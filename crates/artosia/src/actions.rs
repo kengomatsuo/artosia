@@ -1336,6 +1336,7 @@ impl App {
                 Err(error) => s.say(error.to_string(), None),
             });
         }
+        changed |= self.poll_desk(tx);
 
         let state = self.output_state();
         if self.sent.as_ref() != Some(&state) {

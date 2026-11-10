@@ -91,6 +91,82 @@ const BOOKS: [(&str, &[&str]); 66] = [
     ("Revelation", &["revelation", "rv", "apocalypse"]),
 ];
 
+/// Indonesian book names and abbreviations, spaces and hyphens removed, in canonical order.
+/// Full names are the 66 names in the book list of LAI's own Bible search page
+/// (https://www.alkitab.or.id/cari-alkitab/tb/kejadian/1, read 2026-11-11). The short forms are
+/// the "LAI" columns of SABDA Labs' abbreviation table (https://labs.sabda.org/Singkatan, read
+/// 2026-11-11: three letters such as `kej`, and consonant skeletons such as `kjdn`, `mzm`,
+/// `why`, `flp`). Names are facts, so this is a list and not Bible text. A short form that two
+/// books share (`nhm` for Nehemia and Nahum, `ams` for Amsal and Amos) is left to the prefix rule.
+const BOOKS_ID: [&[&str]; 66] = [
+    &["kejadian", "kjdn", "kjd"],
+    &["keluaran", "klrn", "klr"],
+    &["imamat", "immt", "imm"],
+    &["bilangan", "blngn", "bln"],
+    &["ulangan", "ulngn", "uln"],
+    &["yosua", "ys"],
+    &["hakimhakim", "hkmhkm", "hkm"],
+    &["rut", "rt"],
+    &["1samuel", "1sml", "1sm"],
+    &["2samuel", "2sml", "2sm"],
+    &["1rajaraja", "1rjrj", "1rj"],
+    &["2rajaraja", "2rjrj", "2rj"],
+    &["1tawarikh", "1twrkh", "1tw"],
+    &["2tawarikh", "2twrkh", "2tw"],
+    &["ezra", "ezr"],
+    &["nehemia"],
+    &["ester", "estr"],
+    &["ayub", "ayb"],
+    &["mazmur", "mzmr", "mzm", "mz"],
+    &["amsal", "amsl"],
+    &["pengkhotbah", "pengkotbah", "pngktbh", "pkh"],
+    &["kidungagung", "kdngagng", "kdn"],
+    &["yesaya", "ysy"],
+    &["yeremia", "yrm"],
+    &["ratapan", "rtpn", "rtp"],
+    &["yehezkiel", "yhzkl", "yhz"],
+    &["daniel", "dnl"],
+    &["hosea", "hs"],
+    &["yoel", "yl"],
+    &["amos"],
+    &["obaja", "obj"],
+    &["yunus", "yns"],
+    &["mikha", "mika", "mkh"],
+    &["nahum"],
+    &["habakuk", "hbkk", "hbk"],
+    &["zefanya", "zfny", "zfn"],
+    &["hagai", "hg"],
+    &["zakharia", "zakaria", "zkhr"],
+    &["maleakhi", "maleaki", "mlkh", "mlk"],
+    &["matius", "mts"],
+    &["markus", "mrks", "mrk"],
+    &["lukas", "lks"],
+    &["yohanes", "yhns", "yhn"],
+    &["kisahpararasul", "kisah", "kshprrsl", "ksh"],
+    &["roma", "rm"],
+    &["1korintus", "1krnts", "1kr"],
+    &["2korintus", "2krnts", "2kr"],
+    &["galatia", "glt"],
+    &["efesus", "efss", "efs"],
+    &["filipi", "flp"],
+    &["kolose", "kls"],
+    &["1tesalonika", "1tslnk", "1ts"],
+    &["2tesalonika", "2tslnk", "2ts"],
+    &["1timotius", "1tmts", "1tm"],
+    &["2timotius", "2tmts", "2tm"],
+    &["titus", "tts"],
+    &["filemon", "flmn", "flm"],
+    &["ibrani", "ibrn"],
+    &["yakobus", "ykbs", "ykb"],
+    &["1petrus", "1ptrs", "1pt"],
+    &["2petrus", "2ptrs", "2pt"],
+    &["1yohanes", "1yhns", "1yhn"],
+    &["2yohanes", "2yhns", "2yhn"],
+    &["3yohanes", "3yhns", "3yhn"],
+    &["yudas", "yds"],
+    &["wahyu", "why", "wh"],
+];
+
 /// Books in the order a short prefix should prefer them: "jo" means John before Joshua.
 const POPULAR: [u8; 30] = [
     43, 19, 40, 45, 1, 42, 20, 23, 44, 46, 41, 49, 50, 58, 66, 59, 2, 47, 48, 62, 51, 60, 5, 24, 55, 54, 52, 27, 6, 18,
@@ -220,6 +296,11 @@ fn clean(text: &str) -> String {
         _ => trimmed.to_string(),
     };
     unquoted.split_whitespace().collect::<Vec<_>>().join(" ")
+}
+
+/// MyBible's number for book 1..=66.
+pub(crate) fn mybible_number(book: u8) -> u16 {
+    MYBIBLE_NUMBERS.get(usize::from(book).wrapping_sub(1)).copied().unwrap_or(0)
 }
 
 fn canonical(mybible_number: u16) -> Option<u8> {
@@ -365,7 +446,7 @@ impl Bible {
         for info in &self.books {
             let at = usize::from(info.number) - 1;
             let own = [normalize(&info.name).replace(' ', ""), normalize(&info.short).replace(' ', "")];
-            let aliases = BOOKS[at].1.iter().map(|alias| (*alias).to_string()).chain(own);
+            let aliases = BOOKS[at].1.iter().chain(BOOKS_ID[at]).map(|alias| (*alias).to_string()).chain(own);
             let mut best = 0f32;
             for alias in aliases {
                 if alias.is_empty() || ordinal != alias.chars().next().filter(char::is_ascii_digit) {
@@ -642,6 +723,38 @@ mod tests {
         assert_eq!((first.book, first.chapter, first.verse), (19, 23, 1));
         let hits = bible.search("first book", 5);
         assert_eq!(hits.len(), 2);
+    }
+
+    /// A Bible that holds only the passages the Indonesian typing tests ask for.
+    fn five_passages() -> Bible {
+        let verse = |book: u8, chapter: u16, verse: u16| Verse { book, chapter, verse, text: "Made up words.".into() };
+        let mut verses = vec![verse(1, 1, 1), verse(1, 1, 2), verse(43, 3, 16), verse(66, 21, 1), verse(66, 21, 2), verse(66, 21, 3)];
+        verses.extend((1..=8).map(|v| verse(46, 13, v)));
+        verses.extend((1..=6).map(|v| verse(19, 23, v)));
+        Bible::from_parts("TST".into(), None, "Indonesian".into(), Vec::new(), verses).unwrap_or_else(|_| unreachable!())
+    }
+
+    #[test]
+    fn indonesian_book_names_are_read() {
+        let bible = five_passages();
+        assert_eq!(top(&bible, "Yoh 3:16").as_deref(), Some("John 3:16"));
+        assert_eq!(top(&bible, "Mazmur 23").as_deref(), Some("Psalms 23"));
+        assert_eq!(top(&bible, "1 Kor 13 4-7").as_deref(), Some("1 Corinthians 13:4-7"));
+        assert_eq!(top(&bible, "Kej 1 1").as_deref(), Some("Genesis 1:1"));
+        assert_eq!(top(&bible, "Wahyu 21").as_deref(), Some("Revelation 21"));
+        assert_eq!(top(&bible, "yohanes 3 16").as_deref(), Some("John 3:16"));
+        assert_eq!(top(&bible, "Mzm 23 1").as_deref(), Some("Psalms 23:1"));
+        assert_eq!(top(&bible, "Why 21 1-2").as_deref(), Some("Revelation 21:1-2"));
+        assert_eq!(top(&bible, "1kor13:4").as_deref(), Some("1 Corinthians 13:4"));
+    }
+
+    #[test]
+    fn every_indonesian_book_has_its_own_name_as_first_alias() {
+        let mut seen = std::collections::HashSet::new();
+        for names in BOOKS_ID {
+            assert!(seen.insert(names[0]), "{} appears twice", names[0]);
+        }
+        assert_eq!(seen.len(), 66);
     }
 
     #[test]

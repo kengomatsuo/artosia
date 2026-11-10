@@ -10,6 +10,7 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 mod actions;
+mod bibles;
 mod data;
 mod languages;
 mod learning;
@@ -291,6 +292,11 @@ const SCENES: &[Scene] = &[
     ("keys", |s| s.sheet = Sheet::Keys),
     ("listen", |s| s.sheet = Sheet::Listen),
     ("stream", |s| s.sheet = Sheet::Stream),
+    ("bibles", |s| s.demo_bibles("ready")),
+    ("bibles-picked", |s| s.demo_bibles("picked")),
+    ("bibles-loading", |s| s.demo_bibles("loading")),
+    ("bibles-failed", |s| s.demo_bibles("failed")),
+    ("bibles-empty", |s| s.demo_bibles("empty")),
     ("search-command", |s| {
         s.open_palette(Scope::All, "black");
     }),

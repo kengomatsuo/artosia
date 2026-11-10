@@ -219,6 +219,7 @@ dependencies = [
  "rune-kit",
  "serde",
  "serde_json",
+ "ureq",
  "winresource",
 ]
 
@@ -231,6 +232,7 @@ dependencies = [
  "rusqlite",
  "serde",
  "serde_json",
+ "zip",
 ]
 
 [[package]]

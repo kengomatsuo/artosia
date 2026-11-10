@@ -17,6 +17,7 @@ rune = { workspace = true, features = ["native-file-dialog"] }
 rune-kit.workspace = true
 serde = { version = "1.0.229", features = ["derive"] }
 serde_json = "1.0.154"
+ureq = "3.5"
 
 # Windows only: puts Artosia's mark on the program file.
 [build-dependencies]

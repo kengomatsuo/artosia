@@ -1183,6 +1183,56 @@ pub fn starts_line(section: &str, times: u32, of: u32) -> String {
     format!("Usually started at {section}, {times} of {of} times")
 }
 
+// Bibles: a file the church holds, and eBible's free list. English twice until it is written.
+text!(BIBLES_TITLE, "Bibles", "Bibles");
+text!(BIBLES_MORE, "More Bibles", "More Bibles");
+text!(BIBLES_OWN_FILE, "Your own file", "Your own file");
+text!(BIBLES_CHOOSE_FILE, "Choose a Bible file", "Choose a Bible file");
+text!(BIBLES_FILE_HINT, "MyBible, USFX, or a zip of USFM files", "MyBible, USFX, or a zip of USFM files");
+text!(BIBLES_PRACTICE, "Practice mode keeps no Bibles", "Practice mode keeps no Bibles");
+text!(BIBLES_FILE_UNSUPPORTED, "That file is not a Bible Artosia can read", "That file is not a Bible Artosia can read");
+text!(BIBLES_FILE_EMPTY, "That file holds no verses", "That file holds no verses");
+text!(CMD_BIBLE_FILE, "Add a Bible from a file", "Add a Bible from a file");
+text!(CMD_BIBLE_FILE_DETAIL, "MyBible, USFX, or a zip of USFM files", "MyBible, USFX, or a zip of USFM files");
+text!(CMD_BIBLES, "Get more Bibles", "Get more Bibles");
+text!(CMD_BIBLES_DETAIL, "Free translations in many languages", "Free translations in many languages");
+
+text!(BIBLES_FREE, "Free Bibles to download", "Free Bibles to download");
+text!(BIBLES_SEARCH, "Search by language or name", "Search by language or name");
+text!(BIBLES_LOADING, "Getting the list of Bibles", "Getting the list of Bibles");
+text!(BIBLES_LOAD_FAILED, "Could not get the list of Bibles", "Could not get the list of Bibles");
+text!(BIBLES_RETRY, "Try again", "Try again");
+text!(BIBLES_INSTALLED, "Installed", "Installed");
+text!(BIBLES_DOWNLOAD, "Download", "Download");
+text!(BIBLES_DOWNLOADING, "Downloading", "Downloading");
+text!(BIBLES_USE, "Use this Bible", "Use this Bible");
+text!(BIBLES_IN_USE, "In use", "In use");
+text!(BIBLES_COPYRIGHT, "Copyright", "Copyright");
+text!(BIBLES_PICK_HINT, "Pick a Bible to read its copyright", "Pick a Bible to read its copyright");
+text!(BIBLES_SCOPE_WHOLE, "Whole Bible", "Whole Bible");
+text!(BIBLES_SCOPE_PART, "Some books", "Some books");
+
+pub fn bibles_download_failed(why: &str) -> String {
+    if indonesian() {
+        return format!("Could not download the Bible: {why}");
+    }
+    format!("Could not download the Bible: {why}")
+}
+
+pub fn bible_added(name: &str, verses: usize) -> String {
+    if indonesian() {
+        return format!("{name} added, {verses} verses");
+    }
+    format!("{name} added, {verses} verses")
+}
+
+pub fn bibles_file_failed(why: &str) -> String {
+    if indonesian() {
+        return format!("Could not add the Bible: {why}");
+    }
+    format!("Could not add the Bible: {why}")
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

@@ -215,6 +215,7 @@ pub enum Sheet {
     Keys,
     Listen,
     Stream,
+    Bibles,
 }
 
 /// Something the room was heard to say or sing, offered for one click.
@@ -261,6 +262,8 @@ pub struct App {
     pub bibles: HashMap<String, Arc<Bible>>,
     /// Codes being read by a worker.
     pub bibles_loading: Vec<String>,
+    /// The Bibles dialog: files being converted and eBible's list.
+    pub desk: crate::bibles::Desk,
     pub announcements: Vec<Announcement>,
     /// Everyone whose birthday the church keeps, for announcements that fill themselves.
     pub people: Vec<Person>,
@@ -433,6 +436,7 @@ impl App {
             bible_files: Vec::new(),
             bibles: HashMap::new(),
             bibles_loading: Vec::new(),
+            desk: crate::bibles::Desk::default(),
             announcements,
             people: Vec::new(),
             plan,
