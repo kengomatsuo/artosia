@@ -71,7 +71,7 @@ Screenshots, source files and product cards for every screen (S01–S13) are in 
 | Frame pacing | Lerret's cadence logic needs the app to own `present`, which Rune does not allow. Not ported |
 | Speech recognition | Written, never compiled. The 57 MB model is in `%APPDATA%\artosia\models` (downloaded 2026-11-10 with the owner's yes); the build still needs CMake and LLVM, which the owner installs |
 | Video on a computer without GStreamer | A release carries a second projector built without video, which the operator starts when it finds no GStreamer. Video and streaming there need GStreamer installed by hand, or its files put in the release: 306 MB whole, subset not worked out |
-| Never tried | A real phone on the remote; a real streaming service; a Celeron; unplugging a screen by hand; a bent picture through the projector; the installed copy updating itself over the internet |
+| Never tried | A real phone on the remote; a real streaming service; a Celeron; unplugging a screen by hand; a bent picture through the projector |
 
 ## Dependency notes
 

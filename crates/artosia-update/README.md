@@ -95,6 +95,12 @@ Each also has a `_with` form taking `&TrustedKeys`, which the tests use with a t
 
 `tests/end_to_end.rs` serves a fake feed from 127.0.0.1 and updates a fake install folder of real, runnable dummy programs, two of them running during the swap: files change, running programs survive, old files are gone after the next start; a tampered download, a tampered staged file, a wrong signature, an edited manifest and a missing key are all refused; a cut-off download resumes with a `Range` request, and a server that ignores `Range` restarts the file; rollback, never-confirmed rollback and crash recovery restore the old files; offline is a quiet error; the release tool's output is accepted.
 
+## Proven over the internet (2026-11-11)
+
+A copy built to call itself 0.0.9 was started from a scratch folder on a scratch library with the projector off. It found release 0.1.0 at the GitHub address, accepted its signature with the built-in key, and downloaded only `artosia.exe` (36 MB); the three programs it already had at the right hash were left alone. Its next start swapped the file in, started 0.1.0 with the same arguments and left. The installed file then matched the release's hash, and the copy of the old file was gone once 0.1.0 had its window up.
+
+Not tried: a start that fails after the swap on a real release (the rollback is covered by the local tests), and a computer that has never run Artosia, where SmartScreen may ask about the unsigned programs.
+
 ## What is still the owner's
 
 - **A backup of the signing key.** See above.
