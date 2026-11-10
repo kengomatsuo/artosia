@@ -351,6 +351,43 @@ impl App {
 mod tests {
     use super::*;
 
+    /// The whole road a press of Download takes, against the real ebible.org: the list is
+    /// fetched, one small translation is downloaded, converted and listed. Run by hand, since
+    /// it needs the internet: `cargo test -p artosia a_real_download -- --ignored --nocapture`.
+    #[test]
+    #[ignore]
+    fn a_real_download_lands_in_the_library() {
+        let folder = std::env::temp_dir().join(format!("artosia-bible-test-{}", std::process::id()));
+        let _ = std::fs::remove_dir_all(&folder);
+        std::fs::create_dir_all(&folder).expect("a scratch library");
+        // SAFETY: this test is run alone by name; nothing else reads the environment meanwhile.
+        unsafe { std::env::set_var("ARTOSIA_DATA", &folder) };
+        let mut app = App::load();
+        let mut tx = Tx::default();
+        let mut wait = |app: &mut App, done: &dyn Fn(&App) -> bool| {
+            for _ in 0..600 {
+                app.poll_desk(&mut tx);
+                if done(app) {
+                    return true;
+                }
+                std::thread::sleep(Duration::from_millis(100));
+            }
+            false
+        };
+        app.start_catalogue();
+        assert!(wait(&mut app, &|app| !matches!(app.desk.catalogue, Catalogue::Loading)), "the list never arrived");
+        let listed = app.desk.translations().len();
+        assert!(listed > 500, "only {listed} translations listed");
+        // A small Indonesian-language translation, 473 KB on 2026-11-11.
+        app.download_bible("indags");
+        assert!(app.desk.downloading.is_some(), "the download did not start");
+        assert!(wait(&mut app, &|app| app.desk.downloading.is_none()), "the download never ended");
+        let code = installed_code("indags");
+        assert!(app.bible_files.iter().any(|file| file.code == code), "{code} is not in the Bible list: {:?}", app.toast.as_ref().map(|toast| toast.text.clone()));
+        println!("{listed} translations listed; {code} installed in {}", folder.join("bibles").display());
+        let _ = std::fs::remove_dir_all(&folder);
+    }
+
     const CSV: &str = "languageCode,translationId,languageName,languageNameInEnglish,title,description,Redistributable,Copyright,OTbooks,NTbooks,downloadable\n\
         ind,indmade,Bahasa Buatan,Indonesian,Alkitab Buatan,x,True,Made up line,0,27,True\n\
         xyz,xyz1,Zed,Zedish,The Zed Bible,x,True,Made up line,39,27,True\n";

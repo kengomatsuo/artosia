@@ -4,7 +4,8 @@
 #
 #   powershell -File tools/drive-window.ps1 -ProcessId 1234 -Out shots -Steps "key:SPACE shot:started down:SHIFT key:DOWN shot:held up:SHIFT shot:let-go drag:130,195,0,90 shot:dragged"
 #
-# Steps: key:<name>  down:<name>  up:<name>  drag:<x>,<y>,<dx>,<dy> (points inside the window)
+# Steps: key:<name>  down:<name>  up:<name>  type:<text without spaces>
+#        click:<x>,<y>  drag:<x>,<y>,<dx>,<dy> (points inside the window)
 #        shot:<name>  wait:<milliseconds>
 # Input goes to whatever window is in front, so every step first checks that this program's
 # window is the one in front and stops when it is not.
@@ -26,6 +27,7 @@ public static class Drive {
     [DllImport("user32.dll")] public static extern bool ShowWindow(IntPtr h, int cmd);
     [DllImport("user32.dll")] public static extern void keybd_event(byte vk, byte scan, uint flags, UIntPtr extra);
     [DllImport("user32.dll")] public static extern uint MapVirtualKey(uint code, uint mapType);
+    [DllImport("user32.dll")] public static extern short VkKeyScanW(char c);
     [DllImport("user32.dll")] public static extern void mouse_event(uint flags, uint dx, uint dy, uint data, UIntPtr extra);
     [DllImport("user32.dll")] public static extern bool SetCursorPos(int x, int y);
 }
@@ -80,6 +82,28 @@ try {
             "down" { Press $arg $true $false; $held += $arg }
             "up" { Press $arg $false $true; $held = $held | Where-Object { $_ -ne $arg } }
             "wait" { Start-Sleep -Milliseconds ([int]$arg) }
+            "type" {
+                foreach ($c in $arg.ToCharArray()) {
+                    $scan = [Drive]::VkKeyScanW($c)
+                    $vk = [byte]($scan -band 0xFF); $shifted = (($scan -shr 8) -band 1) -eq 1
+                    if ($shifted) { [Drive]::keybd_event(0x10, 0, 0, [UIntPtr]::Zero) }
+                    [Drive]::keybd_event($vk, [byte][Drive]::MapVirtualKey([uint32]$vk, 0), 0, [UIntPtr]::Zero)
+                    [Drive]::keybd_event($vk, [byte][Drive]::MapVirtualKey([uint32]$vk, 0), 2, [UIntPtr]::Zero)
+                    if ($shifted) { [Drive]::keybd_event(0x10, 0, 2, [UIntPtr]::Zero) }
+                    Start-Sleep -Milliseconds 40
+                }
+            }
+            "click" {
+                $x, $y = $arg -split "," | ForEach-Object { [double]$_ }
+                $scale = [Drive]::GetDpiForWindow($h) / 96.0
+                $o = New-Object Drive+POINT
+                [Drive]::ClientToScreen($h, [ref]$o) | Out-Null
+                [Drive]::SetCursorPos([int]($o.X + $x * $scale), [int]($o.Y + $y * $scale)) | Out-Null
+                Start-Sleep -Milliseconds 120
+                [Drive]::mouse_event(2, 0, 0, 0, [UIntPtr]::Zero)
+                Start-Sleep -Milliseconds 60
+                [Drive]::mouse_event(4, 0, 0, 0, [UIntPtr]::Zero)
+            }
             "shot" { Start-Sleep -Milliseconds 350; Shot $arg }
             "drag" {
                 $x, $y, $dx, $dy = $arg -split "," | ForEach-Object { [double]$_ }

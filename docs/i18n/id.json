@@ -2293,5 +2293,150 @@
     "text": "Biasanya mulai di {section}, {times} dari {of} kali",
     "back": "Usually starts at {section}, {times} of {of} times",
     "why": "Fuller form of the pill with the count of recent uses. 40 of 50 with examples."
+  },
+  "BIBLES_TITLE": {
+    "text": "Tambah Alkitab",
+    "back": "Add Bible",
+    "why": "Tambah is the phone page's add verb; Alkitab is the glossary word. 14 of 14."
+  },
+  "BIBLES_MORE": {
+    "text": "Tambah terjemahan",
+    "back": "Add translation",
+    "why": "Short verb button; terjemahan is the glossary word for a translation. 17 of 20."
+  },
+  "BIBLES_OWN_FILE": {
+    "text": "Terjemahan dari berkas",
+    "back": "Translation from a file",
+    "why": "Same shape as the other heading (Terjemahan ...); berkas is the recorded word for file. 22 of 24."
+  },
+  "BIBLES_CHOOSE_FILE": {
+    "text": "Pilih berkas",
+    "back": "Pick file",
+    "why": "Short verb button, berkas as recorded. 12 of 26."
+  },
+  "BIBLES_FILE_HINT": {
+    "text": "MyBible, USFX, atau zip berisi USFM",
+    "back": "MyBible, USFX, or a zip containing USFM",
+    "why": "Format names kept; only the joining words are Indonesian. 35 of 44."
+  },
+  "BIBLES_FREE": {
+    "text": "Terjemahan gratis",
+    "back": "Free translations",
+    "why": "Heading in the shape 'Terjemahan ...' shared with the file heading. 17 of 34."
+  },
+  "BIBLES_SEARCH": {
+    "text": "Cari bahasa atau terjemahan",
+    "back": "Search language or translation",
+    "why": "Cari is the glossary search word. 27 of 34."
+  },
+  "BIBLES_LOADING": {
+    "text": "Mengambil daftar Alkitab",
+    "back": "Fetching the list of Bibles",
+    "why": "Progressive verb, no technical term. 24 of 34."
+  },
+  "BIBLES_LOAD_FAILED": {
+    "text": "Daftar Alkitab tidak bisa diambil",
+    "back": "The list of Bibles cannot be fetched",
+    "why": "Matches the loading caption's verb ambil; no blame. 33 of 40."
+  },
+  "BIBLES_RETRY": {
+    "text": "Coba lagi",
+    "back": "Try again",
+    "why": "Same phrase as the phone page's Mencoba lagi, in button form. 9 of 14."
+  },
+  "BIBLES_INSTALLED": {
+    "text": "Sudah ada",
+    "back": "Already there",
+    "why": "Short state pill for a translation already on this computer. 9 of 14."
+  },
+  "BIBLES_SCOPE_WHOLE": {
+    "text": "Alkitab lengkap",
+    "back": "Complete Bible",
+    "why": "Lengkap for the whole of both Testaments. 15 of 18."
+  },
+  "BIBLES_SCOPE_PART": {
+    "text": "Sebagian kitab",
+    "back": "Some books",
+    "why": "Kitab is the book of the Bible; sebagian says only some. 14 of 18."
+  },
+  "BIBLES_PICK_HINT": {
+    "text": "Pilih terjemahan untuk melihat hak ciptanya",
+    "back": "Pick a translation to see its copyright",
+    "why": "Invitation that says what appears after picking. 44 of 44."
+  },
+  "BIBLES_COPYRIGHT": {
+    "text": "Hak cipta",
+    "back": "Copyright",
+    "why": "Standard label. 9 of 14."
+  },
+  "BIBLES_DOWNLOAD": {
+    "text": "Unduh",
+    "back": "Download",
+    "why": "Short verb button; 'adds it' left out for space. 5 of 14."
+  },
+  "BIBLES_DOWNLOADING": {
+    "text": "Mengunduh",
+    "back": "Downloading",
+    "why": "Busy state of the button, the progressive of Unduh. 9 of 16."
+  },
+  "BIBLES_USE": {
+    "text": "Pakai terjemahan ini",
+    "back": "Use this translation",
+    "why": "Pakai for make it the one in use. 20 of 22."
+  },
+  "BIBLES_IN_USE": {
+    "text": "Sedang dipakai",
+    "back": "Currently in use",
+    "why": "Disabled state matching Pakai. 14 of 16."
+  },
+  "BIBLES_PRACTICE": {
+    "text": "Tidak bisa tambah Alkitab saat latihan",
+    "back": "Cannot add a Bible during practice",
+    "why": "Latihan for practice mode. The reason (nothing is saved) did not fit in 40. 38 of 40."
+  },
+  "BIBLES_FILE_UNSUPPORTED": {
+    "text": "Berkas ini bukan Alkitab yang bisa dibaca",
+    "back": "This file is not a Bible that can be read",
+    "why": "States the fact without blaming the volunteer. 41 of 44."
+  },
+  "BIBLES_FILE_EMPTY": {
+    "text": "Berkas ini tidak berisi ayat",
+    "back": "This file contains no verses",
+    "why": "Ayat is the glossary's Bible verse. 28 of 34."
+  },
+  "bible_added": {
+    "text": "{name} ditambah, {verses} ayat",
+    "back": "{name} added, {verses} verses",
+    "why": "Toast shape 'X tidak/ditambah' shared with the failure toasts; same Tambah stem. 35 of 44 with examples."
+  },
+  "bibles_file_failed": {
+    "text": "Alkitab tidak bisa ditambah: {why}",
+    "back": "Bible cannot be added: {why}",
+    "why": "Reason follows the colon. Own words 28 of 30."
+  },
+  "bibles_download_failed": {
+    "text": "Alkitab tidak bisa diunduh: {why}",
+    "back": "Bible cannot be downloaded: {why}",
+    "why": "Same shape as the file failure toast. Own words 26 of 32."
+  },
+  "CMD_BIBLE_FILE": {
+    "text": "Tambah Alkitab dari berkas",
+    "back": "Add Bible from a file",
+    "why": "Tambah and berkas as fixed. 26 of 30."
+  },
+  "CMD_BIBLE_FILE_DETAIL": {
+    "text": "MyBible, USFX, atau zip berisi USFM",
+    "back": "MyBible, USFX, or a zip containing USFM",
+    "why": "Same text as the dialog hint so the two never differ. 35 of 44."
+  },
+  "CMD_BIBLES": {
+    "text": "Tambah terjemahan Alkitab",
+    "back": "Add Bible translation",
+    "why": "Matches the button in the Look dialog. 25 of 26."
+  },
+  "CMD_BIBLES_DETAIL": {
+    "text": "Terjemahan gratis dalam banyak bahasa",
+    "back": "Free translations in many languages",
+    "why": "Echoes the dialog's Terjemahan gratis. 36 of 40."
   }
 }

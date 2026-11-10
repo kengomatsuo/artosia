@@ -212,3 +212,10 @@ All read on 2026-11-11.
 - How FreeShow's `churchapps.org` list gets its Indonesian entries licensed, and its terms of use.
 - OpenLP's and the other apps' licences beyond the file headers seen; no GitHub issue was cited.
 - MyBible's own policy for its official module registry beyond the pages read.
+
+## Checked after the merge (2026-11-11)
+
+`cargo test -p artosia a_real_download -- --ignored` runs the road a press of Download takes against the real ebible.org: 1,296 translations listed, `indags` downloaded, converted and listed as a Bible in a scratch library. The button itself was not pressed in a real window: the test window could not be brought to the front while the PC was in use.
+
+LAI's Bible API is still unbuilt. Its page links to Postman documentation, and both links answered 404 on 2026-11-11, from a plain fetch and in a browser. It needs a working documentation link and a key, both from LAI (info@alkitab.or.id).
+

@@ -503,11 +503,13 @@ impl App {
     fn typed_hits(&self, query: &str) -> Vec<Hit> {
         let timers = [Doc::new("countdown", "action", t::COUNTDOWN()).aliases(&["timer", "count down", "hitung mundur", "waktu mundur"])];
         let is_timer = |words: &str| !kit::search(&timers, words, &|_| false, 1).is_empty();
-        if let Some((head, minutes)) = kit::trailing_number(query) {
-            if minutes > 0 && minutes <= 600 && is_timer(&head) {
-                return vec![Hit::Countdown(minutes)];
-            }
-            // Anything else that ends in a number goes on: a message may end in a room number.
+        // Anything else that ends in a number goes on: a message may end in a room number.
+        if let Some((head, minutes)) = kit::trailing_number(query)
+            && minutes > 0
+            && minutes <= 600
+            && is_timer(&head)
+        {
+            return vec![Hit::Countdown(minutes)];
         }
         if is_timer(query) && self.countdown.is_none() {
             return vec![Hit::Countdown(5), Hit::Countdown(10), Hit::Countdown(15)];
