@@ -25,3 +25,7 @@ The stack survey and RAM measurements behind this choice are in [research.md](re
 - `spikes/` — throwaway experiments, each with its own `Cargo.toml`, outside the workspace
 - `tools/ram/measure.ps1` — RAM of a process tree; `tools/make-fixture.sh` — test video
 - `fixtures/` — generated media, gitignored
+
+## UI research
+
+Screenshots, source files and product cards for every screen (S01–S13) are in `C:\Users\kenne\Shared\inspo\artosia-presenter-ui\`; start with its `README.md`. No screen is designed from memory: each one copies a pattern named there.
