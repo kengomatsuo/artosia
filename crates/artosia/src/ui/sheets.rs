@@ -172,6 +172,17 @@ fn looks(s: &App, k: &Kit, layer: &mut Vec<El>) {
         .child(setting(k, t::LOOK_SECOND_BIBLE(), bible_picker(s, k, true)))
         .child(setting(
             k,
+            t::BIBLES_TITLE(),
+            row()
+                .grow(1.0)
+                .min_w(0.0)
+                .gap(space::S2)
+                .center_y()
+                .child(btn(t::BIBLES_CHOOSE_FILE()).icon(&icons::IMPORT).focusable().build(k, |s, _| s.desk.want_file = true).key("look-bible-file"))
+                .child(btn(t::BIBLES_MORE()).icon(&icons::GLOBE).focusable().build(k, |s, _| s.open_bibles()).key("look-bible-more")),
+        ))
+        .child(setting(
+            k,
             t::LOOK_LOGO(),
             row()
                 .grow(1.0)
@@ -654,5 +665,6 @@ pub fn view(s: &App, k: &Kit, layer: &mut Vec<El>) {
         Sheet::Keys => keys(k, layer),
         Sheet::Listen => listen(s, k, layer),
         Sheet::Stream => stream(s, k, layer),
+        Sheet::Bibles => crate::ui::bibles::view(s, k, layer),
     }
 }

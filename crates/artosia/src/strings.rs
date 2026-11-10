@@ -884,6 +884,34 @@ text!(LOOK_LANGUAGE, "Language", "Bahasa");
 pub const LANGUAGE_ENGLISH: &str = "English";
 pub const LANGUAGE_INDONESIAN: &str = "Bahasa Indonesia";
 
+// Bibles: a file the church holds, and eBible's free list. English twice until it is written.
+text!(BIBLES_TITLE, "Bibles", "Bibles");
+text!(BIBLES_MORE, "More Bibles", "More Bibles");
+text!(BIBLES_OWN_FILE, "Your own file", "Your own file");
+text!(BIBLES_CHOOSE_FILE, "Choose a Bible file", "Choose a Bible file");
+text!(BIBLES_FILE_HINT, "MyBible, USFX, or a zip of USFM files", "MyBible, USFX, or a zip of USFM files");
+text!(BIBLES_PRACTICE, "Practice mode keeps no Bibles", "Practice mode keeps no Bibles");
+text!(BIBLES_FILE_UNSUPPORTED, "That file is not a Bible Artosia can read", "That file is not a Bible Artosia can read");
+text!(BIBLES_FILE_EMPTY, "That file holds no verses", "That file holds no verses");
+text!(CMD_BIBLE_FILE, "Add a Bible from a file", "Add a Bible from a file");
+text!(CMD_BIBLE_FILE_DETAIL, "MyBible, USFX, or a zip of USFM files", "MyBible, USFX, or a zip of USFM files");
+text!(CMD_BIBLES, "Get more Bibles", "Get more Bibles");
+text!(CMD_BIBLES_DETAIL, "Free translations in many languages", "Free translations in many languages");
+
+pub fn bible_added(name: &str, verses: usize) -> String {
+    if indonesian() {
+        return format!("{name} added, {verses} verses");
+    }
+    format!("{name} added, {verses} verses")
+}
+
+pub fn bibles_file_failed(why: &str) -> String {
+    if indonesian() {
+        return format!("Could not add the Bible: {why}");
+    }
+    format!("Could not add the Bible: {why}")
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

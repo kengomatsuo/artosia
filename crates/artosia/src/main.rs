@@ -10,6 +10,7 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 mod actions;
+mod bibles;
 mod data;
 mod link;
 mod palette;
@@ -287,6 +288,7 @@ const SCENES: &[Scene] = &[
     ("keys", |s| s.sheet = Sheet::Keys),
     ("listen", |s| s.sheet = Sheet::Listen),
     ("stream", |s| s.sheet = Sheet::Stream),
+    ("bibles", |s| s.sheet = Sheet::Bibles),
     ("search-command", |s| {
         s.open_palette(Scope::All, "black");
     }),

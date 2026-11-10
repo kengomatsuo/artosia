@@ -58,10 +58,12 @@ pub enum Command {
     CheckUpdate,
     Listen,
     Stream,
+    BibleFile,
+    Bibles,
 }
 
 impl Command {
-    pub const ALL: [Command; 27] = [
+    pub const ALL: [Command; 29] = [
         Command::StartService,
         Command::Next,
         Command::Previous,
@@ -83,6 +85,8 @@ impl Command {
         Command::Remote,
         Command::Listen,
         Command::Stream,
+        Command::Bibles,
+        Command::BibleFile,
         Command::ImportFolder,
         Command::ImportPptx,
         Command::ImportBirthdays,
@@ -120,6 +124,8 @@ impl Command {
             Command::CheckUpdate => t::CMD_UPDATE(),
             Command::Listen => t::CMD_LISTEN(),
             Command::Stream => t::CMD_STREAM(),
+            Command::BibleFile => t::CMD_BIBLE_FILE(),
+            Command::Bibles => t::CMD_BIBLES(),
         }
     }
 
@@ -152,6 +158,8 @@ impl Command {
             Command::CheckUpdate => t::CMD_UPDATE_DETAIL(),
             Command::Listen => t::CMD_LISTEN_DETAIL(),
             Command::Stream => t::CMD_STREAM_DETAIL(),
+            Command::BibleFile => t::CMD_BIBLE_FILE_DETAIL(),
+            Command::Bibles => t::CMD_BIBLES_DETAIL(),
         }
     }
 
@@ -185,6 +193,8 @@ impl Command {
             Command::CheckUpdate => &["update", "upgrade", "new version", "version", "perbarui", "pembaruan", "versi baru"],
             Command::Listen => &["microphone", "mic", "hear", "speech", "dengar", "dengarkan", "mikrofon", "suara"],
             Command::Stream => &["live stream", "broadcast", "youtube", "facebook", "record", "recording", "siaran", "siaran langsung", "rekam", "streaming"],
+            Command::BibleFile => &["bible file", "import bible", "mybible", "usfm", "usfx", "tb", "alkitab", "berkas alkitab", "impor alkitab", "tambah alkitab"],
+            Command::Bibles => &["download bible", "translations", "ebible", "alkitab", "terjemahan", "unduh alkitab", "versi alkitab", "more bibles"],
         }
     }
 
@@ -804,6 +814,8 @@ impl App {
             Command::CheckUpdate => crate::update::check(self.inbox.clone(), self.waker.clone(), true),
             Command::Listen => self.open_listen(),
             Command::Stream => self.sheet = Sheet::Stream,
+            Command::BibleFile => self.desk.want_file = true,
+            Command::Bibles => self.open_bibles(),
         }
     }
 

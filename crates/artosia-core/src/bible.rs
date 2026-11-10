@@ -298,6 +298,11 @@ fn clean(text: &str) -> String {
     unquoted.split_whitespace().collect::<Vec<_>>().join(" ")
 }
 
+/// MyBible's number for book 1..=66.
+pub(crate) fn mybible_number(book: u8) -> u16 {
+    MYBIBLE_NUMBERS.get(usize::from(book).wrapping_sub(1)).copied().unwrap_or(0)
+}
+
 fn canonical(mybible_number: u16) -> Option<u8> {
     MYBIBLE_NUMBERS.iter().position(|&n| n == mybible_number).map(|at| at as u8 + 1)
 }

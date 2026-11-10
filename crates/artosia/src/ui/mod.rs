@@ -2,6 +2,7 @@
 //! open item, and what is live.
 
 mod announcements;
+mod bibles;
 mod editor;
 pub(crate) mod live;
 mod palette;
