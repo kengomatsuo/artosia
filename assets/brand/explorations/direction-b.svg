@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
-  <title>Direction B, the broken loaf</title>
-  <clipPath id="l"><path d="M0 0H41L18.2 64H0Z"/></clipPath>
-  <clipPath id="r"><path d="M45.8 0H64V64H23Z"/></clipPath>
-  <circle clip-path="url(#l)" cx="32" cy="32" r="26" fill="#5599f3"/>
-  <circle clip-path="url(#r)" cx="32" cy="32" r="26" fill="#9ec7fe"/>
-</svg>

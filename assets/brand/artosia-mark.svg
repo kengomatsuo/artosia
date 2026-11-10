@@ -1,12 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
-  <title>Artosia mark</title>
-  <mask id="cuts" maskUnits="userSpaceOnUse" x="0" y="0" width="64" height="64">
-    <rect width="64" height="64" fill="#fff"/>
-    <g stroke="#000" stroke-width="4.6" stroke-linecap="round" fill="none">
-      <path d="M19 42L24 29"/>
-      <path d="M29 43L35 26"/>
-      <path d="M40 42L45 29"/>
-    </g>
-  </mask>
-  <path transform="translate(0 -2.5)" mask="url(#cuts)" fill="#5599f3" d="M4 46C4 31 14 18 32 18S60 31 60 46V47A4 4 0 0 1 56 51H8A4 4 0 0 1 4 47Z"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="999.998" height="809.997" viewBox="0 0 999.998 809.997"><title>Artosia</title><path d="M107.698 809.997L209.1 809.997L316.167 544.997L571.663 544.997L531.261 444.997L356.57 444.997L499.999 89.997L790.898 809.997L892.3 809.997A500 500 0 1 0 107.698 809.997Z" fill="#6a3913"/></svg>
