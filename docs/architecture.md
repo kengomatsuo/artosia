@@ -29,3 +29,13 @@ The stack survey and RAM measurements behind this choice are in [research.md](re
 ## UI research
 
 Screenshots, source files and product cards for every screen (S01–S13) are in `C:\Users\kenne\Shared\inspo\artosia-presenter-ui\`; start with its `README.md`. No screen is designed from memory: each one copies a pattern named there.
+
+## Proposed (2026-11-10, waiting for the owner's yes)
+
+| Area | Proposal | Evidence |
+|---|---|---|
+| Process split | Operator app in one process; projector and stage windows in a separate renderer process | Lerret's `lerret-output` renderer process, so an operator crash cannot black out the screens (research `languages/lerret.md`) |
+| Storage | SQLite via `rusqlite` with the `bundled` feature | Used by Omni Presenter, VideoPsalm-GPUI, Open Worship, Hearken, ChyguiSlide (their `Cargo.toml`, [research.md](research.md)) |
+| Song exchange | OpenLyrics XML, plus importers for EasiSlides, OpenLP, ProPresenter files | OpenLyrics 0.8 spec; FreeShow and OpenLP import lists (research `languages/freeshow.md`, `languages/openlp.md`) |
+| Bible text | Public-domain translations offline; MyBible and Zefania import | EasiSlides' v5 feature page lists both formats; API.Bible's free tier allows 3 licensed Bibles for non-commercial use ([research.md](research.md)) |
+| Phone remote | HTTP + WebSocket server in the app, paired by QR code and PIN | OpenLP, Lerret and FreeShow serve remotes this way (research `languages/`) |
