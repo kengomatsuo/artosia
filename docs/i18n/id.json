@@ -2049,87 +2049,82 @@
     "back": "Shift arrow",
     "why": "Key name kept; follows the id-choices style 'Alt panah atas, bawah' with no plus sign."
   },
-  "KEYS_SHOWING_ROWS[4].1": {
-    "text": "Geser bingkai di pratinjau, layar tak berubah",
-    "back": "Move the frame in the preview, the screen does not change",
-    "why": "Pratinjau is the chosen word for a preview, so the middle pane; bingkai for the white ring (new word); layar is the congregation's screen."
-  },
-  "KEYS_SHOWING_ROWS[5].0": {
+  "KEYS_SHOWING_ROWS[6].0": {
     "text": "Enter",
     "back": "Enter",
     "why": "Printed key name kept."
   },
-  "KEYS_SHOWING_ROWS[5].1": {
+  "KEYS_SHOWING_ROWS[6].1": {
     "text": "Tayangkan slide yang berbingkai putih",
     "back": "Put the slide that has the white frame on screen",
     "why": "Uses the same ring word (bingkai putih) as the other rows."
   },
-  "KEYS_SHOWING_ROWS[6].0": {
+  "KEYS_SHOWING_ROWS[7].0": {
     "text": "1 sampai 9",
     "back": "1 to 9",
     "why": "The glossary's range form from the phone page."
   },
-  "KEYS_SHOWING_ROWS[6].1": {
+  "KEYS_SHOWING_ROWS[7].1": {
     "text": "Loncat ke bagian lagu sesuai nomor",
     "back": "Jump to the part of the song matching the number",
     "why": "Bagian is the umbrella word for verse and chorus; it avoids picking Bait or Reff for a number key."
   },
-  "KEYS_SHOWING_ROWS[7].0": {
+  "KEYS_SHOWING_ROWS[8].0": {
     "text": "Esc",
     "back": "Esc",
     "why": "Printed key name kept."
   },
-  "KEYS_SHOWING_ROWS[7].1": {
+  "KEYS_SHOWING_ROWS[8].1": {
     "text": "Bawa lagu yang tayang ke pratinjau",
     "back": "Bring the song that is on screen to the preview",
     "why": "Bawa ... ke pratinjau is the one phrase used for every 'put into the middle pane' row."
   },
-  "KEYS_SHOWING_ROWS[8].0": {
+  "KEYS_SHOWING_ROWS[9].0": {
     "text": "F1",
     "back": "F1",
     "why": "Printed key name kept."
   },
-  "KEYS_SHOWING_ROWS[8].1": {
+  "KEYS_SHOWING_ROWS[9].1": {
     "text": "Sembunyikan teks, latar tetap tayang",
     "back": "Hide the text, the background stays on screen",
     "why": "Sembunyikan teks is the fixed clear-text term."
   },
-  "KEYS_SHOWING_ROWS[9].0": {
+  "KEYS_SHOWING_ROWS[10].0": {
     "text": "F2",
     "back": "F2",
     "why": "Printed key name kept."
   },
-  "KEYS_SHOWING_ROWS[9].1": {
+  "KEYS_SHOWING_ROWS[10].1": {
     "text": "Hitamkan layar",
     "back": "Make the screen black",
     "why": "Verb form of the glossary's Layar hitam, so the row starts with an action like its neighbours."
   },
-  "KEYS_SHOWING_ROWS[10].0": {
+  "KEYS_SHOWING_ROWS[11].0": {
     "text": "F3",
     "back": "F3",
     "why": "Printed key name kept."
   },
-  "KEYS_SHOWING_ROWS[10].1": {
+  "KEYS_SHOWING_ROWS[11].1": {
     "text": "Tayangkan logo saja",
     "back": "Put only the logo on screen",
     "why": "Logo is the fixed word; saja carries 'only'."
   },
-  "KEYS_SHOWING_ROWS[11].0": {
+  "KEYS_SHOWING_ROWS[12].0": {
     "text": "F4",
     "back": "F4",
     "why": "Printed key name kept."
   },
-  "KEYS_SHOWING_ROWS[11].1": {
+  "KEYS_SHOWING_ROWS[12].1": {
     "text": "Bawa ayat atau lagu yang dikenali ke pratinjau",
     "back": "Bring the verse or song that was recognised to the preview",
     "why": "Ayat is a Bible verse (glossary); dikenali for recognised, since the listener only proposes."
   },
-  "KEYS_SHOWING_ROWS[12].0": {
+  "KEYS_SHOWING_ROWS[13].0": {
     "text": "F5",
     "back": "F5",
     "why": "Printed key name kept."
   },
-  "KEYS_SHOWING_ROWS[12].1": {
+  "KEYS_SHOWING_ROWS[13].1": {
     "text": "Bawa pengumuman ke pratinjau",
     "back": "Bring the announcements to the preview",
     "why": "Pengumuman is the fixed word; same Bawa phrase as the rows above."
@@ -2179,11 +2174,6 @@
     "back": "Arrow down",
     "why": "Same as the keyboard sheet row."
   },
-  "HINT_SELECT": {
-    "text": "Panah hanya geser bingkai",
-    "back": "arrows only move the frame",
-    "why": "Lowercase fragment that continues the Shift cap; same ring word and Geser as the sheet. Capital first letter added in review to match the hints beside it."
-  },
   "STATE_MESSAGE": {
     "text": "Pesan tampil",
     "back": "Message showing",
@@ -2208,5 +2198,25 @@
     "text": "Belum ada yang dikenali",
     "back": "Nothing recognised yet",
     "why": "Same Belum ada yang ... pattern as the phone page, no blame."
+  },
+  "KEYS_SHOWING_ROWS[4].1": {
+    "text": "Pilih slide lagu tayang, lepas Shift tayangkan",
+    "back": "Pick a slide of the song on screen, let go of Shift, put it on screen",
+    "why": "Starts with the action Pilih; Tayangkan is the fixed show verb; Shift stays as printed. 46 of 46."
+  },
+  "KEYS_SHOWING_ROWS[5].0": {
+    "text": "Ctrl panah",
+    "back": "Ctrl arrow",
+    "why": "Key name as printed, arrow word from the glossary, no plus sign, same form as Shift panah."
+  },
+  "KEYS_SHOWING_ROWS[5].1": {
+    "text": "Geser bingkai di pratinjau, tayang saat Enter",
+    "back": "Move the frame in the preview, goes on screen when Enter",
+    "why": "Same Geser bingkai di pratinjau wording as before; the ring waits and Enter shows it. 45 of 46."
+  },
+  "HINT_SELECT": {
+    "text": "Pilih slide, lepas untuk tayang",
+    "back": "Pick a slide, let go to show",
+    "why": "Pilih matches the sheet row; the Shift cap before it supplies what is released. 31 of 34."
   }
 }

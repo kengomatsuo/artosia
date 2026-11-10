@@ -61,6 +61,17 @@ fn poll(s: &mut App, clock: f64, tx: &mut Tx) -> bool {
 /// The keys of the window. A focused text field has already had its turn by the time a key
 /// gets here, except when nothing has focus, which is the usual state while showing.
 fn on_key(s: &mut App, ev: &KeyEvent, tx: &mut Tx) -> bool {
+    // A modifier on its own. Shift let go shows the slide picked while it was held. This is a
+    // key event because Rune's `App::on_modifiers` is never called in a single-window app:
+    // `src/window.rs` at the pinned rev wires `modifier_keys` and leaves `on_mods` unset.
+    if let Key::Modifier { modifier, pressed } = &ev.key {
+        let shift = matches!(modifier, rune::Modifier::ShiftLeft | rune::Modifier::ShiftRight);
+        if shift && !pressed && !ev.mods.shift && s.release_pick() {
+            follow(s, tx);
+            return true;
+        }
+        return false;
+    }
     let focused = tx.focused().is_some();
     let editing = s.editor.is_some() || s.notices.is_some();
     match &ev.key {
@@ -133,10 +144,20 @@ fn on_key(s: &mut App, ev: &KeyEvent, tx: &mut Tx) -> bool {
         return false;
     }
     // The arrows are EasiSlides': Up and Down are the slide before and after, Left the first
-    // and Right the last, all on the projector. With Shift or Ctrl held they move only the
-    // selector in the Preview pane, as they do while nothing is live; Enter shows its slide.
+    // and Right the last, all on the projector. With Shift held they pick a slide of the live
+    // song and letting Shift go shows it. With Ctrl held they move the ring in the Preview
+    // pane and leave it there, as they do while nothing is live; Enter shows its slide.
     let plain = !ev.mods.cmd && !ev.mods.alt && !ev.mods.ctrl;
-    let only_select = ev.mods.shift || ev.mods.ctrl || ev.mods.cmd || s.live.is_none();
+    let ring = ev.mods.ctrl || ev.mods.cmd;
+    let picking = ev.mods.shift && !ring && !ev.mods.alt;
+    if ev.key == Key::Escape && s.cancel_pick() {
+        return true;
+    }
+    // A headless script sends no lone modifier, so a key without Shift says the same there.
+    if !ev.mods.shift && s.release_pick() {
+        follow(s, tx);
+    }
+    let only_select = ring || s.live.is_none();
     match &ev.key {
         Key::Down if ev.mods.alt => {
             if let Some(id) = s.open.as_ref().and_then(|open| open.item) {
@@ -148,6 +169,10 @@ fn on_key(s: &mut App, ev: &KeyEvent, tx: &mut Tx) -> bool {
                 s.shift_plan_item(id, -1);
             }
         }
+        Key::Down if picking => s.pick_slide(1),
+        Key::Up if picking => s.pick_slide(-1),
+        Key::Left | Key::Home if picking => s.pick_slide_edge(false),
+        Key::Right | Key::End if picking => s.pick_slide_edge(true),
         Key::Down if only_select => drop(s.select(1)),
         Key::Up if only_select => drop(s.select(-1)),
         Key::Left | Key::Home if only_select => drop(s.select_edge(false)),
@@ -192,7 +217,7 @@ pub(crate) fn follow(s: &App, tx: &mut Tx) {
         tx.scroll_into_view(format!("slide-{}", open.cursor));
     }
     if let Some(live) = &s.live {
-        tx.scroll_into_view(format!("live-slide-{}", live.index));
+        tx.scroll_into_view(format!("live-slide-{}", s.live_pick.unwrap_or(live.index)));
     }
 }
 
@@ -352,7 +377,7 @@ fn main() {
         on_key: Some(on_key),
         ..AppSpec::new("Artosia", (1366.0, 768.0), App::load, ui::view)
     };
-    let app = rune::App::new(spec).titlebar(Titlebar::new(theme::size::TOPBAR)).on_close(|s: &mut App, _: &mut Tx| {
+    let app = rune::App::new(spec).titlebar(Titlebar::new(theme::size::TOPBAR)).modifier_keys().on_close(|s: &mut App, _: &mut Tx| {
         // Closing the operator on purpose closes the projector too, and ends a stream cleanly;
         // a crash never gets here, and then both go on.
         if let Some(stream) = s.stream.as_mut() {

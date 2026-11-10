@@ -280,6 +280,10 @@ pub struct App {
     /// The last plan item that was live. An item shown from the search has no place in the
     /// plan, and Next goes on from here once it ends.
     pub resume: Option<u64>,
+    /// A slide of the live deck picked while Shift is held; it shows when Shift is let go.
+    pub live_pick: Option<usize>,
+    /// Shift moved the Preview ring while nothing was live; letting go shows that slide.
+    pub preview_pick: bool,
     pub plan_drag: Option<PlanDrag>,
     /// A plan row was just dropped, so the press that ends the same gesture opens nothing.
     pub plan_dropped: bool,
@@ -439,6 +443,8 @@ impl App {
             notices: None,
             looping: false,
             resume: None,
+            live_pick: None,
+            preview_pick: false,
             plan_drag: None,
             plan_dropped: false,
             loop_at: (0, 0.0),
@@ -721,6 +727,63 @@ impl App {
         }
         open.armed = true;
         true
+    }
+
+    /// Shift and an arrow: moves a ring through the live deck and leaves the projector alone.
+    /// Letting Shift go shows the slide it is on, so a far slide is reached without the ones
+    /// between passing over the room's screen (owner, 2026-11-11: "when release the shift/ctrl
+    /// it activates"). With nothing live the ring is the Preview one, and letting go starts there.
+    pub fn pick_slide(&mut self, by: isize) {
+        match &self.live {
+            Some(live) => {
+                let last = live.deck.slides.len().saturating_sub(1) as isize;
+                let from = self.live_pick.unwrap_or(live.index) as isize;
+                self.live_pick = Some((from + by).clamp(0, last.max(0)) as usize);
+            }
+            None => {
+                self.select(by);
+                self.preview_pick = self.open.is_some();
+            }
+        }
+    }
+
+    /// Shift with Left or Right: the pick goes to the first or the last slide.
+    pub fn pick_slide_edge(&mut self, last: bool) {
+        match &self.live {
+            Some(live) => self.live_pick = Some(if last { live.deck.slides.len().saturating_sub(1) } else { 0 }),
+            None => {
+                self.select_edge(last);
+                self.preview_pick = self.open.is_some();
+            }
+        }
+    }
+
+    /// Shift was let go: the picked slide goes to the projector. True when something was picked.
+    pub fn release_pick(&mut self) -> bool {
+        let preview = std::mem::take(&mut self.preview_pick);
+        match self.live_pick.take() {
+            // The slide already showing is left as it is; going to it would lift Black.
+            Some(pick) => {
+                if self.live.as_ref().is_some_and(|live| live.index != pick) {
+                    self.go_to(pick);
+                }
+                true
+            }
+            None if preview && self.live.is_none() => {
+                let cursor = self.open.as_ref().map(|open| open.cursor).unwrap_or(0);
+                self.show(cursor);
+                true
+            }
+            None => false,
+        }
+    }
+
+    /// Esc while Shift is held: nothing is shown.
+    pub fn cancel_pick(&mut self) -> bool {
+        let picking = self.live_pick.is_some() || self.preview_pick;
+        self.live_pick = None;
+        self.preview_pick = false;
+        picking
     }
 
     /// Puts the selector on the first or the last slide of the Preview deck.
@@ -1186,6 +1249,32 @@ mod tests {
         let at = |id: u64| app.plan.position(id);
         let added = app.plan.items.iter().find(|item| matches!(item.entry, PlanEntry::Song { song_id, .. } if song_id == app.songs[extra].id)).map(|item| item.id);
         assert_eq!(added.and_then(at), at(first).map(|place| place + 1));
+    }
+
+    #[test]
+    fn shift_picks_in_the_live_song_and_letting_go_shows_it() {
+        let mut app = App::practice();
+        let first = song_item(&app, 0);
+        app.open_plan_item(first);
+        app.show(0);
+        app.toggle_black();
+        // Held: the pick moves, the projector and Black stay.
+        app.pick_slide(1);
+        assert_eq!((live_at(&app), app.live_pick, app.black), (Some((Some(first), 0)), Some(1), true));
+        // Past the end it stays on the last slide of this song.
+        app.pick_slide(40);
+        let last = app.live.as_ref().map(|live| live.deck.slides.len() - 1).unwrap_or(0);
+        assert_eq!(app.live_pick, Some(last));
+        app.pick_slide_edge(false);
+        app.pick_slide(1);
+        // Let go: the picked slide shows.
+        assert!(app.release_pick());
+        assert_eq!((live_at(&app), app.live_pick, app.black), (Some((Some(first), 1)), None, false));
+        // Esc while held shows nothing.
+        app.pick_slide(-1);
+        assert!(app.cancel_pick());
+        assert!(!app.release_pick());
+        assert_eq!(live_at(&app), Some((Some(first), 1)));
     }
 
     #[test]

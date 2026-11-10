@@ -352,7 +352,7 @@ text!(STATE_TEXT_HIDDEN, "Text is hidden", "Teks disembunyikan");
 text!(STATE_NOTHING, "Nothing", "Belum ada");
 text!(STATE_MESSAGE, "Message showing", "Pesan tampil");
 text!(STATE_STAGE_MESSAGE, "Stage message showing", "Pesan pemusik tampil");
-text!(HINT_SELECT, "Arrows move the ring only", "Panah hanya geser bingkai");
+text!(HINT_SELECT, "Pick a slide, let go to show", "Pilih slide, lepas untuk tayang");
 text!(STAGE_MESSAGE_DETAIL, "Show this message on the stage screen", "Tampil di monitor panggung saja");
 text!(HEARD_NOTHING, "Nothing heard yet", "Belum ada yang dikenali");
 
@@ -740,12 +740,13 @@ text!(KEYS_SHOWING, "Showing", "Saat tayang");
 text!(KEYS_FINDING, "Finding", "Mencari");
 text!(KEYS_PLAN, "The plan", "Acara");
 text!(KEYS_EDITING, "Editing", "Editor lagu");
-const KEYS_SHOWING_ROWS_EN: [(&str, &str); 13] = [
+const KEYS_SHOWING_ROWS_EN: [(&str, &str); 14] = [
     ("Down, Space", "Next slide"),
     ("Up", "Previous slide"),
     ("Left", "First slide of the live song"),
     ("Right", "Last slide of the live song"),
-    ("Shift arrow", "Move the ring in Preview, the screen stays"),
+    ("Shift arrow", "Pick a slide of the live song, let go to show it"),
+    ("Ctrl arrow", "Move the ring in Preview, Enter shows it"),
     ("Enter", "Show the slide with the ring"),
     ("1 to 9", "Jump to that section of the live song"),
     ("Esc", "Bring the live song into Preview"),
@@ -755,12 +756,13 @@ const KEYS_SHOWING_ROWS_EN: [(&str, &str); 13] = [
     ("F4", "Bring what the listener heard into Preview"),
     ("F5", "Bring the announcements into Preview"),
 ];
-const KEYS_SHOWING_ROWS_ID: [(&str, &str); 13] = [
+const KEYS_SHOWING_ROWS_ID: [(&str, &str); 14] = [
     ("Panah bawah, Spasi", "Tayangkan slide berikutnya"),
     ("Panah atas", "Tayangkan slide sebelumnya"),
     ("Panah kiri", "Loncat ke slide pertama lagu yang tayang"),
     ("Panah kanan", "Loncat ke slide terakhir lagu yang tayang"),
-    ("Shift panah", "Geser bingkai di pratinjau, layar tak berubah"),
+    ("Shift panah", "Pilih slide lagu tayang, lepas Shift tayangkan"),
+    ("Ctrl panah", "Geser bingkai di pratinjau, tayang saat Enter"),
     ("Enter", "Tayangkan slide yang berbingkai putih"),
     ("1 sampai 9", "Loncat ke bagian lagu sesuai nomor"),
     ("Esc", "Bawa lagu yang tayang ke pratinjau"),

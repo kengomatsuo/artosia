@@ -18,6 +18,6 @@ paths:
 - **A CHURCH'S OWN FILES (BULLETIN, BIRTHDAY LIST) NEVER ENTER THE REPOSITORY (2026-11-10).** They hold names, birthdays and gifts; tests build their own files. Full account: [docs/operator.md](../../docs/operator.md)
 - **A NEW SCREEN IS RENDERED IN INDONESIAN TOO (`--indonesian`), BECAUSE ITS WORDS ARE LONGER (2026-11-10).** Three layouts clipped the first time. Full account: [docs/operator.md](../../docs/operator.md)
 - **THE WINDOW IS THE PLAN, THEN PREVIEW AND LIVE SIDE BY SIDE (`ui/shell.rs`, 2026-11-10, the owner's pick from four trials).** Live stays in view beside an editor, and a live slide kept off the projector is yellow, never red. Full account: [docs/operator.md](../../docs/operator.md)
-- **PLAIN ARROWS MOVE THE PROJECTOR, AS IN EASISLIDES; SHIFT OR CTRL MOVES ONLY THE RING (`main.rs` `on_key`, 2026-11-10, owner-directed).** Full account: [docs/operator.md](../../docs/operator.md)
+- **PLAIN ARROWS MOVE THE PROJECTOR, AS IN EASISLIDES; SHIFT PICKS IN THE LIVE SONG AND SHOWS ON RELEASE; CTRL MOVES THE RING IN PREVIEW (`main.rs` `on_key`, 2026-11-11, owner-directed).** Full account: [docs/operator.md](../../docs/operator.md)
 - **PREVIEW IS WHAT COMES NEXT (`state.rs` `queue_next`, `preview_waits`, 2026-11-10, owner-directed).** Artosia queues the next plan item there and never replaces what a person opened; Next at the end of the live item shows it at its ring. Full account: [docs/operator.md](../../docs/operator.md)
-
+- **A KEY OR POINTER CHANGE IS ALSO PRESSED IN A REAL WINDOW WITH `tools/drive-window.ps1` (2026-11-11).** Shift let go did nothing in the real window while every headless script passed. Full account: [docs/operator.md](../../docs/operator.md)

@@ -346,7 +346,8 @@ fn live_pane(s: &App, k: &Kit, narrow: bool) -> El {
             live_at: live.map(|l| l.index),
             hidden,
             width: narrow.then_some(NARROW),
-            cursor: None,
+            // The slide picked with Shift held, until Shift is let go.
+            cursor: s.live_pick.filter(|pick| Some(*pick) != live.map(|l| l.index)),
             go_live: true,
             empty: empty_words(k, t::LIVE_NOTHING()),
             footer,

@@ -27,9 +27,15 @@ A red ring round the Live pane, a red row and a red pill mark what is on the pro
 | A song from the search goes live | The item after the last plan item that was live, so the plan is not lost (`App::resume`) |
 | A person opened something there | That, until it is shown. Artosia replaces only what it queued itself (`OpenDeck::queued`) |
 
-Next at the last slide of the live item shows what waits in Preview, at its ring. That is how a medley is armed: with the next song in Preview, Shift and Down put the ring on its chorus, and the Next that ends this song starts that one there. Enter does the same at once. The owner asked for both on 2026-11-10: "how do we switch between the live and the preview selection so next song can start at medley? How do we pre-arm that?" and "is it supposed to be automatic?".
+Next at the last slide of the live item shows what waits in Preview, at its ring. That is how a medley is armed: with the next song in Preview, Ctrl and Down put the ring on its chorus, and the Next that ends this song starts that one there. Enter does the same at once. The owner asked for both on 2026-11-10: "how do we switch between the live and the preview selection so next song can start at medley? How do we pre-arm that?" and "is it supposed to be automatic?".
 
-The ring also works inside the live song. Esc puts the live song in Preview, Shift and an arrow move the ring to another part, and it stays there while the live slide moves (`OpenDeck::armed`) until Enter, or the Next that ends the song, shows it.
+The ring also works inside the live song. Esc puts the live song in Preview, Ctrl and an arrow move the ring to another part, and it stays there while the live slide moves (`OpenDeck::armed`) until Enter, or the Next that ends the song, shows it.
+
+### Shift picks, and letting go shows
+
+Holding Shift, the arrows move a second ring through the live song in the Live list, and the projector does not change. Letting Shift go shows the slide it is on; Esc before that shows nothing (`state.rs`, `pick_slide`, `release_pick`). A far slide is reached without the ones between passing over the room's screen. The owner asked for it twice: "if shift or control hold then those arrows, it only moves the selector not change the actual live text", then on 2026-11-11 "when release the shift/ctrl it activates". Shift got the release and Ctrl kept the ring that waits, because a medley needs a ring that is still there after the fingers leave the keyboard.
+
+The release is heard as a key (`Key::Modifier`, switched on with `App::modifier_keys()`). Rune's `App::on_modifiers` looked like the callback for it and is never called in this app: `src/window.rs` at the pinned rev wires `modifier_keys` for a single-window app and leaves `on_mods` unset, which only the multi-window, web and headless paths set. Every headless script passed with it. Real keys found it (`tools/drive-window.ps1`).
 
 ### What left the window
 
@@ -80,7 +86,7 @@ Commands that change the projector (Black, Clear text, Next, Start the service, 
 
 Nothing in the main window holds keyboard focus, so every key below works at any time. `?` shows this list in the app.
 
-The arrows are the ones EasiSlides taught the volunteers (owner, 2026-11-10: "Easislide users are used to up/down as prev/next, left as start from beginning, right as endmost"), and Shift or Ctrl turns them into the ring's keys, which was the owner's own idea in the same message.
+The arrows are the ones EasiSlides taught the volunteers (owner, 2026-11-10: "Easislide users are used to up/down as prev/next, left as start from beginning, right as endmost"). Shift and Ctrl turn them into picking keys, which was the owner's own idea in the same message.
 
 | Key | Does |
 |---|---|
@@ -88,7 +94,8 @@ The arrows are the ones EasiSlides taught the volunteers (owner, 2026-11-10: "Ea
 | Up, Page Up | The slide before; at the first slide, the last slide of the plan item before |
 | Left, Home | First slide of the live item |
 | Right, End | Last slide of the live item |
-| Shift or Ctrl with an arrow | The same four moves for the ring in Preview. The projector does not change. Past either end the ring goes on into the plan item before or after. With nothing live the arrows do this without Shift |
+| Shift with an arrow | The same four moves for a ring in the live song. The projector does not change until Shift is let go, which shows the ringed slide. Esc first shows nothing |
+| Ctrl with an arrow | The same four moves for the ring in Preview, which stays where it is put. Past either end it goes on into the plan item before or after. With nothing live the arrows do this without Ctrl |
 | Enter | Show the slide with the ring; with the ring on the live slide, Next |
 | 1 to 9, 0 | Jump to that section of the live song in sung order (0 is the tenth). With nothing live, start the open song there. Each list row shows its number |
 | Esc | Put the live item in Preview |
@@ -111,7 +118,9 @@ A digit starts a search when the live or open item has fewer than two sections, 
 
 Page Down and Page Up are bound for presenter clickers. Which keys a given clicker sends has not been checked against one.
 
-Played through `crates/artosia/scripts/arrows-and-ring.json` on 2026-11-10: Space starting the plan, Down, Shift Down, Right, the Next that goes on at the ring, Left, Tab, a dragged plan row, F5 and F4.
+Played through `crates/artosia/scripts/arrows-and-ring.json` on 2026-11-10: Space starting the plan, Down, a ring moved in Preview, Right, the Next that goes on at the ring, Left, Tab, a dragged plan row, F5 and F4.
+
+Pressed in a real window on 2026-11-11 with `tools/drive-window.ps1`, which sends real key and mouse input to one program's window and saves a picture after each step: Space, Down, Shift held with two Downs and then let go, Esc while Shift was held, Ctrl Down, Tab, Right, the Next that goes on, a plan row dragged, F5. The Shift release was the one step that failed the first time.
 
 Dialogs and the two editors are different: Tab moves through their buttons and fields, and Enter or Space presses the focused button (`Btn::focusable`).
 
