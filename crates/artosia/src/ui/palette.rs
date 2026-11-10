@@ -82,7 +82,10 @@ fn hit_row(s: &App, k: &Kit, index: usize, hit: &Hit) -> El {
             if *planned {
                 trailing.push(state_pill(t::PLAN_CHIP(), k.c.layer_04, k.c.text_base));
             }
-            if let Some((tag, _, _)) = s.learn.starts.get(song) {
+            // The habit chip is long, so it takes the room of the start and section chips: the
+            // matched line is still in the second line, and the preview says the rest.
+            let habit = matches!(reason, Some(Reason::Habit { .. }));
+            if let Some((tag, _, _)) = s.learn.starts.get(song).filter(|_| !habit) {
                 trailing.push(state_pill(&t::starts_chip(&t::section_label(*tag)), k.c.layer_04, k.c.text_base));
             }
             if let Some(Reason::Habit { typed, picks, .. }) = reason {
@@ -94,7 +97,9 @@ fn hit_row(s: &App, k: &Kit, index: usize, hit: &Hit) -> El {
                     (&icons::SONG, title, text(s.reason_line(why)).font(type_::SMALL).color(k.c.text_muted))
                 }
                 (Some(line), _) => {
-                    trailing.push(tag_chip(&t::section_label(line.tag), group_color(tag_group(line.tag))));
+                    if !habit {
+                        trailing.push(tag_chip(&t::section_label(line.tag), group_color(tag_group(line.tag))));
+                    }
                     (&icons::SONG, title, highlighted(&line.text, &line.ranges, type_::SMALL, k.c.text_muted, mark))
                 }
                 (None, _) => {
