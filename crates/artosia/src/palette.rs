@@ -497,7 +497,7 @@ impl App {
             if minutes > 0 && minutes <= 600 && is_timer(&head) {
                 return vec![Hit::Countdown(minutes)];
             }
-            return Vec::new();
+            // Anything else that ends in a number goes on: a message may end in a room number.
         }
         if is_timer(query) && self.countdown.is_none() {
             return vec![Hit::Countdown(5), Hit::Countdown(10), Hit::Countdown(15)];
@@ -910,6 +910,9 @@ mod tests {
         assert_eq!(first(&app), Some(&Hit::Message("Doors open at nine".into())));
         app.pick(Pick::Open);
         assert!(app.message_on && app.message.text == "Doors open at nine");
+        // A message that ends in a number is still a message, never a countdown.
+        search(&mut app, "message Parents of room 12");
+        assert_eq!(first(&app), Some(&Hit::Message("Parents of room 12".into())));
         // The stage has its own word, since the window no longer has a field for it.
         search(&mut app, "panggung satu reff lagi");
         assert_eq!(first(&app), Some(&Hit::StageMessage("satu reff lagi".into())));
