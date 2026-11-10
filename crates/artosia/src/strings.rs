@@ -898,6 +898,28 @@ text!(CMD_BIBLE_FILE_DETAIL, "MyBible, USFX, or a zip of USFM files", "MyBible, 
 text!(CMD_BIBLES, "Get more Bibles", "Get more Bibles");
 text!(CMD_BIBLES_DETAIL, "Free translations in many languages", "Free translations in many languages");
 
+text!(BIBLES_FREE, "Free Bibles to download", "Free Bibles to download");
+text!(BIBLES_SEARCH, "Search by language or name", "Search by language or name");
+text!(BIBLES_LOADING, "Getting the list of Bibles", "Getting the list of Bibles");
+text!(BIBLES_LOAD_FAILED, "Could not get the list of Bibles", "Could not get the list of Bibles");
+text!(BIBLES_RETRY, "Try again", "Try again");
+text!(BIBLES_INSTALLED, "Installed", "Installed");
+text!(BIBLES_DOWNLOAD, "Download", "Download");
+text!(BIBLES_DOWNLOADING, "Downloading", "Downloading");
+text!(BIBLES_USE, "Use this Bible", "Use this Bible");
+text!(BIBLES_IN_USE, "In use", "In use");
+text!(BIBLES_COPYRIGHT, "Copyright", "Copyright");
+text!(BIBLES_PICK_HINT, "Pick a Bible to read its copyright", "Pick a Bible to read its copyright");
+text!(BIBLES_SCOPE_WHOLE, "Whole Bible", "Whole Bible");
+text!(BIBLES_SCOPE_PART, "Some books", "Some books");
+
+pub fn bibles_download_failed(why: &str) -> String {
+    if indonesian() {
+        return format!("Could not download the Bible: {why}");
+    }
+    format!("Could not download the Bible: {why}")
+}
+
 pub fn bible_added(name: &str, verses: usize) -> String {
     if indonesian() {
         return format!("{name} added, {verses} verses");
