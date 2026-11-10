@@ -93,7 +93,7 @@ pub(crate) fn topbar(s: &App, k: &Kit, insets: rune::ChromeInsets) -> El {
                 .w(size::PLAN - space::S4 - space::S3)
                 .gap(space::S2)
                 .center_y()
-                .child(icon(&icons::LOGO, 18.0).color(theme::accent()).a11y_hidden())
+                .child(icon(&icons::LOGO, 18.0).color(k.c.text_base).a11y_hidden())
                 .child(text(t::APP_NAME()).font(type_::TITLE).color(k.c.text_base)),
         )
         .child(search)

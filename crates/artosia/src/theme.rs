@@ -213,8 +213,8 @@ pub mod icons {
     icon!(GLOBE, "a-globe", r#"<circle cx="8" cy="8" r="6" stroke="currentColor"/><path d="M2 8H14M8 2C6 4 6 12 8 14M8 2C10 4 10 12 8 14" stroke="currentColor"/>"#);
     icon!(COPY, "a-copy", r#"<rect x="5.5" y="5.5" width="8" height="8" rx="1.2" stroke="currentColor"/><path d="M10.5 5.5V3.5C10.5 2.9 10.1 2.5 9.5 2.5H3.5C2.9 2.5 2.5 2.9 2.5 3.5V9.5C2.5 10.1 2.9 10.5 3.5 10.5H5.5" stroke="currentColor"/>"#);
     icon!(LOOP, "a-loop", r#"<path d="M3 7C3 5.3 4.3 4 6 4H12.5M10.5 2L12.5 4L10.5 6M13 9C13 10.7 11.7 12 10 12H3.5M5.5 10L3.5 12L5.5 14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>"#);
-    // Artosia's mark, a loaf with a baker's cuts (docs/brand.md).
-    icon!(LOGO, "a-logo", r#"<path d="M1.5 11.5C1.5 6.8 4.3 3.2 8 3.2S14.5 6.8 14.5 11.5V12.4C14.5 13 14 13.5 13.4 13.5H2.6C2 13.5 1.5 13 1.5 12.4Z" stroke="currentColor" stroke-linejoin="round"/><path d="M6.2 11L7.3 8M8.9 11L10 8" stroke="currentColor" stroke-linecap="round"/>"#);
+    // Artosia's mark, an A cut out of a round loaf (docs/brand.md, assets/brand/artosia-mark-mono.svg).
+    icon!(LOGO, "a-logo", r#"<path d="M1.723 14.48L3.346 14.48L5.059 10.24L9.147 10.24L8.5 8.64L5.705 8.64L8 2.96L12.654 14.48L14.277 14.48A8 8 0 1 0 1.723 14.48Z" fill="currentColor"/>"#);
     icon!(MIC, "a-mic", r#"<rect x="6" y="1.8" width="4" height="7.4" rx="2" stroke="currentColor"/><path d="M3.5 7.5C3.5 10 5.5 11.8 8 11.8C10.5 11.8 12.5 10 12.5 7.5M8 11.8V14.2M5.8 14.2H10.2" stroke="currentColor" stroke-linecap="round"/>"#);
     icon!(MINUS, "a-minus", r#"<path d="M3 8H13" stroke="currentColor" stroke-linecap="round"/>"#);
     icon!(CAMERA, "a-camera", r#"<rect x="1.5" y="4.5" width="9" height="7" rx="1.5" stroke="currentColor"/><path d="M10.5 7.2L14.5 5V11L10.5 8.8" stroke="currentColor" stroke-linejoin="round"/>"#);
