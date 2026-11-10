@@ -3,3 +3,4 @@
 /spikes/*/target
 *.log
 /fixtures/easislides/
+/fixtures/church/
