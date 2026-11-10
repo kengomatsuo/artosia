@@ -53,7 +53,7 @@ fn plain_row(k: &Kit, hit: &Hit) -> (&'static rune::Icon, String, String) {
         Hit::Countdown(minutes) => (&icons::TIMER, t::countdown_for(*minutes), t::COUNTDOWN_DETAIL().to_string()),
         Hit::Message(words) => (&icons::ANNOUNCE, words.clone(), t::MESSAGE_DETAIL().to_string()),
         Hit::StageMessage(words) => (&icons::ANNOUNCE, words.clone(), t::STAGE_MESSAGE_DETAIL().to_string()),
-        Hit::Language(indonesian) => (&icons::GLOBE, if *indonesian { t::LANGUAGE_INDONESIAN } else { t::LANGUAGE_ENGLISH }.to_string(), t::LOOK_LANGUAGE().to_string()),
+        Hit::Language(code) => (&icons::GLOBE, crate::languages::index_of(code).map_or("", |at| crate::languages::LANGUAGES[at].name).to_string(), t::LOOK_LANGUAGE().to_string()),
         Hit::Song { .. } | Hit::Section { .. } | Hit::Passage { .. } => (&icons::SONG, String::new(), String::new()),
     }
 }

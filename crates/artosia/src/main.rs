@@ -11,6 +11,7 @@
 
 mod actions;
 mod data;
+mod languages;
 mod link;
 mod palette;
 mod state;

@@ -93,8 +93,11 @@ pub struct Settings {
     /// The projector is switched off.
     pub projector_off: bool,
     pub appearance: Appearance,
-    /// The window speaks Indonesian; otherwise English.
-    pub indonesian: bool,
+    /// The interface language's code (`en`, `id`, ...); empty in a file saved before it was one.
+    pub language: String,
+    /// What older files said instead: Indonesian or not. Read, never written.
+    #[serde(rename = "indonesian", skip_serializing)]
+    pub legacy_indonesian: bool,
     /// The microphone Artosia listens on; empty for the computer's own choice.
     pub listen_device: String,
     /// The language it listens for: "id" or "en".
@@ -126,7 +129,8 @@ impl Default for Settings {
             projector_here: false,
             projector_off: false,
             appearance: Appearance::Auto,
-            indonesian: false,
+            language: String::new(),
+            legacy_indonesian: false,
             listen_device: String::new(),
             listen_language: "id".to_string(),
             stream_address: String::new(),
@@ -387,8 +391,8 @@ impl App {
     }
 
     fn load_in(folder: Option<PathBuf>) -> App {
-        let asked = data::has_flag("--indonesian");
-        t::set_indonesian(asked);
+        let asked = data::flag_value("--language").filter(|code| crate::languages::index_of(code).is_some()).or_else(|| data::has_flag("--indonesian").then(|| "id".to_string()));
+        t::set_language(asked.as_deref().unwrap_or("en"));
         let (store, store_problem) = data::open_store(folder.as_ref());
         let practice = folder.is_none();
         if practice {
@@ -493,8 +497,8 @@ impl App {
             plan_dirty: false,
             settings_dirty: false,
         };
-        app.settings.indonesian |= asked;
-        t::set_indonesian(app.settings.indonesian);
+        app.settings.language = asked.unwrap_or_else(|| crate::languages::from_settings(&app.settings.language, app.settings.legacy_indonesian).to_string());
+        t::set_language(&app.settings.language);
         app.people = app.store.people().unwrap_or_default();
         app.stream_address.replace_text(app.settings.stream_address.clone());
         app.stream_key.replace_text(app.settings.stream_key.clone());

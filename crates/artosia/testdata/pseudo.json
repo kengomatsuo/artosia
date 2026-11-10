@@ -1,0 +1,34 @@
+{
+  "BTN_SAVE": { "text": "[xx] Save" },
+  "BTN_CANCEL": { "text": "[xx] Cancel" },
+  "LOOK_LANGUAGE": { "text": "[xx] Language" },
+  "slides": { "text": { "zero": "[xx] no slides", "one": "[xx] {count} slide", "other": "[xx] {count} slides" } },
+  "phones": { "text": { "zero": "[xx] no phone", "one": "[xx] {count} phone", "other": "[xx] {count} phones" } },
+  "pick_chapter": { "text": "[xx] {book}: chapter?" },
+  "noun.songs": { "text": { "one": "{count} tune", "other": "{count} tunes" } },
+  "noun.bibles": { "text": { "one": "{count} book", "other": "{count} books" } },
+  "import_done": { "text": { "songs_only": "[xx] +{songs}", "songs_and_bibles": "[xx] +{songs} +{bibles}" } },
+  "import_summary": {
+    "text": {
+      "nothing_changed": "[xx] nothing new",
+      "changed_added": "[xx] added {added}",
+      "changed_updated": "[xx] updated {updated}",
+      "changed_both": "[xx] added {added}, updated {updated}",
+      "only_kept": "[xx] kept {kept}",
+      "changed_and_kept": "{changed}; kept {kept}"
+    }
+  },
+  "stream_live": {
+    "text": {
+      "none_lost": "[xx] live {time}",
+      "some_lost": { "one": "[xx] live {time}, {dropped} frame lost", "other": "[xx] live {time}, {dropped} frames lost" }
+    }
+  },
+  "stage_next": { "text": "[xx] then {label}" },
+  "MONTHS[0]": { "text": "Xanuary" },
+  "KEYS_SHOWING_ROWS[0].1": { "text": "[xx] go on" },
+  "ANNOUNCEMENT_TEMPLATES[0].0": { "text": "[xx] Hello" },
+  "section.chorus": { "text": "Refrain" },
+  "section.verse": { "text": "Strophe" },
+  "section_numbered": { "text": "{number}. {name}" }
+}

@@ -59,6 +59,7 @@ fn looks(s: &App, k: &Kit, layer: &mut Vec<El>) {
     let lines = [2usize, 3, 4, 6, 0];
     let line_at = lines.iter().position(|n| *n == look.max_lines);
     let sizes = [0.8f32, 1.0, 1.2];
+    let languages: Vec<&crate::languages::Language> = crate::languages::listed().map(|(_, language)| language).collect();
     let size_at = sizes.iter().position(|v| (*v - look.size).abs() < 0.05);
     let place_at = match look.place {
         Place::Top => 0,
@@ -162,10 +163,14 @@ fn looks(s: &App, k: &Kit, layer: &mut Vec<El>) {
         .child(setting(
             k,
             t::LOOK_LANGUAGE(),
-            SegmentedControl::new(&[t::LANGUAGE_ENGLISH, t::LANGUAGE_INDONESIAN], Some(usize::from(s.settings.indonesian)))
+            SegmentedControl::new(&languages.iter().map(|language| language.name).collect::<Vec<_>>(), languages.iter().position(|language| language.code == t::language_code()))
                 .label(t::LOOK_LANGUAGE())
                 .fit()
-                .on_pick(|s: &mut App, picked, _: &mut Tx| s.set_indonesian(picked == 1))
+                .on_pick(|s: &mut App, picked, _: &mut Tx| {
+                    if let Some((_, language)) = crate::languages::listed().nth(picked) {
+                        s.set_language(language.code);
+                    }
+                })
                 .build(k),
         ))
         .child(setting(k, t::LOOK_BIBLE(), bible_picker(s, k, false)))
