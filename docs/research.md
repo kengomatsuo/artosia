@@ -103,4 +103,4 @@ From each repo's `Cargo.toml`, README and video code, read with `gh api` on 2026
 | sagacious123/hearken-studio | Tauri 2, rusqlite | webview `<video>` | desktop | none stated | Tauri measured 548 MB |
 | DjgaaD/ChyguiSlide2 | Tauri 2, rusqlite | webview `<video>` | Windows-focused | none stated | Tauri measured 548 MB |
 
-Every Rust sibling that ships on Windows decodes video either through a webview or by copying full RGBA frames on the CPU. None uses Rune, and none hands NV12 to the GPU.
+Every Rust sibling that ships on Windows decodes video either through a webview or by copying full RGBA frames on the CPU. None uses Rune.
