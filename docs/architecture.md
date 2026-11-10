@@ -11,7 +11,8 @@ the first constraint, with video backgrounds playing.
 | Language | Rust, edition 2024, toolchain pinned in `rust-toolchain.toml` | Owner call, 2026-11-10 |
 | UI | [Rune](https://github.com/anomalyco/rune), pinned `dev` rev in the root `Cargo.toml` | Owner call, 2026-11-10. GPU-rendered, MIT, Windows/macOS/Linux; every app runs headless, so an agent can `--snap` a PNG and drive the UI with scripts |
 | Licence | GPL-3.0-or-later | The app is free; GPL code (FreeShow, OpenLP) and libraries are usable |
-| Output video | **Open: decided by the spike** in [spike-output-video.md](spike-output-video.md) | Rune's `Player` plays video on macOS only |
+| Output video | Rune draws the output window too. macOS: Rune's `Player` (AVFoundation). Windows and Linux: libVLC decodes with hardware acceleration and its frames go into a Rune `NativeSurface` | Owner call, 2026-11-10. Preview and output render the same way. The spike in [spike-output-video.md](spike-output-video.md) measures this against libVLC owning the window, which stays the fallback if the frame copy costs too much RAM |
+| Storage, Bible and song formats | Not chosen yet | Research before picking |
 
 ## Why not the others
 
@@ -19,7 +20,7 @@ The stack survey and RAM measurements behind this choice are in [research.md](re
 
 ## Layout
 
-- `crates/lumen` — the app (operator window placeholder today)
+- `crates/artosia` — the app (operator window placeholder today)
 - `spikes/` — throwaway experiments, each with its own `Cargo.toml`, outside the workspace
 - `tools/ram/measure.ps1` — RAM of a process tree; `tools/make-fixture.sh` — test video
 - `fixtures/` — generated media, gitignored

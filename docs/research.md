@@ -32,7 +32,7 @@ versions before relying on a row.
 
 ## Measured RAM (2026-10-06, Windows 11, 32 GB PC, RTX 4060 laptop)
 
-A control window plus a 1920x1080 output window looping a 1080p30 H.264 file (8 Mb/s, faststart) under fading lyrics, measured 40 s in (during the second loop), twice, summed over the process tree. Each app's position log was checked to confirm it looped. The lumen repo keeps the measuring script (`tools/ram/measure.ps1`) and the test video generator.
+A control window plus a 1920x1080 output window looping a 1080p30 H.264 file (8 Mb/s, faststart) under fading lyrics, measured 40 s in (during the second loop), twice, summed over the process tree. Each app's position log was checked to confirm it looped. The artosia repo keeps the measuring script (`tools/ram/measure.ps1`) and the test video generator.
 
 | Stack | Platforms | Video path | Working set | Private |
 |---|---|---|---|---|

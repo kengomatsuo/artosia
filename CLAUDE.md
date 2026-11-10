@@ -1,4 +1,4 @@
-# Lumen (working name)
+# Artosia
 
 A free worship presentation app (songs, Bible verses, media backgrounds) replacing EasiSlides,
 for Windows, macOS and Linux. **THE TARGET IS A BUDGET OLD WINDOWS PC, SO RAM WITH A VIDEO
@@ -15,11 +15,11 @@ It is authoritative; update it (and this file's headlines) whenever a decision c
 - UI: [Rune](https://github.com/anomalyco/rune), a git dependency pinned to a `dev` rev in the
   root `Cargo.toml`. Its own docs are the reference: `crates/rune/README.md` and `examples/`
   at that rev. The `house-design-language` skill applies to every screen.
-- Output video: open until the spike in [docs/spike-output-video.md](docs/spike-output-video.md) is done.
+- Output video: Rune draws it; Rune's `Player` on macOS, libVLC frames into a `NativeSurface` on Windows and Linux. The spike in [docs/spike-output-video.md](docs/spike-output-video.md) confirms the RAM.
 
 ## Structure
 
-- `crates/lumen` — the app
+- `crates/artosia` — the app
 - `spikes/` — throwaway experiments with their own `Cargo.toml`; [spikes/SPEC.md](spikes/SPEC.md) is the shared test
 - `tools/` — `ram/measure.ps1` (RAM of a process tree), `make-fixture.sh` (test video)
 - `fixtures/` — generated media, gitignored
@@ -29,7 +29,7 @@ It is authoritative; update it (and this file's headlines) whenever a decision c
 ## Hard rules
 
 - **CHECK A SCREEN BY RENDERING IT, NEVER BY READING THE CODE (Rune headless, 2026-11-10, owner call).**
-  `cargo run -p lumen -- --snap out.png` renders without a window; Rune's README documents
+  `cargo run -p artosia -- --snap out.png` renders without a window; Rune's README documents
   `--scene`, element-tree dumps and scripted input.
 - **A RAM NUMBER COUNTS ONLY IF THE VIDEO WAS PROVEN TO LOOP (2026-10-06, owner-reported).**
   A WPF test was measured after its video had silently stopped. Log the playback position
@@ -38,9 +38,9 @@ It is authoritative; update it (and this file's headlines) whenever a decision c
 ## Commands
 
 ```bash
-cargo build -p lumen
-cargo run -p lumen
-cargo run -p lumen -- --snap out.png
+cargo build -p artosia
+cargo run -p artosia
+cargo run -p artosia -- --snap out.png
 cargo clippy --workspace
 tools/make-fixture.sh            # needs ffmpeg on PATH or FFMPEG=<path>
 powershell -File tools/ram/measure.ps1 -Exe <exe> -Wait 40 -Label <name>
