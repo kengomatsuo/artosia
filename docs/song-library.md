@@ -28,7 +28,7 @@ The owner's church library, cleaned from its EasiSlides export (1,481 items, 202
 
 - 1,232 songs are Indonesian only: search, typo tolerance and stemming must work for Indonesian first; the palette should match title, alternate titles, first line and chorus first line, and treat `s'gala`/`segala`/`sgala` as one word.
 - Most slides are 1–2 lines; the output must look right with a single short line.
-- Nothing is open: the last doubt, a cut-off line in `s0529` (I Want to Know You Lord), was completed from the published hymn.
+- Nothing is open. Every doubt was settled by research: 122 against a published lyric, Bible verse or KBBI entry (URL in the song's `resolved_flags`), 89 structural, and 5 church-only items where no published copy exists anywhere (searches recorded). All 206 song relations are confirmed by a source or by line-by-line lyrics.
 
 ## Re-checking
 
