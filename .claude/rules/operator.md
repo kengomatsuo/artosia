@@ -1,0 +1,23 @@
+---
+paths:
+  - "crates/artosia/**"
+---
+
+# The operator window (2026-11-10)
+
+- **MAIN-WINDOW BUTTONS NEVER TAKE KEYBOARD FOCUS (`crates/artosia/src/ui/widgets.rs`, `Btn`, 2026-11-10).** Rune presses the focused control on Space, and Space must always mean "next slide"; dialogs and editors ask for focus with `.focusable()`. Full account: [docs/operator.md](../../docs/operator.md)
+- **EVERY STRING A VOLUNTEER READS IS IN `strings.rs`, IN ENGLISH AND INDONESIAN, COUNTED NOUNS THROUGH A FUNCTION (2026-11-10).** A new or changed text changes `docs/i18n/brief.json` first and is written for each language from the brief; tests fail on a dash, a middot, a known-wrong Indonesian spelling, or Indonesian that differs from `docs/i18n/id.json`. Full account: [docs/operator.md](../../docs/operator.md)
+- **NO REAL SONG LYRICS IN THE REPOSITORY (2026-11-10).** Practice songs and test text are written for Artosia; the church's library stays in gitignored `fixtures/`. Full account: [docs/operator.md](../../docs/operator.md)
+- **A REMOVAL OFFERS UNDO IN A TOAST; RED MEANS LIVE AND YELLOW MEANS HIDDEN OR WARNING (2026-11-10).** Full account: [docs/operator.md](../../docs/operator.md)
+- **A TEXT FIELD'S `on_edit` ACCESSOR NEVER CREATES STATE (`ui/editor.rs`, `edit_of`, 2026-11-10).** A field hears its own blur after its screen closed; an accessor that made a fresh editor reopened an empty "New song" over the song just saved. Full account: [docs/operator.md](../../docs/operator.md)
+- **CHECK A CHANGE WITH `tools/snap.sh <folder>`, `--query "<text>"` OR A `--script` FLOW (2026-11-10).** Scenes are `SCENES` in `main.rs`; headless runs use the practice library unless `--data` names a folder. Full account: [docs/operator.md](../../docs/operator.md)
+- **SEARCH RESULTS ARE ORDERED BY A CASCADE, NEVER A BLENDED SCORE (`artosia-core/src/palette.rs`, `search.rs` `Facts`, 2026-11-10, after the owner's house-kit).** A command reaches the top only when its own name is typed from its start. Full account: [docs/operator.md](../../docs/operator.md)
+- **DIGITS JUMP INSIDE THE LIVE SONG; LETTERS START A SEARCH (`main.rs` `on_key`, 2026-11-10).** Every main-window key is listed in the `?` sheet and in [docs/operator.md](../../docs/operator.md)
+- **ONLY ONE ARTOSIA RUNS ON A LIBRARY (`main.rs` `claim_instance`, port 47824, 2026-11-10, owner-reported).** Two share one plan and one projector; the owner had two open when the Screens dialog stuck on "Starting". Full account: [docs/operator.md](../../docs/operator.md)
+- **A COLOUR ON THE WINDOW GOES THROUGH `theme` (`ink_of`, `tint_of`, `warn_ink`, `accent`), BECAUSE THE WINDOW IS LIGHT OR DARK (2026-11-10, owner-reported).** Full account: [docs/operator.md](../../docs/operator.md)
+- **A CHURCH'S OWN FILES (BULLETIN, BIRTHDAY LIST) NEVER ENTER THE REPOSITORY (2026-11-10).** They hold names, birthdays and gifts; tests build their own files. Full account: [docs/operator.md](../../docs/operator.md)
+- **A NEW SCREEN IS RENDERED IN INDONESIAN TOO (`--indonesian`), BECAUSE ITS WORDS ARE LONGER (2026-11-10).** Three layouts clipped the first time. Full account: [docs/operator.md](../../docs/operator.md)
+- **THE WINDOW IS THE PLAN, THEN PREVIEW AND LIVE SIDE BY SIDE (`ui/shell.rs`, 2026-11-10, the owner's pick from four trials).** Live stays in view beside an editor, and a live slide kept off the projector is yellow, never red. Full account: [docs/operator.md](../../docs/operator.md)
+- **PLAIN ARROWS MOVE THE PROJECTOR, AS IN EASISLIDES; SHIFT OR CTRL MOVES ONLY THE RING (`main.rs` `on_key`, 2026-11-10, owner-directed).** Full account: [docs/operator.md](../../docs/operator.md)
+- **PREVIEW IS WHAT COMES NEXT (`state.rs` `queue_next`, `preview_waits`, 2026-11-10, owner-directed).** Artosia queues the next plan item there and never replaces what a person opened; Next at the end of the live item shows it at its ring. Full account: [docs/operator.md](../../docs/operator.md)
+

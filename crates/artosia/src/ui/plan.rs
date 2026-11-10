@@ -1,0 +1,234 @@
+//! The rows of today's plan, in the order it will be shown. The shell draws the column.
+
+use std::rc::Rc;
+
+use artosia_core::plan::{PlanEntry, PlanItem};
+use rune::{Anim, Cursor, Drag, El, Phase, ScrollSpec, Tx, col, icon, row, text};
+use rune_kit::{Kit, Menu, MenuItem, ScrollBar};
+
+use crate::palette::Scope;
+use crate::state::{App, PlanDrag};
+use crate::strings as t;
+use crate::theme::{self, icons, size, space, type_};
+use crate::ui::widgets::{btn, state_pill};
+
+pub(crate) fn entry_icon(entry: &PlanEntry) -> &'static rune::Icon {
+    match entry {
+        PlanEntry::Song { .. } => &icons::SONG,
+        PlanEntry::Passage { .. } => &icons::BOOK,
+        PlanEntry::Announcements => &icons::ANNOUNCE,
+        PlanEntry::Heading { .. } => &icons::HEADING,
+    }
+}
+
+pub(crate) fn heading_row(s: &App, k: &Kit, item: &PlanItem, menu: El) -> El {
+    row()
+        .key(format!("plan-{}", item.id))
+        .w_full()
+        .h(HEADING)
+        .px(space::S3)
+        .gap(space::S2)
+        .center_y()
+        .hover_group()
+        .child(text(s.entry_title(&item.entry)).font(type_::SMALL_STRONG).color(k.c.text_muted).truncate().grow(1.0))
+        .child(menu)
+}
+
+pub(crate) fn item_row(s: &App, k: &Kit, item: &PlanItem, menu: El) -> El {
+    let id = item.id;
+    let open = s.open.as_ref().is_some_and(|open| open.item == Some(id));
+    let live = s.live.as_ref().is_some_and(|live| live.item == Some(id));
+    let missing = s.entry_is_missing(&item.entry);
+    let ink = if missing { k.c.text_muted } else { k.c.text_base };
+    let mut body = row()
+        .key(format!("plan-{id}"))
+        .role("listitem")
+        .label(s.entry_title(&item.entry))
+        .w_full()
+        .h(size::ROW)
+        .px(space::S3)
+        .gap(space::S2)
+        .center_y()
+        .radius(k.radius.md)
+        .fill(if open { k.c.layer_03 } else { rune::Color::TRANSPARENT })
+        .hover_group()
+        .child(icon(entry_icon(&item.entry), 16.0).color(if live { theme::live() } else { k.c.text_muted }).a11y_hidden())
+        .child(text(s.entry_title(&item.entry)).font(if open { type_::BODY_STRONG } else { type_::BODY }).color(ink).truncate().grow(1.0));
+    if missing {
+        // An entry that cannot be shown says so in words across the row, not by a cursor.
+        return body.child(state_pill(t::PLAN_MISSING(), theme::warn(), rune::Color::BLACK)).child(menu);
+    }
+    if live {
+        body = body.child(state_pill(t::LIVE(), theme::live(), theme::on_live()));
+    }
+    body.child(menu)
+        .hover(k.c.hover)
+        .press(k.c.pressed)
+        .cursor(Cursor::Pointer)
+        .on_press_tx(move |s: &mut App, tx: &mut Tx| {
+            // The press that ends a drag put the row down; it opens nothing.
+            if std::mem::take(&mut s.plan_dropped) {
+                return;
+            }
+            s.open_plan_item(id);
+            tx.blur();
+        })
+        .on_double_press(move |s: &mut App| {
+            s.open_plan_item(id);
+            s.show(0);
+        })
+}
+
+const HEADING: f32 = 30.0;
+/// Points between two rows of the plan.
+const GAP: f32 = 2.0;
+/// Points the pointer travels before a press on a row becomes a drag, as in the kit's lists.
+const SLOP: f32 = 4.0;
+
+/// Where a row carried `dy` points from place `from` would land: the number of other rows
+/// whose middle it has passed. Rows differ in height, a divider being shorter than an item.
+pub(crate) fn drop_place(from: usize, dy: f32, heights: &[f32]) -> usize {
+    let middle = |index: usize| heights[..index].iter().map(|height| height + GAP).sum::<f32>() + heights[index] / 2.0;
+    let carried = middle(from) + dy;
+    (0..heights.len()).filter(|&other| other != from && middle(other) < carried).count()
+}
+
+/// How far a row sits from its place during a drag: the carried row under the pointer, and
+/// the rows it has passed one step toward the gap it left.
+fn drag_shift(drag: &PlanDrag, at: usize, heights: &[f32]) -> f32 {
+    let step = heights[drag.from] + GAP;
+    if at == drag.from {
+        drag.dy
+    } else if drag.from < at && at <= drag.to {
+        -step
+    } else if drag.to <= at && at < drag.from {
+        step
+    } else {
+        0.0
+    }
+}
+
+/// Makes a plan row something the pointer can carry to another place (owner, 2026-11-10:
+/// "the plan items why can't be dragged for reordering?"). After the kit's `Reorder`, whose
+/// own methods are private to the kit and take every row to be one height.
+fn draggable(s: &App, body: El, id: u64, at: usize, heights: &Rc<[f32]>) -> El {
+    let mut body = body;
+    if let Some(drag) = s.plan_drag.filter(|drag| drag.from < heights.len()) {
+        body = body.offset(0.0, drag_shift(&drag, at, heights));
+        if drag.id == id {
+            // The carried row follows the pointer exactly, opaque, over the rows it passes.
+            body = body.raise().offset_motion(Anim::INSTANT).fill(theme::surf().raised).border(1.0, theme::surf().edge);
+        }
+    }
+    let heights = heights.clone();
+    body.on_drag(move |s: &mut App, drag: &mut Drag, tx: &mut Tx| match drag.phase {
+        Phase::Down => s.plan_dropped = false,
+        Phase::Move => {
+            if s.plan_drag.is_none() && drag.dy.abs() < SLOP {
+                return;
+            }
+            // The rows it passes spring aside.
+            tx.animated();
+            s.plan_menu = None;
+            s.plan_drag = Some(PlanDrag { id, from: at, to: drop_place(at, drag.dy, &heights), dy: drag.dy });
+        }
+        Phase::Up => s.drop_plan_row(drag.cancelled()),
+    })
+}
+
+pub(crate) fn row_menu(s: &App, k: &Kit, item: &PlanItem, at: usize, layer: &mut Vec<El>) -> El {
+    let id = item.id;
+    let open = s.plan_menu == Some(id);
+    let trigger = btn(t::PLAN_ITEM_MENU())
+        .icon(&icons::DOTS)
+        .icon_only()
+        .ghost()
+        .small()
+        .build(k, move |s, tx| {
+            s.plan_menu = if s.plan_menu == Some(id) { None } else { Some(id) };
+            tx.blur();
+        })
+        .key(format!("plan-menu-{id}"))
+        .group_opacity(if open { 1.0 } else { 0.55 }, 1.0);
+    let mut menu = Menu::new(format!("plan-menu-list-{id}")).trigger(trigger).open(open).on_close(|s: &mut App| s.plan_menu = None);
+    if at > 0 {
+        menu = menu.item(MenuItem::new(t::PLAN_MOVE_UP()).icon(&icons::ARROW_UP).on_select(move |s: &mut App| {
+            s.shift_plan_item(id, -1);
+            s.plan_menu = None;
+        }));
+    }
+    if at + 1 < s.plan.items.len() {
+        menu = menu.item(MenuItem::new(t::PLAN_MOVE_DOWN()).icon(&icons::ARROW_DOWN).on_select(move |s: &mut App| {
+            s.shift_plan_item(id, 1);
+            s.plan_menu = None;
+        }));
+    }
+    menu.item(MenuItem::new(t::PLAN_REMOVE()).icon(&icons::TRASH).danger(true).on_select(move |s: &mut App| s.remove_plan_item(id)))
+        .build(k, layer)
+}
+
+/// The plan's own menu: start over, or add a divider.
+pub(crate) fn header_menu(s: &App, k: &Kit, layer: &mut Vec<El>) -> El {
+    let trigger = btn(t::PLAN_ITEM_MENU()).icon(&icons::DOTS).icon_only().ghost().build(k, |s, tx| {
+        s.more_menu = !s.more_menu;
+        tx.blur();
+    });
+    Menu::new("plan-header-menu")
+        .trigger(trigger.key("plan-header-menu-button"))
+        .open(s.more_menu)
+        .on_close(|s: &mut App| s.more_menu = false)
+        .item(MenuItem::new(t::CMD_HEADING()).icon(&icons::HEADING).on_select(|s: &mut App| {
+            s.add_heading();
+            s.more_menu = false;
+        }))
+        .item(MenuItem::new(t::PLAN_NEW()).icon(&icons::PLUS).on_select(|s: &mut App| {
+            s.new_plan();
+            s.more_menu = false;
+        }))
+        .build(k, layer)
+}
+
+pub(crate) fn empty(k: &Kit) -> El {
+    col()
+        .key("plan-empty")
+        .w_full()
+        .grow(1.0)
+        .center()
+        .gap(space::S3)
+        .padding(space::S4)
+        .child(text(t::PLAN_EMPTY()).font(type_::BODY).color(k.c.text_muted))
+        .child(btn(t::PLAN_ADD()).icon(&icons::PLUS).build(k, |s, _| s.open_palette(Scope::All, "")))
+}
+
+/// The plan's rows, scrolling; the column and its title belong to the shell.
+pub(crate) fn list(s: &App, k: &Kit, layer: &mut Vec<El>) -> El {
+    if s.plan.items.is_empty() {
+        return empty(k);
+    }
+    let mut list = col().key("plan-list").role("list").label(s.plan_title()).w_full().grow(1.0).min_h(0.0).px(space::S2).py(space::S2).gap(GAP).scroll(ScrollSpec { stick_bottom: false });
+    let heights: Rc<[f32]> = s.plan.items.iter().map(|item| if item.entry.is_heading() { HEADING } else { size::ROW }).collect();
+    for (at, item) in s.plan.items.iter().enumerate() {
+        let menu = row_menu(s, k, item, at, layer);
+        let body = if item.entry.is_heading() { heading_row(s, k, item, menu) } else { item_row(s, k, item, menu) };
+        list = list.child(draggable(s, body, item.id, at, &heights));
+    }
+    list.scroll_bar(k)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::drop_place;
+
+    #[test]
+    fn a_carried_row_lands_past_the_rows_whose_middle_it_crossed() {
+        // An item, a divider, two items, 2 points apart.
+        let heights = [40.0, 30.0, 40.0, 40.0];
+        assert_eq!(drop_place(0, 0.0, &heights), 0);
+        assert_eq!(drop_place(0, 30.0, &heights), 0, "short of the divider's middle");
+        assert_eq!(drop_place(0, 40.0, &heights), 1);
+        assert_eq!(drop_place(0, 400.0, &heights), 3);
+        assert_eq!(drop_place(3, -400.0, &heights), 0);
+        assert_eq!(drop_place(2, -20.0, &heights), 2);
+        assert_eq!(drop_place(2, -40.0, &heights), 1);
+    }
+}

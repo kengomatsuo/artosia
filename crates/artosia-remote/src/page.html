@@ -1,0 +1,841 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#000000">
+<title>Artosia remote</title>
+<style>
+:root {
+  --bg: #000000;
+  --surface: #1c1c1e;
+  --surface-2: #2c2c2e;
+  --surface-3: #48484a;
+  --text: #ffffff;
+  --text-dim: #a1a1a6;
+  --accent: #0060df;
+  --on-accent: #ffffff;
+  --light: #ffffff;
+  --on-light: #000000;
+  --hide: #ffd60a;
+  --on-hide: #000000;
+  --danger: #ff9f9a;
+  /* section colours, the same families as the operator window */
+  --g0: #5fa2ee;
+  --g1: #f0a04a;
+  --g2: #b98ae6;
+  --g3: #3fbcc4;
+  --g4: #a5a8b3;
+  --g5: #54c17b;
+  --on-group: #000000;
+  --gap: 10px;
+  --pad: 14px;
+  --radius: 14px;
+  --radius-sm: 10px;
+  --font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --fs-title: 1.1rem;
+  --fs-small: 0.8rem;
+  --fs-body: 1rem;
+  --fs-row: 0.95rem;
+  --fs-live: clamp(1.4rem, 6.4vw, 2.1rem);
+  --fs-next: clamp(1rem, 4.2vw, 1.3rem);
+  --fs-clock: 1.6rem;
+  --btn-h: 52px;
+  --btn-big-h: 76px;
+  --row-h: 52px;
+  --row-slim-h: 40px;
+  --hit-h: 64px;
+  --tab-h: 50px;
+  --chip-h: 40px;
+  --dim-opacity: 0.35;
+}
+@supports (color: oklch(0.7 0.1 100)) {
+  :root {
+    --g0: oklch(0.72 0.13 250);
+    --g1: oklch(0.78 0.15 62);
+    --g2: oklch(0.72 0.15 305);
+    --g3: oklch(0.76 0.11 195);
+    --g4: oklch(0.74 0.012 265);
+    --g5: oklch(0.76 0.14 152);
+  }
+}
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body { height: 100%; margin: 0; background: var(--bg); color: var(--text); font-family: var(--font); font-size: var(--fs-body); }
+body { overscroll-behavior: none; }
+[hidden] { display: none !important; }
+button, input { font: inherit; color: inherit; }
+button { border: 0; cursor: pointer; touch-action: manipulation; user-select: none; -webkit-user-select: none; }
+button:focus-visible, input:focus-visible { outline: 2px solid var(--text); outline-offset: 2px; }
+button:disabled { opacity: 0.4; cursor: default; }
+
+.btn { background: var(--surface-2); color: var(--text); border-radius: var(--radius); min-height: var(--btn-h); padding: 0 var(--pad); font-weight: 600; transition: filter 80ms, transform 80ms; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+@media (hover: hover) { .btn:not(:disabled):hover { filter: brightness(1.25); } }
+.btn:not(:disabled):active { filter: brightness(0.8); transform: scale(0.98); }
+.btn.on { background: var(--accent); color: var(--on-accent); }
+.btn.hides.on { background: var(--hide); color: var(--on-hide); }
+.btn.light { background: var(--light); color: var(--on-light); }
+@media (hover: hover) { .btn.light:not(:disabled):hover { filter: brightness(0.9); } }
+.btn.light:not(:disabled):active { filter: brightness(0.7); }
+.btn.small { min-height: 44px; padding: 0 12px; border-radius: var(--radius-sm); }
+
+.field { background: var(--surface); border: 2px solid var(--surface-2); border-radius: var(--radius); height: var(--btn-h); padding: 0 var(--pad); width: 100%; min-width: 0; }
+.field::placeholder { color: var(--text-dim); opacity: 1; }
+.field:focus { border-color: var(--text); outline: none; }
+.note { color: var(--text-dim); font-size: var(--fs-small); margin: 0; overflow-wrap: anywhere; }
+.note:empty { display: none; }
+.lang-switch { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap); }
+
+/* pairing */
+#pair { min-height: 100%; display: flex; flex-direction: column; justify-content: center; gap: var(--gap); padding: 24px; max-width: 420px; margin: 0 auto; }
+#pair h1 { margin: 0 0 6px; font-size: 1.5rem; }
+#pair label { color: var(--text-dim); font-size: var(--fs-small); }
+#pin { background: var(--surface); border: 2px solid var(--surface-2); border-radius: var(--radius); height: 72px; font-size: 2.2rem; letter-spacing: 0.4em; text-align: center; width: 100%; }
+#pin::placeholder { color: var(--text-dim); opacity: 0.6; }
+#pin:focus { border-color: var(--text); outline: none; }
+#pair-error { color: var(--danger); min-height: 1.4em; margin: 0; }
+#pair .btn { min-height: 58px; }
+
+/* remote */
+#remote { height: 100dvh; display: flex; flex-direction: column; gap: var(--gap); padding: max(12px, env(safe-area-inset-top)) 12px max(10px, env(safe-area-inset-bottom)); max-width: 720px; margin: 0 auto; }
+#head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding: 0 4px; flex: 0 0 auto; }
+#title { margin: 0; font-size: var(--fs-title); font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+#head-right { display: flex; gap: 10px; align-items: baseline; white-space: nowrap; color: var(--text-dim); font-size: var(--fs-small); font-variant-numeric: tabular-nums; }
+#clock-pill { background: var(--hide); color: var(--on-hide); border-radius: 999px; padding: 2px 10px; font-weight: 700; }
+
+#panes { flex: 1 1 0; min-height: 0; display: flex; flex-direction: column; }
+.pane { flex: 1 1 0; min-height: 0; display: flex; flex-direction: column; gap: var(--gap); }
+.scroll { overflow-y: auto; min-height: 0; scrollbar-width: thin; }
+
+.card { background: var(--surface); border-radius: var(--radius); padding: var(--pad); }
+.card .tag { color: var(--text-dim); font-size: var(--fs-small); margin-bottom: 4px; }
+.card .body { white-space: pre-wrap; overflow-wrap: anywhere; }
+#live { flex: 0 1 auto; max-height: 26vh; overflow-y: auto; min-height: 80px; }
+#live .body { font-size: var(--fs-live); line-height: 1.25; font-weight: 600; transition: opacity 120ms; }
+#live.dim .body { opacity: var(--dim-opacity); }
+#live .state { color: var(--text-dim); font-size: var(--fs-small); margin-top: 6px; }
+#live .state:empty { display: none; }
+#next { flex: 0 0 auto; padding: 10px var(--pad); background: transparent; border: 1px solid var(--surface-2); }
+#next .body { font-size: var(--fs-next); line-height: 1.25; color: var(--text-dim); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+#sections { flex: 0 0 auto; display: flex; flex-wrap: wrap; gap: 6px; max-height: calc(var(--chip-h) * 2 + 6px); overflow-y: auto; }
+.chip { min-width: 44px; height: var(--chip-h); padding: 0 8px; border-radius: var(--radius-sm); background: var(--surface-2); color: var(--gc, var(--text)); font-weight: 700; transition: filter 80ms, transform 80ms; }
+.chip:active { filter: brightness(0.75); transform: scale(0.96); }
+.chip.live { background: var(--gc, var(--light)); color: var(--on-group); }
+.g0 { --gc: var(--g0); } .g1 { --gc: var(--g1); } .g2 { --gc: var(--g2); }
+.g3 { --gc: var(--g3); } .g4 { --gc: var(--g4); } .g5 { --gc: var(--g5); }
+@media (hover: hover) { .chip:hover { filter: brightness(1.2); } }
+
+#toggles { flex: 0 0 auto; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: var(--gap); }
+#toggles .btn { padding: 0 6px; }
+
+#list { flex: 1 1 0; min-height: 60px; display: flex; flex-direction: column; gap: 6px; }
+.slide { display: grid; grid-template-columns: 5.2rem 1fr; align-items: center; gap: 8px; text-align: left; background: var(--surface); border-radius: var(--radius-sm); padding: 0 12px; width: 100%; height: var(--row-slim-h); flex: 0 0 auto; transition: filter 80ms, transform 80ms; }
+@media (hover: hover) { .slide:hover { filter: brightness(1.3); } }
+.slide:active { filter: brightness(0.8); transform: scale(0.99); }
+.slide.live { background: var(--accent); color: var(--on-accent); }
+.slide .l { font-size: var(--fs-small); color: var(--text-dim); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.slide.live .l { color: var(--on-accent); }
+.slide .t { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: var(--fs-row); }
+
+/* plan */
+#plan-list { flex: 1 1 0; display: flex; flex-direction: column; gap: 6px; }
+.row { display: flex; align-items: center; justify-content: space-between; gap: 10px; text-align: left; width: 100%; height: var(--row-h); flex: 0 0 auto; padding: 0 14px; border-radius: var(--radius-sm); background: var(--surface); transition: filter 80ms, transform 80ms; }
+.row .t { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+.row .w { flex: 0 0 auto; font-size: var(--fs-small); color: var(--text-dim); }
+@media (hover: hover) { .row:hover { filter: brightness(1.3); } }
+.row:active { filter: brightness(0.8); transform: scale(0.99); }
+.row.picked { background: var(--surface-3); }
+.row.live { background: var(--accent); color: var(--on-accent); }
+.row.live .w { color: var(--on-accent); }
+.divider { flex: 0 0 auto; height: var(--row-slim-h); display: flex; align-items: flex-end; padding: 0 4px 6px; color: var(--text-dim); font-size: var(--fs-small); font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.divider span { overflow: hidden; text-overflow: ellipsis; }
+#plan-show { flex: 0 0 auto; min-height: 56px; }
+
+/* search */
+#search-hint { padding: 14px 4px; }
+#hits { flex: 1 1 0; display: flex; flex-direction: column; gap: 6px; }
+.hit { display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: 8px; height: var(--hit-h); flex: 0 0 auto; padding: 0 8px 0 14px; background: var(--surface); border-radius: var(--radius-sm); }
+.hit .txt { min-width: 0; }
+.hit .t, .hit .d { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.hit .t { font-weight: 600; font-size: var(--fs-row); }
+.hit .d { color: var(--text-dim); font-size: var(--fs-small); }
+
+/* more */
+.card h2 { margin: 0 0 8px; font-size: var(--fs-body); font-weight: 700; }
+.card .line { display: flex; gap: var(--gap); align-items: center; }
+.card .line + .line, .card .line + .note, .card .note + .line, .card .field + .line { margin-top: 10px; }
+#clock-left { font-size: var(--fs-clock); font-weight: 700; font-variant-numeric: tabular-nums; flex: 1 1 auto; }
+#minutes { width: 88px; flex: 0 0 auto; text-align: center; }
+#keys-card { display: none; }
+@media (hover: hover) and (pointer: fine) { #keys-card { display: block; } }
+#keys-text { margin: 0; color: var(--text-dim); font-size: var(--fs-small); line-height: 1.5; }
+
+/* bars */
+#bar { flex: 0 0 auto; display: grid; grid-template-columns: 1fr 2fr; gap: var(--gap); }
+#next-btn { min-height: var(--btn-big-h); font-size: 1.5rem; }
+#prev-btn { min-height: var(--btn-big-h); }
+#tabs { flex: 0 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+.tab { height: var(--tab-h); border-radius: var(--radius-sm); background: transparent; color: var(--text-dim); font-weight: 600; transition: filter 80ms, transform 80ms; }
+.tab:active { filter: brightness(0.7); transform: scale(0.97); }
+.tab[aria-selected="true"] { background: var(--surface-3); color: var(--text); }
+@media (hover: hover) { .tab:hover { filter: brightness(1.3); } }
+
+#lost { flex: 0 0 auto; background: var(--light); color: var(--on-light); border-radius: var(--radius); padding: 8px 16px; font-weight: 600; text-align: center; }
+#lost small { display: block; font-weight: 400; color: #3a3a3c; }
+</style>
+</head>
+<body>
+
+<main id="pair" hidden>
+  <h1 data-i="pair_title">Artosia remote</h1>
+  <label for="pin" data-i="pin">PIN</label>
+  <input id="pin" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="one-time-code" placeholder="0000">
+  <p id="pair-error" role="alert"></p>
+  <button id="pair-btn" class="btn light" type="button" data-i="connect">Connect</button>
+  <div class="lang-switch" data-lang-switch></div>
+</main>
+
+<main id="remote" hidden>
+  <div id="head">
+    <h1 id="title"></h1>
+    <div id="head-right"><span id="clock-pill" hidden></span><span id="count"></span></div>
+  </div>
+  <div id="lost" role="status" hidden><span data-i="lost"></span><small data-i="retrying"></small></div>
+
+  <div id="panes">
+    <section id="pane-live" class="pane" role="tabpanel">
+      <section id="live" class="card">
+        <div class="tag" id="live-tag"></div>
+        <div class="body" id="live-text"></div>
+        <div class="state" id="live-state"></div>
+      </section>
+      <section id="next" class="card">
+        <div class="tag" id="next-tag"></div>
+        <div class="body" id="next-text"></div>
+      </section>
+      <div id="sections" data-i-aria="jump"></div>
+      <div id="toggles">
+        <button id="text-btn" class="btn hides" type="button" aria-pressed="false" data-i="clear_text"></button>
+        <button id="black-btn" class="btn hides" type="button" aria-pressed="false" data-i="black"></button>
+        <button id="logo-btn" class="btn hides" type="button" aria-pressed="false" data-i="logo"></button>
+      </div>
+      <p id="logo-note" class="note" hidden data-i="logo_needs"></p>
+      <div id="list" class="scroll"></div>
+    </section>
+
+    <section id="pane-plan" class="pane" role="tabpanel" hidden>
+      <button id="plan-show" class="btn light" type="button" disabled></button>
+      <div id="plan-list" class="scroll"></div>
+    </section>
+
+    <section id="pane-search" class="pane" role="tabpanel" hidden>
+      <input id="search" class="field" type="search" maxlength="100" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="search" data-i-ph="search_ph" data-i-aria="search_ph">
+      <p id="search-hint" class="note"></p>
+      <div id="hits" class="scroll"></div>
+    </section>
+
+    <section id="pane-more" class="pane scroll" role="tabpanel" hidden>
+      <section class="card">
+        <h2 data-i="message"></h2>
+        <input id="msg" class="field" maxlength="200" autocomplete="off" data-i-ph="message_ph" data-i-aria="message">
+        <div class="line">
+          <button id="msg-show" class="btn light" type="button" style="flex:1" data-i="message_show"></button>
+          <button id="msg-hide" class="btn hides" type="button" style="flex:1" data-i="message_hide"></button>
+        </div>
+        <p id="msg-state" class="note"></p>
+      </section>
+      <section class="card">
+        <h2 data-i="countdown"></h2>
+        <div class="line">
+          <div id="clock-left" aria-live="off"></div>
+          <input id="minutes" class="field" inputmode="numeric" maxlength="3" value="5" data-i-aria="minutes">
+          <span class="note" data-i="minutes"></span>
+        </div>
+        <div class="line">
+          <button id="cd-start" class="btn light" type="button" style="flex:1" data-i="start"></button>
+          <button id="cd-stop" class="btn" type="button" style="flex:1" data-i="stop"></button>
+        </div>
+      </section>
+      <section class="card">
+        <h2 data-i="language"></h2>
+        <div class="lang-switch" data-lang-switch></div>
+      </section>
+      <section id="keys-card" class="card">
+        <h2 data-i="keys_title"></h2>
+        <p id="keys-text" data-i="keys_text"></p>
+      </section>
+    </section>
+  </div>
+
+  <div id="bar">
+    <button id="prev-btn" class="btn" type="button" data-i="back"></button>
+    <button id="next-btn" class="btn light" type="button" data-i="next_btn"></button>
+  </div>
+  <nav id="tabs" role="tablist">
+    <button class="tab" type="button" role="tab" data-tab="live" data-i="tab_live" data-keep></button>
+    <button class="tab" type="button" role="tab" data-tab="plan" data-i="tab_plan" data-keep></button>
+    <button class="tab" type="button" role="tab" data-tab="search" data-i="tab_search" data-keep></button>
+    <button class="tab" type="button" role="tab" data-tab="more" data-i="tab_more" data-keep></button>
+  </nav>
+</main>
+
+
+<script>
+"use strict";
+
+/* Every word the page shows, in one table. Indonesian is written for a volunteer at the
+   console, not translated from the English: "Reff" for the chorus, "Tayangkan" for show. */
+const STR = {
+  en: {
+    pair_title: "Artosia remote", pin: "PIN", connect: "Connect",
+    wrong_pin: "Wrong PIN", too_many: "Too many tries. Wait a minute.", unreachable: "Cannot reach the computer",
+    tab_live: "Live", tab_plan: "Plan", tab_search: "Search", tab_more: "More",
+    live: "Live", next: "Next", next_item: "Next item", next_btn: "Next", back: "Back",
+    nothing_open: "Nothing open", nothing_live: "Nothing live",
+    n_of: "{0} of {1}", n_slides: "{0} slides",
+    clear_text: "Clear text", black: "Black", logo: "Logo",
+    logo_needs: "Set a logo picture in Artosia first",
+    text_cleared: "Text is cleared", screen_black: "Screen is black", logo_showing: "Logo is showing",
+    jump: "Jump to a section",
+    plan_pick: "Pick an item", plan_show: "Show {0}", plan_live: "Live", plan_empty: "The plan is empty",
+    search_ph: "Search songs and verses", search_hint: "Type a title, a line or a verse like John 3 16",
+    searching: "Searching", no_results: "No results",
+    show: "Show", add: "Add", added: "Added", show_aria: "Show {0} now", add_aria: "Add {0} to the plan",
+    message: "Message to the room", message_ph: "Write a message", message_show: "Show", message_hide: "Hide",
+    message_showing: "Showing: {0}",
+    countdown: "Countdown", minutes: "Minutes", start: "Start", stop: "Stop",
+    language: "Language",
+    keys_title: "Keys",
+    keys_text: "Space or right arrow: next. Left arrow: back. / : search. C: chorus. B: bridge. 1 to 9: verse. F1 clear text, F2 black, F3 logo.",
+    lost: "Lost connection", retrying: "Trying again"
+  },
+  id: {
+    pair_title: "Remote Artosia", pin: "PIN", connect: "Sambungkan",
+    wrong_pin: "PIN salah", too_many: "Terlalu banyak percobaan. Tunggu semenit.", unreachable: "Komputer tidak terjangkau",
+    tab_live: "Tayang", tab_plan: "Acara", tab_search: "Cari", tab_more: "Lainnya",
+    live: "Tayang", next: "Berikutnya", next_item: "Setelah ini", next_btn: "Lanjut", back: "Kembali",
+    nothing_open: "Belum ada yang dibuka", nothing_live: "Belum ada yang tayang",
+    n_of: "{0} dari {1}", n_slides: "{0} slide",
+    clear_text: "Sembunyikan teks", black: "Layar hitam", logo: "Logo",
+    logo_needs: "Pasang gambar logo di Artosia dulu",
+    text_cleared: "Teks disembunyikan", screen_black: "Layar sedang hitam", logo_showing: "Logo sedang tayang",
+    jump: "Loncat ke bagian",
+    plan_pick: "Pilih satu item", plan_show: "Tayangkan {0}", plan_live: "Tayang", plan_empty: "Susunan acara masih kosong",
+    search_ph: "Cari lagu atau ayat", search_hint: "Ketik judul, sepenggal lirik, atau ayat seperti Yoh 3 16",
+    searching: "Mencari", no_results: "Tidak ditemukan",
+    show: "Tayangkan", add: "Tambah", added: "Masuk", show_aria: "Tayangkan {0} sekarang", add_aria: "Tambahkan {0} ke acara",
+    message: "Pesan untuk jemaat", message_ph: "Tulis pesan", message_show: "Tampilkan", message_hide: "Sembunyikan",
+    message_showing: "Tampil: {0}",
+    countdown: "Hitung mundur", minutes: "Menit", start: "Mulai", stop: "Berhenti",
+    language: "Bahasa",
+    keys_title: "Tombol",
+    keys_text: "Spasi atau panah kanan: lanjut. Panah kiri: kembali. / : cari. C atau R: reff. B: bridge. 1 sampai 9: bait. F1 sembunyikan teks, F2 layar hitam, F3 logo.",
+    lost: "Koneksi terputus", retrying: "Mencoba lagi"
+  }
+};
+/* Names the operator sends in English, shown in the volunteer's own words. */
+const LABELS_ID = [
+  [/^Verse (\d+)$/i, "Bait $1"], [/^Chorus$/i, "Reff"], [/^Pre-?chorus$/i, "Pra-reff"],
+  [/^Bridge( \d+)?$/i, "Bridge$1"], [/^Intro$/i, "Intro"], [/^(Ending|Outro)$/i, "Penutup"]
+];
+
+const KEY = "artosia-remote-token";
+const LANG_KEY = "artosia-remote-lang";
+const $ = (id) => document.getElementById(id);
+let token = null;
+let version = 0;
+let state = null;
+let lost = false;
+let polling = false;
+let lang = "en";
+let tab = "live";
+let picked = null;
+let clockOffset = 0;
+let searchTimer = null;
+let sentSearch = "";
+let msgDirty = false;
+
+function store(name, get, value) {
+  try {
+    if (get) return localStorage.getItem(name);
+    if (value) localStorage.setItem(name, value); else localStorage.removeItem(name);
+  } catch (e) { /* storage blocked: the choice lasts for this page only */ }
+  return null;
+}
+
+function t(key, ...args) {
+  let s = (STR[lang] && STR[lang][key]) || STR.en[key] || key;
+  args.forEach((a, i) => { s = s.replace("{" + i + "}", a); });
+  return s;
+}
+function nice(label) {
+  if (lang !== "id" || !label) return label;
+  for (const [re, to] of LABELS_ID) if (re.test(label)) return label.replace(re, to).trim();
+  return label;
+}
+
+function pickLang() {
+  const saved = store(LANG_KEY, true);
+  if (saved === "en" || saved === "id") return saved;
+  const l = ((navigator.languages && navigator.languages[0]) || navigator.language || "en").toLowerCase();
+  return l.startsWith("id") || l.startsWith("in") ? "id" : "en";
+}
+
+function applyLang() {
+  document.documentElement.lang = lang;
+  document.querySelectorAll("[data-i]").forEach((el) => { el.textContent = t(el.dataset.i); });
+  document.querySelectorAll("[data-i-ph]").forEach((el) => { el.placeholder = t(el.dataset.iPh); });
+  document.querySelectorAll("[data-i-aria]").forEach((el) => { el.setAttribute("aria-label", t(el.dataset.iAria)); });
+  document.querySelectorAll("[data-lang-switch]").forEach((box) => {
+    box.replaceChildren();
+    for (const [code, name] of [["en", "English"], ["id", "Bahasa Indonesia"]]) {
+      const b = document.createElement("button");
+      b.type = "button"; b.className = "btn small" + (lang === code ? " on" : "");
+      b.textContent = name; b.dataset.keep = "";
+      b.setAttribute("aria-pressed", String(lang === code));
+      b.addEventListener("click", () => setLang(code));
+      box.append(b);
+    }
+  });
+  document.querySelectorAll("#tabs .tab").forEach((b) => b.setAttribute("aria-label", t("tab_" + b.dataset.tab)));
+  resetRenderCache();
+  if (state) render();
+  refreshPlanShow();
+  refreshSearchHint();
+  tickClock();
+}
+function setLang(code) {
+  lang = code;
+  store(LANG_KEY, false, code);
+  applyLang();
+}
+
+function show(which) {
+  $("pair").hidden = which !== "pair";
+  $("remote").hidden = which !== "remote";
+  if (which !== "remote") setLost(false);
+}
+
+function setTab(name) {
+  tab = name;
+  for (const n of ["live", "plan", "search", "more"]) $("pane-" + n).hidden = n !== name;
+  document.querySelectorAll("#tabs .tab").forEach((b) => b.setAttribute("aria-selected", String(b.dataset.tab === name)));
+}
+
+function setLost(v) {
+  lost = v;
+  $("lost").hidden = !v;
+  document.querySelectorAll("#remote button:not([data-keep])").forEach((b) => {
+    if (v) { b.dataset.wasDisabled = b.disabled ? "1" : ""; b.disabled = true; }
+    else if (b.dataset.wasDisabled !== undefined) { b.disabled = b.dataset.wasDisabled === "1"; delete b.dataset.wasDisabled; }
+  });
+  $("search").disabled = v;
+  $("msg").disabled = v;
+  $("minutes").disabled = v;
+  if (!v && state) render();
+}
+
+/* wake lock: only exists in secure contexts, so plain http on a LAN usually has none */
+let wake = null;
+async function keepAwake() {
+  try {
+    if ("wakeLock" in navigator && document.visibilityState === "visible" && !wake) {
+      wake = await navigator.wakeLock.request("screen");
+      wake.addEventListener("release", () => { wake = null; });
+    }
+  } catch (e) { wake = null; }
+}
+document.addEventListener("visibilitychange", () => { if (token) keepAwake(); });
+
+async function pair(pin) {
+  $("pair-error").textContent = "";
+  try {
+    const r = await fetch("/api/pair", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ pin }) });
+    if (r.ok) {
+      token = (await r.json()).token;
+      store(KEY, false, token);
+      start();
+      return;
+    }
+    $("pair-error").textContent = r.status === 429 ? t("too_many") : t("wrong_pin");
+  } catch (e) {
+    $("pair-error").textContent = t("unreachable");
+  }
+  show("pair");
+}
+
+function start() {
+  show("remote");
+  setTab(tab);
+  keepAwake();
+  if (!polling) { polling = true; poll(); }
+}
+
+function unpair() {
+  token = null; version = 0; state = null;
+  store(KEY, false, null);
+  $("pin").value = "";
+  show("pair");
+}
+
+async function poll() {
+  while (token) {
+    const ctl = new AbortController();
+    const timer = setTimeout(() => ctl.abort(), 30000);
+    try {
+      const r = await fetch("/api/state?since=" + version, { headers: { Authorization: "Bearer " + token }, signal: ctl.signal, cache: "no-store" });
+      if (r.status === 401) { unpair(); break; }
+      if (!r.ok) throw new Error("status " + r.status);
+      const s = await r.json();
+      if (lost) setLost(false);
+      if (s.version !== version) {
+        version = s.version; state = s;
+        if (typeof s.now === "number") clockOffset = s.now - Date.now() / 1000;
+        render();
+      }
+    } catch (e) {
+      setLost(true);
+      await new Promise((res) => setTimeout(res, 1500));
+    } finally {
+      clearTimeout(timer);
+    }
+  }
+  polling = false;
+}
+
+async function send(cmd, quiet) {
+  if (!token || lost) return;
+  if (!quiet && navigator.vibrate) { try { navigator.vibrate(8); } catch (e) { /* ignore */ } }
+  try {
+    const r = await fetch("/api/command", { method: "POST", headers: { Authorization: "Bearer " + token, "Content-Type": "application/json" }, body: JSON.stringify(cmd) });
+    if (r.status === 401) unpair();
+    else if (!r.ok && r.status !== 400) setLost(true);
+  } catch (e) {
+    setLost(true);
+  }
+}
+
+/* ---------- rendering ---------- */
+
+const cache = {};
+function resetRenderCache() { for (const k of Object.keys(cache)) delete cache[k]; }
+function changed(key, value) {
+  const sig = JSON.stringify(value);
+  if (cache[key] === sig) return false;
+  cache[key] = sig;
+  return true;
+}
+function el(tag, cls, text) {
+  const e = document.createElement(tag);
+  if (cls) e.className = cls;
+  if (text !== undefined) e.textContent = text;
+  return e;
+}
+
+function liveSection(s) {
+  let at = -1;
+  if (s.live === null) return at;
+  s.sections.forEach((x, i) => { if (x.slide <= s.live) at = i; });
+  return at;
+}
+
+function render() {
+  const s = state;
+  $("title").textContent = s.title || t("nothing_open");
+  const n = s.slides.length;
+  const live = s.live;
+  $("count").textContent = n && live !== null ? t("n_of", live + 1, n) : (n ? t("n_slides", n) : "");
+
+  const cur = live !== null ? s.slides[live] : null;
+  $("live-tag").textContent = cur && cur.label ? nice(cur.label) : t("live");
+  $("live-text").textContent = cur ? cur.text : t("nothing_live");
+  $("live").classList.toggle("dim", !cur || s.hidden || s.black || s.logo);
+  $("live-state").textContent = s.logo ? t("logo_showing") : (s.black ? t("screen_black") : (s.hidden ? t("text_cleared") : ""));
+
+  const nextIdx = live !== null ? live + 1 : (n ? 0 : -1);
+  const nx = nextIdx >= 0 && nextIdx < n ? s.slides[nextIdx] : null;
+  $("next").hidden = !nx && !s.next_title;
+  if (nx) { $("next-tag").textContent = nx.label ? nice(nx.label) : t("next"); $("next-text").textContent = nx.text; }
+  else { $("next-tag").textContent = t("next_item"); $("next-text").textContent = s.next_title; }
+
+  renderSections(s);
+  renderSlides(s, live);
+  renderToggles(s);
+  renderPlan(s);
+  renderHits(s);
+  renderMessage(s);
+  tickClock();
+  if (lost) setLost(true);
+}
+
+function renderSections(s) {
+  const box = $("sections");
+  box.hidden = !s.sections.length;
+  if (changed("sections", [s.sections, lang])) {
+    box.replaceChildren();
+    s.sections.forEach((x) => {
+      const b = el("button", "chip g" + Math.min(Math.max(x.group | 0, 0), 5), x.short || x.label);
+      b.type = "button";
+      b.setAttribute("aria-label", nice(x.label));
+      b.addEventListener("click", () => send({ cmd: "goto", index: x.slide }));
+      box.append(b);
+    });
+  }
+  const at = liveSection(s);
+  [...box.children].forEach((b, i) => {
+    b.classList.toggle("live", i === at);
+    if (i === at) b.setAttribute("aria-current", "true"); else b.removeAttribute("aria-current");
+  });
+}
+
+function renderSlides(s, live) {
+  const list = $("list");
+  if (changed("slides", [s.slides, lang])) {
+    list.replaceChildren();
+    s.slides.forEach((sl, i) => {
+      const b = el("button", "slide");
+      b.type = "button";
+      b.append(el("span", "l", nice(sl.label) || String(i + 1)), el("span", "t", sl.text));
+      b.addEventListener("click", () => send({ cmd: "goto", index: i }));
+      list.append(b);
+    });
+  }
+  let liveEl = null;
+  [...list.children].forEach((e, i) => {
+    const isLive = i === live;
+    e.classList.toggle("live", isLive);
+    if (isLive) { e.setAttribute("aria-current", "true"); liveEl = e; } else e.removeAttribute("aria-current");
+  });
+  if (liveEl && changed("liveIdx", live)) liveEl.scrollIntoView({ block: "nearest" });
+}
+
+function renderToggles(s) {
+  const set = (id, on) => { $(id).classList.toggle("on", on); $(id).setAttribute("aria-pressed", String(on)); };
+  set("text-btn", s.hidden);
+  set("black-btn", s.black);
+  set("logo-btn", s.logo);
+  $("logo-btn").disabled = !s.logo_ready || lost;
+  $("logo-note").hidden = s.logo_ready;
+}
+
+function renderPlan(s) {
+  if (picked !== null && !s.plan.some((p) => p.id === picked && p.kind !== "heading")) picked = null;
+  const list = $("plan-list");
+  if (changed("plan", [s.plan, lang])) {
+    list.replaceChildren();
+    if (!s.plan.length) list.append(el("p", "note", t("plan_empty")));
+    s.plan.forEach((p) => {
+      if (p.kind === "heading") {
+        const d = el("div", "divider");
+        d.append(el("span", "", p.title));
+        list.append(d);
+        return;
+      }
+      const b = el("button", "row");
+      b.type = "button"; b.dataset.id = p.id;
+      b.append(el("span", "t", p.title), el("span", "w", p.live ? t("plan_live") : ""));
+      b.addEventListener("click", () => { picked = picked === p.id ? null : p.id; markPicked(); refreshPlanShow(); });
+      list.append(b);
+    });
+  }
+  const liveId = (s.plan.find((p) => p.live) || {}).id;
+  [...list.querySelectorAll(".row")].forEach((b) => {
+    const isLive = String(liveId) === b.dataset.id;
+    b.classList.toggle("live", isLive);
+    if (isLive) b.setAttribute("aria-current", "true"); else b.removeAttribute("aria-current");
+  });
+  markPicked();
+  refreshPlanShow();
+}
+function markPicked() {
+  document.querySelectorAll("#plan-list .row").forEach((b) => {
+    const on = String(picked) === b.dataset.id;
+    b.classList.toggle("picked", on);
+    b.setAttribute("aria-pressed", String(on));
+  });
+}
+function refreshPlanShow() {
+  const b = $("plan-show");
+  const p = state && picked !== null ? state.plan.find((x) => x.id === picked) : null;
+  b.textContent = p ? t("plan_show", p.title) : t("plan_pick");
+  b.disabled = !p || lost;
+}
+
+function typedSearch() { return $("search").value.trim(); }
+function resultsReady(s) { return typedSearch() !== "" && s && s.hits_for.trim().toLowerCase() === typedSearch().toLowerCase(); }
+
+function renderHits(s) {
+  const list = $("hits");
+  const ready = resultsReady(s);
+  if (changed("hits", [ready ? s.hits : [], ready, lang])) {
+    list.replaceChildren();
+    if (ready) s.hits.forEach((h) => {
+      const row = el("div", "hit");
+      const txt = el("div", "txt");
+      txt.append(el("div", "t", h.title), el("div", "d", h.detail));
+      const show = el("button", "btn small light", t("show"));
+      show.type = "button"; show.setAttribute("aria-label", t("show_aria", h.title));
+      show.addEventListener("click", () => { send({ cmd: "hit", id: h.id }); setTab("live"); });
+      const add = el("button", "btn small", t("add"));
+      add.type = "button"; add.setAttribute("aria-label", t("add_aria", h.title));
+      add.addEventListener("click", () => {
+        send({ cmd: "add", id: h.id });
+        add.textContent = t("added"); add.disabled = true;
+        setTimeout(() => { add.textContent = t("add"); add.disabled = lost; }, 1500);
+      });
+      row.append(txt, show, add);
+      list.append(row);
+    });
+  }
+  refreshSearchHint();
+}
+function refreshSearchHint() {
+  const typed = typedSearch();
+  let msg = "";
+  if (!typed) msg = t("search_hint");
+  else if (!resultsReady(state)) msg = t("searching");
+  else if (!state.hits.length) msg = t("no_results");
+  $("search-hint").textContent = msg;
+}
+
+function renderMessage(s) {
+  $("msg-state").textContent = s.message ? t("message_showing", s.message) : "";
+  $("msg-hide").classList.toggle("on", !!s.message);
+  $("msg-hide").disabled = !s.message || lost;
+  if (changed("message", s.message)) { msgDirty = false; }
+  if (!msgDirty && document.activeElement !== $("msg")) $("msg").value = s.message;
+  refreshMsgShow();
+}
+function refreshMsgShow() { $("msg-show").disabled = !$("msg").value.trim() || lost; }
+
+/* the countdown ticks on the phone; the computer's clock is the reference */
+let clockTimer = null;
+function secondsLeft() {
+  if (!state || state.countdown_ends_at === null || state.countdown_ends_at === undefined) return null;
+  return Math.max(0, Math.ceil(state.countdown_ends_at - (Date.now() / 1000 + clockOffset)));
+}
+function fmt(sec) { return Math.floor(sec / 60) + ":" + String(sec % 60).padStart(2, "0"); }
+function tickClock() {
+  const left = secondsLeft();
+  $("clock-pill").hidden = left === null;
+  $("clock-left").textContent = left === null ? "" : fmt(left);
+  if (left !== null) $("clock-pill").textContent = fmt(left);
+  $("cd-stop").disabled = left === null || lost;
+  if (left !== null && !clockTimer) clockTimer = setInterval(tickClock, 250);
+  if (left === null && clockTimer) { clearInterval(clockTimer); clockTimer = null; }
+}
+function minutesValue() {
+  const m = parseInt($("minutes").value, 10);
+  return Number.isFinite(m) && m >= 1 && m <= 180 ? m : null;
+}
+
+/* ---------- controls ---------- */
+
+const next = () => send({ cmd: "next" });
+const back = () => send({ cmd: "prev" });
+$("next-btn").addEventListener("click", next);
+$("prev-btn").addEventListener("click", back);
+$("text-btn").addEventListener("click", () => send({ cmd: "text" }));
+$("black-btn").addEventListener("click", () => send({ cmd: "black" }));
+$("logo-btn").addEventListener("click", () => send({ cmd: "logo" }));
+$("plan-show").addEventListener("click", () => {
+  if (picked === null) return;
+  send({ cmd: "plan", id: picked });
+  picked = null; markPicked(); refreshPlanShow(); setTab("live");
+});
+$("msg").addEventListener("input", () => { msgDirty = true; refreshMsgShow(); });
+$("msg").addEventListener("keydown", (e) => { if (e.key === "Enter" && !$("msg-show").disabled) $("msg-show").click(); });
+$("msg-show").addEventListener("click", () => { send({ cmd: "message", text: $("msg").value }); msgDirty = false; });
+$("msg-hide").addEventListener("click", () => { send({ cmd: "message", text: "" }); $("msg").value = ""; msgDirty = false; refreshMsgShow(); });
+$("minutes").addEventListener("input", () => {
+  const v = $("minutes").value.replace(/\D/g, "").slice(0, 3);
+  if (v !== $("minutes").value) $("minutes").value = v;
+  $("cd-start").disabled = minutesValue() === null || lost;
+});
+$("cd-start").addEventListener("click", () => { const m = minutesValue(); if (m !== null) send({ cmd: "countdown", minutes: m }); });
+$("cd-stop").addEventListener("click", () => send({ cmd: "countdown", minutes: 0 }));
+
+$("search").addEventListener("input", () => {
+  clearTimeout(searchTimer);
+  refreshSearchHint();
+  if (state) renderHits(state);
+  searchTimer = setTimeout(() => {
+    const q = typedSearch();
+    if (q && q !== sentSearch) { sentSearch = q; send({ cmd: "search", text: q }, true); }
+  }, 300);
+});
+$("search").addEventListener("keydown", (e) => {
+  if (e.key === "Enter") { clearTimeout(searchTimer); const q = typedSearch(); if (q) { sentSearch = q; send({ cmd: "search", text: q }, true); } e.target.blur(); }
+});
+
+document.querySelectorAll("#tabs .tab").forEach((b) => b.addEventListener("click", () => setTab(b.dataset.tab)));
+/* a mouse click must not leave focus on a button: Space would press it again */
+document.addEventListener("mousedown", (e) => { if (e.target.closest && e.target.closest("button")) e.preventDefault(); });
+
+function jumpTo(key) {
+  if (!state || !state.sections.length) return;
+  const k = key === "r" ? "c" : key.toLowerCase();
+  if (/^[0-9]$/.test(k)) {
+    /* as on the operator: a digit is that section counted in sung order, 0 the tenth */
+    const nth = state.sections[k === "0" ? 9 : Number(k) - 1];
+    if (nth) send({ cmd: "goto", index: nth.slide });
+    return;
+  }
+  const match = (x) => (x.short || "").toLowerCase().startsWith(k);
+  const hits = state.sections.filter(match);
+  if (!hits.length) return;
+  const here = state.live === null ? -1 : state.live;
+  const target = hits.find((x) => x.slide > here) || hits[0];
+  send({ cmd: "goto", index: target.slide });
+}
+
+document.addEventListener("keydown", (e) => {
+  if (!token || $("remote").hidden || e.ctrlKey || e.metaKey || e.altKey) return;
+  const tg = e.target;
+  const typing = tg && (tg.tagName === "INPUT" || tg.tagName === "TEXTAREA" || tg.tagName === "SELECT" || tg.isContentEditable);
+  if (typing) {
+    if (e.key === "Escape") { tg.blur(); if (tg.id === "search") setTab("live"); }
+    return;
+  }
+  const k = e.key;
+  let handled = true;
+  if (k === " " || k === "ArrowRight" || k === "PageDown") { if (!e.repeat) next(); }
+  else if (k === "ArrowLeft" || k === "PageUp") { if (!e.repeat) back(); }
+  else if (k === "/") { setTab("search"); $("search").focus(); }
+  else if (k === "F1") send({ cmd: "text" });
+  else if (k === "F2") send({ cmd: "black" });
+  else if (k === "F3") { if (state && state.logo_ready) send({ cmd: "logo" }); }
+  else if (k.length === 1 && /[a-z0-9]/i.test(k) && !e.repeat) jumpTo(k);
+  else handled = false;
+  if (handled) e.preventDefault();
+});
+/* releasing Space on a focused button would click it */
+document.addEventListener("keyup", (e) => {
+  if (e.key === " " && token && e.target && e.target.tagName === "BUTTON") e.preventDefault();
+});
+
+$("pair-btn").addEventListener("click", () => pair($("pin").value.trim()));
+$("pin").addEventListener("input", () => {
+  const v = $("pin").value.replace(/\D/g, "").slice(0, 4);
+  if (v !== $("pin").value) $("pin").value = v;
+  if (v.length === 4) pair(v);
+});
+$("pin").addEventListener("keydown", (e) => { if (e.key === "Enter") pair($("pin").value.trim()); });
+
+(function init() {
+  lang = pickLang();
+  applyLang();
+  setTab("live");
+  const q = new URLSearchParams(location.search).get("pin");
+  if (q) {
+    try { history.replaceState(null, "", location.pathname); } catch (e) { /* ignore */ }
+    pair(q.trim());
+    return;
+  }
+  token = store(KEY, true);
+  if (token) start(); else { show("pair"); $("pin").focus(); }
+})();
+</script>
+</body>
+</html>

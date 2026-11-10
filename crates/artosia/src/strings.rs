@@ -1,0 +1,955 @@
+//! Every word the operator reads, in English and in Indonesian. No language is the source the
+//! other is translated from: each was written from what the screen has to say
+//! (`docs/i18n/brief.json`), the Indonesian by a writer who never saw the English.
+//! Counted nouns go through a function: English needs "1 slide" and "2 slides".
+#![allow(non_snake_case)]
+
+#[cfg(not(test))]
+use std::sync::atomic::{AtomicBool, Ordering};
+
+#[cfg(not(test))]
+static INDONESIAN: AtomicBool = AtomicBool::new(false);
+
+// Tests run side by side, one thread each: a language per thread keeps one test's Indonesian
+// out of another's English.
+#[cfg(test)]
+thread_local! {
+    static INDONESIAN: std::cell::Cell<bool> = const { std::cell::Cell::new(false) };
+}
+
+/// Chooses the language of every later call. The window sets it from Look before it draws.
+pub fn set_indonesian(on: bool) {
+    #[cfg(not(test))]
+    INDONESIAN.store(on, Ordering::Relaxed);
+    #[cfg(test)]
+    INDONESIAN.with(|language| language.set(on));
+}
+
+pub fn indonesian() -> bool {
+    #[cfg(not(test))]
+    return INDONESIAN.load(Ordering::Relaxed);
+    #[cfg(test)]
+    return INDONESIAN.with(|language| language.get());
+}
+
+/// One text in both languages, read through a function so the language can change while the
+/// program runs.
+macro_rules! text {
+    ($name:ident, $en:expr, $id:expr) => {
+        pub fn $name() -> &'static str {
+            if indonesian() { $id } else { $en }
+        }
+    };
+}
+
+text!(APP_NAME, "Artosia", "Artosia");
+
+// Keys, as printed on a keyboard.
+text!(KEY_SEARCH, "Ctrl K", "Ctrl K");
+text!(KEY_ENTER, "Enter", "Enter");
+text!(KEY_SHOW_NOW, "Ctrl Enter", "Ctrl Enter");
+text!(KEY_ADD, "Shift Enter", "Shift Enter");
+text!(KEY_NEXT, "Space", "Spasi");
+text!(KEY_BACK, "Up", "Panah atas");
+text!(KEY_DOWN, "Down", "Panah bawah");
+text!(KEY_EDIT, "Ctrl E", "Ctrl E");
+text!(KEY_SAVE, "Ctrl S", "Ctrl S");
+text!(KEY_KEYS, "?", "?");
+
+pub fn ctrl_digit(digit: usize) -> String {
+    format!("Ctrl {digit}")
+}
+
+// Search.
+text!(SEARCH_PLACEHOLDER, "Search songs and the Bible", "Cari lagu atau ayat");
+text!(SEARCH_SONGS, "Title or any line of a song", "Cari judul atau satu baris lirik");
+text!(SEARCH_BIBLE, "John 3:16, or words from a verse", "Yoh 3:16 atau kata dalam ayatnya");
+text!(SEARCH_RESULTS, "Results", "Hasil");
+text!(SCOPE_LABEL, "Search in", "Cari di");
+text!(SCOPE_ALL, "All", "Semua");
+text!(SCOPE_SONGS, "Songs", "Lagu");
+text!(SCOPE_BIBLE, "Bible", "Alkitab");
+text!(HINT_OPEN, "Open", "Buka");
+text!(HINT_SCOPE, "Songs or Bible", "Ganti filter");
+text!(HINT_SECTIONS, "Its sections", "Cari bagian");
+text!(SEARCH_SECTIONS, "Chorus, verse 2, or any line", "Bait 2, Reff, atau satu baris lirik");
+text!(IN_PLAN, "In today's plan", "Sudah ada di acara");
+text!(PLAN_CHIP, "Plan", "Di acara");
+text!(KIND_LOOK, "Look", "Tampilan");
+text!(KIND_BIBLE, "Bible translation", "Versi Alkitab");
+text!(COUNTDOWN_DETAIL, "Shows on the projector until it ends", "Tayang di layar sampai waktu habis");
+text!(MESSAGE_DETAIL, "Show this message to the room", "Pesan tampil di layar jemaat");
+
+pub fn countdown_for(minutes: u32) -> String {
+    if indonesian() {
+        return format!("Hitung mundur {minutes} menit");
+    }
+    if minutes == 1 { "Countdown, 1 minute".to_string() } else { format!("Countdown, {minutes} minutes") }
+}
+text!(BIBLE_LOADING, "Opening the Bible", "Menyiapkan Alkitab");
+text!(OLD_TESTAMENT, "Old Testament", "Perjanjian Lama");
+text!(NEW_TESTAMENT, "New Testament", "Perjanjian Baru");
+
+pub fn pick_chapter(book: &str) -> String {
+    if indonesian() {
+        return format!("{book}: pilih pasal");
+    }
+    format!("{book}: pick a chapter")
+}
+text!(SONGS_EMPTY, "No songs yet", "Belum ada lagu");
+
+pub fn nothing_found(query: &str) -> String {
+    if indonesian() {
+        return format!("Tidak ada hasil untuk \u{201c}{query}\u{201d}");
+    }
+    format!("Nothing matches \u{201c}{query}\u{201d}")
+}
+
+pub fn new_song_called(title: &str) -> String {
+    if indonesian() {
+        return format!("Buat lagu \u{201c}{title}\u{201d}");
+    }
+    format!("New song \u{201c}{title}\u{201d}")
+}
+
+pub fn songs(count: usize) -> String {
+    if indonesian() {
+        return format!("{count} lagu");
+    }
+    if count == 1 { "1 song".to_string() } else { format!("{count} songs") }
+}
+
+pub fn slides(count: usize) -> String {
+    if indonesian() {
+        return format!("{count} slide");
+    }
+    if count == 1 { "1 slide".to_string() } else { format!("{count} slides") }
+}
+
+pub fn chapters(count: usize) -> String {
+    if indonesian() {
+        return format!("{count} pasal");
+    }
+    if count == 1 { "1 chapter".to_string() } else { format!("{count} chapters") }
+}
+
+pub fn verses(count: usize) -> String {
+    if indonesian() {
+        return format!("{count} ayat");
+    }
+    if count == 1 { "1 verse".to_string() } else { format!("{count} verses") }
+}
+
+// Commands in the search panel.
+text!(CMD_NEW_SONG, "New song", "Lagu baru");
+text!(CMD_NEW_SONG_DETAIL, "Type or paste the words", "Ketik atau tempel liriknya");
+text!(CMD_PASTE_SONG, "Paste lyrics as a song", "Tempel lirik sebagai lagu");
+text!(CMD_PASTE_SONG_DETAIL, "Copy lyrics anywhere, then choose this", "Salin liriknya dulu, lalu pilih ini");
+text!(CMD_ANNOUNCEMENTS, "Announcements", "Pengumuman");
+text!(CMD_ANNOUNCEMENTS_DETAIL, "Notices that loop before the service", "Tayang bergantian sebelum ibadah mulai");
+text!(CMD_HEADING, "Add a heading to the plan", "Pemisah acara");
+text!(CMD_HEADING_DETAIL, "A divider such as Worship or Word", "Misalnya Pujian dan Firman");
+text!(CMD_LOOKS, "Look", "Tampilan");
+text!(CMD_LOOKS_DETAIL, "Background, text size and Bible version", "Latar, ukuran teks, dan versi Alkitab");
+text!(CMD_SCREENS, "Screens", "Layar");
+text!(CMD_SCREENS_DETAIL, "Choose the projector and the stage screen", "Pilih layar dan monitor panggung");
+text!(CMD_REMOTE, "Phone remote", "Remote HP");
+text!(CMD_REMOTE_DETAIL, "Change slides from a phone on the same Wi-Fi", "HP di Wi-Fi yang sama bisa ganti slide");
+text!(CMD_IMPORT_FOLDER, "Import songs from a folder", "Impor lagu dari folder");
+text!(CMD_IMPORT_FOLDER_DETAIL, "A folder of OpenLyrics song files", "Berkas OpenLyrics");
+text!(IMPORT_FOLDER_EMPTY, "That folder has no OpenLyrics songs", "Tidak ada berkas OpenLyrics di folder itu");
+text!(CMD_IMPORT, "Bring over EasiSlides", "Impor dari EasiSlides");
+text!(CMD_IMPORT_DETAIL, "Songs and Bibles from EasiSlides on this computer", "Lagu dan Alkitab di komputer ini");
+text!(CMD_STREAM, "Stream and record", "Siaran dan rekaman");
+text!(CMD_STREAM_DETAIL, "Send the projector picture to YouTube or a file", "Kirim gambar layar ke situs video atau berkas");
+text!(BTN_STREAM, "Stream", "Siaran");
+text!(BTN_LISTEN, "Listen", "Dengar");
+text!(STREAM_HINT, "The stream shows what the projector shows, with the room's sound.", "Penonton melihat isi layar dan mendengar suara ruangan");
+text!(STREAM_ADDRESS, "Stream address", "URL streaming");
+text!(STREAM_ADDRESS_HINT, "rtmp://a.rtmp.youtube.com/live2", "rtmp://a.rtmp.youtube.com/live2");
+text!(STREAM_KEY, "Stream key", "Kunci streaming");
+text!(STREAM_RECORD, "Keep a recording", "Simpan rekaman");
+text!(STREAM_RECORD_HINT, "Saved with Artosia's library on this computer", "Disimpan di komputer ini bersama data Artosia");
+text!(BTN_STREAM_START, "Start", "Mulai");
+text!(BTN_STREAM_STOP, "Stop", "Berhenti");
+text!(STREAM_STARTING, "Starting", "Sedang bersiap");
+text!(STREAM_RECONNECTING, "The connection dropped. Trying again.", "Koneksi terputus, mencoba lagi");
+text!(STREAM_STOPPING, "Finishing", "Sedang menyelesaikan");
+text!(STREAM_MISSING, "This copy of Artosia came without the streaming program.", "Bagian siaran belum terpasang di Artosia ini");
+text!(STREAM_NOTHING, "Give an address, or turn on the recording", "Isi URL streaming, atau nyalakan rekaman");
+
+pub fn stream_failed(problem: &str) -> String {
+    if indonesian() {
+        return format!("Siaran gagal dimulai: {problem}");
+    }
+    format!("The stream could not start: {problem}")
+}
+
+/// How long the stream has been live, and how many pictures were lost on the way.
+pub fn stream_live(seconds: u64, dropped: u64) -> String {
+    if indonesian() {
+        return {
+            let time = format!("{}:{:02}", seconds / 60, seconds % 60);
+            if dropped == 0 { format!("Siaran langsung {time}") } else { format!("Siaran langsung {time}, {dropped} gambar hilang") }
+        };
+    }
+    let time = format!("On air for {}:{:02}", seconds / 60, seconds % 60);
+    match dropped {
+        0 => time,
+        1 => format!("{time}. 1 frame lost"),
+        _ => format!("{time}. {dropped} frames lost"),
+    }
+}
+text!(CMD_LISTEN, "Listen to the room", "Dengarkan lewat mikrofon");
+text!(CMD_LISTEN_DETAIL, "Suggests the verse or song it hears", "Mengusulkan lagu atau ayat dari suara");
+text!(LISTEN_SWITCH, "Listen", "Dengarkan suara");
+text!(LISTEN_HINT, "It only suggests. Nothing shows by itself.", "Hanya mengusulkan. Layar tidak berubah sendiri.");
+text!(LISTEN_MICROPHONE, "Microphone", "Mikrofon");
+text!(LISTEN_DEFAULT, "The computer's own", "Bawaan komputer");
+text!(LISTEN_LANGUAGE, "Language", "Bahasa lisan");
+text!(LISTEN_INDONESIAN, "Indonesian", "Indonesia");
+text!(LISTEN_ENGLISH, "English", "Inggris");
+text!(LISTEN_LEVEL, "Sound coming in", "Tingkat suara");
+text!(LISTEN_HEARD, "Heard", "Yang terdengar");
+text!(CMD_UPDATE, "Check for a new version", "Periksa pembaruan");
+text!(CMD_UPDATE_DETAIL, "Artosia also checks by itself at each start", "Artosia juga memeriksa sendiri saat dibuka");
+
+pub fn update_ready(version: &str) -> String {
+    if indonesian() {
+        return format!("Versi {version} sudah diunduh. Terpasang saat Artosia dibuka lagi.");
+    }
+    format!("Version {version} is ready. It installs when Artosia next starts.")
+}
+
+pub fn update_none(version: &str) -> String {
+    if indonesian() {
+        return format!("Versi {version} adalah yang terbaru");
+    }
+    format!("Version {version} is the newest")
+}
+text!(CMD_KEYS, "Keyboard shortcuts", "Tombol pintas");
+text!(CMD_KEYS_DETAIL, "Every key Artosia answers to", "Semua tombol yang dikenali Artosia");
+text!(CMD_START, "Start the service", "Mulai ibadah");
+text!(CMD_START_DETAIL, "Show the first thing in the plan", "Yang pertama di acara tayang di layar");
+text!(CMD_PREVIOUS, "Previous slide", "Kembali");
+text!(CMD_PREVIOUS_DETAIL, "Go back one slide", "Mundur satu slide");
+text!(CMD_NEXT_DETAIL, "Go on one slide", "Maju satu slide");
+text!(CMD_BLACK_DETAIL, "Turn the projector black, or bring it back", "Layar jadi hitam. Pilih lagi untuk batal");
+text!(CMD_CLEAR_DETAIL, "Hide the words and keep the background", "Teks hilang, latar tetap tayang");
+text!(CMD_LOGO_DETAIL, "Show the logo in place of the slide", "Logo gereja menggantikan slide di layar");
+text!(CMD_STOP_COUNTDOWN, "Stop the countdown", "Hentikan hitung mundur");
+text!(CMD_STOP_COUNTDOWN_DETAIL, "Take the countdown off the projector", "Hitungan hilang dari layar");
+text!(CMD_HIDE_MESSAGE, "Hide the message", "Sembunyikan pesan");
+text!(CMD_HIDE_MESSAGE_DETAIL, "Take the message off the screens", "Pesan hilang dari setiap layar");
+text!(CMD_EDIT_SONG, "Edit this song", "Edit lagu");
+text!(CMD_EDIT_SONG_DETAIL, "Change the words of the open song", "Perbaiki lirik lagu yang terbuka");
+text!(CMD_UNDO_DETAIL, "Take back the last removal", "Mengembalikan yang terakhir dihapus");
+text!(CMD_LOOP, "Loop the announcements", "Putar pengumuman");
+text!(CMD_LOOP_DETAIL, "Show each one in turn until you stop", "Tayang bergantian sampai dihentikan");
+text!(CMD_NEW_PLAN_DETAIL, "Empty the plan for another service", "Acara hari ini dikosongkan untuk ibadah lain");
+
+// Top bar and status bar.
+text!(BTN_LOOK, "Look", "Tampilan");
+text!(BTN_SCREENS, "Screens", "Layar");
+text!(BTN_PHONE, "Phone", "Remote HP");
+text!(HINT_NEXT, "Next slide", "Lanjut");
+text!(HINT_BACK, "Back", "Kembali");
+text!(HINT_KEYS, "Keys", "Tombol");
+text!(OUTPUT_OFF, "The projector is off", "Layar dimatikan");
+text!(OUTPUT_PRACTICE, "Practice mode: the projector is off", "Mode latihan: layar tidak dinyalakan");
+text!(OUTPUT_STARTING, "Starting the projector", "Layar sedang dinyalakan");
+text!(OUTPUT_MISSING, "The projector program is missing from Artosia's folder", "Program layar tidak ada di folder Artosia");
+text!(OUTPUT_KEEPS_CLOSING, "The projector keeps closing as it starts", "Program layar terus menutup sendiri setelah mulai");
+
+pub fn output_failed(problem: &str) -> String {
+    if indonesian() {
+        return format!("Layar gagal dinyalakan: {problem}");
+    }
+    format!("The projector could not start: {problem}")
+}
+text!(OUTPUT_NO_SCREEN, "No second screen yet", "Belum ada layar kedua");
+text!(OUTPUT_HERE, "Projector showing on this screen", "Layar ditampilkan di jendela ini");
+text!(OUTPUT_STUCK, "The projector is not answering", "Layar tidak merespons");
+text!(REMOTE_ON, "Phone remote is on", "Remote HP aktif");
+
+pub fn output_on_screen(number: usize) -> String {
+    if indonesian() {
+        return format!("Tayang di layar {number}");
+    }
+    format!("Projector on screen {number}")
+}
+
+pub fn library_in_memory(problem: &str) -> String {
+    if indonesian() {
+        return format!("Pustaka gagal dibuka. Pekerjaan sesi ini hilang saat ditutup: {problem}");
+    }
+    format!("The library could not be opened, so nothing will be saved: {problem}")
+}
+
+// Plan.
+text!(PLAN_DEFAULT_NAME, "Today", "Acara hari ini");
+text!(PLAN_EMPTY, "Nothing planned yet", "Acara masih kosong");
+text!(PLAN_ADD, "Add to the plan", "Tambah ke acara");
+text!(PLAN_NEW, "Start a new plan", "Acara baru");
+text!(PLAN_ITEM_MENU, "More", "Opsi");
+text!(PLAN_MOVE_UP, "Move up", "Naikkan");
+text!(PLAN_MOVE_DOWN, "Move down", "Turunkan");
+text!(PLAN_REMOVE, "Remove", "Keluarkan");
+text!(PLAN_MISSING, "Deleted", "Hilang");
+text!(PLAN_HEADING_NEW, "Heading", "Pemisah baru");
+text!(PLAN_HEADING_WORSHIP, "Worship", "Pujian");
+text!(PLAN_HEADING_WORD, "Word", "Firman");
+
+pub fn added_to_plan(title: &str) -> String {
+    if indonesian() {
+        return format!("\u{201c}{title}\u{201d} masuk ke acara");
+    }
+    format!("Added {title} to the plan")
+}
+
+pub fn removed_from_plan(title: &str) -> String {
+    if indonesian() {
+        return format!("\u{201c}{title}\u{201d} keluar dari acara");
+    }
+    format!("Removed {title}")
+}
+
+// Slides.
+text!(START_TITLE, "What do you want to show?", "Mau menayangkan apa?");
+text!(START_HINT, "or just start typing", "atau langsung ketik");
+text!(START_SONGS, "Songs", "Lagu");
+text!(START_SONGS_DETAIL, "Browse every song", "Telusuri semua lagu");
+text!(START_BIBLE, "Bible", "Alkitab");
+text!(START_BIBLE_DETAIL, "Pick a book and a verse", "Pilih kitab, lalu ayat");
+text!(START_NEW_DETAIL, "Type or paste the words", "Ketik atau tempel liriknya");
+text!(START_NO_SONGS, "The library has no songs yet", "Pustaka masih kosong, belum ada lagu");
+text!(START_ANNOUNCEMENTS_DETAIL, "Notices before the service", "Tayang sebelum ibadah mulai");
+text!(WELCOME_EASISLIDES, "EasiSlides is on this computer", "EasiSlides ada di komputer ini");
+text!(WELCOME_EASISLIDES_DETAIL, "Bring its songs and Bibles into Artosia. EasiSlides keeps working.", "Salin lagu dan Alkitabnya ke sini. EasiSlides tetap utuh dan bisa dipakai.");
+text!(BTN_BRING_OVER, "Bring them over", "Impor sekarang");
+text!(BTN_NOT_NOW, "Not now", "Nanti saja");
+text!(BTN_ADD_TO_PLAN, "Add to plan", "Tambah ke acara");
+text!(BTN_EDIT, "Edit", "Edit");
+text!(BTN_NEXT_VERSE, "Add the next verse", "Tambah ayat berikutnya");
+text!(DECK_EMPTY, "This has no slides", "Belum ada slide");
+text!(BTN_BACK_TO_LIVE, "Back to live", "Ke yang tayang");
+text!(BTN_LOOP_START, "Start the loop", "Putar otomatis");
+text!(BTN_LOOP_STOP, "Stop the loop", "Hentikan putaran");
+text!(PANE_PREVIEW, "Preview", "Pratinjau");
+text!(LIVE, "Live", "Tayang");
+
+// Live column.
+text!(BTN_NEXT, "Next", "Lanjut");
+text!(BTN_BACK, "Back", "Kembali");
+text!(BTN_CLEAR_TEXT, "Clear text", "Sembunyikan teks");
+text!(BTN_BLACK, "Black", "Layar hitam");
+text!(BTN_LOGO, "Logo", "Logo");
+text!(LOGO_MISSING, "Choose a logo picture in Look first", "Pasang gambar logo di Tampilan dulu");
+text!(STATE_ON_SCREEN, "On screen", "Tayang");
+text!(STATE_BLACK, "Screen is black", "Layar sedang hitam");
+text!(STATE_LOGO, "Logo is showing", "Logo sedang tayang");
+text!(STATE_TEXT_HIDDEN, "Text is hidden", "Teks disembunyikan");
+text!(STATE_NOTHING, "Nothing", "Belum ada");
+text!(STATE_MESSAGE, "Message showing", "Pesan tampil");
+text!(STATE_STAGE_MESSAGE, "Stage message showing", "Pesan pemusik tampil");
+text!(HINT_SELECT, "Arrows move the ring only", "Panah hanya geser bingkai");
+text!(STAGE_MESSAGE_DETAIL, "Show this message on the stage screen", "Tampil di monitor panggung saja");
+text!(HEARD_NOTHING, "Nothing heard yet", "Belum ada yang dikenali");
+
+pub fn state_countdown(clock: &str) -> String {
+    if indonesian() {
+        return format!("Hitung mundur {clock}");
+    }
+    format!("Countdown {clock}")
+}
+text!(LIVE_NOTHING, "Click a slide to show it", "Klik slide untuk menayangkan");
+text!(NEXT_NOTHING, "Nothing open", "Belum ada yang dibuka");
+text!(BTN_SHOW, "Show", "Tayangkan");
+text!(COUNTDOWN, "Countdown", "Hitung mundur");
+text!(COUNTDOWN_LABEL, "We start in", "Ibadah dimulai dalam");
+
+// Editor.
+text!(EDITOR_NEW, "New song", "Lagu baru");
+text!(EDITOR_EDIT, "Edit song", "Edit lagu");
+text!(EDITOR_NO_SLIDES, "Slides appear here as you type", "Slide muncul di sini saat mengetik");
+text!(FIELD_TITLE, "Title", "Judul");
+text!(FIELD_AUTHOR, "Author", "Pencipta");
+text!(FIELD_KEY, "Key", "Nada");
+text!(FIELD_COPYRIGHT, "Copyright", "Hak cipta");
+text!(FIELD_CCLI, "CCLI song number", "Nomor CCLI");
+text!(FIELD_LYRICS, "Words", "Lirik");
+text!(FIELD_ORDER, "Or type it: V1 C*2 V2 C B", "Ketik urutan, misalnya V1 C*2 B");
+text!(ORDER, "Order", "Urutan");
+text!(ORDER_AS_WRITTEN, "As written", "Sesuai ketikan");
+text!(ORDER_EMPTY, "The order appears once the words have sections", "Urutan muncul setelah lirik dibagi per bagian");
+text!(ORDER_CHORUS_EACH, "Chorus after each verse", "Reff setelah tiap bait");
+text!(BTN_TIDY, "Tidy", "Rapikan");
+text!(TIDY_HELP, "Make headings into markers and drop chord lines", "Judul bagian jadi penanda, baris akord dihapus");
+text!(SUGGEST_LABEL, "Songs with this title", "Lagu dengan judul sama");
+text!(SUGGEST_LIBRARY, "Already in your library", "Sudah di pustaka");
+text!(SUGGEST_FETCHING, "Getting the words", "Mengambil dari internet");
+text!(LICENCE_NOTE, "Projecting lyrics needs a licence such as CCLI.", "Lirik di layar perlu lisensi, misalnya CCLI");
+
+pub fn suggest_web(artist: &str, source: &str) -> String {
+    if indonesian() {
+        return if artist.is_empty() { source.to_string() } else { format!("{artist}, {source}") };
+    }
+    if artist.is_empty() { format!("From {source}") } else { format!("{artist}, from {source}") }
+}
+
+pub fn words_from(source: &str) -> String {
+    if indonesian() {
+        return format!("Lirik dari {source}. Cocokkan dulu dengan salinan gereja.");
+    }
+    format!("Words from {source}. Check them against your own copy.")
+}
+text!(FIELD_SECOND, "Second language", "Lirik bahasa kedua");
+text!(LYRICS_PLACEHOLDER, "[1]\nFirst verse\n\n[chorus]\nChorus", "[1]\nBaris bait satu\n[chorus]\nBaris reff");
+text!(SECOND_PLACEHOLDER, "The same sections in the other language", "Ketik bagian yang sama dalam bahasa kedua");
+text!(MARK_VERSE, "Verse", "Bait");
+text!(MARK_CHORUS, "Chorus", "Reff");
+text!(MARK_BRIDGE, "Bridge", "Bridge");
+text!(MARK_PRECHORUS, "Pre-chorus", "Pra-reff");
+text!(MARK_ENDING, "Ending", "Penutup");
+text!(BTN_ADD_SECOND, "Add a second language", "Tambah bahasa kedua");
+text!(BTN_SAVE, "Save", "Simpan");
+text!(BTN_CANCEL, "Cancel", "Batal");
+text!(BTN_DELETE, "Delete", "Hapus");
+text!(BTN_DUPLICATE, "Duplicate", "Buat salinan");
+text!(BTN_CLOSE, "Close", "Tutup");
+text!(BTN_UNDO, "Undo", "Urungkan");
+text!(BTN_OPEN, "Open", "Buka");
+text!(BTN_CHOOSE, "Choose", "Pilih");
+text!(BTN_SHOW_NOW, "Show now", "Tayangkan");
+text!(SONG_SAVED, "Song saved", "Lagu disimpan");
+text!(EDITOR_CLOSED, "Closed without saving", "Ditutup, perubahan tidak disimpan");
+text!(SONG_UNTITLED, "Untitled song", "Tanpa judul");
+text!(PASTE_EMPTY, "The clipboard has no text", "Tidak ada teks yang disalin");
+
+pub fn could_not_save(problem: &str) -> String {
+    if indonesian() {
+        return format!("Lagu gagal disimpan: {problem}");
+    }
+    format!("The song was not saved: {problem}")
+}
+
+pub fn song_deleted(title: &str) -> String {
+    if indonesian() {
+        return format!("\u{201c}{title}\u{201d} dihapus");
+    }
+    format!("Deleted {title}")
+}
+
+// Look.
+text!(LOOK_SAMPLE, "The words appear\nlike this", "Contoh teks\nBaris kedua");
+text!(LOOK_CUSTOM, "Your own", "Kustom");
+text!(LOOK_BACKGROUND, "Picture or video", "Latar");
+text!(LOOK_CHOOSE_FILE, "Choose a file", "Pilih berkas");
+text!(LOOK_NO_FILE, "None chosen", "Belum ada berkas");
+text!(LOOK_LINES, "Lines on a slide", "Baris per slide");
+text!(LOOK_LINES_ALL, "All", "Semua");
+text!(LOOK_SIZE, "Text size", "Ukuran teks");
+text!(LOOK_SIZE_SMALL, "Small", "Kecil");
+text!(LOOK_SIZE_NORMAL, "Normal", "Normal");
+text!(LOOK_SIZE_LARGE, "Large", "Besar");
+text!(LOOK_PLACE, "Text position", "Posisi teks");
+text!(LOOK_PLACE_TOP, "Top", "Atas");
+text!(LOOK_PLACE_MIDDLE, "Middle", "Tengah");
+text!(LOOK_PLACE_BOTTOM, "Bottom", "Bawah");
+text!(LOOK_BIBLE, "Bible", "Versi Alkitab");
+text!(LOOK_SECOND_BIBLE, "Second Bible", "Versi Alkitab kedua");
+text!(LOOK_NONE, "None", "Tanpa");
+text!(LOOK_LOGO, "Logo", "Logo gereja");
+text!(LOOK_CHOOSE_LOGO, "Choose a picture", "Pilih gambar");
+text!(LOOK_LICENCE, "CCLI licence", "Nomor lisensi CCLI");
+text!(LOOK_LICENCE_HINT, "Number", "Nomor");
+text!(BACKGROUND_UNKNOWN, "That file is not a picture or a video", "Berkas ini bukan gambar atau video yang didukung");
+
+pub fn bible_failed(code: &str, problem: &str) -> String {
+    if indonesian() {
+        return format!("Alkitab {code} gagal dimuat: {problem}");
+    }
+    format!("{code} could not be opened: {problem}")
+}
+
+// Screens.
+text!(SCREENS_OFF, "The projector is off in practice mode.", "Mode latihan: layar tidak dipakai");
+text!(SCREENS_ONE, "Plug in the projector and it turns on by itself.", "Layar kedua yang tersambung akan menyala sendiri");
+text!(SCREENS_SWITCH, "Projector", "Nyalakan layar");
+text!(WALL, "Picture on the wall", "Gambar proyeksi");
+text!(WALL_HINT, "Pick a corner, then move it until the picture is square.", "Pilih satu sudut, geser sampai gambar di dinding lurus");
+text!(WALL_RESET, "Put it back", "Setel ulang");
+text!(WALL_BRIGHTNESS, "Brightness", "Kecerahan");
+text!(WALL_CONTRAST, "Contrast", "Kontras");
+text!(WALL_COLOUR, "Colour", "Warna");
+text!(CORNER_TOP_LEFT, "Top left corner", "Sudut kiri atas");
+text!(CORNER_TOP_RIGHT, "Top right corner", "Sudut kanan atas");
+text!(CORNER_BOTTOM_RIGHT, "Bottom right corner", "Sudut kanan bawah");
+text!(CORNER_BOTTOM_LEFT, "Bottom left corner", "Sudut kiri bawah");
+text!(NUDGE_UP, "Up", "Naik");
+text!(NUDGE_DOWN, "Down", "Turun");
+text!(NUDGE_LEFT, "Left", "Kiri");
+text!(NUDGE_RIGHT, "Right", "Kanan");
+text!(LESS, "Less", "Kurangi");
+text!(MORE, "More", "Tambah");
+text!(LOOK_CAMERA, "Camera", "Kamera");
+text!(SCREENS_HERE, "Show it on this screen", "Layar di jendela ini");
+text!(SCREENS_HERE_HINT, "Escape on the picture closes it.", "Tutup dengan Esc saat kursor di gambar");
+text!(LOOK_WINDOW, "Artosia's window", "Warna jendela Artosia");
+text!(LOOK_WINDOW_AUTO, "As the computer", "Ikut komputer");
+text!(LOOK_WINDOW_LIGHT, "Light", "Terang");
+text!(LOOK_WINDOW_DARK, "Dark", "Gelap");
+text!(SCREEN_PROJECTOR, "Projector", "Layar jemaat");
+text!(SCREEN_STAGE, "Stage", "Panggung");
+text!(SCREEN_UNUSED, "Not used", "Tak dipakai");
+text!(SCREENS_STAGE_WINDOW, "Show the stage screen in a window", "Monitor panggung di jendela terpisah");
+text!(SCREENS_IDENTIFY, "Show numbers on the screens", "Tampilkan nomor layar");
+
+pub fn screen_name(number: usize) -> String {
+    if indonesian() {
+        return format!("Layar {number}");
+    }
+    format!("Screen {number}")
+}
+
+/// The name in the list of screens, which also says which one Artosia's window is on.
+pub fn screen_title(number: usize, this: bool) -> String {
+    if indonesian() {
+        return if this { format!("Layar {number} (layar ini)") } else { format!("Layar {number}") };
+    }
+    if this { format!("Screen {number}, this one") } else { format!("Screen {number}") }
+}
+
+/// A screen's size, and its zoom when it has one.
+pub fn screen_detail(width: u32, height: u32, scale: f32) -> String {
+    if indonesian() {
+        return {
+            if scale > 0.0 && (scale - 1.0).abs() > 0.01 {
+                let scale = format!("{}%", (scale * 100.0).round() as u32);
+                format!("{width} x {height}, zoom {scale}")
+            } else {
+                format!("{width} x {height}")
+            }
+        };
+    }
+    let mut out = format!("{width} by {height}");
+    if scale > 0.0 && (scale - 1.0).abs() > 0.01 {
+        out.push_str(&format!(" at {}%", (scale * 100.0).round() as u32));
+    }
+    out
+}
+
+// Phone remote.
+text!(REMOTE_SWITCH, "Phone remote", "Remote HP");
+text!(REMOTE_SWITCH_DETAIL, "Let phones on this Wi-Fi change slides", "HP di Wi-Fi yang sama bisa ganti slide");
+text!(REMOTE_SCAN, "Scan the code, or open this address", "Pindai dengan kamera HP atau ketik alamatnya");
+text!(REMOTE_PIN, "PIN", "PIN");
+
+pub fn phones(count: usize) -> String {
+    if indonesian() {
+        return if count == 0 { "Belum ada HP tersambung".to_string() } else { format!("{count} HP tersambung") };
+    }
+    match count {
+        0 => "No phone connected".to_string(),
+        1 => "1 phone connected".to_string(),
+        _ => format!("{count} phones connected"),
+    }
+}
+
+pub fn remote_failed(problem: &str) -> String {
+    if indonesian() {
+        return format!("Remote HP gagal dijalankan: {problem}");
+    }
+    format!("The phone remote could not start: {problem}")
+}
+
+// Import.
+text!(IMPORT_FOUND, "Artosia will copy the songs and Bibles from this folder. EasiSlides keeps working.", "Lagu dan Alkitab EasiSlides akan disalin ke sini. EasiSlides tetap bisa dipakai.");
+text!(IMPORT_NOT_FOUND, "EasiSlides was not found on this computer.", "EasiSlides tidak terpasang di komputer ini");
+
+pub fn import_done(songs: usize, bibles: usize) -> String {
+    if indonesian() {
+        return if bibles == 0 { format!("{songs} lagu ditambahkan") } else { format!("{songs} lagu dan {bibles} Alkitab ditambahkan") };
+    }
+    let songs = if songs == 1 { "1 song".to_string() } else { format!("{songs} songs") };
+    match bibles {
+        0 => format!("Added {songs}"),
+        1 => format!("Added {songs} and 1 Bible"),
+        _ => format!("Added {songs} and {bibles} Bibles"),
+    }
+}
+
+/// What an import of a song folder did, as one or two whole sentences.
+pub fn import_summary(added: usize, updated: usize, kept: usize) -> String {
+    if indonesian() {
+        return {
+            let changed = match (added, updated) {
+                (0, 0) => String::new(),
+                (_, 0) => format!("{added} lagu ditambahkan"),
+                (0, _) => format!("{updated} lagu diperbarui"),
+                _ => format!("{added} lagu baru, {updated} diperbarui"),
+            };
+            match (changed.is_empty(), kept) {
+                (true, 0) => "Semua lagu sudah ada".to_string(),
+                (false, 0) => changed,
+                (true, _) => format!("{kept} lagu dibiarkan karena diedit di sini"),
+                (false, _) => format!("{changed}. {kept} dibiarkan karena diedit di sini."),
+            }
+        };
+    }
+    let count = |n: usize| if n == 1 { "1 song".to_string() } else { format!("{n} songs") };
+    let changed = match (added, updated) {
+        (0, 0) => String::new(),
+        (added, 0) => format!("Added {}", count(added)),
+        (0, updated) => format!("Updated {}", count(updated)),
+        (added, updated) => format!("Added {added} and updated {}", count(updated)),
+    };
+    match (changed.is_empty(), kept) {
+        (true, 0) => "Everything in that folder is already here".to_string(),
+        (false, 0) => changed,
+        (true, kept) => format!("Kept {} you edited here", count(kept)),
+        (false, kept) => format!("{changed}. Kept {} you edited here", count(kept)),
+    }
+}
+
+pub fn files_unreadable(failed: usize) -> String {
+    if indonesian() {
+        return format!("{failed} berkas gagal dimuat");
+    }
+    if failed == 1 { "1 file could not be read".to_string() } else { format!("{failed} files could not be read") }
+}
+
+pub fn import_partial(songs: usize, failed: usize) -> String {
+    if indonesian() {
+        return format!("{songs} lagu masuk, {failed} berkas gagal dimuat");
+    }
+    let files = if failed == 1 { "1 file".to_string() } else { format!("{failed} files") };
+    format!("Added {songs} songs. {files} could not be read")
+}
+
+// Announcements.
+text!(ANNOUNCEMENTS_EMPTY, "No announcements yet", "Belum ada pengumuman");
+text!(ANNOUNCEMENT_NEW, "New announcement", "Pengumuman baru");
+text!(ANNOUNCEMENT_BODY, "Details", "Keterangan");
+text!(ANNOUNCEMENT_TITLE_HINT, "Youth night", "Persekutuan pemuda");
+text!(ANNOUNCEMENT_BODY_HINT, "Friday at 7 pm in the hall", "Jumat, jam 19.00, di aula gereja");
+text!(ANNOUNCEMENT_SECONDS, "Seconds on screen", "Detik per pengumuman");
+text!(ANNOUNCEMENT_START_FROM, "Start from", "Mulai dari contoh");
+text!(ANNOUNCEMENT_BRING_IN, "Bring in", "Ambil dari berkas");
+text!(ANNOUNCEMENT_FILL, "Fill in by itself", "Isi otomatis");
+text!(FILL_NOTHING, "No", "Manual");
+text!(FILL_WEEK, "Birthdays this week", "Ulang tahun minggu ini");
+text!(FILL_MONTH, "Birthdays this month", "Ulang tahun bulan ini");
+text!(ANNOUNCEMENT_PICTURE, "Picture", "Gambar");
+text!(BTN_REMOVE_PICTURE, "Remove", "Lepas");
+text!(CMD_IMPORT_PPTX, "Import a PowerPoint", "Impor dari PowerPoint");
+text!(CMD_IMPORT_PPTX_DETAIL, "Each slide becomes an announcement", "Tiap slide jadi satu pengumuman");
+text!(CMD_IMPORT_BIRTHDAYS, "Import a birthday list", "Impor ulang tahun");
+text!(CMD_IMPORT_BIRTHDAYS_DETAIL, "A Word or PowerPoint table of names and dates", "Tabel nama dan tanggal lahir di Word");
+text!(BIRTHDAYS_NONE_FOUND, "No names with dates were found in that file", "Tidak ada baris berisi nama dan tanggal lahir");
+const MONTHS_EN: [&str; 12] = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+const MONTHS_ID: [&str; 12] = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+pub fn MONTHS() -> &'static [&'static str; 12] {
+    if indonesian() { &MONTHS_ID } else { &MONTHS_EN }
+}
+
+pub fn could_not_read(problem: &str) -> String {
+    if indonesian() {
+        return format!("Berkas gagal dibuka: {problem}");
+    }
+    format!("That file could not be read: {problem}")
+}
+
+pub fn pptx_imported(added: usize, lost: usize) -> String {
+    if indonesian() {
+        return if lost == 0 { format!("{added} pengumuman dibuat") } else { format!("{added} pengumuman dibuat, {lost} gambar gagal dipindahkan") };
+    }
+    let added = if added == 1 { "Added 1 announcement".to_string() } else { format!("Added {added} announcements") };
+    match lost {
+        0 => added,
+        1 => format!("{added}. 1 picture could not be brought in"),
+        _ => format!("{added}. {lost} pictures could not be brought in"),
+    }
+}
+
+pub fn birthdays_on_file(count: usize) -> String {
+    if indonesian() {
+        return if count == 0 { "Belum ada data ulang tahun".to_string() } else { format!("{count} ulang tahun tersimpan") };
+    }
+    match count {
+        0 => "No birthdays on file".to_string(),
+        1 => "1 birthday on file".to_string(),
+        _ => format!("{count} birthdays on file"),
+    }
+}
+
+pub fn birthdays_imported(count: usize, unread: usize) -> String {
+    if indonesian() {
+        return if unread == 0 { format!("{count} ulang tahun tersimpan") } else { format!("{count} ulang tahun tersimpan, {unread} baris dilewati") };
+    }
+    let kept = birthdays_on_file(count);
+    match unread {
+        0 => kept,
+        1 => format!("{kept}. 1 row could not be read"),
+        _ => format!("{kept}. {unread} rows could not be read"),
+    }
+}
+text!(ANNOUNCEMENT_PREVIEW, "On the projector", "Pratinjau");
+/// Ready-made announcements: a title and words to replace.
+const ANNOUNCEMENT_TEMPLATES_EN: [(&str, &str); 6] = [
+    ("Welcome", "We are glad you are here."),
+    ("Service times", "Sunday at 9 am and 5 pm"),
+    ("This week", "Wednesday: prayer meeting at 7 pm"),
+    ("Verse of the week", "Write the verse here"),
+    ("Offering", "Account name and number"),
+    ("Birthdays", "Names this week"),
+];
+const ANNOUNCEMENT_TEMPLATES_ID: [(&str, &str); 6] = [
+    ("Selamat datang", "Kami senang bisa beribadah bersama hari ini"),
+    ("Jam ibadah", "Minggu, jam 07.00 dan 17.00"),
+    ("Minggu ini", "Doa bersama Rabu malam, jam 19.00"),
+    ("Ayat minggu ini", "Ganti baris ini dengan ayatnya"),
+    ("Persembahan", "Tulis atas nama dan nomor rekening di sini"),
+    ("Ulang tahun", "Tulis nama yang berulang tahun minggu ini"),
+];
+pub fn ANNOUNCEMENT_TEMPLATES() -> &'static [(&'static str, &'static str)] {
+    if indonesian() { &ANNOUNCEMENT_TEMPLATES_ID } else { &ANNOUNCEMENT_TEMPLATES_EN }
+}
+
+pub fn announcements(count: usize) -> String {
+    if indonesian() {
+        return if count == 0 { "Belum ada pengumuman".to_string() } else { format!("{count} pengumuman") };
+    }
+    match count {
+        0 => "No announcements yet".to_string(),
+        1 => "1 announcement".to_string(),
+        _ => format!("{count} announcements"),
+    }
+}
+
+pub fn seconds_short(seconds: u32) -> String {
+    if indonesian() {
+        return format!("{seconds} dtk");
+    }
+    format!("{seconds} s")
+}
+
+// The key sheet: what a key is called and what it does.
+text!(KEYS_TITLE, "Keyboard shortcuts", "Tombol pintas");
+text!(KEYS_SHOWING, "Showing", "Saat tayang");
+text!(KEYS_FINDING, "Finding", "Mencari");
+text!(KEYS_PLAN, "The plan", "Acara");
+text!(KEYS_EDITING, "Editing", "Editor lagu");
+const KEYS_SHOWING_ROWS_EN: [(&str, &str); 13] = [
+    ("Down, Space", "Next slide"),
+    ("Up", "Previous slide"),
+    ("Left", "First slide of the live song"),
+    ("Right", "Last slide of the live song"),
+    ("Shift arrow", "Move the ring in Preview, the screen stays"),
+    ("Enter", "Show the slide with the ring"),
+    ("1 to 9", "Jump to that section of the live song"),
+    ("Esc", "Bring the live song into Preview"),
+    ("F1", "Clear the text"),
+    ("F2", "Black"),
+    ("F3", "Logo"),
+    ("F4", "Bring what the listener heard into Preview"),
+    ("F5", "Bring the announcements into Preview"),
+];
+const KEYS_SHOWING_ROWS_ID: [(&str, &str); 13] = [
+    ("Panah bawah, Spasi", "Tayangkan slide berikutnya"),
+    ("Panah atas", "Tayangkan slide sebelumnya"),
+    ("Panah kiri", "Loncat ke slide pertama lagu yang tayang"),
+    ("Panah kanan", "Loncat ke slide terakhir lagu yang tayang"),
+    ("Shift panah", "Geser bingkai di pratinjau, layar tak berubah"),
+    ("Enter", "Tayangkan slide yang berbingkai putih"),
+    ("1 sampai 9", "Loncat ke bagian lagu sesuai nomor"),
+    ("Esc", "Bawa lagu yang tayang ke pratinjau"),
+    ("F1", "Sembunyikan teks, latar tetap tayang"),
+    ("F2", "Hitamkan layar"),
+    ("F3", "Tayangkan logo saja"),
+    ("F4", "Bawa ayat atau lagu yang dikenali ke pratinjau"),
+    ("F5", "Bawa pengumuman ke pratinjau"),
+];
+pub fn KEYS_SHOWING_ROWS() -> &'static [(&'static str, &'static str)] {
+    if indonesian() { &KEYS_SHOWING_ROWS_ID } else { &KEYS_SHOWING_ROWS_EN }
+}
+const KEYS_FINDING_ROWS_EN: [(&str, &str); 7] = [
+    ("Any letter", "Search songs, the Bible and commands"),
+    ("Ctrl K", "Search, or browse every song"),
+    ("Enter", "Open the picked result"),
+    ("Ctrl Enter", "Show it now"),
+    ("Shift Enter", "Add it to the plan, next in line"),
+    ("Tab", "Search inside the picked song"),
+    ("Esc", "Empty the search, then close it"),
+];
+const KEYS_FINDING_ROWS_ID: [(&str, &str); 7] = [
+    ("Huruf apa saja", "Ketik huruf di mana saja untuk mencari"),
+    ("Ctrl K", "Buka pencarian, kosong berarti semua lagu"),
+    ("Enter", "Buka hasil yang disorot"),
+    ("Ctrl Enter", "Buka dan langsung tayangkan"),
+    ("Shift Enter", "Tambah setelah yang tayang, atau di akhir"),
+    ("Tab", "Cari bagian lagu yang disorot"),
+    ("Esc", "Hapus ketikan, tekan lagi untuk menutup"),
+];
+pub fn KEYS_FINDING_ROWS() -> &'static [(&'static str, &'static str)] {
+    if indonesian() { &KEYS_FINDING_ROWS_ID } else { &KEYS_FINDING_ROWS_EN }
+}
+const KEYS_PLAN_ROWS_EN: [(&str, &str); 4] = [
+    ("Tab", "Bring the next plan item into Preview"),
+    ("Shift Tab", "Bring the item before it into Preview"),
+    ("Alt Up, Down", "Move the Preview item earlier or later"),
+    ("Delete", "Take the Preview item out of the plan"),
+];
+const KEYS_PLAN_ROWS_ID: [(&str, &str); 4] = [
+    ("Tab", "Bawa item acara berikutnya ke pratinjau"),
+    ("Shift Tab", "Bawa item acara sebelumnya ke pratinjau"),
+    ("Alt panah atas, bawah", "Geser item pratinjau naik atau turun"),
+    ("Delete", "Keluarkan item pratinjau, bisa diurungkan"),
+];
+pub fn KEYS_PLAN_ROWS() -> &'static [(&'static str, &'static str)] {
+    if indonesian() { &KEYS_PLAN_ROWS_ID } else { &KEYS_PLAN_ROWS_EN }
+}
+const KEYS_EDITING_ROWS_EN: [(&str, &str); 6] = [
+    ("Ctrl N", "New song"),
+    ("Ctrl E", "Edit the open song"),
+    ("Ctrl S", "Save"),
+    ("Ctrl 1 to 5", "Start a verse, chorus or other section"),
+    ("Tab", "Fill in the whole song offered under the title"),
+    ("Ctrl Z", "Undo the last removal"),
+];
+const KEYS_EDITING_ROWS_ID: [(&str, &str); 6] = [
+    ("Ctrl N", "Mulai lagu baru"),
+    ("Ctrl E", "Edit lagu yang terbuka"),
+    ("Ctrl S", "Simpan"),
+    ("Ctrl 1 sampai 5", "Sisipkan penanda bait, reff, atau lainnya"),
+    ("Tab", "Terima lagu yang diusulkan sekaligus"),
+    ("Ctrl Z", "Kembalikan yang terakhir dihapus"),
+];
+pub fn KEYS_EDITING_ROWS() -> &'static [(&'static str, &'static str)] {
+    if indonesian() { &KEYS_EDITING_ROWS_ID } else { &KEYS_EDITING_ROWS_EN }
+}
+
+pub fn announcement_deleted(title: &str) -> String {
+    if indonesian() {
+        return format!("Pengumuman \u{201c}{title}\u{201d} dihapus");
+    }
+    format!("Deleted {title}")
+}
+
+// The screen that faces the musicians. Its words travel to the projector program with each state.
+text!(STAGE_CLOCK, "Clock", "Jam");
+text!(STAGE_TIMER, "Timer", "Hitung mundur");
+text!(STAGE_BLACK, "Screen is black", "Layar jemaat hitam");
+text!(STAGE_NOTHING, "Nothing on screen", "Belum ada yang tayang");
+
+/// What comes after the live slide. Called with "{label}" it gives the pattern itself.
+pub fn stage_next(label: &str) -> String {
+    if indonesian() {
+        return format!("Berikutnya: {label}");
+    }
+    format!("Next: {label}")
+}
+
+/// Which slide of how many. Called with "{index}" and "{count}" it gives the pattern itself.
+pub fn stage_place(index: &str, count: &str) -> String {
+    if indonesian() {
+        return format!("{index} dari {count}");
+    }
+    format!("Slide {index} of {count}")
+}
+
+/// A song section's name as a volunteer reads it: "Verse 2", "Chorus"; "Bait 2", "Reff".
+pub fn section_label(tag: artosia_core::song::Tag) -> String {
+    use artosia_core::song::SectionKind;
+    if !indonesian() {
+        return tag.label();
+    }
+    let name = match tag.kind {
+        SectionKind::Verse => "Bait",
+        SectionKind::PreChorus => "Pra-reff",
+        SectionKind::Chorus => "Reff",
+        SectionKind::Bridge => "Bridge",
+        SectionKind::Intro => "Intro",
+        SectionKind::Ending => "Penutup",
+        SectionKind::Other => "Bagian",
+    };
+    let numbered = matches!(tag.kind, SectionKind::Verse | SectionKind::Other) || tag.number > 1;
+    if numbered { format!("{name} {}", tag.number) } else { name.to_string() }
+}
+
+// The language switch, named in each language's own word.
+text!(LOOK_LANGUAGE, "Language", "Bahasa");
+pub const LANGUAGE_ENGLISH: &str = "English";
+pub const LANGUAGE_INDONESIAN: &str = "Bahasa Indonesia";
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn counted_nouns_have_a_singular() {
+        assert_eq!(slides(1), "1 slide");
+        assert_eq!(slides(8), "8 slides");
+        assert_eq!(phones(0), "No phone connected");
+        assert_eq!(import_done(1, 1), "Added 1 song and 1 Bible");
+        assert_eq!(import_summary(0, 0, 0), "Everything in that folder is already here");
+        assert_eq!(import_summary(3, 1, 0), "Added 3 and updated 1 song");
+        assert_eq!(import_summary(0, 12, 2), "Updated 12 songs. Kept 2 songs you edited here");
+        assert_eq!(import_summary(0, 0, 1), "Kept 1 song you edited here");
+    }
+
+    /// The house rules for words on screen: no dash or dot used as punctuation.
+    #[test]
+    fn no_dash_or_middot_in_any_string() {
+        let source = include_str!("strings.rs");
+        let (code, _) = source.split_once("#[cfg(test)]").unwrap_or((source, ""));
+        for banned in ['\u{2014}', '\u{2013}', '\u{b7}'] {
+            assert!(!code.contains(banned), "found {banned:?}");
+        }
+    }
+
+    /// Spellings Indonesian readers catch at once. Each is a known-wrong form: the right one
+    /// is beside it. A space after the prefix di- makes a verb read as a place.
+    #[test]
+    fn indonesian_keeps_its_own_spelling() {
+        let source = include_str!("strings.rs");
+        let (code, _) = source.split_once("#[cfg(test)]").unwrap_or((source, ""));
+        let lower = code.to_lowercase();
+        let wrong = [
+            ("resiko", "risiko"), ("aktifitas", "aktivitas"), ("silahkan", "silakan"), ("merubah", "mengubah"), ("ijin", "izin"),
+            ("di tampilkan", "ditampilkan"), ("di simpan", "disimpan"), ("di hapus", "dihapus"), ("di tambahkan", "ditambahkan"),
+            ("dilayar", "di layar"), ("diatas", "di atas"), ("dibawah", "di bawah"), ("kedalam", "ke dalam"),
+            ("proyektor", "layar"), ("al kitab", "Alkitab"), ("jema'at", "jemaat"), ("praktek", "praktik"), (" anda ", "no honorific"),
+        ];
+        for (bad, good) in wrong {
+            assert!(!lower.contains(bad), "found {bad:?}; write {good:?}");
+        }
+    }
+
+    /// The Indonesian in this file is the Indonesian that was reviewed (`docs/i18n/id.json`).
+    /// A line changed here and not there, or there and not here, fails.
+    #[test]
+    fn indonesian_matches_the_reviewed_file() {
+        let reviewed: serde_json::Value = serde_json::from_str(include_str!("../../../docs/i18n/id.json")).unwrap_or_default();
+        let source = include_str!("strings.rs");
+        let escape = |text: &str| text.replace('\\', "\\\\").replace('"', "\\\"").replace('\n', "\\n").replace('\u{201c}', "\\u{201c}").replace('\u{201d}', "\\u{201d}");
+        let mut checked = 0;
+        for (key, entry) in reviewed.as_object().into_iter().flatten() {
+            let Some(text) = entry.get("text").and_then(|text| text.as_str()) else { continue };
+            let Some(line) = source.lines().find(|line| line.starts_with(&format!("text!({key}, "))) else { continue };
+            assert!(line.ends_with(&format!(", \"{}\");", escape(text))), "{key} differs from docs/i18n/id.json");
+            checked += 1;
+        }
+        assert!(checked > 250, "only {checked} lines were compared");
+    }
+
+    #[test]
+    fn both_languages_answer() {
+        set_indonesian(false);
+        assert_eq!((BTN_SAVE(), slides(2), section_label(artosia_core::song::Tag::new(artosia_core::song::SectionKind::Chorus, 1))), ("Save", "2 slides".to_string(), "Chorus".to_string()));
+        set_indonesian(true);
+        assert_eq!((BTN_SAVE(), slides(2), section_label(artosia_core::song::Tag::new(artosia_core::song::SectionKind::Chorus, 1))), ("Simpan", "2 slide".to_string(), "Reff".to_string()));
+        assert_eq!(import_summary(3, 1, 2), "3 lagu baru, 1 diperbarui. 2 dibiarkan karena diedit di sini.");
+        set_indonesian(false);
+    }
+}

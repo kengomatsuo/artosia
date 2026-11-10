@@ -1,0 +1,916 @@
+//! The search box: one field that finds songs, Bible passages, announcements and commands, and
+//! that is also the library when nothing is typed.
+//!
+//! The ranking follows the owner's house-kit palette (`artosia_core::palette`): every part of
+//! the app contributes documents, the order is a cascade of single rules, a document answers
+//! to its words in English and Indonesian, and Tab attaches the picked song so the next words
+//! search inside it.
+
+use std::collections::HashSet;
+use std::ops::Range;
+
+use artosia_core::bible::{Reference, english_name};
+use artosia_core::deck::DeckSource;
+use artosia_core::palette::{self as kit, Doc, LABEL};
+use artosia_core::plan::PlanEntry;
+use artosia_core::search::LineHit;
+use artosia_core::song::{SectionKind, Tag};
+use artosia_slides::look::presets;
+use rune::TextEdit;
+
+use crate::state::{App, Sheet, section_starts};
+use crate::strings as t;
+
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub enum Scope {
+    #[default]
+    All,
+    Songs,
+    Bible,
+}
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum Command {
+    NewSong,
+    PasteSong,
+    Announcements,
+    Looks,
+    Screens,
+    Import,
+    ImportFolder,
+    Remote,
+    Heading,
+    NewPlan,
+    Keys,
+    StartService,
+    Next,
+    Previous,
+    Black,
+    ClearText,
+    Logo,
+    StopCountdown,
+    HideMessage,
+    EditSong,
+    Undo,
+    LoopAnnouncements,
+    ImportPptx,
+    ImportBirthdays,
+    CheckUpdate,
+    Listen,
+    Stream,
+}
+
+impl Command {
+    pub const ALL: [Command; 27] = [
+        Command::StartService,
+        Command::Next,
+        Command::Previous,
+        Command::Black,
+        Command::ClearText,
+        Command::Logo,
+        Command::StopCountdown,
+        Command::HideMessage,
+        Command::LoopAnnouncements,
+        Command::Undo,
+        Command::NewSong,
+        Command::PasteSong,
+        Command::EditSong,
+        Command::Announcements,
+        Command::Heading,
+        Command::NewPlan,
+        Command::Looks,
+        Command::Screens,
+        Command::Remote,
+        Command::Listen,
+        Command::Stream,
+        Command::ImportFolder,
+        Command::ImportPptx,
+        Command::ImportBirthdays,
+        Command::Import,
+        Command::Keys,
+        Command::CheckUpdate,
+    ];
+
+    pub fn label(self) -> &'static str {
+        match self {
+            Command::NewSong => t::CMD_NEW_SONG(),
+            Command::PasteSong => t::CMD_PASTE_SONG(),
+            Command::Announcements => t::CMD_ANNOUNCEMENTS(),
+            Command::Looks => t::CMD_LOOKS(),
+            Command::Screens => t::CMD_SCREENS(),
+            Command::Import => t::CMD_IMPORT(),
+            Command::ImportFolder => t::CMD_IMPORT_FOLDER(),
+            Command::Remote => t::CMD_REMOTE(),
+            Command::Heading => t::CMD_HEADING(),
+            Command::NewPlan => t::PLAN_NEW(),
+            Command::Keys => t::CMD_KEYS(),
+            Command::StartService => t::CMD_START(),
+            Command::Next => t::HINT_NEXT(),
+            Command::Previous => t::CMD_PREVIOUS(),
+            Command::Black => t::BTN_BLACK(),
+            Command::ClearText => t::BTN_CLEAR_TEXT(),
+            Command::Logo => t::BTN_LOGO(),
+            Command::StopCountdown => t::CMD_STOP_COUNTDOWN(),
+            Command::HideMessage => t::CMD_HIDE_MESSAGE(),
+            Command::EditSong => t::CMD_EDIT_SONG(),
+            Command::Undo => t::BTN_UNDO(),
+            Command::LoopAnnouncements => t::CMD_LOOP(),
+            Command::ImportPptx => t::CMD_IMPORT_PPTX(),
+            Command::ImportBirthdays => t::CMD_IMPORT_BIRTHDAYS(),
+            Command::CheckUpdate => t::CMD_UPDATE(),
+            Command::Listen => t::CMD_LISTEN(),
+            Command::Stream => t::CMD_STREAM(),
+        }
+    }
+
+    pub fn detail(self) -> &'static str {
+        match self {
+            Command::NewSong => t::CMD_NEW_SONG_DETAIL(),
+            Command::PasteSong => t::CMD_PASTE_SONG_DETAIL(),
+            Command::Announcements => t::CMD_ANNOUNCEMENTS_DETAIL(),
+            Command::Looks => t::CMD_LOOKS_DETAIL(),
+            Command::Screens => t::CMD_SCREENS_DETAIL(),
+            Command::Import => t::CMD_IMPORT_DETAIL(),
+            Command::ImportFolder => t::CMD_IMPORT_FOLDER_DETAIL(),
+            Command::Remote => t::CMD_REMOTE_DETAIL(),
+            Command::Heading => t::CMD_HEADING_DETAIL(),
+            Command::NewPlan => t::CMD_NEW_PLAN_DETAIL(),
+            Command::Keys => t::CMD_KEYS_DETAIL(),
+            Command::StartService => t::CMD_START_DETAIL(),
+            Command::Next => t::CMD_NEXT_DETAIL(),
+            Command::Previous => t::CMD_PREVIOUS_DETAIL(),
+            Command::Black => t::CMD_BLACK_DETAIL(),
+            Command::ClearText => t::CMD_CLEAR_DETAIL(),
+            Command::Logo => t::CMD_LOGO_DETAIL(),
+            Command::StopCountdown => t::CMD_STOP_COUNTDOWN_DETAIL(),
+            Command::HideMessage => t::CMD_HIDE_MESSAGE_DETAIL(),
+            Command::EditSong => t::CMD_EDIT_SONG_DETAIL(),
+            Command::Undo => t::CMD_UNDO_DETAIL(),
+            Command::LoopAnnouncements => t::CMD_LOOP_DETAIL(),
+            Command::ImportPptx => t::CMD_IMPORT_PPTX_DETAIL(),
+            Command::ImportBirthdays => t::CMD_IMPORT_BIRTHDAYS_DETAIL(),
+            Command::CheckUpdate => t::CMD_UPDATE_DETAIL(),
+            Command::Listen => t::CMD_LISTEN_DETAIL(),
+            Command::Stream => t::CMD_STREAM_DETAIL(),
+        }
+    }
+
+    /// Other words that find the command, in English and Indonesian. They never show.
+    fn aliases(self) -> &'static [&'static str] {
+        match self {
+            Command::NewSong => &["add song", "create song", "lagu baru", "tambah lagu", "buat lagu"],
+            Command::PasteSong => &["paste", "clipboard", "tempel lirik", "tempel lagu"],
+            Command::Announcements => &["notices", "edit announcements", "pengumuman", "warta"],
+            Command::Looks => &["theme", "background", "font", "text size", "tampilan", "tema", "latar", "ukuran teks"],
+            Command::Screens => &["projector", "monitor", "display", "stage", "layar", "proyektor"],
+            Command::Import => &["easislides", "impor", "pindahkan"],
+            Command::ImportFolder => &["openlyrics", "impor lagu", "folder lagu"],
+            Command::Remote => &["mobile", "qr", "hp", "ponsel", "telepon", "remote hp"],
+            Command::Heading => &["divider", "section", "judul bagian", "pembatas"],
+            Command::NewPlan => &["new service", "reset plan", "rencana baru", "susunan baru", "ibadah baru"],
+            Command::Keys => &["shortcuts", "help", "hotkeys", "pintasan", "tombol", "bantuan"],
+            Command::StartService => &["start live", "go live", "begin", "mulai", "mulai ibadah", "tayangkan"],
+            Command::Next => &["forward", "lanjut", "berikutnya", "maju"],
+            Command::Previous => &["back", "sebelumnya", "kembali", "mundur"],
+            Command::Black => &["blank", "screen off", "hitam", "gelap", "layar hitam", "matikan layar"],
+            Command::ClearText => &["hide words", "hide lyrics", "sembunyikan teks", "kosongkan teks", "hapus teks"],
+            Command::Logo => &["show logo", "tampilkan logo"],
+            Command::StopCountdown => &["stop timer", "cancel countdown", "hentikan hitung mundur", "batal hitung mundur"],
+            Command::HideMessage => &["clear message", "sembunyikan pesan", "hapus pesan"],
+            Command::EditSong => &["edit", "fix lyrics", "ubah lagu", "sunting lagu", "perbaiki lirik"],
+            Command::Undo => &["revert", "batalkan", "urungkan"],
+            Command::LoopAnnouncements => &["auto advance", "slideshow", "putar pengumuman", "ulang pengumuman", "otomatis"],
+            Command::ImportPptx => &["powerpoint", "ppt", "pptx", "slides", "warta", "impor powerpoint"],
+            Command::ImportBirthdays => &["birthdays", "birthday", "ulang tahun", "ultah", "hut"],
+            Command::CheckUpdate => &["update", "upgrade", "new version", "version", "perbarui", "pembaruan", "versi baru"],
+            Command::Listen => &["microphone", "mic", "hear", "speech", "dengar", "dengarkan", "mikrofon", "suara"],
+            Command::Stream => &["live stream", "broadcast", "youtube", "facebook", "record", "recording", "siaran", "siaran langsung", "rekam", "streaming"],
+        }
+    }
+
+    /// Whether the command can do anything now. One that cannot is left out of the results.
+    fn usable(self, app: &App) -> bool {
+        match self {
+            Command::Import => app.easislides.is_some(),
+            Command::StartService => app.plan.items.iter().any(|item| !item.entry.is_heading()),
+            Command::Next | Command::Previous => app.live.is_some() || app.open.is_some(),
+            Command::Logo => !app.settings.logo.is_empty(),
+            Command::StopCountdown => app.countdown.is_some(),
+            Command::HideMessage => app.message_on || app.stage_message_on,
+            Command::EditSong => matches!(app.open.as_ref().map(|open| &open.deck.source), Some(DeckSource::Song(_))),
+            Command::Undo => app.toast.as_ref().is_some_and(|toast| toast.undo.is_some()),
+            Command::LoopAnnouncements => !app.announcements.is_empty(),
+            _ => true,
+        }
+    }
+}
+
+#[derive(Clone, Debug, PartialEq)]
+pub enum Hit {
+    Song { song: usize, title_ranges: Vec<Range<usize>>, line: Option<LineHit>, planned: bool },
+    /// A section of the attached song, at its place in the sung order.
+    Section { song: usize, slide: usize, tag: Tag, label: String, text: String },
+    /// A reference read from the query, or a book or chapter to step into.
+    Passage { reference: Reference, title: String, text: String, ranges: Vec<Range<usize>>, step: Option<String> },
+    /// Something in today's plan that is not a song.
+    PlanItem { id: u64, title: String },
+    Announcement { index: usize, title: String, body: String },
+    /// A look Artosia ships, by its place in the presets.
+    Look { index: usize, name: String },
+    Bible { code: String, name: String },
+    Command(Command),
+    Countdown(u32),
+    Message(String),
+    /// A message for the musicians, on the stage screen only.
+    StageMessage(String),
+    /// Switch the window to Indonesian (true) or English.
+    Language(bool),
+}
+
+/// What Enter does to the picked result.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum Pick {
+    Open,
+    ShowNow,
+    AddToPlan,
+}
+
+#[derive(Default)]
+pub struct Palette {
+    pub open: bool,
+    pub query: TextEdit,
+    pub scope: Scope,
+    /// The song the search is inside: its sections are the results.
+    pub chip: Option<usize>,
+    pub hits: Vec<Hit>,
+    pub picked: usize,
+    /// How many songs matched before the list was cut, for the count line.
+    pub total: usize,
+}
+
+const SONG_LIMIT: usize = 40;
+/// The most commands and other named things that may go above the songs.
+const NAMED_LIMIT: usize = 4;
+
+fn verse_title(app: &App, reference: &Reference) -> String {
+    app.bible().map(|bible| bible.format(reference)).unwrap_or_else(|| english_name(reference.book).to_string())
+}
+
+fn passage_text(app: &App, reference: &Reference, limit: usize) -> String {
+    let Some(bible) = app.bible() else { return String::new() };
+    let mut out = String::new();
+    for verse in bible.verses(reference) {
+        if !out.is_empty() {
+            out.push(' ');
+        }
+        out.push_str(&verse.text);
+        if out.len() > limit {
+            break;
+        }
+    }
+    out
+}
+
+/// Words that find a section besides its name: what Indonesian song sheets call it.
+fn section_aliases(tag: Tag) -> Vec<String> {
+    let words: &[&str] = match tag.kind {
+        SectionKind::Verse => &["bait", "ayat", "stanza"],
+        SectionKind::Chorus => &["reff", "ref", "refrain", "koor"],
+        SectionKind::PreChorus => &["pre", "prechorus", "pre reff"],
+        SectionKind::Bridge => &["jembatan"],
+        SectionKind::Intro => &["pembuka", "opening"],
+        SectionKind::Ending => &["end", "coda", "penutup", "akhir", "outro"],
+        SectionKind::Other => &["bagian"],
+    };
+    let mut out: Vec<String> = words.iter().map(|word| format!("{word} {}", tag.number)).collect();
+    out.push(tag.short());
+    out
+}
+
+impl App {
+    pub fn open_palette(&mut self, scope: Scope, seed: &str) {
+        self.palette.open = true;
+        self.palette.scope = scope;
+        self.palette.chip = None;
+        self.palette.query = TextEdit::new(seed);
+        self.palette.query.focused = true;
+        self.palette.query.set_caret(seed.len());
+        self.palette.picked = 0;
+        self.plan_menu = None;
+        self.more_menu = false;
+        self.want_bible(&self.settings.bible.clone());
+        self.search();
+    }
+
+    pub fn close_palette(&mut self) {
+        self.palette.open = false;
+        self.palette.chip = None;
+        self.palette.query.focused = false;
+    }
+
+    /// Escape: the first press empties the search, the next one closes it.
+    pub fn palette_escape(&mut self) {
+        if self.palette.chip.is_none() && self.palette.query.text.is_empty() {
+            self.close_palette();
+            return;
+        }
+        self.palette.chip = None;
+        self.set_query("");
+    }
+
+    fn set_query(&mut self, text: &str) {
+        self.palette.query = TextEdit::new(text);
+        self.palette.query.focused = true;
+        self.palette.query.set_caret(text.len());
+        self.palette.picked = 0;
+        self.search();
+    }
+
+    pub fn set_scope(&mut self, scope: Scope) {
+        self.palette.scope = scope;
+        self.palette.picked = 0;
+        self.search();
+    }
+
+    /// Tab: steps into the picked song or book; with nothing to step into, changes the scope.
+    pub fn palette_tab(&mut self) {
+        match self.palette.hits.get(self.palette.picked).cloned() {
+            Some(Hit::Song { song, line, .. }) => {
+                self.palette.chip = Some(song);
+                self.set_query("");
+                // The section the search found stays picked.
+                if let Some(tag) = line.map(|line| line.tag) {
+                    let at = self.palette.hits.iter().position(|hit| matches!(hit, Hit::Section { tag: own, .. } if *own == tag));
+                    self.palette.picked = at.unwrap_or(0);
+                }
+            }
+            Some(Hit::Passage { step: Some(_), .. }) => self.pick(Pick::Open),
+            _ if self.palette.chip.is_some() => {}
+            _ => {
+                let next = match self.palette.scope {
+                    Scope::All => Scope::Songs,
+                    Scope::Songs => Scope::Bible,
+                    Scope::Bible => Scope::All,
+                };
+                self.set_scope(next);
+            }
+        }
+    }
+
+    /// Backspace in an empty search lets go of the attached song. False when there is none.
+    pub fn palette_detach(&mut self) -> bool {
+        if self.palette.chip.is_none() || !self.palette.query.text.is_empty() {
+            return false;
+        }
+        self.palette.chip = None;
+        self.set_query("");
+        true
+    }
+
+    /// Recomputes the results for the current query and scope.
+    pub fn search(&mut self) {
+        let query = self.palette.query.text.trim().to_string();
+        self.palette.total = 0;
+        let hits = match self.palette.chip {
+            Some(song) => self.section_hits(song, &query),
+            None if query.is_empty() => self.browse_hits(),
+            None => self.query_hits(&query),
+        };
+        self.palette.hits = hits;
+        self.palette.picked = self.palette.picked.min(self.palette.hits.len().saturating_sub(1));
+    }
+
+    fn browse_hits(&mut self) -> Vec<Hit> {
+        match self.palette.scope {
+            Scope::Bible => self.book_hits(),
+            scope => {
+                let mut hits = Vec::new();
+                if scope == Scope::All {
+                    // The two ways to add a song lead the list; other commands answer to typing.
+                    hits.extend([Hit::Command(Command::NewSong), Hit::Command(Command::PasteSong)]);
+                }
+                self.palette.total = self.songs.len();
+                let planned = self.planned_songs();
+                hits.extend((0..self.songs.len()).map(|song| Hit::Song { song, title_ranges: Vec::new(), line: None, planned: planned.contains(&song) }));
+                hits
+            }
+        }
+    }
+
+    /// The songs in today's plan, as places in the library.
+    fn planned_songs(&self) -> HashSet<usize> {
+        self.plan
+            .items
+            .iter()
+            .filter_map(|item| match &item.entry {
+                PlanEntry::Song { song_id, .. } => self.song_position(*song_id),
+                _ => None,
+            })
+            .collect()
+    }
+
+    /// The order of a typed search, top to bottom: a countdown or message typed out, a Bible
+    /// reference, songs in today's plan, commands and other things found by name, every other
+    /// song, what was found by another word, then Bible text.
+    fn query_hits(&mut self, query: &str) -> Vec<Hit> {
+        let scope = self.palette.scope;
+        let mut hits: Vec<Hit> = Vec::new();
+        if scope == Scope::All {
+            hits.extend(self.typed_hits(query));
+        }
+        let passages = if scope == Scope::Songs { Vec::new() } else { self.passage_hits(query) };
+        // A typed reference is nearly always what was meant, so it goes first.
+        let reference_first = passages.iter().any(|hit| matches!(hit, Hit::Passage { ranges, .. } if ranges.is_empty()));
+        let (mut first_songs, mut songs) = (Vec::new(), Vec::new());
+        if scope != Scope::Bible {
+            let planned = self.planned_songs();
+            let found = self.index.search_with(query, SONG_LIMIT, &|song| planned.contains(&song));
+            self.palette.total = found.len();
+            for hit in found {
+                let leads = hit.preferred && hit.complete;
+                let row = Hit::Song { song: hit.song, title_ranges: hit.title_ranges, line: hit.line, planned: hit.preferred };
+                if leads { first_songs.push(row) } else { songs.push(row) }
+            }
+        }
+        let (mut named, mut others) = (Vec::new(), Vec::new());
+        if scope == Scope::All {
+            let found = self.documents();
+            let docs: Vec<Doc> = found.iter().map(|(doc, _)| doc.clone()).collect();
+            for hit in kit::search(&docs, query, &|doc| doc.group == "plan", 24) {
+                let by_name = hit.typos == 0 && hit.infix == 0 && hit.weight >= LABEL && hit.position == 0;
+                let row = found[hit.doc].1.clone();
+                if by_name && named.len() < NAMED_LIMIT { named.push(row) } else { others.push(row) }
+            }
+        }
+        if reference_first {
+            hits.extend(passages.iter().cloned());
+        }
+        hits.extend(first_songs);
+        hits.extend(named);
+        hits.extend(songs);
+        hits.extend(others);
+        if !reference_first {
+            hits.extend(passages);
+        }
+        hits
+    }
+
+    /// A command typed with what it takes: "countdown 5", "message the car park is full".
+    fn typed_hits(&self, query: &str) -> Vec<Hit> {
+        let timers = [Doc::new("countdown", "action", t::COUNTDOWN()).aliases(&["timer", "count down", "hitung mundur", "waktu mundur"])];
+        let is_timer = |words: &str| !kit::search(&timers, words, &|_| false, 1).is_empty();
+        if let Some((head, minutes)) = kit::trailing_number(query) {
+            if minutes > 0 && minutes <= 600 && is_timer(&head) {
+                return vec![Hit::Countdown(minutes)];
+            }
+            return Vec::new();
+        }
+        if is_timer(query) && self.countdown.is_none() {
+            return vec![Hit::Countdown(5), Hit::Countdown(10), Hit::Countdown(15)];
+        }
+        let lower = query.to_lowercase();
+        for verb in ["stage ", "band ", "panggung ", "pemusik "] {
+            if let Some(rest) = lower.strip_prefix(verb) {
+                let text = query[query.len() - rest.len()..].trim();
+                if !text.is_empty() {
+                    return vec![Hit::StageMessage(text.to_string())];
+                }
+            }
+        }
+        for verb in ["message ", "msg ", "say ", "pesan ", "umumkan "] {
+            if let Some(rest) = lower.strip_prefix(verb) {
+                let text = query[query.len() - rest.len()..].trim();
+                if !text.is_empty() {
+                    return vec![Hit::Message(text.to_string())];
+                }
+            }
+        }
+        Vec::new()
+    }
+
+    /// Everything that is not a song or a verse, each with the row it becomes.
+    fn documents(&self) -> Vec<(Doc, Hit)> {
+        let mut out: Vec<(Doc, Hit)> = Vec::new();
+        for item in &self.plan.items {
+            let title = self.entry_title(&item.entry);
+            match &item.entry {
+                PlanEntry::Passage { .. } | PlanEntry::Announcements => {
+                    let doc = Doc::new(format!("plan:{}", item.id), "plan", title.clone()).detail(t::IN_PLAN()).aliases(&["plan", "today", "rencana", "hari ini"]);
+                    out.push((doc, Hit::PlanItem { id: item.id, title }));
+                }
+                // Songs in the plan are found as songs, ahead of the rest of the library.
+                PlanEntry::Song { .. } | PlanEntry::Heading { .. } => {}
+            }
+        }
+        for command in Command::ALL {
+            if command.usable(self) {
+                out.push((Doc::new(format!("command:{command:?}"), "action", command.label()).detail(command.detail()).aliases(command.aliases()), Hit::Command(command)));
+            }
+        }
+        for (index, item) in self.announcements.iter().enumerate() {
+            let doc = Doc::new(format!("announcement:{}", item.id), "announcement", item.title.clone())
+                .detail(item.body.clone())
+                .aliases(&["announcement", "show announcement", "notice", "pengumuman", "tampilkan pengumuman", "warta"]);
+            out.push((doc, Hit::Announcement { index, title: item.title.clone(), body: item.body.clone() }));
+        }
+        for (index, look) in presets().into_iter().enumerate() {
+            let doc = Doc::new(format!("look:{}", look.name), "look", look.name.clone()).aliases(&["look", "theme", "background", "tampilan", "tema", "latar"]);
+            out.push((doc, Hit::Look { index, name: look.name }));
+        }
+        for (indonesian, name) in [(false, t::LANGUAGE_ENGLISH), (true, t::LANGUAGE_INDONESIAN)] {
+            let doc = Doc::new(format!("language:{indonesian}"), "language", name).aliases(&["language", "bahasa", "indonesia", "indonesian", "inggris", "english"]);
+            out.push((doc, Hit::Language(indonesian)));
+        }
+        if self.bible_files.len() > 1 {
+            for file in &self.bible_files {
+                let doc = Doc::new(format!("bible:{}", file.code), "bible", file.name.clone())
+                    .aliases(&[file.code.as_str(), "bible", "translation", "version", "alkitab", "terjemahan", "versi"]);
+                out.push((doc, Hit::Bible { code: file.code.clone(), name: file.name.clone() }));
+            }
+        }
+        out
+    }
+
+    /// The attached song's sections in sung order, or those the typed words find.
+    fn section_hits(&self, song: usize, query: &str) -> Vec<Hit> {
+        let Some(found) = self.songs.get(song) else { return Vec::new() };
+        let deck = self.deck_of_song(found);
+        let rows: Vec<Hit> = section_starts(&deck)
+            .into_iter()
+            .filter_map(|slide| {
+                let first = deck.slides.get(slide)?;
+                let tag = first.tag?;
+                // A section split over several slides reads as one.
+                let text: Vec<&str> = deck.slides[slide..].iter().take_while(|other| other.tag == Some(tag)).map(|other| other.text.as_str()).collect();
+                Some(Hit::Section { song, slide, tag, label: t::section_label(tag), text: text.join("\n") })
+            })
+            .collect();
+        if query.is_empty() {
+            return rows;
+        }
+        let docs: Vec<Doc> = rows
+            .iter()
+            .enumerate()
+            .map(|(at, row)| match row {
+                Hit::Section { tag, label, text, .. } => {
+                    let aliases = section_aliases(*tag);
+                    let aliases: Vec<&str> = aliases.iter().map(String::as_str).collect();
+                    Doc::new(format!("section:{at}"), "section", label.clone()).detail(text.clone()).aliases(&aliases)
+                }
+                _ => Doc::default(),
+            })
+            .collect();
+        kit::search(&docs, query, &|_| false, rows.len()).into_iter().map(|hit| rows[hit.doc].clone()).collect()
+    }
+
+    /// Every book as a step into its chapters, for people who would rather click than type.
+    fn book_hits(&self) -> Vec<Hit> {
+        let Some(bible) = self.bible() else { return Vec::new() };
+        bible
+            .books()
+            .iter()
+            .map(|book| Hit::Passage {
+                reference: Reference { book: book.number, chapter: 1, verse: 1, end_chapter: 1, end_verse: book.chapters.first().copied().unwrap_or(1) },
+                title: book.name.clone(),
+                text: t::chapters(book.chapters.len()),
+                ranges: Vec::new(),
+                step: Some(format!("{} ", book.name)),
+            })
+            .collect()
+    }
+
+    fn passage_hits(&self, query: &str) -> Vec<Hit> {
+        let Some(bible) = self.bible() else { return Vec::new() };
+        let mut hits = Vec::new();
+        let guesses = bible.guess(query);
+        if let Some(best) = guesses.first() {
+            let book = bible.book(best.reference.book);
+            if best.book_only {
+                // A bare book lists its chapters to step into.
+                let chapters = book.map(|book| book.chapters.len()).unwrap_or(0);
+                for chapter in 1..=chapters as u16 {
+                    let last = book.and_then(|book| book.chapters.get(usize::from(chapter) - 1).copied()).unwrap_or(1);
+                    let reference = Reference { book: best.reference.book, chapter, verse: 1, end_chapter: chapter, end_verse: last };
+                    hits.push(Hit::Passage {
+                        reference,
+                        title: bible.format(&reference),
+                        text: passage_text(self, &Reference::single(reference.book, chapter, 1), 120),
+                        ranges: Vec::new(),
+                        step: Some(format!("{} {chapter}:", book.map(|b| b.name.as_str()).unwrap_or(""))),
+                    });
+                }
+            } else if best.whole_chapter {
+                hits.push(Hit::Passage {
+                    reference: best.reference,
+                    title: bible.format(&best.reference),
+                    text: t::verses(usize::from(best.reference.end_verse)),
+                    ranges: Vec::new(),
+                    step: None,
+                });
+                for verse in bible.verses(&best.reference) {
+                    let reference = Reference::single(verse.book, verse.chapter, verse.verse);
+                    hits.push(Hit::Passage { reference, title: bible.format(&reference), text: verse.text.to_string(), ranges: Vec::new(), step: None });
+                }
+            } else {
+                hits.push(Hit::Passage {
+                    reference: best.reference,
+                    title: bible.format(&best.reference),
+                    text: passage_text(self, &best.reference, 240),
+                    ranges: Vec::new(),
+                    step: None,
+                });
+            }
+            // Other books the name could mean, such as Joshua for "jo".
+            for other in guesses.iter().skip(1).take(3) {
+                hits.push(Hit::Passage {
+                    reference: other.reference,
+                    title: bible.format(&other.reference),
+                    text: passage_text(self, &Reference::single(other.reference.book, other.reference.chapter, other.reference.verse), 120),
+                    ranges: Vec::new(),
+                    step: None,
+                });
+            }
+            return hits;
+        }
+        if query.chars().count() < 3 {
+            return hits;
+        }
+        for found in bible.search(query, 24) {
+            if self.palette.scope == Scope::All && !found.complete {
+                continue;
+            }
+            let verse = &bible.all_verses()[found.index];
+            let reference = Reference::single(verse.book, verse.chapter, verse.verse);
+            hits.push(Hit::Passage { reference, title: bible.format(&reference), text: verse.text.to_string(), ranges: found.ranges, step: None });
+        }
+        hits
+    }
+
+    /// Whether every result is a book or chapter to step into, which draws as a grid.
+    pub fn palette_is_grid(&self) -> bool {
+        !self.palette.hits.is_empty() && self.palette.hits.iter().all(|hit| matches!(hit, Hit::Passage { step: Some(_), .. }))
+    }
+
+    pub fn move_pick(&mut self, by: isize) {
+        let count = self.palette.hits.len();
+        if count == 0 {
+            return;
+        }
+        let next = (self.palette.picked as isize + by).rem_euclid(count as isize);
+        self.palette.picked = next as usize;
+    }
+
+    /// Acts on the picked result.
+    pub fn pick(&mut self, how: Pick) {
+        let Some(hit) = self.palette.hits.get(self.palette.picked).cloned() else { return };
+        match hit {
+            Hit::Song { song, line, .. } => {
+                if how == Pick::AddToPlan {
+                    self.add_song_to_plan(song);
+                    return;
+                }
+                self.open_song(song, line.map(|line| line.section));
+                self.close_palette();
+                if how == Pick::ShowNow {
+                    let cursor = self.open.as_ref().map(|open| open.cursor).unwrap_or(0);
+                    self.show(cursor);
+                }
+            }
+            Hit::Section { song, slide, .. } => {
+                if how == Pick::AddToPlan {
+                    self.add_song_to_plan(song);
+                    return;
+                }
+                self.open_song(song, None);
+                self.close_palette();
+                // Opening the live song keeps the cursor on the live slide; a picked section moves it.
+                if let Some(open) = self.open.as_mut() {
+                    open.cursor = slide.min(open.deck.slides.len().saturating_sub(1));
+                }
+                if how == Pick::ShowNow {
+                    self.show(slide);
+                }
+            }
+            Hit::Passage { reference, step, .. } => {
+                if let (Some(step), Pick::Open) = (step, how) {
+                    // Stepping into a book or chapter refines the query instead of opening it.
+                    self.set_query(&step);
+                    return;
+                }
+                if how == Pick::AddToPlan {
+                    self.add_passage_to_plan(&reference);
+                    return;
+                }
+                self.open_passage(&reference);
+                self.close_palette();
+                if how == Pick::ShowNow {
+                    self.show(0);
+                }
+            }
+            Hit::PlanItem { id, .. } => {
+                self.open_plan_item(id);
+                self.close_palette();
+                if how == Pick::ShowNow {
+                    self.show(0);
+                }
+            }
+            Hit::Announcement { index, .. } => {
+                if how == Pick::AddToPlan {
+                    self.add_announcements_to_plan();
+                    return;
+                }
+                // An announcement that fills itself may have no slide today, or several.
+                let slide = self.announcement_slide_index(index).unwrap_or(0);
+                self.open_announcements();
+                self.close_palette();
+                if let Some(open) = self.open.as_mut() {
+                    open.cursor = slide.min(open.deck.slides.len().saturating_sub(1));
+                }
+                if how == Pick::ShowNow {
+                    self.show(slide);
+                }
+            }
+            Hit::Look { index, .. } => {
+                self.close_palette();
+                if let Some(preset) = presets().into_iter().nth(index) {
+                    let look = &self.settings.look;
+                    let chosen = artosia_slides::look::Look { max_lines: look.max_lines, size: look.size, place: look.place, ..preset };
+                    self.set_look(chosen);
+                }
+            }
+            Hit::Bible { code, .. } => {
+                self.close_palette();
+                self.set_bible(&code);
+            }
+            Hit::Command(command) => {
+                self.close_palette();
+                self.run(command);
+            }
+            Hit::Countdown(minutes) => {
+                self.close_palette();
+                self.timer_minutes.replace_text(minutes.to_string());
+                self.start_countdown();
+            }
+            Hit::Language(indonesian) => {
+                self.close_palette();
+                self.set_indonesian(indonesian);
+            }
+            Hit::Message(text) => {
+                self.close_palette();
+                self.message.replace_text(text);
+                self.message_on = true;
+            }
+            Hit::StageMessage(text) => {
+                self.close_palette();
+                self.stage_message.replace_text(text);
+                self.stage_message_on = true;
+            }
+        }
+    }
+
+    pub fn run(&mut self, command: Command) {
+        match command {
+            Command::NewSong => self.edit_new_song(artosia_core::song::Song::default()),
+            Command::PasteSong => self.want_paste = true,
+            Command::Announcements => self.edit_announcements(),
+            Command::Looks => self.sheet = Sheet::Looks,
+            Command::Screens => self.sheet = Sheet::Screens,
+            Command::Import => self.sheet = Sheet::Import,
+            Command::ImportFolder => self.want_folder = true,
+            Command::Remote => self.sheet = Sheet::Remote,
+            Command::Heading => self.add_heading(),
+            Command::NewPlan => self.new_plan(),
+            Command::Keys => self.sheet = Sheet::Keys,
+            Command::StartService => self.start_service(),
+            Command::Next => self.next(),
+            Command::Previous => self.previous(),
+            Command::Black => self.toggle_black(),
+            Command::ClearText => self.toggle_text(),
+            Command::Logo => self.toggle_logo(),
+            Command::StopCountdown => self.countdown = None,
+            Command::HideMessage => {
+                self.message_on = false;
+                self.stage_message_on = false;
+            }
+            Command::EditSong => self.edit_open_song(),
+            Command::Undo => self.undo(),
+            Command::LoopAnnouncements => {
+                self.open_announcements();
+                self.show(0);
+                self.looping = true;
+            }
+            Command::ImportPptx => self.want_pptx = true,
+            Command::ImportBirthdays => self.want_birthdays = true,
+            Command::CheckUpdate => crate::update::check(self.inbox.clone(), self.waker.clone(), true),
+            Command::Listen => self.open_listen(),
+            Command::Stream => self.sheet = Sheet::Stream,
+        }
+    }
+
+    /// The title a passage shows in lists, in the active translation's book names.
+    pub fn passage_title(&self, reference: &Reference) -> String {
+        verse_title(self, reference)
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    fn app() -> App {
+        let mut app = App::practice();
+        app.open_palette(Scope::All, "");
+        app
+    }
+
+    fn search(app: &mut App, query: &str) {
+        app.palette.query = TextEdit::new(query);
+        app.search();
+    }
+
+    fn first(app: &App) -> Option<&Hit> {
+        app.palette.hits.first()
+    }
+
+    #[test]
+    fn a_command_is_found_by_its_name_and_by_another_language() {
+        let mut app = app();
+        search(&mut app, "black");
+        assert_eq!(first(&app), Some(&Hit::Command(Command::Black)));
+        search(&mut app, "layar hitam");
+        assert!(app.palette.hits.contains(&Hit::Command(Command::Black)));
+        search(&mut app, "start live");
+        assert_eq!(first(&app), Some(&Hit::Command(Command::StartService)));
+        search(&mut app, "mulai ibadah");
+        assert!(app.palette.hits.contains(&Hit::Command(Command::StartService)));
+    }
+
+    #[test]
+    fn an_announcement_is_shown_by_asking_for_it() {
+        let mut app = app();
+        let title = app.announcements[1].title.clone();
+        let word = title.split_whitespace().next().unwrap_or_default().to_string();
+        search(&mut app, &format!("show announcement {word}"));
+        assert!(matches!(first(&app), Some(Hit::Announcement { index: 1, .. })), "{:?}", first(&app));
+        app.pick(Pick::ShowNow);
+        assert_eq!(app.live.as_ref().map(|live| live.index), Some(1));
+    }
+
+    #[test]
+    fn a_countdown_and_a_message_are_typed_out() {
+        let mut app = app();
+        search(&mut app, "countdown 7");
+        assert_eq!(first(&app), Some(&Hit::Countdown(7)));
+        search(&mut app, "hitung mundur 3");
+        assert_eq!(first(&app), Some(&Hit::Countdown(3)));
+        search(&mut app, "message Doors open at nine");
+        assert_eq!(first(&app), Some(&Hit::Message("Doors open at nine".into())));
+        app.pick(Pick::Open);
+        assert!(app.message_on && app.message.text == "Doors open at nine");
+        // The stage has its own word, since the window no longer has a field for it.
+        search(&mut app, "panggung satu reff lagi");
+        assert_eq!(first(&app), Some(&Hit::StageMessage("satu reff lagi".into())));
+        app.pick(Pick::Open);
+        assert!(app.stage_message_on && app.stage_message.text == "satu reff lagi");
+    }
+
+    #[test]
+    fn a_song_in_the_plan_is_the_first_song() {
+        let mut app = app();
+        // Two practice songs share a word; planning the later one puts it first.
+        let word = "morning";
+        search(&mut app, word);
+        let songs: Vec<usize> = app.palette.hits.iter().filter_map(|hit| if let Hit::Song { song, .. } = hit { Some(*song) } else { None }).collect();
+        assert!(songs.len() >= 2, "the practice library needs two songs with {word:?}");
+        let later = songs[1];
+        app.plan.items.clear();
+        app.add_song_to_plan(later);
+        search(&mut app, word);
+        assert!(matches!(first(&app), Some(Hit::Song { song, planned: true, .. }) if *song == later));
+    }
+
+    #[test]
+    fn tab_steps_into_a_song_and_finds_its_chorus() {
+        let mut app = app();
+        let title = app.songs[1].title.clone();
+        search(&mut app, &title);
+        app.palette_tab();
+        assert_eq!(app.palette.chip, Some(1));
+        assert!(app.palette.hits.iter().all(|hit| matches!(hit, Hit::Section { .. })));
+        search(&mut app, "reff");
+        assert!(matches!(first(&app), Some(Hit::Section { tag, .. }) if tag.kind == SectionKind::Chorus));
+        app.pick(Pick::ShowNow);
+        let live = app.live.as_ref().map(|live| (live.deck.source.clone(), live.deck.slides[live.index].tag.map(|tag| tag.kind)));
+        assert_eq!(live, Some((DeckSource::Song(app.songs[1].id), Some(SectionKind::Chorus))));
+    }
+
+    #[test]
+    fn escape_empties_the_search_before_it_closes() {
+        let mut app = app();
+        search(&mut app, "black");
+        app.palette_escape();
+        assert!(app.palette.open && app.palette.query.text.is_empty());
+        app.palette_escape();
+        assert!(!app.palette.open);
+    }
+}

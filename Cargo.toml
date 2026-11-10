@@ -1,6 +1,28 @@
 [workspace]
 resolver = "3"
-members = ["crates/artosia"]
+members = [
+    "crates/artosia",
+    "crates/artosia-core",
+    "crates/artosia-listen",
+    "crates/artosia-lyrics",
+    "crates/artosia-office",
+    "crates/artosia-output",
+    "crates/artosia-remote",
+    "crates/artosia-slides",
+    "crates/artosia-stream",
+    "crates/artosia-update",
+    "crates/artosia-video",
+    "crates/artosia-warp",
+]
+# A bare `cargo build` skips artosia-video, the only crate that needs GStreamer's development
+# files; build it with `-p artosia-output --features video` where GStreamer is installed.
+default-members = [
+    "crates/artosia",
+    "crates/artosia-core",
+    "crates/artosia-output",
+    "crates/artosia-remote",
+    "crates/artosia-slides",
+]
 
 [workspace.package]
 edition = "2024"
@@ -9,6 +31,7 @@ license = "GPL-3.0-or-later"
 [workspace.dependencies]
 # Rune is pre-release: pin a `dev` rev and bump it on purpose (see .claude/rules/rune.md).
 rune = { git = "https://github.com/anomalyco/rune", rev = "70eff81165e9854834a75f17753edb6c96ab2ab7" }
+rune-kit = { git = "https://github.com/anomalyco/rune", rev = "70eff81165e9854834a75f17753edb6c96ab2ab7" }
 
 [workspace.lints.rust]
 unsafe_op_in_unsafe_fn = "deny"

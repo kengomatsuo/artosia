@@ -1,0 +1,15 @@
+[package]
+name = "artosia-video"
+version = "0.0.1"
+edition.workspace = true
+license.workspace = true
+description = "Looping video backgrounds: GStreamer hardware decode to NV12 into a Rune NativeSurface."
+
+[dependencies]
+rune.workspace = true
+gstreamer = "0.25.4"
+gstreamer-app = "0.25.2"
+gstreamer-video = "0.25"
+
+[lints]
+workspace = true

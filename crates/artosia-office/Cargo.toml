@@ -1,0 +1,13 @@
+[package]
+name = "artosia-office"
+version = "0.0.1"
+edition.workspace = true
+license.workspace = true
+description = "Reads a church's office files (.pptx, .docx) into announcements and birthdays. No UI."
+
+[dependencies]
+quick-xml = "0.42.0"
+zip = { version = "9.5.0", default-features = false, features = ["deflate"] }
+
+[lints]
+workspace = true

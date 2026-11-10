@@ -1,0 +1,15 @@
+[package]
+name = "artosia-lyrics"
+version = "0.0.1"
+edition.workspace = true
+license.workspace = true
+description = "Finding a song's words on the web when the church's library lacks it."
+
+[dependencies]
+# Blocking HTTP client, pure Rust TLS (rustls + ring), no system libraries.
+ureq = "3.5"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+[lints]
+workspace = true

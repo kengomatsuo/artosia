@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <title>Direction C, lines of text stacked into a loaf</title>
+  <g fill="#5599f3">
+    <rect x="20" y="10" width="24" height="11" rx="5.5"/>
+    <rect x="11" y="24" width="42" height="11" rx="5.5"/>
+    <rect x="5" y="38" width="54" height="11" rx="5.5"/>
+  </g>
+</svg>

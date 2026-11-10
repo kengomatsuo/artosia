@@ -1,0 +1,20 @@
+{"events": [
+  {"t": 0.20, "type": "type", "text": "morning hill", "every": 0.04},
+  {"t": 1.00, "type": "key", "name": "Enter"},
+  {"t": 1.40, "type": "key", "name": "Right"},
+  {"t": 1.60, "type": "key", "name": "Right"},
+  {"t": 1.90, "type": "mark", "name": "ring-moved"},
+  {"t": 2.10, "type": "key", "name": "Enter"},
+  {"t": 2.50, "type": "key", "name": "2"},
+  {"t": 2.90, "type": "mark", "name": "jumped-to-chorus"},
+  {"t": 3.10, "type": "key", "name": "Down", "ctrl": true, "cmd": true},
+  {"t": 3.50, "type": "mark", "name": "walked-the-plan"},
+  {"t": 3.70, "type": "key", "name": "Escape"},
+  {"t": 4.10, "type": "mark", "name": "back-to-live"},
+  {"t": 4.30, "type": "type", "text": "black", "every": 0.04},
+  {"t": 4.90, "type": "mark", "name": "command-found"},
+  {"t": 5.10, "type": "key", "name": "Enter"},
+  {"t": 5.50, "type": "mark", "name": "black-on"},
+  {"t": 5.70, "type": "key", "name": "?"},
+  {"t": 6.10, "type": "mark", "name": "end"}
+]}

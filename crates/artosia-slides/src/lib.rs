@@ -1,0 +1,7 @@
+//! What the projector and the stage screen draw, shared by the operator's previews and the
+//! output process, and the messages the two processes exchange.
+
+pub mod audience;
+pub mod frame;
+pub mod look;
+pub mod stage;

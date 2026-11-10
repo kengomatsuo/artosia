@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 264 80" width="264" height="80">
+  <title>Artosia</title>
+  <style>
+    .ink { color: #14161a; }
+    @media (prefers-color-scheme: dark) { .ink { color: #f3f5f8; } }
+  </style>
+  <mask id="cuts" maskUnits="userSpaceOnUse" x="0" y="0" width="64" height="64">
+    <rect width="64" height="64" fill="#fff"/>
+    <g stroke="#000" stroke-width="4.6" stroke-linecap="round" fill="none">
+      <path d="M19 42L24 29"/><path d="M29 43L35 26"/><path d="M40 42L45 29"/>
+    </g>
+  </mask>
+  <g transform="translate(8 8)">
+    <path transform="translate(0 -2.5)" mask="url(#cuts)" fill="#5599f3" d="M4 46C4 31 14 18 32 18S60 31 60 46V47A4 4 0 0 1 56 51H8A4 4 0 0 1 4 47Z"/>
+  </g>
+  <g class="ink" transform="translate(90 20.75) scale(1.75)" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">
+    <g><path d="M1.6 18.4L8 2.4L14.4 18.4M4 13H12"/></g>
+    <g transform="translate(18.4 0)"><path d="M1.6 7.6V18.4M1.6 12.8C1.6 9.2 4 7.4 7.4 7.4"/></g>
+    <g transform="translate(30.2 0)"><path d="M4.6 2.6V15.6C4.6 17.4 5.8 18.4 7.6 18.4H8.8M1.6 7.6H9"/></g>
+    <g transform="translate(42.8 0)"><circle cx="7" cy="13" r="5.4"/></g>
+    <g transform="translate(59.4 0)"><path d="M11 9.2C9.6 7.6 7.8 7.6 6.5 7.6C4 7.6 2.5 8.8 2.5 10.4C2.5 12 4 12.6 6.5 13C9 13.4 10.8 14.2 10.8 16C10.8 17.6 9 18.4 6.6 18.4C4.4 18.4 2.8 17.8 1.6 16.4"/></g>
+    <g transform="translate(74.6 0)"><path d="M1.6 7.6V18.4"/><circle cx="1.6" cy="1.8" r="1.9" fill="currentColor" stroke="none"/></g>
+    <g transform="translate(80.2 0)"><circle cx="7" cy="13" r="5.4"/><path d="M12.4 7.6V18.4"/></g>
+  </g>
+</svg>

@@ -1,0 +1,4 @@
+{"events": [
+  {"t": 0.30, "type": "tap", "key": "remote-switch"},
+  {"t": 1.50, "type": "mark", "name": "end"}
+]}

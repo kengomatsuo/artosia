@@ -1,0 +1,19 @@
+{"events": [
+  {"t": 0.20, "type": "key", "name": " "},
+  {"t": 0.60, "type": "mark", "name": "started"},
+  {"t": 0.80, "type": "key", "name": "Down"},
+  {"t": 1.00, "type": "key", "name": "Down", "shift": true},
+  {"t": 1.40, "type": "mark", "name": "ring-armed"},
+  {"t": 1.60, "type": "key", "name": "Right"},
+  {"t": 1.80, "type": "key", "name": "Down"},
+  {"t": 2.20, "type": "mark", "name": "went-on-at-the-ring"},
+  {"t": 2.40, "type": "key", "name": "Left"},
+  {"t": 2.60, "type": "key", "name": "Tab"},
+  {"t": 3.00, "type": "mark", "name": "tabbed"},
+  {"t": 3.20, "type": "drag", "key": "plan-3", "dx": 0, "dy": 90, "dur": 0.4},
+  {"t": 4.20, "type": "mark", "name": "dragged"},
+  {"t": 4.40, "type": "key", "name": "F5"},
+  {"t": 4.80, "type": "mark", "name": "announcements-key"},
+  {"t": 5.00, "type": "key", "name": "F4"},
+  {"t": 5.40, "type": "mark", "name": "end"}
+]}

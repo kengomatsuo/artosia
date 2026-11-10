@@ -1,16 +1,380 @@
-//! Operator window placeholder. `cargo run -p artosia`; `-- --snap out.png` renders it headless.
+//! Artosia's operator window. `cargo run -p artosia`; `-- --snap out.png` renders it headless
+//! with the practice library, and `--scene <name>` picks a screen (see `SCENES`).
+//!
+//! Flags: `--data <folder>` uses that library folder, `--practice` uses the practice library
+//! in memory with the projector off, `--no-output` keeps the projector off, `--query <text>`
+//! opens the search with that text, `--background <file>` puts a picture or video behind the
+//! text, `--import-easislides` brings EasiSlides over at start, and
+//! `--import-openlyrics <folder>` adds or updates every OpenLyrics song in a folder.
 
-use rune::tok::{self, type_};
-use rune::{AppSpec, Cx, El, col, text};
+#![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-#[derive(Default)]
-struct State;
+mod actions;
+mod data;
+mod link;
+mod palette;
+mod state;
+mod stream;
+mod strings;
+mod theme;
+mod ui;
+mod update;
 
-fn view(_: &State, _: &mut Cx<State>) -> El {
-    let t = tok::theme(true);
-    col().w_full().h_full().center().fill(t.bg).child(text("Artosia").font(type_::TITLE).color(t.text))
+use artosia_core::song::Song;
+use artosia_slides::frame::ToOutput;
+use std::io::{BufRead, BufReader, Write};
+use std::net::{Ipv4Addr, SocketAddr, TcpListener, TcpStream};
+use std::time::Duration;
+
+use rune::{AppSpec, ImageCache, Key, KeyEvent, Titlebar, Tx, Waker};
+
+use palette::Scope;
+use state::{App, Sheet};
+
+fn setup(s: &mut App, waker: Waker) {
+    s.waker = Some(waker.clone());
+    s.images = Some(ImageCache::new(waker.clone()));
+    let (first, second) = (s.settings.bible.clone(), s.settings.second_bible.clone());
+    s.want_bible(&first);
+    s.want_bible(&second);
+    // The projector stays off while practising and in headless runs.
+    if s.folder.is_some() && !rune::is_headless() && !data::has_flag("--no-output") {
+        if update::just_updated() {
+            // A projector left running by the old version would not understand the new one.
+            link::quit_stale_output();
+        }
+        let options = s.output_options();
+        s.link.start(waker, options);
+    }
+    if s.folder.is_some() {
+        update::check(s.inbox.clone(), s.waker.clone(), false);
+    }
+    if s.settings.remote_on && s.folder.is_some() && !rune::is_headless() {
+        s.set_remote(true);
+    }
+}
+
+fn poll(s: &mut App, clock: f64, tx: &mut Tx) -> bool {
+    s.poll(clock, tx)
+}
+
+/// The keys of the window. A focused text field has already had its turn by the time a key
+/// gets here, except when nothing has focus, which is the usual state while showing.
+fn on_key(s: &mut App, ev: &KeyEvent, tx: &mut Tx) -> bool {
+    let focused = tx.focused().is_some();
+    let editing = s.editor.is_some() || s.notices.is_some();
+    match &ev.key {
+        Key::Command('k') => {
+            s.open_palette(Scope::All, "");
+            return true;
+        }
+        Key::Command('s') if s.editor.is_some() => {
+            s.save_editor();
+            tx.blur();
+            return true;
+        }
+        Key::Command('s') if s.notices.is_some() => {
+            s.save_notice();
+            return true;
+        }
+        Key::Command('e') if !editing && !s.palette.open => {
+            s.edit_open_song();
+            return true;
+        }
+        Key::Command('n') if !editing && !s.palette.open => {
+            s.edit_new_song(Song::default());
+            return true;
+        }
+        Key::Command('/') => {
+            s.sheet = if s.sheet == Sheet::Keys { Sheet::None } else { Sheet::Keys };
+            return true;
+        }
+        Key::Function(1) => {
+            s.toggle_text();
+            return true;
+        }
+        Key::Function(2) => {
+            s.toggle_black();
+            return true;
+        }
+        Key::Function(3) => {
+            s.toggle_logo();
+            return true;
+        }
+        Key::Escape if s.palette.open => {
+            s.palette_escape();
+            return true;
+        }
+        Key::Escape if s.editor.is_some() && s.sheet == Sheet::None => {
+            if !s.dismiss_suggestions() {
+                s.close_editor();
+            }
+            tx.blur();
+            return true;
+        }
+        Key::Escape if s.notices.is_some() && s.sheet == Sheet::None => {
+            s.close_announcements();
+            tx.blur();
+            return true;
+        }
+        _ => {}
+    }
+    if s.palette.open {
+        // A key typed before the search field took focus still belongs to the query.
+        if let (Key::Text(typed), false) = (&ev.key, focused) {
+            s.palette.query.insert(typed);
+            s.palette.picked = 0;
+            s.search();
+            return true;
+        }
+        return false;
+    }
+    if focused || editing || s.sheet != Sheet::None {
+        return false;
+    }
+    // The arrows are EasiSlides': Up and Down are the slide before and after, Left the first
+    // and Right the last, all on the projector. With Shift or Ctrl held they move only the
+    // selector in the Preview pane, as they do while nothing is live; Enter shows its slide.
+    let plain = !ev.mods.cmd && !ev.mods.alt && !ev.mods.ctrl;
+    let only_select = ev.mods.shift || ev.mods.ctrl || ev.mods.cmd || s.live.is_none();
+    match &ev.key {
+        Key::Down if ev.mods.alt => {
+            if let Some(id) = s.open.as_ref().and_then(|open| open.item) {
+                s.shift_plan_item(id, 1);
+            }
+        }
+        Key::Up if ev.mods.alt => {
+            if let Some(id) = s.open.as_ref().and_then(|open| open.item) {
+                s.shift_plan_item(id, -1);
+            }
+        }
+        Key::Down if only_select => drop(s.select(1)),
+        Key::Up if only_select => drop(s.select(-1)),
+        Key::Left | Key::Home if only_select => drop(s.select_edge(false)),
+        Key::Right | Key::End if only_select => drop(s.select_edge(true)),
+        // A presenter's clicker sends Page Down and Page Up.
+        Key::Down | Key::PageDown => s.next(),
+        Key::Text(typed) if typed == " " => s.next(),
+        Key::Up | Key::PageUp => s.previous(),
+        Key::Left | Key::Home => s.go_to_edge(false),
+        Key::Right | Key::End => s.go_to_edge(true),
+        Key::Enter => s.enter(),
+        Key::Tab => s.walk_plan(!ev.mods.shift),
+        Key::Function(4) => s.open_last_heard(),
+        Key::Function(5) => s.open_announcements(),
+        Key::Escape if s.live.is_some() && !s.open_is_live() => s.open_live(),
+        Key::Delete => {
+            if let Some(id) = s.open.as_ref().and_then(|open| open.item) {
+                s.remove_plan_item(id);
+            }
+        }
+        Key::Command('z') => s.undo(),
+        Key::Text(typed) if typed == "?" => s.sheet = Sheet::Keys,
+        // A digit jumps inside the live song. With no sections to jump to it starts a search,
+        // so a hymn number can still be typed straight in.
+        Key::Text(typed) if plain && typed.len() == 1 && typed.chars().all(|c| c.is_ascii_digit()) && s.target_deck().is_some_and(|deck| state::section_starts(deck).len() > 1) => {
+            let digit = typed.parse::<usize>().unwrap_or(1);
+            s.jump_to_section(if digit == 0 { 9 } else { digit - 1 });
+        }
+        Key::Text(typed) if plain && typed.chars().all(char::is_alphanumeric) && !typed.is_empty() => {
+            // Typing anywhere starts a search.
+            s.open_palette(Scope::All, typed);
+        }
+        _ => return false,
+    }
+    follow(s, tx);
+    true
+}
+
+/// Keeps the selector and the live slide in view in their lists.
+pub(crate) fn follow(s: &App, tx: &mut Tx) {
+    if let Some(open) = &s.open {
+        tx.scroll_into_view(format!("slide-{}", open.cursor));
+    }
+    if let Some(live) = &s.live {
+        tx.scroll_into_view(format!("live-slide-{}", live.index));
+    }
+}
+
+type Scene = (&'static str, fn(&mut App));
+
+/// Screens a headless run can render: `--scene <name> --snap out.png`.
+const SCENES: &[Scene] = &[
+    ("start", |_| {}),
+    ("song", |s| {
+        s.open_song(0, None);
+        s.show(2);
+    }),
+    ("preparing", |s| {
+        s.open_song(0, None);
+        s.show(1);
+        s.open_song(1, None);
+    }),
+    ("passage", |s| {
+        if let Some(id) = s.plan.items.last().map(|item| item.id) {
+            s.open_plan_item(id);
+            s.show(0);
+        }
+    }),
+    ("black", |s| {
+        s.open_song(0, None);
+        s.show(2);
+        s.toggle_black();
+    }),
+    ("search", |s| {
+        s.open_palette(Scope::All, "rivr mercy");
+    }),
+    ("search-lyrics", |s| {
+        s.open_palette(Scope::All, "anchor deep");
+    }),
+    ("search-bible", |s| {
+        s.open_palette(Scope::All, "joh 3 16-18");
+    }),
+    ("search-words", |s| {
+        s.open_palette(Scope::Bible, "shepherd shall not want");
+    }),
+    ("browse", |s| {
+        s.open_palette(Scope::All, "");
+    }),
+    ("browse-bible", |s| {
+        s.open_palette(Scope::Bible, "");
+    }),
+    ("nothing-found", |s| {
+        s.open_palette(Scope::Songs, "zzzqqq");
+    }),
+    ("editor", |s| {
+        s.open_song(0, None);
+        s.edit_open_song();
+    }),
+    ("new-song", |s| {
+        s.song_from_clipboard("Lantern Song\n\nVerse 1\nCarry the lantern through the night\nKeep the small flame burning bright\n\nChorus\nShine, shine on the road ahead\nShine till the morning comes\n");
+    }),
+    ("look", |s| s.sheet = Sheet::Looks),
+    ("screens", |s| s.sheet = Sheet::Screens),
+    ("screens-two", |s| {
+        s.demo_screens = true;
+        s.settings.warp.corners[1] = [0.94, 0.05];
+        s.warp_corner = 1;
+        s.sheet = Sheet::Screens;
+    }),
+    ("remote", |s| s.sheet = Sheet::Remote),
+    ("announcements", |s| s.edit_announcements()),
+    ("keys", |s| s.sheet = Sheet::Keys),
+    ("listen", |s| s.sheet = Sheet::Listen),
+    ("stream", |s| s.sheet = Sheet::Stream),
+    ("search-command", |s| {
+        s.open_palette(Scope::All, "black");
+    }),
+    ("search-inside", |s| {
+        s.open_palette(Scope::All, "morning");
+        s.palette_tab();
+    }),
+    ("new-song-title", |s| {
+        s.edit_new_song(Song { title: "River".into(), ..Song::default() });
+    }),
+    ("preparing-chorus", |s| {
+        s.open_song(0, None);
+        s.show(1);
+        s.open_song(1, None);
+        s.select(1);
+    }),
+    ("announcements-live", |s| {
+        s.open_announcements();
+        s.show(0);
+    }),
+    ("countdown", |s| {
+        s.start_countdown();
+        s.message.replace_text("Parent of child 12, please come to the nursery");
+        s.message_on = true;
+    }),
+    ("empty", |s| {
+        s.plan.items.clear();
+        s.songs.clear();
+        s.index = artosia_core::search::SongIndex::build(&[]);
+    }),
+    ("toast", |s| {
+        if let Some(id) = s.plan.items.get(2).map(|item| item.id) {
+            s.remove_plan_item(id);
+        }
+    }),
+];
+
+/// The port one Artosia holds so a second start finds it. The output process has the next one down.
+const INSTANCE_PORT: u16 = 47824;
+const INSTANCE_WORD: &str = "artosia";
+
+enum Instance {
+    /// This is the only Artosia on the library; the listener answers later starts.
+    First(TcpListener),
+    /// Another Artosia runs and has been asked to come to the front.
+    Second,
+    /// Not checked: a headless run, a practice run, or a library named by hand.
+    Free,
+}
+
+/// Two Artosias on one library would fight over the projector and overwrite each other's
+/// plan, so the second start hands over to the first and leaves.
+fn claim_instance() -> Instance {
+    if rune::is_headless() || data::has_flag("--practice") || data::flag_value("--data").is_some() || std::env::var_os("ARTOSIA_DATA").is_some() {
+        return Instance::Free;
+    }
+    let address = SocketAddr::from((Ipv4Addr::LOCALHOST, INSTANCE_PORT));
+    if let Ok(listener) = TcpListener::bind(address) {
+        return Instance::First(listener);
+    }
+    let Ok(mut stream) = TcpStream::connect_timeout(&address, Duration::from_millis(500)) else { return Instance::Free };
+    let _ = stream.set_read_timeout(Some(Duration::from_millis(800)));
+    let _ = stream.write_all(b"show\n");
+    let mut answer = String::new();
+    let _ = BufReader::new(stream).read_line(&mut answer);
+    // Anything else on that port is not Artosia, and must not stop it from opening.
+    if answer.trim() == INSTANCE_WORD { Instance::Second } else { Instance::Free }
 }
 
 fn main() {
-    rune::run(AppSpec::new("Artosia", (900.0, 600.0), State::default, view));
+    let instance = claim_instance();
+    if matches!(instance, Instance::Second) {
+        return;
+    }
+    // An update downloaded last time is swapped in before any window opens. The new program
+    // is then started, and this one lets go of its claim and leaves.
+    if update::apply_before_window() {
+        drop(instance);
+        return;
+    }
+    // The mark on the window, the taskbar and Alt+Tab (docs/brand.md).
+    let _ = rune::set_app_icon(include_bytes!("../../../assets/brand/artosia-icon-256.png").to_vec());
+    let spec = AppSpec {
+        min_size: Some((1120.0, 640.0)),
+        scenes: SCENES,
+        setup: Some(setup),
+        poll: Some(poll),
+        on_key: Some(on_key),
+        ..AppSpec::new("Artosia", (1366.0, 768.0), App::load, ui::view)
+    };
+    let app = rune::App::new(spec).titlebar(Titlebar::new(theme::size::TOPBAR)).on_close(|s: &mut App, _: &mut Tx| {
+        // Closing the operator on purpose closes the projector too, and ends a stream cleanly;
+        // a crash never gets here, and then both go on.
+        if let Some(stream) = s.stream.as_mut() {
+            stream.stop();
+        }
+        s.link.send(ToOutput::Quit);
+    });
+    if let Instance::First(listener) = instance {
+        let handle = app.handle();
+        std::thread::spawn(move || {
+            for stream in listener.incoming().flatten() {
+                let mut line = String::new();
+                let Ok(reader) = stream.try_clone() else { continue };
+                let _ = reader.set_read_timeout(Some(Duration::from_millis(800)));
+                let _ = BufReader::new(reader).read_line(&mut line);
+                if line.trim() == "show" {
+                    let mut stream = stream;
+                    let _ = stream.write_all(format!("{INSTANCE_WORD}\n").as_bytes());
+                    handle.open();
+                }
+            }
+        });
+    }
+    app.run();
 }

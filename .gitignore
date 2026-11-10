@@ -4,3 +4,4 @@
 *.log
 /fixtures/easislides/
 /fixtures/church/
+/dist

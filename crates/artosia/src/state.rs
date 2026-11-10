@@ -1,0 +1,1209 @@
+//! Everything the operator window knows, and what each action does to it.
+
+use std::collections::HashMap;
+use std::path::PathBuf;
+use std::sync::mpsc::{Receiver, Sender, channel};
+use std::sync::{Arc, Mutex};
+
+use artosia_core::bible::{Bible, Reference};
+use artosia_core::deck::{Announcement, Deck, DeckSource, Fill, Person, Slide, Today, announcement_pages, passage_deck, song_deck, tag_group};
+use artosia_core::plan::{Plan, PlanEntry, PlanItem};
+use artosia_core::search::SongIndex;
+use artosia_core::song::Song;
+use artosia_core::store::Store;
+use artosia_remote::{RemoteCommand, RemoteServer};
+use artosia_slides::frame::{Countdown, OutputState, StageChip, StageInfo};
+use artosia_slides::look::Look;
+use rune::{Image, ImageCache, TextEdit, Waker};
+use serde::{Deserialize, Serialize};
+
+use crate::data;
+use crate::link::Link;
+use crate::palette::Palette;
+use crate::strings as t;
+
+/// The deck in the Preview pane: what Enter shows, and what Next reaches when the live deck ends.
+pub struct OpenDeck {
+    pub deck: Deck,
+    /// The plan item it was opened from, if any.
+    pub item: Option<u64>,
+    /// The slide Enter will show: the selector, drawn as a ring.
+    pub cursor: usize,
+    /// Artosia put this deck here as what comes next. A deck a person opened is never replaced.
+    pub queued: bool,
+    /// The selector was moved by hand, so it stays put while the live slide moves.
+    pub armed: bool,
+}
+
+impl OpenDeck {
+    /// A deck a person opened.
+    pub fn new(deck: Deck, item: Option<u64>, cursor: usize) -> OpenDeck {
+        OpenDeck { deck, item, cursor, queued: false, armed: false }
+    }
+}
+
+/// A plan row on its way to a new place under the pointer.
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub struct PlanDrag {
+    pub id: u64,
+    pub from: usize,
+    pub to: usize,
+    /// How far the pointer has carried the row.
+    pub dy: f32,
+}
+
+/// The deck on the projector.
+pub struct LiveDeck {
+    pub deck: Deck,
+    pub item: Option<u64>,
+    pub index: usize,
+}
+
+/// Whether Artosia's own window is light or dark.
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
+pub enum Appearance {
+    /// As the computer is set.
+    #[default]
+    Auto,
+    Light,
+    Dark,
+}
+
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[serde(default)]
+pub struct Settings {
+    pub look: Look,
+    pub verses_per_slide: usize,
+    /// The church's CCLI licence number, printed with song credits.
+    pub licence: String,
+    /// A picture shown alone by the Logo button.
+    pub logo: String,
+    pub bible: String,
+    pub second_bible: String,
+    pub plan: i64,
+    /// The first-run card has been dismissed.
+    pub welcomed: bool,
+    pub remote_on: bool,
+    /// The screen the projector uses; None lets the output process choose.
+    pub audience_screen: Option<usize>,
+    pub stage_screen: Option<usize>,
+    pub stage_window: bool,
+    /// With one screen only: the projector is showing on it.
+    pub projector_here: bool,
+    /// The projector is switched off.
+    pub projector_off: bool,
+    pub appearance: Appearance,
+    /// The window speaks Indonesian; otherwise English.
+    pub indonesian: bool,
+    /// The microphone Artosia listens on; empty for the computer's own choice.
+    pub listen_device: String,
+    /// The language it listens for: "id" or "en".
+    pub listen_language: String,
+    /// The streaming service's address, and the key it gave this church. Kept on this computer only.
+    pub stream_address: String,
+    pub stream_key: String,
+    /// Keep a recording of the service in the Videos folder.
+    pub stream_record: bool,
+    /// Corner pin and colour for the projector picture.
+    pub warp: artosia_slides::frame::Warp,
+}
+
+impl Default for Settings {
+    fn default() -> Self {
+        Settings {
+            look: Look::default(),
+            verses_per_slide: 1,
+            licence: String::new(),
+            logo: String::new(),
+            bible: "KJV".to_string(),
+            second_bible: String::new(),
+            plan: 0,
+            welcomed: false,
+            remote_on: false,
+            audience_screen: None,
+            stage_screen: None,
+            stage_window: false,
+            projector_here: false,
+            projector_off: false,
+            appearance: Appearance::Auto,
+            indonesian: false,
+            listen_device: String::new(),
+            listen_language: "id".to_string(),
+            stream_address: String::new(),
+            stream_key: String::new(),
+            stream_record: false,
+            warp: artosia_slides::frame::Warp::default(),
+        }
+    }
+}
+
+/// A translation Artosia can load.
+#[derive(Clone, Debug, PartialEq)]
+pub struct BibleFile {
+    pub code: String,
+    pub name: String,
+    /// None for the translation packed into the program.
+    pub path: Option<PathBuf>,
+}
+
+pub enum Undo {
+    PlanItem { at: usize, item: PlanItem },
+    Song(Box<Song>),
+    Announcement(Announcement),
+    /// An editor closed with unsaved changes.
+    Editor(Box<Editor>),
+}
+
+pub struct Toast {
+    pub text: String,
+    pub undo: Option<Undo>,
+    /// App clock seconds at which it leaves.
+    pub until: f64,
+}
+
+/// A whole song offered under the title of a new one, as an editor offers a completion.
+#[derive(Clone, Debug, PartialEq)]
+pub enum Suggestion {
+    /// The library already has it, at this place in `songs`.
+    Library(usize),
+    /// Found on the web.
+    Web(artosia_lyrics::Found),
+}
+
+#[derive(Default)]
+pub struct Editor {
+    pub id: i64,
+    pub title: TextEdit,
+    pub author: TextEdit,
+    pub copyright: TextEdit,
+    pub ccli: TextEdit,
+    pub key: TextEdit,
+    pub order: TextEdit,
+    pub lyrics: TextEdit,
+    pub second: TextEdit,
+    pub show_second: bool,
+    pub suggestions: Vec<Suggestion>,
+    /// The suggestion Tab or Enter takes.
+    pub suggestion: usize,
+    /// The title the web was last asked about.
+    pub asked: String,
+    /// When to ask the web about the title as it now stands, on the app clock.
+    pub ask_at: Option<f64>,
+    /// A song's words are on their way from the web.
+    pub fetching: bool,
+    /// Where filled-in words came from: the source's name and the page.
+    pub credit: Option<(String, String)>,
+}
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum Sheet {
+    None,
+    Looks,
+    Screens,
+    Import,
+    Remote,
+    Keys,
+    Listen,
+    Stream,
+}
+
+/// Something the room was heard to say or sing, offered for one click.
+#[derive(Clone, Debug, PartialEq)]
+pub enum HeardHit {
+    Song(usize),
+    Passage(Reference, String),
+}
+
+/// The announcement editor: the one being written, and whether it was changed.
+#[derive(Default)]
+pub struct Notices {
+    /// 0 for an announcement not saved yet.
+    pub id: i64,
+    pub title: TextEdit,
+    pub body: TextEdit,
+    pub seconds: u32,
+    /// A picture shown with the words; empty for none.
+    pub image: String,
+    pub fill: Fill,
+}
+
+/// Results a worker thread hands back to the window.
+pub enum Arrived {
+    Bible(String, Result<Bible, String>),
+    /// Songs the web found for a title.
+    Lyrics(String, Result<Vec<artosia_lyrics::Found>, String>),
+    /// The words of one of them.
+    LyricsText(Result<artosia_lyrics::Fetched, String>),
+    /// Words heard in the room, or why listening cannot work.
+    Heard(artosia_listen::Heard),
+    /// A check for a newer Artosia: the version now waiting, none, or why it failed.
+    Update(Result<Option<String>, String>),
+}
+
+pub struct App {
+    pub folder: Option<PathBuf>,
+    pub store: Store,
+    /// Why the library could not be opened on disk, when it could not.
+    pub store_problem: Option<String>,
+    pub songs: Vec<Song>,
+    pub index: SongIndex,
+    pub bible_files: Vec<BibleFile>,
+    pub bibles: HashMap<String, Arc<Bible>>,
+    /// Codes being read by a worker.
+    pub bibles_loading: Vec<String>,
+    pub announcements: Vec<Announcement>,
+    /// Everyone whose birthday the church keeps, for announcements that fill themselves.
+    pub people: Vec<Person>,
+    pub plan: Plan,
+    pub settings: Settings,
+
+    pub open: Option<OpenDeck>,
+    pub live: Option<LiveDeck>,
+    pub black: bool,
+    pub text_hidden: bool,
+    pub logo_on: bool,
+    pub message: TextEdit,
+    pub message_on: bool,
+    pub stage_message: TextEdit,
+    pub stage_message_on: bool,
+    pub timer_minutes: TextEdit,
+    pub countdown: Option<Countdown>,
+
+    pub palette: Palette,
+    pub editor: Option<Editor>,
+    /// Where an editor field writes once the editor has closed under it.
+    pub spare_edit: TextEdit,
+    pub sheet: Sheet,
+    pub notices: Option<Notices>,
+    /// The announcements are advancing by themselves on the projector.
+    pub looping: bool,
+    /// The last plan item that was live. An item shown from the search has no place in the
+    /// plan, and Next goes on from here once it ends.
+    pub resume: Option<u64>,
+    pub plan_drag: Option<PlanDrag>,
+    /// A plan row was just dropped, so the press that ends the same gesture opens nothing.
+    pub plan_dropped: bool,
+    /// The slide the loop is waiting on, and when it moves on, on the app clock.
+    pub loop_at: (usize, f64),
+    /// How many slide tiles fit in a row, for the arrow keys. The view writes it.
+    /// Streaming or recording while this exists.
+    pub stream: Option<crate::stream::Stream>,
+    pub stream_address: TextEdit,
+    pub stream_key: TextEdit,
+    pub stream_problem: Option<String>,
+    /// Listening to the room while this exists.
+    pub listener: Option<artosia_listen::Listener>,
+    /// How loud the room is, 0 to 1, as the bits of an f32 the listening thread writes.
+    pub listen_level: Arc<std::sync::atomic::AtomicU32>,
+    /// The level meter is on screen, so the listening thread should wake the window for it.
+    pub meter_shown: Arc<std::sync::atomic::AtomicBool>,
+    pub listen_problem: Option<String>,
+    /// The last few things heard, newest last.
+    pub heard: Vec<String>,
+    pub heard_hits: Vec<HeardHit>,
+    pub microphones: Vec<artosia_listen::Device>,
+    /// The corner of the projector picture the nudge buttons move: 0 top left, clockwise.
+    pub warp_corner: usize,
+    /// A headless scene is showing the Screens dialog as it looks with a projector plugged in.
+    pub demo_screens: bool,
+    /// This version has told the updater it started well.
+    pub confirmed: bool,
+    pub licence_edit: TextEdit,
+    pub toast: Option<Toast>,
+    pub plan_menu: Option<u64>,
+    pub more_menu: bool,
+    pub easislides: Option<PathBuf>,
+
+    pub link: Link,
+    pub remote: Option<RemoteServer>,
+    pub remote_pin: String,
+    pub remote_problem: Option<String>,
+    /// What the phone last searched for, and what was found.
+    pub remote_hits: (String, Vec<artosia_remote::RemoteHit>),
+    pub remote_qr: Option<rune::Pixels>,
+    /// The screens are showing their numbers.
+    pub identify: bool,
+    /// A handler asked for the clipboard; the next frame requests it.
+    pub want_paste: bool,
+    /// A handler asked for a folder of songs to import; the next frame opens the dialog.
+    pub want_folder: bool,
+    /// A handler asked for a PowerPoint, a birthday list or an announcement picture to choose.
+    pub want_pptx: bool,
+    pub want_birthdays: bool,
+    pub want_notice_image: bool,
+    pub images: Option<ImageCache>,
+    pub picture: Option<(String, Image)>,
+    pub logo: Option<(String, Image)>,
+    /// The pictures announcements carry, by path, for the previews.
+    pub slide_pictures: HashMap<String, Image>,
+    pub waker: Option<Waker>,
+    pub inbox: Arc<Mutex<Vec<Arrived>>>,
+    pub remote_tx: Sender<RemoteCommand>,
+    pub remote_rx: Receiver<RemoteCommand>,
+    /// Seconds since the Unix epoch, refreshed every frame.
+    pub now: f64,
+    /// The app clock, for toasts.
+    pub clock: f64,
+    pub sent: Option<OutputState>,
+    pub plan_dirty: bool,
+    pub settings_dirty: bool,
+}
+
+pub fn unix_now() -> f64 {
+    std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).map(|d| d.as_secs_f64()).unwrap_or(0.0)
+}
+
+/// The first slide of each section of a deck in sung order: where the number keys jump to,
+/// and the numbers the lists show. A section split over several slides counts once; a chorus
+/// sung twice counts twice. A deck with no sections, such as a passage, counts every slide.
+pub fn section_starts(deck: &Deck) -> Vec<usize> {
+    if deck.slides.iter().all(|slide| slide.tag.is_none()) {
+        return (0..deck.slides.len()).collect();
+    }
+    let mut starts = Vec::new();
+    let mut last = None;
+    for (index, slide) in deck.slides.iter().enumerate() {
+        if slide.tag.is_some() && slide.tag != last {
+            starts.push(index);
+        }
+        last = slide.tag;
+    }
+    starts
+}
+
+impl App {
+    pub fn load() -> App {
+        App::load_in(data::folder())
+    }
+
+    /// The practice library in memory, as a headless run and the tests use it.
+    #[cfg(test)]
+    pub fn practice() -> App {
+        App::load_in(None)
+    }
+
+    fn load_in(folder: Option<PathBuf>) -> App {
+        let asked = data::has_flag("--indonesian");
+        t::set_indonesian(asked);
+        let (store, store_problem) = data::open_store(folder.as_ref());
+        let practice = folder.is_none();
+        if practice {
+            for mut song in data::practice_songs() {
+                let _ = store.save_song(&mut song);
+            }
+            for mut item in data::practice_announcements() {
+                let _ = store.save_announcement(&mut item);
+            }
+        }
+        let songs = store.songs().unwrap_or_default();
+        let index = SongIndex::build(&songs);
+        let settings: Settings = store.setting("settings").unwrap_or_default();
+        let announcements = store.announcements().unwrap_or_default();
+        let plans = store.plans().unwrap_or_default();
+        let plan = plans
+            .iter()
+            .find(|plan| plan.id == settings.plan)
+            .or(plans.first())
+            .cloned()
+            .unwrap_or_else(|| Plan::named(t::PLAN_DEFAULT_NAME()));
+        let (remote_tx, remote_rx) = channel();
+        let licence_edit = TextEdit::new(settings.licence.clone());
+        let mut app = App {
+            folder,
+            store,
+            store_problem,
+            songs,
+            index,
+            bible_files: Vec::new(),
+            bibles: HashMap::new(),
+            bibles_loading: Vec::new(),
+            announcements,
+            people: Vec::new(),
+            plan,
+            settings,
+            open: None,
+            live: None,
+            black: false,
+            text_hidden: false,
+            logo_on: false,
+            message: TextEdit::new(""),
+            message_on: false,
+            stage_message: TextEdit::new(""),
+            stage_message_on: false,
+            timer_minutes: TextEdit::new("5"),
+            countdown: None,
+            palette: Palette::default(),
+            editor: None,
+            spare_edit: TextEdit::new(""),
+            sheet: Sheet::None,
+            notices: None,
+            looping: false,
+            resume: None,
+            plan_drag: None,
+            plan_dropped: false,
+            loop_at: (0, 0.0),
+            stream: None,
+            stream_address: TextEdit::new(""),
+            stream_key: TextEdit::new("").secure(),
+            stream_problem: None,
+            listener: None,
+            listen_level: Arc::new(std::sync::atomic::AtomicU32::new(0)),
+            meter_shown: Arc::new(std::sync::atomic::AtomicBool::new(false)),
+            listen_problem: None,
+            heard: Vec::new(),
+            heard_hits: Vec::new(),
+            microphones: Vec::new(),
+            warp_corner: 0,
+            demo_screens: false,
+            confirmed: false,
+            licence_edit,
+            toast: None,
+            plan_menu: None,
+            more_menu: false,
+            easislides: artosia_core::import::easislides_folder(),
+            link: Link::default(),
+            remote: None,
+            remote_pin: String::new(),
+            remote_problem: None,
+            remote_hits: (String::new(), Vec::new()),
+            remote_qr: None,
+            identify: false,
+            want_paste: false,
+            want_folder: false,
+            want_pptx: false,
+            want_birthdays: false,
+            want_notice_image: false,
+            images: None,
+            picture: None,
+            logo: None,
+            slide_pictures: HashMap::new(),
+            waker: None,
+            inbox: Arc::new(Mutex::new(Vec::new())),
+            remote_tx,
+            remote_rx,
+            now: unix_now(),
+            clock: 0.0,
+            sent: None,
+            plan_dirty: false,
+            settings_dirty: false,
+        };
+        app.settings.indonesian |= asked;
+        t::set_indonesian(app.settings.indonesian);
+        app.people = app.store.people().unwrap_or_default();
+        app.stream_address.replace_text(app.settings.stream_address.clone());
+        app.stream_key.replace_text(app.settings.stream_key.clone());
+        app.list_bibles();
+        if practice {
+            app.seed_practice_plan();
+        }
+        if data::has_flag("--import-easislides") {
+            app.import_easislides();
+            app.toast = None;
+        }
+        if let Some(folder) = data::flag_value("--import-openlyrics") {
+            // The toast stays: it is the only report of what the import did.
+            app.import_openlyrics(std::path::Path::new(&folder));
+        }
+        // `--import-pptx <file>` and `--import-birthdays <file>` bring a church's own files in at start.
+        if let Some(file) = data::flag_value("--import-pptx") {
+            app.import_pptx(std::path::Path::new(&file));
+        }
+        if let Some(file) = data::flag_value("--import-birthdays") {
+            app.import_birthdays(std::path::Path::new(&file));
+        }
+        // A headless run has no later frame to wait for, so it reads the Bible before drawing.
+        if rune::is_headless() {
+            let code = app.settings.bible.clone();
+            let file = app.bible_files.iter().find(|file| file.code == code).cloned();
+            let loaded = match file.and_then(|file| file.path) {
+                Some(path) => Bible::open(&path).ok(),
+                None => artosia_core::import::bundled_bible().ok(),
+            };
+            if let Some(bible) = loaded {
+                app.bibles.insert(code, Arc::new(bible));
+            }
+        }
+        // `--background <file>` sets a picture or video behind the text, for checking it by eye.
+        if let Some(file) = data::flag_value("--background") {
+            app.set_background_file(std::path::Path::new(&file));
+            app.toast = None;
+        }
+        // `--light` and `--dark` set the window's theme for this run, for checking both by eye.
+        if data::has_flag("--light") {
+            app.settings.appearance = Appearance::Light;
+        } else if data::has_flag("--dark") {
+            app.settings.appearance = Appearance::Dark;
+        }
+        // `--query <text>` opens the search with that text, for checking a search by eye.
+        if let Some(query) = data::flag_value("--query") {
+            app.open_palette(crate::palette::Scope::All, &query);
+        }
+        app
+    }
+
+    fn seed_practice_plan(&mut self) {
+        if !self.plan.items.is_empty() {
+            return;
+        }
+        self.plan.push(PlanEntry::Announcements);
+        self.plan.push(PlanEntry::Heading { title: t::PLAN_HEADING_WORSHIP().to_string() });
+        for song in self.songs.iter().take(3) {
+            self.plan.push(PlanEntry::Song { song_id: song.id, title: song.title.clone() });
+        }
+        self.plan.push(PlanEntry::Heading { title: t::PLAN_HEADING_WORD().to_string() });
+        let reference = Reference { book: 43, chapter: 3, verse: 16, end_chapter: 3, end_verse: 17 };
+        self.plan.push(PlanEntry::Passage { reference, bible: "KJV".into(), second: None, title: "John 3:16-17".into() });
+    }
+
+    /// Lists the translations on disk beside the one packed in.
+    pub fn list_bibles(&mut self) {
+        let mut files = vec![BibleFile { code: "KJV".into(), name: "King James Version".into(), path: None }];
+        if let Some(folder) = &self.folder {
+            for path in artosia_core::import::bible_files(&folder.join("bibles")) {
+                if let Ok((code, name, _)) = artosia_core::bible::describe(&path)
+                    && !files.iter().any(|file| file.code == code) {
+                        files.push(BibleFile { code, name, path: Some(path) });
+                    }
+            }
+        }
+        self.bible_files = files;
+        if !self.bible_files.iter().any(|file| file.code == self.settings.bible) {
+            self.settings.bible = "KJV".into();
+        }
+        if !self.bible_files.iter().any(|file| file.code == self.settings.second_bible) {
+            self.settings.second_bible.clear();
+        }
+    }
+
+    /// Starts reading a translation on a worker unless it is loaded or on its way.
+    pub fn want_bible(&mut self, code: &str) {
+        if code.is_empty() || self.bibles.contains_key(code) || self.bibles_loading.iter().any(|c| c == code) {
+            return;
+        }
+        let Some(file) = self.bible_files.iter().find(|file| file.code == code).cloned() else { return };
+        self.bibles_loading.push(code.to_string());
+        let (inbox, waker) = (self.inbox.clone(), self.waker.clone());
+        std::thread::spawn(move || {
+            let result = match &file.path {
+                Some(path) => Bible::open(path),
+                None => artosia_core::import::bundled_bible(),
+            };
+            let result = result.map_err(|error| error.to_string());
+            if let Ok(bible) = &result {
+                bible.warm();
+            }
+            if let Ok(mut inbox) = inbox.lock() {
+                inbox.push(Arrived::Bible(file.code.clone(), result));
+            }
+            if let Some(wake) = waker {
+                wake();
+            }
+        });
+    }
+
+    pub fn bible(&self) -> Option<&Arc<Bible>> {
+        self.bibles.get(&self.settings.bible)
+    }
+
+    pub fn second_bible(&self) -> Option<&Arc<Bible>> {
+        if self.settings.second_bible.is_empty() { None } else { self.bibles.get(&self.settings.second_bible) }
+    }
+
+    pub fn bible_is_loading(&self) -> bool {
+        self.bible().is_none() && self.bibles_loading.contains(&self.settings.bible)
+    }
+
+    pub fn song_position(&self, id: i64) -> Option<usize> {
+        self.songs.iter().position(|song| song.id == id)
+    }
+
+    pub fn deck_of_song(&self, song: &Song) -> Deck {
+        let mut deck = song_deck(song, self.settings.look.max_lines, &self.settings.licence);
+        // The library names sections in English; a volunteer reads them in the window's language.
+        for slide in &mut deck.slides {
+            if let Some(tag) = slide.tag {
+                slide.label = t::section_label(tag);
+            }
+        }
+        deck
+    }
+
+    /// The plan's name as its column shows it. A plan nobody renamed reads in the window's language.
+    pub fn plan_title(&self) -> String {
+        if matches!(self.plan.name.as_str(), "Today" | "Acara hari ini" | "") { t::PLAN_DEFAULT_NAME().to_string() } else { self.plan.name.clone() }
+    }
+
+    /// A plan entry's title as the plan shows it.
+    pub fn entry_title(&self, entry: &PlanEntry) -> String {
+        match entry {
+            PlanEntry::Announcements => t::CMD_ANNOUNCEMENTS().to_string(),
+            other => other.title().to_string(),
+        }
+    }
+
+    pub fn deck_of_passage(&self, reference: &Reference) -> Option<Deck> {
+        let bible = self.bible()?;
+        Some(passage_deck(bible, reference, self.second_bible().map(Arc::as_ref), self.settings.verses_per_slide))
+    }
+
+    /// The deck a plan entry stands for; None for a heading, a deleted song or a Bible still loading.
+    pub fn deck_for(&self, entry: &PlanEntry) -> Option<Deck> {
+        match entry {
+            PlanEntry::Song { song_id, .. } => self.song_position(*song_id).map(|at| self.deck_of_song(&self.songs[at])),
+            PlanEntry::Passage { reference, bible, second, .. } => {
+                let first = self.bibles.get(bible).or(self.bible())?;
+                let other = second.as_ref().and_then(|code| self.bibles.get(code));
+                Some(passage_deck(first, reference, other.map(Arc::as_ref), self.settings.verses_per_slide))
+            }
+            PlanEntry::Announcements => Some(self.announcements_deck()),
+            PlanEntry::Heading { .. } => None,
+        }
+    }
+
+    /// Whether a plan entry can no longer be shown, and so needs a warning in the list.
+    pub fn entry_is_missing(&self, entry: &PlanEntry) -> bool {
+        matches!(entry, PlanEntry::Song { song_id, .. } if self.song_position(*song_id).is_none())
+    }
+
+    fn plan_item_of(&self, source: &DeckSource) -> Option<u64> {
+        self.plan.items.iter().find(|item| entry_matches(&item.entry, source)).map(|item| item.id)
+    }
+
+    /// Today's date, for announcements that fill themselves with this week's birthdays.
+    pub fn today(&self) -> Today<'static> {
+        let time = rune::LocalTime::at((self.now * 1000.0) as i64);
+        Today { month: time.month.clamp(1, 12) as u8, day: time.day.clamp(1, 31) as u8, months: t::MONTHS() }
+    }
+
+    /// Every announcement slide in order, each with the place of its announcement in the list.
+    pub fn announcement_pages(&self) -> Vec<(usize, Slide)> {
+        announcement_pages(&self.announcements, &self.people, &self.today())
+    }
+
+    pub fn announcements_deck(&self) -> Deck {
+        let mut deck = artosia_core::deck::announcements_deck(&self.announcements, &self.people, &self.today());
+        deck.title = t::CMD_ANNOUNCEMENTS().to_string();
+        deck
+    }
+
+    /// The deck the number keys act on: what is live, else what is open.
+    pub fn target_deck(&self) -> Option<&Deck> {
+        self.live.as_ref().map(|live| &live.deck).or(self.open.as_ref().map(|open| &open.deck))
+    }
+
+    /// Shows the nth section of the live song, counted from 0 in sung order. With nothing
+    /// live it starts the open song there.
+    pub fn jump_to_section(&mut self, nth: usize) {
+        let Some(slide) = self.target_deck().and_then(|deck| section_starts(deck).get(nth).copied()) else { return };
+        if self.live.is_some() { self.go_to(slide) } else { self.show(slide) }
+    }
+
+    /// Moves the selector in the Preview pane and leaves the projector alone. Past either end
+    /// of the deck it goes on into the plan item before or after. True when it moved.
+    pub fn select(&mut self, by: isize) -> bool {
+        let Some(open) = self.open.as_mut() else {
+            self.walk_plan(by > 0);
+            return self.open.is_some();
+        };
+        let last = open.deck.slides.len().saturating_sub(1) as isize;
+        let wanted = open.cursor as isize + by;
+        if (0..=last).contains(&wanted) {
+            open.cursor = wanted as usize;
+            open.armed = true;
+            open.queued = false;
+            return true;
+        }
+        let was = open.item;
+        self.walk_plan(by > 0);
+        let Some(open) = self.open.as_mut().filter(|open| open.item != was) else { return false };
+        if by < 0 {
+            open.cursor = open.deck.slides.len().saturating_sub(1);
+        }
+        open.armed = true;
+        true
+    }
+
+    /// Puts the selector on the first or the last slide of the Preview deck.
+    pub fn select_edge(&mut self, last: bool) -> bool {
+        let Some(open) = self.open.as_mut() else { return false };
+        let to = if last { open.deck.slides.len().saturating_sub(1) } else { 0 };
+        let moved = to != open.cursor;
+        open.cursor = to;
+        open.armed = true;
+        open.queued = false;
+        moved
+    }
+
+    /// Whether Enter would show something other than the live slide: another deck, or a slide
+    /// of the live deck picked by hand.
+    pub fn preview_waits(&self) -> bool {
+        match (&self.open, &self.live) {
+            (Some(open), Some(live)) => !open.deck.slides.is_empty() && (!self.open_is_live() || (open.armed && open.cursor != live.index)),
+            (Some(open), None) => !open.deck.slides.is_empty(),
+            _ => false,
+        }
+    }
+
+    /// Fills the Preview pane with what comes after the live item, so Enter, or Next at the end
+    /// of the live deck, goes on with the plan. With nothing after it, Preview holds the live deck.
+    fn queue_next(&mut self) {
+        let Some(live) = &self.live else { return };
+        if let Some(id) = live.item {
+            self.resume = Some(id);
+        }
+        let queued = match self.neighbour(true) {
+            Some((id, deck)) => OpenDeck { deck, item: Some(id), cursor: 0, queued: true, armed: false },
+            None => OpenDeck { deck: live.deck.clone(), item: live.item, cursor: live.index, queued: true, armed: false },
+        };
+        self.open = Some(queued);
+    }
+
+    /// Fills the Preview pane again after the plan changed under a deck Artosia queued.
+    pub fn requeue(&mut self) {
+        if self.live.is_some() && self.open.as_ref().is_none_or(|open| open.queued) {
+            self.queue_next();
+        }
+    }
+
+    /// Opens the plan item before or after the open one, without showing it.
+    pub fn walk_plan(&mut self, forward: bool) {
+        let from = self.open.as_ref().and_then(|open| open.item).or(self.live.as_ref().and_then(|live| live.item)).or(self.resume);
+        let next = match from {
+            Some(id) if forward => self.plan.next_showable(id).map(|item| item.id),
+            Some(id) => self.plan.previous_showable(id).map(|item| item.id),
+            None => self.plan.items.iter().find(|item| !item.entry.is_heading()).map(|item| item.id),
+        };
+        if let Some(id) = next {
+            self.open_plan_item(id);
+        }
+    }
+
+    /// Puts the live deck in the Preview pane too, so the selector can pick another part of it.
+    pub fn open_live(&mut self) {
+        if let Some(live) = &self.live {
+            self.open = Some(OpenDeck::new(live.deck.clone(), live.item, live.index));
+        }
+    }
+
+    /// Shows the first slide of the first thing in the plan.
+    pub fn start_service(&mut self) {
+        let first = self.plan.items.iter().filter(|item| !item.entry.is_heading()).find(|item| self.deck_for(&item.entry).is_some_and(|deck| !deck.slides.is_empty()));
+        match first.map(|item| item.id) {
+            Some(id) => {
+                self.open_plan_item(id);
+                self.show(0);
+            }
+            None => self.say(t::PLAN_EMPTY(), None),
+        }
+    }
+
+    /// Moves the announcement loop on when the live slide's time is up. Returns the seconds
+    /// until it next has work, or None when no loop runs.
+    pub fn loop_step(&mut self, clock: f64) -> Option<f64> {
+        let on_air = self.live.as_ref().is_some_and(|live| live.deck.source == DeckSource::Announcements && !live.deck.slides.is_empty());
+        if !self.looping || !on_air {
+            self.looping = false;
+            return None;
+        }
+        // A birthday announcement can run over several slides, so each slide's time is looked up.
+        let own: Vec<u32> = self.announcement_pages().into_iter().map(|(at, _)| self.announcements.get(at).map(|item| item.seconds).unwrap_or(10)).collect();
+        let seconds = |index: usize| f64::from(own.get(index).copied().unwrap_or(10).clamp(2, 600));
+        let live = self.live.as_mut()?;
+        if self.loop_at.0 != live.index || self.loop_at.1 <= 0.0 {
+            // A slide shown by hand gets its full time.
+            self.loop_at = (live.index, clock + seconds(live.index));
+        } else if clock >= self.loop_at.1 {
+            live.index = (live.index + 1) % live.deck.slides.len();
+            self.loop_at = (live.index, clock + seconds(live.index));
+            self.follow_live();
+        }
+        Some((self.loop_at.1 - clock).max(0.05))
+    }
+
+    pub fn open_deck(&mut self, deck: Deck, item: Option<u64>, cursor: usize) {
+        let item = item.or_else(|| self.plan_item_of(&deck.source));
+        let last = deck.slides.len().saturating_sub(1);
+        // Opening what is already live keeps the cursor on the live slide.
+        let cursor = match &self.live {
+            Some(live) if live.deck.source == deck.source && live.item == item => live.index.min(last),
+            _ => cursor.min(last),
+        };
+        self.open = Some(OpenDeck::new(deck, item, cursor));
+        self.editor = None;
+        self.notices = None;
+    }
+
+    pub fn open_song(&mut self, at: usize, section: Option<usize>) {
+        let Some(song) = self.songs.get(at) else { return };
+        let deck = self.deck_of_song(song);
+        let cursor = section
+            .and_then(|section| song.sections().get(section).map(|s| s.tag))
+            .and_then(|tag| deck.slides.iter().position(|slide| slide.tag == Some(tag)))
+            .unwrap_or(0);
+        self.open_deck(deck, None, cursor);
+    }
+
+    pub fn open_passage(&mut self, reference: &Reference) {
+        if let Some(deck) = self.deck_of_passage(reference) {
+            self.open_deck(deck, None, 0);
+        }
+    }
+
+    pub fn open_plan_item(&mut self, id: u64) {
+        let Some(item) = self.plan.items.iter().find(|item| item.id == id) else { return };
+        if let Some(deck) = self.deck_for(&item.entry) {
+            self.open_deck(deck, Some(id), 0);
+        }
+    }
+
+    pub fn open_is_live(&self) -> bool {
+        match (&self.open, &self.live) {
+            (Some(open), Some(live)) => open.deck.source == live.deck.source && open.item == live.item,
+            _ => false,
+        }
+    }
+
+    /// Puts a slide of the Preview deck on the projector, and queues what comes after it.
+    /// Anything sent to the screen shows: black, logo and cleared text all lift.
+    pub fn show(&mut self, index: usize) {
+        let Some(open) = self.open.as_mut() else { return };
+        if open.deck.slides.is_empty() {
+            return;
+        }
+        let index = index.min(open.deck.slides.len() - 1);
+        open.cursor = index;
+        open.armed = false;
+        self.live = Some(LiveDeck { deck: open.deck.clone(), item: open.item, index });
+        self.reveal();
+        self.queue_next();
+    }
+
+    fn reveal(&mut self) {
+        self.black = false;
+        self.text_hidden = false;
+        self.logo_on = false;
+    }
+
+    fn follow_live(&mut self) {
+        let Some(live) = &self.live else { return };
+        match self.open.as_mut() {
+            Some(open) if !open.armed && open.deck.source == live.deck.source && open.item == live.item => open.cursor = live.index,
+            _ => {}
+        }
+    }
+
+    /// The plan item after the live one, with its deck.
+    fn neighbour(&self, forward: bool) -> Option<(u64, Deck)> {
+        let live = self.live.as_ref()?;
+        let mut id = live.item.or(if forward { self.resume } else { None })?;
+        // Skips entries with nothing to show, such as a deleted song.
+        for _ in 0..self.plan.items.len() {
+            let item = if forward { self.plan.next_showable(id) } else { self.plan.previous_showable(id) }?;
+            match self.deck_for(&item.entry) {
+                Some(deck) if !deck.slides.is_empty() => return Some((item.id, deck)),
+                _ => id = item.id,
+            }
+        }
+        None
+    }
+
+    /// The title of what Next will reach once the live deck ends.
+    pub fn next_item_title(&self) -> Option<String> {
+        self.neighbour(true).map(|(_, deck)| deck.title)
+    }
+
+    pub fn next(&mut self) {
+        let Some(live) = self.live.as_mut() else {
+            // Nothing is live yet: Next starts the Preview deck at its selector, or the plan.
+            match self.open.as_ref().map(|open| open.cursor) {
+                Some(cursor) => self.show(cursor),
+                None => self.start_service(),
+            }
+            return;
+        };
+        if live.index + 1 < live.deck.slides.len() {
+            live.index += 1;
+            self.reveal();
+            self.follow_live();
+        } else if self.preview_waits() {
+            // The live deck is over: what waits in Preview goes on, at its selector.
+            let cursor = self.open.as_ref().map(|open| open.cursor).unwrap_or(0);
+            self.show(cursor);
+        } else if let Some((id, deck)) = self.neighbour(true) {
+            self.open = Some(OpenDeck::new(deck, Some(id), 0));
+            self.show(0);
+        }
+    }
+
+    pub fn previous(&mut self) {
+        let Some(live) = self.live.as_mut() else { return };
+        if live.index > 0 {
+            live.index -= 1;
+            self.reveal();
+            self.follow_live();
+        } else if let Some((id, deck)) = self.neighbour(false) {
+            let index = deck.slides.len().saturating_sub(1);
+            self.live = Some(LiveDeck { deck, item: Some(id), index });
+            self.reveal();
+            self.requeue();
+        }
+    }
+
+    /// The first or the last slide of the live deck.
+    pub fn go_to_edge(&mut self, last: bool) {
+        let end = self.live.as_ref().map(|live| live.deck.slides.len().saturating_sub(1)).unwrap_or(0);
+        self.go_to(if last { end } else { 0 });
+    }
+
+    pub fn go_to(&mut self, index: usize) {
+        if let Some(live) = self.live.as_mut()
+            && index < live.deck.slides.len() {
+                live.index = index;
+                self.reveal();
+                self.follow_live();
+            }
+    }
+
+    /// Enter in the main window: show the slide with the selector, else go on.
+    pub fn enter(&mut self) {
+        if self.preview_waits() {
+            let cursor = self.open.as_ref().map(|open| open.cursor).unwrap_or(0);
+            self.show(cursor);
+        } else {
+            self.next();
+        }
+    }
+
+    pub fn toggle_black(&mut self) {
+        self.black = !self.black;
+    }
+
+    pub fn toggle_text(&mut self) {
+        self.text_hidden = !self.text_hidden;
+    }
+
+    pub fn toggle_logo(&mut self) {
+        if !self.settings.logo.is_empty() {
+            self.logo_on = !self.logo_on;
+        }
+    }
+
+    pub fn start_countdown(&mut self) {
+        let minutes: f64 = self.timer_minutes.text.trim().replace(',', ".").parse().unwrap_or(5.0);
+        let minutes = minutes.clamp(0.1, 600.0);
+        self.countdown = Some(Countdown { label: t::COUNTDOWN_LABEL().to_string(), ends_at: self.now + minutes * 60.0 });
+    }
+
+    /// What the projector and the stage screen should show now.
+    pub fn output_state(&self) -> OutputState {
+        let slide = self.live.as_ref().and_then(|live| live.deck.slides.get(live.index).cloned());
+        let stage = match &self.live {
+            Some(live) => StageInfo {
+                title: live.deck.title.clone(),
+                next: live.deck.slides.get(live.index + 1).cloned(),
+                next_title: if live.index + 1 >= live.deck.slides.len() { self.next_item_title().unwrap_or_default() } else { String::new() },
+                index: live.index,
+                count: live.deck.slides.len(),
+                chips: live
+                    .deck
+                    .slides
+                    .iter()
+                    .enumerate()
+                    .filter(|(_, slide)| slide.tag.is_some())
+                    .map(|(i, slide)| StageChip {
+                        text: slide.short.clone(),
+                        group: slide.tag.map(tag_group).unwrap_or(0),
+                        active: i == live.index,
+                    })
+                    .collect(),
+                message: if self.stage_message_on { self.stage_message.text.clone() } else { String::new() },
+                words: stage_words(),
+            },
+            None => StageInfo {
+                message: if self.stage_message_on { self.stage_message.text.clone() } else { String::new() },
+                words: stage_words(),
+                ..StageInfo::default()
+            },
+        };
+        OutputState {
+            slide,
+            look: self.settings.look.clone(),
+            black: self.black,
+            text_hidden: self.text_hidden,
+            logo: self.settings.logo.clone(),
+            logo_on: self.logo_on,
+            message: if self.message_on { self.message.text.clone() } else { String::new() },
+            countdown: self.countdown.clone(),
+            stage,
+            warp: self.settings.warp,
+        }
+    }
+
+    /// The same state with another slide in place, for a slide tile.
+    pub fn preview_state(&self, slide: Option<artosia_core::deck::Slide>) -> OutputState {
+        OutputState { slide, look: self.settings.look.clone(), ..OutputState::default() }
+    }
+
+    pub fn say(&mut self, text: impl Into<String>, undo: Option<Undo>) {
+        // A toast that can be undone stays long enough to read and reach.
+        let stay = if undo.is_some() { 8.0 } else { 4.0 };
+        self.toast = Some(Toast { text: text.into(), undo, until: self.clock + stay });
+    }
+
+    pub fn output_options(&self) -> crate::link::OutputOptions {
+        crate::link::OutputOptions {
+            audience: self.settings.audience_screen,
+            stage: self.settings.stage_screen,
+            stage_window: self.settings.stage_window,
+            here: self.settings.projector_here,
+            off: self.settings.projector_off,
+        }
+    }
+
+    /// Rebuilds the open and live decks after songs, announcements or the look changed.
+    pub fn refresh_decks(&mut self) {
+        let rebuilt = |app: &App, source: &DeckSource| -> Option<Deck> {
+            match source {
+                DeckSource::Song(id) => app.song_position(*id).map(|at| app.deck_of_song(&app.songs[at])),
+                DeckSource::Passage { reference, .. } => app.deck_of_passage(reference),
+                DeckSource::Announcements | DeckSource::Announcement(_) => Some(app.announcements_deck()),
+            }
+        };
+        if let Some(source) = self.open.as_ref().map(|open| open.deck.source.clone()) {
+            match rebuilt(self, &source) {
+                Some(deck) => {
+                    if let Some(open) = self.open.as_mut() {
+                        open.cursor = open.cursor.min(deck.slides.len().saturating_sub(1));
+                        open.deck = deck;
+                    }
+                }
+                None => self.open = None,
+            }
+        }
+        if let Some(source) = self.live.as_ref().map(|live| live.deck.source.clone())
+            && let Some(deck) = rebuilt(self, &source)
+                && let Some(live) = self.live.as_mut() {
+                    live.index = live.index.min(deck.slides.len().saturating_sub(1));
+                    live.deck = deck;
+                }
+    }
+
+    pub fn reload_songs(&mut self) {
+        self.songs = self.store.songs().unwrap_or_default();
+        self.index = SongIndex::build(&self.songs);
+        self.refresh_decks();
+    }
+
+    pub fn touch_settings(&mut self) {
+        self.settings_dirty = true;
+    }
+
+    pub fn touch_plan(&mut self) {
+        self.plan_dirty = true;
+    }
+}
+
+/// The few words the stage monitor writes itself, in the window's language.
+fn stage_words() -> artosia_slides::frame::StageWords {
+    artosia_slides::frame::StageWords {
+        clock: t::STAGE_CLOCK().to_string(),
+        timer: t::STAGE_TIMER().to_string(),
+        black: t::STAGE_BLACK().to_string(),
+        nothing: t::STAGE_NOTHING().to_string(),
+        next: t::stage_next("{label}"),
+        place: t::stage_place("{index}", "{count}"),
+    }
+}
+
+/// Whether a plan entry and a deck are the same thing.
+pub fn entry_matches(entry: &PlanEntry, source: &DeckSource) -> bool {
+    match (entry, source) {
+        (PlanEntry::Song { song_id, .. }, DeckSource::Song(id)) => song_id == id,
+        (PlanEntry::Passage { reference, .. }, DeckSource::Passage { reference: other, .. }) => reference == other,
+        (PlanEntry::Announcements, DeckSource::Announcements) => true,
+        _ => false,
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    /// The nth song of the practice plan.
+    fn song_item(app: &App, nth: usize) -> u64 {
+        app.plan.items.iter().filter(|item| matches!(item.entry, PlanEntry::Song { .. })).nth(nth).map(|item| item.id).expect("the practice plan has songs")
+    }
+
+    fn live_at(app: &App) -> Option<(Option<u64>, usize)> {
+        app.live.as_ref().map(|live| (live.item, live.index))
+    }
+
+    #[test]
+    fn showing_a_plan_item_queues_the_one_after_it() {
+        let mut app = App::practice();
+        let (first, second) = (song_item(&app, 0), song_item(&app, 1));
+        app.open_plan_item(first);
+        app.show(0);
+        assert_eq!(live_at(&app), Some((Some(first), 0)));
+        let open = app.open.as_ref().expect("Preview is filled");
+        assert_eq!((open.item, open.cursor, open.queued), (Some(second), 0, true));
+    }
+
+    #[test]
+    fn the_selector_moves_alone_and_the_next_song_starts_where_it_was_put() {
+        let mut app = App::practice();
+        let (first, second) = (song_item(&app, 0), song_item(&app, 1));
+        app.open_plan_item(first);
+        app.show(0);
+        // Shift and Down: the ring moves in the song that waits; the projector stays.
+        assert!(app.select(1));
+        assert_eq!(live_at(&app), Some((Some(first), 0)));
+        assert_eq!(app.open.as_ref().map(|open| (open.item, open.cursor)), Some((Some(second), 1)));
+        // Next runs through the live song, and at its end goes on at the ring: a medley.
+        let slides = app.live.as_ref().map(|live| live.deck.slides.len()).unwrap_or(0);
+        for _ in 1..slides {
+            app.next();
+        }
+        assert_eq!(live_at(&app), Some((Some(first), slides - 1)));
+        app.next();
+        assert_eq!(live_at(&app), Some((Some(second), 1)));
+    }
+
+    #[test]
+    fn a_song_from_the_search_keeps_the_place_in_the_plan() {
+        let mut app = App::practice();
+        let (first, second) = (song_item(&app, 0), song_item(&app, 1));
+        app.open_plan_item(first);
+        app.show(0);
+        let planned: Vec<i64> = app.plan.items.iter().filter_map(|item| if let PlanEntry::Song { song_id, .. } = item.entry { Some(song_id) } else { None }).collect();
+        let extra = app.songs.iter().position(|song| !planned.contains(&song.id)).expect("the practice library has a song outside the plan");
+        app.open_song(extra, None);
+        app.show(0);
+        assert_eq!(app.live.as_ref().and_then(|live| live.item), None);
+        assert_eq!(app.open.as_ref().and_then(|open| open.item), Some(second), "Preview goes on with the plan");
+        // Added now, it is the next one, ahead of what was already planned.
+        app.add_song_to_plan(extra);
+        let at = |id: u64| app.plan.position(id);
+        let added = app.plan.items.iter().find(|item| matches!(item.entry, PlanEntry::Song { song_id, .. } if song_id == app.songs[extra].id)).map(|item| item.id);
+        assert_eq!(added.and_then(at), at(first).map(|place| place + 1));
+    }
+
+    #[test]
+    fn the_live_song_can_be_armed_for_another_of_its_own_parts() {
+        let mut app = App::practice();
+        // A plan that ends on its first song.
+        let last = song_item(&app, 0);
+        let keep = app.plan.position(last).map(|at| at + 1).unwrap_or(0);
+        app.plan.items.truncate(keep);
+        app.open_plan_item(last);
+        app.show(0);
+        // Nothing follows, so Preview holds the live deck and Enter is Next.
+        assert!(app.open_is_live() && !app.preview_waits());
+        assert!(app.select(1));
+        assert!(app.preview_waits());
+        app.go_to(0);
+        assert_eq!(app.open.as_ref().map(|open| open.cursor), Some(1), "an armed ring stays put");
+        app.enter();
+        assert_eq!(live_at(&app), Some((Some(last), 1)));
+    }
+}

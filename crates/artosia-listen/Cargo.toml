@@ -1,0 +1,18 @@
+[package]
+name = "artosia-listen"
+version = "0.0.1"
+edition.workspace = true
+license.workspace = true
+description = "Listening to the room: naming the verse or the song from what is said and sung."
+
+[features]
+# The speech recogniser (whisper.cpp through whisper-rs). Off by default: building it needs
+# CMake and LLVM (libclang), and capture and the level meter work without it.
+whisper = ["dep:whisper-rs"]
+
+[dependencies]
+cpal = "0.18"
+whisper-rs = { version = "0.16", optional = true }
+
+[lints]
+workspace = true

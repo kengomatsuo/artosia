@@ -10,6 +10,20 @@
 8. Phone control and phone streaming on the same Wi-Fi, including across routers of one network.
 9. Many quality-of-life features the legacy apps lack.
 
+## Where each stands (2026-11-10)
+
+| # | Feature | State |
+|---|---|---|
+| 1 | Live camera and streaming | Built. A camera can be the background (Look, Camera); when it drops out the words stay on black and it comes back by itself. `artosia-stream` sends the projector picture and the room's sound to RTMP, SRT or a file (Stream in the top bar). Proven against a local ingest and a recording; no real service was reached. [output.md](output.md), `crates/artosia-stream/README.md` |
+| 2 | Song search that forgives typos | Built, ordered by a cascade after the owner's house-kit palette: songs in today's plan first, the title before the lyrics, `diberkati` found by `berkat`. [operator.md](operator.md) |
+| 3 | Any second screen or projector | Built. One screen shows no projector window; a second screen is taken full-screen at once and released when it goes; the first frame is laid out for the real window. Proven on a 1920x1080 screen at 150%. Unplugging was simulated, never done by hand. [output.md](output.md) |
+| 4 | Warp and colour | Built: four corners nudged from the Screens dialog, brightness, contrast and colour, drawn by `artosia-warp` over the whole projector picture. A bent picture was checked in the warp crate's own example, and through the projector only unbent |
+| 5 | Listening to audio | Half built. The microphone, the level meter and the phrase cutting work (Listen in the top bar). Speech recognition is written against whisper.cpp but was never compiled or run: the 57 MB model is downloaded, and the build waits for CMake and LLVM on this PC. F4 puts what it recognised in Preview. Melody recognition is not built. `crates/artosia-listen/README.md` |
+| 6 | Lyrics from the web | Built: a new song's title offers songs from LRCLIB and fills the editor on Tab; paste still works. LRCLIB found 2 of 20 sampled Indonesian titles. [operator.md](operator.md) |
+| 7 | Next slide | Built: Next runs through the item and on to what waits in Preview, which Artosia fills with the next plan item; Shift and an arrow arm another starting slide for a medley; number keys jump to sections; announcements loop on a timer. Nothing advances a song by itself |
+| 8 | Phone control | Built: live slide, sections, plan, search, messages and countdown from a web page on the same Wi-Fi. Not tried from a real phone in this session. A phone cannot be the camera or microphone from that page: browsers give those only to secure pages, and a LAN address is not one (`crates/artosia-remote`, sources in the builder's report, 2026-11-10) |
+| 9 | Quality of life | Built so far: one search for everything; every action from the keyboard; light and dark; English and Indonesian; PowerPoint and birthday-list import; self-filling birthday slides; one Artosia per library; updates from GitHub Releases without a USB stick; the projector survives an operator crash |
+
 ## What the installed GStreamer 1.28.8 covers (checked with `gst-inspect-1.0`, 2026-11-10)
 
 | Need | Elements present on this PC |

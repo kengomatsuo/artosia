@@ -1,0 +1,12 @@
+{"events": [
+  {"t": 0.20, "type": "type", "text": "quite harbor", "every": 0.05},
+  {"t": 1.20, "type": "mark", "name": "typed"},
+  {"t": 1.40, "type": "key", "name": "Enter"},
+  {"t": 1.90, "type": "mark", "name": "opened"},
+  {"t": 2.10, "type": "key", "name": "Enter"},
+  {"t": 2.50, "type": "key", "name": " "},
+  {"t": 3.00, "type": "mark", "name": "live"},
+  {"t": 3.20, "type": "key", "name": "F2"},
+  {"t": 3.60, "type": "tap", "key": "slide-0"},
+  {"t": 4.20, "type": "mark", "name": "end"}
+]}
