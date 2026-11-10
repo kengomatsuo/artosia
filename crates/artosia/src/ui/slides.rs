@@ -63,23 +63,30 @@ pub(crate) fn start(s: &App, k: &Kit) -> El {
     );
     if s.easislides.is_some() && !s.settings.welcomed && s.folder.is_some() {
         column = column.child(
-            row()
+            // The words over the two buttons: side by side, the second sentence ran under them.
+            col()
                 .key("easislides-card")
                 .w(232.0 * 2.0 + space::S3)
                 .padding(space::S4)
-                .gap(space::S4)
-                .center_y()
+                .gap(space::S3)
                 .radius(k.radius.lg)
                 .fill(k.c.layer_01)
                 .border(1.0, k.c.border_base)
-                .child(icon(&icons::IMPORT, 16.0).color(k.c.text_muted).a11y_hidden())
                 .child(
-                    col().grow(1.0).min_w(0.0).gap(2.0).child(text(t::WELCOME_EASISLIDES()).font(type_::BODY_STRONG).color(k.c.text_base)).child(
-                        text(t::WELCOME_EASISLIDES_DETAIL()).font(type_::SMALL).color(k.c.text_muted),
+                    row().w_full().gap(space::S3).items_start().child(icon(&icons::IMPORT, 16.0).color(k.c.text_muted).a11y_hidden()).child(
+                        col().grow(1.0).min_w(0.0).gap(2.0).child(text(t::WELCOME_EASISLIDES()).font(type_::BODY_STRONG).color(k.c.text_base)).child(
+                            text(t::WELCOME_EASISLIDES_DETAIL()).font(type_::SMALL).color(k.c.text_muted).wrap(),
+                        ),
                     ),
                 )
-                .child(btn(t::BTN_NOT_NOW()).ghost().build(k, |s, _| s.dismiss_welcome()))
-                .child(btn(t::BTN_BRING_OVER()).primary().build(k, |s, _| s.import_easislides())),
+                .child(
+                    row()
+                        .w_full()
+                        .gap(space::S2)
+                        .child(spacer())
+                        .child(btn(t::BTN_NOT_NOW()).ghost().build(k, |s, _| s.dismiss_welcome()))
+                        .child(btn(t::BTN_BRING_OVER()).primary().build(k, |s, _| s.import_easislides())),
+                ),
         );
     } else if s.songs.is_empty() {
         column = column.child(text(t::START_NO_SONGS()).font(type_::SMALL).color(k.c.text_muted));

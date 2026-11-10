@@ -6,6 +6,8 @@
 #
 # Steps: key:<name>  down:<name>  up:<name>  type:<text without spaces>
 #        click:<x>,<y>  drag:<x>,<y>,<dx>,<dy> (points inside the window)
+#        post-click:<x>,<y> (a click sent to the window itself, which works while another
+#        program is in front and takes nothing from it)
 #        shot:<name>  wait:<milliseconds>
 # Input goes to whatever window is in front, so every step first checks that this program's
 # window is the one in front and stops when it is not.
@@ -25,6 +27,11 @@ public static class Drive {
     [DllImport("user32.dll")] public static extern IntPtr GetForegroundWindow();
     [DllImport("user32.dll")] public static extern bool SetForegroundWindow(IntPtr h);
     [DllImport("user32.dll")] public static extern bool ShowWindow(IntPtr h, int cmd);
+    [DllImport("user32.dll")] public static extern bool BringWindowToTop(IntPtr h);
+    [DllImport("user32.dll")] public static extern uint GetWindowThreadProcessId(IntPtr h, out uint pid);
+    [DllImport("user32.dll")] public static extern bool AttachThreadInput(uint from, uint to, bool attach);
+    [DllImport("kernel32.dll")] public static extern uint GetCurrentThreadId();
+    [DllImport("user32.dll")] public static extern bool PostMessage(IntPtr h, uint message, IntPtr w, IntPtr l);
     [DllImport("user32.dll")] public static extern void keybd_event(byte vk, byte scan, uint flags, UIntPtr extra);
     [DllImport("user32.dll")] public static extern uint MapVirtualKey(uint code, uint mapType);
     [DllImport("user32.dll")] public static extern short VkKeyScanW(char c);
@@ -48,6 +55,17 @@ function InFront {
     # Windows lets a program take the front only after input; an Alt tap counts as input.
     [Drive]::keybd_event(0x12, 0, 0, [UIntPtr]::Zero); [Drive]::keybd_event(0x12, 0, 2, [UIntPtr]::Zero)
     [Drive]::SetForegroundWindow($h) | Out-Null
+    Start-Sleep -Milliseconds 300
+    if ([Drive]::GetForegroundWindow() -eq $h) { return $true }
+    # Windows may still refuse while another program has the keyboard. Joining that program's
+    # input queue for a moment is the documented way to hand the front over.
+    $other = 0
+    $front = [Drive]::GetWindowThreadProcessId([Drive]::GetForegroundWindow(), [ref]$other)
+    $me = [Drive]::GetCurrentThreadId()
+    [Drive]::AttachThreadInput($me, $front, $true) | Out-Null
+    [Drive]::BringWindowToTop($h) | Out-Null
+    [Drive]::SetForegroundWindow($h) | Out-Null
+    [Drive]::AttachThreadInput($me, $front, $false) | Out-Null
     Start-Sleep -Milliseconds 300
     return ([Drive]::GetForegroundWindow() -eq $h)
 }
@@ -76,12 +94,22 @@ $all = $Steps -split "\s+" | Where-Object { $_ }
 try {
     foreach ($step in $all) {
         $what, $arg = $step -split ":", 2
-        if ($what -ne "shot" -and $what -ne "wait" -and -not (InFront)) { "stopped at '$step': the window is not in front"; exit 2 }
+        if ($what -ne "shot" -and $what -ne "wait" -and $what -ne "post-click" -and -not (InFront)) { "stopped at '$step': the window is not in front"; exit 2 }
         switch ($what) {
             "key" { Press $arg $true $true }
             "down" { Press $arg $true $false; $held += $arg }
             "up" { Press $arg $false $true; $held = $held | Where-Object { $_ -ne $arg } }
             "wait" { Start-Sleep -Milliseconds ([int]$arg) }
+            "post-click" {
+                $x, $y = $arg -split "," | ForEach-Object { [double]$_ }
+                $scale = [Drive]::GetDpiForWindow($h) / 96.0
+                $at = [IntPtr](([int]($y * $scale) -shl 16) -bor ([int]($x * $scale) -band 0xFFFF))
+                [Drive]::PostMessage($h, 0x0200, [IntPtr]::Zero, $at) | Out-Null   # the pointer moves there
+                Start-Sleep -Milliseconds 120
+                [Drive]::PostMessage($h, 0x0201, [IntPtr]1, $at) | Out-Null        # left button down
+                Start-Sleep -Milliseconds 80
+                [Drive]::PostMessage($h, 0x0202, [IntPtr]::Zero, $at) | Out-Null   # and up
+            }
             "type" {
                 foreach ($c in $arg.ToCharArray()) {
                     $scan = [Drive]::VkKeyScanW($c)
