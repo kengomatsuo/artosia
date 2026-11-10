@@ -251,8 +251,10 @@ fn grid(s: &App, k: &Kit) -> El {
 fn actions(k: &Kit, hit: &Hit) -> El {
     let bar = row().key("preview-actions").w_full().padding(space::S3).gap(space::S2).center_y();
     let choose = || btn(t::BTN_CHOOSE()).primary().hint(t::KEY_ENTER()).build(k, |s, _| s.pick(Pick::Open));
-    let add = || btn(t::BTN_ADD_TO_PLAN()).hint(t::KEY_ADD()).build(k, |s, _| s.pick(Pick::AddToPlan));
-    let show = || btn(t::BTN_SHOW_NOW()).hint(t::KEY_SHOW_NOW()).build(k, |s, _| s.pick(Pick::ShowNow));
+    // Only the main button carries its key: the row under the list names all three, and with
+    // three key caps the Indonesian buttons ran past the panel's edge.
+    let add = || btn(t::BTN_ADD_TO_PLAN()).build(k, |s, _| s.pick(Pick::AddToPlan));
+    let show = || btn(t::BTN_SHOW_NOW()).build(k, |s, _| s.pick(Pick::ShowNow));
     let open = || btn(t::BTN_OPEN()).primary().hint(t::KEY_ENTER()).build(k, |s, _| s.pick(Pick::Open));
     match hit {
         Hit::Group(_) => bar,

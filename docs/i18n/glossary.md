@@ -36,6 +36,7 @@ This file is the one place a concrete word is allowed.
 | `ring` | The white outline on the slide Enter will show, in the Preview pane. Moved with Shift and an arrow. | "bingkai" ("bingkai putih" where it fits). Chosen 2026-11-10: a selection outline on a thumbnail is called this; "cincin" reads oddly. |
 | `preview-pane` | The middle pane of the main window: the slides of what comes next. | "Pratinjau" as the pane's title, "pratinjau" inside a sentence. "Bawa ... ke pratinjau" for putting something there. |
 | `plan-item` | One entry of the plan: a song, a passage or the announcements. | "item" ("item acara"). |
+| `learned` | What the search remembers of past use on this PC: which song was picked for what was typed, and what followed what. | "ingat" and "dilupakan" ("Ingat pilihan di PC ini", "Lupakan pilihan yang diingat"); a past pick is "dipilih ... kali", coming right after another song is "menyusul". "Lupakan", never "Hapus", which would read as deleting songs. |
 
 ## Phone page words the operator window must agree with
 

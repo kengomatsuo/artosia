@@ -1103,18 +1103,18 @@ pub const LANGUAGE_ENGLISH: &str = "English";
 pub const LANGUAGE_INDONESIAN: &str = "Bahasa Indonesia";
 
 // What the search learned. Indonesian is written later from the brief; English stands in both.
-text!(LEARN_SECTION, "Search", "Search");
-text!(LEARN_ON, "Learn from use", "Learn from use");
-text!(LEARN_ON_HINT, "Songs you pick often come first among equal matches", "Songs you pick often come first among equal matches");
-text!(LEARN_FORGET, "Forget what the search learned", "Forget what the search learned");
-text!(LEARN_FORGOTTEN, "Search history forgotten", "Search history forgotten");
-text!(GROUP_WEEKDAY, "Sung on this day of the week", "Sung on this day of the week");
-text!(GROUP_RECENT, "Picked from the list lately", "Picked from the list lately");
+text!(LEARN_SECTION, "Search", "Pencarian");
+text!(LEARN_ON, "Learn from use", "Ingat pilihan di PC ini");
+text!(LEARN_ON_HINT, "Songs you pick often come first among equal matches", "Hanya mengurutkan hasil yang sama cocok, acara tetap di atas");
+text!(LEARN_FORGET, "Forget what the search learned", "Lupakan pilihan yang diingat");
+text!(LEARN_FORGOTTEN, "Search history forgotten", "Semua pilihan sudah dilupakan");
+text!(GROUP_WEEKDAY, "Sung on this day of the week", "Lagu di hari yang sama");
+text!(GROUP_RECENT, "Picked from the list lately", "Lagu yang baru dipilih");
 
 /// The heading over the songs that came after the live song.
 pub fn group_follows(title: &str) -> String {
     if indonesian() {
-        return format!("Often sung after {title}");
+        return format!("Lagu yang pernah menyusul {title}");
     }
     format!("Often sung after {title}")
 }
@@ -1130,7 +1130,7 @@ fn services_of(count: u32) -> String {
 /// On the row: how often this text led to this song, with the text.
 pub fn habit_chip(typed: &str, picks: u32) -> String {
     if indonesian() {
-        return format!("Picked for \u{201c}{typed}\u{201d} {}", times_of(picks));
+        return format!("Dipilih {picks} kali untuk \u{201c}{typed}\u{201d}");
     }
     format!("Picked for \u{201c}{typed}\u{201d} {}", times_of(picks))
 }
@@ -1138,7 +1138,7 @@ pub fn habit_chip(typed: &str, picks: u32) -> String {
 /// The same with the day of the last pick, in the preview.
 pub fn habit_line(typed: &str, picks: u32, when: &str) -> String {
     if indonesian() {
-        return format!("Picked for \u{201c}{typed}\u{201d} {}, last {when}", times_of(picks));
+        return format!("Dipilih {picks} kali untuk \u{201c}{typed}\u{201d}, terakhir {when}");
     }
     format!("Picked for \u{201c}{typed}\u{201d} {}, last {when}", times_of(picks))
 }
@@ -1146,7 +1146,7 @@ pub fn habit_line(typed: &str, picks: u32, when: &str) -> String {
 /// Under a song that came after the live one.
 pub fn follows_line(count: u32, when: &str) -> String {
     if indonesian() {
-        return format!("Came next {}, last {when}", times_of(count));
+        return format!("Menyusul {count} kali, terakhir {when}");
     }
     format!("Came next {}, last {when}", times_of(count))
 }
@@ -1154,7 +1154,7 @@ pub fn follows_line(count: u32, when: &str) -> String {
 /// Under a song sung on this day of the week: in `count` of the last `of` services that day.
 pub fn weekday_line(count: u32, of: u32) -> String {
     if indonesian() {
-        return format!("Sung on this day in {count} of {}", services_of(of));
+        return format!("Dinyanyikan {count} dari {of} ibadah");
     }
     format!("Sung on this day in {count} of {}", services_of(of))
 }
@@ -1162,7 +1162,7 @@ pub fn weekday_line(count: u32, of: u32) -> String {
 /// Under a song picked from the list with nothing typed.
 pub fn recent_line(picks: u32, when: &str) -> String {
     if indonesian() {
-        return format!("Picked {}, last {when}", times_of(picks));
+        return format!("Dipilih {picks} kali, terakhir {when}");
     }
     format!("Picked {}, last {when}", times_of(picks))
 }
@@ -1170,7 +1170,7 @@ pub fn recent_line(picks: u32, when: &str) -> String {
 /// A short chip: the song usually begins at this section.
 pub fn starts_chip(section: &str) -> String {
     if indonesian() {
-        return format!("Starts at {section}");
+        return format!("Mulai di {section}");
     }
     format!("Starts at {section}")
 }
@@ -1178,7 +1178,7 @@ pub fn starts_chip(section: &str) -> String {
 /// In the preview: the section it usually begins at, and how often.
 pub fn starts_line(section: &str, times: u32, of: u32) -> String {
     if indonesian() {
-        return format!("Usually started at {section}, {times} of {of} times");
+        return format!("Biasanya mulai di {section}, {times} dari {of} kali");
     }
     format!("Usually started at {section}, {times} of {of} times")
 }

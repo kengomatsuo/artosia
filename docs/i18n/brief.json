@@ -6660,5 +6660,295 @@
       "the ring (the mark on the slide Enter will show)"
     ],
     "notes": "Each row of this group stands alone; rows are read one under the other, so start each with the action. The glossary has the word already used for the ring and for what is on the congregation's screen."
+  },
+  {
+    "key": "LEARN_SECTION",
+    "kind": "const",
+    "screen": "The Look dialog (settings for the congregation's screen and the program), its last section, which is about the search box.",
+    "moment": "The volunteer scrolled to the end of the dialog.",
+    "role": "section heading",
+    "does": "Names the group of settings about the search box.",
+    "budget": 14,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "search-box"
+    ],
+    "notes": ""
+  },
+  {
+    "key": "LEARN_ON",
+    "kind": "const",
+    "screen": "The Look dialog (settings for the congregation's screen and the program), its last section, which is about the search box.",
+    "moment": "A switch, on by default.",
+    "role": "switch label",
+    "does": "Names the switch that lets the search remember which songs get picked and use that to order results.",
+    "budget": 24,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "search-box"
+    ],
+    "notes": "A label for a switch, not a sentence. It must be clear that the program learns from how it is used here, on this computer."
+  },
+  {
+    "key": "LEARN_ON_HINT",
+    "kind": "const",
+    "screen": "The Look dialog (settings for the congregation's screen and the program), its last section, which is about the search box.",
+    "moment": "Grey line under that switch.",
+    "role": "hint under a switch",
+    "does": "Reassures: songs picked often come first only among results that match what was typed equally well; a song in today's plan or an exact title still wins.",
+    "budget": 60,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "song"
+    ],
+    "notes": ""
+  },
+  {
+    "key": "LEARN_FORGET",
+    "kind": "const",
+    "screen": "The Look dialog (settings for the congregation's screen and the program), its last section, which is about the search box.",
+    "moment": "A button under the switch. Pressing it erases everything the search remembered; a toast then offers to undo.",
+    "role": "button",
+    "does": "Erases what the search has learned from past use.",
+    "budget": 34,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "search-box"
+    ],
+    "notes": ""
+  },
+  {
+    "key": "LEARN_FORGOTTEN",
+    "kind": "const",
+    "screen": "Main window, a toast at the bottom with an Undo button beside it.",
+    "moment": "The volunteer just pressed the button that erases what the search learned.",
+    "role": "toast",
+    "does": "Confirms that what the search had learned is gone.",
+    "budget": 34,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "search-box"
+    ],
+    "notes": "A fragment without a full stop. The Undo button sits right after it."
+  },
+  {
+    "key": "GROUP_WEEKDAY",
+    "kind": "const",
+    "screen": "The search box, opened over the main window. Left: a list of results, each a row with a title, a grey second line and sometimes a small grey pill at its right end. Right: a preview of the picked result. Artosia remembers, on this computer only, which songs were shown in past services and what was typed to find them, and uses that to order and suggest songs.",
+    "moment": "The search was opened with nothing typed. This heading sits over a few songs.",
+    "role": "group heading in a list",
+    "does": "Heads the songs that were sung on this same day of the week in recent weeks (for a Sunday service: recent Sundays).",
+    "budget": 40,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "song"
+    ],
+    "notes": ""
+  },
+  {
+    "key": "GROUP_RECENT",
+    "kind": "const",
+    "screen": "The search box, opened over the main window. Left: a list of results, each a row with a title, a grey second line and sometimes a small grey pill at its right end. Right: a preview of the picked result. Artosia remembers, on this computer only, which songs were shown in past services and what was typed to find them, and uses that to order and suggest songs.",
+    "moment": "The search was opened with nothing typed. This heading sits over a few songs.",
+    "role": "group heading in a list",
+    "does": "Heads the songs that were lately picked straight from this list, without typing anything.",
+    "budget": 40,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "song"
+    ],
+    "notes": ""
+  },
+  {
+    "key": "group_follows",
+    "kind": "fn",
+    "screen": "The search box, opened over the main window. Left: a list of results, each a row with a title, a grey second line and sometimes a small grey pill at its right end. Right: a preview of the picked result. Artosia remembers, on this computer only, which songs were shown in past services and what was typed to find them, and uses that to order and suggest songs.",
+    "moment": "The search was opened with nothing typed while a song is on the congregation's screen. This heading sits over a few songs.",
+    "role": "group heading in a list",
+    "does": "Heads the songs that, in past services, were sung right after the song now showing. Names that song.",
+    "budget": 46,
+    "variables": [
+      {
+        "name": "{title}",
+        "example": "Bread for the Road"
+      }
+    ],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "song"
+    ],
+    "notes": "The title can be long; put it last if the grammar allows, so the fixed words are read first. Keep {title} exactly."
+  },
+  {
+    "key": "habit_chip",
+    "kind": "fn",
+    "screen": "The search box, opened over the main window. Left: a list of results, each a row with a title, a grey second line and sometimes a small grey pill at its right end. Right: a preview of the picked result. Artosia remembers, on this computer only, which songs were shown in past services and what was typed to find them, and uses that to order and suggest songs.",
+    "moment": "The volunteer typed a few letters. One result carries this small pill at its right end.",
+    "role": "pill on a result row",
+    "does": "Says why this song is placed where it is: it was picked this many times before when these same letters were typed.",
+    "budget": 32,
+    "variables": [
+      {
+        "name": "{typed}",
+        "example": "mor"
+      },
+      {
+        "name": "{picks}",
+        "example": "4"
+      }
+    ],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [],
+    "notes": "The typed letters are shown inside quotation marks. One template; Indonesian needs no plural. Keep both placeholders exactly."
+  },
+  {
+    "key": "habit_line",
+    "kind": "fn",
+    "screen": "The search box, opened over the main window. Left: a list of results, each a row with a title, a grey second line and sometimes a small grey pill at its right end. Right: a preview of the picked result. Artosia remembers, on this computer only, which songs were shown in past services and what was typed to find them, and uses that to order and suggest songs.",
+    "moment": "Same result, picked; this is a grey line in the preview on the right.",
+    "role": "explaining line",
+    "does": "The fuller form of that pill: picked this many times for these typed letters, and the day it last happened.",
+    "budget": 50,
+    "variables": [
+      {
+        "name": "{typed}",
+        "example": "mor"
+      },
+      {
+        "name": "{picks}",
+        "example": "4"
+      },
+      {
+        "name": "{when}",
+        "example": "4 November"
+      }
+    ],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [],
+    "notes": "The day is written as a day and a month, already in the reader's language."
+  },
+  {
+    "key": "follows_line",
+    "kind": "fn",
+    "screen": "The search box, opened over the main window. Left: a list of results, each a row with a title, a grey second line and sometimes a small grey pill at its right end. Right: a preview of the picked result. Artosia remembers, on this computer only, which songs were shown in past services and what was typed to find them, and uses that to order and suggest songs.",
+    "moment": "Grey second line of a song listed under the heading for songs that came after the one now showing.",
+    "role": "second line of a result",
+    "does": "Says how many times this song came right after it in past services, and the day it last did.",
+    "budget": 46,
+    "variables": [
+      {
+        "name": "{count}",
+        "example": "3"
+      },
+      {
+        "name": "{when}",
+        "example": "4 November"
+      }
+    ],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [],
+    "notes": ""
+  },
+  {
+    "key": "weekday_line",
+    "kind": "fn",
+    "screen": "The search box, opened over the main window. Left: a list of results, each a row with a title, a grey second line and sometimes a small grey pill at its right end. Right: a preview of the picked result. Artosia remembers, on this computer only, which songs were shown in past services and what was typed to find them, and uses that to order and suggest songs.",
+    "moment": "Grey second line of a song listed under the heading for songs sung on this day of the week.",
+    "role": "second line of a result",
+    "does": "Says in how many of the recent services on this day of the week the song was sung.",
+    "budget": 46,
+    "variables": [
+      {
+        "name": "{count}",
+        "example": "4"
+      },
+      {
+        "name": "{of}",
+        "example": "5"
+      }
+    ],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "service (the Sunday gathering; the plan's own word for it is in the glossary)"
+    ],
+    "notes": ""
+  },
+  {
+    "key": "recent_line",
+    "kind": "fn",
+    "screen": "The search box, opened over the main window. Left: a list of results, each a row with a title, a grey second line and sometimes a small grey pill at its right end. Right: a preview of the picked result. Artosia remembers, on this computer only, which songs were shown in past services and what was typed to find them, and uses that to order and suggest songs.",
+    "moment": "Grey second line of a song listed under the heading for songs lately picked from this list.",
+    "role": "second line of a result",
+    "does": "Says how many times it was picked from the list and the day it last was.",
+    "budget": 40,
+    "variables": [
+      {
+        "name": "{picks}",
+        "example": "2"
+      },
+      {
+        "name": "{when}",
+        "example": "4 November"
+      }
+    ],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [],
+    "notes": ""
+  },
+  {
+    "key": "starts_chip",
+    "kind": "fn",
+    "screen": "The search box, opened over the main window. Left: a list of results, each a row with a title, a grey second line and sometimes a small grey pill at its right end. Right: a preview of the picked result. Artosia remembers, on this computer only, which songs were shown in past services and what was typed to find them, and uses that to order and suggest songs.",
+    "moment": "A small pill at the right end of a song's row.",
+    "role": "pill on a result row",
+    "does": "Says this song is usually begun at a part other than its first, and names the part.",
+    "budget": 22,
+    "variables": [
+      {
+        "name": "{section}",
+        "example": "Reff"
+      }
+    ],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "section",
+      "chorus"
+    ],
+    "notes": "The part's name arrives already in the reader's language (Bait 2, Reff, Bridge)."
+  },
+  {
+    "key": "starts_line",
+    "kind": "fn",
+    "screen": "The search box, opened over the main window. Left: a list of results, each a row with a title, a grey second line and sometimes a small grey pill at its right end. Right: a preview of the picked result. Artosia remembers, on this computer only, which songs were shown in past services and what was typed to find them, and uses that to order and suggest songs.",
+    "moment": "Grey line in the preview of that song.",
+    "role": "explaining line",
+    "does": "The fuller form: the part the song is usually begun at, and in how many of its recent uses.",
+    "budget": 50,
+    "variables": [
+      {
+        "name": "{section}",
+        "example": "Reff"
+      },
+      {
+        "name": "{times}",
+        "example": "3"
+      },
+      {
+        "name": "{of}",
+        "example": "4"
+      }
+    ],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "section"
+    ],
+    "notes": ""
   }
 ]

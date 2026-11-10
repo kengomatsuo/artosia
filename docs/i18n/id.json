@@ -2218,5 +2218,80 @@
     "text": "Pilih slide, lepas untuk tayang",
     "back": "Pick a slide, let go to show",
     "why": "Pilih matches the sheet row; the Shift cap before it supplies what is released. 31 of 34."
+  },
+  "LEARN_SECTION": {
+    "text": "Pencarian",
+    "back": "Searching",
+    "why": "Plain noun heading for the search box settings, built on the glossary's Cari."
+  },
+  "LEARN_ON": {
+    "text": "Ingat pilihan di PC ini",
+    "back": "Remember choices on this PC",
+    "why": "Ingat for remember; 'di PC ini' says it learns here, on this computer. 23 of 24."
+  },
+  "LEARN_ON_HINT": {
+    "text": "Hanya mengurutkan hasil yang sama cocok, acara tetap di atas",
+    "back": "Only orders results that match equally well, the plan stays on top",
+    "why": "Reassures that it only breaks ties; acara is the fixed plan word. 60 of 60."
+  },
+  "LEARN_FORGET": {
+    "text": "Lupakan pilihan yang diingat",
+    "back": "Forget the choices that are remembered",
+    "why": "Lupakan pairs with the switch's Ingat, and unlike Hapus it does not suggest deleting songs. 28 of 34."
+  },
+  "LEARN_FORGOTTEN": {
+    "text": "Semua pilihan sudah dilupakan",
+    "back": "All choices have been forgotten",
+    "why": "Echoes Lupakan; plain fragment, no full stop. 29 of 34."
+  },
+  "GROUP_WEEKDAY": {
+    "text": "Lagu di hari yang sama",
+    "back": "Songs on the same day",
+    "why": "Heading in the shape 'Lagu ...' shared with the other two groups. 22 of 40."
+  },
+  "GROUP_RECENT": {
+    "text": "Lagu yang baru dipilih",
+    "back": "Songs that were just picked",
+    "why": "Same 'Lagu ...' shape; baru dipilih is lately picked. 22 of 40."
+  },
+  "group_follows": {
+    "text": "Lagu yang pernah menyusul {title}",
+    "back": "Songs that once followed {title}",
+    "why": "Same 'Lagu ...' shape with the title last so the fixed words are read first. 44 of 46 with the example."
+  },
+  "habit_chip": {
+    "text": "Dipilih {picks} kali untuk “{typed}”",
+    "back": "picked {picks} times for \"{typed}\"",
+    "why": "One template, no plural; quotation marks included around the typed letters. 26 of 32 with examples. Review: curly quotation marks as in the English, and a capital first letter."
+  },
+  "habit_line": {
+    "text": "Dipilih {picks} kali untuk “{typed}”, terakhir {when}",
+    "back": "Picked {picks} times for \"{typed}\", last {when}",
+    "why": "Fuller form of the pill; the day comes already as day and month. 47 of 50 with examples. Review: curly quotation marks as in the English, and a capital first letter."
+  },
+  "follows_line": {
+    "text": "Menyusul {count} kali, terakhir {when}",
+    "back": "Followed {count} times, last {when}",
+    "why": "Same count and last-day shape as the other grey lines. 36 of 46 with examples."
+  },
+  "weekday_line": {
+    "text": "Dinyanyikan {count} dari {of} ibadah",
+    "back": "Sung {count} of {of} services",
+    "why": "Ibadah is the recorded word for a service. 29 of 46 with examples."
+  },
+  "recent_line": {
+    "text": "Dipilih {picks} kali, terakhir {when}",
+    "back": "Picked {picks} times, last {when}",
+    "why": "Same shape as the other grey lines. 35 of 40 with examples."
+  },
+  "starts_chip": {
+    "text": "Mulai di {section}",
+    "back": "Starts at {section}",
+    "why": "Short pill; the part name arrives already translated. 13 of 22 with the example."
+  },
+  "starts_line": {
+    "text": "Biasanya mulai di {section}, {times} dari {of} kali",
+    "back": "Usually starts at {section}, {times} of {of} times",
+    "why": "Fuller form of the pill with the count of recent uses. 40 of 50 with examples."
   }
 }
