@@ -203,7 +203,7 @@ pub fn view(s: &App, cx: &mut Cx<App>) -> El {
         crate::state::Appearance::Light => false,
         crate::state::Appearance::Dark => true,
     });
-    t::set_indonesian(s.settings.indonesian);
+    t::set_language(&s.settings.language);
     let k = theme::kit();
     cx.caption_color(k.c.text_base);
     let insets = cx.chrome_insets();

@@ -4,42 +4,113 @@
 //! Counted nouns go through a function: English needs "1 slide" and "2 slides".
 #![allow(non_snake_case)]
 
-#[cfg(not(test))]
-use std::sync::atomic::{AtomicBool, Ordering};
+use crate::languages::{self, Arg, ENGLISH, INDONESIAN, counted, text_arg};
 
 #[cfg(not(test))]
-static INDONESIAN: AtomicBool = AtomicBool::new(false);
+static LANGUAGE: std::sync::atomic::AtomicUsize = std::sync::atomic::AtomicUsize::new(ENGLISH);
 
 // Tests run side by side, one thread each: a language per thread keeps one test's Indonesian
 // out of another's English.
 #[cfg(test)]
 thread_local! {
-    static INDONESIAN: std::cell::Cell<bool> = const { std::cell::Cell::new(false) };
+    static LANGUAGE: std::cell::Cell<usize> = const { std::cell::Cell::new(ENGLISH) };
 }
 
-/// Chooses the language of every later call. The window sets it from Look before it draws.
-pub fn set_indonesian(on: bool) {
+/// Chooses the language of every later call by its code. False, and nothing changes, for a code
+/// the registry does not know.
+pub fn set_language(code: &str) -> bool {
+    let Some(at) = languages::index_of(code) else { return false };
     #[cfg(not(test))]
-    INDONESIAN.store(on, Ordering::Relaxed);
+    LANGUAGE.store(at, std::sync::atomic::Ordering::Relaxed);
     #[cfg(test)]
-    INDONESIAN.with(|language| language.set(on));
+    LANGUAGE.with(|language| language.set(at));
+    true
+}
+
+/// The chosen language's position in `languages::LANGUAGES`.
+pub fn language() -> usize {
+    #[cfg(not(test))]
+    return LANGUAGE.load(std::sync::atomic::Ordering::Relaxed);
+    #[cfg(test)]
+    return LANGUAGE.with(|language| language.get());
+}
+
+pub fn language_code() -> &'static str {
+    languages::LANGUAGES[language()].code
+}
+
+/// The two-language switch, kept for the code written before the language was a code.
+#[allow(dead_code)]
+pub fn set_indonesian(on: bool) {
+    set_language(if on { "id" } else { "en" });
 }
 
 pub fn indonesian() -> bool {
-    #[cfg(not(test))]
-    return INDONESIAN.load(Ordering::Relaxed);
-    #[cfg(test)]
-    return INDONESIAN.with(|language| language.get());
+    language() == INDONESIAN
 }
 
-/// One text in both languages, read through a function so the language can change while the
-/// program runs.
+/// One text in English and Indonesian, read through a function so the language can change while
+/// the program runs. Any other language reads its table by this key, and English when it lacks it.
 macro_rules! text {
     ($name:ident, $en:expr, $id:expr) => {
         pub fn $name() -> &'static str {
-            if indonesian() { $id } else { $en }
+            match language() {
+                ENGLISH => $en,
+                INDONESIAN => $id,
+                other => languages::text(other, stringify!($name)).unwrap_or($en),
+            }
         }
     };
+}
+
+/// A sentence of a table language. None for English and Indonesian, which the function writes
+/// itself, and for a key the table lacks, which the function then writes in English.
+fn say(key: &str, case: Option<&str>, count: Option<usize>, args: &[(&str, Arg)]) -> Option<String> {
+    let lang = language();
+    if lang <= INDONESIAN {
+        return None;
+    }
+    languages::sentence(lang, key, case, count, args)
+}
+
+/// What an import of a song folder said, in a table language.
+fn import_summary_table(added: usize, updated: usize, kept: usize) -> Option<String> {
+    if language() <= INDONESIAN {
+        return None;
+    }
+    let both = [("added", counted("songs", added)), ("updated", counted("songs", updated)), ("kept", counted("songs", kept))];
+    let case = match (added, updated) {
+        (0, 0) => None,
+        (_, 0) => Some("changed_added"),
+        (0, _) => Some("changed_updated"),
+        _ => Some("changed_both"),
+    };
+    let changed = case.and_then(|case| say("import_summary", Some(case), None, &both));
+    match (case.is_none(), kept) {
+        (true, 0) => say("import_summary", Some("nothing_changed"), None, &[]),
+        (false, 0) => changed,
+        (true, _) => say("import_summary", Some("only_kept"), None, &both),
+        (false, _) => say("import_summary", Some("changed_and_kept"), None, &[("changed", text_arg(changed?)), ("kept", counted("songs", kept))]),
+    }
+}
+
+/// A section's name in a table language: `section.verse` and the others, English where missing.
+fn section_label_table(tag: artosia_core::song::Tag) -> String {
+    use artosia_core::song::SectionKind;
+    let (key, english) = match tag.kind {
+        SectionKind::Verse => ("verse", "Verse"),
+        SectionKind::PreChorus => ("pre_chorus", "Pre-chorus"),
+        SectionKind::Chorus => ("chorus", "Chorus"),
+        SectionKind::Bridge => ("bridge", "Bridge"),
+        SectionKind::Intro => ("intro", "Intro"),
+        SectionKind::Ending => ("ending", "Ending"),
+        SectionKind::Other => ("other", "Part"),
+    };
+    let name = languages::text(language(), &format!("section.{key}")).unwrap_or(english);
+    if !(tag.kind == SectionKind::Verse || tag.number > 1) {
+        return name.to_string();
+    }
+    say("section_numbered", None, None, &[("name", text_arg(name)), ("number", text_arg(tag.number))]).unwrap_or_else(|| format!("{name} {}", tag.number))
 }
 
 text!(APP_NAME, "Artosia", "Artosia");
@@ -57,6 +128,9 @@ text!(KEY_SAVE, "Ctrl S", "Ctrl S");
 text!(KEY_KEYS, "?", "?");
 
 pub fn ctrl_digit(digit: usize) -> String {
+    if let Some(text) = say("ctrl_digit", None, None, &[("digit", text_arg(digit))]) {
+        return text;
+    }
     format!("Ctrl {digit}")
 }
 
@@ -81,6 +155,9 @@ text!(COUNTDOWN_DETAIL, "Shows on the projector until it ends", "Tayang di layar
 text!(MESSAGE_DETAIL, "Show this message to the room", "Pesan tampil di layar jemaat");
 
 pub fn countdown_for(minutes: u32) -> String {
+    if let Some(text) = say("countdown_for", None, Some(minutes as usize), &[("minutes", text_arg(minutes))]) {
+        return text;
+    }
     if indonesian() {
         return format!("Hitung mundur {minutes} menit");
     }
@@ -91,6 +168,9 @@ text!(OLD_TESTAMENT, "Old Testament", "Perjanjian Lama");
 text!(NEW_TESTAMENT, "New Testament", "Perjanjian Baru");
 
 pub fn pick_chapter(book: &str) -> String {
+    if let Some(text) = say("pick_chapter", None, None, &[("book", text_arg(book))]) {
+        return text;
+    }
     if indonesian() {
         return format!("{book}: pilih pasal");
     }
@@ -99,6 +179,9 @@ pub fn pick_chapter(book: &str) -> String {
 text!(SONGS_EMPTY, "No songs yet", "Belum ada lagu");
 
 pub fn nothing_found(query: &str) -> String {
+    if let Some(text) = say("nothing_found", None, None, &[("query", text_arg(query))]) {
+        return text;
+    }
     if indonesian() {
         return format!("Tidak ada hasil untuk \u{201c}{query}\u{201d}");
     }
@@ -106,6 +189,9 @@ pub fn nothing_found(query: &str) -> String {
 }
 
 pub fn new_song_called(title: &str) -> String {
+    if let Some(text) = say("new_song_called", None, None, &[("title", text_arg(title))]) {
+        return text;
+    }
     if indonesian() {
         return format!("Buat lagu \u{201c}{title}\u{201d}");
     }
@@ -113,6 +199,9 @@ pub fn new_song_called(title: &str) -> String {
 }
 
 pub fn songs(count: usize) -> String {
+    if let Some(text) = say("songs", None, Some(count), &[]) {
+        return text;
+    }
     if indonesian() {
         return format!("{count} lagu");
     }
@@ -120,6 +209,9 @@ pub fn songs(count: usize) -> String {
 }
 
 pub fn slides(count: usize) -> String {
+    if let Some(text) = say("slides", None, Some(count), &[]) {
+        return text;
+    }
     if indonesian() {
         return format!("{count} slide");
     }
@@ -127,6 +219,9 @@ pub fn slides(count: usize) -> String {
 }
 
 pub fn chapters(count: usize) -> String {
+    if let Some(text) = say("chapters", None, Some(count), &[]) {
+        return text;
+    }
     if indonesian() {
         return format!("{count} pasal");
     }
@@ -134,6 +229,9 @@ pub fn chapters(count: usize) -> String {
 }
 
 pub fn verses(count: usize) -> String {
+    if let Some(text) = say("verses", None, Some(count), &[]) {
+        return text;
+    }
     if indonesian() {
         return format!("{count} ayat");
     }
@@ -179,6 +277,9 @@ text!(STREAM_MISSING, "This copy of Artosia came without the streaming program."
 text!(STREAM_NOTHING, "Give an address, or turn on the recording", "Isi URL streaming, atau nyalakan rekaman");
 
 pub fn stream_failed(problem: &str) -> String {
+    if let Some(text) = say("stream_failed", None, None, &[("problem", text_arg(problem))]) {
+        return text;
+    }
     if indonesian() {
         return format!("Siaran gagal dimulai: {problem}");
     }
@@ -187,6 +288,9 @@ pub fn stream_failed(problem: &str) -> String {
 
 /// How long the stream has been live, and how many pictures were lost on the way.
 pub fn stream_live(seconds: u64, dropped: u64) -> String {
+    if let Some(text) = say("stream_live", Some(if dropped == 0 { "none_lost" } else { "some_lost" }), Some(dropped as usize), &[("time", text_arg(languages::clock(seconds))), ("dropped", text_arg(dropped))]) {
+        return text;
+    }
     if indonesian() {
         return {
             let time = format!("{}:{:02}", seconds / 60, seconds % 60);
@@ -215,6 +319,9 @@ text!(CMD_UPDATE, "Check for a new version", "Periksa pembaruan");
 text!(CMD_UPDATE_DETAIL, "Artosia also checks by itself at each start", "Artosia juga memeriksa sendiri saat dibuka");
 
 pub fn update_ready(version: &str) -> String {
+    if let Some(text) = say("update_ready", None, None, &[("version", text_arg(version))]) {
+        return text;
+    }
     if indonesian() {
         return format!("Versi {version} sudah diunduh. Terpasang saat Artosia dibuka lagi.");
     }
@@ -222,6 +329,9 @@ pub fn update_ready(version: &str) -> String {
 }
 
 pub fn update_none(version: &str) -> String {
+    if let Some(text) = say("update_none", None, None, &[("version", text_arg(version))]) {
+        return text;
+    }
     if indonesian() {
         return format!("Versi {version} adalah yang terbaru");
     }
@@ -262,6 +372,9 @@ text!(OUTPUT_MISSING, "The projector program is missing from Artosia's folder", 
 text!(OUTPUT_KEEPS_CLOSING, "The projector keeps closing as it starts", "Program layar terus menutup sendiri setelah mulai");
 
 pub fn output_failed(problem: &str) -> String {
+    if let Some(text) = say("output_failed", None, None, &[("problem", text_arg(problem))]) {
+        return text;
+    }
     if indonesian() {
         return format!("Layar gagal dinyalakan: {problem}");
     }
@@ -273,6 +386,9 @@ text!(OUTPUT_STUCK, "The projector is not answering", "Layar tidak merespons");
 text!(REMOTE_ON, "Phone remote is on", "Remote HP aktif");
 
 pub fn output_on_screen(number: usize) -> String {
+    if let Some(text) = say("output_on_screen", None, None, &[("number", text_arg(number))]) {
+        return text;
+    }
     if indonesian() {
         return format!("Tayang di layar {number}");
     }
@@ -280,6 +396,9 @@ pub fn output_on_screen(number: usize) -> String {
 }
 
 pub fn library_in_memory(problem: &str) -> String {
+    if let Some(text) = say("library_in_memory", None, None, &[("problem", text_arg(problem))]) {
+        return text;
+    }
     if indonesian() {
         return format!("Pustaka gagal dibuka. Pekerjaan sesi ini hilang saat ditutup: {problem}");
     }
@@ -301,6 +420,9 @@ text!(PLAN_HEADING_WORSHIP, "Worship", "Pujian");
 text!(PLAN_HEADING_WORD, "Word", "Firman");
 
 pub fn added_to_plan(title: &str) -> String {
+    if let Some(text) = say("added_to_plan", None, None, &[("title", text_arg(title))]) {
+        return text;
+    }
     if indonesian() {
         return format!("\u{201c}{title}\u{201d} masuk ke acara");
     }
@@ -308,6 +430,9 @@ pub fn added_to_plan(title: &str) -> String {
 }
 
 pub fn removed_from_plan(title: &str) -> String {
+    if let Some(text) = say("removed_from_plan", None, None, &[("title", text_arg(title))]) {
+        return text;
+    }
     if indonesian() {
         return format!("\u{201c}{title}\u{201d} keluar dari acara");
     }
@@ -357,6 +482,9 @@ text!(STAGE_MESSAGE_DETAIL, "Show this message on the stage screen", "Tampil di 
 text!(HEARD_NOTHING, "Nothing heard yet", "Belum ada yang dikenali");
 
 pub fn state_countdown(clock: &str) -> String {
+    if let Some(text) = say("state_countdown", None, None, &[("clock", text_arg(clock))]) {
+        return text;
+    }
     if indonesian() {
         return format!("Hitung mundur {clock}");
     }
@@ -391,6 +519,9 @@ text!(SUGGEST_FETCHING, "Getting the words", "Mengambil dari internet");
 text!(LICENCE_NOTE, "Projecting lyrics needs a licence such as CCLI.", "Lirik di layar perlu lisensi, misalnya CCLI");
 
 pub fn suggest_web(artist: &str, source: &str) -> String {
+    if let Some(text) = say("suggest_web", Some(if artist.is_empty() { "without_artist" } else { "with_artist" }), None, &[("artist", text_arg(artist)), ("source", text_arg(source))]) {
+        return text;
+    }
     if indonesian() {
         return if artist.is_empty() { source.to_string() } else { format!("{artist}, {source}") };
     }
@@ -398,6 +529,9 @@ pub fn suggest_web(artist: &str, source: &str) -> String {
 }
 
 pub fn words_from(source: &str) -> String {
+    if let Some(text) = say("words_from", None, None, &[("source", text_arg(source))]) {
+        return text;
+    }
     if indonesian() {
         return format!("Lirik dari {source}. Cocokkan dulu dengan salinan gereja.");
     }
@@ -427,6 +561,9 @@ text!(SONG_UNTITLED, "Untitled song", "Tanpa judul");
 text!(PASTE_EMPTY, "The clipboard has no text", "Tidak ada teks yang disalin");
 
 pub fn could_not_save(problem: &str) -> String {
+    if let Some(text) = say("could_not_save", None, None, &[("problem", text_arg(problem))]) {
+        return text;
+    }
     if indonesian() {
         return format!("Lagu gagal disimpan: {problem}");
     }
@@ -434,6 +571,9 @@ pub fn could_not_save(problem: &str) -> String {
 }
 
 pub fn song_deleted(title: &str) -> String {
+    if let Some(text) = say("song_deleted", None, None, &[("title", text_arg(title))]) {
+        return text;
+    }
     if indonesian() {
         return format!("\u{201c}{title}\u{201d} dihapus");
     }
@@ -466,6 +606,9 @@ text!(LOOK_LICENCE_HINT, "Number", "Nomor");
 text!(BACKGROUND_UNKNOWN, "That file is not a picture or a video", "Berkas ini bukan gambar atau video yang didukung");
 
 pub fn bible_failed(code: &str, problem: &str) -> String {
+    if let Some(text) = say("bible_failed", None, None, &[("code", text_arg(code)), ("problem", text_arg(problem))]) {
+        return text;
+    }
     if indonesian() {
         return format!("Alkitab {code} gagal dimuat: {problem}");
     }
@@ -506,6 +649,9 @@ text!(SCREENS_STAGE_WINDOW, "Show the stage screen in a window", "Monitor panggu
 text!(SCREENS_IDENTIFY, "Show numbers on the screens", "Tampilkan nomor layar");
 
 pub fn screen_name(number: usize) -> String {
+    if let Some(text) = say("screen_name", None, None, &[("number", text_arg(number))]) {
+        return text;
+    }
     if indonesian() {
         return format!("Layar {number}");
     }
@@ -514,6 +660,9 @@ pub fn screen_name(number: usize) -> String {
 
 /// The name in the list of screens, which also says which one Artosia's window is on.
 pub fn screen_title(number: usize, this: bool) -> String {
+    if let Some(text) = say("screen_title", Some(if this { "with_this" } else { "without_this" }), None, &[("number", text_arg(number))]) {
+        return text;
+    }
     if indonesian() {
         return if this { format!("Layar {number} (layar ini)") } else { format!("Layar {number}") };
     }
@@ -522,6 +671,9 @@ pub fn screen_title(number: usize, this: bool) -> String {
 
 /// A screen's size, and its zoom when it has one.
 pub fn screen_detail(width: u32, height: u32, scale: f32) -> String {
+    if let Some(text) = say("screen_detail", Some(if scale > 0.0 && (scale - 1.0).abs() > 0.01 { "with_zoom" } else { "normal_zoom" }), None, &[("width", text_arg(width)), ("height", text_arg(height)), ("scale", text_arg(format!("{}%", (scale * 100.0).round() as u32)))]) {
+        return text;
+    }
     if indonesian() {
         return {
             if scale > 0.0 && (scale - 1.0).abs() > 0.01 {
@@ -546,6 +698,9 @@ text!(REMOTE_SCAN, "Scan the code, or open this address", "Pindai dengan kamera 
 text!(REMOTE_PIN, "PIN", "PIN");
 
 pub fn phones(count: usize) -> String {
+    if let Some(text) = say("phones", None, Some(count), &[]) {
+        return text;
+    }
     if indonesian() {
         return if count == 0 { "Belum ada HP tersambung".to_string() } else { format!("{count} HP tersambung") };
     }
@@ -557,6 +712,9 @@ pub fn phones(count: usize) -> String {
 }
 
 pub fn remote_failed(problem: &str) -> String {
+    if let Some(text) = say("remote_failed", None, None, &[("problem", text_arg(problem))]) {
+        return text;
+    }
     if indonesian() {
         return format!("Remote HP gagal dijalankan: {problem}");
     }
@@ -568,6 +726,9 @@ text!(IMPORT_FOUND, "Artosia will copy the songs and Bibles from this folder. Ea
 text!(IMPORT_NOT_FOUND, "EasiSlides was not found on this computer.", "EasiSlides tidak terpasang di komputer ini");
 
 pub fn import_done(songs: usize, bibles: usize) -> String {
+    if let Some(text) = say("import_done", Some(if bibles == 0 { "songs_only" } else { "songs_and_bibles" }), None, &[("songs", counted("songs", songs)), ("bibles", counted("bibles", bibles))]) {
+        return text;
+    }
     if indonesian() {
         return if bibles == 0 { format!("{songs} lagu ditambahkan") } else { format!("{songs} lagu dan {bibles} Alkitab ditambahkan") };
     }
@@ -581,6 +742,9 @@ pub fn import_done(songs: usize, bibles: usize) -> String {
 
 /// What an import of a song folder did, as one or two whole sentences.
 pub fn import_summary(added: usize, updated: usize, kept: usize) -> String {
+    if let Some(text) = import_summary_table(added, updated, kept) {
+        return text;
+    }
     if indonesian() {
         return {
             let changed = match (added, updated) {
@@ -613,6 +777,9 @@ pub fn import_summary(added: usize, updated: usize, kept: usize) -> String {
 }
 
 pub fn files_unreadable(failed: usize) -> String {
+    if let Some(text) = say("files_unreadable", None, Some(failed), &[]) {
+        return text;
+    }
     if indonesian() {
         return format!("{failed} berkas gagal dimuat");
     }
@@ -620,6 +787,9 @@ pub fn files_unreadable(failed: usize) -> String {
 }
 
 pub fn import_partial(songs: usize, failed: usize) -> String {
+    if let Some(text) = say("import_partial", None, None, &[("songs", counted("songs", songs)), ("files", counted("files", failed))]) {
+        return text;
+    }
     if indonesian() {
         return format!("{songs} lagu masuk, {failed} berkas gagal dimuat");
     }
@@ -650,10 +820,16 @@ text!(BIRTHDAYS_NONE_FOUND, "No names with dates were found in that file", "Tida
 const MONTHS_EN: [&str; 12] = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 const MONTHS_ID: [&str; 12] = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
 pub fn MONTHS() -> &'static [&'static str; 12] {
+    if language() > INDONESIAN {
+        return languages::months(language(), &MONTHS_EN);
+    }
     if indonesian() { &MONTHS_ID } else { &MONTHS_EN }
 }
 
 pub fn could_not_read(problem: &str) -> String {
+    if let Some(text) = say("could_not_read", None, None, &[("problem", text_arg(problem))]) {
+        return text;
+    }
     if indonesian() {
         return format!("Berkas gagal dibuka: {problem}");
     }
@@ -661,6 +837,9 @@ pub fn could_not_read(problem: &str) -> String {
 }
 
 pub fn pptx_imported(added: usize, lost: usize) -> String {
+    if let Some(text) = say("pptx_imported", Some(if lost == 0 { "without_lost" } else { "with_lost" }), None, &[("added", counted("announcements", added)), ("lost", counted("pictures", lost))]) {
+        return text;
+    }
     if indonesian() {
         return if lost == 0 { format!("{added} pengumuman dibuat") } else { format!("{added} pengumuman dibuat, {lost} gambar gagal dipindahkan") };
     }
@@ -673,6 +852,9 @@ pub fn pptx_imported(added: usize, lost: usize) -> String {
 }
 
 pub fn birthdays_on_file(count: usize) -> String {
+    if let Some(text) = say("birthdays_on_file", None, Some(count), &[]) {
+        return text;
+    }
     if indonesian() {
         return if count == 0 { "Belum ada data ulang tahun".to_string() } else { format!("{count} ulang tahun tersimpan") };
     }
@@ -684,6 +866,9 @@ pub fn birthdays_on_file(count: usize) -> String {
 }
 
 pub fn birthdays_imported(count: usize, unread: usize) -> String {
+    if let Some(text) = say("birthdays_imported", Some(if unread == 0 { "none_skipped" } else { "some_skipped" }), if unread == 0 { Some(count) } else { None }, &[("birthdays", counted("birthdays", count)), ("rows", counted("rows", unread))]) {
+        return text;
+    }
     if indonesian() {
         return if unread == 0 { format!("{count} ulang tahun tersimpan") } else { format!("{count} ulang tahun tersimpan, {unread} baris dilewati") };
     }
@@ -713,10 +898,16 @@ const ANNOUNCEMENT_TEMPLATES_ID: [(&str, &str); 6] = [
     ("Ulang tahun", "Tulis nama yang berulang tahun minggu ini"),
 ];
 pub fn ANNOUNCEMENT_TEMPLATES() -> &'static [(&'static str, &'static str)] {
+    if language() > INDONESIAN {
+        return languages::rows(language(), "ANNOUNCEMENT_TEMPLATES", &ANNOUNCEMENT_TEMPLATES_EN);
+    }
     if indonesian() { &ANNOUNCEMENT_TEMPLATES_ID } else { &ANNOUNCEMENT_TEMPLATES_EN }
 }
 
 pub fn announcements(count: usize) -> String {
+    if let Some(text) = say("announcements", None, Some(count), &[]) {
+        return text;
+    }
     if indonesian() {
         return if count == 0 { "Belum ada pengumuman".to_string() } else { format!("{count} pengumuman") };
     }
@@ -728,6 +919,9 @@ pub fn announcements(count: usize) -> String {
 }
 
 pub fn seconds_short(seconds: u32) -> String {
+    if let Some(text) = say("seconds_short", None, None, &[("seconds", text_arg(seconds))]) {
+        return text;
+    }
     if indonesian() {
         return format!("{seconds} dtk");
     }
@@ -773,6 +967,9 @@ const KEYS_SHOWING_ROWS_ID: [(&str, &str); 14] = [
     ("F5", "Bawa pengumuman ke pratinjau"),
 ];
 pub fn KEYS_SHOWING_ROWS() -> &'static [(&'static str, &'static str)] {
+    if language() > INDONESIAN {
+        return languages::rows(language(), "KEYS_SHOWING_ROWS", &KEYS_SHOWING_ROWS_EN);
+    }
     if indonesian() { &KEYS_SHOWING_ROWS_ID } else { &KEYS_SHOWING_ROWS_EN }
 }
 const KEYS_FINDING_ROWS_EN: [(&str, &str); 7] = [
@@ -794,6 +991,9 @@ const KEYS_FINDING_ROWS_ID: [(&str, &str); 7] = [
     ("Esc", "Hapus ketikan, tekan lagi untuk menutup"),
 ];
 pub fn KEYS_FINDING_ROWS() -> &'static [(&'static str, &'static str)] {
+    if language() > INDONESIAN {
+        return languages::rows(language(), "KEYS_FINDING_ROWS", &KEYS_FINDING_ROWS_EN);
+    }
     if indonesian() { &KEYS_FINDING_ROWS_ID } else { &KEYS_FINDING_ROWS_EN }
 }
 const KEYS_PLAN_ROWS_EN: [(&str, &str); 4] = [
@@ -809,6 +1009,9 @@ const KEYS_PLAN_ROWS_ID: [(&str, &str); 4] = [
     ("Delete", "Keluarkan item pratinjau, bisa diurungkan"),
 ];
 pub fn KEYS_PLAN_ROWS() -> &'static [(&'static str, &'static str)] {
+    if language() > INDONESIAN {
+        return languages::rows(language(), "KEYS_PLAN_ROWS", &KEYS_PLAN_ROWS_EN);
+    }
     if indonesian() { &KEYS_PLAN_ROWS_ID } else { &KEYS_PLAN_ROWS_EN }
 }
 const KEYS_EDITING_ROWS_EN: [(&str, &str); 6] = [
@@ -828,10 +1031,16 @@ const KEYS_EDITING_ROWS_ID: [(&str, &str); 6] = [
     ("Ctrl Z", "Kembalikan yang terakhir dihapus"),
 ];
 pub fn KEYS_EDITING_ROWS() -> &'static [(&'static str, &'static str)] {
+    if language() > INDONESIAN {
+        return languages::rows(language(), "KEYS_EDITING_ROWS", &KEYS_EDITING_ROWS_EN);
+    }
     if indonesian() { &KEYS_EDITING_ROWS_ID } else { &KEYS_EDITING_ROWS_EN }
 }
 
 pub fn announcement_deleted(title: &str) -> String {
+    if let Some(text) = say("announcement_deleted", None, None, &[("title", text_arg(title))]) {
+        return text;
+    }
     if indonesian() {
         return format!("Pengumuman \u{201c}{title}\u{201d} dihapus");
     }
@@ -846,6 +1055,9 @@ text!(STAGE_NOTHING, "Nothing on screen", "Belum ada yang tayang");
 
 /// What comes after the live slide. Called with "{label}" it gives the pattern itself.
 pub fn stage_next(label: &str) -> String {
+    if let Some(text) = say("stage_next", None, None, &[("label", text_arg(label))]) {
+        return text;
+    }
     if indonesian() {
         return format!("Berikutnya: {label}");
     }
@@ -854,6 +1066,9 @@ pub fn stage_next(label: &str) -> String {
 
 /// Which slide of how many. Called with "{index}" and "{count}" it gives the pattern itself.
 pub fn stage_place(index: &str, count: &str) -> String {
+    if let Some(text) = say("stage_place", None, None, &[("index", text_arg(index)), ("count", text_arg(count))]) {
+        return text;
+    }
     if indonesian() {
         return format!("{index} dari {count}");
     }
@@ -862,6 +1077,9 @@ pub fn stage_place(index: &str, count: &str) -> String {
 
 /// A song section's name as a volunteer reads it: "Verse 2", "Chorus"; "Bait 2", "Reff".
 pub fn section_label(tag: artosia_core::song::Tag) -> String {
+    if language() > INDONESIAN {
+        return section_label_table(tag);
+    }
     use artosia_core::song::SectionKind;
     if !indonesian() {
         return tag.label();

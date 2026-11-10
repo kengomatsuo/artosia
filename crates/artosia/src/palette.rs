@@ -223,8 +223,8 @@ pub enum Hit {
     Message(String),
     /// A message for the musicians, on the stage screen only.
     StageMessage(String),
-    /// Switch the window to Indonesian (true) or English.
-    Language(bool),
+    /// Switch the window to the language with this code.
+    Language(&'static str),
 }
 
 /// What Enter does to the picked result.
@@ -517,9 +517,9 @@ impl App {
             let doc = Doc::new(format!("look:{}", look.name), "look", look.name.clone()).aliases(&["look", "theme", "background", "tampilan", "tema", "latar"]);
             out.push((doc, Hit::Look { index, name: look.name }));
         }
-        for (indonesian, name) in [(false, t::LANGUAGE_ENGLISH), (true, t::LANGUAGE_INDONESIAN)] {
-            let doc = Doc::new(format!("language:{indonesian}"), "language", name).aliases(&["language", "bahasa", "indonesia", "indonesian", "inggris", "english"]);
-            out.push((doc, Hit::Language(indonesian)));
+        for (_, language) in crate::languages::listed() {
+            let doc = Doc::new(format!("language:{}", language.code), "language", language.name).aliases(&["language", "bahasa"]).aliases(language.aliases);
+            out.push((doc, Hit::Language(language.code)));
         }
         if self.bible_files.len() > 1 {
             for file in &self.bible_files {
@@ -751,9 +751,9 @@ impl App {
                 self.timer_minutes.replace_text(minutes.to_string());
                 self.start_countdown();
             }
-            Hit::Language(indonesian) => {
+            Hit::Language(code) => {
                 self.close_palette();
-                self.set_indonesian(indonesian);
+                self.set_language(code);
             }
             Hit::Message(text) => {
                 self.close_palette();

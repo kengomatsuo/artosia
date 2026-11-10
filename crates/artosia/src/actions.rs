@@ -1152,10 +1152,12 @@ impl App {
         self.touch_settings();
     }
 
-    /// Switches the window between English and Indonesian, section names on the slides included.
-    pub fn set_indonesian(&mut self, on: bool) {
-        self.settings.indonesian = on;
-        t::set_indonesian(on);
+    /// Switches the window to the language with this code, section names on the slides included.
+    pub fn set_language(&mut self, code: &str) {
+        if !t::set_language(code) {
+            return;
+        }
+        self.settings.language = code.to_string();
         self.touch_settings();
         self.refresh_decks();
         if self.palette.open {
