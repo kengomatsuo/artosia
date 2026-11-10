@@ -153,7 +153,7 @@ A short email to info@alkitab.or.id: a free, GPL, non-commercial presentation ap
 
 ## Interface languages
 
-Today the operator window supports exactly two languages, and the shape is a switch, not a list.
+The operator window carries any number of languages since 2026-11-11 (`crates/artosia/src/languages.rs`, [docs/i18n/README.md](i18n/README.md)). The table below is what was hard-wired to two before that rework, kept as the record; the Bible book names, the Bible picker and the song search stemmer per language are still to do.
 
 | Where | What is hard-wired to two |
 |---|---|
