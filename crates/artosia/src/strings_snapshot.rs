@@ -484,7 +484,7 @@ fn same(have: &str, fixture: &str, name: &str) {
 fn english_is_unchanged() {
     let have = dump_in(false);
     if std::env::var("ARTOSIA_WRITE_SNAPSHOT").is_ok() {
-        std::fs::write(concat!(env!("CARGO_MANIFEST_DIR"), "/testdata/strings-en.txt"), &have).unwrap();
+        std::fs::write(concat!(env!("CARGO_MANIFEST_DIR"), "/testdata/strings-en.txt"), &have).unwrap_or_else(|error| panic!("{error}"));
     }
     same(&have, include_str!("../testdata/strings-en.txt"), "English");
 }
@@ -493,7 +493,7 @@ fn english_is_unchanged() {
 fn indonesian_is_unchanged() {
     let have = dump_in(true);
     if std::env::var("ARTOSIA_WRITE_SNAPSHOT").is_ok() {
-        std::fs::write(concat!(env!("CARGO_MANIFEST_DIR"), "/testdata/strings-id.txt"), &have).unwrap();
+        std::fs::write(concat!(env!("CARGO_MANIFEST_DIR"), "/testdata/strings-id.txt"), &have).unwrap_or_else(|error| panic!("{error}"));
     }
     same(&have, include_str!("../testdata/strings-id.txt"), "Indonesian");
 }

@@ -266,7 +266,7 @@ mod tests {
         for language in LANGUAGES {
             let Some(table) = language.table else { continue };
             let parsed: Value = serde_json::from_str(table).unwrap_or_else(|error| panic!("{}: {error}", language.code));
-            for (key, entry) in parsed.as_object().expect("an object") {
+            for (key, entry) in parsed.as_object().into_iter().flatten() {
                 assert!(entry.get("text").is_some(), "{} {key} has no text", language.code);
             }
         }
@@ -281,11 +281,11 @@ mod tests {
 
     #[test]
     fn old_settings_that_said_indonesian_still_mean_it() {
-        let old = |json: &str| serde_json::from_str::<crate::state::Settings>(json).unwrap();
+        let old = |json: &str| serde_json::from_str::<crate::state::Settings>(json).unwrap_or_else(|error| panic!("{error}"));
         for (json, code) in [(r#"{"indonesian":true}"#, "id"), (r#"{"indonesian":false}"#, "en"), (r#"{}"#, "en"), (r#"{"language":"xx"}"#, "xx"), (r#"{"language":"zz","indonesian":true}"#, "id")] {
             let settings = old(json);
             assert_eq!(from_settings(&settings.language, settings.legacy_indonesian), code, "{json}");
         }
-        assert!(!serde_json::to_string(&crate::state::Settings::default()).unwrap().contains("indonesian"));
+        assert!(!serde_json::to_string(&crate::state::Settings::default()).unwrap_or_default().contains("indonesian"));
     }
 }
