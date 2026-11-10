@@ -1,0 +1,23 @@
+[workspace]
+resolver = "3"
+members = ["crates/lumen"]
+
+[workspace.package]
+edition = "2024"
+license = "GPL-3.0-or-later"
+
+[workspace.dependencies]
+# Rune is pre-release: pin a `dev` rev and bump it on purpose (see .claude/rules/rune.md).
+rune = { git = "https://github.com/anomalyco/rune", rev = "70eff81165e9854834a75f17753edb6c96ab2ab7" }
+
+[workspace.lints.rust]
+unsafe_op_in_unsafe_fn = "deny"
+unused_must_use = "deny"
+
+[workspace.lints.clippy]
+dbg_macro = "deny"
+unwrap_used = "warn"
+expect_used = "warn"
+
+[profile.dev.package."*"]
+debug = false

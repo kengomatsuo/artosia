@@ -1,0 +1,4 @@
+[toolchain]
+# Matches the pinned Rune rev's own rust-toolchain.toml.
+channel = "1.99.1"
+components = ["clippy", "rustfmt"]
