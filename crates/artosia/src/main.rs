@@ -16,6 +16,8 @@ mod palette;
 mod state;
 mod stream;
 mod strings;
+#[cfg(test)]
+mod strings_snapshot;
 mod theme;
 mod ui;
 mod update;
