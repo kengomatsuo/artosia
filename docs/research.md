@@ -104,3 +104,38 @@ From each repo's `Cargo.toml`, README and video code, read with `gh api` on 2026
 | DjgaaD/ChyguiSlide2 | Tauri 2, rusqlite | webview `<video>` | Windows-focused | none stated | Tauri measured 548 MB |
 
 Every Rust sibling that ships on Windows decodes video either through a webview or by copying full RGBA frames on the CPU. None uses Rune.
+
+## Which Rust sibling is best at what (2026-11-10, measured and read)
+
+Maturity from `gh api` and shallow clones; decode cost measured on this PC (Windows 11, Intel Iris Xe + RTX 4060 laptop) with `fixtures/bg30.mp4` (1080p30 H.264), 10 s samples, decode only (no UI).
+
+| App | Commits / age | Rust lines | Tests | Platforms | Video path |
+|---|---|---|---|---|---|
+| Lerret | 6 commits, created 2026-10-23 | 130,317 | 1,218 | macOS 13+ | AVFoundation, no copy into wgpu; frame-cadence judder control; separate renderer process. Windows/Linux video: none (black) |
+| Omni Presenter | 66, created 2026-11-01, 2 releases, CI | 84,530 | 331 | Win (alpha), macOS, Linux | user-installed ffmpeg, `-hwaccel auto`, RGBA pipe |
+| VideoPsalm-GPUI | 78, 29 releases | 40,934 | 407 | Linux tested | none in-app (opens VLC/mpv) |
+| Lumina | 1,004 commits since 2023-04 | 26,006 | 52 | Linux first; Windows installer fetches GStreamer | GStreamer `playbin` → NV12 → wgpu shader (`iced_video_player`) |
+| Open Worship | 264 since 2024-07 | 24,246 | 30 | Linux | none |
+| Lirics | 1 | 3,760 | 10 | Win, Linux | ffmpeg software, RGBA pipe |
+
+Decode cost of each path:
+
+| Path | Used by | CPU (cores) | Working set | Private |
+|---|---|---|---|---|
+| GStreamer `d3d11h264dec` → NV12 in RAM | | 0.05 | 107 MB | 110 MB |
+| GStreamer `playbin` (auto-picked hardware) → NV12 | Lumina | 0.05 | 173 MB | 189 MB |
+| GStreamer `d3d12h264dec` → NV12 | | 0.05 | 151 MB | 166 MB |
+| GStreamer `avdec_h264` (software) → NV12 | | 0.24 | 168 MB | 179 MB |
+| libVLC 3 callbacks RV32 (software; incl. ~12 MB Python) | Artosia plan until now | 0.27 | 197 MB | 221 MB |
+| ffmpeg software → RGBA pipe | Lirics | 0.40 | 161 MB | 172 MB |
+| ffmpeg `-hwaccel d3d11va` → NV12 pipe | | 0.12 | 284 MB | 305 MB |
+| ffmpeg `-hwaccel auto` → RGBA pipe | Omni Presenter default | 0.48 | 306 MB | 322 MB |
+
+An RGBA pipe also costs the receiving app an 8 MB copy and texture upload per 1080p frame; NV12 is 3 MB.
+
+Verdict:
+- Most carefully engineered: Lerret (tests, renderer-process split, judder control, volunteer UX). Three weeks old and macOS-only, so copy its design, not its platform code.
+- Longest real use: Lumina, and its video path is the lightest measured on every platform GStreamer covers.
+- Widest platform coverage today: Omni Presenter, with the heaviest video path measured.
+- GStreamer has hardware decoders on all three OSes: Direct3D 11/12 on Windows (present here), VideoToolbox `vtdec` on macOS, VA-API `vah264dec` on Linux (GStreamer plugin docs).
+- GStreamer delivers NV12, which Rune's `NativeSurface::push_bytes` takes directly.
