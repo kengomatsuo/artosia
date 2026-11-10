@@ -9,7 +9,7 @@ The owner's church library, cleaned from its EasiSlides export (1,481 items, 202
 | `songs/<id>.xml` | One song, OpenLyrics 0.9: `<verse name="v1|c|b|p|e|o..." lang="id|en|jv|zh...">`, one `<lines>` per slide, `verseOrder` in `<properties>` |
 | `songs/<id>.json` | Per-song record: `kind`, `title`, `alt_titles`, `first_line`, `chorus_first_line`, `languages`, `source_tag`, every `changes` entry with before/after and reason, `flags`, `resolved_flags` |
 | `index.json` | One row per item for search and the palette: title, alternate titles (including the titles of merged duplicate copies), first line, chorus first line, languages, links (`translation`, `part-of`, `medley`, `shares-chorus`, `related`), `merged_from` |
-| `REPORT.md` | Change counts by type and what is still open (1 item) |
+| `REPORT.md` | Change counts by type and what is still open (nothing) |
 | `relations.json` | 206 decisions on duplicates, partial songs, medleys, translations, different songs sharing a title |
 | `RULES.md`, `AUDIT.md` | The cleanup rulebook and the independent audit (80 songs, ~3% defect rate, every pattern then fixed library-wide) |
 
@@ -28,7 +28,7 @@ The owner's church library, cleaned from its EasiSlides export (1,481 items, 202
 
 - 1,232 songs are Indonesian only: search, typo tolerance and stemming must work for Indonesian first; the palette should match title, alternate titles, first line and chorus first line, and treat `s'gala`/`segala`/`sgala` as one word.
 - Most slides are 1–2 lines; the output must look right with a single short line.
-- Open: `s0529` (I Want to Know You Lord) has an unfinished line after "You die and"; only the church's printed sheet can settle it.
+- Nothing is open: the last doubt, a cut-off line in `s0529` (I Want to Know You Lord), was completed from the published hymn.
 
 ## Re-checking
 
