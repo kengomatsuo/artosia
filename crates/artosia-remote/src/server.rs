@@ -321,7 +321,7 @@ pub fn handle(shared: &Shared, mut stream: TcpStream) {
         return respond(&mut stream, 400, "text/plain", b"bad request");
     };
     match (req.method.as_str(), req.path.as_str()) {
-        ("GET", "/") => respond(&mut stream, 200, "text/html; charset=utf-8", PAGE.as_bytes()),
+        ("GET", "/") => respond(&mut stream, 200, "text/html; charset=utf-8", crate::languages::page().as_bytes()),
         ("POST", "/api/pair") => pair(shared, &mut stream, &req),
         ("GET", "/api/state") | ("POST", "/api/command") if !authorize(shared, &req) => {
             json_reply(&mut stream, 401, &json!({"error": "not paired"}))

@@ -3,6 +3,7 @@
 //! A phone opens the served page, pairs with a PIN and then follows the live slide over a
 //! long-poll (`GET /api/state?since=<version>`). Taps arrive as `POST /api/command`.
 
+mod languages;
 mod net;
 mod server;
 
