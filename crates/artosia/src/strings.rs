@@ -884,6 +884,87 @@ text!(LOOK_LANGUAGE, "Language", "Bahasa");
 pub const LANGUAGE_ENGLISH: &str = "English";
 pub const LANGUAGE_INDONESIAN: &str = "Bahasa Indonesia";
 
+// What the search learned. Indonesian is written later from the brief; English stands in both.
+text!(LEARN_SECTION, "Search", "Search");
+text!(LEARN_ON, "Learn from use", "Learn from use");
+text!(LEARN_ON_HINT, "Songs you pick often come first among equal matches", "Songs you pick often come first among equal matches");
+text!(LEARN_FORGET, "Forget what the search learned", "Forget what the search learned");
+text!(LEARN_FORGOTTEN, "Search history forgotten", "Search history forgotten");
+text!(GROUP_WEEKDAY, "Sung on this day of the week", "Sung on this day of the week");
+text!(GROUP_RECENT, "Picked from the list lately", "Picked from the list lately");
+
+/// The heading over the songs that came after the live song.
+pub fn group_follows(title: &str) -> String {
+    if indonesian() {
+        return format!("Often sung after {title}");
+    }
+    format!("Often sung after {title}")
+}
+
+fn times_of(count: u32) -> String {
+    if count == 1 { "1 time".to_string() } else { format!("{count} times") }
+}
+
+fn services_of(count: u32) -> String {
+    if count == 1 { "1 service".to_string() } else { format!("{count} services") }
+}
+
+/// On the row: how often this text led to this song, with the text.
+pub fn habit_chip(typed: &str, picks: u32) -> String {
+    if indonesian() {
+        return format!("Picked for \u{201c}{typed}\u{201d} {}", times_of(picks));
+    }
+    format!("Picked for \u{201c}{typed}\u{201d} {}", times_of(picks))
+}
+
+/// The same with the day of the last pick, in the preview.
+pub fn habit_line(typed: &str, picks: u32, when: &str) -> String {
+    if indonesian() {
+        return format!("Picked for \u{201c}{typed}\u{201d} {}, last {when}", times_of(picks));
+    }
+    format!("Picked for \u{201c}{typed}\u{201d} {}, last {when}", times_of(picks))
+}
+
+/// Under a song that came after the live one.
+pub fn follows_line(count: u32, when: &str) -> String {
+    if indonesian() {
+        return format!("Came next {}, last {when}", times_of(count));
+    }
+    format!("Came next {}, last {when}", times_of(count))
+}
+
+/// Under a song sung on this day of the week: in `count` of the last `of` services that day.
+pub fn weekday_line(count: u32, of: u32) -> String {
+    if indonesian() {
+        return format!("Sung on this day in {count} of {}", services_of(of));
+    }
+    format!("Sung on this day in {count} of {}", services_of(of))
+}
+
+/// Under a song picked from the list with nothing typed.
+pub fn recent_line(picks: u32, when: &str) -> String {
+    if indonesian() {
+        return format!("Picked {}, last {when}", times_of(picks));
+    }
+    format!("Picked {}, last {when}", times_of(picks))
+}
+
+/// A short chip: the song usually begins at this section.
+pub fn starts_chip(section: &str) -> String {
+    if indonesian() {
+        return format!("Starts at {section}");
+    }
+    format!("Starts at {section}")
+}
+
+/// In the preview: the section it usually begins at, and how often.
+pub fn starts_line(section: &str, times: u32, of: u32) -> String {
+    if indonesian() {
+        return format!("Usually started at {section}, {times} of {of} times");
+    }
+    format!("Usually started at {section}, {times} of {of} times")
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

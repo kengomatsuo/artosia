@@ -171,6 +171,9 @@ impl App {
                 editor.lyrics.focused = true;
                 self.editor = Some(editor);
             }
+            Some(Undo::History(history)) => {
+                let _ = self.store.restore_history(*history);
+            }
             Some(Undo::Announcement(mut item)) => {
                 item.id = 0;
                 if self.store.save_announcement(&mut item).is_ok() {
