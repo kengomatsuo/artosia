@@ -23,6 +23,7 @@ It is authoritative; update it (and this file's headlines) whenever a decision c
 - `spikes/` — throwaway experiments with their own `Cargo.toml`; [spikes/SPEC.md](spikes/SPEC.md) is the shared test
 - `tools/` — `ram/measure.ps1` (RAM of a process tree), `make-fixture.sh` (test video)
 - `fixtures/` — generated media, gitignored
+- `docs/easislides-format.md` — EasiSlides' real data files, for the importer
 - `docs/features.md` — the owner's key features and what GStreamer covers
 - `docs/` — full accounts behind every rule; [docs/research.md](docs/research.md) is the stack survey
 - `.claude/rules/` — subsystem conventions, path-scoped

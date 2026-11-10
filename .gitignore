@@ -2,3 +2,4 @@
 /fixtures/*.mp4
 /spikes/*/target
 *.log
+/fixtures/easislides/
