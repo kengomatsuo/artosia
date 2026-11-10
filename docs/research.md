@@ -139,3 +139,5 @@ Verdict:
 - Widest platform coverage today: Omni Presenter, with the heaviest video path measured.
 - GStreamer has hardware decoders on all three OSes: Direct3D 11/12 on Windows (present here), VideoToolbox `vtdec` on macOS, VA-API `vah264dec` on Linux (GStreamer plugin docs).
 - GStreamer delivers NV12, which Rune's `NativeSurface::push_bytes` takes directly.
+
+GStreamer bundle size on Windows (1.28.8, measured 2026-11-10 by summing the GStreamer DLLs and plugins each pipeline loads): hardware path (`d3d11h264dec` → NV12) 26 files, 15.1 MB; hardware path plus the `avdec_h264` software fallback 41 files, 38.2 MB. The full install is 193 MB of `bin/` plus 893 MB of plugins; the app ships only what it loads.
