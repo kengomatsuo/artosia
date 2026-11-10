@@ -12,6 +12,7 @@
 mod actions;
 mod data;
 mod languages;
+mod learning;
 mod link;
 mod palette;
 mod state;
@@ -319,6 +320,21 @@ const SCENES: &[Scene] = &[
         s.plan.items.clear();
         s.songs.clear();
         s.index = artosia_core::search::SongIndex::build(&[]);
+    }),
+    // The search after a made-up history: groups under the two commands, and the reason chips.
+    ("learned-browse", |s| {
+        s.plan.items.clear();
+        if let Some(id) = s.songs.first().map(|song| song.id) {
+            s.plan.push(artosia_core::plan::PlanEntry::Song { song_id: id, title: s.songs[0].title.clone() });
+        }
+        s.seed_demo_history();
+        s.open_song(0, None);
+        s.show(0);
+        s.open_palette(Scope::All, "");
+    }),
+    ("learned-search", |s| {
+        s.seed_demo_history();
+        s.open_palette(Scope::All, "mor");
     }),
     ("toast", |s| {
         if let Some(id) = s.plan.items.get(2).map(|item| item.id) {

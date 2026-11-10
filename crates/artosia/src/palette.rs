@@ -205,9 +205,32 @@ impl Command {
     }
 }
 
+/// Why a song is where it is, from what the search learned. Each is one plain count.
+#[derive(Clone, Debug, PartialEq)]
+pub enum Reason {
+    /// Picked this many times for the text typed, the last time at this unix second.
+    Habit { typed: String, picks: u32, last: i64 },
+    /// Came right after the live song in this many past services.
+    Follows { count: u32, last: i64 },
+    /// Sung on this day of the week in this many of the last `of` services.
+    Weekday { count: u32, of: u32 },
+    /// Picked from the list with nothing typed.
+    Recent { picks: u32, last: i64 },
+}
+
+/// A heading above a group of suggested songs. It is never picked.
+#[derive(Clone, Debug, PartialEq)]
+pub enum Group {
+    /// After the live song, named by its title.
+    Follows(String),
+    Weekday,
+    Recent,
+}
+
 #[derive(Clone, Debug, PartialEq)]
 pub enum Hit {
-    Song { song: usize, title_ranges: Vec<Range<usize>>, line: Option<LineHit>, planned: bool },
+    Song { song: usize, title_ranges: Vec<Range<usize>>, line: Option<LineHit>, planned: bool, reason: Option<Reason> },
+    Group(Group),
     /// A section of the attached song, at its place in the sung order.
     Section { song: usize, slide: usize, tag: Tag, label: String, text: String },
     /// A reference read from the query, or a book or chapter to step into.
@@ -371,6 +394,7 @@ impl App {
     pub fn search(&mut self) {
         let query = self.palette.query.text.trim().to_string();
         self.palette.total = 0;
+        self.read_starts();
         let hits = match self.palette.chip {
             Some(song) => self.section_hits(song, &query),
             None if query.is_empty() => self.browse_hits(),
@@ -378,6 +402,10 @@ impl App {
         };
         self.palette.hits = hits;
         self.palette.picked = self.palette.picked.min(self.palette.hits.len().saturating_sub(1));
+        // A heading cannot be picked: Enter takes the first row under it.
+        while matches!(self.palette.hits.get(self.palette.picked), Some(Hit::Group(_))) && self.palette.picked + 1 < self.palette.hits.len() {
+            self.palette.picked += 1;
+        }
     }
 
     fn browse_hits(&mut self) -> Vec<Hit> {
@@ -388,17 +416,18 @@ impl App {
                 if scope == Scope::All {
                     // The two ways to add a song lead the list; other commands answer to typing.
                     hits.extend([Hit::Command(Command::NewSong), Hit::Command(Command::PasteSong)]);
+                    hits.extend(self.suggestion_rows());
                 }
                 self.palette.total = self.songs.len();
                 let planned = self.planned_songs();
-                hits.extend((0..self.songs.len()).map(|song| Hit::Song { song, title_ranges: Vec::new(), line: None, planned: planned.contains(&song) }));
+                hits.extend((0..self.songs.len()).map(|song| Hit::Song { song, title_ranges: Vec::new(), line: None, planned: planned.contains(&song), reason: None }));
                 hits
             }
         }
     }
 
     /// The songs in today's plan, as places in the library.
-    fn planned_songs(&self) -> HashSet<usize> {
+    pub(crate) fn planned_songs(&self) -> HashSet<usize> {
         self.plan
             .items
             .iter()
@@ -424,11 +453,16 @@ impl App {
         let (mut first_songs, mut songs) = (Vec::new(), Vec::new());
         if scope != Scope::Bible {
             let planned = self.planned_songs();
-            let found = self.index.search_with(query, SONG_LIMIT, &|song| planned.contains(&song));
+            // What was picked for this text lately only orders songs that tied on everything else.
+            let habits = self.habit_weights(query);
+            let weight = |song: usize| habits.get(&song).map_or(0, |habit| habit.weight());
+            let found = self.index.search_ranked(query, SONG_LIMIT, &|song| planned.contains(&song), &weight);
             self.palette.total = found.len();
+            let typed = artosia_core::learn::fold_typed(query);
             for hit in found {
                 let leads = hit.preferred && hit.complete;
-                let row = Hit::Song { song: hit.song, title_ranges: hit.title_ranges, line: hit.line, planned: hit.preferred };
+                let reason = habits.get(&hit.song).filter(|_| hit.habit > 0).map(|habit| Reason::Habit { typed: typed.clone(), picks: habit.picks, last: habit.last });
+                let row = Hit::Song { song: hit.song, title_ranges: hit.title_ranges, line: hit.line, planned: hit.preferred, reason };
                 if leads { first_songs.push(row) } else { songs.push(row) }
             }
         }
@@ -656,14 +690,23 @@ impl App {
         if count == 0 {
             return;
         }
-        let next = (self.palette.picked as isize + by).rem_euclid(count as isize);
+        let mut next = (self.palette.picked as isize + by).rem_euclid(count as isize);
+        // Headings are stepped over, in the direction of travel.
+        for _ in 0..count {
+            if !matches!(self.palette.hits[next as usize], Hit::Group(_)) {
+                break;
+            }
+            next = (next + by.signum()).rem_euclid(count as isize);
+        }
         self.palette.picked = next as usize;
     }
 
     /// Acts on the picked result.
     pub fn pick(&mut self, how: Pick) {
         let Some(hit) = self.palette.hits.get(self.palette.picked).cloned() else { return };
+        self.log_pick(&hit, how);
         match hit {
+            Hit::Group(_) => {}
             Hit::Song { song, line, .. } => {
                 if how == Pick::AddToPlan {
                     self.add_song_to_plan(song);

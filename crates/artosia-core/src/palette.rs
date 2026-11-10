@@ -7,7 +7,8 @@
 //! score cannot be explained; a cascade says exactly which rule put a row first.
 //!
 //! The order: preferred, fewer typos, whole words before prefixes, prefixes before a match
-//! inside a word, the heavier field, words closer together, the match nearer the start.
+//! inside a word, the heavier field, words closer together, the match nearer the start, and
+//! last of all what the volunteer picked for this text lately.
 
 use std::cmp::Ordering;
 
@@ -72,6 +73,8 @@ pub struct DocHit {
     pub proximity: u32,
     /// How far into its field the first matched word sits.
     pub position: u32,
+    /// Picks of this document for the typed text lately (0 to 5). Read after everything else.
+    pub habit: u8,
 }
 
 /// THE CASCADE. Read it top to bottom: each line only speaks when every line above it tied.
@@ -84,12 +87,18 @@ pub fn compare(a: &DocHit, b: &DocHit) -> Ordering {
         .then(b.weight.total_cmp(&a.weight))
         .then(a.proximity.cmp(&b.proximity))
         .then(a.position.cmp(&b.position))
+        .then(b.habit.cmp(&a.habit))
         .then(a.doc.cmp(&b.doc))
 }
 
 /// Documents that hold every word of the query, best first. `preferred` marks documents that
 /// go first when everything else ties, such as what is already in today's plan.
 pub fn search(docs: &[Doc], query: &str, preferred: &dyn Fn(&Doc) -> bool, limit: usize) -> Vec<DocHit> {
+    search_ranked(docs, query, preferred, &|_| 0, limit)
+}
+
+/// [`search`] with a habit for each document, read after every other rule.
+pub fn search_ranked(docs: &[Doc], query: &str, preferred: &dyn Fn(&Doc) -> bool, habit: &dyn Fn(&Doc) -> u8, limit: usize) -> Vec<DocHit> {
     let tokens = crate::search::tokens(query);
     if tokens.is_empty() {
         return Vec::new();
@@ -134,6 +143,7 @@ pub fn search(docs: &[Doc], query: &str, preferred: &dyn Fn(&Doc) -> bool, limit
             weight: found.iter().map(|(_, weight, _)| *weight).fold(0.0, f32::max),
             proximity: if found.len() > 1 { (high - low).saturating_sub(found.len() as u32 - 1) } else { 0 },
             position: low,
+            habit: habit(doc),
         });
     }
     hits.sort_by(compare);
@@ -206,6 +216,20 @@ mod tests {
         let hits = search(&docs, "black", &|doc| doc.key == "announcement:2", 10);
         // Preference is the first line of the cascade, as in the kit: it does win here.
         assert_eq!(docs[hits[0].doc].key, "announcement:2");
+    }
+
+    #[test]
+    fn a_habit_orders_documents_that_tie_and_nothing_else() {
+        let docs = docs();
+        let key = |hits: Vec<DocHit>| hits.into_iter().map(|hit| docs[hit.doc].key.clone()).collect::<Vec<_>>();
+        // "show announcement" ties for both announcements; the habit picks the second.
+        let loved = |doc: &Doc| if doc.key == "announcement:2" { 4 } else { 0 };
+        assert_eq!(key(search_ranked(&docs, "show announcement", &|_| false, &loved, 10)), ["announcement:2", "announcement:1"]);
+        // A whole word still goes before a longer word the habit favours.
+        assert_eq!(key(search_ranked(&docs, "black", &|_| false, &loved, 10)), ["command:black", "announcement:2"]);
+        // And a preferred document stays above any habit.
+        let hits = search_ranked(&docs, "show announcement", &|doc| doc.key == "announcement:1", &loved, 10);
+        assert_eq!(docs[hits[0].doc].key, "announcement:1");
     }
 
     #[test]

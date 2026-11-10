@@ -18,6 +18,7 @@ use rune::{Image, ImageCache, TextEdit, Waker};
 use serde::{Deserialize, Serialize};
 
 use crate::data;
+use crate::learning::Learning;
 use crate::link::Link;
 use crate::palette::Palette;
 use crate::strings as t;
@@ -109,6 +110,8 @@ pub struct Settings {
     pub stream_record: bool,
     /// Corner pin and colour for the projector picture.
     pub warp: artosia_slides::frame::Warp,
+    /// The search learns from what is picked and sung, and orders equal matches by it.
+    pub learn: bool,
 }
 
 impl Default for Settings {
@@ -137,6 +140,7 @@ impl Default for Settings {
             stream_key: String::new(),
             stream_record: false,
             warp: artosia_slides::frame::Warp::default(),
+            learn: true,
         }
     }
 }
@@ -156,6 +160,8 @@ pub enum Undo {
     Announcement(Announcement),
     /// An editor closed with unsaved changes.
     Editor(Box<Editor>),
+    /// The search history was forgotten.
+    History(Box<artosia_core::learn::History>),
 }
 
 pub struct Toast {
@@ -274,6 +280,8 @@ pub struct App {
     pub countdown: Option<Countdown>,
 
     pub palette: Palette,
+    /// What the search learns from use (`learning.rs`).
+    pub learn: Learning,
     pub editor: Option<Editor>,
     /// Where an editor field writes once the editor has closed under it.
     pub spare_edit: TextEdit,
@@ -441,6 +449,7 @@ impl App {
             timer_minutes: TextEdit::new("5"),
             countdown: None,
             palette: Palette::default(),
+            learn: Learning::default(),
             editor: None,
             spare_edit: TextEdit::new(""),
             sheet: Sheet::None,
@@ -503,6 +512,7 @@ impl App {
         app.stream_address.replace_text(app.settings.stream_address.clone());
         app.stream_key.replace_text(app.settings.stream_key.clone());
         app.list_bibles();
+        app.start_learning();
         if practice {
             app.seed_practice_plan();
         }
@@ -940,7 +950,13 @@ impl App {
         let index = index.min(open.deck.slides.len() - 1);
         open.cursor = index;
         open.armed = false;
+        let (source, tag, first) = (open.deck.source.clone(), open.deck.slides[index].tag, open.deck.slides[0].tag);
+        let before = self.live.as_ref().map(|live| live.deck.source.clone());
         self.live = Some(LiveDeck { deck: open.deck.clone(), item: open.item, index });
+        // Another slide of what is already live is not a new song going up.
+        if before.as_ref() != Some(&source) {
+            self.log_live(&source, tag, first, index);
+        }
         self.reveal();
         self.queue_next();
     }

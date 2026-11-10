@@ -204,7 +204,21 @@ fn looks(s: &App, k: &Kit, layer: &mut Vec<El>) {
                     })
                     .build(k),
             ),
-        ));
+        ))
+        .child(el().h(space::S2))
+        .child(section_label(k, t::LEARN_SECTION()))
+        .child(switch_row(k, "learn-switch", t::LEARN_ON(), t::LEARN_ON_HINT(), s.settings.learn, |s| {
+            s.settings.learn = !s.settings.learn;
+            s.touch_settings();
+            s.search();
+        }))
+        .child(
+            row()
+                .w_full()
+                .h(36.0)
+                .center_y()
+                .child(btn(t::LEARN_FORGET()).focusable().disabled(s.store.history_rows() == 0).build(k, |s, _| s.forget_learning())),
+        );
     // Taller than a small laptop screen once every setting is in, so the settings scroll under the looks.
     let body = col().w_full().max_h(600.0).scroll(rune::ScrollSpec { stick_bottom: false }).child(body).scroll_bar(k);
     Dialog::new("looks", t::BTN_LOOK()).open(true).width(620.0).fit().on_close(close).child(body).build(k, layer);

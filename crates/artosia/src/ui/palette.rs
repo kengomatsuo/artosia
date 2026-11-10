@@ -7,7 +7,7 @@ use artosia_slides::stage::group_color;
 use rune::{Cursor, El, GrowthSpec, Key, KeyEvent, ScrollSpec, Tx, col, el, icon, row, spacer, text, text_input};
 use rune_kit::{Kit, ScrollBar, SegmentedControl};
 
-use crate::palette::{Command, Hit, Pick, Scope};
+use crate::palette::{Command, Group, Hit, Pick, Reason, Scope};
 use crate::state::App;
 use crate::strings as t;
 use crate::theme::{self, icons, size, space, type_};
@@ -54,27 +54,55 @@ fn plain_row(k: &Kit, hit: &Hit) -> (&'static rune::Icon, String, String) {
         Hit::Message(words) => (&icons::ANNOUNCE, words.clone(), t::MESSAGE_DETAIL().to_string()),
         Hit::StageMessage(words) => (&icons::ANNOUNCE, words.clone(), t::STAGE_MESSAGE_DETAIL().to_string()),
         Hit::Language(code) => (&icons::GLOBE, crate::languages::index_of(code).map_or("", |at| crate::languages::LANGUAGES[at].name).to_string(), t::LOOK_LANGUAGE().to_string()),
-        Hit::Song { .. } | Hit::Section { .. } | Hit::Passage { .. } => (&icons::SONG, String::new(), String::new()),
+        Hit::Song { .. } | Hit::Section { .. } | Hit::Passage { .. } | Hit::Group(_) => (&icons::SONG, String::new(), String::new()),
     }
 }
 
+/// A heading over a group of suggested songs, as tall as a result so the list scrolls evenly.
+fn group_row(k: &Kit, group: &Group) -> El {
+    let words = match group {
+        Group::Follows(title) => t::group_follows(title),
+        Group::Weekday => t::GROUP_WEEKDAY().to_string(),
+        Group::Recent => t::GROUP_RECENT().to_string(),
+    };
+    row().key("group").w_full().h(size::RESULT).px(space::S3).items_end().pb(space::S1).child(text(words).font(type_::SMALL_STRONG).color(k.c.text_muted).truncate())
+}
+
 fn hit_row(s: &App, k: &Kit, index: usize, hit: &Hit) -> El {
+    if let Hit::Group(group) = hit {
+        return group_row(k, group);
+    }
     let picked = index == s.palette.picked;
     let mark = theme::accent();
     let mut trailing: Vec<El> = Vec::new();
     let (glyph, title, detail): (&'static rune::Icon, El, El) = match hit {
-        Hit::Song { song, title_ranges, line, planned } => {
+        Hit::Song { song, title_ranges, line, planned, reason } => {
             let found = &s.songs[*song];
             let title = highlighted(&found.title, title_ranges, type_::BODY_STRONG, k.c.text_base, mark);
             if *planned {
                 trailing.push(state_pill(t::PLAN_CHIP(), k.c.layer_04, k.c.text_base));
             }
-            match line {
-                Some(line) => {
-                    trailing.push(tag_chip(&t::section_label(line.tag), group_color(tag_group(line.tag))));
+            // The habit chip is long, so it takes the room of the start and section chips: the
+            // matched line is still in the second line, and the preview says the rest.
+            let habit = matches!(reason, Some(Reason::Habit { .. }));
+            if let Some((tag, _, _)) = s.learn.starts.get(song).filter(|_| !habit) {
+                trailing.push(state_pill(&t::starts_chip(&t::section_label(*tag)), k.c.layer_04, k.c.text_base));
+            }
+            if let Some(Reason::Habit { typed, picks, .. }) = reason {
+                trailing.push(state_pill(&t::habit_chip(typed, *picks), k.c.layer_04, k.c.text_base));
+            }
+            match (line, reason) {
+                // A suggested song says why in words, in the line a title match would use for lyrics.
+                (_, Some(why @ (Reason::Follows { .. } | Reason::Weekday { .. } | Reason::Recent { .. }))) => {
+                    (&icons::SONG, title, text(s.reason_line(why)).font(type_::SMALL).color(k.c.text_muted))
+                }
+                (Some(line), _) => {
+                    if !habit {
+                        trailing.push(tag_chip(&t::section_label(line.tag), group_color(tag_group(line.tag))));
+                    }
                     (&icons::SONG, title, highlighted(&line.text, &line.ranges, type_::SMALL, k.c.text_muted, mark))
                 }
-                None => {
+                (None, _) => {
                     let first = found.first_line().unwrap_or_default();
                     (&icons::SONG, title, text(if found.author.is_empty() { first } else { found.author.clone() }).font(type_::SMALL).color(k.c.text_muted))
                 }
@@ -227,6 +255,7 @@ fn actions(k: &Kit, hit: &Hit) -> El {
     let show = || btn(t::BTN_SHOW_NOW()).hint(t::KEY_SHOW_NOW()).build(k, |s, _| s.pick(Pick::ShowNow));
     let open = || btn(t::BTN_OPEN()).primary().hint(t::KEY_ENTER()).build(k, |s, _| s.pick(Pick::Open));
     match hit {
+        Hit::Group(_) => bar,
         Hit::Command(_) | Hit::Look { .. } | Hit::Bible { .. } | Hit::Countdown(_) | Hit::Message(_) | Hit::StageMessage(_) | Hit::Language(_) => bar.child(spacer()).child(choose()),
         Hit::Passage { step: Some(_), .. } => bar.child(spacer()).child(btn(t::BTN_ADD_TO_PLAN()).build(k, |s, _| s.pick(Pick::AddToPlan))).child(choose()),
         Hit::PlanItem { .. } => bar.child(spacer()).child(show()).child(open()),
@@ -235,11 +264,15 @@ fn actions(k: &Kit, hit: &Hit) -> El {
 }
 
 /// A song's words, with the matched line or the picked section marked.
-fn song_preview(s: &App, k: &Kit, song: usize, line: Option<&artosia_core::search::LineHit>, picked: Option<artosia_core::song::Tag>) -> Vec<El> {
+fn song_preview(s: &App, k: &Kit, song: usize, line: Option<&artosia_core::search::LineHit>, picked: Option<artosia_core::song::Tag>, notes: Vec<String>) -> Vec<El> {
     let found = &s.songs[song];
     let mut out = vec![text(found.title.clone()).font(type_::HEADING).color(k.c.text_base).wrap()];
     if !found.author.is_empty() {
         out.push(text(found.author.clone()).font(type_::SMALL).color(k.c.text_muted));
+    }
+    // Why the song is where it is, in words with the real counts.
+    for note in notes {
+        out.push(text(note).font(type_::SMALL_STRONG).color(k.c.text_muted).wrap());
     }
     for (at, section) in found.sections().iter().enumerate() {
         let color = group_color(tag_group(section.tag));
@@ -272,8 +305,8 @@ fn preview(s: &App, k: &Kit) -> El {
         el().size(wide, (wide * 9.0 / 16.0).round()).radius(k.radius.lg).clip_rounded(k.radius.lg).child(crate::ui::thumb(s, state, wide))
     };
     match hit {
-        Hit::Song { song, line, .. } => body = body.children(song_preview(s, k, *song, line.as_ref(), None)),
-        Hit::Section { song, tag, .. } => body = body.children(song_preview(s, k, *song, None, Some(*tag))),
+        Hit::Song { song, line, reason, .. } => body = body.children(song_preview(s, k, *song, line.as_ref(), None, s.song_notes(*song, reason.as_ref()))),
+        Hit::Section { song, tag, .. } => body = body.children(song_preview(s, k, *song, None, Some(*tag), Vec::new())),
         Hit::Passage { reference, title, step, .. } => {
             body = body.child(text(title.clone()).font(type_::HEADING).color(k.c.text_base).wrap());
             if let Some(bible) = s.bible() {

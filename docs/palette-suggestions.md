@@ -1,6 +1,6 @@
 # Palette suggestions: a proposal
 
-Status: a proposal for the owner to accept or decline. Nothing is built. Written 2026-11-11.
+Status: accepted by the owner on 2026-11-11 ("behavioural, even relationships like after this song usually find this song"). Built; see "Built" at the end.
 
 The owner's question: can the palette be smarter with suggestions, "like google's suggestion logic, maybe based on past calls"?
 
@@ -292,3 +292,33 @@ All read 2026-11-11.
 - Whether volunteers want last week's songs suggested or avoided. That is a question for the owner and the worship team, not for research. The proposal ships that block off until answered.
 - The window (12 weeks), the minimum (2), the cap (5) and the row counts are my choices and estimates. They need the synthetic history and, later, a real month of data.
 - Slack's and Firefox's numbers describe their products at the time of the pages read. I have not checked whether either has changed since.
+
+## Built
+
+Written 2026-11-11, on the branch of the agent that built it.
+
+What exists:
+
+| Piece | Where |
+|---|---|
+| Tables `palette_picks`, `service_songs`, `service_passages` (created with the other tables, so an older library gains them) | `crates/artosia-core/src/store.rs` |
+| Writes, reads, forget with undo, two-year prune | `crates/artosia-core/src/learn.rs` |
+| `habit` as the last line of `Facts`, and in `compare` after `position` | `search.rs`, `palette.rs` in `artosia-core` |
+| Recording at `pick` and at `show`, groups, reasons, switch, demo history | `crates/artosia/src/learning.rs` |
+| Groups and chips on the rows, the sentence in the preview | `crates/artosia/src/ui/palette.rs` |
+| "Learn from use" and "Forget what the search learned" | last section of the Look dialog, `ui/sheets.rs` |
+| Scenes `learned-browse` and `learned-search` | `main.rs` |
+
+Choices that differ from the proposal above:
+
+- `service_songs` also keeps `weekday`, `typed`, `start_tag` and `from_start`; passages go in `service_passages`, because a passage has no song id. A passage takes a place in the service's order but is skipped when reading what followed a song.
+- The side-by-side and nearest-the-start reads in `search_ranked` still come before `habit`, so `habit` orders only songs that tie on everything else. Putting it in `Facts` alone would have placed it above them.
+- A song is recorded as going live only when another deck was live before it; a second slide of the same song is not a new song.
+- Followers need two services. The weekday group reads eight weeks, counts at most 5 services, and needs 2. The recent-picks group reads three weeks. A song shows in one group only, never when it is in today's plan or live now.
+- "Usually started at the chorus": a song that went live at the same section other than its first, three times or more and in 60% of its starts or more, over 26 weeks. It shows as a chip and in the preview; Enter opens the song as before.
+- Not built, as the proposal says: last service's plan (off until the owner answers), habit for announcements, looks, commands and passages. `compare` carries the field and a test; nothing feeds it yet.
+- Recording needs a real library folder, a real window, no `--practice`, and the switch on. Tests turn `learn.recording` on by hand.
+
+Verified: `cargo test -p artosia -p artosia-core` (store and cascade tests on a made-up clock and offset: window, fade, cap, follower pairs, weekday, recent, start habit, forget and undo, prune; app tests: habit never beats a plan song, an exact title or a number, nothing recorded in practice, no message text kept), `cargo clippy` clean, and `--snap` renders of both scenes in light, dark and Indonesian plus the Look dialog scrolled to the end, and a script that steps over a heading with Down.
+
+Not verified: a real window on the second screen, the RAM measure, the speed of the habit query on a library with two years of rows, and the Indonesian text (English stands in both languages until it is written).

@@ -91,6 +91,44 @@ create table if not exists settings (
     key text primary key,
     value text not null
 );
+-- What the search learns from (docs/palette-suggestions.md). Ids and folded typed text only:
+-- no lyrics, no titles, no announcement text, nothing typed into a message.
+create table if not exists palette_picks (
+    id integer primary key,
+    picked_at integer not null,
+    service_date text not null,
+    weekday integer not null,
+    plan_id integer,
+    kind text not null,
+    target text not null,
+    typed text not null default '',
+    shown_rank integer,
+    action text not null
+);
+create index if not exists palette_picks_typed on palette_picks (typed, target);
+create index if not exists palette_picks_when on palette_picks (picked_at);
+create table if not exists service_songs (
+    id integer primary key,
+    service_date text not null,
+    weekday integer not null,
+    plan_id integer,
+    seq integer not null,
+    song_id integer not null,
+    shown_at integer not null,
+    typed text not null default '',
+    start_tag text not null default '',
+    from_start integer not null default 1
+);
+create index if not exists service_songs_song on service_songs (song_id, service_date);
+create table if not exists service_passages (
+    id integer primary key,
+    service_date text not null,
+    plan_id integer,
+    seq integer not null,
+    reference text not null,
+    shown_at integer not null,
+    typed text not null default ''
+);
 ";
 
 impl Store {
@@ -119,6 +157,10 @@ impl Store {
             }
         }
         Ok(Store { db })
+    }
+
+    pub(crate) fn db(&self) -> &Connection {
+        &self.db
     }
 
     pub fn songs(&self) -> Result<Vec<Song>> {

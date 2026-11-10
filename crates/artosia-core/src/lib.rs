@@ -3,6 +3,7 @@
 pub mod bible;
 pub mod deck;
 pub mod import;
+pub mod learn;
 pub mod openlyrics;
 pub mod palette;
 pub mod plan;
