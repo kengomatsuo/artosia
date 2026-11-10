@@ -15,7 +15,7 @@ It is authoritative; update it (and this file's headlines) whenever a decision c
 - UI: [Rune](https://github.com/anomalyco/rune), a git dependency pinned to a `dev` rev in the
   root `Cargo.toml`. Its own docs are the reference: `crates/rune/README.md` and `examples/`
   at that rev. The `house-design-language` skill applies to every screen.
-- Output video: Rune draws it; Rune's `Player` on macOS, libVLC frames into a `NativeSurface` on Windows and Linux. The spike in [docs/spike-output-video.md](docs/spike-output-video.md) confirms the RAM.
+- Output video: GStreamer hardware decode to NV12 into a Rune `NativeSurface` on every OS; projector and stage run in a separate renderer process (after Lerret).
 
 ## Structure
 

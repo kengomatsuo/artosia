@@ -12,7 +12,10 @@ with integrated graphics even when video is decoded on the CPU (owner, 2026-11-1
 | Language | Rust, edition 2024, toolchain pinned in `rust-toolchain.toml` | Owner call, 2026-11-10 |
 | UI | [Rune](https://github.com/anomalyco/rune), pinned `dev` rev in the root `Cargo.toml` | Owner call, 2026-11-10. GPU-rendered, MIT, Windows/macOS/Linux; every app runs headless, so an agent can `--snap` a PNG and drive the UI with scripts |
 | Licence | GPL-3.0-or-later | The app is free; GPL code (FreeShow, OpenLP) and libraries are usable |
-| Output video | Rune draws the output window too. macOS: Rune's `Player` (AVFoundation). Windows and Linux: libVLC decodes with hardware acceleration and its frames go into a Rune `NativeSurface` | Owner call, 2026-11-10. Preview and output render the same way. The spike in [spike-output-video.md](spike-output-video.md) measures this against libVLC owning the window, which stays the fallback if the frame copy costs too much RAM |
+| Output video | GStreamer on Windows, macOS and Linux: hardware decode (Direct3D 11/12, VideoToolbox, VA-API) to NV12, pushed into a Rune `NativeSurface`; software fallback | Owner call, 2026-11-10, on measurements in [research.md](research.md): 0.05 cores and 107 MB for 1080p30 against 0.27 cores and 197 MB for libVLC callbacks |
+| Processes | Operator app in one process; projector and stage windows in a separate renderer process | Owner call, 2026-11-10, copied from Lerret so an operator crash cannot black out the screens |
+| Frame pacing | Port Lerret's cadence logic (`crates/lerret-render/src/video/cadence.rs`, GPL-3.0) | Owner call, 2026-11-10: stops 30 fps judder on 60/120 Hz screens |
+| Volunteer UX | Numbered monitor setup, no-second-screen fallback, phone remote paired by QR + PIN, practice mode, after Lerret | Owner call, 2026-11-10 |
 | Storage, Bible and song formats | Not chosen yet | Research before picking |
 
 ## Why not the others
@@ -34,8 +37,7 @@ Screenshots, source files and product cards for every screen (S01–S13) are in 
 
 | Area | Proposal | Evidence |
 |---|---|---|
-| Process split | Operator app in one process; projector and stage windows in a separate renderer process | Lerret's `lerret-output` renderer process, so an operator crash cannot black out the screens (research `languages/lerret.md`) |
 | Storage | SQLite via `rusqlite` with the `bundled` feature | Used by Omni Presenter, VideoPsalm-GPUI, Open Worship, Hearken, ChyguiSlide (their `Cargo.toml`, [research.md](research.md)) |
 | Song exchange | OpenLyrics XML, plus importers for EasiSlides, OpenLP, ProPresenter files | OpenLyrics 0.8 spec; FreeShow and OpenLP import lists (research `languages/freeshow.md`, `languages/openlp.md`) |
 | Bible text | Public-domain translations offline; MyBible and Zefania import | EasiSlides' v5 feature page lists both formats; API.Bible's free tier allows 3 licensed Bibles for non-commercial use ([research.md](research.md)) |
-| Phone remote | HTTP + WebSocket server in the app, paired by QR code and PIN | OpenLP, Lerret and FreeShow serve remotes this way (research `languages/`) |
+| Phone remote transport | HTTP + WebSocket server in the app | OpenLP, Lerret and FreeShow serve remotes this way (research `languages/`) |

@@ -1,5 +1,8 @@
 # Spike: how the output window shows video
 
+**Decided 2026-11-10 (owner): GStreamer to NV12 into a Rune `NativeSurface` on every OS.** The libVLC variants below are kept as the record of what was measured and rejected (0.27 cores against GStreamer's 0.05). The spike now builds that one path and measures it with the window drawing: RAM, CPU, dropped frames, on this PC's Intel Iris Xe and on a Celeron-class machine.
+
+
 The first task in this repo. Build both variants against [spikes/SPEC.md](../spikes/SPEC.md),
 measure both, then record the winner in [architecture.md](architecture.md).
 
