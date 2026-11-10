@@ -63,9 +63,17 @@ The signing key was made on 2026-11-10 with `artosia-release keygen` and lives o
 
 `tools/release.ps1` still makes an upload-ready folder for any other host; `ARTOSIA_UPDATE_FEED`, or one line in `update-feed.txt` beside the program, points a copy at it.
 
-### Why two projector programs
+### GStreamer comes in the release
 
-The projector built with video does not start at all on a computer without GStreamer: Windows cannot load it (`gio-2.0-0.dll: cannot open`, tried on 2026-11-10 with GStreamer off the PATH). The operator therefore starts `artosia-output-plain.exe` when it finds no GStreamer (`crates/artosia/src/link.rs`, `output_program`), and that computer shows the words over pictures and colours. Putting GStreamer's own files in the release would give it video too; the whole runtime is 306 MB in 417 files, and the subset Artosia needs has not been worked out.
+The projector built with video does not start at all on a computer without GStreamer: Windows cannot load it (`gio-2.0-0.dll: cannot open`, tried on 2026-11-10 with GStreamer off the PATH). So a release carries the part of GStreamer the programs need in a `gstreamer` folder: 31 plugins and the 40 libraries they import, 65 MB of the installer's 306 MB, with the installer's licence files in `licenses.zip`. `tools/gstreamer-subset.py` names each plugin with the reason Artosia needs it and follows every file's import table for the rest, so the list is derived, never kept by hand.
+
+The operator looks in its own folder first and hands the programs it starts that GStreamer alone: its plugin folder in `GST_PLUGIN_SYSTEM_PATH_1_0` and a plugin cache of its own in `GST_REGISTRY_1_0` (`crates/artosia/src/link.rs`, `with_gstreamer`). An installed GStreamer is used only when the folder is missing.
+
+Tried on 2026-11-11: a projector started with nothing but the bundle on its PATH played `fixtures/bg30.mp4` on the second screen through `d3d11h264dec`, 853 frames and one full loop, and all 30 of its GStreamer modules were loaded from the bundle. The streaming program, started the same way, listed 17 sound inputs, 2 screens and 14 windows. Not tried on the bundle alone: the software decoder on a graphics chip without one, a camera, and a stream actually sent.
+
+`artosia-output-plain.exe`, the projector built without video, stays in the release for a copy whose `gstreamer` folder is missing: the operator starts it when it finds no GStreamer at all (`output_program`), and that computer still shows the words.
+
+The bundle includes x264 (GPL) and FFmpeg's libraries (LGPL) beside GStreamer's own (LGPL); Artosia is GPL-3.0-or-later, which all of them allow.
 
 ## API
 

@@ -29,6 +29,7 @@ with integrated graphics even when video is decoded on the CPU (owner, 2026-11-1
 | Interface languages | English and Indonesian in `strings.rs`, neither translated from the other; briefs and the reviewed Indonesian in `docs/i18n/` | Owner, 2026-11-10 ("all the open stuff simply solve them"). Written blind from briefs, then rendered and fitted |
 | Updates | `artosia-update`: a signed manifest and flat files, published as GitHub Releases of `kengomatsuo/artosia` by `tools/publish.sh`, swapped in at the next start, rolled back if the new build does not start | Owner, 2026-11-10 ("so I don't have to send the executable over and over by usb or whatsapp"; GitHub Releases was the owner's pick). The signing key is outside the repository. `crates/artosia-update/README.md` |
 | Church files | `artosia-office` reads .pptx and .docx without Office; EMF pictures are redrawn through Windows | Owner's bulletin and birthday list, 2026-11-10. The files hold personal data and stay out of the repository |
+| GStreamer in the release | The 65 MB of GStreamer the programs need travels in the release's `gstreamer` folder, worked out by `tools/gstreamer-subset.py`; an installed one is the fallback | The video projector cannot start on a computer without GStreamer, and the church PC has none. Proven with the bundle alone on 2026-11-11. `crates/artosia-update/README.md` |
 | Window arrangement | The plan, then Preview and Live side by side as numbered lists, a dock under both (`crates/artosia/src/ui/shell.rs`) | Owner's pick on 2026-11-10 from four trials drawn after OpenLP, ProPresenter, FreeShow and Lerret; the other three and their switch are deleted. [operator.md](operator.md) |
 | Streaming | `artosia-stream`, a third program: Windows Graphics Capture of the projector window, one hardware encoder, one small pipeline per destination | Its own process for the reason the projector is; a dropped connection rebuilds only that destination |
 
@@ -70,7 +71,6 @@ Screenshots, source files and product cards for every screen (S01–S13) are in 
 | RAM and CPU with a video background | Misses the target: 0.25 to 0.45 cores and about 300 MB in the output on an Intel Iris Xe laptop. Decode is 0.07 cores; the rest is Rune redrawing the window while a video surface is mounted, which needs a change in Rune. Numbers and the change: [output.md](output.md) |
 | Frame pacing | Lerret's cadence logic needs the app to own `present`, which Rune does not allow. Not ported |
 | Speech recognition | Written, never compiled. The 57 MB model is in `%APPDATA%\artosia\models` (downloaded 2026-11-10 with the owner's yes); the build still needs CMake and LLVM, which the owner installs |
-| Video on a computer without GStreamer | A release carries a second projector built without video, which the operator starts when it finds no GStreamer. Video and streaming there need GStreamer installed by hand, or its files put in the release: 306 MB whole, subset not worked out |
 | Never tried | A real phone on the remote; a real streaming service; a Celeron; unplugging a screen by hand; a bent picture through the projector |
 
 ## Dependency notes

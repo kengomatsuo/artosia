@@ -33,6 +33,8 @@ rm -rf "dist/$version"
 mkdir -p "$programs"
 cp target/release/artosia.exe target/release/artosia-output.exe target/release/artosia-stream.exe "$programs/"
 cp target/plain/release/artosia-output.exe "$programs/artosia-output-plain.exe"
+# The part of GStreamer the programs need, so video plays on a computer that has none installed.
+python tools/gstreamer-subset.py --copy "$programs/gstreamer"
 
 target/release-tool/release/artosia-release.exe build --dir "$programs" --version "$version" --out "$feed" --notes "$notes" --key-file "$key"
 
@@ -42,6 +44,8 @@ powershell -NoProfile -Command "Compress-Archive -Path '$programs/*' -Destinatio
 
 git tag "v$version"
 git push origin HEAD "v$version"
-gh release create "v$version" "$feed"/* "$zip" --draft --title "Artosia $version" --notes "$notes"
+gh release create "v$version" "$zip" --draft --title "Artosia $version" --notes "$notes"
+# About eighty files: a few at a time, so one slow upload does not fail the whole release.
+find "$feed" -type f -print0 | xargs -0 -n 12 gh release upload "v$version" --clobber
 gh release edit "v$version" --draft=false --latest
 echo "Published v$version."

@@ -80,15 +80,7 @@ impl Stream {
         if let Some(file) = &options.record {
             command.arg("--record").arg(file);
         }
-        if let Some(bin) = crate::link::gstreamer_bin() {
-            let mut paths = vec![bin];
-            if let Some(existing) = std::env::var_os("PATH") {
-                paths.extend(std::env::split_paths(&existing));
-            }
-            if let Ok(joined) = std::env::join_paths(paths) {
-                command.env("PATH", joined);
-            }
-        }
+        crate::link::with_gstreamer(&mut command);
         // The helper's error stream can carry an address at debug levels, so it is not kept.
         command.stdin(Stdio::piped()).stdout(Stdio::piped()).stderr(Stdio::null());
         let mut child = command.spawn().map_err(|error| t::stream_failed(&error.to_string()))?;

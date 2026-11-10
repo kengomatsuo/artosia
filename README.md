@@ -25,7 +25,7 @@ Artosia puts song words, Bible verses and announcements on a church's projector.
 
 Windows may warn about an unknown publisher the first time: the programs are not code-signed.
 
-Video and camera backgrounds, and streaming, need [GStreamer](https://gstreamer.freedesktop.org/download/) installed (the MSVC 64-bit runtime, complete install). Without it Artosia shows the words over pictures and colours.
+Video and camera backgrounds and streaming run on the part of [GStreamer](https://gstreamer.freedesktop.org/) that comes in the `gstreamer` folder, so nothing else has to be installed. Its licences are in `gstreamer/licenses.zip`.
 
 ## Building
 

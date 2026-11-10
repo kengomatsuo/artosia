@@ -61,19 +61,47 @@ pub struct Link {
     options: Arc<Mutex<OutputOptions>>,
 }
 
-/// GStreamer's `bin` folder, which the output process needs on its PATH to play video.
-pub fn gstreamer_bin() -> Option<PathBuf> {
-    let mut roots: Vec<PathBuf> = Vec::new();
-    if let Some(root) = std::env::var_os("GSTREAMER_1_0_ROOT_MSVC_X86_64") {
-        roots.push(PathBuf::from(root));
-    }
+/// The GStreamer the projector and the streaming program run on, and whether it is the one
+/// that came in Artosia's own folder. That one is looked for first: a release carries the
+/// files it was built and tried with, and an installed GStreamer may be another version.
+fn gstreamer_root() -> Option<(PathBuf, bool)> {
+    let mut roots: Vec<(PathBuf, bool)> = Vec::new();
     if let Ok(exe) = std::env::current_exe()
         && let Some(folder) = exe.parent() {
-            roots.push(folder.join("gstreamer"));
+            roots.push((folder.join("gstreamer"), true));
         }
-    roots.push(PathBuf::from(r"C:\Program Files\gstreamer\1.0\msvc_x86_64"));
-    roots.push(PathBuf::from(r"C:\gstreamer\1.0\msvc_x86_64"));
-    roots.into_iter().map(|root| root.join("bin")).find(|bin| bin.is_dir())
+    if let Some(root) = std::env::var_os("GSTREAMER_1_0_ROOT_MSVC_X86_64") {
+        roots.push((PathBuf::from(root), false));
+    }
+    roots.push((PathBuf::from(r"C:\Program Files\gstreamer\1.0\msvc_x86_64"), false));
+    roots.push((PathBuf::from(r"C:\gstreamer\1.0\msvc_x86_64"), false));
+    roots.into_iter().find(|(root, _)| root.join("bin").is_dir())
+}
+
+/// GStreamer's `bin` folder, which the output process needs on its PATH to play video.
+pub fn gstreamer_bin() -> Option<PathBuf> {
+    gstreamer_root().map(|(root, _)| root.join("bin"))
+}
+
+/// Lets a program Artosia starts find GStreamer. The files that came with Artosia are a
+/// GStreamer of their own: it reads only its own plugins and keeps its own plugin cache, so
+/// an installed one neither feeds it nor is disturbed by it. GStreamer's "Running GStreamer
+/// Applications" page: without `GST_PLUGIN_SYSTEM_PATH` it "will fill in this list for you",
+/// and `GST_REGISTRY` is for "a separate environment which should not affect the default cache".
+pub fn with_gstreamer(command: &mut std::process::Command) {
+    let Some((root, bundled)) = gstreamer_root() else { return };
+    let mut paths = vec![root.join("bin")];
+    if let Some(existing) = std::env::var_os("PATH") {
+        paths.extend(std::env::split_paths(&existing));
+    }
+    if let Ok(joined) = std::env::join_paths(paths) {
+        command.env("PATH", joined);
+    }
+    if bundled {
+        command.env("GST_PLUGIN_SYSTEM_PATH_1_0", root.join("lib").join("gstreamer-1.0"));
+        command.env("GST_PLUGIN_PATH_1_0", "");
+        command.env("GST_REGISTRY_1_0", std::env::temp_dir().join("artosia-gstreamer-registry.bin"));
+    }
 }
 
 fn output_program() -> Option<PathBuf> {
@@ -94,15 +122,7 @@ fn spawn_output() -> Result<(), String> {
     let mut command = std::process::Command::new(program);
     // Where its windows go arrives over the socket, so it opens nothing it was not asked for.
     command.arg("--port").arg(PORT.to_string());
-    if let Some(bin) = gstreamer_bin() {
-        let mut paths = vec![bin];
-        if let Some(existing) = std::env::var_os("PATH") {
-            paths.extend(std::env::split_paths(&existing));
-        }
-        if let Ok(joined) = std::env::join_paths(paths) {
-            command.env("PATH", joined);
-        }
-    }
+    with_gstreamer(&mut command);
     command.stdin(std::process::Stdio::null());
     trace(|| format!("starting the output: {command:?}"));
     command.spawn().map(|_| ()).map_err(|error| t::output_failed(&error.to_string()))
