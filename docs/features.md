@@ -23,4 +23,11 @@
 | One source to several outputs | `tee`, `compositor`, `d3d11compositor` |
 | Warp and colour | `perspective`, `d3d11convert`, `glcolorbalance` |
 
-Not checked yet: the same elements on macOS and Linux builds; speech-to-text and pitch-to-song models (feature 5) sit outside GStreamer.
+On macOS and Linux (GStreamer plugin docs, each page fetched 2026-11-10): cameras `avfvideosrc` (macOS) and `v4l2src` (Linux); audio input `osxaudiosrc` and `pulsesrc`; hardware decode `vtdec` and `vah264dec`; hardware encode `vtenc_h264` and `vah264enc`.
+
+Speech-to-text and pitch-to-song models (feature 5) sit outside GStreamer; it supplies the audio input and `spectrum` analysis.
+
+## libVLC 3.0.24 for comparison (plugins in the `VideoLAN.LibVLC.Windows` NuGet build, listed 2026-11-10)
+
+Has: screen capture (`libscreen`), RTSP (`liblive555`), SRT in and out, WASAPI audio input, Intel QSV and x264 encoders, `transform` and `adjust` filters.
+Missing from this build: a USB camera input (no `dshow` access plugin), RTMP output, WebRTC in or out, NDI, a perspective/corner-pin warp. Its frame callbacks also decoded in software in our test (0.27 cores against GStreamer's 0.05).
