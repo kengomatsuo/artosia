@@ -239,6 +239,9 @@ pub struct SongHit {
     pub complete: bool,
     /// The words were found in the title, not only in the lyrics.
     pub in_title: bool,
+    /// How often the volunteer picked this song for the typed text lately (0 to 5). It only
+    /// ever orders songs that tied on everything else.
+    pub habit: u8,
     pub title_ranges: Vec<Range<usize>>,
     /// The lyric line that matched best, when the lyrics matched at all.
     pub line: Option<LineHit>,
@@ -269,6 +272,9 @@ struct Facts {
     in_title: Reverse<bool>,
     exact: Reverse<u8>,
     infix: u8,
+    /// Picks of this song for the typed text in the last 12 weeks, from the caller. LAST: a
+    /// plan song, an exact title and a typed number all stay above a habit.
+    habit: Reverse<u8>,
 }
 
 struct Found {
@@ -328,11 +334,17 @@ impl SongIndex {
         self.search_with(query, limit, &|_| false)
     }
 
+    /// [`Self::search_ranked`] with no habits.
+    pub fn search_with(&self, query: &str, limit: usize, preferred: &dyn Fn(usize) -> bool) -> Vec<SongHit> {
+        self.search_ranked(query, limit, preferred, &|_| 0)
+    }
+
     /// The best `limit` songs for a query. A song that holds every word goes before one that
     /// holds some; among those, a song `preferred` names goes first, then words found together
     /// in one line, fewer typos, the title before the lyrics, whole words, and words side by
-    /// side. A number finds the song with that number before anything else.
-    pub fn search_with(&self, query: &str, limit: usize, preferred: &dyn Fn(usize) -> bool) -> Vec<SongHit> {
+    /// side. A number finds the song with that number before anything else. `habit` is read
+    /// last, so it only orders songs that tie on every one of those.
+    pub fn search_ranked(&self, query: &str, limit: usize, preferred: &dyn Fn(usize) -> bool, habit: &dyn Fn(usize) -> u8) -> Vec<SongHit> {
         let tokens = tokens(query);
         if tokens.is_empty() {
             return Vec::new();
@@ -386,6 +398,7 @@ impl SongIndex {
                         in_title: Reverse(false),
                         exact: Reverse(0),
                         infix: 0,
+                        habit: Reverse(habit(song as usize)),
                     };
                     found.push(Found { song, facts, best: title, title_matched: false, line: None });
                 }
@@ -401,6 +414,7 @@ impl SongIndex {
                 in_title: Reverse(in_title),
                 exact: Reverse(matched.clone().filter(|rank| **rank % 4 == 0).count() as u8),
                 infix: matched.filter(|rank| **rank % 2 == 1).count() as u8,
+                habit: Reverse(habit(song as usize)),
             };
             found.push(Found { song, facts, best, title_matched, line: line.map(|(_, _, entry)| entry) });
         }
@@ -416,8 +430,15 @@ impl SongIndex {
             }
         };
         let mut order: Vec<usize> = (0..found.len()).collect();
+        // The habit is the last line of `Facts`, but the side-by-side and nearest-the-start reads
+        // below it still come first: a habit only orders what tied on everything else.
+        let without_habit = |facts: Facts| Facts { habit: Reverse(0), ..facts };
         order.sort_by(|&a, &b| {
-            found[a].facts.cmp(&found[b].facts).then_with(|| window_of(a).cmp(&window_of(b))).then(found[a].song.cmp(&found[b].song))
+            without_habit(found[a].facts)
+                .cmp(&without_habit(found[b].facts))
+                .then_with(|| window_of(a).cmp(&window_of(b)))
+                .then(found[a].facts.habit.cmp(&found[b].facts.habit))
+                .then(found[a].song.cmp(&found[b].song))
         });
         order
             .into_iter()
@@ -439,6 +460,7 @@ impl SongIndex {
                     preferred: hit.facts.preferred.0,
                     complete: usize::from(hit.facts.covered.0) == count,
                     in_title: hit.facts.in_title.0,
+                    habit: hit.facts.habit.0,
                     title_ranges,
                     line,
                 }
@@ -545,6 +567,65 @@ mod tests {
         let index = SongIndex::build(&songs);
         let hits: Vec<usize> = index.search("berkat", 10).into_iter().map(|hit| hit.song).collect();
         assert_eq!(hits, [5, 4]);
+    }
+
+    #[test]
+    fn a_habit_orders_songs_that_tie() {
+        let mut songs = library();
+        for (number, title) in [(20, "Kasih Besar"), (21, "Kasih Agung"), (22, "Kasih Setia")] {
+            songs.push(Song { number, title: title.into(), lyrics: "[1]
+Words made up for the test
+".into(), ..Song::default() });
+        }
+        let index = SongIndex::build(&songs);
+        // Three titles start with "ka"; nothing but library order separates them.
+        let plain: Vec<usize> = index.search("ka", 10).iter().map(|hit| hit.song).collect();
+        assert_eq!(plain, [4, 5, 6]);
+        let hits = index.search_ranked("ka", 10, &|_| false, &|song| if song == 6 { 3 } else { 0 });
+        assert_eq!(hits.iter().map(|hit| (hit.song, hit.habit)).collect::<Vec<_>>(), [(6, 3), (4, 0), (5, 0)]);
+    }
+
+    #[test]
+    fn a_habit_never_beats_a_plan_song_or_a_typed_number() {
+        let index = SongIndex::build(&library());
+        let hits = index.search_ranked("morning", 10, &|song| song == 0, &|song| if song == 2 { 5 } else { 0 });
+        assert_eq!(hits[0].song, 0, "the plan song stays first");
+        let hits = index.search_ranked("47", 10, &|_| false, &|song| if song == 1 { 5 } else { 0 });
+        assert_eq!(hits[0].song, 3, "the number stays first");
+    }
+
+    #[test]
+    fn a_habit_never_beats_an_exact_title_or_a_closer_match() {
+        let mut songs = library();
+        songs.push(Song { number: 9, title: "Pujian".into(), lyrics: "[1]
+Diberkati selamanya
+".into(), ..Song::default() });
+        songs.push(Song { number: 10, title: "Berkat".into(), lyrics: "[1]
+Other words
+".into(), ..Song::default() });
+        let index = SongIndex::build(&songs);
+        // The song named for the word goes first, whatever was picked for it before.
+        let hits = index.search_ranked("berkat", 10, &|_| false, &|song| if song == 4 { 5 } else { 0 });
+        assert_eq!(hits.iter().map(|hit| hit.song).collect::<Vec<_>>(), [5, 4]);
+        // A whole title typed out puts that song first.
+        let hits = index.search_ranked("quiet harbour", 10, &|_| false, &|song| if song == 0 { 5 } else { 0 });
+        assert_eq!(hits[0].song, 3);
+    }
+
+    #[test]
+    fn a_habit_comes_after_words_side_by_side() {
+        let mut songs = library();
+        // Both hold "river" and "home" in a line, one with the words side by side.
+        songs.push(Song { number: 11, title: "Alpha".into(), lyrics: "[1]
+River bends toward the home
+".into(), ..Song::default() });
+        songs.push(Song { number: 12, title: "Beta".into(), lyrics: "[1]
+River home again
+".into(), ..Song::default() });
+        let index = SongIndex::build(&songs);
+        let plain: Vec<usize> = index.search("river home", 3).iter().map(|hit| hit.song).collect();
+        let loved: Vec<usize> = index.search_ranked("river home", 3, &|_| false, &|song| if song == plain[1] { 5 } else { 0 }).iter().map(|hit| hit.song).collect();
+        assert_eq!(loved[0], plain[0], "a closer phrase still goes first");
     }
 
     #[test]
