@@ -61,8 +61,13 @@ pub struct Plan {
 /// it full-screen, with one screen there is no projector window unless `here` asks for one. A
 /// pinned screen is used while it exists. The stage view only exists on its own screen or when
 /// `stage_window` asks for a window.
+///
+/// The first screen is never covered. It holds Artosia's own window, and a full-screen
+/// projector over it, always on top, locks the volunteer out of the program: a pin on it is
+/// passed over (owner, 2026-11-10: "cant return back to screen 1 as the app only"; on
+/// 2026-11-11 a saved pin on screen 1 covered the owner's main screen at start).
 pub fn plan(displays: &[Disp], pins: &Pins) -> Plan {
-    let find = |name: &Option<String>| name.as_ref().and_then(|name| displays.iter().position(|disp| &disp.name == name));
+    let find = |name: &Option<String>| name.as_ref().and_then(|name| displays.iter().position(|disp| &disp.name == name)).filter(|index| !displays[*index].primary);
     let mut stage_index = find(&pins.stage);
     let audience_index = if pins.off {
         None
@@ -366,11 +371,16 @@ mod tests {
 
     #[test]
     fn a_pinned_projector_is_honoured_while_it_exists() {
-        let pins = Pins { audience: Some("A".into()), ..Pins::default() };
-        let list = [disp("A", 0, true), disp("B", 1920, false)];
-        assert_eq!(plan(&list, &pins).audience_index, Some(0));
-        assert_eq!(plan(&list[1..], &pins).audience_index, Some(0));
-        assert_eq!(plan(&list[..1], &pins).audience_index, Some(0));
+        let list = [disp("A", 0, true), disp("B", 1920, false), disp("C", 3840, false)];
+        let pins = Pins { audience: Some("C".into()), ..Pins::default() };
+        assert_eq!(plan(&list, &pins).audience_index, Some(2));
+        assert_eq!(plan(&list[..2], &pins).audience_index, Some(1), "its screen is gone, so the other one");
+        // A pin on the first screen, where Artosia's own window is, is passed over.
+        let own = Pins { audience: Some("A".into()), ..Pins::default() };
+        assert_eq!(plan(&list[..2], &own).audience_index, Some(1));
+        assert_eq!(plan(&list[..1], &own).audience, None, "one screen: no projector window");
+        assert_eq!(plan(&list[..1], &Pins { here: true, ..own.clone() }).audience, Some(Spot::Window));
+        assert_eq!(plan(&list, &Pins { stage: Some("A".into()), ..Pins::default() }).stage, None, "nor the stage view");
         let gone = Pins { audience: Some("Z".into()), ..Pins::default() };
         assert_eq!(plan(&list[..1], &gone).audience, None);
         assert_eq!(plan(&list, &gone).audience_index, Some(1));

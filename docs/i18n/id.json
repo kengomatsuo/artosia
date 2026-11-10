@@ -2438,5 +2438,10 @@
     "text": "Terjemahan gratis dalam banyak bahasa",
     "back": "Free translations in many languages",
     "why": "Echoes the dialog's Terjemahan gratis. 36 of 40."
+  },
+  "SCREEN_OWN": {
+    "text": "Layar untuk Artosia sendiri",
+    "back": "Screen for Artosia itself",
+    "why": "Layar is the fixed word for a screen; 'untuk Artosia sendiri' says it is taken, so no choice is offered. 27 of 30."
   }
 }

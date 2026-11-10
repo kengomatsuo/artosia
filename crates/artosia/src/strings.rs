@@ -1183,6 +1183,8 @@ pub fn starts_line(section: &str, times: u32, of: u32) -> String {
     format!("Usually started at {section}, {times} of {of} times")
 }
 
+text!(SCREEN_OWN, "Artosia is on this screen", "Layar untuk Artosia sendiri");
+
 // Bibles: a file the church holds, and eBible's free list.
 text!(BIBLES_TITLE, "Bibles", "Tambah Alkitab");
 text!(BIBLES_MORE, "More Bibles", "Tambah terjemahan");

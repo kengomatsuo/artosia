@@ -7407,5 +7407,20 @@
       "bible"
     ],
     "notes": ""
+  },
+  {
+    "key": "SCREEN_OWN",
+    "kind": "const",
+    "screen": "The Screens dialog: a list of the screens plugged into the computer, one row each. Other rows end in a choice of what the screen is used for (the congregation's screen, the stage screen, or nothing).",
+    "moment": "The row of the screen where Artosia's own window is. It ends in these grey words where the other rows have the choice.",
+    "role": "note in a row",
+    "does": "Says this is the screen Artosia itself is shown on, which is why it cannot be given to the congregation or the stage.",
+    "budget": 30,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "projector"
+    ],
+    "notes": "A fragment without a full stop. Artosia is the program's name and stays as written."
   }
 ]

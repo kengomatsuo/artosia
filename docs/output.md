@@ -84,3 +84,12 @@ Frame cadence (Lerret's `FrameClock` choosing frames on the vsync grid) needs th
 `--snap` cannot see what Windows does to a real window. On 2026-11-10 the owner photographed lyrics running off the right edge of the projector: Windows had opened the window at the second screen's 150% zoom, 2304x1296 pixels on a 1920x1080 screen, and the view had laid the first slide out for a size it did not have. Every headless render was correct. The output now opens its windows hidden, fits them to the screen, draws only the background until the size is known, and says so in the trace ("size check ... same").
 
 To check a change: start `artosia-output.exe --port 47932` from a copy of the build, run `python tools/send-state.py 47932 6`, which sends where to show and one made-up slide and then asks it to quit, and capture the window meanwhile with `tools/grab-window.ps1 -Name artosia-output -Out shot.png`. The capture tool is per-monitor DPI aware; before that it returned 1600x900 for this screen and cropped the picture, which looked like the defect it was checking for. Checked this way on 2026-11-10: the slide is centred and whole at 1920x1080, and the output rests at 0.01 cores and 142 MB with nothing moving.
+
+## The first screen is never covered (2026-11-11)
+
+The projector goes full-screen and always on top. On the screen that holds Artosia's own window that locks the volunteer out of the program: nothing of the operator can be reached to move it back. The owner hit it on 2026-11-10 ("cant return back to screen 1 as the app only") and the Screens dialog saved screen 1 as the projector's screen. On 2026-11-11 a fresh start honoured that saved choice and covered the owner's main screen, a 2560x1080 display, over every other program.
+
+`displays::plan` now passes over a pin on the first screen, for the projector and for the stage view: with another screen there it takes that one, and with no other screen it is the one-screen case, where no projector window opens unless "show it here" asks for an ordinary window. The Screens dialog offers no role on that screen's row and says why (`ui/sheets.rs`, `SCREEN_OWN`). Tried on the owner's two screens: asked for screen 1, the projector opened at 2560,0 on screen 2.
+
+"The first screen" is the one Windows calls primary, where Artosia's window opens. A volunteer who drags Artosia's window to another screen and wants the projector on the primary one is not served; the output would need to be told which screen the operator window is on.
+

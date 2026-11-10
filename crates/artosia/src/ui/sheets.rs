@@ -385,7 +385,11 @@ fn screens(s: &App, k: &Kit, layer: &mut Vec<El>) {
                                 text(t::screen_detail(display.width, display.height, display.scale)).font(type_::SMALL).color(k.c.text_muted).truncate(),
                             ),
                         )
-                        .child(
+                        // The screen Artosia's own window is on takes no role: a full-screen
+                        // projector over it would lock the volunteer out.
+                        .child(if display.primary {
+                            text(t::SCREEN_OWN()).font(type_::SMALL).color(k.c.text_muted)
+                        } else {
                             SegmentedControl::new(&[t::SCREEN_PROJECTOR(), t::SCREEN_STAGE(), t::SCREEN_UNUSED()], Some(role))
                                 .label(t::screen_name(index + 1))
                                 .fit()
@@ -407,8 +411,8 @@ fn screens(s: &App, k: &Kit, layer: &mut Vec<El>) {
                                     }
                                     s.settings_screens(next);
                                 })
-                                .build(k),
-                        ),
+                                .build(k)
+                        }),
                 );
             }
         }
