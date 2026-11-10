@@ -28,6 +28,21 @@ measure both, then record the winner in [architecture.md](architecture.md).
 - Lyrics would have to use libVLC's own overlay (marquee/subtitles), so the projector gets
   no Rune styling or springs. Rune text cannot draw over a native child window.
 
+## Measured: libVLC frame callbacks decode on the CPU (2026-11-10)
+
+libVLC 3.0.24 (NuGet `VideoLAN.LibVLC.Windows`), `libvlc_video_set_callbacks` + `libvlc_video_set_format("RV32", 1920, 1080, 7680)`, the 1080p30 fixture, 20 s per run, from a Python ctypes harness:
+
+| `--avcodec-hw` | Frames in 20 s | Working set | Private |
+|---|---|---|---|
+| none | 592 (29.6 fps) | 201 MB | 222 MB |
+| any | 593 | 202 MB | 223 MB |
+| d3d11va | 585 | 202 MB | 223 MB |
+| dxva2 | 596 | 201 MB | 221 MB |
+
+Every run logged `trying format dxva2_vld`, `trying format d3d11va_vld`, then `no hw decoder modules matched`: with callbacks the decode is software. The numbers include the Python interpreter. An NV12 run with `libvlc_video_set_format` hung on stop ("waiting decoder fifos to empty"); NV12 needs `libvlc_video_set_format_callbacks`, which declares both planes' pitches.
+
+This fits the plan: the app must stay smooth with CPU decoding on an Intel Celeron with integrated graphics. Next: measure CPU % here and on a Celeron-class machine, and try 720p backgrounds.
+
 ## Bindings
 
 - `vlc-rs` 0.3.0 on crates.io was last released 2018 and its repo last pushed 2021-12, so

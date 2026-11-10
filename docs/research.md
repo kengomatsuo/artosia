@@ -85,3 +85,22 @@ A control window plus a 1920x1080 output window looping a 1080p30 H.264 file (8 
 | OpenAdoration | C# WPF + FFME, MIT |
 | lyric-display-app, bible-song-pro-studio | Electron + React |
 | EasiSlides (Easyslides 5.2) | C# WinForms on .NET Framework 4.8 (read from the exe); video through the Windows Media Player ActiveX control, DirectShowLib, SQLite, Office interop for PowerPoint; freeware, unsigned |
+
+## Rust siblings compared with Artosia (2026-11-10)
+
+From each repo's `Cargo.toml`, README and video code, read with `gh api` on 2026-11-10.
+
+| App | UI toolkit | Video | Platforms | Licence | Next to Artosia |
+|---|---|---|---|---|---|
+| Artosia | Rune (own wgpu renderer) | libVLC frames into a `NativeSurface`; Rune `Player` on macOS | Win, macOS, Linux | GPL-3.0 | |
+| ChrisCochrun/lumina | libcosmic (iced) on wgpu, sqlx/SQLite | GStreamer via `iced_video_player`, frames as image handles | Linux first | none stated | closest in spirit; GStreamer must ship on Windows |
+| OmniFaith/omni-presenter | egui/eframe 0.37, rusqlite | the user's installed `ffmpeg`/`ffprobe` CLI, optional hwaccel setting | Win, macOS, Linux | MIT | same CPU-copy path that cost ~500 MB in our egui test |
+| jorgedevai/lirics | egui (glow) | `ffmpeg` child process, RGBA frames into egui textures | Win, Linux | MIT | identical to our egui test app's pipeline |
+| filipjaj/lerret | GPUI (`gpui-kit`), cosmic-text | AVFoundation (objc2) | macOS 13+ | GPL-3.0 | macOS only; GPUI video is macOS-only |
+| Jemo69/videopsalm-gpui | GPUI 0.2, rusqlite | not found in the tree | Linux tested | none stated | a VideoPsalm clean-room port |
+| micaiah-effiong/open-worship | GTK4, rusqlite | not found | Linux/macOS, "not tested for windows" | MIT | GTK on Windows is heavy to ship |
+| fhcmedia/projector | GTK4 0.3 | not found | Linux | MIT | last pushed 2023-10 |
+| sagacious123/hearken-studio | Tauri 2, rusqlite | webview `<video>` | desktop | none stated | Tauri measured 548 MB |
+| DjgaaD/ChyguiSlide2 | Tauri 2, rusqlite | webview `<video>` | Windows-focused | none stated | Tauri measured 548 MB |
+
+Every Rust sibling that ships on Windows decodes video either through a webview or by copying full RGBA frames on the CPU. None uses Rune, and none hands NV12 to the GPU.

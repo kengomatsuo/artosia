@@ -2,7 +2,8 @@
 
 A free worship presentation app (songs, Bible verses, media) to replace EasiSlides. It runs on
 Windows, macOS and Linux, and on the budget old Windows PCs small churches own, so RAM is
-the first constraint, with video backgrounds playing.
+the first constraint, with video backgrounds playing. It must run smoothly on an Intel Celeron
+with integrated graphics even when video is decoded on the CPU (owner, 2026-11-10).
 
 ## Decided
 
