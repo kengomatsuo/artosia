@@ -7422,5 +7422,84 @@
       "projector"
     ],
     "notes": "A fragment without a full stop. Artosia is the program's name and stays as written."
+  },
+  {
+    "key": "SUGGEST_HEARD",
+    "kind": "const",
+    "screen": "Main window, the strip at the top of the Preview pane. It holds up to three rows, each with a small grey reason line over a title, a small section pill and one button. The listener (a microphone helper) and what the search learned from past services feed it. Nothing in it ever reaches the projector.",
+    "moment": "Small grey line over the title of a row, shown for about a minute after the microphone helper recognised words from another song or a Bible passage.",
+    "role": "reason line",
+    "does": "Says why this row is offered: the helper heard words of it a moment ago.",
+    "budget": 24,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "listen",
+      "song"
+    ],
+    "notes": ""
+  },
+  {
+    "key": "SUGGEST_HERE",
+    "kind": "const",
+    "screen": "Main window, the strip at the top of the Preview pane. It holds up to three rows, each with a small grey reason line over a title, a small section pill and one button. The listener (a microphone helper) and what the search learned from past services feed it. Nothing in it ever reaches the projector.",
+    "moment": "Small grey line over the title of a row, shown when the helper heard words from a later part of the song that is on the projector now, a part some slides away. A pill beside the title names the part.",
+    "role": "reason line",
+    "does": "Says the singing has reached the part named in the pill, so the volunteer can bring it into Preview and be ready to follow.",
+    "budget": 28,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "listen",
+      "section"
+    ],
+    "notes": ""
+  },
+  {
+    "key": "SUGGEST_FOLLOWS",
+    "kind": "const",
+    "screen": "Main window, the strip at the top of the Preview pane. It holds up to three rows, each with a small grey reason line over a title, a small section pill and one button. The listener (a microphone helper) and what the search learned from past services feed it. Nothing in it ever reaches the projector.",
+    "moment": "Small grey line over the title of a row, shown when the song on the projector is the last of the plan and this church has often sung the row's song right after it in past services.",
+    "role": "reason line",
+    "does": "Says why this song is offered: it often comes after the song that is live.",
+    "budget": 30,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "song",
+      "live"
+    ],
+    "notes": "Past services of this church on this computer, never other churches."
+  },
+  {
+    "key": "SUGGEST_LOST",
+    "kind": "const",
+    "screen": "Main window, the strip at the top of the Preview pane. It holds up to three rows, each with a small grey reason line over a title, a small section pill and one button. The listener (a microphone helper) and what the search learned from past services feed it. Nothing in it ever reaches the projector.",
+    "moment": "A single row with a yellow tint, shown when the helper has read the singing well for a while and then twice in a row heard words that are in no song of the library. It sits beside a button that opens the search.",
+    "role": "warning line",
+    "does": "Tells the volunteer that what the room is singing now is not what the screen shows and is not in any song the program knows, so the words must be found or typed by hand.",
+    "budget": 48,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "listen",
+      "song"
+    ],
+    "notes": "Plain statement, no blame and no 'sorry'. It must not say the program is sure of why."
+  },
+  {
+    "key": "SUGGEST_SEARCH",
+    "kind": "const",
+    "screen": "Main window, the strip at the top of the Preview pane. It holds up to three rows, each with a small grey reason line over a title, a small section pill and one button. The listener (a microphone helper) and what the search learned from past services feed it. Nothing in it ever reaches the projector.",
+    "moment": "The button at the right end of the yellow warning row.",
+    "role": "button",
+    "does": "Button that opens the search box so the volunteer can look for the song being sung.",
+    "budget": 12,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "search-box"
+    ],
+    "notes": ""
   }
 ]

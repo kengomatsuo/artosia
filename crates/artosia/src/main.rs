@@ -21,6 +21,7 @@ mod stream;
 mod strings;
 #[cfg(test)]
 mod strings_snapshot;
+mod suggest;
 mod theme;
 mod ui;
 mod update;
@@ -341,6 +342,35 @@ const SCENES: &[Scene] = &[
     ("learned-search", |s| {
         s.seed_demo_history();
         s.open_palette(Scope::All, "mor");
+    }),
+    // The suggestion strip, drawn over the top of the Preview pane: what the listener heard
+    // (made-up words of two practice songs), what usually follows, and the lost-words line.
+    ("suggest-heard", |s| {
+        s.plan.items.clear();
+        s.hearing.demo = true;
+        s.hearing.overlay = true;
+        s.seed_demo_history();
+        s.open_song(0, None);
+        s.show(0);
+        s.heard_final("down by the river we gather mercy flowing like the rain we will not be moved we will not be moved you are with us still".into());
+    }),
+    ("suggest-follows", |s| {
+        s.plan.items.clear();
+        s.hearing.demo = true;
+        s.hearing.overlay = true;
+        s.seed_demo_history();
+        s.open_song(0, None);
+        s.show(0);
+    }),
+    ("suggest-lost", |s| {
+        s.plan.items.clear();
+        s.hearing.overlay = true;
+        s.open_song(0, None);
+        s.show(0);
+        for words in ["first light breaks over the valley we wake and lift our voices", "lantern carpet violin tractor window pencil", "marble ladder compass orchard blanket whistle"] {
+            s.now += 12.0;
+            s.heard_final(words.into());
+        }
     }),
     ("toast", |s| {
         if let Some(id) = s.plan.items.get(2).map(|item| item.id) {

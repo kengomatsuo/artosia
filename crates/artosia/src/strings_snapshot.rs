@@ -180,6 +180,11 @@ pub fn dump() -> String {
     line(out, "HINT_SELECT", HINT_SELECT());
     line(out, "STAGE_MESSAGE_DETAIL", STAGE_MESSAGE_DETAIL());
     line(out, "HEARD_NOTHING", HEARD_NOTHING());
+    line(out, "SUGGEST_HEARD", SUGGEST_HEARD());
+    line(out, "SUGGEST_HERE", SUGGEST_HERE());
+    line(out, "SUGGEST_FOLLOWS", SUGGEST_FOLLOWS());
+    line(out, "SUGGEST_LOST", SUGGEST_LOST());
+    line(out, "SUGGEST_SEARCH", SUGGEST_SEARCH());
     line(out, "LIVE_NOTHING", LIVE_NOTHING());
     line(out, "NEXT_NOTHING", NEXT_NOTHING());
     line(out, "BTN_SHOW", BTN_SHOW());

@@ -480,6 +480,11 @@ text!(STATE_STAGE_MESSAGE, "Stage message showing", "Pesan pemusik tampil");
 text!(HINT_SELECT, "Pick a slide, let go to show", "Pilih slide, lepas untuk tayang");
 text!(STAGE_MESSAGE_DETAIL, "Show this message on the stage screen", "Tampil di monitor panggung saja");
 text!(HEARD_NOTHING, "Nothing heard yet", "Belum ada yang dikenali");
+text!(SUGGEST_HEARD, "Heard just now", "Heard just now");
+text!(SUGGEST_HERE, "The singing is here", "The singing is here");
+text!(SUGGEST_FOLLOWS, "Often sung after this", "Often sung after this");
+text!(SUGGEST_LOST, "The words being sung are not on the screen", "The words being sung are not on the screen");
+text!(SUGGEST_SEARCH, "Search", "Search");
 
 pub fn state_countdown(clock: &str) -> String {
     if let Some(text) = say("state_countdown", None, None, &[("clock", text_arg(clock))]) {

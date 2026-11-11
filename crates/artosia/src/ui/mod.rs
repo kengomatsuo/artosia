@@ -10,6 +10,7 @@ pub(crate) mod plan;
 mod sheets;
 mod shell;
 pub(crate) mod slides;
+pub(crate) mod suggest;
 pub mod widgets;
 
 use artosia_slides::audience::Media;
@@ -231,6 +232,14 @@ pub fn view(s: &App, cx: &mut Cx<App>) -> El {
         palette::view(s, k, &mut layer);
     }
     sheets::view(s, k, &mut layer);
+    // A scene draws the suggestion strip here, over the top of the Preview pane, until the shell
+    // places it there (`s.hearing.overlay` is set by the `suggest-*` scenes only).
+    if s.hearing.overlay
+        && let Some(strip) = suggest::strip(s, k)
+    {
+        let width = cx.layout_size("slide").map(|size| size[0]).unwrap_or(554.0);
+        layer.push(strip.w(width).pin(Some(257.0), Some(size::TOPBAR + 1.0 + 40.0), None, None));
+    }
     layer.extend(toast(s, k));
     rune_kit::root(body, layer)
 }
