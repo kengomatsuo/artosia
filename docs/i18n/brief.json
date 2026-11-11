@@ -7422,5 +7422,236 @@
       "projector"
     ],
     "notes": "A fragment without a full stop. Artosia is the program's name and stays as written."
+  },
+  {
+    "key": "CMD_TOUR",
+    "kind": "const",
+    "screen": "Search panel, a command row",
+    "moment": "Moment: the person typed or browsed in the search box and sees commands among the results; choosing the row runs it. Bold title of the row; must be recognisable by its first word.",
+    "role": "name of a thing",
+    "does": "Command that starts the short guided tour of the main window again. Also the label of the button in the shortcuts sheet and on the empty start screen that does the same.",
+    "budget": 30,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [],
+    "notes": "Wording to match the tour's own name wherever it appears."
+  },
+  {
+    "key": "CMD_TOUR_DETAIL",
+    "kind": "const",
+    "screen": "Search panel, a command row",
+    "moment": "Moment: the person typed or browsed in the search box and sees commands among the results; choosing the row runs it. Grey line under the command's title.",
+    "role": "list row detail",
+    "does": "Under the tour command: says the tour has five short stops.",
+    "budget": 44,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [],
+    "notes": ""
+  },
+  {
+    "key": "TOUR_SKIP",
+    "kind": "const",
+    "screen": "The first-start tour: a dimmed window with a ring round one part of it and a small card beside it. Five stops walk through the main window from left to right: the plan of today's service, Preview (the slide that comes next), the Show button, Live (what the congregation sees) and the search box. Every stop can be skipped.",
+    "moment": "A small quiet button at the left of the card's button row, on every stop.",
+    "role": "button label",
+    "does": "Ends the tour at once, from any stop. The tour is not shown again by itself afterwards.",
+    "budget": 16,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "tour"
+    ],
+    "notes": ""
+  },
+  {
+    "key": "TOUR_DONE",
+    "kind": "const",
+    "screen": "The first-start tour: a dimmed window with a ring round one part of it and a small card beside it. Five stops walk through the main window from left to right: the plan of today's service, Preview (the slide that comes next), the Show button, Live (what the congregation sees) and the search box. Every stop can be skipped.",
+    "moment": "The filled button at the right of the card on the fifth and last stop, where the other stops say Next.",
+    "role": "button label",
+    "does": "Ends the tour after the last stop.",
+    "budget": 14,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [],
+    "notes": ""
+  },
+  {
+    "key": "TOUR_PLAN",
+    "kind": "const",
+    "screen": "The first-start tour: a dimmed window with a ring round one part of it and a small card beside it. Five stops walk through the main window from left to right: the plan of today's service, Preview (the slide that comes next), the Show button, Live (what the congregation sees) and the search box. Every stop can be skipped.",
+    "moment": "Stop 1 of 5. The plan, the column on the left, is ringed. Bold main line of the card.",
+    "role": "card headline",
+    "does": "Says the plan is the list of everything that will be shown today, in the order it will be shown.",
+    "budget": 60,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "plan"
+    ],
+    "notes": ""
+  },
+  {
+    "key": "TOUR_PLAN_MORE",
+    "kind": "const",
+    "screen": "The first-start tour: a dimmed window with a ring round one part of it and a small card beside it. Five stops walk through the main window from left to right: the plan of today's service, Preview (the slide that comes next), the Show button, Live (what the congregation sees) and the search box. Every stop can be skipped.",
+    "moment": "Stop 1 of 5, the quieter second line of the card under the headline.",
+    "role": "card detail",
+    "does": "Says an item in the plan can be dragged to a new place.",
+    "budget": 36,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "plan"
+    ],
+    "notes": ""
+  },
+  {
+    "key": "TOUR_PREVIEW",
+    "kind": "const",
+    "screen": "The first-start tour: a dimmed window with a ring round one part of it and a small card beside it. Five stops walk through the main window from left to right: the plan of today's service, Preview (the slide that comes next), the Show button, Live (what the congregation sees) and the search box. Every stop can be skipped.",
+    "moment": "Stop 2 of 5. The list of slides in the Preview pane is ringed. Bold main line.",
+    "role": "card headline",
+    "does": "Says Preview holds the slide that will be shown next.",
+    "budget": 48,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "preview"
+    ],
+    "notes": "Preview is the name of a pane and a key word elsewhere in the window."
+  },
+  {
+    "key": "TOUR_PREVIEW_MORE",
+    "kind": "const",
+    "screen": "The first-start tour: a dimmed window with a ring round one part of it and a small card beside it. Five stops walk through the main window from left to right: the plan of today's service, Preview (the slide that comes next), the Show button, Live (what the congregation sees) and the search box. Every stop can be skipped.",
+    "moment": "Stop 2 of 5, the quieter second line.",
+    "role": "card detail",
+    "does": "Reassures: what is in Preview is never seen by the congregation.",
+    "budget": 40,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "preview"
+    ],
+    "notes": ""
+  },
+  {
+    "key": "TOUR_SHOW",
+    "kind": "const",
+    "screen": "The first-start tour: a dimmed window with a ring round one part of it and a small card beside it. Five stops walk through the main window from left to right: the plan of today's service, Preview (the slide that comes next), the Show button, Live (what the congregation sees) and the search box. Every stop can be skipped.",
+    "moment": "Stop 3 of 5. The Show button under Preview is ringed. Bold main line.",
+    "role": "card headline",
+    "does": "Says the Show button is what sends the Preview slide to the projector.",
+    "budget": 48,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "preview",
+      "projector",
+      "show"
+    ],
+    "notes": "Show is the label of that button: use the same word the button uses."
+  },
+  {
+    "key": "TOUR_SHOW_MORE",
+    "kind": "const",
+    "screen": "The first-start tour: a dimmed window with a ring round one part of it and a small card beside it. Five stops walk through the main window from left to right: the plan of today's service, Preview (the slide that comes next), the Show button, Live (what the congregation sees) and the search box. Every stop can be skipped.",
+    "moment": "Stop 3 of 5, the quieter second line.",
+    "role": "card detail",
+    "does": "Says that until Show is pressed, the room sees nothing new.",
+    "budget": 52,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "show"
+    ],
+    "notes": ""
+  },
+  {
+    "key": "TOUR_LIVE",
+    "kind": "const",
+    "screen": "The first-start tour: a dimmed window with a ring round one part of it and a small card beside it. Five stops walk through the main window from left to right: the plan of today's service, Preview (the slide that comes next), the Show button, Live (what the congregation sees) and the search box. Every stop can be skipped.",
+    "moment": "Stop 4 of 5. The row of buttons under the Live pane (Back, Next, Clear text, Black, Logo) is ringed. Bold main line.",
+    "role": "card headline",
+    "does": "Says Live is what the congregation sees at this moment.",
+    "budget": 44,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "live"
+    ],
+    "notes": "Live is the name of a pane."
+  },
+  {
+    "key": "TOUR_LIVE_MORE",
+    "kind": "const",
+    "screen": "The first-start tour: a dimmed window with a ring round one part of it and a small card beside it. Five stops walk through the main window from left to right: the plan of today's service, Preview (the slide that comes next), the Show button, Live (what the congregation sees) and the search box. Every stop can be skipped.",
+    "moment": "Stop 4 of 5, the quieter second line; it names two of the buttons that are ringed.",
+    "role": "card detail",
+    "does": "Says the Next button moves on to the following slide and the Black button blanks the screen.",
+    "budget": 44,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "next",
+      "black"
+    ],
+    "notes": "Two short sentences. Use the same words as the buttons Next and Black."
+  },
+  {
+    "key": "TOUR_SEARCH",
+    "kind": "const",
+    "screen": "The first-start tour: a dimmed window with a ring round one part of it and a small card beside it. Five stops walk through the main window from left to right: the plan of today's service, Preview (the slide that comes next), the Show button, Live (what the congregation sees) and the search box. Every stop can be skipped.",
+    "moment": "Stop 5 of 5. The search box at the top of the window is ringed. Bold main line.",
+    "role": "card headline",
+    "does": "Says the search finds any song or Bible verse.",
+    "budget": 44,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "search"
+    ],
+    "notes": ""
+  },
+  {
+    "key": "TOUR_SEARCH_MORE",
+    "kind": "const",
+    "screen": "The first-start tour: a dimmed window with a ring round one part of it and a small card beside it. Five stops walk through the main window from left to right: the plan of today's service, Preview (the slide that comes next), the Show button, Live (what the congregation sees) and the search box. Every stop can be skipped.",
+    "moment": "Stop 5 of 5, the quieter second line; the tour ends after it.",
+    "role": "card detail",
+    "does": "Says to open the found item and then press the button named Add to plan.",
+    "budget": 44,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "plan"
+    ],
+    "notes": "Add to plan is the label of an existing button; use its exact wording."
+  },
+  {
+    "key": "tour_place",
+    "kind": "fn",
+    "screen": "The first-start tour: a dimmed window with a ring round one part of it and a small card beside it. Five stops walk through the main window from left to right: the plan of today's service, Preview (the slide that comes next), the Show button, Live (what the congregation sees) and the search box. Every stop can be skipped.",
+    "moment": "A small grey line at the bottom left of the card, above the buttons.",
+    "role": "progress",
+    "does": "Says which stop of the tour this is, out of how many.",
+    "budget": 16,
+    "variables": [
+      {
+        "name": "at",
+        "example": "2",
+        "what": "the stop now showing, counted from 1"
+      },
+      {
+        "name": "total",
+        "example": "5",
+        "what": "how many stops the tour has"
+      }
+    ],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [],
+    "notes": "Like '2 of 5'. Both numbers stay as digits."
   }
 ]

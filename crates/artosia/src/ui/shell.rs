@@ -225,7 +225,7 @@ fn preview_pane(s: &App, k: &Kit) -> El {
             s.enter();
             crate::follow(s, tx);
             tx.blur();
-        }))
+        }).key("show-button"))
     } else {
         side.child(row().child(state_pill(t::LIVE(), if hidden { theme::warn() } else { theme::live() }, if hidden { Color::BLACK } else { theme::on_live() })))
     };

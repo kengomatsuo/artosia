@@ -57,15 +57,30 @@ fn setup(s: &mut App, waker: Waker) {
     if s.settings.remote_on && s.folder.is_some() && !rune::is_headless() {
         s.set_remote(true);
     }
+    // The first start on a library, and every practice run, begins with the tour. A headless
+    // run never does unless a scene asks for it.
+    if !rune::is_headless() && (!s.settings.toured || s.folder.is_none()) {
+        s.start_tour();
+    }
 }
 
 fn poll(s: &mut App, clock: f64, tx: &mut Tx) -> bool {
+    // The tour's Next button takes focus once the card is on screen.
+    if s.tour_focus {
+        s.tour_focus = false;
+        tx.focus("tour-next", false);
+    }
     s.poll(clock, tx)
 }
 
 /// The keys of the window. A focused text field has already had its turn by the time a key
 /// gets here, except when nothing has focus, which is the usual state while showing.
 fn on_key(s: &mut App, ev: &KeyEvent, tx: &mut Tx) -> bool {
+    // The tour takes every key, so none of them reaches the projector.
+    if s.tour.is_some() {
+        s.tour_key(&ev.key, tx.focused().is_some());
+        return true;
+    }
     // A modifier on its own. Shift let go shows the slide picked while it was held. This is a
     // key event because Rune's `App::on_modifiers` is never called in a single-window app:
     // `src/window.rs` at the pinned rev wires `modifier_keys` and leaves `on_mods` unset.
@@ -290,6 +305,11 @@ const SCENES: &[Scene] = &[
     ("remote", |s| s.sheet = Sheet::Remote),
     ("announcements", |s| s.edit_announcements()),
     ("keys", |s| s.sheet = Sheet::Keys),
+    ("tour-plan", |s| s.tour = Some(0)),
+    ("tour-preview", |s| s.tour = Some(1)),
+    ("tour-show", |s| s.tour = Some(2)),
+    ("tour-live", |s| s.tour = Some(3)),
+    ("tour-search", |s| s.tour = Some(4)),
     ("listen", |s| s.sheet = Sheet::Listen),
     ("stream", |s| s.sheet = Sheet::Stream),
     ("bibles", |s| s.demo_bibles("ready")),

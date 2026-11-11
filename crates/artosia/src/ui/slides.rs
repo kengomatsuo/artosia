@@ -61,6 +61,8 @@ pub(crate) fn start(s: &App, k: &Kit) -> El {
                     })),
             ),
     );
+    // A quiet way into the tour while there is nothing else to do.
+    column = column.child(btn(t::CMD_TOUR()).icon(&icons::PLAY).ghost().build(k, |s, _| s.start_tour()));
     if s.easislides.is_some() && !s.settings.welcomed && s.folder.is_some() {
         column = column.child(
             // The words over the two buttons: side by side, the second sentence ran under them.

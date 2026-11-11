@@ -97,6 +97,20 @@ pub fn dump() -> String {
     line(out, "CMD_UPDATE_DETAIL", CMD_UPDATE_DETAIL());
     line(out, "CMD_KEYS", CMD_KEYS());
     line(out, "CMD_KEYS_DETAIL", CMD_KEYS_DETAIL());
+    line(out, "CMD_TOUR", CMD_TOUR());
+    line(out, "CMD_TOUR_DETAIL", CMD_TOUR_DETAIL());
+    line(out, "TOUR_SKIP", TOUR_SKIP());
+    line(out, "TOUR_DONE", TOUR_DONE());
+    line(out, "TOUR_PLAN", TOUR_PLAN());
+    line(out, "TOUR_PLAN_MORE", TOUR_PLAN_MORE());
+    line(out, "TOUR_PREVIEW", TOUR_PREVIEW());
+    line(out, "TOUR_PREVIEW_MORE", TOUR_PREVIEW_MORE());
+    line(out, "TOUR_SHOW", TOUR_SHOW());
+    line(out, "TOUR_SHOW_MORE", TOUR_SHOW_MORE());
+    line(out, "TOUR_LIVE", TOUR_LIVE());
+    line(out, "TOUR_LIVE_MORE", TOUR_LIVE_MORE());
+    line(out, "TOUR_SEARCH", TOUR_SEARCH());
+    line(out, "TOUR_SEARCH_MORE", TOUR_SEARCH_MORE());
     line(out, "CMD_START", CMD_START());
     line(out, "CMD_START_DETAIL", CMD_START_DETAIL());
     line(out, "CMD_PREVIOUS", CMD_PREVIOUS());
@@ -423,6 +437,7 @@ pub fn dump() -> String {
     line(out, "stage_next(\"Chorus\")", &stage_next("Chorus"));
     line(out, "stage_place(\"{index}\", \"{count}\")", &stage_place("{index}", "{count}"));
     line(out, "stage_place(\"2\", \"5\")", &stage_place("2", "5"));
+    line(out, "tour_place(\"2\", \"5\")", &tour_place(2, 5));
     line(out, "section_label(Verse, 1)", &section_label(Tag::new(SectionKind::Verse, 1)));
     line(out, "section_label(Verse, 2)", &section_label(Tag::new(SectionKind::Verse, 2)));
     line(out, "section_label(PreChorus, 1)", &section_label(Tag::new(SectionKind::PreChorus, 1)));
