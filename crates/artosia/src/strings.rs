@@ -1334,6 +1334,35 @@ text!(BIBLES_NO_COPYRIGHT, "This file states no copyright", "This file states no
 text!(BIBLES_NOTICE_LOADING, "Reading the file's own notice", "Reading the file's own notice");
 text!(BIBLES_NOTICE_FAILED, "Could not read the file's notice", "Could not read the file's notice");
 
+// Backdrops: ready pictures and videos to put behind the words. English in both slots until the brief is written for each language.
+text!(BACKDROPS_TITLE, "Backdrops", "Backdrops");
+text!(BACKDROPS_SEARCH, "Search backdrops", "Search backdrops");
+text!(BACKDROPS_ALL, "All", "All");
+text!(BACKDROPS_SKY, "Sky", "Sky");
+text!(BACKDROPS_MOUNTAINS, "Mountains", "Mountains");
+text!(BACKDROPS_WATER, "Water", "Water");
+text!(BACKDROPS_NATURE, "Nature", "Nature");
+text!(BACKDROPS_LIGHT, "Light", "Light");
+text!(BACKDROPS_NIGHT, "Night", "Night");
+text!(BACKDROPS_CANDLES, "Candles", "Candles");
+text!(BACKDROPS_CHURCH, "Church", "Church");
+text!(BACKDROPS_PEOPLE, "Hands", "Hands");
+text!(BACKDROPS_TEXTURE, "Textures", "Textures");
+text!(BACKDROPS_USE, "Use", "Use");
+text!(BACKDROPS_DOWNLOADING, "Downloading", "Downloading");
+text!(BACKDROPS_OFFLINE, "No internet connection", "No internet connection");
+text!(BACKDROPS_AUTHOR, "Author", "Author");
+text!(BACKDROPS_LICENCE, "Licence", "Licence");
+text!(BACKDROPS_PAGE, "Page", "Page");
+text!(BACKDROPS_SIZE, "Size", "Size");
+text!(BACKDROPS_PICK_HINT, "Pick a backdrop to see its author and licence", "Pick a backdrop to see its author and licence");
+text!(BACKDROPS_DIM, "Bright or busy, so dim the look", "Bright or busy, so dim the look");
+text!(BACKDROPS_HERE, "On this computer", "On this computer");
+
+pub fn backdrop_failed(why: &str) -> String {
+    format!("Could not get the backdrop: {why}")
+}
+
 pub fn bibles_download_failed(why: &str) -> String {
     if indonesian() {
         return format!("Alkitab tidak bisa diunduh: {why}");
