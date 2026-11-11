@@ -101,6 +101,7 @@ pub fn dump() -> String {
     line(out, "LISTEN_HINT", LISTEN_HINT());
     line(out, "LISTEN_MICROPHONE", LISTEN_MICROPHONE());
     line(out, "LISTEN_DEFAULT", LISTEN_DEFAULT());
+    line(out, "LISTEN_SYSTEM_AUDIO", LISTEN_SYSTEM_AUDIO());
     line(out, "LISTEN_LANGUAGE", LISTEN_LANGUAGE());
     line(out, "LISTEN_INDONESIAN", LISTEN_INDONESIAN());
     line(out, "LISTEN_ENGLISH", LISTEN_ENGLISH());

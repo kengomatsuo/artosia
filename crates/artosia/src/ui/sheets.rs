@@ -725,14 +725,23 @@ fn listen(s: &App, k: &Kit, layer: &mut Vec<El>) {
         let on = s.listener.is_none();
         s.set_listening(on);
     }, true));
-    // The microphones as a row of choices, the computer's own first.
-    let mut names: Vec<String> = vec![t::LISTEN_DEFAULT().to_string()];
-    names.extend(s.microphones.iter().map(|device| device.name.clone()));
-    let picked = s.microphones.iter().position(|device| device.name == s.settings.listen_device).map(|at| at + 1).unwrap_or(0);
+    // The sources as a row of choices: the computer's own microphone first, then the others, then
+    // what the computer itself plays. Each carries what the setting holds (empty is the default).
+    let mut sources: Vec<(String, String)> = vec![(t::LISTEN_DEFAULT().to_string(), String::new())];
+    sources.extend(s.microphones.iter().map(|device| (device.name.clone(), device.id.clone())));
+    if artosia_listen::system_audio_available() {
+        sources.push((t::LISTEN_SYSTEM_AUDIO().to_string(), artosia_listen::SYSTEM_AUDIO.to_string()));
+    }
+    // Older settings saved a microphone's name, newer ones its id.
+    let saved = s.settings.listen_device.as_str();
+    let picked = sources
+        .iter()
+        .position(|(label, value)| !saved.is_empty() && (value == saved || label == saved))
+        .unwrap_or(0);
     let mut list = col().key("microphones").role("list").label(t::LISTEN_MICROPHONE()).w_full().gap(2.0);
-    for (at, name) in names.iter().enumerate() {
+    for (at, (name, wanted)) in sources.iter().enumerate() {
         let chosen = at == picked;
-        let wanted = if at == 0 { String::new() } else { name.clone() };
+        let wanted = wanted.clone();
         list = list.child(
             row()
                 .key(format!("microphone-{at}"))

@@ -44,3 +44,7 @@ expect_used = "warn"
 
 [profile.dev.package."*"]
 debug = false
+
+# The tempo tracker runs an FFT every 5 ms: unoptimised it is too slow for its own accuracy test.
+[profile.dev.package.artosia-listen]
+opt-level = 3

@@ -38,6 +38,50 @@ pub fn devices() -> Vec<Device> {
     capture::input_devices()
 }
 
+pub use capture::{SYSTEM_AUDIO, system_audio_available};
+
+/// What opening a source delivered over a short time; see [`probe`].
+#[derive(Debug, Clone, PartialEq)]
+pub struct Probe {
+    pub sample_rate: u32,
+    pub channels: u16,
+    pub sample_format: String,
+    pub loopback: bool,
+    /// Mono frames that arrived.
+    pub frames: usize,
+    pub peak: f32,
+    pub rms: f32,
+}
+
+/// Opens a source through the code the listener uses (`None` is the default input,
+/// [`SYSTEM_AUDIO`] the computer's own sound), reads it for `duration`, and reports what arrived.
+/// Keeps no audio. `on_block` sees each mono block, for tools that feed a detector.
+pub fn probe(device: Option<&str>, duration: Duration, mut on_block: impl FnMut(&[f32], u32)) -> Result<Probe, ListenError> {
+    let (tx, rx) = mpsc::sync_channel(QUEUE_BLOCKS);
+    let running = capture::open(device, tx)?;
+    let began = std::time::Instant::now();
+    let (mut frames, mut peak, mut sum_squares) = (0usize, 0.0f32, 0.0f64);
+    while began.elapsed() < duration {
+        if let Ok(capture::Capture::Audio(block)) = rx.recv_timeout(Duration::from_millis(50)) {
+            frames += block.len();
+            for &s in &block {
+                peak = peak.max(s.abs());
+                sum_squares += f64::from(s) * f64::from(s);
+            }
+            on_block(&block, running.sample_rate);
+        }
+    }
+    Ok(Probe {
+        sample_rate: running.sample_rate,
+        channels: running.channels,
+        sample_format: running.sample_format.to_string(),
+        loopback: running.loopback,
+        frames,
+        peak,
+        rms: if frames == 0 { 0.0 } else { (sum_squares / frames as f64).sqrt() as f32 },
+    })
+}
+
 /// What the listener reports.
 #[derive(Debug, Clone, PartialEq)]
 pub enum Heard {
@@ -229,6 +273,7 @@ impl Job {
         let mut segmenter = Segmenter::new(SegmenterConfig::default());
         let mut resampled = Vec::new();
         let mut last_error = String::new();
+        let mut silence: Vec<f32> = Vec::new();
 
         while !self.stop.load(Ordering::Relaxed) {
             match rx.recv_timeout(Duration::from_millis(100)) {
@@ -249,7 +294,23 @@ impl Job {
                         last_error = message;
                     }
                 }
-                Err(RecvTimeoutError::Timeout) => {}
+                Err(RecvTimeoutError::Timeout) => {
+                    // The computer's own sound arrives only while something plays: the quiet in
+                    // between is silence, or the meter would hold its last loud reading.
+                    if running.loopback {
+                        silence.clear();
+                        silence.resize((running.sample_rate / 10) as usize, 0.0);
+                        meter.push(&silence, |level| (self.emit)(Heard::Level(level)));
+                        tracker.push(&silence, |tempo| (self.emit)(Heard::Tempo(tempo)));
+                        if let Some(phrase_tx) = &phrase_tx {
+                            resampled.clear();
+                            resampler.push(&silence, &mut resampled);
+                            for phrase in segmenter.push(&resampled) {
+                                let _ = phrase_tx.send(phrase);
+                            }
+                        }
+                    }
+                }
                 Err(RecvTimeoutError::Disconnected) => break,
             }
         }
@@ -307,5 +368,16 @@ impl Job {
                 None
             }
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn a_source_that_is_not_there_is_named_in_the_error() {
+        let error = probe(Some("no such microphone"), Duration::from_millis(10), |_, _| {}).err();
+        assert!(matches!(error, Some(ListenError::NoDevice(m)) if m.contains("no such microphone")));
     }
 }

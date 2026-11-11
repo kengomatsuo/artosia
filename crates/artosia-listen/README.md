@@ -149,12 +149,20 @@ Nothing is added to `Cargo.toml`: the FFT is 40 lines of plain Rust.
 
 1. Average to about 8 kHz (a box filter; aliasing does no harm to an onset signal).
 2. 256-point FFT every 5 ms, 24 mel-spaced bands from 60 Hz to 3.8 kHz, `log10(1 + 100 * magnitude)`.
-3. SuperFlux onset strength: the sum over bands of the rise over the largest of the three
-   neighbouring bands two frames earlier.
-4. Every 0.5 s, on the last 6 s of that envelope (mean removed): autocorrelation at the lags for
-   50 to 200 BPM, summed with its values at two and three times the lag, weighted by the
-   log-normal prior around 120 BPM. The peak is refined by a parabola. Confidence is the geometric
-   mean of the normalised autocorrelation at one and at two periods, less 0.08. A pulse that is
+3. SuperFlux onset strength: the last three frames of band levels are averaged (a held chord's
+   partials beat against each other at 50 Hz and more, which an unaveraged flux turns into a
+   steady false pulse), then each band's rise over the largest of the three neighbouring bands
+   four frames earlier is counted above twice that band's running mean rise, and summed.
+4. Every 0.5 s, on the last 8 s of that envelope (mean removed): autocorrelation at the lags for
+   50 to 200 BPM, summed with its values at two, three and four times the lag (weights 1, 0.1,
+   0.15, 1: the bar matters more than the pair), times the log-normal prior around 128 BPM and 1.2
+   octaves wide. The same is done for each of the 24 bands' own rises (an FFT per band) and
+   averaged with weight peak squared; the larger of the two autocorrelations is used, which finds
+   a pulse that lives in a few bands under hiss and ripple in the rest. The score of every period
+   is blended with the previous reports' (0.7 kept) so a kick and snare that alternate do not flip
+   between 60 and 120. The peak is refined by a parabola. Confidence is the geometric mean of the
+   normalised autocorrelation at one period and the larger of that at two periods and 0.6 times
+   that at four (a syncopated bar need not repeat after two beats), less 0.08. A pulse that is
    only half regular has a strong first peak and a weak second, which is what plain speech does.
 5. Beat phase: the offset at which a pulse train of that period collects the most envelope,
    recent beats counting more.
@@ -164,14 +172,14 @@ Nothing is added to `Cargo.toml`: the FFT is 40 lines of plain Rust.
 ### Why it fits this room
 
 - A slow CPU: no model, one 256-point FFT per 5 ms, and about 1.7 million multiply-adds a second
-  for the autocorrelation. A live microphone: it is causal and keeps 6 s of envelope.
+  for the autocorrelation. A live microphone: it is causal and keeps 8 s of envelope.
 - A reverberant hall: the envelope is a rise in energy, so a tail that decays smoothly adds no
   onsets. The test uses a Schroeder reverberator with a tail near 1.5 s.
 - A band or a single keyboard: the method needs attacks. A pad with no attack, or slow held
   chords, gives no pulse and the tracker says nothing instead of guessing.
 - Congregational singing: voices have soft onsets, so the pulse comes from drums, guitar and
   clapping. Over singing alone it will usually report nothing.
-- The 120 BPM prior and the harmonic sum are what keep it off half and double speed.
+- The 128 BPM prior, the harmonic sum with the bar and the blend are what keep it off half and double speed.
 
 ### Measured on made-up signals (`cargo test -p artosia-listen`)
 
@@ -183,7 +191,7 @@ The tests synthesise a drum-like thump plus a noise burst, never a recording.
 - Hits in noise at the hits' own loudness, and in a reverberant tail (wet signal 1.5 times the
   dry): within 2 BPM from 10 s on. The lowest raw confidence seen was 0.22 to 0.36.
 - A change from 90 to 130 BPM is followed: read correctly by 10 s after the change (the window is
-  6 s long).
+  8 s long).
 - Silence, steady noise and a very quiet hiss report nothing. Six seeds of speech-like noise
   (syllables 120 to 250 ms, gaps 30 to 300 ms) report nothing for 40 s; their raw confidence
   peaks between 0.08 and 0.20, under the 0.28 that starts a report. The gap is narrow: music with
@@ -192,10 +200,15 @@ The tests synthesise a drum-like thump plus a noise burst, never a recording.
   soft hit at half and at a quarter strength, always read as the true tempo, half of it or double
   it, never another number; the test allows those three. How often a real band is read at half or
   double was not measured: there is no real music in the tests.
-- Cost: 60 s of 48 kHz audio takes 49 ms in a release build on the i9 laptop, 0.08 % of one core
+- Cost: 60 s of 48 kHz audio takes 290 ms in a release build on the i9 laptop, 0.5 % of one core
   (`cargo test -p artosia-listen --release --test cost -- --ignored --nocapture`). A Celeron is
   several times slower and should stay near 1 %; not run on one.
 - It also works at 44.1 kHz.
+- Five rhythms (four on the floor, kick and snare with hats, a syncopated bar, a soft-attack
+  guitar strum, a sustained four-note pad with a quiet pulse under it) at ten tempos from 60 to
+  176 BPM, with room noise, built in `tests/tempo_accuracy.rs`, three noise seeds each: every row
+  reads within 2 BPM of the truth from 8.5 s on and no octave error remains. 60 BPM takes
+  5.5 to 8 s to settle, 72 and 84 BPM 4 to 5 s and the rest 3.5 to 4.5 s.
 
 ### What tempo is for, and what is not built
 
