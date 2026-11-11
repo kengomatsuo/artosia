@@ -4,4 +4,5 @@
 pub mod audience;
 pub mod frame;
 pub mod look;
+pub mod preview;
 pub mod stage;
