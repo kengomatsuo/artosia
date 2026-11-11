@@ -55,7 +55,7 @@ fn swatch(k: &Kit, key: String, name: &'static str, color: [u8; 3], on: bool, pr
         .center()
         .radius(k.radius.md + 2.0)
         .border(2.0, ring)
-        .focusable(true)
+        .focusable(true).on_key(crate::ui::widgets::enter_key)
         .cursor(Cursor::Pointer)
         .child(el().size(26.0, 26.0).radius(k.radius.md).fill(rgb(color)).border(1.0, k.c.border_strong).hover(Color::WHITE.alpha(0.12)))
         .on_press(press)
@@ -99,7 +99,7 @@ fn colour_row(k: &Kit, label: &'static str, current: [u8; 3], choices: &[(&'stat
             s.set_look(look);
         }));
     }
-    setting(k, label, row().grow(1.0).min_w(0.0).gap(space::S2).center_y().child(squares).child(hex_field(k, edit, outline)))
+    setting(k, label, row().grow(1.0).min_w(0.0).gap(space::S2).center_y().child(squares).child(rune::text("#").font(crate::theme::type_::BODY).color(k.c.text_muted).a11y_hidden()).child(hex_field(k, edit, outline)))
 }
 
 /// The font picker. The list of installed families is asked for only once it is opened, because
@@ -176,7 +176,7 @@ fn chooser(s: &App, k: &Kit) -> El {
     let own = s.has_own_look();
     let usual = btn(t::LOOK_FOR_USUAL()).icon(&icons::SCREEN).focusable().grow();
     let usual = if own { usual } else { usual.primary() };
-    let plan = btn(s.plan_title()).icon(&icons::LOOK).help(t::LOOK_FOR_PLAN()).focusable().grow();
+    let plan = btn(t::LOOK_FOR_PLAN()).icon(&icons::LOOK).help(s.plan_title()).focusable().grow();
     let plan = if own { plan.primary() } else { plan };
     row()
         .key("look-for")

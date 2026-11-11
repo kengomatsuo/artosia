@@ -330,6 +330,8 @@ pub struct App {
     /// Where an editor field writes once the editor has closed under it.
     pub spare_edit: TextEdit,
     pub sheet: Sheet,
+    /// The part of the Design dialog that shows: 0 background, 1 words, 2 logo.
+    pub design_part: usize,
     /// The tour's stop, while the tour is open (`ui/tour.rs`).
     pub tour: Option<usize>,
     /// The tour has just opened and its Next button should take keyboard focus.
@@ -538,6 +540,7 @@ impl App {
             editor: None,
             spare_edit: TextEdit::new(""),
             sheet: Sheet::None,
+            design_part: 0,
             tour: None,
             tour_entered_at: -1.0,
             tour_focus: false,
@@ -789,6 +792,14 @@ impl App {
 
     fn plan_item_of(&self, source: &DeckSource) -> Option<u64> {
         self.plan.items.iter().find(|item| entry_matches(&item.entry, source)).map(|item| item.id)
+    }
+
+    /// A passage to show as an example, in the book names of the Bible in use: "Psalms 23:1"
+    /// under a KJV, "Mazmur 23:1" under an Indonesian Bible, and the window's language when
+    /// there is no Bible yet.
+    pub fn example_passage(&self, verses: &str) -> String {
+        let book = self.bible().and_then(|bible| bible.book(19).map(|book| book.name.clone())).unwrap_or_else(|| artosia_core::bible::book_name(19, t::language_code()).to_string());
+        format!("{book} {verses}")
     }
 
     /// Today's date, for announcements that fill themselves with this week's birthdays.

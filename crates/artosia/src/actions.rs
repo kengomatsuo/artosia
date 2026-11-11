@@ -220,6 +220,16 @@ impl App {
         self.title_changed();
     }
 
+    /// Ctrl E: opens what is in Preview for editing. A song opens its editor, and the
+    /// announcements open theirs; a Bible passage has nothing to edit.
+    pub fn edit_open(&mut self) {
+        match self.open.as_ref().map(|open| &open.deck.source) {
+            Some(DeckSource::Song(_)) => self.edit_open_song(),
+            Some(DeckSource::Announcements | DeckSource::Announcement(_)) => self.edit_announcements(),
+            _ => {}
+        }
+    }
+
     pub fn edit_open_song(&mut self) {
         let Some(DeckSource::Song(id)) = self.open.as_ref().map(|open| open.deck.source.clone()) else { return };
         if let Some(at) = self.song_position(id) {

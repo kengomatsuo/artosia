@@ -93,7 +93,9 @@ fn on_key(s: &mut App, ev: &KeyEvent, tx: &mut Tx) -> bool {
     // key event because Rune's `App::on_modifiers` is never called in a single-window app:
     // `src/window.rs` at the pinned rev wires `modifier_keys` and leaves `on_mods` unset.
     // Which of Ctrl and Shift is down is kept for the hint bar; every key event carries it.
-    let held = (ev.mods.ctrl || ev.mods.cmd, ev.mods.shift);
+    // A headless script never sends a modifier's release, so there the badge would stay lit
+    // after every chord; the scenes that show it set it themselves.
+    let held = if rune::is_headless() { (s.held_ctrl, s.held_shift) } else { (ev.mods.ctrl || ev.mods.cmd, ev.mods.shift) };
     let held_changed = held != (s.held_ctrl, s.held_shift);
     (s.held_ctrl, s.held_shift) = held;
     if let Key::Modifier { modifier, pressed } = &ev.key {
@@ -122,7 +124,12 @@ fn on_key(s: &mut App, ev: &KeyEvent, tx: &mut Tx) -> bool {
             return true;
         }
         Key::Command('e') if !editing && !s.palette.open => {
-            s.edit_open_song();
+            s.edit_open();
+            return true;
+        }
+        // New means a new one of what is being edited: a card among the announcements, a song anywhere else.
+        Key::Command('n') if s.notices.is_some() && !s.palette.open => {
+            s.new_notice("", "");
             return true;
         }
         Key::Command('n') if !editing && !s.palette.open => {
@@ -231,6 +238,7 @@ fn on_key(s: &mut App, ev: &KeyEvent, tx: &mut Tx) -> bool {
         Key::Up | Key::PageUp => s.previous(),
         Key::Left | Key::Home => s.go_to_edge(false),
         Key::Right | Key::End => s.go_to_edge(true),
+        Key::Enter if ev.mods.alt => return false,
         Key::Enter => s.enter(),
         Key::Tab => s.walk_plan(!ev.mods.shift),
         // Ctrl M: the Preview song starts at the ring's section (docs/operator.md).
@@ -521,7 +529,7 @@ const SCENES: &[Scene] = &[
         s.demo_plans();
         s.begin_rename(false);
         if let Some(renaming) = s.switcher.renaming.as_mut() {
-            renaming.date.replace_text("2026-11-15");
+            renaming.date.replace_text(crate::plans::day_words("2026-11-15"));
         }
     }),
     // A plan with a look of its own: the dialog on it, and the list with that plan marked.

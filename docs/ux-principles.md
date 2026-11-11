@@ -21,7 +21,25 @@ The owner tested the window on 2026-11-11 and wrote: "You're not making an app f
 | A key is printed on the control it presses | The owner: a list at the bottom "doesn't really help", a key on the row does | Each tile has its key in a corner; the row Next will show carries the space bar; the ringed row carries Enter |
 | A key is drawn as the keyboard prints it | The owner: "show the exact thing showing on the keyboard: the arrow icons" | `keycaps` draws arrows as arrows and the space bar as a bar; key names are never translated |
 | A single letter can be switched off | WCAG 2.1.4, Character Key Shortcuts | Letters jump to sections (C, V, B); Settings has the switch |
+| Everything a pointer can do, keys can do | Microsoft, Keyboard accessibility: "Any UI that can be activated by pointer should also be invokable by keyboard" | Every action of a menu is also a command in search (copy a plan, rename it, delete it, start a song at a slide, a new announcement); the keys sheet ends with a line that says so |
+| A focused button takes Enter and Space | Microsoft, the same page: "For controls that can be invoked, implement keyboard event handlers for the Spacebar and Enter keys"; WAI-ARIA button pattern: "Enter: Activates the button" | `enter_key` on every element that asks for focus; Rune alone follows AppKit, where Return belongs to the default button |
+| A list is one Tab stop, and arrows move inside it | Microsoft, the same page: "keep the composite root in tab order and manage active descendants internally, rather than exposing every child as a separate tab stop" | The cards of the announcements and the row of examples are focus groups; a keys-only tester needed fourteen Tab presses to pass four cards before |
 | A held key shows what it changed, while it is held | Raskin's quasimodes, in the research notes | With Ctrl held the Preview pane is ringed and the bar at the bottom names the keys; it is empty otherwise |
+
+## Names
+
+| Rule | Source | In Artosia |
+|---|---|---|
+| A section is named in full, never by a code | Two native readers, each on their own: a volunteer who reads Bait and Reff everywhere "never learns that C means Reff" | Chips read Verse 1, Chorus, Bait 1, Reff on every list, picture and menu; the letters stay only as keys, drawn as key caps beside the name, and as the typed song order |
+| What the program writes into a text, it writes in the window's language | The same readers: the button said Reff and `[chorus]` appeared | Markers are written with the language's section names and read back in any language (`song::set_marker_words`) |
+| A reason is on the row, in words | House rule: hover is never the sole carrier of information | A suggestion says why after its title; its button has a word beside its arrow |
+
+## Dialogs
+
+| Rule | Source | In Artosia |
+|---|---|---|
+| No dialog ends in half a row | Both readers took a row cut by the fold for a defect | Design shows one part at a time (background, words, logo); Settings fits a 768 point window; the keys sheet scrolls under a title that stays |
+| What scrolls fades at the edge that hides more | The same finding, where scrolling cannot be avoided | `scroll_edge_fade` on every scrolling area (`theme::size::FADE`) |
 
 ## Preview and Live
 

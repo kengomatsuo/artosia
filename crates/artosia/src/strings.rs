@@ -24,7 +24,18 @@ pub fn set_language(code: &str) -> bool {
     LANGUAGE.store(at, std::sync::atomic::Ordering::Relaxed);
     #[cfg(test)]
     LANGUAGE.with(|language| language.set(at));
+    // Markers written into lyrics from here on use this language's names for the sections.
+    artosia_core::song::set_marker_words(marker_words());
     true
+}
+
+/// The window's names for the kinds of section, in the order of `SectionKind`, for a language
+/// that has a table; None for English, whose markers stay `[1]` and `[chorus]`.
+fn marker_words() -> Option<[String; 7]> {
+    if !languages::has_table(language()) {
+        return None;
+    }
+    Some(["verse", "pre_chorus", "chorus", "bridge", "intro", "ending", "other"].map(|kind| languages::text(language(), &format!("section.{kind}")).unwrap_or_default().to_string()))
 }
 
 /// The chosen language's position in `languages::LANGUAGES`.
@@ -134,7 +145,6 @@ pub fn ctrl_digit(digit: usize) -> String {
 // Search.
 text!(SEARCH_PLACEHOLDER, "Search songs and the Bible", "Cari lagu atau ayat");
 text!(SEARCH_SONGS, "Title or any line of a song", "Cari judul atau satu baris lirik");
-text!(SEARCH_BIBLE, "John 3:16, or words from a verse", "Yoh 3:16 atau kata dalam ayatnya");
 text!(SEARCH_RESULTS, "Results", "Hasil");
 text!(SCOPE_LABEL, "Search in", "Cari di");
 text!(SCOPE_ALL, "All", "Semua");
@@ -721,6 +731,24 @@ pub fn look_label(name: &str) -> String {
 }
 text!(SETTINGS_ADD_BIBLE, "More versions", "More versions");
 text!(BTN_DELETE_SONG, "Delete song", "Delete song");
+text!(CMD_PLANS, "Plans", "Plans");
+text!(CMD_PLANS_DETAIL, "Switch to another service's plan", "Switch to another service's plan");
+text!(CMD_PLAN_DUPLICATE_DETAIL, "The same items again, for another service", "The same items again, for another service");
+text!(CMD_PLAN_RENAME_DETAIL, "This plan's name and its day", "This plan's name and its day");
+text!(CMD_PLAN_DELETE_DETAIL, "Remove this plan. Undo brings it back", "Remove this plan. Undo brings it back");
+text!(CMD_START_HERE, "Start the song here", "Start the song here");
+text!(CMD_START_HERE_DETAIL, "The Preview song begins at the picked slide, for a medley", "The Preview song begins at the picked slide, for a medley");
+text!(CMD_NEW_ANNOUNCEMENT_DETAIL, "A card for before the service, a verse or birthdays", "A card for before the service, a verse or birthdays");
+text!(KEYS_MORE, "Everything else is in search: type what you want, such as copy plan or design", "Everything else is in search: type what you want, such as copy plan or design");
+text!(SETTINGS_GENERAL, "General", "General");
+/// The hint in the search box while it looks through the Bible. `passage` is an example in
+/// the open Bible's own book names, so a KJV says Psalms and an Indonesian Bible says Mazmur.
+pub fn search_bible(passage: &str) -> String {
+    if let Some(text) = say("search_bible", None, None, &[("passage", text_arg(passage))]) {
+        return text;
+    }
+    format!("{passage}, or words from the verse")
+}
 text!(TOUR_BACK, "Back", "Back");
 text!(TOUR_NEXT, "Next", "Next");
 text!(KEYS_TO, "to", "to");
@@ -735,6 +763,15 @@ pub fn language_word(english: &str) -> String {
     }
     .to_string()
 }
+/// A reason written to follow a colon, shown as a line of its own: its first letter a capital.
+pub fn as_sentence(clause: &str) -> String {
+    let mut letters = clause.chars();
+    match letters.next() {
+        Some(first) => first.to_uppercase().chain(letters).collect(),
+        None => String::new(),
+    }
+}
+
 /// The month a word names, 1 to 12: the whole name or its first three letters or more, in
 /// English, in Indonesian and in the window's language.
 pub fn month_number(word: &str) -> Option<u32> {
@@ -1066,7 +1103,6 @@ text!(ANNOUNCEMENT_PREVIEW, "On the projector", "Pratinjau");
 // from the brief; English stands in both.
 text!(FILL_PASSAGE, "Bible passage", "Bible passage");
 text!(ANNOUNCEMENT_PASSAGE, "Bible reference", "Bible reference");
-text!(ANNOUNCEMENT_PASSAGE_HINT, "Psalm 23:1-3", "Psalm 23:1-3");
 text!(PASSAGE_NO_BIBLE, "No Bible is installed, so this card has no words", "No Bible is installed, so this card has no words");
 text!(PASSAGE_UNREADABLE, "The Bible has no verse at that reference", "The Bible has no verse at that reference");
 text!(NOTICE_NOTHING_TO_SHOW, "This card has nothing to show today", "This card has nothing to show today");

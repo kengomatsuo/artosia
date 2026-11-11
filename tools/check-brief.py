@@ -46,6 +46,7 @@ LEFT_OUT = {
     "look_label": "chooses among the LOOK_* names, each briefed",
     "language_word": "chooses among the language names, each briefed",
     "month_number": "not a text",
+    "as_sentence": "changes the first letter of a text that has its own brief",
 }
 KINDS = {"const", "sentence", "row", "section", "noun", "months", "phone"}
 FIELDS = ["key", "kind", "screen", "moment", "role", "does", "budget", "variables", "cases", "counts", "register", "concepts", "notes"]

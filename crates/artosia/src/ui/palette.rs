@@ -29,7 +29,11 @@ fn command_icon(command: Command) -> &'static rune::Icon {
         Command::Import | Command::ImportFolder | Command::ImportPptx | Command::ImportBirthdays | Command::BibleFile => &icons::IMPORT,
         Command::Bibles => &icons::BOOK,
         Command::Remote => &icons::PHONE,
-        Command::Heading | Command::NewPlan => &icons::HEADING,
+        Command::Heading | Command::NewPlan | Command::Plans | Command::PlanRename => &icons::HEADING,
+        Command::PlanDuplicate => &icons::COPY,
+        Command::PlanDelete => &icons::TRASH,
+        Command::StartHere => &icons::PLAY,
+        Command::NewAnnouncement => &icons::ANNOUNCE,
         Command::Keys => &icons::KEYBOARD,
         Command::Tour => &icons::PLAY,
         Command::StartService => &icons::PLAY,
@@ -91,7 +95,7 @@ fn hit_row(s: &App, k: &Kit, index: usize, hit: &Hit) -> El {
             // matched line is still in the second line, and the preview says the rest.
             let habit = matches!(reason, Some(Reason::Habit { .. }));
             if let Some((tag, _, _)) = s.learn.starts.get(song).filter(|_| !habit) {
-                trailing.push(state_pill(&t::starts_chip(&t::section_label(*tag)), k.c.layer_04, k.c.text_base));
+                trailing.push(row().gap(3.0).center_y().role("img").label(t::starts_chip(&t::section_label(*tag))).help(t::starts_chip(&t::section_label(*tag))).child(icon(&icons::PLAY, 12.0).color(k.c.text_muted).a11y_hidden()).child(crate::ui::widgets::section_chip(*tag)));
             }
             if let Some(Reason::Habit { typed, picks, .. }) = reason {
                 trailing.push(state_pill(&t::habit_chip(typed, *picks), k.c.layer_04, k.c.text_base));
@@ -114,7 +118,7 @@ fn hit_row(s: &App, k: &Kit, index: usize, hit: &Hit) -> El {
             }
         }
         Hit::Section { tag, label, text: words, .. } => {
-            trailing.push(tag_chip(&tag.short(), group_color(tag_group(*tag))));
+            trailing.push(crate::ui::widgets::section_chip(*tag));
             let first = words.lines().next().unwrap_or_default().to_string();
             (&icons::SONG, text(label.clone()).font(type_::BODY_STRONG).color(k.c.text_base), text(first).font(type_::SMALL).color(k.c.text_muted))
         }
@@ -200,7 +204,7 @@ fn list(s: &App, k: &Kit) -> El {
             None => el(),
         },
     );
-    let viewport = col().key("hit-scroll").role("listbox").label(t::SEARCH_RESULTS()).w_full().grow(1.0).min_h(0.0).py(space::S1).scroll(ScrollSpec { stick_bottom: false }).child(rows);
+    let viewport = col().key("hit-scroll").role("listbox").label(t::SEARCH_RESULTS()).w_full().grow(1.0).min_h(0.0).py(space::S1).scroll(ScrollSpec { stick_bottom: false }).scroll_edge_fade(crate::theme::size::FADE).child(rows);
     col().key("hit-list").w(LIST).h_full().min_h(0.0).child(viewport.scroll_bar(k))
 }
 
@@ -235,7 +239,7 @@ fn grid_button(s: &App, k: &Kit, index: usize, label: String, width: f32, color:
 fn grid(s: &App, k: &Kit) -> El {
     let hits = &s.palette.hits;
     let chapters = hits.iter().any(|hit| matches!(hit, Hit::Passage { step: Some(step), .. } if step.ends_with(':')));
-    let mut body = col().key("bible-grid").w_full().grow(1.0).min_h(0.0).px(space::S4).py(space::S3).gap(space::S2).scroll(ScrollSpec { stick_bottom: false });
+    let mut body = col().key("bible-grid").w_full().grow(1.0).min_h(0.0).px(space::S4).py(space::S3).gap(space::S2).scroll(ScrollSpec { stick_bottom: false }).scroll_edge_fade(crate::theme::size::FADE);
     if chapters {
         let book = hits.first().and_then(|hit| match hit {
             Hit::Passage { reference, .. } => Some(reference.book),
@@ -326,7 +330,7 @@ fn preview(s: &App, k: &Kit) -> El {
     let Some(hit) = s.palette.hits.get(s.palette.picked) else {
         return col().key("preview").grow(1.0).h_full();
     };
-    let mut body = col().key("preview-body").w_full().grow(1.0).min_h(0.0).padding(space::S5).gap(space::S3).scroll(ScrollSpec { stick_bottom: false });
+    let mut body = col().key("preview-body").w_full().grow(1.0).min_h(0.0).padding(space::S5).gap(space::S3).scroll(ScrollSpec { stick_bottom: false }).scroll_edge_fade(crate::theme::size::FADE);
     let wide = WIDTH - LIST - 2.0 * space::S5 - 1.0;
     let slide_preview = |state: &artosia_slides::frame::OutputState| {
         el().size(wide, (wide * 9.0 / 16.0).round()).radius(k.radius.lg).clip_rounded(k.radius.lg).child(crate::ui::thumb(s, state, wide))
@@ -394,10 +398,10 @@ fn input_row(s: &App, k: &Kit) -> El {
         .caret(k.c.text_base, k.selection())
         .placeholder(
             match (inside.is_some(), s.palette.scope) {
-                (true, _) => t::SEARCH_SECTIONS(),
-                (false, Scope::All) => t::SEARCH_PLACEHOLDER(),
-                (false, Scope::Songs) => t::SEARCH_SONGS(),
-                (false, Scope::Bible) => t::SEARCH_BIBLE(),
+                (true, _) => t::SEARCH_SECTIONS().to_string(),
+                (false, Scope::All) => t::SEARCH_PLACEHOLDER().to_string(),
+                (false, Scope::Songs) => t::SEARCH_SONGS().to_string(),
+                (false, Scope::Bible) => t::search_bible(&s.example_passage("23:1")),
             },
             k.c.text_faint,
         )

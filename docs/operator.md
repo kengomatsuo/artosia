@@ -320,6 +320,24 @@ A song without a source id is skipped when one with its title, author and openin
 
 `crates/artosia-core/tests/church_library.rs` imports the church's library whenever `fixtures/church/library` is on the machine: every file must read, empty placeholders must be skipped and every alternate title in `index.json` must arrive. The import report stays on screen as a toast, including when the import is started with `--import-openlyrics`; hiding it once concealed two unreadable files, which turned out to be the library being rewritten by another session at that moment. A file that fails is reported beside what the rest of the import did, never in place of it.
 
+## What keys reach (2026-11-11, after a keys-only blind test)
+
+A tester who could use only the keyboard and saw only screenshots failed two of twelve everyday goals and stumbled in five more. Each cause, and what now holds:
+
+| What happened | Cause | Now |
+|---|---|---|
+| Enter did nothing on a dialog's buttons | Rune presses the focused control on Space and gives Return to the default button, as AppKit does | `ui/widgets.rs` `enter_key` hangs on every element that asks for focus and passes Enter on as Space |
+| No way to copy a plan | The plan's menu could only be opened with the pointer | Every action of a menu is a command in search: Plans, Duplicate plan, Rename plan, Delete plan, Start the song here, New announcement (`palette.rs`) |
+| Fourteen Tab presses to reach New announcement | Every button of every card was a Tab stop | The card list and the examples are focus groups: one Tab stop each, arrows inside; Alt and an arrow moves a card, Delete removes it, Ctrl N starts a new one, Ctrl E opens the editor from the announcements item |
+| Preview kept the old plan's item after a switch | `enter_plan` left what a person had opened | What Preview holds leaves with its plan, and with nothing live the new plan's first item opens |
+| Alt Enter put a slide in front of the room | Enter ignored its modifiers | Enter with Alt held does nothing |
+| Letters landed in the wrong field | The test harness sent the next key while a long text was still being typed | `tools/blind.py` waits for the text's length |
+| "Ctrl held" stayed lit | A headless script never sends a key's release | Headless runs no longer set the badge from key events |
+
+Found while pressing real keys afterwards: **Enter did not start a new line in the lyrics box**, in any release so far. Rune at the pinned rev treats a field of several lines as a chat composer (Return submits, Shift Return breaks the line; `edit/input.rs`). `ui/widgets.rs` `enter_breaks_line` is called first in the `on_key` of every `TextArea` and passes Enter on as Shift Return.
+
+F1 hides the words here, where Windows programs open help; the tester pressed it for help once and undid it at once, because the tile lights up yellow. The keys of the three screen states stay where two releases put them, and `?` opens the keys.
+
 ## Checking a screen
 
 `tools/snap.sh <folder>` renders every scene in `main.rs` (`SCENES`) to PNG with the practice library; `--query "<text>"` opens the search on any text; `--background <file>` puts a picture behind the text; `--script crates/artosia/scripts/type-and-show.json --at mark:live` plays a keyboard flow first. `--data <folder>` points at a real library.

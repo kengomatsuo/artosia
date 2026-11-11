@@ -10,9 +10,7 @@ use crate::palette::Scope;
 use crate::state::{App, PlanDrag};
 use crate::strings as t;
 use crate::theme::{self, icons, size, space, type_};
-use crate::ui::widgets::{btn, state_pill, tag_chip};
-use artosia_core::deck::tag_group;
-use artosia_slides::stage::group_color;
+use crate::ui::widgets::{btn, state_pill};
 
 pub(crate) fn entry_icon(entry: &PlanEntry) -> &'static rune::Icon {
     match entry {
@@ -72,7 +70,7 @@ pub(crate) fn item_row(s: &App, k: &Kit, item: &PlanItem, menu: El) -> El {
     // A song marked to begin at one of its parts shows that part's chip, as the lists draw it.
     let mut body = body;
     if let Some(tag) = s.entry_start(&item.entry) {
-        body = body.label(format!("{}, {}", s.entry_title(&item.entry), t::starts_chip(&t::section_label(tag)))).child(tag_chip(&tag.short(), group_color(tag_group(tag))));
+        body = body.label(format!("{}, {}", s.entry_title(&item.entry), t::starts_chip(&t::section_label(tag)))).child(crate::ui::widgets::section_chip(tag));
     }
     // The item on the projector carries a red dot where its menu button is; the button takes
     // the dot's place under the pointer, and while its menu is open (owner, 2026-11-11: a dot,
@@ -260,7 +258,7 @@ pub(crate) fn list(s: &App, k: &Kit, layer: &mut Vec<El>) -> El {
     if s.plan.items.is_empty() {
         return empty(k);
     }
-    let mut list = col().key("plan-list").role("list").label(s.plan_title()).w_full().grow(1.0).min_h(0.0).px(space::S2).py(space::S2).gap(GAP).scroll(ScrollSpec { stick_bottom: false });
+    let mut list = col().key("plan-list").role("list").label(s.plan_title()).w_full().grow(1.0).min_h(0.0).px(space::S2).py(space::S2).gap(GAP).scroll(ScrollSpec { stick_bottom: false }).scroll_edge_fade(crate::theme::size::FADE);
     let heights: Rc<[f32]> = s.plan.items.iter().map(|item| if item.entry.is_heading() { HEADING } else { size::ROW }).collect();
     for (at, item) in s.plan.items.iter().enumerate() {
         let menu = row_menu(s, k, item, at, layer);

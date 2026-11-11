@@ -12,7 +12,7 @@ use crate::ui::widgets::{btn, section_label};
 
 const LIST: f32 = 330.0;
 /// The widest the preview is drawn.
-const PREVIEW: f32 = 440.0;
+const PREVIEW: f32 = 340.0;
 /// The place of "Verse of the week" among `ANNOUNCEMENT_TEMPLATES`, in every language.
 const PASSAGE_TEMPLATE: usize = 3;
 /// How long an announcement may stay up, in seconds.
@@ -35,8 +35,21 @@ fn edit_of(s: &mut App, pick: fn(&mut Notices) -> &mut rune::TextEdit) -> &mut r
     }
 }
 
+/// A card's name in the list: its title, or its first line. The card in the form reads what
+/// is being typed, so the list never shows an old name beside the new one.
+fn shown_title(item: &artosia_core::deck::Announcement, form: Option<&Notices>) -> String {
+    let (title, body) = match form {
+        Some(form) => (form.title.text.as_str(), form.body.text.as_str()),
+        None => (item.title.as_str(), item.body.as_str()),
+    };
+    if title.trim().is_empty() { body.lines().next().unwrap_or_default().trim().to_string() } else { title.trim().to_string() }
+}
+
 fn list(s: &App, k: &Kit, form: &Notices) -> El {
-    let mut rows = col().key("notice-rows").role("list").label(t::CMD_ANNOUNCEMENTS()).w_full().gap(2.0);
+    // One Tab stop: the arrows move through the cards and open the one they land on, Alt and
+    // an arrow moves the card, Delete removes it. The buttons on a row are for the pointer;
+    // with a Tab stop each, the tester needed fourteen presses to get past four cards.
+    let mut rows = col().key("notice-rows").role("list").label(t::CMD_ANNOUNCEMENTS()).w_full().gap(2.0).focus_group().focus_follows();
     let count = s.announcements.len();
     for (at, item) in s.announcements.iter().enumerate() {
         let id = item.id;
@@ -56,19 +69,36 @@ fn list(s: &App, k: &Kit, form: &Notices) -> El {
             .hover(k.c.hover)
             .cursor(Cursor::Pointer)
             .child(text((at + 1).to_string()).font(type_::SMALL).color(k.c.text_faint).w(16.0))
-            .child(text(if item.title.is_empty() { item.body.lines().next().unwrap_or_default().to_string() } else { item.title.clone() }).font(if picked { type_::BODY_STRONG } else { type_::BODY }).color(k.c.text_base).truncate().grow(1.0));
+            .focusable(true)
+            .focus_selected(picked)
+            .on_key(move |s: &mut App, ev: &rune::KeyEvent, _: &mut Tx| match &ev.key {
+                rune::Key::Up if ev.mods.alt => {
+                    s.move_notice(id, -1);
+                    true
+                }
+                rune::Key::Down if ev.mods.alt => {
+                    s.move_notice(id, 1);
+                    true
+                }
+                rune::Key::Delete => {
+                    s.delete_announcement(id);
+                    true
+                }
+                _ => false,
+            })
+            .child(text(shown_title(item, picked.then_some(form))).font(if picked { type_::BODY_STRONG } else { type_::BODY }).color(k.c.text_base).truncate().grow(1.0));
         if picked {
             // The picked row carries its own tools, so nothing hides behind a hover.
             line = line
-                .child(btn(t::PLAN_MOVE_UP()).icon(&icons::ARROW_UP).icon_only().ghost().small().disabled(at == 0).focusable().build(k, move |s, _| s.move_notice(id, -1)))
-                .child(btn(t::PLAN_MOVE_DOWN()).icon(&icons::ARROW_DOWN).icon_only().ghost().small().disabled(at + 1 >= count).focusable().build(k, move |s, _| s.move_notice(id, 1)))
-                .child(btn(t::BTN_DUPLICATE()).icon(&icons::COPY).icon_only().ghost().small().focusable().build(k, move |s, _| s.duplicate_notice(id)))
-                .child(btn(t::BTN_DELETE()).icon(&icons::TRASH).icon_only().ghost().small().focusable().build(k, move |s, _| s.delete_announcement(id)));
+                .child(btn(t::PLAN_MOVE_UP()).icon(&icons::ARROW_UP).icon_only().ghost().small().disabled(at == 0).build(k, move |s, _| s.move_notice(id, -1)))
+                .child(btn(t::PLAN_MOVE_DOWN()).icon(&icons::ARROW_DOWN).icon_only().ghost().small().disabled(at + 1 >= count).build(k, move |s, _| s.move_notice(id, 1)))
+                .child(btn(t::BTN_DUPLICATE()).icon(&icons::COPY).icon_only().ghost().small().build(k, move |s, _| s.duplicate_notice(id)))
+                .child(btn(t::BTN_DELETE()).icon(&icons::TRASH).icon_only().ghost().small().build(k, move |s, _| s.delete_announcement(id)));
         } else {
             line = line.child(text(t::seconds_short(item.seconds)).font(type_::SMALL).color(k.c.text_faint).pr(space::S1));
         }
         // On every row, so a card can go on the projector without being opened first.
-        line = line.child(btn(t::BTN_SHOW_NOW()).icon(&icons::PLAY).icon_only().ghost().small().focusable().build(k, move |s, _| s.show_notice_now(id)));
+        line = line.child(btn(t::BTN_SHOW_NOW()).icon(&icons::PLAY).icon_only().ghost().small().build(k, move |s, _| s.show_notice_now(id)));
         rows = rows.child(line.on_press(move |s: &mut App| s.pick_notice(id)));
     }
     if form.id == 0 && s.notice_draft().is_some() {
@@ -94,7 +124,8 @@ fn list(s: &App, k: &Kit, form: &Notices) -> El {
     } else if s.announcements.is_empty() {
         rows = rows.child(text(t::ANNOUNCEMENTS_EMPTY()).font(type_::BODY).color(k.c.text_muted).px(space::S3).py(space::S2));
     }
-    let mut templates = row().key("notice-templates").w_full().gap(6.0).flex_wrap();
+    // One Tab stop as well: the arrows move among the examples.
+    let mut templates = row().key("notice-templates").role("toolbar").label(t::ANNOUNCEMENT_START_FROM()).w_full().gap(6.0).flex_wrap().focus_group();
     for (at, &(title, body)) in t::ANNOUNCEMENT_TEMPLATES().iter().enumerate() {
         // The verse of the week reads its words from the Bible; the others are words to replace.
         templates = if at == PASSAGE_TEMPLATE {
@@ -111,8 +142,8 @@ fn list(s: &App, k: &Kit, form: &Notices) -> El {
         .px(space::S3)
         .pb(space::S4)
         .gap(space::S3)
-        .scroll(ScrollSpec { stick_bottom: false })
-        .child(btn(t::ANNOUNCEMENT_NEW()).icon(&icons::PLUS).focusable().build(k, |s, _| s.new_notice("", "")))
+        .scroll(ScrollSpec { stick_bottom: false }).scroll_edge_fade(crate::theme::size::FADE)
+        .child(btn(t::ANNOUNCEMENT_NEW()).icon(&icons::PLUS).hint("Ctrl N").focusable().build(k, |s, _| s.new_notice("", "")))
         .child(rows)
         .child(text(t::announcements(s.announcements.len())).font(type_::SMALL).color(k.c.text_faint).px(space::S3))
         .child(
@@ -168,7 +199,8 @@ fn form(s: &App, k: &Kit, form: &Notices, width: f32) -> El {
         .key("notice-preview")
         .w_full()
         .gap(space::S1)
-        .child(section_label(k, t::ANNOUNCEMENT_PREVIEW()))
+        // A passage or a long list of birthdays takes several slides; the sample is the first, and says of how many.
+        .child(row().w_full().gap(space::S2).center_y().child(section_label(k, t::ANNOUNCEMENT_PREVIEW())).child(spacer()).children((slides.len() > 1).then(|| text(t::slides(slides.len())).font(type_::SMALL).color(k.c.text_muted))))
         .child(el().size(shown, (shown * 9.0 / 16.0).round()).radius(k.radius.lg).clip_rounded(k.radius.lg).border(1.0, k.c.border_base).child(crate::ui::thumb(s, &shown_state, shown)));
     let fields = col()
         .key("notice-form")
@@ -178,7 +210,7 @@ fn form(s: &App, k: &Kit, form: &Notices, width: f32) -> El {
         .px(space::S5)
         .pb(space::S3)
         .gap(space::S3)
-        .scroll(ScrollSpec { stick_bottom: false })
+        .scroll(ScrollSpec { stick_bottom: false }).scroll_edge_fade(crate::theme::size::FADE)
         .child(preview)
         .children(holds(s, k, draft.as_ref()))
         .child(
@@ -197,7 +229,7 @@ fn form(s: &App, k: &Kit, form: &Notices, width: f32) -> El {
                 TextInput::new(&form.passage)
                     .width(None)
                     .label(t::ANNOUNCEMENT_PASSAGE())
-                    .placeholder(t::ANNOUNCEMENT_PASSAGE_HINT())
+                    .placeholder(s.example_passage("23:1-6"))
                     .on_edit(|s: &mut App| edit_of(s, |form| &mut form.passage))
                     .on_key(escape_closes)
                     .build(k),
@@ -215,7 +247,7 @@ fn form(s: &App, k: &Kit, form: &Notices, width: f32) -> El {
                         .gap(space::S2)
                         .center_y()
                         .child(text(problem).font(type_::SMALL).color(k.c.text_muted).wrap().grow(1.0))
-                        .child(btn(t::CMD_BIBLES()).small().focusable().build(k, |s, _| s.open_bibles())),
+                        .child(btn(t::BIBLES_MORE()).small().focusable().build(k, |s, _| s.open_bibles())),
                 );
             }
             field
@@ -230,7 +262,7 @@ fn form(s: &App, k: &Kit, form: &Notices, width: f32) -> El {
                     .placeholder(t::ANNOUNCEMENT_BODY_HINT())
                     .auto_grow(4, 14)
                     .on_edit(|s: &mut App| edit_of(s, |form| &mut form.body))
-                    .on_key(escape_closes)
+                    .on_key(|s: &mut App, ev: &KeyEvent, tx: &mut Tx| crate::ui::widgets::enter_breaks_line(ev, tx) || escape_closes(s, ev, tx))
                     .build(k),
             )
         })

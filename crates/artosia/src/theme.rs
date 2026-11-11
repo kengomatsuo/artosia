@@ -155,6 +155,8 @@ pub mod space {
 }
 
 pub mod size {
+    /// How far a scrolling area fades at an edge that hides content.
+    pub const FADE: f32 = 28.0;
     /// Height of every list row.
     pub const ROW: f32 = 40.0;
     /// Height of a search result, which has two lines.

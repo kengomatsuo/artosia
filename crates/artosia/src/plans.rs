@@ -230,12 +230,16 @@ impl App {
         match self.open.as_ref().map(|open| (open.queued, open.deck.source.clone())) {
             // What Artosia queued came from the old plan, so it is queued again from the new one.
             Some((true, _)) => self.open = None,
-            Some((false, source)) => {
-                let item = place_of(self, &source);
-                if let Some(open) = self.open.as_mut() {
-                    open.item = item;
+            Some((false, source)) => match place_of(self, &source) {
+                Some(item) => {
+                    if let Some(open) = self.open.as_mut() {
+                        open.item = Some(item);
+                    }
                 }
-            }
+                // What Preview held belongs to the plan that was left. Showing it under the
+                // new plan's list made a tester think the switch had failed (2026-11-11).
+                None => self.open = None,
+            },
             None => {}
         }
         // Another plan may split lyrics into other line counts. The live deck keeps the words it
@@ -246,6 +250,13 @@ impl App {
             self.live = live;
         }
         self.requeue();
+        // With nothing live, Preview opens the plan's first item, as it does at the start.
+        if self.live.is_none()
+            && self.open.is_none()
+            && let Some(first) = self.plan.items.iter().find(|item| !item.entry.is_heading()).map(|item| item.id)
+        {
+            self.open_plan_item(first);
+        }
         self.refresh_plan_rows();
     }
 

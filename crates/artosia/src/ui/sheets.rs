@@ -22,7 +22,7 @@ fn file_name(path: &str) -> String {
     std::path::Path::new(path).file_name().map(|name| name.to_string_lossy().to_string()).unwrap_or_default()
 }
 
-fn looks(s: &App, k: &Kit, layer: &mut Vec<El>) {
+fn looks(s: &App, k: &Kit, layer: &mut Vec<El>, tall: f32) {
     let look = s.look();
     // The cameras the projector program found on this computer; none in a build without video.
     let cameras = s.link.status().cameras;
@@ -44,7 +44,7 @@ fn looks(s: &App, k: &Kit, layer: &mut Vec<El>) {
                 .label(t::look_label(&preset.name))
                 .w(tile)
                 .gap(space::S1)
-                .focusable(true)
+                .focusable(true).on_key(crate::ui::widgets::enter_key)
                 .cursor(Cursor::Pointer)
                 .child(frame.hover(rune::Color::WHITE.alpha(0.06)))
                 .child(text(t::look_label(&preset.name)).font(if on { type_::SMALL_STRONG } else { type_::SMALL }).color(if on { k.c.text_base } else { k.c.text_muted }))
@@ -81,14 +81,20 @@ fn looks(s: &App, k: &Kit, layer: &mut Vec<El>) {
     // 2026-11-11: nobody could guess that "Look" held the language and the Bibles).
     let mut rows = super::look::rows(s, k, layer);
     let chooser = rows.remove(0);
-    let body = col()
-        .w_full()
-        .px(space::S4)
-        .pb(space::S4)
-        .gap(space::S2)
-        .child(chooser)
-        .child(el().h(space::S1))
-        .child(section_label(k, t::DESIGN_BACKGROUND()))
+    // One part at a time, picked by a row of three: the whole dialog then fits a laptop screen,
+    // and the colour of the words is one press away, not a scroll past six sample slides (Apple's
+    // guidelines on settings group them into panes; a keys-only tester ran out of steps before
+    // reaching the text colour, 2026-11-11).
+    let part = s.design_part.min(2);
+    let parts = SegmentedControl::new(&[t::DESIGN_BACKGROUND(), t::DESIGN_TEXT(), t::LOOK_LOGO()], Some(part))
+        .label(t::BTN_LOOK())
+        .fit()
+        .on_pick(|s: &mut App, picked, _: &mut Tx| s.design_part = picked.min(2))
+        .build(k)
+        .key("design-parts");
+    let pane = col().key(format!("design-part-{part}")).w_full().gap(space::S2);
+    let pane = match part {
+        0 => pane
         .child(grid)
         .child(setting(
             k,
@@ -116,9 +122,8 @@ fn looks(s: &App, k: &Kit, layer: &mut Vec<El>) {
                 choices = choices.child(btn(name.clone()).icon(&icons::CAMERA).toggle(on).focusable().build(k, move |s, _| s.set_camera(&wanted)));
             }
             setting(k, t::LOOK_CAMERA(), choices)
-        }))
-        .child(el().h(space::S2))
-        .child(section_label(k, t::DESIGN_TEXT()))
+        })),
+        1 => pane
         .children(rows)
         .child(setting(
             k,
@@ -158,9 +163,8 @@ fn looks(s: &App, k: &Kit, layer: &mut Vec<El>) {
                     s.set_look(look);
                 })
                 .build(k),
-        ))
-        .child(el().h(space::S2))
-        .child(section_label(k, t::LOOK_LOGO()))
+        )),
+        _ => pane
         .child(setting(
             k,
             t::LOOK_LOGO(),
@@ -174,9 +178,11 @@ fn looks(s: &App, k: &Kit, layer: &mut Vec<El>) {
                     s.touch_settings();
                 })))
                 .child(text(if s.settings.logo.is_empty() { t::LOOK_NO_FILE().to_string() } else { file_name(&s.settings.logo) }).font(type_::SMALL).color(k.c.text_muted).truncate().grow(1.0)),
-        ));
-    // Taller than a small laptop screen, so the controls scroll under the sample slide.
-    let body = col().w_full().max_h(440.0).scroll(rune::ScrollSpec { stick_bottom: false }).child(body).scroll_bar(k);
+        )),
+    };
+    let body = col().w_full().px(space::S4).pb(space::S4).gap(space::S3).child(chooser).child(row().w_full().child(parts)).child(pane);
+    // A window lower than a laptop's scrolls the part under the sample slide.
+    let body = col().w_full().max_h((tall - 330.0).max(200.0)).scroll(rune::ScrollSpec { stick_bottom: false }).scroll_edge_fade(crate::theme::size::FADE).child(body).scroll_bar(k);
     let content = col().w_full().child(super::look::preview(s, k)).child(body);
     Dialog::new("looks", t::BTN_LOOK()).open(true).width(620.0).fit().on_close(close).child(content).build(k, layer);
 }
@@ -185,15 +191,17 @@ fn looks(s: &App, k: &Kit, layer: &mut Vec<El>) {
 /// each change takes effect at once, and help and the version close the list (Microsoft's
 /// guidelines for app settings; Apple's on settings: "general settings that affect your overall
 /// experience").
-fn settings(s: &App, k: &Kit, layer: &mut Vec<El>) {
+fn settings(s: &App, k: &Kit, layer: &mut Vec<El>, tall: f32) {
     let languages: Vec<&crate::languages::Language> = crate::languages::listed().map(|(_, language)| language).collect();
     let body = col()
         .w_full()
         .px(space::S4)
         .pb(space::S4)
         .gap(space::S2)
-        .child(section_label(k, t::LOOK_LANGUAGE()))
-        .child(row().w_full().h(36.0).center_y().child(
+        .child(section_label(k, t::SETTINGS_GENERAL()))
+        .child(setting(
+            k,
+            t::LOOK_LANGUAGE(),
             SegmentedControl::new(&languages.iter().map(|language| language.name).collect::<Vec<_>>(), languages.iter().position(|language| language.code == t::language_code()))
                 .label(t::LOOK_LANGUAGE())
                 .fit()
@@ -204,9 +212,9 @@ fn settings(s: &App, k: &Kit, layer: &mut Vec<El>) {
                 })
                 .build(k),
         ))
-        .child(el().h(space::S2))
-        .child(section_label(k, t::LOOK_WINDOW()))
-        .child(row().w_full().h(36.0).center_y().child(
+        .child(setting(
+            k,
+            t::LOOK_WINDOW(),
             SegmentedControl::new(&[t::LOOK_WINDOW_AUTO(), t::LOOK_WINDOW_LIGHT(), t::LOOK_WINDOW_DARK()], Some(s.settings.appearance as usize))
                 .label(t::LOOK_WINDOW())
                 .fit()
@@ -216,7 +224,7 @@ fn settings(s: &App, k: &Kit, layer: &mut Vec<El>) {
                 })
                 .build(k),
         ))
-        .child(el().h(space::S2))
+        .child(el().h(2.0))
         .child(section_label(k, t::KIND_BIBLE()))
         .child(setting(k, t::LOOK_BIBLE(), bible_picker(s, k, false)))
         .child(setting(k, t::LOOK_SECOND_BIBLE(), bible_picker(s, k, true)))
@@ -231,7 +239,7 @@ fn settings(s: &App, k: &Kit, layer: &mut Vec<El>) {
                 .child(btn(t::BIBLES_CHOOSE_FILE()).icon(&icons::FOLDER).focusable().build(k, |s, _| s.desk.want_file = true).key("look-bible-file"))
                 .child(btn(t::BIBLES_MORE()).icon(&icons::GLOBE).focusable().build(k, |s, _| s.open_bibles()).key("look-bible-more")),
         ))
-        .child(el().h(space::S2))
+        .child(el().h(2.0))
         .child(section_label(k, t::SETTINGS_SONGS()))
         .child(setting(
             k,
@@ -249,7 +257,7 @@ fn settings(s: &App, k: &Kit, layer: &mut Vec<El>) {
                     .build(k),
             ),
         ))
-        .child(el().h(space::S2))
+        .child(el().h(2.0))
         .child(section_label(k, t::LEARN_SECTION()))
         .child(switch_row(k, "learn-switch", t::LEARN_ON(), t::LEARN_ON_HINT(), s.settings.learn, |s| {
             s.settings.learn = !s.settings.learn;
@@ -263,14 +271,14 @@ fn settings(s: &App, k: &Kit, layer: &mut Vec<El>) {
                 .center_y()
                 .child(btn(t::LEARN_FORGET()).focusable().disabled(s.store.history_rows() == 0).build(k, |s, _| s.forget_learning())),
         )
-        .child(el().h(space::S2))
+        .child(el().h(2.0))
         .child(section_label(k, t::KEYS_TITLE()))
         .child(switch_row(k, "letter-keys-switch", t::LETTER_KEYS(), t::LETTER_KEYS_HINT(), s.settings.letter_keys, |s| {
             s.settings.letter_keys = !s.settings.letter_keys;
             s.touch_settings();
         }))
         .child(row().w_full().h(36.0).center_y().child(btn(t::CMD_KEYS()).icon(&icons::KEYBOARD).focusable().build(k, |s, _| s.sheet = Sheet::Keys)))
-        .child(el().h(space::S2))
+        .child(el().h(2.0))
         .child(section_label(k, t::SETTINGS_ABOUT()))
         .child(
             row()
@@ -285,7 +293,7 @@ fn settings(s: &App, k: &Kit, layer: &mut Vec<El>) {
                 .child(btn(t::CMD_UPDATE()).icon(&icons::IMPORT).focusable().build(k, |s, _| s.run(crate::palette::Command::CheckUpdate)))
                 .child(text(t::about_version(crate::update::VERSION)).font(type_::SMALL).color(k.c.text_muted)),
         );
-    let body = col().w_full().max_h(560.0).scroll(rune::ScrollSpec { stick_bottom: false }).child(body).scroll_bar(k);
+    let body = col().w_full().max_h((tall - 84.0).max(240.0)).scroll(rune::ScrollSpec { stick_bottom: false }).scroll_edge_fade(crate::theme::size::FADE).child(body).scroll_bar(k);
     Dialog::new("settings", t::BTN_SETTINGS()).open(true).width(620.0).fit().on_close(close).child(body).build(k, layer);
 }
 
@@ -356,7 +364,7 @@ fn wall(s: &App, k: &Kit) -> El {
                 .fill(if picked { theme::accent() } else { k.c.layer_04 })
                 .border(2.0, if picked { theme::accent() } else { k.c.text_muted })
                 .hover(k.c.hover)
-                .focusable(true)
+                .focusable(true).on_key(crate::ui::widgets::enter_key)
                 .cursor(Cursor::Pointer)
                 .help(names[at])
                 .on_press(move |s: &mut App| s.warp_corner = at),
@@ -598,8 +606,15 @@ fn keys(s: &App, k: &Kit, layer: &mut Vec<El>, tall: f32) {
                 .child(key_group(k, t::KEYS_EDITING(), t::KEYS_EDITING_KEYS(), t::KEYS_EDITING_ROWS())),
         );
     let _ = s;
-    let list = col().key("keys-list").w_full().max_h((tall - 200.0).max(220.0)).scroll(rune::ScrollSpec { stick_bottom: false }).child(rows).scroll_bar(k);
-    let tour = row().w_full().child(btn(t::CMD_TOUR()).icon(&icons::PLAY).focusable().build(k, |s, _| s.start_tour()));
+    let list = col().key("keys-list").w_full().max_h((tall - 200.0).max(220.0)).scroll(rune::ScrollSpec { stick_bottom: false }).scroll_edge_fade(crate::theme::size::FADE).child(rows).scroll_bar(k);
+    // What has no key of its own is in the search, and the sheet says so where the eye ends
+    // up: a keys-only tester read this sheet and still could not find how to copy a plan.
+    let tour = row()
+        .w_full()
+        .gap(space::S3)
+        .center_y()
+        .child(btn(t::CMD_TOUR()).icon(&icons::PLAY).focusable().build(k, |s, _| s.start_tour()))
+        .child(row().grow(1.0).min_w(0.0).gap(space::S2).center_y().child(keycap(k, "Ctrl K", false)).child(text(t::KEYS_MORE()).font(type_::BODY).color(k.c.text_muted).truncate().grow(1.0)));
     let body = col().w_full().px(space::S4).pb(space::S4).gap(space::S3).child(list).child(tour);
     Dialog::new("keys", t::KEYS_TITLE()).open(true).width(1060.0).fit().on_close(close).child(body).build(k, layer);
 }
@@ -699,7 +714,7 @@ fn listen(s: &App, k: &Kit, layer: &mut Vec<El>) {
                 .radius(k.radius.md)
                 .fill(if chosen { k.c.layer_04 } else { rune::Color::TRANSPARENT })
                 .hover(k.c.hover)
-                .focusable(true)
+                .focusable(true).on_key(crate::ui::widgets::enter_key)
                 .cursor(Cursor::Pointer)
                 .child(text(name.clone()).font(if chosen { type_::BODY_STRONG } else { type_::BODY }).color(k.c.text_base).truncate())
                 .on_press(move |s: &mut App| {
@@ -789,8 +804,8 @@ fn listen(s: &App, k: &Kit, layer: &mut Vec<El>) {
 pub fn view(s: &App, k: &Kit, layer: &mut Vec<El>, tall: f32) {
     match s.sheet {
         Sheet::None => {}
-        Sheet::Looks => looks(s, k, layer),
-        Sheet::Settings => settings(s, k, layer),
+        Sheet::Looks => looks(s, k, layer, tall),
+        Sheet::Settings => settings(s, k, layer, tall),
         Sheet::Screens => screens(s, k, layer),
         Sheet::Remote => remote(s, k, layer),
         Sheet::Import => import(s, k, layer),

@@ -47,6 +47,9 @@ fn escape_closes(s: &mut App, ev: &KeyEvent, tx: &mut Tx) -> bool {
 /// Keys in the words: Ctrl with 1 to 5 starts a section, Ctrl M writes the suggested marks,
 /// Escape closes.
 fn lyrics_keys(s: &mut App, ev: &KeyEvent, tx: &mut Tx) -> bool {
+    if crate::ui::widgets::enter_breaks_line(ev, tx) {
+        return true;
+    }
     if let Key::Command(digit @ '1'..='5') = ev.key {
         s.insert_section(SECTION_KEYS[digit as usize - '1' as usize]);
         return true;
@@ -177,7 +180,7 @@ fn order_block(s: &App, k: &Kit, editor: &Editor) -> El {
     let typed = !editor.order.text.trim().is_empty();
     let chip = |key: String, tag: Tag, filled: bool, plus: bool| {
         let color = group_color(tag_group(tag));
-        let label = if plus { format!("+ {}", tag.short()) } else { tag.short() };
+        let label = if plus { format!("+ {}", t::section_label(tag)) } else { t::section_label(tag) };
         el().key(key)
             .role("button")
             .label(t::section_label(tag))
@@ -252,7 +255,7 @@ fn stanza_chip(k: &Kit, at: usize, stanza: &Stanza) -> El {
         .fill(if written { theme::tint_of(color, true) } else { rune::Color::TRANSPARENT })
         .border(1.0, ink.alpha(if written { 0.0 } else { 0.6 }))
         .help(why(stanza))
-        .child(text(stanza.tag.short()).font(type_::SMALL_STRONG).color(ink))
+        .child(text(t::section_label(stanza.tag)).font(type_::SMALL_STRONG).color(ink))
 }
 
 /// One kind a person can pick for the stanza at the caret. All are one width, so a longer
@@ -328,7 +331,7 @@ fn form(s: &App, k: &Kit) -> El {
         .px(space::S6)
         .pb(space::S6)
         .gap(space::S3)
-        .scroll(ScrollSpec { stick_bottom: false })
+        .scroll(ScrollSpec { stick_bottom: false }).scroll_edge_fade(crate::theme::size::FADE)
         .child(title_block(s, k, editor))
         .child(
             row()
@@ -364,7 +367,7 @@ fn form(s: &App, k: &Kit) -> El {
                         .width(None)
                         .label(t::FIELD_LYRICS())
                         .placeholder(t::LYRICS_PLACEHOLDER())
-                        .auto_grow(12, 400)
+                        .auto_grow(10, 400)
                         .decorations(marker_spans(&editor.lyrics.text))
                         .on_edit(|s: &mut App| edit_of(s, |editor| &mut editor.lyrics))
                         .on_change(|s: &mut App, _: &mut Tx| {
@@ -386,7 +389,7 @@ fn form(s: &App, k: &Kit) -> El {
                     .auto_grow(8, 400)
                     .decorations(marker_spans(&editor.second.text))
                     .on_edit(|s: &mut App| edit_of(s, |editor| &mut editor.second))
-                    .on_key(escape_closes)
+                    .on_key(|s: &mut App, ev: &KeyEvent, tx: &mut Tx| crate::ui::widgets::enter_breaks_line(ev, tx) || escape_closes(s, ev, tx))
                     .build(k),
             ),
         );
@@ -403,7 +406,7 @@ fn form(s: &App, k: &Kit) -> El {
 
 fn slides(s: &App, k: &Kit) -> El {
     let deck = s.editor_song().map(|song| s.deck_of_song(&song));
-    let mut column = col().key("editor-slides").w_full().grow(1.0).min_h(0.0).padding(space::S4).gap(space::S3).scroll(ScrollSpec { stick_bottom: false });
+    let mut column = col().key("editor-slides").w_full().grow(1.0).min_h(0.0).padding(space::S4).gap(space::S3).scroll(ScrollSpec { stick_bottom: false }).scroll_edge_fade(crate::theme::size::FADE);
     let slides = deck.map(|deck| deck.slides).unwrap_or_default();
     if slides.is_empty() {
         column = column.child(text(t::EDITOR_NO_SLIDES()).font(type_::SMALL).color(k.c.text_muted).wrap());

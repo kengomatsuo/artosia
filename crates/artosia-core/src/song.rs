@@ -60,8 +60,22 @@ impl Tag {
         if numbered { format!("{letter}{}", self.number) } else { letter.to_string() }
     }
 
-    /// The marker line written back into lyrics text.
+    /// The marker line written back into lyrics text: in the words of the window's language
+    /// when it gave some and they read back as this very section, else in the plain form.
     pub fn marker(&self) -> String {
+        let local = MARKER_WORDS.with(|words| {
+            let words = words.borrow();
+            let word = words.as_ref()?.get(self.kind as usize)?.trim().to_string();
+            if word.is_empty() {
+                return None;
+            }
+            let numbered = matches!(self.kind, SectionKind::Verse | SectionKind::Other) || self.number > 1;
+            let text = if numbered { format!("{word} {}", self.number) } else { word };
+            (parse_tag(&text) == Some(*self)).then(|| format!("[{text}]"))
+        });
+        if let Some(local) = local {
+            return local;
+        }
         match self.kind {
             SectionKind::Verse => format!("[{}]", self.number),
             SectionKind::PreChorus if self.number > 1 => format!("[prechorus {}]", self.number),
@@ -133,15 +147,28 @@ pub struct Song {
     pub edited: bool,
 }
 
+thread_local! {
+    /// What the window's language calls each kind of section, in the order of `SectionKind`.
+    static MARKER_WORDS: std::cell::RefCell<Option<[String; 7]>> = const { std::cell::RefCell::new(None) };
+}
+
+/// Sets the words markers are written with on this thread, one for each `SectionKind` in its
+/// order: a volunteer who presses the button that reads Reff sees `[Reff]` appear, not
+/// `[chorus]`. None writes the plain form (`[1]`, `[chorus]`). Either form is read back, in
+/// any language, so a library never depends on the language it was written under.
+pub fn set_marker_words(words: Option<[String; 7]>) {
+    MARKER_WORDS.with(|slot| *slot.borrow_mut() = words);
+}
+
 fn kind_from_word(word: &str) -> Option<SectionKind> {
     Some(match word {
         "verse" | "v" | "vers" | "stanza" | "bait" | "ayat" => SectionKind::Verse,
         "chorus" | "c" | "refrain" | "ref" | "reff" | "koor" | "chor" => SectionKind::Chorus,
-        "prechorus" | "pre" | "p" => SectionKind::PreChorus,
+        "prechorus" | "pre" | "p" | "prareff" | "pra" => SectionKind::PreChorus,
         "bridge" | "b" | "jembatan" => SectionKind::Bridge,
         "intro" | "i" | "pembuka" => SectionKind::Intro,
         "ending" | "end" | "outro" | "tag" | "coda" | "penutup" | "akhir" | "e" => SectionKind::Ending,
-        "part" | "x" | "o" | "other" => SectionKind::Other,
+        "part" | "x" | "o" | "other" | "bagian" => SectionKind::Other,
         _ => return None,
     })
 }
@@ -424,6 +451,29 @@ pub fn song_from_paste(text: &str) -> Song {
 #[cfg(test)]
 mod tests {
     use super::*;
+    /// Markers written in a language's own words read back as the same sections, and a word
+    /// the reader does not know falls back to the plain form.
+    #[test]
+    fn markers_are_written_in_the_window_s_words_and_read_back() {
+        let words = ["Bait", "Pra-reff", "Reff", "Bridge", "Intro", "Ending", "Lainnya"].map(String::from);
+        let order: [SectionKind; 7] = [SectionKind::Verse, SectionKind::PreChorus, SectionKind::Chorus, SectionKind::Bridge, SectionKind::Intro, SectionKind::Ending, SectionKind::Other];
+        // The words are given in the order of the kinds themselves.
+        for (at, kind) in order.iter().enumerate() {
+            assert_eq!(*kind as usize, at);
+        }
+        set_marker_words(Some(words));
+        assert_eq!(Tag::new(SectionKind::Verse, 2).marker(), "[Bait 2]");
+        assert_eq!(Tag::new(SectionKind::Chorus, 1).marker(), "[Reff]");
+        assert_eq!(Tag::new(SectionKind::PreChorus, 1).marker(), "[Pra-reff]");
+        // "Lainnya" is not a word the reader knows, so that kind keeps the plain form.
+        assert_eq!(Tag::new(SectionKind::Other, 1).marker(), "[part 1]");
+        for tag in [Tag::new(SectionKind::Verse, 2), Tag::new(SectionKind::Chorus, 1), Tag::new(SectionKind::Chorus, 2), Tag::new(SectionKind::PreChorus, 1), Tag::new(SectionKind::Bridge, 1)] {
+            assert_eq!(heading(&tag.marker()), Some(tag));
+        }
+        set_marker_words(None);
+        assert_eq!(Tag::new(SectionKind::Chorus, 1).marker(), "[chorus]");
+    }
+
     /// The words a church writes above a stanza: the lyrics box shows `[Bait 1]` and `[Reff]`
     /// as its example in Indonesian, so both must mean what `[1]` and `[chorus]` mean.
     #[test]

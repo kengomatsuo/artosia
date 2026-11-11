@@ -7,20 +7,19 @@
 //! The model is `suggest.rs`; the shell places this strip.
 
 use artosia_core::song::Tag;
-use artosia_slides::stage::group_color;
 use rune::{Cursor, El, Icon, col, el, icon, row, text};
 use rune_kit::Kit;
 
 use crate::strings as t;
 use crate::suggest::{Suggestion, Target, Why, suggestions};
 use crate::theme::{self, icons, space, type_};
-use crate::ui::widgets::{keycap, tag_chip};
+use crate::ui::widgets::keycap;
 
 /// Height of one row.
 pub const ROW: f32 = 40.0;
 /// Width of the button on every row, the same whatever the language: an icon, and a key cap
 /// on the first.
-const BUTTON: f32 = 64.0;
+const BUTTON: f32 = 116.0;
 
 /// The strip, or nothing when there is nothing to offer, so the pane keeps all its room.
 pub(crate) fn strip(s: &crate::state::App, k: &Kit) -> Option<El> {
@@ -53,14 +52,15 @@ fn sign(why: Why) -> &'static Icon {
 }
 
 fn section_chip(tag: Tag) -> El {
-    tag_chip(&tag.short(), group_color(artosia_core::deck::tag_group(tag)))
+    crate::ui::widgets::section_chip(tag)
 }
 
 /// The one button of a row: an icon, and its key on the first row. It never takes focus, so
 /// Space still means Next.
 fn button(k: &Kit, key: &str, glyph: &'static Icon, tip: &str, first: bool, press: impl Fn(&mut crate::state::App, &mut rune::Tx) + 'static) -> El {
-    let mut body = row().key(key.to_string()).role("button").label(tip.to_string()).help(tip.to_string()).w(BUTTON).h(28.0).gap(6.0).center().radius(k.radius.md).fill(k.c.layer_02).border(1.0, k.c.border_base);
-    body = body.child(icon(glyph, 16.0).color(k.c.text_base).a11y_hidden());
+    // An icon and its word, as every button here has; the key rides on the first row only.
+    let mut body = row().key(key.to_string()).role("button").label(tip.to_string()).w(BUTTON).h(28.0).gap(6.0).center().radius(k.radius.md).fill(k.c.layer_02).border(1.0, k.c.border_base);
+    body = body.child(icon(glyph, 16.0).color(k.c.text_base).a11y_hidden()).child(text(tip.to_string()).font(type_::SMALL_STRONG).color(k.c.text_base).truncate().a11y_hidden());
     if first {
         body = body.child(keycap(k, "F4", false));
     }
@@ -87,9 +87,14 @@ fn line(k: &Kit, at: usize, offer: Suggestion) -> El {
         Target::Passage(_) => &icons::BOOK,
         _ => &icons::SONG,
     };
-    // The reason is a tooltip on the ear or the clock, and the row's name for a screen reader.
-    let why_sign = el().w(20.0).h(ROW).center().role("img").label(words).help(words).child(icon(sign(why), 16.0).color(k.c.text_muted).a11y_hidden());
-    let mut out = base.child(why_sign).child(icon(kind, 16.0).color(k.c.text_muted).a11y_hidden()).child(text(offer.title.clone()).font(type_::BODY_STRONG).color(k.c.text_base).truncate().grow(1.0).min_w(0.0));
+    // The reason stands on the row in words, after the title: an ear or a clock alone told a
+    // reader nothing, and a tooltip is no answer for someone who never hovers (2026-11-11).
+    let why_sign = el().w(20.0).h(ROW).center().role("img").label(words).child(icon(sign(why), 16.0).color(k.c.text_muted).a11y_hidden());
+    let mut out = base
+        .child(why_sign)
+        .child(icon(kind, 16.0).color(k.c.text_muted).a11y_hidden())
+        .child(text(offer.title.clone()).font(type_::BODY_STRONG).color(k.c.text_base).truncate().min_w(60.0))
+        .child(text(words).font(type_::SMALL).color(k.c.text_muted).truncate().grow(1.0).min_w(0.0));
     if let Some(tag) = offer.tag {
         out = out.child(section_chip(tag));
     }

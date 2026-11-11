@@ -9,11 +9,6 @@
   "back": "Song title or one line of its words",
   "why": "Noun phrase as a hint"
  },
- "SEARCH_BIBLE": {
-  "text": "Mazmur 23:1 atau kata dalam ayatnya",
-  "back": "Psalms 23:1 or a word in its verse",
-  "why": "Reference written as a church writes it, full book name"
- },
  "SEARCH_RESULTS": {
   "text": "Hasil pencarian",
   "back": "Search results",
@@ -65,9 +60,9 @@
   "why": "A state, no verb that invites a click"
  },
  "PLAN_CHIP": {
-  "text": "Rundown",
-  "back": "Rundown",
-  "why": "The one word for the plan"
+  "text": "Sudah di rundown",
+  "back": "Already in the rundown",
+  "why": "A statement about the song"
  },
  "KIND_LOOK": {
   "text": "Tema",
@@ -180,9 +175,9 @@
   "why": "Fragment, no subject needed"
  },
  "CMD_HEADING": {
-  "text": "Tambah segmen",
-  "back": "Add a segment",
-  "why": "'segmen' is not a whole service"
+  "text": "Tambah judul bagian",
+  "back": "Add a part heading",
+  "why": "Plain church word for a heading"
  },
  "CMD_HEADING_DETAIL": {
   "text": "Misalnya Pujian dan Firman",
@@ -195,9 +190,9 @@
   "why": "Same word as the top bar button"
  },
  "CMD_LOOKS_DETAIL": {
-  "text": "Latar belakang, teks, dan logo gereja",
+  "text": "Latar, teks, dan logo gereja",
   "back": "Backdrop, text, and the church logo",
-  "why": "'teks' is the word for words on a slide"
+  "why": "'latar' everywhere"
  },
  "CMD_SETTINGS": {
   "text": "Pengaturan",
@@ -270,9 +265,9 @@
   "why": "Said as is at the desk"
  },
  "BTN_LISTEN": {
-  "text": "Dengar",
-  "back": "Listen",
-  "why": "One word, fits the button"
+  "text": "Pendengar",
+  "back": "Listener",
+  "why": "A noun for a tool, not a command"
  },
  "STREAM_HINT": {
   "text": "Gambarnya sama dengan proyektor, lengkap dengan suara ruangan.",
@@ -348,9 +343,9 @@
   "why": "'gambar' for a lost video frame"
  },
  "CMD_LISTEN": {
-  "text": "Dengar",
-  "back": "Listen",
-  "why": "One name: button, title, command"
+  "text": "Pendengar",
+  "back": "Listener",
+  "why": "Same name as the button"
  },
  "CMD_LISTEN_DETAIL": {
   "text": "Komputer menyarankan lagu atau ayat dari suara",
@@ -413,9 +408,9 @@
   "why": "Musicians use the international abbreviation"
  },
  "LISTEN_BEAT_BLINK": {
-  "text": "Tanda merah Live ikut irama musik",
-  "back": "The red Live marks follow the rhythm of the music",
-  "why": "Says what moves and what it follows"
+  "text": "Titik merah berkedip ikut irama",
+  "back": "The red dot blinks along with the rhythm",
+  "why": "No word Live; plain verb"
  },
  "LISTEN_BEAT_BLINK_HINT": {
   "text": "Hanya hiasan, tidak mengubah apa pun",
@@ -550,7 +545,7 @@
  "DESIGN_TEXT": {
   "text": "Teks",
   "back": "Text",
-  "why": "Everyday word for words on a slide"
+  "why": "Tab name"
  },
  "SETTINGS_SONGS": {
   "text": "Lagu",
@@ -688,8 +683,8 @@
   "why": "One word tag"
  },
  "PLAN_HEADING_NEW": {
-  "text": "Segmen baru",
-  "back": "New segment",
+  "text": "Judul bagian",
+  "back": "Part heading",
   "why": "Same word as the divider"
  },
  "PLAN_HEADING_WORSHIP": {
@@ -708,9 +703,9 @@
   "why": "Plural as asked"
  },
  "PLAN_DUPLICATE": {
-  "text": "Gandakan rundown",
-  "back": "Duplicate the rundown",
-  "why": "A verb"
+  "text": "Salin rundown",
+  "back": "Copy the rundown",
+  "why": "The everyday verb"
  },
  "PLAN_RENAME": {
   "text": "Ganti nama rundown",
@@ -743,9 +738,9 @@
   "why": "One word"
  },
  "PLAN_DATE_HINT": {
-  "text": "mis. 15 November",
-  "back": "e.g. 15 November",
-  "why": "Day number then month name"
+  "text": "contoh: 15 November",
+  "back": "example: 15 November",
+  "why": "'contoh' in full"
  },
  "LOOK_FOR_USUAL": {
   "text": "Tema biasa",
@@ -753,9 +748,9 @@
   "why": "Design is 'tema'"
  },
  "LOOK_FOR_PLAN": {
-  "text": "Tema khusus rundown ini",
-  "back": "Theme special to this rundown",
-  "why": "tema"
+  "text": "Khusus rundown ini",
+  "back": "Only for this rundown",
+  "why": "Says only for this plan"
  },
  "PLAN_OWN_LOOK": {
   "text": "Punya tema sendiri",
@@ -858,9 +853,9 @@
   "why": "Warning"
  },
  "TOUR_LIVE": {
-  "text": "Daftar Live berisi apa yang dilihat jemaat sekarang",
-  "back": "The Live list holds what the congregation sees now",
-  "why": "Says list, so the tile is not meant"
+  "text": "Panel Live berisi apa yang dilihat jemaat sekarang",
+  "back": "The Live panel holds what the congregation sees now",
+  "why": "'panel' is the word for a part of a window"
  },
  "TOUR_LIVE_MORE": {
   "text": "Tombol merah Live (F6): proyektor nyala atau mati",
@@ -1058,9 +1053,9 @@
   "why": "Pair of Maju"
  },
  "BTN_NO_TEXT": {
-  "text": "Teks off",
+  "text": "Teks mati",
   "back": "Text off",
-  "why": "Says the text goes; 'off' is how desks say it, 'mati' would not fit 8"
+  "why": "Says the words go; same 'mati' as the projector"
  },
  "STATE_OFF": {
   "text": "Proyektor mati",
@@ -1138,8 +1133,8 @@
   "why": "Same word as the Bible tile and the search filter"
  },
  "PLAN_ADD_HEADING": {
-  "text": "Segmen",
-  "back": "Segment",
+  "text": "Judul bagian",
+  "back": "Part heading",
   "why": "Same word as the divider"
  },
  "PLAN_DRAG": {
@@ -1336,9 +1331,9 @@
   "why": "Pairs with Reff"
  },
  "MARK_ENDING": {
-  "text": "Ending",
-  "back": "Ending",
-  "why": "Musicians' word"
+  "text": "Penutup",
+  "back": "Closing",
+  "why": "Everyday word the reader knows"
  },
  "BTN_ADD_SECOND": {
   "text": "Tambah bahasa kedua",
@@ -1361,9 +1356,9 @@
   "why": "For good, not for plan items"
  },
  "BTN_DUPLICATE": {
-  "text": "Gandakan",
-  "back": "Duplicate",
-  "why": "A verb"
+  "text": "Salin",
+  "back": "Copy",
+  "why": "The everyday verb"
  },
  "BTN_CLOSE": {
   "text": "Tutup",
@@ -1511,8 +1506,8 @@
   "why": "One word"
  },
  "LOOK_LOGO": {
-  "text": "Logo gereja",
-  "back": "Church logo",
+  "text": "Logo",
+  "back": "Logo",
   "why": "Same word as the tile"
  },
  "LOOK_CHOOSE_LOGO": {
@@ -1701,9 +1696,9 @@
   "why": "Screen reader only"
  },
  "LOOK_COLOUR_HEX_HINT": {
-  "text": "Kode hex, mis. ffcc00",
-  "back": "Hex code, e.g. ffcc00",
-  "why": "'kode hex' is what people say"
+  "text": "Kode, contoh: ffcc00",
+  "back": "Code, example: ffcc00",
+  "why": "'contoh' in full"
  },
  "LOOK_FONT": {
   "text": "Font",
@@ -2073,11 +2068,6 @@
   "back": "Book, chapter, verse",
   "why": "Names what is typed"
  },
- "ANNOUNCEMENT_PASSAGE_HINT": {
-  "text": "Mazmur 23:1-6",
-  "back": "Psalms 23:1-6",
-  "why": "Hyphen is the verse range, as churches write it"
- },
  "PASSAGE_NO_BIBLE": {
   "text": "Belum ada versi Alkitab, jadi isinya kosong",
   "back": "No Bible version yet, so it stays empty",
@@ -2277,9 +2267,9 @@
   "why": "Fragment"
  },
  "KEYS_SHOWING_ROWS[14].1": {
-  "text": "Saran dari Dengar masuk ke Preview",
-  "back": "Suggestions from Listen go into Preview",
-  "why": "Fragment"
+  "text": "Saran dari Pendengar masuk ke Preview",
+  "back": "Suggestions from the Listener go into Preview",
+  "why": "Listener's new name"
  },
  "KEYS_SHOWING_ROWS[15].1": {
   "text": "Pengumuman masuk ke Preview",
@@ -2362,14 +2352,14 @@
   "why": "Fragment"
  },
  "KEYS_EDITING_ROWS[3].1": {
-  "text": "Penanda bait, reff, pra-reff, bridge, ending",
-  "back": "Marker for verse, chorus, pre-chorus, bridge, ending",
-  "why": "Five items for five keys"
+  "text": "Penanda bait, reff, pra-reff, bridge, penutup",
+  "back": "Marker for verse, chorus, pre-chorus, bridge, closing",
+  "why": "Penutup"
  },
  "KEYS_EDITING_ROWS[4].1": {
-  "text": "Isi seluruh lagu dari daftar di bawah judul",
-  "back": "Fill the whole song from the list under the title",
-  "why": "Says what is taken and from where"
+  "text": "Pakai lagu dari saran di bawah judul",
+  "back": "Use the song from the suggestions under the title",
+  "why": "Says what and from where"
  },
  "KEYS_EDITING_ROWS[5].1": {
   "text": "Kembalikan yang terakhir dihapus",
@@ -2432,9 +2422,9 @@
   "why": "Phrase next to a switch"
  },
  "LEARN_ON_HINT": {
-  "text": "Lagu yang sering dipilih naik ke atas, bila cocoknya sama",
-  "back": "Songs picked often move up, when the match is equal",
-  "why": "One sentence"
+  "text": "Lagu yang sering dipilih lebih dulu, kalau hasilnya sama",
+  "back": "Songs picked often come first, when the results are equal",
+  "why": "Plain speech"
  },
  "LEARN_FORGET": {
   "text": "Hapus riwayat pencarian",
@@ -2457,9 +2447,9 @@
   "why": "Group heading"
  },
  "group_follows": {
-  "text": "Sering sesudah “{title}”",
-  "back": "Often after “{title}”",
-  "why": "Plain words for after"
+  "text": "Kerap dinyanyikan usai {title}",
+  "back": "Often sung after {title}",
+  "why": "Full verb, fits 44"
  },
  "habit_chip": {
   "text": "dipilih {picks} kali untuk “{typed}”",
@@ -2507,9 +2497,9 @@
   "why": "Dialog title"
  },
  "BIBLES_MORE": {
-  "text": "Cari versi lain",
-  "back": "Look for other versions",
-  "why": "Button"
+  "text": "Cari Alkitab lain",
+  "back": "Look for another Bible",
+  "why": "Same text as the search row"
  },
  "BIBLES_OWN_FILE": {
   "text": "Dari berkas sendiri",
@@ -2552,9 +2542,9 @@
   "why": "ZIP in capitals"
  },
  "CMD_BIBLES": {
-  "text": "Cari versi Alkitab lain",
-  "back": "Look for other Bible versions",
-  "why": "Row title"
+  "text": "Cari Alkitab lain",
+  "back": "Look for another Bible",
+  "why": "Same text as the button"
  },
  "CMD_BIBLES_FIND_DETAIL": {
   "text": "Alkitab dalam banyak bahasa bisa diunduh",
@@ -2707,9 +2697,9 @@
   "why": "What church bands say"
  },
  "section.ending": {
-  "text": "Ending",
-  "back": "Ending",
-  "why": "Musicians' word"
+  "text": "Penutup",
+  "back": "Closing",
+  "why": "The reader accepts it"
  },
  "section.intro": {
   "text": "Intro",
@@ -2737,9 +2727,9 @@
   "why": "Name first, as in 'Bait 2'"
  },
  "DESIGN_BACKGROUND": {
-  "text": "Latar belakang",
+  "text": "Latar",
   "back": "Backdrop",
-  "why": "One group heading"
+  "why": "'latar' everywhere"
  },
  "KEYS_PLAN_ROWS[4].1": {
   "text": "Keluarkan item di Preview dari rundown",
@@ -2772,9 +2762,9 @@
   "why": "Reason is a lower-case clause"
  },
  "MARKS_APPLY": {
-  "text": "Terapkan",
-  "back": "Apply",
-  "why": "Eight characters exactly"
+  "text": "Pakai penanda ini",
+  "back": "Use these marks",
+  "why": "Says what is applied"
  },
  "MARKS_APPLY_HELP": {
   "text": "Nama bagian ditulis ke lirik, bisa dibatalkan",
@@ -2817,9 +2807,9 @@
   "why": "'latar' is the short form of the one backdrop word"
  },
  "BACKDROPS_SEARCH": {
-  "text": "Cari, mis. laut atau lilin",
-  "back": "Search, e.g. sea or candle",
-  "why": "Invitation with two examples"
+  "text": "Cari, contoh: laut atau lilin",
+  "back": "Search, example: sea or candle",
+  "why": "'contoh' in full"
  },
  "BACKDROPS_ALL": {
   "text": "Semua",
@@ -2927,9 +2917,9 @@
   "why": "Fragment"
  },
  "backdrop_failed": {
-  "text": "Latar belakang gagal diunduh: {why}",
+  "text": "Latar gagal diunduh: {why}",
   "back": "The backdrop failed to download: {why}",
-  "why": "Reason is a lower-case clause after the colon"
+  "why": "'latar'"
  },
  "WHY_OFFLINE": {
   "text": "tidak ada koneksi internet",
@@ -3060,5 +3050,60 @@
   "text": "Hapus lagu",
   "back": "Delete song",
   "why": "Verb and object"
+ },
+ "CMD_PLANS": {
+  "text": "Semua rundown",
+  "back": "All rundowns",
+  "why": "Plural of the plan word"
+ },
+ "CMD_PLANS_DETAIL": {
+  "text": "Pindah ke rundown ibadah yang lain",
+  "back": "Move to the rundown of another service",
+  "why": "Fragment"
+ },
+ "CMD_PLAN_DUPLICATE_DETAIL": {
+  "text": "Salinannya berisi lagu dan bacaan yang sama",
+  "back": "The copy holds the same songs and readings",
+  "why": "Fragment"
+ },
+ "CMD_PLAN_RENAME_DETAIL": {
+  "text": "Ubah nama dan tanggal rundown ini",
+  "back": "Change the name and date of this rundown",
+  "why": "Fragment"
+ },
+ "CMD_PLAN_DELETE_DETAIL": {
+  "text": "Rundown dihapus, lagu aman, bisa dikembalikan",
+  "back": "The rundown is deleted, the songs are safe, it can be brought back",
+  "why": "Two short fragments"
+ },
+ "CMD_START_HERE": {
+  "text": "Mulai dari slide ini",
+  "back": "Start from this slide",
+  "why": "About where a song begins"
+ },
+ "CMD_START_HERE_DETAIL": {
+  "text": "Lagu mulai dari slide yang disorot, untuk medley",
+  "back": "The song starts from the highlighted slide, for a medley",
+  "why": "'medley' is known to musicians"
+ },
+ "CMD_NEW_ANNOUNCEMENT_DETAIL": {
+  "text": "Pengumuman, ayat Alkitab, atau daftar ulang tahun",
+  "back": "A notice, Bible verses, or a list of birthdays",
+  "why": "Fragment"
+ },
+ "KEYS_MORE": {
+  "text": "Yang tidak tercantum: ketik di pencarian, contoh salin rundown atau tema",
+  "back": "What is not listed: type it in the search, for example copy rundown or theme",
+  "why": "Uses the product's words rundown and tema"
+ },
+ "SETTINGS_GENERAL": {
+  "text": "Umum",
+  "back": "General",
+  "why": "The usual word for a basic group"
+ },
+ "search_bible": {
+  "text": "{passage} atau kata dalam ayatnya",
+  "back": "{passage} or a word in its verse",
+  "why": "Example first, then the alternative"
  }
 }

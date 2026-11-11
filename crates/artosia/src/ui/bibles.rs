@@ -68,7 +68,7 @@ fn failed(k: &Kit, why: &str) -> El {
         .gap(space::S3)
         .padding(space::S4)
         .child(text(t::BIBLES_LOAD_FAILED()).font(type_::BODY_STRONG).color(theme::warn_ink()))
-        .child(text(why.to_string()).font(type_::SMALL).color(k.c.text_muted).wrap())
+        .child(text(t::as_sentence(why)).font(type_::SMALL).color(k.c.text_muted).wrap())
         .child(btn(t::BIBLES_RETRY()).icon(&icons::LOOP).focusable().build(k, |s, _| s.start_catalogue()))
 }
 
@@ -102,7 +102,7 @@ fn line(s: &App, k: &Kit, at: usize) -> El {
                 .radius(k.radius.md)
                 .fill(if picked { k.c.layer_04 } else { rune::Color::TRANSPARENT })
                 .hover(k.c.hover)
-                .focusable(true)
+                .focusable(true).on_key(crate::ui::widgets::enter_key)
                 .cursor(rune::Cursor::Pointer)
                 .child(el().w(space::S2))
                 .child(text(title).font(if picked { type_::BODY_STRONG } else { type_::BODY }).color(k.c.text_base).truncate().grow(1.0))
@@ -134,7 +134,7 @@ fn list(s: &App, k: &Kit) -> El {
                 },
                 |s: &App, at| line(s, theme::kit(), at),
             );
-            col().key("bible-scroll").role("listbox").label(t::BIBLES_LIST()).w_full().h(LIST).min_h(0.0).scroll(ScrollSpec { stick_bottom: false }).child(rows).scroll_bar(k)
+            col().key("bible-scroll").role("listbox").label(t::BIBLES_LIST()).w_full().h(LIST).min_h(0.0).scroll(ScrollSpec { stick_bottom: false }).scroll_edge_fade(crate::theme::size::FADE).child(rows).scroll_bar(k)
         }
     };
     col().key("bibles-list").w_full().h(LIST).radius(k.radius.lg).fill(k.c.layer_02).clip_rounded(k.radius.lg).child(inside)

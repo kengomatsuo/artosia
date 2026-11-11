@@ -9,6 +9,35 @@ use rune_kit::Kit;
 use crate::state::App;
 use crate::theme::{self, icons, type_};
 
+/// Enter presses the button that has focus, as Space does. Rune follows AppKit, where Return
+/// belongs to the default button and only Space presses the focused one; this program runs
+/// on Windows, where a focused button takes both (Microsoft, Keyboard accessibility: "For
+/// controls that can be invoked, implement keyboard event handlers for the Spacebar and Enter
+/// keys"; WAI-ARIA button pattern: "Enter: Activates the button"). A keys-only tester took
+/// every dialog button for broken (2026-11-11). Hung on each element that asks for focus.
+pub fn enter_key(_: &mut App, ev: &rune::KeyEvent, tx: &mut Tx) -> bool {
+    if ev.key != rune::Key::Enter || ev.mods != rune::Mods::default() {
+        return false;
+    }
+    if !tx.key_repeat() {
+        tx.send_key(rune::KeyEvent { key: rune::Key::Text(" ".into()), mods: rune::Mods::default() });
+    }
+    true
+}
+
+/// Enter starts a new line in a box of several lines. Rune at the pinned rev treats such a
+/// box as a chat composer: Return submits and only Shift Return breaks the line
+/// (`edit/input.rs`, `Block::Paragraph => out.submit = true`), so Enter did nothing at all in
+/// the lyrics (found pressing real keys, 2026-11-11). Every `TextArea` calls this first in its
+/// `on_key` and passes the key on as Shift Return, which the field turns into the line break.
+pub fn enter_breaks_line(ev: &rune::KeyEvent, tx: &mut Tx) -> bool {
+    if ev.key != rune::Key::Enter || ev.mods != rune::Mods::default() {
+        return false;
+    }
+    tx.send_key(rune::KeyEvent { key: rune::Key::Enter, mods: rune::Mods { shift: true, ..rune::Mods::default() } });
+    true
+}
+
 #[derive(Clone, Copy, PartialEq)]
 enum Kind {
     Plain,
@@ -165,7 +194,7 @@ impl Btn {
             return e.layer_opacity(0.45).disabled(true);
         }
         if self.focus {
-            e = e.focusable(true);
+            e = e.focusable(true).on_key(crate::ui::widgets::enter_key);
         }
         e.hover(hover).press(pressed).cursor(Cursor::Pointer).on_press_tx(move |s: &mut App, tx: &mut Tx| {
             press(s, tx);
@@ -325,7 +354,7 @@ impl Tile {
             }
             return e.hover(hover).press(pressed).cursor(Cursor::Pointer).on_press_tx(move |s: &mut App, tx: &mut Tx| press(s, tx));
         }
-        let mut e = rune::col().role("button").label(name).h(self.height).grow(1.0).min_w(0.0).px(6.0).gap(4.0).center().radius(k.radius.md).fill(fill);
+        let mut e = rune::col().role("button").label(name).h(self.height).grow(1.0).min_w(0.0).px(3.0).gap(4.0).center().radius(k.radius.md).fill(fill);
         if let Some(border) = border {
             e = e.border(1.0, border);
         }
@@ -339,7 +368,8 @@ impl Tile {
                 icon(glyph, 20.0).color(ink).a11y_hidden()
             });
         }
-        e = e.child(el().w_full().center().child(text(self.label.clone()).font(type_::SMALL_STRONG).color(ink).truncate().a11y_hidden()));
+        let face = if self.label.chars().count() > 8 { type_::TINY } else { type_::SMALL_STRONG };
+        e = e.child(el().w_full().center().child(text(self.label.clone()).font(face).color(ink).truncate().a11y_hidden()));
         if let Some(keys) = self.keys {
             // The key sits in the corner, where it never changes the tile's size.
             e = e.child(el().pin(None, Some(5.0), Some(5.0), None).child(keycaps(k, keys, filled.then_some(ink))));
@@ -367,6 +397,14 @@ pub fn section_label(k: &Kit, label: &str) -> El {
 /// A coloured pill naming a song section.
 pub fn tag_chip(label: &str, color: Color) -> El {
     el().px(7.0).h(20.0).center().radius(6.0).fill(theme::tint_of(color, false)).child(text(label).font(type_::TINY).color(theme::ink_of(color)))
+}
+
+/// A section's chip: its whole name in the window's language, in the colour of its kind.
+/// "V1" and "C" were a code to learn, and two native readers each said a volunteer who reads
+/// Bait and Reff everywhere else never learns that C means Reff (2026-11-11). The code stays
+/// only where it is typed (the song order) and where it is a key, drawn as a key.
+pub fn section_chip(tag: artosia_core::song::Tag) -> El {
+    tag_chip(&t::section_label(tag), artosia_slides::stage::group_color(artosia_core::deck::tag_group(tag)))
 }
 
 /// A filled pill for a state, such as "Live".

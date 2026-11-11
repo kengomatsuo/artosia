@@ -18,7 +18,7 @@ A second reader of a finished language found one thing under two or three names,
 
 **Names that must not collide.** The word chosen for `design` must not be a form of the verb chosen for `on_projector`, and must not be the word for a preview of the projector's picture. The word for `divider` must not be the word for a whole service of the day. The word for `tour` steps (back, next) must not be the words for moving a slide back and forward.
 
-**One feature, one name.** The listener, the phone remote, the stream and the design each have one name. Its button in the top bar, the title of its dialog and its command in search all read as that same name. A switch inside the dialog says the state (on), not a third form of the name. Do not mix an English word with a local abbreviation in one name.
+**One feature, one name.** The listener, the phone remote, the stream and the design each have one name, and the name is a noun: a bare imperative verb on a button in the top bar reads as an order to the volunteer. Its button in the top bar, the title of its dialog and its command in search all read as that same name. A switch inside the dialog says the state (on), not a third form of the name. Do not mix an English word with a local abbreviation in one name.
 
 **Counting.** How many times something happened is written with the word for times, never with the letter x.
 
@@ -32,7 +32,7 @@ A second reader of a finished language found one thing under two or three names,
 
 **`plan_item`** One entry of a plan: one song, one Bible passage, or the announcements as a whole. Clicking an item opens it in Preview; it does not show it to the room.
 
-**`divider`** A named line inside a plan that splits it into parts, such as the part where the congregation sings and the part where scripture is read. It holds nothing to show and is never put on the screen. Churches usually call these parts of the service by short names, such as the part of praise and the part of the sermon. The word for the line itself must not be the word for a whole service or session of the day.
+**`divider`** A named line inside a plan that splits it into parts, such as the part where the congregation sings and the part where scripture is read. It holds nothing to show and is never put on the screen. Churches usually call these parts of the service by short names, such as the part of praise and the part of the sermon. The word for the line itself must not be the word for a whole service or session of the day, and not a broadcasting term: a plain word a church volunteer uses for a heading or a separator.
 
 **`song`** A song of the church: a title, an author, its words divided into parts, and the order the parts are sung in. All songs live in the library.
 

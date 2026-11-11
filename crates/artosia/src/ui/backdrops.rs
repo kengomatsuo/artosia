@@ -90,7 +90,7 @@ fn chip(k: &Kit, key: &str, label: &str, mark: &'static Icon, on: bool, press: i
         .radius(k.radius.md)
         .fill(if on { k.c.layer_04 } else { k.c.layer_02 })
         .hover(k.c.hover)
-        .focusable(true)
+        .focusable(true).on_key(crate::ui::widgets::enter_key)
         .cursor(Cursor::Pointer)
         .child(icon(mark, 14.0).color(ink).a11y_hidden())
         .child(text(label.to_string()).font(if on { type_::SMALL_STRONG } else { type_::SMALL }).color(ink).a11y_hidden());
@@ -133,7 +133,7 @@ fn tile(s: &App, k: &Kit, at: usize) -> El {
     };
     let id = entry.id.clone();
     let picked = s.backdrops.picked.as_deref() == Some(entry.id.as_str());
-    let mut frame = el().key(format!("backdrop-{}", entry.id)).role("button").label(entry.title.clone()).w(TILE_W).h(TILE_H).radius(k.radius.md).clip_rounded(k.radius.md).fill(k.c.layer_04).focusable(true).cursor(Cursor::Pointer);
+    let mut frame = el().key(format!("backdrop-{}", entry.id)).role("button").label(entry.title.clone()).w(TILE_W).h(TILE_H).radius(k.radius.md).clip_rounded(k.radius.md).fill(k.c.layer_04).focusable(true).on_key(crate::ui::widgets::enter_key).cursor(Cursor::Pointer);
     match picture_of(s, entry, false) {
         Some(image) => frame = frame.pixels_fit(image.pixels(), SurfaceFit::Fill),
         None if s.backdrops.failed.contains(&entry.id) => frame = frame.center().child(icon(&icons::IMAGE, 20.0).color(k.c.text_muted).a11y_hidden()),
@@ -177,7 +177,7 @@ fn grid(s: &App, k: &Kit) -> El {
             s.show_rows(rows);
             false
         });
-    col().key("backdrop-scroll").role("list").label(t::BACKDROPS_TITLE()).w_full().h(GRID).min_h(0.0).scroll(ScrollSpec { stick_bottom: false }).child(list).scroll_bar(k)
+    col().key("backdrop-scroll").role("list").label(t::BACKDROPS_TITLE()).w_full().h(GRID).min_h(0.0).scroll(ScrollSpec { stick_bottom: false }).scroll_edge_fade(crate::theme::size::FADE).child(list).scroll_bar(k)
 }
 
 fn clock(seconds: f32) -> String {

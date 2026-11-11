@@ -21,7 +21,6 @@ pub fn dump() -> String {
     line(out, "KEY_SAVE", KEY_SAVE());
     line(out, "SEARCH_PLACEHOLDER", SEARCH_PLACEHOLDER());
     line(out, "SEARCH_SONGS", SEARCH_SONGS());
-    line(out, "SEARCH_BIBLE", SEARCH_BIBLE());
     line(out, "SEARCH_RESULTS", SEARCH_RESULTS());
     line(out, "SCOPE_LABEL", SCOPE_LABEL());
     line(out, "SCOPE_ALL", SCOPE_ALL());
@@ -140,6 +139,17 @@ pub fn dump() -> String {
     line(out, "LOOK_PAPER", LOOK_PAPER());
     line(out, "SETTINGS_ADD_BIBLE", SETTINGS_ADD_BIBLE());
     line(out, "BTN_DELETE_SONG", BTN_DELETE_SONG());
+    line(out, "CMD_PLANS", CMD_PLANS());
+    line(out, "CMD_PLANS_DETAIL", CMD_PLANS_DETAIL());
+    line(out, "CMD_PLAN_DUPLICATE_DETAIL", CMD_PLAN_DUPLICATE_DETAIL());
+    line(out, "CMD_PLAN_RENAME_DETAIL", CMD_PLAN_RENAME_DETAIL());
+    line(out, "CMD_PLAN_DELETE_DETAIL", CMD_PLAN_DELETE_DETAIL());
+    line(out, "CMD_START_HERE", CMD_START_HERE());
+    line(out, "CMD_START_HERE_DETAIL", CMD_START_HERE_DETAIL());
+    line(out, "CMD_NEW_ANNOUNCEMENT_DETAIL", CMD_NEW_ANNOUNCEMENT_DETAIL());
+    line(out, "KEYS_MORE", KEYS_MORE());
+    line(out, "SETTINGS_GENERAL", SETTINGS_GENERAL());
+    line(out, "search_bible", &search_bible("Psalms 23:1"));
     line(out, "TOUR_BACK", TOUR_BACK());
     line(out, "TOUR_NEXT", TOUR_NEXT());
     line(out, "KEYS_TO", KEYS_TO());

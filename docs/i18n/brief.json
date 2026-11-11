@@ -37,25 +37,6 @@
   "notes": "Hint inside an empty box. Plain words a volunteer would use for the name of a song and for one line of its words."
  },
  {
-  "key": "SEARCH_BIBLE",
-  "kind": "const",
-  "screen": "Search panel, text field, when the switch beside it is set to Bible only.",
-  "moment": "The person has narrowed the search to the Bible and the field is still empty.",
-  "role": "placeholder",
-  "does": "Shows the two ways to find scripture: type a book, chapter and verse the way a church writes it, or type some words that are in the verse.",
-  "budget": 42,
-  "variables": [],
-  "cases": [],
-  "counts": "",
-  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
-  "concepts": [
-   "search",
-   "bible_translation",
-   "passage"
-  ],
-  "notes": "The reference part is an example written the way a church in this language writes a passage (book name or its usual short form, chapter, colon, verse). Do not use a verse of a real translation as the example words."
- },
- {
   "key": "SEARCH_RESULTS",
   "kind": "const",
   "screen": "Search panel, results list. Never printed: it is the name a screen reader gives the list.",
@@ -243,8 +224,8 @@
   "screen": "Search panel, results list, a small rounded tag at the right end of a result row.",
   "moment": "The result is also in the current plan.",
   "role": "tag",
-  "does": "Marks the result as being in the current plan.",
-  "budget": 10,
+  "does": "A small chip on a song's row in the search results. It says this song is already in the open plan.",
+  "budget": 18,
   "variables": [],
   "cases": [],
   "counts": "",
@@ -252,7 +233,7 @@
   "concepts": [
    "plan"
   ],
-  "notes": "A small tag about 60 points wide: one word, the same word that names the plan everywhere."
+  "notes": "It must read as a statement about the song, such as already in the plan; the bare name of the plan reads as a category. Two or three short words."
  },
  {
   "key": "KIND_LOOK",
@@ -1011,7 +992,7 @@
   "concepts": [
    "listener"
   ],
-  "notes": "One word, ten characters at most."
+  "notes": "One word, ten characters at most: a noun that names a tool which listens. A bare imperative verb reads as an order to the volunteer."
  },
  {
   "key": "STREAM_HINT",
@@ -1521,7 +1502,7 @@
    "listener",
    "live"
   ],
-  "notes": "Say plainly what moves (the red Live marks) and what it follows (the music's beat). No poetic verb."
+  "notes": "Say plainly what moves and what it follows: the red dot blinks along with the music's tempo. Do not use the word Live in it. No poetic verb."
  },
  {
   "key": "LISTEN_BEAT_BLINK_HINT",
@@ -2002,10 +1983,10 @@
  {
   "key": "DESIGN_TEXT",
   "kind": "const",
-  "screen": "Design dialog, small heading over the rows that decide how the words are drawn (lines per slide, size, position, colour).",
-  "moment": "Scrolled to the part about words.",
-  "role": "section heading",
-  "does": "Names the group of choices about the lettering on the projector.",
+  "screen": "The Design dialog. Under the sample slide and the choice between the usual design and the plan's own, a row of three equal tabs picks which part of the design shows below: the background, the words, the emblem. This text is one of the three tabs.",
+  "moment": "The person wants to change one thing about how the projector looks and picks the part it belongs to.",
+  "role": "tab",
+  "does": "Opens the part where the words on the slide are set: their colour, font, outline, size, position and how many lines a slide holds.",
   "budget": 16,
   "variables": [],
   "cases": [],
@@ -2608,7 +2589,7 @@
   "concepts": [
    "plan"
   ],
-  "notes": "A verb: make a copy of this plan."
+  "notes": "A verb a volunteer would say for making a copy, the everyday one, not a bookish one."
  },
  {
   "key": "PLAN_RENAME",
@@ -2721,7 +2702,7 @@
   "moment": "The person is about to type the day of the service and wonders how to write it.",
   "role": "placeholder",
   "does": "Shows by one example how a day may be typed: the number of the day followed by the name of the month, here the fifteenth of November.",
-  "budget": 24,
+  "budget": 26,
   "variables": [],
   "cases": [],
   "counts": "",
@@ -2729,7 +2710,7 @@
   "concepts": [
    "plan"
   ],
-  "notes": "An example, such as the words for 'such as' followed by 15 and the month's name. No full stop. The field may be left empty, which the label already allows."
+  "notes": "An example: the word for 'for example' written in full (no abbreviation), then 15 and the month's name. No full stop."
  },
  {
   "key": "LOOK_FOR_USUAL",
@@ -2755,8 +2736,8 @@
   "screen": "Design dialog, hover help of the right-hand wide button, whose visible label is the plan's name.",
   "moment": "The person hovers the button with the plan's name.",
   "role": "tooltip",
-  "does": "Says this button edits a design that belongs to this plan only.",
-  "budget": 34,
+  "does": "The second of two equal buttons at the top of the Design dialog. The first applies the church's usual design; this one gives the open plan a design of its own, used only while that plan is open.",
+  "budget": 30,
   "variables": [],
   "cases": [],
   "counts": "",
@@ -2765,7 +2746,7 @@
    "design",
    "plan"
   ],
-  "notes": "Tooltip."
+  "notes": "A short label that says: only for this plan. It is the button's whole text, about 30 characters wide."
  },
  {
   "key": "PLAN_OWN_LOOK",
@@ -3179,7 +3160,7 @@
    "tour",
    "live"
   ],
-  "notes": "One sentence."
+  "notes": "Call it the Live pane or panel, with the word a volunteer uses for a part of a window; not a list. One sentence, no full stop."
  },
  {
   "key": "TOUR_LIVE_MORE",
@@ -3911,7 +3892,7 @@
   "moment": "The person wants the words gone but the background kept.",
   "role": "tile label",
   "does": "Names the state in which the projector shows no words, only the background.",
-  "budget": 8,
+  "budget": 9,
   "variables": [],
   "cases": [],
   "counts": "",
@@ -3922,7 +3903,7 @@
    "live",
    "slide_words"
   ],
-  "notes": "A state name, lit while it is on; not a verb. Eight characters at most. It must say that the words are gone from the screen: a short form of 'no words' or 'words off'. A word that only means plain or empty is wrong."
+  "notes": "A state name, lit while it is on; not a verb. Nine characters at most. It must say that the words are gone from the screen, in the language's own words: no English 'off'."
  },
  {
   "key": "STATE_OFF",
@@ -4949,7 +4930,7 @@
    "ending",
    "section"
   ],
-  "notes": "Same word as the ending section's name."
+  "notes": "If church musicians of the language have their own everyday word for the closing part of a song, use it; the reader knows that word."
  },
  {
   "key": "BTN_ADD_SECOND",
@@ -5039,7 +5020,7 @@
    "announcement",
    "card"
   ],
-  "notes": "A verb: make a copy."
+  "notes": "A verb a volunteer would say for making a copy, the everyday one, not a bookish one."
  },
  {
   "key": "BTN_CLOSE",
@@ -5572,10 +5553,10 @@
  {
   "key": "LOOK_LOGO",
   "kind": "const",
-  "screen": "Design dialog: a window about 620 points wide over the main window. A preview picture of a projector slide at the top, two wide buttons under it, then rows of choices: a grid of backgrounds, a file chooser, then Words with colour, font, outline, lines per slide, size and position, then the church's emblem. Small heading at the bottom of the dialog, over a row with a picture chooser.",
-  "moment": "The person sets the church's emblem.",
-  "role": "heading",
-  "does": "Names the church's emblem shown by itself on the projector.",
+  "screen": "The Design dialog. Under the sample slide and the choice between the usual design and the plan's own, a row of three equal tabs picks which part of the design shows below: the background, the words, the emblem. This text is one of the three tabs.",
+  "moment": "The person wants to change one thing about how the projector looks and picks the part it belongs to.",
+  "role": "tab",
+  "does": "Opens the part where the church's emblem is chosen. The same word is the label of the row inside it and the name of the tile that shows the emblem on the projector.",
   "budget": 16,
   "variables": [],
   "cases": [],
@@ -6072,9 +6053,9 @@
  {
   "key": "LOOK_WINDOW",
   "kind": "const",
-  "screen": "Settings dialog: a window about 620 points wide with small bold headings (Language, window colour, Bible choices, Songs, Search, About) and a row of controls under each. Small heading over the three-way switch for light or dark.",
+  "screen": "The Settings dialog, the first group. This labels the row whose control picks whether the program's window is light, dark, or follows the computer.",
   "moment": "The person wants to decide the window's light or dark look.",
-  "role": "section heading",
+  "role": "row label",
   "does": "Names the choice of how bright the program's window is.",
   "budget": 26,
   "variables": [],
@@ -6255,7 +6236,7 @@
   "concepts": [
    "design"
   ],
-  "notes": "The example ffcc00 stays; the lead-in words are text. Hex means the base-16 notation designers use; use the word people in this language use for such a colour code."
+  "notes": "Write the word for 'for example' in full; no abbreviation."
  },
  {
   "key": "LOOK_FONT",
@@ -7631,24 +7612,6 @@
   "notes": "A noun phrase."
  },
  {
-  "key": "ANNOUNCEMENT_PASSAGE_HINT",
-  "kind": "const",
-  "screen": "Announcements editor: it takes the place of the Preview pane. Top row: heading, an add-to-plan button, a loop button and Close. Left half: a New announcement button, the numbered list of cards (title and seconds each), an Import block and a row of ready-made starting points. Right half: a preview picture, then Title, Details, Seconds on screen, Fill in by itself and Picture. Hint inside the empty reference box.",
-  "moment": "The box is empty.",
-  "role": "placeholder",
-  "does": "Gives an example of a passage reference written the way the church writes one: a book from the poetry part of the Bible, a chapter, and a range of verses.",
-  "budget": 18,
-  "variables": [],
-  "cases": [],
-  "counts": "",
-  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
-  "concepts": [
-   "passage",
-   "card"
-  ],
-  "notes": "Use the book's name and the punctuation as this church writes them."
- },
- {
   "key": "PASSAGE_NO_BIBLE",
   "kind": "const",
   "screen": "Announcements editor: it takes the place of the Preview pane. Top row: heading, an add-to-plan button, a loop button and Close. Left half: a New announcement button, the numbered list of cards (title and seconds each), an Import block and a row of ready-made starting points. Right half: a preview picture, then Title, Details, Seconds on screen, Fill in by itself and Picture. A line in the warning colour under the reference box.",
@@ -8737,7 +8700,7 @@
    "song",
    "suggestion"
   ],
-  "notes": "Say what is taken and from where. Fragment, no full stop."
+  "notes": "Say what is taken and from where: use the song offered in the suggestions under the title. Fragment, no full stop."
  },
  {
   "key": "KEYS_EDITING_ROWS[5].1",
@@ -8938,9 +8901,9 @@
  {
   "key": "LOOK_LANGUAGE",
   "kind": "const",
-  "screen": "Settings dialog: a window about 620 points wide with small bold headings (Language, window colour, Bible choices, Songs, Search, About) and a row of controls under each. Small heading at the very top of the dialog; also the second line of a search row for a language.",
+  "screen": "The Settings dialog, the first group. This labels the row whose control picks the language the program's own words are shown in; each language is listed under its own name.",
   "moment": "The person wants the window in another language.",
-  "role": "section heading",
+  "role": "row label",
   "does": "Names the choice of the language the program's own words are shown in.",
   "budget": 14,
   "variables": [],
@@ -9006,7 +8969,7 @@
    "search_memory",
    "search"
   ],
-  "notes": "One sentence."
+  "notes": "Plain speech, nothing bookish: songs picked often come first when results match equally well. One short sentence, no full stop."
  },
  {
   "key": "LEARN_FORGET",
@@ -9103,7 +9066,7 @@
    "suggestion",
    "song"
   ],
-  "notes": "The plain words for sung after. No verb that means catching up with or trailing behind."
+  "notes": "The plain words for often sung after the named song. A full verb, not just the word for after."
  },
  {
   "key": "habit_chip",
@@ -10133,7 +10096,7 @@
    "ending",
    "section"
   ],
-  "notes": "One word. The chip's second half, the number, is not part of this text."
+  "notes": "If church musicians of the language have their own everyday word for the closing part of a song, use it. It must be a word the song reader accepts: for Indonesian, the reader knows the usual one."
  },
  {
   "key": "section.intro",
@@ -10239,10 +10202,10 @@
  {
   "key": "DESIGN_BACKGROUND",
   "kind": "const",
-  "screen": "The Design dialog (opened from the top bar's palette button). Under the sample slide and the choice of which look is being edited, the controls come in groups, each under a small grey heading. This is the first heading, over a grid of ready-made backgrounds and the row for choosing a picture or video file.",
-  "moment": "The person is choosing what sits behind the words on the projector.",
-  "role": "heading",
-  "does": "Names the group of controls that set what is behind the words.",
+  "screen": "The Design dialog. Under the sample slide and the choice between the usual design and the plan's own, a row of three equal tabs picks which part of the design shows below: the background, the words, the emblem. This text is one of the three tabs.",
+  "moment": "The person wants to change one thing about how the projector looks and picks the part it belongs to.",
+  "role": "tab",
+  "does": "Opens the part where what lies behind the words is chosen: a ready colour scheme, a photo or video, or a camera.",
   "budget": 16,
   "variables": [],
   "cases": [],
@@ -10372,8 +10335,8 @@
   "screen": "The song editor: the lyrics field in the middle, and above it a quiet strip that proposes section names for the parts of the song that have none, drawn as the row of small coloured section chips the song would get. Button.",
   "moment": "Shown while some part of the words has no section name yet, beside a row of small coloured section chips.",
   "role": "button",
-  "does": "Button that accepts the suggestion: it writes a section marker before every part of the words that has none, so the row of chips beside it becomes the song's sections. Sits beside a check icon and a key cap.",
-  "budget": 8,
+  "does": "Writes the section names proposed in this strip (verse 1, chorus, verse 2 and so on, one per stanza) into the lyrics, all at once.",
+  "budget": 18,
   "variables": [],
   "cases": [],
   "counts": "",
@@ -10382,7 +10345,7 @@
    "section",
    "song"
   ],
-  "notes": "One word, at most eight characters. The key Ctrl M is printed beside it."
+  "notes": "Say what is applied: use these marks. Two or three words; the key Ctrl M is drawn beside it."
  },
  {
   "key": "MARKS_APPLY_HELP",
@@ -10534,7 +10497,7 @@
   "moment": "The person is about to type a subject, such as sea or candle.",
   "role": "placeholder",
   "does": "Invites typing to find a backdrop by what it shows.",
-  "budget": 26,
+  "budget": 30,
   "variables": [],
   "cases": [],
   "counts": "",
@@ -10542,7 +10505,7 @@
   "concepts": [
    "backdrop"
   ],
-  "notes": "A short imperative, no full stop."
+  "notes": "A short imperative with one or two example words. Write the word for 'for example' in full, as the rest of the program does; no abbreviation. No full stop."
  },
  {
   "key": "BACKDROPS_ALL",
@@ -11347,5 +11310,207 @@
    "library"
   ],
   "notes": "Two words: the verb for deleting and the word for song, so nobody takes it for removing a slide or a line."
+ },
+ {
+  "key": "CMD_PLANS",
+  "kind": "const",
+  "screen": "Search (the box at the top of the window): a list of results, each with a name in bold and one grey line under it that says what it does. This is the name of the command that opens the list of the church's plans, one per service.",
+  "moment": "The person wants to go to the plan of another service, such as the afternoon one.",
+  "role": "command name",
+  "does": "Names the list of all plans, from which another one is opened.",
+  "budget": 14,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "plan"
+  ],
+  "notes": "One or two words: the plural of the word for a plan."
+ },
+ {
+  "key": "CMD_PLANS_DETAIL",
+  "kind": "const",
+  "screen": "Search (the box at the top of the window): a list of results, each with a name in bold and one grey line under it that says what it does. This is the grey line under the command that opens the list of plans.",
+  "moment": "The person reads it to check this is how to change to another service's plan.",
+  "role": "command description",
+  "does": "Says this changes over to the plan of a different service.",
+  "budget": 44,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "plan"
+  ],
+  "notes": "A fragment, no full stop."
+ },
+ {
+  "key": "CMD_PLAN_DUPLICATE_DETAIL",
+  "kind": "const",
+  "screen": "Search (the box at the top of the window): a list of results, each with a name in bold and one grey line under it that says what it does. This is the grey line under the command that makes a copy of the open plan.",
+  "moment": "The afternoon service sings what the morning one sang, and the person wants the same list twice.",
+  "role": "command description",
+  "does": "Says the copy holds the same songs and readings, ready for a second service.",
+  "budget": 48,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "plan",
+   "plan_item"
+  ],
+  "notes": "A fragment, no full stop."
+ },
+ {
+  "key": "CMD_PLAN_RENAME_DETAIL",
+  "kind": "const",
+  "screen": "Search (the box at the top of the window): a list of results, each with a name in bold and one grey line under it that says what it does. This is the grey line under the command that opens the small dialog with a plan's name and day.",
+  "moment": "The person wants to call the plan something else or set which day it is for.",
+  "role": "command description",
+  "does": "Says this changes what the open plan is called and which day it is for.",
+  "budget": 40,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "plan"
+  ],
+  "notes": "A fragment, no full stop."
+ },
+ {
+  "key": "CMD_PLAN_DELETE_DETAIL",
+  "kind": "const",
+  "screen": "Search (the box at the top of the window): a list of results, each with a name in bold and one grey line under it that says what it does. This is the grey line under the command that deletes the open plan.",
+  "moment": "The person no longer needs this plan.",
+  "role": "command description",
+  "does": "Says the open plan is thrown away, and that the toast which follows can bring it back.",
+  "budget": 48,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "plan",
+   "undo"
+  ],
+  "notes": "One or two short fragments, no final full stop. The songs themselves stay in the library; only the list goes."
+ },
+ {
+  "key": "CMD_START_HERE",
+  "kind": "const",
+  "screen": "Search (the box at the top of the window): a list of results, each with a name in bold and one grey line under it that says what it does. This is the name of the command that marks where the song in Preview will begin. The same thing is done by the small play button in the Preview title and by Ctrl M.",
+  "moment": "A medley: the band goes straight into the chorus of the second song, and the person wants that song to open at its chorus.",
+  "role": "command name",
+  "does": "Makes the song in Preview begin at the highlighted slide when its turn comes.",
+  "budget": 26,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "start_mark",
+   "song"
+  ],
+  "notes": "A short imperative. It is about where a song begins, not about starting the service."
+ },
+ {
+  "key": "CMD_START_HERE_DETAIL",
+  "kind": "const",
+  "screen": "Search (the box at the top of the window): a list of results, each with a name in bold and one grey line under it that says what it does. This is the grey line under that command.",
+  "moment": "The person reads it to learn that the highlighted slide in Preview is where the song will open.",
+  "role": "command description",
+  "does": "Says the song in Preview will open at the slide that is highlighted there, which is what a medley needs.",
+  "budget": 56,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "start_mark",
+   "preview",
+   "ring"
+  ],
+  "notes": "A fragment, no full stop. The word medley is known to church musicians."
+ },
+ {
+  "key": "CMD_NEW_ANNOUNCEMENT_DETAIL",
+  "kind": "const",
+  "screen": "Search (the box at the top of the window): a list of results, each with a name in bold and one grey line under it that says what it does. This is the grey line under the command that starts a new announcement card.",
+  "moment": "The person wants to add a notice, a verse of the week or the week's birthdays.",
+  "role": "command description",
+  "does": "Says a card can be a notice for the loop that runs while people take their seats, a Bible verse, or a list of birthdays.",
+  "budget": 52,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "announcement",
+   "card"
+  ],
+  "notes": "A fragment, no full stop."
+ },
+ {
+  "key": "KEYS_MORE",
+  "kind": "const",
+  "screen": "Keyboard shortcuts sheet, one line at the bottom, to the right of the button that starts the tour. Before it the keys Ctrl and K are drawn as key caps.",
+  "moment": "The person looked through the sheet for something that has no key, such as copying a plan or changing the design.",
+  "role": "hint line",
+  "does": "Says that anything not listed above is found by typing what one wants into the search, and gives two examples: copying a plan, the design.",
+  "budget": 78,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "search",
+   "plan",
+   "design"
+  ],
+  "notes": "One sentence, no full stop. Do not write the keys Ctrl K: they are drawn before the text. Use the product's own words for the plan and the design."
+ },
+ {
+  "key": "SETTINGS_GENERAL",
+  "kind": "const",
+  "screen": "The Settings dialog: a list of groups, each under a small heading. This is the heading of the first group, which holds two rows: the language of the window, and whether the window is light or dark.",
+  "moment": "The person opens Settings and scans the headings.",
+  "role": "group heading",
+  "does": "Heads the group of the program's most basic choices, the ones that fit under no other heading.",
+  "budget": 12,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "settings"
+  ],
+  "notes": "One word, the one programs in this language use for such a group."
+ },
+ {
+  "key": "search_bible",
+  "kind": "sentence",
+  "screen": "Search, with the filter set to the Bible: the grey hint inside the empty search box.",
+  "moment": "The person is about to look for a passage and wonders what to type.",
+  "role": "placeholder",
+  "does": "Says that either a reference or some words that stand in the verse may be typed, and shows a reference as the example.",
+  "budget": 48,
+  "variables": [
+   {
+    "name": "passage",
+    "example": "Mazmur 23:1",
+    "meaning": "A Bible reference used as the example, already written with the book's name as the Bible in use writes it."
+   }
+  ],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "passage",
+   "search"
+  ],
+  "notes": "The example comes first, then the alternative: a few words out of the verse. No full stop."
  }
 ]

@@ -82,7 +82,8 @@ def render(session, state):
     events, t = [], 0.3
     for step in state["steps"]:
         events += event(step, round(t, 2))
-        t += STEP
+        # Rune types one character every 0.035 s; the step after a long text waits for its end.
+        t += max(STEP, 0.035 * len(step.get("text", "")) + 0.3) if step["do"] == "type" else STEP
     events.append({"t": round(t, 2), "type": "mark", "name": "end"})
     script = os.path.join(here, "script.json")
     with open(script, "w", encoding="utf-8") as f:

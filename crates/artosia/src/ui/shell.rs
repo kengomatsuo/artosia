@@ -10,9 +10,8 @@
 //! Preview is the safe side. A click there moves the ring and nothing else; only Show, Enter
 //! and the Live pane put something on the projector (owner, 2026-11-11).
 
-use artosia_core::deck::{Deck, DeckSource, Slide, SlideKind, tag_group};
+use artosia_core::deck::{Deck, DeckSource, Slide, SlideKind};
 use artosia_slides::audience::clock_text;
-use artosia_slides::stage::group_color;
 use rune::{Color, Cursor, Cx, El, ScrollSpec, Tx, col, el, icon, row, spacer, text};
 use rune_kit::{Kit, Menu, MenuItem, ScrollBar};
 
@@ -20,7 +19,7 @@ use crate::state::{App, section_starts};
 use crate::strings as t;
 use crate::theme::{self, icons, space, type_};
 use crate::ui::live;
-use crate::ui::widgets::{btn, keycaps, state_pill, tag_chip, tile};
+use crate::ui::widgets::{btn, keycaps, state_pill, tile};
 
 /// Height of a row in the two lists: room for four lines of words.
 const ROW: f32 = 76.0;
@@ -114,7 +113,7 @@ enum Hint {
 /// that acts on it (owner, 2026-11-11: keys listed at the bottom did not help; a key on the
 /// row does).
 #[allow(clippy::too_many_arguments)]
-fn list_row(k: &Kit, key: &str, index: usize, number: Option<usize>, slide: &Slide, mark: Mark, go_live: bool, hint: Hint, starts: bool) -> El {
+fn list_row(k: &Kit, key: &str, index: usize, number: Option<usize>, slide: &Slide, mark: Mark, go_live: bool, hint: Hint, starts: bool, letters: bool) -> El {
     let live = matches!(mark, Mark::Live | Mark::Hidden);
     let on_fill = if mark == Mark::Hidden { Color::BLACK } else { theme::on_live() };
     let ink = if live { on_fill } else { k.c.text_base };
@@ -137,19 +136,29 @@ fn list_row(k: &Kit, key: &str, index: usize, number: Option<usize>, slide: &Sli
         }
     }
     let chip = match (slide.tag, slide.kind) {
-        (Some(_), _) if live => state_pill(&slide.short, Color::WHITE, Color::BLACK),
-        (Some(tag), _) => tag_chip(&slide.short, group_color(tag_group(tag))),
+        (Some(tag), _) if live => state_pill(&t::section_label(tag), Color::WHITE, Color::BLACK),
+        (Some(tag), _) => crate::ui::widgets::section_chip(tag),
         (None, SlideKind::Scripture) => text(slide.short.clone()).font(type_::SMALL_STRONG).color(faint),
         _ => el(),
     };
     // The number shown is the key that jumps here; a section's later slides carry none.
     let shown = number.filter(|n| *n < 10).map(|n| ((n + 1) % 10).to_string());
     // Drawn as a key, because it is one.
-    let digit = match shown {
-        Some(digit) if live => el().w(20.0).child(el().w(18.0).h(18.0).center().radius(4.0).fill(on_fill.alpha(0.16)).child(text(digit).font(type_::TINY).color(on_fill))),
-        Some(digit) => el().w(20.0).child(el().w(18.0).h(18.0).center().radius(4.0).fill(k.c.layer_03).child(text(digit).font(type_::TINY).color(k.c.text_muted))),
-        None => el().w(20.0),
+    let cap = |sign: String| match live {
+        true => el().w(18.0).h(18.0).center().radius(4.0).fill(on_fill.alpha(0.16)).child(text(sign).font(type_::TINY).color(on_fill)),
+        false => el().w(18.0).h(18.0).center().radius(4.0).fill(k.c.layer_03).child(text(sign).font(type_::TINY).color(k.c.text_muted)),
     };
+    // Beside the digit, the letter that jumps to the next section of this kind: C beside a
+    // chorus teaches the key where the eye already is (owner, 2026-11-11: a key shown "at
+    // the rows" helps, a list of keys at the bottom does not).
+    let letter = slide.tag.filter(|_| letters && number.is_some()).map(|tag| crate::state::marker_letter(tag).to_string());
+    let mut digit = row().w(40.0).gap(2.0).a11y_hidden();
+    if let Some(sign) = shown {
+        digit = digit.child(cap(sign));
+    }
+    if let Some(sign) = letter {
+        digit = digit.child(cap(sign));
+    }
     let trailing = match hint {
         Hint::None => el(),
         Hint::Next => keycaps(k, "Space", None),
@@ -178,7 +187,13 @@ fn list_row(k: &Kit, key: &str, index: usize, number: Option<usize>, slide: &Sli
             Mark::Rest => Color::TRANSPARENT,
         })
         .child(digit)
-        .child(col().w(46.0).gap(2.0).child(chip).child(if starts { icon(&icons::PLAY, 12.0).color(faint).a11y_hidden() } else { el() }))
+        // A section's name gets a column of its own; a Bible verse's number a narrow one; an
+        // announcement has neither, and its words start beside its number.
+        .child(match (slide.tag, slide.kind) {
+            (Some(_), _) => col().w(84.0).gap(2.0).items_start().child(chip).child(if starts { icon(&icons::PLAY, 12.0).color(faint).a11y_hidden() } else { el() }),
+            (None, SlideKind::Scripture) => col().w(46.0).items_start().child(chip),
+            _ => col().w(0.0),
+        })
         .child(words)
         .child(trailing);
     if mark == Mark::Cursor {
@@ -209,6 +224,8 @@ struct Pane<'a> {
     width: Option<f32>,
     cursor: Option<usize>,
     go_live: bool,
+    /// The letter keys act on this list, so its rows show them.
+    letters: bool,
     /// The slide Next will show, marked with its key.
     next_at: Option<usize>,
     /// What Artosia offers to bring here next, over the list.
@@ -222,7 +239,7 @@ struct Pane<'a> {
 }
 
 fn pane(k: &Kit, p: Pane<'_>) -> El {
-    let mut list = col().key(format!("{}-list", p.key)).w_full().grow(1.0).min_h(0.0).px(space::S2).py(space::S1).scroll(ScrollSpec { stick_bottom: false });
+    let mut list = col().key(format!("{}-list", p.key)).w_full().grow(1.0).min_h(0.0).px(space::S2).py(space::S1).scroll(ScrollSpec { stick_bottom: false }).scroll_edge_fade(crate::theme::size::FADE);
     match p.deck {
         Some(deck) if !deck.slides.is_empty() => {
             let starts = section_starts(deck);
@@ -248,7 +265,7 @@ fn pane(k: &Kit, p: Pane<'_>) -> El {
                     _ if p.next_at == Some(index) => Hint::Next,
                     _ => Hint::None,
                 };
-                list = list.child(list_row(k, p.key, index, number, slide, mark, p.go_live, hint, p.start == Some(index)));
+                list = list.child(list_row(k, p.key, index, number, slide, mark, p.go_live, hint, p.start == Some(index), p.letters));
             }
         }
         _ => list = list.child(p.empty),
@@ -281,7 +298,7 @@ fn picture(s: &App, k: &Kit, state: &artosia_slides::frame::OutputState, width: 
     let mut frame = el().size(width, (width * 9.0 / 16.0).round()).radius(k.radius.md).clip_rounded(k.radius.md).border(1.0, theme::surf().edge).child(crate::ui::thumb(s, state, width));
     if let Some(slide) = &state.slide {
         let chip = match (slide.tag, slide.kind) {
-            (Some(tag), _) => Some(tag_chip(&slide.short, group_color(tag_group(tag)))),
+            (Some(tag), _) => Some(crate::ui::widgets::section_chip(tag)),
             (None, SlideKind::Scripture) => Some(state_pill(&slide.short, Color::BLACK.alpha(0.55), Color::WHITE)),
             _ => None,
         };
@@ -381,6 +398,7 @@ fn preview_pane(s: &App, k: &Kit, size: Foot) -> El {
             width: None,
             cursor: open.map(|o| o.cursor).filter(|cursor| Some(*cursor) != live_index),
             go_live: false,
+            letters: s.settings.letter_keys && s.live.is_none(),
             next_at: None,
             // What was heard, or what usually follows: it comes into Preview, the safe side.
             strip: crate::ui::suggest::strip(s, k),
@@ -519,6 +537,7 @@ fn live_pane(s: &App, k: &Kit, size: Option<Foot>, layer: &mut Vec<El>) -> El {
             // The slide picked with Shift held, until Shift is let go.
             cursor: s.live_pick.filter(|pick| Some(*pick) != live.map(|l| l.index)),
             go_live: true,
+            letters: s.settings.letter_keys,
             strip: None,
             start: None,
             next_at: live.map(|l| l.index + 1).filter(|next| live.is_some_and(|l| *next < l.deck.slides.len())),
