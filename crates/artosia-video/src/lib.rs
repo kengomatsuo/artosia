@@ -7,11 +7,13 @@ mod frames;
 mod hardware;
 mod looper;
 mod poster;
+mod tap;
 
 pub use camera::{CameraLoop, Cameras};
 pub use error::VideoError;
 pub use looper::{VideoLoop, VideoOptions};
 pub use poster::{Poster, poster};
+pub use tap::{Nv12View, set_tap, want as want_taps};
 
 use std::sync::OnceLock;
 

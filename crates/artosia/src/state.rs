@@ -112,6 +112,11 @@ pub struct Settings {
     pub warp: artosia_slides::frame::Warp,
     /// The search learns from what is picked and sung, and orders equal matches by it.
     pub learn: bool,
+    /// A letter jumps to the section it names in the live song (C the chorus, V a verse).
+    /// Off, every letter starts a search. WCAG 2.1.4 asks that single-letter keys can be
+    /// turned off.
+    #[serde(default = "yes")]
+    pub letter_keys: bool,
 }
 
 impl Default for Settings {
@@ -141,6 +146,7 @@ impl Default for Settings {
             stream_record: false,
             warp: artosia_slides::frame::Warp::default(),
             learn: true,
+            letter_keys: true,
         }
     }
 }
@@ -152,6 +158,15 @@ pub struct BibleFile {
     pub name: String,
     /// None for the translation packed into the program.
     pub path: Option<PathBuf>,
+}
+
+fn yes() -> bool {
+    true
+}
+
+/// The key that names a section's kind: V, P, C, B, I, E, and X for any other.
+pub fn marker_letter(tag: artosia_core::song::Tag) -> char {
+    tag.short().chars().next().unwrap_or('X')
 }
 
 pub enum Undo {
@@ -314,6 +329,10 @@ pub struct App {
     /// the panes say which while it is held.
     pub held_ctrl: bool,
     pub held_shift: bool,
+    /// What was on the projector before, newest last, so a volunteer who went too far can
+    /// see where they were and bring it back into Preview.
+    pub history: Vec<LiveDeck>,
+    pub history_menu: bool,
     /// The plan's Add menu is open.
     pub add_menu: bool,
     /// The slide the loop is waiting on, and when it moves on, on the app clock.
@@ -486,6 +505,8 @@ impl App {
             plan_dropped: false,
             held_ctrl: false,
             held_shift: false,
+            history: Vec::new(),
+            history_menu: false,
             add_menu: false,
             loop_at: (0, 0.0),
             stream: None,
@@ -762,7 +783,60 @@ impl App {
     /// live it starts the open song there.
     pub fn jump_to_section(&mut self, nth: usize) {
         let Some(slide) = self.target_deck().and_then(|deck| section_starts(deck).get(nth).copied()) else { return };
-        if self.live.is_some() { self.go_to(slide) } else { self.show(slide) }
+        // With nothing live the ring moves: only Show, Enter and Next start the projector.
+        if self.live.is_some() { self.go_to(slide) } else { self.select_at(slide) }
+    }
+
+    /// Ctrl and a digit: the ring in Preview goes to that section; the projector stays.
+    pub fn select_section(&mut self, nth: usize) {
+        let Some(slide) = self.open.as_ref().and_then(|open| section_starts(&open.deck).get(nth).copied()) else { return };
+        self.select_at(slide);
+    }
+
+    /// The letters that jump somewhere in the deck the keys act on.
+    pub fn marker_letters(&self) -> Vec<char> {
+        let Some(deck) = self.target_deck() else { return Vec::new() };
+        let mut letters: Vec<char> = deck.slides.iter().filter_map(|slide| slide.tag).map(marker_letter).collect();
+        letters.sort_unstable();
+        letters.dedup();
+        letters
+    }
+
+    /// A letter key: the next section of that kind after the live slide, going round to the
+    /// first (owner, 2026-11-11: "C stands for chorus, and a keyboard shortcut for every named
+    /// marker"). False when the deck has no such section.
+    pub fn jump_to_marker(&mut self, letter: char) -> bool {
+        let Some(deck) = self.target_deck() else { return false };
+        let from = self.live.as_ref().map(|live| live.index).or(self.open.as_ref().map(|open| open.cursor)).unwrap_or(0);
+        let starts: Vec<usize> = section_starts(deck).into_iter().filter(|&at| deck.slides[at].tag.is_some_and(|tag| marker_letter(tag) == letter)).collect();
+        let Some(&to) = starts.iter().find(|&&at| at > from).or(starts.first()) else { return false };
+        if self.live.is_some() { self.go_to(to) } else { self.select_at(to) }
+        true
+    }
+
+    /// Keeps what is leaving the projector, when another item takes its place.
+    fn remember_live(&mut self, next: &DeckSource) {
+        let Some(live) = &self.live else { return };
+        if &live.deck.source == next {
+            return;
+        }
+        let kept = LiveDeck { deck: live.deck.clone(), item: live.item, index: live.index };
+        self.history.retain(|shown| shown.deck.source != kept.deck.source);
+        self.history.push(kept);
+        let extra = self.history.len().saturating_sub(8);
+        self.history.drain(..extra);
+    }
+
+    /// Brings something shown earlier back into Preview, with the ring where it was left.
+    pub fn open_shown(&mut self, at: usize) {
+        let Some(shown) = self.history.get(at) else { return };
+        let (deck, item, index) = (shown.deck.clone(), shown.item, shown.index);
+        self.open_deck(deck, item, index);
+        if let Some(open) = self.open.as_mut() {
+            open.cursor = index.min(open.deck.slides.len().saturating_sub(1));
+            open.armed = true;
+        }
+        self.history_menu = false;
     }
 
     /// Moves the selector in the Preview pane and leaves the projector alone. Past either end
@@ -812,6 +886,8 @@ impl App {
         }
         self.live_pick = None;
         self.looping = false;
+        self.history.retain(|shown| shown.deck.source != live.deck.source);
+        self.history.push(LiveDeck { deck: live.deck.clone(), item: live.item, index: live.index });
         self.say(t::LIVE_ENDED(), Some(Undo::Live(Box::new(live))));
     }
 
@@ -1041,7 +1117,9 @@ impl App {
         open.armed = false;
         let (source, tag, first) = (open.deck.source.clone(), open.deck.slides[index].tag, open.deck.slides[0].tag);
         let before = self.live.as_ref().map(|live| live.deck.source.clone());
-        self.live = Some(LiveDeck { deck: open.deck.clone(), item: open.item, index });
+        let (deck, item) = (open.deck.clone(), open.item);
+        self.remember_live(&source);
+        self.live = Some(LiveDeck { deck, item, index });
         // Another slide of what is already live is not a new song going up.
         if before.as_ref() != Some(&source) {
             self.log_live(&source, tag, first, index);
@@ -1121,6 +1199,7 @@ impl App {
             self.follow_live();
         } else if let Some((id, deck)) = self.neighbour(false) {
             let index = deck.slides.len().saturating_sub(1);
+            self.remember_live(&deck.source);
             self.live = Some(LiveDeck { deck, item: Some(id), index });
             self.reveal();
             self.requeue();
@@ -1315,6 +1394,50 @@ mod tests {
 
     fn live_at(app: &App) -> Option<(Option<u64>, usize)> {
         app.live.as_ref().map(|live| (live.item, live.index))
+    }
+
+    #[test]
+    fn a_letter_goes_to_the_next_section_of_its_kind() {
+        let mut app = App::practice();
+        let first = song_item(&app, 0);
+        app.open_plan_item(first);
+        // Nothing is live: a letter and a digit move the ring and start nothing.
+        assert!(app.jump_to_marker('C'));
+        assert!(app.live.is_none());
+        let chorus = app.open.as_ref().map(|open| open.cursor).unwrap_or(0);
+        assert!(chorus > 0);
+        app.jump_to_section(0);
+        assert_eq!((app.live.is_none(), app.open.as_ref().map(|open| open.cursor)), (true, Some(0)));
+        // Live: the letter moves the projector, and a kind the song lacks does nothing.
+        app.show(0);
+        assert!(app.jump_to_marker('C'));
+        assert_eq!(live_at(&app), Some((Some(first), chorus)));
+        assert!(!app.jump_to_marker('Q'));
+        assert_eq!(live_at(&app), Some((Some(first), chorus)));
+        // Past the last of its kind it goes round to the first.
+        assert!(app.jump_to_marker('V'));
+        assert_eq!(live_at(&app), Some((Some(first), 0)));
+        assert!(app.marker_letters().contains(&'C'));
+    }
+
+    #[test]
+    fn what_left_the_projector_can_be_brought_back_into_preview() {
+        let mut app = App::practice();
+        let (first, second) = (song_item(&app, 0), song_item(&app, 1));
+        app.open_plan_item(first);
+        app.show(1);
+        // Another slide of the same song is not something that was left.
+        app.go_to(0);
+        assert!(app.history.is_empty());
+        app.go_to(1);
+        app.open_plan_item(second);
+        app.show(0);
+        assert_eq!(app.history.iter().map(|shown| (shown.item, shown.index)).collect::<Vec<_>>(), vec![(Some(first), 1)]);
+        // Back into Preview where it was left; the projector stays on the second song.
+        app.open_shown(0);
+        assert_eq!(app.open.as_ref().map(|open| (open.item, open.cursor)), Some((Some(first), 1)));
+        assert_eq!(live_at(&app), Some((Some(second), 0)));
+        assert!(app.preview_waits());
     }
 
     #[test]

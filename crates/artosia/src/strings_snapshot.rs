@@ -214,6 +214,10 @@ pub fn dump() -> String {
     line(out, "PLAN_DRAG", PLAN_DRAG());
     line(out, "ADDING_TO_PLAN", ADDING_TO_PLAN());
     line(out, "BTN_DONE", BTN_DONE());
+    line(out, "BTN_EARLIER", BTN_EARLIER());
+    line(out, "EARLIER_HINT", EARLIER_HINT());
+    line(out, "LETTER_KEYS", LETTER_KEYS());
+    line(out, "LETTER_KEYS_HINT", LETTER_KEYS_HINT());
     line(out, "after_this", &after_this("Kasih Setia-Mu"));
     line(out, "COUNTDOWN", COUNTDOWN());
     line(out, "COUNTDOWN_LABEL", COUNTDOWN_LABEL());

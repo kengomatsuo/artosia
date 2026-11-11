@@ -60,6 +60,38 @@ pub(crate) fn nv12_frame(sample: &gst::Sample) -> Result<ByteFrame, VideoError> 
     })
 }
 
+/// Lends an NV12 system-memory sample's planes to `with`, without copying them.
+pub(crate) fn nv12_view<R>(sample: &gst::Sample, with: impl FnOnce(crate::tap::Nv12View<'_>) -> R) -> Result<R, VideoError> {
+    let buffer = sample.buffer().ok_or_else(|| VideoError::Frame("sample has no buffer".into()))?;
+    let caps = sample.caps().ok_or_else(|| VideoError::Frame("sample has no caps".into()))?;
+    let info = gst_video::VideoInfo::from_caps(caps).map_err(|e| VideoError::Frame(e.to_string()))?;
+    if info.format() != gst_video::VideoFormat::Nv12 {
+        return Err(VideoError::Frame(format!("expected NV12, got {}", info.format())));
+    }
+    let frame = gst_video::VideoFrameRef::from_buffer_ref_readable(buffer, &info)
+        .map_err(|e| VideoError::Frame(e.to_string()))?;
+    let strides = frame.plane_stride();
+    let stride = |i: usize| strides.get(i).copied().and_then(|s| usize::try_from(s).ok()).unwrap_or(0);
+    let luma = frame.plane_data(0).map_err(|e| VideoError::Frame(e.to_string()))?;
+    let chroma = frame.plane_data(1).map_err(|e| VideoError::Frame(e.to_string()))?;
+    let c = info.colorimetry();
+    let bt601 = match c.matrix() {
+        gst_video::VideoColorMatrix::Bt601 => true,
+        gst_video::VideoColorMatrix::Unknown => info.height() <= 576,
+        _ => false,
+    };
+    Ok(with(crate::tap::Nv12View {
+        width: info.width(),
+        height: info.height(),
+        luma,
+        luma_stride: stride(0),
+        chroma,
+        chroma_stride: stride(1),
+        full_range: c.range() == gst_video::VideoColorRange::Range0_255,
+        bt601,
+    }))
+}
+
 /// A tightly packed RGBA copy of a sample already converted to RGBA.
 pub(crate) fn rgba_pixels(sample: &gst::Sample) -> Result<(u32, u32, Vec<u8>), VideoError> {
     let buffer = sample.buffer().ok_or_else(|| VideoError::Frame("sample has no buffer".into()))?;

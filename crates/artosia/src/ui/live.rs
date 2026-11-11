@@ -23,7 +23,9 @@ pub(crate) fn transport(s: &App, k: &Kit, size: Option<Foot>) -> El {
         }
         None => (44.0, 32.0, None, false),
     };
-    let hint = |button: crate::ui::widgets::Btn, keys: &str| if hints { button.hint(keys) } else { button };
+    // Every button prints its key (principle: the key is on the control, not in a legend).
+    let _ = hints;
+    let hint = |button: crate::ui::widgets::Btn, keys: &str| button.hint(keys);
     let frame = col().key("transport").gap(space::S2);
     let frame = match (width, size) {
         (Some(width), Some(size)) => frame.w(width).h(size.height),
@@ -35,7 +37,7 @@ pub(crate) fn transport(s: &App, k: &Kit, size: Option<Foot>) -> El {
                 .w_full()
                 .gap(space::S2)
                 // The arrows point the way the list runs, and name the keys that do the same.
-                .child(btn(t::BTN_BACK()).icon(&icons::ARROW_UP).height(tall).build(k, |s, tx| {
+                .child(btn(t::BTN_BACK()).icon(&icons::ARROW_UP).height(tall).hint(t::KEY_BACK()).build(k, |s, tx| {
                     s.previous();
                     crate::follow(s, tx);
                     tx.blur();
@@ -71,7 +73,7 @@ pub(crate) fn transport(s: &App, k: &Kit, size: Option<Foot>) -> El {
                     },
                 ))
                 // End takes the live item off the projector; the toast puts it back.
-                .child(hint(btn(t::BTN_END()).icon(&icons::STOP).height(short).grow(), "F6").disabled(s.live.is_none()).build(k, |s, tx| {
+                .child(hint(btn(t::BTN_END()).height(short).grow(), "F6").disabled(s.live.is_none()).build(k, |s, tx| {
                     s.end_live();
                     tx.blur();
                 })),
