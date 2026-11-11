@@ -3,13 +3,13 @@
 
 use artosia_slides::fonts;
 use artosia_slides::look::{Look, Outline, hex_of, parse_hex, rgb};
-use rune::{Color, Cursor, El, TextEdit, Tx, el, row};
+use rune::{Color, Cursor, El, TextEdit, Tx, col, el, row, text};
 use rune_kit::{Combobox, ComboboxOption, ComboboxState, Kit, SegmentedControl, TextInput};
 
 use super::sheets::setting;
 use crate::state::App;
 use crate::strings as t;
-use crate::theme::space;
+use crate::theme::{space, type_};
 
 /// What the dialog's typed colours and its font list hold between frames.
 pub struct LookEdit {
@@ -66,7 +66,7 @@ fn hex_field(k: &Kit, edit: &TextEdit, outline: bool) -> El {
     let field = if outline {
         field.on_edit(|s: &mut App| &mut s.look_edit.outline).on_change(|s: &mut App, _: &mut Tx| {
             if let Some(color) = parse_hex(&s.look_edit.outline.text) {
-                let mut look = s.settings.look.clone();
+                let mut look = s.look();
                 look.outline_ink = color;
                 s.set_look(look);
             }
@@ -74,7 +74,7 @@ fn hex_field(k: &Kit, edit: &TextEdit, outline: bool) -> El {
     } else {
         field.on_edit(|s: &mut App| &mut s.look_edit.ink).on_change(|s: &mut App, _: &mut Tx| {
             if let Some(color) = parse_hex(&s.look_edit.ink.text) {
-                let mut look = s.settings.look.clone();
+                let mut look = s.look();
                 look.ink = color;
                 s.set_look(look);
             }
@@ -89,7 +89,7 @@ fn colour_row(k: &Kit, label: &'static str, current: [u8; 3], choices: &[(&'stat
         let color = *color;
         let key = format!("look-{}-{}", if outline { "outline" } else { "ink" }, hex_of(color));
         squares = squares.child(swatch(k, key, name, color, current == color, move |s: &mut App| {
-            let mut look = s.settings.look.clone();
+            let mut look = s.look();
             if outline {
                 look.outline_ink = color;
             } else {
@@ -104,7 +104,7 @@ fn colour_row(k: &Kit, label: &'static str, current: [u8; 3], choices: &[(&'stat
 /// The font picker. The list of installed families is asked for only once it is opened, because
 /// reading the system's fonts takes a moment and some memory.
 fn font_row(s: &App, k: &Kit, layer: &mut Vec<El>) -> El {
-    let current = s.settings.look.font.clone();
+    let current = s.look().font.clone();
     let default = ComboboxOption::new("", t::LOOK_FONT_DEFAULT());
     let mut options = vec![default];
     if s.look_edit.font.is_open() {
@@ -120,7 +120,7 @@ fn font_row(s: &App, k: &Kit, layer: &mut Vec<El>) -> El {
         .width(280.0)
         .max_height(240.0)
         .on_choose(|s: &mut App, name: &str, _: &mut Tx| {
-            let mut look = s.settings.look.clone();
+            let mut look = s.look();
             look.font = name.to_string();
             s.set_look(look);
         })
@@ -130,7 +130,7 @@ fn font_row(s: &App, k: &Kit, layer: &mut Vec<El>) -> El {
 
 /// The rows that style the words: colour, font, outline and the outline's colour.
 pub fn rows(s: &App, k: &Kit, layer: &mut Vec<El>) -> Vec<El> {
-    let look = &s.settings.look;
+    let look = s.look();
     let at = Outline::ALL.iter().position(|outline| *outline == look.outline);
     vec![
         colour_row(k, t::LOOK_TEXT_COLOUR(), look.ink, &text_colours(), &s.look_edit.ink, false),
@@ -142,7 +142,7 @@ pub fn rows(s: &App, k: &Kit, layer: &mut Vec<El>) -> Vec<El> {
                 .label(t::LOOK_OUTLINE())
                 .fit()
                 .on_pick(|s: &mut App, picked, _: &mut Tx| {
-                    let mut look = s.settings.look.clone();
+                    let mut look = s.look();
                     look.outline = Outline::ALL[picked.min(Outline::ALL.len() - 1)];
                     s.set_look(look);
                 })
@@ -164,4 +164,25 @@ pub fn preview(s: &App, k: &Kit) -> El {
         .pb(space::S2)
         .justify_center()
         .child(el().size(width, height).radius(k.radius.md).clip_rounded(k.radius.md).child(super::thumb(s, &state, width)))
+}
+
+/// What the dialog edits: the usual look, or the open plan's own. Choosing the plan's own copies
+/// the usual look as a start; going back to the usual look drops it, with Undo in a toast.
+pub fn chooser(s: &App, k: &Kit) -> El {
+    let own = s.has_own_look();
+    let hint = if own { t::look_only_for(&s.plan_title()) } else { t::LOOK_FOR_USUAL_HINT().to_string() };
+    col()
+        .key("look-for")
+        .w_full()
+        .px(space::S4)
+        .pb(space::S2)
+        .gap(space::S1)
+        .child(
+            SegmentedControl::new(&[t::LOOK_FOR_USUAL(), t::LOOK_FOR_PLAN()], Some(usize::from(own)))
+                .label(t::LOOK_FOR_LABEL())
+                .fit()
+                .on_pick(|s: &mut App, picked, _: &mut Tx| if picked == 0 { s.use_usual_look() } else { s.use_own_look() })
+                .build(k),
+        )
+        .child(text(hint).font(type_::SMALL).color(k.c.text_muted).truncate())
 }

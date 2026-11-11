@@ -50,6 +50,11 @@ pub fn dump() -> String {
     line(out, "PLAN_NAME_LABEL", PLAN_NAME_LABEL());
     line(out, "PLAN_DATE_LABEL", PLAN_DATE_LABEL());
     line(out, "PLAN_DATE_HINT", PLAN_DATE_HINT());
+    line(out, "LOOK_FOR_LABEL", LOOK_FOR_LABEL());
+    line(out, "LOOK_FOR_USUAL", LOOK_FOR_USUAL());
+    line(out, "LOOK_FOR_PLAN", LOOK_FOR_PLAN());
+    line(out, "LOOK_FOR_USUAL_HINT", LOOK_FOR_USUAL_HINT());
+    line(out, "PLAN_OWN_LOOK", PLAN_OWN_LOOK());
     line(out, "COUNTDOWN_DETAIL", COUNTDOWN_DETAIL());
     line(out, "MESSAGE_DETAIL", MESSAGE_DETAIL());
     line(out, "BIBLE_LOADING", BIBLE_LOADING());

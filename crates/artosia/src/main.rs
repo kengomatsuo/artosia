@@ -292,7 +292,7 @@ const SCENES: &[Scene] = &[
     ("look", |s| s.sheet = Sheet::Looks),
     ("look-styled", |s| {
         s.sheet = Sheet::Looks;
-        let styled = artosia_slides::look::Look { ink: [255, 214, 0], font: "Georgia".into(), outline: artosia_slides::look::Outline::Thick, ..s.settings.look.clone() };
+        let styled = artosia_slides::look::Look { ink: [255, 214, 0], font: "Georgia".into(), outline: artosia_slides::look::Outline::Thick, ..s.look() };
         s.set_look(styled);
     }),
     ("screens", |s| s.sheet = Sheet::Screens),
@@ -397,6 +397,19 @@ const SCENES: &[Scene] = &[
         if let Some(renaming) = s.switcher.renaming.as_mut() {
             renaming.date.replace_text("2026-11-15");
         }
+    }),
+    // A plan with a look of its own: the dialog on it, and the list with that plan marked.
+    ("look-plan", |s| {
+        s.demo_plans();
+        s.use_own_look();
+        let styled = artosia_slides::look::Look { ink: [255, 214, 0], outline: artosia_slides::look::Outline::Thick, ..s.look() };
+        s.set_look(styled);
+        s.sheet = Sheet::Looks;
+    }),
+    ("plans-own-look", |s| {
+        s.demo_plans();
+        s.use_own_look();
+        s.open_switcher();
     }),
     ("search-plan", |s| {
         s.demo_plans();

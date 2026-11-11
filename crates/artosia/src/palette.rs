@@ -851,7 +851,7 @@ impl App {
             Hit::Look { index, .. } => {
                 self.close_palette();
                 if let Some(preset) = presets().into_iter().nth(index) {
-                    let chosen = self.settings.look.with_preset(preset);
+                    let chosen = self.look().with_preset(preset);
                     self.set_look(chosen);
                 }
             }

@@ -348,7 +348,7 @@ fn preview(s: &App, k: &Kit) -> El {
         Hit::Look { index, name } => {
             if let Some(preset) = presets().into_iter().nth(*index) {
                 let mut state = s.preview_state(Some(crate::ui::sample_slide()));
-                state.look = s.settings.look.with_preset(preset);
+                state.look = s.look().with_preset(preset);
                 body = body.child(slide_preview(&state)).child(text(name.clone()).font(type_::HEADING).color(k.c.text_base));
             }
         }

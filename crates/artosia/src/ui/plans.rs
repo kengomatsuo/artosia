@@ -54,7 +54,12 @@ pub(crate) fn title_bar(s: &App, k: &Kit, layer: &mut Vec<El>, tools: El) -> El 
     for row in &s.switcher.rows {
         let id = row.id;
         let current = id == s.plan.id;
-        menu = menu.item(MenuItem::new(row.label()).checked(current).badge(row.detail()).on_select(move |s: &mut App| s.switch_plan(id)));
+        // A plan with a look of its own carries a small mark before its name; the others keep the room, so the names line up.
+        let mark = match row.own_look {
+            true => icon(&icons::LOOK, 14.0).color(k.c.icon_base).role("img").label(t::PLAN_OWN_LOOK()),
+            false => el().size(14.0, 14.0).a11y_hidden(),
+        };
+        menu = menu.item(MenuItem::new(row.label()).lead(mark).checked(current).badge(row.detail()).on_select(move |s: &mut App| s.switch_plan(id)));
     }
     menu = menu
         .separator()
