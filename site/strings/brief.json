@@ -49,7 +49,7 @@
   "step_open_text": {"where": "one sentence under step 3", "does": "the first time, Windows may show a warning that it does not know the publisher; the reason is that the program files do not carry a paid code signature", "max": 130},
   "facts_title": {"where": "heading of the last part, a list of short facts", "does": "things worth knowing before you download", "max": 24},
   "fact_runs_term": {"where": "bold label of a fact", "does": "what it runs on", "max": 16},
-  "fact_runs_text": {"where": "the fact under that label", "does": "Windows 10 and 11, 64-bit. Versions for Mac and Linux are planned and have not been tested", "max": 90},
+  "fact_runs_text": {"where": "the fact under that label", "does": "three short facts: it is built for Windows 10 and 11, 64-bit; so far it has only been tried on Windows 11; versions for Mac and Linux are planned and have not been tested", "max": 120},
   "fact_needs_term": {"where": "bold label of a fact", "does": "what you need", "max": 16},
   "fact_needs_text": {"where": "the fact under that label", "does": "a projector or a second screen; one screen alone is enough to try the program", "max": 90},
   "fact_bible_term": {"where": "bold label of a fact", "does": "the Bible, the common Indonesian word", "max": 12},

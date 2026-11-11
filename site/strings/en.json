@@ -48,7 +48,7 @@
   "step_open_text": "Windows may warn about an unknown publisher the first time, because the programs are not code-signed.",
   "facts_title": "Good to know",
   "fact_runs_term": "Runs on",
-  "fact_runs_text": "Windows 10 and 11, 64-bit. Mac and Linux are planned and untested.",
+  "fact_runs_text": "Windows 10 and 11, 64-bit, and tried on Windows 11 so far. Mac and Linux are planned and untested.",
   "fact_needs_term": "Needs",
   "fact_needs_text": "A projector or a second screen. One screen is enough to try it.",
   "fact_bible_term": "Bible",
