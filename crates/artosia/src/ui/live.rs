@@ -37,12 +37,12 @@ pub(crate) fn transport(s: &App, k: &Kit, size: Option<Foot>) -> El {
                 .w_full()
                 .gap(space::S2)
                 // The arrows point the way the list runs, and name the keys that do the same.
-                .child(btn(t::BTN_BACK()).icon(&icons::ARROW_UP).height(tall).hint(t::KEY_BACK()).build(k, |s, tx| {
+                .child(btn(t::BTN_BACK()).key_icon(&icons::ARROW_UP).height(tall).build(k, |s, tx| {
                     s.previous();
                     crate::follow(s, tx);
                     tx.blur();
                 }))
-                .child(btn(t::BTN_NEXT()).icon(&icons::ARROW_DOWN).primary().height(tall).grow().hint(t::KEY_NEXT()).build(k, |s, tx| {
+                .child(btn(t::BTN_NEXT()).key_icon(&icons::ARROW_DOWN).primary().height(tall).grow().hint(t::KEY_NEXT()).build(k, |s, tx| {
                     s.next();
                     crate::follow(s, tx);
                     tx.blur();

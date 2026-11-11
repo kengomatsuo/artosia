@@ -24,6 +24,8 @@ pub struct Btn {
     icon: Option<&'static Icon>,
     kind: Kind,
     hint: Option<String>,
+    /// An arrow key drawn as a key cap before the label, for a button an arrow key presses.
+    key_icon: Option<&'static Icon>,
     height: f32,
     grow: bool,
     disabled: bool,
@@ -38,6 +40,7 @@ pub fn btn(label: impl Into<String>) -> Btn {
         icon: None,
         kind: Kind::Plain,
         hint: None,
+        key_icon: None,
         height: 32.0,
         grow: false,
         disabled: false,
@@ -75,6 +78,11 @@ impl Btn {
     /// A key cap after the label, such as "F1".
     pub fn hint(mut self, keys: impl Into<String>) -> Self {
         self.hint = Some(keys.into());
+        self
+    }
+    /// The arrow key that presses this button, drawn as a key: no font is asked for an arrow.
+    pub fn key_icon(mut self, icon: &'static Icon) -> Self {
+        self.key_icon = Some(icon);
         self
     }
     pub fn tall(mut self) -> Self {
@@ -137,6 +145,9 @@ impl Btn {
         if let Some(i) = self.icon {
             e = e.child(icon(i, 16.0).color(ink).a11y_hidden());
         }
+        if let Some(i) = self.key_icon {
+            e = e.child(el().size(20.0, 18.0).center().radius(4.0).fill(ink.alpha(0.14)).child(icon(i, 12.0).color(ink)).a11y_hidden());
+        }
         if !self.icon_only {
             e = e.child(text(self.label.clone()).font(font).color(ink).truncate().a11y_hidden());
         }
@@ -149,7 +160,8 @@ impl Btn {
             });
         }
         if self.grow {
-            e = e.grow(1.0);
+            // A grown button shares its row; a label too long for its share is cut, never pushed past the edge.
+            e = e.grow(1.0).min_w(0.0);
         }
         let tip = self.help.or(self.icon_only.then(|| self.label.clone()));
         if let Some(tip) = tip {

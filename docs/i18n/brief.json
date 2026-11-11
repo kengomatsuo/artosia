@@ -2300,13 +2300,13 @@
     "moment": "Three small buttons side by side in a 344 pt column, each with a key cap.",
     "role": "button",
     "does": "Button that hides the words while leaving the background picture or video on the congregation's screen.",
-    "budget": 12,
+    "budget": 11,
     "variables": [],
     "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
     "vocabulary": [
       "clear-text"
     ],
-    "notes": "Phone page already writes this action; see glossary. Must fit with a key cap."
+    "notes": "Phone page already writes this action; see glossary. Must fit with a key cap. The button is 140 points wide and also carries its key (F1), so the words must fit in 11 characters."
   },
   {
     "key": "BTN_BLACK",

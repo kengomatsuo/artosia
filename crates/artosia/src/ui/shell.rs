@@ -293,12 +293,12 @@ fn preview_controls(s: &App, k: &Kit, size: Foot, live_here: bool, hidden: bool)
     let slide = s.open.as_ref().and_then(|open| open.deck.slides.get(open.cursor));
     let label = slide.map(|slide| slide.label.clone()).unwrap_or_else(|| t::NEXT_NOTHING().to_string());
     let after = s.after_preview_title();
-    let step = if size.height < 150.0 { 28.0 } else { 32.0 };
-    let fixed = 20.0 + space::S2 + space::S2 + step + if after.is_some() { space::S2 + 16.0 } else { 0.0 };
-    let mut name = row().w_full().h(20.0).gap(space::S2).center_y().child(text(label).font(type_::BODY_STRONG).color(k.c.text_base).truncate().min_w(0.0));
-    if live_here && !s.preview_waits() {
-        name = name.child(state_pill(t::LIVE(), if hidden { theme::warn() } else { theme::live() }, if hidden { Color::BLACK } else { theme::on_live() }));
-    }
+    // With room the two plan buttons share a row under the slide's name. Without it they
+    // stack, each with its words and its key, and the name gives way: the ringed row says it.
+    let roomy = size.roomy();
+    let step = if roomy { 32.0 } else { 28.0 };
+    let caption = if after.is_some() { space::S2 + 16.0 } else { 0.0 };
+    let fixed = if roomy { 20.0 + space::S2 + space::S2 + step + caption } else { space::S2 + step + space::S1 + step + caption };
     let show = btn(t::BTN_SHOW()).primary().height((size.height - fixed).max(36.0)).grow().hint(t::KEY_ENTER()).disabled(!s.preview_waits()).build(k, |s, tx| {
         s.enter();
         crate::follow(s, tx);
@@ -306,15 +306,22 @@ fn preview_controls(s: &App, k: &Kit, size: Foot, live_here: bool, hidden: bool)
     });
     let walk = |forward: bool| {
         let (label, glyph, keys) = if forward { (t::BTN_NEXT_ITEM(), &icons::ITEM_AFTER, "Tab") } else { (t::BTN_PREVIOUS_ITEM(), &icons::ITEM_BEFORE, "Shift Tab") };
-        // The key is printed on the button; with little room the icon gives way to it.
-        let button = btn(label).height(step).grow().hint(keys).disabled(s.walk_target(forward).is_none());
-        if size.roomy() { button.icon(glyph) } else { button }.build(k, move |s, tx| {
+        btn(label).icon(glyph).height(step).grow().hint(keys).disabled(s.walk_target(forward).is_none()).build(k, move |s, tx| {
             s.walk_plan(forward);
             crate::follow(s, tx);
             tx.blur();
         })
     };
-    let mut side = col().key("preview-controls").w(size.controls).h(size.height).gap(space::S2).child(name).child(row().w_full().child(show)).child(row().w_full().gap(space::S2).child(walk(false)).child(walk(true)));
+    let mut side = col().key("preview-controls").w(size.controls).h(size.height).gap(space::S2);
+    if roomy {
+        let mut name = row().w_full().h(20.0).gap(space::S2).center_y().child(text(label).font(type_::BODY_STRONG).color(k.c.text_base).truncate().min_w(0.0));
+        if live_here && !s.preview_waits() {
+            name = name.child(state_pill(t::LIVE(), if hidden { theme::warn() } else { theme::live() }, if hidden { Color::BLACK } else { theme::on_live() }));
+        }
+        side = side.child(name).child(row().w_full().child(show)).child(row().w_full().gap(space::S2).child(walk(false)).child(walk(true)));
+    } else {
+        side = side.child(row().w_full().child(show)).child(col().w_full().gap(space::S1).child(row().w_full().child(walk(false))).child(row().w_full().child(walk(true))));
+    }
     if let Some(after) = after {
         side = side.child(el().w_full().h(16.0).child(text(t::after_this(&after)).font(type_::SMALL).color(k.c.text_muted).truncate()));
     }
