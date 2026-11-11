@@ -168,6 +168,12 @@ pub enum FromOutput {
     /// The person at the projector window hid it with Escape or a click. Sent only for the
     /// window shown by `Place { here: true }`; the operator should turn its switch off.
     ProjectorHidden,
+    /// A small picture of the moving background (video or camera) as it is on the projector
+    /// now, a few times a second: `rgb` is `width * height` RGB pixels as base64
+    /// ([`crate::preview`]).
+    Preview { width: u32, height: u32, rgb: String },
+    /// The moving background stopped or changed; the operator drops the picture.
+    PreviewEnd,
 }
 
 #[cfg(test)]

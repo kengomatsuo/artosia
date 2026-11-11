@@ -309,6 +309,18 @@ const SCENES: &[Scene] = &[
         let styled = artosia_slides::look::Look { ink: [255, 214, 0], font: "Georgia".into(), outline: artosia_slides::look::Outline::Thick, ..s.settings.look.clone() };
         s.set_look(styled);
     }),
+    // The owner's look: a camera behind words at the bottom. The frame is a made-up gradient
+    // handed over as if the projector had sent it, so both previews show it under the words.
+    ("camera-background", |s| {
+        let look = artosia_slides::look::Look { background: artosia_slides::look::Background::Camera(String::new()), place: artosia_slides::look::Place::Bottom, shadow: true, ..s.settings.look.clone() };
+        s.set_look(look);
+        s.open_song(0, None);
+        s.show(2);
+        s.open_song(1, None);
+        let (w, h) = (256u32, 144u32);
+        let rgba = (0..w * h).flat_map(|i| [(i % w * 255 / w) as u8, (i / w * 255 / h) as u8, 200 - (i % w * 150 / w) as u8, 255]).collect();
+        s.link.inject_live_picture(w, h, rgba);
+    }),
     ("screens", |s| s.sheet = Sheet::Screens),
     ("screens-two", |s| {
         s.demo_screens = true;
