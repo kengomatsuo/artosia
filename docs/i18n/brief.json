@@ -10352,7 +10352,7 @@
   "screen": "The song editor: the lyrics field in the middle, and above it a quiet strip that proposes section names for the parts of the song that have none, drawn as the row of small coloured section chips the song would get. Tooltip on that button.",
   "moment": "Hover over the button.",
   "role": "tooltip",
-  "does": "Says the button writes the suggested section markers into the words, as one change that can be undone.",
+  "does": "Says that pressing the button puts the proposed section names in the lyrics, as one change that can be undone.",
   "budget": 50,
   "variables": [],
   "cases": [],
