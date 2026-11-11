@@ -2,12 +2,15 @@
 //! with a little noise. No files, no downloads: the audio is built here. Run it with
 //! `cargo test -p artosia-listen --test tempo_accuracy -- --nocapture` to see the table.
 //!
-//! A row passes when the reading at the end is within 2 BPM of the truth (a doubled or halved
-//! reading is a failure) and the tracker held a correct reading from 8.5 s on.
+//! A row passes when the reading at the end is within 2 BPM of what the tracker should say and
+//! it held that reading from 8.5 s on. Up to `MAX_BPM` that is the tempo itself, and a doubled or
+//! halved reading is a failure. Above it the tracker says half the tempo or nothing, never
+//! another number: real slow songs were read at double speed until readings stopped at 132
+//! (README, "Measured on real music").
 
 use std::f32::consts::PI;
 
-use artosia_listen::TempoTracker;
+use artosia_listen::{MAX_BPM, TempoTracker};
 
 const RATE: u32 = 48_000;
 const SECONDS: f32 = 24.0;
@@ -190,6 +193,8 @@ struct Row {
     detected: Option<f32>,
     locked_at: Option<f32>,
     held: bool,
+    /// From `LOCK_BY` on, every reading that was made was right; some reports may be empty.
+    never_wrong: bool,
 }
 
 fn measure(signal: &[f32], truth: f32) -> Row {
@@ -204,7 +209,8 @@ fn measure(signal: &[f32], truth: f32) -> Row {
     // The first report after which every report is right.
     let locked_at = (0..reports.len()).find(|&i| reports[i..].iter().all(right)).map(|i| reports[i].0);
     let held = reports.iter().filter(|r| r.0 >= LOCK_BY).all(right);
-    Row { detected: reports.last().and_then(|r| r.1), locked_at, held }
+    let never_wrong = reports.iter().filter(|r| r.0 >= LOCK_BY).all(|r| r.1.is_none() || right(r));
+    Row { detected: reports.last().and_then(|r| r.1), locked_at, held, never_wrong }
 }
 
 #[test]
@@ -217,8 +223,14 @@ fn tempo_accuracy_table() {
         for (pattern, name) in PATTERNS {
             for bpm in TEMPOS {
                 let signal = render(pattern, bpm, seed + bpm as u64);
-                let row = measure(&signal, bpm);
-                let ok = row.held && row.detected.is_some_and(|d| (d - bpm).abs() <= 2.0) && row.locked_at.is_some_and(|t| t <= LOCK_BY);
+                let said = if bpm > MAX_BPM { bpm / 2.0 } else { bpm };
+                let row = measure(&signal, said);
+                let ok = match bpm > MAX_BPM {
+                    false => row.held && row.detected.is_some_and(|d| (d - said).abs() <= 2.0) && row.locked_at.is_some_and(|t| t <= LOCK_BY),
+                    // Half the tempo is a slower pulse to find, and a syncopated bar does not
+                    // repeat at it: no reading is allowed there, a wrong one is not.
+                    true => row.never_wrong,
+                };
                 if round == 0 {
                     println!(
                         "{name:<18} {bpm:>6.0} {:>9} {:>8}  {}",

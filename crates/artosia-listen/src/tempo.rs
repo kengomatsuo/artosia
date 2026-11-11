@@ -23,7 +23,7 @@ use std::f32::consts::PI;
 
 /// Slowest and fastest tempo reported.
 pub const MIN_BPM: f32 = 50.0;
-pub const MAX_BPM: f32 = 200.0;
+pub const MAX_BPM: f32 = 132.0;
 
 const TARGET_RATE: f32 = 8000.0;
 const FRAME: usize = 256;
@@ -738,16 +738,27 @@ mod tests {
 
     #[test]
     fn click_tracks_are_found_within_two_bpm() {
-        for bpm in [60.0, 90.0, 120.0, 150.0] {
+        for bpm in [60.0, 90.0, 120.0, 130.0] {
             let (audio, _) = track(30.0, &[(0.0, bpm)], None, 7);
             let reports = run(&audio);
             assert_tempo(&reports, 8.0, bpm, 2.0);
         }
     }
 
+    /// Readings stop at `MAX_BPM`, so a slow song's eighth notes are never taken for its beat
+    /// (68 was read as 136 on real music). A faster pulse is then said at half speed.
+    #[test]
+    fn a_tempo_above_the_cap_reads_at_half() {
+        for bpm in [150.0, 176.0] {
+            let (audio, _) = track(30.0, &[(0.0, bpm)], None, 7);
+            let reports = run(&audio);
+            assert_tempo(&reports, 10.0, bpm / 2.0, 2.0);
+        }
+    }
+
     #[test]
     fn a_tempo_settles_within_a_few_seconds() {
-        for bpm in [60.0, 90.0, 120.0, 150.0] {
+        for bpm in [60.0, 90.0, 120.0, 130.0] {
             let (audio, _) = track(15.0, &[(0.0, bpm)], None, 11);
             let reports = run(&audio);
             let first = reports.iter().find(|(_, r)| r.is_some_and(|t| (t.bpm - bpm).abs() <= 2.0)).map(|(t, _)| *t);

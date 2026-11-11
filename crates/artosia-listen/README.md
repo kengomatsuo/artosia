@@ -139,7 +139,7 @@ Not tried: a wireless headset, a device at 44.1 or 16 kHz, a device unplugged wh
 ## Tempo and the beat
 
 `TempoTracker` (`src/tempo.rs`) is fed the same mono blocks as the level meter and reports, twice
-a second, `Heard::Tempo(Option<Tempo>)`: beats per minute (50 to 200), a confidence from 0 to 1,
+a second, `Heard::Tempo(Option<Tempo>)`: beats per minute (50 to 132), a confidence from 0 to 1,
 the beat period, and how many seconds ago the last beat fell. `None` means no steady pulse.
 Nothing is added to `Cargo.toml`: the FFT is 40 lines of plain Rust.
 
@@ -180,7 +180,7 @@ Nothing is added to `Cargo.toml`: the FFT is 40 lines of plain Rust.
    steady false pulse), then each band's rise over the largest of the three neighbouring bands
    four frames earlier is counted above twice that band's running mean rise, and summed.
 4. Every 0.5 s, on the last 8 s of that envelope (mean removed): autocorrelation at the lags for
-   50 to 200 BPM, summed with its values at two, three and four times the lag (weights 1, 0.1,
+   50 to 132 BPM, summed with its values at two, three and four times the lag (weights 1, 0.1,
    0.15, 1: the bar matters more than the pair), times the log-normal prior around 128 BPM and 1.2
    octaves wide. The same is done for each of the 24 bands' own rises (an FFT per band) and
    averaged with weight peak squared; the larger of the two autocorrelations is used, which finds
@@ -211,7 +211,7 @@ Nothing is added to `Cargo.toml`: the FFT is 40 lines of plain Rust.
 
 The tests synthesise a drum-like thump plus a noise burst, never a recording.
 
-- Click tracks at 60, 90, 120 and 150 BPM: every report from 8 s on is within 0.1 BPM of the
+- Click tracks at 60, 90, 120 and 130 BPM: every report from 8 s on is within 0.1 BPM of the
   truth (the test allows 2). The first correct report arrives within 5 s.
 - The reported last-beat time falls within 20 ms of a real hit (the test allows 30).
 - Hits in noise at the hits' own loudness, and in a reverberant tail (wet signal 1.5 times the
@@ -224,8 +224,7 @@ The tests synthesise a drum-like thump plus a noise burst, never a recording.
   weak, irregular accents in a very noisy room can also fall under 0.28 and report nothing.
 - Half and double time: hits that alternate loud and soft, at 80, 100, 140 and 170 BPM with the
   soft hit at half and at a quarter strength, always read as the true tempo, half of it or double
-  it, never another number; the test allows those three. How often a real band is read at half or
-  double was not measured: there is no real music in the tests.
+  it, never another number; the test allows those three. Real music is measured below.
 - Cost: 60 s of 48 kHz audio takes 290 ms in a release build on the i9 laptop, 0.5 % of one core
   (`cargo test -p artosia-listen --release --test cost -- --ignored --nocapture`). A Celeron is
   several times slower and should stay near 1 %; not run on one.
@@ -233,8 +232,63 @@ The tests synthesise a drum-like thump plus a noise burst, never a recording.
 - Five rhythms (four on the floor, kick and snare with hats, a syncopated bar, a soft-attack
   guitar strum, a sustained four-note pad with a quiet pulse under it) at ten tempos from 60 to
   176 BPM, with room noise, built in `tests/tempo_accuracy.rs`, three noise seeds each: every row
-  reads within 2 BPM of the truth from 8.5 s on and no octave error remains. 60 BPM takes
+  up to 128 BPM reads within 2 BPM of the truth from 8.5 s on, with no reading at half or double.
+  At 140, 160 and 176 BPM, above the cap, the steady rhythms read half the tempo, the strum
+  takes 8.5 to 9 s to do so, and the syncopated bar, which does not repeat at half speed, reads
+  nothing; the test allows half or nothing there, never another number. 60 BPM takes
   5.5 to 8 s to settle, 72 and 84 BPM 4 to 5 s and the rest 3.5 to 4.5 s.
+
+### Measured on real music (2026-11-11, owner: "try using music from youtube")
+
+Thirty-five tracks whose uploader states the tempo in the title (backing tracks, drum loops and
+worship pads, 50 to 160 BPM) were played from YouTube at low volume and read through system
+audio, 30 s each from half a minute in. Twenty-two were looked at while the tracker was
+changed; thirteen were played afterwards and never used for a decision.
+
+| Stated tempo | Tracks | Read |
+|---|---|---|
+| 67 to 132 BPM | 23 | 22 within 0.2 BPM of the title (one title says 76 and the track plays at 78); a pad with no drums and no attacks gave no reading |
+| 60 BPM, four beats in a bar | 3 | 2 right (one only after 23 s, and unsteady); a strummed ballad read 120 |
+| 50 and 60 BPM, six eighth notes in a bar | 3 | 2 read 99.9 and 120.1, the eighth notes counted two to the stated beat; one drum loop gave no reading |
+| 60 BPM, twelve eighth notes in a bar | 2 | 1 right after 15 s; 1 read 52.7 twice in 30 s |
+| 140 and 160 BPM | 4 | half the tempo, steadily (70, 70, 80, 80): see the cap below |
+
+The first reading comes 3.5 to 5.5 s in for most tracks and 15 to 24 s in for the slowest.
+
+**What was wrong, and the one change that came of it.** Before this the tracker reported up to
+200 BPM, and of the first twenty-two tracks it read 15 right, 3 slow ones at double speed (60 as
+120, 68 as 136, 70 as 140) and 2 fast ones at half. A slow ballad whose eighth notes are as
+strong as its beats looks, to an autocorrelation, exactly like a song twice as fast. Nothing in
+the signal separates the two: the autocorrelation at half the beat, at the beat, at two beats
+and at the bar was printed for every track (`TEMPO_EXPLAIN=1 ... sources read`), and the slow
+tracks that doubled sat inside the range of the fast tracks that were right on every figure.
+Essentia's Percival estimator settles the same question with three figures, one of them the
+tempo itself, and weights learned from other music (`percivalbpmestimator.cpp`, read 2026-11-11).
+
+So `MAX_BPM` is 132: the double of any song from 67 BPM up is no longer on offer. A church sings
+far more songs between 60 and 80 than above 132, and a fast song read at half speed still
+pulses on its first and third beats. After the change every track from 67 to 132 BPM that reads at
+all reads right, more steadily than before, and the four fast tracks read a steady half where
+three of them used to flip between the two.
+
+Tried and put back, each scored on the kept tracks and on the made-up table:
+
+| Change | Real tracks | Made-up table |
+|---|---|---|
+| Count the pair of beats as much as the bar (weights 1, 1, 0.15, 1) | the two halved fast tracks came right, the three doubled slow ones stayed | 33 of 150 rows failed, slow rows read double |
+| The same with the pair at 0.5 | the same | 18 rows failed |
+| A prior centred lower (118, 110, 100 BPM) with those weights | more fast tracks halved | not run |
+| A prior centred lower (100, 92, 91 BPM) with the cap | 120 BPM read as 60 | not run |
+
+Still wrong: a ballad at 60 to 66 BPM with strong eighth notes can read double, because its
+double is under the cap; music in six or twelve eighth notes to the bar reads at the eighth
+note, slowly, or not at all; a pad with no attacks reads nothing, as designed.
+
+**How to score a change.** `sources hear 30 keep <file>` writes the tracker's own 5 ms steps of
+whatever is playing (the rise in each of 24 bands and the energy: not sound, and it cannot be
+played back), and `sources read <files>` runs them through the tracker again in a moment. Name a
+file `<stated tempo>-<anything>` and `TEMPO_EXPLAIN=1` also prints the figures at that tempo,
+half and double. The files stay out of the repository.
 
 ### What tempo is for, and what is not built
 
