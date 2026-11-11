@@ -25,6 +25,7 @@ LEFT_OUT = {
     "KEY_SHOW_NOW": "keys as the keyboard prints them",
     "KEY_ADD": "keys as the keyboard prints them",
     "KEY_SAVE": "keys as the keyboard prints them",
+    "KEY_START_HERE": "keys as the keyboard prints them",
     "ctrl_digit": "a key as the keyboard prints it",
     "STREAM_ADDRESS_HINT": "a sample web address",
     "BIBLES_SOURCE_EBIBLE": "the name of a website",

@@ -70,7 +70,9 @@ The ids in backticks are the ones `concepts` lists in each brief.
 
 **`logo`** A state of the projector in which the church's emblem is shown by itself in place of the slide (key F3). The picture is chosen in Design. The tile is greyed out when none is chosen.
 
-**`earlier`** A small menu next to Preview that lists what was already shown during this service, so that a volunteer can bring a song back.
+**`start_mark`** A mark on a song in the plan that names the section where the song will begin when its turn comes, for example its chorus. It exists for medleys, where the band goes from one song straight into the middle of the next. With no mark a song begins at its first slide. It is set from Preview with a small play button, or from the song's row menu in the plan, and the plan row then shows that section's chip.
+
+**`earlier`** A small menu in the title of the Live pane that lists what was already shown during this service, so that a volunteer can bring a song back.
 
 ## The screens
 

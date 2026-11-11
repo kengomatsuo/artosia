@@ -1370,7 +1370,7 @@ text!(TIP_START_HERE, "Start the song at this slide", "Start the song at this sl
 text!(PLAN_STARTS_AT, "Starts at", "Starts at");
 text!(PLAN_START_BEGINNING, "The beginning", "The beginning");
 
-text!(SCREEN_OWN,"Artosia is on this screen", "Layar untuk Artosia sendiri");
+text!(SCREEN_OWN, "Artosia is on this screen", "Layar untuk Artosia sendiri");
 
 // Bibles: a file the church holds, and eBible's free list.
 text!(BIBLES_TITLE, "Bibles", "Tambah Alkitab");
