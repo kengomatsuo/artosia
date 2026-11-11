@@ -1,9 +1,10 @@
 //! The Bibles dialog: pick a free Bible from eBible's list, or bring in a file.
 
+use artosia_core::ebible::{Source, Translation};
 use rune::{El, GrowthSpec, ScrollSpec, col, el, row, spacer, text};
 use rune_kit::{Dialog, Kit, ScrollBar, TextInput};
 
-use crate::bibles::{Catalogue, Row, installed_code};
+use crate::bibles::{Catalogue, Notice, Row, installed_code};
 use crate::state::{App, Sheet};
 use crate::strings as t;
 use crate::theme::{self, icons, space, type_};
@@ -20,6 +21,25 @@ fn scope_name(scope: u8) -> &'static str {
         1 => t::NEW_TESTAMENT(),
         2 => t::OLD_TESTAMENT(),
         _ => t::BIBLES_SCOPE_PART(),
+    }
+}
+
+fn source_name(source: Source) -> &'static str {
+    match source {
+        Source::Ebible => t::BIBLES_SOURCE_EBIBLE(),
+        Source::Beblia => t::BIBLES_SOURCE_BEBLIA(),
+    }
+}
+
+/// How much of the Bible a row holds, or the file's size when the list cannot say.
+fn extent(item: &Translation) -> String {
+    if item.scope() < 4 {
+        return scope_name(item.scope()).to_string();
+    }
+    match item.size {
+        0 => String::new(),
+        size if size >= 1_000_000 => format!("{} MB", (size + 500_000) / 1_000_000),
+        size => format!("{} KB", (size + 500) / 1000),
     }
 }
 
@@ -69,10 +89,11 @@ fn line(s: &App, k: &Kit, at: usize) -> El {
             let Some(item) = s.desk.translations().get(*index) else { return el() };
             let id = item.id.clone();
             let picked = s.desk.picked.as_deref() == Some(item.id.as_str());
+            let title = s.desk.title_of(item).to_string();
             let mut line = row()
                 .key(format!("bible-{}", item.id))
                 .role("button")
-                .label(item.title.clone())
+                .label(title.clone())
                 .w_full()
                 .h(ROW)
                 .px(space::S3)
@@ -84,12 +105,13 @@ fn line(s: &App, k: &Kit, at: usize) -> El {
                 .focusable(true)
                 .cursor(rune::Cursor::Pointer)
                 .child(el().w(space::S2))
-                .child(text(item.title.clone()).font(if picked { type_::BODY_STRONG } else { type_::BODY }).color(k.c.text_base).truncate().grow(1.0))
-                .child(text(scope_name(item.scope())).font(type_::SMALL).color(k.c.text_muted));
+                .child(text(title).font(if picked { type_::BODY_STRONG } else { type_::BODY }).color(k.c.text_base).truncate().grow(1.0))
+                .child(text(extent(item)).font(type_::SMALL).color(k.c.text_muted))
+                .child(el().w(64.0).child(text(source_name(item.source)).font(type_::SMALL).color(k.c.text_muted).truncate()));
             if installed(s, &item.id) {
                 line = line.child(state_pill(t::BIBLES_INSTALLED(), k.c.layer_03, k.c.text_base));
             }
-            line.on_press(move |s: &mut App| s.desk.picked = Some(id.clone()))
+            line.on_press(move |s: &mut App| s.pick_bible(&id))
         }
         None => el(),
     }
@@ -112,7 +134,7 @@ fn list(s: &App, k: &Kit) -> El {
                 },
                 |s: &App, at| line(s, theme::kit(), at),
             );
-            col().key("bible-scroll").role("listbox").label(t::BIBLES_FREE()).w_full().h(LIST).min_h(0.0).scroll(ScrollSpec { stick_bottom: false }).child(rows).scroll_bar(k)
+            col().key("bible-scroll").role("listbox").label(t::BIBLES_LIST()).w_full().h(LIST).min_h(0.0).scroll(ScrollSpec { stick_bottom: false }).child(rows).scroll_bar(k)
         }
     };
     col().key("bibles-list").w_full().h(LIST).radius(k.radius.lg).fill(k.c.layer_02).clip_rounded(k.radius.lg).child(inside)
@@ -125,6 +147,15 @@ fn detail(s: &App, k: &Kit) -> El {
         return card.center().child(text(t::BIBLES_PICK_HINT()).font(type_::BODY).color(k.c.text_muted));
     };
     let code = installed_code(&item.id);
+    let title = s.desk.title_of(item).to_string();
+    // eBible's list carries the copyright line. A Beblia file carries it inside, read when the row was picked.
+    let notice = match (item.source, s.desk.notices.get(&item.id)) {
+        (Source::Ebible, _) => if item.copyright.is_empty() { item.description.clone() } else { item.copyright.clone() },
+        (Source::Beblia, Some(Notice::Known { copyright, .. })) if copyright.is_empty() => t::BIBLES_NO_COPYRIGHT().to_string(),
+        (Source::Beblia, Some(Notice::Known { copyright, .. })) => copyright.clone(),
+        (Source::Beblia, Some(Notice::Failed)) => t::BIBLES_NOTICE_FAILED().to_string(),
+        (Source::Beblia, _) => t::BIBLES_NOTICE_LOADING().to_string(),
+    };
     let (have, using) = (installed(s, &item.id), s.settings.bible == code);
     let id = item.id.clone();
     let busy = s.desk.downloading.is_some();
@@ -143,12 +174,13 @@ fn detail(s: &App, k: &Kit) -> El {
             .w_full()
             .gap(space::S2)
             .center_y()
-            .child(text(item.title.clone()).font(type_::BODY_STRONG).color(k.c.text_base).truncate().grow(1.0))
+            .child(text(title).font(type_::BODY_STRONG).color(k.c.text_base).truncate().grow(1.0))
             .child(text(item.language_english.clone()).font(type_::SMALL).color(k.c.text_muted))
-            .child(text(scope_name(item.scope())).font(type_::SMALL).color(k.c.text_muted)),
+            .child(text(extent(item)).font(type_::SMALL).color(k.c.text_muted))
+            .child(text(source_name(item.source)).font(type_::SMALL_STRONG).color(k.c.text_muted)),
     )
     .child(text(t::BIBLES_COPYRIGHT()).font(type_::SMALL_STRONG).color(k.c.text_muted))
-    .child(text(if item.copyright.is_empty() { item.description.clone() } else { item.copyright.clone() }).font(type_::SMALL).color(k.c.text_base).max_lines(2).grow(1.0))
+    .child(text(notice).font(type_::SMALL).color(k.c.text_base).max_lines(2).grow(1.0))
     .child(row().w_full().child(spacer()).child(action))
 }
 
@@ -170,7 +202,7 @@ pub fn view(s: &App, k: &Kit, layer: &mut Vec<El>) {
         .px(space::S4)
         .pb(space::S4)
         .gap(space::S3)
-        .child(col().w_full().gap(space::S2).child(section_label(k, t::BIBLES_FREE())).child(search))
+        .child(col().w_full().gap(space::S2).child(section_label(k, t::BIBLES_LIST())).child(search))
         .child(list(s, k))
         .child(detail(s, k))
         .child(divider(k))

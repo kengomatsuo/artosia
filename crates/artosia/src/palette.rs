@@ -159,7 +159,7 @@ impl Command {
             Command::Listen => t::CMD_LISTEN_DETAIL(),
             Command::Stream => t::CMD_STREAM_DETAIL(),
             Command::BibleFile => t::CMD_BIBLE_FILE_DETAIL(),
-            Command::Bibles => t::CMD_BIBLES_DETAIL(),
+            Command::Bibles => t::CMD_BIBLES_FIND_DETAIL(),
         }
     }
 

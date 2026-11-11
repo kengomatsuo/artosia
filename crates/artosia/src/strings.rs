@@ -1287,9 +1287,9 @@ text!(BIBLES_FILE_EMPTY, "That file holds no verses", "Berkas ini tidak berisi a
 text!(CMD_BIBLE_FILE, "Add a Bible from a file", "Tambah Alkitab dari berkas");
 text!(CMD_BIBLE_FILE_DETAIL, "MyBible, USFX, or a zip of USFM files", "MyBible, USFX, atau zip berisi USFM");
 text!(CMD_BIBLES, "Get more Bibles", "Tambah terjemahan Alkitab");
-text!(CMD_BIBLES_DETAIL, "Free translations in many languages", "Terjemahan gratis dalam banyak bahasa");
+text!(CMD_BIBLES_FIND_DETAIL, "Download translations in many languages", "Download translations in many languages");
 
-text!(BIBLES_FREE, "Free Bibles to download", "Terjemahan gratis");
+text!(BIBLES_LIST, "Bibles to download", "Bibles to download");
 text!(BIBLES_SEARCH, "Search by language or name", "Cari bahasa atau terjemahan");
 text!(BIBLES_LOADING, "Getting the list of Bibles", "Mengambil daftar Alkitab");
 text!(BIBLES_LOAD_FAILED, "Could not get the list of Bibles", "Daftar Alkitab tidak bisa diambil");
@@ -1303,6 +1303,11 @@ text!(BIBLES_COPYRIGHT, "Copyright", "Hak cipta");
 text!(BIBLES_PICK_HINT, "Pick a Bible to read its copyright", "Pilih terjemahan untuk melihat hak ciptanya");
 text!(BIBLES_SCOPE_WHOLE, "Whole Bible", "Alkitab lengkap");
 text!(BIBLES_SCOPE_PART, "Some books", "Sebagian kitab");
+text!(BIBLES_SOURCE_EBIBLE, "eBible", "eBible");
+text!(BIBLES_SOURCE_BEBLIA, "Beblia", "Beblia");
+text!(BIBLES_NO_COPYRIGHT, "This file states no copyright", "This file states no copyright");
+text!(BIBLES_NOTICE_LOADING, "Reading the file's own notice", "Reading the file's own notice");
+text!(BIBLES_NOTICE_FAILED, "Could not read the file's notice", "Could not read the file's notice");
 
 pub fn bibles_download_failed(why: &str) -> String {
     if indonesian() {
