@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<title>Artosia remote, ProPresenter look</title>
+<style>
+/* Direction: ProPresenter Remote (iOS). Skeleton from products/01..04 and languages/propresenter-remote.md:
+   black header with a progress line, a Next up pill between two round arrows, a stack of slide cards with a
+   colour band, five bottom tabs, one floating round button, big square tiles, a grid of timer cards. */
+:root {
+  --page: #1b1b1d; --bar: #000000; --card: #2a2a2d; --card-2: #343438; --line: #3d3d41;
+  --text: #f5f5f7; --muted: #b0b0b8; --faint: #8e8e96;
+  --accent: #ff6a13; --on-accent: #1a0a00;
+  --live: #d4122e; --warn: #f7cd3a; --on-warn: #201a09;
+  --ok: #3fbf5a;
+  --b0: #0b5ba1; --b1: #7a0ac9; --b2: #00778a; --b3: #5b5f6b; --b4: #86520b; --b5: #1f7a3a;
+  --h0: #5eb0cf; --h1: #67bd2f; --h2: #f2a71b; --h3: #9b4fd6;
+  --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", Inter, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body { height: 100%; margin: 0; background: var(--page); color: var(--text); font-family: var(--font); font-size: 16px; line-height: 1.3; -webkit-font-smoothing: antialiased; }
+body { overscroll-behavior: none; }
+[hidden] { display: none !important; }
+button, input { font: inherit; color: inherit; }
+button { border: 0; background: none; cursor: pointer; touch-action: manipulation; user-select: none; -webkit-user-select: none; padding: 0; }
+button:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+button:disabled { opacity: 0.45; cursor: default; }
+svg.ic { width: 22px; height: 22px; flex: 0 0 auto; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+.press { transition: transform 80ms, filter 80ms; }
+.press:not(:disabled):active { transform: scale(0.97); filter: brightness(0.88); }
+.pill { display: inline-flex; align-items: center; height: 22px; padding: 0 9px; border-radius: 999px; font-size: 0.75rem; font-weight: 700; white-space: nowrap; }
+.pill:empty { display: none; }
+.pill.live { background: var(--live); color: #fff; }
+.pill.warn { background: var(--warn); color: var(--on-warn); }
+.note { color: var(--muted); font-size: 0.8125rem; margin: 0; }
+.note:empty { display: none; }
+
+/* pairing: Meta Quest's separate digit boxes (mobbin/metaquest-pin.jpg) */
+#pair { min-height: 100%; display: flex; flex-direction: column; justify-content: center; gap: 16px; padding: 28px 24px; max-width: 420px; margin: 0 auto; }
+#pair .mark { width: 56px; height: 56px; border-radius: 16px; background: var(--accent); color: var(--on-accent); display: grid; place-items: center; }
+#pair .mark svg.ic { width: 30px; height: 30px; }
+#pair h1 { margin: 0; font-size: 1.75rem; font-weight: 700; letter-spacing: -0.02em; }
+#pair p.lead { margin: 0; color: var(--muted); }
+.cells { position: relative; display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.cells .cell { height: 72px; border-radius: 14px; background: var(--card); border: 2px solid transparent; display: grid; place-items: center; font-size: 2rem; font-weight: 600; font-variant-numeric: tabular-nums; }
+.cells:focus-within .cell.at { border-color: var(--accent); }
+#pin { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; font-size: 16px; border: 0; background: none; }
+#pair-error { margin: 0; min-height: 1.3em; color: var(--warn); font-weight: 600; font-size: 0.875rem; }
+.cta { display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 54px; border-radius: 14px; background: var(--accent); color: var(--on-accent); font-weight: 700; font-size: 1.0625rem; width: 100%; }
+.cta:disabled { background: var(--card-2); color: var(--muted); opacity: 1; }
+.seg { display: flex; gap: 4px; padding: 4px; background: var(--card); border-radius: 12px; }
+.seg-btn { flex: 1 1 0; min-width: 0; min-height: 44px; padding: 4px 8px; border-radius: 9px; color: var(--muted); font-weight: 600; font-size: 0.9375rem; line-height: 1.15; overflow-wrap: anywhere; }
+.seg-btn.on { background: var(--card-2); color: var(--text); box-shadow: inset 0 0 0 1px var(--line); }
+
+/* remote shell */
+#remote { position: relative; height: 100dvh; display: flex; flex-direction: column; max-width: 640px; margin: 0 auto; }
+#head { flex: 0 0 auto; display: grid; grid-template-columns: 44px 1fr 44px; align-items: center; gap: 6px; padding: max(6px, env(safe-area-inset-top)) 12px 0; background: var(--bar); min-height: 52px; }
+#head button { width: 44px; height: 44px; display: grid; place-items: center; color: var(--accent); }
+#title { margin: 0; font-size: 1.0625rem; font-weight: 600; text-align: center; min-width: 0; display: flex; align-items: center; justify-content: center; gap: 6px; }
+#title span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#title svg.ic { width: 18px; height: 18px; flex: 0 0 auto; }
+#count { color: var(--muted); font-size: 0.8125rem; text-align: center; margin: -4px 0 4px; font-variant-numeric: tabular-nums; }
+#progress { flex: 0 0 auto; height: 3px; margin: 0 20px; background: var(--card-2); border-radius: 2px; overflow: hidden; }
+#progress i { display: block; height: 100%; background: var(--accent); transform-origin: left; transform: scaleX(0); transition: transform 160ms; }
+#headwrap { flex: 0 0 auto; background: var(--bar); padding-bottom: 8px; }
+
+/* lost: a pill that floats over the page and pushes nothing (mobbin/particle-offline.jpg) */
+#lost { position: absolute; z-index: 5; top: 64px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 10px; max-width: calc(100% - 24px); background: var(--warn); color: var(--on-warn); border-radius: 18px; padding: 8px 16px; font-weight: 700; font-size: 0.9375rem; box-shadow: 0 6px 20px rgba(0,0,0,0.45); }
+#lost small { display: block; font-weight: 500; font-size: 0.8125rem; }
+
+#panes { flex: 1 1 0; min-height: 0; display: flex; flex-direction: column; position: relative; }
+.pane { flex: 1 1 0; min-height: 0; display: flex; flex-direction: column; }
+.scroll { overflow-y: auto; min-height: 0; scrollbar-width: thin; }
+
+/* live: next up row, section bands, card stack */
+#nextup { flex: 0 0 auto; display: grid; grid-template-columns: 52px minmax(0, 1fr) 52px; align-items: center; gap: 8px; padding: 10px 14px 6px; }
+#nextup .round { width: 52px; height: 52px; border-radius: 50%; background: var(--card); display: grid; place-items: center; }
+#nextup .round.go { background: var(--accent); color: var(--on-accent); }
+#nextup .round svg.ic { width: 26px; height: 26px; }
+#nextup .pillrow { height: 52px; border-radius: 26px; background: var(--card); padding: 0 16px; display: flex; align-items: center; gap: 6px; min-width: 0; font-size: 0.9375rem; }
+#nextup .pillrow b { flex: 0 0 auto; }
+#nextup .pillrow span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--muted); min-width: 0; }
+#sections { flex: 0 0 auto; display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; padding: 6px 14px 8px; }
+#sections::-webkit-scrollbar { display: none; }
+.band { flex: 0 0 auto; min-height: 44px; padding: 0 14px; border-radius: 8px; background: var(--band, var(--b3)); color: #fff; font-weight: 700; font-size: 0.875rem; white-space: nowrap; }
+.band.live { box-shadow: 0 0 0 2px var(--page), 0 0 0 4px var(--accent); }
+.g0 { --band: var(--b0); } .g1 { --band: var(--b1); } .g2 { --band: var(--b2); } .g3 { --band: var(--b3); } .g4 { --band: var(--b4); } .g5 { --band: var(--b5); }
+#list { flex: 1 1 0; display: flex; flex-direction: column; gap: 16px; padding: 8px 14px 84px; }
+.card { flex: 0 0 auto; display: block; width: 100%; text-align: left; border-radius: 10px; padding: 8px 8px 0; background: var(--band, var(--b3)); border: 2px solid transparent; }
+.card.live { border-color: var(--accent); box-shadow: 0 0 0 2px var(--page), 0 0 0 4px var(--accent); }
+.card .screen { min-height: 96px; border-radius: 4px; background: #121214 repeating-linear-gradient(45deg, rgba(255,255,255,0.03) 0 2px, transparent 2px 4px); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 14px 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+.card .screen::before, .card .screen::after { content: ""; width: 56px; height: 2px; background: rgba(255,255,255,0.8); }
+.card .screen p { margin: 0; text-align: center; font-weight: 600; font-size: 1.0625rem; line-height: 1.3; white-space: pre-wrap; overflow-wrap: anywhere; }
+#list.kept .card.live .screen p { opacity: 0.4; }
+.card .foot { display: flex; align-items: center; gap: 8px; min-height: 36px; font-size: 0.875rem; font-weight: 600; }
+.card .foot .badge { margin-left: auto; }
+#clear { position: absolute; z-index: 3; right: 16px; bottom: 14px; width: 60px; height: 60px; border-radius: 50%; background: #4b4b50; display: grid; place-items: center; box-shadow: 0 6px 16px rgba(0,0,0,0.5); }
+#clear.on { background: var(--warn); color: var(--on-warn); }
+#clear svg.ic { width: 26px; height: 26px; }
+
+/* plan: plain rows under saturated heading bars (products/03) */
+#plan-list { flex: 1 1 0; padding-bottom: 12px; }
+.bar { display: flex; align-items: center; min-height: 48px; padding: 0 16px; font-size: 1.0625rem; font-weight: 700; color: #0b0b0d; background: var(--h0); margin-top: 6px; }
+.bar.h1 { background: var(--h1); } .bar.h2 { background: var(--h2); } .bar.h3 { background: var(--h3); color: #fff; }
+.bar:first-child { margin-top: 0; }
+.prow { display: flex; align-items: center; gap: 12px; width: 100%; min-height: 56px; padding: 0 16px; text-align: left; font-size: 1.0625rem; position: relative; }
+.prow::after { content: ""; position: absolute; left: 52px; right: 0; bottom: 0; height: 1px; background: var(--line); }
+.prow svg.ic { color: #7b7b83; width: 26px; height: 26px; }
+.prow .t { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.prow .go { color: var(--faint); width: 18px; height: 18px; }
+.prow.picked { background: color-mix(in srgb, var(--accent) 24%, var(--page)); }
+.prow.picked svg.ic:first-child { color: var(--accent); }
+#plan-foot, #search-foot { flex: 0 0 auto; padding: 10px 14px; }
+#plan-show { min-height: 54px; }
+
+/* search */
+.field { width: 100%; height: 48px; border-radius: 12px; border: 0; background: var(--card); padding: 0 14px 0 44px; font-size: 1rem; }
+.field::placeholder { color: var(--faint); opacity: 1; }
+.field.plain { padding-left: 14px; }
+.field:focus { outline: 2px solid var(--accent); }
+.sbox { position: relative; flex: 0 0 auto; margin: 12px 14px 0; }
+.sbox svg.ic { position: absolute; left: 13px; top: 13px; color: var(--faint); }
+#search-hint { padding: 8px 18px; }
+#hits { flex: 1 1 0; }
+.hit { display: grid; grid-template-columns: 26px minmax(0, 1fr) auto auto; align-items: center; gap: 10px; min-height: 68px; padding: 8px 14px; position: relative; }
+.hit::after { content: ""; position: absolute; left: 52px; right: 0; bottom: 0; height: 1px; background: var(--line); }
+.hit > svg.ic { color: #7b7b83; width: 26px; height: 26px; }
+.hit .t, .hit .d { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.hit .t { font-size: 1.0625rem; }
+.hit .d { color: var(--muted); font-size: 0.8125rem; margin-top: 2px; }
+.hit .txt { min-width: 0; }
+.mini { min-height: 44px; padding: 0 14px; border-radius: 22px; font-weight: 700; font-size: 0.875rem; background: var(--card-2); }
+.mini.go { background: var(--accent); color: var(--on-accent); }
+.mini.go:disabled { background: var(--card-2); color: var(--muted); opacity: 1; }
+.timepill:empty::before { content: "0:00"; color: var(--faint); }
+
+/* output: big square tiles with one glyph and a caption (products/04) */
+#tiles { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; padding: 16px 14px 8px; }
+.tile { aspect-ratio: 1.15; max-height: 24vh; min-height: 96px; border-radius: 16px; background: var(--card); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; font-weight: 600; font-size: 1rem; text-align: center; padding: 6px; }
+.tile svg.ic { width: 36px; height: 36px; }
+.tile.hides.on { background: var(--warn); color: var(--on-warn); }
+.tile.onair.on { background: var(--live); color: #fff; }
+
+/* more: timer cards in a grid (products/02) */
+#pane-more { padding: 14px; gap: 14px; }
+.tcard { background: var(--card); border-radius: 16px; padding: 14px; display: flex; flex-direction: column; gap: 12px; border: 2px solid transparent; }
+.tcard.run { border-color: var(--ok); }
+.tcard h2 { margin: 0; font-size: 1.0625rem; font-weight: 700; }
+.tcard .row { display: flex; align-items: center; gap: 10px; }
+.timepill { flex: 1 1 auto; min-width: 0; height: 52px; border-radius: 26px; background: var(--card-2); display: flex; align-items: center; justify-content: center; font-size: 1.6rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+.tcard.run .timepill { background: var(--ok); color: #04200c; }
+#minutes { width: 84px; flex: 0 0 auto; height: 48px; border-radius: 12px; border: 0; background: var(--card-2); text-align: center; font-size: 1.125rem; font-variant-numeric: tabular-nums; }
+.circle { width: 52px; height: 52px; flex: 0 0 auto; border-radius: 50%; background: var(--card-2); display: grid; place-items: center; }
+.circle.go { background: var(--accent); color: var(--on-accent); }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.two .mini { min-height: 48px; }
+#msg-hide.on { background: var(--warn); color: var(--on-warn); }
+
+#tabs { flex: 0 0 auto; display: grid; grid-template-columns: repeat(5, 1fr); background: #101012; padding: 4px 4px max(4px, env(safe-area-inset-bottom)); border-top: 1px solid #000; }
+.tab { height: 54px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; color: var(--muted); font-size: 0.6875rem; font-weight: 500; min-width: 0; }
+.tab span { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tab[aria-selected="true"] { color: var(--accent); }
+.tab[aria-selected="true"] svg.ic { fill: color-mix(in srgb, var(--accent) 30%, transparent); }
+
+@media (max-height: 700px) {
+  #nextup { padding-top: 6px; } #nextup .round, #nextup .pillrow { height: 48px; } #nextup { grid-template-columns: 48px minmax(0, 1fr) 48px; }
+  .card .screen { min-height: 72px; padding: 10px; } #list { gap: 12px; }
+  #clear { width: 54px; height: 54px; } .tab { height: 50px; }
+  .tile { min-height: 84px; } #tiles { gap: 10px; padding-top: 10px; }
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-down" viewBox="0 0 24 24"><path d="M12 5v14M6 13l6 6 6-6"/></symbol>
+  <symbol id="i-left" viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6"/></symbol>
+  <symbol id="i-right" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></symbol>
+  <symbol id="i-chev-down" viewBox="0 0 24 24"><path d="M5 9l7 7 7-7"/></symbol>
+  <symbol id="i-text" viewBox="0 0 24 24"><path d="M6 6h12M12 6v12M4 20L20 4"/></symbol>
+  <symbol id="i-black" viewBox="0 0 24 24"><rect x="4" y="6.5" width="16" height="11" rx="2" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-logo" viewBox="0 0 24 24"><circle cx="12" cy="9" r="5"/><path d="M9 13.2 7.6 20l4.4-2 4.4 2L15 13.2"/></symbol>
+  <symbol id="i-live" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4.5v15l12-7.5z" fill="currentColor"/></symbol>
+  <symbol id="i-plan" viewBox="0 0 24 24"><path d="M9 7h10M9 12h10M9 17h10M5 7h.01M5 12h.01M5 17h.01"/></symbol>
+  <symbol id="i-deck" viewBox="0 0 24 24"><path d="M3 6l6 2v9l-6 2zM21 6l-6 2v9l6 2zM9 8h6v9H9z"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.3-4.3"/></symbol>
+  <symbol id="i-timer" viewBox="0 0 24 24"><circle cx="12" cy="13" r="7.5"/><path d="M12 13V9M9.5 3h5"/></symbol>
+  <symbol id="i-more" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.6" fill="currentColor"/><circle cx="12" cy="12" r="1.6" fill="currentColor"/><circle cx="19" cy="12" r="1.6" fill="currentColor"/></symbol>
+  <symbol id="i-dots" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12h.01M12 12h.01M16 12h.01"/></symbol>
+  <symbol id="i-sidebar" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="14" rx="2.5"/><path d="M9.5 5v14"/></symbol>
+  <symbol id="i-song" viewBox="0 0 24 24"><path d="M9 17.5V6l10-2v11.5"/><circle cx="6.8" cy="17.5" r="2.2"/><circle cx="16.8" cy="15.5" r="2.2"/></symbol>
+  <symbol id="i-passage" viewBox="0 0 24 24"><path d="M5 5.5A1.5 1.5 0 0 1 6.5 4H19v13H6.5A1.5 1.5 0 0 0 5 18.5zM5 18.5A1.5 1.5 0 0 0 6.5 20H19"/></symbol>
+  <symbol id="i-announcements" viewBox="0 0 24 24"><path d="M4 10v4h3l7 4V6l-7 4zM17.5 9.5a4 4 0 0 1 0 5"/></symbol>
+  <symbol id="i-item" viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="2.5"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-stop" viewBox="0 0 24 24"><rect x="6.5" y="6.5" width="11" height="11" rx="2" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-remote" viewBox="0 0 24 24"><rect x="7" y="3" width="10" height="18" rx="2.5"/><circle cx="12" cy="8" r="1.6"/><path d="M12 13v3"/></symbol>
+  <symbol id="i-lost" viewBox="0 0 24 24"><path d="M4.5 9.5a11 11 0 0 1 15 0M7.5 13a7 7 0 0 1 9 0M12 17h.01M4 4l16 16"/></symbol>
+</svg>
+
+<main id="pair" hidden>
+  <div class="mark" aria-hidden="true"><svg class="ic"><use href="#i-remote"/></svg></div>
+  <h1 data-i="pair_title"></h1>
+  <p class="lead" data-i="pin_hint"></p>
+  <div class="cells" id="cells"><div class="cell at"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+    <input id="pin" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="one-time-code" data-i-aria="pin"></div>
+  <p id="pair-error" role="alert"></p>
+  <button id="pair-btn" class="cta press" type="button" data-i="connect"></button>
+  <div class="seg" data-lang-switch></div>
+</main>
+
+<main id="remote" hidden>
+  <div id="lost" role="status" hidden><svg class="ic" aria-hidden="true"><use href="#i-lost"/></svg><div><span data-i="lost"></span><small data-i="retrying"></small></div></div>
+  <div id="headwrap">
+    <div id="head">
+      <button type="button" id="side" data-keep data-i-aria="tab_plan"><svg class="ic" aria-hidden="true"><use href="#i-sidebar"/></svg></button>
+      <h1 id="title"><span id="title-text"></span><svg class="ic" id="title-chev" aria-hidden="true"><use href="#i-chev-down"/></svg></h1>
+      <button type="button" id="dots" data-keep data-i-aria="tab_more"><svg class="ic" aria-hidden="true"><use href="#i-dots"/></svg></button>
+    </div>
+    <div id="count"></div>
+    <div id="progress" aria-hidden="true"><i id="progress-fill"></i></div>
+  </div>
+
+  <div id="panes">
+    <section id="pane-live" class="pane" role="tabpanel">
+      <div id="nextup">
+        <button class="round press" type="button" data-act="prev" data-i-aria="back"><svg class="ic" aria-hidden="true"><use href="#i-left"/></svg></button>
+        <div class="pillrow"><b data-i="next_up"></b><span id="nextup-text"></span></div>
+        <button class="round go press" type="button" data-act="next" data-i-aria="next_btn"><svg class="ic" aria-hidden="true"><use href="#i-right"/></svg></button>
+      </div>
+      <div id="sections" data-i-aria="jump"></div>
+      <div id="list" class="scroll"></div>
+      <button id="clear" class="press" type="button" data-toggle="text" aria-pressed="false" data-i-aria="clear_text"><svg class="ic" aria-hidden="true"><use href="#i-text"/></svg></button>
+    </section>
+
+    <section id="pane-plan" class="pane" role="tabpanel" hidden>
+      <div id="plan-list" class="scroll"></div>
+      <div id="plan-foot"><button class="cta press" id="plan-show" type="button" data-act="plan-show" disabled></button></div>
+    </section>
+
+    <section id="pane-search" class="pane" role="tabpanel" hidden>
+      <div class="sbox"><svg class="ic" aria-hidden="true"><use href="#i-search"/></svg>
+        <input id="search" class="field" type="search" maxlength="100" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="search" data-i-ph="search_ph" data-i-aria="search_ph"></div>
+      <p id="search-hint" class="note"></p>
+      <div id="hits" class="scroll"></div>
+    </section>
+
+    <section id="pane-output" class="pane" role="tabpanel" hidden>
+      <div id="tiles">
+        <button class="tile hides press" type="button" data-toggle="text" aria-pressed="false"><svg class="ic" aria-hidden="true"><use href="#i-text"/></svg><span data-i="clear_text"></span></button>
+        <button class="tile hides press" type="button" data-toggle="black" aria-pressed="false"><svg class="ic" aria-hidden="true"><use href="#i-black"/></svg><span data-i="black"></span></button>
+        <button class="tile hides press" type="button" data-toggle="logo" aria-pressed="false"><svg class="ic" aria-hidden="true"><use href="#i-logo"/></svg><span data-i="logo"></span></button>
+        <button class="tile onair press" type="button" data-toggle="live" aria-pressed="true"><svg class="ic" aria-hidden="true"><use href="#i-live"/></svg><span data-i="live"></span></button>
+      </div>
+      <p id="logo-note" class="note" style="padding:0 18px" hidden data-i="logo_needs"></p>
+    </section>
+
+    <section id="pane-more" class="pane scroll" role="tabpanel" hidden>
+      <section class="tcard" id="cd-card">
+        <h2 data-i="countdown"></h2>
+        <div class="row"><div class="timepill" data-clock></div><input id="minutes" inputmode="numeric" maxlength="3" value="5" data-i-aria="minutes"></div>
+        <div class="two">
+          <button id="cd-start" class="mini go press" type="button" data-i="start"></button>
+          <button id="cd-stop" class="mini press" type="button" data-i="stop"></button>
+        </div>
+      </section>
+      <section class="tcard">
+        <h2 data-i="message"></h2>
+        <input id="msg" class="field plain" maxlength="200" autocomplete="off" data-i-ph="message_ph" data-i-aria="message">
+        <div class="two">
+          <button id="msg-show" class="mini go press" type="button" data-i="message_show"></button>
+          <button id="msg-hide" class="mini press" type="button" data-i="message_hide"></button>
+        </div>
+        <p id="msg-state" class="note"></p>
+      </section>
+      <section class="tcard">
+        <h2 data-i="language"></h2>
+        <div class="seg" data-lang-switch></div>
+      </section>
+    </section>
+  </div>
+
+  <nav id="tabs" role="tablist">
+    <button class="tab press" type="button" role="tab" data-tab="plan" data-keep><svg class="ic" aria-hidden="true"><use href="#i-deck"/></svg><span data-i="tab_plan"></span></button>
+    <button class="tab press" type="button" role="tab" data-tab="search" data-keep><svg class="ic" aria-hidden="true"><use href="#i-search"/></svg><span data-i="tab_search"></span></button>
+    <button class="tab press" type="button" role="tab" data-tab="live" data-keep><svg class="ic" aria-hidden="true"><use href="#i-play"/></svg><span data-i="tab_live"></span></button>
+    <button class="tab press" type="button" role="tab" data-tab="output" data-keep><svg class="ic" aria-hidden="true"><use href="#i-live"/></svg><span data-i="output"></span></button>
+    <button class="tab press" type="button" role="tab" data-tab="more" data-keep><svg class="ic" aria-hidden="true"><use href="#i-timer"/></svg><span data-i="tab_more"></span></button>
+  </nav>
+</main>
+
+<script src="/look/core.js"></script>
+<script>
+"use strict";
+const R = window.Remote, $ = R.$, t = R.t;
+let tab = "live";
+const NAMES = { live: null, plan: "tab_plan", search: "tab_search", output: "output", more: "tab_more" };
+
+function setTab(name) {
+  tab = name;
+  for (const n of Object.keys(NAMES)) $("pane-" + n).hidden = n !== name;
+  document.querySelectorAll("#tabs .tab").forEach((b) => b.setAttribute("aria-selected", String(b.dataset.tab === name)));
+  paintTitle();
+  if (name === "search") $("search").focus();
+}
+function paintTitle() {
+  const s = R.state;
+  $("title-text").textContent = tab === "live" ? (s ? R.view(s).title : "") : t(NAMES[tab]);
+  $("title-chev").toggleAttribute("hidden", tab !== "live");
+  $("progress").hidden = tab !== "live";
+  $("count").hidden = tab !== "live";
+}
+document.querySelectorAll("#tabs .tab").forEach((b) => b.addEventListener("click", () => setTab(b.dataset.tab)));
+$("side").addEventListener("click", () => setTab("plan"));
+$("dots").addEventListener("click", () => setTab("more"));
+
+function card(sl, i, group) {
+  const b = R.el("button", "card press" + (group === null ? "" : R.groupClass(group)));
+  b.type = "button";
+  const screen = R.el("div", "screen"); screen.append(R.el("p", "", sl.text));
+  const foot = R.el("div", "foot", ""); foot.append(R.el("span", "", (i + 1) + "." + (sl.label ? " " + R.nice(sl.label) : "")), R.el("span", "pill badge", ""));
+  b.append(screen, foot);
+  return b;
+}
+function chip(x) {
+  const b = R.el("button", "band press" + R.groupClass(x.group), R.nice(x.label) || x.short);
+  b.type = "button"; b.setAttribute("aria-label", R.nice(x.label));
+  return b;
+}
+const HEAD = ["", " h1", " h2", " h3"];
+
+R.hooks.render = (s, v) => {
+  paintTitle();
+  $("count").textContent = v.count;
+  $("progress-fill").style.transform = "scaleX(" + v.progress + ")";
+  $("nextup-text").textContent = v.hasNext ? v.next.text.split("\n")[0] : "";
+  R.fillSections($("sections"), chip);
+  R.fillSlides($("list"), card);
+  $("list").classList.toggle("kept", v.kept);
+  /* red while the room sees the card; yellow with the reason while something keeps it away */
+  [...$("list").children].forEach((c, i) => {
+    const badge = c.querySelector(".badge");
+    const live = i === v.live;
+    badge.className = "pill badge" + (live ? (v.kept ? " warn" : " live") : "");
+    badge.textContent = live ? (v.kept ? v.why : t("live")) : "";
+  });
+  R.fillPlan($("plan-list"), (p, h) => R.el("div", "bar" + HEAD[h % 4], p.title), (p) => {
+    const b = R.el("button", "prow press");
+    b.type = "button";
+    b.append(R.icon(R.kindIcon(p.kind)), R.el("span", "t", p.title));
+    if (p.live) b.append(R.el("span", "pill live", t("plan_live")));
+    else { const c = R.icon("chev"); c.classList.add("go"); b.append(c); }
+    return b;
+  });
+};
+R.hooks.hits = () => R.fillHits($("hits"), (h) => {
+  const row = R.el("div", "hit");
+  const txt = R.el("div", "txt"); txt.append(R.el("div", "t", h.title), R.el("div", "d", h.detail));
+  const [show, add] = R.hitButtons(h, "mini go", "mini");
+  row.append(R.icon(R.kindIcon(h.kind)), txt, show, add);
+  return row;
+});
+R.hooks.lang = () => paintTitle();
+R.hooks.clock = (left) => $("cd-card").classList.toggle("run", left !== null);
+R.hooks.openLive = () => setTab("live");
+R.hooks.openSearch = () => setTab("search");
+R.hooks.start = () => setTab(tab);
+R.hooks.pinInput = (v) => {
+  const cells = document.querySelectorAll("#cells .cell");
+  cells.forEach((c, i) => { c.textContent = v[i] || ""; c.classList.toggle("at", i === Math.min(v.length, 3)); });
+};
+R.hooks.pinReset = () => R.hooks.pinInput("");
+R.boot();
+</script>
+</body>
+</html>

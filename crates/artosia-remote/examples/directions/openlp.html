@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>Artosia remote, OpenLP look</title>
+<style>
+/* Direction: OpenLP Remote. Skeleton from products/21..24 and languages/openlp-remote.md: flat iOS 7 list
+   screens, header with gear, title and up and down chevrons, lyric blocks as plain text with the current one
+   shaded, a four-segment display bar above four icon-over-label tabs. Light follows the iOS screenshots; dark
+   follows the web remote's theme tones (github/code/OpenLP--assets_themes_openlp-dark-theme.scss, seed #1E468C:
+   primary 80 #afc6ff, 60 #6a8fdf, 40 #345ca8) and its .selected rule (slide-item-theme). */
+:root {
+  --bg: #ffffff; --bar: #f7f7f7; --group: #efeff4; --line: #c8c7cc; --shade: #d9d9d9; --on-shade: #000000;
+  --text: #000000; --muted: #5f5f66; --faint: #6d6d74;
+  --accent: #0063d1; --on-accent: #ffffff;
+  --live: #d4122e; --warn: #f7cd3a; --on-warn: #201a09;
+  --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", Inter, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #111318; --bar: #1b1e26; --group: #1b1e26; --line: #343b4d; --shade: #6a8fdf; --on-shade: #000000;
+    --text: #e2e2e9; --muted: #b4b8c6; --faint: #9399a8;
+    --accent: #afc6ff; --on-accent: #002d6c;
+  }
+}
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body { height: 100%; margin: 0; background: var(--bg); color: var(--text); font-family: var(--font); font-size: 17px; line-height: 1.3; -webkit-font-smoothing: antialiased; }
+body { overscroll-behavior: none; }
+[hidden] { display: none !important; }
+button, input { font: inherit; color: inherit; }
+button { border: 0; background: none; cursor: pointer; touch-action: manipulation; user-select: none; -webkit-user-select: none; padding: 0; }
+button:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+button:disabled { opacity: 0.4; cursor: default; }
+svg.ic { width: 24px; height: 24px; flex: 0 0 auto; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.press { transition: opacity 80ms; }
+.press:not(:disabled):active { opacity: 0.55; }
+.pill { display: inline-flex; align-items: center; height: 20px; padding: 0 8px; border-radius: 10px; font-size: 0.75rem; font-weight: 600; white-space: nowrap; }
+.pill:empty { display: none; }
+.pill.live { background: var(--live); color: #fff; }
+.pill.warn { background: var(--warn); color: var(--on-warn); }
+.note { color: var(--muted); font-size: 0.8125rem; margin: 0; }
+.note:empty { display: none; }
+.scroll { overflow-y: auto; min-height: 0; scrollbar-width: thin; }
+.link { color: var(--accent); font-weight: 500; min-height: 44px; padding: 0 10px; }
+
+/* login: one outlined field with a label on its edge (the Material form field of login.component.html) */
+#pair { min-height: 100%; display: flex; flex-direction: column; justify-content: center; gap: 18px; padding: 28px 24px; max-width: 420px; margin: 0 auto; }
+#pair h1 { margin: 0; font-size: 1.625rem; font-weight: 600; }
+#pair p.lead { margin: 0; color: var(--muted); }
+.ff { position: relative; }
+.ff label { position: absolute; left: 12px; top: -9px; padding: 0 5px; background: var(--bg); color: var(--accent); font-size: 0.8125rem; font-weight: 500; }
+#pin { width: 100%; height: 64px; border-radius: 6px; border: 2px solid var(--accent); background: none; padding: 0 16px; font-size: 1.75rem; letter-spacing: 0.5em; font-variant-numeric: tabular-nums; }
+#pin:focus { outline: none; }
+#pin::placeholder { color: var(--faint); opacity: 0.6; }
+#pair-error { margin: 0; min-height: 1.3em; color: var(--text); font-weight: 600; font-size: 0.875rem; }
+.cta { display: flex; align-items: center; justify-content: center; min-height: 50px; border-radius: 8px; background: var(--accent); color: var(--on-accent); font-weight: 600; font-size: 1.0625rem; width: 100%; }
+.cta:disabled { opacity: 0.4; }
+.seg { display: flex; border: 1px solid var(--accent); border-radius: 7px; overflow: hidden; }
+.seg-btn { flex: 1 1 0; min-width: 0; min-height: 44px; padding: 4px 6px; color: var(--accent); font-size: 0.9375rem; line-height: 1.15; overflow-wrap: anywhere; border-left: 1px solid var(--accent); }
+.seg-btn:first-child { border-left: 0; }
+.seg-btn.on { background: var(--accent); color: var(--on-accent); }
+
+#remote { position: relative; height: 100dvh; display: flex; flex-direction: column; max-width: 640px; margin: 0 auto; background: var(--bg); }
+#head { flex: 0 0 auto; display: grid; grid-template-columns: 48px minmax(0, 1fr) 96px; align-items: center; padding: max(4px, env(safe-area-inset-top)) 6px 4px; background: var(--bar); border-bottom: 1px solid var(--line); min-height: 56px; }
+#head button { width: 48px; height: 48px; display: grid; place-items: center; color: var(--accent); }
+#head .ends { display: flex; }
+#head .ends svg.ic { width: 30px; height: 30px; stroke-width: 2; }
+#head .mid { text-align: center; min-width: 0; padding: 0 4px; }
+#title { margin: 0; font-size: 1.0625rem; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#count { color: var(--muted); font-size: 0.75rem; font-variant-numeric: tabular-nums; min-height: 1em; }
+#sections { flex: 0 0 auto; display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; padding: 8px 12px; border-bottom: 1px solid var(--line); }
+#sections::-webkit-scrollbar { display: none; }
+.chip { flex: 0 0 auto; min-height: 44px; padding: 0 14px; border-radius: 7px; border: 1px solid var(--accent); color: var(--accent); font-size: 0.9375rem; white-space: nowrap; }
+.chip.live { background: var(--accent); color: var(--on-accent); }
+
+/* offline: the overlay of overlay.scss, a scrim over the page with one message */
+#lost { position: absolute; z-index: 6; inset: 0; display: grid; place-items: center; background: color-mix(in srgb, var(--bg) 70%, transparent); }
+#lost .box { display: flex; align-items: center; gap: 12px; max-width: calc(100% - 40px); background: var(--bar); border: 1px solid var(--line); border-radius: 14px; padding: 16px 20px; box-shadow: 0 8px 30px rgba(0,0,0,0.25); }
+#lost svg.ic { color: var(--warn); width: 30px; height: 30px; }
+#lost b { display: block; font-size: 1.0625rem; }
+#lost small { color: var(--muted); font-size: 0.875rem; }
+
+#panes { flex: 1 1 0; min-height: 0; display: flex; flex-direction: column; }
+.pane { flex: 1 1 0; min-height: 0; display: flex; flex-direction: column; }
+
+/* slides: text blocks, the current one shaded */
+#list { flex: 1 1 0; }
+.block { display: block; width: 100%; text-align: left; padding: 16px 20px 18px; border-bottom: 1px solid var(--line); margin: 0; }
+.block:last-child { border-bottom: 0; }
+.block .head { display: flex; align-items: center; gap: 8px; min-height: 20px; margin-bottom: 6px; color: var(--muted); font-size: 0.875rem; font-weight: 600; }
+.block .head .pill { margin-left: auto; }
+.block .words { white-space: pre-wrap; overflow-wrap: anywhere; font-size: clamp(1.25rem, 5.4vw, 1.5rem); line-height: 1.38; }
+.block.live { background: var(--shade); color: var(--on-shade); }
+.block.live .head { color: color-mix(in srgb, var(--on-shade) 70%, transparent); }
+#list.kept .block.live .words { opacity: 0.55; }
+
+#display { flex: 0 0 auto; padding: 8px 12px; background: var(--bar); border-top: 1px solid var(--line); }
+#display .seg .seg-btn { min-height: 44px; font-size: 0.875rem; }
+#display .seg-btn.hides.on { background: var(--warn); color: var(--on-warn); }
+#display .seg-btn.onair.on { background: var(--live); color: #fff; }
+#display .seg:has(.onair.on) { border-color: var(--accent); }
+
+#tabs { flex: 0 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); background: var(--bar); border-top: 1px solid var(--line); padding-bottom: env(safe-area-inset-bottom); }
+.tab { height: 54px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; color: var(--faint); font-size: 0.6875rem; min-width: 0; }
+.tab span { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tab[aria-selected="true"] { color: var(--accent); }
+
+/* service: a plain list, group headings, the live row shaded */
+#plan-list { flex: 1 1 0; }
+.group { padding: 8px 16px 6px; background: var(--group); color: var(--muted); font-size: 0.8125rem; font-weight: 600; margin-top: 0; }
+.prow { display: flex; align-items: center; gap: 12px; width: 100%; min-height: 54px; padding: 0 16px; text-align: left; border-bottom: 1px solid var(--line); margin-left: 0; }
+.prow svg.ic { color: var(--faint); }
+.prow .t { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.prow.live { background: var(--shade); color: var(--on-shade); }
+.prow.live svg.ic { color: inherit; }
+.prow.picked { background: color-mix(in srgb, var(--accent) 22%, var(--bg)); box-shadow: inset 0 0 0 1px var(--accent); }
+.prow.picked.live { background: var(--shade); }
+#plan-bar { flex: 0 0 auto; padding: 8px 12px; background: var(--bar); border-top: 1px solid var(--line); }
+
+/* search: one field, title rows (products/23, 24) */
+.sbox { position: relative; flex: 0 0 auto; padding: 8px 12px; background: var(--bar); border-bottom: 1px solid var(--line); }
+.sbox svg.ic { position: absolute; left: 22px; top: 18px; width: 20px; height: 20px; color: var(--faint); }
+.field { width: 100%; height: 40px; border-radius: 10px; border: 0; background: color-mix(in srgb, var(--faint) 22%, var(--bg)); padding: 0 12px 0 38px; font-size: 1rem; }
+.field.plain { padding-left: 12px; border: 1px solid var(--line); background: var(--bg); height: 48px; }
+.field::placeholder { color: var(--faint); opacity: 1; }
+.field:focus { outline: 2px solid var(--accent); }
+#search-hint { padding: 10px 16px; }
+#hits { flex: 1 1 0; }
+.hit { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; align-items: center; min-height: 64px; padding: 6px 4px 6px 16px; border-bottom: 1px solid var(--line); }
+.hit .t, .hit .d { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.hit .d { color: var(--muted); font-size: 0.8125rem; margin-top: 1px; }
+.hit .txt { min-width: 0; }
+
+/* alerts: the message, and the countdown as one huge figure over a wide button (mobbin/wakingup-timer.jpg) */
+#pane-more, #pane-settings { padding: 0 0 16px; }
+.sect { padding: 14px 16px 6px; color: var(--muted); font-size: 0.8125rem; font-weight: 600; }
+.form { padding: 4px 16px 10px; display: flex; flex-direction: column; gap: 10px; }
+.twin { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.btn { min-height: 48px; border-radius: 8px; border: 1px solid var(--accent); color: var(--accent); font-weight: 600; }
+.btn.go { background: var(--accent); color: var(--on-accent); }
+#msg-hide.on { background: var(--warn); color: var(--on-warn); border-color: transparent; }
+[data-clock]:empty::before { content: "0:00"; color: var(--faint); }
+.big { text-align: center; font-size: 3.5rem; font-weight: 300; font-variant-numeric: tabular-nums; line-height: 1.1; min-height: 1.1em; }
+.mins { display: flex; align-items: center; justify-content: center; gap: 10px; color: var(--muted); }
+#minutes { width: 84px; height: 48px; border-radius: 8px; border: 1px solid var(--line); background: var(--bg); text-align: center; font-size: 1.125rem; font-variant-numeric: tabular-nums; }
+.keys { padding: 0 16px; color: var(--muted); font-size: 0.8125rem; line-height: 1.5; margin: 0; }
+
+@media (max-height: 700px) { .block { padding: 12px 20px 14px; } .tab { height: 50px; } #head { min-height: 52px; } }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-down" viewBox="0 0 24 24"><path d="M5 9l7 7 7-7"/></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24"><path d="M5 15l7-7 7 7"/></symbol>
+  <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/></symbol>
+  <symbol id="i-service" viewBox="0 0 24 24"><path d="M9 7h10M9 12h10M9 17h10M5 7h.01M5 12h.01M5 17h.01"/></symbol>
+  <symbol id="i-slides" viewBox="0 0 24 24"><rect x="3" y="6" width="14" height="10" rx="1.5"/><path d="M7 19h13V9"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 4L3 19h18zM12 10v4M12 16.5h.01"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.3-4.3"/></symbol>
+  <symbol id="i-song" viewBox="0 0 24 24"><path d="M9 17.5V6l10-2v11.5"/><circle cx="6.8" cy="17.5" r="2.2"/><circle cx="16.8" cy="15.5" r="2.2"/></symbol>
+  <symbol id="i-passage" viewBox="0 0 24 24"><path d="M5 5.5A1.5 1.5 0 0 1 6.5 4H19v13H6.5A1.5 1.5 0 0 0 5 18.5zM5 18.5A1.5 1.5 0 0 0 6.5 20H19"/></symbol>
+  <symbol id="i-announcements" viewBox="0 0 24 24"><path d="M4 10v4h3l7 4V6l-7 4zM17.5 9.5a4 4 0 0 1 0 5"/></symbol>
+  <symbol id="i-item" viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="2.5"/></symbol>
+  <symbol id="i-lost" viewBox="0 0 24 24"><path d="M4.5 9.5a11 11 0 0 1 15 0M7.5 13a7 7 0 0 1 9 0M12 17h.01M4 4l16 16"/></symbol>
+</svg>
+
+<main id="pair" hidden>
+  <h1 data-i="pair_title"></h1>
+  <p class="lead" data-i="pin_hint"></p>
+  <div class="ff"><label for="pin" data-i="pin"></label>
+    <input id="pin" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="one-time-code" placeholder="0000"></div>
+  <p id="pair-error" role="alert"></p>
+  <button id="pair-btn" class="cta press" type="button" data-i="connect"></button>
+  <div class="seg" data-lang-switch></div>
+</main>
+
+<main id="remote" hidden>
+  <div id="lost" role="status" hidden><div class="box"><svg class="ic" aria-hidden="true"><use href="#i-lost"/></svg><div><b data-i="lost"></b><small data-i="retrying"></small></div></div></div>
+  <div id="head">
+    <button type="button" id="gear" data-keep data-i-aria="settings"><svg class="ic" aria-hidden="true"><use href="#i-gear"/></svg></button>
+    <div class="mid"><h1 id="title"></h1><div id="count"></div></div>
+    <div class="ends">
+      <button type="button" class="press" data-act="prev" data-i-aria="back"><svg class="ic" aria-hidden="true"><use href="#i-up"/></svg></button>
+      <button type="button" class="press" data-act="next" data-i-aria="next_btn"><svg class="ic" aria-hidden="true"><use href="#i-down"/></svg></button>
+    </div>
+  </div>
+
+  <div id="panes">
+    <section id="pane-live" class="pane" role="tabpanel">
+      <div id="sections" data-i-aria="jump"></div>
+      <div id="list" class="scroll"></div>
+      <div id="display">
+        <div class="seg">
+          <button class="seg-btn hides press" type="button" data-toggle="text" aria-pressed="false" data-i="clear_text"></button>
+          <button class="seg-btn hides press" type="button" data-toggle="black" aria-pressed="false" data-i="black"></button>
+          <button class="seg-btn hides press" type="button" data-toggle="logo" aria-pressed="false" data-i="logo"></button>
+          <button class="seg-btn onair press" type="button" data-toggle="live" aria-pressed="true" data-i="live"></button>
+        </div>
+        <p id="logo-note" class="note" hidden data-i="logo_needs" style="padding-top:6px"></p>
+      </div>
+    </section>
+
+    <section id="pane-plan" class="pane" role="tabpanel" hidden>
+      <div id="plan-list" class="scroll"></div>
+      <div id="plan-bar"><button class="cta press" type="button" data-act="plan-show" disabled></button></div>
+    </section>
+
+    <section id="pane-more" class="pane scroll" role="tabpanel" hidden>
+      <div class="sect" data-i="message"></div>
+      <div class="form">
+        <input id="msg" class="field plain" maxlength="200" autocomplete="off" data-i-ph="message_ph" data-i-aria="message">
+        <div class="twin">
+          <button id="msg-show" class="btn go press" type="button" data-i="message_show"></button>
+          <button id="msg-hide" class="btn press" type="button" data-i="message_hide"></button>
+        </div>
+        <p id="msg-state" class="note"></p>
+      </div>
+      <div class="sect" data-i="countdown"></div>
+      <div class="form">
+        <div class="big" data-clock></div>
+        <div class="mins"><input id="minutes" inputmode="numeric" maxlength="3" value="5" data-i-aria="minutes"><span data-i="minutes"></span></div>
+        <div class="twin">
+          <button id="cd-start" class="btn go press" type="button" data-i="start"></button>
+          <button id="cd-stop" class="btn press" type="button" data-i="stop"></button>
+        </div>
+      </div>
+    </section>
+
+    <section id="pane-search" class="pane" role="tabpanel" hidden>
+      <div class="sbox"><svg class="ic" aria-hidden="true"><use href="#i-search"/></svg>
+        <input id="search" class="field" type="search" maxlength="100" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="search" data-i-ph="search_ph" data-i-aria="search_ph"></div>
+      <p id="search-hint" class="note"></p>
+      <div id="hits" class="scroll"></div>
+    </section>
+
+    <section id="pane-settings" class="pane scroll" role="tabpanel" hidden>
+      <div class="sect" data-i="language"></div>
+      <div class="form"><div class="seg" data-lang-switch></div></div>
+      <div class="sect" data-i="keys_title"></div>
+      <p class="keys" data-i="keys_text"></p>
+    </section>
+  </div>
+
+  <nav id="tabs" role="tablist">
+    <button class="tab press" type="button" role="tab" data-tab="plan" data-keep><svg class="ic" aria-hidden="true"><use href="#i-service"/></svg><span data-i="tab_plan"></span></button>
+    <button class="tab press" type="button" role="tab" data-tab="live" data-keep><svg class="ic" aria-hidden="true"><use href="#i-slides"/></svg><span data-i="tab_live"></span></button>
+    <button class="tab press" type="button" role="tab" data-tab="more" data-keep><svg class="ic" aria-hidden="true"><use href="#i-alert"/></svg><span data-i="msg_tab"></span></button>
+    <button class="tab press" type="button" role="tab" data-tab="search" data-keep><svg class="ic" aria-hidden="true"><use href="#i-search"/></svg><span data-i="tab_search"></span></button>
+  </nav>
+</main>
+
+<script src="/look/core.js"></script>
+<script>
+"use strict";
+const R = window.Remote, $ = R.$, t = R.t;
+let tab = "live";
+
+function setTab(name) {
+  tab = name;
+  for (const n of ["live", "plan", "more", "search", "settings"]) $("pane-" + n).hidden = n !== name;
+  document.querySelectorAll("#tabs .tab").forEach((b) => b.setAttribute("aria-selected", String(b.dataset.tab === name)));
+  paintTitle();
+  if (name === "search") $("search").focus();
+}
+function paintTitle() {
+  const s = R.state;
+  const names = { plan: "tab_plan", more: "message", search: "tab_search", settings: "settings" };
+  $("title").textContent = tab === "live" ? (s ? R.view(s).title : "") : t(names[tab]);
+  $("count").textContent = tab === "live" && s ? R.view(s).count : "";
+}
+document.querySelectorAll("#tabs .tab").forEach((b) => b.addEventListener("click", () => setTab(b.dataset.tab)));
+$("gear").addEventListener("click", () => setTab("settings"));
+
+function block(sl, i) {
+  const b = R.el("button", "block press");
+  b.type = "button";
+  const head = R.el("div", "head", ""); head.append(R.el("span", "", (i + 1) + (sl.label ? "  " + R.nice(sl.label) : "")), R.el("span", "pill", ""));
+  b.append(head, R.el("div", "words", sl.text));
+  return b;
+}
+function chip(x) {
+  const b = R.el("button", "chip press", R.nice(x.label) || x.short);
+  b.type = "button"; b.setAttribute("aria-label", R.nice(x.label));
+  return b;
+}
+
+R.hooks.render = (s, v) => {
+  paintTitle();
+  R.fillSections($("sections"), chip);
+  R.fillSlides($("list"), block);
+  $("list").classList.toggle("kept", v.kept);
+  /* red while the room sees the block; yellow with the reason while something keeps it away */
+  [...$("list").children].forEach((c, i) => {
+    const p = c.querySelector(".pill"), live = i === v.live;
+    p.className = "pill" + (live ? (v.kept ? " warn" : " live") : "");
+    p.textContent = live ? (v.kept ? v.why : t("live")) : "";
+  });
+  R.fillPlan($("plan-list"), (p) => R.el("div", "group", p.title), (p) => {
+    const b = R.el("button", "prow press");
+    b.type = "button";
+    b.append(R.icon(R.kindIcon(p.kind)), R.el("span", "t", p.title), R.el("span", "pill live", p.live ? t("plan_live") : ""));
+    return b;
+  });
+};
+R.hooks.hits = () => R.fillHits($("hits"), (h) => {
+  const row = R.el("div", "hit");
+  const txt = R.el("div", "txt"); txt.append(R.el("div", "t", h.title), R.el("div", "d", h.detail));
+  const [show, add] = R.hitButtons(h, "link", "link");
+  row.append(txt, show, add);
+  return row;
+});
+R.hooks.lang = () => paintTitle();
+R.hooks.openLive = () => setTab("live");
+R.hooks.openSearch = () => setTab("search");
+R.hooks.start = () => setTab(tab);
+R.boot();
+</script>
+</body>
+</html>

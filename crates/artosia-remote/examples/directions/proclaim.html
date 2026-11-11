@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<title>Artosia remote, Proclaim look</title>
+<style>
+/* Direction: Proclaim Remote (iOS). Skeleton from products/06, 07, 08, 10 and languages/proclaim-remote.md:
+   no tab bar; a top bar of grouped dark round-rect buttons around a two-segment pill; the slide full width on a
+   dark field; a pull-up drawer of labelled thumbnails with a grab handle; headed groups of thumbnail rows with
+   two stacked pills; one round floating button. */
+:root {
+  --bar: #44445a; --field: #2f2f3f; --deep: #25252f; --band: #3d3d52; --row: #2f2f3f; --line: #44445a;
+  --text: #f2f2f7; --muted: #bdbdcf; --faint: #9a9ab0;
+  --blue: #5b9dff; --on-blue: #061630; --mint: #1ee6a0; --on-mint: #04271b;
+  --live: #d4122e; --warn: #f7cd3a; --on-warn: #201a09;
+  --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", Inter, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body { height: 100%; margin: 0; background: var(--field); color: var(--text); font-family: var(--font); font-size: 16px; line-height: 1.3; -webkit-font-smoothing: antialiased; }
+body { overscroll-behavior: none; }
+[hidden] { display: none !important; }
+button, input { font: inherit; color: inherit; }
+button { border: 0; background: none; cursor: pointer; touch-action: manipulation; user-select: none; -webkit-user-select: none; padding: 0; }
+button:focus-visible, input:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+button:disabled { opacity: 0.45; cursor: default; }
+svg.ic { width: 22px; height: 22px; flex: 0 0 auto; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.press { transition: transform 80ms, filter 80ms; }
+.press:not(:disabled):active { transform: scale(0.97); filter: brightness(0.88); }
+.pill { display: inline-flex; align-items: center; height: 22px; padding: 0 9px; border-radius: 999px; font-size: 0.75rem; font-weight: 700; white-space: nowrap; }
+.pill:empty { display: none; }
+.pill.live { background: var(--live); color: #fff; }
+.pill.warn { background: var(--warn); color: var(--on-warn); }
+.note { color: var(--muted); font-size: 0.8125rem; margin: 0; }
+.note:empty { display: none; }
+.scroll { overflow-y: auto; min-height: 0; scrollbar-width: thin; }
+
+/* the stacked pills of a row: Follow over Control in the source, Show over Not now or Add here */
+.stack { display: flex; flex-direction: column; gap: 8px; flex: 0 0 auto; width: 96px; }
+.sp { min-height: 44px; border-radius: 10px; background: #565670; font-weight: 600; font-size: 0.9375rem; padding: 0 10px; }
+.sp.go { background: var(--blue); color: var(--on-blue); }
+
+/* pairing: Xbox's code cells, two rows of dark squares (mobbin/xbox-code.jpg) */
+#pair { min-height: 100%; display: flex; flex-direction: column; justify-content: center; gap: 16px; padding: 28px 24px; max-width: 420px; margin: 0 auto; background: var(--field); }
+#pair h1 { margin: 0; font-size: 1.75rem; font-weight: 700; text-align: center; }
+#pair p.lead { margin: 0; color: var(--muted); text-align: center; }
+.cells { position: relative; display: grid; grid-template-columns: repeat(2, 84px); justify-content: center; gap: 12px; }
+.cells .cell { height: 84px; border-radius: 10px; background: var(--deep); display: grid; place-items: center; font-size: 2.25rem; font-weight: 600; font-variant-numeric: tabular-nums; border: 2px solid transparent; }
+.cells:focus-within .cell.at { border-color: var(--blue); }
+#pin { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; font-size: 16px; border: 0; background: none; }
+#pair-error { margin: 0; min-height: 1.3em; color: var(--warn); font-weight: 600; font-size: 0.875rem; text-align: center; }
+.cta { display: flex; align-items: center; justify-content: center; min-height: 52px; border-radius: 10px; background: var(--blue); color: var(--on-blue); font-weight: 700; font-size: 1.0625rem; width: 100%; }
+.cta:disabled { background: #565670; color: var(--muted); opacity: 1; }
+.seg { display: flex; gap: 4px; padding: 4px; background: var(--deep); border-radius: 12px; }
+.seg-btn { flex: 1 1 0; min-width: 0; min-height: 44px; padding: 4px 8px; border-radius: 9px; color: var(--muted); font-weight: 600; font-size: 0.9375rem; line-height: 1.15; overflow-wrap: anywhere; }
+.seg-btn.on { background: #565670; color: var(--text); }
+
+#remote { height: 100dvh; display: flex; flex-direction: column; max-width: 640px; margin: 0 auto; background: var(--field); }
+/* top bar: grouped round-rect buttons, a two-segment pill between them */
+#top { flex: 0 0 auto; display: grid; grid-template-columns: 52px minmax(0, 1fr) auto; align-items: center; gap: 8px; padding: max(8px, env(safe-area-inset-top)) 12px 10px; background: var(--bar); }
+.grp { display: flex; align-items: center; background: var(--deep); border-radius: 22px; height: 48px; padding: 0 2px; }
+.grp button { width: 46px; height: 44px; display: grid; place-items: center; border-radius: 22px; }
+.grp { grid-column: 3; }
+#back-grp, #spacer { grid-column: 1; }
+#seg2 { grid-column: 2; }
+.grp.solo { width: 48px; padding: 0; justify-content: center; }
+#seg2 { justify-self: center; display: flex; height: 48px; padding: 3px; background: var(--deep); border-radius: 24px; max-width: 100%; min-width: 0; }
+#seg2 button { min-width: 0; padding: 0 18px; border-radius: 21px; font-weight: 600; color: var(--muted); font-size: 1rem; }
+#seg2 button[aria-selected="true"] { background: #5a5a75; color: var(--text); }
+#subtitle { flex: 0 0 auto; padding: 0; }
+
+#lost { flex: 0 0 auto; display: flex; align-items: center; gap: 12px; margin: 10px 12px 0; padding: 10px 14px; border-radius: 12px; background: color-mix(in srgb, var(--warn) 18%, var(--field)); color: var(--text); }
+#lost svg.ic { color: var(--warn); }
+#lost b { display: block; font-size: 0.9375rem; }
+#lost small { color: var(--muted); font-size: 0.8125rem; }
+
+#screens { flex: 1 1 0; min-height: 0; display: flex; flex-direction: column; position: relative; }
+.screen { flex: 1 1 0; min-height: 0; display: flex; flex-direction: column; }
+
+/* live: title line, slide, state pills, Prev and Next, toggles, drawer */
+#stage { flex: 1 1 0; min-height: 0; display: flex; flex-direction: column; padding: 10px 0 0; gap: 10px; overflow-y: auto; }
+#now { display: flex; align-items: center; gap: 8px; padding: 0 14px; min-height: 26px; }
+#now b { font-size: 1.0625rem; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#now span { margin-left: auto; color: var(--muted); font-size: 0.875rem; font-variant-numeric: tabular-nums; white-space: nowrap; }
+#slide { position: relative; margin: 0; background: #14141c; aspect-ratio: 16 / 9; max-height: 42vh; width: 100%; display: flex; align-items: center; justify-content: center; padding: 14px 18px; text-align: center; outline: 3px solid transparent; outline-offset: -3px; }
+#slide.onair { outline-color: var(--live); }
+#slide.kept { outline-color: var(--warn); }
+#slide p { margin: 0; font-weight: 700; font-size: clamp(1.15rem, 5.4vw, 1.75rem); line-height: 1.25; white-space: pre-wrap; overflow-wrap: anywhere; transition: opacity 120ms; }
+#slide.kept p { opacity: 0.4; }
+#slide .tag { position: absolute; left: 10px; top: 8px; }
+#slide .tag.name { background: rgba(255,255,255,0.14); color: var(--text); }
+#slide .state { position: absolute; right: 10px; top: 8px; }
+#steps { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); gap: 10px; padding: 0 14px; }
+#steps button { min-height: 64px; border-radius: 14px; background: #565670; font-weight: 700; font-size: 1.0625rem; display: flex; align-items: center; justify-content: center; gap: 8px; }
+#steps button.go { background: var(--blue); color: var(--on-blue); font-size: 1.25rem; }
+#flags { display: grid; grid-template-columns: repeat(4, 1fr); margin: 0 14px; background: var(--deep); border-radius: 16px; padding: 4px; gap: 4px; }
+.flag { min-height: 58px; border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; font-size: 0.75rem; font-weight: 600; color: var(--muted); padding: 2px; text-align: center; line-height: 1.1; min-width: 0; }
+.flag span { max-width: 100%; overflow-wrap: anywhere; }
+.flag svg.ic { width: 22px; height: 22px; }
+.flag.hides.on { background: var(--warn); color: var(--on-warn); }
+.flag.onair.on { background: var(--live); color: #fff; }
+
+#drawer { flex: 0 0 auto; background: var(--bar); border-radius: 18px 18px 0 0; display: flex; flex-direction: column; max-height: 100%; }
+#handle { display: grid; place-items: center; height: 26px; width: 100%; }
+#handle i { display: block; width: 44px; height: 5px; border-radius: 3px; background: #7a7a94; }
+#sections { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; padding: 0 12px 8px; flex: 0 0 auto; }
+#sections::-webkit-scrollbar { display: none; }
+.chip { flex: 0 0 auto; min-height: 44px; padding: 0 16px; border-radius: 22px; background: var(--deep); font-weight: 600; font-size: 0.9375rem; white-space: nowrap; color: var(--text); }
+.chip.live { background: var(--blue); color: var(--on-blue); }
+#list { display: flex; gap: 10px; overflow-x: auto; scrollbar-width: none; padding: 2px 12px calc(12px + env(safe-area-inset-bottom)); }
+#list::-webkit-scrollbar { display: none; }
+.thumb { flex: 0 0 132px; display: flex; flex-direction: column; gap: 6px; text-align: left; min-width: 0; }
+.thumb .cap { font-size: 0.8125rem; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.thumb .tile { display: block; aspect-ratio: 16 / 9; border-radius: 6px; background: #14141c; padding: 6px 8px; font-size: 0.6875rem; line-height: 1.25; overflow: hidden; outline: 3px solid transparent; outline-offset: 0; }
+.thumb.live .tile { outline-color: var(--blue); }
+#drawer.onair .thumb.live .tile { outline-color: var(--live); }
+#drawer.kept .thumb.live .tile { outline-color: var(--warn); }
+#drawer.open { position: absolute; left: 0; right: 0; bottom: 0; top: 0; border-radius: 0; z-index: 4; }
+#drawer.open #list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 12px; overflow-y: auto; flex: 1 1 0; min-height: 0; align-content: start; }
+#drawer.open .thumb { flex: initial; }
+#drawer.open .thumb .tile { font-size: 0.8125rem; }
+
+/* plan: headed groups, thumbnail rows (products/06) */
+#plan-list { flex: 1 1 0; padding-bottom: 96px; }
+.band { padding: 12px 16px; background: var(--band); font-weight: 600; font-size: 0.9375rem; color: var(--muted); }
+.prow { display: flex; align-items: center; gap: 12px; width: 100%; min-height: 84px; padding: 10px 14px; text-align: left; background: var(--row); border-bottom: 1px solid var(--line); }
+.prow .th { position: relative; flex: 0 0 76px; height: 54px; border-radius: 6px; background: linear-gradient(135deg, #3b3b58, #1d1d2a); display: grid; place-items: center; color: var(--muted); }
+.prow .th .pill { position: absolute; left: 4px; bottom: 4px; height: 18px; font-size: 0.6875rem; padding: 0 6px; }
+.prow .meta { flex: 1 1 auto; min-width: 0; }
+.prow .t { font-size: 1.0625rem; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.prow .d { color: var(--muted); font-size: 0.875rem; margin-top: 2px; }
+.prow .stack { display: none; }
+.prow.picked { background: #3a3a54; }
+.prow.picked .stack { display: flex; }
+.fab { position: absolute; z-index: 3; right: 18px; bottom: calc(18px + env(safe-area-inset-bottom)); width: 60px; height: 60px; border-radius: 50%; background: var(--mint); color: var(--on-mint); display: grid; place-items: center; box-shadow: 0 6px 16px rgba(0,0,0,0.45); }
+.fab svg.ic { width: 30px; height: 30px; stroke-width: 2.4; }
+
+/* search */
+.sbox { flex: 0 0 auto; padding: 12px 14px; background: var(--field); }
+.field { width: 100%; height: 48px; border-radius: 12px; border: 0; background: var(--deep); padding: 0 14px; font-size: 1rem; }
+.field::placeholder { color: var(--faint); opacity: 1; }
+.field:focus { outline: 2px solid var(--blue); }
+#search-hint { padding: 0 16px 8px; }
+#hits { flex: 1 1 0; }
+.hit { display: flex; align-items: center; gap: 12px; min-height: 84px; padding: 10px 14px; background: var(--row); border-bottom: 1px solid var(--line); }
+.hit .th { flex: 0 0 76px; height: 54px; border-radius: 6px; background: linear-gradient(135deg, #3b3b58, #1d1d2a); display: grid; place-items: center; color: var(--muted); }
+.hit .meta { flex: 1 1 auto; min-width: 0; }
+.hit .t { font-size: 1.0625rem; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.hit .d { color: var(--muted); font-size: 0.875rem; margin-top: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* settings screen: message, countdown (mobbin/opal-timer.jpg), language */
+#pane-more { padding: 14px; gap: 14px; display: flex; flex-direction: column; }
+.group { background: var(--row); border-radius: 14px; padding: 14px; display: flex; flex-direction: column; gap: 12px; }
+.group h2 { margin: 0; font-size: 1.0625rem; font-weight: 700; }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.two .sp { width: 100%; min-height: 48px; }
+#msg-hide.on { background: var(--warn); color: var(--on-warn); }
+.dial { display: grid; grid-template-columns: 52px minmax(0, 1fr) 52px; align-items: center; gap: 10px; }
+.dial .step { width: 52px; height: 52px; border-radius: 26px; background: #565670; display: grid; place-items: center; }
+.dial .mid { display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 0; }
+[data-clock]:empty::before { content: "0:00"; color: var(--faint); }
+.dial [data-clock] { font-size: 2.25rem; font-weight: 700; font-variant-numeric: tabular-nums; min-height: 2.9rem; line-height: 1.3; }
+#minutes { width: 96px; height: 44px; border-radius: 22px; border: 0; background: var(--deep); text-align: center; font-size: 1.0625rem; font-variant-numeric: tabular-nums; }
+
+@media (max-height: 700px) {
+  #steps button { min-height: 52px; } .flag { min-height: 52px; } #stage { gap: 8px; padding-top: 8px; }
+  #slide { max-height: 30vh; }
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-down" viewBox="0 0 24 24"><path d="M12 5v14M6 13l6 6 6-6"/></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6"/></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></symbol>
+  <symbol id="i-text" viewBox="0 0 24 24"><path d="M6 6h12M12 6v12M4 20L20 4"/></symbol>
+  <symbol id="i-black" viewBox="0 0 24 24"><rect x="4" y="6.5" width="16" height="11" rx="2" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-logo" viewBox="0 0 24 24"><circle cx="12" cy="9" r="5"/><path d="M9 13.2 7.6 20l4.4-2 4.4 2L15 13.2"/></symbol>
+  <symbol id="i-live" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-list" viewBox="0 0 24 24"><path d="M9 7h10M9 12h10M9 17h10M5 7h.01M5 12h.01M5 17h.01"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.3-4.3"/></symbol>
+  <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/></symbol>
+  <symbol id="i-song" viewBox="0 0 24 24"><path d="M9 17.5V6l10-2v11.5"/><circle cx="6.8" cy="17.5" r="2.2"/><circle cx="16.8" cy="15.5" r="2.2"/></symbol>
+  <symbol id="i-passage" viewBox="0 0 24 24"><path d="M5 5.5A1.5 1.5 0 0 1 6.5 4H19v13H6.5A1.5 1.5 0 0 0 5 18.5zM5 18.5A1.5 1.5 0 0 0 6.5 20H19"/></symbol>
+  <symbol id="i-announcements" viewBox="0 0 24 24"><path d="M4 10v4h3l7 4V6l-7 4zM17.5 9.5a4 4 0 0 1 0 5"/></symbol>
+  <symbol id="i-item" viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="2.5"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+  <symbol id="i-lost" viewBox="0 0 24 24"><path d="M4.5 9.5a11 11 0 0 1 15 0M7.5 13a7 7 0 0 1 9 0M12 17h.01M4 4l16 16"/></symbol>
+</svg>
+
+<main id="pair" hidden>
+  <h1 data-i="pair_title"></h1>
+  <p class="lead" data-i="pin_hint"></p>
+  <div class="cells" id="cells"><div class="cell at"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+    <input id="pin" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="one-time-code" data-i-aria="pin"></div>
+  <p id="pair-error" role="alert"></p>
+  <button id="pair-btn" class="cta press" type="button" data-i="connect"></button>
+  <div class="seg" data-lang-switch></div>
+</main>
+
+<main id="remote" hidden>
+  <div id="top">
+    <div class="grp solo" id="back-grp" hidden><button type="button" id="back" data-keep data-i-aria="back_to_live"><svg class="ic" aria-hidden="true"><use href="#i-back"/></svg></button></div>
+    <span id="spacer"></span>
+    <div id="seg2" role="tablist">
+      <button type="button" role="tab" data-screen="live" data-keep data-i="tab_live"></button>
+      <button type="button" role="tab" data-screen="plan" data-keep data-i="tab_plan"></button>
+    </div>
+    <div class="grp">
+      <button type="button" id="go-search" data-keep data-i-aria="tab_search"><svg class="ic" aria-hidden="true"><use href="#i-search"/></svg></button>
+      <button type="button" id="go-more" data-keep data-i-aria="settings"><svg class="ic" aria-hidden="true"><use href="#i-gear"/></svg></button>
+    </div>
+  </div>
+  <div id="lost" role="status" hidden><svg class="ic" aria-hidden="true"><use href="#i-lost"/></svg><div><b data-i="lost"></b><small data-i="retrying"></small></div></div>
+
+  <div id="screens">
+    <section id="pane-live" class="screen" role="tabpanel">
+      <div id="stage">
+        <div id="now"><b id="title"></b><span id="count"></span></div>
+        <div id="slide"><span class="pill tag name" id="live-tag"></span><span class="pill state" id="live-state"></span><p id="live-text"></p></div>
+        <div id="steps">
+          <button class="press" type="button" data-act="prev"><svg class="ic" aria-hidden="true"><use href="#i-up"/></svg><span data-i="back"></span></button>
+          <button class="go press" type="button" data-act="next"><svg class="ic" aria-hidden="true"><use href="#i-down"/></svg><span data-i="next_btn"></span></button>
+        </div>
+        <div id="flags">
+          <button class="flag hides press" type="button" data-toggle="text" aria-pressed="false"><svg class="ic" aria-hidden="true"><use href="#i-text"/></svg><span data-i="clear_text"></span></button>
+          <button class="flag hides press" type="button" data-toggle="black" aria-pressed="false"><svg class="ic" aria-hidden="true"><use href="#i-black"/></svg><span data-i="black"></span></button>
+          <button class="flag hides press" type="button" data-toggle="logo" aria-pressed="false"><svg class="ic" aria-hidden="true"><use href="#i-logo"/></svg><span data-i="logo"></span></button>
+          <button class="flag onair press" type="button" data-toggle="live" aria-pressed="true"><svg class="ic" aria-hidden="true"><use href="#i-live"/></svg><span data-i="live"></span></button>
+        </div>
+        <p id="logo-note" class="note" style="padding:0 16px" hidden data-i="logo_needs"></p>
+      </div>
+      <div id="drawer">
+        <button id="handle" type="button" data-keep data-i-aria="sections"><i></i></button>
+        <div id="sections" data-i-aria="jump"></div>
+        <div id="list"></div>
+      </div>
+    </section>
+
+    <section id="pane-plan" class="screen" role="tabpanel" hidden>
+      <div id="plan-list" class="scroll"></div>
+      <button class="fab press" type="button" id="fab" data-keep data-i-aria="tab_search"><svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></button>
+    </section>
+
+    <section id="pane-search" class="screen" role="tabpanel" hidden>
+      <div class="sbox"><input id="search" class="field" type="search" maxlength="100" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="search" data-i-ph="search_ph" data-i-aria="search_ph"></div>
+      <p id="search-hint" class="note"></p>
+      <div id="hits" class="scroll"></div>
+    </section>
+
+    <section id="pane-more" class="screen scroll" role="tabpanel" hidden>
+      <section class="group">
+        <h2 data-i="message"></h2>
+        <input id="msg" class="field" maxlength="200" autocomplete="off" data-i-ph="message_ph" data-i-aria="message">
+        <div class="two">
+          <button id="msg-show" class="sp go press" type="button" data-i="message_show"></button>
+          <button id="msg-hide" class="sp press" type="button" data-i="message_hide"></button>
+        </div>
+        <p id="msg-state" class="note"></p>
+      </section>
+      <section class="group">
+        <h2 data-i="countdown"></h2>
+        <div class="dial">
+          <button class="step press" type="button" id="m-less" data-keep data-i-aria="minutes"><svg class="ic" aria-hidden="true"><use href="#i-minus"/></svg></button>
+          <div class="mid"><span data-clock></span><input id="minutes" inputmode="numeric" maxlength="3" value="5" data-i-aria="minutes"></div>
+          <button class="step press" type="button" id="m-more" data-keep data-i-aria="minutes"><svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></button>
+        </div>
+        <div class="two">
+          <button id="cd-start" class="sp go press" type="button" data-i="start"></button>
+          <button id="cd-stop" class="sp press" type="button" data-i="stop"></button>
+        </div>
+      </section>
+      <section class="group">
+        <h2 data-i="language"></h2>
+        <div class="seg" data-lang-switch></div>
+      </section>
+    </section>
+  </div>
+</main>
+
+<script src="/look/core.js"></script>
+<script>
+"use strict";
+const R = window.Remote, $ = R.$, t = R.t;
+let screen = "live";
+
+function setScreen(name) {
+  screen = name;
+  for (const n of ["live", "plan", "search", "more"]) $("pane-" + n).hidden = n !== name;
+  document.querySelectorAll("#seg2 button").forEach((b) => b.setAttribute("aria-selected", String(b.dataset.screen === name)));
+  const sub = name === "search" || name === "more";
+  $("back-grp").hidden = !sub;
+  $("spacer").hidden = sub;
+  $("seg2").hidden = sub;
+  if (name === "search") $("search").focus();
+}
+document.querySelectorAll("#seg2 button").forEach((b) => b.addEventListener("click", () => setScreen(b.dataset.screen)));
+$("back").addEventListener("click", () => setScreen("live"));
+$("go-search").addEventListener("click", () => setScreen("search"));
+$("go-more").addEventListener("click", () => setScreen("more"));
+$("fab").addEventListener("click", () => setScreen("search"));
+$("handle").addEventListener("click", () => {
+  const open = $("drawer").classList.toggle("open");
+  $("handle").setAttribute("aria-expanded", String(open));
+});
+function nudge(by) { const m = $("minutes"); m.value = Math.min(180, Math.max(1, (parseInt(m.value, 10) || 1) + by)); m.dispatchEvent(new Event("input")); }
+$("m-less").addEventListener("click", () => nudge(-1));
+$("m-more").addEventListener("click", () => nudge(1));
+
+const KINDS = { song: "Song", passage: "Bible passage", announcements: "Announcements", item: "Item" };
+function thumb(sl, i) {
+  const b = R.el("button", "thumb press");
+  b.type = "button";
+  b.append(R.el("span", "cap", (i + 1) + (sl.label ? " " + R.nice(sl.label) : "")), R.el("span", "tile", sl.text));
+  return b;
+}
+function chip(x) {
+  const b = R.el("button", "chip press", R.nice(x.label) || x.short);
+  b.type = "button"; b.setAttribute("aria-label", R.nice(x.label));
+  return b;
+}
+
+R.hooks.render = (s, v) => {
+  $("title").textContent = v.title;
+  $("count").textContent = v.count;
+  $("live-text").textContent = v.text;
+  $("live-tag").textContent = v.label;
+  $("slide").classList.toggle("onair", v.onair);
+  $("slide").classList.toggle("kept", v.kept && !!v.cur);
+  /* red pill while the room sees it; the yellow pill says what keeps it away */
+  const st = $("live-state");
+  st.className = "pill state" + (v.onair ? " live" : (v.why ? " warn" : ""));
+  st.textContent = v.onair ? t("on_air") : v.why;
+  $("drawer").classList.toggle("onair", v.onair);
+  $("drawer").classList.toggle("kept", v.kept);
+  R.fillSections($("sections"), chip);
+  R.fillSlides($("list"), thumb);
+  R.fillPlan($("plan-list"), (p) => R.el("div", "band", p.title), (p) => {
+    const row = R.el("div", "prow press");
+    row.tabIndex = 0; row.setAttribute("role", "button");
+    const th = R.el("div", "th"); th.append(R.icon(R.kindIcon(p.kind)));
+    if (p.live) th.append(R.el("span", "pill live", t("on_air")));
+    const meta = R.el("div", "meta"); meta.append(R.el("div", "t", p.title), R.el("div", "d", KINDS[R.kindIcon(p.kind)]));
+    const stack = R.el("div", "stack");
+    const go = R.el("button", "sp go press", t("show")); go.type = "button";
+    go.addEventListener("click", (e) => { e.stopPropagation(); R.showPicked(); });
+    const no = R.el("button", "sp press", t("cancel")); no.type = "button";
+    no.addEventListener("click", (e) => { e.stopPropagation(); R.pick(p.id); });
+    stack.append(go, no);
+    row.append(th, meta, stack);
+    return row;
+  });
+};
+R.hooks.hits = () => R.fillHits($("hits"), (h) => {
+  const row = R.el("div", "hit");
+  const th = R.el("div", "th"); th.append(R.icon(R.kindIcon(h.kind)));
+  const meta = R.el("div", "meta"); meta.append(R.el("div", "t", h.title), R.el("div", "d", h.detail));
+  const stack = R.el("div", "stack");
+  const [show, add] = R.hitButtons(h, "sp go", "sp");
+  stack.append(show, add);
+  row.append(th, meta, stack);
+  return row;
+});
+R.hooks.openLive = () => setScreen("live");
+R.hooks.openSearch = () => setScreen("search");
+R.hooks.start = () => setScreen(screen);
+R.hooks.pinInput = (v) => {
+  document.querySelectorAll("#cells .cell").forEach((c, i) => { c.textContent = v[i] || ""; c.classList.toggle("at", i === Math.min(v.length, 3)); });
+};
+R.hooks.pinReset = () => R.hooks.pinInput("");
+R.boot();
+</script>
+</body>
+</html>
