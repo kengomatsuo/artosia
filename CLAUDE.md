@@ -26,6 +26,7 @@ It is authoritative; update it (and this file's headlines) whenever a decision c
 - `crates/artosia-remote` — the phone remote; `crates/artosia-video` — looping video and cameras; `crates/artosia-warp` — corner pin and colour
 - `crates/artosia-stream` — the streaming program (needs GStreamer, like `artosia-video`); `crates/artosia-listen` — microphone and speech; `crates/artosia-lyrics` — lyrics from the web
 - `crates/artosia-office` — reads a church's PowerPoint and Word files; `crates/artosia-update` — self-update and the release tool
+- `crates/artosia-setup` — `Artosia-setup.exe`, the small download that installs Artosia; kept the same file across releases ([docs/setup.md](docs/setup.md))
 - `spikes/` — throwaway experiments with their own `Cargo.toml`; [spikes/SPEC.md](spikes/SPEC.md) is the shared test
 - `tools/` — `snap.sh`, `ram/measure.ps1`, `ram/measure-cpu.ps1`, `grab-window.ps1`, `make-fixture.sh`, `make-bible-asset.py`
 - `site/` — the homepage at artosia.matsuokengo.com, one template in English and Indonesian ([docs/site.md](docs/site.md))

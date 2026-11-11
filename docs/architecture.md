@@ -57,6 +57,7 @@ The stack survey and RAM measurements behind this choice are in [research.md](re
 | `crates/artosia-lyrics` | Finding a song's words on LRCLIB | no | no |
 | `crates/artosia-office` | Reading a church's PowerPoint and Word files | no | no |
 | `crates/artosia-update` | Self-update from a signed static folder, and the release tool | no | no |
+| `crates/artosia-setup` | `Artosia-setup.exe`: fetches the signed release into the user's own programs folder, adds shortcuts and the entry in Windows' installed apps, removes them again. Unsigned by the owner's choice (2026-11-12), and kept the same file across releases ([setup.md](setup.md)) | no | no |
 
 A bare `cargo build` builds everything but `artosia-video` (`default-members` in the root `Cargo.toml`), so a machine without GStreamer still builds and runs Artosia with colour and picture backgrounds.
 

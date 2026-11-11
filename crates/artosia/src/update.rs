@@ -7,6 +7,7 @@
 //! `update-feed.txt` beside the program, points a copy at another folder of releases.
 
 use std::path::PathBuf;
+use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::{Arc, Mutex};
 
 use artosia_update::{Applied, UpdateError};
@@ -28,15 +29,9 @@ pub fn install_dir() -> Option<PathBuf> {
     std::env::current_exe().ok()?.parent().map(PathBuf::from)
 }
 
-/// The files of the newest release, wherever it was tagged.
-const RELEASES: &str = "https://github.com/kengomatsuo/artosia/releases/latest/download";
-
 /// Where new versions are published.
 pub fn feed() -> Option<String> {
-    let from_file = || std::fs::read_to_string(install_dir()?.join("update-feed.txt")).ok();
-    let feed = std::env::var("ARTOSIA_UPDATE_FEED").ok().or_else(from_file).unwrap_or_else(|| RELEASES.to_string());
-    let feed = feed.lines().next().unwrap_or("").trim().to_string();
-    (!feed.is_empty()).then_some(feed)
+    artosia_update::feed_address(install_dir().as_deref())
 }
 
 /// Swaps in an update that was downloaded earlier. True when the new program has been
@@ -52,18 +47,44 @@ pub fn apply_before_window() -> bool {
     artosia_update::relaunch(&program).is_ok()
 }
 
+/// Set by `just_updated`, read once by `confirm`: this start is the first on a new version.
+static FIRST_START_OF_NEW_VERSION: AtomicBool = AtomicBool::new(false);
+
 /// Whether this start is the first one on new files. The projector left running by the old
 /// version must then be replaced too.
 pub fn just_updated() -> bool {
     let Some(marker) = install_dir().map(|folder| folder.join(MARKER)) else { return false };
-    marker.is_file() && std::fs::remove_file(marker).is_ok()
+    let first = marker.is_file() && std::fs::remove_file(marker).is_ok();
+    if first {
+        FIRST_START_OF_NEW_VERSION.store(true, Ordering::SeqCst);
+    }
+    first
 }
 
-/// Tells the updater this version started well, so it is kept.
+/// Tells the updater this version started well, so it is kept. The first time a new version
+/// does, the setup that installed Artosia is asked to put the version in Windows' list of
+/// installed apps.
 pub fn confirm() {
     if let Some(folder) = install_dir() {
         let _ = artosia_update::confirm_started(&folder);
+        if FIRST_START_OF_NEW_VERSION.swap(false, Ordering::SeqCst) {
+            refresh_installed_apps(&folder);
+        }
     }
+}
+
+/// Runs the kept setup copy's `--refresh`, one process and no wait. A copy unzipped by hand has
+/// no kept setup, and then nothing happens.
+fn refresh_installed_apps(folder: &std::path::Path) {
+    let setup = folder.join(artosia_update::SETUP_FILE);
+    if !setup.is_file() {
+        return;
+    }
+    let mut command = std::process::Command::new(setup);
+    command.arg("--refresh").arg(VERSION).current_dir(folder);
+    #[cfg(windows)]
+    std::os::windows::process::CommandExt::creation_flags(&mut command, 0x0800_0000);
+    let _ = command.spawn();
 }
 
 /// Looks for a newer version on a worker and downloads it. `asked` is true when a person

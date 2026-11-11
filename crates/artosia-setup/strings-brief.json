@@ -1,0 +1,235 @@
+[
+ {
+  "key": "title",
+  "dialog": "The title bar of every setup dialog (the plain Windows task dialog; there is no other window).",
+  "moment": "Always visible while any of the setup's dialogs is open.",
+  "role": "window title",
+  "does": "Names the program that is talking: the little installer for the church's presentation program, so the person knows which program asked.",
+  "budget": 30,
+  "variables": [],
+  "notes": "The product name Artosia stays as it is. Not a sentence; no full stop."
+ },
+ {
+  "key": "install_heading",
+  "dialog": "The progress dialog while installing. This is the large blue line at the top of the dialog, above a line about the current step and a moving bar.",
+  "moment": "The person has just opened the downloaded setup file. Nothing else has been asked of them.",
+  "role": "dialog heading",
+  "does": "Says that the program is being put on this computer right now.",
+  "budget": 40,
+  "variables": [],
+  "notes": "A present-tense statement of what is going on, not a command and not a question."
+ },
+ {
+  "key": "step_checking",
+  "dialog": "The progress dialog while installing: the line under the heading, above the bar. The bar slides back and forth because no size is known yet.",
+  "moment": "The first second or two, while the setup asks the internet which release of the program is the newest.",
+  "role": "status line",
+  "does": "Tells the person the setup is finding out which is the newest release of the program.",
+  "budget": 45,
+  "variables": [],
+  "notes": "No full stop; it is a status line that gets replaced by the next one."
+ },
+ {
+  "key": "step_downloading",
+  "dialog": "The progress dialog while installing: the line under the heading, above the bar. The bar now fills from left to right.",
+  "moment": "The program's files are arriving over the internet; this takes from half a minute to several minutes on a slow church connection, and the line changes about every second.",
+  "role": "status line with two numbers",
+  "does": "Tells the person the files are arriving and how far along that is, as megabytes received out of megabytes in all.",
+  "budget": 45,
+  "variables": [
+   { "name": "done", "example": "42", "meaning": "megabytes received so far, a whole number" },
+   { "name": "total", "example": "163", "meaning": "megabytes to receive in all, a whole number" }
+  ],
+  "notes": "Keep both placeholders in curly braces exactly as named. The unit is megabytes, written the usual short way in the language."
+ },
+ {
+  "key": "step_setting_up",
+  "dialog": "The progress dialog while installing: the line under the heading, above the bar. The bar slides again and the Cancel button is greyed out.",
+  "moment": "All files have arrived and are being put into their folder and checked; a few seconds. Cancel is no longer possible.",
+  "role": "status line",
+  "does": "Tells the person the downloaded files are being put in place and the program is nearly ready.",
+  "budget": 35,
+  "variables": [],
+  "notes": "No full stop."
+ },
+ {
+  "key": "removing_heading",
+  "dialog": "The progress dialog while uninstalling: the large heading at the top, above a line about the current step.",
+  "moment": "The person confirmed that they want the program gone, and it is being deleted now.",
+  "role": "dialog heading",
+  "does": "Says that the program is being taken off this computer right now.",
+  "budget": 40,
+  "variables": [],
+  "notes": "Mirror of the installing heading in tone: a statement of what is going on."
+ },
+ {
+  "key": "step_removing",
+  "dialog": "The progress dialog while uninstalling: the line under the heading, above a sliding bar. Cancel is greyed out.",
+  "moment": "The program's folder and the two shortcuts (Start menu and desktop) are being deleted; it can take many seconds when antivirus scans each file.",
+  "role": "status line",
+  "does": "Tells the person that the program files and the two shortcuts are being deleted.",
+  "budget": 45,
+  "variables": [],
+  "notes": "No full stop."
+ },
+ {
+  "key": "cancel",
+  "dialog": "A button, on the progress dialog and on the question before removing, and on the dialog that asks to close the program first.",
+  "moment": "The person wants to stop or change their mind.",
+  "role": "button, secondary",
+  "does": "Lets the person back out without anything changing or breaking.",
+  "budget": 12,
+  "variables": [],
+  "notes": "One word if the language has one. Never a sentence."
+ },
+ {
+  "key": "failed_heading",
+  "dialog": "The dialog shown when installing failed: the large heading, with a red round error icon on its left, above one paragraph and two buttons.",
+  "moment": "Installing stopped before it finished. The person is probably in a hurry to get the program onto a computer at church.",
+  "role": "dialog heading",
+  "does": "Says plainly that the program did not get installed.",
+  "budget": 40,
+  "variables": [],
+  "notes": "A statement of the result, no apology and no exclamation."
+ },
+ {
+  "key": "failed_offline",
+  "dialog": "The paragraph of the failure dialog, under the heading, when the cause was the internet connection or the server.",
+  "moment": "The setup could not get the newest release because the computer is offline, the line is too slow, or the download place did not answer.",
+  "role": "paragraph, one cause",
+  "does": "Says what happened (the computer could not get to the place the program is downloaded from) and what to do (look at the connection, then try once more).",
+  "budget": 90,
+  "variables": [],
+  "notes": "Two short sentences at most. The next button is the one that tries again."
+ },
+ {
+  "key": "failed_damaged",
+  "dialog": "The paragraph of the failure dialog, under the heading, when a downloaded file failed its check.",
+  "moment": "The files arrived but at least one did not match its signature or its fingerprint, so the setup refused to use it.",
+  "role": "paragraph, one cause",
+  "does": "Says what happened (a file that arrived was not the file that was sent, so it was not used), and what to do (try once more; if the same thing happens again, get the setup file again from the download page).",
+  "budget": 120,
+  "variables": [],
+  "notes": "Do not say hacked, virus or corrupt. One or two short sentences."
+ },
+ {
+  "key": "failed_disk",
+  "dialog": "The paragraph of the failure dialog, under the heading, when the files could not be written to the disk.",
+  "moment": "The computer would not let the setup save or move the program's files: a full disk, or an antivirus program holding the folder.",
+  "role": "paragraph, one cause",
+  "does": "Says what happened (the files could not be stored) and two things to do about it (make room on the disk, or let the antivirus program open the program's folder), then to try once more.",
+  "budget": 120,
+  "variables": [],
+  "notes": "One or two short sentences."
+ },
+ {
+  "key": "failed_shortcuts",
+  "dialog": "The paragraph of the failure dialog, under the heading, when only the shortcuts failed.",
+  "moment": "The files are in place but Windows would not create the Start menu or desktop shortcut. A second try is quick because nothing is downloaded again.",
+  "role": "paragraph, one cause",
+  "does": "Says what happened (the two icons for starting the program could not be made) and to try once more.",
+  "budget": 60,
+  "variables": [],
+  "notes": "One short sentence plus the instruction."
+ },
+ {
+  "key": "failed_other",
+  "dialog": "The paragraph of the failure dialog, under the heading, when none of the other causes fits.",
+  "moment": "Something unexpected stopped the install, for example a build with no signing key, or an update that was refused earlier on this computer.",
+  "role": "paragraph, cause unknown",
+  "does": "Admits that something went wrong without naming a cause, and tells the person to try once more.",
+  "budget": 45,
+  "variables": [],
+  "notes": "Short. No technical words."
+ },
+ {
+  "key": "try_again",
+  "dialog": "The first button of the failure dialog, the one that has focus.",
+  "moment": "Installing failed and the person has read what happened.",
+  "role": "button, primary",
+  "does": "Runs the install once more from where it stopped; files already downloaded are kept.",
+  "budget": 18,
+  "variables": [],
+  "notes": "A short verb phrase."
+ },
+ {
+  "key": "close",
+  "dialog": "The second button of the failure dialog.",
+  "moment": "Installing failed and the person gives up for now.",
+  "role": "button, secondary",
+  "does": "Closes the setup without installing.",
+  "budget": 12,
+  "variables": [],
+  "notes": "One word if the language has one."
+ },
+ {
+  "key": "remove_heading",
+  "dialog": "The question dialog shown before uninstalling: the large heading above one paragraph and two buttons. The keyboard focus is on the Cancel button.",
+  "moment": "The person chose to uninstall from the list of installed apps in Windows settings, or ran the setup with the remove option.",
+  "role": "dialog heading, a question",
+  "does": "Asks whether the person really wants the program removed from this computer.",
+  "budget": 40,
+  "variables": [],
+  "notes": "A question that can be answered by the two buttons below."
+ },
+ {
+  "key": "remove_body",
+  "dialog": "The paragraph of the question dialog before uninstalling, under the heading.",
+  "moment": "The person is deciding whether to remove the program. Church volunteers worry that removing it will destroy the church's songs.",
+  "role": "paragraph, reassurance",
+  "does": "Says what will be deleted (the program and the two shortcuts) and, importantly, that the church's songs, its service plans, its settings and its recordings are kept where they are, on this machine.",
+  "budget": 130,
+  "variables": [],
+  "notes": "Two short sentences. The second sentence is the reassurance and must name the four things that stay."
+ },
+ {
+  "key": "remove_yes",
+  "dialog": "The first button of the question dialog before uninstalling. It does not have focus; the Cancel button does.",
+  "moment": "The person has read the paragraph and decides to go ahead.",
+  "role": "button, destructive",
+  "does": "Starts deleting the program.",
+  "budget": 14,
+  "variables": [],
+  "notes": "One word, the verb for taking a program away."
+ },
+ {
+  "key": "close_first_heading",
+  "dialog": "The dialog that appears when removing was asked for while the program is open: the large heading, a paragraph, and a Cancel button. The dialog closes by itself when the program is closed.",
+  "moment": "The program or its projector window is still running, so its files cannot be deleted. The person has to close it themselves; the setup will never close it for them.",
+  "role": "dialog heading, a request",
+  "does": "Asks the person to shut the program down before anything else happens.",
+  "budget": 35,
+  "variables": [],
+  "notes": "A polite request."
+ },
+ {
+  "key": "close_first_body",
+  "dialog": "The paragraph of the dialog that waits for the program to be closed.",
+  "moment": "The person is looking at the open program and the open projector window, perhaps on a second screen.",
+  "role": "paragraph, instruction",
+  "does": "Explains that both the main window and the projector window must be closed, and that removing then carries on without any further press.",
+  "budget": 100,
+  "variables": [],
+  "notes": "Two short sentences. Name the projector window so it is not forgotten."
+ },
+ {
+  "key": "remove_failed_heading",
+  "dialog": "The dialog shown when removing failed: the large heading with a red error icon, a paragraph and two buttons (try again, close).",
+  "moment": "Some of the program's files could not be deleted, so the entry in the installed apps list was kept and the person can run removal again.",
+  "role": "dialog heading",
+  "does": "Says that the removal did not finish completely.",
+  "budget": 45,
+  "variables": [],
+  "notes": "A statement of the result."
+ },
+ {
+  "key": "remove_failed_body",
+  "dialog": "The paragraph of the dialog shown when removing failed.",
+  "moment": "A file is still open somewhere: in the program, in a folder window, or held for a moment by antivirus.",
+  "role": "paragraph, cause and remedy",
+  "does": "Says that a few of the files refused to be deleted, and tells the person to close the program and any folder window showing it, then try once more.",
+  "budget": 110,
+  "variables": [],
+  "notes": "Two short sentences."
+ }
+]

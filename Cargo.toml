@@ -8,6 +8,7 @@ members = [
     "crates/artosia-office",
     "crates/artosia-output",
     "crates/artosia-remote",
+    "crates/artosia-setup",
     "crates/artosia-slides",
     "crates/artosia-stream",
     "crates/artosia-update",
@@ -48,3 +49,24 @@ debug = false
 # The tempo tracker runs an FFT every 5 ms: unoptimised it is too slow for its own accuracy test.
 [profile.dev.package.artosia-listen]
 opt-level = 3
+
+# The setup is a small download for strangers, so its size is a feature (Velopack's setup uses
+# opt-level z, lto and one codegen unit for the same reason). Cargo lets a package override
+# opt-level, codegen-units, strip, debug, debug-assertions, overflow-checks, incremental and
+# split-debuginfo, and refuses lto, panic and rpath there: those belong to the whole link.
+[profile.release.package.artosia-setup]
+opt-level = "z"
+codegen-units = 1
+strip = true
+debug = false
+
+# `cargo build --profile setup -p artosia-setup` is the build of Artosia-setup.exe: the whole
+# graph the setup links (the updater, ureq, rustls, windows) built for size. The release
+# profile above stays as it is for every other program.
+[profile.setup]
+inherits = "release"
+opt-level = "z"
+lto = true
+codegen-units = 1
+panic = "abort"
+strip = true

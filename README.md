@@ -24,11 +24,11 @@ Artosia puts song words, Bible verses and announcements on a church's projector.
 
 The homepage, in English and Indonesian: [artosia.matsuokengo.com](https://artosia.matsuokengo.com).
 
-1. Download [Artosia-windows.zip](https://github.com/kengomatsuo/artosia/releases/latest/download/Artosia-windows.zip).
-2. Unzip it into a folder you can write to, such as Documents. Program Files will not do, because Artosia updates its own files.
-3. Start `artosia.exe`.
+1. Download [Artosia-setup.exe](https://github.com/kengomatsuo/artosia/releases/latest/download/Artosia-setup.exe).
+2. Open it. Windows may warn about an unknown publisher the first time: the programs are not code-signed.
+3. It fetches Artosia, adds it to the desktop and the Start menu, and opens it.
 
-Windows may warn about an unknown publisher the first time: the programs are not code-signed.
+For a computer with no internet, take [Artosia-windows.zip](https://github.com/kengomatsuo/artosia/releases/latest/download/Artosia-windows.zip), unzip it into a folder you can write to, such as Documents, and start `artosia.exe`. Program Files will not do, because Artosia updates its own files. [docs/setup.md](docs/setup.md) says what the setup does and how to remove Artosia.
 
 Video and camera backgrounds and streaming run on the part of [GStreamer](https://gstreamer.freedesktop.org/) that comes in the `gstreamer` folder, so nothing else has to be installed. Its licences are in `gstreamer/licenses.zip`.
 

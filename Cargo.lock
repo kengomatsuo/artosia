@@ -284,6 +284,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "artosia-setup"
+version = "0.1.0"
+dependencies = [
+ "artosia-update",
+ "serde_json",
+ "windows",
+ "winresource",
+]
+
+[[package]]
 name = "artosia-slides"
 version = "0.0.1"
 dependencies = [
