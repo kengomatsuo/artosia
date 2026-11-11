@@ -5,7 +5,7 @@ whole list in a headless Artosia on the practice library and saves a picture of 
 as it then looks, so the tester decides the next step from the picture alone. Nothing here
 touches a real window, the owner's library or the projector.
 
-    python tools/blind.py new   <session> [--indonesian] [--light] [--size 1366x768]
+    python tools/blind.py new   <session> [--indonesian] [--light] [--size 1366x768] [--scene <name>]
     python tools/blind.py look  <session>                 the window as it is now
     python tools/blind.py key   <session> <Name> [ctrl] [shift] [alt]
     python tools/blind.py type  <session> "<text>"
@@ -106,6 +106,9 @@ def main():
     if verb == "new":
         size = rest[rest.index("--size") + 1] if "--size" in rest else "1366x768"
         flags = [flag for flag in ("--indonesian", "--light", "--dark") if flag in rest]
+        # A scene to start from, such as the first stop of the tour a new volunteer meets.
+        if "--scene" in rest:
+            flags += ["--scene", rest[rest.index("--scene") + 1]]
         state = {"size": size, "flags": flags, "steps": []}
         save(session, state)
         return render(session, state)
