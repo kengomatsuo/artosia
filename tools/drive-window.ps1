@@ -9,6 +9,8 @@
 #        post-click:<x>,<y> (a click sent to the window itself, which works while another
 #        program is in front; the pointer goes to the spot for the click and back again,
 #        because Rune presses what is under the real pointer)
+#        post-wheel:<x>,<y>,<notches> (the wheel turned over a point, down when negative; it
+#        reaches the window under the pointer whichever program is in front)
 #        shot:<name>  wait:<milliseconds>
 # Input goes to whatever window is in front, so every step first checks that this program's
 # window is the one in front and stops when it is not.
@@ -101,7 +103,7 @@ $all = $Steps -split "\s+" | Where-Object { $_ }
 try {
     foreach ($step in $all) {
         $what, $arg = $step -split ":", 2
-        if ($what -ne "shot" -and $what -ne "wait" -and $what -ne "post-click" -and -not (InFront)) { "stopped at '$step': the window is not in front"; exit 2 }
+        if ($what -ne "shot" -and $what -ne "wait" -and $what -ne "post-click" -and $what -ne "post-wheel" -and -not (InFront)) { "stopped at '$step': the window is not in front"; exit 2 }
         switch ($what) {
             "key" { Press $arg $true $true }
             "down" { Press $arg $true $false; $held += $arg }
@@ -125,6 +127,26 @@ try {
                 Start-Sleep -Milliseconds 80
                 [Drive]::PostMessage($h, 0x0202, [IntPtr]::Zero, $at) | Out-Null   # and up
                 Start-Sleep -Milliseconds 120
+                [Drive]::SetCursorPos($was.X, $was.Y) | Out-Null
+            }
+            "post-wheel" {
+                $x, $y, $notches = $arg -split "," | ForEach-Object { [double]$_ }
+                $scale = [Drive]::GetDpiForWindow($h) / 96.0
+                $was = New-Object Drive+POINT
+                [Drive]::GetCursorPos([ref]$was) | Out-Null
+                $o = New-Object Drive+POINT
+                [Drive]::ClientToScreen($h, [ref]$o) | Out-Null
+                $sx = [int]($o.X + $x * $scale); $sy = [int]($o.Y + $y * $scale)
+                [Drive]::SetCursorPos($sx, $sy) | Out-Null
+                Start-Sleep -Milliseconds 80
+                # A posted wheel message is not heard by Rune; the real wheel is, one notch at a time.
+                # One notch is 120; down is that negated, written as the unsigned number it is sent as.
+                $step = if ($notches -lt 0) { [uint32]4294967176 } else { [uint32]120 }
+                foreach ($n in 1..[int][Math]::Abs($notches)) {
+                    [Drive]::mouse_event(0x0800, 0, 0, $step, [UIntPtr]::Zero)
+                    Start-Sleep -Milliseconds 40
+                }
+                Start-Sleep -Milliseconds 250
                 [Drive]::SetCursorPos($was.X, $was.Y) | Out-Null
             }
             "type" {
