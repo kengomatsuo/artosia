@@ -161,7 +161,7 @@ The operator window carries any number of languages since 2026-11-11 (`crates/ar
 | `crates/artosia/src/state.rs` | `settings.indonesian: bool`, `--indonesian` flag. |
 | `crates/artosia/src/palette.rs` | `Hit::Language(bool)` and two entries (`LANGUAGE_ENGLISH`, `LANGUAGE_INDONESIAN`) with English and Indonesian search aliases. |
 | `crates/artosia-remote/src/page.html` | `STR.en` and `STR.id` tables, `lang !== "id"` checks, `<html lang="en">`. |
-| `docs/i18n/` | `brief.json`, `glossary.md`, `id.json` and tests that pin Indonesian spellings. |
+| `docs/i18n/` | `brief.json`, `brief-phone.json`, `concepts.md`, `id.json` and tests that pin Indonesian spellings. |
 
 A shape that carries any number of languages: a `Language` value (a locale tag) in settings instead of the bool; each string a key with one entry per locale (a table or generated file per language) and English as one locale among the others; plural and counter rules chosen per locale; a locale list that the palette and the remote page read instead of two hard-coded rows; and Bible book names, the Bible picker and the song search stemmer per language too. The code for it is not designed here.
 
