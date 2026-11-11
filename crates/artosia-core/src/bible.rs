@@ -167,6 +167,36 @@ const BOOKS_ID: [&[&str]; 66] = [
     &["wahyu", "why", "wh"],
 ];
 
+/// The Indonesian names as a slide prints them, in canonical order: the first alias of each
+/// row of `BOOKS_ID` with its spaces, hyphens and capitals back (same source, same day).
+const NAMES_ID: [&str; 66] = [
+    "Kejadian", "Keluaran", "Imamat", "Bilangan", "Ulangan", "Yosua",
+    "Hakim-hakim", "Rut", "1 Samuel", "2 Samuel", "1 Raja-raja", "2 Raja-raja",
+    "1 Tawarikh", "2 Tawarikh", "Ezra", "Nehemia", "Ester", "Ayub",
+    "Mazmur", "Amsal", "Pengkhotbah", "Kidung Agung", "Yesaya", "Yeremia",
+    "Ratapan", "Yehezkiel", "Daniel", "Hosea", "Yoel", "Amos",
+    "Obaja", "Yunus", "Mikha", "Nahum", "Habakuk", "Zefanya",
+    "Hagai", "Zakharia", "Maleakhi", "Matius", "Markus", "Lukas",
+    "Yohanes", "Kisah Para Rasul", "Roma", "1 Korintus", "2 Korintus", "Galatia",
+    "Efesus", "Filipi", "Kolose", "1 Tesalonika", "2 Tesalonika", "1 Timotius",
+    "2 Timotius", "Titus", "Filemon", "Ibrani", "Yakobus", "1 Petrus",
+    "2 Petrus", "1 Yohanes", "2 Yohanes", "3 Yohanes", "Yudas", "Wahyu",
+];
+
+/// Whether a Bible's language field says Indonesian. MyBible modules write `id` or `in`,
+/// Beblia's files and eBible's catalogue write the word.
+fn is_indonesian(language: &str) -> bool {
+    matches!(language.trim().to_ascii_lowercase().as_str(), "id" | "in" | "ind" | "indonesian" | "indonesia" | "bahasa indonesia")
+}
+
+/// The name of book 1..=66 for a Bible that names no books itself, in that Bible's language
+/// when this program knows the language's names, and in English otherwise. Beblia's files
+/// carry no book names at all, so an Indonesian Bible from there read Genesis and Psalms.
+pub fn book_name(book: u8, language: &str) -> &'static str {
+    let at = usize::from(book).wrapping_sub(1);
+    if is_indonesian(language) { NAMES_ID.get(at).copied().unwrap_or("") } else { english_name(book) }
+}
+
 /// Books in the order a short prefix should prefer them: "jo" means John before Joshua.
 const POPULAR: [u8; 30] = [
     43, 19, 40, 45, 1, 42, 20, 23, 44, 46, 41, 49, 50, 58, 66, 59, 2, 47, 48, 62, 51, 60, 5, 24, 55, 54, 52, 27, 6, 18,
@@ -376,7 +406,7 @@ impl Bible {
                 let own = names.iter().find(|entry| entry.0 == verse.book);
                 books.push(BookInfo {
                     number: verse.book,
-                    name: own.map(|entry| entry.1.clone()).filter(|n| !n.is_empty()).unwrap_or_else(|| english_name(verse.book).to_string()),
+                    name: own.map(|entry| entry.1.clone()).filter(|n| !n.is_empty()).unwrap_or_else(|| book_name(verse.book, &language).to_string()),
                     short: own.map(|entry| entry.2.clone()).unwrap_or_default(),
                     chapters: Vec::new(),
                 });
@@ -737,15 +767,30 @@ mod tests {
     #[test]
     fn indonesian_book_names_are_read() {
         let bible = five_passages();
-        assert_eq!(top(&bible, "Yoh 3:16").as_deref(), Some("John 3:16"));
-        assert_eq!(top(&bible, "Mazmur 23").as_deref(), Some("Psalms 23"));
-        assert_eq!(top(&bible, "1 Kor 13 4-7").as_deref(), Some("1 Corinthians 13:4-7"));
-        assert_eq!(top(&bible, "Kej 1 1").as_deref(), Some("Genesis 1:1"));
-        assert_eq!(top(&bible, "Wahyu 21").as_deref(), Some("Revelation 21"));
-        assert_eq!(top(&bible, "yohanes 3 16").as_deref(), Some("John 3:16"));
-        assert_eq!(top(&bible, "Mzm 23 1").as_deref(), Some("Psalms 23:1"));
-        assert_eq!(top(&bible, "Why 21 1-2").as_deref(), Some("Revelation 21:1-2"));
-        assert_eq!(top(&bible, "1kor13:4").as_deref(), Some("1 Corinthians 13:4"));
+        assert_eq!(top(&bible, "Yoh 3:16").as_deref(), Some("Yohanes 3:16"));
+        assert_eq!(top(&bible, "Mazmur 23").as_deref(), Some("Mazmur 23"));
+        assert_eq!(top(&bible, "1 Kor 13 4-7").as_deref(), Some("1 Korintus 13:4-7"));
+        assert_eq!(top(&bible, "Kej 1 1").as_deref(), Some("Kejadian 1:1"));
+        assert_eq!(top(&bible, "Wahyu 21").as_deref(), Some("Wahyu 21"));
+        assert_eq!(top(&bible, "yohanes 3 16").as_deref(), Some("Yohanes 3:16"));
+        assert_eq!(top(&bible, "Mzm 23 1").as_deref(), Some("Mazmur 23:1"));
+        assert_eq!(top(&bible, "Why 21 1-2").as_deref(), Some("Wahyu 21:1-2"));
+        assert_eq!(top(&bible, "1kor13:4").as_deref(), Some("1 Korintus 13:4"));
+        // The English names still find their books in an Indonesian Bible.
+        assert_eq!(top(&bible, "John 3:16").as_deref(), Some("Yohanes 3:16"));
+    }
+
+    /// The printed Indonesian names are the typed ones with their spaces and hyphens back, so
+    /// the two lists cannot drift apart; a Bible in another language keeps the English names.
+    #[test]
+    fn a_bible_without_book_names_names_them_in_its_language() {
+        for (at, name) in NAMES_ID.iter().enumerate() {
+            let typed: String = name.chars().filter(|c| c.is_alphanumeric()).collect::<String>().to_lowercase();
+            assert_eq!(typed, BOOKS_ID[at][0], "book {}", at + 1);
+        }
+        assert_eq!((book_name(19, "Indonesian"), book_name(19, "id"), book_name(19, "ind")), ("Mazmur", "Mazmur", "Mazmur"));
+        assert_eq!((book_name(19, "English"), book_name(19, ""), book_name(19, "Basque")), ("Psalms", "Psalms", "Psalms"));
+        assert_eq!(book_name(0, "Indonesian"), "");
     }
 
     #[test]

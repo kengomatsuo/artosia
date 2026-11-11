@@ -424,6 +424,14 @@ pub fn song_from_paste(text: &str) -> Song {
 #[cfg(test)]
 mod tests {
     use super::*;
+    /// The words a church writes above a stanza: the lyrics box shows `[Bait 1]` and `[Reff]`
+    /// as its example in Indonesian, so both must mean what `[1]` and `[chorus]` mean.
+    #[test]
+    fn indonesian_marker_words_are_read() {
+        let song = Song { lyrics: "[Bait 1]\nsatu\n\n[Reff]\ndua\n\n[bait 2]\ntiga\n\n[REFF]\nempat\n".into(), ..Song::default() };
+        let tags: Vec<Tag> = song.sections().iter().map(|section| section.tag).collect();
+        assert_eq!(tags, [Tag::new(SectionKind::Verse, 1), Tag::new(SectionKind::Chorus, 1), Tag::new(SectionKind::Verse, 2), Tag::new(SectionKind::Chorus, 1)]);
+    }
 
     const MARKED: &str = "[1]\nFirst light on the hill\nSecond line here\n[chorus]\nSing it out\nSing it loud\n[2]\nAnother verse\n";
 
