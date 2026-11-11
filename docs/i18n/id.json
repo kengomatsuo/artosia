@@ -45,9 +45,9 @@
   "why": "Same word as the Open button"
  },
  "HINT_SCOPE": {
-  "text": "ganti lagu/Alkitab",
-  "back": "switch songs/Bible",
-  "why": "Verb phrase for what Tab does"
+  "text": "ganti ke lagu atau Alkitab",
+  "back": "switch to songs or Bible",
+  "why": "Plain 'atau', no slash"
  },
  "HINT_SECTIONS": {
   "text": "cari bagian lagu",

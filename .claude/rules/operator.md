@@ -6,6 +6,7 @@ paths:
 # The operator window (2026-11-10)
 
 - **MAIN-WINDOW BUTTONS NEVER TAKE KEYBOARD FOCUS (`crates/artosia/src/ui/widgets.rs`, `Btn`, 2026-11-10).** Rune presses the focused control on Space, and Space must always mean "next slide"; dialogs and editors ask for focus with `.focusable()`. Full account: [docs/operator.md](../../docs/operator.md)
+- **A REASON SHOWN TO A VOLUNTEER IS A STRING, NEVER A LIBRARY'S OWN ERROR TEXT (`crates/artosia/src/why.rs`, 2026-11-11, found by the Indonesian reader).** Full account: [docs/i18n/README.md](../../docs/i18n/README.md)
 - **A STRING A VOLUNTEER READS HAS ITS ENGLISH IN `strings.rs` AND A BRIEF IN `docs/i18n/brief.json`; INDONESIAN, LIKE EVERY LATER LANGUAGE, IS A TABLE WRITTEN FROM THE BRIEFS BY A WRITER WHO NEVER SEES THE ENGLISH (`docs/i18n/id.json`, `languages.rs`, 2026-11-11, owner-directed: "STOP TRANSLITERATING").** A new text gets its brief first (`tools/check-brief.py`), key names are drawn and never translated, and a test holds the table to its briefs. Full account: [docs/i18n/README.md](../../docs/i18n/README.md)
 - **NO REAL SONG LYRICS IN THE REPOSITORY (2026-11-10).** Practice songs and test text are written for Artosia; the church's library stays in gitignored `fixtures/`. Full account: [docs/operator.md](../../docs/operator.md)
 - **A REMOVAL OFFERS UNDO IN A TOAST; RED MEANS LIVE AND YELLOW MEANS HIDDEN OR WARNING (2026-11-10).** Full account: [docs/operator.md](../../docs/operator.md)

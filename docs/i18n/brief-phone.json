@@ -922,7 +922,7 @@
   "moment": "The person looks for a key on the computer.",
   "role": "help",
   "does": "Lists, in one short paragraph, the keys that work on this page when a keyboard is attached. The Space bar and also the arrow pointing down go one slide forward; the arrow pointing up goes one slide back; the slash key opens the search; C jumps to the chorus, V to the verse after this one, B to the bridge; a digit from 1 to 9 jumps to that part of the song; F1 hides the words, F2 makes the screen black, F3 shows the logo, F6 switches the projector on or off.",
-  "budget": 160,
+  "budget": 230,
   "variables": [],
   "cases": [],
   "counts": "",
@@ -937,7 +937,7 @@
    "logo",
    "clear_text"
   ],
-  "notes": "Key names stay as printed on the keyboard. Every key in the list above must be named, and no other."
+  "notes": "Key names stay as printed on the keyboard. Every key in the list above must be named, and no other. It is a paragraph that wraps over several lines on the phone, so write whole short sentences; no slashes standing in for words."
  },
  {
   "key": "lost",

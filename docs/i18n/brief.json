@@ -167,7 +167,7 @@
   "moment": "The panel's bottom row, when nothing is picked or the picked row is not a song: Tab switches between searching songs and searching the Bible.",
   "role": "key hint label",
   "does": "Says that this key cycles between searching songs and searching the Bible.",
-  "budget": 20,
+  "budget": 28,
   "variables": [],
   "cases": [],
   "counts": "",
@@ -177,7 +177,7 @@
    "song",
    "bible_translation"
   ],
-  "notes": "Says what pressing Tab does now: switch the list between songs and the Bible. A short verb phrase."
+  "notes": "Says what pressing Tab does now: switch the list between songs and the Bible. A short verb phrase with a plain word for 'or'; no slash."
  },
  {
   "key": "HINT_SECTIONS",

@@ -12,6 +12,7 @@ Researched and built 2026-11-11. The owner asked for at least 250 Christian, nat
 | Previews | 500 px wide, fetched when a row of tiles comes on screen (three at a time), kept in `<library>/media/backdrops/previews`. | `show_rows` in `backdrops.rs` |
 | What the button does | "Use" sets the look's background to the local file through `set_background_file` (`Background::Image` or `Background::Video`), downloading first when needed. A bar and a Cancel button show while it runs. Offline gives a toast. | `use_backdrop`, `ui/backdrops.rs` |
 | What the browser shows | Category chips, a search field, a grid of equal previews, a mark on tiles already on this computer, and a large preview with author, licence and the page that states it. | `ui/backdrops.rs` (`panel`) |
+| Where it opens | From the Design dialog's background row (the Backdrops button beside Choose a file) and from the search (the Backdrops command). It is a dialog of its own, one step inside Design: closing it, or pressing Use, goes back to Design, where the sample shows the new background and the dimming is. | `ui/sheets.rs` (`looks`), `ui/backdrops.rs` (`view`), `back_to_design` |
 | A hint for dimming | Mean brightness and detail of the preview, 0 to 100. A small sun mark shows on the brightest and busiest tenth. | `Entry::wants_dimming` |
 
 ## Law first
@@ -83,11 +84,25 @@ H.264 in MP4, which the release plays for certain, is not offered: Commons does 
 
 ## Not verified
 
-- A video was not played in Artosia: the task allowed one small real file, spent on a picture. VP9 at 1080 lines on a budget PC without hardware VP9 decode is the risk. The sizes and the codec come from the API's own record.
+- A video backdrop was played in `artosia-video`'s loop example (table below) and not yet watched on the projector window of Artosia itself.
 - The grid was rendered with made-up entries and generated previews. A scroll through real previews on a real connection was not watched.
 - The large preview of a video shows its poster frame, not the motion.
 - Commons may delete or rename a file. The press then fails with a message, and files already downloaded keep working.
 - Whether a Commons CC0 mark is right for every file is the uploader's claim and Commons' check, not Artosia's.
+
+## What a video backdrop cost here (2026-11-11)
+
+Two catalogue files, fetched from Commons, played by `target/release/examples/loop.exe` until the position had wrapped twice, then measured for 20 seconds. Intel Iris Xe laptop; the window was minimised, so these are decode and upload costs and are lower than the drawn figures in [output.md](output.md).
+
+| File | Size on screen | Decoder | Cores | Working set |
+|---|---|---|---|---|
+| A candle, 21 s | 1920x1080 VP9 | `d3d11vp9dec` (graphics chip) | 0.17 | 242 MB |
+| The same | 1920x1080 VP9 | `vp9dec` (software) | 0.34 | 219 MB |
+| Street lamps, 10 s | 848x480 VP9 | `d3d11vp9dec` | 0.23 | 214 MB |
+| The same | 848x480 VP9 | `vp9dec` (software) | 0.24 | 181 MB |
+| `fixtures/bg30.mp4`, for comparison | 1920x1080 H.264 | `avdec_h264` (software) | 0.45 | 341 MB |
+
+So VP9 in software cost less here than H.264 in software, and a PC whose graphics chip cannot decode VP9 still plays the 1080 line files. This PC is not the budget target; the number to trust comes from the target machine.
 
 ## Sources
 

@@ -49,7 +49,8 @@ LEFT_OUT = {
 }
 KINDS = {"const", "sentence", "row", "section", "noun", "months", "phone"}
 FIELDS = ["key", "kind", "screen", "moment", "role", "does", "budget", "variables", "cases", "counts", "register", "concepts", "notes"]
-MIN_DOES, MAX_BUDGET = 12, 170
+# The longest text is the phone page's paragraph of keys, which wraps over several lines.
+MIN_DOES, MAX_BUDGET = 12, 240
 
 
 def words(text):
