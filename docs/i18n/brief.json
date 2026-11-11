@@ -1348,6 +1348,23 @@
   "notes": "A phrase, no full stop."
  },
  {
+  "key": "LISTEN_SYSTEM_AUDIO",
+  "kind": "const",
+  "screen": "Listen dialog, last row of the microphone list, after the microphones.",
+  "moment": "The music or the recording is playing from this same computer and the person wants Artosia to listen to that, not to a microphone.",
+  "role": "list option",
+  "does": "Names the choice of listening to whatever sound the computer itself is playing, in place of any microphone.",
+  "budget": 30,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "listener"
+  ],
+  "notes": "A phrase, no full stop."
+ },
+ {
   "key": "LISTEN_LANGUAGE",
   "kind": "const",
   "screen": "Listen dialog, label to the left of a two-way switch.",

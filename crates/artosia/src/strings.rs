@@ -320,6 +320,7 @@ text!(LISTEN_SWITCH, "Listen", "Dengarkan suara");
 text!(LISTEN_HINT, "It only suggests. Nothing shows by itself.", "Hanya mengusulkan. Layar tidak berubah sendiri.");
 text!(LISTEN_MICROPHONE, "Microphone", "Mikrofon");
 text!(LISTEN_DEFAULT, "The computer's own", "Bawaan komputer");
+text!(LISTEN_SYSTEM_AUDIO, "System audio", "System audio");
 text!(LISTEN_LANGUAGE, "Language", "Bahasa lisan");
 text!(LISTEN_INDONESIAN, "Indonesian", "Indonesia");
 text!(LISTEN_ENGLISH, "English", "Inggris");

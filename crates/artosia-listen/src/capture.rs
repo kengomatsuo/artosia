@@ -36,18 +36,48 @@ pub fn input_devices() -> Vec<Device> {
 pub struct Running {
     _stream: Stream,
     pub sample_rate: u32,
+    pub channels: u16,
+    pub sample_format: SampleFormat,
+    /// Whether this is the computer's own output being listened to. Such a stream may deliver
+    /// nothing while nothing plays, so the listener feeds silence to the meter meanwhile.
+    pub loopback: bool,
+}
+
+/// The source id that listens to what the computer plays, not to a microphone.
+pub const SYSTEM_AUDIO: &str = "system-audio";
+
+/// Whether this OS can capture the sound the computer plays: WASAPI loopback on Windows and a
+/// CoreAudio tap on macOS 14.6 and later. ALSA has no such thing.
+pub const fn system_audio_available() -> bool {
+    cfg!(any(target_os = "windows", target_os = "macos"))
+}
+
+/// Finds a source by the id [`input_devices`] gave, or by its name (what older settings saved).
+fn find_input(host: &cpal::Host, wanted: &str) -> Option<cpal::Device> {
+    if let Some(device) = DeviceId::from_str(wanted).ok().and_then(|parsed| host.device_by_id(&parsed)) {
+        return Some(device);
+    }
+    host.input_devices().ok()?.find(|d| d.description().is_ok_and(|desc| desc.name() == wanted))
 }
 
 pub fn open(device: Option<&str>, tx: SyncSender<Capture>) -> Result<Running, ListenError> {
     let host = cpal::default_host();
-    let device = match device {
-        None => host.default_input_device().ok_or(ListenError::NoDevice("no default input device".into()))?,
-        Some(id) => {
-            let parsed = DeviceId::from_str(id).map_err(|e| ListenError::NoDevice(format!("bad device id {id}: {e}")))?;
-            host.device_by_id(&parsed).ok_or_else(|| ListenError::NoDevice(format!("device {id} is not connected")))?
+    let (device, loopback) = match device {
+        None => (host.default_input_device().ok_or(ListenError::NoDevice("no default input device".into()))?, false),
+        Some(SYSTEM_AUDIO) => {
+            if !system_audio_available() {
+                return Err(ListenError::NoDevice("this system cannot listen to its own sound".into()));
+            }
+            // cpal 0.18.2 wasapi/mod.rs: an output device used as an input is opened in loopback mode.
+            (host.default_output_device().ok_or(ListenError::NoDevice("no default output device".into()))?, true)
         }
+        Some(wanted) => (
+            find_input(&host, wanted).ok_or_else(|| ListenError::NoDevice(format!("device {wanted} is not connected")))?,
+            false,
+        ),
     };
-    let supported = device.default_input_config().map_err(|e| ListenError::Stream(e.to_string()))?;
+    let supported = if loopback { device.default_output_config() } else { device.default_input_config() }
+        .map_err(|e| ListenError::Stream(e.to_string()))?;
     let format = supported.sample_format();
     let config: StreamConfig = supported.into();
     let channels = usize::from(config.channels.max(1));
@@ -63,7 +93,7 @@ pub fn open(device: Option<&str>, tx: SyncSender<Capture>) -> Result<Running, Li
         other => return Err(ListenError::Stream(format!("unsupported sample format {other}"))),
     }?;
     stream.play().map_err(|e| ListenError::Stream(e.to_string()))?;
-    Ok(Running { _stream: stream, sample_rate })
+    Ok(Running { _stream: stream, sample_rate, channels: config.channels, sample_format: format, loopback })
 }
 
 fn build<T>(
