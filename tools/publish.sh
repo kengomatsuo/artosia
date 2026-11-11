@@ -22,8 +22,20 @@ grep -q "^version = \"$version\"" crates/artosia/Cargo.toml || { echo "crates/ar
 gst="${GSTREAMER_1_0_ROOT_MSVC_X86_64:-C:/Program Files/gstreamer/1.0/msvc_x86_64}"
 export PKG_CONFIG="$gst/bin/pkg-config.exe" PKG_CONFIG_PATH="$gst/lib/pkgconfig"
 
+# Speech recognition needs CMake and libclang to build; with both the operator carries it, and
+# without them the release is built (and says so) with no recogniser.
+# shellcheck source=speech-env.sh
+. "$root/tools/speech-env.sh"
+features="artosia-output/video"
+if [ "${ARTOSIA_SPEECH:-0}" = "1" ]; then
+    features="$features,artosia/speech"
+    echo "This release is built WITH speech recognition."
+else
+    echo "This release is built WITHOUT speech recognition."
+fi
+
 # The programs, and a second projector built without video for a computer with no GStreamer.
-cargo build --release -p artosia -p artosia-output -p artosia-stream --features artosia-output/video
+cargo build --release -p artosia -p artosia-output -p artosia-stream --features "$features"
 cargo build --release -p artosia-output --target-dir target/plain
 cargo build --release -p artosia-update --bin artosia-release --target-dir target/release-tool
 

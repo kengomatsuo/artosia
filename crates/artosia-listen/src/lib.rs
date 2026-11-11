@@ -18,7 +18,7 @@ use std::sync::{Arc, Mutex};
 use std::thread::JoinHandle;
 use std::time::Duration;
 
-pub use audio::{LevelMeter, RECOGNISER_RATE, Resampler, level_from_rms, mix_to_mono, rms};
+pub use audio::{LevelMeter, RECOGNISER_RATE, Resampler, level_from_rms, mix_to_mono, read_wav, rms};
 pub use segment::{Phrase, Segmenter, SegmenterConfig, audio_ctx_for, coalesce};
 pub use text::clean_text;
 
@@ -125,6 +125,59 @@ impl Listener {
             }
         }
     }
+}
+
+/// Reads one phrase and says what to report, if anything. The live listener and
+/// [`hear_samples`] both go through here, so a test hears what the microphone path hears.
+fn read_phrase(recogniser: &mut dyn recogniser::Recogniser, phrase: &Phrase, last_partial: &mut String) -> Option<Heard> {
+    let raw = match recogniser.transcribe(&phrase.samples, phrase.is_final) {
+        Ok(raw) => raw,
+        Err(message) => return Some(Heard::Problem(message)),
+    };
+    let cleaned = clean_text(&raw);
+    if phrase.is_final {
+        last_partial.clear();
+        cleaned.map(Heard::Final)
+    } else {
+        let text = cleaned?;
+        if text == *last_partial {
+            return None;
+        }
+        last_partial.clone_from(&text);
+        Some(Heard::Partial(text))
+    }
+}
+
+/// Runs recorded audio through the same resampling, phrase cutting and recognising as the
+/// microphone, in place of a microphone, and reports every phrase that ended as `Heard::Final`
+/// (progress reads are skipped: nobody is watching them). Blocks until done, so call it from a
+/// test or a tool, never from a window's thread. `samples` are mono at `sample_rate`.
+pub fn hear_samples(
+    samples: &[f32],
+    sample_rate: u32,
+    model: &Path,
+    language: &str,
+    mut on_heard: impl FnMut(Heard),
+) -> Result<(), String> {
+    let mut recogniser = recogniser::load(model, language)?;
+    let mut resampler = Resampler::new(sample_rate, RECOGNISER_RATE);
+    let mut segmenter = Segmenter::new(SegmenterConfig::default());
+    let mut last_partial = String::new();
+    let mut resampled = Vec::new();
+    let mut phrases = Vec::new();
+    // Blocks of 10 ms, as a capture callback delivers them.
+    for block in samples.chunks((sample_rate / 100).max(1) as usize) {
+        resampled.clear();
+        resampler.push(block, &mut resampled);
+        phrases.extend(segmenter.push(&resampled));
+    }
+    phrases.extend(segmenter.flush());
+    for phrase in phrases.iter().filter(|p| p.is_final) {
+        if let Some(heard) = read_phrase(recogniser.as_mut(), phrase, &mut last_partial) {
+            on_heard(heard);
+        }
+    }
+    Ok(())
 }
 
 impl Drop for Listener {
@@ -235,24 +288,8 @@ impl Job {
                 let mut jobs = vec![first];
                 jobs.extend(rx.try_iter());
                 for phrase in coalesce(jobs) {
-                    let raw = match recogniser.transcribe(&phrase.samples, phrase.is_final) {
-                        Ok(raw) => raw,
-                        Err(message) => {
-                            emit(Heard::Problem(message));
-                            continue;
-                        }
-                    };
-                    let cleaned = clean_text(&raw);
-                    if phrase.is_final {
-                        last_partial.clear();
-                        if let Some(text) = cleaned {
-                            emit(Heard::Final(text));
-                        }
-                    } else if let Some(text) = cleaned
-                        && text != last_partial
-                    {
-                        last_partial.clone_from(&text);
-                        emit(Heard::Partial(text));
+                    if let Some(heard) = read_phrase(recogniser.as_mut(), &phrase, &mut last_partial) {
+                        emit(heard);
                     }
                 }
             }

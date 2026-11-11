@@ -894,7 +894,7 @@ impl App {
 
     /// Turns a sentence that was heard into what it may have named: a passage, or songs that
     /// hold its words.
-    fn heard_final(&mut self, text: String) {
+    pub(crate) fn heard_final(&mut self, text: String) {
         let mut hits: Vec<HeardHit> = Vec::new();
         if let Some(bible) = self.bible()
             && let Some(guess) = bible.guess(&text).first() {

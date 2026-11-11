@@ -5,6 +5,11 @@ edition.workspace = true
 license.workspace = true
 description = "Artosia's operator window."
 
+[features]
+# Speech recognition (whisper.cpp). Off by default: building it needs CMake and LLVM, and the
+# operator must build on a machine without them. `tools/speech-env.sh` finds both.
+speech = ["artosia-listen/whisper"]
+
 [dependencies]
 artosia-listen = { path = "../artosia-listen" }
 artosia-lyrics = { path = "../artosia-lyrics" }

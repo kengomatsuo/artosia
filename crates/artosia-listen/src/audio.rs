@@ -136,9 +136,71 @@ impl Resampler {
     }
 }
 
+/// Reads a RIFF/WAVE file (16-bit PCM, 32-bit PCM or 32-bit float) into mono samples and its
+/// sample rate. Used by tests and tools that stand in for a microphone; it keeps no state.
+pub fn read_wav(bytes: &[u8]) -> Result<(Vec<f32>, u32), String> {
+    let u16_at = |at: usize| bytes.get(at..at + 2).map(|b| u16::from_le_bytes([b[0], b[1]]));
+    let u32_at = |at: usize| bytes.get(at..at + 4).map(|b| u32::from_le_bytes([b[0], b[1], b[2], b[3]]));
+    if bytes.get(..4) != Some(b"RIFF") || bytes.get(8..12) != Some(b"WAVE") {
+        return Err("not a WAVE file".into());
+    }
+    let (mut format, mut data) = (None, None);
+    let mut at = 12;
+    while let (Some(id), Some(size)) = (bytes.get(at..at + 4), u32_at(at + 4)) {
+        let body = at + 8;
+        let end = (body + size as usize).min(bytes.len());
+        match id {
+            b"fmt " => {
+                let tag = u16_at(body).ok_or("short fmt chunk")?;
+                let channels = u16_at(body + 2).ok_or("short fmt chunk")?;
+                let rate = u32_at(body + 4).ok_or("short fmt chunk")?;
+                let bits = u16_at(body + 14).ok_or("short fmt chunk")?;
+                format = Some((tag, channels as usize, rate, bits));
+            }
+            b"data" => data = Some(&bytes[body..end]),
+            _ => {}
+        }
+        at = body + size as usize + (size as usize & 1);
+    }
+    let ((tag, channels, rate, bits), data) = format.zip(data).ok_or("missing fmt or data chunk")?;
+    if channels == 0 {
+        return Err("zero channels".into());
+    }
+    let interleaved: Vec<f32> = match (tag, bits) {
+        (1, 16) => data.chunks_exact(2).map(|b| f32::from(i16::from_le_bytes([b[0], b[1]])) / 32768.0).collect(),
+        (1, 32) => data.chunks_exact(4).map(|b| (i32::from_le_bytes([b[0], b[1], b[2], b[3]]) as f64 / 2_147_483_648.0) as f32).collect(),
+        (3, 32) => data.chunks_exact(4).map(|b| f32::from_le_bytes([b[0], b[1], b[2], b[3]])).collect(),
+        _ => return Err(format!("unsupported WAVE format {tag} with {bits} bits")),
+    };
+    let mut mono = Vec::with_capacity(interleaved.len() / channels);
+    mix_to_mono(&interleaved, channels, &mut mono);
+    Ok((mono, rate))
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn a_wave_file_is_read_to_mono() {
+        let mut wav = b"RIFF\0\0\0\0WAVEfmt ".to_vec();
+        wav.extend(16u32.to_le_bytes());
+        wav.extend(1u16.to_le_bytes()); // PCM
+        wav.extend(2u16.to_le_bytes()); // stereo
+        wav.extend(22_050u32.to_le_bytes());
+        wav.extend((22_050u32 * 4).to_le_bytes());
+        wav.extend(4u16.to_le_bytes());
+        wav.extend(16u16.to_le_bytes());
+        wav.extend(b"data");
+        wav.extend(8u32.to_le_bytes());
+        for s in [16384i16, 0, -16384, -16384] {
+            wav.extend(s.to_le_bytes());
+        }
+        let (mono, rate) = read_wav(&wav).expect("valid wave");
+        assert_eq!(rate, 22_050);
+        assert_eq!(mono, vec![0.25, -0.5]);
+        assert!(read_wav(b"nonsense").is_err());
+    }
 
     fn sine(freq: f64, rate: u32, seconds: f64) -> Vec<f32> {
         (0..(f64::from(rate) * seconds) as usize)
