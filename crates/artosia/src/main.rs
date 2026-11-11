@@ -435,6 +435,10 @@ const SCENES: &[Scene] = &[
         s.listen_level.store(0.1f32.to_bits(), std::sync::atomic::Ordering::Relaxed);
         s.settings.beat_blink = true;
     }),
+    ("listen-problem", |s| {
+        s.sheet = Sheet::Listen;
+        s.listen_problem = Some(crate::why::listen_error(&artosia_listen::ListenError::NoDevice(String::new())));
+    }),
     ("stream", |s| s.sheet = Sheet::Stream),
     ("backdrops", |s| s.demo_backdrops("ready")),
     ("backdrops-picked", |s| s.demo_backdrops("picked")),
