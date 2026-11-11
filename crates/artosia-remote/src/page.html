@@ -302,7 +302,7 @@ const STR = {
     clear_text: "Clear text", black: "Black", logo: "Logo",
     logo_needs: "Set a logo picture in Artosia first",
     text_cleared: "Text is cleared", screen_black: "Screen is black", logo_showing: "Logo is showing",
-    live: "Live", projector_off: "Projector is off",
+    projector_off: "Projector is off",
     jump: "Jump to a section",
     plan_pick: "Pick an item", plan_show: "Show {0}", plan_live: "Live", plan_empty: "The plan is empty",
     search_ph: "Search songs and verses", search_hint: "Type a title, a line or a verse like John 3 16",
@@ -313,38 +313,71 @@ const STR = {
     countdown: "Countdown", minutes: "Minutes", start: "Start", stop: "Stop",
     language: "Language",
     keys_title: "Keys",
-    keys_text: "Space or right arrow: next. Left arrow: back. / : search. C: chorus. B: bridge. 1 to 9: verse. F1 clear text, F2 black, F3 logo.",
+    keys_text: "Space or the down arrow: next. Up arrow: back. / : search. C: chorus. V: next verse. B: bridge. 1 to 9: that section. F1 no text, F2 black, F3 logo, F6 projector.",
     lost: "Lost connection", retrying: "Trying again"
   },
   id: {
-    pair_title: "Remote Artosia", pin: "PIN", connect: "Sambungkan",
-    wrong_pin: "PIN salah", too_many: "Terlalu banyak percobaan. Tunggu semenit.", unreachable: "Komputer tidak terjangkau",
-    tab_live: "Tayang", tab_plan: "Acara", tab_search: "Cari", tab_more: "Lainnya",
-    live: "Tayang", next: "Berikutnya", next_item: "Setelah ini", next_btn: "Lanjut", back: "Kembali",
-    nothing_open: "Belum ada yang dibuka", nothing_live: "Belum ada yang tayang",
-    n_of: "{0} dari {1}", n_slides: "{0} slide",
-    clear_text: "Sembunyikan teks", black: "Layar hitam", logo: "Logo",
-    logo_needs: "Pasang gambar logo di Artosia dulu",
-    text_cleared: "Teks disembunyikan", screen_black: "Layar sedang hitam", logo_showing: "Logo sedang tayang",
-    live: "Live", projector_off: "Projector is off",
-    jump: "Loncat ke bagian",
-    plan_pick: "Pilih satu item", plan_show: "Tayangkan {0}", plan_live: "Tayang", plan_empty: "Susunan acara masih kosong",
-    search_ph: "Cari lagu atau ayat", search_hint: "Ketik judul, sepenggal lirik, atau ayat seperti Yoh 3 16",
-    searching: "Mencari", no_results: "Tidak ditemukan",
-    show: "Tayangkan", add: "Tambah", added: "Masuk", show_aria: "Tayangkan {0} sekarang", add_aria: "Tambahkan {0} ke acara",
-    message: "Pesan untuk jemaat", message_ph: "Tulis pesan", message_show: "Tampilkan", message_hide: "Sembunyikan",
-    message_showing: "Tampil: {0}",
-    countdown: "Hitung mundur", minutes: "Menit", start: "Mulai", stop: "Berhenti",
+    pair_title: "Remote Artosia",
+    pin: "PIN",
+    connect: "Sambungkan",
+    wrong_pin: "PIN salah",
+    too_many: "Terlalu banyak percobaan. Tunggu semenit.",
+    unreachable: "Komputer tidak bisa dihubungi",
+    tab_live: "Live",
+    tab_plan: "Rundown",
+    tab_search: "Cari",
+    tab_more: "Lainnya",
+    live: "Live",
+    next: "Berikutnya",
+    next_item: "Item berikut",
+    next_btn: "Maju",
+    back: "Mundur",
+    nothing_open: "Belum ada yang dibuka",
+    nothing_live: "Belum ada yang tayang",
+    n_of: "{0} dari {1}",
+    n_slides: "{0} slide",
+    clear_text: "Polos",
+    black: "Hitam",
+    logo: "Logo",
+    logo_needs: "Pilih logo dulu di Tampilan komputer",
+    text_cleared: "Tulisan disembunyikan",
+    screen_black: "Layar hitam",
+    logo_showing: "Logo sedang tampil",
+    projector_off: "Projector is off",
+    jump: "Loncat ke bagian lagu",
+    plan_pick: "Pilih item dulu",
+    plan_show: "Tayangkan {0}",
+    plan_live: "Live",
+    plan_empty: "Rundown masih kosong",
+    search_ph: "Cari lagu atau ayat",
+    search_hint: "Judul lagu, sebaris lirik, atau ayat, mis. Mazmur 23 1",
+    searching: "Mencari",
+    no_results: "Tidak ditemukan",
+    show: "Tayangkan",
+    add: "Tambah",
+    added: "Ditambah",
+    show_aria: "Tayangkan {0} sekarang",
+    add_aria: "Tambah {0} ke rundown",
+    message: "Pesan ke jemaat",
+    message_ph: "Tulis pesan di sini",
+    message_show: "Tampilkan",
+    message_hide: "Sembunyikan",
+    message_showing: "Sedang tampil: “{0}”",
+    countdown: "Hitung mundur",
+    minutes: "menit",
+    start: "Mulai",
+    stop: "Hentikan",
     language: "Bahasa",
-    keys_title: "Tombol",
-    keys_text: "Spasi atau panah kanan: lanjut. Panah kiri: kembali. / : cari. C atau R: reff. B: bridge. 1 sampai 9: bait. F1 sembunyikan teks, F2 layar hitam, F3 logo.",
-    lost: "Koneksi terputus", retrying: "Mencoba lagi"
+    keys_title: "Pintasan",
+    keys_text: "Space atau panah bawah maju, panah atas mundur. C ke reff, V ke bait berikutnya, B ke bridge. F1 sembunyikan tulisan, F2 hitam, F3 logo.",
+    lost: "Terputus dari komputer",
+    retrying: "Mencoba tersambung lagi"
   }
 };
 /* Names the operator sends in English, shown in the volunteer's own words. */
 const LABELS_ID = [
   [/^Verse (\d+)$/i, "Bait $1"], [/^Chorus$/i, "Reff"], [/^Pre-?chorus$/i, "Pra-reff"],
-  [/^Bridge( \d+)?$/i, "Bridge$1"], [/^Intro$/i, "Intro"], [/^(Ending|Outro)$/i, "Penutup"]
+  [/^Bridge( \d+)?$/i, "Bridge$1"], [/^Intro$/i, "Intro"], [/^(Ending|Outro)$/i, "Ending"]
 ];
 /* The languages by code. A language outside this file is added by the server below, from its table. */
 const LABELS = { id: LABELS_ID };
@@ -821,8 +854,8 @@ document.addEventListener("keydown", (e) => {
   }
   const k = e.key;
   let handled = true;
-  if (k === " " || k === "ArrowRight" || k === "PageDown") { if (!e.repeat) next(); }
-  else if (k === "ArrowLeft" || k === "PageUp") { if (!e.repeat) back(); }
+  if (k === " " || k === "ArrowDown" || k === "ArrowRight" || k === "PageDown") { if (!e.repeat) next(); }
+  else if (k === "ArrowUp" || k === "ArrowLeft" || k === "PageUp") { if (!e.repeat) back(); }
   else if (k === "/") { setTab("search"); $("search").focus(); }
   else if (k === "F1") send({ cmd: "text" });
   else if (k === "F2") send({ cmd: "black" });

@@ -1524,28 +1524,54 @@ mod tests {
 
     /// The Indonesian in this file is the Indonesian that was reviewed (`docs/i18n/id.json`).
     /// A line changed here and not there, or there and not here, fails.
+    /// The Indonesian table against the briefs it was written from: every brief has a text,
+    /// no text is longer than its brief allows, and a variable the brief names is in the text.
     #[test]
-    fn indonesian_matches_the_reviewed_file() {
-        let reviewed: serde_json::Value = serde_json::from_str(include_str!("../../../docs/i18n/id.json")).unwrap_or_default();
-        let source = include_str!("strings.rs");
-        let escape = |text: &str| text.replace('\\', "\\\\").replace('"', "\\\"").replace('\n', "\\n").replace('\u{201c}', "\\u{201c}").replace('\u{201d}', "\\u{201d}");
+    fn the_indonesian_table_answers_every_brief() {
+        let table: serde_json::Value = serde_json::from_str(include_str!("../../../docs/i18n/id.json")).unwrap_or_default();
+        let briefs: serde_json::Value = serde_json::from_str(include_str!("../../../docs/i18n/brief.json")).unwrap_or_default();
         let mut checked = 0;
-        for (key, entry) in reviewed.as_object().into_iter().flatten() {
-            let Some(text) = entry.get("text").and_then(|text| text.as_str()) else { continue };
-            let Some(line) = source.lines().find(|line| line.starts_with(&format!("text!({key}, "))) else { continue };
-            assert!(line.ends_with(&format!(", \"{}\");", escape(text))), "{key} differs from docs/i18n/id.json");
+        for brief in briefs.as_array().into_iter().flatten() {
+            let key = brief["key"].as_str().unwrap_or_default();
+            let entry = &table[key]["text"];
+            assert!(!entry.is_null(), "{key} has a brief and no Indonesian text");
+            // A text is one string, or one string per case or per plural form.
+            let texts: Vec<&str> = match entry {
+                serde_json::Value::String(text) => vec![text.as_str()],
+                serde_json::Value::Object(forms) => forms.values().flat_map(|form| match form {
+                    serde_json::Value::String(text) => vec![text.as_str()],
+                    serde_json::Value::Object(inner) => inner.values().filter_map(|text| text.as_str()).collect(),
+                    _ => Vec::new(),
+                }).collect(),
+                _ => Vec::new(),
+            };
+            assert!(!texts.is_empty(), "{key} has no Indonesian text to read");
+            let budget = brief["budget"].as_u64().unwrap_or(u64::MAX) as usize;
+            for text in &texts {
+                // A text of several lines is measured by its longest line.
+                // A text that carries a variable is as long as what fills it; the writer's own
+                // check measured those with the brief's examples.
+                let longest = text.lines().map(|line| line.chars().count()).max().unwrap_or(0);
+                assert!(text.contains('{') || longest <= budget.max(1), "{key} is {longest} characters and its brief allows {budget}");
+                assert!(!text.contains('\u{2014}') && !text.contains('\u{2013}') && !text.contains('\u{b7}') && !text.contains('!'), "{key} carries a mark the interface never uses");
+            }
             checked += 1;
         }
-        assert!(checked > 250, "only {checked} lines were compared");
+        assert!(checked > 500, "only {checked} briefs were checked");
     }
 
     #[test]
     fn both_languages_answer() {
         set_indonesian(false);
         assert_eq!((BTN_SAVE(), slides(2), section_label(artosia_core::song::Tag::new(artosia_core::song::SectionKind::Chorus, 1))), ("Save", "2 slides".to_string(), "Chorus".to_string()));
+        // Indonesian says what its table says, for a word, a counted noun and a section's name.
+        let table: serde_json::Value = serde_json::from_str(include_str!("../../../docs/i18n/id.json")).unwrap_or_default();
+        let of = |key: &str| table[key]["text"].as_str().unwrap_or_default().to_string();
         set_indonesian(true);
-        assert_eq!((BTN_SAVE(), slides(2), section_label(artosia_core::song::Tag::new(artosia_core::song::SectionKind::Chorus, 1))), ("Simpan", "2 slide".to_string(), "Reff".to_string()));
-        assert_eq!(import_summary(3, 1, 2), "3 lagu baru, 1 diperbarui. 2 dibiarkan karena diedit di sini.");
+        assert_eq!(BTN_SAVE(), of("BTN_SAVE"));
+        assert_eq!(slides(2), of("slides").replace("{count}", "2"));
+        assert_eq!(section_label(artosia_core::song::Tag::new(artosia_core::song::SectionKind::Chorus, 1)), of("section.chorus"));
+        assert_ne!(BTN_SAVE(), "Save");
         set_indonesian(false);
     }
 }

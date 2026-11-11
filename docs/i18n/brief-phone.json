@@ -170,7 +170,7 @@
  {
   "key": "live",
   "kind": "phone",
-  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Live tab: title of what is open at the top, a slide counter, the words now live in a large card, the words coming next in a smaller card, buttons that jump to sections, three toggle buttons and Back and Next at the bottom. The small label above the words that are live when no part name applies, and a marker beside a plan row that is live.",
+  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Live tab: title of what is open at the top, a slide counter, the words now live in a large card, the words coming next in a smaller card, buttons that jump to sections, three toggle buttons and Back and Next at the bottom. The small label above the words that are live when no part name applies, and a marker beside a plan row that is live. The same word also labels the red button, in the row of four state buttons, that is lit while the projector shows the slide and switches the projector off and on.",
   "moment": "Something is on the projector.",
   "role": "label",
   "does": "Names what the room is seeing now.",
@@ -921,7 +921,7 @@
   "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. More tab: message to the room, countdown, language and keys blocks. A paragraph in the last block.",
   "moment": "The person looks for a key on the computer.",
   "role": "help",
-  "does": "Lists the keys that move the slides and the three letters and three function keys that jump to a part or hide things, in one flowing paragraph.",
+  "does": "Lists, in one short paragraph, the keys that work on this page when a keyboard is attached: Space or the down arrow goes to the next slide; the up arrow goes back one; the slash key opens the search; C jumps to the chorus, V to the next verse, B to the bridge; a digit from 1 to 9 jumps to that section of the song; F1 hides the words, F2 makes the screen black, F3 shows the logo, F6 switches the projector on or off.",
   "budget": 160,
   "variables": [],
   "cases": [],
@@ -937,7 +937,7 @@
    "logo",
    "clear_text"
   ],
-  "notes": "Key names (Space, F1, F2, F3, the letters) stay as printed on the keyboard; the explaining words are text. Which letter jumps to which part is the same as on the computer's key sheet."
+  "notes": "Key names stay as printed on the keyboard. Every key in the list above must be named, and no other."
  },
  {
   "key": "lost",

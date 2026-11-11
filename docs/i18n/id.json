@@ -1,2362 +1,2805 @@
 {
-  "APP_NAME": {
-    "text": "Artosia",
-    "back": "Artosia",
-    "why": "Proper noun, kept."
-  },
-  "KEY_SEARCH": {
-    "text": "Ctrl K",
-    "back": "Ctrl K",
-    "why": "Key name as printed."
-  },
-  "KEY_ENTER": {
-    "text": "Enter",
-    "back": "Enter",
-    "why": "Key name as printed."
-  },
-  "KEY_SHOW_NOW": {
-    "text": "Ctrl Enter",
-    "back": "Ctrl Enter",
-    "why": "Key names as printed."
-  },
-  "KEY_ADD": {
-    "text": "Shift Enter",
-    "back": "Shift Enter",
-    "why": "Key names as printed."
-  },
-  "KEY_SAVE": {
-    "text": "Ctrl S",
-    "back": "Ctrl S",
-    "why": "Brief names no letter; S is a guess, check against the code binding."
-  },
-  "ctrl_digit": {
-    "text": "Ctrl {digit}",
-    "back": "Ctrl {digit}",
-    "why": "Key names as printed."
-  },
-  "SEARCH_PLACEHOLDER": {
-    "text": "Cari lagu atau ayat",
-    "back": "Search song or verse",
-    "why": "Same wording as the phone page search box."
-  },
-  "SEARCH_SONGS": {
-    "text": "Cari judul atau satu baris lirik",
-    "back": "Search title or one line of lyrics",
-    "why": "'baris lirik' is how volunteers say a line of words."
-  },
-  "SEARCH_BIBLE": {
-    "text": "Yoh 3:16 atau kata dalam ayatnya",
-    "back": "Yoh 3:16 or a word in the verse",
-    "why": "Yoh is the standard Indonesian abbreviation for Yohanes."
-  },
-  "SEARCH_RESULTS": {
-    "text": "Hasil",
-    "back": "Results",
-    "why": "Plain heading."
-  },
-  "SCOPE_LABEL": {
-    "text": "Cari di",
-    "back": "Search in",
-    "why": "Short lead-in to the three tabs."
-  },
-  "SCOPE_ALL": {
-    "text": "Semua",
-    "back": "All",
-    "why": "Plain tab."
-  },
-  "SCOPE_SONGS": {
-    "text": "Lagu",
-    "back": "Songs",
-    "why": "Same word as the start-screen card."
-  },
-  "SCOPE_BIBLE": {
-    "text": "Alkitab",
-    "back": "Bible",
-    "why": "Standard word."
-  },
-  "HINT_OPEN": {
-    "text": "Buka",
-    "back": "Open",
-    "why": "Plain verb."
-  },
-  "HINT_SCOPE": {
-    "text": "Ganti filter",
-    "back": "Change filter",
-    "why": "'filter' is a loanword volunteers know."
-  },
-  "HINT_SECTIONS": {
-    "text": "Cari bagian",
-    "back": "Search part",
-    "why": "'bagian' is the glossary umbrella word for a song part."
-  },
-  "SEARCH_SECTIONS": {
-    "text": "Bait 2, Reff, atau satu baris lirik",
-    "back": "Verse 2, Chorus, or one line of lyrics",
-    "why": "Uses the glossary words Bait and Reff."
-  },
-  "IN_PLAN": {
-    "text": "Sudah ada di acara",
-    "back": "Already in the plan",
-    "why": "'acara' is the one word for the plan."
-  },
-  "PLAN_CHIP": {
-    "text": "Di acara",
-    "back": "In the plan",
-    "why": "Tiny badge."
-  },
-  "KIND_LOOK": {
-    "text": "Tampilan",
-    "back": "Look",
-    "why": "Glossary word; 'saved set' dropped to fit the budget."
-  },
-  "KIND_BIBLE": {
-    "text": "Versi Alkitab",
-    "back": "Bible version",
-    "why": "Phone page says 'versi'."
-  },
-  "COUNTDOWN_DETAIL": {
-    "text": "Tayang di layar sampai waktu habis",
-    "back": "Live on the screen until time runs out",
-    "why": "'layar' is the one word for the projector screen."
-  },
-  "MESSAGE_DETAIL": {
-    "text": "Pesan tampil di layar jemaat",
-    "back": "The message appears on the congregation's screen",
-    "why": "'layar jemaat' keeps it clear this is the audience, not the operator; same word 'layar'."
-  },
-  "countdown_for": {
-    "text": "Hitung mundur {minutes} menit",
-    "back": "Countdown {minutes} minutes",
-    "why": "No plural in Indonesian, one form for every number."
-  },
-  "BIBLE_LOADING": {
-    "text": "Menyiapkan Alkitab",
-    "back": "Preparing the Bible",
-    "why": "No trailing dots."
-  },
-  "OLD_TESTAMENT": {
-    "text": "Perjanjian Lama",
-    "back": "Old Covenant (Old Testament)",
-    "why": "Name Indonesian churches use."
-  },
-  "NEW_TESTAMENT": {
-    "text": "Perjanjian Baru",
-    "back": "New Covenant (New Testament)",
-    "why": "Name Indonesian churches use."
-  },
-  "pick_chapter": {
-    "text": "{book}: pilih pasal",
-    "back": "{book}: choose chapter",
-    "why": "'pasal' is the Indonesian word for chapter."
-  },
-  "SONGS_EMPTY": {
-    "text": "Belum ada lagu",
-    "back": "No songs yet",
-    "why": "Plain empty state."
-  },
-  "nothing_found": {
-    "text": "Tidak ada hasil untuk “{query}”",
-    "back": "No results for “{query}”",
-    "why": "Curly quotes kept."
-  },
-  "new_song_called": {
-    "text": "Buat lagu “{title}”",
-    "back": "Create song “{title}”",
-    "why": "Verb first so the row reads as an action."
-  },
-  "songs": {
-    "text": "{count} lagu",
-    "back": "{count} songs",
-    "why": "No plural form."
-  },
-  "chapters": {
-    "text": "{count} pasal",
-    "back": "{count} chapters",
-    "why": "No plural form."
-  },
-  "verses": {
-    "text": "{count} ayat",
-    "back": "{count} verses",
-    "why": "Bible verse."
-  },
-  "CMD_NEW_SONG": {
-    "text": "Lagu baru",
-    "back": "New song",
-    "why": "Recognisable by the first word."
-  },
-  "CMD_NEW_SONG_DETAIL": {
-    "text": "Ketik atau tempel liriknya",
-    "back": "Type or paste the lyrics",
-    "why": "Plain."
-  },
-  "CMD_PASTE_SONG": {
-    "text": "Tempel lirik sebagai lagu",
-    "back": "Paste lyrics as a song",
-    "why": "Plain."
-  },
-  "CMD_PASTE_SONG_DETAIL": {
-    "text": "Salin liriknya dulu, lalu pilih ini",
-    "back": "Copy the lyrics first, then pick this",
-    "why": "Order of steps."
-  },
-  "CMD_ANNOUNCEMENTS": {
-    "text": "Pengumuman",
-    "back": "Announcements",
-    "why": "Glossary word."
-  },
-  "CMD_ANNOUNCEMENTS_DETAIL": {
-    "text": "Tayang bergantian sebelum ibadah mulai",
-    "back": "Shown in turns before the service starts",
-    "why": "Plain."
-  },
-  "CMD_HEADING": {
-    "text": "Pemisah acara",
-    "back": "Plan divider",
-    "why": "'pemisah' is the one word for a divider in the plan."
-  },
-  "CMD_HEADING_DETAIL": {
-    "text": "Misalnya Pujian dan Firman",
-    "back": "For example Praise and Word",
-    "why": "Same two words as PLAN_HEADING_WORSHIP and PLAN_HEADING_WORD."
-  },
-  "CMD_LOOKS": {
-    "text": "Tampilan",
-    "back": "Look",
-    "why": "Glossary word."
-  },
-  "CMD_LOOKS_DETAIL": {
-    "text": "Latar, ukuran teks, dan versi Alkitab",
-    "back": "Background, text size, and Bible version",
-    "why": "The three kinds of setting."
-  },
-  "CMD_SCREENS": {
-    "text": "Layar",
-    "back": "Screens",
-    "why": "Same word as the top-bar button."
-  },
-  "CMD_SCREENS_DETAIL": {
-    "text": "Pilih layar dan monitor panggung",
-    "back": "Choose the screen and the stage monitor",
-    "why": "'layar' = congregation screen, 'monitor panggung' = musicians' screen."
-  },
-  "CMD_REMOTE": {
-    "text": "Remote HP",
-    "back": "Phone remote",
-    "why": "Feature word 'Remote' plus device word 'HP'."
-  },
-  "CMD_REMOTE_DETAIL": {
-    "text": "HP di Wi-Fi yang sama bisa ganti slide",
-    "back": "Phones on the same Wi-Fi can change slides",
-    "why": "Plain."
-  },
-  "CMD_IMPORT_FOLDER": {
-    "text": "Impor lagu dari folder",
-    "back": "Import songs from folder",
-    "why": "Plain."
-  },
-  "CMD_IMPORT_FOLDER_DETAIL": {
-    "text": "Berkas OpenLyrics",
-    "back": "OpenLyrics files",
-    "why": "Format name kept."
-  },
-  "IMPORT_FOLDER_EMPTY": {
-    "text": "Tidak ada berkas OpenLyrics di folder itu",
-    "back": "There are no OpenLyrics files in that folder",
-    "why": "Nothing-added is implied."
-  },
-  "CMD_IMPORT": {
-    "text": "Impor dari EasiSlides",
-    "back": "Import from EasiSlides",
-    "why": "Plain."
-  },
-  "CMD_IMPORT_DETAIL": {
-    "text": "Lagu dan Alkitab di komputer ini",
-    "back": "Songs and Bibles on this computer",
-    "why": "Plain."
-  },
-  "CMD_LISTEN": {
-    "text": "Dengarkan lewat mikrofon",
-    "back": "Listen through the microphone",
-    "why": "Plain."
-  },
-  "CMD_LISTEN_DETAIL": {
-    "text": "Mengusulkan lagu atau ayat dari suara",
-    "back": "Proposes a song or verse from the sound",
-    "why": "Plain."
-  },
-  "LISTEN_SWITCH": {
-    "text": "Dengarkan suara",
-    "back": "Listen to the sound",
-    "why": "Reads naturally as on/off."
-  },
-  "LISTEN_HINT": {
-    "text": "Hanya mengusulkan. Layar tidak berubah sendiri.",
-    "back": "Only proposes. The screen does not change by itself.",
-    "why": "Reassurance."
-  },
-  "LISTEN_MICROPHONE": {
-    "text": "Mikrofon",
-    "back": "Microphone",
-    "why": "Plain."
-  },
-  "LISTEN_DEFAULT": {
-    "text": "Bawaan komputer",
-    "back": "The computer's own",
-    "why": "Plain."
-  },
-  "LISTEN_LANGUAGE": {
-    "text": "Bahasa lisan",
-    "back": "Spoken language",
-    "why": "About the voice, not the interface."
-  },
-  "LISTEN_INDONESIAN": {
-    "text": "Indonesia",
-    "back": "Indonesia",
-    "why": "The language's own name for itself, short."
-  },
-  "LISTEN_ENGLISH": {
-    "text": "Inggris",
-    "back": "English",
-    "why": "Plain."
-  },
-  "LISTEN_LEVEL": {
-    "text": "Tingkat suara",
-    "back": "Sound level",
-    "why": "Plain."
-  },
-  "LISTEN_HEARD": {
-    "text": "Yang terdengar",
-    "back": "What was heard",
-    "why": "Plain."
-  },
-  "CMD_UPDATE": {
-    "text": "Periksa pembaruan",
-    "back": "Check for updates",
-    "why": "Plain."
-  },
-  "CMD_UPDATE_DETAIL": {
-    "text": "Artosia juga memeriksa sendiri saat dibuka",
-    "back": "Artosia also checks by itself when opened",
-    "why": "Plain."
-  },
-  "update_ready": {
-    "text": "Versi {version} sudah diunduh. Terpasang saat Artosia dibuka lagi.",
-    "back": "Version {version} has been downloaded. Installed when Artosia is opened again.",
-    "why": "Two short sentences."
-  },
-  "update_none": {
-    "text": "Versi {version} adalah yang terbaru",
-    "back": "Version {version} is the newest",
-    "why": "Plain."
-  },
-  "CMD_KEYS": {
-    "text": "Tombol pintas",
-    "back": "Shortcut keys",
-    "why": "'Tombol' is the phone page heading; 'pintas' says shortcut."
-  },
-  "CMD_KEYS_DETAIL": {
-    "text": "Semua tombol yang dikenali Artosia",
-    "back": "Every key Artosia responds to",
-    "why": "Plain."
-  },
-  "CMD_START": {
-    "text": "Mulai ibadah",
-    "back": "Start the service",
-    "why": "'Mulai' family as on the phone page."
-  },
-  "CMD_START_DETAIL": {
-    "text": "Yang pertama di acara tayang di layar",
-    "back": "The first one in the plan goes live on the screen",
-    "why": "Plain."
-  },
-  "CMD_PREVIOUS": {
-    "text": "Kembali",
-    "back": "Back",
-    "why": "Same word as the Back button and phone page."
-  },
-  "CMD_PREVIOUS_DETAIL": {
-    "text": "Mundur satu slide",
-    "back": "Go back one slide",
-    "why": "Plain."
-  },
-  "CMD_NEXT_DETAIL": {
-    "text": "Maju satu slide",
-    "back": "Go forward one slide",
-    "why": "Plain."
-  },
-  "CMD_BLACK_DETAIL": {
-    "text": "Layar jadi hitam. Pilih lagi untuk batal",
-    "back": "The screen turns black. Pick again to cancel",
-    "why": "Plain."
-  },
-  "CMD_CLEAR_DETAIL": {
-    "text": "Teks hilang, latar tetap tayang",
-    "back": "The text disappears, the background stays live",
-    "why": "Plain."
-  },
-  "CMD_LOGO_DETAIL": {
-    "text": "Logo gereja menggantikan slide di layar",
-    "back": "The church logo replaces the slide on the screen",
-    "why": "Plain."
-  },
-  "CMD_STOP_COUNTDOWN": {
-    "text": "Hentikan hitung mundur",
-    "back": "Stop the countdown",
-    "why": "Plain."
-  },
-  "CMD_STOP_COUNTDOWN_DETAIL": {
-    "text": "Hitungan hilang dari layar",
-    "back": "The count disappears from the screen",
-    "why": "Plain."
-  },
-  "CMD_HIDE_MESSAGE": {
-    "text": "Sembunyikan pesan",
-    "back": "Hide the message",
-    "why": "Plain."
-  },
-  "CMD_HIDE_MESSAGE_DETAIL": {
-    "text": "Pesan hilang dari setiap layar",
-    "back": "The message leaves every screen",
-    "why": "Plain."
-  },
-  "CMD_EDIT_SONG": {
-    "text": "Edit lagu",
-    "back": "Edit song",
-    "why": "'Edit' is what volunteers say."
-  },
-  "CMD_EDIT_SONG_DETAIL": {
-    "text": "Perbaiki lirik lagu yang terbuka",
-    "back": "Correct the lyrics of the open song",
-    "why": "Plain."
-  },
-  "CMD_UNDO_DETAIL": {
-    "text": "Mengembalikan yang terakhir dihapus",
-    "back": "Brings back what was last removed",
-    "why": "Plain."
-  },
-  "CMD_LOOP": {
-    "text": "Putar pengumuman",
-    "back": "Run the announcements",
-    "why": "Plain."
-  },
-  "CMD_LOOP_DETAIL": {
-    "text": "Tayang bergantian sampai dihentikan",
-    "back": "Shown in turns until stopped",
-    "why": "Plain."
-  },
-  "CMD_NEW_PLAN_DETAIL": {
-    "text": "Acara hari ini dikosongkan untuk ibadah lain",
-    "back": "Today's plan is emptied for another service",
-    "why": "Plain."
-  },
-  "BTN_LOOK": {
-    "text": "Tampilan",
-    "back": "Look",
-    "why": "Glossary word."
-  },
-  "BTN_SCREENS": {
-    "text": "Layar",
-    "back": "Screens",
-    "why": "Plain."
-  },
-  "BTN_PHONE": {
-    "text": "Remote HP",
-    "back": "Phone remote",
-    "why": "Plain."
-  },
-  "HINT_KEYS": {
-    "text": "Tombol",
-    "back": "Keys",
-    "why": "Phone page heading word."
-  },
-  "OUTPUT_OFF": {
-    "text": "Layar dimatikan",
-    "back": "The screen is switched off",
-    "why": "Plain."
-  },
-  "OUTPUT_PRACTICE": {
-    "text": "Mode latihan: layar tidak dinyalakan",
-    "back": "Practice mode: the screen is not switched on",
-    "why": "Plain."
-  },
-  "OUTPUT_STARTING": {
-    "text": "Layar sedang dinyalakan",
-    "back": "The screen is being switched on",
-    "why": "Plain."
-  },
-  "OUTPUT_MISSING": {
-    "text": "Program layar tidak ada di folder Artosia",
-    "back": "The screen program is not in the Artosia folder",
-    "why": "Short and factual."
-  },
-  "OUTPUT_KEEPS_CLOSING": {
-    "text": "Program layar terus menutup sendiri setelah mulai",
-    "back": "The screen program keeps closing by itself after starting",
-    "why": "Plain."
-  },
-  "output_failed": {
-    "text": "Layar gagal dinyalakan: {problem}",
-    "back": "The screen failed to start: {problem}",
-    "why": "Reason last after a colon."
-  },
-  "OUTPUT_NO_SCREEN": {
-    "text": "Belum ada layar kedua",
-    "back": "There is no second screen yet",
-    "why": "Plain."
-  },
-  "OUTPUT_HERE": {
-    "text": "Layar ditampilkan di jendela ini",
-    "back": "The screen is shown in this window",
-    "why": "Plain."
-  },
-  "OUTPUT_STUCK": {
-    "text": "Layar tidak merespons",
-    "back": "The screen is not responding",
-    "why": "Plain."
-  },
-  "REMOTE_ON": {
-    "text": "Remote HP aktif",
-    "back": "Phone remote is on",
-    "why": "Plain."
-  },
-  "output_on_screen": {
-    "text": "Tayang di layar {number}",
-    "back": "Live on screen {number}",
-    "why": "Plain."
-  },
-  "library_in_memory": {
-    "text": "Pustaka gagal dibuka. Pekerjaan sesi ini hilang saat ditutup: {problem}",
-    "back": "The library failed to open. This session's work is lost on closing: {problem}",
-    "why": "Serious, flat, no softening."
-  },
-  "PLAN_DEFAULT_NAME": {
-    "text": "Acara hari ini",
-    "back": "Today's plan",
-    "why": "Exactly at budget."
-  },
-  "PLAN_EMPTY": {
-    "text": "Acara masih kosong",
-    "back": "The plan is still empty",
-    "why": "Close to the phone page's 'Susunan acara masih kosong'."
-  },
-  "PLAN_ADD": {
-    "text": "Tambah ke acara",
-    "back": "Add to the plan",
-    "why": "Phone page: 'ke acara'."
-  },
-  "PLAN_NEW": {
-    "text": "Acara baru",
-    "back": "New plan",
-    "why": "Alias already in the palette."
-  },
-  "PLAN_ITEM_MENU": {
-    "text": "Opsi",
-    "back": "Options",
-    "why": "Plain."
-  },
-  "PLAN_MOVE_UP": {
-    "text": "Naikkan",
-    "back": "Move up",
-    "why": "Plain."
-  },
-  "PLAN_MOVE_DOWN": {
-    "text": "Turunkan",
-    "back": "Move down",
-    "why": "Plain."
-  },
-  "PLAN_REMOVE": {
-    "text": "Keluarkan",
-    "back": "Take out",
-    "why": "Not 'Hapus', since the song itself stays in the library."
-  },
-  "PLAN_MISSING": {
-    "text": "Hilang",
-    "back": "Missing",
-    "why": "Pill."
-  },
-  "PLAN_HEADING_NEW": {
-    "text": "Pemisah baru",
-    "back": "New divider",
-    "why": "Plain."
-  },
-  "PLAN_HEADING_WORSHIP": {
-    "text": "Pujian",
-    "back": "Praise",
-    "why": "Churches say 'pujian' for the singing time."
-  },
-  "PLAN_HEADING_WORD": {
-    "text": "Firman",
-    "back": "The Word",
-    "why": "Churches say 'firman' for sermon and scripture time."
-  },
-  "added_to_plan": {
-    "text": "“{title}” masuk ke acara",
-    "back": "“{title}” went into the plan",
-    "why": "Phone page says 'Masuk' for added."
-  },
-  "removed_from_plan": {
-    "text": "“{title}” keluar dari acara",
-    "back": "“{title}” left the plan",
-    "why": "Plain."
-  },
-  "START_TITLE": {
-    "text": "Mau menayangkan apa?",
-    "back": "What do you want to put on?",
-    "why": "Short friendly question, no address word."
-  },
-  "START_HINT": {
-    "text": "atau langsung ketik",
-    "back": "or just start typing",
-    "why": "Follows the key cap."
-  },
-  "START_SONGS": {
-    "text": "Lagu",
-    "back": "Songs",
-    "why": "Plain."
-  },
-  "START_SONGS_DETAIL": {
-    "text": "Telusuri semua lagu",
-    "back": "Browse all songs",
-    "why": "Plain."
-  },
-  "START_BIBLE": {
-    "text": "Alkitab",
-    "back": "Bible",
-    "why": "Plain."
-  },
-  "START_BIBLE_DETAIL": {
-    "text": "Pilih kitab, lalu ayat",
-    "back": "Choose a book, then a verse",
-    "why": "Plain."
-  },
-  "START_NEW_DETAIL": {
-    "text": "Ketik atau tempel liriknya",
-    "back": "Type or paste the lyrics",
-    "why": "Plain."
-  },
-  "START_NO_SONGS": {
-    "text": "Pustaka masih kosong, belum ada lagu",
-    "back": "The library is still empty, no songs yet",
-    "why": "Plain."
-  },
-  "START_ANNOUNCEMENTS_DETAIL": {
-    "text": "Tayang sebelum ibadah mulai",
-    "back": "Shown before the service starts",
-    "why": "Plain."
-  },
-  "BTN_BRING_OVER": {
-    "text": "Impor sekarang",
-    "back": "Import now",
-    "why": "Same family as the import commands."
-  },
-  "BTN_ADD_TO_PLAN": {
-    "text": "Tambah ke acara",
-    "back": "Add to the plan",
-    "why": "Plain."
-  },
-  "BTN_EDIT": {
-    "text": "Edit",
-    "back": "Edit",
-    "why": "Plain."
-  },
-  "BTN_NEXT_VERSE": {
-    "text": "Tambah ayat berikutnya",
-    "back": "Add the next verse",
-    "why": "Plain."
-  },
-  "DECK_EMPTY": {
-    "text": "Belum ada slide",
-    "back": "No slides yet",
-    "why": "Plain."
-  },
-  "BTN_LOOP_START": {
-    "text": "Putar otomatis",
-    "back": "Run automatically",
-    "why": "Plain."
-  },
-  "BTN_LOOP_STOP": {
-    "text": "Hentikan putaran",
-    "back": "Stop the running",
-    "why": "Plain."
-  },
-  "LIVE": {
-    "text": "Tayang",
-    "back": "Live",
-    "why": "Glossary word."
-  },
-  "BTN_NEXT": {
-    "text": "Lanjut",
-    "back": "Next",
-    "why": "Phone page action word."
-  },
-  "BTN_CLEAR_TEXT": {
-    "text": "Sembunyikan teks",
-    "back": "Hide the text",
-    "why": "OVER BUDGET (16 vs 12): glossary word kept; shortest natural alternative is 'Sembunyi teks'."
-  },
-  "BTN_BLACK": {
-    "text": "Layar hitam",
-    "back": "Black screen",
-    "why": "OVER BUDGET by 1 (11 vs 10): glossary word kept."
-  },
-  "BTN_LOGO": {
-    "text": "Logo",
-    "back": "Logo",
-    "why": "Loanword on the phone page."
-  },
-  "LOGO_MISSING": {
-    "text": "Pasang gambar logo di Tampilan dulu",
-    "back": "Set a logo picture in Look first",
-    "why": "Plain."
-  },
-  "STATE_BLACK": {
-    "text": "Layar sedang hitam",
-    "back": "The screen is black",
-    "why": "Phone page wording."
-  },
-  "STATE_LOGO": {
-    "text": "Logo sedang tayang",
-    "back": "The logo is live",
-    "why": "Phone page wording."
-  },
-  "LIVE_NOTHING": {
-    "text": "Klik slide untuk menayangkan",
-    "back": "Click a slide to put it live",
-    "why": "Plain."
-  },
-  "BTN_SHOW": {
-    "text": "Tayangkan",
-    "back": "Put on screen",
-    "why": "The writer's own word for this action, first written for the Enter hint this button replaced (2026-11-10); the search box says 'tayangkan' for it too."
-  },
-  "COUNTDOWN": {
-    "text": "Hitung mundur",
-    "back": "Countdown",
-    "why": "Phone page word."
-  },
-  "COUNTDOWN_LABEL": {
-    "text": "Ibadah dimulai dalam",
-    "back": "The service starts in",
-    "why": "Reads before a time like 4:32."
-  },
-  "EDITOR_NEW": {
-    "text": "Lagu baru",
-    "back": "New song",
-    "why": "Plain."
-  },
-  "EDITOR_EDIT": {
-    "text": "Edit lagu",
-    "back": "Edit song",
-    "why": "Plain."
-  },
-  "EDITOR_NO_SLIDES": {
-    "text": "Slide muncul di sini saat mengetik",
-    "back": "Slides appear here while typing",
-    "why": "Plain."
-  },
-  "FIELD_TITLE": {
-    "text": "Judul",
-    "back": "Title",
-    "why": "Plain."
-  },
-  "FIELD_AUTHOR": {
-    "text": "Pencipta",
-    "back": "Composer/writer",
-    "why": "Plain."
-  },
-  "FIELD_KEY": {
-    "text": "Nada",
-    "back": "Pitch/key",
-    "why": "Budget 8 forces 'Nada'; 'Nada dasar' (10) is clearer to musicians. Unsure."
-  },
-  "FIELD_COPYRIGHT": {
-    "text": "Hak cipta",
-    "back": "Copyright",
-    "why": "Plain."
-  },
-  "FIELD_CCLI": {
-    "text": "Nomor CCLI",
-    "back": "CCLI number",
-    "why": "Plain."
-  },
-  "FIELD_LYRICS": {
-    "text": "Lirik",
-    "back": "Lyrics",
-    "why": "Plain."
-  },
-  "ORDER": {
-    "text": "Urutan",
-    "back": "Order",
-    "why": "Plain."
-  },
-  "ORDER_AS_WRITTEN": {
-    "text": "Sesuai ketikan",
-    "back": "As typed",
-    "why": "Plain."
-  },
-  "ORDER_EMPTY": {
-    "text": "Urutan muncul setelah lirik dibagi per bagian",
-    "back": "The order appears once the lyrics are split into parts",
-    "why": "Plain."
-  },
-  "ORDER_CHORUS_EACH": {
-    "text": "Reff setelah tiap bait",
-    "back": "Chorus after each verse",
-    "why": "Plain."
-  },
-  "BTN_TIDY": {
-    "text": "Rapikan",
-    "back": "Tidy up",
-    "why": "Plain."
-  },
-  "TIDY_HELP": {
-    "text": "Judul bagian jadi penanda, baris akord dihapus",
-    "back": "Part headings become markers, chord lines are removed",
-    "why": "Plain."
-  },
-  "SUGGEST_LABEL": {
-    "text": "Lagu dengan judul sama",
-    "back": "Songs with the same title",
-    "why": "Plain."
-  },
-  "SUGGEST_LIBRARY": {
-    "text": "Sudah di pustaka",
-    "back": "Already in the library",
-    "why": "Plain."
-  },
-  "SUGGEST_FETCHING": {
-    "text": "Mengambil dari internet",
-    "back": "Fetching from the internet",
-    "why": "Plain."
-  },
-  "LICENCE_NOTE": {
-    "text": "Lirik di layar perlu lisensi, misalnya CCLI",
-    "back": "Lyrics on the screen need a licence, for example CCLI",
-    "why": "Plain reminder."
-  },
-  "suggest_web": {
-    "text": "{artist}, {source}",
-    "back": "{artist}, {source}",
-    "why": "The program must drop '{artist}, ' when the artist is empty."
-  },
-  "words_from": {
-    "text": "Lirik dari {source}. Cocokkan dulu dengan salinan gereja.",
-    "back": "Lyrics from {source}. Check them against the church's copy first.",
-    "why": "Plain."
-  },
-  "FIELD_SECOND": {
-    "text": "Lirik bahasa kedua",
-    "back": "Second-language lyrics",
-    "why": "Plain."
-  },
-  "LYRICS_PLACEHOLDER": {
-    "text": "[1]\nBaris bait satu\n[chorus]\nBaris reff",
-    "back": "[1]\nVerse one line\n[chorus]\nChorus line",
-    "why": "Markers kept literally; samples are generic, no real lyrics."
-  },
-  "SECOND_PLACEHOLDER": {
-    "text": "Ketik bagian yang sama dalam bahasa kedua",
-    "back": "Type the same parts in the second language",
-    "why": "Plain."
-  },
-  "MARK_VERSE": {
-    "text": "Bait",
-    "back": "Verse",
-    "why": "Glossary word."
-  },
-  "MARK_CHORUS": {
-    "text": "Reff",
-    "back": "Chorus",
-    "why": "Glossary word."
-  },
-  "MARK_BRIDGE": {
-    "text": "Bridge",
-    "back": "Bridge",
-    "why": "Glossary word."
-  },
-  "MARK_PRECHORUS": {
-    "text": "Pra-reff",
-    "back": "Pre-chorus",
-    "why": "Glossary word."
-  },
-  "MARK_ENDING": {
-    "text": "Penutup",
-    "back": "Ending",
-    "why": "Glossary word."
-  },
-  "BTN_ADD_SECOND": {
-    "text": "Tambah bahasa kedua",
-    "back": "Add a second language",
-    "why": "Plain."
-  },
-  "BTN_SAVE": {
-    "text": "Simpan",
-    "back": "Save",
-    "why": "Plain."
-  },
-  "BTN_CANCEL": {
-    "text": "Batal",
-    "back": "Cancel",
-    "why": "Plain."
-  },
-  "BTN_DELETE": {
-    "text": "Hapus",
-    "back": "Delete",
-    "why": "Plain."
-  },
-  "BTN_DUPLICATE": {
-    "text": "Buat salinan",
-    "back": "Make a copy",
-    "why": "Plain."
-  },
-  "BTN_CLOSE": {
-    "text": "Tutup",
-    "back": "Close",
-    "why": "Plain."
-  },
-  "BTN_UNDO": {
-    "text": "Urungkan",
-    "back": "Undo",
-    "why": "Standard Indonesian software word for undo."
-  },
-  "BTN_OPEN": {
-    "text": "Buka",
-    "back": "Open",
-    "why": "Plain."
-  },
-  "BTN_CHOOSE": {
-    "text": "Pilih",
-    "back": "Choose",
-    "why": "Plain."
-  },
-  "BTN_SHOW_NOW": {
-    "text": "Tayangkan",
-    "back": "Put it live",
-    "why": "Phone page word for showing an item."
-  },
-  "SONG_SAVED": {
-    "text": "Lagu disimpan",
-    "back": "Song saved",
-    "why": "Plain."
-  },
-  "EDITOR_CLOSED": {
-    "text": "Ditutup, perubahan tidak disimpan",
-    "back": "Closed, changes not saved",
-    "why": "Plain."
-  },
-  "SONG_UNTITLED": {
-    "text": "Tanpa judul",
-    "back": "Without a title",
-    "why": "Plain."
-  },
-  "PASTE_EMPTY": {
-    "text": "Tidak ada teks yang disalin",
-    "back": "No text was copied",
-    "why": "Plain."
-  },
-  "could_not_save": {
-    "text": "Lagu gagal disimpan: {problem}",
-    "back": "The song failed to save: {problem}",
-    "why": "Reason last after a colon."
-  },
-  "song_deleted": {
-    "text": "“{title}” dihapus",
-    "back": "“{title}” deleted",
-    "why": "Plain."
-  },
-  "LOOK_SAMPLE": {
-    "text": "Contoh teks\nBaris kedua",
-    "back": "Sample text\nSecond line",
-    "why": "Exactly two lines, neutral."
-  },
-  "LOOK_CUSTOM": {
-    "text": "Kustom",
-    "back": "Custom",
-    "why": "Loanword volunteers know."
-  },
-  "LOOK_BACKGROUND": {
-    "text": "Latar",
-    "back": "Background",
-    "why": "Palette alias 'latar'."
-  },
-  "LOOK_CHOOSE_FILE": {
-    "text": "Pilih berkas",
-    "back": "Choose a file",
-    "why": "'berkas' is the one word for file."
-  },
-  "LOOK_NO_FILE": {
-    "text": "Belum ada berkas",
-    "back": "No file yet",
-    "why": "Plain."
-  },
-  "LOOK_LINES": {
-    "text": "Baris per slide",
-    "back": "Lines per slide",
-    "why": "Plain."
-  },
-  "LOOK_LINES_ALL": {
-    "text": "Semua",
-    "back": "All",
-    "why": "Plain."
-  },
-  "LOOK_SIZE": {
-    "text": "Ukuran teks",
-    "back": "Text size",
-    "why": "Palette alias."
-  },
-  "LOOK_SIZE_SMALL": {
-    "text": "Kecil",
-    "back": "Small",
-    "why": "Plain."
-  },
-  "LOOK_SIZE_NORMAL": {
-    "text": "Normal",
-    "back": "Normal",
-    "why": "Plain."
-  },
-  "LOOK_SIZE_LARGE": {
-    "text": "Besar",
-    "back": "Large",
-    "why": "Plain."
-  },
-  "LOOK_PLACE": {
-    "text": "Posisi teks",
-    "back": "Text position",
-    "why": "Plain."
-  },
-  "LOOK_PLACE_TOP": {
-    "text": "Atas",
-    "back": "Top",
-    "why": "Plain."
-  },
-  "LOOK_PLACE_MIDDLE": {
-    "text": "Tengah",
-    "back": "Middle",
-    "why": "Plain."
-  },
-  "LOOK_PLACE_BOTTOM": {
-    "text": "Bawah",
-    "back": "Bottom",
-    "why": "Plain."
-  },
-  "LOOK_BIBLE": {
-    "text": "Versi Alkitab",
-    "back": "Bible version",
-    "why": "Same as KIND_BIBLE."
-  },
-  "LOOK_SECOND_BIBLE": {
-    "text": "Versi Alkitab kedua",
-    "back": "Second Bible version",
-    "why": "Plain."
-  },
-  "LOOK_NONE": {
-    "text": "Tanpa",
-    "back": "None",
-    "why": "'Tidak ada' is 9, over the 8 budget."
-  },
-  "LOOK_LOGO": {
-    "text": "Logo gereja",
-    "back": "Church logo",
-    "why": "Plain."
-  },
-  "LOOK_CHOOSE_LOGO": {
-    "text": "Pilih gambar",
-    "back": "Choose a picture",
-    "why": "Generic, used for logo and announcement picture."
-  },
-  "LOOK_LICENCE": {
-    "text": "Nomor lisensi CCLI",
-    "back": "CCLI licence number",
-    "why": "Plain."
-  },
-  "LOOK_LICENCE_HINT": {
-    "text": "Nomor",
-    "back": "Number",
-    "why": "Plain."
-  },
-  "BACKGROUND_UNKNOWN": {
-    "text": "Berkas ini bukan gambar atau video yang didukung",
-    "back": "This file is not a supported picture or video",
-    "why": "Plain."
-  },
-  "bible_failed": {
-    "text": "Alkitab {code} gagal dimuat: {problem}",
-    "back": "Bible {code} failed to load: {problem}",
-    "why": "Reason last after a colon."
-  },
-  "SCREENS_OFF": {
-    "text": "Mode latihan: layar tidak dipakai",
-    "back": "Practice mode: the screen is not used",
-    "why": "Plain."
-  },
-  "SCREENS_ONE": {
-    "text": "Layar kedua yang tersambung akan menyala sendiri",
-    "back": "A second screen that gets connected will switch on by itself",
-    "why": "Plain."
-  },
-  "SCREENS_SWITCH": {
-    "text": "Nyalakan layar",
-    "back": "Switch on the screen",
-    "why": "Plain."
-  },
-  "WALL": {
-    "text": "Gambar proyeksi",
-    "back": "Projected picture",
-    "why": "Chosen word for the wall-picture."
-  },
-  "WALL_HINT": {
-    "text": "Pilih satu sudut, geser sampai gambar di dinding lurus",
-    "back": "Choose one corner, shift it until the picture on the wall is straight",
-    "why": "Plain."
-  },
-  "WALL_RESET": {
-    "text": "Setel ulang",
-    "back": "Reset",
-    "why": "Plain."
-  },
-  "WALL_BRIGHTNESS": {
-    "text": "Kecerahan",
-    "back": "Brightness",
-    "why": "Plain."
-  },
-  "WALL_CONTRAST": {
-    "text": "Kontras",
-    "back": "Contrast",
-    "why": "Plain."
-  },
-  "WALL_COLOUR": {
-    "text": "Warna",
-    "back": "Colour",
-    "why": "Intensity; 'Intensitas warna' (16) is over the 14 budget."
-  },
-  "CORNER_TOP_LEFT": {
-    "text": "Sudut kiri atas",
-    "back": "Top left corner",
-    "why": "Plain."
-  },
-  "CORNER_TOP_RIGHT": {
-    "text": "Sudut kanan atas",
-    "back": "Top right corner",
-    "why": "Plain."
-  },
-  "CORNER_BOTTOM_RIGHT": {
-    "text": "Sudut kanan bawah",
-    "back": "Bottom right corner",
-    "why": "Plain."
-  },
-  "CORNER_BOTTOM_LEFT": {
-    "text": "Sudut kiri bawah",
-    "back": "Bottom left corner",
-    "why": "Plain."
-  },
-  "NUDGE_UP": {
-    "text": "Naik",
-    "back": "Up",
-    "why": "Plain."
-  },
-  "NUDGE_DOWN": {
-    "text": "Turun",
-    "back": "Down",
-    "why": "Plain."
-  },
-  "NUDGE_LEFT": {
-    "text": "Kiri",
-    "back": "Left",
-    "why": "Plain."
-  },
-  "NUDGE_RIGHT": {
-    "text": "Kanan",
-    "back": "Right",
-    "why": "Plain."
-  },
-  "LESS": {
-    "text": "Kurangi",
-    "back": "Lower",
-    "why": "Plain."
-  },
-  "MORE": {
-    "text": "Tambah",
-    "back": "Raise",
-    "why": "Plain."
-  },
-  "LOOK_CAMERA": {
-    "text": "Kamera",
-    "back": "Camera",
-    "why": "Plain."
-  },
-  "SCREENS_HERE": {
-    "text": "Layar di jendela ini",
-    "back": "Screen in this window",
-    "why": "Plain."
-  },
-  "SCREENS_HERE_HINT": {
-    "text": "Tutup dengan Esc saat kursor di gambar",
-    "back": "Close with Esc while the cursor is on the picture",
-    "why": "Esc is a key name."
-  },
-  "LOOK_WINDOW_AUTO": {
-    "text": "Ikut komputer",
-    "back": "Follow the computer",
-    "why": "Plain."
-  },
-  "LOOK_WINDOW_LIGHT": {
-    "text": "Terang",
-    "back": "Light",
-    "why": "Plain."
-  },
-  "LOOK_WINDOW_DARK": {
-    "text": "Gelap",
-    "back": "Dark",
-    "why": "Plain."
-  },
-  "SCREEN_PROJECTOR": {
-    "text": "Layar jemaat",
-    "back": "Congregation screen",
-    "why": "Full form of the projector word, exactly at budget."
-  },
-  "SCREEN_STAGE": {
-    "text": "Panggung",
-    "back": "Stage",
-    "why": "Head noun of 'monitor panggung', short for the segmented control. Over the full form on purpose."
-  },
-  "SCREEN_UNUSED": {
-    "text": "Tak dipakai",
-    "back": "Not used",
-    "why": "'Tidak dipakai' is 13, over the 12 budget."
-  },
-  "SCREENS_IDENTIFY": {
-    "text": "Tampilkan nomor layar",
-    "back": "Show the screen numbers",
-    "why": "Plain."
-  },
-  "screen_name": {
-    "text": "Layar {number}",
-    "back": "Screen {number}",
-    "why": "Plain."
-  },
-  "screen_detail": {
-    "text": {
-      "normal_zoom": "{width} x {height}",
-      "with_zoom": "{width} x {height}, zoom {scale}"
-    },
-    "back": {
-      "normal_zoom": "{width} x {height}",
-      "with_zoom": "{width} x {height}, zoom {scale}"
-    },
-    "why": "'x' reads naturally between pixel sizes in Indonesian."
-  },
-  "REMOTE_SWITCH": {
-    "text": "Remote HP",
-    "back": "Phone remote",
-    "why": "Dialog title."
-  },
-  "REMOTE_SWITCH_DETAIL": {
-    "text": "HP di Wi-Fi yang sama bisa ganti slide",
-    "back": "Phones on the same Wi-Fi can change slides",
-    "why": "Plain."
-  },
-  "REMOTE_SCAN": {
-    "text": "Pindai dengan kamera HP atau ketik alamatnya",
-    "back": "Scan with the phone camera or type the address",
-    "why": "Plain."
-  },
-  "REMOTE_PIN": {
-    "text": "PIN",
-    "back": "PIN",
-    "why": "Same as the phone page."
-  },
-  "phones": {
-    "text": {
-      "zero": "Belum ada HP tersambung",
-      "one": "{count} HP tersambung",
-      "many": "{count} HP tersambung"
-    },
-    "back": {
-      "zero": "No phone connected yet",
-      "one": "{count} phone connected",
-      "many": "{count} phones connected"
-    },
-    "why": "Indonesian has no plural; only zero differs. 'one' and 'many' are the same line."
-  },
-  "remote_failed": {
-    "text": "Remote HP gagal dijalankan: {problem}",
-    "back": "Phone remote failed to run: {problem}",
-    "why": "Reason last after a colon."
-  },
-  "IMPORT_FOUND": {
-    "text": "Lagu dan Alkitab EasiSlides akan disalin ke sini. EasiSlides tetap bisa dipakai.",
-    "back": "EasiSlides songs and Bibles will be copied here. EasiSlides can still be used.",
-    "why": "Plain."
-  },
-  "IMPORT_NOT_FOUND": {
-    "text": "EasiSlides tidak terpasang di komputer ini",
-    "back": "EasiSlides is not installed on this computer",
-    "why": "Plain."
-  },
-  "import_done": {
-    "text": {
-      "songs_only": "{songs} lagu ditambahkan",
-      "songs_and_bibles": "{songs} lagu dan {bibles} Alkitab ditambahkan"
-    },
-    "back": {
-      "songs_only": "{songs} songs added",
-      "songs_and_bibles": "{songs} songs and {bibles} Bibles added"
-    },
-    "why": "Bibles part left out at 0."
-  },
-  "import_summary": {
-    "text": {
-      "nothing_changed": "Semua lagu sudah ada",
-      "only_added": "{added} lagu ditambahkan",
-      "only_updated": "{updated} lagu diperbarui",
-      "kept_some": "{added} lagu baru, {updated} diperbarui. {kept} dibiarkan karena diedit di sini."
-    },
-    "back": {
-      "nothing_changed": "All songs are already there",
-      "only_added": "{added} songs added",
-      "only_updated": "{updated} songs refreshed",
-      "kept_some": "{added} new songs, {updated} refreshed. {kept} left alone because they were edited here."
-    },
-    "why": "Four cases as the brief names them."
-  },
-  "files_unreadable": {
-    "text": "{failed} berkas gagal dimuat",
-    "back": "{failed} files failed to load",
-    "why": "No plural form."
-  },
-  "import_partial": {
-    "text": "{songs} lagu masuk, {failed} berkas gagal dimuat",
-    "back": "{songs} songs came in, {failed} files failed to load",
-    "why": "Plain."
-  },
-  "ANNOUNCEMENTS_EMPTY": {
-    "text": "Belum ada pengumuman",
-    "back": "No announcements yet",
-    "why": "Plain."
-  },
-  "ANNOUNCEMENT_NEW": {
-    "text": "Pengumuman baru",
-    "back": "New announcement",
-    "why": "Plain."
-  },
-  "ANNOUNCEMENT_BODY": {
-    "text": "Keterangan",
-    "back": "Details",
-    "why": "Plain."
-  },
-  "ANNOUNCEMENT_TITLE_HINT": {
-    "text": "Persekutuan pemuda",
-    "back": "Youth fellowship",
-    "why": "Made-up example."
-  },
-  "ANNOUNCEMENT_BODY_HINT": {
-    "text": "Jumat, jam 19.00, di aula gereja",
-    "back": "Friday, at 19.00, in the church hall",
-    "why": "Made-up example in Indonesian time style."
-  },
-  "ANNOUNCEMENT_SECONDS": {
-    "text": "Detik per pengumuman",
-    "back": "Seconds per announcement",
-    "why": "Plain."
-  },
-  "ANNOUNCEMENT_START_FROM": {
-    "text": "Mulai dari contoh",
-    "back": "Start from an example",
-    "why": "Plain."
-  },
-  "ANNOUNCEMENT_BRING_IN": {
-    "text": "Ambil dari berkas",
-    "back": "Take from a file",
-    "why": "Plain."
-  },
-  "ANNOUNCEMENT_FILL": {
-    "text": "Isi otomatis",
-    "back": "Fill automatically",
-    "why": "Plain."
-  },
-  "FILL_NOTHING": {
-    "text": "Manual",
-    "back": "Manual",
-    "why": "Plain."
-  },
-  "FILL_WEEK": {
-    "text": "Ulang tahun minggu ini",
-    "back": "Birthdays this week",
-    "why": "Plain."
-  },
-  "FILL_MONTH": {
-    "text": "Ulang tahun bulan ini",
-    "back": "Birthdays this month",
-    "why": "Plain."
-  },
-  "ANNOUNCEMENT_PICTURE": {
-    "text": "Gambar",
-    "back": "Picture",
-    "why": "Plain."
-  },
-  "BTN_REMOVE_PICTURE": {
-    "text": "Lepas",
-    "back": "Detach",
-    "why": "Short for the 10 budget."
-  },
-  "CMD_IMPORT_PPTX": {
-    "text": "Impor dari PowerPoint",
-    "back": "Import from PowerPoint",
-    "why": "Plain."
-  },
-  "CMD_IMPORT_PPTX_DETAIL": {
-    "text": "Tiap slide jadi satu pengumuman",
-    "back": "Each slide becomes one announcement",
-    "why": "Plain."
-  },
-  "CMD_IMPORT_BIRTHDAYS": {
-    "text": "Impor ulang tahun",
-    "back": "Import birthdays",
-    "why": "Plain."
-  },
-  "CMD_IMPORT_BIRTHDAYS_DETAIL": {
-    "text": "Tabel nama dan tanggal lahir di Word",
-    "back": "A table of names and birth dates in Word",
-    "why": "Brief also names PowerPoint; left out to fit 44."
-  },
-  "BIRTHDAYS_NONE_FOUND": {
-    "text": "Tidak ada baris berisi nama dan tanggal lahir",
-    "back": "There are no rows with a name and a birth date",
-    "why": "Plain."
-  },
-  "MONTHS[0]": {
-    "text": "Januari",
-    "back": "January",
-    "why": "Ordinary Indonesian civil calendar name."
-  },
-  "MONTHS[1]": {
-    "text": "Februari",
-    "back": "February",
-    "why": "Ordinary Indonesian civil calendar name."
-  },
-  "MONTHS[2]": {
-    "text": "Maret",
-    "back": "March",
-    "why": "Ordinary Indonesian civil calendar name."
-  },
-  "MONTHS[3]": {
-    "text": "April",
-    "back": "April",
-    "why": "Ordinary Indonesian civil calendar name."
-  },
-  "MONTHS[4]": {
-    "text": "Mei",
-    "back": "May",
-    "why": "Ordinary Indonesian civil calendar name."
-  },
-  "MONTHS[5]": {
-    "text": "Juni",
-    "back": "June",
-    "why": "Ordinary Indonesian civil calendar name."
-  },
-  "MONTHS[6]": {
-    "text": "Juli",
-    "back": "July",
-    "why": "Ordinary Indonesian civil calendar name."
-  },
-  "MONTHS[7]": {
-    "text": "Agustus",
-    "back": "August",
-    "why": "Ordinary Indonesian civil calendar name."
-  },
-  "MONTHS[8]": {
-    "text": "September",
-    "back": "September",
-    "why": "Ordinary Indonesian civil calendar name."
-  },
-  "MONTHS[9]": {
-    "text": "Oktober",
-    "back": "October",
-    "why": "Ordinary Indonesian civil calendar name."
-  },
-  "MONTHS[10]": {
-    "text": "November",
-    "back": "November",
-    "why": "Ordinary Indonesian civil calendar name."
-  },
-  "MONTHS[11]": {
-    "text": "Desember",
-    "back": "December",
-    "why": "Ordinary Indonesian civil calendar name."
-  },
-  "could_not_read": {
-    "text": "Berkas gagal dibuka: {problem}",
-    "back": "The file failed to open: {problem}",
-    "why": "Reason last after a colon."
-  },
-  "pptx_imported": {
-    "text": {
-      "without_lost": "{added} pengumuman dibuat",
-      "with_lost": "{added} pengumuman dibuat, {lost} gambar gagal dipindahkan"
-    },
-    "back": {
-      "without_lost": "{added} announcements created",
-      "with_lost": "{added} announcements created, {lost} pictures failed to transfer"
-    },
-    "why": "Lost part left out at 0."
-  },
-  "birthdays_on_file": {
-    "text": {
-      "zero": "Belum ada data ulang tahun",
-      "one": "{count} ulang tahun tersimpan",
-      "many": "{count} ulang tahun tersimpan"
-    },
-    "back": {
-      "zero": "No birthday data yet",
-      "one": "{count} birthday stored",
-      "many": "{count} birthdays stored"
-    },
-    "why": "Only zero differs in Indonesian."
-  },
-  "birthdays_imported": {
-    "text": {
-      "none_skipped": "{count} ulang tahun tersimpan",
-      "some_skipped": "{count} ulang tahun tersimpan, {unread} baris dilewati"
-    },
-    "back": {
-      "none_skipped": "{count} birthdays stored",
-      "some_skipped": "{count} birthdays stored, {unread} rows skipped"
-    },
-    "why": "Skipped part left out at 0."
-  },
-  "ANNOUNCEMENT_PREVIEW": {
-    "text": "Pratinjau",
-    "back": "Preview",
-    "why": "Not 'Tampilan', which is the look."
-  },
-  "ANNOUNCEMENT_TEMPLATES[0].0": {
-    "text": "Selamat datang",
-    "back": "Welcome",
-    "why": "Church noticeboard word."
-  },
-  "ANNOUNCEMENT_TEMPLATES[0].1": {
-    "text": "Kami senang bisa beribadah bersama hari ini",
-    "back": "We are glad to worship together today",
-    "why": "No address word."
-  },
-  "ANNOUNCEMENT_TEMPLATES[1].0": {
-    "text": "Jam ibadah",
-    "back": "Service times",
-    "why": "Church noticeboard word."
-  },
-  "ANNOUNCEMENT_TEMPLATES[1].1": {
-    "text": "Minggu, jam 07.00 dan 17.00",
-    "back": "Sunday, at 07.00 and 17.00",
-    "why": "Made-up example times in Indonesian style."
-  },
-  "ANNOUNCEMENT_TEMPLATES[2].0": {
-    "text": "Minggu ini",
-    "back": "This week",
-    "why": "Church noticeboard word."
-  },
-  "ANNOUNCEMENT_TEMPLATES[2].1": {
-    "text": "Doa bersama Rabu malam, jam 19.00",
-    "back": "Prayer together Wednesday evening, at 19.00",
-    "why": "Made-up example."
-  },
-  "ANNOUNCEMENT_TEMPLATES[3].0": {
-    "text": "Ayat minggu ini",
-    "back": "Verse of the week",
-    "why": "Church noticeboard word."
-  },
-  "ANNOUNCEMENT_TEMPLATES[3].1": {
-    "text": "Ganti baris ini dengan ayatnya",
-    "back": "Replace this line with the verse",
-    "why": "Instruction to the volunteer."
-  },
-  "ANNOUNCEMENT_TEMPLATES[4].0": {
-    "text": "Persembahan",
-    "back": "Offering",
-    "why": "Church noticeboard word."
-  },
-  "ANNOUNCEMENT_TEMPLATES[4].1": {
-    "text": "Tulis atas nama dan nomor rekening di sini",
-    "back": "Write the account name and number here",
-    "why": "Prompt to the volunteer."
-  },
-  "ANNOUNCEMENT_TEMPLATES[5].0": {
-    "text": "Ulang tahun",
-    "back": "Birthdays",
-    "why": "Church noticeboard word."
-  },
-  "ANNOUNCEMENT_TEMPLATES[5].1": {
-    "text": "Tulis nama yang berulang tahun minggu ini",
-    "back": "Write the names with birthdays this week",
-    "why": "Prompt to the volunteer."
-  },
-  "announcements": {
-    "text": {
-      "zero": "Belum ada pengumuman",
-      "one": "{count} pengumuman",
-      "many": "{count} pengumuman"
-    },
-    "back": {
-      "zero": "No announcements yet",
-      "one": "{count} announcement",
-      "many": "{count} announcements"
-    },
-    "why": "Only zero differs in Indonesian."
-  },
-  "seconds_short": {
-    "text": "{seconds} dtk",
-    "back": "{seconds} sec",
-    "why": "'dtk' is the usual abbreviation for detik."
-  },
-  "KEYS_TITLE": {
-    "text": "Tombol pintas",
-    "back": "Shortcut keys",
-    "why": "Same wording as CMD_KEYS."
-  },
-  "KEYS_SHOWING": {
-    "text": "Saat tayang",
-    "back": "While live",
-    "why": "Plain."
-  },
-  "KEYS_FINDING": {
-    "text": "Mencari",
-    "back": "Searching",
-    "why": "Plain."
-  },
-  "KEYS_PLAN": {
-    "text": "Acara",
-    "back": "Plan",
-    "why": "Plain."
-  },
-  "KEYS_EDITING": {
-    "text": "Editor lagu",
-    "back": "Song editor",
-    "why": "Plain."
-  },
-  "KEYS_FINDING_ROWS[0].0": {
-    "text": "Huruf apa saja",
-    "back": "Any letter",
-    "why": "Plain phrase."
-  },
-  "KEYS_FINDING_ROWS[0].1": {
-    "text": "Ketik huruf di mana saja untuk mencari",
-    "back": "Type a letter anywhere to search",
-    "why": "Plain."
-  },
-  "KEYS_FINDING_ROWS[1].0": {
-    "text": "Ctrl K",
-    "back": "Ctrl K",
-    "why": "Key names as printed."
-  },
-  "KEYS_FINDING_ROWS[1].1": {
-    "text": "Buka pencarian, kosong berarti semua lagu",
-    "back": "Open the search, empty means all songs",
-    "why": "Plain."
-  },
-  "KEYS_FINDING_ROWS[2].0": {
-    "text": "Enter",
-    "back": "Enter",
-    "why": "Key name as printed."
-  },
-  "KEYS_FINDING_ROWS[2].1": {
-    "text": "Buka hasil yang disorot",
-    "back": "Open the highlighted result",
-    "why": "Plain."
-  },
-  "KEYS_FINDING_ROWS[3].0": {
-    "text": "Ctrl Enter",
-    "back": "Ctrl Enter",
-    "why": "Key names as printed."
-  },
-  "KEYS_FINDING_ROWS[3].1": {
-    "text": "Buka dan langsung tayangkan",
-    "back": "Open and put live at once",
-    "why": "Plain."
-  },
-  "KEYS_FINDING_ROWS[4].0": {
-    "text": "Shift Enter",
-    "back": "Shift Enter",
-    "why": "Key names as printed."
-  },
-  "KEYS_FINDING_ROWS[4].1": {
-    "text": "Tambah setelah yang tayang, atau di akhir",
-    "back": "Add after the one that is on screen, or at the end",
-    "why": "Tambah is the phone page's add verb; yang tayang names the item live; 'or at the end' covers the nothing-showing case."
-  },
-  "KEYS_FINDING_ROWS[5].0": {
-    "text": "Tab",
-    "back": "Tab",
-    "why": "Key name as printed."
-  },
-  "KEYS_FINDING_ROWS[5].1": {
-    "text": "Cari bagian lagu yang disorot",
-    "back": "Search the parts of the highlighted song",
-    "why": "Plain."
-  },
-  "KEYS_FINDING_ROWS[6].0": {
-    "text": "Esc",
-    "back": "Esc",
-    "why": "Key name as printed."
-  },
-  "KEYS_FINDING_ROWS[6].1": {
-    "text": "Hapus ketikan, tekan lagi untuk menutup",
-    "back": "Clear what was typed, press again to close",
-    "why": "Plain."
-  },
-  "KEYS_EDITING_ROWS[0].0": {
-    "text": "Ctrl N",
-    "back": "Ctrl N",
-    "why": "Letter is a guess, check the binding."
-  },
-  "KEYS_EDITING_ROWS[0].1": {
-    "text": "Mulai lagu baru",
-    "back": "Start a new song",
-    "why": "Plain."
-  },
-  "KEYS_EDITING_ROWS[1].0": {
-    "text": "Ctrl E",
-    "back": "Ctrl E",
-    "why": "Letter is a guess, same as KEY_EDIT."
-  },
-  "KEYS_EDITING_ROWS[1].1": {
-    "text": "Edit lagu yang terbuka",
-    "back": "Edit the open song",
-    "why": "Plain."
-  },
-  "KEYS_EDITING_ROWS[2].0": {
-    "text": "Ctrl S",
-    "back": "Ctrl S",
-    "why": "Letter is a guess, same as KEY_SAVE."
-  },
-  "KEYS_EDITING_ROWS[2].1": {
-    "text": "Simpan",
-    "back": "Save",
-    "why": "Plain."
-  },
-  "KEYS_EDITING_ROWS[3].0": {
-    "text": "Ctrl 1 sampai 5",
-    "back": "Ctrl 1 to 5",
-    "why": "OVER BUDGET by 1 (15 vs 14): the joining word is written out."
-  },
-  "KEYS_EDITING_ROWS[3].1": {
-    "text": "Sisipkan penanda bait, reff, atau lainnya",
-    "back": "Insert a marker for a verse, chorus, or other",
-    "why": "Plain."
-  },
-  "KEYS_EDITING_ROWS[4].0": {
-    "text": "Tab",
-    "back": "Tab",
-    "why": "Key name as printed."
-  },
-  "KEYS_EDITING_ROWS[4].1": {
-    "text": "Terima lagu yang diusulkan sekaligus",
-    "back": "Accept the proposed song in one go",
-    "why": "Plain."
-  },
-  "KEYS_EDITING_ROWS[5].0": {
-    "text": "Ctrl Z",
-    "back": "Ctrl Z",
-    "why": "Letter is a guess, check the binding."
-  },
-  "KEYS_EDITING_ROWS[5].1": {
-    "text": "Kembalikan yang terakhir dihapus",
-    "back": "Bring back what was last removed",
-    "why": "Plain."
-  },
-  "announcement_deleted": {
-    "text": "Pengumuman “{title}” dihapus",
-    "back": "Announcement “{title}” deleted",
-    "why": "Plain."
-  },
-  "SCREENS_STAGE_WINDOW": {
-    "text": "Monitor panggung di jendela terpisah",
-    "back": "Stage monitor in a separate window",
-    "why": "Says 'separate' so it is not read as this dialog or this window. Exactly 36."
-  },
-  "FIELD_ORDER": {
-    "text": "Ketik urutan, misalnya V1 C*2 B",
-    "back": "Type the order, for example V1 C*2 B",
-    "why": "Codes and the C*2 form kept exactly; C*2 is the chorus twice."
-  },
-  "LOOK_WINDOW": {
-    "text": "Warna jendela Artosia",
-    "back": "Colour of Artosia's window",
-    "why": "Names Artosia's own window and says colour, so it does not read as windowed mode."
-  },
-  "screen_title": {
-    "text": {
-      "without_this": "Layar {number}",
-      "with_this": "Layar {number} (layar ini)"
-    },
-    "back": {
-      "without_this": "Screen {number}",
-      "with_this": "Screen {number} (this screen)"
-    },
-    "why": "The tag is about the monitor. The {this} flag only picks the case, so it is not written in the text."
-  },
-  "CMD_STREAM": {
-    "text": "Siaran dan rekaman",
-    "back": "Broadcast and recording",
-    "why": "Names both jobs; also the dialog title."
-  },
-  "CMD_STREAM_DETAIL": {
-    "text": "Kirim gambar layar ke situs video atau berkas",
-    "back": "Send the screen picture to a video site or a file",
-    "why": "Plain."
-  },
-  "BTN_STREAM": {
-    "text": "Siaran",
-    "back": "Broadcast",
-    "why": "One word."
-  },
-  "BTN_LISTEN": {
-    "text": "Dengar",
-    "back": "Listen",
-    "why": "Same family as 'Dengarkan' in the listen dialog."
-  },
-  "STREAM_HINT": {
-    "text": "Penonton melihat isi layar dan mendengar suara ruangan",
-    "back": "Viewers see what is on the screen and hear the sound of the room",
-    "why": "Plain."
-  },
-  "STREAM_ADDRESS": {
-    "text": "URL streaming",
-    "back": "Streaming URL",
-    "why": "The term Indonesian YouTube Studio shows."
-  },
-  "STREAM_KEY": {
-    "text": "Kunci streaming",
-    "back": "Streaming key",
-    "why": "Matches Indonesian YouTube Studio, as the brief suggests."
-  },
-  "STREAM_RECORD": {
-    "text": "Simpan rekaman",
-    "back": "Keep a recording",
-    "why": "Plain."
-  },
-  "STREAM_RECORD_HINT": {
-    "text": "Disimpan di komputer ini bersama data Artosia",
-    "back": "Kept on this computer together with Artosia's data",
-    "why": "Plain."
-  },
-  "BTN_STREAM_START": {
-    "text": "Mulai",
-    "back": "Start",
-    "why": "Phone page word."
-  },
-  "BTN_STREAM_STOP": {
-    "text": "Berhenti",
-    "back": "Stop",
-    "why": "Phone page word."
-  },
-  "STREAM_STARTING": {
-    "text": "Sedang bersiap",
-    "back": "Getting ready",
-    "why": "Plain."
-  },
-  "STREAM_RECONNECTING": {
-    "text": "Koneksi terputus, mencoba lagi",
-    "back": "Connection lost, trying again",
-    "why": "Phone page wording."
-  },
-  "STREAM_STOPPING": {
-    "text": "Sedang menyelesaikan",
-    "back": "Finishing up",
-    "why": "Plain."
-  },
-  "STREAM_MISSING": {
-    "text": "Bagian siaran belum terpasang di Artosia ini",
-    "back": "The broadcast part is not installed in this Artosia",
-    "why": "Plain."
-  },
-  "STREAM_NOTHING": {
-    "text": "Isi URL streaming, atau nyalakan rekaman",
-    "back": "Fill in the streaming URL, or turn the recording on",
-    "why": "Says what to do."
-  },
-  "stream_failed": {
-    "text": "Siaran gagal dimulai: {problem}",
-    "back": "The broadcast failed to start: {problem}",
-    "why": "Reason last after a colon."
-  },
-  "stream_live": {
-    "text": {
-      "none_lost": "Siaran langsung {time}",
-      "some_lost": "Siaran langsung {time}, {dropped} gambar hilang"
-    },
-    "back": {
-      "none_lost": "Live broadcast {time}",
-      "some_lost": "Live broadcast {time}, {dropped} pictures lost"
-    },
-    "why": "Cases as the brief names them."
-  },
-  "STAGE_CLOCK": {
-    "text": "Jam",
-    "back": "Clock",
-    "why": "Plain."
-  },
-  "STAGE_TIMER": {
-    "text": "Hitung mundur",
-    "back": "Countdown",
-    "why": "Glossary word."
-  },
-  "STAGE_BLACK": {
-    "text": "Layar jemaat hitam",
-    "back": "The congregation screen is black",
-    "why": "Names the congregation's screen, as the musicians need."
-  },
-  "STAGE_NOTHING": {
-    "text": "Belum ada yang tayang",
-    "back": "Nothing is live yet",
-    "why": "Phone page wording."
-  },
-  "stage_next": {
-    "text": "Berikutnya: {label}",
-    "back": "Next: {label}",
-    "why": "Phone page caption word."
-  },
-  "stage_place": {
-    "text": "{index} dari {count}",
-    "back": "{index} of {count}",
-    "why": "Phone page pattern."
-  },
-  "PANE_PREVIEW": {
-    "text": "Pratinjau",
-    "back": "Preview",
-    "why": "The writer's own glossary word for a preview (id-choices.md), reused for the pane's name."
-  },
-  "KEYS_SHOWING_ROWS[0].0": {
-    "text": "Panah bawah, Spasi",
-    "back": "Arrow down, Space",
-    "why": "Glossary words for arrow and space bar; two keys in one cap joined by a comma."
-  },
-  "KEYS_SHOWING_ROWS[0].1": {
-    "text": "Tayangkan slide berikutnya",
-    "back": "Put the next slide on screen",
-    "why": "Tayangkan is the phone page's show verb; berikutnya is its word for what follows."
-  },
-  "KEYS_SHOWING_ROWS[1].0": {
-    "text": "Panah atas",
-    "back": "Arrow up",
-    "why": "Same pattern as the glossary's panah kiri and panah kanan."
-  },
-  "KEYS_SHOWING_ROWS[1].1": {
-    "text": "Tayangkan slide sebelumnya",
-    "back": "Put the previous slide on screen",
-    "why": "Mirrors the next-slide row so the pair reads as opposites."
-  },
-  "KEYS_SHOWING_ROWS[2].0": {
-    "text": "Panah kiri",
-    "back": "Arrow left",
-    "why": "Glossary word."
-  },
-  "KEYS_SHOWING_ROWS[2].1": {
-    "text": "Loncat ke slide pertama lagu yang tayang",
-    "back": "Jump to the first slide of the song that is on screen",
-    "why": "Loncat matches the phone page's jump heading; yang tayang is the fixed word for what is live."
-  },
-  "KEYS_SHOWING_ROWS[3].0": {
-    "text": "Panah kanan",
-    "back": "Arrow right",
-    "why": "Glossary word."
-  },
-  "KEYS_SHOWING_ROWS[3].1": {
-    "text": "Loncat ke slide terakhir lagu yang tayang",
-    "back": "Jump to the last slide of the song that is on screen",
-    "why": "Pairs with the first-slide row, same shape."
-  },
-  "KEYS_SHOWING_ROWS[4].0": {
-    "text": "Shift panah",
-    "back": "Shift arrow",
-    "why": "Key name kept; follows the id-choices style 'Alt panah atas, bawah' with no plus sign."
-  },
-  "KEYS_SHOWING_ROWS[6].0": {
-    "text": "Enter",
-    "back": "Enter",
-    "why": "Printed key name kept."
-  },
-  "KEYS_SHOWING_ROWS[6].1": {
-    "text": "Tayangkan slide yang berbingkai putih",
-    "back": "Put the slide that has the white frame on screen",
-    "why": "Uses the same ring word (bingkai putih) as the other rows."
-  },
-  "KEYS_SHOWING_ROWS[7].0": {
-    "text": "1 sampai 9",
-    "back": "1 to 9",
-    "why": "The glossary's range form from the phone page."
-  },
-  "KEYS_SHOWING_ROWS[7].1": {
-    "text": "Loncat ke bagian lagu sesuai nomor",
-    "back": "Jump to the part of the song matching the number",
-    "why": "Bagian is the umbrella word for verse and chorus; it avoids picking Bait or Reff for a number key."
-  },
-  "KEYS_SHOWING_ROWS[8].0": {
-    "text": "Esc",
-    "back": "Esc",
-    "why": "Printed key name kept."
-  },
-  "KEYS_SHOWING_ROWS[8].1": {
-    "text": "Bawa lagu yang tayang ke pratinjau",
-    "back": "Bring the song that is on screen to the preview",
-    "why": "Bawa ... ke pratinjau is the one phrase used for every 'put into the middle pane' row."
-  },
-  "KEYS_SHOWING_ROWS[9].0": {
-    "text": "F1",
-    "back": "F1",
-    "why": "Printed key name kept."
-  },
-  "KEYS_SHOWING_ROWS[9].1": {
-    "text": "Sembunyikan teks, latar tetap tayang",
-    "back": "Hide the text, the background stays on screen",
-    "why": "Sembunyikan teks is the fixed clear-text term."
-  },
-  "KEYS_SHOWING_ROWS[10].0": {
-    "text": "F2",
-    "back": "F2",
-    "why": "Printed key name kept."
-  },
-  "KEYS_SHOWING_ROWS[10].1": {
-    "text": "Hitamkan layar",
-    "back": "Make the screen black",
-    "why": "Verb form of the glossary's Layar hitam, so the row starts with an action like its neighbours."
-  },
-  "KEYS_SHOWING_ROWS[11].0": {
-    "text": "F3",
-    "back": "F3",
-    "why": "Printed key name kept."
-  },
-  "KEYS_SHOWING_ROWS[11].1": {
-    "text": "Tayangkan logo saja",
-    "back": "Put only the logo on screen",
-    "why": "Logo is the fixed word; saja carries 'only'."
-  },
-  "KEYS_SHOWING_ROWS[12].0": {
-    "text": "F4",
-    "back": "F4",
-    "why": "Printed key name kept."
-  },
-  "KEYS_SHOWING_ROWS[12].1": {
-    "text": "Bawa ayat atau lagu yang dikenali ke pratinjau",
-    "back": "Bring the verse or song that was recognised to the preview",
-    "why": "Ayat is a Bible verse (glossary); dikenali for recognised, since the listener only proposes."
-  },
-  "KEYS_SHOWING_ROWS[13].0": {
-    "text": "F5",
-    "back": "F5",
-    "why": "Printed key name kept."
-  },
-  "KEYS_SHOWING_ROWS[13].1": {
-    "text": "Bawa pengumuman ke pratinjau",
-    "back": "Bring the announcements to the preview",
-    "why": "Pengumuman is the fixed word; same Bawa phrase as the rows above."
-  },
-  "KEYS_PLAN_ROWS[0].0": {
-    "text": "Tab",
-    "back": "Tab",
-    "why": "Printed key name kept."
-  },
-  "KEYS_PLAN_ROWS[0].1": {
-    "text": "Bawa item acara berikutnya ke pratinjau",
-    "back": "Bring the next plan item to the preview",
-    "why": "Acara is the plan word from id-choices; item is a common loanword for one entry of it."
-  },
-  "KEYS_PLAN_ROWS[1].0": {
-    "text": "Shift Tab",
-    "back": "Shift Tab",
-    "why": "Printed key names kept, no plus sign, like the other combinations."
-  },
-  "KEYS_PLAN_ROWS[1].1": {
-    "text": "Bawa item acara sebelumnya ke pratinjau",
-    "back": "Bring the previous plan item to the preview",
-    "why": "Mirrors the Tab row."
-  },
-  "KEYS_PLAN_ROWS[2].0": {
-    "text": "Alt panah atas, bawah",
-    "back": "Alt arrow up, down",
-    "why": "Same text id-choices already records for this cap."
-  },
-  "KEYS_PLAN_ROWS[2].1": {
-    "text": "Geser item pratinjau naik atau turun",
-    "back": "Move the preview item up or down",
-    "why": "Geser is used for moving something one step; naik and turun match the cap's panah atas, bawah."
-  },
-  "KEYS_PLAN_ROWS[3].0": {
-    "text": "Delete",
-    "back": "Delete",
-    "why": "Printed key name kept."
-  },
-  "KEYS_PLAN_ROWS[3].1": {
-    "text": "Keluarkan item pratinjau, bisa diurungkan",
-    "back": "Take out the preview item, it can be undone",
-    "why": "Keluarkan is the recorded plan-removal word; Urungkan is the recorded undo word."
-  },
-  "STATE_MESSAGE": {
-    "text": "Pesan tampil",
-    "back": "Message showing",
-    "why": "The phone page uses Tampil for a message that is showing (Tampil: {0})."
-  },
-  "STATE_STAGE_MESSAGE": {
-    "text": "Pesan pemusik tampil",
-    "back": "Musicians' message showing",
-    "why": "Pemusik from the recorded Pesan untuk pemusik; the word differs from the room pill so the two are not confused."
-  },
-  "state_countdown": {
-    "text": "Hitung mundur {clock}",
-    "back": "Countdown {clock}",
-    "why": "Fixed word Hitung mundur; the clock follows it."
-  },
-  "STAGE_MESSAGE_DETAIL": {
-    "text": "Tampil di monitor panggung saja",
-    "back": "Shows on the stage monitor only",
-    "why": "Monitor panggung is the recorded word for the stage screen; saja says it does not go to the congregation."
-  },
-  "HEARD_NOTHING": {
-    "text": "Belum ada yang dikenali",
-    "back": "Nothing recognised yet",
-    "why": "Same Belum ada yang ... pattern as the phone page, no blame."
-  },
-  "KEYS_SHOWING_ROWS[4].1": {
-    "text": "Pilih slide lagu tayang, lepas Shift tayangkan",
-    "back": "Pick a slide of the song on screen, let go of Shift, put it on screen",
-    "why": "Starts with the action Pilih; Tayangkan is the fixed show verb; Shift stays as printed. 46 of 46."
-  },
-  "KEYS_SHOWING_ROWS[5].0": {
-    "text": "Ctrl panah",
-    "back": "Ctrl arrow",
-    "why": "Key name as printed, arrow word from the glossary, no plus sign, same form as Shift panah."
-  },
-  "KEYS_SHOWING_ROWS[5].1": {
-    "text": "Geser bingkai di pratinjau, tayang saat Enter",
-    "back": "Move the frame in the preview, goes on screen when Enter",
-    "why": "Same Geser bingkai di pratinjau wording as before; the ring waits and Enter shows it. 45 of 46."
-  },
-  "LEARN_SECTION": {
-    "text": "Pencarian",
-    "back": "Searching",
-    "why": "Plain noun heading for the search box settings, built on the glossary's Cari."
-  },
-  "LEARN_ON": {
-    "text": "Ingat pilihan di PC ini",
-    "back": "Remember choices on this PC",
-    "why": "Ingat for remember; 'di PC ini' says it learns here, on this computer. 23 of 24."
-  },
-  "LEARN_ON_HINT": {
-    "text": "Hanya mengurutkan hasil yang sama cocok, acara tetap di atas",
-    "back": "Only orders results that match equally well, the plan stays on top",
-    "why": "Reassures that it only breaks ties; acara is the fixed plan word. 60 of 60."
-  },
-  "LEARN_FORGET": {
-    "text": "Lupakan pilihan yang diingat",
-    "back": "Forget the choices that are remembered",
-    "why": "Lupakan pairs with the switch's Ingat, and unlike Hapus it does not suggest deleting songs. 28 of 34."
-  },
-  "LEARN_FORGOTTEN": {
-    "text": "Semua pilihan sudah dilupakan",
-    "back": "All choices have been forgotten",
-    "why": "Echoes Lupakan; plain fragment, no full stop. 29 of 34."
-  },
-  "GROUP_WEEKDAY": {
-    "text": "Lagu di hari yang sama",
-    "back": "Songs on the same day",
-    "why": "Heading in the shape 'Lagu ...' shared with the other two groups. 22 of 40."
-  },
-  "GROUP_RECENT": {
-    "text": "Lagu yang baru dipilih",
-    "back": "Songs that were just picked",
-    "why": "Same 'Lagu ...' shape; baru dipilih is lately picked. 22 of 40."
-  },
-  "group_follows": {
-    "text": "Lagu yang pernah menyusul {title}",
-    "back": "Songs that once followed {title}",
-    "why": "Same 'Lagu ...' shape with the title last so the fixed words are read first. 44 of 46 with the example."
-  },
-  "habit_chip": {
-    "text": "Dipilih {picks} kali untuk “{typed}”",
-    "back": "picked {picks} times for \"{typed}\"",
-    "why": "One template, no plural; quotation marks included around the typed letters. 26 of 32 with examples. Review: curly quotation marks as in the English, and a capital first letter."
-  },
-  "habit_line": {
-    "text": "Dipilih {picks} kali untuk “{typed}”, terakhir {when}",
-    "back": "Picked {picks} times for \"{typed}\", last {when}",
-    "why": "Fuller form of the pill; the day comes already as day and month. 47 of 50 with examples. Review: curly quotation marks as in the English, and a capital first letter."
-  },
-  "follows_line": {
-    "text": "Menyusul {count} kali, terakhir {when}",
-    "back": "Followed {count} times, last {when}",
-    "why": "Same count and last-day shape as the other grey lines. 36 of 46 with examples."
-  },
-  "weekday_line": {
-    "text": "Dinyanyikan {count} dari {of} ibadah",
-    "back": "Sung {count} of {of} services",
-    "why": "Ibadah is the recorded word for a service. 29 of 46 with examples."
-  },
-  "recent_line": {
-    "text": "Dipilih {picks} kali, terakhir {when}",
-    "back": "Picked {picks} times, last {when}",
-    "why": "Same shape as the other grey lines. 35 of 40 with examples."
-  },
-  "starts_chip": {
-    "text": "Mulai di {section}",
-    "back": "Starts at {section}",
-    "why": "Short pill; the part name arrives already translated. 13 of 22 with the example."
-  },
-  "starts_line": {
-    "text": "Biasanya mulai di {section}, {times} dari {of} kali",
-    "back": "Usually starts at {section}, {times} of {of} times",
-    "why": "Fuller form of the pill with the count of recent uses. 40 of 50 with examples."
-  },
-  "BIBLES_TITLE": {
-    "text": "Tambah Alkitab",
-    "back": "Add Bible",
-    "why": "Tambah is the phone page's add verb; Alkitab is the glossary word. 14 of 14."
-  },
-  "BIBLES_MORE": {
-    "text": "Tambah terjemahan",
-    "back": "Add translation",
-    "why": "Short verb button; terjemahan is the glossary word for a translation. 17 of 20."
-  },
-  "BIBLES_OWN_FILE": {
-    "text": "Terjemahan dari berkas",
-    "back": "Translation from a file",
-    "why": "Same shape as the other heading (Terjemahan ...); berkas is the recorded word for file. 22 of 24."
-  },
-  "BIBLES_CHOOSE_FILE": {
-    "text": "Pilih berkas",
-    "back": "Pick file",
-    "why": "Short verb button, berkas as recorded. 12 of 26."
-  },
-  "BIBLES_FILE_HINT": {
-    "text": "MyBible, USFX, atau zip berisi USFM",
-    "back": "MyBible, USFX, or a zip containing USFM",
-    "why": "Format names kept; only the joining words are Indonesian. 35 of 44."
-  },
-  "BIBLES_FREE": {
-    "text": "Terjemahan gratis",
-    "back": "Free translations",
-    "why": "Heading in the shape 'Terjemahan ...' shared with the file heading. 17 of 34."
-  },
-  "BIBLES_SEARCH": {
-    "text": "Cari bahasa atau terjemahan",
-    "back": "Search language or translation",
-    "why": "Cari is the glossary search word. 27 of 34."
-  },
-  "BIBLES_LOADING": {
-    "text": "Mengambil daftar Alkitab",
-    "back": "Fetching the list of Bibles",
-    "why": "Progressive verb, no technical term. 24 of 34."
-  },
-  "BIBLES_LOAD_FAILED": {
-    "text": "Daftar Alkitab tidak bisa diambil",
-    "back": "The list of Bibles cannot be fetched",
-    "why": "Matches the loading caption's verb ambil; no blame. 33 of 40."
-  },
-  "BIBLES_RETRY": {
-    "text": "Coba lagi",
-    "back": "Try again",
-    "why": "Same phrase as the phone page's Mencoba lagi, in button form. 9 of 14."
-  },
-  "BIBLES_INSTALLED": {
-    "text": "Sudah ada",
-    "back": "Already there",
-    "why": "Short state pill for a translation already on this computer. 9 of 14."
-  },
-  "BIBLES_SCOPE_WHOLE": {
-    "text": "Alkitab lengkap",
-    "back": "Complete Bible",
-    "why": "Lengkap for the whole of both Testaments. 15 of 18."
-  },
-  "BIBLES_SCOPE_PART": {
-    "text": "Sebagian kitab",
-    "back": "Some books",
-    "why": "Kitab is the book of the Bible; sebagian says only some. 14 of 18."
-  },
-  "BIBLES_PICK_HINT": {
-    "text": "Pilih terjemahan untuk melihat hak ciptanya",
-    "back": "Pick a translation to see its copyright",
-    "why": "Invitation that says what appears after picking. 44 of 44."
-  },
-  "BIBLES_COPYRIGHT": {
-    "text": "Hak cipta",
-    "back": "Copyright",
-    "why": "Standard label. 9 of 14."
-  },
-  "BIBLES_DOWNLOAD": {
-    "text": "Unduh",
-    "back": "Download",
-    "why": "Short verb button; 'adds it' left out for space. 5 of 14."
-  },
-  "BIBLES_DOWNLOADING": {
-    "text": "Mengunduh",
-    "back": "Downloading",
-    "why": "Busy state of the button, the progressive of Unduh. 9 of 16."
-  },
-  "BIBLES_USE": {
-    "text": "Pakai terjemahan ini",
-    "back": "Use this translation",
-    "why": "Pakai for make it the one in use. 20 of 22."
-  },
-  "BIBLES_IN_USE": {
-    "text": "Sedang dipakai",
-    "back": "Currently in use",
-    "why": "Disabled state matching Pakai. 14 of 16."
-  },
-  "BIBLES_PRACTICE": {
-    "text": "Tidak bisa tambah Alkitab saat latihan",
-    "back": "Cannot add a Bible during practice",
-    "why": "Latihan for practice mode. The reason (nothing is saved) did not fit in 40. 38 of 40."
-  },
-  "BIBLES_FILE_UNSUPPORTED": {
-    "text": "Berkas ini bukan Alkitab yang bisa dibaca",
-    "back": "This file is not a Bible that can be read",
-    "why": "States the fact without blaming the volunteer. 41 of 44."
-  },
-  "BIBLES_FILE_EMPTY": {
-    "text": "Berkas ini tidak berisi ayat",
-    "back": "This file contains no verses",
-    "why": "Ayat is the glossary's Bible verse. 28 of 34."
-  },
-  "bible_added": {
-    "text": "{name} ditambah, {verses} ayat",
-    "back": "{name} added, {verses} verses",
-    "why": "Toast shape 'X tidak/ditambah' shared with the failure toasts; same Tambah stem. 35 of 44 with examples."
-  },
-  "bibles_file_failed": {
-    "text": "Alkitab tidak bisa ditambah: {why}",
-    "back": "Bible cannot be added: {why}",
-    "why": "Reason follows the colon. Own words 28 of 30."
-  },
-  "bibles_download_failed": {
-    "text": "Alkitab tidak bisa diunduh: {why}",
-    "back": "Bible cannot be downloaded: {why}",
-    "why": "Same shape as the file failure toast. Own words 26 of 32."
-  },
-  "CMD_BIBLE_FILE": {
-    "text": "Tambah Alkitab dari berkas",
-    "back": "Add Bible from a file",
-    "why": "Tambah and berkas as fixed. 26 of 30."
-  },
-  "CMD_BIBLE_FILE_DETAIL": {
-    "text": "MyBible, USFX, atau zip berisi USFM",
-    "back": "MyBible, USFX, or a zip containing USFM",
-    "why": "Same text as the dialog hint so the two never differ. 35 of 44."
-  },
-  "CMD_BIBLES": {
-    "text": "Tambah terjemahan Alkitab",
-    "back": "Add Bible translation",
-    "why": "Matches the button in the Look dialog. 25 of 26."
-  },
-  "CMD_BIBLES_DETAIL": {
-    "text": "Terjemahan gratis dalam banyak bahasa",
-    "back": "Free translations in many languages",
-    "why": "Echoes the dialog's Terjemahan gratis. 36 of 40."
-  },
-  "SCREEN_OWN": {
-    "text": "Layar untuk Artosia sendiri",
-    "back": "Screen for Artosia itself",
-    "why": "Layar is the fixed word for a screen; 'untuk Artosia sendiri' says it is taken, so no choice is offered. 27 of 30."
-  },
-  "slides": {
-    "text": "{count} slide",
-    "back": "{count} slides",
-    "why": "'slide' is the loanword the phone page uses."
-  }
+ "SEARCH_PLACEHOLDER": {
+  "text": "Cari lagu atau ayat",
+  "back": "Look for song or verse",
+  "why": "An invitation, not a command; 'ayat' covers Bible passages"
+ },
+ "SEARCH_SONGS": {
+  "text": "Judul lagu atau sebaris liriknya",
+  "back": "Song title or one line of its words",
+  "why": "Noun phrase as a hint"
+ },
+ "SEARCH_BIBLE": {
+  "text": "Mazmur 23:1 atau kata dalam ayatnya",
+  "back": "Psalms 23:1 or a word in its verse",
+  "why": "Reference written as a church writes it, full book name"
+ },
+ "SEARCH_RESULTS": {
+  "text": "Hasil pencarian",
+  "back": "Search results",
+  "why": "Plain noun phrase"
+ },
+ "SCOPE_LABEL": {
+  "text": "Tempat mencari",
+  "back": "Place to search",
+  "why": "Short noun phrase for a screen reader"
+ },
+ "SCOPE_ALL": {
+  "text": "Semua",
+  "back": "All",
+  "why": "One short word"
+ },
+ "SCOPE_SONGS": {
+  "text": "Lagu",
+  "back": "Songs",
+  "why": "Same noun as everywhere"
+ },
+ "SCOPE_BIBLE": {
+  "text": "Alkitab",
+  "back": "Bible",
+  "why": "Ordinary name of the Bible"
+ },
+ "HINT_OPEN": {
+  "text": "Buka",
+  "back": "Open",
+  "why": "Same word as the Open button"
+ },
+ "HINT_SCOPE": {
+  "text": "Lagu atau Alkitab",
+  "back": "Songs or Bible",
+  "why": "Two nouns joined by atau"
+ },
+ "HINT_SECTIONS": {
+  "text": "Bagian lagu",
+  "back": "Song parts",
+  "why": "'bagian' is the one word for parts of a song"
+ },
+ "SEARCH_SECTIONS": {
+  "text": "Reff, bait 2, atau sebaris liriknya",
+  "back": "Chorus, verse 2, or one line of its words",
+  "why": "Examples use the church's own section names"
+ },
+ "IN_PLAN": {
+  "text": "Sudah ada di rundown",
+  "back": "Already in the rundown",
+  "why": "A state, no verb that invites a click"
+ },
+ "PLAN_CHIP": {
+  "text": "Rundown",
+  "back": "Rundown",
+  "why": "The one word for the plan"
+ },
+ "KIND_LOOK": {
+  "text": "Tampilan",
+  "back": "Look",
+  "why": "Same word as the top bar button"
+ },
+ "KIND_BIBLE": {
+  "text": "Versi Alkitab",
+  "back": "Bible version",
+  "why": "Churches say 'versi' for TB, TL, BIS"
+ },
+ "COUNTDOWN_DETAIL": {
+  "text": "Tampil di proyektor sampai waktunya habis",
+  "back": "Appears on the projector until its time runs out",
+  "why": "Statement without full stop"
+ },
+ "MESSAGE_DETAIL": {
+  "text": "Tampil di layar sebagai pesan untuk jemaat",
+  "back": "Appears on the screen as a message for the congregation",
+  "why": "Says only what happens to the typed words"
+ },
+ "countdown_for": {
+  "text": "Hitung mundur {minutes} menit",
+  "back": "Countdown {minutes} minutes",
+  "why": "No plural forms in Indonesian"
+ },
+ "BIBLE_LOADING": {
+  "text": "Alkitab sedang disiapkan",
+  "back": "The Bible is being prepared",
+  "why": "Progress, not an apology"
+ },
+ "OLD_TESTAMENT": {
+  "text": "Perjanjian Lama",
+  "back": "Old Covenant",
+  "why": "Traditional church name"
+ },
+ "NEW_TESTAMENT": {
+  "text": "Perjanjian Baru",
+  "back": "New Covenant",
+  "why": "Traditional church name"
+ },
+ "pick_chapter": {
+  "text": "Pilih pasal {book}",
+  "back": "Choose chapter {book}",
+  "why": "Book name last, as one says 'pasal Mazmur'"
+ },
+ "SONGS_EMPTY": {
+  "text": "Belum ada lagu di koleksi",
+  "back": "There are no songs in the collection yet",
+  "why": "States only, no instruction"
+ },
+ "nothing_found": {
+  "text": "Tidak ada hasil untuk “{query}”",
+  "back": "No results for “{query}”",
+  "why": "Curly quotes around what was typed"
+ },
+ "new_song_called": {
+  "text": "Lagu baru “{title}”",
+  "back": "New song “{title}”",
+  "why": "Short row title"
+ },
+ "songs": {
+  "text": "{count} lagu",
+  "back": "{count} songs",
+  "why": "No plural form"
+ },
+ "slides": {
+  "text": "{count} slide",
+  "back": "{count} slides",
+  "why": "Everybody says slide"
+ },
+ "chapters": {
+  "text": "{count} pasal",
+  "back": "{count} chapters",
+  "why": "'pasal' is chapter of a Bible book"
+ },
+ "verses": {
+  "text": "{count} ayat",
+  "back": "{count} verses",
+  "why": "'ayat' is a Bible verse"
+ },
+ "CMD_NEW_SONG": {
+  "text": "Lagu baru",
+  "back": "New song",
+  "why": "Same as the editor heading"
+ },
+ "CMD_NEW_SONG_DETAIL": {
+  "text": "Ketik atau tempel liriknya",
+  "back": "Type or paste the words",
+  "why": "Short imperative fragment"
+ },
+ "CMD_PASTE_SONG": {
+  "text": "Tempel lirik jadi lagu",
+  "back": "Paste words into a song",
+  "why": "Verb phrase as an action name"
+ },
+ "CMD_PASTE_SONG_DETAIL": {
+  "text": "Salin lirik dari mana saja, lalu pilih ini",
+  "back": "Copy words from anywhere, then pick this",
+  "why": "Reminder in the order of doing"
+ },
+ "CMD_ANNOUNCEMENTS": {
+  "text": "Pengumuman",
+  "back": "Announcements",
+  "why": "What the church calls the notices shown before the service"
+ },
+ "CMD_ANNOUNCEMENTS_DETAIL": {
+  "text": "Bergantian di layar saat jemaat masih datang",
+  "back": "Take turns on the screen while the congregation is still arriving",
+  "why": "Fragment, no subject needed"
+ },
+ "CMD_HEADING": {
+  "text": "Tambah sesi",
+  "back": "Add a session",
+  "why": "'sesi' is how churches name parts of a service"
+ },
+ "CMD_HEADING_DETAIL": {
+  "text": "Misalnya Pujian dan Firman",
+  "back": "For example Praise and the Word",
+  "why": "Same names as the first dividers of a fresh plan"
+ },
+ "CMD_LOOKS": {
+  "text": "Tampilan",
+  "back": "Look",
+  "why": "Same word as the top bar button"
+ },
+ "CMD_LOOKS_DETAIL": {
+  "text": "Latar belakang, tulisan, dan logo gereja",
+  "back": "Backdrop, lettering, and the church logo",
+  "why": "Three real items, not decoration"
+ },
+ "CMD_SETTINGS": {
+  "text": "Pengaturan",
+  "back": "Settings",
+  "why": "Standard in Indonesian apps"
+ },
+ "CMD_SETTINGS_DETAIL": {
+  "text": "Bahasa, Alkitab, pintasan, dan panduan singkat",
+  "back": "Language, Bible, shortcuts, and the short guide",
+  "why": "Lists what is inside"
+ },
+ "CMD_SCREENS": {
+  "text": "Layar",
+  "back": "Screens",
+  "why": "One word, same as the top bar"
+ },
+ "CMD_SCREENS_DETAIL": {
+  "text": "Pilih layar untuk jemaat dan layar panggung",
+  "back": "Choose the screen for the congregation and the stage screen",
+  "why": "Uses the stage screen name"
+ },
+ "CMD_REMOTE": {
+  "text": "Remote HP",
+  "back": "Phone remote",
+  "why": "How volunteers say it"
+ },
+ "CMD_REMOTE_DETAIL": {
+  "text": "HP di wifi yang sama bisa menggerakkan slide",
+  "back": "A phone on the same wifi can move the slides",
+  "why": "'wifi' is what people say"
+ },
+ "CMD_IMPORT_FOLDER": {
+  "text": "Impor folder lagu",
+  "back": "Import song folder",
+  "why": "'impor' as in Indonesian apps"
+ },
+ "CMD_IMPORT_FOLDER_DETAIL": {
+  "text": "Berkas lagu berformat OpenLyrics",
+  "back": "Song files in OpenLyrics format",
+  "why": "Proper name stays"
+ },
+ "IMPORT_FOLDER_EMPTY": {
+  "text": "Tidak ada berkas lagu di folder itu",
+  "back": "There are no song files in that folder",
+  "why": "Toast without full stop"
+ },
+ "CMD_IMPORT": {
+  "text": "Impor dari EasiSlides",
+  "back": "Import from EasiSlides",
+  "why": "Not 'pindah': the old program is untouched"
+ },
+ "CMD_IMPORT_DETAIL": {
+  "text": "Lagu dan Alkitab EasiSlides di komputer ini",
+  "back": "EasiSlides songs and Bibles on this computer",
+  "why": "Says what will be copied"
+ },
+ "CMD_STREAM": {
+  "text": "Streaming dan rekaman",
+  "back": "Streaming and recording",
+  "why": "Both ideas in the title"
+ },
+ "CMD_STREAM_DETAIL": {
+  "text": "Streaming layar proyektor atau simpan videonya",
+  "back": "Stream the projector picture or save its video",
+  "why": "Plain, no technical words"
+ },
+ "BTN_STREAM": {
+  "text": "Streaming",
+  "back": "Streaming",
+  "why": "Said as is at the desk"
+ },
+ "BTN_LISTEN": {
+  "text": "Dengar",
+  "back": "Listen",
+  "why": "One word, fits the button"
+ },
+ "STREAM_HINT": {
+  "text": "Gambarnya sama dengan proyektor, lengkap dengan suara ruangan.",
+  "back": "The picture is the same as the projector, complete with the room's sound.",
+  "why": "A sentence, so a full stop"
+ },
+ "STREAM_ADDRESS": {
+  "text": "URL streaming",
+  "back": "Streaming URL",
+  "why": "YouTube Studio labels it so"
+ },
+ "STREAM_KEY": {
+  "text": "Kunci streaming",
+  "back": "Streaming key",
+  "why": "YouTube's own label for the secret code"
+ },
+ "STREAM_RECORD": {
+  "text": "Simpan juga rekamannya",
+  "back": "Also save the recording",
+  "why": "Reads as what the switch turns on"
+ },
+ "STREAM_RECORD_HINT": {
+  "text": "Disimpan di komputer ini, bersama data Artosia",
+  "back": "Saved on this computer, with Artosia's data",
+  "why": "Says where the file goes"
+ },
+ "BTN_STREAM_START": {
+  "text": "Mulai",
+  "back": "Start",
+  "why": "Pair with Hentikan"
+ },
+ "BTN_STREAM_STOP": {
+  "text": "Hentikan",
+  "back": "Stop",
+  "why": "Opposite of Mulai"
+ },
+ "STREAM_STARTING": {
+  "text": "Streaming dimulai",
+  "back": "Streaming is starting",
+  "why": "State, not a request"
+ },
+ "STREAM_RECONNECTING": {
+  "text": "Koneksi putus, mencoba tersambung lagi sendiri",
+  "back": "Connection lost, trying to connect again by itself",
+  "why": "Two clauses, nothing to do"
+ },
+ "STREAM_STOPPING": {
+  "text": "Menghentikan streaming",
+  "back": "Stopping the streaming",
+  "why": "State"
+ },
+ "STREAM_MISSING": {
+  "text": "Streaming tidak bisa dipakai karena bagiannya tidak ikut terpasang",
+  "back": "Streaming cannot be used because its part was not installed along",
+  "why": "No 'bug' or 'error'"
+ },
+ "STREAM_NOTHING": {
+  "text": "Isi URL streaming, atau nyalakan rekaman",
+  "back": "Fill in the streaming URL, or turn on recording",
+  "why": "Says what to do"
+ },
+ "stream_failed": {
+  "text": "Streaming gagal dimulai: {problem}",
+  "back": "Streaming failed to start: {problem}",
+  "why": "Reason after a colon"
+ },
+ "stream_live": {
+  "text": {
+   "none_lost": "Berjalan {time}",
+   "some_lost": "Berjalan {time}, {dropped} gambar hilang"
+  },
+  "back": "Running {time} / Running {time}, {dropped} pictures lost",
+  "why": "'gambar' for a lost video frame"
+ },
+ "CMD_LISTEN": {
+  "text": "Dengar ibadah",
+  "back": "Listen to the service",
+  "why": "Row and dialog title"
+ },
+ "CMD_LISTEN_DETAIL": {
+  "text": "Komputer menyarankan lagu atau ayat dari suara",
+  "back": "The computer suggests a song or verse from the sound",
+  "why": "Only proposes"
+ },
+ "LISTEN_SWITCH": {
+  "text": "Mendengar",
+  "back": "Listening",
+  "why": "State word next to a switch"
+ },
+ "LISTEN_HINT": {
+  "text": "Hanya memberi saran. Tidak menayangkan apa pun.",
+  "back": "Only gives suggestions. Shows nothing.",
+  "why": "Reassurance kept hard"
+ },
+ "LISTEN_MICROPHONE": {
+  "text": "Mikrofon",
+  "back": "Microphone",
+  "why": "One word"
+ },
+ "LISTEN_DEFAULT": {
+  "text": "Bawaan komputer",
+  "back": "The computer's own pick",
+  "why": "Natural for a default choice"
+ },
+ "LISTEN_LANGUAGE": {
+  "text": "Bahasa ibadah",
+  "back": "Service language",
+  "why": "Cannot be read as the interface language"
+ },
+ "LISTEN_INDONESIAN": {
+  "text": "Indonesia",
+  "back": "Indonesian",
+  "why": "Fits 14; 'Bahasa Indonesia' would not"
+ },
+ "LISTEN_ENGLISH": {
+  "text": "Inggris",
+  "back": "English",
+  "why": "Pair with Indonesia"
+ },
+ "LISTEN_LEVEL": {
+  "text": "Volume suara",
+  "back": "Sound volume",
+  "why": "Plain loudness meter word"
+ },
+ "LISTEN_HEARD": {
+  "text": "Yang terdengar",
+  "back": "What was heard",
+  "why": "Heading, not a sentence"
+ },
+ "LISTEN_TEMPO": {
+  "text": "Tempo",
+  "back": "Tempo",
+  "why": "Musician's word"
+ },
+ "LISTEN_BPM": {
+  "text": "BPM",
+  "back": "BPM",
+  "why": "Musicians use the international abbreviation"
+ },
+ "LISTEN_BEAT_BLINK": {
+  "text": "Live ikut berdenyut sesuai irama",
+  "back": "Live also pulses to the rhythm",
+  "why": "'berdenyut' instead of blink; light tone"
+ },
+ "LISTEN_BEAT_BLINK_HINT": {
+  "text": "Denyutnya pelan, sekadar hiburan",
+  "back": "The pulse is gentle, just for fun",
+  "why": "Light tone"
+ },
+ "CMD_UPDATE": {
+  "text": "Cek pembaruan",
+  "back": "Check for updates",
+  "why": "'cek' is what people say"
+ },
+ "CMD_UPDATE_DETAIL": {
+  "text": "Dicek juga sendiri setiap program dibuka",
+  "back": "Also checked by itself each time the program opens",
+  "why": "Reassurance"
+ },
+ "update_ready": {
+  "text": "Versi {version} sudah diunduh dan dipakai saat program dibuka lagi",
+  "back": "Version {version} has been downloaded and is used when the program opens again",
+  "why": "Two clauses"
+ },
+ "update_none": {
+  "text": "Versi {version} sudah yang terbaru",
+  "back": "Version {version} is already the newest",
+  "why": "Plain"
+ },
+ "CMD_KEYS": {
+  "text": "Pintasan",
+  "back": "Shortcuts",
+  "why": "Same word as the sheet heading"
+ },
+ "CMD_KEYS_DETAIL": {
+  "text": "Daftar semua tombol yang dikenali program",
+  "back": "List of all keys the program reacts to",
+  "why": "Fragment"
+ },
+ "CMD_START": {
+  "text": "Mulai ibadah",
+  "back": "Start the service",
+  "why": "What the person says"
+ },
+ "CMD_START_DETAIL": {
+  "text": "Item pertama rundown langsung tayang",
+  "back": "The first item of the rundown goes on screen at once",
+  "why": "Fragment"
+ },
+ "CMD_PREVIOUS": {
+  "text": "Mundur satu slide",
+  "back": "Back one slide",
+  "why": "'mundur' pairs with 'maju'"
+ },
+ "CMD_PREVIOUS_DETAIL": {
+  "text": "Proyektor mundur satu slide",
+  "back": "The projector goes back one slide",
+  "why": "Pair of the next detail"
+ },
+ "CMD_NEXT_DETAIL": {
+  "text": "Proyektor maju satu slide",
+  "back": "The projector goes forward one slide",
+  "why": "Pair of the previous detail"
+ },
+ "CMD_BLACK_DETAIL": {
+  "text": "Proyektor jadi hitam, pilih lagi untuk kembali",
+  "back": "The projector goes black, choose again to come back",
+  "why": "Both facts"
+ },
+ "CMD_CLEAR_DETAIL": {
+  "text": "Tulisan hilang, latar tetap tampil",
+  "back": "The words disappear, the backdrop stays",
+  "why": "'latar' short for backdrop"
+ },
+ "CMD_LOGO_DETAIL": {
+  "text": "Logo gereja menggantikan slide di layar",
+  "back": "The church logo replaces the slide on the screen",
+  "why": "Plain"
+ },
+ "CMD_STOP_COUNTDOWN": {
+  "text": "Hentikan hitung mundur",
+  "back": "Stop the countdown",
+  "why": "Action name"
+ },
+ "CMD_STOP_COUNTDOWN_DETAIL": {
+  "text": "Hitung mundur hilang dari proyektor",
+  "back": "The countdown disappears from the projector",
+  "why": "Fragment"
+ },
+ "CMD_HIDE_MESSAGE": {
+  "text": "Sembunyikan pesan",
+  "back": "Hide the message",
+  "why": "Action name"
+ },
+ "CMD_HIDE_MESSAGE_DETAIL": {
+  "text": "Pesan hilang dari semua layar",
+  "back": "The message disappears from every screen",
+  "why": "Fragment"
+ },
+ "CMD_EDIT_SONG": {
+  "text": "Ubah lagu ini",
+  "back": "Change this song",
+  "why": "'ubah' is the native verb"
+ },
+ "CMD_EDIT_SONG_DETAIL": {
+  "text": "Perbaiki lirik lagu yang sedang dilihat",
+  "back": "Correct the words of the song being looked at",
+  "why": "Fragment"
+ },
+ "CMD_UNDO_DETAIL": {
+  "text": "Yang terakhir dihapus muncul kembali",
+  "back": "What was last removed comes back",
+  "why": "Matches the Kembalikan word"
+ },
+ "CMD_LOOP": {
+  "text": "Putar pengumuman",
+  "back": "Run the announcements",
+  "why": "Action name"
+ },
+ "CMD_LOOP_DETAIL": {
+  "text": "Pengumuman tayang bergantian sampai dihentikan",
+  "back": "Announcements show in turn until stopped",
+  "why": "Fragment"
+ },
+ "BTN_LOOK": {
+  "text": "Tampilan",
+  "back": "Look",
+  "why": "Fits 70 points"
+ },
+ "BTN_SETTINGS": {
+  "text": "Pengaturan",
+  "back": "Settings",
+  "why": "Ten characters, fits exactly"
+ },
+ "DESIGN_TEXT": {
+  "text": "Tulisan",
+  "back": "Lettering",
+  "why": "What volunteers say for the words on screen"
+ },
+ "SETTINGS_SONGS": {
+  "text": "Lagu",
+  "back": "Songs",
+  "why": "Same noun"
+ },
+ "SETTINGS_ABOUT": {
+  "text": "Tentang",
+  "back": "About",
+  "why": "As in other programs"
+ },
+ "about_version": {
+  "text": "Artosia {version}",
+  "back": "Artosia {version}",
+  "why": "No word needed"
+ },
+ "BTN_SCREENS": {
+  "text": "Layar",
+  "back": "Screens",
+  "why": "One word"
+ },
+ "BTN_PHONE": {
+  "text": "HP",
+  "back": "Phone",
+  "why": "'HP' is the everyday word"
+ },
+ "HINT_KEYS": {
+  "text": "Pintasan",
+  "back": "Shortcuts",
+  "why": "Sheet of shortcut keys"
+ },
+ "OUTPUT_OFF": {
+  "text": "Proyektor dimatikan",
+  "back": "The projector is switched off",
+  "why": "State"
+ },
+ "OUTPUT_PRACTICE": {
+  "text": "Mode latihan, proyektor tidak menyala",
+  "back": "Practice mode, the projector is not on",
+  "why": "Both facts"
+ },
+ "OUTPUT_STARTING": {
+  "text": "Menyalakan proyektor",
+  "back": "Turning on the projector",
+  "why": "Progress state"
+ },
+ "OUTPUT_MISSING": {
+  "text": "Program proyektor tidak ada di folder program utama",
+  "back": "The projector program is not in the main program's folder",
+  "why": "Names the folder"
+ },
+ "OUTPUT_KEEPS_CLOSING": {
+  "text": "Proyektor berhenti sendiri setiap kali dinyalakan",
+  "back": "The projector stops by itself every time it is turned on",
+  "why": "No technical term"
+ },
+ "output_failed": {
+  "text": "Proyektor gagal dibuka: {problem}",
+  "back": "The projector failed to open: {problem}",
+  "why": "Reason after a colon"
+ },
+ "OUTPUT_NO_SCREEN": {
+  "text": "Belum ada layar kedua",
+  "back": "No second screen yet",
+  "why": "State"
+ },
+ "OUTPUT_HERE": {
+  "text": "Proyektor tampil di layar ini",
+  "back": "The projector shows on this screen",
+  "why": "State"
+ },
+ "OUTPUT_STUCK": {
+  "text": "Proyektor tidak menanggapi",
+  "back": "The projector does not respond",
+  "why": "State"
+ },
+ "REMOTE_ON": {
+  "text": "Remote HP menyala",
+  "back": "Phone remote is on",
+  "why": "State"
+ },
+ "output_on_screen": {
+  "text": "Proyektor di layar {number}",
+  "back": "Projector on screen {number}",
+  "why": "Number is the one shown on screens"
+ },
+ "library_in_memory": {
+  "text": "Koleksi gagal dibuka, perubahan hilang saat program ditutup: {problem}",
+  "back": "The collection failed to open, changes are lost when the program closes: {problem}",
+  "why": "Warning first, reason after the colon"
+ },
+ "PLAN_DEFAULT_NAME": {
+  "text": "Ibadah Minggu",
+  "back": "Sunday service",
+  "why": "A day-name, not a date"
+ },
+ "PLAN_EMPTY": {
+  "text": "Rundown masih kosong",
+  "back": "The rundown is still empty",
+  "why": "State"
+ },
+ "PLAN_ADD": {
+  "text": "Tambah ke rundown",
+  "back": "Add to rundown",
+  "why": "Verb plus object"
+ },
+ "PLAN_NEW": {
+  "text": "Rundown baru",
+  "back": "New rundown",
+  "why": "Menu item"
+ },
+ "PLAN_ITEM_MENU": {
+  "text": "Lainnya",
+  "back": "More",
+  "why": "Hover help of three dots"
+ },
+ "PLAN_MOVE_UP": {
+  "text": "Geser ke atas",
+  "back": "Move up",
+  "why": "Pair with the next"
+ },
+ "PLAN_MOVE_DOWN": {
+  "text": "Geser ke bawah",
+  "back": "Move down",
+  "why": "Pair with the previous"
+ },
+ "PLAN_REMOVE": {
+  "text": "Keluarkan dari rundown",
+  "back": "Take out of the rundown",
+  "why": "Not 'hapus', which is for the library"
+ },
+ "PLAN_MISSING": {
+  "text": "Hilang",
+  "back": "Gone",
+  "why": "One word tag"
+ },
+ "PLAN_HEADING_NEW": {
+  "text": "Sesi baru",
+  "back": "New session",
+  "why": "Same word as the divider concept"
+ },
+ "PLAN_HEADING_WORSHIP": {
+  "text": "Pujian",
+  "back": "Praise",
+  "why": "Singing time of a service"
+ },
+ "PLAN_HEADING_WORD": {
+  "text": "Firman",
+  "back": "The Word",
+  "why": "Reading and preaching time"
+ },
+ "PLAN_SWITCH_LABEL": {
+  "text": "Semua rundown",
+  "back": "All rundowns",
+  "why": "Plural as asked"
+ },
+ "PLAN_DUPLICATE": {
+  "text": "Duplikat rundown",
+  "back": "Duplicate rundown",
+  "why": "'Duplikat' is common in apps"
+ },
+ "PLAN_RENAME": {
+  "text": "Ganti nama rundown",
+  "back": "Rename the rundown",
+  "why": "Menu item and dialog title"
+ },
+ "PLAN_DELETE": {
+  "text": "Hapus rundown",
+  "back": "Delete rundown",
+  "why": "Reads as a removal"
+ },
+ "PLAN_NEW_DETAIL": {
+  "text": "Untuk ibadah lain dalam seminggu",
+  "back": "For another service in the week",
+  "why": "Fragment"
+ },
+ "PLAN_NEW_NAME": {
+  "text": "Rundown baru",
+  "back": "New rundown",
+  "why": "Working name"
+ },
+ "PLAN_NAME_LABEL": {
+  "text": "Nama rundown",
+  "back": "Rundown name",
+  "why": "Noun phrase"
+ },
+ "PLAN_DATE_LABEL": {
+  "text": "Tanggal",
+  "back": "Date",
+  "why": "One word"
+ },
+ "PLAN_DATE_HINT": {
+  "text": "Tahun-bulan-tanggal, boleh kosong",
+  "back": "Year-month-day, may stay empty",
+  "why": "Hyphens join the date parts, they are not punctuation between clauses"
+ },
+ "LOOK_FOR_USUAL": {
+  "text": "Tampilan biasa",
+  "back": "Usual look",
+  "why": "Pair with the plan button"
+ },
+ "LOOK_FOR_PLAN": {
+  "text": "Tampilan khusus rundown ini",
+  "back": "Look special to this rundown",
+  "why": "Tooltip"
+ },
+ "PLAN_OWN_LOOK": {
+  "text": "Punya tampilan sendiri",
+  "back": "Has its own look",
+  "why": "Statement"
+ },
+ "KIND_PLAN": {
+  "text": "Rundown",
+  "back": "Rundown",
+  "why": "Same word as the plan"
+ },
+ "plan_items": {
+  "text": "{count} item",
+  "back": "{count} items",
+  "why": "Number first"
+ },
+ "plan_copy_name": {
+  "text": "{name} (salinan)",
+  "back": "{name} (copy)",
+  "why": "Original name kept intact"
+ },
+ "look_own_dropped": {
+  "text": "{name} kembali memakai tampilan biasa",
+  "back": "{name} goes back to using the usual look",
+  "why": "Name first"
+ },
+ "plan_deleted": {
+  "text": "Rundown {name} dihapus",
+  "back": "Rundown {name} deleted",
+  "why": "Past tense"
+ },
+ "added_to_plan": {
+  "text": "“{title}” ditambahkan ke rundown",
+  "back": "“{title}” added to the rundown",
+  "why": "Title in quotes"
+ },
+ "removed_from_plan": {
+  "text": "“{title}” dikeluarkan dari rundown",
+  "back": "“{title}” taken out of the rundown",
+  "why": "Past tense"
+ },
+ "START_TITLE": {
+  "text": "Mau menayangkan apa?",
+  "back": "What do you want to show?",
+  "why": "A helper's question"
+ },
+ "START_HINT": {
+  "text": "atau ketik apa saja",
+  "back": "or type anything",
+  "why": "Completes the line after the key caps"
+ },
+ "CMD_TOUR": {
+  "text": "Panduan singkat",
+  "back": "Short guide",
+  "why": "Name of the tour everywhere"
+ },
+ "CMD_TOUR_DETAIL": {
+  "text": "Lima langkah singkat di jendela ini",
+  "back": "Five short steps in this window",
+  "why": "Fragment"
+ },
+ "TOUR_SKIP": {
+  "text": "Lewati",
+  "back": "Skip",
+  "why": "One word"
+ },
+ "TOUR_DONE": {
+  "text": "Selesai",
+  "back": "Done",
+  "why": "One word"
+ },
+ "TOUR_PLAN": {
+  "text": "Ini rundown: semua yang akan tayang, urut dari atas",
+  "back": "This is the rundown: everything that will be shown, in order from the top",
+  "why": "Names the thing first"
+ },
+ "TOUR_PLAN_MORE": {
+  "text": "Seret baris untuk memindahkannya",
+  "back": "Drag a row to move it",
+  "why": "Short sentence"
+ },
+ "TOUR_PREVIEW": {
+  "text": "Preview berisi slide yang akan tayang berikutnya",
+  "back": "Preview holds the slide that will be shown next",
+  "why": "Same name as the pane"
+ },
+ "TOUR_PREVIEW_MORE": {
+  "text": "Jemaat tidak pernah melihat isi Preview",
+  "back": "The congregation never sees what is in Preview",
+  "why": "Reassurance"
+ },
+ "TOUR_SHOW": {
+  "text": "Tombol Tayangkan memindahkan isi Preview ke Live",
+  "back": "The Tayangkan button moves what is in Preview to Live",
+  "why": "Same names as pane titles and tile"
+ },
+ "TOUR_SHOW_MORE": {
+  "text": "Jemaat baru melihatnya kalau proyektor menyala",
+  "back": "The congregation only sees it when the projector is on",
+  "why": "Warning"
+ },
+ "TOUR_LIVE": {
+  "text": "Live berisi apa yang dilihat jemaat sekarang",
+  "back": "Live holds what the congregation sees now",
+  "why": "Plain"
+ },
+ "TOUR_LIVE_MORE": {
+  "text": "Tombol Live menyalakan dan mematikan proyektor",
+  "back": "The Live tile switches the projector on and off",
+  "why": "Tile name matches its label"
+ },
+ "TOUR_SEARCH": {
+  "text": "Satu kotak untuk mencari semua lagu dan ayat",
+  "back": "One box to find every song and verse",
+  "why": "Plain"
+ },
+ "TOUR_SEARCH_MORE": {
+  "text": "Buka dulu, lalu klik Tambah ke rundown",
+  "back": "Open it first, then click Add to rundown",
+  "why": "Matches the button label"
+ },
+ "START_SONGS": {
+  "text": "Lagu",
+  "back": "Songs",
+  "why": "Same as the songs option"
+ },
+ "START_SONGS_DETAIL": {
+  "text": "Semua lagu di koleksi",
+  "back": "All songs in the collection",
+  "why": "Tile detail"
+ },
+ "START_BIBLE": {
+  "text": "Alkitab",
+  "back": "Bible",
+  "why": "Same as the Bible option"
+ },
+ "START_BIBLE_DETAIL": {
+  "text": "Pilih kitab, lalu ayat",
+  "back": "Pick a book, then a verse",
+  "why": "Tile detail"
+ },
+ "START_NEW_DETAIL": {
+  "text": "Ketik atau tempel liriknya",
+  "back": "Type or paste the words",
+  "why": "Same as the new-song detail"
+ },
+ "START_NO_SONGS": {
+  "text": "Koleksi lagu masih kosong",
+  "back": "The song collection is still empty",
+  "why": "State"
+ },
+ "START_ANNOUNCEMENTS_DETAIL": {
+  "text": "Tayang sebelum ibadah mulai",
+  "back": "Shown before the service begins",
+  "why": "Tile detail"
+ },
+ "BTN_BRING_OVER": {
+  "text": "Salin semuanya",
+  "back": "Copy everything",
+  "why": "Copy, not move"
+ },
+ "BTN_ADD_TO_PLAN": {
+  "text": "Tambah ke rundown",
+  "back": "Add to rundown",
+  "why": "Same as plan add"
+ },
+ "BTN_EDIT": {
+  "text": "Ubah",
+  "back": "Change",
+  "why": "One word"
+ },
+ "BTN_NEXT_VERSE": {
+  "text": "Tambah ayat berikutnya",
+  "back": "Add the next verse",
+  "why": "Tooltip"
+ },
+ "DECK_EMPTY": {
+  "text": "Tidak ada slide",
+  "back": "There are no slides",
+  "why": "State"
+ },
+ "BTN_LOOP_START": {
+  "text": "Putar pengumuman",
+  "back": "Run the announcements",
+  "why": "Pair with stop"
+ },
+ "BTN_LOOP_STOP": {
+  "text": "Hentikan putaran",
+  "back": "Stop the run",
+  "why": "Opposite of start"
+ },
+ "PANE_PREVIEW": {
+  "text": "Preview",
+  "back": "Preview",
+  "why": "Said all day at the desk"
+ },
+ "LIVE": {
+  "text": "Live",
+  "back": "Live",
+  "why": "Said at the desk"
+ },
+ "BTN_NEXT": {
+  "text": "Maju",
+  "back": "Forward",
+  "why": "'maju satu slide' is how it is said"
+ },
+ "BTN_CLEAR_TEXT": {
+  "text": "Sembunyikan tulisan",
+  "back": "Hide the lettering",
+  "why": "Action name"
+ },
+ "BTN_BLACK": {
+  "text": "Hitam",
+  "back": "Black",
+  "why": "State"
+ },
+ "BTN_LOGO": {
+  "text": "Logo",
+  "back": "Logo",
+  "why": "State, as said"
+ },
+ "LOGO_MISSING": {
+  "text": "Belum ada logo, pilih di Tampilan",
+  "back": "No logo yet, choose it in Look",
+  "why": "Names the dialog"
+ },
+ "STATE_BLACK": {
+  "text": "Proyektor sedang hitam",
+  "back": "The projector is black",
+  "why": "State"
+ },
+ "STATE_LOGO": {
+  "text": "Logo sedang tampil",
+  "back": "The logo is showing",
+  "why": "State"
+ },
+ "STATE_MESSAGE": {
+  "text": "Pesan sedang tampil",
+  "back": "A message is showing",
+  "why": "State"
+ },
+ "STATE_STAGE_MESSAGE": {
+  "text": "Pesan panggung tampil",
+  "back": "A stage message is showing",
+  "why": "Pair of the room pill"
+ },
+ "STAGE_MESSAGE_DETAIL": {
+  "text": "Hanya tampil di layar panggung",
+  "back": "Appears only on the stage screen",
+  "why": "Fragment"
+ },
+ "HEARD_NOTHING": {
+  "text": "Belum ada lagu atau ayat yang dikenali",
+  "back": "No song or verse recognised yet",
+  "why": "State"
+ },
+ "SUGGEST_HEARD": {
+  "text": "Baru saja terdengar",
+  "back": "Just heard",
+  "why": "Short reason"
+ },
+ "SUGGEST_HERE": {
+  "text": "Sedang dinyanyikan di bagian ini",
+  "back": "Being sung at this part",
+  "why": "Short reason"
+ },
+ "SUGGEST_FOLLOWS": {
+  "text": "Biasanya menyusul lagu yang tayang",
+  "back": "Usually follows the song on screen",
+  "why": "Short reason"
+ },
+ "SUGGEST_LOST": {
+  "text": "Jemaat menyanyi lain dari yang tayang",
+  "back": "The congregation sings something other than what is shown",
+  "why": "Calm warning"
+ },
+ "SUGGEST_SEARCH": {
+  "text": "Cari",
+  "back": "Search",
+  "why": "One word"
+ },
+ "state_countdown": {
+  "text": "Hitung mundur {clock}",
+  "back": "Countdown {clock}",
+  "why": "State"
+ },
+ "LIVE_NOTHING": {
+  "text": "Belum ada yang tayang",
+  "back": "Nothing is on yet",
+  "why": "State"
+ },
+ "BTN_SHOW": {
+  "text": "Tayangkan",
+  "back": "Put on screen",
+  "why": "What volunteers say"
+ },
+ "BTN_PREV": {
+  "text": "Mundur",
+  "back": "Back",
+  "why": "Pair of Maju"
+ },
+ "BTN_NO_TEXT": {
+  "text": "Polos",
+  "back": "Plain",
+  "why": "State fitting 8 characters; the slide is plain, only the backdrop stays"
+ },
+ "STATE_OFF": {
+  "text": "Proyektor mati",
+  "back": "The projector is off",
+  "why": "State"
+ },
+ "TIP_SHOW": {
+  "text": "Tayangkan isi Preview ke Live",
+  "back": "Put what is in Preview on Live",
+  "why": "Tooltip"
+ },
+ "TIP_PREV": {
+  "text": "Mundur satu slide",
+  "back": "Back one slide",
+  "why": "Tooltip"
+ },
+ "TIP_NEXT": {
+  "text": "Maju satu slide",
+  "back": "Forward one slide",
+  "why": "Tooltip"
+ },
+ "TIP_LIVE": {
+  "text": "Nyalakan atau matikan proyektor",
+  "back": "Turn the projector on or off",
+  "why": "Tooltip"
+ },
+ "BTN_PREVIOUS_ITEM": {
+  "text": "Item sebelumnya",
+  "back": "Previous item",
+  "why": "Row label"
+ },
+ "BTN_NEXT_ITEM": {
+  "text": "Item berikutnya",
+  "back": "Next item",
+  "why": "Pair"
+ },
+ "HELD_CTRL": {
+  "text": "Ctrl ditahan",
+  "back": "Ctrl held",
+  "why": "State; key name stays"
+ },
+ "HELD_SHIFT": {
+  "text": "Shift ditahan",
+  "back": "Shift held",
+  "why": "State; key name stays"
+ },
+ "HINT_RING": {
+  "text": "gerakkan bingkai putih",
+  "back": "move the white frame",
+  "why": "Short phrase after key caps"
+ },
+ "HINT_PICK": {
+  "text": "pilih slide di Live",
+  "back": "choose a slide in Live",
+  "why": "Short phrase after key caps"
+ },
+ "HINT_LET_GO": {
+  "text": "lepas untuk menayangkan",
+  "back": "let go to put it on screen",
+  "why": "Short phrase"
+ },
+ "HINT_CANCEL": {
+  "text": "Batal",
+  "back": "Cancel",
+  "why": "One word"
+ },
+ "PLAN_ADD_SONG": {
+  "text": "Lagu",
+  "back": "Song",
+  "why": "One word"
+ },
+ "PLAN_ADD_PASSAGE": {
+  "text": "Ayat Alkitab",
+  "back": "Bible verses",
+  "why": "'ayat' is the passage word"
+ },
+ "PLAN_ADD_HEADING": {
+  "text": "Sesi",
+  "back": "Session",
+  "why": "Same as divider word"
+ },
+ "PLAN_DRAG": {
+  "text": "Seret untuk memindahkan",
+  "back": "Drag to move",
+  "why": "Tooltip"
+ },
+ "ADDING_TO_PLAN": {
+  "text": "Menambah ke rundown",
+  "back": "Adding to the rundown",
+  "why": "State"
+ },
+ "BTN_DONE": {
+  "text": "Selesai",
+  "back": "Done",
+  "why": "One word"
+ },
+ "BTN_EARLIER": {
+  "text": "Riwayat",
+  "back": "History",
+  "why": "What already ran"
+ },
+ "EARLIER_HINT": {
+  "text": "Sudah pernah tayang. Klik untuk ke Preview.",
+  "back": "Has been on screen. Click to go to Preview.",
+  "why": "Two short statements"
+ },
+ "LETTER_KEYS": {
+  "text": "Tombol huruf pindah bagian lagu",
+  "back": "Letter keys change song part",
+  "why": "Reads next to a switch"
+ },
+ "LETTER_KEYS_HINT": {
+  "text": "C ke reff, V ke bait berikutnya. Kalau mati, huruf membuka pencarian.",
+  "back": "C to chorus, V to next verse. When off, letters open the search.",
+  "why": "Letters are the fixed keys"
+ },
+ "COUNTDOWN": {
+  "text": "Hitung mundur",
+  "back": "Countdown",
+  "why": "Native and said"
+ },
+ "COUNTDOWN_LABEL": {
+  "text": "Ibadah dimulai dalam",
+  "back": "The service starts in",
+  "why": "Phrase finishing with the clock beneath"
+ },
+ "EDITOR_NEW": {
+  "text": "Lagu baru",
+  "back": "New song",
+  "why": "Pair"
+ },
+ "EDITOR_EDIT": {
+  "text": "Ubah lagu",
+  "back": "Change song",
+  "why": "Pair"
+ },
+ "EDITOR_NO_SLIDES": {
+  "text": "Slide muncul di sini saat lirik diketik",
+  "back": "Slides appear here as the words are typed",
+  "why": "Plain statement"
+ },
+ "FIELD_TITLE": {
+  "text": "Judul",
+  "back": "Title",
+  "why": "One word"
+ },
+ "FIELD_AUTHOR": {
+  "text": "Pencipta",
+  "back": "Composer",
+  "why": "Writer of words and music"
+ },
+ "FIELD_KEY": {
+  "text": "Nada",
+  "back": "Pitch",
+  "why": "Musicians' word for the key; 'kunci' collides with a keyboard key"
+ },
+ "FIELD_COPYRIGHT": {
+  "text": "Hak cipta",
+  "back": "Copyright",
+  "why": "Two words"
+ },
+ "FIELD_CCLI": {
+  "text": "Nomor lagu CCLI",
+  "back": "CCLI song number",
+  "why": "CCLI stays"
+ },
+ "FIELD_LYRICS": {
+  "text": "Lirik",
+  "back": "Lyrics",
+  "why": "One word"
+ },
+ "FIELD_ORDER": {
+  "text": "Atau ketik urutan, contoh: V1 C*2 V2 C B",
+  "back": "Or type the order, for example: V1 C*2 V2 C B",
+  "why": "Code kept exactly"
+ },
+ "ORDER": {
+  "text": "Urutan",
+  "back": "Order",
+  "why": "One word"
+ },
+ "ORDER_AS_WRITTEN": {
+  "text": "Sesuai tulisan",
+  "back": "As written",
+  "why": "Small button"
+ },
+ "ORDER_EMPTY": {
+  "text": "Urutan muncul setelah lirik dibagi jadi beberapa bagian",
+  "back": "The order appears once the words are split into parts",
+  "why": "Statement"
+ },
+ "ORDER_CHORUS_EACH": {
+  "text": "Reff setelah tiap bait",
+  "back": "Chorus after every verse",
+  "why": "Names the pattern"
+ },
+ "BTN_TIDY": {
+  "text": "Rapikan",
+  "back": "Tidy up",
+  "why": "One word"
+ },
+ "TIDY_HELP": {
+  "text": "Baris nama bagian jadi penanda, baris chord saja dihapus",
+  "back": "Lines with a part name become markers, lines with only chords are deleted",
+  "why": "'chord' is said by bands"
+ },
+ "SUGGEST_LABEL": {
+  "text": "Lagu dengan judul sama",
+  "back": "Songs with the same title",
+  "why": "Screen reader name"
+ },
+ "SUGGEST_LIBRARY": {
+  "text": "Sudah ada di koleksi",
+  "back": "Already in the collection",
+  "why": "No full stop"
+ },
+ "SUGGEST_FETCHING": {
+  "text": "Mengambil lirik dari internet",
+  "back": "Fetching words from the internet",
+  "why": "Progress state"
+ },
+ "LICENCE_NOTE": {
+  "text": "Menayangkan lirik di gereja perlu lisensi, biasanya CCLI.",
+  "back": "Showing words in church needs a licence, usually CCLI.",
+  "why": "One sentence"
+ },
+ "suggest_web": {
+  "text": {
+   "without_artist": "dari {source}",
+   "with_artist": "{artist}, dari {source}"
+  },
+  "back": "from {source} / {artist}, from {source}",
+  "why": "Fragment under the title"
+ },
+ "words_from": {
+  "text": "Lirik dari {source}. Cocokkan dulu dengan salinan gereja.",
+  "back": "Words from {source}. Compare first with the church's own copy.",
+  "why": "Checking advice kept"
+ },
+ "FIELD_SECOND": {
+  "text": "Lirik bahasa kedua",
+  "back": "Second language words",
+  "why": "Phrase"
+ },
+ "LYRICS_PLACEHOLDER": {
+  "text": "[Bait 1]\nBaris pertama lagu ini\n\n[Reff]\nBaris reff lagu ini",
+  "back": "[Verse 1]\nFirst line of this song\n\n[Chorus]\nChorus line of this song",
+  "why": "Marker syntax guessed as square brackets, see report"
+ },
+ "SECOND_PLACEHOLDER": {
+  "text": "Tulis dengan bagian dan urutan yang sama",
+  "back": "Write with the same parts and order",
+  "why": "One sentence"
+ },
+ "MARK_VERSE": {
+  "text": "Bait",
+  "back": "Verse",
+  "why": "Never 'ayat'"
+ },
+ "MARK_CHORUS": {
+  "text": "Reff",
+  "back": "Chorus",
+  "why": "What church bands say"
+ },
+ "MARK_BRIDGE": {
+  "text": "Bridge",
+  "back": "Bridge",
+  "why": "Musicians' word"
+ },
+ "MARK_PRECHORUS": {
+  "text": "Pra-reff",
+  "back": "Pre-chorus",
+  "why": "Pairs with Reff"
+ },
+ "MARK_ENDING": {
+  "text": "Ending",
+  "back": "Ending",
+  "why": "Musicians' word"
+ },
+ "BTN_ADD_SECOND": {
+  "text": "Tambah bahasa kedua",
+  "back": "Add a second language",
+  "why": "Phrase"
+ },
+ "BTN_SAVE": {
+  "text": "Simpan",
+  "back": "Save",
+  "why": "Standard"
+ },
+ "BTN_CANCEL": {
+  "text": "Batal",
+  "back": "Cancel",
+  "why": "Standard"
+ },
+ "BTN_DELETE": {
+  "text": "Hapus",
+  "back": "Delete",
+  "why": "For good, not for plan items"
+ },
+ "BTN_DUPLICATE": {
+  "text": "Duplikat",
+  "back": "Duplicate",
+  "why": "Same word as for the rundown"
+ },
+ "BTN_CLOSE": {
+  "text": "Tutup",
+  "back": "Close",
+  "why": "Standard"
+ },
+ "BTN_UNDO": {
+  "text": "Kembalikan",
+  "back": "Bring back",
+  "why": "Says what happens"
+ },
+ "BTN_OPEN": {
+  "text": "Buka",
+  "back": "Open",
+  "why": "Standard"
+ },
+ "BTN_CHOOSE": {
+  "text": "Pilih",
+  "back": "Choose",
+  "why": "Standard"
+ },
+ "BTN_SHOW_NOW": {
+  "text": "Langsung",
+  "back": "Straight away",
+  "why": "Short; skips Preview"
+ },
+ "SONG_SAVED": {
+  "text": "Lagu disimpan",
+  "back": "Song saved",
+  "why": "No full stop"
+ },
+ "EDITOR_CLOSED": {
+  "text": "Editor ditutup, perubahan tidak disimpan",
+  "back": "Editor closed, changes not saved",
+  "why": "Undo is beside it"
+ },
+ "SONG_UNTITLED": {
+  "text": "Lagu tanpa judul",
+  "back": "Song without a title",
+  "why": "Stand-in name"
+ },
+ "PASTE_EMPTY": {
+  "text": "Tidak ada teks yang disalin",
+  "back": "There is no copied text",
+  "why": "No full stop"
+ },
+ "could_not_save": {
+  "text": "Lagu gagal disimpan: {problem}",
+  "back": "The song failed to save: {problem}",
+  "why": "Reason after a colon"
+ },
+ "song_deleted": {
+  "text": "Lagu “{title}” dihapus",
+  "back": "Song “{title}” deleted",
+  "why": "Past tense"
+ },
+ "LOOK_SAMPLE": {
+  "text": "Pagi yang indah\nkami bersyukur",
+  "back": "A beautiful morning\nwe give thanks",
+  "why": "Made up, not a real song"
+ },
+ "LOOK_CUSTOM": {
+  "text": "Milik sendiri",
+  "back": "Our own",
+  "why": "Short name under a thumbnail"
+ },
+ "LOOK_BACKGROUND": {
+  "text": "Latar belakang",
+  "back": "Backdrop",
+  "why": "The one word for it"
+ },
+ "LOOK_CHOOSE_FILE": {
+  "text": "Pilih dari komputer",
+  "back": "Choose from the computer",
+  "why": "Fits 20"
+ },
+ "LOOK_NO_FILE": {
+  "text": "Belum ada berkas",
+  "back": "No file yet",
+  "why": "State"
+ },
+ "LOOK_LINES": {
+  "text": "Baris per slide",
+  "back": "Lines per slide",
+  "why": "Noun phrase"
+ },
+ "LOOK_LINES_ALL": {
+  "text": "Semua",
+  "back": "All",
+  "why": "One word"
+ },
+ "LOOK_SIZE": {
+  "text": "Ukuran huruf",
+  "back": "Letter size",
+  "why": "Noun phrase"
+ },
+ "LOOK_SIZE_SMALL": {
+  "text": "Kecil",
+  "back": "Small",
+  "why": "One word"
+ },
+ "LOOK_SIZE_NORMAL": {
+  "text": "Sedang",
+  "back": "Medium",
+  "why": "One word"
+ },
+ "LOOK_SIZE_LARGE": {
+  "text": "Besar",
+  "back": "Large",
+  "why": "One word"
+ },
+ "LOOK_PLACE": {
+  "text": "Posisi tulisan",
+  "back": "Position of the lettering",
+  "why": "Noun phrase"
+ },
+ "LOOK_PLACE_TOP": {
+  "text": "Atas",
+  "back": "Top",
+  "why": "One word"
+ },
+ "LOOK_PLACE_MIDDLE": {
+  "text": "Tengah",
+  "back": "Middle",
+  "why": "One word"
+ },
+ "LOOK_PLACE_BOTTOM": {
+  "text": "Bawah",
+  "back": "Bottom",
+  "why": "One word"
+ },
+ "LOOK_BIBLE": {
+  "text": "Versi",
+  "back": "Version",
+  "why": "Under the Bible heading"
+ },
+ "LOOK_SECOND_BIBLE": {
+  "text": "Versi kedua",
+  "back": "Second version",
+  "why": "Pair with Versi"
+ },
+ "LOOK_NONE": {
+  "text": "Tanpa",
+  "back": "Without",
+  "why": "One word"
+ },
+ "LOOK_LOGO": {
+  "text": "Logo gereja",
+  "back": "Church logo",
+  "why": "Same word as the tile"
+ },
+ "LOOK_CHOOSE_LOGO": {
+  "text": "Pilih gambar",
+  "back": "Choose a picture",
+  "why": "Also the file chooser title"
+ },
+ "LOOK_LICENCE": {
+  "text": "Nomor lisensi CCLI",
+  "back": "CCLI licence number",
+  "why": "CCLI stays"
+ },
+ "LOOK_LICENCE_HINT": {
+  "text": "Nomor",
+  "back": "Number",
+  "why": "One word"
+ },
+ "BACKGROUND_UNKNOWN": {
+  "text": "Latar harus gambar atau video yang didukung",
+  "back": "The backdrop must be a supported picture or video",
+  "why": "Says what is allowed"
+ },
+ "bible_failed": {
+  "text": "Alkitab {code} gagal dibuka: {problem}",
+  "back": "Bible {code} failed to open: {problem}",
+  "why": "Reason after a colon"
+ },
+ "SCREENS_OFF": {
+  "text": "Di mode latihan proyektor selalu mati",
+  "back": "In practice mode the projector is always off",
+  "why": "One sentence"
+ },
+ "SCREENS_ONE": {
+  "text": "Cukup sambungkan proyektor, langsung bekerja sendiri",
+  "back": "Just connect the projector, it works by itself at once",
+  "why": "One sentence"
+ },
+ "SCREENS_SWITCH": {
+  "text": "Proyektor",
+  "back": "Projector",
+  "why": "Same noun"
+ },
+ "WALL": {
+  "text": "Gambar di dinding",
+  "back": "Picture on the wall",
+  "why": "About the wall, not the program"
+ },
+ "WALL_HINT": {
+  "text": "Pilih satu sudut, lalu geser sampai tepi gambar di dinding lurus",
+  "back": "Choose one corner, then shift it until the edges of the picture on the wall are straight",
+  "why": "Instruction"
+ },
+ "WALL_RESET": {
+  "text": "Setel ulang",
+  "back": "Reset",
+  "why": "Not Kembalikan, which is undo"
+ },
+ "WALL_BRIGHTNESS": {
+  "text": "Kecerahan",
+  "back": "Brightness",
+  "why": "One word"
+ },
+ "WALL_CONTRAST": {
+  "text": "Kontras",
+  "back": "Contrast",
+  "why": "One word"
+ },
+ "WALL_COLOUR": {
+  "text": "Warna",
+  "back": "Colour",
+  "why": "One word"
+ },
+ "CORNER_TOP_LEFT": {
+  "text": "Sudut kiri atas",
+  "back": "Top left corner",
+  "why": "Noun phrase"
+ },
+ "CORNER_TOP_RIGHT": {
+  "text": "Sudut kanan atas",
+  "back": "Top right corner",
+  "why": "Noun phrase"
+ },
+ "CORNER_BOTTOM_RIGHT": {
+  "text": "Sudut kanan bawah",
+  "back": "Bottom right corner",
+  "why": "Noun phrase"
+ },
+ "CORNER_BOTTOM_LEFT": {
+  "text": "Sudut kiri bawah",
+  "back": "Bottom left corner",
+  "why": "Noun phrase"
+ },
+ "NUDGE_UP": {
+  "text": "Naik",
+  "back": "Up",
+  "why": "One word"
+ },
+ "NUDGE_DOWN": {
+  "text": "Turun",
+  "back": "Down",
+  "why": "One word"
+ },
+ "NUDGE_LEFT": {
+  "text": "Ke kiri",
+  "back": "To the left",
+  "why": "Short"
+ },
+ "NUDGE_RIGHT": {
+  "text": "Ke kanan",
+  "back": "To the right",
+  "why": "Short"
+ },
+ "LESS": {
+  "text": "Kurangi",
+  "back": "Reduce",
+  "why": "One word"
+ },
+ "MORE": {
+  "text": "Tambah",
+  "back": "Increase",
+  "why": "Not the 'Lainnya' of the plan row"
+ },
+ "LOOK_CAMERA": {
+  "text": "Kamera",
+  "back": "Camera",
+  "why": "One word"
+ },
+ "SCREENS_HERE": {
+  "text": "Tampilkan di jendela di layar ini",
+  "back": "Show in a window on this screen",
+  "why": "Phrase next to a switch"
+ },
+ "SCREENS_HERE_HINT": {
+  "text": "Tutup dengan Esc selagi kursor ada di jendela",
+  "back": "Close with Esc while the cursor is over the window",
+  "why": "Key name stays"
+ },
+ "LOOK_WINDOW": {
+  "text": "Warna jendela",
+  "back": "Window colour",
+  "why": "About the program window"
+ },
+ "LOOK_WINDOW_AUTO": {
+  "text": "Ikuti komputer",
+  "back": "Follow the computer",
+  "why": "Phrase"
+ },
+ "LOOK_WINDOW_LIGHT": {
+  "text": "Terang",
+  "back": "Bright",
+  "why": "One word"
+ },
+ "LOOK_WINDOW_DARK": {
+  "text": "Gelap",
+  "back": "Dark",
+  "why": "One word"
+ },
+ "LOOK_TEXT_COLOUR": {
+  "text": "Warna tulisan",
+  "back": "Colour of the lettering",
+  "why": "Noun phrase"
+ },
+ "LOOK_COLOUR_WHITE": {
+  "text": "Putih",
+  "back": "White",
+  "why": "Colour name"
+ },
+ "LOOK_COLOUR_WARM": {
+  "text": "Putih gading",
+  "back": "Ivory white",
+  "why": "Slightly yellowish white"
+ },
+ "LOOK_COLOUR_YELLOW": {
+  "text": "Kuning",
+  "back": "Yellow",
+  "why": "Colour name"
+ },
+ "LOOK_COLOUR_BLACK": {
+  "text": "Hitam",
+  "back": "Black",
+  "why": "Colour name"
+ },
+ "LOOK_COLOUR_HEX": {
+  "text": "Kode warna",
+  "back": "Colour code",
+  "why": "Screen reader only"
+ },
+ "LOOK_COLOUR_HEX_HINT": {
+  "text": "Kode hex, mis. ffcc00",
+  "back": "Hex code, e.g. ffcc00",
+  "why": "'kode hex' is what people say"
+ },
+ "LOOK_FONT": {
+  "text": "Jenis huruf",
+  "back": "Type of letters",
+  "why": "What volunteers say"
+ },
+ "LOOK_FONT_DEFAULT": {
+  "text": "Bawaan program",
+  "back": "The program's own",
+  "why": "Phrase"
+ },
+ "LOOK_FONT_SEARCH": {
+  "text": "Cari jenis huruf",
+  "back": "Look for a type of letters",
+  "why": "Invitation"
+ },
+ "LOOK_FONT_NONE": {
+  "text": "Tidak ada huruf yang cocok",
+  "back": "No letters that match",
+  "why": "State"
+ },
+ "LOOK_OUTLINE": {
+  "text": "Garis tepi",
+  "back": "Edge line",
+  "why": "The line round the letters"
+ },
+ "LOOK_OUTLINE_OFF": {
+  "text": "Mati",
+  "back": "Off",
+  "why": "One word"
+ },
+ "LOOK_OUTLINE_THIN": {
+  "text": "Tipis",
+  "back": "Thin",
+  "why": "One word"
+ },
+ "LOOK_OUTLINE_MEDIUM": {
+  "text": "Sedang",
+  "back": "Medium",
+  "why": "One word"
+ },
+ "LOOK_OUTLINE_THICK": {
+  "text": "Tebal",
+  "back": "Thick",
+  "why": "One word"
+ },
+ "LOOK_OUTLINE_COLOUR": {
+  "text": "Warna garis tepi",
+  "back": "Colour of the edge line",
+  "why": "Noun phrase"
+ },
+ "SCREEN_PROJECTOR": {
+  "text": "Proyektor",
+  "back": "Projector",
+  "why": "Same noun"
+ },
+ "SCREEN_STAGE": {
+  "text": "Panggung",
+  "back": "Stage",
+  "why": "Same noun as the stage screen"
+ },
+ "SCREEN_UNUSED": {
+  "text": "Tidak dipakai",
+  "back": "Not used",
+  "why": "Short phrase"
+ },
+ "SCREENS_STAGE_WINDOW": {
+  "text": "Layar panggung dalam jendela",
+  "back": "Stage screen in a window",
+  "why": "Phrase next to a switch"
+ },
+ "SCREENS_IDENTIFY": {
+  "text": "Tampilkan nomor tiap layar",
+  "back": "Show the number of each screen",
+  "why": "Button"
+ },
+ "screen_name": {
+  "text": "Layar {number}",
+  "back": "Screen {number}",
+  "why": "Number is a figure"
+ },
+ "screen_title": {
+  "text": {
+   "with_this": "Layar {number} (layar ini)",
+   "without_this": "Layar {number}"
+  },
+  "back": "Screen {number} (this screen) / Screen {number}",
+  "why": "Bold line, no full stop"
+ },
+ "screen_detail": {
+  "text": {
+   "normal_zoom": "{width} x {height}",
+   "with_zoom": "{width} x {height}, zoom {scale}"
+  },
+  "back": "{width} x {height} / {width} x {height}, zoom {scale}",
+  "why": "'zoom' is what people say"
+ },
+ "REMOTE_SWITCH": {
+  "text": "Remote HP",
+  "back": "Phone remote",
+  "why": "Same as the dialog title"
+ },
+ "REMOTE_SWITCH_DETAIL": {
+  "text": "HP di wifi yang sama bisa menggerakkan slide",
+  "back": "A phone on the same wifi can move the slides",
+  "why": "One sentence"
+ },
+ "REMOTE_SCAN": {
+  "text": "Scan kode ini dengan HP, atau ketik alamatnya",
+  "back": "Scan this code with the phone, or type its address",
+  "why": "'scan' is said everywhere"
+ },
+ "REMOTE_PIN": {
+  "text": "PIN",
+  "back": "PIN",
+  "why": "People say PIN"
+ },
+ "phones": {
+  "text": "{count} HP tersambung",
+  "back": "{count} phones connected",
+  "why": "One string; zero reads fine"
+ },
+ "remote_failed": {
+  "text": "Remote HP gagal menyala: {problem}",
+  "back": "The phone remote failed to start: {problem}",
+  "why": "Reason after a colon"
+ },
+ "IMPORT_FOUND": {
+  "text": "Lagu dan Alkitab dari EasiSlides disalin ke sini. Aslinya tidak diubah.",
+  "back": "Songs and Bibles from EasiSlides are copied here. The original is not changed.",
+  "why": "Two short sentences"
+ },
+ "IMPORT_NOT_FOUND": {
+  "text": "EasiSlides tidak ditemukan di komputer ini",
+  "back": "EasiSlides was not found on this computer",
+  "why": "One sentence"
+ },
+ "import_done": {
+  "text": {
+   "songs_only": "{songs} ditambahkan",
+   "songs_and_bibles": "{songs} dan {bibles} ditambahkan"
+  },
+  "back": "{songs} added / {songs} and {bibles} added",
+  "why": "Counted phrases inserted"
+ },
+ "import_summary": {
+  "text": {
+   "nothing_changed": "Semua lagu di folder sudah ada di koleksi",
+   "only_kept": "{kept} dibiarkan karena sudah diubah di sini",
+   "changed_added": "{added} ditambahkan",
+   "changed_updated": "{updated} diperbarui",
+   "changed_both": "{added} ditambahkan, {updated} diperbarui",
+   "changed_and_kept": "{changed}. {kept} dibiarkan karena sudah diubah di sini"
+  },
+  "back": "All songs in the folder are already in the collection / {kept} left alone because already changed here / {added} added / {updated} updated / {added} added, {updated} updated / {changed}. {kept} left alone because already changed here",
+  "why": "changed assumed to arrive without a full stop"
+ },
+ "files_unreadable": {
+  "text": "{count} berkas tidak terbaca",
+  "back": "{count} files unreadable",
+  "why": "Counted noun"
+ },
+ "import_partial": {
+  "text": "{songs} ditambahkan, {files} tidak bisa dibuka",
+  "back": "{songs} added, {files} could not be opened",
+  "why": "Two counted phrases"
+ },
+ "ANNOUNCEMENTS_EMPTY": {
+  "text": "Belum ada pengumuman",
+  "back": "No announcement yet",
+  "why": "State"
+ },
+ "ANNOUNCEMENT_NEW": {
+  "text": "Pengumuman baru",
+  "back": "New announcement",
+  "why": "Wide button"
+ },
+ "ANNOUNCEMENT_BODY": {
+  "text": "Keterangan",
+  "back": "Details",
+  "why": "One word"
+ },
+ "ANNOUNCEMENT_TITLE_HINT": {
+  "text": "Persekutuan Pemuda",
+  "back": "Youth Fellowship",
+  "why": "A weekly youth meeting as churches name it"
+ },
+ "ANNOUNCEMENT_BODY_HINT": {
+  "text": "Jumat, pukul 19.00 di aula gereja",
+  "back": "Friday, at 19.00 in the church hall",
+  "why": "Times written 19.00"
+ },
+ "ANNOUNCEMENT_SECONDS": {
+  "text": "Lama tampil (detik)",
+  "back": "Time shown (seconds)",
+  "why": "Makes the numbers read as seconds"
+ },
+ "ANNOUNCEMENT_START_FROM": {
+  "text": "Mulai dari contoh",
+  "back": "Start from an example",
+  "why": "Phrase"
+ },
+ "ANNOUNCEMENT_BRING_IN": {
+  "text": "Dari berkas",
+  "back": "From a file",
+  "why": "Fits 16"
+ },
+ "ANNOUNCEMENT_FILL": {
+  "text": "Isi otomatis",
+  "back": "Fill automatically",
+  "why": "Phrase"
+ },
+ "FILL_NOTHING": {
+  "text": "Manual",
+  "back": "Manual",
+  "why": "Answers the heading"
+ },
+ "FILL_WEEK": {
+  "text": "Ulang tahun minggu ini",
+  "back": "Birthdays this week",
+  "why": "Phrase"
+ },
+ "FILL_MONTH": {
+  "text": "Ulang tahun bulan ini",
+  "back": "Birthdays this month",
+  "why": "Phrase"
+ },
+ "ANNOUNCEMENT_PICTURE": {
+  "text": "Gambar",
+  "back": "Picture",
+  "why": "One word"
+ },
+ "BTN_REMOVE_PICTURE": {
+  "text": "Hapus gambar",
+  "back": "Delete picture",
+  "why": "Not 'keluarkan', which is for the plan"
+ },
+ "CMD_IMPORT_PPTX": {
+  "text": "Impor dari PowerPoint",
+  "back": "Import from PowerPoint",
+  "why": "Button and dialog title"
+ },
+ "CMD_IMPORT_PPTX_DETAIL": {
+  "text": "Tiap slide jadi satu pengumuman",
+  "back": "Every slide becomes one announcement",
+  "why": "Fragment"
+ },
+ "CMD_IMPORT_BIRTHDAYS": {
+  "text": "Impor ulang tahun",
+  "back": "Import birthdays",
+  "why": "Button and dialog title"
+ },
+ "CMD_IMPORT_BIRTHDAYS_DETAIL": {
+  "text": "Dokumen berisi tabel nama dan tanggal lahir",
+  "back": "A document holding a table of names and dates of birth",
+  "why": "Fragment"
+ },
+ "BIRTHDAYS_NONE_FOUND": {
+  "text": "Tidak ada nama dengan tanggal lahir di berkas ini",
+  "back": "There is no name with a date of birth in this file",
+  "why": "No full stop"
+ },
+ "MONTHS[0]": {
+  "text": "Januari",
+  "back": "January",
+  "why": "Capital as Indonesian writes months"
+ },
+ "MONTHS[1]": {
+  "text": "Februari",
+  "back": "February",
+  "why": "Capital"
+ },
+ "MONTHS[2]": {
+  "text": "Maret",
+  "back": "March",
+  "why": "Capital"
+ },
+ "MONTHS[3]": {
+  "text": "April",
+  "back": "April",
+  "why": "Capital"
+ },
+ "MONTHS[4]": {
+  "text": "Mei",
+  "back": "May",
+  "why": "Capital"
+ },
+ "MONTHS[5]": {
+  "text": "Juni",
+  "back": "June",
+  "why": "Capital"
+ },
+ "MONTHS[6]": {
+  "text": "Juli",
+  "back": "July",
+  "why": "Capital"
+ },
+ "MONTHS[7]": {
+  "text": "Agustus",
+  "back": "August",
+  "why": "Capital"
+ },
+ "MONTHS[8]": {
+  "text": "September",
+  "back": "September",
+  "why": "Capital"
+ },
+ "MONTHS[9]": {
+  "text": "Oktober",
+  "back": "October",
+  "why": "Capital"
+ },
+ "MONTHS[10]": {
+  "text": "November",
+  "back": "November",
+  "why": "Capital"
+ },
+ "MONTHS[11]": {
+  "text": "Desember",
+  "back": "December",
+  "why": "Capital"
+ },
+ "could_not_read": {
+  "text": "Berkas tidak bisa dibuka: {problem}",
+  "back": "The file could not be opened: {problem}",
+  "why": "Reason after a colon"
+ },
+ "pptx_imported": {
+  "text": {
+   "without_lost": "{added} dibuat dari slide",
+   "with_lost": "{added} dibuat, {lost} tidak ikut terbawa"
+  },
+  "back": "{added} made from the slides / {added} made, {lost} did not come along",
+  "why": "Two counted phrases"
+ },
+ "birthdays_on_file": {
+  "text": "{count} ulang tahun tersimpan",
+  "back": "{count} birthdays saved",
+  "why": "One string; zero reads fine"
+ },
+ "birthdays_imported": {
+  "text": {
+   "none_skipped": "{birthdays} tersimpan",
+   "some_skipped": "{birthdays} tersimpan, {rows} dilewati"
+  },
+  "back": "{birthdays} saved / {birthdays} saved, {rows} skipped",
+  "why": "Counted phrases"
+ },
+ "ANNOUNCEMENT_PREVIEW": {
+  "text": "Tampilan di proyektor",
+  "back": "Look on the projector",
+  "why": "Phrase"
+ },
+ "FILL_PASSAGE": {
+  "text": "Ayat Alkitab",
+  "back": "Bible verses",
+  "why": "Same as the plan menu item"
+ },
+ "ANNOUNCEMENT_PASSAGE": {
+  "text": "Kitab, pasal, ayat",
+  "back": "Book, chapter, verse",
+  "why": "Names what is typed"
+ },
+ "ANNOUNCEMENT_PASSAGE_HINT": {
+  "text": "Mazmur 23:1-6",
+  "back": "Psalms 23:1-6",
+  "why": "Hyphen is the verse range, as churches write it"
+ },
+ "PASSAGE_NO_BIBLE": {
+  "text": "Belum ada versi Alkitab, jadi isinya kosong",
+  "back": "No Bible version yet, so it stays empty",
+  "why": "One sentence"
+ },
+ "PASSAGE_UNREADABLE": {
+  "text": "Ayat itu tidak ada di versi Alkitab ini",
+  "back": "That verse is not in this Bible version",
+  "why": "One sentence"
+ },
+ "NOTICE_NOTHING_TO_SHOW": {
+  "text": "Hari ini belum ada yang bisa ditayangkan",
+  "back": "Today there is nothing that can be shown yet",
+  "why": "No full stop"
+ },
+ "birthdays_cover_week": {
+  "text": "Tanggal {from_day} {from_month} sampai {to_day} {to_month}",
+  "back": "From {from_day} {from_month} to {to_day} {to_month}",
+  "why": "Day before month"
+ },
+ "birthdays_cover_month": {
+  "text": "Sepanjang bulan {month}",
+  "back": "All through the month of {month}",
+  "why": "Fragment"
+ },
+ "names_today": {
+  "text": "{count} nama hari ini",
+  "back": "{count} names today",
+  "why": "One string; zero reads fine"
+ },
+ "ANNOUNCEMENT_TEMPLATES[0].0": {
+  "text": "Selamat datang",
+  "back": "Welcome",
+  "why": "Short card title"
+ },
+ "ANNOUNCEMENT_TEMPLATES[0].1": {
+  "text": "Selamat datang bagi jemaat dan para tamu",
+  "back": "Welcome to the members and the guests",
+  "why": "No exclamation"
+ },
+ "ANNOUNCEMENT_TEMPLATES[1].0": {
+  "text": "Jadwal ibadah",
+  "back": "Service schedule",
+  "why": "Short card title"
+ },
+ "ANNOUNCEMENT_TEMPLATES[1].1": {
+  "text": "Ibadah Minggu 07.00, 09.00, dan 17.00",
+  "back": "Sunday service 07.00, 09.00, and 17.00",
+  "why": "Made-up example"
+ },
+ "ANNOUNCEMENT_TEMPLATES[2].0": {
+  "text": "Kegiatan minggu ini",
+  "back": "This week's activities",
+  "why": "Short card title"
+ },
+ "ANNOUNCEMENT_TEMPLATES[2].1": {
+  "text": "Rabu 18.30, doa bersama di aula",
+  "back": "Wednesday 18.30, prayer together in the hall",
+  "why": "Made-up example"
+ },
+ "ANNOUNCEMENT_TEMPLATES[3].0": {
+  "text": "Ayat hafalan",
+  "back": "Memory verse",
+  "why": "Short card title"
+ },
+ "ANNOUNCEMENT_TEMPLATES[3].1": {
+  "text": "Tulis ayat hafalan minggu ini di sini",
+  "back": "Write this week's memory verse here",
+  "why": "Instruction to the editor"
+ },
+ "ANNOUNCEMENT_TEMPLATES[4].0": {
+  "text": "Persembahan",
+  "back": "Offering",
+  "why": "Short card title"
+ },
+ "ANNOUNCEMENT_TEMPLATES[4].1": {
+  "text": "Tulis nama dan nomor rekening gereja di sini",
+  "back": "Write the church bank account name and number here",
+  "why": "Reminder"
+ },
+ "ANNOUNCEMENT_TEMPLATES[5].0": {
+  "text": "Yang berulang tahun",
+  "back": "Those having a birthday",
+  "why": "Short card title"
+ },
+ "ANNOUNCEMENT_TEMPLATES[5].1": {
+  "text": "Tulis nama mereka di sini",
+  "back": "Write their names here",
+  "why": "Instruction"
+ },
+ "announcements": {
+  "text": "{count} pengumuman",
+  "back": "{count} announcements",
+  "why": "One string; zero reads fine"
+ },
+ "seconds_short": {
+  "text": "{seconds} detik",
+  "back": "{seconds} seconds",
+  "why": "Full word fits 8"
+ },
+ "KEYS_TITLE": {
+  "text": "Pintasan",
+  "back": "Shortcuts",
+  "why": "Same word as the sheet"
+ },
+ "KEYS_SHOWING": {
+  "text": "Saat ibadah",
+  "back": "During the service",
+  "why": "Group heading"
+ },
+ "KEYS_FINDING": {
+  "text": "Cari dan tambah",
+  "back": "Find and add",
+  "why": "Group heading"
+ },
+ "KEYS_PLAN": {
+  "text": "Rundown",
+  "back": "Rundown",
+  "why": "Group heading"
+ },
+ "KEYS_EDITING": {
+  "text": "Ubah lagu",
+  "back": "Change song",
+  "why": "Group heading"
+ },
+ "KEYS_SHOWING_ROWS[0].1": {
+  "text": "Maju satu slide",
+  "back": "Forward one slide",
+  "why": "Fragment"
+ },
+ "KEYS_SHOWING_ROWS[1].1": {
+  "text": "Mundur satu slide",
+  "back": "Back one slide",
+  "why": "Fragment"
+ },
+ "KEYS_SHOWING_ROWS[2].1": {
+  "text": "Ke slide pertama lagu yang tayang",
+  "back": "To the first slide of the song on screen",
+  "why": "Fragment"
+ },
+ "KEYS_SHOWING_ROWS[3].1": {
+  "text": "Ke slide terakhir lagu yang tayang",
+  "back": "To the last slide of the song on screen",
+  "why": "Fragment"
+ },
+ "KEYS_SHOWING_ROWS[4].1": {
+  "text": "Pilih slide di Live, tayang saat Shift dilepas",
+  "back": "Choose a slide in Live, shown when Shift is released",
+  "why": "Key name stays"
+ },
+ "KEYS_SHOWING_ROWS[5].1": {
+  "text": "Gerakkan bingkai putih di Preview, lalu Enter",
+  "back": "Move the white frame in Preview, then Enter",
+  "why": "Key name stays"
+ },
+ "KEYS_SHOWING_ROWS[6].1": {
+  "text": "Tayangkan slide yang berbingkai putih",
+  "back": "Put on screen the slide with the white frame",
+  "why": "Fragment"
+ },
+ "KEYS_SHOWING_ROWS[7].1": {
+  "text": "Ke bagian lagu sesuai nomornya",
+  "back": "To the part of the song with that number",
+  "why": "Fragment"
+ },
+ "KEYS_SHOWING_ROWS[8].1": {
+  "text": "Ke reff, bait berikutnya, bridge",
+  "back": "To the chorus, the next verse, the bridge",
+  "why": "Three items match the three keys"
+ },
+ "KEYS_SHOWING_ROWS[9].1": {
+  "text": "Bingkai putih ke bagian bernomor di Preview",
+  "back": "White frame to the numbered part in Preview",
+  "why": "Fragment"
+ },
+ "KEYS_SHOWING_ROWS[10].1": {
+  "text": "Bawa lagu yang tayang ke Preview",
+  "back": "Bring the song on screen to Preview",
+  "why": "Fragment"
+ },
+ "KEYS_SHOWING_ROWS[11].1": {
+  "text": "Sembunyikan tulisan, latar tetap tampil",
+  "back": "Hide the lettering, the backdrop stays",
+  "why": "Fragment"
+ },
+ "KEYS_SHOWING_ROWS[12].1": {
+  "text": "Proyektor jadi hitam",
+  "back": "The projector goes black",
+  "why": "Fragment"
+ },
+ "KEYS_SHOWING_ROWS[13].1": {
+  "text": "Tayangkan logo gereja",
+  "back": "Put the church logo on screen",
+  "why": "Fragment"
+ },
+ "KEYS_SHOWING_ROWS[14].1": {
+  "text": "Saran dari Dengar masuk ke Preview",
+  "back": "Suggestions from Listen go into Preview",
+  "why": "Fragment"
+ },
+ "KEYS_SHOWING_ROWS[15].1": {
+  "text": "Pengumuman masuk ke Preview",
+  "back": "Announcements go into Preview",
+  "why": "Fragment"
+ },
+ "KEYS_SHOWING_ROWS[16].1": {
+  "text": "Nyalakan atau matikan proyektor",
+  "back": "Turn the projector on or off",
+  "why": "Fragment"
+ },
+ "KEYS_FINDING_ROWS[0].1": {
+  "text": "Mulai mencari lagu, ayat, atau perintah",
+  "back": "Start looking for songs, verses, or actions",
+  "why": "Fragment"
+ },
+ "KEYS_FINDING_ROWS[1].1": {
+  "text": "Buka pencarian, kosong berarti semua lagu",
+  "back": "Open the search, empty means all songs",
+  "why": "Fragment"
+ },
+ "KEYS_FINDING_ROWS[2].1": {
+  "text": "Buka hasil yang dipilih",
+  "back": "Open the chosen result",
+  "why": "Fragment"
+ },
+ "KEYS_FINDING_ROWS[3].1": {
+  "text": "Tayangkan hasil pilihan langsung, tanpa Preview",
+  "back": "Put the chosen result on screen directly, without Preview",
+  "why": "Fragment"
+ },
+ "KEYS_FINDING_ROWS[4].1": {
+  "text": "Tambahkan hasil ke rundown, setelah yang tayang",
+  "back": "Add the result to the rundown, after the one on screen",
+  "why": "Fragment"
+ },
+ "KEYS_FINDING_ROWS[5].1": {
+  "text": "Cari bagian di dalam lagu yang dipilih",
+  "back": "Look for a part inside the chosen song",
+  "why": "Fragment"
+ },
+ "KEYS_FINDING_ROWS[6].1": {
+  "text": "Hapus ketikan dulu, tekan lagi untuk menutup",
+  "back": "First clear the typing, press again to close",
+  "why": "Fragment"
+ },
+ "KEYS_PLAN_ROWS[0].1": {
+  "text": "Item berikutnya ke Preview",
+  "back": "Next item to Preview",
+  "why": "Fragment"
+ },
+ "KEYS_PLAN_ROWS[1].1": {
+  "text": "Item sebelumnya ke Preview",
+  "back": "Previous item to Preview",
+  "why": "Fragment"
+ },
+ "KEYS_PLAN_ROWS[2].1": {
+  "text": "Geser item di Preview ke atas atau bawah",
+  "back": "Move the item in Preview up or down",
+  "why": "Fragment"
+ },
+ "KEYS_PLAN_ROWS[3].1": {
+  "text": "Keluarkan item di Preview dari rundown",
+  "back": "Take the item in Preview out of the rundown",
+  "why": "Fragment"
+ },
+ "KEYS_EDITING_ROWS[0].1": {
+  "text": "Lagu baru",
+  "back": "New song",
+  "why": "Fragment"
+ },
+ "KEYS_EDITING_ROWS[1].1": {
+  "text": "Ubah lagu di Preview",
+  "back": "Change the song in Preview",
+  "why": "Fragment"
+ },
+ "KEYS_EDITING_ROWS[2].1": {
+  "text": "Simpan yang sudah ditulis",
+  "back": "Save what has been written",
+  "why": "Fragment"
+ },
+ "KEYS_EDITING_ROWS[3].1": {
+  "text": "Penanda bait, reff, pra-reff, bridge, ending",
+  "back": "Marker for verse, chorus, pre-chorus, bridge, ending",
+  "why": "Five items for five keys"
+ },
+ "KEYS_EDITING_ROWS[4].1": {
+  "text": "Ambil lagu yang disarankan di bawah judul",
+  "back": "Take the song suggested under the title",
+  "why": "Fragment"
+ },
+ "KEYS_EDITING_ROWS[5].1": {
+  "text": "Kembalikan yang terakhir dihapus",
+  "back": "Bring back what was last removed",
+  "why": "Fragment"
+ },
+ "announcement_deleted": {
+  "text": "Pengumuman “{title}” dihapus",
+  "back": "Announcement “{title}” deleted",
+  "why": "Past tense"
+ },
+ "STAGE_CLOCK": {
+  "text": "Jam",
+  "back": "Clock",
+  "why": "One word, read from far"
+ },
+ "STAGE_TIMER": {
+  "text": "Hitung mundur",
+  "back": "Countdown",
+  "why": "Same word as elsewhere"
+ },
+ "STAGE_BLACK": {
+  "text": "Layar jemaat sedang hitam",
+  "back": "The congregation's screen is black",
+  "why": "Says whose screen"
+ },
+ "STAGE_NOTHING": {
+  "text": "Belum ada yang tayang",
+  "back": "Nothing is on yet",
+  "why": "State"
+ },
+ "stage_next": {
+  "text": "Berikutnya: {label}",
+  "back": "Next: {label}",
+  "why": "Label is a section name"
+ },
+ "tour_place": {
+  "text": "{at} dari {total}",
+  "back": "{at} of {total}",
+  "why": "Small counter"
+ },
+ "stage_place": {
+  "text": "Slide {index} dari {count}",
+  "back": "Slide {index} of {count}",
+  "why": "Two figures"
+ },
+ "LOOK_LANGUAGE": {
+  "text": "Bahasa",
+  "back": "Language",
+  "why": "Window language"
+ },
+ "LEARN_SECTION": {
+  "text": "Pencarian",
+  "back": "Search",
+  "why": "One word"
+ },
+ "LEARN_ON": {
+  "text": "Ingat lagu yang dipilih",
+  "back": "Remember the songs picked",
+  "why": "Phrase next to a switch"
+ },
+ "LEARN_ON_HINT": {
+  "text": "Lagu yang sering dipilih naik ke atas, bila cocoknya sama",
+  "back": "Songs picked often move up, when the match is equal",
+  "why": "One sentence"
+ },
+ "LEARN_FORGET": {
+  "text": "Lupakan yang diingat pencarian",
+  "back": "Forget what the search remembers",
+  "why": "Not 'hapus': songs stay"
+ },
+ "LEARN_FORGOTTEN": {
+  "text": "Pencarian sudah melupakan pilihan lama",
+  "back": "The search has forgotten the old picks",
+  "why": "No full stop"
+ },
+ "GROUP_WEEKDAY": {
+  "text": "Biasanya dinyanyikan hari ini",
+  "back": "Usually sung today",
+  "why": "Group heading"
+ },
+ "GROUP_RECENT": {
+  "text": "Dipilih beberapa hari terakhir",
+  "back": "Picked in the last few days",
+  "why": "Group heading"
+ },
+ "group_follows": {
+  "text": "Sering menyusul “{title}”",
+  "back": "Often follow “{title}”",
+  "why": "Title in quotes"
+ },
+ "habit_chip": {
+  "text": "dipilih {picks}x untuk “{typed}”",
+  "back": "picked {picks}x for “{typed}”",
+  "why": "Tight tag"
+ },
+ "habit_line": {
+  "text": "Dipilih {picks} kali untuk “{typed}”, terakhir {when}",
+  "back": "Picked {picks} times for “{typed}”, last {when}",
+  "why": "Day then month name"
+ },
+ "follows_line": {
+  "text": "Menyusul {count} kali, terakhir {when}",
+  "back": "Followed {count} times, last {when}",
+  "why": "Fragment"
+ },
+ "weekday_line": {
+  "text": "Dinyanyikan {count} dari {of} ibadah hari itu",
+  "back": "Sung in {count} of {of} services that day",
+  "why": "Two figures"
+ },
+ "recent_line": {
+  "text": "Dipilih {picks} kali, terakhir {when}",
+  "back": "Picked {picks} times, last {when}",
+  "why": "Fragment"
+ },
+ "starts_chip": {
+  "text": "Mulai dari {section}",
+  "back": "Starts from {section}",
+  "why": "Tight tag"
+ },
+ "starts_line": {
+  "text": "Biasanya mulai dari {section}, {times} dari {of} kali",
+  "back": "Usually starts from {section}, {times} of {of} times",
+  "why": "Fragment"
+ },
+ "SCREEN_OWN": {
+  "text": "Jendela program ada di layar ini",
+  "back": "The program window is on this screen",
+  "why": "State"
+ },
+ "BIBLES_TITLE": {
+  "text": "Versi Alkitab",
+  "back": "Bible versions",
+  "why": "Dialog title"
+ },
+ "BIBLES_MORE": {
+  "text": "Cari versi lain",
+  "back": "Look for other versions",
+  "why": "Button"
+ },
+ "BIBLES_OWN_FILE": {
+  "text": "Dari berkas sendiri",
+  "back": "From your own file",
+  "why": "Phrase"
+ },
+ "BIBLES_CHOOSE_FILE": {
+  "text": "Pilih berkas Alkitab",
+  "back": "Choose a Bible file",
+  "why": "Button and chooser title"
+ },
+ "BIBLES_FILE_HINT": {
+  "text": "MyBible, USFX, atau berkas USFM dalam zip",
+  "back": "MyBible, USFX, or USFM files in a zip",
+  "why": "Proper names stay"
+ },
+ "BIBLES_PRACTICE": {
+  "text": "Mode latihan tidak menyimpan Alkitab",
+  "back": "Practice mode does not keep Bibles",
+  "why": "No full stop"
+ },
+ "BIBLES_FILE_UNSUPPORTED": {
+  "text": "Berkas ini tidak dikenali sebagai Alkitab",
+  "back": "This file is not recognised as a Bible",
+  "why": "No full stop"
+ },
+ "BIBLES_FILE_EMPTY": {
+  "text": "Berkas ini tidak berisi ayat",
+  "back": "This file contains no verses",
+  "why": "No full stop"
+ },
+ "CMD_BIBLE_FILE": {
+  "text": "Tambah Alkitab dari berkas",
+  "back": "Add a Bible from a file",
+  "why": "Row title"
+ },
+ "CMD_BIBLE_FILE_DETAIL": {
+  "text": "MyBible, USFX, atau berkas USFM dalam zip",
+  "back": "MyBible, USFX, or USFM files in a zip",
+  "why": "Same as the hint"
+ },
+ "CMD_BIBLES": {
+  "text": "Cari versi Alkitab lain",
+  "back": "Look for other Bible versions",
+  "why": "Row title"
+ },
+ "CMD_BIBLES_FIND_DETAIL": {
+  "text": "Alkitab dalam banyak bahasa bisa diunduh",
+  "back": "Bibles in many languages can be downloaded",
+  "why": "Fragment"
+ },
+ "BIBLES_LIST": {
+  "text": "Versi yang bisa diunduh",
+  "back": "Versions that can be downloaded",
+  "why": "Phrase"
+ },
+ "BIBLES_SEARCH": {
+  "text": "Ketik bahasa atau nama versi",
+  "back": "Type a language or a version name",
+  "why": "Invitation"
+ },
+ "BIBLES_LOADING": {
+  "text": "Mengambil daftar versi",
+  "back": "Fetching the list of versions",
+  "why": "Progress state"
+ },
+ "BIBLES_LOAD_FAILED": {
+  "text": "Daftar versi gagal diambil",
+  "back": "The list of versions could not be fetched",
+  "why": "No full stop"
+ },
+ "BIBLES_RETRY": {
+  "text": "Coba lagi",
+  "back": "Try again",
+  "why": "Standard"
+ },
+ "BIBLES_INSTALLED": {
+  "text": "Sudah ada",
+  "back": "Already here",
+  "why": "State"
+ },
+ "BIBLES_DOWNLOAD": {
+  "text": "Unduh",
+  "back": "Download",
+  "why": "One word"
+ },
+ "BIBLES_DOWNLOADING": {
+  "text": "Mengunduh",
+  "back": "Downloading",
+  "why": "Progress state"
+ },
+ "BIBLES_USE": {
+  "text": "Pakai versi ini",
+  "back": "Use this version",
+  "why": "Button"
+ },
+ "BIBLES_IN_USE": {
+  "text": "Sedang dipakai",
+  "back": "In use",
+  "why": "State"
+ },
+ "BIBLES_COPYRIGHT": {
+  "text": "Hak cipta",
+  "back": "Copyright",
+  "why": "One word"
+ },
+ "BIBLES_PICK_HINT": {
+  "text": "Pilih satu versi untuk melihat hak ciptanya",
+  "back": "Choose a version to see its copyright",
+  "why": "One sentence"
+ },
+ "BIBLES_SCOPE_WHOLE": {
+  "text": "Alkitab lengkap",
+  "back": "Whole Bible",
+  "why": "Short tag"
+ },
+ "BIBLES_SCOPE_PART": {
+  "text": "Sebagian kitab",
+  "back": "Some books",
+  "why": "Short tag"
+ },
+ "BIBLES_NO_COPYRIGHT": {
+  "text": "Berkas tidak mencantumkan pemilik hak cipta",
+  "back": "The file does not name the owner of the rights",
+  "why": "One sentence"
+ },
+ "BIBLES_NOTICE_LOADING": {
+  "text": "Membaca keterangan hak cipta",
+  "back": "Reading the copyright notice",
+  "why": "Progress state"
+ },
+ "BIBLES_NOTICE_FAILED": {
+  "text": "Keterangan hak cipta tidak terbaca",
+  "back": "The copyright notice could not be read",
+  "why": "No full stop"
+ },
+ "bibles_download_failed": {
+  "text": "Versi Alkitab gagal diunduh: {why}",
+  "back": "The Bible version failed to download: {why}",
+  "why": "Reason after a colon"
+ },
+ "bible_added": {
+  "text": "“{name}” ditambahkan, {verses} ayat",
+  "back": "“{name}” added, {verses} verses",
+  "why": "Name in quotes"
+ },
+ "bibles_file_failed": {
+  "text": "Alkitab gagal ditambahkan: {why}",
+  "back": "The Bible failed to be added: {why}",
+  "why": "Reason after a colon"
+ },
+ "noun.announcements": {
+  "text": "{count} pengumuman",
+  "back": "{count} announcements",
+  "why": "No plural forms"
+ },
+ "noun.bibles": {
+  "text": "{count} Alkitab",
+  "back": "{count} Bibles",
+  "why": "No plural forms"
+ },
+ "noun.birthdays": {
+  "text": "{count} ulang tahun",
+  "back": "{count} birthdays",
+  "why": "No plural forms"
+ },
+ "noun.files": {
+  "text": "{count} berkas",
+  "back": "{count} files",
+  "why": "No plural forms"
+ },
+ "noun.pictures": {
+  "text": "{count} gambar",
+  "back": "{count} pictures",
+  "why": "No plural forms"
+ },
+ "noun.rows": {
+  "text": "{count} baris",
+  "back": "{count} rows",
+  "why": "No plural forms"
+ },
+ "noun.songs": {
+  "text": "{count} lagu",
+  "back": "{count} songs",
+  "why": "No plural forms"
+ },
+ "section.bridge": {
+  "text": "Bridge",
+  "back": "Bridge",
+  "why": "Musicians' word"
+ },
+ "section.chorus": {
+  "text": "Reff",
+  "back": "Chorus",
+  "why": "What church bands say"
+ },
+ "section.ending": {
+  "text": "Ending",
+  "back": "Ending",
+  "why": "Musicians' word"
+ },
+ "section.intro": {
+  "text": "Intro",
+  "back": "Intro",
+  "why": "Musicians' word"
+ },
+ "section.other": {
+  "text": "Bagian",
+  "back": "Part",
+  "why": "General word"
+ },
+ "section.pre_chorus": {
+  "text": "Pra-reff",
+  "back": "Pre-chorus",
+  "why": "Pairs with Reff"
+ },
+ "section.verse": {
+  "text": "Bait",
+  "back": "Verse",
+  "why": "Never 'ayat'"
+ },
+ "section_numbered": {
+  "text": "{name} {number}",
+  "back": "{name} {number}",
+  "why": "Name first, as in 'Bait 2'"
+ },
+ "DESIGN_BACKGROUND": {
+  "text": "Latar belakang",
+  "back": "Backdrop",
+  "why": "One group heading"
+ },
+ "KEYS_PLAN_ROWS[4].1": {
+  "text": "Jadikan slide berbingkai putih titik mulai",
+  "back": "Make the slide with the white frame the start point",
+  "why": "Fragment"
+ },
+ "TIP_START_HERE": {
+  "text": "Mulai dari sini, klik lagi untuk batal",
+  "back": "Start from here, click again to cancel",
+  "why": "Both facts in one line"
+ },
+ "PLAN_STARTS_AT": {
+  "text": "Mulai dari",
+  "back": "Start from",
+  "why": "Heading over the sections"
+ },
+ "PLAN_START_BEGINNING": {
+  "text": "Dari awal",
+  "back": "From the beginning",
+  "why": "Menu item"
+ },
+ "LISTEN_MODEL_MISSING": {
+  "text": "Perlu satu berkas lagi (57 MB) untuk mengenali suara",
+  "back": "One more file (57 MB) is needed to recognise voices",
+  "why": "Says the size so the button is clear"
+ },
+ "listen_model_failed": {
+  "text": "Berkas suara gagal diunduh: {why}",
+  "back": "The voice file failed to download: {why}",
+  "why": "Reason after a colon"
+ },
+ "MARKS_APPLY": {
+  "text": "Terapkan",
+  "back": "Apply",
+  "why": "Eight characters exactly"
+ },
+ "MARKS_APPLY_HELP": {
+  "text": "Nama bagian ditulis ke lirik, bisa dibatalkan",
+  "back": "Part names are written into the words, can be undone",
+  "why": "No full stop"
+ },
+ "MARKS_HIDE": {
+  "text": "Tutup saran bagian",
+  "back": "Close the part suggestions",
+  "why": "Tooltip"
+ },
+ "MARKS_THIS": {
+  "text": "Bagian ini",
+  "back": "This part",
+  "why": "Label"
+ },
+ "MARKS_WHY_NAMED": {
+  "text": "Sudah ditulis sebagai nama bagian di lirik",
+  "back": "Already written as a part name in the words",
+  "why": "No full stop"
+ },
+ "MARKS_WHY_REPEAT": {
+  "text": "Diulang persis, seperti reff",
+  "back": "Repeated exactly, like a chorus",
+  "why": "No full stop"
+ },
+ "MARKS_WHY_BRIDGE": {
+  "text": "Pendek, hanya sekali, dan di akhir lagu",
+  "back": "Short, only once, and near the end of the song",
+  "why": "No full stop"
+ },
+ "MARKS_WHY_ORDER": {
+  "text": "Menyusul bait sebelumnya, berurutan",
+  "back": "Follows the earlier verses, in order",
+  "why": "No full stop"
+ }
 }

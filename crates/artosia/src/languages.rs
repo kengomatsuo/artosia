@@ -33,7 +33,9 @@ pub const INDONESIAN: usize = 1;
 
 pub static LANGUAGES: &[Language] = &[
     Language { code: "en", name: crate::strings::LANGUAGE_ENGLISH, table: None, aliases: &["indonesia", "indonesian", "inggris", "english"], listed: true },
-    Language { code: "id", name: crate::strings::LANGUAGE_INDONESIAN, table: None, aliases: &["indonesia", "indonesian", "inggris", "english"], listed: true },
+    // Indonesian is a table like any language that comes after it, written from the briefs
+    // by a writer who never saw the English (`docs/i18n/README.md`).
+    Language { code: "id", name: crate::strings::LANGUAGE_INDONESIAN, table: Some(include_str!("../../../docs/i18n/id.json")), aliases: &["indonesia", "indonesian", "inggris", "english"], listed: true },
     // A language joins here once a person who can judge it has reviewed it.
     #[cfg(any(test, debug_assertions))]
     Language { code: "xx", name: "Pseudo", table: Some(include_str!("../testdata/pseudo.json")), aliases: &[], listed: false },
