@@ -8,6 +8,7 @@ mod audio;
 mod capture;
 mod recogniser;
 mod segment;
+mod tempo;
 mod text;
 
 use std::fmt;
@@ -20,6 +21,7 @@ use std::time::Duration;
 
 pub use audio::{LevelMeter, RECOGNISER_RATE, Resampler, level_from_rms, mix_to_mono, rms};
 pub use segment::{Phrase, Segmenter, SegmenterConfig, audio_ctx_for, coalesce};
+pub use tempo::{MAX_BPM, MIN_BPM, Tempo, TempoTracker};
 pub use text::clean_text;
 
 /// An audio input the system offers.
@@ -41,6 +43,8 @@ pub fn devices() -> Vec<Device> {
 pub enum Heard {
     /// Loudness 0..1 on a decibel scale, four times a second.
     Level(f32),
+    /// The beat, twice a second: `None` while the room has no steady pulse.
+    Tempo(Option<Tempo>),
     /// A progress read of a phrase still being said or sung. It may change or vanish.
     Partial(String),
     /// A phrase that ended. Search with this one.
@@ -168,6 +172,7 @@ impl Job {
 
         let mut meter = LevelMeter::new(running.sample_rate, LEVELS_PER_SECOND);
         let mut resampler = Resampler::new(running.sample_rate, RECOGNISER_RATE);
+        let mut tracker = TempoTracker::new(running.sample_rate);
         let mut segmenter = Segmenter::new(SegmenterConfig::default());
         let mut resampled = Vec::new();
         let mut last_error = String::new();
@@ -176,6 +181,7 @@ impl Job {
             match rx.recv_timeout(Duration::from_millis(100)) {
                 Ok(capture::Capture::Audio(block)) => {
                     meter.push(&block, |level| (self.emit)(Heard::Level(level)));
+                    tracker.push(&block, |tempo| (self.emit)(Heard::Tempo(tempo)));
                     if let Some(phrase_tx) = &phrase_tx {
                         resampled.clear();
                         resampler.push(&block, &mut resampled);

@@ -110,12 +110,122 @@ mixing desk's line out with the vocal loud. Plug the listener into a vocal chann
   a pitch-contour matcher becomes a weekend project. Until then the lyrics path (fuzzy words ->
   `SongIndex::search`) is the only song identifier, and it needs a vocal loud enough to read.
 
+## Tempo and the beat
+
+`TempoTracker` (`src/tempo.rs`) is fed the same mono blocks as the level meter and reports, twice
+a second, `Heard::Tempo(Option<Tempo>)`: beats per minute (50 to 200), a confidence from 0 to 1,
+the beat period, and how many seconds ago the last beat fell. `None` means no steady pulse.
+Nothing is added to `Cargo.toml`: the FFT is 40 lines of plain Rust.
+
+### Sources (fetched 2026-11-11)
+
+- **Scheirer 1998**, "Tempo and beat analysis of acoustic musical signals", JASA 103(1)
+  (`ee.columbia.edu/~dpwe/papers/Schei98-beats.pdf`). Read for the idea: envelopes of a few
+  bands (six in the paper), their rectified difference, then a bank of comb filters, one per
+  candidate tempo, run causally so the beat can be predicted. Not copied: the resonator bank per
+  band, which costs more than a plain autocorrelation of one envelope.
+- **Ellis 2007**, "Beat Tracking by Dynamic Programming"
+  (`ee.columbia.edu/~dpwe/pubs/Ellis07-beattrack.pdf`). Onset envelope at 8 kHz, 32 ms windows,
+  4 ms hop, 40 mel bands in dB, positive differences summed across bands; tempo from the
+  autocorrelation of that envelope weighted by a Gaussian on a log axis centred on 120 BPM, width
+  1.4 octaves (0.9 octaves when two metrical levels are scored together). Used: the envelope
+  recipe and the log-Gaussian window at 0.9 octaves. Not used: the dynamic-programming pass. The
+  paper says the abrupt tempo change needs "a more radical modification" and that searching over
+  tempos in DP is "considerably more computationally expensive".
+- **Böck and Widmer 2013**, "Maximum Filter Vibrato Suppression for Onset Detection", DAFx-13
+  (SuperFlux; the abstract was read, the parameters come from the authors' reference code,
+  `github.com/CPJKU/SuperFlux`: `max_bins = 3`, `log10(mul * spec + add)`, `mul = add = 1`). Used:
+  the flux is taken against a maximum filter over the neighbouring bands of an earlier frame, so
+  a sung note gliding across a band is not an onset. That matters for a congregation. Böck and
+  Schedl's spectral-flux work is the base of it and was not read separately.
+- **aubio** (`src/tempo/tempo.c` and `beattracking.c`, master): `specflux` onsets, a window of
+  about 6 s, a Rayleigh weight centred on 120 BPM, and the autocorrelation summed at one to four
+  multiples of each lag with weights `1/(2a-1)`. Used: the 6 s window and the harmonic sum (three
+  harmonics, those weights). The source cites no paper. It is GPL; nothing was copied.
+- **librosa** `feature.rhythm.tempo` (`rhythm.py`, main): `start_bpm = 120`, `std_bpm = 1.0`
+  octaves, `ac_size = 8 s`. Confirms the 120 BPM log-normal prior.
+
+### Method
+
+1. Average to about 8 kHz (a box filter; aliasing does no harm to an onset signal).
+2. 256-point FFT every 5 ms, 24 mel-spaced bands from 60 Hz to 3.8 kHz, `log10(1 + 100 * magnitude)`.
+3. SuperFlux onset strength: the sum over bands of the rise over the largest of the three
+   neighbouring bands two frames earlier.
+4. Every 0.5 s, on the last 6 s of that envelope (mean removed): autocorrelation at the lags for
+   50 to 200 BPM, summed with its values at two and three times the lag, weighted by the
+   log-normal prior around 120 BPM. The peak is refined by a parabola. Confidence is the geometric
+   mean of the normalised autocorrelation at one and at two periods, less 0.08. A pulse that is
+   only half regular has a strong first peak and a weak second, which is what plain speech does.
+5. Beat phase: the offset at which a pulse train of that period collects the most envelope,
+   recent beats counting more.
+6. A report needs confidence 0.28 twice in a row at periods within 4 %. Once reporting it carries
+   on down to 0.15, and it goes quiet after four half-seconds without a usable estimate.
+
+### Why it fits this room
+
+- A slow CPU: no model, one 256-point FFT per 5 ms, and about 1.7 million multiply-adds a second
+  for the autocorrelation. A live microphone: it is causal and keeps 6 s of envelope.
+- A reverberant hall: the envelope is a rise in energy, so a tail that decays smoothly adds no
+  onsets. The test uses a Schroeder reverberator with a tail near 1.5 s.
+- A band or a single keyboard: the method needs attacks. A pad with no attack, or slow held
+  chords, gives no pulse and the tracker says nothing instead of guessing.
+- Congregational singing: voices have soft onsets, so the pulse comes from drums, guitar and
+  clapping. Over singing alone it will usually report nothing.
+- The 120 BPM prior and the harmonic sum are what keep it off half and double speed.
+
+### Measured on made-up signals (`cargo test -p artosia-listen`)
+
+The tests synthesise a drum-like thump plus a noise burst, never a recording.
+
+- Click tracks at 60, 90, 120 and 150 BPM: every report from 8 s on is within 0.1 BPM of the
+  truth (the test allows 2). The first correct report arrives within 5 s.
+- The reported last-beat time falls within 20 ms of a real hit (the test allows 30).
+- Hits in noise at the hits' own loudness, and in a reverberant tail (wet signal 1.5 times the
+  dry): within 2 BPM from 10 s on. The lowest raw confidence seen was 0.22 to 0.36.
+- A change from 90 to 130 BPM is followed: read correctly by 10 s after the change (the window is
+  6 s long).
+- Silence, steady noise and a very quiet hiss report nothing. Six seeds of speech-like noise
+  (syllables 120 to 250 ms, gaps 30 to 300 ms) report nothing for 40 s; their raw confidence
+  peaks between 0.08 and 0.20, under the 0.28 that starts a report. The gap is narrow: music with
+  weak, irregular accents in a very noisy room can also fall under 0.28 and report nothing.
+- Half and double time: hits that alternate loud and soft, at 80, 100, 140 and 170 BPM with the
+  soft hit at half and at a quarter strength, always read as the true tempo, half of it or double
+  it, never another number; the test allows those three. How often a real band is read at half or
+  double was not measured: there is no real music in the tests.
+- Cost: 60 s of 48 kHz audio takes 49 ms in a release build on the i9 laptop, 0.08 % of one core
+  (`cargo test -p artosia-listen --release --test cost -- --ignored --nocapture`). A Celeron is
+  several times slower and should stay near 1 %; not run on one.
+- It also works at 44.1 kHz.
+
+### What tempo is for, and what is not built
+
+The owner's "next detection" is knowing when the lines of a slide are about to end, so the next
+slide can be ready. Tempo is the first piece. What the rest would take:
+
+1. **The beat and the bar.** The tracker gives the beat. A bar is usually four beats, and the bar
+   line is the beat with the strongest onset (the kick, the first chord). Not built: finding the
+   downbeat needs the accent pattern, which the autocorrelation here does not keep.
+2. **How long a line is.** A line of a song usually lasts a whole number of bars, most often two
+   or four. The slide knows its line count, but nothing records how many bars a line takes. That
+   would be a number per song: entered once by a volunteer, or learned the first time through.
+3. **Where in the line the singing is.** Beats say how time passes, not where the words are.
+   `segment.rs` knows when singing starts and stops, so a line start could be anchored to the
+   first loud frame after a pause. Matching sung words to the slide's lines needs the speech
+   recogniser on a vocal channel.
+4. **Then** "this slide ends in about N beats" is lines times bars per line times beats per bar,
+   less the beats already sung. That estimate will be wrong often enough that it should only ever
+   prepare something (light the Next button), never move the projector.
+
+None of this is built: no downbeat, no bars per line, no matching, no estimate. The tempo and the
+time of the last beat are all that exist, and the operator uses them for the number and the dot
+in the Listen dialog and for the optional pulse of the Live label.
+
 ## What was built
 
 ```rust
 pub struct Device { pub id: String, pub name: String }
 pub fn devices() -> Vec<Device>;
-pub enum Heard { Level(f32), Partial(String), Final(String), Problem(String) }
+pub enum Heard { Level(f32), Tempo(Option<Tempo>), Partial(String), Final(String), Problem(String) }
 pub struct Listener;           // drop = stop, frees the model
 impl Listener { pub fn start(device: Option<&str>, model: &Path, language: &str,
                              on_heard: impl Fn(Heard) + Send + 'static) -> Result<Listener, ListenError>; }
@@ -141,6 +251,8 @@ impl Listener { pub fn start(device: Option<&str>, model: &Path, language: &str,
 - No model file: `Listener::start` still succeeds, levels flow, and one `Heard::Problem`
   says "No speech model installed (looked for ...)". Without the `whisper` feature a model file
   that exists gets "this build has no speech recogniser".
+
+- `tempo.rs`: the beat tracker, below. Needs no model and no feature flag.
 
 ### Not proven here
 
