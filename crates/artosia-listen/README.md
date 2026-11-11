@@ -158,8 +158,11 @@ model and the church's 1,333 songs as the library. The test is `names_its_song` 
 
 Opened on this PC, 2026-11-11: the default microphone and a USB microphone by name (48 kHz,
 one channel), the laptop's microphone array (48 kHz, two channels), a virtual cable (opens,
-silent), and system audio (a 440 Hz tone played at low volume came back at -20.7 dBFS peak).
-Not tried: a wireless headset, a device at 44.1 or 16 kHz, a device unplugged while it runs.
+silent), a wireless headset's microphone by id and by name (48 kHz, one channel, frames
+arriving but every one of them zero, as with the headset switched off), and system audio (a
+440 Hz tone played at low volume came back at -20.7 dBFS peak).
+Not tried: the headset with someone speaking into it, a device at 44.1 or 16 kHz, a device
+unplugged while it runs.
 
 ## Tempo and the beat
 
