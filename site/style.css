@@ -394,6 +394,23 @@ footer {
   color: var(--muted);
 }
 
+.zip-note {
+  margin-top: 1.5rem;
+  font-size: 0.9375rem;
+  max-width: 34rem;
+}
+
+.zip-note a {
+  font-weight: 500;
+  color: var(--accent);
+  white-space: nowrap;
+  transition: opacity 0.15s;
+}
+
+.zip-note a:hover {
+  opacity: 0.7;
+}
+
 .band-alt {
   background: var(--bg-alt);
   --muted: var(--muted-alt);

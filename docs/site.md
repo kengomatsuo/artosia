@@ -30,8 +30,9 @@ version and size on the page. The script reads both from the newest release, nev
 then checks the newest release when it is opened and keeps the answer for an hour.
 
 The download button points at
-`https://github.com/kengomatsuo/artosia/releases/latest/download/Artosia-windows.zip`,
-which always answers with the newest zip.
+`https://github.com/kengomatsuo/artosia/releases/latest/download/Artosia-setup.exe`,
+which always answers with the newest release's setup ([setup.md](setup.md)). The zip of the
+same release is the second way, for a computer with no internet, under the three steps.
 
 ## The look
 

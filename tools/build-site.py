@@ -1,10 +1,11 @@
 """Builds the homepage into target/site: one template, one page per language.
 
-    python -I tools/build-site.py [--version V] [--zip-bytes N] [--langs en,id] [--out target/site]
+    python -I tools/build-site.py [--version V] [--setup-bytes N] [--zip-bytes N] [--langs en,id] [--out target/site]
 
-The version comes from --version, or from crates/artosia/Cargo.toml. The zip's
-size comes from --zip-bytes, or from dist/<version>/Artosia-windows.zip when
-that was built here. tools/publish-site.sh passes both from the newest release.
+The version comes from --version, or from crates/artosia/Cargo.toml. The sizes
+of the setup and of the zip come from --setup-bytes and --zip-bytes, or from
+the files in dist/<version>/ when that was built here. tools/publish-site.sh
+passes all three from the newest release.
 A placeholder with no string, a string no placeholder uses, and a language
 missing a key each stop the build.
 """
@@ -22,7 +23,9 @@ ROOT = Path(__file__).resolve().parent.parent
 SITE = ROOT / "site"
 DOMAIN = "artosia.matsuokengo.com"
 ORIGIN = f"https://{DOMAIN}"
-DOWNLOAD = "https://github.com/kengomatsuo/artosia/releases/latest/download/Artosia-windows.zip"
+LATEST = "https://github.com/kengomatsuo/artosia/releases/latest/download"
+DOWNLOAD = f"{LATEST}/Artosia-setup.exe"
+ZIP = f"{LATEST}/Artosia-windows.zip"
 # The first page sends an Indonesian browser to /id/ once; a chosen language is kept.
 REDIRECT = (
     '<script>try{var c=localStorage.getItem("lang");'
@@ -56,6 +59,7 @@ def page(lang: str, strings: dict, numbers: dict) -> str:
         "site": ORIGIN,
         "canonical": f"{ORIGIN}/" if first else f"{ORIGIN}/{lang}/",
         "download": DOWNLOAD,
+        "zip": ZIP,
         "version": numbers["version"],
         "language_redirect": REDIRECT if first else "",
     }
@@ -65,6 +69,7 @@ def page(lang: str, strings: dict, numbers: dict) -> str:
         used.add(key)
         text = html.escape(strings[key], quote=True)
         text = text.replace("{version}", f'<span data-version>{numbers["version"]}</span>')
+        text = text.replace("{zipsize}", f'<span data-zip-size>{numbers["zip_mb"]}</span>')
         return text.replace("{size}", f'<span data-size>{numbers["mb"]}</span>')
 
     def fill(match: re.Match) -> str:
@@ -91,19 +96,29 @@ def page(lang: str, strings: dict, numbers: dict) -> str:
 def main() -> None:
     args = argparse.ArgumentParser()
     args.add_argument("--version")
+    args.add_argument("--setup-bytes", type=int)
     args.add_argument("--zip-bytes", type=int)
     args.add_argument("--langs", default="en,id")
     args.add_argument("--out", default=str(ROOT / "target/site"))
     args = args.parse_args()
 
     v = args.version or version()
-    size = args.zip_bytes
-    if size is None:
-        built = ROOT / "dist" / v / "Artosia-windows.zip"
+    def size_of(given: int | None, name: str, flag: str) -> int:
+        if given is not None:
+            return given
+        built = ROOT / "dist" / v / name
         if not built.exists():
-            sys.exit(f"pass --zip-bytes: {built} is not here")
-        size = built.stat().st_size
-    numbers = {"version": v, "mb": round(size / 1048576)}
+            sys.exit(f"pass {flag}: {built} is not here")
+        return built.stat().st_size
+
+    def megabytes(n: int) -> int:
+        return max(1, round(n / 1048576))
+
+    numbers = {
+        "version": v,
+        "mb": megabytes(size_of(args.setup_bytes, "Artosia-setup.exe", "--setup-bytes")),
+        "zip_mb": megabytes(size_of(args.zip_bytes, "Artosia-windows.zip", "--zip-bytes")),
+    }
 
     langs = args.langs.split(",")
     catalogues = {
@@ -147,7 +162,10 @@ def main() -> None:
         f"{urls}</urlset>\n",
         newline="\n",
     )
-    print(f"built {out}: {', '.join(langs)}, version {v}, {numbers['mb']} MB")
+    print(
+        f"built {out}: {', '.join(langs)}, version {v}, "
+        f"setup {numbers['mb']} MB, zip {numbers['zip_mb']} MB"
+    )
 
 
 if __name__ == "__main__":

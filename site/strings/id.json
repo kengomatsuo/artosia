@@ -9,7 +9,7 @@
   "hero_lead": "Artosia program gratis untuk menayangkan lagu, ayat Alkitab, dan pengumuman di proyektor gereja, dijalankan dari komputer Windows di meja multimedia.",
   "download_button": "Unduh untuk Windows",
   "source_button": "Kode sumber",
-  "release_note": "Versi {version}, {size} MB zip, Windows 10 dan 11",
+  "release_note": "Versi {version}, {size} MB, Windows 10 dan 11",
   "stage_prev": "Mundur",
   "stage_next": "Maju",
   "stage_count": "{n} dari {of}",
@@ -41,10 +41,8 @@
   "notices_alt": "Editor pengumuman: daftar slide, dan slide ulang tahun di gambar kecil proyektor",
   "start_title": "Mulai dalam tiga langkah",
   "step_download_title": "Unduh",
-  "step_download_text": "Satu berkas zip sebesar {size} MB.",
-  "step_unzip_title": "Ekstrak",
-  "step_unzip_text": "Ekstrak ke folder yang bisa diubah, misalnya Dokumen. Artosia memperbarui berkasnya sendiri di sana.",
-  "step_open_title": "Buka artosia.exe",
+  "step_download_text": "Program pemasang Artosia yang kecil, {size} MB.",
+  "step_open_title": "Buka Artosia-setup.exe",
   "step_open_text": "Windows mungkin memperingatkan bahwa penerbitnya tidak dikenal, sebab berkas program belum memakai tanda tangan kode berbayar.",
   "facts_title": "Yang perlu kamu tahu",
   "fact_runs_term": "Berjalan di",
@@ -65,5 +63,9 @@
   "fact_price_text": "Gratis, kode sumbernya terbuka dengan lisensi GPL-3.0-or-later.",
   "footer_source": "Kode sumber",
   "footer_releases": "Semua versi",
-  "footer_licence": "Lisensi"
+  "footer_licence": "Lisensi",
+  "step_ready_title": "Artosia buka sendiri",
+  "step_ready_text": "Berkas ini mengambil program dari internet, membuat pintasan di desktop dan menu Start, lalu membuka Artosia. Perlu koneksi internet.",
+  "zip_note": "Kalau komputernya tidak punya internet, ada cara lain: berkas zip {zipsize} MB yang kamu ekstrak ke folder sendiri.",
+  "zip_link": "Unduh zip →"
 }

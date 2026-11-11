@@ -1,70 +1,348 @@
 {
   "_page": "The public homepage of Artosia at artosia.matsuokengo.com. Artosia is a free program for a church's media desk: it puts the words of songs, Bible verses and announcements on the projector during a service. It runs on a Windows computer. The reader is a church volunteer of any age who was sent the link and wants to know what this is and how to get it. Register: informal and warm, addressing the reader as kamu where a pronoun is needed. Plain, modest, concrete: say what the thing is and does, then stop. No exclamation marks, no em-dash, no en-dash, no middle dot, no emoji. Sentence case. Program names (Artosia, EasiSlides, OpenLyrics, PowerPoint, Windows, Wi-Fi, GPL-3.0-or-later, artosia.exe) stay as written. Names of things inside the program must be the words the program itself uses in Indonesian: look them up in docs/i18n/id.json (Design, Screens, Announcements, Search, Prev and Next, the plan, Preview and Live).",
-  "meta_title": {"where": "the browser tab and the search engine result's blue line", "does": "names the program, then says in a few words what kind of program it is (free, for worship services, shows words on a projector, for Windows). Starts with 'Artosia:'", "max": 60},
-  "meta_description": {"where": "the grey text under a search engine result", "does": "one or two sentences: Artosia puts song words, Bible verses and announcements on a church's projector; it is free, for Windows, and the program itself speaks Indonesian and English", "max": 155},
-  "nav_what": {"where": "top bar link that jumps to the part of the page listing what the program does", "does": "names that part", "max": 16},
-  "nav_start": {"where": "top bar link that jumps to the three steps for getting started", "does": "names that part, one word if possible", "max": 10},
-  "nav_other_language": {"where": "top bar link on the Indonesian page that opens the English page", "does": "the name of the English language as English speakers write it", "max": 10},
-  "nav_download": {"where": "small button at the right of the top bar; pressing it downloads the program", "does": "the act, one word", "max": 10},
-  "hero_title": {"where": "the big headline, the first thing read", "does": "says what the program does in one short sentence ending in a full stop: the words of the songs appear on the projector screen. Must fit two lines on a phone", "max": 32},
-  "hero_lead": {"where": "one sentence under the headline, grey", "does": "says what Artosia is: free software that puts songs, Bible verses and announcements on a church's projector, run from the Windows computer at the media desk (where the multimedia volunteer sits)", "max": 150},
-  "download_button": {"where": "the main black button; pressing it downloads the program", "does": "says the act and that it is for Windows", "max": 24},
-  "source_button": {"where": "quiet outline button beside the main one; opens the page where the program's source code is public", "does": "names what it opens: the source code", "max": 14},
-  "release_note": {"where": "small grey line under the download button", "does": "three facts separated by commas: the version, written as the word for version followed by the token {version}; the size, written as the token {size} followed by MB and the word zip; and that it is for Windows 10 and 11. Keep both tokens exactly", "max": 50},
-  "stage_prev": {"where": "button under a picture of the program; steps the picture back one slide. It mirrors the program's own key for the previous slide", "does": "the program's own short word for going to the previous slide", "max": 8},
-  "stage_next": {"where": "button under a picture of the program; steps the picture forward one slide. It mirrors the program's own key for the next slide", "does": "the program's own short word for going to the next slide", "max": 8},
-  "stage_count": {"where": "small counter beside those buttons", "does": "which picture of how many, using the tokens {n} and {of}, for example the Indonesian way of writing '2 of 4'. Keep both tokens exactly", "max": 14},
-  "stage_caption": {"where": "one grey line beside the buttons, under the picture of the program's window", "does": "tells the reader to press the forward button (use the same word as stage_next), and that the row marked red is what the congregation sees on the projector", "max": 70},
-  "stage_alt_0": {"where": "text read aloud by a screen reader in place of the first picture", "does": "describes it: the Artosia window, with the plan for the service on the left, the next song in the middle, and on the right the slide now on the projector, marked red", "max": 150},
-  "stage_alt_1": {"where": "screen reader text for the second picture", "does": "the same window one slide later", "max": 60},
-  "stage_alt_2": {"where": "screen reader text for the third picture", "does": "the same window two slides later", "max": 60},
-  "stage_alt_3": {"where": "screen reader text for the fourth picture", "does": "the same window three slides later", "max": 60},
-  "what_title": {"where": "heading of the part that shows what the program does, each with a picture", "does": "names the part, same idea as nav_what", "max": 24},
-  "wall_title": {"where": "small heading beside a picture of the projector screen showing only four lines of a song", "does": "the congregation sees nothing but the words", "max": 36},
-  "wall_text": {"where": "one sentence under that heading", "does": "the projector is run by a separate program of its own, so the words stay on the screen even if the operator's window stops working", "max": 120},
-  "wall_caption": {"where": "tiny grey label under that picture", "does": "names what the picture is: the projector", "max": 14},
-  "wall_alt": {"where": "screen reader text for that picture", "does": "four lines of a song in white on a dark blue screen", "max": 80},
-  "search_title": {"where": "small heading above a picture of the search box with songs found", "does": "a song can be found from any line of its words", "max": 36},
-  "search_text": {"where": "one or two sentences under that heading", "does": "type the title or whatever line you remember; spelling mistakes are forgiven; the words that match are marked", "max": 120},
-  "search_caption": {"where": "tiny grey label under that picture", "does": "the search opens as soon as you start typing", "max": 44},
-  "search_alt": {"where": "screen reader text for that picture", "does": "the search box with two words typed and four songs found, the matching words in blue", "max": 110},
-  "look_title": {"where": "small heading beside a picture of the dialog where the look of the slides is chosen", "does": "you pick a look that is already made (you do not have to design one)", "max": 30},
-  "look_text": {"where": "one or two sentences under that heading", "does": "six looks are ready; behind the words you can put a colour, a picture, a looping video or a camera; there are 318 free backgrounds to choose from", "max": 150},
-  "look_caption": {"where": "tiny grey label under that picture", "does": "the program's own Indonesian name for its Design dialog", "max": 14},
-  "look_alt": {"where": "screen reader text for that picture", "does": "the Design dialog with six ready looks and a preview of the words", "max": 100},
-  "screens_title": {"where": "small heading beside a picture of the dialog for projector screens, where four corners of the picture can be moved", "does": "the crooked picture on the wall can be straightened without leaving the desk", "max": 40},
-  "screens_text": {"where": "one or two sentences under that heading", "does": "a second screen is found and filled automatically; you move its four corners until the picture on the wall is square", "max": 130},
-  "screens_caption": {"where": "tiny grey label under that picture", "does": "the program's own Indonesian name for its Screens dialog", "max": 14},
-  "screens_alt": {"where": "screen reader text for that picture", "does": "the Screens dialog listing two screens, with four corners that can be moved", "max": 100},
-  "notices_title": {"where": "small heading beside a picture of the announcements editor", "does": "announcements shown before the service starts", "max": 36},
-  "notices_text": {"where": "one sentence under that heading", "does": "slides that repeat in a loop while people arrive; they can be typed in, or brought in from a PowerPoint file or from a list of birthdays", "max": 130},
-  "notices_caption": {"where": "tiny grey label under that picture", "does": "the program's own Indonesian name for Announcements", "max": 16},
-  "notices_alt": {"where": "screen reader text for that picture", "does": "the announcements editor: a list of slides, and a birthdays slide shown in the small projector preview", "max": 120},
-  "start_title": {"where": "heading of the part with three numbered steps to get the program running", "does": "getting started takes three steps", "max": 30},
-  "step_download_title": {"where": "step 1, bold word after the number", "does": "the act: download. Same word as nav_download", "max": 12},
-  "step_download_text": {"where": "one short line under step 1", "does": "it is a single zip file of {size} MB. Keep the token exactly", "max": 40},
-  "step_unzip_title": {"where": "step 2, bold word after the number", "does": "the act: unpack the zip file, the everyday Indonesian word for it", "max": 14},
-  "step_unzip_text": {"where": "one or two short sentences under step 2", "does": "unpack it into a folder you are allowed to write to, for example Documents (use the folder's name as an Indonesian Windows shows it); the reason: Artosia updates its own files there", "max": 110},
-  "step_open_title": {"where": "step 3, bold words after the number", "does": "the act: open the file artosia.exe", "max": 20},
-  "step_open_text": {"where": "one sentence under step 3", "does": "the first time, Windows may show a warning that it does not know the publisher; the reason is that the program files do not carry a paid code signature", "max": 130},
-  "facts_title": {"where": "heading of the last part, a list of short facts", "does": "things worth knowing before you download", "max": 24},
-  "fact_runs_term": {"where": "bold label of a fact", "does": "what it runs on", "max": 16},
-  "fact_runs_text": {"where": "the fact under that label", "does": "three short facts: it is built for Windows 10 and 11, 64-bit; so far it has only been tried on Windows 11; versions for Mac and Linux are planned and have not been tested", "max": 120},
-  "fact_needs_term": {"where": "bold label of a fact", "does": "what you need", "max": 16},
-  "fact_needs_text": {"where": "the fact under that label", "does": "a projector or a second screen; one screen alone is enough to try the program", "max": 90},
-  "fact_bible_term": {"where": "bold label of a fact", "does": "the Bible, the common Indonesian word", "max": 12},
-  "fact_bible_text": {"where": "the fact under that label", "does": "verses are called up by their reference, with an example reference written the Indonesian way (book Yohanes, chapter 3, verses 16 to 18, with a hyphen), taken from the Bibles you add to the program", "max": 90},
-  "fact_library_term": {"where": "bold label of a fact", "does": "the song collection you already have from an older program", "max": 22},
-  "fact_library_text": {"where": "the fact under that label", "does": "it reads song files from EasiSlides and OpenLyrics", "max": 70},
-  "fact_phone_term": {"where": "bold label of a fact", "does": "a phone, the everyday Indonesian word", "max": 10},
-  "fact_phone_text": {"where": "the fact under that label", "does": "a web page opened on a phone on the same Wi-Fi can move the slides", "max": 80},
-  "fact_language_term": {"where": "bold label of a fact", "does": "languages", "max": 10},
-  "fact_language_text": {"where": "the fact under that label", "does": "Indonesian and English, both in the program's window and in its search (Indonesian named first on this page)", "max": 80},
-  "fact_updates_term": {"where": "bold label of a fact", "does": "updates of the program", "max": 14},
-  "fact_updates_text": {"where": "the fact under that label", "does": "every installed copy fetches the newest version by itself and checks its digital signature", "max": 100},
-  "fact_price_term": {"where": "bold label of a fact", "does": "the price", "max": 10},
-  "fact_price_text": {"where": "the fact under that label", "does": "free; the source code is open under the licence GPL-3.0-or-later", "max": 80},
-  "footer_source": {"where": "small footer link to the public source code", "does": "one or two words", "max": 14},
-  "footer_releases": {"where": "small footer link to the list of every released version", "does": "one or two words", "max": 14},
-  "footer_licence": {"where": "small footer link to the licence text", "does": "one word", "max": 10}
+  "meta_title": {
+    "where": "the browser tab and the search engine result's blue line",
+    "does": "names the program, then says in a few words what kind of program it is (free, for worship services, shows words on a projector, for Windows). Starts with 'Artosia:'",
+    "max": 60
+  },
+  "meta_description": {
+    "where": "the grey text under a search engine result",
+    "does": "one or two sentences: Artosia puts song words, Bible verses and announcements on a church's projector; it is free, for Windows, and the program itself speaks Indonesian and English",
+    "max": 155
+  },
+  "nav_what": {
+    "where": "top bar link that jumps to the part of the page listing what the program does",
+    "does": "names that part",
+    "max": 16
+  },
+  "nav_start": {
+    "where": "top bar link that jumps to the three steps for getting started",
+    "does": "names that part, one word if possible",
+    "max": 10
+  },
+  "nav_other_language": {
+    "where": "top bar link on the Indonesian page that opens the English page",
+    "does": "the name of the English language as English speakers write it",
+    "max": 10
+  },
+  "nav_download": {
+    "where": "small button at the right of the top bar; pressing it downloads the program",
+    "does": "the act, one word",
+    "max": 10
+  },
+  "hero_title": {
+    "where": "the big headline, the first thing read",
+    "does": "says what the program does in one short sentence ending in a full stop: the words of the songs appear on the projector screen. Must fit two lines on a phone",
+    "max": 32
+  },
+  "hero_lead": {
+    "where": "one sentence under the headline, grey",
+    "does": "says what Artosia is: free software that puts songs, Bible verses and announcements on a church's projector, run from the Windows computer at the media desk (where the multimedia volunteer sits)",
+    "max": 150
+  },
+  "download_button": {
+    "where": "the main black button; pressing it downloads the program",
+    "does": "says the act and that it is for Windows",
+    "max": 24
+  },
+  "source_button": {
+    "where": "quiet outline button beside the main one; opens the page where the program's source code is public",
+    "does": "names what it opens: the source code",
+    "max": 14
+  },
+  "release_note": {
+    "where": "small grey line under the download button",
+    "does": "three facts separated by commas: the version, written as the word for version followed by the token {version}; the size of the file the button downloads, written as the token {size} followed by MB; and that it is for Windows 10 and 11. Keep both tokens exactly",
+    "max": 50
+  },
+  "stage_prev": {
+    "where": "button under a picture of the program; steps the picture back one slide. It mirrors the program's own key for the previous slide",
+    "does": "the program's own short word for going to the previous slide",
+    "max": 8
+  },
+  "stage_next": {
+    "where": "button under a picture of the program; steps the picture forward one slide. It mirrors the program's own key for the next slide",
+    "does": "the program's own short word for going to the next slide",
+    "max": 8
+  },
+  "stage_count": {
+    "where": "small counter beside those buttons",
+    "does": "which picture of how many, using the tokens {n} and {of}, for example the Indonesian way of writing '2 of 4'. Keep both tokens exactly",
+    "max": 14
+  },
+  "stage_caption": {
+    "where": "one grey line beside the buttons, under the picture of the program's window",
+    "does": "tells the reader to press the forward button (use the same word as stage_next), and that the row marked red is what the congregation sees on the projector",
+    "max": 70
+  },
+  "stage_alt_0": {
+    "where": "text read aloud by a screen reader in place of the first picture",
+    "does": "describes it: the Artosia window, with the plan for the service on the left, the next song in the middle, and on the right the slide now on the projector, marked red",
+    "max": 150
+  },
+  "stage_alt_1": {
+    "where": "screen reader text for the second picture",
+    "does": "the same window one slide later",
+    "max": 60
+  },
+  "stage_alt_2": {
+    "where": "screen reader text for the third picture",
+    "does": "the same window two slides later",
+    "max": 60
+  },
+  "stage_alt_3": {
+    "where": "screen reader text for the fourth picture",
+    "does": "the same window three slides later",
+    "max": 60
+  },
+  "what_title": {
+    "where": "heading of the part that shows what the program does, each with a picture",
+    "does": "names the part, same idea as nav_what",
+    "max": 24
+  },
+  "wall_title": {
+    "where": "small heading beside a picture of the projector screen showing only four lines of a song",
+    "does": "the congregation sees nothing but the words",
+    "max": 36
+  },
+  "wall_text": {
+    "where": "one sentence under that heading",
+    "does": "the projector is run by a separate program of its own, so the words stay on the screen even if the operator's window stops working",
+    "max": 120
+  },
+  "wall_caption": {
+    "where": "tiny grey label under that picture",
+    "does": "names what the picture is: the projector",
+    "max": 14
+  },
+  "wall_alt": {
+    "where": "screen reader text for that picture",
+    "does": "four lines of a song in white on a dark blue screen",
+    "max": 80
+  },
+  "search_title": {
+    "where": "small heading above a picture of the search box with songs found",
+    "does": "a song can be found from any line of its words",
+    "max": 36
+  },
+  "search_text": {
+    "where": "one or two sentences under that heading",
+    "does": "type the title or whatever line you remember; spelling mistakes are forgiven; the words that match are marked",
+    "max": 120
+  },
+  "search_caption": {
+    "where": "tiny grey label under that picture",
+    "does": "the search opens as soon as you start typing",
+    "max": 44
+  },
+  "search_alt": {
+    "where": "screen reader text for that picture",
+    "does": "the search box with two words typed and four songs found, the matching words in blue",
+    "max": 110
+  },
+  "look_title": {
+    "where": "small heading beside a picture of the dialog where the look of the slides is chosen",
+    "does": "you pick a look that is already made (you do not have to design one)",
+    "max": 30
+  },
+  "look_text": {
+    "where": "one or two sentences under that heading",
+    "does": "six looks are ready; behind the words you can put a colour, a picture, a looping video or a camera; there are 318 free backgrounds to choose from",
+    "max": 150
+  },
+  "look_caption": {
+    "where": "tiny grey label under that picture",
+    "does": "the program's own Indonesian name for its Design dialog",
+    "max": 14
+  },
+  "look_alt": {
+    "where": "screen reader text for that picture",
+    "does": "the Design dialog with six ready looks and a preview of the words",
+    "max": 100
+  },
+  "screens_title": {
+    "where": "small heading beside a picture of the dialog for projector screens, where four corners of the picture can be moved",
+    "does": "the crooked picture on the wall can be straightened without leaving the desk",
+    "max": 40
+  },
+  "screens_text": {
+    "where": "one or two sentences under that heading",
+    "does": "a second screen is found and filled automatically; you move its four corners until the picture on the wall is square",
+    "max": 130
+  },
+  "screens_caption": {
+    "where": "tiny grey label under that picture",
+    "does": "the program's own Indonesian name for its Screens dialog",
+    "max": 14
+  },
+  "screens_alt": {
+    "where": "screen reader text for that picture",
+    "does": "the Screens dialog listing two screens, with four corners that can be moved",
+    "max": 100
+  },
+  "notices_title": {
+    "where": "small heading beside a picture of the announcements editor",
+    "does": "announcements shown before the service starts",
+    "max": 36
+  },
+  "notices_text": {
+    "where": "one sentence under that heading",
+    "does": "slides that repeat in a loop while people arrive; they can be typed in, or brought in from a PowerPoint file or from a list of birthdays",
+    "max": 130
+  },
+  "notices_caption": {
+    "where": "tiny grey label under that picture",
+    "does": "the program's own Indonesian name for Announcements",
+    "max": 16
+  },
+  "notices_alt": {
+    "where": "screen reader text for that picture",
+    "does": "the announcements editor: a list of slides, and a birthdays slide shown in the small projector preview",
+    "max": 120
+  },
+  "start_title": {
+    "where": "heading of the part with three numbered steps to get the program running",
+    "does": "getting started takes three steps",
+    "max": 30
+  },
+  "step_download_title": {
+    "where": "step 1, bold word after the number",
+    "does": "the act: download. Same word as nav_download",
+    "max": 12
+  },
+  "step_download_text": {
+    "where": "one short line under step 1",
+    "does": "what the button gives you: a small setup file (the program that installs Artosia) of {size} MB. Keep the token exactly",
+    "max": 50
+  },
+  "step_open_title": {
+    "where": "step 2, bold words after the number",
+    "does": "the act: open the downloaded file, whose name Artosia-setup.exe is written exactly",
+    "max": 26
+  },
+  "step_open_text": {
+    "where": "one sentence under step 2",
+    "does": "the first time, Windows may show a warning that it does not know the publisher; the reason is that the program files do not carry a paid code signature",
+    "max": 130
+  },
+  "step_ready_title": {
+    "where": "step 3, bold words after the number",
+    "does": "what happens last, with nothing for the person to do: Artosia opens by itself",
+    "max": 22
+  },
+  "step_ready_text": {
+    "where": "one or two short sentences under step 3",
+    "does": "what the setup file does by itself: it fetches the program from the internet, puts a shortcut on the desktop and in the Start menu (use the words an Indonesian Windows shows for those two places), and opens Artosia. It needs an internet connection for this",
+    "max": 150
+  },
+  "zip_note": {
+    "where": "one sentence under the second download button, for the less common case; a link follows it",
+    "does": "for a computer that has no internet connection there is another way: a zip file of {zipsize} MB that you unpack into a folder of your own. Keep the token exactly",
+    "max": 130
+  },
+  "zip_link": {
+    "where": "a green text link right after that sentence; pressing it downloads the zip file",
+    "does": "the act: download the zip. It ends with a space and the arrow character →, as every action link on this site does",
+    "max": 24
+  },
+  "facts_title": {
+    "where": "heading of the last part, a list of short facts",
+    "does": "things worth knowing before you download",
+    "max": 24
+  },
+  "fact_runs_term": {
+    "where": "bold label of a fact",
+    "does": "what it runs on",
+    "max": 16
+  },
+  "fact_runs_text": {
+    "where": "the fact under that label",
+    "does": "three short facts: it is built for Windows 10 and 11, 64-bit; so far it has only been tried on Windows 11; versions for Mac and Linux are planned and have not been tested",
+    "max": 120
+  },
+  "fact_needs_term": {
+    "where": "bold label of a fact",
+    "does": "what you need",
+    "max": 16
+  },
+  "fact_needs_text": {
+    "where": "the fact under that label",
+    "does": "a projector or a second screen; one screen alone is enough to try the program",
+    "max": 90
+  },
+  "fact_bible_term": {
+    "where": "bold label of a fact",
+    "does": "the Bible, the common Indonesian word",
+    "max": 12
+  },
+  "fact_bible_text": {
+    "where": "the fact under that label",
+    "does": "verses are called up by their reference, with an example reference written the Indonesian way (book Yohanes, chapter 3, verses 16 to 18, with a hyphen), taken from the Bibles you add to the program",
+    "max": 90
+  },
+  "fact_library_term": {
+    "where": "bold label of a fact",
+    "does": "the song collection you already have from an older program",
+    "max": 22
+  },
+  "fact_library_text": {
+    "where": "the fact under that label",
+    "does": "it reads song files from EasiSlides and OpenLyrics",
+    "max": 70
+  },
+  "fact_phone_term": {
+    "where": "bold label of a fact",
+    "does": "a phone, the everyday Indonesian word",
+    "max": 10
+  },
+  "fact_phone_text": {
+    "where": "the fact under that label",
+    "does": "a web page opened on a phone on the same Wi-Fi can move the slides",
+    "max": 80
+  },
+  "fact_language_term": {
+    "where": "bold label of a fact",
+    "does": "languages",
+    "max": 10
+  },
+  "fact_language_text": {
+    "where": "the fact under that label",
+    "does": "Indonesian and English, both in the program's window and in its search (Indonesian named first on this page)",
+    "max": 80
+  },
+  "fact_updates_term": {
+    "where": "bold label of a fact",
+    "does": "updates of the program",
+    "max": 14
+  },
+  "fact_updates_text": {
+    "where": "the fact under that label",
+    "does": "every installed copy fetches the newest version by itself and checks its digital signature",
+    "max": 100
+  },
+  "fact_price_term": {
+    "where": "bold label of a fact",
+    "does": "the price",
+    "max": 10
+  },
+  "fact_price_text": {
+    "where": "the fact under that label",
+    "does": "free; the source code is open under the licence GPL-3.0-or-later",
+    "max": 80
+  },
+  "footer_source": {
+    "where": "small footer link to the public source code",
+    "does": "one or two words",
+    "max": 14
+  },
+  "footer_releases": {
+    "where": "small footer link to the list of every released version",
+    "does": "one or two words",
+    "max": 14
+  },
+  "footer_licence": {
+    "where": "small footer link to the licence text",
+    "does": "one word",
+    "max": 10
+  }
 }

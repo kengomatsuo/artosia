@@ -170,12 +170,13 @@ function stage() {
 async function release() {
   const versions = document.querySelectorAll("[data-version]");
   const sizes = document.querySelectorAll("[data-size]");
+  const zipSizes = document.querySelectorAll("[data-zip-size]");
   if (!versions.length) return;
   const HOUR = 3600e3;
   let found = null;
   try {
     const kept = JSON.parse(localStorage.getItem("release") || "null");
-    if (kept && Date.now() - kept.at < HOUR) found = kept;
+    if (kept && kept.zip && Date.now() - kept.at < HOUR) found = kept;
   } catch {}
   if (!found) {
     try {
@@ -184,12 +185,16 @@ async function release() {
       });
       if (!res.ok) return;
       const latest = await res.json();
-      const zip = (latest.assets || []).find((a) => a.name === "Artosia-windows.zip");
-      if (!zip || !latest.tag_name) return;
+      const file = (name) => (latest.assets || []).find((a) => a.name === name);
+      const setup = file("Artosia-setup.exe");
+      const zip = file("Artosia-windows.zip");
+      if (!setup || !zip || !latest.tag_name) return;
+      const megabytes = (bytes) => Math.max(1, Math.round(bytes / 1048576));
       found = {
         at: Date.now(),
         version: latest.tag_name.replace(/^v/, ""),
-        mb: Math.round(zip.size / 1048576),
+        mb: megabytes(setup.size),
+        zip: megabytes(zip.size),
       };
       try {
         localStorage.setItem("release", JSON.stringify(found));
@@ -200,4 +205,5 @@ async function release() {
   }
   versions.forEach((el) => (el.textContent = found.version));
   sizes.forEach((el) => (el.textContent = found.mb));
+  zipSizes.forEach((el) => (el.textContent = found.zip));
 }
