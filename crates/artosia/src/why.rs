@@ -71,7 +71,9 @@ pub fn listen_problem(problem: &artosia_listen::Problem, speech_built: bool) -> 
         Problem::NoModel | Problem::NoRecogniser => Some(t::LISTEN_BEAT_ONLY().to_string()),
         Problem::Model(_) => Some(t::LISTEN_MODEL_DAMAGED().to_string()),
         Problem::Input(_) => Some(t::LISTEN_INPUT_STOPPED().to_string()),
-        Problem::Reading(_) => None,
+        // A phrase that could not be read is not worth a volunteer's eye, and a folder that
+        // cannot be written is said beside the recordings, where it can be moved.
+        Problem::Reading(_) | Problem::Keep(_) => None,
     }
 }
 

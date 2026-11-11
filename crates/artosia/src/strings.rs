@@ -338,6 +338,31 @@ pub fn listen_model_failed(why: &str) -> String {
     }
     format!("The speech model did not arrive: {why}")
 }
+text!(LISTEN_PART_LISTENING, "Listening", "Listening");
+text!(LISTEN_PART_RECORDINGS, "Recordings", "Recordings");
+text!(REC_SWITCH, "Keep recordings", "Keep recordings");
+text!(REC_HINT, "Heard phrases and guesses, in a folder on this computer.", "Heard phrases and guesses, in a folder on this computer.");
+text!(REC_NONE, "Nothing kept yet", "Nothing kept yet");
+text!(REC_OPEN, "Open folder", "Open folder");
+text!(REC_MOVE, "Move folder", "Move folder");
+text!(REC_SAVE, "Save as one file", "Save as one file");
+text!(REC_SAVING, "Saving", "Saving");
+text!(REC_DELETE, "Delete all", "Delete all");
+text!(REC_DELETED, "Recordings deleted", "Recordings deleted");
+text!(REC_FAILED, "Recordings cannot be written there. Move the folder.", "Recordings cannot be written there. Move the folder.");
+text!(REC_ON, "Recording", "Recording");
+pub fn rec_kept(size: &str) -> String {
+    if let Some(text) = say("rec_kept", None, None, &[("size", text_arg(size))]) {
+        return text;
+    }
+    format!("{size} kept")
+}
+pub fn rec_saved(name: &str) -> String {
+    if let Some(text) = say("rec_saved", None, None, &[("name", text_arg(name))]) {
+        return text;
+    }
+    format!("Saved as {name}")
+}
 text!(LISTEN_TEMPO, "Tempo", "Tempo");
 text!(LISTEN_BPM, "BPM", "BPM");
 text!(LISTEN_TEMPO_HALF, "Half", "Half");

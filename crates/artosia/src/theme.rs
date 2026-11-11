@@ -211,6 +211,7 @@ pub mod icons {
     icon!(DOTS, "a-dots", r#"<circle cx="3.5" cy="8" r="1.1" fill="currentColor"/><circle cx="8" cy="8" r="1.1" fill="currentColor"/><circle cx="12.5" cy="8" r="1.1" fill="currentColor"/>"#);
     icon!(IMAGE, "a-image", r#"<rect x="1.5" y="2.5" width="13" height="11" rx="1.5" stroke="currentColor"/><circle cx="5.5" cy="6.5" r="1.2" stroke="currentColor"/><path d="M2 12L6 8L9 11L11 9L14 12" stroke="currentColor" stroke-linejoin="round"/>"#);
     icon!(PHONE, "a-phone", r#"<rect x="4.5" y="1.5" width="7" height="13" rx="1.5" stroke="currentColor"/><path d="M7.4 12.3H8.6" stroke="currentColor" stroke-linecap="round"/>"#);
+    icon!(EXPORT, "a-export", r#"<path d="M8 10.5V2.5M4.5 5.5L8 2L11.5 5.5M2.5 13.5H13.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>"#);
     icon!(IMPORT, "a-import", r#"<path d="M8 2.5V10.5M4.5 7.5L8 11L11.5 7.5M2.5 13.5H13.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>"#);
     icon!(PASTE, "a-paste", r#"<path d="M5.5 3.5H3.5V14H12.5V3.5H10.5" stroke="currentColor" stroke-linejoin="round"/><rect x="5.5" y="2" width="5" height="3" rx="0.8" stroke="currentColor"/><path d="M6 8.5H10M6 11H9" stroke="currentColor" stroke-linecap="round"/>"#);
     icon!(LOOK, "a-look", r#"<circle cx="8" cy="8" r="6" stroke="currentColor"/><path d="M8 2V14C4.7 14 2 11.3 2 8C2 4.7 4.7 2 8 2Z" fill="currentColor"/>"#);

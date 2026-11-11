@@ -134,6 +134,8 @@ A second reader of a finished language found one thing under two or three names,
 
 **`suggestion`** An offer, in a strip at the top of Preview, of what to show next: because the listener heard it, because it is often sung after the live song, or because the singing seems to have left the words on the screen. A suggestion only ever fills Preview and is never sent to the room by itself.
 
+**`recordings`** Sound files and a list of guesses that the program keeps in a folder on this computer when a person switches that on. Each file is one short piece of what the listener heard, twelve seconds at most; the list says what the program thought it heard, which song it guessed and what was really on the projector. They are for the people who make Artosia to learn from, so that the listener gets better. Nothing is sent anywhere: a person hands the folder over, or keeps it where their cloud drive picks it up. It is not the stream's recording of the service as a video.
+
 **`listener`** The microphone helper. It listens to the room, works out which song or verse is being sung or read, and makes suggestions. It never shows anything on its own. It can also feel the beat of the music. Name it by the thing a volunteer sees, the microphone, or by what it does for them; a word for a person who listens reads as the congregation.
 
 **`keyboard`** The shortcut keys of the window, listed in a sheet. Key names such as Ctrl, Shift, Enter and the F keys are drawn as printed on a keyboard and are never translated.

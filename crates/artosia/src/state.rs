@@ -132,6 +132,11 @@ pub struct Settings {
     pub listen_language: String,
     /// The red Live marker pulses gently on the beat the listener hears. Off by default.
     pub beat_blink: bool,
+    /// Heard phrases and what Artosia made of them are kept in a folder. Off until a person
+    /// switches it on: a service holds people's voices.
+    pub keep_recordings: bool,
+    /// The folder a person picked for them; empty keeps them beside the library.
+    pub recordings_folder: String,
     /// The streaming service's address, and the key it gave this church. Kept on this computer only.
     pub stream_address: String,
     pub stream_key: String,
@@ -172,6 +177,8 @@ impl Default for Settings {
             listen_device: String::new(),
             listen_language: "id".to_string(),
             beat_blink: false,
+            keep_recordings: false,
+            recordings_folder: String::new(),
             stream_address: String::new(),
             stream_key: String::new(),
             stream_record: false,
@@ -223,6 +230,8 @@ pub enum Undo {
     Plan(Box<Plan>),
     /// A plan went back to the usual look; this was its own, and `plan` is the plan it belonged to.
     PlanLook { plan: i64, look: serde_json::Value },
+    /// Every recording was deleted; they wait beside the folder until the toast leaves.
+    Recordings,
 }
 
 pub struct Toast {
@@ -323,6 +332,8 @@ pub enum Arrived {
     Update(Result<Option<String>, String>),
     /// The speech model's download ended.
     Model(Result<(), String>),
+    /// The recordings were packed into one file: its name, or that it could not be written.
+    RecordingsSaved(Result<String, ()>),
 }
 
 pub struct App {
@@ -429,6 +440,10 @@ pub struct App {
     /// another song.
     pub tempo_count: TempoCount,
     pub tempo_wanted: Option<f32>,
+    /// What is kept of what the listener hears, when a person switched that on.
+    pub recordings: crate::recordings::Recordings,
+    /// The Listen dialog shows its second part, the recordings.
+    pub listen_part: usize,
     /// The app clock of the last beat reported and whether it is an off beat of the halved
     /// count, carried from report to report so the slower pulse does not jump.
     pub tempo_half: Option<(f64, bool)>,
@@ -616,6 +631,8 @@ impl App {
             listen_tempo_slot: Arc::new(Mutex::new(None)),
             tempo_count: TempoCount::AsHeard,
             tempo_wanted: None,
+            recordings: crate::recordings::Recordings::at_start(),
+            listen_part: 0,
             tempo_half: None,
             tempo: None,
             demo_listening: false,

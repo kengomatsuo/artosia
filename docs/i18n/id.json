@@ -3266,6 +3266,81 @@
   "back": "The voice file is broken. Download it again with the button above.",
   "why": "'Berkas suara' is the name the download row uses"
  },
+ "LISTEN_PART_LISTENING": {
+  "text": "Mendengar",
+  "back": "Listening",
+  "why": "Verbal noun that pairs with the second tab"
+ },
+ "LISTEN_PART_RECORDINGS": {
+  "text": "Sampel suara",
+  "back": "Sound samples",
+  "why": "The one noun for the concept; 'rekaman' belongs to the stream's video recording"
+ },
+ "REC_SWITCH": {
+  "text": "Simpan sampel suara",
+  "back": "Keep sound samples",
+  "why": "Reads beside a switch; same noun as the tab"
+ },
+ "REC_HINT": {
+  "text": "Potongan suara dan tebakan program disimpan di komputer ini.",
+  "back": "Pieces of sound and the program's guesses are kept on this computer.",
+  "why": "Exact about what and where; promises nothing about others"
+ },
+ "REC_NONE": {
+  "text": "Belum ada sampel",
+  "back": "No samples yet",
+  "why": "Short statement"
+ },
+ "rec_kept": {
+  "text": "{size} tersimpan",
+  "back": "{size} kept",
+  "why": "Size and one word"
+ },
+ "REC_OPEN": {
+  "text": "Buka folder",
+  "back": "Open folder",
+  "why": "Same verb as the table's Buka"
+ },
+ "REC_MOVE": {
+  "text": "Pindah folder",
+  "back": "Move folder",
+  "why": "Pairs with Buka folder"
+ },
+ "REC_SAVE": {
+  "text": "Kemas jadi satu berkas",
+  "back": "Pack into one file",
+  "why": "Says the result is one file; 'berkas' as in the table"
+ },
+ "REC_SAVING": {
+  "text": "Mengemas",
+  "back": "Packing",
+  "why": "Ongoing form of Kemas"
+ },
+ "REC_DELETE": {
+  "text": "Hapus semua",
+  "back": "Delete all",
+  "why": "Same Hapus as every deletion; the word for everything"
+ },
+ "REC_DELETED": {
+  "text": "Semua sampel dihapus",
+  "back": "All samples deleted",
+  "why": "Past tense; Kembalikan sits beside it"
+ },
+ "rec_saved": {
+  "text": "{name} sudah disimpan",
+  "back": "{name} has been saved",
+  "why": "Past tense with the file's name"
+ },
+ "REC_FAILED": {
+  "text": "Sampel tidak bisa disimpan di sini. Pakai Pindah folder.",
+  "back": "Samples cannot be saved here. Use Move folder.",
+  "why": "What is wrong, then what to do; same words as the second button"
+ },
+ "REC_ON": {
+  "text": "Menyimpan suara",
+  "back": "Keeping sound",
+  "why": "Ongoing form that names what is kept, sound, so it cannot be read as the plan being saved"
+ },
  "KEYS_PLAN_ROWS[7].1": {
   "text": "Rundown baru, pilih hari dan jamnya",
   "back": "A new rundown, choose its day and hour",

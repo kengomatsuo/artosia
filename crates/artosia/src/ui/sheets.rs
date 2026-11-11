@@ -729,13 +729,110 @@ fn tempo_row(s: &App, k: &Kit) -> El {
     col().w_full().gap(space::S1).child(section_label(k, t::LISTEN_TEMPO())).child(line)
 }
 
-fn listen(s: &App, k: &Kit, layer: &mut Vec<El>) {
+/// A folder as its last two names, with what came before cut away: the end says where it is,
+/// and a path cut at its end says nothing.
+fn folder_words(folder: &std::path::Path) -> String {
+    let names: Vec<String> = folder.iter().map(|part| part.to_string_lossy().to_string()).collect();
+    if names.len() <= 3 {
+        return folder.to_string_lossy().to_string();
+    }
+    let between = std::path::MAIN_SEPARATOR;
+    format!("...{between}{}{between}{}", names[names.len() - 2], names[names.len() - 1])
+}
+
+/// The second part of the Listen dialog: what is kept of what is heard, where, and the four
+/// things to do with it. Keeping is off until its switch is pressed: a service holds people's
+/// voices (owner, 2026-11-11: "make the app collect telemetry audio and the attempts for us
+/// to learn"; nothing is sent, the folder is the whole of it).
+fn recordings_part(s: &App, k: &Kit) -> El {
+    let on = s.settings.keep_recordings;
+    let folder = s.recordings_folder().map(|folder| folder_words(&folder)).unwrap_or_default();
+    let kept = match s.recordings.used {
+        0 => t::REC_NONE().to_string(),
+        bytes => t::rec_kept(&crate::recordings::size_words(bytes)),
+    };
+    let nothing = s.recordings.used == 0;
+    let place = row()
+        .key("rec-where")
+        .w_full()
+        .min_h(40.0)
+        .px(space::S3)
+        .gap(space::S3)
+        .center_y()
+        .radius(k.radius.md)
+        .fill(k.c.layer_02)
+        .child(rune::icon(&icons::FOLDER, 16.0).color(k.c.text_muted).a11y_hidden())
+        .child(text(folder).font(type_::BODY).color(k.c.text_base).truncate().grow(1.0).min_w(0.0))
+        .child(text(kept).font(type_::BODY_STRONG.features("'tnum' 1")).color(k.c.text_base));
+    let pair = |left: El, right: El| row().w_full().gap(space::S2).child(left).child(right);
+    let open = btn(t::REC_OPEN()).icon(&icons::FOLDER).grow().focusable().build(k, |s, _| s.open_recordings_folder());
+    let moved = btn(t::REC_MOVE()).icon(&icons::ARROW_RIGHT).grow().focusable().build(k, |_, tx| {
+        tx.open_folder(FileDialogOptions { title: t::REC_MOVE().to_string(), ..Default::default() }, |s: &mut App, picked, _| {
+            if let Ok(Some(folder)) = picked {
+                s.move_recordings(folder);
+            }
+        });
+    });
+    let saving = s.recordings.saving;
+    let save = btn(if saving { t::REC_SAVING() } else { t::REC_SAVE() }).icon(&icons::EXPORT).grow().disabled(nothing || saving).focusable().build(k, |_, tx| {
+        let options = FileDialogOptions { title: t::REC_SAVE().to_string(), file_name: Some("Artosia recordings.zip".to_string()), ..Default::default() }.filter("zip", &["zip"]);
+        tx.save_file(options, |s: &mut App, picked, _| {
+            if let Ok(Some(file)) = picked {
+                s.save_recordings(file);
+            }
+        });
+    });
+    let delete = btn(t::REC_DELETE()).icon(&icons::TRASH).grow().disabled(nothing).focusable().build(k, |s, _| s.delete_recordings());
+    let mut part = col()
+        .key("recordings")
+        .w_full()
+        .gap(space::S3)
+        .child(switch_row(k, "rec-switch", t::REC_SWITCH(), t::REC_HINT(), on, |s| {
+            let on = !s.settings.keep_recordings;
+            s.set_keep_recordings(on);
+        }))
+        .child(place)
+        .child(col().w_full().gap(space::S2).child(pair(open.key("rec-open"), moved.key("rec-move"))).child(pair(save.key("rec-save"), delete.key("rec-delete"))));
+    if s.recordings.failed {
+        part = part.child(text(t::REC_FAILED()).font(type_::BODY).color(theme::warn_ink()).wrap());
+    }
+    part
+}
+
+fn listen(s: &App, k: &Kit, layer: &mut Vec<El>, tall: f32) {
     let on = s.listener.is_some() || s.demo_listening;
     let level = f32::from_bits(s.listen_level.load(std::sync::atomic::Ordering::Relaxed));
-    let mut body = col().w_full().px(space::S4).pb(space::S4).gap(space::S3).child(switch_row_at(k, "listen-switch", t::LISTEN_SWITCH(), t::LISTEN_HINT(), on, |s| {
+    // Practice keeps nothing, so it shows no second part.
+    let keeps = s.recordings_folder().is_some();
+    let part = if keeps { s.listen_part.min(1) } else { 0 };
+    // The parts and the switch stay; what is under them scrolls when the window is lower
+    // than the dialog (six microphones, a tempo and three heard songs passed 768 points).
+    let mut head = col().w_full().px(space::S4).gap(space::S3);
+    if keeps {
+        // Two parts, as Design has three: with the recordings under the rest the dialog was
+        // taller than a laptop's screen.
+        head = head.child(
+            SegmentedControl::new(&[t::LISTEN_PART_LISTENING(), t::LISTEN_PART_RECORDINGS()], Some(part))
+                .label(t::CMD_LISTEN())
+                .fit()
+                .on_pick(|s: &mut App, picked, _: &mut Tx| {
+                    s.listen_part = picked.min(1);
+                    s.refresh_recordings();
+                })
+                .build(k)
+                .key("listen-parts"),
+        );
+    }
+    if part == 1 {
+        let body = head.pb(space::S4).child(recordings_part(s, k));
+        Dialog::new("listen", t::CMD_LISTEN()).open(true).width(560.0).fit().on_close(close).child(body).build(k, layer);
+        return;
+    }
+    head = head.child(switch_row_at(k, "listen-switch", t::LISTEN_SWITCH(), t::LISTEN_HINT(), on, |s| {
         let on = s.listener.is_none();
         s.set_listening(on);
     }, true));
+    let mut body = col().w_full().px(space::S4).pt(space::S3).pb(space::S4).gap(space::S3);
     // The sources as a row of choices: the computer's own microphone first, then the others, then
     // what the computer itself plays. Each carries what the setting holds (empty is the default).
     let mut sources: Vec<(String, String)> = vec![(t::LISTEN_DEFAULT().to_string(), String::new())];
@@ -848,7 +945,10 @@ fn listen(s: &App, k: &Kit, layer: &mut Vec<El>) {
                 .child(btn(t::BTN_OPEN()).small().focusable().build(k, move |s, _| s.open_heard(&chosen))),
         );
     }
-    Dialog::new("listen", t::CMD_LISTEN()).open(true).width(560.0).fit().on_close(close).child(body).build(k, layer);
+    // The dialog's title, its own edges, and the parts and switch above the scrolling rest.
+    let above = if keeps { 196.0 } else { 148.0 };
+    let rest = col().key("listen-rest").w_full().max_h((tall - above).max(200.0)).scroll(rune::ScrollSpec { stick_bottom: false }).scroll_edge_fade(crate::theme::size::FADE).child(body).scroll_bar(k);
+    Dialog::new("listen", t::CMD_LISTEN()).open(true).width(560.0).fit().on_close(close).child(col().w_full().child(head).child(rest)).build(k, layer);
 }
 
 /// `tall` is the window's height: a sheet longer than the window scrolls inside itself.
@@ -861,7 +961,7 @@ pub fn view(s: &App, k: &Kit, layer: &mut Vec<El>, tall: f32) {
         Sheet::Remote => remote(s, k, layer),
         Sheet::Import => import(s, k, layer),
         Sheet::Keys => keys(s, k, layer, tall),
-        Sheet::Listen => listen(s, k, layer),
+        Sheet::Listen => listen(s, k, layer, tall),
         Sheet::Stream => stream(s, k, layer),
         Sheet::Bibles => crate::ui::bibles::view(s, k, layer),
         Sheet::Backdrops => crate::ui::backdrops::view(s, k, layer),

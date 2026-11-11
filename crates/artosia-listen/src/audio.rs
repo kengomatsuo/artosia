@@ -136,6 +136,29 @@ impl Resampler {
     }
 }
 
+/// Writes mono samples as a 16-bit PCM RIFF/WAVE file, the plainest sound file there is: any
+/// program opens it and [`read_wav`] reads it back.
+pub fn write_wav(path: &std::path::Path, samples: &[f32], sample_rate: u32) -> std::io::Result<()> {
+    let data = (samples.len() * 2) as u32;
+    let mut bytes = Vec::with_capacity(44 + samples.len() * 2);
+    bytes.extend(b"RIFF");
+    bytes.extend((36 + data).to_le_bytes());
+    bytes.extend(b"WAVEfmt ");
+    bytes.extend(16u32.to_le_bytes());
+    bytes.extend(1u16.to_le_bytes()); // PCM
+    bytes.extend(1u16.to_le_bytes()); // one channel
+    bytes.extend(sample_rate.to_le_bytes());
+    bytes.extend((sample_rate * 2).to_le_bytes());
+    bytes.extend(2u16.to_le_bytes());
+    bytes.extend(16u16.to_le_bytes());
+    bytes.extend(b"data");
+    bytes.extend(data.to_le_bytes());
+    for sample in samples {
+        bytes.extend(((sample.clamp(-1.0, 1.0) * 32767.0).round() as i16).to_le_bytes());
+    }
+    std::fs::write(path, bytes)
+}
+
 /// Reads a RIFF/WAVE file (16-bit PCM, 32-bit PCM or 32-bit float) into mono samples and its
 /// sample rate. Used by tests and tools that stand in for a microphone; it keeps no state.
 pub fn read_wav(bytes: &[u8]) -> Result<(Vec<f32>, u32), String> {

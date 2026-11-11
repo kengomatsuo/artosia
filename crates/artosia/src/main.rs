@@ -18,6 +18,7 @@ mod learning;
 mod link;
 mod palette;
 mod plans;
+mod recordings;
 mod starts;
 mod speech_model;
 mod state;
@@ -176,6 +177,13 @@ fn on_key(s: &mut App, ev: &KeyEvent, tx: &mut Tx) -> bool {
             let digit = digit.to_digit(10).unwrap_or(1) as usize;
             s.select_section(if digit == 0 { 9 } else { digit - 1 });
             follow(s, tx);
+            return true;
+        }
+        // A toast that offers Undo prints Ctrl Z, so the key takes it back over a dialog too
+        // (Delete all in Listen left the key dead while its toast was up). A text field uses
+        // the key for its own typing first and only what it leaves arrives here.
+        Key::Command('z') if s.sheet != Sheet::None && s.toast.as_ref().is_some_and(|toast| toast.undo.is_some()) => {
+            s.undo();
             return true;
         }
         Key::Escape if s.palette.open => {
@@ -441,6 +449,40 @@ const SCENES: &[Scene] = &[
         s.sheet = Sheet::Listen;
         s.listen_level.store(0.1f32.to_bits(), std::sync::atomic::Ordering::Relaxed);
         s.settings.beat_blink = true;
+    }),
+    // Everything the first part can hold at once: on a laptop its lower rows scroll under the
+    // parts and the switch.
+    ("listen-heard", |s| {
+        s.demo_listening = true;
+        s.sheet = Sheet::Listen;
+        s.settings.recordings_folder = r"D:\Artosia\recordings".to_string();
+        s.listen_level.store(0.4f32.to_bits(), std::sync::atomic::Ordering::Relaxed);
+        s.tempo = Some((artosia_listen::Tempo { bpm: 92.0, confidence: 0.7, period: 60.0 / 92.0, since_beat: 0.0 }, 0.0));
+        s.microphones = ["Microphone Array", "USB microphone", "Headset", "Mixer line in"].iter().map(|name| artosia_listen::Device { name: (*name).to_string(), id: (*name).to_string() }).collect();
+        s.heard.push("morning light upon the hill and every voice".to_string());
+        s.heard_hits = (0..3).map(crate::state::HeardHit::Song).collect();
+    }),
+    // The second part of the Listen dialog: recordings kept in a picked folder, none yet, and
+    // a folder that cannot be written; and the lit mark in the status bar while it keeps.
+    ("listen-recordings", |s| {
+        s.sheet = Sheet::Listen;
+        s.listen_part = 1;
+        s.settings.keep_recordings = true;
+        s.settings.recordings_folder = r"D:\Church\OneDrive\Artosia recordings".to_string();
+        s.recordings.used = 212 << 20;
+        s.recordings.demo = true;
+    }),
+    ("listen-recordings-none", |s| {
+        s.sheet = Sheet::Listen;
+        s.listen_part = 1;
+        s.settings.recordings_folder = r"D:\Artosia\recordings".to_string();
+    }),
+    ("listen-recordings-failed", |s| {
+        s.sheet = Sheet::Listen;
+        s.listen_part = 1;
+        s.settings.keep_recordings = true;
+        s.settings.recordings_folder = r"E:\Artosia recordings".to_string();
+        s.recordings.failed = true;
     }),
     ("listen-problem", |s| {
         s.sheet = Sheet::Listen;

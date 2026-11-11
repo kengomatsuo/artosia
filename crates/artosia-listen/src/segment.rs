@@ -9,6 +9,8 @@ pub struct Phrase {
     pub samples: Vec<f32>,
     /// False for a progress read of a phrase still going on, true when it ended.
     pub is_final: bool,
+    /// The number of the wave file the listener kept this phrase in, when it keeps them.
+    pub kept: Option<u32>,
 }
 
 #[derive(Debug, Clone)]
@@ -136,7 +138,7 @@ impl Segmenter {
                 out.extend(self.close());
             } else if self.samples_since_partial >= ms_to_samples(self.cfg.partial_every_ms) {
                 self.samples_since_partial = 0;
-                out.push(Phrase { samples: self.phrase.clone(), is_final: false });
+                out.push(Phrase { samples: self.phrase.clone(), is_final: false, kept: None });
             }
             return;
         }
@@ -176,7 +178,7 @@ impl Segmenter {
         samples.truncate(samples.len().saturating_sub(trim));
         self.silent_frames = 0;
         (samples.len() >= ms_to_samples(self.cfg.min_phrase_ms))
-            .then_some(Phrase { samples, is_final: true })
+            .then_some(Phrase { samples, is_final: true, kept: None })
     }
 }
 
@@ -276,7 +278,7 @@ mod tests {
     }
 
     fn job(is_final: bool, tag: f32) -> Phrase {
-        Phrase { samples: vec![tag], is_final }
+        Phrase { samples: vec![tag], is_final, kept: None }
     }
 
     fn tags(jobs: Vec<Phrase>) -> Vec<f32> {

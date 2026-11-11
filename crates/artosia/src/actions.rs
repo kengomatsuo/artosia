@@ -192,6 +192,7 @@ impl App {
             }
             Some(Undo::Plan(plan)) => self.restore_plan(*plan),
             Some(Undo::PlanLook { plan, look }) => self.restore_plan_look(plan, look),
+            Some(Undo::Recordings) => self.restore_recordings(),
             None => {}
         }
     }
@@ -1044,6 +1045,8 @@ impl App {
     pub fn open_listen(&mut self) {
         self.microphones = artosia_listen::devices();
         self.check_model();
+        self.refresh_recordings();
+        self.listen_part = 0;
         self.sheet = Sheet::Listen;
     }
 
@@ -1054,6 +1057,7 @@ impl App {
             // Stopping waits for a recognition in progress, so it happens off the window's thread.
             std::thread::spawn(move || drop(listener));
         }
+        self.end_sitting();
         self.listen_problem = None;
         self.hearing.clear();
         self.listen_level.store(0, std::sync::atomic::Ordering::Relaxed);
@@ -1071,7 +1075,9 @@ impl App {
         let (inbox, waker) = (self.inbox.clone(), self.waker.clone());
         let (level, shown) = (self.listen_level.clone(), self.meter_shown.clone());
         let tempo_slot = self.listen_tempo_slot.clone();
-        let started = artosia_listen::Listener::start(device.as_deref(), &model, &self.settings.listen_language, move |heard| {
+        // With recordings switched on, a sitting opens and the listener writes its phrases there.
+        let keep = self.begin_sitting();
+        let started = artosia_listen::Listener::start_keeping(device.as_deref(), &model, &self.settings.listen_language, keep.as_deref(), move |heard| {
             let wake = match heard {
                 artosia_listen::Heard::Level(now) => {
                     level.store(now.clamp(0.0, 1.0).to_bits(), std::sync::atomic::Ordering::Relaxed);
@@ -1098,7 +1104,10 @@ impl App {
         });
         match started {
             Ok(listener) => self.listener = Some(listener),
-            Err(error) => self.listen_problem = Some(crate::why::listen_error(&error)),
+            Err(error) => {
+                self.end_sitting();
+                self.listen_problem = Some(crate::why::listen_error(&error));
+            }
         }
     }
 
@@ -1139,6 +1148,7 @@ impl App {
             (TempoCount::AsHeard, _) | (_, None) => None,
             (_, Some((tempo, _))) => Some(tempo.bpm * count.times()),
         };
+        self.recording_count();
     }
 
     /// The tempo as it is counted: the tracker's reading, halved or doubled by a press.
@@ -1544,6 +1554,8 @@ impl App {
         }
         self.meter_shown.store(self.listener.is_some() && (self.sheet == Sheet::Listen || self.settings.beat_blink), std::sync::atomic::Ordering::Relaxed);
         changed |= self.take_tempo(clock);
+        self.note_recordings();
+        self.purge_recordings();
         if self.beat_moving() {
             // The dot and the Live marker pulse, which needs a frame every so often.
             changed = true;
@@ -1579,6 +1591,12 @@ impl App {
                     }
                 }
                 Arrived::Heard(artosia_listen::Heard::Final(text)) => self.heard_final(text),
+                Arrived::Heard(artosia_listen::Heard::Kept { n, seconds }) => self.recording_kept(n, seconds),
+                Arrived::Heard(artosia_listen::Heard::Read { n, text }) => self.recording_read(n, text),
+                Arrived::Heard(artosia_listen::Heard::Problem(artosia_listen::Problem::Keep(_))) => {
+                    self.recordings.failed = true;
+                    self.end_sitting();
+                }
                 Arrived::Heard(artosia_listen::Heard::Problem(problem)) => {
                     // A model that would not load is offered again by the row that fetches it.
                     if matches!(problem, artosia_listen::Problem::Model(_)) {
@@ -1590,6 +1608,7 @@ impl App {
                 }
                 Arrived::Heard(_) => {}
                 Arrived::Model(result) => self.model_arrived(result),
+                Arrived::RecordingsSaved(saved) => self.recordings_saved(saved),
                 Arrived::Update(Ok(Some(version))) => self.say(t::update_ready(&version), None),
                 Arrived::Update(Ok(None)) => self.say(t::update_none(crate::update::VERSION), None),
                 Arrived::Update(Err(problem)) => self.say(problem, None),

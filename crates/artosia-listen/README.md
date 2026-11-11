@@ -461,6 +461,12 @@ microphone path (`tests/speech.rs`, ignored: it needs the model and `fixtures/sp
   and flips on short phrases.
 - Show `Heard::Problem` text verbatim; it is already written for a person.
 - The model path is an app setting. Ship no model: offer the download (57 MB) once, with consent.
+- `Listener::start_keeping` is `start` with a folder: every phrase the listener cuts is written
+  there as `phrase-00001.wav` onwards (16 kHz, one channel, 16 bits), `Heard::Kept { n, seconds }`
+  says so, and `Heard::Read { n, text }` says what the recogniser read in it, `None` when it read
+  nothing. Phrases are cut and kept without a speech model too. The first write that fails ends the
+  keeping with `Problem::Keep` and the listening goes on. What the app does with it:
+  [docs/recordings.md](../../docs/recordings.md).
 - Call `Listener::start` off the UI thread's critical path (it waits for the device to open, a
   fraction of a second) and drop the `Listener` to stop; dropping waits for a recognition in
   progress, which can take seconds on a slow CPU, so drop it from a background thread.

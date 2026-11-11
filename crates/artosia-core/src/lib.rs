@@ -10,6 +10,7 @@ pub mod import;
 pub mod learn;
 pub mod marks;
 pub mod openlyrics;
+pub mod pack;
 pub mod palette;
 pub mod plan;
 pub mod search;

@@ -173,6 +173,19 @@ impl App {
         self.hearing.finals.drain(..extra);
     }
 
+    /// What Artosia makes of a phrase, for the recordings: the titles of its nearest songs with
+    /// the words together in a line of each, the titles it names by itself, and a passage.
+    pub(crate) fn attempt_of(&self, text: &str) -> (Vec<(String, u32)>, Vec<String>, Option<String>) {
+        let said: Vec<String> = split_words(text).into_iter().map(|word| word.norm).collect();
+        let words = distinct(&said);
+        let title = |found: &Match| self.songs.get(found.song).map(|song| song.title.clone()).unwrap_or_default();
+        let (near, named) = match words.len() >= MIN_WORDS {
+            true => (self.near_songs(&words.join(" ")).iter().map(|found| (title(found), found.together)).collect(), self.read_songs(&said, &words).iter().map(title).collect()),
+            false => (Vec::new(), Vec::new()),
+        };
+        (near, named, self.bible().and_then(|bible| bible.guess(text).first().map(|guess| bible.format(&guess.reference))))
+    }
+
     /// The three songs nearest to the whole phrase, with how many of its words sit together in
     /// one line of each.
     fn near_songs(&self, phrase: &str) -> Vec<Match> {
@@ -254,6 +267,7 @@ impl App {
 
     /// Puts an offer in the Preview pane. The projector is never touched.
     pub fn take_offer(&mut self, offer: &Suggestion) {
+        self.recording_taken(&format!("{:?}", offer.why), &offer.title);
         match &offer.target {
             Target::Song { at, slide: Some(slide), .. } => {
                 // The live song, with the ring on the part the singing has reached.

@@ -54,6 +54,8 @@ fn main() {
             Heard::Final(t) => println!("final: {t}"),
             Heard::Tempo(Some(t)) => println!("tempo {:.1} BPM, confidence {:.2}, last beat {:.2} s ago", t.bpm, t.confidence, t.since_beat),
             Heard::Tempo(None) => {}
+            // This example keeps no phrases, so neither arrives.
+            Heard::Kept { .. } | Heard::Read { .. } => {}
             Heard::Problem(p) => println!("problem: {p}"),
         }
     }

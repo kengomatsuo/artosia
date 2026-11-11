@@ -19,7 +19,7 @@ use std::sync::{Arc, Mutex};
 use std::thread::JoinHandle;
 use std::time::Duration;
 
-pub use audio::{LevelMeter, RECOGNISER_RATE, Resampler, level_from_rms, mix_to_mono, read_wav, rms};
+pub use audio::{LevelMeter, RECOGNISER_RATE, Resampler, level_from_rms, mix_to_mono, read_wav, rms, write_wav};
 pub use segment::{Phrase, Segmenter, SegmenterConfig, audio_ctx_for, coalesce};
 pub use tempo::{MAX_BPM, MIN_BPM, Tempo, TempoTracker};
 #[doc(hidden)]
@@ -97,6 +97,12 @@ pub enum Heard {
     Final(String),
     /// Something a person should be told: no model installed, a device unplugged.
     Problem(Problem),
+    /// A phrase that ended was written as `phrase-<n>.wav` (five digits) in the folder given to
+    /// [`Listener::start_keeping`]; `seconds` is its length.
+    Kept { n: u32, seconds: f32 },
+    /// What the recogniser made of kept phrase `n`: its words, or none when it read nothing.
+    /// It comes just before the `Final` of the same phrase.
+    Read { n: u32, text: Option<String> },
 }
 
 /// What went wrong while listening. The window words each kind in its own language; `Display`
@@ -113,6 +119,8 @@ pub enum Problem {
     Input(String),
     /// One phrase could not be read.
     Reading(String),
+    /// A phrase could not be written to the folder; keeping stops.
+    Keep(String),
 }
 
 impl fmt::Display for Problem {
@@ -123,6 +131,7 @@ impl fmt::Display for Problem {
             Self::Model(why) => write!(f, "the speech model would not load: {why}"),
             Self::Input(why) => write!(f, "the audio input reported: {why}"),
             Self::Reading(why) => write!(f, "a phrase could not be read: {why}"),
+            Self::Keep(why) => write!(f, "a phrase could not be kept: {why}"),
         }
     }
 }
@@ -172,6 +181,20 @@ impl Listener {
         language: &str,
         on_heard: impl Fn(Heard) + Send + 'static,
     ) -> Result<Listener, ListenError> {
+        Self::start_keeping(device, model, language, None, on_heard)
+    }
+
+    /// [`Listener::start`], and with `keep` every phrase that ends is also written to that
+    /// folder as a 16 kHz wave file, whether or not there is a recogniser to read it:
+    /// `Heard::Kept` says which, and `Heard::Read` what was read in it. The folder must exist.
+    /// Nothing is kept without it.
+    pub fn start_keeping(
+        device: Option<&str>,
+        model: &Path,
+        language: &str,
+        keep: Option<&Path>,
+        on_heard: impl Fn(Heard) + Send + 'static,
+    ) -> Result<Listener, ListenError> {
         let on_heard = Mutex::new(on_heard);
         let emit: Emit = Arc::new(move |h| {
             if let Ok(f) = on_heard.lock() {
@@ -184,6 +207,7 @@ impl Listener {
             device: device.map(str::to_string),
             model: model.to_path_buf(),
             language: language.to_string(),
+            keep: keep.map(Path::to_path_buf),
             emit,
             stop: stop.clone(),
         };
@@ -271,8 +295,34 @@ struct Job {
     device: Option<String>,
     model: PathBuf,
     language: String,
+    /// The folder each phrase that ends is written to, when a person asked for that.
+    keep: Option<PathBuf>,
     emit: Emit,
     stop: Arc<AtomicBool>,
+}
+
+/// Writes the phrases that end as numbered wave files, until one cannot be written.
+struct Keeper {
+    folder: Option<PathBuf>,
+    n: u32,
+}
+
+impl Keeper {
+    fn keep(&mut self, phrase: &mut Phrase, emit: &Emit) {
+        let Some(folder) = self.folder.as_ref().filter(|_| phrase.is_final) else { return };
+        self.n += 1;
+        match write_wav(&folder.join(format!("phrase-{:05}.wav", self.n)), &phrase.samples, RECOGNISER_RATE) {
+            Ok(()) => {
+                phrase.kept = Some(self.n);
+                emit(Heard::Kept { n: self.n, seconds: phrase.samples.len() as f32 / RECOGNISER_RATE as f32 });
+            }
+            Err(error) => {
+                // A full disk or a folder that went away: say so once and keep nothing more.
+                emit(Heard::Problem(Problem::Keep(error.to_string())));
+                self.folder = None;
+            }
+        }
+    }
 }
 
 impl Job {
@@ -304,17 +354,23 @@ impl Job {
         let mut resampled = Vec::new();
         let mut last_error = String::new();
         let mut silence: Vec<f32> = Vec::new();
+        let mut keeper = Keeper { folder: self.keep.clone(), n: 0 };
+        // Phrases are cut for the recogniser, and for the folder when there is no recogniser.
+        let cutting = phrase_tx.is_some() || keeper.folder.is_some();
 
         while !self.stop.load(Ordering::Relaxed) {
             match rx.recv_timeout(Duration::from_millis(100)) {
                 Ok(capture::Capture::Audio(block)) => {
                     meter.push(&block, |level| (self.emit)(Heard::Level(level)));
                     tracker.push(&block, |tempo| (self.emit)(Heard::Tempo(tempo)));
-                    if let Some(phrase_tx) = &phrase_tx {
+                    if cutting {
                         resampled.clear();
                         resampler.push(&block, &mut resampled);
-                        for phrase in segmenter.push(&resampled) {
-                            let _ = phrase_tx.send(phrase);
+                        for mut phrase in segmenter.push(&resampled) {
+                            keeper.keep(&mut phrase, &self.emit);
+                            if let Some(phrase_tx) = &phrase_tx {
+                                let _ = phrase_tx.send(phrase);
+                            }
                         }
                     }
                 }
@@ -332,11 +388,14 @@ impl Job {
                         silence.resize((running.sample_rate / 10) as usize, 0.0);
                         meter.push(&silence, |level| (self.emit)(Heard::Level(level)));
                         tracker.push(&silence, |tempo| (self.emit)(Heard::Tempo(tempo)));
-                        if let Some(phrase_tx) = &phrase_tx {
+                        if cutting {
                             resampled.clear();
                             resampler.push(&silence, &mut resampled);
-                            for phrase in segmenter.push(&resampled) {
-                                let _ = phrase_tx.send(phrase);
+                            for mut phrase in segmenter.push(&resampled) {
+                                keeper.keep(&mut phrase, &self.emit);
+                                if let Some(phrase_tx) = &phrase_tx {
+                                    let _ = phrase_tx.send(phrase);
+                                }
                             }
                         }
                     }
@@ -382,7 +441,16 @@ impl Job {
                 let mut jobs = vec![first];
                 jobs.extend(rx.try_iter());
                 for phrase in coalesce(jobs) {
-                    if let Some(heard) = read_phrase(recogniser.as_mut(), &phrase, &mut last_partial) {
+                    let heard = read_phrase(recogniser.as_mut(), &phrase, &mut last_partial);
+                    // A kept phrase says what was read in it, words or none, before its `Final`.
+                    if let (true, Some(n)) = (phrase.is_final, phrase.kept) {
+                        let text = match &heard {
+                            Some(Heard::Final(text)) => Some(text.clone()),
+                            _ => None,
+                        };
+                        emit(Heard::Read { n, text });
+                    }
+                    if let Some(heard) = heard {
                         emit(heard);
                     }
                 }
@@ -406,5 +474,45 @@ mod tests {
     fn a_source_that_is_not_there_is_named_in_the_error() {
         let error = probe(Some("no such microphone"), Duration::from_millis(10), |_, _| {}).err();
         assert!(matches!(error, Some(ListenError::NoDevice(m)) if m.contains("no such microphone")));
+    }
+
+    fn heard() -> (Emit, Arc<Mutex<Vec<Heard>>>) {
+        let said: Arc<Mutex<Vec<Heard>>> = Arc::new(Mutex::new(Vec::new()));
+        let sink = said.clone();
+        (Arc::new(move |h| sink.lock().unwrap_or_else(|e| e.into_inner()).push(h)), said)
+    }
+
+    #[test]
+    fn a_phrase_that_ended_is_kept_as_a_wave_file_that_reads_back() {
+        let folder = std::env::temp_dir().join(format!("artosia-keep-{}", std::process::id()));
+        std::fs::create_dir_all(&folder).expect("a scratch folder");
+        let (emit, said) = heard();
+        let mut keeper = Keeper { folder: Some(folder.clone()), n: 0 };
+        // A made-up tone, half a second at the recogniser's rate.
+        let samples: Vec<f32> = (0..RECOGNISER_RATE / 2).map(|i| (i as f32 * 0.05).sin() * 0.5).collect();
+        let mut going = Phrase { samples: samples.clone(), is_final: false, kept: None };
+        keeper.keep(&mut going, &emit);
+        assert_eq!(going.kept, None, "a phrase still going on is not kept");
+        let mut ended = Phrase { samples: samples.clone(), is_final: true, kept: None };
+        keeper.keep(&mut ended, &emit);
+        assert_eq!(ended.kept, Some(1));
+        let (back, rate) = read_wav(&std::fs::read(folder.join("phrase-00001.wav")).expect("the file is there")).expect("a wave file");
+        assert_eq!((back.len(), rate), (samples.len(), RECOGNISER_RATE));
+        assert!(back.iter().zip(&samples).all(|(a, b)| (a - b).abs() < 0.001));
+        assert!(matches!(said.lock().unwrap_or_else(|e| e.into_inner()).as_slice(), [Heard::Kept { n: 1, seconds }] if (*seconds - 0.5).abs() < 0.01));
+        let _ = std::fs::remove_dir_all(&folder);
+    }
+
+    #[test]
+    fn a_folder_that_cannot_be_written_says_so_once_and_keeps_nothing_more() {
+        let (emit, said) = heard();
+        let mut keeper = Keeper { folder: Some(std::env::temp_dir().join("artosia-keep-no-such-folder").join("deeper")), n: 0 };
+        for _ in 0..2 {
+            let mut phrase = Phrase { samples: vec![0.1; 800], is_final: true, kept: None };
+            keeper.keep(&mut phrase, &emit);
+            assert_eq!(phrase.kept, None);
+        }
+        let said = said.lock().unwrap_or_else(|e| e.into_inner());
+        assert!(matches!(said.as_slice(), [Heard::Problem(Problem::Keep(_))]), "{said:?}");
     }
 }

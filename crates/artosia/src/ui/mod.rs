@@ -179,6 +179,20 @@ pub(crate) fn statusbar(s: &App, k: &Kit) -> El {
     if s.remote.is_some() {
         bar = bar.child(text(t::REMOTE_ON()).font(type_::SMALL).color(k.c.text_muted));
     }
+    // Lit for as long as what is heard is being kept, and a press opens where that is switched.
+    if s.recording() {
+        bar = bar.child(
+            crate::ui::widgets::state_pill(t::REC_ON(), theme::accent(), rune::Color::WHITE)
+                .key("recording")
+                .role("button")
+                .label(t::REC_ON())
+                .cursor(Cursor::Pointer)
+                .on_press(|s: &mut App| {
+                    s.open_listen();
+                    s.listen_part = 1;
+                }),
+        );
+    }
     bar.child(spacer())
         .children(key_hints(s, k))
         .child(

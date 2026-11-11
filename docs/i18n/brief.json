@@ -1451,6 +1451,276 @@
   "notes": "Past participle sense: what was caught. A heading, not a sentence."
  },
  {
+  "key": "LISTEN_PART_LISTENING",
+  "kind": "const",
+  "screen": "The Listen dialog has two parts, picked by a row of two equal tabs under its title. The first part is the listener itself: its switch, the sound source, the language, the loudness and the tempo. The second part is about keeping what the listener hears. This text is the first tab.",
+  "moment": "The person opened the dialog to turn the listener on or to pick its sound source.",
+  "role": "tab",
+  "does": "Opens the part with the listener's own controls.",
+  "budget": 16,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "listener"
+  ],
+  "notes": "One word, a noun or a verbal noun, that pairs with the second tab. Sentence case, no full stop."
+ },
+ {
+  "key": "LISTEN_PART_RECORDINGS",
+  "kind": "const",
+  "screen": "The Listen dialog has two parts, picked by a row of two equal tabs under its title. The first part is the listener itself: its switch, the sound source, the language, the loudness and the tempo. The second part is about keeping what the listener hears. This text is the second tab.",
+  "moment": "The person wants to switch the keeping on or off, or to see, hand over or delete what was kept.",
+  "role": "tab",
+  "does": "Opens the part about what is kept of what the listener hears.",
+  "budget": 16,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "recordings"
+  ],
+  "notes": "One word, a plain noun for kept sound. Sentence case, no full stop."
+ },
+ {
+  "key": "REC_SWITCH",
+  "kind": "const",
+  "screen": "The second part of the Listen dialog, about keeping what the listener hears. From top to bottom: a switch with a small grey line under its label; a grey row with a folder icon, where the kept files are, and at its right end how much is kept; then four equal buttons in two rows, each with an icon. This is the switch's label.",
+  "moment": "The person decides whether this computer keeps what the listener hears.",
+  "role": "switch label",
+  "does": "Labels the switch that makes the program keep what the listener hears.",
+  "budget": 24,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "recordings"
+  ],
+  "notes": "Reads right beside an on/off switch. Uses the same noun as the tab. No full stop."
+ },
+ {
+  "key": "REC_HINT",
+  "kind": "const",
+  "screen": "The second part of the Listen dialog, about keeping what the listener hears. From top to bottom: a switch with a small grey line under its label; a grey row with a folder icon, where the kept files are, and at its right end how much is kept; then four equal buttons in two rows, each with an icon. This is the small grey line under the switch's label.",
+  "moment": "The person wonders what exactly would be kept and where it would go before switching it on.",
+  "role": "hint",
+  "does": "Says what is kept, the short pieces that were heard and the program's guesses about them, and that they do not leave this machine: they sit in one place on its disk.",
+  "budget": 62,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "recordings"
+  ],
+  "notes": "One plain statement that reassures by being exact: what, and where. It must not promise anything about other people. Full stop."
+ },
+ {
+  "key": "REC_NONE",
+  "kind": "const",
+  "screen": "The second part of the Listen dialog, about keeping what the listener hears. From top to bottom: a switch with a small grey line under its label; a grey row with a folder icon, where the kept files are, and at its right end how much is kept; then four equal buttons in two rows, each with an icon. This text stands at the right end of the grey folder row when nothing is kept.",
+  "moment": "The person looks at how much is kept, and nothing is yet.",
+  "role": "amount",
+  "does": "Says nothing has been kept so far.",
+  "budget": 20,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "recordings"
+  ],
+  "notes": "Two or three words. No full stop."
+ },
+ {
+  "key": "rec_kept",
+  "kind": "sentence",
+  "screen": "The second part of the Listen dialog, about keeping what the listener hears. From top to bottom: a switch with a small grey line under its label; a grey row with a folder icon, where the kept files are, and at its right end how much is kept; then four equal buttons in two rows, each with an icon. This text stands at the right end of the grey folder row.",
+  "moment": "The person looks at how much room the kept files take.",
+  "role": "amount",
+  "does": "Says how much is kept, as a size.",
+  "budget": 16,
+  "variables": [
+   {
+    "name": "size",
+    "example": "212 MB",
+    "meaning": "How much room the kept files take, already written with its unit."
+   }
+  ],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "recordings"
+  ],
+  "notes": "The size and one word. No full stop."
+ },
+ {
+  "key": "REC_OPEN",
+  "kind": "const",
+  "screen": "The second part of the Listen dialog, about keeping what the listener hears. From top to bottom: a switch with a small grey line under its label; a grey row with a folder icon, where the kept files are, and at its right end how much is kept; then four equal buttons in two rows, each with an icon. This is the first button, with a folder icon.",
+  "moment": "The person wants to look at the kept files themselves, or copy them by hand.",
+  "role": "button",
+  "does": "Opens the folder of kept files in the computer's own file window.",
+  "budget": 18,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "recordings"
+  ],
+  "notes": "A verb and its object, two words. No full stop."
+ },
+ {
+  "key": "REC_MOVE",
+  "kind": "const",
+  "screen": "The second part of the Listen dialog, about keeping what the listener hears. From top to bottom: a switch with a small grey line under its label; a grey row with a folder icon, where the kept files are, and at its right end how much is kept; then four equal buttons in two rows, each with an icon. This is the second button, with an arrow icon. It is also the title of the folder chooser it opens.",
+  "moment": "The person wants the kept files to live somewhere else, such as inside the folder their cloud drive copies by itself.",
+  "role": "button",
+  "does": "Lets the person pick another folder; from then on the files are kept there, and what was kept so far moves with them.",
+  "budget": 18,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "recordings"
+  ],
+  "notes": "A verb and its object, two words, pairing with the first button. No full stop."
+ },
+ {
+  "key": "REC_SAVE",
+  "kind": "const",
+  "screen": "The second part of the Listen dialog, about keeping what the listener hears. From top to bottom: a switch with a small grey line under its label; a grey row with a folder icon, where the kept files are, and at its right end how much is kept; then four equal buttons in two rows, each with an icon. This is the third button, with an arrow leaving a tray. It is also the title of the save window it opens.",
+  "moment": "The person wants to hand everything kept to the people who make Artosia, by e-mail, chat or a memory stick.",
+  "role": "button",
+  "does": "Packs everything kept into one single file that the person names and places.",
+  "budget": 22,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "recordings"
+  ],
+  "notes": "Says that the result is one file. Three or four words. No full stop."
+ },
+ {
+  "key": "REC_SAVING",
+  "kind": "const",
+  "screen": "The second part of the Listen dialog, about keeping what the listener hears. From top to bottom: a switch with a small grey line under its label; a grey row with a folder icon, where the kept files are, and at its right end how much is kept; then four equal buttons in two rows, each with an icon. This text replaces the third button's label while the one file is being written; the button cannot be pressed meanwhile.",
+  "moment": "The person pressed the button and waits a few seconds.",
+  "role": "button, busy",
+  "does": "Says the one file is being written right now.",
+  "budget": 14,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "recordings"
+  ],
+  "notes": "One word, the ongoing form of the same verb as the button. No full stop."
+ },
+ {
+  "key": "REC_DELETE",
+  "kind": "const",
+  "screen": "The second part of the Listen dialog, about keeping what the listener hears. From top to bottom: a switch with a small grey line under its label; a grey row with a folder icon, where the kept files are, and at its right end how much is kept; then four equal buttons in two rows, each with an icon. This is the fourth button, with a bin icon.",
+  "moment": "The person wants nothing of what was heard to remain on this computer.",
+  "role": "button",
+  "does": "Deletes everything kept. A toast then offers to take it back for a few seconds.",
+  "budget": 16,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "recordings"
+  ],
+  "notes": "A verb and the word for everything, two words. No full stop."
+ },
+ {
+  "key": "REC_DELETED",
+  "kind": "const",
+  "screen": "Main window, a toast with an undo button.",
+  "moment": "The person just deleted everything kept.",
+  "role": "toast",
+  "does": "Confirms that everything kept was deleted.",
+  "budget": 30,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "recordings",
+   "undo",
+   "notice"
+  ],
+  "notes": "Past tense; an Undo button is beside it. No full stop."
+ },
+ {
+  "key": "rec_saved",
+  "kind": "sentence",
+  "screen": "Main window, a toast.",
+  "moment": "The one file with everything kept was just written where the person chose.",
+  "role": "toast",
+  "does": "Confirms the file was written and names it.",
+  "budget": 48,
+  "variables": [
+   {
+    "name": "name",
+    "example": "Artosia recordings.zip",
+    "meaning": "The file's name as the person gave it."
+   }
+  ],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "recordings",
+   "notice"
+  ],
+  "notes": "Past tense. No full stop."
+ },
+ {
+  "key": "REC_FAILED",
+  "kind": "const",
+  "screen": "The second part of the Listen dialog, about keeping what the listener hears. From top to bottom: a switch with a small grey line under its label; a grey row with a folder icon, where the kept files are, and at its right end how much is kept; then four equal buttons in two rows, each with an icon. This line appears under the four buttons, in the warning colour, only when something is wrong. It is also shown as a toast when the one file could not be written.",
+  "moment": "The folder cannot be written to: the drive is full, was unplugged, or does not allow it.",
+  "role": "warning line",
+  "does": "Says the files cannot be written in that place, and tells the person to pick another folder with the second button.",
+  "budget": 60,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "recordings"
+  ],
+  "notes": "Two short sentences: what is wrong, then what to do. It uses the same words as the second button. Full stops."
+ },
+ {
+  "key": "REC_ON",
+  "kind": "const",
+  "screen": "Main window, the thin bar along the bottom edge. A small filled pill appears there for as long as the program is keeping what the listener hears; a press on it opens the dialog where that is switched.",
+  "moment": "During a service anyone at the console can see at a glance that sound is being kept.",
+  "role": "state mark",
+  "does": "Says that sound from the room is being kept right now.",
+  "budget": 18,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "recordings"
+  ],
+  "notes": "It is the only sign a passer-by gets, so it must name what is being kept, sound, and not only that something is being stored: a bare word for storing could be read as the plan being saved. Two words at most, the ongoing form. No full stop."
+ },
+ {
   "key": "LISTEN_TEMPO",
   "kind": "const",
   "screen": "Listen dialog, small heading over a number and a pulsing blue dot.",
