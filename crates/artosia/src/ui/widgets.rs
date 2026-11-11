@@ -15,8 +15,9 @@ use crate::theme::{self, icons, type_};
 /// controls that can be invoked, implement keyboard event handlers for the Spacebar and Enter
 /// keys"; WAI-ARIA button pattern: "Enter: Activates the button"). A keys-only tester took
 /// every dialog button for broken (2026-11-11). Hung on each element that asks for focus.
-pub fn enter_key(_: &mut App, ev: &rune::KeyEvent, tx: &mut Tx) -> bool {
-    if ev.key != rune::Key::Enter || ev.mods != rune::Mods::default() {
+pub fn enter_key(s: &mut App, ev: &rune::KeyEvent, tx: &mut Tx) -> bool {
+    // The tour owns Enter: it means the next card even while Skip holds the focus.
+    if ev.key != rune::Key::Enter || ev.mods != rune::Mods::default() || s.tour.is_some() {
         return false;
     }
     if !tx.key_repeat() {

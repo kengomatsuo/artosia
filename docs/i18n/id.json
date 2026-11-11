@@ -1885,14 +1885,14 @@
   "why": "The text of a notice, not a caption"
  },
  "ANNOUNCEMENT_TITLE_HINT": {
-  "text": "Persekutuan Pemuda",
-  "back": "Youth Fellowship",
-  "why": "A weekly youth meeting as churches name it"
+  "text": "contoh: Persekutuan Pemuda",
+  "back": "example: Youth Fellowship",
+  "why": "'contoh' in full so it is not taken for a real card"
  },
  "ANNOUNCEMENT_BODY_HINT": {
-  "text": "Jumat, pukul 19.00 di aula gereja",
-  "back": "Friday, at 19.00 in the church hall",
-  "why": "Times written 19.00"
+  "text": "contoh: Jumat pukul 19.00 di aula gereja",
+  "back": "example: Friday at 19.00 in the church hall",
+  "why": "'contoh' in full; time written 19.00"
  },
  "ANNOUNCEMENT_SECONDS": {
   "text": "Lama tayang (detik)",
@@ -2357,9 +2357,9 @@
   "why": "Penutup"
  },
  "KEYS_EDITING_ROWS[4].1": {
-  "text": "Pakai lagu dari saran di bawah judul",
-  "back": "Use the song from the suggestions under the title",
-  "why": "Says what and from where"
+  "text": "Pilih lagu dari saran di bawah judul, isi form",
+  "back": "Choose a song from the suggestions under the title, fill the form",
+  "why": "Down arrow and Enter pick from the list"
  },
  "KEYS_EDITING_ROWS[5].1": {
   "text": "Kembalikan yang terakhir dihapus",

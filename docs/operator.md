@@ -339,6 +339,18 @@ Found while pressing real keys afterwards: **Enter did not start a new line in t
 
 F1 hides the words here, where Windows programs open help; the tester pressed it for help once and undid it at once, because the tile lights up yellow. The keys of the three screen states stay where two releases put them, and `?` opens the keys.
 
+The second keys-only test (2026-11-11, on the build before 0.1.5) did six of its goals, failed one and ran out of harness time; what it met:
+
+| What happened | Now |
+|---|---|
+| Tab in a new song's title took the first song offered under it and threw the new song away | Tab is the next field; an offered song is taken only after the down arrow chose it, with Enter; the list shows only while the title has the focus |
+| No way to reach any announcement card but the first | Ctrl and an arrow goes to the card before or after, from any field; the keys are drawn beside the count |
+| "new plan" listed two songs above the command "Start a new plan" | Two or more typed words that stand together in a command's name find it before songs holding one of the words; a name typed whole leads the list |
+| Arrows did not move among the colour squares | The squares are one Tab stop with arrows inside |
+| A grey example in an empty title was taken for a card | The hints begin with the words for "such as" |
+| Enter on the tour's first card ended the tour in the test | While the tour is up Enter is the tour's, whatever holds the focus |
+| The test tool stopped at step 108 | `tools/blind.py` waits up to fifteen minutes for a replay |
+
 ## What a pointer-only volunteer met (2026-11-11, second blind test, in Indonesian)
 
 All fifteen goals were reached; these are the places where the tester had to guess, and what changed.

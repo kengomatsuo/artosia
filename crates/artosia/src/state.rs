@@ -234,6 +234,8 @@ pub struct Editor {
     pub suggestions: Vec<Suggestion>,
     /// The suggestion Tab or Enter takes.
     pub suggestion: usize,
+    /// An arrow key has chosen one of the offered songs, so Enter takes it.
+    pub suggestion_armed: bool,
     /// The title the web was last asked about.
     pub asked: String,
     /// When to ask the web about the title as it now stands, on the app clock.

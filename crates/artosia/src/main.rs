@@ -123,6 +123,10 @@ fn on_key(s: &mut App, ev: &KeyEvent, tx: &mut Tx) -> bool {
             s.save_notice();
             return true;
         }
+        Key::Up | Key::Down if s.notices.is_some() && (ev.mods.ctrl || ev.mods.cmd) && !s.palette.open => {
+            s.step_notice(if ev.key == Key::Up { -1 } else { 1 });
+            return true;
+        }
         Key::Command('e') if !editing && !s.palette.open => {
             s.edit_open();
             return true;

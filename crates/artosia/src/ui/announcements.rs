@@ -19,6 +19,12 @@ const PASSAGE_TEMPLATE: usize = 3;
 const SECONDS: [u32; 6] = [5, 8, 10, 15, 20, 30];
 
 fn escape_closes(s: &mut App, ev: &KeyEvent, tx: &mut Tx) -> bool {
+    // From any field, Ctrl and an arrow goes to the card before or after, as Ctrl moves the
+    // highlight in Preview. A keys-only tester could edit only the first card.
+    if (ev.mods.ctrl || ev.mods.cmd) && matches!(ev.key, Key::Up | Key::Down) {
+        s.step_notice(if ev.key == Key::Up { -1 } else { 1 });
+        return true;
+    }
     if !matches!(ev.key, Key::Escape) {
         return false;
     }
@@ -145,7 +151,7 @@ fn list(s: &App, k: &Kit, form: &Notices) -> El {
         .scroll(ScrollSpec { stick_bottom: false }).scroll_edge_fade(crate::theme::size::FADE)
         .child(btn(t::ANNOUNCEMENT_NEW()).icon(&icons::PLUS).hint("Ctrl N").focusable().build(k, |s, _| s.new_notice("", "")))
         .child(rows)
-        .child(text(t::announcements(s.announcements.len())).font(type_::SMALL).color(k.c.text_faint).px(space::S3))
+        .child(row().w_full().gap(space::S2).center_y().child(text(t::announcements(s.announcements.len())).font(type_::SMALL).color(k.c.text_faint).px(space::S3).grow(1.0)).child(el().pr(space::S2).child(crate::ui::widgets::keycap(k, "Ctrl Up Down", false))))
         .child(
             col()
                 .w_full()

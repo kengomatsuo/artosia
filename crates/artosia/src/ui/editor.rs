@@ -67,8 +67,14 @@ fn title_keys(s: &mut App, ev: &KeyEvent, tx: &mut Tx) -> bool {
     match ev.key {
         Key::Down if offered => s.move_suggestion(1),
         Key::Up if offered => s.move_suggestion(-1),
-        Key::Tab | Key::Enter if offered => {
+        // Enter takes a song only after an arrow chose it. Tab is the next field, as everywhere:
+        // the offer goes away and the key goes on.
+        Key::Enter if offered && s.editor.as_ref().is_some_and(|editor| editor.suggestion_armed) => {
             s.take_suggestion(None);
+        }
+        Key::Tab if offered => {
+            s.dismiss_suggestions();
+            return false;
         }
         Key::Escape if offered => {
             s.dismiss_suggestions();
@@ -135,7 +141,7 @@ fn suggestion_row(s: &App, k: &Kit, index: usize, suggestion: &Suggestion, picke
         .child(text(title).font(type_::BODY_STRONG).color(k.c.text_base).truncate())
         .child(text(detail).font(type_::SMALL).color(k.c.text_muted).truncate().grow(1.0));
     if picked {
-        line = line.child(keycap(k, "Tab", false));
+        line = line.child(keycap(k, "Enter", false));
     }
     line.on_press(move |s: &mut App| {
         s.take_suggestion(Some(index));
@@ -155,10 +161,24 @@ fn title_block(s: &App, k: &Kit, editor: &Editor) -> El {
     if editor.fetching {
         block = block.child(text(t::SUGGEST_FETCHING()).font(type_::SMALL).color(k.c.text_muted));
     }
-    if !editor.suggestions.is_empty() {
-        let mut list = col().key("suggestions").role("listbox").label(t::SUGGEST_LABEL()).w_full().padding(space::S1).gap(2.0).radius(k.radius.lg).fill(k.c.layer_02).border(1.0, k.c.border_base);
+    // Offered only while the title is being typed: once the focus moves on, the list goes,
+    // and it never lies over the fields under it.
+    if !editor.suggestions.is_empty() && editor.title.focused {
+        let mut list = col()
+            .key("suggestions")
+            .role("listbox")
+            .label(t::SUGGEST_LABEL())
+            .w_full()
+            .padding(space::S1)
+            .gap(2.0)
+            .radius(k.radius.lg)
+            .fill(k.c.layer_02)
+            .border(1.0, k.c.border_base)
+            // A click on a row must not first take the focus from the title, which would close the list under it.
+            .preserve_focus_on_press(true)
+            .child(row().w_full().h(24.0).px(space::S3).gap(space::S2).center_y().child(text(t::SUGGEST_LABEL()).font(type_::SMALL).color(k.c.text_muted).truncate().grow(1.0)).child(keycap(k, "Down Enter", false)));
         for (index, suggestion) in editor.suggestions.iter().enumerate() {
-            list = list.child(suggestion_row(s, k, index, suggestion, index == editor.suggestion));
+            list = list.child(suggestion_row(s, k, index, suggestion, editor.suggestion_armed && index == editor.suggestion));
         }
         if editor.suggestions.iter().any(|suggestion| matches!(suggestion, Suggestion::Web(_))) {
             list = list.child(text(t::LICENCE_NOTE()).font(type_::SMALL).color(k.c.text_faint).px(space::S3).py(space::S1));

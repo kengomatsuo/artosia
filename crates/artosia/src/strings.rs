@@ -1045,8 +1045,8 @@ pub fn import_partial(songs: usize, failed: usize) -> String {
 text!(ANNOUNCEMENTS_EMPTY, "No announcements yet", "Belum ada pengumuman");
 text!(ANNOUNCEMENT_NEW, "New announcement", "Pengumuman baru");
 text!(ANNOUNCEMENT_BODY, "Details", "Keterangan");
-text!(ANNOUNCEMENT_TITLE_HINT, "Youth night", "Persekutuan pemuda");
-text!(ANNOUNCEMENT_BODY_HINT, "Friday at 7 pm in the hall", "Jumat, jam 19.00, di aula gereja");
+text!(ANNOUNCEMENT_TITLE_HINT, "Such as Youth night", "Such as Youth night");
+text!(ANNOUNCEMENT_BODY_HINT, "Such as Friday at 7 pm in the hall", "Such as Friday at 7 pm in the hall");
 text!(ANNOUNCEMENT_SECONDS, "Seconds on screen", "Detik per pengumuman");
 text!(ANNOUNCEMENT_START_FROM, "Start from", "Mulai dari contoh");
 text!(ANNOUNCEMENT_BRING_IN, "Bring in", "Ambil dari berkas");
@@ -1322,7 +1322,7 @@ const KEYS_EDITING_ROWS_EN: [(&str, &str); 6] = [
     ("Ctrl E", "Edit the open song"),
     ("Ctrl S", "Save"),
     ("Ctrl 1 to 5", "Start a verse, chorus or other section"),
-    ("Tab", "Fill in the whole song offered under the title"),
+    ("Down Enter", "Fill in the whole song offered under the title"),
     ("Ctrl Z", "Undo the last removal"),
 ];
 const KEYS_EDITING_ROWS_ID: [(&str, &str); 6] = [
@@ -1330,7 +1330,7 @@ const KEYS_EDITING_ROWS_ID: [(&str, &str); 6] = [
     ("Ctrl E", "Edit lagu yang terbuka"),
     ("Ctrl S", "Simpan"),
     ("Ctrl 1 sampai 5", "Sisipkan penanda bait, reff, atau lainnya"),
-    ("Tab", "Terima lagu yang diusulkan sekaligus"),
+    ("Down Enter", "Terima lagu yang diusulkan sekaligus"),
     ("Ctrl Z", "Kembalikan yang terakhir dihapus"),
 ];
 pub fn KEYS_EDITING_ROWS() -> &'static [(&'static str, &'static str)] {

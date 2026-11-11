@@ -94,7 +94,7 @@ def render(session, state):
     frozen = os.path.join(ROOT, "target", "blind", "bin", name)
     exe = os.environ.get("ARTOSIA_EXE") or (frozen if os.path.exists(frozen) else os.path.join(ROOT, "target", "debug", name))
     args = [exe, "--practice", "--script", script, "--snap", shot, "--at", "mark:end", "--size", state["size"], "--scale", "1"] + state["flags"]
-    done = subprocess.run(args, capture_output=True, text=True, timeout=120)
+    done = subprocess.run(args, capture_output=True, text=True, timeout=900)
     if not os.path.exists(shot):
         raise SystemExit("Artosia did not draw the window:\n" + done.stderr[-800:])
     print(shot)

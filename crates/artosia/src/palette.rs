@@ -551,19 +551,34 @@ impl App {
                 if leads { first_songs.push(row) } else { songs.push(row) }
             }
         }
-        let (mut named, mut others) = (Vec::new(), Vec::new());
+        let (mut leading, mut named, mut others) = (Vec::new(), Vec::new(), Vec::new());
         if scope == Scope::All {
             let found = self.documents();
             let docs: Vec<Doc> = found.iter().map(|(doc, _)| doc.clone()).collect();
+            let typed = artosia_core::search::tokens(query).len();
             for hit in kit::search(&docs, query, &|doc| doc.group == "plan", 24) {
-                let by_name = hit.typos == 0 && hit.infix == 0 && hit.weight >= LABEL && hit.position == 0;
+                // Every typed word is a whole word of the name itself.
+                let whole = hit.typos == 0 && hit.infix == 0 && hit.weight >= LABEL && usize::from(hit.exact) == typed;
+                // The name and nothing else was typed: "today" for the plan Today. It leads
+                // even a planned song that only holds the word in a line.
+                let is_name = whole && hit.position == 0 && artosia_core::text::words(&docs[hit.doc].display).len() == typed;
+                // Two or more words standing together in a name count wherever they stand in it:
+                // "new plan" finds "Start a new plan" before songs that hold one of the words.
+                let by_name = hit.typos == 0 && hit.infix == 0 && hit.weight >= LABEL && (hit.position == 0 || (typed >= 2 && whole && hit.proximity == 0));
                 let row = found[hit.doc].1.clone();
-                if by_name && named.len() < NAMED_LIMIT { named.push(row) } else { others.push(row) }
+                if is_name && leading.len() < NAMED_LIMIT {
+                    leading.push(row)
+                } else if by_name && named.len() < NAMED_LIMIT {
+                    named.push(row)
+                } else {
+                    others.push(row)
+                }
             }
         }
         if reference_first {
             hits.extend(passages.iter().cloned());
         }
+        hits.extend(leading);
         hits.extend(first_songs);
         hits.extend(named);
         hits.extend(songs);
@@ -1004,6 +1019,17 @@ mod tests {
         let mut app = App::practice();
         app.open_palette(Scope::All, "");
         app
+    }
+
+    /// A command named by every typed word leads songs that hold one of the words in a line
+    /// (a keys-only tester typed "new plan" and found two songs above the command).
+    #[test]
+    fn words_that_name_a_command_find_it_first() {
+        let mut app = app();
+        search(&mut app, "new plan");
+        assert!(matches!(app.palette.hits.first(), Some(Hit::Command(Command::NewPlan))), "{:?}", app.palette.hits.first().map(|hit| std::mem::discriminant(hit)));
+        search(&mut app, "copy plan");
+        assert!(matches!(app.palette.hits.first(), Some(Hit::Command(Command::PlanDuplicate))));
     }
 
     fn search(app: &mut App, query: &str) {

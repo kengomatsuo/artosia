@@ -85,7 +85,7 @@ fn hex_field(k: &Kit, edit: &TextEdit, outline: bool) -> El {
 }
 
 fn colour_row(k: &Kit, label: &'static str, current: [u8; 3], choices: &[(&'static str, [u8; 3])], edit: &TextEdit, outline: bool) -> El {
-    let mut squares = row().gap(space::S1).center_y();
+    let mut squares = row().role("toolbar").label(label).gap(space::S1).center_y().focus_group();
     for (name, color) in choices {
         let color = *color;
         let key = format!("look-{}-{}", if outline { "outline" } else { "ink" }, hex_of(color));

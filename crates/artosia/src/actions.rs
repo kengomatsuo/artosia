@@ -247,6 +247,9 @@ impl App {
     /// Runs when a new song's title changes: lists the songs the library already has under
     /// that name at once, and asks the web a moment after the typing stops.
     pub fn title_changed(&mut self) {
+        if let Some(editor) = self.editor.as_mut() {
+            editor.suggestion_armed = false;
+        }
         let Some(editor) = self.editor.as_ref().filter(|editor| editor.id == 0 && editor.lyrics.text.trim().is_empty()) else {
             if let Some(editor) = self.editor.as_mut() {
                 editor.suggestions.clear();
@@ -287,9 +290,17 @@ impl App {
         });
     }
 
+    /// Down and Up in the title choose among the songs offered under it. Nothing is chosen
+    /// until the first press, so Enter and Tab stay the title's own keys: a tester typed a
+    /// title, pressed Tab for the next field, and was taken to another song (2026-11-11).
     pub fn move_suggestion(&mut self, by: isize) {
         let Some(editor) = self.editor.as_mut().filter(|editor| !editor.suggestions.is_empty()) else { return };
         let count = editor.suggestions.len() as isize;
+        if !editor.suggestion_armed {
+            editor.suggestion_armed = true;
+            editor.suggestion = if by < 0 { (count - 1) as usize } else { 0 };
+            return;
+        }
         editor.suggestion = (editor.suggestion as isize + by).rem_euclid(count) as usize;
     }
 
@@ -323,6 +334,9 @@ impl App {
     }
 
     pub fn dismiss_suggestions(&mut self) -> bool {
+        if let Some(editor) = self.editor.as_mut() {
+            editor.suggestion_armed = false;
+        }
         match self.editor.as_mut().filter(|editor| !editor.suggestions.is_empty()) {
             Some(editor) => {
                 editor.suggestions.clear();
@@ -673,6 +687,21 @@ impl App {
             }
             self.reload_announcements();
             self.say(t::NOTICE_SAVED(), None);
+        }
+    }
+
+    /// The card before or after the one in the form, from anywhere in the editor.
+    pub fn step_notice(&mut self, by: isize) {
+        let Some(form) = self.notices.as_ref() else { return };
+        let at = self.announcements.iter().position(|card| card.id == form.id);
+        let to = match at {
+            Some(at) => at as isize + by,
+            // A card not saved yet stands after the last one.
+            None => self.announcements.len() as isize - 1,
+        };
+        if let Some(card) = usize::try_from(to).ok().and_then(|to| self.announcements.get(to)) {
+            let id = card.id;
+            self.pick_notice(id);
         }
     }
 

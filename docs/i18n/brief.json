@@ -6964,7 +6964,7 @@
   "moment": "A new card has no title.",
   "role": "placeholder",
   "does": "Gives an example of a title for a church notice, the name of a weekly meeting for young people.",
-  "budget": 28,
+  "budget": 44,
   "variables": [],
   "cases": [],
   "counts": "",
@@ -6973,7 +6973,7 @@
    "announcement",
    "card"
   ],
-  "notes": "Make up a plausible title in this church's language; it is a hint, not a label."
+  "notes": "Begin with the words for 'for example' written in full, then the example (a youth night), so nobody takes the grey text for a card that exists. No full stop."
  },
  {
   "key": "ANNOUNCEMENT_BODY_HINT",
@@ -6982,7 +6982,7 @@
   "moment": "A new card has no text.",
   "role": "placeholder",
   "does": "Gives an example of the text of a notice: a weekday, an hour and a place in the church.",
-  "budget": 40,
+  "budget": 44,
   "variables": [],
   "cases": [],
   "counts": "",
@@ -6991,7 +6991,7 @@
    "announcement",
    "card"
   ],
-  "notes": "Make up a plausible time and place in this church's language and customs, including how times of day are written there."
+  "notes": "Begin with the words for 'for example' written in full, then the example (Friday at seven in the evening, in the hall), so nobody takes the grey text for a card that exists. No full stop."
  },
  {
   "key": "ANNOUNCEMENT_SECONDS",
@@ -8687,10 +8687,10 @@
  {
   "key": "KEYS_EDITING_ROWS[4].1",
   "kind": "row",
-  "screen": "Keyboard shortcuts sheet: a wide window with two columns of groups. Each row has the keys drawn as little key caps at the left (never translated) and a description at the right, about 300 points wide. This text is the description. Fourth group (editing). The keys at the left are: Tab.",
+  "screen": "Keyboard shortcuts sheet: a wide window with two columns of groups. Each row has the keys drawn as little key caps at the left (never translated) and a description at the right, about 300 points wide. This text is the description. Fourth group (editing). The keys at the left are: the down arrow, then Enter.",
   "moment": "The person opens the sheet to learn what pressing these keys does, and reads this line while looking at the key caps beside it.",
   "role": "key description",
-  "does": "Fills the form with the whole song that the list under the title field offers: a song found on the internet, or one already in the library.",
+  "does": "Chooses a song from the list that appears beneath the title field (found on the internet or already in the library) and fills the form with the whole of it.",
   "budget": 48,
   "variables": [],
   "cases": [],
