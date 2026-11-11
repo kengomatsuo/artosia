@@ -632,11 +632,6 @@
   "back": "The collection failed to open, changes are lost when the program closes: {problem}",
   "why": "Warning first, reason after the colon"
  },
- "PLAN_DEFAULT_NAME": {
-  "text": "Ibadah Minggu",
-  "back": "Sunday service",
-  "why": "A day-name, not a date"
- },
  "PLAN_EMPTY": {
   "text": "Rundown masih kosong",
   "back": "The rundown is still empty",
@@ -2277,9 +2272,9 @@
   "why": "Fragment"
  },
  "KEYS_FINDING_ROWS[6].1": {
-  "text": "Hapus ketikan dulu, tekan lagi untuk menutup",
-  "back": "First clear the typing, press again to close",
-  "why": "Fragment"
+  "text": "Keluar dari pencarian ke jendela utama",
+  "back": "Leave the search for the main window",
+  "why": "One press leaves the search"
  },
  "KEYS_PLAN_ROWS[0].1": {
   "text": "Item berikutnya ke Preview",
@@ -3220,5 +3215,10 @@
   "text": "Minggu",
   "back": "Sunday",
   "why": "Full day name, week counted from Monday"
+ },
+ "KEYS_PLAN_ROWS[6].1": {
+  "text": "Rundown berikutnya, dengan Shift yang sebelumnya",
+  "back": "The next rundown, with Shift the previous one",
+  "why": "Fragment; Shift stays as printed"
  }
 }

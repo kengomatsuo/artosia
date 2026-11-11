@@ -2327,23 +2327,6 @@
   "notes": "The warning part comes first, the reason after a colon."
  },
  {
-  "key": "PLAN_DEFAULT_NAME",
-  "kind": "const",
-  "screen": "Main window, left column (the plan): a title strip with the plan's name and a drop-down arrow, the list of plan items and dividers below, and a wide Add button at the bottom.",
-  "moment": "The first plan of a new library, or the one made after the last was deleted.",
-  "role": "name given by the program",
-  "does": "The name the program gives a plan when the person has not named it: it is a plan for the day it is used.",
-  "budget": 18,
-  "variables": [],
-  "cases": [],
-  "counts": "",
-  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
-  "concepts": [
-   "plan"
-  ],
-  "notes": "A word like a day-name, not a date. Appears in the plan's title strip and the list of plans."
- },
- {
   "key": "PLAN_EMPTY",
   "kind": "const",
   "screen": "Main window, left column (the plan): a title strip with the plan's name and a drop-down arrow, the list of plan items and dividers below, and a wide Add button at the bottom. The message sits in the middle of the empty list.",
@@ -2838,7 +2821,7 @@
  {
   "key": "KIND_PLAN",
   "kind": "const",
-  "screen": "Search panel, second line of a row for one of the plans, and a small tag.",
+  "screen": "Search panel, second line of a row for one of the plans, and a small tag. It is also what a plan reads as in the list of plans and at the top of the left column when it has neither a name nor a day.",
   "moment": "The typed text matched the name of a plan.",
   "role": "kind label",
   "does": "Names the kind of result: a whole plan one can switch to.",
@@ -8821,7 +8804,7 @@
   "screen": "Keyboard shortcuts sheet: a wide window with two columns of groups. Each row has the keys drawn as little key caps at the left (never translated) and a description at the right, about 300 points wide. This text is the description. Second group (finding). The keys at the left are: Esc.",
   "moment": "The person opens the sheet to learn what pressing these keys does, and reads this line while looking at the key caps beside it.",
   "role": "key description",
-  "does": "First empties the typed text, a second press closes the search.",
+  "does": "Leaves the search and goes back to the main window, in one press.",
   "budget": 48,
   "variables": [],
   "cases": [],
@@ -8919,6 +8902,23 @@
   "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
   "concepts": [
    "preview",
+   "plan"
+  ],
+  "notes": "Fragment, no full stop."
+ },
+ {
+  "key": "KEYS_PLAN_ROWS[6].1",
+  "kind": "row",
+  "screen": "Keyboard shortcuts sheet: a wide window with two columns of groups. Each row has the keys drawn as little key caps at the left (never translated) and a description at the right, about 300 points wide. This text is the description. Third group (the plan). The keys at the left are: Ctrl Tab.",
+  "moment": "The person opens the sheet to learn what pressing these keys does, and reads this line while looking at the key caps beside it.",
+  "role": "key description",
+  "does": "Opens the plan that stands after the open one in the list of plans, going round to the first; with Shift held, the one before.",
+  "budget": 48,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
    "plan"
   ],
   "notes": "Fragment, no full stop."

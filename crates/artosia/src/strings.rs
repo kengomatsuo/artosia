@@ -438,7 +438,6 @@ pub fn library_in_memory(problem: &str) -> String {
 }
 
 // Plan.
-text!(PLAN_DEFAULT_NAME, "Today", "Acara hari ini");
 text!(PLAN_EMPTY, "Nothing planned yet", "Acara masih kosong");
 text!(PLAN_ADD, "Add to the plan", "Tambah ke acara");
 text!(PLAN_NEW, "Start a new plan", "Acara baru");
@@ -1292,7 +1291,7 @@ const KEYS_FINDING_ROWS_EN: [(&str, &str); 7] = [
     ("Ctrl Enter", "Show it now"),
     ("Shift Enter", "Add it to the plan, next in line"),
     ("Tab", "Search inside the picked song"),
-    ("Esc", "Empty the search, then close it"),
+    ("Esc", "Close the search"),
 ];
 const KEYS_FINDING_ROWS_ID: [(&str, &str); 7] = [
     ("Huruf apa saja", "Ketik huruf di mana saja untuk mencari"),
@@ -1301,7 +1300,7 @@ const KEYS_FINDING_ROWS_ID: [(&str, &str); 7] = [
     ("Ctrl Enter", "Buka dan langsung tayangkan"),
     ("Shift Enter", "Tambah setelah yang tayang, atau di akhir"),
     ("Tab", "Cari bagian lagu yang disorot"),
-    ("Esc", "Hapus ketikan, tekan lagi untuk menutup"),
+    ("Esc", "Close the search"),
 ];
 pub fn KEYS_FINDING_ROWS() -> &'static [(&'static str, &'static str)] {
     if languages::has_table(language()) {
@@ -1309,21 +1308,23 @@ pub fn KEYS_FINDING_ROWS() -> &'static [(&'static str, &'static str)] {
     }
     if indonesian() { &KEYS_FINDING_ROWS_ID } else { &KEYS_FINDING_ROWS_EN }
 }
-const KEYS_PLAN_ROWS_EN: [(&str, &str); 6] = [
+const KEYS_PLAN_ROWS_EN: [(&str, &str); 7] = [
     ("Tab", "Bring the next plan item into Preview"),
     ("Shift Tab", "Bring the item before it into Preview"),
     ("Alt Up Down", "Move the Preview item earlier or later"),
     ("Ctrl M", "Start the Preview song at the ring"),
     ("Delete", "Take the Preview item out of the plan"),
     ("Shift Enter", "Add what is in Preview to the plan"),
+    ("Ctrl Tab", "Open the next plan"),
 ];
-const KEYS_PLAN_ROWS_ID: [(&str, &str); 6] = [
+const KEYS_PLAN_ROWS_ID: [(&str, &str); 7] = [
     ("Tab", "Bawa item acara berikutnya ke pratinjau"),
     ("Shift Tab", "Bawa item acara sebelumnya ke pratinjau"),
     ("Alt panah atas, bawah", "Geser item pratinjau naik atau turun"),
     ("Ctrl M", "Start the Preview song at the ring"),
     ("Delete", "Keluarkan item pratinjau, bisa diurungkan"),
     ("Shift Enter", "Add what is in Preview to the plan"),
+    ("Ctrl Tab", "Open the next plan"),
 ];
 pub fn KEYS_PLAN_ROWS() -> &'static [(&'static str, &'static str)] {
     if languages::has_table(language()) {

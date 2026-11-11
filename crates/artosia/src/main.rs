@@ -252,6 +252,9 @@ fn on_key(s: &mut App, ev: &KeyEvent, tx: &mut Tx) -> bool {
             }
         }
         Key::Enter => s.enter(),
+        // Ctrl Tab is the next plan, as it is the next tab of a Windows program; Tab alone is
+        // the next item of the open plan.
+        Key::Tab if ev.mods.ctrl || ev.mods.cmd => s.walk_plans(!ev.mods.shift),
         Key::Tab => s.walk_plan(!ev.mods.shift),
         // Ctrl M: the Preview song starts at the ring's section (docs/operator.md).
         Key::Command('m') => s.toggle_start_here(),

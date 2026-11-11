@@ -519,7 +519,7 @@ impl App {
             .find(|plan| plan.id == settings.plan)
             .or(plans.first())
             .cloned()
-            .unwrap_or_else(|| Plan::named(t::PLAN_DEFAULT_NAME()));
+            .unwrap_or_else(|| Plan::named(""));
         let (remote_tx, remote_rx) = channel();
         let licence_edit = TextEdit::new(settings.licence.clone());
         let first_look = plan.look.clone().and_then(|own| serde_json::from_value(own).ok()).unwrap_or_else(|| settings.look.clone());

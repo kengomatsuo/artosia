@@ -49,6 +49,8 @@ pub struct PlanEdit {
     pub hour: Option<u8>,
     pub minute: u8,
     pub name: TextEdit,
+    /// The digits typed so far, for a time typed as it is said: "0730", "1830", "7".
+    pub typed: String,
 }
 
 impl PlanEdit {
@@ -93,7 +95,9 @@ pub fn plan_words(name: &str, day: Option<u8>, time: Option<u16>) -> String {
     if !is_unnamed(name) {
         return name.trim().to_string();
     }
-    slot_words(day, time).unwrap_or_else(|| t::PLAN_DEFAULT_NAME().to_string())
+    // With neither, it is a plan and no more: it used to read "Today", under a heading that
+    // may itself read Today.
+    slot_words(day, time).unwrap_or_else(|| t::KIND_PLAN().to_string())
 }
 
 impl PlanRow {
@@ -308,7 +312,7 @@ impl App {
     pub fn begin_new_plan(&mut self) {
         let day = self.plan.day.unwrap_or(self.weekday_now().0);
         self.switcher.menu = None;
-        self.switcher.editing = Some(PlanEdit { what: Editing::New, day, hour: None, minute: 0, name: TextEdit::new("") });
+        self.switcher.editing = Some(PlanEdit { what: Editing::New, day, hour: None, minute: 0, name: TextEdit::new(""), typed: String::new() });
     }
 
     /// Opens the box for a copy of a plan, for another service with the same items.
@@ -318,7 +322,7 @@ impl App {
         let day = source.day.unwrap_or(self.weekday_now().0);
         let minute = source.time.map(|time| (time % 60) as u8).unwrap_or(0);
         self.switcher.menu = None;
-        self.switcher.editing = Some(PlanEdit { what: Editing::Copy(id), day, hour: None, minute, name: TextEdit::new("") });
+        self.switcher.editing = Some(PlanEdit { what: Editing::Copy(id), day, hour: None, minute, name: TextEdit::new(""), typed: String::new() });
     }
 
     /// Opens the box on a plan's own day, time and name.
@@ -333,7 +337,46 @@ impl App {
         };
         let name = if is_unnamed(&plan.name) { String::new() } else { plan.name.clone() };
         self.switcher.menu = None;
-        self.switcher.editing = Some(PlanEdit { what: Editing::Existing(id), day, hour, minute, name: TextEdit::new(name) });
+        self.switcher.editing = Some(PlanEdit { what: Editing::Existing(id), day, hour, minute, name: TextEdit::new(name), typed: String::new() });
+    }
+
+    /// A digit typed in the box while no field has the keys: the time is typed as it is said,
+    /// hour then minutes. "7" is seven o'clock, "0730" and "730" half past seven, "1830" half
+    /// past six in the evening. A keys-only tester pressed an arrow nine times to get from 16 to 07.
+    pub fn plan_box_digit(&mut self, digit: char) {
+        let Some(edit) = self.switcher.editing.as_mut() else { return };
+        let Some(digit) = digit.to_digit(10) else { return };
+        if edit.typed.len() >= 4 {
+            edit.typed.clear();
+        }
+        edit.typed.push(char::from(b'0' + digit as u8));
+        let digits: Vec<u8> = edit.typed.bytes().map(|byte| byte - b'0').collect();
+        let two = |a: u8, b: u8| a * 10 + b;
+        let tens = |digit: u8| if digit <= 5 { digit * 10 } else { 0 };
+        (edit.hour, edit.minute) = match digits[..] {
+            [hour] => (Some(hour), 0),
+            [a, b] if two(a, b) <= 23 => (Some(two(a, b)), 0),
+            [hour, minute] => (Some(hour), tens(minute)),
+            [a, b, minute] if two(a, b) <= 23 => (Some(two(a, b)), tens(minute)),
+            [hour, a, b] => (Some(hour), two(a, b).min(59)),
+            [a, b, c, d] if two(a, b) <= 23 => (Some(two(a, b)), two(c, d).min(59)),
+            [hour, a, b, _] => (Some(hour), two(a, b).min(59)),
+            _ => (edit.hour, edit.minute),
+        };
+    }
+
+    /// Ctrl Tab and Ctrl Shift Tab: the plan after or before the open one in the list, going
+    /// round, as the same keys move between the tabs of a Windows program. The projector is
+    /// not touched, as with every switch of plan.
+    pub fn walk_plans(&mut self, forward: bool) {
+        let count = self.switcher.rows.len();
+        let Some(at) = self.switcher.rows.iter().position(|row| row.id == self.plan.id) else { return };
+        if count < 2 {
+            return;
+        }
+        let to = if forward { (at + 1) % count } else { (at + count - 1) % count };
+        let id = self.switcher.rows[to].id;
+        self.switch_plan(id);
     }
 
     /// Closes the box. With `save` the plan is made, copied or changed; without, nothing is.
@@ -476,6 +519,43 @@ mod tests {
         app.finish_edit(true);
         assert_eq!((app.plan_title().as_str(), app.plan.time), ("Sunday school", Some(630)));
         assert_eq!(slot_words(app.plan.day, app.plan.time).as_deref(), Some("Sunday 10:30"));
+    }
+
+    #[test]
+    fn a_time_is_typed_as_it_is_said() {
+        let mut app = App::practice();
+        let typed = |app: &mut App, digits: &str| {
+            app.begin_new_plan();
+            for digit in digits.chars() {
+                app.plan_box_digit(digit);
+            }
+            let edit = app.switcher.editing.take().expect("the box is open");
+            (edit.hour, edit.minute)
+        };
+        assert_eq!(typed(&mut app, "7"), (Some(7), 0));
+        assert_eq!(typed(&mut app, "07"), (Some(7), 0));
+        assert_eq!(typed(&mut app, "0730"), (Some(7), 30));
+        assert_eq!(typed(&mut app, "730"), (Some(7), 30));
+        assert_eq!(typed(&mut app, "1830"), (Some(18), 30));
+        assert_eq!(typed(&mut app, "10"), (Some(10), 0));
+        assert_eq!(typed(&mut app, "1015"), (Some(10), 15));
+    }
+
+    #[test]
+    fn ctrl_tab_goes_round_the_plans_and_leaves_the_projector() {
+        let mut app = App::practice();
+        another_plan(&mut app, 6, 7);
+        another_plan(&mut app, 6, 10);
+        let order: Vec<i64> = app.switcher.rows.iter().map(|row| row.id).collect();
+        let first = app.plan.items.iter().find(|item| !item.entry.is_heading()).map(|item| item.id);
+        assert!(first.is_none(), "the newest plan is empty");
+        let start = order.iter().position(|id| *id == app.plan.id).expect("the open plan is listed");
+        app.walk_plans(true);
+        assert_eq!(app.plan.id, order[(start + 1) % order.len()]);
+        app.walk_plans(false);
+        app.walk_plans(false);
+        assert_eq!(app.plan.id, order[(start + order.len() - 1) % order.len()]);
+        assert!(app.live.is_none());
     }
 
     #[test]

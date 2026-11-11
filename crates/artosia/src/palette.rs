@@ -258,7 +258,6 @@ impl Command {
             Command::EditSong => matches!(app.open.as_ref().map(|open| &open.deck.source), Some(DeckSource::Song(_))),
             Command::Undo => app.toast.as_ref().is_some_and(|toast| toast.undo.is_some()),
             Command::LoopAnnouncements => !app.announcements.is_empty(),
-            Command::PlanDuplicate => app.plan.items.iter().any(|item| !item.entry.is_heading()),
             // Offered whenever the plan holds a song: a person who types "start at chorus" must find
             // it, and is told what to open first when Preview holds something else.
             Command::Earlier => !app.history.is_empty(),
@@ -419,9 +418,11 @@ impl App {
         }
     }
 
-    /// Escape: the first press empties the search, the next one closes it.
+    /// Escape closes the search at once; from inside a song it first goes back out to the
+    /// whole search. It used to empty the box first, and a tester who had opened the search by
+    /// a slip of a letter key pressed it once and was still inside.
     pub fn palette_escape(&mut self) {
-        if self.palette.chip.is_none() && self.palette.query.text.is_empty() {
+        if self.palette.chip.is_none() {
             self.close_palette();
             return;
         }
@@ -555,6 +556,8 @@ impl App {
             }
         }
         let (mut leading, mut named, mut others) = (Vec::new(), Vec::new(), Vec::new());
+        // A word that is a whole word of a command's or a plan's name was meant for it.
+        let mut names_a_thing = false;
         if scope == Scope::All {
             let found = self.documents();
             let docs: Vec<Doc> = found.iter().map(|(doc, _)| doc.clone()).collect();
@@ -562,6 +565,7 @@ impl App {
             for hit in kit::search(&docs, query, &|doc| doc.group == "plan", 24) {
                 // Every typed word is a whole word of the name itself.
                 let whole = hit.typos == 0 && hit.infix == 0 && hit.weight >= LABEL && usize::from(hit.exact) == typed;
+                names_a_thing |= whole;
                 // The name and nothing else was typed: "today" for the plan Today. It leads
                 // even a planned song that only holds the word in a line.
                 let is_name = whole && hit.position == 0 && artosia_core::text::words(&docs[hit.doc].display).len() == typed;
@@ -578,6 +582,9 @@ impl App {
                 }
             }
         }
+        // A book of the Bible guessed from a word that names a command or a plan does not go
+        // first: "plan" was read as a book and filled the list with its chapters.
+        let reference_first = reference_first && !names_a_thing;
         if reference_first {
             hits.extend(passages.iter().cloned());
         }
@@ -1184,12 +1191,28 @@ mod tests {
     }
 
     #[test]
-    fn escape_empties_the_search_before_it_closes() {
+    fn escape_closes_the_search_at_once_and_first_leaves_a_song() {
         let mut app = app();
         search(&mut app, "black");
+        assert!(app.palette.open);
         app.palette_escape();
-        assert!(app.palette.open && app.palette.query.text.is_empty());
+        assert!(!app.palette.open, "one press leaves, whatever was typed");
+        // From inside a song the first press goes back out to the whole search.
+        app.open_palette(Scope::All, "");
+        app.palette.chip = Some(0);
+        app.palette_escape();
+        assert!(app.palette.open && app.palette.chip.is_none());
         app.palette_escape();
         assert!(!app.palette.open);
+    }
+
+    #[test]
+    fn a_word_that_names_a_command_is_not_read_as_a_book_of_the_bible() {
+        let mut app = app();
+        search(&mut app, "plan");
+        assert!(!matches!(first(&app), Some(Hit::Passage { .. })), "no chapter of a guessed book leads the list");
+        let command = app.palette.hits.iter().position(|hit| matches!(hit, Hit::Command(Command::NewPlan))).expect("the plan commands are found");
+        let passage = app.palette.hits.iter().position(|hit| matches!(hit, Hit::Passage { .. })).unwrap_or(usize::MAX);
+        assert!(command < passage, "the command stands before any passage");
     }
 }

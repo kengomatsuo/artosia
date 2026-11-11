@@ -133,6 +133,8 @@ pub(crate) fn strip(s: &App, k: &Kit, layer: &mut Vec<El>, tall: f32) -> El {
         .gap(space::S2)
         .center_y()
         .child(text(t::PLANS_TITLE()).font(type_::SMALL_STRONG).color(k.c.text_muted))
+        // The key that goes to the next plan, drawn where the plans are.
+        .child(crate::ui::widgets::keycaps(k, "Ctrl Tab", None))
         .child(spacer())
         .child(btn(t::PLAN_NEW()).icon(&icons::PLUS).icon_only().ghost().small().build(k, |s, tx| {
             s.begin_new_plan();
@@ -170,7 +172,7 @@ fn chip(k: &Kit, key: String, label: String, on: bool, width: Option<f32>, press
         .hover(if on { rune::Color::BLACK.alpha(0.08) } else { k.c.hover })
         .focusable(true)
         .focus_selected(on)
-        .on_key(crate::ui::widgets::enter_key)
+        .on_key(box_keys)
         .cursor(Cursor::Pointer)
         .child(text(label).font(if on { type_::BODY_STRONG } else { type_::BODY }).color(ink).a11y_hidden());
     if !on {
@@ -180,6 +182,29 @@ fn chip(k: &Kit, key: String, label: String, on: bool, width: Option<f32>, press
         chip = chip.w(width);
     }
     chip.on_press(press)
+}
+
+/// Keys while a chip of the box has the focus. Enter saves, the one thing the box is for; a
+/// chip is already chosen by the arrow that reached it. A digit types the time. A keys-only
+/// tester pressed Enter on an hour and nothing happened, and counted nine arrows from 16 to 07.
+fn box_keys(s: &mut App, ev: &rune::KeyEvent, tx: &mut Tx) -> bool {
+    if ev.mods != rune::Mods::default() {
+        return false;
+    }
+    match &ev.key {
+        rune::Key::Enter => {
+            s.finish_edit(true);
+            tx.scroll_into_view(format!("plans-under-{}", s.plan.id));
+            true
+        }
+        rune::Key::Text(typed) if typed.len() == 1 && typed.chars().all(|c| c.is_ascii_digit()) => {
+            if let Some(digit) = typed.chars().next() {
+                s.plan_box_digit(digit);
+            }
+            true
+        }
+        _ => false,
+    }
 }
 
 /// A row of choices under its label: one Tab stop, the arrows choose as they move.
@@ -205,6 +230,8 @@ pub(crate) fn view(s: &App, k: &Kit, layer: &mut Vec<El>) {
         move |s: &mut App| {
             if let Some(edit) = s.switcher.editing.as_mut() {
                 change(edit, value);
+                // A press starts the typed time afresh.
+                edit.typed.clear();
             }
         }
     };

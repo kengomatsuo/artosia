@@ -234,7 +234,6 @@ pub fn dump() -> String {
     line(out, "OUTPUT_HERE", OUTPUT_HERE());
     line(out, "OUTPUT_STUCK", OUTPUT_STUCK());
     line(out, "REMOTE_ON", REMOTE_ON());
-    line(out, "PLAN_DEFAULT_NAME", PLAN_DEFAULT_NAME());
     line(out, "PLAN_EMPTY", PLAN_EMPTY());
     line(out, "PLAN_ADD", PLAN_ADD());
     line(out, "PLAN_NEW", PLAN_NEW());
