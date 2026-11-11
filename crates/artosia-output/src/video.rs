@@ -9,7 +9,7 @@
 
 use std::path::Path;
 use std::sync::atomic::Ordering;
-use std::sync::mpsc::{RecvTimeoutError, Sender, channel};
+use std::sync::mpsc::{RecvTimeoutError, Sender, SyncSender, channel, sync_channel};
 use std::sync::{Arc, Mutex, OnceLock};
 use std::time::{Duration, Instant};
 
@@ -34,6 +34,58 @@ static CAMERAS: OnceLock<Arc<Cameras>> = OnceLock::new();
 const STALL: Duration = Duration::from_millis(2000);
 const CAMERA_RETRY: Duration = Duration::from_secs(2);
 const FILE_RETRY: Duration = Duration::from_secs(10);
+
+/// Held while a preview picture is checked and written, and while the video is marked dark and
+/// the operator told, so a picture still on its way can never land after "the video is gone".
+static PREVIEW_GATE: Mutex<()> = Mutex::new(());
+
+/// Operators connected now; the pictures are made only while there is one.
+static OPERATORS: std::sync::atomic::AtomicUsize = std::sync::atomic::AtomicUsize::new(0);
+
+/// An operator connected (true) or its socket ended (false).
+pub fn operator_connected(connected: bool) {
+    let now = if connected { OPERATORS.fetch_add(1, Ordering::AcqRel) + 1 } else { OPERATORS.fetch_sub(1, Ordering::AcqRel).saturating_sub(1) };
+    // Measuring switch: ARTOSIA_NO_PREVIEW=1 makes no pictures, for costing them against none.
+    artosia_video::want_taps(now > 0 && std::env::var_os("ARTOSIA_NO_PREVIEW").is_none());
+}
+
+/// Sends the operator a small picture of the background now and then, from the frames the
+/// loop already decodes: each is shrunk from its NV12 planes on the decoder's thread, and a
+/// writer thread sends the newest, so a slow socket can never hold the decoder back.
+fn start_previews() {
+    let (tx, rx): (SyncSender<artosia_slides::preview::Shrunk>, _) = sync_channel(1);
+    artosia_video::set_tap(Duration::from_millis(1000 / u64::from(artosia_slides::preview::PER_SECOND)), move |view| {
+        let frame = artosia_slides::preview::Nv12 {
+            width: view.width,
+            height: view.height,
+            luma: view.luma,
+            luma_stride: view.luma_stride,
+            chroma: view.chroma,
+            chroma_stride: view.chroma_stride,
+            full_range: view.full_range,
+            bt601: view.bt601,
+        };
+        if let Some(small) = artosia_slides::preview::shrink(&frame, artosia_slides::preview::WIDTH) {
+            let _ = tx.try_send(small);
+        }
+    });
+    let _ = std::thread::Builder::new().name("artosia-previews".into()).spawn(move || {
+        let (mut count, mut began) = (0u32, Instant::now());
+        while let Ok(small) = rx.recv() {
+            let Ok(_gate) = PREVIEW_GATE.lock() else { continue };
+            if !shared().video_live.load(Ordering::Acquire) {
+                continue;
+            }
+            let rgb = artosia_slides::preview::pack(&small);
+            shared().tell(&FromOutput::Preview { width: small.width, height: small.height, rgb });
+            count += 1;
+            if began.elapsed() >= Duration::from_secs(5) {
+                trace(|| format!("previews: {count} sent in 5 s, {}x{}", small.width, small.height));
+                (count, began) = (0, Instant::now());
+            }
+        }
+    });
+}
 
 /// Asks for a file or camera behind the text, or for none.
 pub fn want(wanted: Want) {
@@ -85,7 +137,10 @@ impl Worker {
     /// Shows black under the text until the background is back.
     fn go_dark(&mut self) {
         let shared = shared();
-        shared.video_live.store(false, Ordering::Release);
+        if let Ok(_gate) = PREVIEW_GATE.lock() {
+            shared.video_live.store(false, Ordering::Release);
+            shared.tell(&FromOutput::PreviewEnd);
+        }
         self.playing = None;
         shared.surface.clear();
         shared.touch();
@@ -220,6 +275,7 @@ impl Worker {
 /// because GStreamer's device monitor costs about 50 MB for as long as it runs.
 pub fn start() {
     let (tx, rx) = channel::<Want>();
+    start_previews();
     if WANT.set(Mutex::new(tx)).is_err() {
         return;
     }

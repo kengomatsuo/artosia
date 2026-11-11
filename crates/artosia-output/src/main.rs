@@ -350,6 +350,8 @@ fn listen(listener: TcpListener) {
         if let Some(hello) = hello {
             shared.tell(&hello);
         }
+        #[cfg(feature = "video")]
+        video::operator_connected(true);
         std::thread::spawn(move || {
             for line in BufReader::new(reader).lines() {
                 let Ok(line) = line else { break };
@@ -357,6 +359,8 @@ fn listen(listener: TcpListener) {
                     apply(message);
                 }
             }
+            #[cfg(feature = "video")]
+            video::operator_connected(false);
         });
     }
 }
