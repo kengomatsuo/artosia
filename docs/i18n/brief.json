@@ -8941,6 +8941,23 @@
   "notes": "Fragment, no full stop."
  },
  {
+  "key": "KEYS_PLAN_ROWS[7].1",
+  "kind": "row",
+  "screen": "Keyboard shortcuts sheet: a wide window with two columns of groups. Each row has the keys drawn as little key caps at the left (never translated) and a description at the right, about 300 points wide. This text is the description. Third group (the plan). The keys at the left are: Ctrl Shift N.",
+  "moment": "The person opens the sheet to learn what pressing these keys does, and reads this line while looking at the key caps beside it.",
+  "role": "key description",
+  "does": "Opens the small dialog that makes a plan for another service: its day of the week and its hour are chosen there.",
+  "budget": 48,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "plan"
+  ],
+  "notes": "Fragment, no full stop."
+ },
+ {
   "key": "KEYS_EDITING_ROWS[0].1",
   "kind": "row",
   "screen": "Keyboard shortcuts sheet: a wide window with two columns of groups. Each row has the keys drawn as little key caps at the left (never translated) and a description at the right, about 300 points wide. This text is the description. Fourth group (editing). The keys at the left are: Ctrl and N.",

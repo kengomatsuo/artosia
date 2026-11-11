@@ -136,7 +136,7 @@ pub(crate) fn strip(s: &App, k: &Kit, layer: &mut Vec<El>, tall: f32) -> El {
         // The key that goes to the next plan, drawn where the plans are.
         .child(crate::ui::widgets::keycaps(k, "Ctrl Tab", None))
         .child(spacer())
-        .child(btn(t::PLAN_NEW()).icon(&icons::PLUS).icon_only().ghost().small().build(k, |s, tx| {
+        .child(btn(t::PLAN_NEW()).icon(&icons::PLUS).icon_only().ghost().small().hint("Ctrl Shift N").build(k, |s, tx| {
             s.begin_new_plan();
             tx.blur();
         }));
@@ -203,6 +203,16 @@ fn box_keys(s: &mut App, ev: &rune::KeyEvent, tx: &mut Tx) -> bool {
             }
             true
         }
+        // A day is typed by its name, "sun" or "min": a tester typed "sunday 07:00" and only
+        // the hour was taken.
+        rune::Key::Text(typed) if typed.chars().count() == 1 && typed.chars().all(char::is_alphabetic) => {
+            if let Some(letter) = typed.chars().next() {
+                s.plan_box_letter(letter);
+            }
+            true
+        }
+        // The marks between a day and a time, and inside a time, are part of typing one.
+        rune::Key::Text(typed) if matches!(typed.as_str(), " " | ":" | "." | ",") => true,
         _ => false,
     }
 }
@@ -213,7 +223,8 @@ fn choices(k: &Kit, label: &'static str, chips: Vec<El>) -> El {
     for chip in chips {
         group = group.child(chip);
     }
-    col().w_full().gap(space::S1).child(section_label(k, label)).child(group)
+    // The arrows that move in the row are drawn beside its name: a tester found out by trying.
+    col().w_full().gap(space::S1).child(row().gap(space::S2).center_y().child(section_label(k, label)).child(crate::ui::widgets::keycaps(k, "Left Right", None))).child(group)
 }
 
 /// The box that sets a plan's day and time. Every part is a chip to press; only a name, which

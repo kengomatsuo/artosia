@@ -1309,23 +1309,25 @@ pub fn KEYS_FINDING_ROWS() -> &'static [(&'static str, &'static str)] {
     }
     if indonesian() { &KEYS_FINDING_ROWS_ID } else { &KEYS_FINDING_ROWS_EN }
 }
-const KEYS_PLAN_ROWS_EN: [(&str, &str); 7] = [
+const KEYS_PLAN_ROWS_EN: [(&str, &str); 8] = [
     ("Tab", "Bring the next plan item into Preview"),
     ("Shift Tab", "Bring the item before it into Preview"),
     ("Alt Up Down", "Move the Preview item earlier or later"),
     ("Ctrl M", "Start the Preview song at the ring"),
     ("Delete", "Take the Preview item out of the plan"),
     ("Shift Enter", "Add what is in Preview to the plan"),
-    ("Ctrl Tab", "Open the next plan"),
+    ("Ctrl Tab", "Open the next plan; with Shift, the one before"),
+    ("Ctrl Shift N", "Start a new plan"),
 ];
-const KEYS_PLAN_ROWS_ID: [(&str, &str); 7] = [
+const KEYS_PLAN_ROWS_ID: [(&str, &str); 8] = [
     ("Tab", "Bawa item acara berikutnya ke pratinjau"),
     ("Shift Tab", "Bawa item acara sebelumnya ke pratinjau"),
     ("Alt panah atas, bawah", "Geser item pratinjau naik atau turun"),
     ("Ctrl M", "Start the Preview song at the ring"),
     ("Delete", "Keluarkan item pratinjau, bisa diurungkan"),
     ("Shift Enter", "Add what is in Preview to the plan"),
-    ("Ctrl Tab", "Open the next plan"),
+    ("Ctrl Tab", "Open the next plan; with Shift, the one before"),
+    ("Ctrl Shift N", "Start a new plan"),
 ];
 pub fn KEYS_PLAN_ROWS() -> &'static [(&'static str, &'static str)] {
     if languages::has_table(language()) {

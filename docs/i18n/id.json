@@ -3220,5 +3220,15 @@
   "text": "Rundown berikutnya, dengan Shift yang sebelumnya",
   "back": "The next rundown, with Shift the previous one",
   "why": "Fragment; Shift stays as printed"
+ },
+ "LISTEN_SYSTEM_AUDIO": {
+  "text": "Suara dari komputer ini",
+  "back": "Sound from this computer",
+  "why": "A phrase for listening to the computer's own sound instead of a microphone"
+ },
+ "KEYS_PLAN_ROWS[7].1": {
+  "text": "Rundown baru, pilih hari dan jamnya",
+  "back": "A new rundown, choose its day and hour",
+  "why": "Fragment; same words as the plan dialog"
  }
 }

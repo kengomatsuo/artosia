@@ -132,6 +132,12 @@ fn on_key(s: &mut App, ev: &KeyEvent, tx: &mut Tx) -> bool {
             return true;
         }
         // New means a new one of what is being edited: a card among the announcements, a song anywhere else.
+        // Ctrl Shift N is a new plan, beside Ctrl N for a new song; the plus of the list of
+        // plans prints it.
+        Key::Command('n') if ev.mods.shift && !editing && !s.palette.open && s.sheet == Sheet::None => {
+            s.begin_new_plan();
+            return true;
+        }
         Key::Command('n') if s.notices.is_some() && !s.palette.open => {
             s.new_notice("", "");
             return true;

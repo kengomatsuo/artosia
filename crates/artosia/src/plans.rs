@@ -51,6 +51,8 @@ pub struct PlanEdit {
     pub name: TextEdit,
     /// The digits typed so far, for a time typed as it is said: "0730", "1830", "7".
     pub typed: String,
+    /// The letters typed so far, for a day typed by the start of its name.
+    pub typed_day: String,
 }
 
 impl PlanEdit {
@@ -312,7 +314,7 @@ impl App {
     pub fn begin_new_plan(&mut self) {
         let day = self.plan.day.unwrap_or(self.weekday_now().0);
         self.switcher.menu = None;
-        self.switcher.editing = Some(PlanEdit { what: Editing::New, day, hour: None, minute: 0, name: TextEdit::new(""), typed: String::new() });
+        self.switcher.editing = Some(PlanEdit { what: Editing::New, day, hour: None, minute: 0, name: TextEdit::new(""), typed: String::new(), typed_day: String::new() });
     }
 
     /// Opens the box for a copy of a plan, for another service with the same items.
@@ -322,7 +324,7 @@ impl App {
         let day = source.day.unwrap_or(self.weekday_now().0);
         let minute = source.time.map(|time| (time % 60) as u8).unwrap_or(0);
         self.switcher.menu = None;
-        self.switcher.editing = Some(PlanEdit { what: Editing::Copy(id), day, hour: None, minute, name: TextEdit::new(""), typed: String::new() });
+        self.switcher.editing = Some(PlanEdit { what: Editing::Copy(id), day, hour: None, minute, name: TextEdit::new(""), typed: String::new(), typed_day: String::new() });
     }
 
     /// Opens the box on a plan's own day, time and name.
@@ -337,7 +339,7 @@ impl App {
         };
         let name = if is_unnamed(&plan.name) { String::new() } else { plan.name.clone() };
         self.switcher.menu = None;
-        self.switcher.editing = Some(PlanEdit { what: Editing::Existing(id), day, hour, minute, name: TextEdit::new(name), typed: String::new() });
+        self.switcher.editing = Some(PlanEdit { what: Editing::Existing(id), day, hour, minute, name: TextEdit::new(name), typed: String::new(), typed_day: String::new() });
     }
 
     /// A digit typed in the box while no field has the keys: the time is typed as it is said,
@@ -363,6 +365,26 @@ impl App {
             [hour, a, b, _] => (Some(hour), two(a, b).min(59)),
             _ => (edit.hour, edit.minute),
         };
+    }
+
+    /// A letter typed in the box while no field has the keys: the day whose name begins with
+    /// the letters typed so far, in the window's language or in English ("sun", "min", "sab").
+    /// A letter that fits no day starts the word again.
+    pub fn plan_box_letter(&mut self, letter: char) {
+        let Some(edit) = self.switcher.editing.as_mut() else { return };
+        let find = |typed: &str| {
+            let english = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
+            (0..7u8).find(|day| t::WEEKDAYS()[usize::from(*day)].to_lowercase().starts_with(typed) || english[usize::from(*day)].starts_with(typed))
+        };
+        edit.typed_day.extend(letter.to_lowercase());
+        let found = find(&edit.typed_day).or_else(|| {
+            edit.typed_day = letter.to_lowercase().collect();
+            find(&edit.typed_day)
+        });
+        match found {
+            Some(day) => edit.day = day,
+            None => edit.typed_day.clear(),
+        }
     }
 
     /// Ctrl Tab and Ctrl Shift Tab: the plan after or before the open one in the list, going
@@ -539,6 +561,17 @@ mod tests {
         assert_eq!(typed(&mut app, "1830"), (Some(18), 30));
         assert_eq!(typed(&mut app, "10"), (Some(10), 0));
         assert_eq!(typed(&mut app, "1015"), (Some(10), 15));
+        // A day is typed by the start of its name, in English or in the window's language.
+        app.begin_new_plan();
+        for letter in "sat".chars() {
+            app.plan_box_letter(letter);
+        }
+        assert_eq!(app.switcher.editing.as_ref().map(|edit| edit.day), Some(5));
+        for letter in "sunday".chars() {
+            app.plan_box_letter(letter);
+        }
+        assert_eq!(app.switcher.editing.as_ref().map(|edit| edit.day), Some(6), "a new word starts when the letters fit no day");
+        app.finish_edit(false);
     }
 
     #[test]
