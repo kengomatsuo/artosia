@@ -173,6 +173,8 @@ Played through `crates/artosia/scripts/arrows-and-ring.json` on 2026-11-10: Spac
 
 Pressed in a real window on 2026-11-11 with `tools/drive-window.ps1`, which sends real key and mouse input to one program's window and saves a picture after each step: Space, Down, Shift held with two Downs and then let go, Esc while Shift was held, Ctrl Down, Tab, Right, the Next that goes on, a plan row dragged, F5. The Shift release was the one step that failed the first time.
 
+Pressed again in a real practice window on 2026-11-11 after the tile rework: Enter moved the tour one stop and Esc ended it; Space, Tab and Enter put a song up; C jumped to its chorus; F6 switched the Live tile off (no ring, the row grey, the picture dimmed, the plan dot grey) and on again; Ctrl held ringed Preview and wrote its keys in the bar. Shift let go was pressed on a last slide, where there is nowhere to pick, so that run says nothing new about it.
+
 Dialogs and the two editors are different: Tab moves through their buttons and fields, and Enter or Space presses the focused button (`Btn::focusable`).
 
 ## The tour
