@@ -288,7 +288,7 @@ fn marks_strip(s: &App, k: &Kit, editor: &Editor) -> Option<El> {
     for (at, stanza) in proposal.stanzas.iter().enumerate() {
         chips = chips.child(stanza_chip(k, at, stanza));
     }
-    let apply = row().w(148.0).child(btn(t::MARKS_APPLY()).icon(&icons::CHECK).small().hint(t::KEY_MARK()).help(t::MARKS_APPLY_HELP()).grow().build(k, |s, _| s.apply_marks()));
+    let apply = row().w(184.0).child(btn(t::MARKS_APPLY()).icon(&icons::CHECK).small().hint(t::KEY_MARK()).help(t::MARKS_APPLY_HELP()).grow().build(k, |s, _| s.apply_marks()));
     let hide = btn(t::MARKS_HIDE()).icon(&icons::CLOSE).small().ghost().icon_only().build(k, |s, _| s.hide_marks());
     let mut strip = col()
         .key("marks-strip")
@@ -439,7 +439,7 @@ pub fn view(s: &App, k: &Kit, _width: f32) -> El {
         .child(text(if existing { t::EDITOR_EDIT() } else { t::EDITOR_NEW() }).font(type_::HEADING).color(k.c.text_base))
         .child(spacer());
     if existing {
-        header = header.child(btn(t::BTN_DELETE()).icon(&icons::TRASH).ghost().focusable().build(k, move |s, tx: &mut Tx| {
+        header = header.child(btn(t::BTN_DELETE_SONG()).icon(&icons::TRASH).ghost().focusable().build(k, move |s, tx: &mut Tx| {
             s.delete_song(id);
             tx.blur();
         }));

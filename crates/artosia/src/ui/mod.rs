@@ -261,7 +261,7 @@ pub fn view(s: &App, cx: &mut Cx<App>) -> El {
     if s.palette.open {
         palette::view(s, k, &mut layer);
     }
-    sheets::view(s, k, &mut layer);
+    sheets::view(s, k, &mut layer, cx.layout_size("window").map(|size| size[1]).unwrap_or(768.0));
     plans::view(s, k, &mut layer);
     layer.extend(toast(s, k));
     tour::view(s, cx, k, &mut layer);

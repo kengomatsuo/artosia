@@ -190,6 +190,7 @@ pub mod icons {
     icon!(SONG, "a-song", r#"<path d="M6 12.5V3.6L13 2.2V11" stroke="currentColor" stroke-linejoin="round"/><circle cx="4.3" cy="12.5" r="1.7" stroke="currentColor"/><circle cx="11.3" cy="11" r="1.7" stroke="currentColor"/>"#);
     icon!(BOOK, "a-book", r#"<path d="M8 4.5V13.5M8 4.5C7 3.5 5.2 3 2.5 3V12C5.2 12 7 12.5 8 13.5M8 4.5C9 3.5 10.8 3 13.5 3V12C10.8 12 9 12.5 8 13.5" stroke="currentColor" stroke-linejoin="round"/>"#);
     icon!(ANNOUNCE, "a-announce", r#"<path d="M2.5 6.5V9.5H4.5L9.5 12.5V3.5L4.5 6.5H2.5Z" stroke="currentColor" stroke-linejoin="round"/><path d="M11.8 6C12.6 6.5 13 7.2 13 8C13 8.8 12.6 9.5 11.8 10" stroke="currentColor" stroke-linecap="round"/>"#);
+    icon!(FOLDER, "a-folder", r#"<path d="M2 4.6C2 4 2.5 3.5 3.1 3.5H6.2L7.6 5H12.9C13.5 5 14 5.5 14 6.1V11.4C14 12 13.5 12.5 12.9 12.5H3.1C2.5 12.5 2 12 2 11.4V4.6Z" stroke="currentColor" stroke-linejoin="round"/>"#);
     icon!(PLUS, "a-plus", r#"<path d="M8 3V13M3 8H13" stroke="currentColor" stroke-linecap="round"/>"#);
     icon!(CLOSE, "a-close", r#"<path d="M4 4L12 12M12 4L4 12" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"/>"#);
     icon!(ARROW_LEFT, "a-arrow-left", r#"<path d="M13.5 8H2.5M7 3.5L2.5 8L7 12.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>"#);

@@ -177,7 +177,7 @@
    "song",
    "bible_translation"
   ],
-  "notes": "Two nouns joined by a plain 'or'; no verb needed."
+  "notes": "Says what pressing Tab does now: switch the list between songs and the Bible. A short verb phrase."
  },
  {
   "key": "HINT_SECTIONS",
@@ -196,7 +196,7 @@
    "section",
    "song"
   ],
-  "notes": "Short noun phrase. The word for the parts of a song must be the same one the song sections use everywhere."
+  "notes": "Says what pressing Tab does now: look inside the picked song for one of its parts. A short verb phrase."
  },
  {
   "key": "SEARCH_SECTIONS",
@@ -733,7 +733,8 @@
    "design",
    "backdrop",
    "logo",
-   "projector"
+   "projector",
+   "slide_words"
   ],
   "notes": "No full stop."
  },
@@ -787,7 +788,8 @@
   "concepts": [
    "screens_dialog",
    "projector",
-   "stage_screen"
+   "stage_screen",
+   "monitor"
   ],
   "notes": "Same word as the top bar button."
  },
@@ -842,7 +844,7 @@
   "concepts": [
    "phone_remote"
   ],
-  "notes": "No full stop. Say the network the way people at the church say it."
+  "notes": "A full natural sentence: phones on the same Wi-Fi can change the slides. Wi-Fi is written Wi-Fi."
  },
  {
   "key": "CMD_IMPORT_FOLDER",
@@ -972,9 +974,10 @@
   "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
   "concepts": [
    "stream",
-   "projector"
+   "projector",
+   "monitor"
   ],
-  "notes": "YouTube may be named or replaced by a general word for a video website. No full stop."
+  "notes": "What is broadcast is the projector's picture; do not call it by the noun for a monitor. No full stop."
  },
  {
   "key": "BTN_STREAM",
@@ -1103,8 +1106,8 @@
   "screen": "Stream dialog, bottom bar, a button on the right; it turns red and changes its word while a broadcast runs.",
   "moment": "The details are filled in and the person is ready to begin.",
   "role": "button",
-  "does": "Begins the broadcast.",
-  "budget": 10,
+  "does": "Starts the broadcast, and the recording when that is switched on.",
+  "budget": 16,
   "variables": [],
   "cases": [],
   "counts": "",
@@ -1112,7 +1115,7 @@
   "concepts": [
    "stream"
   ],
-  "notes": "An action while nothing runs. The other state of the same button is the stop action: they are a pair."
+  "notes": "Must say what starts: the broadcast. Two words."
  },
  {
   "key": "BTN_STREAM_STOP",
@@ -1318,7 +1321,7 @@
   "screen": "Listen dialog, title of the first switch row at the top.",
   "moment": "The dialog is open; the person turns hearing on or off.",
   "role": "switch label",
-  "does": "Names the switch that turns the computer's listening on and off.",
+  "does": "Labels the switch that turns the listener on and off.",
   "budget": 16,
   "variables": [],
   "cases": [],
@@ -1327,7 +1330,7 @@
   "concepts": [
    "listener"
   ],
-  "notes": "A state-naming word or phrase that reads right next to an on/off switch."
+  "notes": "Says the state the switch turns on, in a form that reads right beside an on/off switch. It must not look like a third name for the feature beside the button's name and the dialog's title."
  },
  {
   "key": "LISTEN_HINT",
@@ -1415,7 +1418,7 @@
   "concepts": [
    "listener"
   ],
-  "notes": "The name of a language, not the name of a nation."
+  "notes": "The name of a language, not of a nation, in the reader's language."
  },
  {
   "key": "LISTEN_ENGLISH",
@@ -1508,7 +1511,7 @@
   "screen": "Listen dialog, label of the last switch row.",
   "moment": "The person thinks it would be fun that the red Live marker pulses with the music.",
   "role": "switch label",
-  "does": "Names the option that makes the red marker of what is live pulse in time with the music.",
+  "does": "Labels a switch. When on, the red marks that show what is live (the red dot in the plan and the red marker in the Live list) fade gently in and out in time with the beat of the music that the microphone hears.",
   "budget": 34,
   "variables": [],
   "cases": [],
@@ -1518,7 +1521,7 @@
    "listener",
    "live"
   ],
-  "notes": "Light tone, it is a toy. Do not use the word 'blink' if the other word for pulse is more natural."
+  "notes": "Say plainly what moves (the red Live marks) and what it follows (the music's beat). No poetic verb."
  },
  {
   "key": "LISTEN_BEAT_BLINK_HINT",
@@ -1526,7 +1529,7 @@
   "screen": "Listen dialog, grey line under the pulse switch's label.",
   "moment": "The person wonders what the pulse is for.",
   "role": "explanatory text",
-  "does": "Says the pulse is gentle and only there for amusement.",
+  "does": "Explains under that switch that the effect is faint and changes nothing else: it is only decoration.",
   "budget": 40,
   "variables": [],
   "cases": [],
@@ -1535,7 +1538,7 @@
   "concepts": [
    "listener"
   ],
-  "notes": "Light tone. Keep it as short as the original job."
+  "notes": "Plain and neutral. No joke."
  },
  {
   "key": "CMD_UPDATE",
@@ -1686,7 +1689,8 @@
   "concepts": [
    "plan",
    "show",
-   "projector"
+   "projector",
+   "on_projector"
   ],
   "notes": "No full stop."
  },
@@ -1776,7 +1780,9 @@
   "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
   "concepts": [
    "clear_text",
-   "backdrop"
+   "backdrop",
+   "slide_words",
+   "on_projector"
   ],
   "notes": "No full stop."
  },
@@ -1926,7 +1932,7 @@
   "screen": "Search panel, results list: a row for an action the program can do (not a song). Icon at the left, bold title, and a lighter line under it that says what the action does. The row shows when the typed words match the action or when the field is empty.",
   "moment": "The person wants the announcements to cycle on the projector.",
   "role": "row title",
-  "does": "Names the action of making the announcement cards take turns on the projector, over and over.",
+  "does": "Starts showing the announcement cards on the projector one after another, round and round, until stopped.",
   "budget": 26,
   "variables": [],
   "cases": [],
@@ -1937,7 +1943,7 @@
    "card",
    "projector"
   ],
-  "notes": "Row title: a short name for the action, the thing a person types or reads to find it."
+  "notes": "A verb that fits cards taking turns. Not the verb for playing a video or music."
  },
  {
   "key": "CMD_LOOP_DETAIL",
@@ -2007,7 +2013,8 @@
   "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
   "concepts": [
    "design",
-   "projector"
+   "projector",
+   "slide_words"
   ],
   "notes": "One word or two. Not the name for a song's words in the editor."
  },
@@ -2087,7 +2094,8 @@
   "concepts": [
    "screens_dialog",
    "projector",
-   "stage_screen"
+   "stage_screen",
+   "monitor"
   ],
   "notes": "One word, ten characters at most."
  },
@@ -2156,7 +2164,8 @@
   "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
   "concepts": [
    "practice",
-   "projector"
+   "projector",
+   "switched_on"
   ],
   "notes": "It must not say the projector is off: the Live tile beside it is lit, and a tester read the two as a contradiction. No full stop."
  },
@@ -2266,7 +2275,9 @@
   "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
   "concepts": [
    "projector",
-   "screens_dialog"
+   "screens_dialog",
+   "on_projector",
+   "monitor"
   ],
   "notes": "A state, no full stop."
  },
@@ -2597,7 +2608,7 @@
   "concepts": [
    "plan"
   ],
-  "notes": "A menu item."
+  "notes": "A verb: make a copy of this plan."
  },
  {
   "key": "PLAN_RENAME",
@@ -2706,11 +2717,11 @@
  {
   "key": "PLAN_DATE_HINT",
   "kind": "const",
-  "screen": "Rename dialog, empty hint inside the date field.",
-  "moment": "The field is empty.",
+  "screen": "The small dialog that names a plan: two fields, the plan's name and its day. This text is the grey hint inside the empty day field.",
+  "moment": "The person is about to type the day of the service and wonders how to write it.",
   "role": "placeholder",
-  "does": "Shows the order of the date, year then month then day, in digits, and that the field may stay empty.",
-  "budget": 34,
+  "does": "Shows by one example how a day may be typed: the number of the day followed by the name of the month, here the fifteenth of November.",
+  "budget": 24,
   "variables": [],
   "cases": [],
   "counts": "",
@@ -2718,7 +2729,7 @@
   "concepts": [
    "plan"
   ],
-  "notes": "Say which part comes first. The program only understands year, month, day in that order."
+  "notes": "An example, such as the words for 'such as' followed by 15 and the month's name. No full stop. The field may be left empty, which the label already allows."
  },
  {
   "key": "LOOK_FOR_USUAL",
@@ -3127,7 +3138,8 @@
    "tour",
    "show",
    "preview",
-   "live"
+   "live",
+   "on_projector"
   ],
   "notes": "Use the same names as the pane titles and the tile."
  },
@@ -3175,7 +3187,7 @@
   "screen": "Tour: a small speech bubble pointing at a part of the main window, with a bold first line, a lighter second line and the buttons Skip and Next; a count such as 2 of 5 sits beside the buttons. Fourth stop, second line.",
   "moment": "Same stop.",
   "role": "bubble line two",
-  "does": "Says that the tile named Live is the switch that makes the projector start and stop showing.",
+  "does": "Says that the red tile named Live under this list is what turns the projector's output off and back on, with the key F6.",
   "budget": 52,
   "variables": [],
   "cases": [],
@@ -3185,9 +3197,10 @@
    "tour",
    "live",
    "live_switch",
-   "projector"
+   "projector",
+   "switched_on"
   ],
-  "notes": "The word for the tile must match the tile's label."
+  "notes": "Make plain that this is the red tile, not the list above it. One sentence, no full stop."
  },
  {
   "key": "TOUR_SEARCH",
@@ -3446,7 +3459,7 @@
   "screen": "Two places: the toolbar of the announcements editor, and the Preview title strip while announcements are open.",
   "moment": "The person wants the announcements to cycle.",
   "role": "button",
-  "does": "Starts the cards cycling one after another on the projector.",
+  "does": "Starts showing the announcement cards on the projector one after another, round and round, until stopped.",
   "budget": 20,
   "variables": [],
   "cases": [],
@@ -3457,7 +3470,7 @@
    "card",
    "projector"
   ],
-  "notes": "A pair with the stop button, which swaps places with it."
+  "notes": "A verb that fits cards taking turns. Not the verb for playing a video or music."
  },
  {
   "key": "BTN_LOOP_STOP",
@@ -3545,7 +3558,8 @@
   "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
   "concepts": [
    "clear_text",
-   "backdrop"
+   "backdrop",
+   "slide_words"
   ],
   "notes": "An action name. The tile itself carries the state's name, written separately."
  },
@@ -3635,7 +3649,8 @@
   "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
   "concepts": [
    "logo",
-   "projector"
+   "projector",
+   "on_projector"
   ],
   "notes": "A state."
  },
@@ -3653,7 +3668,8 @@
   "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
   "concepts": [
    "room_message",
-   "projector"
+   "projector",
+   "on_projector"
   ],
   "notes": "A state, not an action. A pill of about 130 points."
  },
@@ -3671,7 +3687,8 @@
   "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
   "concepts": [
    "stage_message",
-   "stage_screen"
+   "stage_screen",
+   "on_projector"
   ],
   "notes": "A state. Pair with the room-notice pill."
  },
@@ -3689,7 +3706,8 @@
   "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
   "concepts": [
    "stage_message",
-   "stage_screen"
+   "stage_screen",
+   "on_projector"
   ],
   "notes": "No full stop."
  },
@@ -3765,7 +3783,7 @@
    "suggestion",
    "search_memory"
   ],
-  "notes": "A short reason."
+  "notes": "A short reason, with the plain words for sung after. No verb that means catching up with or trailing behind."
  },
  {
   "key": "SUGGEST_LOST",
@@ -3773,7 +3791,7 @@
   "screen": "Same strip, in a yellow tone.",
   "moment": "The listener recognises that the congregation sings words that are not what the projector shows, twice in a row.",
   "role": "reason line",
-  "does": "Warns that what the congregation is singing differs from what the projector displays.",
+  "does": "Says the congregation seems to be singing something other than the words on the projector.",
   "budget": 44,
   "variables": [],
   "cases": [],
@@ -3782,9 +3800,10 @@
   "concepts": [
    "suggestion",
    "listener",
-   "projector"
+   "projector",
+   "on_projector"
   ],
-  "notes": "A warning, but calm."
+  "notes": "A full, natural sentence with its object: they are singing another song, or other words, than what is shown."
  },
  {
   "key": "SUGGEST_SEARCH",
@@ -3900,9 +3919,10 @@
   "concepts": [
    "clear_text",
    "backdrop",
-   "live"
+   "live",
+   "slide_words"
   ],
-  "notes": "A state name, lit while it is on; not a verb. One word is best, eight characters at most."
+  "notes": "A state name, lit while it is on; not a verb. Eight characters at most. It must say that the words are gone from the screen: a short form of 'no words' or 'words off'. A word that only means plain or empty is wrong."
  },
  {
   "key": "STATE_OFF",
@@ -3918,7 +3938,8 @@
   "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
   "concepts": [
    "live_switch",
-   "projector"
+   "projector",
+   "switched_on"
   ],
   "notes": "A state."
  },
@@ -3937,7 +3958,8 @@
   "concepts": [
    "show",
    "preview",
-   "live"
+   "live",
+   "on_projector"
   ],
   "notes": "A tooltip."
  },
@@ -3991,7 +4013,8 @@
   "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
   "concepts": [
    "live_switch",
-   "projector"
+   "projector",
+   "switched_on"
   ],
   "notes": "A tooltip."
  },
@@ -4048,7 +4071,7 @@
    "ring",
    "preview"
   ],
-  "notes": "A state, a pill of about 100 points. The key name Ctrl stays as printed."
+  "notes": "A short label the way a person says a key is being held down. Avoid a heavy passive. The key's name stays as printed."
  },
  {
   "key": "HELD_SHIFT",
@@ -4066,7 +4089,7 @@
    "keyboard",
    "live"
   ],
-  "notes": "A state. The key name Shift stays as printed."
+  "notes": "A short label the way a person says a key is being held down. Avoid a heavy passive. The key's name stays as printed."
  },
  {
   "key": "HINT_RING",
@@ -4121,7 +4144,8 @@
   "concepts": [
    "show",
    "live",
-   "keyboard"
+   "keyboard",
+   "on_projector"
   ],
   "notes": "A short phrase."
  },
@@ -4176,7 +4200,7 @@
    "plan",
    "passage"
   ],
-  "notes": "A short phrase."
+  "notes": "The Bible is named with the same word as on the big Bible tile of the empty Preview and in the search's filter."
  },
  {
   "key": "PLAN_ADD_HEADING",
@@ -4220,7 +4244,7 @@
   "screen": "Search panel, a bar across the top while the person is adding to the plan (the panel stays open after each add).",
   "moment": "The person came from the Add button and each pick goes into the plan.",
   "role": "banner",
-  "does": "Tells that everything picked now goes into the plan.",
+  "does": "A chip in the search field while every pick is being added to the plan.",
   "budget": 30,
   "variables": [],
   "cases": [],
@@ -4230,7 +4254,7 @@
    "plan",
    "search"
   ],
-  "notes": "A state."
+  "notes": "The same words as the button that adds to the plan, not another form of the verb."
  },
  {
   "key": "BTN_DONE",
@@ -4361,7 +4385,7 @@
    "countdown",
    "projector"
   ],
-  "notes": "Read by the whole congregation from far away. A phrase that finishes with the clock beneath."
+  "notes": "Starts with a capital letter: it is drawn large on the projector above the timer."
  },
  {
   "key": "EDITOR_NEW",
@@ -4456,8 +4480,8 @@
   "screen": "Song editor: it takes the place of the Preview pane. Heading and Delete, Cancel and Save buttons across the top; below them the fields Title, Author, Key, Copyright and CCLI song number; then the big box for the words with a row of small buttons above it; under it the order of the song; and a column of slide thumbnails at the right. Label over a narrow field about 90 points wide.",
   "moment": "The person types a musical key such as a letter of the scale.",
   "role": "field label",
-  "does": "Names the field for the musical key the song is usually played in.",
-  "budget": 8,
+  "does": "Labels the field for the musical key the song is sung in, such as G or D minor.",
+  "budget": 12,
   "variables": [],
   "cases": [],
   "counts": "",
@@ -4465,7 +4489,7 @@
   "concepts": [
    "song"
   ],
-  "notes": "A musician's word for the key of a song, never the word for a keyboard key. Tight: one short word."
+  "notes": "The term songbooks use for a song's key. It must not be mistaken for a single note or for tone of voice."
  },
  {
   "key": "FIELD_COPYRIGHT",
@@ -4565,7 +4589,7 @@
   "screen": "Song editor: it takes the place of the Preview pane. Heading and Delete, Cancel and Save buttons across the top; below them the fields Title, Author, Key, Copyright and CCLI song number; then the big box for the words with a row of small buttons above it; under it the order of the song; and a column of slide thumbnails at the right. A tiny ghost button right of the order label, shown when the order has been changed.",
   "moment": "The person changed the order and wants the written one back.",
   "role": "button",
-  "does": "Puts the order back to the way the parts were typed in the words box.",
+  "does": "The choice that sings the sections in the order they stand in the lyrics box below, with nothing repeated.",
   "budget": 20,
   "variables": [],
   "cases": [],
@@ -4574,7 +4598,7 @@
   "concepts": [
    "song_order"
   ],
-  "notes": "A small button."
+  "notes": "Refer to the lyrics with the word the editor uses for lyrics."
  },
  {
   "key": "ORDER_EMPTY",
@@ -4592,7 +4616,7 @@
    "song_order",
    "section"
   ],
-  "notes": "A statement."
+  "notes": "Plain and short, one register throughout. No full stop."
  },
  {
   "key": "ORDER_CHORUS_EACH",
@@ -4620,7 +4644,7 @@
   "moment": "The person pasted words copied from elsewhere.",
   "role": "button",
   "does": "Cleans up pasted words so they can be used as a song.",
-  "budget": 8,
+  "budget": 14,
   "variables": [],
   "cases": [],
   "counts": "",
@@ -4629,7 +4653,7 @@
    "tidy",
    "song"
   ],
-  "notes": "One word, tiny button."
+  "notes": "May name its object: tidy the lyrics. Two words at most."
  },
  {
   "key": "TIDY_HELP",
@@ -5015,7 +5039,7 @@
    "announcement",
    "card"
   ],
-  "notes": "A tooltip."
+  "notes": "A verb: make a copy."
  },
  {
   "key": "BTN_CLOSE",
@@ -5093,8 +5117,8 @@
   "screen": "Three places: the search panel's button beside Open; the key hint after the Ctrl Enter key caps in the panel's bottom row; and a small icon-only play button in the announcements list (hover help).",
   "moment": "The person wants the picked result on the projector at once, skipping Preview.",
   "role": "button and tooltip",
-  "does": "Opens the result and puts it on the projector without the stop in Preview.",
-  "budget": 14,
+  "does": "Sends the picked result straight to the projector, without the stop in Preview.",
+  "budget": 18,
   "variables": [],
   "cases": [],
   "counts": "",
@@ -5102,9 +5126,10 @@
   "concepts": [
    "show",
    "live",
-   "preview"
+   "preview",
+   "on_projector"
   ],
-  "notes": "Not the same as Show: here nothing waits in Preview first. As a key hint it is a short label."
+  "notes": "The product's verb for putting something on the projector, with the sense of at once. A bare adverb is not enough. As a key hint it is a short label."
  },
  {
   "key": "SONG_SAVED",
@@ -5248,20 +5273,19 @@
  {
   "key": "LOOK_CUSTOM",
   "kind": "const",
-  "screen": "Design dialog: a window about 620 points wide over the main window. A preview picture of a projector slide at the top, two wide buttons under it, then rows of choices: a grid of backgrounds, a file chooser, then Words with colour, font, outline, lines per slide, size and position, then the church's emblem. The name given to a design the moment the person uses their own picture.",
-  "moment": "The person picked their own file as background.",
-  "role": "design name",
-  "does": "Is the name of a design the person made themselves, not one of the ready-made ones.",
-  "budget": 14,
+  "screen": "The Design dialog and search: the name shown for the look in use once the person changed its background to a picture, a video or a camera of their own.",
+  "moment": "The look in use is none of the six ready samples any more.",
+  "role": "name of a look",
+  "does": "Names a look the person put together themselves, as opposed to a ready sample.",
+  "budget": 12,
   "variables": [],
   "cases": [],
   "counts": "",
   "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
   "concepts": [
-   "design",
-   "backdrop"
+   "design"
   ],
-  "notes": "A short word, shown under a small thumbnail."
+  "notes": "One or two words."
  },
  {
   "key": "LOOK_BACKGROUND",
@@ -5269,7 +5293,7 @@
   "screen": "Design dialog: a window about 620 points wide over the main window. A preview picture of a projector slide at the top, two wide buttons under it, then rows of choices: a grid of backgrounds, a file chooser, then Words with colour, font, outline, lines per slide, size and position, then the church's emblem. Small heading above the grid of backgrounds, and the label of a row below it that holds the file chooser.",
   "moment": "The person chooses what is behind the words.",
   "role": "heading",
-  "does": "Names the choice of what lies behind the words: a ready-made colour scheme, or the person's own picture or video.",
+  "does": "Labels the row that holds two buttons: one opens the collection of ready backdrops, the other picks a picture or video file from this computer.",
   "budget": 22,
   "variables": [],
   "cases": [],
@@ -5279,7 +5303,7 @@
    "backdrop",
    "design"
   ],
-  "notes": "A noun phrase. Same word as the backdrop concept."
+  "notes": "It stands right under the heading of the background part, so it must NOT repeat that heading. Say picture or video."
  },
  {
   "key": "LOOK_CHOOSE_FILE",
@@ -5364,7 +5388,8 @@
   "counts": "",
   "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
   "concepts": [
-   "design"
+   "design",
+   "slide_words"
   ],
   "notes": "A noun phrase."
  },
@@ -5433,7 +5458,8 @@
   "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
   "concepts": [
    "design",
-   "slide"
+   "slide",
+   "slide_words"
   ],
   "notes": "A noun phrase."
  },
@@ -5676,9 +5702,10 @@
   "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
   "concepts": [
    "practice",
-   "projector"
+   "projector",
+   "switched_on"
   ],
-  "notes": "One sentence."
+  "notes": "A natural sentence with its comma. The same pair of words for on and off as the status bar uses."
  },
  {
   "key": "SCREENS_ONE",
@@ -5722,7 +5749,7 @@
   "screen": "Screens dialog: a window about 600 points wide; at the top the projector on/off switch, one row for each monitor found (number, size, who it is for), then the Picture on the wall block. Bold heading of the lower block, with the Put it back link at the right.",
   "moment": "The projector's picture lands on the wall crooked and the person wants to straighten it.",
   "role": "section heading",
-  "does": "Names the block for correcting how the projected picture falls on the wall.",
+  "does": "Heads the controls that correct how the projector's picture lands on the wall: four corner handles and three sliders.",
   "budget": 24,
   "variables": [],
   "cases": [],
@@ -5732,7 +5759,7 @@
    "wall_picture",
    "projector"
   ],
-  "notes": "The block is physical: it is about the wall, not the program."
+  "notes": "Two or three words that say this adjusts or corrects the projected picture."
  },
  {
   "key": "WALL_HINT",
@@ -5766,7 +5793,7 @@
   "concepts": [
    "wall_picture"
   ],
-  "notes": "A short button."
+  "notes": "The everyday word for putting settings back to how they were at the start."
  },
  {
   "key": "WALL_BRIGHTNESS",
@@ -5808,7 +5835,7 @@
   "screen": "Screens dialog: a window about 600 points wide; at the top the projector on/off switch, one row for each monitor found (number, size, who it is for), then the Picture on the wall block. Same layout, third row.",
   "moment": "The person changes how strong the colours look.",
   "role": "row label",
-  "does": "Names the setting of how vivid the colours are.",
+  "does": "Labels the slider for how strong the colours are, from grey to vivid. It stands beside the sliders for brightness and contrast, and shows a percentage.",
   "budget": 16,
   "variables": [],
   "cases": [],
@@ -5817,7 +5844,7 @@
   "concepts": [
    "wall_picture"
   ],
-  "notes": "One word."
+  "notes": "The term for the strength of colour (what photo editors call saturation). The bare word for colour is taken by other labels."
  },
  {
   "key": "CORNER_TOP_LEFT",
@@ -6123,7 +6150,8 @@
   "counts": "",
   "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
   "concepts": [
-   "design"
+   "design",
+   "slide_words"
   ],
   "notes": "A noun phrase."
  },
@@ -6242,7 +6270,8 @@
   "counts": "",
   "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
   "concepts": [
-   "design"
+   "design",
+   "slide_words"
   ],
   "notes": "The word a church volunteer uses for the style of letters."
  },
@@ -6311,7 +6340,8 @@
   "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
   "concepts": [
    "outline",
-   "design"
+   "design",
+   "slide_words"
   ],
   "notes": "The word for the line round the letters."
  },
@@ -6472,7 +6502,8 @@
   "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
   "concepts": [
    "stage_screen",
-   "screens_dialog"
+   "screens_dialog",
+   "monitor"
   ],
   "notes": "A phrase next to a switch."
  },
@@ -6512,7 +6543,8 @@
   "counts": "",
   "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
   "concepts": [
-   "screens_dialog"
+   "screens_dialog",
+   "monitor"
   ],
   "notes": "The number is a figure."
  },
@@ -6544,7 +6576,8 @@
   "counts": "",
   "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
   "concepts": [
-   "screens_dialog"
+   "screens_dialog",
+   "monitor"
   ],
   "notes": "Bold line, no full stop."
  },
@@ -6622,7 +6655,7 @@
   "concepts": [
    "phone_remote"
   ],
-  "notes": "One sentence."
+  "notes": "A full natural sentence: phones on the same Wi-Fi can change the slides. Wi-Fi is written Wi-Fi."
  },
  {
   "key": "REMOTE_SCAN",
@@ -6993,7 +7026,8 @@
   "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
   "concepts": [
    "announcement",
-   "card"
+   "card",
+   "on_projector"
   ],
   "notes": "A noun phrase that makes the numbers read as seconds."
  },
@@ -7039,7 +7073,7 @@
   "screen": "Announcements editor: it takes the place of the Preview pane. Top row: heading, an add-to-plan button, a loop button and Close. Left half: a New announcement button, the numbered list of cards (title and seconds each), an Import block and a row of ready-made starting points. Right half: a preview picture, then Title, Details, Seconds on screen, Fill in by itself and Picture. Small bold heading over a four-way switch, over two rows.",
   "moment": "The person wants the card's words to be written by the program from somewhere else.",
   "role": "section heading",
-  "does": "Names the choice of letting the program fill the card with its own content, such as a Bible passage or this week's birthdays.",
+  "does": "Labels the choice of where the card's words come from: typed by hand, a Bible passage, this week's birthdays, this month's birthdays.",
   "budget": 22,
   "variables": [],
   "cases": [],
@@ -7050,7 +7084,7 @@
    "announcement",
    "passage"
   ],
-  "notes": "A phrase."
+  "notes": "It must not say automatic, because the first choice is typing by hand. A word like content or source."
  },
  {
   "key": "FILL_NOTHING",
@@ -7186,7 +7220,7 @@
   "screen": "Announcements editor: it takes the place of the Preview pane. Top row: heading, an add-to-plan button, a loop button and Close. Left half: a New announcement button, the numbered list of cards (title and seconds each), an Import block and a row of ready-made starting points. Right half: a preview picture, then Title, Details, Seconds on screen, Fill in by itself and Picture. Second button of the import block; also a row in search and the title of the computer's file chooser.",
   "moment": "The church keeps a table of members' names and birthdays in a document.",
   "role": "button and dialog title",
-  "does": "Names the action of reading a list of birthdays from a document.",
+  "does": "Brings in a list of people's birthdays from a Word or PowerPoint file.",
   "budget": 26,
   "variables": [],
   "cases": [],
@@ -7197,7 +7231,7 @@
    "import",
    "card"
   ],
-  "notes": "A button about 220 points wide."
+  "notes": "Say that a list of birthdays is brought in; without the word for list it reads as importing one birthday."
  },
  {
   "key": "CMD_IMPORT_BIRTHDAYS_DETAIL",
@@ -7487,7 +7521,7 @@
   "screen": "Announcements editor: it takes the place of the Preview pane. Top row: heading, an add-to-plan button, a loop button and Close. Left half: a New announcement button, the numbered list of cards (title and seconds each), an Import block and a row of ready-made starting points. Right half: a preview picture, then Title, Details, Seconds on screen, Fill in by itself and Picture. Grey line under the import buttons.",
   "moment": "The person looks at how many birthdays are known.",
   "role": "status",
-  "does": "Says how many birthdays are saved, including none.",
+  "does": "Says how many people's birthdays the program has stored.",
   "budget": 36,
   "variables": [],
   "cases": [],
@@ -7498,7 +7532,7 @@
    "card",
    "import"
   ],
-  "notes": "The zero case is a full statement."
+  "notes": "Count names or people: so many names stored."
  },
  {
   "key": "birthdays_imported",
@@ -7554,7 +7588,8 @@
   "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
   "concepts": [
    "announcement",
-   "projector"
+   "projector",
+   "on_projector"
   ],
   "notes": "A phrase."
  },
@@ -7738,7 +7773,7 @@
   "screen": "Announcements editor: it takes the place of the Preview pane. Top row: heading, an add-to-plan button, a loop button and Close. Left half: a New announcement button, the numbered list of cards (title and seconds each), an Import block and a row of ready-made starting points. Right half: a preview picture, then Title, Details, Seconds on screen, Fill in by itself and Picture. Grey line in the preview heading while a birthday card is picked.",
   "moment": "The card is filled.",
   "role": "status",
-  "does": "Says how many names are on the card today, including none.",
+  "does": "Says how many people on this card have their birthday in the days the card covers, including none.",
   "budget": 24,
   "variables": [],
   "cases": [],
@@ -7748,7 +7783,7 @@
    "card",
    "announcement"
   ],
-  "notes": "No say() call exists yet for this one; the key is the function name. The zero case is a full statement."
+  "notes": "Count people who have a birthday; the words for 'names today' read as a name day. The zero case is a full statement."
  },
  {
   "key": "ANNOUNCEMENT_TEMPLATES[0].0",
@@ -8247,7 +8282,7 @@
   "screen": "Keyboard shortcuts sheet: a wide window with two columns of groups. Each row has the keys drawn as little key caps at the left (never translated) and a description at the right, about 300 points wide. This text is the description. First group (showing). The keys at the left are: the letters C, V and B.",
   "moment": "The person opens the sheet to learn what pressing these keys does, and reads this line while looking at the key caps beside it.",
   "role": "key description",
-  "does": "Jumps to the chorus, to the next verse, to the bridge.",
+  "does": "Says what three letter keys do, each key named with its own target: C goes to the chorus, V goes to the verse after the current one, B goes to the bridge.",
   "budget": 48,
   "variables": [],
   "cases": [],
@@ -8260,7 +8295,7 @@
    "verse",
    "bridge"
   ],
-  "notes": "Sentence fragment in the imperative or a noun phrase; no full stop. The row's keys are named in this brief only; the writer does not draw them."
+  "notes": "Name each letter with its target, so nobody has to match two lists by position. Fragment, no full stop."
  },
  {
   "key": "KEYS_SHOWING_ROWS[9].1",
@@ -8313,7 +8348,9 @@
   "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
   "concepts": [
    "clear_text",
-   "backdrop"
+   "backdrop",
+   "slide_words",
+   "on_projector"
   ],
   "notes": "Sentence fragment in the imperative or a noun phrase; no full stop. The row's keys are named in this brief only; the writer does not draw them."
  },
@@ -8404,7 +8441,8 @@
   "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
   "concepts": [
    "live_switch",
-   "projector"
+   "projector",
+   "switched_on"
   ],
   "notes": "Sentence fragment in the imperative or a noun phrase; no full stop. The row's keys are named in this brief only; the writer does not draw them."
  },
@@ -8591,7 +8629,7 @@
   "notes": "Fragment, no full stop."
  },
  {
-  "key": "KEYS_PLAN_ROWS[3].1",
+  "key": "KEYS_PLAN_ROWS[4].1",
   "kind": "row",
   "screen": "Keyboard shortcuts sheet: a wide window with two columns of groups. Each row has the keys drawn as little key caps at the left (never translated) and a description at the right, about 300 points wide. This text is the description. Third group (the plan). The keys at the left are: Delete.",
   "moment": "The person opens the sheet to learn what pressing these keys does, and reads this line while looking at the key caps beside it.",
@@ -8689,7 +8727,7 @@
   "screen": "Keyboard shortcuts sheet: a wide window with two columns of groups. Each row has the keys drawn as little key caps at the left (never translated) and a description at the right, about 300 points wide. This text is the description. Fourth group (editing). The keys at the left are: Tab.",
   "moment": "The person opens the sheet to learn what pressing these keys does, and reads this line while looking at the key caps beside it.",
   "role": "key description",
-  "does": "Takes the whole song that the drop-down under the title offers.",
+  "does": "Fills the form with the whole song that the list under the title field offers: a song found on the internet, or one already in the library.",
   "budget": 48,
   "variables": [],
   "cases": [],
@@ -8699,7 +8737,7 @@
    "song",
    "suggestion"
   ],
-  "notes": "Fragment, no full stop."
+  "notes": "Say what is taken and from where. Fragment, no full stop."
  },
  {
   "key": "KEYS_EDITING_ROWS[5].1",
@@ -8976,7 +9014,7 @@
   "screen": "Settings dialog: a window about 620 points wide with small bold headings and rows of controls. A wide button under the switch; greyed out when nothing is remembered.",
   "moment": "The person wants the memory emptied.",
   "role": "button",
-  "does": "Wipes what the search has remembered about picks and what followed what.",
+  "does": "Erases everything the search has learned from past use: which songs were picked for which typed words, and which songs follow which.",
   "budget": 34,
   "variables": [],
   "cases": [],
@@ -8985,7 +9023,7 @@
   "concepts": [
    "search_memory"
   ],
-  "notes": "Do not use the word for deleting songs: songs are not touched."
+  "notes": "Say it the way a volunteer would: clearing the search's history. Verb first."
  },
  {
   "key": "LEARN_FORGOTTEN",
@@ -9012,7 +9050,7 @@
   "screen": "Search panel, results list: one row per result; an icon at the left, a bold title, a lighter second line, and small tags at the right end. A small bold heading line across the list, above a group of songs, shown when the search is opened with nothing typed.",
   "moment": "The person opens the search to pick something.",
   "role": "group heading",
-  "does": "Heads the songs that this church usually sings on this weekday.",
+  "does": "Heads the group of songs usually sung on the weekday that today is, for example on Sundays.",
   "budget": 36,
   "variables": [],
   "cases": [],
@@ -9048,7 +9086,7 @@
   "screen": "Search panel, results list: one row per result; an icon at the left, a bold title, a lighter second line, and small tags at the right end. Group heading across the list, above songs that came after the song now live.",
   "moment": "A song is live and the person opens the search.",
   "role": "group heading",
-  "does": "Heads the songs that have often been sung right after the named song.",
+  "does": "Heads the group of songs that were often sung straight after the named song in past services.",
   "budget": 44,
   "variables": [
    {
@@ -9065,7 +9103,7 @@
    "suggestion",
    "song"
   ],
-  "notes": "The title is the live song's name."
+  "notes": "The plain words for sung after. No verb that means catching up with or trailing behind."
  },
  {
   "key": "habit_chip",
@@ -9094,7 +9132,7 @@
    "search_memory",
    "song"
   ],
-  "notes": "The typed text is in quotation marks. Tight: the tag takes room from the second line. No say() call exists yet; the key is the function name."
+  "notes": "The count is followed by the word for times, never the letter x."
  },
  {
   "key": "habit_line",
@@ -9157,7 +9195,7 @@
    "search_memory",
    "song"
   ],
-  "notes": "No say() call exists yet; the key is the function name."
+  "notes": "The plain words for sung after it, so many times. No verb that means catching up with or trailing behind."
  },
  {
   "key": "weekday_line",
@@ -9165,7 +9203,7 @@
   "screen": "Search panel, results list: one row per result; an icon at the left, a bold title, a lighter second line, and small tags at the right end. Grey second line of a song row under the group for this weekday.",
   "moment": "The song is often sung on this weekday.",
   "role": "row detail",
-  "does": "Says that on this day of the week the song was sung in some of the last services held on that day.",
+  "does": "Says in how many of the recent services held on this same weekday the song was sung, out of how many.",
   "budget": 50,
   "variables": [
    {
@@ -9186,7 +9224,7 @@
    "search_memory",
    "song"
   ],
-  "notes": "No say() call exists yet; the key is the function name. Two figures: how many, of how many."
+  "notes": "It stands under a heading that speaks of today, so it must not then say 'that day'. Name it as this weekday."
  },
  {
   "key": "recent_line",
@@ -9380,7 +9418,7 @@
    "bible_translation",
    "import"
   ],
-  "notes": "The kind names are proper names and stay."
+  "notes": "A list of file kinds. ZIP is written in capitals."
  },
  {
   "key": "BIBLES_PRACTICE",
@@ -9471,7 +9509,7 @@
    "bible_translation",
    "import"
   ],
-  "notes": "No full stop."
+  "notes": "A list of file kinds. ZIP is written in capitals."
  },
  {
   "key": "CMD_BIBLES",
@@ -9574,7 +9612,7 @@
   "concepts": [
    "bible_translation"
   ],
-  "notes": "No full stop."
+  "notes": "Natural order: failed to load the list of versions."
  },
  {
   "key": "BIBLES_RETRY",
@@ -9773,7 +9811,7 @@
   "screen": "Bibles dialog: a window about 680 points wide. At the top a search box, then a list of Bible translations to download grouped under language headings (seven lines show at once, each line with the translation's name and, at the right, how much of the Bible it holds and where it comes from), then a block describing the picked translation with its copyright and a Download button, then at the bottom a Your own file block. Grey text in the block under the list.",
   "moment": "The program opens the file to read its own notice.",
   "role": "waiting state",
-  "does": "States that the notice inside the file is being read.",
+  "does": "Shown while the program fetches the rights notice of the picked Bible version from the internet.",
   "budget": 40,
   "variables": [],
   "cases": [],
@@ -9783,7 +9821,7 @@
    "bible_translation",
    "licence"
   ],
-  "notes": "A progress state."
+  "notes": "The verb for loading or fetching. Not a verb that could mean reading aloud."
  },
  {
   "key": "BIBLES_NOTICE_FAILED",
@@ -9814,8 +9852,8 @@
   "variables": [
    {
     "name": "why",
-    "example": "the connection was lost",
-    "meaning": "A short reason from the system."
+    "example": "it took too long",
+    "meaning": "The reason, already written in the reader's language, as a clause in lower case."
    }
   ],
   "cases": [],
@@ -9825,7 +9863,7 @@
    "bible_translation",
    "notice"
   ],
-  "notes": "No say() call exists yet; the key is the function name. The reason follows a colon."
+  "notes": "The reason is a ready clause in the same language that starts in lower case, such as one saying there is no internet connection. It goes after a colon. No full stop."
  },
  {
   "key": "bible_added",
@@ -9867,8 +9905,8 @@
   "variables": [
    {
     "name": "why",
-    "example": "the file is damaged",
-    "meaning": "A short reason from the system."
+    "example": "it took too long",
+    "meaning": "The reason, already written in the reader's language, as a clause in lower case."
    }
   ],
   "cases": [],
@@ -9878,7 +9916,7 @@
    "bible_translation",
    "notice"
   ],
-  "notes": "No say() call exists yet; the key is the function name. The reason follows a colon."
+  "notes": "The reason is a ready clause in the same language that starts in lower case, such as one saying there is no internet connection. It goes after a colon. No full stop."
  },
  {
   "key": "noun.announcements",
@@ -10216,7 +10254,7 @@
   "notes": "One word, a noun. No colon."
  },
  {
-  "key": "KEYS_PLAN_ROWS[4].1",
+  "key": "KEYS_PLAN_ROWS[3].1",
   "kind": "row",
   "screen": "Keyboard shortcuts sheet: a wide window with two columns of groups. Each row has the keys drawn as little key caps at the left (never translated) and a description at the right, about 300 points wide. This text is the description. Third group (the plan). The keys at the left are: Ctrl M.",
   "moment": "The person opens the sheet to learn what pressing these keys does, and reads this line while looking at the key caps beside it.",
@@ -10316,8 +10354,8 @@
   "variables": [
    {
     "name": "why",
-    "example": "there is no connection",
-    "meaning": "The reason the download failed, as the program reports it."
+    "example": "it took too long",
+    "meaning": "The reason, already written in the reader's language, as a clause in lower case."
    }
   ],
   "cases": [],
@@ -10326,7 +10364,7 @@
   "concepts": [
    "listener"
   ],
-  "notes": "The reason is put in as given, in English, after a colon."
+  "notes": "The reason is a ready clause in the same language that starts in lower case, such as one saying there is no internet connection. It goes after a colon. No full stop."
  },
  {
   "key": "MARKS_APPLY",
@@ -10475,315 +10513,839 @@
  {
   "key": "BACKDROPS_TITLE",
   "kind": "const",
-  "screen": "Backdrop browser (a panel in the Background part of the Look dialog), its heading and the search label",
-  "moment": "Always visible.",
-  "role": "heading",
-  "does": "Names the browser of ready pictures and looping videos a volunteer can put behind the words.",
+  "screen": "The backdrop browser: a dialog opened from the Design dialog's background row (or from search). At the top a search field, under it a row of chips that narrow the grid to one subject, then a grid of small previews of photos and looping videos, and at the bottom a card about the picked one with a big preview, four facts and one button. This text is the dialog's title, the label of the button that opens it in Design, and the name of the command in search.",
+  "moment": "The person wants a ready picture or video behind the song words and looks for where those are.",
+  "role": "dialog title and button",
+  "does": "Names the collection of ready photos and looping videos that can go behind the words.",
   "budget": 14,
   "variables": [],
-  "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
-  "vocabulary": [],
-  "notes": ""
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "backdrop"
+  ],
+  "notes": "One or two words, a noun. The same word everywhere this collection is named."
  },
  {
   "key": "BACKDROPS_SEARCH",
   "kind": "const",
-  "screen": "Backdrop browser (a panel in the Background part of the Look dialog), search field",
-  "moment": "Above the category chips.",
-  "role": "field label and placeholder",
-  "does": "Tells the volunteer the field filters the ready backdrops by what they type.",
-  "budget": 24,
+  "screen": "The backdrop browser: a dialog opened from the Design dialog's background row (or from search). At the top a search field, under it a row of chips that narrow the grid to one subject, then a grid of small previews of photos and looping videos, and at the bottom a card about the picked one with a big preview, four facts and one button. This text is the grey hint inside the empty search field.",
+  "moment": "The person is about to type a subject, such as sea or candle.",
+  "role": "placeholder",
+  "does": "Invites typing to find a backdrop by what it shows.",
+  "budget": 26,
   "variables": [],
-  "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
-  "vocabulary": [],
-  "notes": ""
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "backdrop"
+  ],
+  "notes": "A short imperative, no full stop."
  },
  {
   "key": "BACKDROPS_ALL",
   "kind": "const",
-  "screen": "Backdrop browser (a panel in the Background part of the Look dialog), first category chip",
-  "moment": "Before the ten category chips.",
-  "role": "chip",
-  "does": "Shows every backdrop whatever its category.",
-  "budget": 10,
+  "screen": "The backdrop browser: a dialog opened from the Design dialog's background row (or from search). At the top a search field, under it a row of chips that narrow the grid to one subject, then a grid of small previews of photos and looping videos, and at the bottom a card about the picked one with a big preview, four facts and one button. This text is one of the chips; each chip has a small icon and one word, and the chosen chip is filled. This is the first chip.",
+  "moment": "The person wants the whole collection again after narrowing it.",
+  "role": "filter chip",
+  "does": "Shows every backdrop, whatever its subject.",
+  "budget": 8,
   "variables": [],
-  "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
-  "vocabulary": [],
-  "notes": ""
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [],
+  "notes": "One word."
  },
  {
   "key": "BACKDROPS_SKY",
   "kind": "const",
-  "screen": "Backdrop browser (a panel in the Background part of the Look dialog), category chip",
-  "moment": "Beside a cloud icon.",
-  "role": "chip",
-  "does": "Backdrops of sky and clouds.",
+  "screen": "The backdrop browser: a dialog opened from the Design dialog's background row (or from search). At the top a search field, under it a row of chips that narrow the grid to one subject, then a grid of small previews of photos and looping videos, and at the bottom a card about the picked one with a big preview, four facts and one button. This text is one of the chips; each chip has a small icon and one word, and the chosen chip is filled. Its icon is a cloud.",
+  "moment": "The person wants only backdrops of one subject.",
+  "role": "filter chip",
+  "does": "Narrows the grid to skies and clouds.",
   "budget": 12,
   "variables": [],
-  "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
-  "vocabulary": [],
-  "notes": ""
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "backdrop"
+  ],
+  "notes": "One word, a plain noun in the plural sense if the language marks it."
  },
  {
   "key": "BACKDROPS_MOUNTAINS",
   "kind": "const",
-  "screen": "Backdrop browser (a panel in the Background part of the Look dialog), category chip",
-  "moment": "Beside a mountain icon.",
-  "role": "chip",
-  "does": "Backdrops of mountains.",
-  "budget": 14,
+  "screen": "The backdrop browser: a dialog opened from the Design dialog's background row (or from search). At the top a search field, under it a row of chips that narrow the grid to one subject, then a grid of small previews of photos and looping videos, and at the bottom a card about the picked one with a big preview, four facts and one button. This text is one of the chips; each chip has a small icon and one word, and the chosen chip is filled. Its icon is a mountain.",
+  "moment": "The person wants only backdrops of one subject.",
+  "role": "filter chip",
+  "does": "Narrows the grid to mountains and hills.",
+  "budget": 12,
   "variables": [],
-  "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
-  "vocabulary": [],
-  "notes": ""
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "backdrop"
+  ],
+  "notes": "One word, a plain noun in the plural sense if the language marks it."
  },
  {
   "key": "BACKDROPS_WATER",
   "kind": "const",
-  "screen": "Backdrop browser (a panel in the Background part of the Look dialog), category chip",
-  "moment": "Beside a waves icon.",
-  "role": "chip",
-  "does": "Backdrops of sea, lakes, rivers and waterfalls.",
+  "screen": "The backdrop browser: a dialog opened from the Design dialog's background row (or from search). At the top a search field, under it a row of chips that narrow the grid to one subject, then a grid of small previews of photos and looping videos, and at the bottom a card about the picked one with a big preview, four facts and one button. This text is one of the chips; each chip has a small icon and one word, and the chosen chip is filled. Its icon is waves.",
+  "moment": "The person wants only backdrops of one subject.",
+  "role": "filter chip",
+  "does": "Narrows the grid to sea, lakes, rivers and waterfalls.",
   "budget": 12,
   "variables": [],
-  "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
-  "vocabulary": [],
-  "notes": ""
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "backdrop"
+  ],
+  "notes": "One word, a plain noun in the plural sense if the language marks it."
  },
  {
   "key": "BACKDROPS_NATURE",
   "kind": "const",
-  "screen": "Backdrop browser (a panel in the Background part of the Look dialog), category chip",
-  "moment": "Beside a leaf icon.",
-  "role": "chip",
-  "does": "Backdrops of forest, fields and flowers.",
+  "screen": "The backdrop browser: a dialog opened from the Design dialog's background row (or from search). At the top a search field, under it a row of chips that narrow the grid to one subject, then a grid of small previews of photos and looping videos, and at the bottom a card about the picked one with a big preview, four facts and one button. This text is one of the chips; each chip has a small icon and one word, and the chosen chip is filled. Its icon is a sprout.",
+  "moment": "The person wants only backdrops of one subject.",
+  "role": "filter chip",
+  "does": "Narrows the grid to forests, fields, leaves and flowers.",
   "budget": 12,
   "variables": [],
-  "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
-  "vocabulary": [],
-  "notes": ""
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "backdrop"
+  ],
+  "notes": "One word, a plain noun in the plural sense if the language marks it."
  },
  {
   "key": "BACKDROPS_LIGHT",
   "kind": "const",
-  "screen": "Backdrop browser (a panel in the Background part of the Look dialog), category chip",
-  "moment": "Beside a sun icon.",
-  "role": "chip",
-  "does": "Backdrops of sun rays and golden light.",
+  "screen": "The backdrop browser: a dialog opened from the Design dialog's background row (or from search). At the top a search field, under it a row of chips that narrow the grid to one subject, then a grid of small previews of photos and looping videos, and at the bottom a card about the picked one with a big preview, four facts and one button. This text is one of the chips; each chip has a small icon and one word, and the chosen chip is filled. Its icon is a sun.",
+  "moment": "The person wants only backdrops of one subject.",
+  "role": "filter chip",
+  "does": "Narrows the grid to sunbeams, sunrise and soft glowing light.",
   "budget": 12,
   "variables": [],
-  "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
-  "vocabulary": [],
-  "notes": ""
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "backdrop"
+  ],
+  "notes": "One word, a plain noun in the plural sense if the language marks it."
  },
  {
   "key": "BACKDROPS_NIGHT",
   "kind": "const",
-  "screen": "Backdrop browser (a panel in the Background part of the Look dialog), category chip",
-  "moment": "Beside a moon icon.",
-  "role": "chip",
-  "does": "Backdrops of stars, moon and the night sky.",
+  "screen": "The backdrop browser: a dialog opened from the Design dialog's background row (or from search). At the top a search field, under it a row of chips that narrow the grid to one subject, then a grid of small previews of photos and looping videos, and at the bottom a card about the picked one with a big preview, four facts and one button. This text is one of the chips; each chip has a small icon and one word, and the chosen chip is filled. Its icon is a crescent moon.",
+  "moment": "The person wants only backdrops of one subject.",
+  "role": "filter chip",
+  "does": "Narrows the grid to stars, the moon and dark skies.",
   "budget": 12,
   "variables": [],
-  "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
-  "vocabulary": [],
-  "notes": ""
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "backdrop"
+  ],
+  "notes": "One word, a plain noun in the plural sense if the language marks it."
  },
  {
   "key": "BACKDROPS_CANDLES",
   "kind": "const",
-  "screen": "Backdrop browser (a panel in the Background part of the Look dialog), category chip",
-  "moment": "Beside a flame icon.",
-  "role": "chip",
-  "does": "Backdrops of candles, lamps and warm firelight.",
+  "screen": "The backdrop browser: a dialog opened from the Design dialog's background row (or from search). At the top a search field, under it a row of chips that narrow the grid to one subject, then a grid of small previews of photos and looping videos, and at the bottom a card about the picked one with a big preview, four facts and one button. This text is one of the chips; each chip has a small icon and one word, and the chosen chip is filled. Its icon is a flame.",
+  "moment": "The person wants only backdrops of one subject.",
+  "role": "filter chip",
+  "does": "Narrows the grid to candles and small flames.",
   "budget": 12,
   "variables": [],
-  "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
-  "vocabulary": [],
-  "notes": ""
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "backdrop"
+  ],
+  "notes": "One word, a plain noun in the plural sense if the language marks it."
  },
  {
   "key": "BACKDROPS_CHURCH",
   "kind": "const",
-  "screen": "Backdrop browser (a panel in the Background part of the Look dialog), category chip",
-  "moment": "Beside a cross icon.",
-  "role": "chip",
-  "does": "Backdrops of crosses, church interiors and stained glass.",
+  "screen": "The backdrop browser: a dialog opened from the Design dialog's background row (or from search). At the top a search field, under it a row of chips that narrow the grid to one subject, then a grid of small previews of photos and looping videos, and at the bottom a card about the picked one with a big preview, four facts and one button. This text is one of the chips; each chip has a small icon and one word, and the chosen chip is filled. Its icon is a cross.",
+  "moment": "The person wants only backdrops of one subject.",
+  "role": "filter chip",
+  "does": "Narrows the grid to crosses, church buildings and stained glass.",
   "budget": 12,
   "variables": [],
-  "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
-  "vocabulary": [],
-  "notes": ""
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "backdrop"
+  ],
+  "notes": "One word, a plain noun in the plural sense if the language marks it."
  },
  {
   "key": "BACKDROPS_PEOPLE",
   "kind": "const",
-  "screen": "Backdrop browser (a panel in the Background part of the Look dialog), category chip",
-  "moment": "Beside a figure icon.",
-  "role": "chip",
-  "does": "Backdrops of praying or raised hands, shown as silhouettes.",
+  "screen": "The backdrop browser: a dialog opened from the Design dialog's background row (or from search). At the top a search field, under it a row of chips that narrow the grid to one subject, then a grid of small previews of photos and looping videos, and at the bottom a card about the picked one with a big preview, four facts and one button. This text is one of the chips; each chip has a small icon and one word, and the chosen chip is filled. Its icon is a person with raised arms.",
+  "moment": "The person wants only backdrops of one subject.",
+  "role": "filter chip",
+  "does": "Narrows the grid to pictures of people praying or lifting their hands, without recognisable faces.",
   "budget": 12,
   "variables": [],
-  "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
-  "vocabulary": [],
-  "notes": ""
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "backdrop"
+  ],
+  "notes": "One word, a plain noun in the plural sense if the language marks it."
  },
  {
   "key": "BACKDROPS_TEXTURE",
   "kind": "const",
-  "screen": "Backdrop browser (a panel in the Background part of the Look dialog), category chip",
-  "moment": "Beside a grid icon.",
-  "role": "chip",
-  "does": "Plain textures, blurs and soft gradients that sit quietly behind words.",
-  "budget": 14,
+  "screen": "The backdrop browser: a dialog opened from the Design dialog's background row (or from search). At the top a search field, under it a row of chips that narrow the grid to one subject, then a grid of small previews of photos and looping videos, and at the bottom a card about the picked one with a big preview, four facts and one button. This text is one of the chips; each chip has a small icon and one word, and the chosen chip is filled. Its icon is a square divided in four.",
+  "moment": "The person wants only backdrops of one subject.",
+  "role": "filter chip",
+  "does": "Narrows the grid to plain surfaces and soft patterns with nothing in them to look at, such as paper, cloth or blurred colour.",
+  "budget": 12,
   "variables": [],
-  "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
-  "vocabulary": [],
-  "notes": ""
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "backdrop"
+  ],
+  "notes": "One word, a plain noun in the plural sense if the language marks it."
  },
  {
   "key": "BACKDROPS_USE",
   "kind": "const",
-  "screen": "Backdrop browser (a panel in the Background part of the Look dialog), the one button under the large preview",
-  "moment": "Primary button; the file is fetched first when it is not on this computer.",
-  "role": "button",
-  "does": "Puts the chosen backdrop behind the words on the projector.",
-  "budget": 12,
+  "screen": "The backdrop browser: a dialog opened from the Design dialog's background row (or from search). At the top a search field, under it a row of chips that narrow the grid to one subject, then a grid of small previews of photos and looping videos, and at the bottom a card about the picked one with a big preview, four facts and one button. This text is in the card about the picked backdrop. It is the one filled button of the card.",
+  "moment": "The person has picked a backdrop and wants it behind the words. If the file is not on this computer yet, pressing fetches it first.",
+  "role": "primary button",
+  "does": "Puts the picked backdrop behind the words, downloading it first when needed.",
+  "budget": 10,
   "variables": [],
-  "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
-  "vocabulary": [],
-  "notes": ""
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "backdrop"
+  ],
+  "notes": "One short verb."
  },
  {
   "key": "BACKDROPS_DOWNLOADING",
   "kind": "const",
-  "screen": "Backdrop browser (a panel in the Background part of the Look dialog), label over the progress bar",
-  "moment": "While a backdrop is being fetched; a Cancel button sits beside it.",
+  "screen": "The backdrop browser: a dialog opened from the Design dialog's background row (or from search). At the top a search field, under it a row of chips that narrow the grid to one subject, then a grid of small previews of photos and looping videos, and at the bottom a card about the picked one with a big preview, four facts and one button. This text is in the card about the picked backdrop. It names the progress bar that replaces the button while the file arrives; a Cancel button stands beside the bar.",
+  "moment": "The backdrop's file is on its way.",
   "role": "progress label",
-  "does": "A file is being fetched from the internet right now.",
+  "does": "Says the file is being fetched from the internet right now.",
   "budget": 16,
   "variables": [],
-  "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
-  "vocabulary": [],
-  "notes": ""
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [],
+  "notes": "One word or two, no dots after it."
  },
  {
   "key": "BACKDROPS_OFFLINE",
   "kind": "const",
-  "screen": "Backdrop browser (a panel in the Background part of the Look dialog), toast",
-  "moment": "After a press on Use with no internet.",
+  "screen": "A toast at the bottom of the main window, after the person pressed the button that puts a backdrop behind the words.",
+  "moment": "The file could not be fetched, and the cause is that the computer is not on the internet.",
   "role": "toast",
-  "does": "The backdrop could not be fetched because the computer is not online.",
-  "budget": 30,
+  "does": "Says the computer is not connected to the internet.",
+  "budget": 32,
   "variables": [],
-  "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
-  "vocabulary": [],
-  "notes": ""
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [],
+  "notes": "A short statement, no full stop."
  },
  {
   "key": "BACKDROPS_AUTHOR",
   "kind": "const",
-  "screen": "Backdrop browser (a panel in the Background part of the Look dialog), detail line label",
-  "moment": "Before the name of the person who made the picture or video.",
-  "role": "field label",
-  "does": "Label for the creator of the chosen backdrop.",
-  "budget": 12,
+  "screen": "The backdrop browser: a dialog opened from the Design dialog's background row (or from search). At the top a search field, under it a row of chips that narrow the grid to one subject, then a grid of small previews of photos and looping videos, and at the bottom a card about the picked one with a big preview, four facts and one button. This text is in the card about the picked backdrop. It is the grey label of one of four short facts, each a label at the left (about nine characters wide) and its value at the right. The value is a person's name.",
+  "moment": "The person wants to know who made the photo or video.",
+  "role": "fact label",
+  "does": "Labels the name of whoever took the photo or made the video.",
+  "budget": 9,
   "variables": [],
-  "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
-  "vocabulary": [],
-  "notes": ""
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [],
+  "notes": "One word."
  },
  {
   "key": "BACKDROPS_LICENCE",
   "kind": "const",
-  "screen": "Backdrop browser (a panel in the Background part of the Look dialog), detail line label",
-  "moment": "Before the licence name, such as CC0.",
-  "role": "field label",
-  "does": "Label for the licence the chosen backdrop is shared under.",
-  "budget": 12,
+  "screen": "The backdrop browser: a dialog opened from the Design dialog's background row (or from search). At the top a search field, under it a row of chips that narrow the grid to one subject, then a grid of small previews of photos and looping videos, and at the bottom a card about the picked one with a big preview, four facts and one button. This text is in the card about the picked backdrop. It is the grey label of one of four short facts, each a label at the left (about nine characters wide) and its value at the right. The value is the short name of the terms, such as CC0.",
+  "moment": "The person wants to know whether the church may use the picture.",
+  "role": "fact label",
+  "does": "Labels the terms under which the picture may be used.",
+  "budget": 9,
   "variables": [],
-  "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
-  "vocabulary": [],
-  "notes": ""
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [],
+  "notes": "One word."
  },
  {
   "key": "BACKDROPS_PAGE",
   "kind": "const",
-  "screen": "Backdrop browser (a panel in the Background part of the Look dialog), detail line label",
-  "moment": "Before the web address of the page that states the licence.",
-  "role": "field label",
-  "does": "Label for the web page where the backdrop's source states its licence.",
-  "budget": 12,
+  "screen": "The backdrop browser: a dialog opened from the Design dialog's background row (or from search). At the top a search field, under it a row of chips that narrow the grid to one subject, then a grid of small previews of photos and looping videos, and at the bottom a card about the picked one with a big preview, four facts and one button. This text is in the card about the picked backdrop. It is the grey label of one of four short facts, each a label at the left (about nine characters wide) and its value at the right. The value is a web address.",
+  "moment": "The person wants to see where the picture comes from.",
+  "role": "fact label",
+  "does": "Labels the web address where the picture and its terms can be seen.",
+  "budget": 9,
   "variables": [],
-  "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
-  "vocabulary": [],
-  "notes": ""
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [],
+  "notes": "One word."
  },
  {
   "key": "BACKDROPS_SIZE",
   "kind": "const",
-  "screen": "Backdrop browser (a panel in the Background part of the Look dialog), detail line label",
-  "moment": "Before the pixel size, and the length for a video.",
-  "role": "field label",
-  "does": "Label for the picture size, in pixels, and the length of a video.",
-  "budget": 12,
+  "screen": "The backdrop browser: a dialog opened from the Design dialog's background row (or from search). At the top a search field, under it a row of chips that narrow the grid to one subject, then a grid of small previews of photos and looping videos, and at the bottom a card about the picked one with a big preview, four facts and one button. This text is in the card about the picked backdrop. It is the grey label of one of four short facts, each a label at the left (about nine characters wide) and its value at the right. The value reads like 1920 x 1080, and for a video also its length.",
+  "moment": "The person checks whether the picture is sharp enough for the projector.",
+  "role": "fact label",
+  "does": "Labels the width and height of the picture in pixels.",
+  "budget": 9,
   "variables": [],
-  "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
-  "vocabulary": [],
-  "notes": ""
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [],
+  "notes": "One word."
  },
  {
   "key": "BACKDROPS_PICK_HINT",
   "kind": "const",
-  "screen": "Backdrop browser (a panel in the Background part of the Look dialog), large preview area",
-  "moment": "Shown until a backdrop is chosen.",
-  "role": "hint",
-  "does": "Asks the volunteer to choose a backdrop to see who made it and under which licence.",
-  "budget": 50,
+  "screen": "The backdrop browser: a dialog opened from the Design dialog's background row (or from search). At the top a search field, under it a row of chips that narrow the grid to one subject, then a grid of small previews of photos and looping videos, and at the bottom a card about the picked one with a big preview, four facts and one button. This text fills the bottom card while nothing is picked.",
+  "moment": "The browser has just opened and no preview has been pressed yet.",
+  "role": "empty state",
+  "does": "Tells the person to press a preview to see who made it and under which terms it may be used.",
+  "budget": 56,
   "variables": [],
-  "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
-  "vocabulary": [],
-  "notes": ""
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "backdrop"
+  ],
+  "notes": "One short sentence, no full stop."
  },
  {
   "key": "BACKDROPS_DIM",
   "kind": "const",
-  "screen": "Backdrop browser (a panel in the Background part of the Look dialog), tooltip on a small sun mark",
-  "moment": "Hover on the mark beside a bright or busy backdrop's title.",
+  "screen": "The backdrop browser: a dialog opened from the Design dialog's background row (or from search). At the top a search field, under it a row of chips that narrow the grid to one subject, then a grid of small previews of photos and looping videos, and at the bottom a card about the picked one with a big preview, four facts and one button. This text is in the card about the picked backdrop. It is the tooltip of a small yellow sun mark beside the title of some backdrops.",
+  "moment": "The picked picture is very bright or full of detail, so words on top of it would be hard to read.",
   "role": "tooltip",
-  "does": "Warns that words on this backdrop read better with the look's dimming turned up.",
-  "budget": 40,
+  "does": "Warns that the picture is bright or full of detail, and advises making the background darker in Design so the words stay readable.",
+  "budget": 44,
   "variables": [],
-  "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
-  "vocabulary": [],
-  "notes": ""
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "backdrop",
+   "design"
+  ],
+  "notes": "A short statement, no full stop."
  },
  {
   "key": "BACKDROPS_HERE",
   "kind": "const",
-  "screen": "Backdrop browser (a panel in the Background part of the Look dialog), screen-reader name of a small tick on a tile",
-  "moment": "On every tile whose file is already on this computer; the tick is only an icon.",
-  "role": "accessible name",
-  "does": "The backdrop is already saved on this computer and works without the internet.",
+  "screen": "The backdrop browser: a dialog opened from the Design dialog's background row (or from search). At the top a search field, under it a row of chips that narrow the grid to one subject, then a grid of small previews of photos and looping videos, and at the bottom a card about the picked one with a big preview, four facts and one button. It is the tooltip of a small tick on a preview in the grid.",
+  "moment": "The person sees which backdrops were fetched before and work without the internet.",
+  "role": "tooltip",
+  "does": "Says this backdrop's file is already stored here, so it needs no internet.",
   "budget": 24,
   "variables": [],
-  "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
-  "vocabulary": [],
-  "notes": ""
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [],
+  "notes": "A short fragment."
  },
  {
   "key": "backdrop_failed",
-  "kind": "const",
-  "screen": "Backdrop browser (a panel in the Background part of the Look dialog), toast",
-  "moment": "After a failed fetch that was not a lost connection.",
+  "kind": "sentence",
+  "screen": "A toast at the bottom of the main window, after the person pressed the button that puts a backdrop behind the words.",
+  "moment": "The file could not be fetched for a reason other than being off the internet.",
   "role": "toast",
-  "does": "The backdrop could not be fetched; the reason follows.",
-  "budget": 50,
+  "does": "Says the backdrop did not arrive and gives the reason after a colon.",
+  "budget": 80,
   "variables": [
-   "why"
+   {
+    "name": "why",
+    "example": "it took too long",
+    "meaning": "The reason, already written in the reader's language, as a clause in lower case."
+   }
   ],
-  "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
-  "vocabulary": [],
-  "notes": "A short reason is appended by the program, in English."
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "backdrop"
+  ],
+  "notes": "The reason is a ready clause in the same language that starts in lower case, such as the ones for a slow or broken download. No full stop."
+ },
+ {
+  "key": "WHY_OFFLINE",
+  "kind": "const",
+  "screen": "A toast at the bottom of the main window, or a line inside a dialog, after something could not be fetched from the internet or read from a file. The program first says what failed (for example that a Bible or a backdrop could not be fetched), then a colon, then this text as the reason.",
+  "moment": "The computer could not reach the internet at all.",
+  "role": "reason inside a sentence",
+  "does": "Gives the reason: this computer has no connection to the internet right now.",
+  "budget": 34,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [],
+  "notes": "A clause that follows a colon inside a longer sentence: it starts in lower case and has no full stop. It must read naturally after sentences such as the ones that say a Bible, a backdrop or the speech file could not be fetched."
+ },
+ {
+  "key": "WHY_SLOW",
+  "kind": "const",
+  "screen": "A toast at the bottom of the main window, or a line inside a dialog, after something could not be fetched from the internet or read from a file. The program first says what failed (for example that a Bible or a backdrop could not be fetched), then a colon, then this text as the reason.",
+  "moment": "The other side did not answer within the time the program waits.",
+  "role": "reason inside a sentence",
+  "does": "Gives the reason: the wait for an answer went on past the limit.",
+  "budget": 30,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [],
+  "notes": "A clause that follows a colon inside a longer sentence: it starts in lower case and has no full stop. It must read naturally after sentences such as the ones that say a Bible, a backdrop or the speech file could not be fetched."
+ },
+ {
+  "key": "WHY_BROKEN",
+  "kind": "const",
+  "screen": "A toast at the bottom of the main window, or a line inside a dialog, after something could not be fetched from the internet or read from a file. The program first says what failed (for example that a Bible or a backdrop could not be fetched), then a colon, then this text as the reason.",
+  "moment": "The download started and then stopped before it was complete.",
+  "role": "reason inside a sentence",
+  "does": "Gives the reason: the link to the internet was lost partway through.",
+  "budget": 36,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [],
+  "notes": "A clause that follows a colon inside a longer sentence: it starts in lower case and has no full stop. It must read naturally after sentences such as the ones that say a Bible, a backdrop or the speech file could not be fetched."
+ },
+ {
+  "key": "WHY_UNREADABLE",
+  "kind": "const",
+  "screen": "A toast at the bottom of the main window, or a line inside a dialog, after something could not be fetched from the internet or read from a file. The program first says what failed (for example that a Bible or a backdrop could not be fetched), then a colon, then this text as the reason.",
+  "moment": "Something arrived, or a file was opened, and the program could not make sense of it.",
+  "role": "reason inside a sentence",
+  "does": "Gives the reason: the program could not make sense of the file or the answer it got.",
+  "budget": 36,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [],
+  "notes": "A clause that follows a colon inside a longer sentence: it starts in lower case and has no full stop. It must read naturally after sentences such as the ones that say a Bible, a backdrop or the speech file could not be fetched."
+ },
+ {
+  "key": "WHY_NOT_BIBLE",
+  "kind": "const",
+  "screen": "A toast at the bottom of the main window, or a line inside a dialog, after something could not be fetched from the internet or read from a file. The program first says what failed (for example that a Bible or a backdrop could not be fetched), then a colon, then this text as the reason.",
+  "moment": "The person chose or downloaded a file to add as a Bible version, and it is some other kind of file.",
+  "role": "reason inside a sentence",
+  "does": "Gives the reason: the chosen file does not hold a Bible.",
+  "budget": 30,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "bible_translation"
+  ],
+  "notes": "A clause that follows a colon inside a longer sentence: it starts in lower case and has no full stop. It must read naturally after sentences such as the ones that say a Bible, a backdrop or the speech file could not be fetched."
+ },
+ {
+  "key": "WHY_DAMAGED",
+  "kind": "const",
+  "screen": "A toast at the bottom of the main window, or a line inside a dialog, after something could not be fetched from the internet or read from a file. The program first says what failed (for example that a Bible or a backdrop could not be fetched), then a colon, then this text as the reason.",
+  "moment": "A download finished, and a check showed it is incomplete or altered.",
+  "role": "reason inside a sentence",
+  "does": "Gives the reason: the downloaded file is broken or incomplete.",
+  "budget": 32,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [],
+  "notes": "A clause that follows a colon inside a longer sentence: it starts in lower case and has no full stop. It must read naturally after sentences such as the ones that say a Bible, a backdrop or the speech file could not be fetched."
+ },
+ {
+  "key": "WHY_DISK",
+  "kind": "const",
+  "screen": "A toast at the bottom of the main window, or a line inside a dialog, after something could not be fetched from the internet or read from a file. The program first says what failed (for example that a Bible or a backdrop could not be fetched), then a colon, then this text as the reason.",
+  "moment": "The download was fine and writing it to this computer's disk failed (no room, or the folder cannot be written).",
+  "role": "reason inside a sentence",
+  "does": "Gives the reason: writing to this computer's storage failed.",
+  "budget": 48,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [],
+  "notes": "A clause that follows a colon inside a longer sentence: it starts in lower case and has no full stop. It must read naturally after sentences such as the ones that say a Bible, a backdrop or the speech file could not be fetched."
+ },
+ {
+  "key": "why_status",
+  "kind": "sentence",
+  "screen": "A toast at the bottom of the main window, or a line inside a dialog, after something could not be fetched from the internet or read from a file. The program first says what failed (for example that a Bible or a backdrop could not be fetched), then a colon, then this text as the reason.",
+  "moment": "The website answered with an error number instead of the file.",
+  "role": "reason inside a sentence",
+  "does": "Gives the reason: the website replied with an error, and shows its number so the person can pass it on to someone who helps.",
+  "budget": 34,
+  "variables": [
+   {
+    "name": "code",
+    "example": "404",
+    "meaning": "The error number the website replied with."
+   }
+  ],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [],
+  "notes": "A clause that follows a colon inside a longer sentence: it starts in lower case and has no full stop. It must read naturally after sentences such as the ones that say a Bible, a backdrop or the speech file could not be fetched."
+ },
+ {
+  "key": "LYRICS_OFFLINE",
+  "kind": "const",
+  "screen": "A toast at the bottom of the main window while a new song is being written. Under the song's title the program offers lyrics found on the internet; the person picked one and the program tried to fetch it.",
+  "moment": "The lyrics website could not be reached.",
+  "role": "toast",
+  "does": "Says the lyrics website could not be reached and tells the person to look at the internet connection.",
+  "budget": 70,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "lyrics_service"
+  ],
+  "notes": "One or two short sentences, no final full stop."
+ },
+ {
+  "key": "LYRICS_NOT_FOUND",
+  "kind": "const",
+  "screen": "A toast at the bottom of the main window while a new song is being written. Under the song's title the program offers lyrics found on the internet; the person picked one and the program tried to fetch it.",
+  "moment": "The lyrics website was reached and has no words for that song.",
+  "role": "toast",
+  "does": "Says the lyrics website has no words for that song.",
+  "budget": 56,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "lyrics_service"
+  ],
+  "notes": "One short sentence, no final full stop."
+ },
+ {
+  "key": "LYRICS_BUSY",
+  "kind": "const",
+  "screen": "A toast at the bottom of the main window while a new song is being written. Under the song's title the program offers lyrics found on the internet; the person picked one and the program tried to fetch it.",
+  "moment": "The lyrics website asked the program to slow down and gave no time.",
+  "role": "toast",
+  "does": "Says the lyrics website is serving too many people and to try once more after about a minute.",
+  "budget": 64,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "lyrics_service"
+  ],
+  "notes": "One or two short sentences, no final full stop."
+ },
+ {
+  "key": "LYRICS_UNREADABLE",
+  "kind": "const",
+  "screen": "A toast at the bottom of the main window while a new song is being written. Under the song's title the program offers lyrics found on the internet; the person picked one and the program tried to fetch it.",
+  "moment": "The lyrics website replied with something the program does not understand.",
+  "role": "toast",
+  "does": "Says the reply from the lyrics website made no sense to the program. The program is called Artosia.",
+  "budget": 64,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "lyrics_service"
+  ],
+  "notes": "One short sentence, no final full stop. Artosia is a name and stays as it is."
+ },
+ {
+  "key": "lyrics_busy_for",
+  "kind": "sentence",
+  "screen": "A toast at the bottom of the main window while a new song is being written. Under the song's title the program offers lyrics found on the internet; the person picked one and the program tried to fetch it.",
+  "moment": "The lyrics website asked the program to slow down and said how long.",
+  "role": "toast",
+  "does": "Says the lyrics website is serving too many people and to try once more after the given number of seconds.",
+  "budget": 70,
+  "variables": [
+   {
+    "name": "seconds",
+    "example": "30",
+    "meaning": "How many seconds to wait before trying once more."
+   }
+  ],
+  "cases": [],
+  "counts": "seconds is 1 or more, usually 10 to 120",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "lyrics_service"
+  ],
+  "notes": "One or two short sentences, no final full stop."
+ },
+ {
+  "key": "CMD_BACKDROPS_DETAIL",
+  "kind": "const",
+  "screen": "Search (the box at the top of the window), the grey line under the command named after the browser of ready backgrounds. The same line is the tooltip of the button that opens that browser in the Design dialog.",
+  "moment": "The person typed something like background or picture and reads this line to see what the command opens.",
+  "role": "command description",
+  "does": "Says the browser holds photos and looping videos, free to use, that can go behind the song words on the projector.",
+  "budget": 52,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "backdrop",
+   "design"
+  ],
+  "notes": "A fragment, no full stop."
+ },
+ {
+  "key": "LOOK_MIDNIGHT",
+  "kind": "const",
+  "screen": "The Design dialog, the part about the background: a grid of six small sample slides, each with its name under it. The same name is a result in search when the person types it.",
+  "moment": "The person looks over the six samples to choose how the slides look.",
+  "role": "name under a sample",
+  "does": "Names the sample with a very dark blue background that fades to near black, like the sky deep in the night, with white words.",
+  "budget": 14,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "design"
+  ],
+  "notes": "One or two words, a name for a colour mood. Capital on the first word only."
+ },
+ {
+  "key": "LOOK_CLASSIC_BLUE",
+  "kind": "const",
+  "screen": "The Design dialog, the part about the background: a grid of six small sample slides, each with its name under it. The same name is a result in search when the person types it.",
+  "moment": "The person looks over the six samples to choose how the slides look.",
+  "role": "name under a sample",
+  "does": "Names the sample with a flat, strong blue background and white words, the blue that older worship programs used.",
+  "budget": 14,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "design"
+  ],
+  "notes": "One or two words, a name for a colour mood. Capital on the first word only."
+ },
+ {
+  "key": "LOOK_BLACK",
+  "kind": "const",
+  "screen": "The Design dialog, the part about the background: a grid of six small sample slides, each with its name under it. The same name is a result in search when the person types it.",
+  "moment": "The person looks over the six samples to choose how the slides look.",
+  "role": "name under a sample",
+  "does": "Names the sample with a plain black background and white words. It must be the same word as the button that turns the projector black.",
+  "budget": 14,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "design"
+  ],
+  "notes": "One or two words, a name for a colour mood. Capital on the first word only."
+ },
+ {
+  "key": "LOOK_FOREST",
+  "kind": "const",
+  "screen": "The Design dialog, the part about the background: a grid of six small sample slides, each with its name under it. The same name is a result in search when the person types it.",
+  "moment": "The person looks over the six samples to choose how the slides look.",
+  "role": "name under a sample",
+  "does": "Names the sample with a deep green background, like dense trees, and off-white words.",
+  "budget": 14,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "design"
+  ],
+  "notes": "One or two words, a name for a colour mood. Capital on the first word only."
+ },
+ {
+  "key": "LOOK_EMBER",
+  "kind": "const",
+  "screen": "The Design dialog, the part about the background: a grid of six small sample slides, each with its name under it. The same name is a result in search when the person types it.",
+  "moment": "The person looks over the six samples to choose how the slides look.",
+  "role": "name under a sample",
+  "does": "Names the sample with a dark red background, like glowing coals, and warm white words.",
+  "budget": 14,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "design"
+  ],
+  "notes": "One or two words, a name for a colour mood. Capital on the first word only."
+ },
+ {
+  "key": "LOOK_PAPER",
+  "kind": "const",
+  "screen": "The Design dialog, the part about the background: a grid of six small sample slides, each with its name under it. The same name is a result in search when the person types it.",
+  "moment": "The person looks over the six samples to choose how the slides look.",
+  "role": "name under a sample",
+  "does": "Names the sample with a cream background, like a sheet of a book, and dark words.",
+  "budget": 14,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "design"
+  ],
+  "notes": "One or two words, a name for a colour mood. Capital on the first word only."
+ },
+ {
+  "key": "TOUR_BACK",
+  "kind": "const",
+  "screen": "The guided tour: a small card that points at one part of the main window at a time and explains it in two lines. At the bottom of the card are up to three buttons of one size: one to leave the tour at the left, and at the right one to see the step before and one to see the step after. This is the button with a left arrow.",
+  "moment": "The person wants to read the step before this one again.",
+  "role": "button",
+  "does": "Goes to the step of the tour before this one.",
+  "budget": 9,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "tour"
+  ],
+  "notes": "One word. It must NOT be the word the main window uses for going one slide back: this is about steps of the tour."
+ },
+ {
+  "key": "TOUR_NEXT",
+  "kind": "const",
+  "screen": "The guided tour: a small card that points at one part of the main window at a time and explains it in two lines. At the bottom of the card are up to three buttons of one size: one to leave the tour at the left, and at the right one to see the step before and one to see the step after. This is the filled button with a right arrow.",
+  "moment": "The person has read this step and wants the one after it.",
+  "role": "primary button",
+  "does": "Goes to the step of the tour after this one.",
+  "budget": 9,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "tour"
+  ],
+  "notes": "One word. It must NOT be the word the main window uses for going one slide forward: this is about steps of the tour."
+ },
+ {
+  "key": "KEYS_TO",
+  "kind": "const",
+  "screen": "Keyboard shortcuts sheet: each row shows keys drawn as little key caps at the left and what they do at the right. This tiny word stands between two key caps to mean every key from the first to the last: A _ Z, 1 _ 9.",
+  "moment": "The person reads a row whose keys are a whole range.",
+  "role": "word between key caps",
+  "does": "Joins the first and the last key of a range, meaning every key in between as well.",
+  "budget": 7,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [],
+  "notes": "One short word in lower case."
+ },
+ {
+  "key": "KEYS_OR",
+  "kind": "const",
+  "screen": "Keyboard shortcuts sheet: each row shows keys drawn as little key caps at the left and what they do at the right. This tiny word stands between two key caps to mean either one does the same: Ctrl K _ /.",
+  "moment": "The person reads a row that two different keys answer to.",
+  "role": "word between key caps",
+  "does": "Joins two keys that do the same thing, meaning press either.",
+  "budget": 5,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [],
+  "notes": "One short word in lower case."
+ },
+ {
+  "key": "SETTINGS_ADD_BIBLE",
+  "kind": "const",
+  "screen": "The Settings dialog, the part about Bible versions. Two rows above this one choose the version to show and a second one beside it. This text labels the third row, which holds two buttons: one picks a Bible file from this computer, the other opens the list of free versions to download.",
+  "moment": "The person wants a Bible version the computer does not have yet.",
+  "role": "row label",
+  "does": "Labels the row from which more Bible versions are added to this computer.",
+  "budget": 18,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "bible_translation",
+   "settings"
+  ],
+  "notes": "It must NOT repeat the heading of this part, which already names Bible versions. Say that this is about adding or getting more."
+ },
+ {
+  "key": "BTN_DELETE_SONG",
+  "kind": "const",
+  "screen": "The song editor, the row of buttons at the top right, beside Cancel and Save. It has a bin icon.",
+  "moment": "The person wants this song gone from the church's collection of songs. A toast then offers to bring it back.",
+  "role": "button",
+  "does": "Removes the song being edited from the library.",
+  "budget": 14,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "song",
+   "library"
+  ],
+  "notes": "Two words: the verb for deleting and the word for song, so nobody takes it for removing a slide or a line."
  }
 ]

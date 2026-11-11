@@ -2,6 +2,7 @@
 //! click on Black, Space must still mean "next slide", not "press Black again". Dialogs and
 //! the editors ask for it, so Tab reaches every button in them.
 
+use crate::strings as t;
 use rune::{Color, Cursor, El, Icon, Span, TextStyle, Tx, el, icon, rich, row, text};
 use rune_kit::Kit;
 
@@ -191,6 +192,9 @@ pub fn keycaps(k: &Kit, spec: &str, on: Option<Color>) -> El {
             "Left" => arrow(&icons::ARROW_LEFT),
             "Right" => arrow(&icons::ARROW_RIGHT),
             "Space" => cap().w(34.0).child(icon(&icons::SPACE_BAR, 14.0).color(ink)),
+            // The two little words between key caps are words of the language.
+            "to" => text(t::KEYS_TO()).font(type_::TINY).color(ink),
+            "or" => text(t::KEYS_OR()).font(type_::TINY).color(ink),
             word if word.chars().all(|c| c.is_lowercase()) && word.len() > 1 => text(word.to_string()).font(type_::TINY).color(ink),
             name => cap().child(text(name.to_string()).font(type_::TINY).color(ink)),
         });
@@ -232,12 +236,14 @@ pub struct Tile {
     keys: Option<&'static str>,
     tone: Tone,
     height: f32,
+    /// The tile is too narrow for its key to sit beside its icon: the key gets a line of its own.
+    narrow: bool,
     disabled: bool,
     help: Option<String>,
 }
 
 pub fn tile(label: impl Into<String>) -> Tile {
-    Tile { label: label.into(), icon: None, key_face: false, wide: false, keys: None, tone: Tone::Plain, height: 64.0, disabled: false, help: None }
+    Tile { label: label.into(), icon: None, key_face: false, wide: false, keys: None, tone: Tone::Plain, height: 64.0, narrow: false, disabled: false, help: None }
 }
 
 impl Tile {
@@ -273,6 +279,11 @@ impl Tile {
     }
     pub fn height(mut self, height: f32) -> Self {
         self.height = height;
+        self
+    }
+    /// For a tile under about 76 points wide: the key in the corner gets its own line above the icon.
+    pub fn narrow(mut self, narrow: bool) -> Self {
+        self.narrow = narrow;
         self
     }
     pub fn disabled(mut self, disabled: bool) -> Self {
@@ -317,6 +328,9 @@ impl Tile {
         let mut e = rune::col().role("button").label(name).h(self.height).grow(1.0).min_w(0.0).px(6.0).gap(4.0).center().radius(k.radius.md).fill(fill);
         if let Some(border) = border {
             e = e.border(1.0, border);
+        }
+        if self.narrow && self.keys.is_some() {
+            e = e.child(el().h(14.0));
         }
         if let Some(glyph) = self.icon {
             e = e.child(if self.key_face {

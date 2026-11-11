@@ -31,6 +31,7 @@ mod suggest;
 mod theme;
 mod ui;
 mod update;
+mod why;
 
 use artosia_core::song::Song;
 use artosia_slides::frame::ToOutput;

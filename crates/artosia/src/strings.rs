@@ -450,7 +450,7 @@ text!(PLAN_NEW_DETAIL, "Start a plan for another service", "Start a plan for ano
 text!(PLAN_NEW_NAME, "New plan", "New plan");
 text!(PLAN_NAME_LABEL, "Plan name", "Plan name");
 text!(PLAN_DATE_LABEL, "Date", "Date");
-text!(PLAN_DATE_HINT, "Year-month-day, optional", "Year-month-day, optional");
+text!(PLAN_DATE_HINT, "Such as 15 November", "Such as 15 November");
 // A plan's own look. The Indonesian slots hold the English until a person writes them from the briefs.
 text!(LOOK_FOR_USUAL, "The usual look", "The usual look");
 text!(LOOK_FOR_PLAN, "This plan's own look", "This plan's own look");
@@ -695,6 +695,58 @@ pub fn song_deleted(title: &str) -> String {
 // Look.
 text!(LOOK_SAMPLE, "The words appear\nlike this", "Contoh teks\nBaris kedua");
 text!(LOOK_CUSTOM, "Your own", "Kustom");
+/// The name a look is stored under once the person changed it; the screen says `LOOK_CUSTOM`.
+pub const LOOK_CUSTOM_ID: &str = "Custom";
+text!(LOOK_MIDNIGHT, "Midnight", "Midnight");
+text!(LOOK_CLASSIC_BLUE, "Classic blue", "Classic blue");
+text!(LOOK_BLACK, "Black", "Black");
+text!(LOOK_FOREST, "Forest", "Forest");
+text!(LOOK_EMBER, "Ember", "Ember");
+text!(LOOK_PAPER, "Paper", "Paper");
+/// A look's name on screen. Looks are stored under their English names, which never change,
+/// so a library opened in another language still knows which look it has.
+pub fn look_label(name: &str) -> String {
+    match name {
+        "Midnight" => LOOK_MIDNIGHT(),
+        "Classic blue" => LOOK_CLASSIC_BLUE(),
+        "Black" => LOOK_BLACK(),
+        "Forest" => LOOK_FOREST(),
+        "Ember" => LOOK_EMBER(),
+        "Paper" => LOOK_PAPER(),
+        // Libraries from before the fixed name stored the word of the day.
+        "Custom" | "Your own" | "Kustom" => LOOK_CUSTOM(),
+        other => other,
+    }
+    .to_string()
+}
+text!(SETTINGS_ADD_BIBLE, "More versions", "More versions");
+text!(BTN_DELETE_SONG, "Delete song", "Delete song");
+text!(TOUR_BACK, "Back", "Back");
+text!(TOUR_NEXT, "Next", "Next");
+text!(KEYS_TO, "to", "to");
+text!(KEYS_OR, "or", "or");
+/// A language's name as the Bible catalogues write it in English, in the window's language
+/// for the two languages this program has words for; any other name stays as the catalogue has it.
+pub fn language_word(english: &str) -> String {
+    match english {
+        "Indonesian" => LISTEN_INDONESIAN(),
+        "English" => LISTEN_ENGLISH(),
+        other => other,
+    }
+    .to_string()
+}
+/// The month a word names, 1 to 12: the whole name or its first three letters or more, in
+/// English, in Indonesian and in the window's language.
+pub fn month_number(word: &str) -> Option<u32> {
+    let word = word.trim().to_lowercase();
+    if word.chars().count() < 3 {
+        return None;
+    }
+    if word == "agt" || word == "agst" {
+        return Some(8);
+    }
+    [&MONTHS_EN, &MONTHS_ID, MONTHS()].iter().find_map(|names| names.iter().position(|name| name.to_lowercase().starts_with(&word)).map(|at| at as u32 + 1))
+}
 text!(LOOK_BACKGROUND, "Picture or video", "Latar");
 text!(LOOK_CHOOSE_FILE, "Choose a file", "Pilih berkas");
 text!(LOOK_NO_FILE, "None chosen", "Belum ada berkas");
@@ -1474,7 +1526,36 @@ text!(BACKDROPS_DIM, "Bright or busy, so dim the look", "Bright or busy, so dim 
 text!(BACKDROPS_HERE, "On this computer", "On this computer");
 
 pub fn backdrop_failed(why: &str) -> String {
+    if let Some(text) = say("backdrop_failed", None, None, &[("why", text_arg(why))]) {
+        return text;
+    }
     format!("Could not get the backdrop: {why}")
+}
+text!(CMD_BACKDROPS_DETAIL, "Ready pictures and videos to put behind the words", "Ready pictures and videos to put behind the words");
+
+// Why a download or a file failed: clauses that finish "Could not ...: {why}".
+text!(WHY_OFFLINE, "there is no internet connection", "there is no internet connection");
+text!(WHY_SLOW, "it took too long", "it took too long");
+text!(WHY_BROKEN, "the connection broke on the way", "the connection broke on the way");
+text!(WHY_UNREADABLE, "what arrived could not be read", "what arrived could not be read");
+text!(WHY_NOT_BIBLE, "the file is not a Bible", "the file is not a Bible");
+text!(WHY_DAMAGED, "the file arrived damaged", "the file arrived damaged");
+text!(WHY_DISK, "the file could not be saved on this computer", "the file could not be saved on this computer");
+pub fn why_status(code: u16) -> String {
+    if let Some(text) = say("why_status", None, None, &[("code", text_arg(code))]) {
+        return text;
+    }
+    format!("the server answered {code}")
+}
+text!(LYRICS_OFFLINE, "Could not reach the lyrics service. Check the internet connection", "Could not reach the lyrics service. Check the internet connection");
+text!(LYRICS_NOT_FOUND, "The lyrics service does not have this song", "The lyrics service does not have this song");
+text!(LYRICS_BUSY, "The lyrics service is busy. Try again in a minute", "The lyrics service is busy. Try again in a minute");
+text!(LYRICS_UNREADABLE, "The lyrics service sent something Artosia cannot read", "The lyrics service sent something Artosia cannot read");
+pub fn lyrics_busy_for(seconds: u64) -> String {
+    if let Some(text) = say("lyrics_busy_for", None, Some(seconds as usize), &[("seconds", text_arg(seconds))]) {
+        return text;
+    }
+    format!("The lyrics service is busy. Try again in {seconds} seconds")
 }
 
 pub fn bibles_download_failed(why: &str) -> String {
@@ -1587,6 +1668,26 @@ mod tests {
             checked += 1;
         }
         assert!(checked > 500, "only {checked} briefs were checked");
+    }
+
+    /// Each row of the keys sheet is described by the brief written for those very keys. A
+    /// brief names its keys in words, and a row that moved in the code without its brief put
+    /// "take it out of the plan" beside Ctrl M (2026-11-11).
+    #[test]
+    fn every_key_row_has_the_brief_of_its_own_keys() {
+        let briefs: serde_json::Value = serde_json::from_str(include_str!("../../../docs/i18n/brief.json")).unwrap_or_default();
+        let screen_of = |key: &str| briefs.as_array().into_iter().flatten().find(|brief| brief["key"] == key).and_then(|brief| brief["screen"].as_str()).unwrap_or_default().to_string();
+        let groups: [(&str, &[(&str, &str)]); 4] = [("KEYS_SHOWING_ROWS", &KEYS_SHOWING_ROWS_EN), ("KEYS_FINDING_ROWS", &KEYS_FINDING_ROWS_EN), ("KEYS_PLAN_ROWS", &KEYS_PLAN_ROWS_EN), ("KEYS_EDITING_ROWS", &KEYS_EDITING_ROWS_EN)];
+        for (name, rows) in groups {
+            for (at, (keys, _)) in rows.iter().enumerate() {
+                let screen = screen_of(&format!("{name}[{at}].1"));
+                let said = screen.rsplit("The keys at the left are:").next().unwrap_or_default();
+                let named = keys.split(' ').filter(|token| token.len() > 1 && token.starts_with(char::is_uppercase) && !matches!(*token, "Up" | "Down" | "Left" | "Right" | "Space"));
+                for token in named {
+                    assert!(said.contains(token), "{name}[{at}] is drawn with {keys} and its brief describes: {said}");
+                }
+            }
+        }
     }
 
     #[test]

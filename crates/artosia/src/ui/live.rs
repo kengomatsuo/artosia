@@ -20,7 +20,9 @@ use crate::ui::widgets::tile;
 /// the thin pane beside an editor.
 pub(crate) fn transport(s: &App, k: &Kit, size: Option<Foot>) -> El {
     let has_logo = !s.settings.logo.is_empty();
-    let high = size.map(Foot::tile).unwrap_or(56.0);
+    let high = size.map(Foot::tile).unwrap_or(72.0);
+    // Beside an editor the strip is a narrow column: four tiles share about 264 points.
+    let narrow = size.is_none_or(|size| size.controls < 320.0);
     let frame = col().key("transport").gap(space::S2);
     let frame = match size {
         Some(size) => frame.w(size.controls),
@@ -49,20 +51,20 @@ pub(crate) fn transport(s: &App, k: &Kit, size: Option<Foot>) -> El {
             row()
                 .w_full()
                 .gap(space::S2)
-                .child(tile(t::BTN_NO_TEXT()).icon(&icons::NO_TEXT).on(text_off.0, text_off.1, text_off.2).keys("F1").height(high).help(t::BTN_CLEAR_TEXT()).build(k, |s, tx| {
+                .child(tile(t::BTN_NO_TEXT()).icon(&icons::NO_TEXT).on(text_off.0, text_off.1, text_off.2).keys("F1").height(high).narrow(narrow).help(t::BTN_CLEAR_TEXT()).build(k, |s, tx| {
                     s.toggle_text();
                     tx.blur();
                 }))
-                .child(tile(t::BTN_BLACK()).icon(&icons::BLACK_SCREEN).on(black.0, black.1, black.2).keys("F2").height(high).help(t::STATE_BLACK()).build(k, |s, tx| {
+                .child(tile(t::BTN_BLACK()).icon(&icons::BLACK_SCREEN).on(black.0, black.1, black.2).keys("F2").height(high).narrow(narrow).help(t::STATE_BLACK()).build(k, |s, tx| {
                     s.toggle_black();
                     tx.blur();
                 }))
-                .child(tile(t::BTN_LOGO()).icon(&icons::BADGE).on(logo.0, logo.1, logo.2).keys("F3").height(high).disabled(!has_logo).help(if has_logo { t::STATE_LOGO() } else { t::LOGO_MISSING() }).build(k, |s, tx| {
+                .child(tile(t::BTN_LOGO()).icon(&icons::BADGE).on(logo.0, logo.1, logo.2).keys("F3").height(high).narrow(narrow).disabled(!has_logo).help(if has_logo { t::STATE_LOGO() } else { t::LOGO_MISSING() }).build(k, |s, tx| {
                     s.toggle_logo();
                     tx.blur();
                 }))
                 // Lit red while the room sees the Live list; off, the projector shows none of it.
-                .child(tile(t::LIVE()).icon(if s.on_air() { &icons::ON_AIR } else { &icons::OFF_AIR }).on(s.on_air(), theme::live(), theme::on_live()).keys("F6").height(high).help(t::TIP_LIVE()).build(k, |s, tx| {
+                .child(tile(t::LIVE()).icon(if s.on_air() { &icons::ON_AIR } else { &icons::OFF_AIR }).on(s.on_air(), theme::live(), theme::on_live()).keys("F6").height(high).narrow(narrow).help(t::TIP_LIVE()).build(k, |s, tx| {
                     s.toggle_live();
                     tx.blur();
                 })),

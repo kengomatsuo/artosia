@@ -80,8 +80,9 @@ impl App {
 
 /// Downloads to a side file and keeps it only when it is the file Hugging Face lists.
 fn fetch(path: &Path) -> Result<(), String> {
-    let folder = path.parent().ok_or_else(|| "no folder".to_string())?;
-    std::fs::create_dir_all(folder).map_err(|error| error.to_string())?;
+    let disk = |_: std::io::Error| crate::strings::WHY_DISK().to_string();
+    let folder = path.parent().ok_or_else(|| crate::strings::WHY_DISK().to_string())?;
+    std::fs::create_dir_all(folder).map_err(disk)?;
     let part = path.with_extension("part");
     let agent: ureq::Agent = ureq::Agent::config_builder()
         .timeout_connect(Some(Duration::from_secs(8)))
@@ -89,15 +90,15 @@ fn fetch(path: &Path) -> Result<(), String> {
         .user_agent("Artosia (free worship presentation app)")
         .build()
         .into();
-    let mut response = agent.get(URL).call().map_err(|error| error.to_string())?;
-    let mut file = std::fs::File::create(&part).map_err(|error| error.to_string())?;
+    let mut response = agent.get(URL).call().map_err(crate::why::net)?;
+    let mut file = std::fs::File::create(&part).map_err(disk)?;
     // A reader has ureq's 10 MB limit unless it is raised.
-    std::io::copy(&mut response.body_mut().with_config().limit(SIZE + 1024).reader(), &mut file).map_err(|error| error.to_string())?;
+    std::io::copy(&mut response.body_mut().with_config().limit(SIZE + 1024).reader(), &mut file).map_err(|_| crate::strings::WHY_BROKEN().to_string())?;
     drop(file);
     let right = std::fs::metadata(&part).map(|meta| meta.len()).ok() == Some(SIZE) && artosia_update::manifest::sha256_hex_of_file(&part).ok().as_deref() == Some(SHA256);
     if !right {
         let _ = std::fs::remove_file(&part);
-        return Err("the file that arrived is not the speech model".to_string());
+        return Err(crate::strings::WHY_DAMAGED().to_string());
     }
     std::fs::rename(&part, path).map_err(|error| error.to_string())
 }

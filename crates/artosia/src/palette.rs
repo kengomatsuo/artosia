@@ -35,6 +35,7 @@ pub enum Command {
     PasteSong,
     Announcements,
     Looks,
+    Backdrops,
     Settings,
     Screens,
     Import,
@@ -65,7 +66,7 @@ pub enum Command {
 }
 
 impl Command {
-    pub const ALL: [Command; 31] = [
+    pub const ALL: [Command; 32] = [
         Command::StartService,
         Command::Next,
         Command::Previous,
@@ -83,6 +84,7 @@ impl Command {
         Command::Heading,
         Command::NewPlan,
         Command::Looks,
+        Command::Backdrops,
         Command::Settings,
         Command::Screens,
         Command::Remote,
@@ -106,6 +108,7 @@ impl Command {
             Command::Announcements => t::CMD_ANNOUNCEMENTS(),
             Command::Looks => t::CMD_LOOKS(),
             Command::Settings => t::CMD_SETTINGS(),
+            Command::Backdrops => t::BACKDROPS_TITLE(),
             Command::Screens => t::CMD_SCREENS(),
             Command::Import => t::CMD_IMPORT(),
             Command::ImportFolder => t::CMD_IMPORT_FOLDER(),
@@ -142,6 +145,7 @@ impl Command {
             Command::Announcements => t::CMD_ANNOUNCEMENTS_DETAIL(),
             Command::Looks => t::CMD_LOOKS_DETAIL(),
             Command::Settings => t::CMD_SETTINGS_DETAIL(),
+            Command::Backdrops => t::CMD_BACKDROPS_DETAIL(),
             Command::Screens => t::CMD_SCREENS_DETAIL(),
             Command::Import => t::CMD_IMPORT_DETAIL(),
             Command::ImportFolder => t::CMD_IMPORT_FOLDER_DETAIL(),
@@ -178,6 +182,7 @@ impl Command {
             Command::PasteSong => &["paste", "clipboard", "tempel lirik", "tempel lagu"],
             Command::Announcements => &["notices", "edit announcements", "pengumuman", "warta"],
             Command::Looks => &["look", "theme", "background", "font", "text size", "colour", "outline", "tampilan", "desain", "tema", "latar", "ukuran teks"],
+            Command::Backdrops => &["backdrop", "backgrounds", "stock", "pictures", "videos", "wallpaper", "nature", "latar", "gambar", "video", "pemandangan"],
             Command::Settings => &["settings", "preferences", "options", "language", "dark", "light", "pengaturan", "setelan", "bahasa"],
             Command::Screens => &["projector", "monitor", "display", "stage", "layar", "proyektor"],
             Command::Import => &["easislides", "impor", "pindahkan"],
@@ -613,8 +618,8 @@ impl App {
             out.push((doc, Hit::Announcement { index, title: item.title.clone(), body }));
         }
         for (index, look) in presets().into_iter().enumerate() {
-            let doc = Doc::new(format!("look:{}", look.name), "look", look.name.clone()).aliases(&["look", "theme", "background", "tampilan", "tema", "latar"]);
-            out.push((doc, Hit::Look { index, name: look.name }));
+            let doc = Doc::new(format!("look:{}", look.name), "look", t::look_label(&look.name)).aliases(&["look", "theme", "background", "tampilan", "tema", "latar"]).aliases(&[look.name.as_str()]);
+            out.push((doc, Hit::Look { index, name: t::look_label(&look.name) }));
         }
         for (_, language) in crate::languages::listed() {
             let doc = Doc::new(format!("language:{}", language.code), "language", language.name).aliases(&["language", "bahasa"]).aliases(language.aliases);
@@ -902,6 +907,7 @@ impl App {
             Command::Announcements => self.edit_announcements(),
             Command::Looks => self.sheet = Sheet::Looks,
             Command::Settings => self.sheet = Sheet::Settings,
+            Command::Backdrops => self.open_backdrops(),
             Command::Screens => self.sheet = Sheet::Screens,
             Command::Import => self.sheet = Sheet::Import,
             Command::ImportFolder => self.want_folder = true,

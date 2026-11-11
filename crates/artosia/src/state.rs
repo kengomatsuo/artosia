@@ -849,6 +849,10 @@ impl App {
     pub fn marker_letters(&self) -> Vec<char> {
         let Some(deck) = self.target_deck() else { return Vec::new() };
         let mut letters: Vec<char> = deck.slides.iter().filter_map(|slide| slide.tag).map(marker_letter).collect();
+        // R is the chorus too: a church that says "reff" reaches for R, and no kind of section owns that letter.
+        if letters.contains(&'C') {
+            letters.push('R');
+        }
         letters.sort_unstable();
         letters.dedup();
         letters
@@ -859,6 +863,7 @@ impl App {
     /// marker"). False when the deck has no such section.
     pub fn jump_to_marker(&mut self, letter: char) -> bool {
         let Some(deck) = self.target_deck() else { return false };
+        let letter = if letter == 'R' { 'C' } else { letter };
         let from = self.live.as_ref().map(|live| live.index).or(self.open.as_ref().map(|open| open.cursor)).unwrap_or(0);
         let starts: Vec<usize> = section_starts(deck).into_iter().filter(|&at| deck.slides[at].tag.is_some_and(|tag| marker_letter(tag) == letter)).collect();
         let Some(&to) = starts.iter().find(|&&at| at > from).or(starts.first()) else { return false };

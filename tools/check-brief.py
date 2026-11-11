@@ -43,6 +43,9 @@ LEFT_OUT = {
     "KEYS_PLAN_ROWS": "briefed row by row",
     "KEYS_EDITING_ROWS": "briefed row by row",
     "section_label": "briefed through section.* and section_numbered",
+    "look_label": "chooses among the LOOK_* names, each briefed",
+    "language_word": "chooses among the language names, each briefed",
+    "month_number": "not a text",
 }
 KINDS = {"const", "sentence", "row", "section", "noun", "months", "phone"}
 FIELDS = ["key", "kind", "screen", "moment", "role", "does", "budget", "variables", "cases", "counts", "register", "concepts", "notes"]

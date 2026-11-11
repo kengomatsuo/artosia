@@ -173,7 +173,7 @@ pub(crate) fn row_menu(s: &App, k: &Kit, item: &PlanItem, at: usize, layer: &mut
         })
         .key(format!("plan-menu-{id}"))
         .group_opacity(if open { 1.0 } else { rest }, 1.0);
-    let mut menu = Menu::new(format!("plan-menu-list-{id}")).trigger(trigger).open(open).on_close(|s: &mut App| s.plan_menu = None);
+    let mut menu = Menu::new(format!("plan-menu-list-{id}")).trigger(trigger).open(open).min_width(236.0).on_close(|s: &mut App| s.plan_menu = None);
     if at > 0 {
         menu = menu.item(MenuItem::new(t::PLAN_MOVE_UP()).icon(&icons::ARROW_UP).on_select(move |s: &mut App| {
             s.shift_plan_item(id, -1);

@@ -145,12 +145,7 @@ fn agent() -> ureq::Agent {
 }
 
 fn net_error(error: ureq::Error) -> String {
-    match error {
-        ureq::Error::StatusCode(code) => format!("the server answered {code}"),
-        ureq::Error::Timeout(_) => "it took too long".to_string(),
-        ureq::Error::HostNotFound | ureq::Error::ConnectionFailed | ureq::Error::Io(_) => "there is no connection".to_string(),
-        other => other.to_string(),
-    }
+    crate::why::net(error)
 }
 
 fn get(url: &str, limit: u64) -> Result<Vec<u8>, String> {
@@ -181,7 +176,7 @@ fn cached_bytes(cache: &Option<PathBuf>, url: &str, limit: u64, usable: &dyn Fn(
     match get(url, limit) {
         Ok(bytes) => {
             if !usable(&bytes) {
-                return Err("the list was not in the shape expected".to_string());
+                return Err(t::WHY_UNREADABLE().to_string());
             }
             if let Some(path) = cache {
                 let _ = std::fs::write(path, &bytes);
@@ -269,7 +264,7 @@ impl App {
         self.sheet = Sheet::Bibles;
         match state {
             "loading" => self.desk.catalogue = Catalogue::Loading,
-            "failed" => self.desk.catalogue = Catalogue::Failed("there is no connection".to_string()),
+            "failed" => self.desk.catalogue = Catalogue::Failed(t::WHY_OFFLINE().to_string()),
             _ => {
                 self.desk.catalogue = Catalogue::Ready(demo_list());
                 match state {
@@ -359,7 +354,7 @@ impl App {
         let (events, waker) = (self.desk.events.clone(), self.waker.clone());
         std::thread::spawn(move || {
             let result = get_head(&beblia::download_url(&item.file), beblia::HEADER_BYTES).and_then(|head| {
-                bible_file::beblia_header(&String::from_utf8_lossy(&head)).ok_or_else(|| "it is not a Beblia Bible".to_string())
+                bible_file::beblia_header(&String::from_utf8_lossy(&head)).ok_or_else(|| t::WHY_NOT_BIBLE().to_string())
             });
             if let Ok(mut events) = events.lock() {
                 events.push(Event::Notice(item.id.clone(), result));
@@ -442,7 +437,7 @@ impl App {
                         Ok(installed) => self.bible_installed(installed),
                         Err(ImportError::Unsupported) => self.say(t::BIBLES_FILE_UNSUPPORTED(), None),
                         Err(ImportError::Empty) => self.say(t::BIBLES_FILE_EMPTY(), None),
-                        Err(other) => self.say(t::bibles_file_failed(&other.to_string()), None),
+                        Err(other) => self.say(t::bibles_file_failed(&crate::why::bible_file(&other)), None),
                     }
                 }
                 Event::Catalogue(Ok(list)) => {

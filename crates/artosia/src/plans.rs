@@ -46,6 +46,57 @@ pub fn label(name: &str) -> String {
     if matches!(name, "Today" | "Acara hari ini" | "") { t::PLAN_DEFAULT_NAME().to_string() } else { name.to_string() }
 }
 
+/// A day as people write it, as year-month-day. Reads "15 November", "15 Nov 2026",
+/// "November 15", "15/11", "15-11-2026" and "2026-11-15", with month names in English, in
+/// Indonesian and in the window's language. A day written without its year is the next such
+/// day: this year, or next year once it lies more than a month behind `today` (year, month, day).
+pub fn read_day(text: &str, today: (i32, u32, u32)) -> Option<String> {
+    let text = text.trim().to_lowercase();
+    if let Some(date) = valid_date(&text) {
+        return Some(date);
+    }
+    let parts: Vec<&str> = text.split(|c: char| !c.is_alphanumeric()).filter(|part| !part.is_empty()).collect();
+    let numbers: Vec<u32> = parts.iter().filter_map(|part| part.parse().ok()).collect();
+    let named: Vec<u32> = parts.iter().filter(|part| part.parse::<u32>().is_err()).filter_map(|part| t::month_number(part)).collect();
+    if numbers.len() + named.len() != parts.len() || named.len() > 1 {
+        return None;
+    }
+    let (day, month, year) = match (numbers.as_slice(), named.first()) {
+        (&[day], Some(&month)) => (day, month, None),
+        (&[a, b], Some(&month)) if a > 31 => (b, month, Some(a)),
+        (&[a, b], Some(&month)) => (a, month, Some(b)),
+        // Day then month, as Indonesia and most of the world write it; a month over twelve means the other order.
+        (&[a, b], None) if b > 12 && a <= 12 => (b, a, None),
+        (&[a, b], None) => (a, b, None),
+        (&[a, b, year], None) if b > 12 && a <= 12 => (b, a, Some(year)),
+        (&[a, b, year], None) => (a, b, Some(year)),
+        _ => return None,
+    };
+    let lengths = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    if !(1..=12).contains(&month) || day == 0 || day > lengths[(month - 1) as usize] {
+        return None;
+    }
+    let year = match year {
+        Some(year) if year < 100 => 2000 + year as i32,
+        Some(year) if (1900..=9999).contains(&year) => year as i32,
+        Some(_) => return None,
+        // More than a month ago means the person is planning next year's.
+        None if month * 31 + day + 31 < today.1 * 31 + today.2 => today.0 + 1,
+        None => today.0,
+    };
+    Some(format!("{year:04}-{month:02}-{day:02}"))
+}
+
+/// "15 November 2026" for the field a plan's day is typed in; nothing for a plan with no day.
+pub fn day_words(plan_date: &str) -> String {
+    let Some(date) = valid_date(plan_date) else { return String::new() };
+    let mut parts = date.split('-').filter_map(|part| part.parse::<u32>().ok());
+    match (parts.next(), parts.next(), parts.next()) {
+        (Some(year), Some(month), Some(day)) => format!("{day} {} {year}", t::MONTHS()[(month - 1) as usize]),
+        _ => String::new(),
+    }
+}
+
 /// "15 November" for a plan that has a date.
 pub fn day_text(plan_date: &str) -> Option<String> {
     let mut plan = Plan::named("");
@@ -227,12 +278,18 @@ impl App {
         let mut name = TextEdit::new(if blank { String::new() } else { self.plan_title() });
         name.focused = true;
         name.set_caret(name.text.len());
-        self.switcher.renaming = Some(Renaming { id: self.plan.id, name, date: TextEdit::new(self.plan.date.clone()) });
+        self.switcher.renaming = Some(Renaming { id: self.plan.id, name, date: TextEdit::new(day_words(&self.plan.date)) });
+    }
+
+    /// Today as year, month and day on this computer's clock.
+    fn this_day(&self) -> (i32, u32, u32) {
+        let time = rune::LocalTime::at((self.now * 1000.0) as i64);
+        (time.year, time.month, time.day)
     }
 
     /// The date field holds a day, or nothing.
     pub fn rename_date_ok(&self) -> bool {
-        self.switcher.renaming.as_ref().is_none_or(|renaming| renaming.date.text.trim().is_empty() || valid_date(&renaming.date.text).is_some())
+        self.switcher.renaming.as_ref().is_none_or(|renaming| renaming.date.text.trim().is_empty() || read_day(&renaming.date.text, self.this_day()).is_some())
     }
 
     pub fn finish_rename(&mut self, save: bool) {
@@ -241,7 +298,7 @@ impl App {
             return;
         }
         let name = renaming.name.text.trim();
-        let date = valid_date(&renaming.date.text).unwrap_or_default();
+        let date = read_day(&renaming.date.text, self.this_day()).unwrap_or_default();
         if renaming.id == self.plan.id {
             if !name.is_empty() {
                 self.plan.name = name.to_string();
@@ -332,6 +389,23 @@ mod tests {
         assert!(app.plan.name.starts_with("Sunday 10:00"));
         let copy = app.plan.id;
         assert_ne!(copy, 0);
+        // The day reads back in words, and words are read as the day.
+        app.begin_rename(false);
+        assert_eq!(app.switcher.renaming.as_ref().map(|renaming| renaming.date.text.clone()), Some(String::new()), "a copy has no day");
+        app.finish_rename(false);
+        let today = (2026, 11, 11);
+        assert_eq!(read_day("15 November", today).as_deref(), Some("2026-11-15"));
+        assert_eq!(read_day("15 nov 2027", today).as_deref(), Some("2027-11-15"));
+        assert_eq!(read_day("November 15", today).as_deref(), Some("2026-11-15"));
+        assert_eq!(read_day("17 Agustus", today).as_deref(), Some("2027-08-17"), "a day long past is next year's");
+        assert_eq!(read_day("25 Desember", today).as_deref(), Some("2026-12-25"));
+        assert_eq!(read_day("15/11", today).as_deref(), Some("2026-11-15"));
+        assert_eq!(read_day("15-11-2026", today).as_deref(), Some("2026-11-15"));
+        assert_eq!(read_day("11/15/2026", today).as_deref(), Some("2026-11-15"), "a month over twelve is a day");
+        assert_eq!(read_day("2026-11-15", today).as_deref(), Some("2026-11-15"));
+        assert_eq!(read_day("31 June", today), None);
+        assert_eq!(read_day("November", today), None);
+        assert_eq!(day_words("2026-11-15"), "15 November 2026");
         // A date that is not a day is refused and the plan keeps what it had.
         app.begin_rename(false);
         if let Some(renaming) = app.switcher.renaming.as_mut() {

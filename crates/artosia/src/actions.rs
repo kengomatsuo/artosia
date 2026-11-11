@@ -263,7 +263,7 @@ impl App {
         editor.asked = title.clone();
         let (inbox, waker) = (self.inbox.clone(), self.waker.clone());
         std::thread::spawn(move || {
-            let found = artosia_lyrics::search(&title).map_err(|error| error.to_string());
+            let found = artosia_lyrics::search(&title).map_err(|error| crate::why::lyrics(&error));
             if let Ok(mut inbox) = inbox.lock() {
                 inbox.push(Arrived::Lyrics(title, found));
             }
@@ -295,7 +295,7 @@ impl App {
                 editor.ask_at = None;
                 let (inbox, waker) = (self.inbox.clone(), self.waker.clone());
                 std::thread::spawn(move || {
-                    let fetched = artosia_lyrics::fetch(&found).map_err(|error| error.to_string());
+                    let fetched = artosia_lyrics::fetch(&found).map_err(|error| crate::why::lyrics(&error));
                     if let Ok(mut inbox) = inbox.lock() {
                         inbox.push(Arrived::LyricsText(fetched));
                     }
@@ -1143,7 +1143,7 @@ impl App {
         let mut look = self.look();
         look.background = background;
         look.shadow = true;
-        look.name = t::LOOK_CUSTOM().to_string();
+        look.name = t::LOOK_CUSTOM_ID.to_string();
         self.set_look(look);
     }
 
@@ -1368,7 +1368,7 @@ impl App {
         let mut look = self.look();
         look.background = Background::Camera(name.to_string());
         look.shadow = true;
-        look.name = t::LOOK_CUSTOM().to_string();
+        look.name = t::LOOK_CUSTOM_ID.to_string();
         self.set_look(look);
     }
 

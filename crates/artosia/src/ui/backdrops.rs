@@ -256,8 +256,14 @@ pub(crate) fn panel(s: &App, k: &Kit, _layer: &mut Vec<El>) -> El {
         .child(detail(s, k))
 }
 
-/// The browser in a dialog of its own: a temporary hook until the Look dialog's Background panel holds `panel`.
+/// The mark of the browser itself, for the button in Design and the command in search.
+pub(crate) fn mark() -> &'static Icon {
+    &ALL
+}
+
+/// The browser in a dialog of its own, one step inside Design: the grid needs the room, and
+/// closing it goes back to Design, where it was opened and where the sample is.
 pub fn view(s: &App, k: &Kit, layer: &mut Vec<El>) {
     let body = col().w_full().px(space::S4).pb(space::S4).child(panel(s, k, layer));
-    Dialog::new("backdrops", t::BACKDROPS_TITLE()).open(true).width(WIDTH + 2.0 * space::S4).fit().on_close(|s: &mut App| s.sheet = Sheet::None).child(body).build(k, layer);
+    Dialog::new("backdrops", t::BACKDROPS_TITLE()).open(true).width(WIDTH + 2.0 * space::S4).fit().on_close(|s: &mut App| s.sheet = Sheet::Looks).child(body).build(k, layer);
 }

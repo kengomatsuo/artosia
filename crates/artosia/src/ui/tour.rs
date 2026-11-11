@@ -139,9 +139,9 @@ fn card(k: &Kit, at: usize, stop: &Stop) -> El {
     let fixed = |button: El| row().w(BUTTON).child(button);
     let mut buttons = row().w_full().gap(space::S2).center_y().child(fixed(btn(t::TOUR_SKIP()).icon(&icons::CLOSE).ghost().grow().focusable().build(k, |s, _| s.end_tour()))).child(spacer());
     if at > 0 {
-        buttons = buttons.child(fixed(btn(t::BTN_PREV()).icon(&icons::ARROW_LEFT).grow().focusable().build(k, |s, _| s.tour_back())));
+        buttons = buttons.child(fixed(btn(t::TOUR_BACK()).icon(&icons::ARROW_LEFT).grow().focusable().build(k, |s, _| s.tour_back())));
     }
-    let (label, glyph) = if last { (t::TOUR_DONE(), &icons::CHECK) } else { (t::BTN_NEXT(), &icons::ARROW_RIGHT) };
+    let (label, glyph) = if last { (t::TOUR_DONE(), &icons::CHECK) } else { (t::TOUR_NEXT(), &icons::ARROW_RIGHT) };
     buttons = buttons.child(fixed(btn(label).icon(glyph).primary().grow().focusable().build(k, |s, _| s.tour_press_next()).key("tour-next")));
     col()
         .key("tour-card")

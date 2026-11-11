@@ -41,13 +41,13 @@ fn looks(s: &App, k: &Kit, layer: &mut Vec<El>) {
             col()
                 .key(format!("look-{}", preset.name))
                 .role("button")
-                .label(preset.name.clone())
+                .label(t::look_label(&preset.name))
                 .w(tile)
                 .gap(space::S1)
                 .focusable(true)
                 .cursor(Cursor::Pointer)
                 .child(frame.hover(rune::Color::WHITE.alpha(0.06)))
-                .child(text(preset.name.clone()).font(if on { type_::SMALL_STRONG } else { type_::SMALL }).color(if on { k.c.text_base } else { k.c.text_muted }))
+                .child(text(t::look_label(&preset.name)).font(if on { type_::SMALL_STRONG } else { type_::SMALL }).color(if on { k.c.text_base } else { k.c.text_muted }))
                 .on_press(move |s: &mut App| s.set_look(chosen.clone())),
         );
     }
@@ -98,7 +98,8 @@ fn looks(s: &App, k: &Kit, layer: &mut Vec<El>) {
                 .min_w(0.0)
                 .gap(space::S2)
                 .center_y()
-                .child(btn(t::LOOK_CHOOSE_FILE()).icon(&icons::IMAGE).focusable().build(
+                .child(btn(t::BACKDROPS_TITLE()).icon(crate::ui::backdrops::mark()).focusable().help(t::CMD_BACKDROPS_DETAIL()).build(k, |s, _| s.open_backdrops()).key("design-backdrops"))
+                .child(btn(t::LOOK_CHOOSE_FILE()).icon(&icons::FOLDER).focusable().build(
                     k,
                     pick_file(t::LOOK_CHOOSE_FILE(), &["png", "jpg", "jpeg", "webp", "bmp", "mp4", "mov", "mkv", "webm", "m4v"], |s, path| s.set_background_file(path)),
                 ))
@@ -221,13 +222,13 @@ fn settings(s: &App, k: &Kit, layer: &mut Vec<El>) {
         .child(setting(k, t::LOOK_SECOND_BIBLE(), bible_picker(s, k, true)))
         .child(setting(
             k,
-            t::BIBLES_TITLE(),
+            t::SETTINGS_ADD_BIBLE(),
             row()
                 .grow(1.0)
                 .min_w(0.0)
                 .gap(space::S2)
                 .center_y()
-                .child(btn(t::BIBLES_CHOOSE_FILE()).icon(&icons::IMPORT).focusable().build(k, |s, _| s.desk.want_file = true).key("look-bible-file"))
+                .child(btn(t::BIBLES_CHOOSE_FILE()).icon(&icons::FOLDER).focusable().build(k, |s, _| s.desk.want_file = true).key("look-bible-file"))
                 .child(btn(t::BIBLES_MORE()).icon(&icons::GLOBE).focusable().build(k, |s, _| s.open_bibles()).key("look-bible-more")),
         ))
         .child(el().h(space::S2))
@@ -570,24 +571,36 @@ fn import(s: &App, k: &Kit, layer: &mut Vec<El>) {
 
 /// One group of the key sheet: a heading and its rows.
 fn key_group(k: &Kit, heading: &'static str, keys: &[(&'static str, &'static str)], rows: &[(&'static str, &'static str)]) -> El {
-    let mut group = col().w_full().gap(space::S1).child(section_label(k, heading));
+    let mut group = col().w_full().gap(2.0).child(section_label(k, heading));
     // The keys are the same in every language and are drawn as the keyboard prints them;
     // only what a key does is written per language.
     for ((keys, _), (_, does)) in keys.iter().zip(rows) {
-        group = group.child(row().w_full().h(28.0).gap(space::S3).center_y().child(el().w(168.0).child(row().child(keycap(k, keys, false)))).child(text(*does).font(type_::BODY).color(k.c.text_base).truncate().grow(1.0)));
+        group = group.child(row().w_full().h(24.0).gap(space::S3).center_y().child(el().w(132.0).child(row().child(keycap(k, keys, false)))).child(text(*does).font(type_::BODY).color(k.c.text_base).truncate().grow(1.0)));
     }
     group
 }
 
-fn keys(s: &App, k: &Kit, layer: &mut Vec<El>) {
+fn keys(s: &App, k: &Kit, layer: &mut Vec<El>, tall: f32) {
+    // Two columns of about the same height: the keys of a service, and everything else. On a
+    // laptop screen the whole sheet shows; a lower window scrolls the list under a title and
+    // a close button that stay (the sheet once ran off both edges of a 768 point window).
     let rows = row()
         .w_full()
         .gap(space::S6)
-        .child(col().grow(1.0).min_w(0.0).gap(space::S4).child(key_group(k, t::KEYS_SHOWING(), t::KEYS_SHOWING_KEYS(), t::KEYS_SHOWING_ROWS())).child(key_group(k, t::KEYS_PLAN(), t::KEYS_PLAN_KEYS(), t::KEYS_PLAN_ROWS())))
-        .child(col().grow(1.0).min_w(0.0).gap(space::S4).child(key_group(k, t::KEYS_FINDING(), t::KEYS_FINDING_KEYS(), t::KEYS_FINDING_ROWS())).child(key_group(k, t::KEYS_EDITING(), t::KEYS_EDITING_KEYS(), t::KEYS_EDITING_ROWS())));
+        .child(col().grow(1.0).min_w(0.0).child(key_group(k, t::KEYS_SHOWING(), t::KEYS_SHOWING_KEYS(), t::KEYS_SHOWING_ROWS())))
+        .child(
+            col()
+                .grow(1.0)
+                .min_w(0.0)
+                .gap(space::S3)
+                .child(key_group(k, t::KEYS_FINDING(), t::KEYS_FINDING_KEYS(), t::KEYS_FINDING_ROWS()))
+                .child(key_group(k, t::KEYS_PLAN(), t::KEYS_PLAN_KEYS(), t::KEYS_PLAN_ROWS()))
+                .child(key_group(k, t::KEYS_EDITING(), t::KEYS_EDITING_KEYS(), t::KEYS_EDITING_ROWS())),
+        );
     let _ = s;
+    let list = col().key("keys-list").w_full().max_h((tall - 200.0).max(220.0)).scroll(rune::ScrollSpec { stick_bottom: false }).child(rows).scroll_bar(k);
     let tour = row().w_full().child(btn(t::CMD_TOUR()).icon(&icons::PLAY).focusable().build(k, |s, _| s.start_tour()));
-    let body = col().w_full().px(space::S4).pb(space::S4).gap(space::S4).child(rows).child(tour);
+    let body = col().w_full().px(space::S4).pb(space::S4).gap(space::S3).child(list).child(tour);
     Dialog::new("keys", t::KEYS_TITLE()).open(true).width(1060.0).fit().on_close(close).child(body).build(k, layer);
 }
 
@@ -772,7 +785,8 @@ fn listen(s: &App, k: &Kit, layer: &mut Vec<El>) {
     Dialog::new("listen", t::CMD_LISTEN()).open(true).width(560.0).fit().on_close(close).child(body).build(k, layer);
 }
 
-pub fn view(s: &App, k: &Kit, layer: &mut Vec<El>) {
+/// `tall` is the window's height: a sheet longer than the window scrolls inside itself.
+pub fn view(s: &App, k: &Kit, layer: &mut Vec<El>, tall: f32) {
     match s.sheet {
         Sheet::None => {}
         Sheet::Looks => looks(s, k, layer),
@@ -780,7 +794,7 @@ pub fn view(s: &App, k: &Kit, layer: &mut Vec<El>) {
         Sheet::Screens => screens(s, k, layer),
         Sheet::Remote => remote(s, k, layer),
         Sheet::Import => import(s, k, layer),
-        Sheet::Keys => keys(s, k, layer),
+        Sheet::Keys => keys(s, k, layer, tall),
         Sheet::Listen => listen(s, k, layer),
         Sheet::Stream => stream(s, k, layer),
         Sheet::Bibles => crate::ui::bibles::view(s, k, layer),

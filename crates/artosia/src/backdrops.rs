@@ -238,9 +238,18 @@ impl App {
         let path = backdrops::local_path(&self.backdrop_media(), &entry);
         if backdrops::is_downloaded(&self.backdrop_media(), &entry) {
             self.set_background_file(&path);
+            self.back_to_design();
             return;
         }
         self.download_backdrop(id, true);
+    }
+
+    /// A backdrop was put behind the words: Design opens again, where its sample shows it and
+    /// the sliders that dim a bright picture are.
+    fn back_to_design(&mut self) {
+        if self.sheet == Sheet::Backdrops {
+            self.sheet = Sheet::Looks;
+        }
     }
 
     /// Starts fetching a backdrop. Only a press calls this.
@@ -333,11 +342,12 @@ impl App {
                             self.backdrops.have.insert(id.clone());
                             if apply {
                                 self.set_background_file(&path);
+                                self.back_to_design();
                             }
                         }
                         Err(Failure::Cancelled) => {}
                         Err(Failure::Offline) => self.say(t::BACKDROPS_OFFLINE(), None),
-                        Err(other) => self.say(t::backdrop_failed(&format!("{other:?}")), None),
+                        Err(other) => self.say(t::backdrop_failed(&crate::why::backdrop(&other)), None),
                     }
                 }
             }

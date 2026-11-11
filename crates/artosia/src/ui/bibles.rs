@@ -79,7 +79,7 @@ fn nothing(s: &App, k: &Kit) -> El {
 fn line(s: &App, k: &Kit, at: usize) -> El {
     match s.desk.rows.get(at) {
         Some(Row::Language { name, local }) => {
-            let mut heading = row().key(format!("bibles-language-{name}")).w_full().h(ROW).px(space::S3).gap(space::S2).center_y().child(text(name.clone()).font(type_::SMALL_STRONG).color(k.c.text_muted).truncate());
+            let mut heading = row().key(format!("bibles-language-{name}")).w_full().h(ROW).px(space::S3).gap(space::S2).center_y().child(text(t::language_word(name)).font(type_::SMALL_STRONG).color(k.c.text_muted).truncate());
             if !local.is_empty() {
                 heading = heading.child(text(local.clone()).font(type_::SMALL).color(k.c.text_muted).truncate());
             }
@@ -175,7 +175,7 @@ fn detail(s: &App, k: &Kit) -> El {
             .gap(space::S2)
             .center_y()
             .child(text(title).font(type_::BODY_STRONG).color(k.c.text_base).truncate().grow(1.0))
-            .child(text(item.language_english.clone()).font(type_::SMALL).color(k.c.text_muted))
+            .child(text(t::language_word(&item.language_english)).font(type_::SMALL).color(k.c.text_muted))
             .child(text(extent(item)).font(type_::SMALL).color(k.c.text_muted))
             .child(text(source_name(item.source)).font(type_::SMALL_STRONG).color(k.c.text_muted)),
     )
@@ -190,7 +190,7 @@ fn own_file(k: &Kit) -> El {
             .w_full()
             .gap(space::S3)
             .center_y()
-            .child(btn(t::BIBLES_CHOOSE_FILE()).icon(&icons::IMPORT).focusable().build(k, |s, _| s.desk.want_file = true).key("bible-file"))
+            .child(btn(t::BIBLES_CHOOSE_FILE()).icon(&icons::FOLDER).focusable().build(k, |s, _| s.desk.want_file = true).key("bible-file"))
             .child(text(t::BIBLES_FILE_HINT()).font(type_::SMALL).color(k.c.text_muted).grow(1.0).truncate()),
     )
 }

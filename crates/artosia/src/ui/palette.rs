@@ -24,6 +24,7 @@ fn command_icon(command: Command) -> &'static rune::Icon {
         Command::Announcements | Command::LoopAnnouncements => &icons::ANNOUNCE,
         Command::Looks => &icons::PALETTE,
         Command::Settings => &icons::SLIDERS,
+        Command::Backdrops => crate::ui::backdrops::mark(),
         Command::Screens | Command::Black | Command::Logo => &icons::SCREEN,
         Command::Import | Command::ImportFolder | Command::ImportPptx | Command::ImportBirthdays | Command::BibleFile => &icons::IMPORT,
         Command::Bibles => &icons::BOOK,
@@ -512,10 +513,13 @@ fn footer(s: &App, k: &Kit) -> El {
         _ => String::new(),
     };
     // Tab says what it will do to the picked row.
-    let tab = match s.palette.hits.get(s.palette.picked) {
+    let picked = s.palette.hits.get(s.palette.picked);
+    // A row that is chosen, such as a command or a book of the Bible, has one key: Enter.
+    let chosen = matches!(picked, Some(Hit::Command(_) | Hit::Look { .. } | Hit::Bible { .. } | Hit::Countdown(_) | Hit::Message(_) | Hit::StageMessage(_) | Hit::Language(_) | Hit::Plan { .. } | Hit::Passage { step: Some(_), .. }));
+    let tab = match picked {
         _ if s.palette.chip.is_some() => None,
         Some(Hit::Song { .. }) => Some(t::HINT_SECTIONS()),
-        Some(Hit::Passage { step: Some(_), .. }) => Some(t::BTN_CHOOSE()),
+        Some(Hit::Passage { step: Some(_), .. }) => None,
         _ => Some(t::HINT_SCOPE()),
     };
     let mut bar = row()
@@ -527,6 +531,8 @@ fn footer(s: &App, k: &Kit) -> El {
         .center_y();
     bar = if s.palette.adding {
         bar.child(key_hint(k, t::KEY_ENTER(), t::BTN_ADD_TO_PLAN())).child(key_hint(k, "Esc", t::BTN_DONE()))
+    } else if chosen {
+        bar.child(key_hint(k, t::KEY_ENTER(), t::BTN_CHOOSE()))
     } else {
         bar.child(key_hint(k, t::KEY_ENTER(), t::HINT_OPEN())).child(key_hint(k, t::KEY_SHOW_NOW(), t::BTN_SHOW_NOW())).child(key_hint(k, t::KEY_ADD(), t::BTN_ADD_TO_PLAN()))
     };

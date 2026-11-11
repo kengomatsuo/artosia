@@ -921,7 +921,7 @@
   "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. More tab: message to the room, countdown, language and keys blocks. A paragraph in the last block.",
   "moment": "The person looks for a key on the computer.",
   "role": "help",
-  "does": "Lists, in one short paragraph, the keys that work on this page when a keyboard is attached: Space or the down arrow goes to the next slide; the up arrow goes back one; the slash key opens the search; C jumps to the chorus, V to the next verse, B to the bridge; a digit from 1 to 9 jumps to that section of the song; F1 hides the words, F2 makes the screen black, F3 shows the logo, F6 switches the projector on or off.",
+  "does": "Lists, in one short paragraph, the keys that work on this page when a keyboard is attached. The Space bar and also the arrow pointing down go one slide forward; the arrow pointing up goes one slide back; the slash key opens the search; C jumps to the chorus, V to the verse after this one, B to the bridge; a digit from 1 to 9 jumps to that part of the song; F1 hides the words, F2 makes the screen black, F3 shows the logo, F6 switches the projector on or off.",
   "budget": 160,
   "variables": [],
   "cases": [],
@@ -1097,6 +1097,6 @@
    "live_switch",
    "projector"
   ],
-  "notes": "A short statement without a full stop."
+  "notes": "A short statement without a full stop, with the same word for off that the operator's window uses for the projector."
  }
 ]
