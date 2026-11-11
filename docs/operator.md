@@ -170,7 +170,7 @@ The arrows are the ones EasiSlides taught the volunteers (owner, 2026-11-10: "Ea
 | Backspace | Put what was on the projector before this into Preview, with the ring where it was left; pressed again, the one before that, then round to the newest (`open_earlier`). The room sees nothing until Enter. The Earlier button of the Live title prints the key |
 | Tab, Shift Tab | Put the next or the previous plan item in Preview. The row Tab opens carries the key where its menu button is; the button takes its place under the pointer |
 | Shift Enter | Add what Preview holds to the plan, as in the search. It never shows anything |
-| Ctrl Tab, Ctrl Shift Tab | The plan after or before the open one in the list of plans, going round, as the same keys move between tabs in Windows (Microsoft, Keyboard shortcuts in Windows: "Ctrl+Tab: Move to the next tab"). The projector is not touched. The keys are drawn beside the heading of the list |
+| Ctrl Tab, Ctrl Shift Tab | The plan after or before the open one in the list of plans, going round, as the same keys move between tabs in Windows (Microsoft, Keyboard shortcuts in Windows: "Ctrl+Tab: Move to the next tab"). The projector is not touched. Ctrl Tab is drawn on the row of the plan it opens: beside the heading of the list it ran past the column's edge in Indonesian (2026-11-11) |
 | Alt Down, Alt Up | Move the Preview item in the plan |
 | Ctrl M | Start the Preview song at the ring's section, or clear it |
 | Delete | Take the Preview item out of the plan (Undo in the toast) |

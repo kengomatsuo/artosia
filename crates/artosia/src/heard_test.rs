@@ -80,6 +80,10 @@ fn music_playing_on_this_computer_names_its_song() {
             Heard::Final(text) => {
                 app.now = start + began.elapsed().as_secs_f64();
                 let words = text.split_whitespace().count();
+                // How near the phrase came: the best titles the search finds for all of it, with
+                // how many of its words sit together in one line of that song.
+                let near: Vec<String> = app.index.search(&text, 3).into_iter().filter_map(|hit| app.songs.get(hit.song).map(|song| format!("{} ({})", song.title, hit.together))).collect();
+                println!("        nearest {near:?}");
                 app.heard_final(text);
                 let offers: Vec<String> = crate::suggest::suggestions(&app).into_iter().filter(|offer| offer.why == crate::suggest::Why::Heard).map(|offer| offer.title).collect();
                 println!("{:5.1} s  {words:2} words  named {offers:?}", began.elapsed().as_secs_f32());

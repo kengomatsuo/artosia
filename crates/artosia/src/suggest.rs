@@ -31,8 +31,10 @@ const MIN_WORDS: usize = 4;
 /// A heard phrase is read in chunks of this many words, each moving on by `STEP`.
 const CHUNK: usize = 6;
 const STEP: usize = 3;
-/// A chunk matches a song when at least 70% of its words (and at least three) sit in one line.
-const TOGETHER_PERCENT: usize = 70;
+/// A chunk of a phrase points at a song only when it has this many words and every one of them
+/// sits in one line. Three words of four did so for five songs in a hundred seconds of a real
+/// sermon.
+const CHUNK_LEAST: usize = 5;
 /// Misses in a row before the "not on the screen" line shows.
 const MISSES: usize = 2;
 /// The listener must have matched something this many seconds before the first miss, which
@@ -43,6 +45,20 @@ const MISS_SPAN: f64 = 90.0;
 /// Slides away from the live one before a section of the live song counts as "far".
 const FAR: usize = 2;
 const KEEP: usize = 12;
+/// Singing rarely reads well enough to match a line outright: on real recordings the model
+/// heard five to nine words in twelve seconds, and two to four of them sat together in a line
+/// of the right song. So the three nearest songs of every phrase are kept, and a song that
+/// keeps coming back within this many seconds is offered.
+const SUNG_SPAN: f64 = 75.0;
+/// Words together in its lines, summed over the phrases, before such a song is offered.
+const SUNG_WORDS: u32 = 5;
+/// Words together in one phrase before that phrase counts for a song at all: one word is in
+/// every song.
+const SUNG_LEAST: u32 = 2;
+/// And it must be among the nearest songs of one phrase in this many: preaching makes three
+/// times the phrases singing does, and two of six landing near one song was chance in a real
+/// sermon.
+const SUNG_SHARE: u32 = 2;
 
 /// Where a heard phrase was found: a song, and the line that matched best.
 #[derive(Clone, Debug, PartialEq)]
@@ -60,6 +76,8 @@ struct Final {
     at: f64,
     words: usize,
     songs: Vec<Match>,
+    /// The nearest songs for the whole phrase, however loosely: what `sung` counts.
+    near: Vec<Match>,
     passage: Option<(Reference, String)>,
 }
 
@@ -91,6 +109,17 @@ impl Hearing {
         self.finals.clear();
         self.aged = (false, false);
     }
+}
+
+/// Each word once, in the order first said.
+fn distinct(words: &[String]) -> Vec<String> {
+    let mut once: Vec<String> = Vec::new();
+    for word in words {
+        if !once.contains(word) {
+            once.push(word.clone());
+        }
+    }
+    once
 }
 
 /// What an offer is, and so why it is made.
@@ -130,33 +159,65 @@ pub struct Suggestion {
 impl App {
     /// Reads a phrase the listener finished and keeps what it matched.
     pub(crate) fn note_heard(&mut self, text: &str) {
-        let (words, songs) = self.read_songs(text);
+        let said: Vec<String> = split_words(text).into_iter().map(|word| word.norm).collect();
+        // Each word once, in order: singing repeats its words and the model loops on them, and
+        // a word heard five times is still one word of evidence. A hymn's repeated line once
+        // put eight "words together" in a song that was not being sung.
+        let words = distinct(&said);
+        let count = words.len();
+        let (songs, near) = if count >= MIN_WORDS { (self.read_songs(&said, &words), self.near_songs(&words.join(" "))) } else { (Vec::new(), Vec::new()) };
         let passage = self.bible().and_then(|bible| bible.guess(text).first().map(|guess| (guess.reference, bible.format(&guess.reference))));
         let at = self.now;
-        self.hearing.finals.push(Final { at, words, songs, passage });
+        self.hearing.finals.push(Final { at, words: count, songs, near, passage });
         let extra = self.hearing.finals.len().saturating_sub(KEEP);
         self.hearing.finals.drain(..extra);
     }
 
-    /// The songs whose lines hold the words of a phrase, best first. Each chunk of the phrase
-    /// is searched alone, because a sung phrase runs over several lines and a library of
-    /// thousands of lines holds every common word somewhere.
-    fn read_songs(&self, text: &str) -> (usize, Vec<Match>) {
-        let words: Vec<String> = split_words(text).into_iter().map(|word| word.norm).collect();
-        let count = words.len();
-        if count < MIN_WORDS {
-            return (count, Vec::new());
-        }
+    /// The three songs nearest to the whole phrase, with how many of its words sit together in
+    /// one line of each.
+    fn near_songs(&self, phrase: &str) -> Vec<Match> {
+        self.index
+            .search(phrase, MOST)
+            .into_iter()
+            .filter(|hit| u32::from(hit.together) >= SUNG_LEAST)
+            .map(|hit| {
+                let (section, tag) = match &hit.line {
+                    Some(line) => (Some(line.section), Some(line.tag)),
+                    None => (None, None),
+                };
+                Match { song: hit.song, section, tag, chunks: 1, together: u32::from(hit.together) }
+            })
+            .collect()
+    }
+
+    /// The songs a phrase names by itself, best first. Each chunk of what was said is searched
+    /// alone, because a sung phrase runs over several lines and a library of thousands of lines
+    /// holds every common word somewhere. One whole chunk is not enough: a sentence of a sermon
+    /// held a line that three songs share, and all three were offered. A song is named when two
+    /// chunks sit whole in its lines, or one does and the song holds every word of the phrase.
+    fn read_songs(&self, said: &[String], words: &[String]) -> Vec<Match> {
+        let count = said.len();
+        let whole: Vec<usize> = self.index.search(&words.join(" "), 8).into_iter().filter(|hit| hit.complete).map(|hit| hit.song).collect();
         let mut found: Vec<Match> = Vec::new();
         let mut start = 0;
         loop {
             let end = (start + CHUNK).min(count);
-            let need = ((end - start) * TOGETHER_PERCENT).div_ceil(100).max(3);
-            for hit in self.index.search(&words[start..end].join(" "), 2) {
-                let together = u32::from(hit.together);
-                if (together as usize) < need {
+            // Six words, and when those are not whole in a line, the first five: a line of five
+            // words is followed by the first word of the next.
+            let mut hits = Vec::new();
+            for reach in [end, (start + CHUNK_LEAST).min(count)] {
+                let chunk = distinct(&said[start..reach]);
+                if chunk.len() < CHUNK_LEAST {
                     continue;
                 }
+                hits = self.index.search(&chunk.join(" "), 2);
+                hits.retain(|hit| usize::from(hit.together) >= chunk.len());
+                if !hits.is_empty() {
+                    break;
+                }
+            }
+            for hit in hits {
+                let together = u32::from(hit.together);
                 let (section, tag) = match &hit.line {
                     Some(line) => (Some(line.section), Some(line.tag)),
                     None => (None, None),
@@ -176,9 +237,10 @@ impl App {
             }
             start += STEP;
         }
+        found.retain(|known| known.chunks >= 2 || whole.contains(&known.song));
         found.sort_by(|a, b| b.chunks.cmp(&a.chunks).then(b.together.cmp(&a.together)));
         found.truncate(MOST);
-        (count, found)
+        found
     }
 
     /// Poll: true when a heard phrase has just grown too old to offer, so the strip is redrawn.
@@ -245,9 +307,39 @@ pub fn suggestions(s: &App) -> Vec<Suggestion> {
     out
 }
 
-/// What the newest phrase that matched something named, unless that is already in hand.
+/// The song that keeps coming back among the nearest songs of the last phrases: in two phrases
+/// or more and half of them (`SUNG_SHARE`), with `SUNG_WORDS` words together in all, half as
+/// many again as any other song, and its newest phrase still fresh. `chunks` is the phrases and
+/// `together` the words.
+fn sung(s: &App) -> Option<Match> {
+    let mut tally: Vec<(Match, f64)> = Vec::new();
+    let mut phrases = 0u32;
+    for heard in s.hearing.finals.iter().filter(|heard| s.now - heard.at <= SUNG_SPAN) {
+        phrases += u32::from(heard.informative());
+        for near in &heard.near {
+            match tally.iter_mut().find(|(known, _)| known.song == near.song) {
+                Some((known, newest)) => {
+                    known.chunks += 1;
+                    known.together += near.together;
+                    *newest = heard.at;
+                    if near.section.is_some() {
+                        (known.section, known.tag) = (near.section, near.tag);
+                    }
+                }
+                None => tally.push((near.clone(), heard.at)),
+            }
+        }
+    }
+    tally.sort_by_key(|(found, _)| std::cmp::Reverse(found.together));
+    let (best, newest) = tally.first()?;
+    let next = tally.get(1).map_or(0, |(other, _)| other.together);
+    (best.chunks >= 2 && best.chunks * SUNG_SHARE >= phrases && best.together >= SUNG_WORDS && best.together * 2 >= next * 3 && s.now - newest <= FRESH).then(|| best.clone())
+}
+
+/// What the newest phrase that matched something named, unless that is already in hand; else
+/// the song that keeps coming back in what is sung.
 fn heard(s: &App) -> Vec<Suggestion> {
-    let Some(last) = s.hearing.finals.iter().rev().find(|heard| s.now - heard.at <= FRESH && heard.matched()) else { return Vec::new() };
+    let Some(last) = s.hearing.finals.iter().rev().find(|heard| s.now - heard.at <= FRESH && heard.matched()) else { return sung_offer(s).into_iter().collect() };
     let mut out = Vec::new();
     let open = s.open.as_ref();
     if let Some((reference, title)) = &last.passage
@@ -281,6 +373,16 @@ fn heard(s: &App) -> Vec<Suggestion> {
         }
     }
     out
+}
+
+/// The offer for `sung`: nothing when that song is the live one or already waits in Preview.
+fn sung_offer(s: &App) -> Option<Suggestion> {
+    let found = sung(s)?;
+    let song = s.songs.get(found.song)?;
+    if Some(found.song) == s.live_song() || s.open.as_ref().is_some_and(|open| matches!(open.deck.source, DeckSource::Song(id) if id == song.id)) {
+        return None;
+    }
+    Some(Suggestion { why: Why::Heard, target: Target::Song { at: found.song, section: found.section, slide: None }, title: song.title.clone(), tag: found.tag })
 }
 
 /// The words being sung are on no screen and in no song. Said only when the listener has read
@@ -417,6 +519,73 @@ mod tests {
         assert!(app.preview_waits(), "Enter would show the heard part");
         assert_eq!(app.live.as_ref().map(|live| live.index), Some(0), "the projector did not move");
         assert!(suggestions(&app).is_empty(), "the ring already sits there");
+    }
+
+    /// What the recogniser makes of singing: a few right words of a line among wrong ones.
+    const SUNG_BADLY: [&str; 3] = [
+        "lantern down by the carpet violin tractor",
+        "window we gather pencil marble ladder compass",
+        "orchard mercy flowing blanket whistle pepper",
+    ];
+
+    #[test]
+    fn a_song_that_keeps_coming_back_in_badly_heard_singing_is_offered() {
+        let mut app = app();
+        live(&mut app, MORNING, 0);
+        hear(&mut app, 5.0, SUNG_BADLY[0]);
+        assert!(suggestions(&app).iter().all(|offer| offer.why != Why::Heard), "one phrase is not enough: {:?}", suggestions(&app));
+        hear(&mut app, 12.0, SUNG_BADLY[1]);
+        hear(&mut app, 12.0, SUNG_BADLY[2]);
+        let found = suggestions(&app);
+        assert_eq!(found.first().map(|offer| (offer.why, offer.title.as_str())), Some((Why::Heard, RIVER)), "{found:?}");
+        // It goes with the singing: a minute after the last such phrase it is no longer offered.
+        app.now += FRESH + 1.0;
+        assert!(suggestions(&app).iter().all(|offer| offer.why != Why::Heard));
+    }
+
+    #[test]
+    fn a_sentence_that_only_holds_a_line_of_a_song_names_nothing_by_itself() {
+        let mut app = app();
+        live(&mut app, MORNING, 0);
+        // A preacher's sentence with a song's line inside it: the rest is in no song.
+        hear(&mut app, 5.0, "down by the river we gather brothers yesterday umbrellas tomorrow");
+        assert!(suggestions(&app).iter().all(|offer| offer.why != Why::Heard), "{:?}", suggestions(&app));
+    }
+
+    #[test]
+    fn a_word_sung_again_and_again_counts_once() {
+        let mut app = app();
+        live(&mut app, MORNING, 0);
+        // Looped words must not pile up into a match: "river" five times is one word.
+        hear(&mut app, 5.0, "river river river river river lantern");
+        hear(&mut app, 12.0, "river river river mercy mercy mercy carpet");
+        assert!(suggestions(&app).iter().all(|offer| offer.why != Why::Heard), "{:?}", suggestions(&app));
+    }
+
+    #[test]
+    fn phrases_that_are_near_a_different_song_each_time_offer_nothing() {
+        let mut app = app();
+        live(&mut app, MORNING, 0);
+        hear(&mut app, 5.0, SUNG_BADLY[0]);
+        hear(&mut app, 12.0, "saddle bread for the road anvil thimble copper");
+        hear(&mut app, 12.0, "feather night is over lantern carpet violin");
+        assert!(suggestions(&app).iter().all(|offer| offer.why != Why::Heard), "{:?}", suggestions(&app));
+    }
+
+    #[test]
+    fn two_phrases_near_one_song_among_many_phrases_are_chance() {
+        let mut app = app();
+        live(&mut app, MORNING, 0);
+        // Preaching: a phrase every few seconds, two of eight near one song.
+        hear(&mut app, 5.0, SUNG_BADLY[0]);
+        for garbage in GARBAGE {
+            hear(&mut app, 4.0, garbage);
+        }
+        hear(&mut app, 4.0, SUNG_BADLY[1]);
+        for garbage in GARBAGE {
+            hear(&mut app, 4.0, garbage);
+        }
+        assert!(suggestions(&app).iter().all(|offer| offer.why != Why::Heard), "{:?}", suggestions(&app));
     }
 
     #[test]
