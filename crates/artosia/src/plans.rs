@@ -67,6 +67,8 @@ pub struct Switcher {
     /// The church's plans in the order the list under the plan shows them.
     pub rows: Vec<PlanRow>,
     pub editing: Option<PlanEdit>,
+    /// The list that drops from the plan's title is open.
+    pub open: bool,
     /// The plan of the list whose menu is open.
     pub menu: Option<i64>,
     /// Another plan was opened since anything from a plan went live, so Next starts it from the top.
@@ -178,6 +180,33 @@ impl App {
         self.touch_plan();
         self.look_edit.sync(&self.look());
         self.refresh_decks();
+    }
+
+    /// Opens the list that drops from the plan's title, with the plans as they are now.
+    pub fn open_switcher(&mut self) {
+        self.refresh_plan_rows();
+        self.switcher.menu = None;
+        self.switcher.open = true;
+    }
+
+    pub fn close_switcher(&mut self) {
+        self.switcher.open = false;
+    }
+
+    /// Where the open plan stands among the entries of the list that drops from the title,
+    /// counting each day's heading, so the list can open with it in view.
+    pub fn switcher_entry(&self) -> Option<usize> {
+        let mut at = 0;
+        for (_, plans) in self.plan_groups() {
+            at += 1;
+            for plan in &plans {
+                if plan.id == self.plan.id {
+                    return Some(at);
+                }
+                at += 1;
+            }
+        }
+        None
     }
 
     pub fn refresh_plan_rows(&mut self) {
@@ -596,6 +625,26 @@ mod tests {
         app.walk_plans(false);
         assert_eq!(app.plan.id, order[(start + order.len() - 1) % order.len()]);
         assert!(app.live.is_none());
+    }
+
+    #[test]
+    fn the_list_that_drops_from_the_title_knows_where_the_open_plan_stands() {
+        let mut app = App::practice();
+        let (today, _) = app.weekday_now();
+        another_plan(&mut app, today, 7);
+        another_plan(&mut app, (today + 1) % 7, 9);
+        app.open_switcher();
+        assert!(app.switcher.open);
+        // Entries are a heading for each day and then that day's plans.
+        let mut entries: Vec<Option<i64>> = Vec::new();
+        for (_, plans) in app.plan_groups() {
+            entries.push(None);
+            entries.extend(plans.iter().map(|plan| Some(plan.id)));
+        }
+        let at = app.switcher_entry().expect("the open plan is in the list");
+        assert_eq!(entries[at], Some(app.plan.id));
+        app.close_switcher();
+        assert!(!app.switcher.open);
     }
 
     #[test]

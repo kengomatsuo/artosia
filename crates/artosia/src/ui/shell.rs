@@ -23,7 +23,7 @@ use crate::ui::widgets::{btn, keycaps, state_pill, tile};
 
 /// Height of a row in the two lists: room for four lines of words.
 const ROW: f32 = 76.0;
-const PLAN: f32 = 256.0;
+const PLAN: f32 = theme::size::PLAN;
 /// The least width the controls beside a picture need: four tiles side by side.
 const CONTROLS: f32 = 290.0;
 /// The most they take: past this a tile stops being a button and becomes a wall.
@@ -566,7 +566,7 @@ fn live_pane(s: &App, k: &Kit, size: Option<Foot>, layer: &mut Vec<El>) -> El {
 
 fn plan_column(s: &App, k: &Kit, layer: &mut Vec<El>, tall: f32) -> El {
     // The title is the plan's name and switches between the plans of the day's services.
-    let bar = crate::ui::plans::title_bar(s, k, layer, el());
+    let bar = crate::ui::plans::title_bar(s, k, layer, el(), tall);
     // The button that adds to the plan stays right under the plan's items; the list of plans
     // is the foot of the column.
     col()

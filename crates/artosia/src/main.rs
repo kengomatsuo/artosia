@@ -560,6 +560,32 @@ const SCENES: &[Scene] = &[
     }),
     // Several plans: the list under the title with two more plans kept, and the rename dialog.
     ("plans", |s| s.demo_plans()),
+    // The list that drops from the plan's title, and the same with a plan whose name is long.
+    ("plans-drop", |s| {
+        s.demo_plans();
+        s.open_switcher();
+    }),
+    ("plans-drop-many", |s| {
+        s.demo_plans();
+        for (day, hour) in [(0u8, 18u8), (1, 6), (1, 19), (2, 18), (3, 5), (3, 19), (4, 18), (4, 20), (5, 9), (5, 16), (6, 6), (6, 8), (6, 12), (6, 17), (6, 19)] {
+            s.begin_new_plan();
+            if let Some(edit) = s.switcher.editing.as_mut() {
+                (edit.day, edit.hour) = (day, Some(hour));
+            }
+            s.finish_edit(true);
+        }
+        s.open_switcher();
+    }),
+    ("plans-drop-long", |s| {
+        s.demo_plans();
+        s.begin_new_plan();
+        if let Some(edit) = s.switcher.editing.as_mut() {
+            edit.hour = Some(16);
+            edit.name.replace_text("Persekutuan Doa Kaum Muda dan Remaja Gabungan");
+        }
+        s.finish_edit(true);
+        s.open_switcher();
+    }),
     ("plan-new", |s| {
         s.demo_plans();
         s.begin_new_plan();

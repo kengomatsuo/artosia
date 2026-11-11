@@ -163,7 +163,13 @@ pub mod size {
     pub const RESULT: f32 = 54.0;
     pub const TOPBAR: f32 = 52.0;
     pub const STATUS: f32 = 32.0;
-    pub const PLAN: f32 = 272.0;
+    /// Width of the plan column, and the one number for it. The column was 256 in `shell.rs`
+    /// while the plan's drop-down measured itself against a 272 kept here: its box ran 8 points
+    /// past the column and was cut, and its list ended on the column's edge (owner, 2026-11-11:
+    /// "don't let it clip right side like it does today").
+    pub const PLAN: f32 = 256.0;
+    /// Width of the top bar's lead, the logo and the name: the search box starts after it.
+    pub const TOP_LEAD: f32 = 272.0;
 }
 
 pub mod type_ {

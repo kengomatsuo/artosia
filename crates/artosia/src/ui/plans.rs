@@ -1,5 +1,5 @@
-//! The plan's title, the list of every plan under the plan, and the box that sets a plan's day
-//! and time from chips.
+//! The plan's title, which drops down the list of plans; the same list under the plan; and the
+//! box that sets a plan's day and time from chips.
 
 use rune::{Cursor, El, ScrollSpec, Tx, col, el, icon, row, spacer, text};
 use rune_kit::{Dialog, Kit, Menu, MenuItem, ScrollBar, TextInput};
@@ -7,7 +7,7 @@ use rune_kit::{Dialog, Kit, Menu, MenuItem, ScrollBar, TextInput};
 use crate::plans::{Editing, PlanRow, clock_words, is_unnamed, slot_words};
 use crate::state::App;
 use crate::strings as t;
-use crate::theme::{self, icons, space, type_};
+use crate::theme::{self, icons, size, space, type_};
 use crate::ui::widgets::{btn, section_label};
 
 fn edit_name(s: &mut App) -> &mut rune::TextEdit {
@@ -17,24 +17,139 @@ fn edit_name(s: &mut App) -> &mut rune::TextEdit {
     }
 }
 
-/// The bar above the plan: what the open plan is, as a title and nothing else. The list of
-/// plans is under the plan, so nothing drops down from here (owner, 2026-11-11: "make it show
-/// title only id rather have that than a clipping dropdown").
-pub(crate) fn title_bar(s: &App, k: &Kit, _layer: &mut Vec<El>, tools: El) -> El {
-    // A plan with a name of its own says its day and time beside it.
+/// The box of the drop-down: the plan column less the same room on each side, so both its ends
+/// are inside the column. The list under it is at least this wide, so their edges line up.
+const BOX: f32 = size::PLAN - 2.0 * space::S2;
+/// The widest the list grows for a long name; past it the name ends in an ellipsis.
+const LIST_MOST: f32 = 440.0;
+/// What a row of the kit's menu takes beside its words (`rune-kit` `menu.rs` at the pinned rev):
+/// the list's padding, the row's own, the mark before the words, the gaps and the tick.
+const ROW_BESIDE: f32 = 70.0;
+
+/// What a plan reads as in the list that drops from the title: under its day's heading, the
+/// time and then the name when it has one.
+fn drop_words(plan: &PlanRow) -> String {
+    match (plan.day, plan.time) {
+        (Some(_), Some(time)) => match plan.own_name() {
+            Some(name) => format!("{} {name}", clock_words(time)),
+            None => clock_words(time),
+        },
+        _ => plan.label(),
+    }
+}
+
+/// The bar above the plan: the open plan's name as the box of a drop-down list, with its edge
+/// and its arrow, as the worship list's box is in EasiSlides. The list holds every plan under
+/// its day and what can be done with the open one. The owner had it taken out for being cut on
+/// the right, then asked for it back whole (2026-11-11: "keep the dropdown but don't let it
+/// clip right side like it does today"); the list under the plan stays as well.
+pub(crate) fn title_bar(s: &App, k: &Kit, layer: &mut Vec<El>, tools: El, tall: f32) -> El {
+    let open = s.switcher.open;
+    let name = s.plan_title();
+    let wide = |words: &str, font: rune::TextStyle| rune::text::measure(words, &[], font, None).0;
+    // A plan with a name of its own says its day and time beside it, when both fit the box:
+    // half a day's name after a name cut short says nothing.
     let slot = slot_words(s.plan.day, s.plan.time).filter(|_| !is_unnamed(&s.plan.name)).unwrap_or_default();
-    row()
-        .key("plan-title")
-        .w_full()
-        .h(40.0)
-        .px(space::S3)
+    let room = BOX - 2.0 * space::S2 - 2.0 * space::S2 - 14.0;
+    let slot = if wide(&name, type_::BODY_STRONG) + wide(&slot, type_::SMALL) <= room { slot } else { String::new() };
+    let trigger = row()
+        .key("plan-switcher-button")
+        .role("button")
+        .label(name.clone())
+        .help(t::PLANS_TITLE())
+        .w(BOX)
+        .h(30.0)
+        .px(space::S2)
         .gap(space::S2)
         .center_y()
-        .fill(theme::surf().header)
-        .child(text(s.plan_title()).font(type_::BODY_STRONG).color(k.c.text_base).truncate().min_w(0.0))
-        .child(text(slot).font(type_::SMALL).color(k.c.text_muted).truncate().min_w(0.0))
+        .radius(k.radius.md)
+        .fill(if open { k.c.layer_03 } else { k.c.layer_02 })
+        .border(1.0, k.c.border_base)
+        .hover(k.c.hover)
+        .press(k.c.pressed)
+        .cursor(Cursor::Pointer)
+        .child(text(name).font(type_::BODY_STRONG).color(k.c.text_base).truncate().min_w(0.0))
+        // An empty text that may shrink still draws its ellipsis, so it is left out.
+        .children((!slot.is_empty()).then(|| text(slot).font(type_::SMALL).color(k.c.text_muted)))
         .child(spacer())
-        .child(tools)
+        .child(icon(k.glyph.chevron_down, 14.0).color(k.c.text_muted).a11y_hidden())
+        .on_press_tx(|s: &mut App, tx: &mut Tx| {
+            if s.switcher.open {
+                s.close_switcher();
+            } else {
+                s.open_switcher();
+                // The list may be longer than its room: it opens with the open plan in view.
+                if let Some(entry) = s.switcher_entry() {
+                    tx.scroll_into_view(format!("plan-switcher-item{entry}"));
+                }
+            }
+            tx.blur();
+        });
+    // The list is as wide as its longest row needs, so no name is cut while there is room for
+    // it; it may then reach over Preview, where it is drawn whole with its edge and shadow.
+    let groups = s.plan_groups();
+    let longest = groups.iter().flat_map(|(_, plans)| plans.iter()).map(|plan| wide(&drop_words(plan), k.ty.ui_compact)).fold(0.0f32, f32::max);
+    let keys = wide(t::PLAN_NEW(), k.ty.ui_compact) + wide("Ctrl Shift N", k.ty.small_medium) + space::S2;
+    let width = (longest.max(keys) + ROW_BESIDE).clamp(BOX, LIST_MOST);
+    let mut menu = Menu::new("plan-switcher").trigger(trigger).open(open).min_width(width).on_close(|s: &mut App| s.close_switcher());
+    let today = s.weekday_now().0;
+    for (day, plans) in groups {
+        menu = menu.group_label(match day {
+            Some(day) if day == today => t::PLANS_TODAY().to_string(),
+            Some(day) => t::WEEKDAYS()[usize::from(day.min(6))].to_string(),
+            None => t::PLANS_NO_DAY().to_string(),
+        });
+        for plan in &plans {
+            let id = plan.id;
+            let current = id == s.plan.id;
+            let own_look = if current { s.has_own_look() } else { plan.own_look };
+            // A plan with a look of its own carries a small mark before its name; the others
+            // keep the room, so the times line up.
+            let mark = match own_look {
+                true => icon(&icons::LOOK, 14.0).color(k.c.icon_base).role("img").label(t::PLAN_OWN_LOOK()),
+                false => el().size(14.0, 14.0).a11y_hidden(),
+            };
+            menu = menu.item(MenuItem::new(drop_words(plan)).lead(mark).checked(current).on_select(move |s: &mut App| {
+                s.close_switcher();
+                s.switch_plan(id);
+            }));
+        }
+    }
+    let here = s.plan.id;
+    menu = menu
+        .separator()
+        .item(MenuItem::new(t::PLAN_NEW()).icon(&icons::PLUS).shortcut("Ctrl Shift N").on_select(|s: &mut App| {
+            s.close_switcher();
+            s.begin_new_plan();
+        }))
+        .item(MenuItem::new(t::PLAN_RENAME()).icon(&icons::TIMER).on_select(move |s: &mut App| {
+            s.close_switcher();
+            s.begin_edit(here);
+        }))
+        .item(MenuItem::new(t::PLAN_DUPLICATE()).icon(&icons::COPY).on_select(move |s: &mut App| {
+            s.close_switcher();
+            s.begin_copy(here);
+        }))
+        .item(MenuItem::new(t::PLAN_DELETE()).icon(&icons::TRASH).danger(true).on_select(|s: &mut App| {
+            s.close_switcher();
+            s.delete_plan();
+        }));
+    let mounted = layer.len();
+    let built = menu.build(k, layer);
+    // The kit lets a menu run to the foot of the window. This one stops at about three fifths
+    // of it and scrolls, fading where more waits (owner, 2026-11-11: "The plans dont have the
+    // max height?"). The surface is the last thing the menu mounted.
+    if layer.len() > mounted
+        && let Some(surface) = layer.pop()
+    {
+        layer.push(surface.max_h(drop_max(tall)));
+    }
+    row().key("plan-title").w_full().h(40.0).px(space::S2).gap(space::S2).center_y().fill(theme::surf().header).child(built).child(tools)
+}
+
+/// The most the list that drops from the title may take of a window `tall` points high.
+pub(crate) fn drop_max(tall: f32) -> f32 {
+    (tall * 0.6).clamp(240.0, 520.0)
 }
 
 /// Points of one row of the list under the plan.

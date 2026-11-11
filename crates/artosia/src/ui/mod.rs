@@ -104,7 +104,7 @@ pub(crate) fn topbar(s: &App, k: &Kit, insets: rune::ChromeInsets, wide: bool) -
         .fill(k.c.bg_base)
         .child(
             row()
-                .w(size::PLAN - space::S4 - space::S3)
+                .w(size::TOP_LEAD - space::S4 - space::S3)
                 .gap(space::S2)
                 .center_y()
                 .child(icon(&icons::LOGO, 18.0).color(k.c.text_base).a11y_hidden())
