@@ -39,9 +39,15 @@ pub(crate) fn title_bar(s: &App, k: &Kit, _layer: &mut Vec<El>, tools: El) -> El
 
 /// Points of one row of the list under the plan.
 const STRIP_ROW: f32 = 30.0;
-/// The list of plans never grows past this, about five rows; past it the list scrolls and
-/// fades at the edge that hides more (owner, 2026-11-11: "The plans dont have the max height?").
-const STRIP_MAX: f32 = 168.0;
+
+/// The most the list of plans may take of a column `tall` points high: about a third, so three
+/// Sunday services and a Saturday one show without scrolling on a 768 point screen, and never
+/// less than five rows or more than ten. Past it the list scrolls and fades at the edge that
+/// hides more (owner, 2026-11-11: "The plans dont have the max height?"; a tester then found
+/// four plans did not fit a fixed five rows).
+pub(crate) fn strip_max(tall: f32) -> f32 {
+    (tall * 0.34).clamp(170.0, 330.0)
+}
 
 /// One plan of the list: its time, its name when it has one, and its own menu. The open one is
 /// filled; a press opens another.
@@ -66,6 +72,12 @@ fn strip_row(s: &App, k: &Kit, plan: &PlanRow, layer: &mut Vec<El>) -> El {
         .press(k.c.pressed)
         .hover_group()
         .cursor(Cursor::Pointer);
+    // The open plan carries a tick as well as its fill, which alone a tester took for a hover;
+    // the others keep the tick's room, so the times line up.
+    line = line.child(match open {
+        true => icon(&icons::CHECK, 12.0).color(k.c.text_base).a11y_hidden(),
+        false => el().size(12.0, 12.0).a11y_hidden(),
+    });
     // The time leads the row, in digits of one width so the times line up; a plan with no day
     // reads by its name alone.
     match (plan.day, plan.time) {
@@ -95,6 +107,8 @@ fn strip_row(s: &App, k: &Kit, plan: &PlanRow, layer: &mut Vec<El>) -> El {
         .trigger(trigger)
         .open(menu_open)
         .min_width(200.0)
+        // The menu names the plan it acts on: it may open beside another row.
+        .group_label(plan.label())
         .on_close(|s: &mut App| s.switcher.menu = None)
         .item(MenuItem::new(t::PLAN_RENAME()).icon(&icons::TIMER).on_select(move |s: &mut App| s.begin_edit(id)))
         .item(MenuItem::new(t::PLAN_DUPLICATE()).icon(&icons::COPY).on_select(move |s: &mut App| s.begin_copy(id)))
@@ -110,7 +124,7 @@ fn strip_row(s: &App, k: &Kit, plan: &PlanRow, layer: &mut Vec<El>) -> El {
 /// (owner, 2026-11-11: "how to access plan picker? In easislide the plan list is just below the
 /// plan"). The plans are grouped by their day of the week, today's first, each day in the order
 /// of its times; one press opens another, and the plus starts a new one.
-pub(crate) fn strip(s: &App, k: &Kit, layer: &mut Vec<El>) -> El {
+pub(crate) fn strip(s: &App, k: &Kit, layer: &mut Vec<El>, tall: f32) -> El {
     let head = row()
         .w_full()
         .h(28.0)
@@ -137,7 +151,7 @@ pub(crate) fn strip(s: &App, k: &Kit, layer: &mut Vec<El>) -> El {
             rows = rows.child(strip_row(s, k, plan, layer));
         }
     }
-    let list = col().key("plans-scroll").w_full().max_h(STRIP_MAX).min_h(0.0).scroll(ScrollSpec { stick_bottom: false }).scroll_edge_fade(crate::theme::size::FADE).child(rows).scroll_bar(k);
+    let list = col().key("plans-scroll").w_full().max_h(strip_max(tall)).min_h(0.0).scroll(ScrollSpec { stick_bottom: false }).scroll_edge_fade(crate::theme::size::FADE).child(rows).scroll_bar(k);
     col().key("plans-strip").w_full().child(head).child(list)
 }
 
@@ -201,10 +215,11 @@ pub(crate) fn view(s: &App, k: &Kit, layer: &mut Vec<El>) {
             if edit.day == day { chip.autofocus() } else { chip }
         })
         .collect();
-    let hours: Vec<El> = (0..24u8).map(|hour| chip(k, format!("plan-hour-{hour}"), format!("{hour:02}"), edit.hour == hour, Some(40.0), set(|edit, hour| edit.hour = hour, hour))).collect();
+    let hours: Vec<El> = (0..24u8).map(|hour| chip(k, format!("plan-hour-{hour}"), format!("{hour:02}"), edit.hour == Some(hour), Some(40.0), set(|edit, hour| edit.hour = Some(hour), hour))).collect();
     let minutes: Vec<El> = (0..12u8).map(|step| step * 5).map(|minute| chip(k, format!("plan-minute-{minute}"), format!("{minute:02}"), edit.minute == minute, Some(40.0), set(|edit, minute| edit.minute = minute, minute))).collect();
     // What the plan will read as, said back as the chips are pressed.
-    let slot = slot_words(Some(edit.day), Some(edit.time())).unwrap_or_default();
+    let slot = slot_words(Some(edit.day), edit.time()).unwrap_or_default();
+    let ready = edit.hour.is_some();
     let name = TextInput::new(&edit.name)
         .width(None)
         .label(t::PLAN_NAME_LABEL())
@@ -221,7 +236,11 @@ pub(crate) fn view(s: &App, k: &Kit, layer: &mut Vec<El>) {
         .center_y()
         .child(text(slot).font(type_::TITLE).color(k.c.text_base).truncate().grow(1.0).min_w(0.0))
         .child(btn(t::BTN_CANCEL()).focusable().build(k, |s, _| s.finish_edit(false)))
-        .child(btn(t::BTN_SAVE()).primary().focusable().build(k, |s, _| s.finish_edit(true)));
+        .child(btn(t::BTN_SAVE()).primary().disabled(!ready).focusable().build(k, |s, tx| {
+            s.finish_edit(true);
+            // The plan just made or changed is brought into view in the list.
+            tx.scroll_into_view(format!("plans-under-{}", s.plan.id));
+        }));
     let body = col()
         .w_full()
         .px(space::S4)

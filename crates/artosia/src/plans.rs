@@ -45,14 +45,16 @@ pub enum Editing {
 pub struct PlanEdit {
     pub what: Editing,
     pub day: u8,
-    pub hour: u8,
+    /// None until an hour is pressed: the box never guesses when a service starts.
+    pub hour: Option<u8>,
     pub minute: u8,
     pub name: TextEdit,
 }
 
 impl PlanEdit {
-    pub fn time(&self) -> u16 {
-        u16::from(self.hour) * 60 + u16::from(self.minute)
+    /// The starting time in minutes after midnight, once an hour is chosen.
+    pub fn time(&self) -> Option<u16> {
+        self.hour.map(|hour| u16::from(hour) * 60 + u16::from(self.minute))
     }
 }
 
@@ -300,46 +302,34 @@ impl App {
         self.stored_plan(id)
     }
 
-    /// The day and time a new plan is offered: the open plan's day two hours after it, else
-    /// today at the next full hour.
-    fn offered_slot(&self) -> (u8, u8, u8) {
-        let (today, minutes) = self.weekday_now();
-        match (self.plan.day, self.plan.time) {
-            (Some(day), Some(time)) => (day, ((time / 60 + 2).min(23)) as u8, (time % 60) as u8),
-            (Some(day), None) => (day, ((minutes / 60 + 1).min(23)) as u8, 0),
-            _ => (today, ((minutes / 60 + 1).min(23)) as u8, 0),
-        }
-    }
-
-    /// Opens the box for a new plan. Nothing exists until Save.
+    /// Opens the box for a new plan, on the open plan's day (another service of that day is
+    /// the usual reason) or on today, with no hour chosen: a guessed hour was taken for a
+    /// setting by a tester. Nothing exists until Save.
     pub fn begin_new_plan(&mut self) {
-        let (day, hour, minute) = self.offered_slot();
+        let day = self.plan.day.unwrap_or(self.weekday_now().0);
         self.switcher.menu = None;
-        self.switcher.editing = Some(PlanEdit { what: Editing::New, day, hour, minute, name: TextEdit::new("") });
+        self.switcher.editing = Some(PlanEdit { what: Editing::New, day, hour: None, minute: 0, name: TextEdit::new("") });
     }
 
     /// Opens the box for a copy of a plan, for another service with the same items.
     pub fn begin_copy(&mut self, id: i64) {
         let id = self.settled(id);
         let Some(source) = self.plan_by_id(id) else { return };
-        let (today, minutes) = self.weekday_now();
-        let day = source.day.unwrap_or(today);
-        let (hour, minute) = match source.time {
-            Some(time) => (((time / 60 + 2).min(23)) as u8, (time % 60) as u8),
-            None => (((minutes / 60 + 1).min(23)) as u8, 0),
-        };
+        let day = source.day.unwrap_or(self.weekday_now().0);
+        let minute = source.time.map(|time| (time % 60) as u8).unwrap_or(0);
         self.switcher.menu = None;
-        self.switcher.editing = Some(PlanEdit { what: Editing::Copy(id), day, hour, minute, name: TextEdit::new("") });
+        self.switcher.editing = Some(PlanEdit { what: Editing::Copy(id), day, hour: None, minute, name: TextEdit::new("") });
     }
 
     /// Opens the box on a plan's own day, time and name.
     pub fn begin_edit(&mut self, id: i64) {
         let id = self.settled(id);
         let Some(plan) = self.plan_by_id(id) else { return };
-        let (day, hour, minute) = match (plan.day, plan.time) {
-            (Some(day), Some(time)) => (day, (time / 60) as u8, (time % 60) as u8),
-            (Some(day), None) => (day, self.offered_slot().1, 0),
-            _ => self.offered_slot(),
+        // The plan's own day and time; a plan that has none yet opens on today with no hour.
+        let day = plan.day.unwrap_or(self.weekday_now().0);
+        let (hour, minute) = match plan.time {
+            Some(time) => (Some((time / 60) as u8), (time % 60) as u8),
+            None => (None, 0),
         };
         let name = if is_unnamed(&plan.name) { String::new() } else { plan.name.clone() };
         self.switcher.menu = None;
@@ -347,12 +337,16 @@ impl App {
     }
 
     /// Closes the box. With `save` the plan is made, copied or changed; without, nothing is.
+    /// Save does nothing until an hour is chosen, and the box stays.
     pub fn finish_edit(&mut self, save: bool) {
+        if save && self.switcher.editing.as_ref().is_some_and(|edit| edit.hour.is_none()) {
+            return;
+        }
         let Some(edit) = self.switcher.editing.take() else { return };
         if !save {
             return;
         }
-        let (day, time, name) = (Some(edit.day.min(6)), Some(edit.time().min(24 * 60 - 1)), edit.name.text.trim().to_string());
+        let (day, time, name) = (Some(edit.day.min(6)), edit.time().map(|time| time.min(24 * 60 - 1)), edit.name.text.trim().to_string());
         match edit.what {
             Editing::New => {
                 let mut plan = Plan::named(name);
@@ -446,7 +440,7 @@ mod tests {
     fn another_plan(app: &mut App, day: u8, hour: u8) {
         app.begin_new_plan();
         if let Some(edit) = app.switcher.editing.as_mut() {
-            (edit.day, edit.hour, edit.minute) = (day, hour, 0);
+            (edit.day, edit.hour, edit.minute) = (day, Some(hour), 0);
         }
         app.finish_edit(true);
     }
@@ -462,6 +456,10 @@ mod tests {
         // Nothing exists until Save, and Cancel leaves nothing.
         app.begin_new_plan();
         assert_eq!(app.switcher.rows.len(), 1);
+        // No hour is guessed, and Save waits for one.
+        assert_eq!(app.switcher.editing.as_ref().map(|edit| edit.hour), Some(None));
+        app.finish_edit(true);
+        assert!(app.switcher.editing.is_some(), "the box stays until an hour is chosen");
         app.finish_edit(false);
         assert_eq!((app.switcher.rows.len(), app.plan.items.len()), (1, items));
         // Sunday at seven, with no name: it reads as its day and time.
@@ -473,7 +471,7 @@ mod tests {
         app.begin_edit(open);
         if let Some(edit) = app.switcher.editing.as_mut() {
             edit.name.replace_text("Sunday school");
-            (edit.hour, edit.minute) = (10, 30);
+            (edit.hour, edit.minute) = (Some(10), 30);
         }
         app.finish_edit(true);
         assert_eq!((app.plan_title().as_str(), app.plan.time), ("Sunday school", Some(630)));
@@ -510,7 +508,7 @@ mod tests {
         // Copied from its row while another plan is open.
         app.begin_copy(first);
         if let Some(edit) = app.switcher.editing.as_mut() {
-            (edit.day, edit.hour, edit.minute) = (6, 17, 0);
+            (edit.day, edit.hour, edit.minute) = (6, Some(17), 0);
         }
         app.finish_edit(true);
         assert_eq!((app.plan.items.len(), app.plan.day, app.plan.time), (items, Some(6), Some(1020)));
@@ -527,7 +525,7 @@ mod tests {
         // The first plan gets a day while the second is the open one.
         app.begin_edit(first);
         if let Some(edit) = app.switcher.editing.as_mut() {
-            (edit.day, edit.hour, edit.minute) = (2, 19, 0);
+            (edit.day, edit.hour, edit.minute) = (2, Some(19), 0);
         }
         app.finish_edit(true);
         assert_eq!(app.plan.id, second, "the open plan stays open");
@@ -624,6 +622,9 @@ mod tests {
         app.show(0);
         // A copy holds the same songs, so the live one is found in it and Next follows it.
         app.begin_copy(app.plan.id);
+        if let Some(edit) = app.switcher.editing.as_mut() {
+            edit.hour = Some(10);
+        }
         app.finish_edit(true);
         let at = app.live.as_ref().and_then(|live| live.item);
         assert!(at.is_some_and(|id| app.plan.position(id).is_some()));
@@ -685,6 +686,9 @@ mod tests {
         app.use_own_look();
         let own = app.look();
         app.begin_copy(app.plan.id);
+        if let Some(edit) = app.switcher.editing.as_mut() {
+            edit.hour = Some(10);
+        }
         app.finish_edit(true);
         assert!(app.has_own_look());
         assert_eq!(app.look(), own);

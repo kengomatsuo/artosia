@@ -496,7 +496,7 @@ fn input_row(s: &App, k: &Kit) -> El {
                     s.palette.query.focused = true;
                 }),
         );
-        return line.child(field);
+        return line.child(field).child(close(k));
     }
     let scope = match s.palette.scope {
         Scope::All => 0,
@@ -518,7 +518,16 @@ fn input_row(s: &App, k: &Kit) -> El {
     // Tab turns this switch unless the picked row gives Tab another job: its key is drawn
     // beside it, where the eye is when it wonders how to narrow the list.
     let turns = !matches!(s.palette.hits.get(s.palette.picked), Some(Hit::Song { .. } | Hit::Passage { step: Some(_), .. }));
-    line.child(field).child(el().layer_opacity(if turns { 1.0 } else { 0.0 }).child(keycaps(k, "Tab", None))).child(scopes)
+    line.child(field).child(el().layer_opacity(if turns { 1.0 } else { 0.0 }).child(keycaps(k, "Tab", None))).child(scopes).child(close(k))
+}
+
+/// The way out for the pointer: the panel stays open after a song is added to the plan with
+/// its plus, and a tester who had finished found only a press outside it to leave by.
+fn close(k: &Kit) -> El {
+    btn(t::BTN_CLOSE()).icon(&icons::CLOSE).icon_only().ghost().small().hint("Esc").build(k, |s, tx| {
+        s.close_palette();
+        tx.blur();
+    })
 }
 
 fn footer(s: &App, k: &Kit) -> El {

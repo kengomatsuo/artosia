@@ -564,7 +564,7 @@ fn live_pane(s: &App, k: &Kit, size: Option<Foot>, layer: &mut Vec<El>) -> El {
     )
 }
 
-fn plan_column(s: &App, k: &Kit, layer: &mut Vec<El>) -> El {
+fn plan_column(s: &App, k: &Kit, layer: &mut Vec<El>, tall: f32) -> El {
     // The title is the plan's name and switches between the plans of the day's services.
     let bar = crate::ui::plans::title_bar(s, k, layer, el());
     // The button that adds to the plan stays right under the plan's items; the list of plans
@@ -580,7 +580,7 @@ fn plan_column(s: &App, k: &Kit, layer: &mut Vec<El>) -> El {
         .child(hline())
         .child(crate::ui::plan::add_bar(s, k, layer))
         .child(hline())
-        .child(crate::ui::plans::strip(s, k, layer))
+        .child(crate::ui::plans::strip(s, k, layer, tall))
 }
 
 /// The whole window under the title bar and over the status bar.
@@ -604,7 +604,7 @@ pub fn view(s: &App, cx: &mut Cx<App>, k: &Kit, layer: &mut Vec<El>) -> El {
             centre.child(preview_pane(s, k, size)).child(vline()).child(live_pane(s, k, Some(size), layer))
         }
     };
-    row().key("columns").w_full().grow(1.0).min_h(0.0).child(plan_column(s, k, layer)).child(vline()).child(centre)
+    row().key("columns").w_full().grow(1.0).min_h(0.0).child(plan_column(s, k, layer, tall)).child(vline()).child(centre)
 }
 
 #[cfg(test)]
