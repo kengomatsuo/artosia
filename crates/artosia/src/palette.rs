@@ -35,6 +35,7 @@ pub enum Command {
     PasteSong,
     Announcements,
     Looks,
+    Settings,
     Screens,
     Import,
     ImportFolder,
@@ -64,7 +65,7 @@ pub enum Command {
 }
 
 impl Command {
-    pub const ALL: [Command; 30] = [
+    pub const ALL: [Command; 31] = [
         Command::StartService,
         Command::Next,
         Command::Previous,
@@ -82,6 +83,7 @@ impl Command {
         Command::Heading,
         Command::NewPlan,
         Command::Looks,
+        Command::Settings,
         Command::Screens,
         Command::Remote,
         Command::Listen,
@@ -103,6 +105,7 @@ impl Command {
             Command::PasteSong => t::CMD_PASTE_SONG(),
             Command::Announcements => t::CMD_ANNOUNCEMENTS(),
             Command::Looks => t::CMD_LOOKS(),
+            Command::Settings => t::CMD_SETTINGS(),
             Command::Screens => t::CMD_SCREENS(),
             Command::Import => t::CMD_IMPORT(),
             Command::ImportFolder => t::CMD_IMPORT_FOLDER(),
@@ -138,6 +141,7 @@ impl Command {
             Command::PasteSong => t::CMD_PASTE_SONG_DETAIL(),
             Command::Announcements => t::CMD_ANNOUNCEMENTS_DETAIL(),
             Command::Looks => t::CMD_LOOKS_DETAIL(),
+            Command::Settings => t::CMD_SETTINGS_DETAIL(),
             Command::Screens => t::CMD_SCREENS_DETAIL(),
             Command::Import => t::CMD_IMPORT_DETAIL(),
             Command::ImportFolder => t::CMD_IMPORT_FOLDER_DETAIL(),
@@ -173,7 +177,8 @@ impl Command {
             Command::NewSong => &["add song", "create song", "lagu baru", "tambah lagu", "buat lagu"],
             Command::PasteSong => &["paste", "clipboard", "tempel lirik", "tempel lagu"],
             Command::Announcements => &["notices", "edit announcements", "pengumuman", "warta"],
-            Command::Looks => &["theme", "background", "font", "text size", "tampilan", "tema", "latar", "ukuran teks"],
+            Command::Looks => &["look", "theme", "background", "font", "text size", "colour", "outline", "tampilan", "desain", "tema", "latar", "ukuran teks"],
+            Command::Settings => &["settings", "preferences", "options", "language", "dark", "light", "pengaturan", "setelan", "bahasa"],
             Command::Screens => &["projector", "monitor", "display", "stage", "layar", "proyektor"],
             Command::Import => &["easislides", "impor", "pindahkan"],
             Command::ImportFolder => &["openlyrics", "impor lagu", "folder lagu"],
@@ -896,6 +901,7 @@ impl App {
             Command::PasteSong => self.want_paste = true,
             Command::Announcements => self.edit_announcements(),
             Command::Looks => self.sheet = Sheet::Looks,
+            Command::Settings => self.sheet = Sheet::Settings,
             Command::Screens => self.sheet = Sheet::Screens,
             Command::Import => self.sheet = Sheet::Import,
             Command::ImportFolder => self.want_folder = true,

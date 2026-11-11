@@ -61,12 +61,13 @@ pub fn thumb(s: &App, state: &artosia_slides::frame::OutputState, width: f32) ->
     artosia_slides::audience::thumbnail(state, width, media, s.now)
 }
 
-pub(crate) fn topbar(s: &App, k: &Kit, insets: rune::ChromeInsets) -> El {
+pub(crate) fn topbar(s: &App, k: &Kit, insets: rune::ChromeInsets, wide: bool) -> El {
     let search = row()
         .key("search-button")
         .role("button")
         .label(t::SEARCH_PLACEHOLDER())
-        .w(340.0)
+        // A laptop's width leaves the search less room, so the buttons keep their words.
+        .w(if wide { 340.0 } else { 260.0 })
         .h(34.0)
         .px(space::S3)
         .gap(space::S2)
@@ -105,13 +106,19 @@ pub(crate) fn topbar(s: &App, k: &Kit, insets: rune::ChromeInsets) -> El {
         )
         .child(search)
         .child(spacer())
-        .child(btn(t::BTN_LOOK()).icon(&icons::LOOK).ghost().build(k, |s, _| s.sheet = Sheet::Looks))
+        // Three groups: what the projector draws, what Artosia is connected to, and the
+        // program's own settings, last, where a person looks for them.
+        .child(btn(t::BTN_LOOK()).icon(&icons::PALETTE).ghost().build(k, |s, _| s.sheet = Sheet::Looks))
+        .child(el().w(1.0).h(20.0).fill(k.c.border_base).a11y_hidden())
         .child(btn(t::BTN_SCREENS()).icon(&icons::SCREEN).ghost().build(k, |s, _| s.sheet = Sheet::Screens))
         .child(btn(t::BTN_PHONE()).icon(&icons::PHONE).ghost().build(k, |s, _| s.sheet = Sheet::Remote))
         .child(btn(t::BTN_STREAM()).icon(&icons::STREAM).ghost().active(s.stream.is_some()).build(k, |s, _| s.sheet = Sheet::Stream))
         .child(btn(t::BTN_LISTEN()).icon(&icons::MIC).ghost().build(k, |s, _| s.open_listen()))
-        .child(el().w(space::S2))
-        .child(clock)
+        .child(el().w(1.0).h(20.0).fill(k.c.border_base).a11y_hidden())
+        .child(btn(t::BTN_SETTINGS()).icon(&icons::SLIDERS).ghost().build(k, |s, _| s.sheet = Sheet::Settings))
+        // The clock gives way first: the taskbar has one.
+        .children(wide.then(|| el().w(space::S2)))
+        .children(wide.then_some(clock))
 }
 
 pub(crate) fn statusbar(s: &App, k: &Kit) -> El {
@@ -238,7 +245,7 @@ pub fn view(s: &App, cx: &mut Cx<App>) -> El {
         .w_full()
         .h_full()
         .fill(sf.chrome)
-        .child(topbar(s, k, insets).fill(sf.chrome))
+        .child(topbar(s, k, insets, cx.layout_size("window").map(|size| size[0]).unwrap_or(1366.0) >= 1560.0).fill(sf.chrome))
         .child(hline())
         .child(shell::view(s, cx, k, &mut layer))
         .child(hline())

@@ -230,7 +230,10 @@ pub struct Editor {
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum Sheet {
     None,
+    /// What the projector draws: background, words, logo.
     Looks,
+    /// The program's own settings.
+    Settings,
     Screens,
     Import,
     Remote,
@@ -1024,7 +1027,9 @@ impl App {
         match from {
             Some(id) if forward => self.plan.next_showable(id).map(|item| item.id),
             Some(id) => self.plan.previous_showable(id).map(|item| item.id),
-            None => self.plan.items.iter().find(|item| !item.entry.is_heading()).map(|item| item.id),
+            // With no place in the plan yet, forward starts it and there is nothing before.
+            None if forward => self.plan.items.iter().find(|item| !item.entry.is_heading()).map(|item| item.id),
+            None => None,
         }
     }
 

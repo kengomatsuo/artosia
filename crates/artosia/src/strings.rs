@@ -244,8 +244,10 @@ text!(CMD_ANNOUNCEMENTS, "Announcements", "Pengumuman");
 text!(CMD_ANNOUNCEMENTS_DETAIL, "Notices that loop before the service", "Tayang bergantian sebelum ibadah mulai");
 text!(CMD_HEADING, "Add a heading to the plan", "Pemisah acara");
 text!(CMD_HEADING_DETAIL, "A divider such as Worship or Word", "Misalnya Pujian dan Firman");
-text!(CMD_LOOKS, "Look", "Tampilan");
-text!(CMD_LOOKS_DETAIL, "Background, text size and Bible version", "Latar, ukuran teks, dan versi Alkitab");
+text!(CMD_LOOKS, "Design", "Design");
+text!(CMD_LOOKS_DETAIL, "Background, words and logo on the projector", "Background, words and logo on the projector");
+text!(CMD_SETTINGS, "Settings", "Settings");
+text!(CMD_SETTINGS_DETAIL, "Language, Bible, keys and help", "Language, Bible, keys and help");
 text!(CMD_SCREENS, "Screens", "Layar");
 text!(CMD_SCREENS_DETAIL, "Choose the projector and the stage screen", "Pilih layar dan monitor panggung");
 text!(CMD_REMOTE, "Phone remote", "Remote HP");
@@ -355,7 +357,20 @@ text!(CMD_LOOP, "Loop the announcements", "Putar pengumuman");
 text!(CMD_LOOP_DETAIL, "Show each one in turn until you stop", "Tayang bergantian sampai dihentikan");
 
 // Top bar and status bar.
-text!(BTN_LOOK, "Look", "Tampilan");
+text!(BTN_LOOK, "Design", "Design");
+text!(BTN_SETTINGS, "Settings", "Settings");
+text!(DESIGN_TEXT, "Words", "Words");
+text!(SETTINGS_SONGS, "Songs", "Songs");
+text!(SETTINGS_ABOUT, "About", "About");
+pub fn about_version(version: &str) -> String {
+    if let Some(text) = say("about_version", None, None, &[("version", text_arg(version))]) {
+        return text;
+    }
+    if indonesian() {
+        return format!("Artosia {version}");
+    }
+    format!("Artosia {version}")
+}
 text!(BTN_SCREENS, "Screens", "Layar");
 text!(BTN_PHONE, "Phone", "Remote HP");
 text!(HINT_KEYS, "Keys", "Tombol");

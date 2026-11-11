@@ -59,7 +59,6 @@ fn looks(s: &App, k: &Kit, layer: &mut Vec<El>) {
     let lines = [2usize, 3, 4, 6, 0];
     let line_at = lines.iter().position(|n| *n == look.max_lines);
     let sizes = [0.8f32, 1.0, 1.2];
-    let languages: Vec<&crate::languages::Language> = crate::languages::listed().map(|(_, language)| language).collect();
     let size_at = sizes.iter().position(|v| (*v - look.size).abs() < 0.05);
     let place_at = match look.place {
         Place::Top => 0,
@@ -76,15 +75,21 @@ fn looks(s: &App, k: &Kit, layer: &mut Vec<El>) {
             });
         }
     };
+    // What the projector draws, and nothing else: the background, the words, the logo. What
+    // belongs to the program itself is in Settings (Microsoft's guidance on settings: "Commands
+    // that are part of the typical app workflow ... shouldn't be in a settings page"; the owner,
+    // 2026-11-11: nobody could guess that "Look" held the language and the Bibles).
+    let mut rows = super::look::rows(s, k, layer);
+    let chooser = rows.remove(0);
     let body = col()
         .w_full()
         .px(space::S4)
         .pb(space::S4)
         .gap(space::S2)
-        .children(super::look::rows(s, k, layer))
+        .child(chooser)
         .child(el().h(space::S1))
+        .child(section_label(k, t::LOOK_BACKGROUND()))
         .child(grid)
-        .child(el().h(space::S1))
         .child(setting(
             k,
             t::LOOK_BACKGROUND(),
@@ -111,6 +116,9 @@ fn looks(s: &App, k: &Kit, layer: &mut Vec<El>) {
             }
             setting(k, t::LOOK_CAMERA(), choices)
         }))
+        .child(el().h(space::S2))
+        .child(section_label(k, t::DESIGN_TEXT()))
+        .children(rows)
         .child(setting(
             k,
             t::LOOK_LINES(),
@@ -150,44 +158,8 @@ fn looks(s: &App, k: &Kit, layer: &mut Vec<El>) {
                 })
                 .build(k),
         ))
-        .child(setting(
-            k,
-            t::LOOK_WINDOW(),
-            SegmentedControl::new(&[t::LOOK_WINDOW_AUTO(), t::LOOK_WINDOW_LIGHT(), t::LOOK_WINDOW_DARK()], Some(s.settings.appearance as usize))
-                .label(t::LOOK_WINDOW())
-                .fit()
-                .on_pick(|s: &mut App, picked, _: &mut Tx| {
-                    s.settings.appearance = [Appearance::Auto, Appearance::Light, Appearance::Dark][picked.min(2)];
-                    s.touch_settings();
-                })
-                .build(k),
-        ))
-        .child(setting(
-            k,
-            t::LOOK_LANGUAGE(),
-            SegmentedControl::new(&languages.iter().map(|language| language.name).collect::<Vec<_>>(), languages.iter().position(|language| language.code == t::language_code()))
-                .label(t::LOOK_LANGUAGE())
-                .fit()
-                .on_pick(|s: &mut App, picked, _: &mut Tx| {
-                    if let Some((_, language)) = crate::languages::listed().nth(picked) {
-                        s.set_language(language.code);
-                    }
-                })
-                .build(k),
-        ))
-        .child(setting(k, t::LOOK_BIBLE(), bible_picker(s, k, false)))
-        .child(setting(k, t::LOOK_SECOND_BIBLE(), bible_picker(s, k, true)))
-        .child(setting(
-            k,
-            t::BIBLES_TITLE(),
-            row()
-                .grow(1.0)
-                .min_w(0.0)
-                .gap(space::S2)
-                .center_y()
-                .child(btn(t::BIBLES_CHOOSE_FILE()).icon(&icons::IMPORT).focusable().build(k, |s, _| s.desk.want_file = true).key("look-bible-file"))
-                .child(btn(t::BIBLES_MORE()).icon(&icons::GLOBE).focusable().build(k, |s, _| s.open_bibles()).key("look-bible-more")),
-        ))
+        .child(el().h(space::S2))
+        .child(section_label(k, t::LOOK_LOGO()))
         .child(setting(
             k,
             t::LOOK_LOGO(),
@@ -201,7 +173,65 @@ fn looks(s: &App, k: &Kit, layer: &mut Vec<El>) {
                     s.touch_settings();
                 })))
                 .child(text(if s.settings.logo.is_empty() { t::LOOK_NO_FILE().to_string() } else { file_name(&s.settings.logo) }).font(type_::SMALL).color(k.c.text_muted).truncate().grow(1.0)),
+        ));
+    // Taller than a small laptop screen, so the controls scroll under the sample slide.
+    let body = col().w_full().max_h(440.0).scroll(rune::ScrollSpec { stick_bottom: false }).child(body).scroll_bar(k);
+    let content = col().w_full().child(super::look::preview(s, k)).child(body);
+    Dialog::new("looks", t::BTN_LOOK()).open(true).width(620.0).fit().on_close(close).child(content).build(k, layer);
+}
+
+/// The program's own settings: what is chosen once and left. Grouped under one-word headings,
+/// each change takes effect at once, and help and the version close the list (Microsoft's
+/// guidelines for app settings; Apple's on settings: "general settings that affect your overall
+/// experience").
+fn settings(s: &App, k: &Kit, layer: &mut Vec<El>) {
+    let languages: Vec<&crate::languages::Language> = crate::languages::listed().map(|(_, language)| language).collect();
+    let body = col()
+        .w_full()
+        .px(space::S4)
+        .pb(space::S4)
+        .gap(space::S2)
+        .child(section_label(k, t::LOOK_LANGUAGE()))
+        .child(row().w_full().h(36.0).center_y().child(
+            SegmentedControl::new(&languages.iter().map(|language| language.name).collect::<Vec<_>>(), languages.iter().position(|language| language.code == t::language_code()))
+                .label(t::LOOK_LANGUAGE())
+                .fit()
+                .on_pick(|s: &mut App, picked, _: &mut Tx| {
+                    if let Some((_, language)) = crate::languages::listed().nth(picked) {
+                        s.set_language(language.code);
+                    }
+                })
+                .build(k),
         ))
+        .child(el().h(space::S2))
+        .child(section_label(k, t::LOOK_WINDOW()))
+        .child(row().w_full().h(36.0).center_y().child(
+            SegmentedControl::new(&[t::LOOK_WINDOW_AUTO(), t::LOOK_WINDOW_LIGHT(), t::LOOK_WINDOW_DARK()], Some(s.settings.appearance as usize))
+                .label(t::LOOK_WINDOW())
+                .fit()
+                .on_pick(|s: &mut App, picked, _: &mut Tx| {
+                    s.settings.appearance = [Appearance::Auto, Appearance::Light, Appearance::Dark][picked.min(2)];
+                    s.touch_settings();
+                })
+                .build(k),
+        ))
+        .child(el().h(space::S2))
+        .child(section_label(k, t::KIND_BIBLE()))
+        .child(setting(k, t::LOOK_BIBLE(), bible_picker(s, k, false)))
+        .child(setting(k, t::LOOK_SECOND_BIBLE(), bible_picker(s, k, true)))
+        .child(setting(
+            k,
+            t::BIBLES_TITLE(),
+            row()
+                .grow(1.0)
+                .min_w(0.0)
+                .gap(space::S2)
+                .center_y()
+                .child(btn(t::BIBLES_CHOOSE_FILE()).icon(&icons::IMPORT).focusable().build(k, |s, _| s.desk.want_file = true).key("look-bible-file"))
+                .child(btn(t::BIBLES_MORE()).icon(&icons::GLOBE).focusable().build(k, |s, _| s.open_bibles()).key("look-bible-more")),
+        ))
+        .child(el().h(space::S2))
+        .child(section_label(k, t::SETTINGS_SONGS()))
         .child(setting(
             k,
             t::LOOK_LICENCE(),
@@ -231,11 +261,31 @@ fn looks(s: &App, k: &Kit, layer: &mut Vec<El>) {
                 .h(36.0)
                 .center_y()
                 .child(btn(t::LEARN_FORGET()).focusable().disabled(s.store.history_rows() == 0).build(k, |s, _| s.forget_learning())),
+        )
+        .child(el().h(space::S2))
+        .child(section_label(k, t::KEYS_TITLE()))
+        .child(switch_row(k, "letter-keys-switch", t::LETTER_KEYS(), t::LETTER_KEYS_HINT(), s.settings.letter_keys, |s| {
+            s.settings.letter_keys = !s.settings.letter_keys;
+            s.touch_settings();
+        }))
+        .child(row().w_full().h(36.0).center_y().child(btn(t::CMD_KEYS()).icon(&icons::KEYBOARD).focusable().build(k, |s, _| s.sheet = Sheet::Keys)))
+        .child(el().h(space::S2))
+        .child(section_label(k, t::SETTINGS_ABOUT()))
+        .child(
+            row()
+                .w_full()
+                .h(36.0)
+                .gap(space::S3)
+                .center_y()
+                .child(btn(t::CMD_TOUR()).icon(&icons::CHECK).focusable().build(k, |s, _| {
+                    s.sheet = Sheet::None;
+                    s.start_tour();
+                }))
+                .child(btn(t::CMD_UPDATE()).icon(&icons::IMPORT).focusable().build(k, |s, _| s.run(crate::palette::Command::CheckUpdate)))
+                .child(text(t::about_version(crate::update::VERSION)).font(type_::SMALL).color(k.c.text_muted)),
         );
-    // Taller than a small laptop screen once every setting is in, so the settings scroll under the looks.
-    let body = col().w_full().max_h(440.0).scroll(rune::ScrollSpec { stick_bottom: false }).child(body).scroll_bar(k);
-    let content = col().w_full().child(super::look::preview(s, k)).child(body);
-    Dialog::new("looks", t::BTN_LOOK()).open(true).width(620.0).fit().on_close(close).child(content).build(k, layer);
+    let body = col().w_full().max_h(560.0).scroll(rune::ScrollSpec { stick_bottom: false }).child(body).scroll_bar(k);
+    Dialog::new("settings", t::BTN_SETTINGS()).open(true).width(620.0).fit().on_close(close).child(body).build(k, layer);
 }
 
 /// The translations as a row of choices; the second picker starts with "None".
@@ -535,13 +585,9 @@ fn keys(s: &App, k: &Kit, layer: &mut Vec<El>) {
         .gap(space::S6)
         .child(col().grow(1.0).min_w(0.0).gap(space::S4).child(key_group(k, t::KEYS_SHOWING(), t::KEYS_SHOWING_KEYS(), t::KEYS_SHOWING_ROWS())).child(key_group(k, t::KEYS_PLAN(), t::KEYS_PLAN_KEYS(), t::KEYS_PLAN_ROWS())))
         .child(col().grow(1.0).min_w(0.0).gap(space::S4).child(key_group(k, t::KEYS_FINDING(), t::KEYS_FINDING_KEYS(), t::KEYS_FINDING_ROWS())).child(key_group(k, t::KEYS_EDITING(), t::KEYS_EDITING_KEYS(), t::KEYS_EDITING_ROWS())));
-    // Single-letter keys can be switched off, as WCAG 2.1.4 asks.
-    let letters = switch_row(k, "letter-keys-switch", t::LETTER_KEYS(), t::LETTER_KEYS_HINT(), s.settings.letter_keys, |s| {
-        s.settings.letter_keys = !s.settings.letter_keys;
-        s.touch_settings();
-    });
+    let _ = s;
     let tour = row().w_full().child(btn(t::CMD_TOUR()).icon(&icons::PLAY).focusable().build(k, |s, _| s.start_tour()));
-    let body = col().w_full().px(space::S4).pb(space::S4).gap(space::S4).child(rows).child(letters).child(tour);
+    let body = col().w_full().px(space::S4).pb(space::S4).gap(space::S4).child(rows).child(tour);
     Dialog::new("keys", t::KEYS_TITLE()).open(true).width(1060.0).fit().on_close(close).child(body).build(k, layer);
 }
 
@@ -692,6 +738,7 @@ pub fn view(s: &App, k: &Kit, layer: &mut Vec<El>) {
     match s.sheet {
         Sheet::None => {}
         Sheet::Looks => looks(s, k, layer),
+        Sheet::Settings => settings(s, k, layer),
         Sheet::Screens => screens(s, k, layer),
         Sheet::Remote => remote(s, k, layer),
         Sheet::Import => import(s, k, layer),

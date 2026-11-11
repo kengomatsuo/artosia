@@ -123,6 +123,10 @@ fn on_key(s: &mut App, ev: &KeyEvent, tx: &mut Tx) -> bool {
             s.edit_new_song(Song::default());
             return true;
         }
+        Key::Command(',') => {
+            s.sheet = if s.sheet == Sheet::Settings { Sheet::None } else { Sheet::Settings };
+            return true;
+        }
         Key::Command('/') => {
             s.sheet = if s.sheet == Sheet::Keys { Sheet::None } else { Sheet::Keys };
             return true;
@@ -320,6 +324,7 @@ const SCENES: &[Scene] = &[
         s.song_from_clipboard("Lantern Song\n\nVerse 1\nCarry the lantern through the night\nKeep the small flame burning bright\n\nChorus\nShine, shine on the road ahead\nShine till the morning comes\n");
     }),
     ("look", |s| s.sheet = Sheet::Looks),
+    ("settings", |s| s.sheet = Sheet::Settings),
     ("look-styled", |s| {
         s.sheet = Sheet::Looks;
         let styled = artosia_slides::look::Look { ink: [255, 214, 0], font: "Georgia".into(), outline: artosia_slides::look::Outline::Thick, ..s.look() };

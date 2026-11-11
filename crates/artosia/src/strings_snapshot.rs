@@ -137,6 +137,13 @@ pub fn dump() -> String {
     line(out, "CMD_LOOP", CMD_LOOP());
     line(out, "CMD_LOOP_DETAIL", CMD_LOOP_DETAIL());
     line(out, "BTN_LOOK", BTN_LOOK());
+    line(out, "BTN_SETTINGS", BTN_SETTINGS());
+    line(out, "DESIGN_TEXT", DESIGN_TEXT());
+    line(out, "SETTINGS_SONGS", SETTINGS_SONGS());
+    line(out, "SETTINGS_ABOUT", SETTINGS_ABOUT());
+    line(out, "CMD_SETTINGS", CMD_SETTINGS());
+    line(out, "CMD_SETTINGS_DETAIL", CMD_SETTINGS_DETAIL());
+    line(out, "about_version", &about_version("0.1.4"));
     line(out, "BTN_SCREENS", BTN_SCREENS());
     line(out, "BTN_PHONE", BTN_PHONE());
     line(out, "HINT_KEYS", HINT_KEYS());
