@@ -16,6 +16,7 @@ mod languages;
 mod learning;
 mod link;
 mod palette;
+mod plans;
 mod state;
 mod stream;
 mod strings;
@@ -71,13 +72,18 @@ fn on_key(s: &mut App, ev: &KeyEvent, tx: &mut Tx) -> bool {
     // A modifier on its own. Shift let go shows the slide picked while it was held. This is a
     // key event because Rune's `App::on_modifiers` is never called in a single-window app:
     // `src/window.rs` at the pinned rev wires `modifier_keys` and leaves `on_mods` unset.
+    // Which of Ctrl and Shift is down is kept for the hint bar; every key event carries it.
+    let held = (ev.mods.ctrl || ev.mods.cmd, ev.mods.shift);
+    let held_changed = held != (s.held_ctrl, s.held_shift);
+    (s.held_ctrl, s.held_shift) = held;
     if let Key::Modifier { modifier, pressed } = &ev.key {
         let shift = matches!(modifier, rune::Modifier::ShiftLeft | rune::Modifier::ShiftRight);
         if shift && !pressed && !ev.mods.shift && s.release_pick() {
             follow(s, tx);
             return true;
         }
-        return false;
+        // A change is handled so the window draws the new hints.
+        return held_changed;
     }
     let focused = tx.focused().is_some();
     let editing = s.editor.is_some() || s.notices.is_some();
@@ -117,6 +123,17 @@ fn on_key(s: &mut App, ev: &KeyEvent, tx: &mut Tx) -> bool {
         }
         Key::Function(3) => {
             s.toggle_logo();
+            return true;
+        }
+        Key::Function(6) => {
+            s.end_live();
+            return true;
+        }
+        // Ctrl and a digit put the Preview ring on that section.
+        Key::Command(digit) if digit.is_ascii_digit() && !editing && !s.palette.open && s.sheet == Sheet::None => {
+            let digit = digit.to_digit(10).unwrap_or(1) as usize;
+            s.select_section(if digit == 0 { 9 } else { digit - 1 });
+            follow(s, tx);
             return true;
         }
         Key::Escape if s.palette.open => {
@@ -208,6 +225,13 @@ fn on_key(s: &mut App, ev: &KeyEvent, tx: &mut Tx) -> bool {
             let digit = typed.parse::<usize>().unwrap_or(1);
             s.jump_to_section(if digit == 0 { 9 } else { digit - 1 });
         }
+        Key::Text(typed) if typed == "/" => s.open_palette(Scope::All, ""),
+        // A letter that names a section of the song the keys act on goes there. Any other
+        // letter starts a search, and so does every letter once this is switched off.
+        Key::Text(typed) if plain && s.settings.letter_keys && typed.chars().count() == 1 && typed.chars().next().is_some_and(|c| c.is_ascii_alphabetic() && s.marker_letters().contains(&c.to_ascii_uppercase())) => {
+            let letter = typed.chars().next().unwrap_or('C').to_ascii_uppercase();
+            s.jump_to_marker(letter);
+        }
         Key::Text(typed) if plain && typed.chars().all(char::is_alphanumeric) && !typed.is_empty() => {
             // Typing anywhere starts a search.
             s.open_palette(Scope::All, typed);
@@ -282,6 +306,23 @@ const SCENES: &[Scene] = &[
         s.song_from_clipboard("Lantern Song\n\nVerse 1\nCarry the lantern through the night\nKeep the small flame burning bright\n\nChorus\nShine, shine on the road ahead\nShine till the morning comes\n");
     }),
     ("look", |s| s.sheet = Sheet::Looks),
+    ("look-styled", |s| {
+        s.sheet = Sheet::Looks;
+        let styled = artosia_slides::look::Look { ink: [255, 214, 0], font: "Georgia".into(), outline: artosia_slides::look::Outline::Thick, ..s.settings.look.clone() };
+        s.set_look(styled);
+    }),
+    // The owner's look: a camera behind words at the bottom. The frame is a made-up gradient
+    // handed over as if the projector had sent it, so both previews show it under the words.
+    ("camera-background", |s| {
+        let look = artosia_slides::look::Look { background: artosia_slides::look::Background::Camera(String::new()), place: artosia_slides::look::Place::Bottom, shadow: true, ..s.settings.look.clone() };
+        s.set_look(look);
+        s.open_song(0, None);
+        s.show(2);
+        s.open_song(1, None);
+        let (w, h) = (256u32, 144u32);
+        let rgba = (0..w * h).flat_map(|i| [(i % w * 255 / w) as u8, (i / w * 255 / h) as u8, 200 - (i % w * 150 / w) as u8, 255]).collect();
+        s.link.inject_live_picture(w, h, rgba);
+    }),
     ("screens", |s| s.sheet = Sheet::Screens),
     ("screens-two", |s| {
         s.demo_screens = true;
@@ -291,11 +332,17 @@ const SCENES: &[Scene] = &[
     }),
     ("remote", |s| s.sheet = Sheet::Remote),
     ("announcements", |s| s.edit_announcements()),
+    ("announcement-passage", |s| s.demo_notices("passage")),
+    ("announcement-passage-no-bible", |s| s.demo_notices("passage-no-bible")),
+    ("announcement-birthdays", |s| s.demo_notices("birthdays")),
     ("keys", |s| s.sheet = Sheet::Keys),
     ("listen", |s| s.sheet = Sheet::Listen),
     ("stream", |s| s.sheet = Sheet::Stream),
     ("bibles", |s| s.demo_bibles("ready")),
     ("bibles-picked", |s| s.demo_bibles("picked")),
+    ("bibles-picked-file", |s| s.demo_bibles("picked-file")),
+    ("bibles-picked-silent", |s| s.demo_bibles("picked-silent")),
+    ("bibles-picked-reading", |s| s.demo_bibles("picked-reading")),
     ("bibles-loading", |s| s.demo_bibles("loading")),
     ("bibles-failed", |s| s.demo_bibles("failed")),
     ("bibles-empty", |s| s.demo_bibles("empty")),
@@ -315,6 +362,29 @@ const SCENES: &[Scene] = &[
         s.open_song(1, None);
         s.select(1);
     }),
+    ("ctrl-held", |s| {
+        s.open_song(0, None);
+        s.show(1);
+        s.open_song(1, None);
+        s.select(1);
+        s.held_ctrl = true;
+    }),
+    ("shift-held", |s| {
+        s.open_song(0, None);
+        s.show(1);
+        s.pick_slide(2);
+        s.held_shift = true;
+    }),
+    ("ended", |s| {
+        s.start_service();
+        s.next();
+        s.end_live();
+    }),
+    ("adding", |s| {
+        s.open_palette_adding(Scope::Songs);
+        s.set_query("gr");
+    }),
+    ("add-menu", |s| s.add_menu = true),
     ("announcements-live", |s| {
         s.open_announcements();
         s.show(0);
@@ -343,6 +413,22 @@ const SCENES: &[Scene] = &[
     ("learned-search", |s| {
         s.seed_demo_history();
         s.open_palette(Scope::All, "mor");
+    }),
+    // Several plans: the list under the title with two more plans kept, and the rename dialog.
+    ("plans", |s| {
+        s.demo_plans();
+        s.open_switcher();
+    }),
+    ("plan-rename", |s| {
+        s.demo_plans();
+        s.begin_rename(false);
+        if let Some(renaming) = s.switcher.renaming.as_mut() {
+            renaming.date.replace_text("2026-11-15");
+        }
+    }),
+    ("search-plan", |s| {
+        s.demo_plans();
+        s.open_palette(Scope::All, "youth");
     }),
     ("toast", |s| {
         if let Some(id) = s.plan.items.get(2).map(|item| item.id) {

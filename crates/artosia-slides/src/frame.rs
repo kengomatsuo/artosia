@@ -168,6 +168,27 @@ pub enum FromOutput {
     /// The person at the projector window hid it with Escape or a click. Sent only for the
     /// window shown by `Place { here: true }`; the operator should turn its switch off.
     ProjectorHidden,
+    /// A small picture of the moving background (video or camera) as it is on the projector
+    /// now, a few times a second: `rgb` is `width * height` RGB pixels as base64
+    /// ([`crate::preview`]).
+    Preview { width: u32, height: u32, rgb: String },
+    /// The moving background stopped or changed; the operator drops the picture.
+    PreviewEnd,
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::look::Outline;
+
+    #[test]
+    fn the_state_line_keeps_the_text_style() {
+        let look = Look { ink: [255, 214, 0], font: "Georgia".into(), outline: Outline::Thick, outline_ink: [10, 20, 30], ..Look::default() };
+        let state = OutputState { look: look.clone(), ..OutputState::default() };
+        let line = encode(&ToOutput::State(Box::new(state)));
+        let Some(ToOutput::State(back)) = decode::<ToOutput>(&line) else { panic!("the line decodes") };
+        assert_eq!(back.look, look);
+    }
 }
 
 /// Prints a line to stderr when `ARTOSIA_TRACE` is set, for following the two processes.

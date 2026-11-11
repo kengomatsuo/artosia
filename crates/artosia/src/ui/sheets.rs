@@ -14,7 +14,7 @@ fn close(s: &mut App) {
     s.sheet = Sheet::None;
 }
 
-fn setting(k: &Kit, label: &'static str, control: El) -> El {
+pub(super) fn setting(k: &Kit, label: &'static str, control: El) -> El {
     row().w_full().h(36.0).gap(space::S3).center_y().child(text(label).font(type_::BODY).color(k.c.text_base).w(150.0)).child(control)
 }
 
@@ -31,7 +31,7 @@ fn looks(s: &App, k: &Kit, layer: &mut Vec<El>) {
     for preset in presets() {
         let on = preset.name == look.name;
         let mut state = s.preview_state(Some(crate::ui::sample_slide()));
-        state.look = artosia_slides::look::Look { max_lines: look.max_lines, size: look.size, place: look.place, ..preset.clone() };
+        state.look = look.with_preset(preset.clone());
         let chosen = state.look.clone();
         let mut frame = el().size(tile, (tile * 9.0 / 16.0).round()).radius(k.radius.md).clip_rounded(k.radius.md).child(crate::ui::thumb(s, &state, tile));
         if on {
@@ -81,6 +81,8 @@ fn looks(s: &App, k: &Kit, layer: &mut Vec<El>) {
         .px(space::S4)
         .pb(space::S4)
         .gap(space::S2)
+        .children(super::look::rows(s, k, layer))
+        .child(el().h(space::S1))
         .child(grid)
         .child(el().h(space::S1))
         .child(setting(
@@ -231,8 +233,9 @@ fn looks(s: &App, k: &Kit, layer: &mut Vec<El>) {
                 .child(btn(t::LEARN_FORGET()).focusable().disabled(s.store.history_rows() == 0).build(k, |s, _| s.forget_learning())),
         );
     // Taller than a small laptop screen once every setting is in, so the settings scroll under the looks.
-    let body = col().w_full().max_h(600.0).scroll(rune::ScrollSpec { stick_bottom: false }).child(body).scroll_bar(k);
-    Dialog::new("looks", t::BTN_LOOK()).open(true).width(620.0).fit().on_close(close).child(body).build(k, layer);
+    let body = col().w_full().max_h(440.0).scroll(rune::ScrollSpec { stick_bottom: false }).child(body).scroll_bar(k);
+    let content = col().w_full().child(super::look::preview(s, k)).child(body);
+    Dialog::new("looks", t::BTN_LOOK()).open(true).width(620.0).fit().on_close(close).child(content).build(k, layer);
 }
 
 /// The translations as a row of choices; the second picker starts with "None".
@@ -524,14 +527,18 @@ fn key_group(k: &Kit, heading: &'static str, rows: &[(&'static str, &'static str
     group
 }
 
-fn keys(k: &Kit, layer: &mut Vec<El>) {
-    let body = row()
+fn keys(s: &App, k: &Kit, layer: &mut Vec<El>) {
+    let rows = row()
         .w_full()
-        .px(space::S4)
-        .pb(space::S4)
         .gap(space::S6)
         .child(col().grow(1.0).min_w(0.0).gap(space::S4).child(key_group(k, t::KEYS_SHOWING(), t::KEYS_SHOWING_ROWS())).child(key_group(k, t::KEYS_PLAN(), t::KEYS_PLAN_ROWS())))
         .child(col().grow(1.0).min_w(0.0).gap(space::S4).child(key_group(k, t::KEYS_FINDING(), t::KEYS_FINDING_ROWS())).child(key_group(k, t::KEYS_EDITING(), t::KEYS_EDITING_ROWS())));
+    // Single-letter keys can be switched off, as WCAG 2.1.4 asks.
+    let letters = switch_row(k, "letter-keys-switch", t::LETTER_KEYS(), t::LETTER_KEYS_HINT(), s.settings.letter_keys, |s| {
+        s.settings.letter_keys = !s.settings.letter_keys;
+        s.touch_settings();
+    });
+    let body = col().w_full().px(space::S4).pb(space::S4).gap(space::S4).child(rows).child(letters);
     Dialog::new("keys", t::KEYS_TITLE()).open(true).width(1060.0).fit().on_close(close).child(body).build(k, layer);
 }
 
@@ -685,7 +692,7 @@ pub fn view(s: &App, k: &Kit, layer: &mut Vec<El>) {
         Sheet::Screens => screens(s, k, layer),
         Sheet::Remote => remote(s, k, layer),
         Sheet::Import => import(s, k, layer),
-        Sheet::Keys => keys(k, layer),
+        Sheet::Keys => keys(s, k, layer),
         Sheet::Listen => listen(s, k, layer),
         Sheet::Stream => stream(s, k, layer),
         Sheet::Bibles => crate::ui::bibles::view(s, k, layer),

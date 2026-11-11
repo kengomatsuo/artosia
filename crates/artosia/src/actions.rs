@@ -4,7 +4,7 @@ use std::sync::Arc;
 
 use artosia_core::bible::Reference;
 use artosia_core::deck::{Announcement, DeckSource, Fill, Person};
-use artosia_core::plan::{Plan, PlanEntry};
+use artosia_core::plan::PlanEntry;
 use artosia_core::song::{SectionKind, Song, Tag, parse_order, song_from_paste, tidy_lyrics, write_order};
 use artosia_remote::{RemoteCommand, RemoteConfig, RemoteHit, RemotePlanItem, RemoteSection, RemoteServer, RemoteSlide, RemoteState};
 use artosia_slides::frame::ToOutput;
@@ -12,7 +12,7 @@ use artosia_slides::look::{Background, Look};
 use rune::{TextEdit, Tx};
 
 use crate::link::OutputOptions;
-use crate::state::{App, Arrived, Editor, HeardHit, Notices, Sheet, Suggestion, Undo, entry_matches, section_starts, unix_now};
+use crate::state::{App, Arrived, Editor, HeardHit, Notices, OpenDeck, Sheet, Suggestion, Undo, entry_matches, section_starts, unix_now};
 use crate::strings as t;
 
 /// A QR code as a picture, eight pixels to a module, black on white.
@@ -137,16 +137,12 @@ impl App {
         }
     }
 
+    /// Starts another plan beside the open one, which is kept (`plans.rs`).
     pub fn new_plan(&mut self) {
-        self.save_plan_now();
-        self.plan = Plan::named(t::PLAN_DEFAULT_NAME());
-        self.settings.plan = 0;
-        self.open = None;
-        self.touch_plan();
-        self.touch_settings();
+        self.create_plan();
     }
 
-    fn save_plan_now(&mut self) {
+    pub(crate) fn save_plan_now(&mut self) {
         if self.store.save_plan(&mut self.plan).is_ok() && self.settings.plan != self.plan.id {
             self.settings.plan = self.plan.id;
             self.settings_dirty = true;
@@ -160,6 +156,10 @@ impl App {
             Some(Undo::PlanItem { at, item }) => {
                 self.plan.items.insert(at.min(self.plan.items.len()), item);
                 self.touch_plan();
+            }
+            Some(Undo::Live(live)) => {
+                self.live = Some(*live);
+                self.requeue();
             }
             Some(Undo::Song(song)) => {
                 if self.store.restore_song(&song).is_ok() {
@@ -180,6 +180,7 @@ impl App {
                     self.reload_announcements();
                 }
             }
+            Some(Undo::Plan(plan)) => self.restore_plan(*plan),
             None => {}
         }
     }
@@ -543,11 +544,6 @@ impl App {
         }
     }
 
-    pub fn dismiss_welcome(&mut self) {
-        self.settings.welcomed = true;
-        self.touch_settings();
-    }
-
     // ---- Announcements ----
 
     fn notices_for(item: Option<&Announcement>) -> Notices {
@@ -559,6 +555,7 @@ impl App {
                 seconds: item.seconds,
                 image: item.image.clone(),
                 fill: item.fill,
+                passage: TextEdit::new(item.passage.clone()),
             },
             None => Notices { seconds: 10, ..Notices::default() },
         };
@@ -568,7 +565,12 @@ impl App {
 
     /// Opens the announcement editor on the first announcement, or on a blank one.
     pub fn edit_announcements(&mut self) {
-        self.notices = Some(App::notices_for(self.announcements.first()));
+        // A card opened on its own is the one to edit.
+        let opened = match self.open.as_ref().map(|open| &open.deck.source) {
+            Some(DeckSource::Announcement(id)) => self.announcements.iter().find(|card| card.id == *id),
+            _ => None,
+        };
+        self.notices = Some(App::notices_for(opened.or(self.announcements.first())));
         self.editor = None;
         self.sheet = Sheet::None;
         self.close_palette();
@@ -579,7 +581,8 @@ impl App {
         let form = self.notices.as_ref()?;
         let (title, body) = (form.title.text.trim().to_string(), form.body.text.trim().to_string());
         let has_words = !title.is_empty() || !body.is_empty() || !form.image.is_empty() || form.fill != Fill::Nothing;
-        has_words.then_some(Announcement { id: form.id, title, body, seconds: form.seconds.clamp(2, 600), image: form.image.clone(), fill: form.fill })
+        let passage = if form.fill == Fill::Passage { form.passage.text.trim().to_string() } else { String::new() };
+        has_words.then_some(Announcement { id: form.id, title, body, seconds: form.seconds.clamp(2, 600), image: form.image.clone(), fill: form.fill, passage })
     }
 
     fn reload_announcements(&mut self) {
@@ -606,6 +609,43 @@ impl App {
         self.save_notice();
         let found = self.announcements.iter().find(|item| item.id == id);
         self.notices = Some(App::notices_for(found));
+        self.preview_card(id);
+    }
+
+    /// Puts one saved card in Preview, behind the editor, so closing the editor leaves it there.
+    fn preview_card(&mut self, id: i64) {
+        if let Some(deck) = self.card_deck(id) {
+            self.open = Some(OpenDeck::new(deck, None, 0));
+        }
+    }
+
+    /// Puts the card in the form on the projector by itself; the rest of the announcements stay out.
+    pub fn show_form_notice_now(&mut self) {
+        self.save_notice();
+        let id = self.notices.as_ref().map(|form| form.id).unwrap_or(0);
+        self.show_notice_now(id);
+    }
+
+    /// Puts one saved card on the projector by itself, or says it has nothing to show today.
+    pub fn show_notice_now(&mut self, id: i64) {
+        match self.card_deck(id) {
+            Some(deck) => {
+                self.open = Some(OpenDeck::new(deck, None, 0));
+                self.show(0);
+            }
+            None => self.say(t::NOTICE_NOTHING_TO_SHOW(), None),
+        }
+    }
+
+    /// Starts a new card that reads a Bible passage.
+    pub fn new_passage_notice(&mut self, title: &str) {
+        self.save_notice();
+        let mut form = App::notices_for(None);
+        form.title = TextEdit::new(title);
+        form.fill = Fill::Passage;
+        form.title.focused = false;
+        form.passage.focused = true;
+        self.notices = Some(form);
     }
 
     /// Starts a new announcement, blank or from a ready-made one.
@@ -687,7 +727,7 @@ impl App {
             if draft.title.trim().is_empty() && draft.body.trim().is_empty() && image.is_empty() {
                 continue;
             }
-            let mut item = Announcement { id: 0, title: draft.title, body: draft.body, seconds: 10, image, fill: Fill::Nothing };
+            let mut item = Announcement { id: 0, title: draft.title, body: draft.body, seconds: 10, image, fill: Fill::Nothing, passage: String::new() };
             if self.store.save_announcement(&mut item).is_ok() {
                 added += 1;
             }
@@ -780,6 +820,40 @@ impl App {
         let deck = self.announcements_deck();
         self.open_deck(deck, None, 0);
         self.sheet = Sheet::None;
+    }
+
+    /// Fills the practice library for a headless render of the announcement editor: "passage",
+    /// "passage-no-bible" or "birthdays". The names are made up and fall on today's date.
+    pub fn demo_notices(&mut self, kind: &str) {
+        let today = self.today();
+        let person = |name: &str, day: u8| Person { id: 0, name: name.into(), day: day.clamp(1, 28), month: today.month };
+        self.people = vec![person("Sample Alpha", today.day), person("Sample Beta", today.day.saturating_add(2)), person("Sample Gamma", today.day.saturating_add(3))];
+        let mut cards = vec![
+            Announcement { title: "Verse of the week".into(), fill: Fill::Passage, passage: "Psalm 23:1-3".into(), seconds: 12, ..Announcement::default() },
+            Announcement { title: "Birthdays".into(), fill: Fill::BirthdaysWeek, seconds: 12, ..Announcement::default() },
+        ];
+        if kind == "birthdays" {
+            cards.reverse();
+        }
+        for card in &mut cards {
+            let _ = self.store.save_announcement(card);
+        }
+        if kind == "passage-no-bible" {
+            // A code no file has, so nothing starts loading behind the render.
+            self.bibles.clear();
+            self.settings.bible = "none".into();
+        }
+        self.reload_announcements();
+        // The editor opens on the card the scene is about.
+        let wanted = if kind == "birthdays" { Fill::BirthdaysWeek } else { Fill::Passage };
+        let id = self.announcements.iter().find(|card| card.fill == wanted).map(|card| card.id).unwrap_or(0);
+        self.edit_announcements();
+        self.pick_notice(id);
+    }
+
+    /// Whether the announcements are a row of today's plan already.
+    pub fn announcements_in_plan(&self) -> bool {
+        self.plan_has(&DeckSource::Announcements)
     }
 
     pub fn add_announcements_to_plan(&mut self) {
@@ -931,6 +1005,7 @@ impl App {
     pub fn set_look(&mut self, look: Look) {
         let lines = self.settings.look.max_lines;
         let changed_lines = look.max_lines != lines;
+        self.look_edit.sync(&look);
         self.settings.look = look;
         self.touch_settings();
         if changed_lines {
@@ -1422,5 +1497,97 @@ impl App {
             let image = || images.file(&path, 960.0, 1.0);
             self.slide_pictures.entry(path.clone()).or_insert_with(image);
         }
+    }
+}
+
+#[cfg(test)]
+mod notice_tests {
+    use super::*;
+    use artosia_core::bible::{Bible, Verse};
+
+    /// A made-up Bible: three verses at Psalms 23, with a book name of its own.
+    fn made_up(words: &str) -> Arc<Bible> {
+        let verse = |v: u16| Verse { book: 19, chapter: 23, verse: v, text: format!("{words} {v}").into() };
+        let names = vec![(19, "Mazmur".to_string(), "Mzm".to_string())];
+        Arc::new(Bible::from_parts("TST".into(), None, String::new(), names, vec![verse(1), verse(2), verse(3)]).unwrap_or_else(|_| unreachable!()))
+    }
+
+    fn app_with(card: Announcement) -> (App, i64) {
+        let mut app = App::practice();
+        app.bibles.clear();
+        app.bibles.insert("TST".into(), made_up("Made up words"));
+        app.settings.bible = "TST".into();
+        app.settings.verses_per_slide = 3;
+        let mut card = card;
+        assert!(app.store.save_announcement(&mut card).is_ok());
+        app.reload_announcements();
+        (app, card.id)
+    }
+
+    fn passage_card(reference: &str) -> Announcement {
+        Announcement { title: "Verse of the week".into(), fill: Fill::Passage, passage: reference.into(), seconds: 10, ..Announcement::default() }
+    }
+
+    #[test]
+    fn a_passage_card_fills_from_the_installed_bible() {
+        let (mut app, id) = app_with(passage_card("Mazmur 23:1-3"));
+        let deck = app.card_deck(id).unwrap_or_else(|| panic!("the card has no deck"));
+        assert_eq!(deck.slides.len(), 1);
+        assert_eq!(deck.slides[0].text, "1 Made up words 1 2 Made up words 2 3 Made up words 3");
+        assert_eq!(deck.slides[0].heading, "Verse of the week");
+        assert_eq!(deck.slides[0].caption, "Mazmur 23:1-3 TST");
+        // The Bible changes: the same card reads the new words.
+        app.bibles.insert("TST".into(), made_up("Other words"));
+        assert!(app.card_deck(id).is_some_and(|deck| deck.slides[0].text.starts_with("1 Other words 1")));
+    }
+
+    #[test]
+    fn a_passage_card_without_a_bible_says_so_and_shows_nothing() {
+        let (mut app, id) = app_with(passage_card("Mazmur 23:1"));
+        app.bibles.clear();
+        assert!(app.card_deck(id).is_none());
+        app.show_notice_now(id);
+        assert!(app.live.is_none());
+        assert_eq!(app.toast.as_ref().map(|toast| toast.text.as_str()), Some(t::NOTICE_NOTHING_TO_SHOW()));
+        let card = app.announcements.iter().find(|card| card.id == id).cloned().unwrap_or_default();
+        assert_eq!(artosia_core::deck::passage_state(&card, app.bible().map(|bible| &**bible)), artosia_core::deck::PassageState::NoBible);
+    }
+
+    #[test]
+    fn show_now_puts_one_card_up_and_leaves_the_others_out() {
+        let (mut app, id) = app_with(passage_card("Mazmur 23:2"));
+        assert!(app.announcements.len() > 1, "the practice library has other cards");
+        app.show_notice_now(id);
+        let live = app.live.as_ref().unwrap_or_else(|| panic!("nothing went live"));
+        assert_eq!(live.deck.source, DeckSource::Announcement(id));
+        assert_eq!(live.deck.slides.len(), 1);
+        assert_eq!(live.deck.slides[0].text, "Made up words 2");
+        // A plain card by itself too, never the whole list.
+        let other = app.announcements.iter().find(|card| card.id != id).map(|card| card.id).unwrap_or_default();
+        app.show_notice_now(other);
+        let live = app.live.as_ref().unwrap_or_else(|| panic!("nothing went live"));
+        assert_eq!(live.deck.source, DeckSource::Announcement(other));
+        assert!(live.deck.slides.iter().all(|slide| !slide.text.contains("Made up words")));
+        assert!(app.announcements.len() > live.deck.slides.len());
+    }
+
+    #[test]
+    fn a_row_press_opens_the_card_in_preview_and_keeps_the_editor() {
+        let (mut app, id) = app_with(passage_card("Mazmur 23:1"));
+        app.edit_announcements();
+        app.pick_notice(id);
+        assert!(app.notices.as_ref().is_some_and(|form| form.id == id));
+        assert_eq!(app.open.as_ref().map(|open| open.deck.source.clone()), Some(DeckSource::Announcement(id)));
+    }
+
+    #[test]
+    fn a_birthday_card_holds_names_and_is_shown_at_once() {
+        let mut app = App::practice();
+        app.demo_notices("birthdays");
+        let id = app.announcements.iter().find(|card| card.fill == Fill::BirthdaysWeek).map(|card| card.id).unwrap_or_default();
+        let deck = app.card_deck(id).unwrap_or_else(|| panic!("no names in the made-up week"));
+        assert!(deck.slides[0].text.contains("Sample Alpha"));
+        app.show_notice_now(id);
+        assert_eq!(app.live.as_ref().map(|live| live.deck.slides.len()), Some(deck.slides.len()));
     }
 }

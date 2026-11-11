@@ -288,6 +288,8 @@ name = "artosia-slides"
 version = "0.0.1"
 dependencies = [
  "artosia-core",
+ "base64 0.22.1",
+ "fontique",
  "rune",
  "serde",
  "serde_json",
