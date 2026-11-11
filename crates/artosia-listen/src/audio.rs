@@ -167,9 +167,9 @@ pub fn read_wav(bytes: &[u8]) -> Result<(Vec<f32>, u32), String> {
         return Err("zero channels".into());
     }
     let interleaved: Vec<f32> = match (tag, bits) {
-        (1, 16) => data.chunks_exact(2).map(|b| f32::from(i16::from_le_bytes([b[0], b[1]])) / 32768.0).collect(),
-        (1, 32) => data.chunks_exact(4).map(|b| (i32::from_le_bytes([b[0], b[1], b[2], b[3]]) as f64 / 2_147_483_648.0) as f32).collect(),
-        (3, 32) => data.chunks_exact(4).map(|b| f32::from_le_bytes([b[0], b[1], b[2], b[3]])).collect(),
+        (1, 16) => data.as_chunks::<2>().0.iter().map(|b| f32::from(i16::from_le_bytes([b[0], b[1]])) / 32768.0).collect(),
+        (1, 32) => data.as_chunks::<4>().0.iter().map(|b| (i32::from_le_bytes([b[0], b[1], b[2], b[3]]) as f64 / 2_147_483_648.0) as f32).collect(),
+        (3, 32) => data.as_chunks::<4>().0.iter().map(|b| f32::from_le_bytes([b[0], b[1], b[2], b[3]])).collect(),
         _ => return Err(format!("unsupported WAVE format {tag} with {bits} bits")),
     };
     let mut mono = Vec::with_capacity(interleaved.len() / channels);
