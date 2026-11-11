@@ -66,14 +66,22 @@ impl PlanRow {
 }
 
 impl App {
-    /// Every plan the library holds, the open one as it is in memory, the rest most recently used first.
+    /// Every plan the library holds, the open one as it is in memory, in an order that never
+    /// changes by use.
     fn all_plans(&self) -> Vec<Plan> {
         let mut plans: Vec<Plan> = self.store.plans().unwrap_or_default().into_iter().filter(|plan| plan.id != self.plan.id).collect();
-        plans.sort_by(|a, b| b.used.cmp(&a.used).then(b.id.cmp(&a.id)));
         if self.plan.id != 0 || !self.plan.items.is_empty() {
-            plans.insert(0, self.plan.clone());
+            plans.push(self.plan.clone());
         }
+        // A fixed order, so a row is where it was the last time the list opened: plans with a
+        // day first, by day, then the rest as they were made. The open one is marked, not moved.
+        plans.sort_by(|a, b| a.date.is_empty().cmp(&b.date.is_empty()).then(a.date.cmp(&b.date)).then(Self::made(a).cmp(&Self::made(b))));
         plans
+    }
+
+    /// When a plan was made, as an order: its number in the library, and last when not saved yet.
+    fn made(plan: &Plan) -> i64 {
+        if plan.id == 0 { i64::MAX } else { plan.id }
     }
 
     /// The look the screens use now: the open plan's own, else the usual one.

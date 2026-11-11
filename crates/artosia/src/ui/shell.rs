@@ -310,7 +310,7 @@ fn open_tools(s: &App, k: &Kit) -> Vec<El> {
     let mut tools = Vec::new();
     tools.extend(crate::ui::plan::start_tool(s, k));
     if !s.open_in_plan() {
-        tools.push(btn(t::BTN_ADD_TO_PLAN()).icon(&icons::PLUS).icon_only().small().build(k, |s, tx| {
+        tools.push(btn(t::BTN_ADD_TO_PLAN()).icon(&icons::PLUS).small().build(k, |s, tx| {
             s.add_open_to_plan();
             tx.blur();
         }));
@@ -448,7 +448,7 @@ fn off_pill(k: &Kit, key: &'static str, words: String, does: &'static str, off: 
 /// passing over the room's screen (owner, 2026-11-11: a volunteer who pressed Next too often
 /// did not know how to get back).
 fn earlier(s: &App, k: &Kit, layer: &mut Vec<El>) -> El {
-    let trigger = btn(t::BTN_EARLIER()).icon(&icons::HISTORY).icon_only().small().build(k, |s, tx| {
+    let trigger = btn(t::BTN_EARLIER()).icon(&icons::HISTORY).small().build(k, |s, tx| {
         s.history_menu = !s.history_menu;
         tx.blur();
     });

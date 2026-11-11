@@ -2148,8 +2148,8 @@
   "screen": "Main window, status bar: the thin strip along the bottom edge, a small coloured dot then one line of grey text on the left; the Keys button is at the far right.",
   "moment": "The program was started in practice mode; no real library, nothing saved.",
   "role": "status",
-  "does": "States that this is practice mode and therefore the projector is not on.",
-  "budget": 50,
+  "does": "Says the program is running as a rehearsal: everything works as in a service, the Live tile lights up, and none of it is sent to a real projector.",
+  "budget": 44,
   "variables": [],
   "cases": [],
   "counts": "",
@@ -2158,7 +2158,7 @@
    "practice",
    "projector"
   ],
-  "notes": "State both facts."
+  "notes": "It must not say the projector is off: the Live tile beside it is lit, and a tester read the two as a contradiction. No full stop."
  },
  {
   "key": "OUTPUT_STARTING",

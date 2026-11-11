@@ -130,6 +130,15 @@ fn hit_row(s: &App, k: &Kit, index: usize, hit: &Hit) -> El {
             (glyph, text(title).font(type_::BODY_STRONG).color(k.c.text_base), text(detail).font(type_::SMALL).color(k.c.text_muted))
         }
     };
+    // A row that can go into the plan has its own button for it, whether or not the pointer
+    // is over it: the tester clicked a song, watched the search close, and had no Add left.
+    let joins = matches!(hit, Hit::Song { planned: false, .. } | Hit::Section { .. } | Hit::Announcement { .. } | Hit::Passage { step: None, .. });
+    if joins && !s.palette.adding {
+        trailing.push(btn(t::BTN_ADD_TO_PLAN()).icon(&icons::PLUS).icon_only().small().build(k, move |s, _| {
+            s.palette.picked = index;
+            s.pick(Pick::AddToPlan);
+        }));
+    }
     row()
         .key("row")
         .role("option")

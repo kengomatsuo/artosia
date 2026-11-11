@@ -389,7 +389,7 @@ text!(BTN_SCREENS, "Screens", "Layar");
 text!(BTN_PHONE, "Phone", "Remote HP");
 text!(HINT_KEYS, "Keys", "Tombol");
 text!(OUTPUT_OFF, "The projector is off", "Layar dimatikan");
-text!(OUTPUT_PRACTICE, "Practice mode: the projector is off", "Mode latihan: layar tidak dinyalakan");
+text!(OUTPUT_PRACTICE, "Practice: nothing reaches a real screen", "Practice: nothing reaches a real screen");
 text!(OUTPUT_STARTING, "Starting the projector", "Layar sedang dinyalakan");
 text!(OUTPUT_MISSING, "The projector program is missing from Artosia's folder", "Program layar tidak ada di folder Artosia");
 text!(OUTPUT_KEEPS_CLOSING, "The projector keeps closing as it starts", "Program layar terus menutup sendiri setelah mulai");

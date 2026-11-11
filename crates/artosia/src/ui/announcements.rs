@@ -71,7 +71,27 @@ fn list(s: &App, k: &Kit, form: &Notices) -> El {
         line = line.child(btn(t::BTN_SHOW_NOW()).icon(&icons::PLAY).icon_only().ghost().small().focusable().build(k, move |s, _| s.show_notice_now(id)));
         rows = rows.child(line.on_press(move |s: &mut App| s.pick_notice(id)));
     }
-    if s.announcements.is_empty() {
+    if form.id == 0 && s.notice_draft().is_some() {
+        let title = form.title.text.trim();
+        let shown = if title.is_empty() { form.body.text.lines().next().unwrap_or_default().trim().to_string() } else { title.to_string() };
+        rows = rows.child(
+            row()
+                .key("notice-new")
+                .role("listitem")
+                .label(shown.clone())
+                .w_full()
+                .h(size::ROW)
+                .pl(space::S3)
+                .pr(space::S3)
+                .gap(space::S2)
+                .center_y()
+                .radius(k.radius.md)
+                .fill(k.c.layer_03)
+                .child(text((count + 1).to_string()).font(type_::SMALL).color(k.c.text_faint).w(16.0))
+                .child(text(shown).font(type_::BODY_STRONG).color(k.c.text_base).truncate().grow(1.0))
+                .child(rune::icon(&icons::PENCIL, 14.0).color(k.c.text_muted).help(t::ANNOUNCEMENT_NEW())),
+        );
+    } else if s.announcements.is_empty() {
         rows = rows.child(text(t::ANNOUNCEMENTS_EMPTY()).font(type_::BODY).color(k.c.text_muted).px(space::S3).py(space::S2));
     }
     let mut templates = row().key("notice-templates").w_full().gap(6.0).flex_wrap();
@@ -150,14 +170,13 @@ fn form(s: &App, k: &Kit, form: &Notices, width: f32) -> El {
         .gap(space::S1)
         .child(section_label(k, t::ANNOUNCEMENT_PREVIEW()))
         .child(el().size(shown, (shown * 9.0 / 16.0).round()).radius(k.radius.lg).clip_rounded(k.radius.lg).border(1.0, k.c.border_base).child(crate::ui::thumb(s, &shown_state, shown)));
-    col()
+    let fields = col()
         .key("notice-form")
+        .w_full()
         .grow(1.0)
-        .min_w(0.0)
-        .h_full()
         .min_h(0.0)
         .px(space::S5)
-        .pb(space::S5)
+        .pb(space::S3)
         .gap(space::S3)
         .scroll(ScrollSpec { stick_bottom: false })
         .child(preview)
@@ -248,8 +267,10 @@ fn form(s: &App, k: &Kit, form: &Notices, width: f32) -> El {
         )
 
         .child(picture)
-        .child(tools)
-        .scroll_bar(k)
+        .scroll_bar(k);
+    // The two buttons that finish the form sit under it and never scroll away: the tester's
+    // Save was half off the bottom edge of a laptop screen (2026-11-11).
+    col().grow(1.0).min_w(0.0).h_full().min_h(0.0).child(fields).child(crate::ui::widgets::divider(k)).child(tools.px(space::S5).py(space::S3))
 }
 
 /// For a birthday card: the days it covers and how many names it holds today.
