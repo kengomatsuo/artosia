@@ -28,6 +28,7 @@ public static class Drive {
     [DllImport("user32.dll")] public static extern IntPtr GetForegroundWindow();
     [DllImport("user32.dll")] public static extern bool SetForegroundWindow(IntPtr h);
     [DllImport("user32.dll")] public static extern bool ShowWindow(IntPtr h, int cmd);
+    [DllImport("user32.dll")] public static extern bool IsIconic(IntPtr h);
     [DllImport("user32.dll")] public static extern bool BringWindowToTop(IntPtr h);
     [DllImport("user32.dll")] public static extern uint GetWindowThreadProcessId(IntPtr h, out uint pid);
     [DllImport("user32.dll")] public static extern bool AttachThreadInput(uint from, uint to, bool attach);
@@ -53,7 +54,9 @@ New-Item -ItemType Directory -Force -Path $Out | Out-Null
 
 function InFront {
     if ([Drive]::GetForegroundWindow() -eq $h) { return $true }
-    [Drive]::ShowWindow($h, 9) | Out-Null
+    # Restore only a minimized window: restoring a maximized one shrinks it, and every point
+    # measured on the maximized window then lands somewhere else.
+    if ([Drive]::IsIconic($h)) { [Drive]::ShowWindow($h, 9) | Out-Null } else { [Drive]::ShowWindow($h, 5) | Out-Null }
     # Windows lets a program take the front only after input; an Alt tap counts as input.
     [Drive]::keybd_event(0x12, 0, 0, [UIntPtr]::Zero); [Drive]::keybd_event(0x12, 0, 2, [UIntPtr]::Zero)
     [Drive]::SetForegroundWindow($h) | Out-Null
