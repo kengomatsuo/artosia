@@ -51,6 +51,31 @@ Back and Next carry arrows that point up and down, the way the lists run and the
 
 A row follows the pointer after 4 points of travel and the rows it passes step aside (`ui/plan.rs`, `draggable`). It is written after the kit's `Reorder`, whose methods are private to the kit and which takes every row to be one height; a divider here is shorter than an item, so the landing place counts the rows whose middle was passed (`drop_place`, with a test). Rune sends the row's press after the drag's release, so the drop sets `plan_dropped` and the press that follows opens nothing. Escape puts the row back.
 
+## Several plans
+
+A church holds more than one service a week (Sunday morning and evening, youth on Saturday), and each needs its own list, kept and named (owner, 2026-11-11: "Where's the multiple-plan support? For different times of the worship schedule idk what it's called?"). The word stays **plan**: the window and the Indonesian interface (`Acara`) already used it, and it says what the list is without saying "service", which in a church also means the hour itself.
+
+**What others call it, from their own manuals.** OpenLP keeps a *service* as a file you open and save, with New, Open and Save As, so a church loads one at a time ([manual.openlp.org/service.html](https://manual.openlp.org/service.html)). FreeShow keeps *projects* in a list in its Show tab, made with a New project button, opened by a double press, and can turn one into a template for new ones ([freeshow.app/docs/projects](https://freeshow.app/docs/projects)). EasyWorship keeps a *schedule* as a file saved and reopened with File, Save As and Reopen, and has no switcher beside the list ([support.easyworship.com](https://support.easyworship.com/support/solutions/6000085139)). ProPresenter keeps *playlists* in a sidebar list, renamed from a right-click menu and duplicated to roll last week's list into this week's ([learn.renewedvision.com](https://learn.renewedvision.com/propresenter6/introduction-to-propresenter/playlists)). Two of the four are files, so a volunteer must find them on disk; the other two are a list inside the program. Artosia takes the list, because the church's PC is shared by volunteers who should never meet a file dialog, and ProPresenter's Duplicate because a new Sunday is nearly always last Sunday with other songs.
+
+**What a plan is.** A row of the `plans` table: a name, an optional date (`YYYY-MM-DD`), the time it last became the open one, and its items (`artosia-core/src/plan.rs`). The table always allowed many rows and the window only ever opened one; the old `New plan` command left each earlier plan behind as a hidden row named "Today". Those rows show in the list now, so nothing is lost. Plans saved before the date existed load with `#[serde(default)]` fields and are tested to do so (`plan.rs`, `store.rs`).
+
+**The controls.** The plan column's title is a button with the open plan's name; it opens a list, the open plan first (checked) and the others most recently used first, each with its date or, without one, how many items it holds. Under the list: New plan, Duplicate plan, Rename plan, Delete plan, all acting on the open plan (`ui/plans.rs`, `plans.rs`). New plan opens the rename dialog at once with the name empty. Rename asks for a name and a date; a date that is not a day disables Save. Duplicate copies the items and leaves the date empty, since a copy is another day. Delete removes the open plan, opens the one used before it (or an empty one), and offers Undo in a toast, which puts the plan back in the list without switching to it. The search finds a plan by its name and Enter opens it, so the keyboard alone switches; "new plan" is a command there too.
+
+**What a switch does to the projector: nothing.** Item numbers belong to one plan and two plans both count from 1, so a switch cannot keep `live.item` as it is. `plans.rs` `enter_plan` therefore:
+
+| State | After the switch |
+|---|---|
+| The live deck and its slide | Unchanged. The output is never sent anything |
+| `live.item` | The new plan's item for the same song or passage if it has one, else none. With one, Next goes on after it in the new plan |
+| `resume` | Cleared |
+| Preview, queued by Artosia | Dropped and queued again from the new plan |
+| Preview, opened by a person | Kept, its item looked up in the new plan the same way |
+| Next at the end of the live item, when the new plan has none of it | Shows the new plan's first showable item (`Switcher::fresh`, `plan_start`), so a switch mid-service leads straight into the next service's list |
+
+Tests in `plans.rs` hold each row of the table.
+
+**The learning log.** `palette_picks`, `service_songs` and `service_passages` already carry `plan_id`; the log writes the open plan's id and never reads it for ranking. Two services on one day broke one query: "what came after this song" partitioned by day, so the last song of the 7:00 plan counted as followed by the first of the 10:00 plan. It now partitions by day and plan (`learn.rs`, `followers_of`, with a test). The weekday group counts days and is unchanged. A deleted plan leaves its id in old rows; nothing reads it, and Undo restores the row under the same id.
+
 ## Search is the library
 
 One box finds songs, Bible passages, announcements and commands. Typing a letter anywhere in the window opens it; so does Ctrl K. It is built after the owner's house-kit palette (`core/palette` in `kengomatsuo/house-kit`): every part of the app contributes documents, the order is a cascade of single rules where a rule only speaks when every rule above it tied, and a document answers to its words in English and Indonesian (`crates/artosia-core/src/palette.rs`, `crates/artosia/src/palette.rs`).
