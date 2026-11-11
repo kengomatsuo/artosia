@@ -1,0 +1,1084 @@
+[
+  {
+    "key": "pair_title",
+    "kind": "phone",
+    "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Pairing screen, the first thing shown: a title, a PIN field, a Connect button and an error line. Heading at the top.",
+    "moment": "The phone just opened the page.",
+    "role": "heading",
+    "does": "Names the program that the phone is being joined to, as a remote control.",
+    "budget": 24,
+    "variables": [],
+    "cases": [],
+    "counts": "",
+    "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+    "concepts": [
+      "phone_remote"
+    ],
+    "notes": "Short heading."
+  },
+  {
+    "key": "pin",
+    "kind": "phone",
+    "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Pairing screen, the first thing shown: a title, a PIN field, a Connect button and an error line. Label over the number box.",
+    "moment": "The person types the number shown on the computer.",
+    "role": "field label",
+    "does": "Names the short number shown on the computer's phone remote dialog.",
+    "budget": 8,
+    "variables": [],
+    "cases": [],
+    "counts": "",
+    "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+    "concepts": [
+      "phone_remote"
+    ],
+    "notes": "Same word as the computer's own label for it."
+  },
+  {
+    "key": "connect",
+    "kind": "phone",
+    "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Pairing screen, the first thing shown: a title, a PIN field, a Connect button and an error line. The big button under the number box.",
+    "moment": "The number is typed.",
+    "role": "button",
+    "does": "Joins the phone to the computer.",
+    "budget": 14,
+    "variables": [],
+    "cases": [],
+    "counts": "",
+    "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+    "concepts": [
+      "phone_remote"
+    ],
+    "notes": "One word."
+  },
+  {
+    "key": "wrong_pin",
+    "kind": "phone",
+    "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Pairing screen, the first thing shown: a title, a PIN field, a Connect button and an error line. A line in red under the button.",
+    "moment": "The number typed is not the right one.",
+    "role": "error",
+    "does": "Says that the number is wrong.",
+    "budget": 24,
+    "variables": [],
+    "cases": [],
+    "counts": "",
+    "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+    "concepts": [
+      "phone_remote"
+    ],
+    "notes": "No full stop."
+  },
+  {
+    "key": "too_many",
+    "kind": "phone",
+    "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Pairing screen, the first thing shown: a title, a PIN field, a Connect button and an error line. A line in red under the button.",
+    "moment": "Many wrong numbers were typed in a row and the computer is locking out for a minute.",
+    "role": "error",
+    "does": "Says there have been too many attempts and to wait one minute.",
+    "budget": 44,
+    "variables": [],
+    "cases": [],
+    "counts": "",
+    "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+    "concepts": [
+      "phone_remote"
+    ],
+    "notes": "Two short statements."
+  },
+  {
+    "key": "unreachable",
+    "kind": "phone",
+    "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Pairing screen, the first thing shown: a title, a PIN field, a Connect button and an error line. A line in red under the button.",
+    "moment": "The phone cannot find the computer, usually because it is on mobile data instead of the church's wireless network.",
+    "role": "error",
+    "does": "Says the computer cannot be reached.",
+    "budget": 36,
+    "variables": [],
+    "cases": [],
+    "counts": "",
+    "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+    "concepts": [
+      "phone_remote"
+    ],
+    "notes": "No full stop."
+  },
+  {
+    "key": "tab_live",
+    "kind": "phone",
+    "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. The row of four tabs along the very bottom, about 80 points each, an icon above each word. First tab.",
+    "moment": "The person wants the controls for what is on the projector.",
+    "role": "tab label",
+    "does": "Names the tab with the controls of the projector's current content.",
+    "budget": 8,
+    "variables": [],
+    "cases": [],
+    "counts": "",
+    "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+    "concepts": [
+      "live"
+    ],
+    "notes": "One word, at most 8 characters. Same word as the computer's Live name."
+  },
+  {
+    "key": "tab_plan",
+    "kind": "phone",
+    "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. The row of four tabs along the very bottom, about 80 points each, an icon above each word. Second tab.",
+    "moment": "The person wants the list of items for the service.",
+    "role": "tab label",
+    "does": "Names the tab with the list of plan items.",
+    "budget": 8,
+    "variables": [],
+    "cases": [],
+    "counts": "",
+    "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+    "concepts": [
+      "plan"
+    ],
+    "notes": "One word. Same word as the computer's plan."
+  },
+  {
+    "key": "tab_search",
+    "kind": "phone",
+    "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. The row of four tabs along the very bottom, about 80 points each, an icon above each word. Third tab.",
+    "moment": "The person wants to find a song or verse.",
+    "role": "tab label",
+    "does": "Names the tab for finding songs and Bible passages.",
+    "budget": 8,
+    "variables": [],
+    "cases": [],
+    "counts": "",
+    "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+    "concepts": [
+      "search"
+    ],
+    "notes": "One word."
+  },
+  {
+    "key": "tab_more",
+    "kind": "phone",
+    "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. The row of four tabs along the very bottom, about 80 points each, an icon above each word. Fourth tab.",
+    "moment": "The person wants the other tools.",
+    "role": "tab label",
+    "does": "Names the tab with the remaining tools: message, countdown, language, keys.",
+    "budget": 8,
+    "variables": [],
+    "cases": [],
+    "counts": "",
+    "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+    "concepts": [],
+    "notes": "One word meaning 'more'."
+  },
+  {
+    "key": "live",
+    "kind": "phone",
+    "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Live tab: title of what is open at the top, a slide counter, the words now live in a large card, the words coming next in a smaller card, buttons that jump to sections, three toggle buttons and Back and Next at the bottom. The small label above the words that are live when no part name applies, and a marker beside a plan row that is live.",
+    "moment": "Something is on the projector.",
+    "role": "label",
+    "does": "Names what the room is seeing now.",
+    "budget": 8,
+    "variables": [],
+    "cases": [],
+    "counts": "",
+    "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+    "concepts": [
+      "live"
+    ],
+    "notes": "One word."
+  },
+  {
+    "key": "next",
+    "kind": "phone",
+    "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Live tab: title of what is open at the top, a slide counter, the words now live in a large card, the words coming next in a smaller card, buttons that jump to sections, three toggle buttons and Back and Next at the bottom. The small label above the next card when no part name applies.",
+    "moment": "A slide follows.",
+    "role": "label",
+    "does": "Names the slide that comes after this one.",
+    "budget": 14,
+    "variables": [],
+    "cases": [],
+    "counts": "",
+    "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+    "concepts": [
+      "slide"
+    ],
+    "notes": "One or two words."
+  },
+  {
+    "key": "next_item",
+    "kind": "phone",
+    "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Live tab: title of what is open at the top, a slide counter, the words now live in a large card, the words coming next in a smaller card, buttons that jump to sections, three toggle buttons and Back and Next at the bottom. The small label above the next card when the live item is on its last slide.",
+    "moment": "The live song ends and the plan item after it is named below.",
+    "role": "label",
+    "does": "Names the next plan item, the one after the current song or passage ends.",
+    "budget": 14,
+    "variables": [],
+    "cases": [],
+    "counts": "",
+    "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+    "concepts": [
+      "plan_item"
+    ],
+    "notes": "One or two words."
+  },
+  {
+    "key": "next_btn",
+    "kind": "phone",
+    "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Live tab: title of what is open at the top, a slide counter, the words now live in a large card, the words coming next in a smaller card, buttons that jump to sections, three toggle buttons and Back and Next at the bottom. The big button at the bottom right.",
+    "moment": "The person wants the projector one slide on.",
+    "role": "button",
+    "does": "Moves the projector one slide forward.",
+    "budget": 10,
+    "variables": [],
+    "cases": [],
+    "counts": "",
+    "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+    "concepts": [
+      "slide",
+      "live"
+    ],
+    "notes": "One word. Same word as the computer's Next tile."
+  },
+  {
+    "key": "back",
+    "kind": "phone",
+    "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Live tab: title of what is open at the top, a slide counter, the words now live in a large card, the words coming next in a smaller card, buttons that jump to sections, three toggle buttons and Back and Next at the bottom. The big button at the bottom left.",
+    "moment": "The person wants the projector one slide back.",
+    "role": "button",
+    "does": "Moves the projector one slide back.",
+    "budget": 10,
+    "variables": [],
+    "cases": [],
+    "counts": "",
+    "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+    "concepts": [
+      "slide",
+      "live"
+    ],
+    "notes": "One word."
+  },
+  {
+    "key": "nothing_open",
+    "kind": "phone",
+    "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Live tab: title of what is open at the top, a slide counter, the words now live in a large card, the words coming next in a smaller card, buttons that jump to sections, three toggle buttons and Back and Next at the bottom. The title line.",
+    "moment": "No plan item has been opened.",
+    "role": "empty state",
+    "does": "States that nothing has been opened on the computer.",
+    "budget": 26,
+    "variables": [],
+    "cases": [],
+    "counts": "",
+    "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+    "concepts": [
+      "preview"
+    ],
+    "notes": "No full stop."
+  },
+  {
+    "key": "nothing_live",
+    "kind": "phone",
+    "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Live tab: title of what is open at the top, a slide counter, the words now live in a large card, the words coming next in a smaller card, buttons that jump to sections, three toggle buttons and Back and Next at the bottom. The text of the large card.",
+    "moment": "Nothing is on the projector.",
+    "role": "empty state",
+    "does": "States that nothing is on the projector at the moment.",
+    "budget": 30,
+    "variables": [],
+    "cases": [],
+    "counts": "",
+    "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+    "concepts": [
+      "live",
+      "projector"
+    ],
+    "notes": "No full stop."
+  },
+  {
+    "key": "n_of",
+    "kind": "phone",
+    "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Live tab: title of what is open at the top, a slide counter, the words now live in a large card, the words coming next in a smaller card, buttons that jump to sections, three toggle buttons and Back and Next at the bottom. The slide counter at the top right.",
+    "moment": "The song's slides are numbered.",
+    "role": "counter",
+    "does": "Says which slide of how many is on the projector.",
+    "budget": 10,
+    "variables": [
+      {
+        "name": "0",
+        "example": "3",
+        "meaning": "Position."
+      },
+      {
+        "name": "1",
+        "example": "8",
+        "meaning": "How many slides."
+      }
+    ],
+    "cases": [],
+    "counts": "",
+    "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+    "concepts": [
+      "slide"
+    ],
+    "notes": "Two numbers."
+  },
+  {
+    "key": "n_slides",
+    "kind": "phone",
+    "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Live tab: title of what is open at the top, a slide counter, the words now live in a large card, the words coming next in a smaller card, buttons that jump to sections, three toggle buttons and Back and Next at the bottom. The slide counter when nothing is live yet.",
+    "moment": "An item is open but not shown.",
+    "role": "counter",
+    "does": "Says how many slides the open item has.",
+    "budget": 12,
+    "variables": [
+      {
+        "name": "0",
+        "example": "8",
+        "meaning": "How many slides."
+      }
+    ],
+    "cases": [],
+    "counts": "",
+    "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+    "concepts": [
+      "slide"
+    ],
+    "notes": "A number and a noun."
+  },
+  {
+    "key": "clear_text",
+    "kind": "phone",
+    "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Live tab: title of what is open at the top, a slide counter, the words now live in a large card, the words coming next in a smaller card, buttons that jump to sections, three toggle buttons and Back and Next at the bottom. First of three toggle buttons about 110 points wide; it is filled while it is on.",
+    "moment": "The person wants the words gone but the background kept.",
+    "role": "toggle",
+    "does": "Names the state in which the projector shows no words.",
+    "budget": 14,
+    "variables": [],
+    "cases": [],
+    "counts": "",
+    "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+    "concepts": [
+      "clear_text"
+    ],
+    "notes": "A state name: lit while on; same word as the computer's No text tile."
+  },
+  {
+    "key": "black",
+    "kind": "phone",
+    "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Live tab: title of what is open at the top, a slide counter, the words now live in a large card, the words coming next in a smaller card, buttons that jump to sections, three toggle buttons and Back and Next at the bottom. Second toggle button; filled while on.",
+    "moment": "The person wants the screen dark.",
+    "role": "toggle",
+    "does": "Names the state of the projector being dark.",
+    "budget": 14,
+    "variables": [],
+    "cases": [],
+    "counts": "",
+    "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+    "concepts": [
+      "black"
+    ],
+    "notes": "A state name; same word as the computer's Black tile."
+  },
+  {
+    "key": "logo",
+    "kind": "phone",
+    "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Live tab: title of what is open at the top, a slide counter, the words now live in a large card, the words coming next in a smaller card, buttons that jump to sections, three toggle buttons and Back and Next at the bottom. Third toggle button; filled while on.",
+    "moment": "The person wants the emblem on the screen.",
+    "role": "toggle",
+    "does": "Names the state of the projector showing the church's emblem.",
+    "budget": 14,
+    "variables": [],
+    "cases": [],
+    "counts": "",
+    "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+    "concepts": [
+      "logo"
+    ],
+    "notes": "A state name; same word as the computer's Logo tile."
+  },
+  {
+    "key": "logo_needs",
+    "kind": "phone",
+    "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Live tab: title of what is open at the top, a slide counter, the words now live in a large card, the words coming next in a smaller card, buttons that jump to sections, three toggle buttons and Back and Next at the bottom. A small note under the toggles, shown when the Logo toggle cannot work.",
+    "moment": "The person pressed Logo but the computer has no emblem.",
+    "role": "note",
+    "does": "Tells that an emblem picture must be set on the computer first.",
+    "budget": 44,
+    "variables": [],
+    "cases": [],
+    "counts": "",
+    "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+    "concepts": [
+      "logo",
+      "design"
+    ],
+    "notes": "One sentence."
+  },
+  {
+    "key": "text_cleared",
+    "kind": "phone",
+    "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Live tab: title of what is open at the top, a slide counter, the words now live in a large card, the words coming next in a smaller card, buttons that jump to sections, three toggle buttons and Back and Next at the bottom. A small state line under the live card.",
+    "moment": "The words are hidden.",
+    "role": "state line",
+    "does": "States that the words are hidden.",
+    "budget": 28,
+    "variables": [],
+    "cases": [],
+    "counts": "",
+    "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+    "concepts": [
+      "clear_text"
+    ],
+    "notes": "A state, no full stop."
+  },
+  {
+    "key": "screen_black",
+    "kind": "phone",
+    "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Live tab: title of what is open at the top, a slide counter, the words now live in a large card, the words coming next in a smaller card, buttons that jump to sections, three toggle buttons and Back and Next at the bottom. The same state line.",
+    "moment": "The screen is black.",
+    "role": "state line",
+    "does": "States that the screen is black.",
+    "budget": 28,
+    "variables": [],
+    "cases": [],
+    "counts": "",
+    "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+    "concepts": [
+      "black"
+    ],
+    "notes": "A state."
+  },
+  {
+    "key": "logo_showing",
+    "kind": "phone",
+    "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Live tab: title of what is open at the top, a slide counter, the words now live in a large card, the words coming next in a smaller card, buttons that jump to sections, three toggle buttons and Back and Next at the bottom. The same state line.",
+    "moment": "The emblem is up.",
+    "role": "state line",
+    "does": "States that the emblem is on the screen.",
+    "budget": 28,
+    "variables": [],
+    "cases": [],
+    "counts": "",
+    "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+    "concepts": [
+      "logo"
+    ],
+    "notes": "A state."
+  },
+  {
+    "key": "jump",
+    "kind": "phone",
+    "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Live tab: title of what is open at the top, a slide counter, the words now live in a large card, the words coming next in a smaller card, buttons that jump to sections, three toggle buttons and Back and Next at the bottom. Accessibility name of the row of buttons, one for each part of the song. Never visible.",
+    "moment": "A screen reader lands on the row.",
+    "role": "accessibility label",
+    "does": "Names the row of buttons that jump to a part of the song.",
+    "budget": 24,
+    "variables": [],
+    "cases": [],
+    "counts": "",
+    "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+    "concepts": [
+      "section"
+    ],
+    "notes": "Not visible."
+  },
+  {
+    "key": "plan_pick",
+    "kind": "phone",
+    "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Plan tab: the list of plan items, then a wide button at the bottom. The wide button at the bottom before any item is picked, greyed out.",
+    "moment": "Nothing is picked in the list.",
+    "role": "button",
+    "does": "Tells the person to pick an item from the list.",
+    "budget": 24,
+    "variables": [],
+    "cases": [],
+    "counts": "",
+    "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+    "concepts": [
+      "plan_item"
+    ],
+    "notes": "Greyed out; an instruction."
+  },
+  {
+    "key": "plan_show",
+    "kind": "phone",
+    "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Plan tab: the list of plan items, then a wide button at the bottom. The wide button at the bottom once an item is picked.",
+    "moment": "An item is picked.",
+    "role": "button",
+    "does": "Puts the picked item on the projector.",
+    "budget": 34,
+    "variables": [
+      {
+        "name": "0",
+        "example": "Hill of Morning Stars",
+        "meaning": "The picked item's name."
+      }
+    ],
+    "cases": [],
+    "counts": "",
+    "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+    "concepts": [
+      "show",
+      "plan_item"
+    ],
+    "notes": "The item's name is inside."
+  },
+  {
+    "key": "plan_live",
+    "kind": "phone",
+    "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Plan tab: the list of plan items, then a wide button at the bottom. A small word at the right of the row that is live.",
+    "moment": "The row is on the projector.",
+    "role": "tag",
+    "does": "Marks the plan row that is live.",
+    "budget": 8,
+    "variables": [],
+    "cases": [],
+    "counts": "",
+    "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+    "concepts": [
+      "live",
+      "plan_item"
+    ],
+    "notes": "One word."
+  },
+  {
+    "key": "plan_empty",
+    "kind": "phone",
+    "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Plan tab: the list of plan items, then a wide button at the bottom. A line in the middle of the empty list.",
+    "moment": "The plan has no items.",
+    "role": "empty state",
+    "does": "States that the plan has no items yet.",
+    "budget": 30,
+    "variables": [],
+    "cases": [],
+    "counts": "",
+    "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+    "concepts": [
+      "plan"
+    ],
+    "notes": "No full stop."
+  },
+  {
+    "key": "search_ph",
+    "kind": "phone",
+    "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Search tab: a search field, a line of help, and a list of results each with a Show button and an Add button. Hint inside the empty search field.",
+    "moment": "The field is empty.",
+    "role": "placeholder",
+    "does": "Invites typing a song or Bible verse to look for.",
+    "budget": 28,
+    "variables": [],
+    "cases": [],
+    "counts": "",
+    "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+    "concepts": [
+      "search",
+      "song",
+      "passage"
+    ],
+    "notes": "Invitation."
+  },
+  {
+    "key": "search_hint",
+    "kind": "phone",
+    "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Search tab: a search field, a line of help, and a list of results each with a Show button and an Add button. A grey line where results would be.",
+    "moment": "Nothing is typed yet.",
+    "role": "help",
+    "does": "Tells what can be typed: a song's name, one sung line, or a Bible reference, with an example written with spaces.",
+    "budget": 66,
+    "variables": [],
+    "cases": [],
+    "counts": "",
+    "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+    "concepts": [
+      "search",
+      "song",
+      "passage"
+    ],
+    "notes": "The example reference is written the way people would type it on a phone, with spaces between the numbers."
+  },
+  {
+    "key": "searching",
+    "kind": "phone",
+    "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Search tab: a search field, a line of help, and a list of results each with a Show button and an Add button. A grey line where results would be.",
+    "moment": "The search is running.",
+    "role": "waiting state",
+    "does": "States that the search is in progress.",
+    "budget": 20,
+    "variables": [],
+    "cases": [],
+    "counts": "",
+    "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+    "concepts": [
+      "search"
+    ],
+    "notes": "No full stop."
+  },
+  {
+    "key": "no_results",
+    "kind": "phone",
+    "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Search tab: a search field, a line of help, and a list of results each with a Show button and an Add button. A grey line where results would be.",
+    "moment": "Nothing matched.",
+    "role": "empty state",
+    "does": "States that nothing was found.",
+    "budget": 24,
+    "variables": [],
+    "cases": [],
+    "counts": "",
+    "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+    "concepts": [
+      "search"
+    ],
+    "notes": "No full stop."
+  },
+  {
+    "key": "show",
+    "kind": "phone",
+    "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Search tab: a search field, a line of help, and a list of results each with a Show button and an Add button. The filled button at the right of a result.",
+    "moment": "The person wants the result on the projector at once.",
+    "role": "button",
+    "does": "Puts the result on the projector.",
+    "budget": 10,
+    "variables": [],
+    "cases": [],
+    "counts": "",
+    "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+    "concepts": [
+      "show"
+    ],
+    "notes": "One word. Same word as the computer's Show tile."
+  },
+  {
+    "key": "add",
+    "kind": "phone",
+    "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Search tab: a search field, a line of help, and a list of results each with a Show button and an Add button. The quiet button at the right of a result.",
+    "moment": "The person wants the result put in the plan.",
+    "role": "button",
+    "does": "Puts the result in the plan.",
+    "budget": 10,
+    "variables": [],
+    "cases": [],
+    "counts": "",
+    "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+    "concepts": [
+      "plan"
+    ],
+    "notes": "One word."
+  },
+  {
+    "key": "added",
+    "kind": "phone",
+    "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Search tab: a search field, a line of help, and a list of results each with a Show button and an Add button. The Add button's word for a moment after it was pressed.",
+    "moment": "The person just pressed Add.",
+    "role": "button state",
+    "does": "Confirms the result is now in the plan.",
+    "budget": 10,
+    "variables": [],
+    "cases": [],
+    "counts": "",
+    "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+    "concepts": [
+      "plan"
+    ],
+    "notes": "One word."
+  },
+  {
+    "key": "show_aria",
+    "kind": "phone",
+    "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Search tab: a search field, a line of help, and a list of results each with a Show button and an Add button. Accessibility name of a result's Show button. Never visible.",
+    "moment": "A screen reader lands on the button.",
+    "role": "accessibility label",
+    "does": "Says this button puts the named result on the projector right now.",
+    "budget": 40,
+    "variables": [
+      {
+        "name": "0",
+        "example": "Hill of Morning Stars",
+        "meaning": "The result's name."
+      }
+    ],
+    "cases": [],
+    "counts": "",
+    "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+    "concepts": [
+      "show"
+    ],
+    "notes": "Not visible."
+  },
+  {
+    "key": "add_aria",
+    "kind": "phone",
+    "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Search tab: a search field, a line of help, and a list of results each with a Show button and an Add button. Accessibility name of a result's Add button. Never visible.",
+    "moment": "A screen reader lands on the button.",
+    "role": "accessibility label",
+    "does": "Says this button puts the named result in the plan.",
+    "budget": 40,
+    "variables": [
+      {
+        "name": "0",
+        "example": "Hill of Morning Stars",
+        "meaning": "The result's name."
+      }
+    ],
+    "cases": [],
+    "counts": "",
+    "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+    "concepts": [
+      "plan"
+    ],
+    "notes": "Not visible."
+  },
+  {
+    "key": "message",
+    "kind": "phone",
+    "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. More tab: message to the room, countdown, language and keys blocks. Heading of the first block, also the name a screen reader gives the text box.",
+    "moment": "The person wants a notice shown to the room.",
+    "role": "heading",
+    "does": "Names the block for writing a notice that is shown to the congregation.",
+    "budget": 24,
+    "variables": [],
+    "cases": [],
+    "counts": "",
+    "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+    "concepts": [
+      "room_message"
+    ],
+    "notes": "A phrase."
+  },
+  {
+    "key": "message_ph",
+    "kind": "phone",
+    "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. More tab: message to the room, countdown, language and keys blocks. Hint inside the empty message box.",
+    "moment": "The box is empty.",
+    "role": "placeholder",
+    "does": "Invites the person to write the notice.",
+    "budget": 24,
+    "variables": [],
+    "cases": [],
+    "counts": "",
+    "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+    "concepts": [
+      "room_message"
+    ],
+    "notes": "Invitation."
+  },
+  {
+    "key": "message_show",
+    "kind": "phone",
+    "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. More tab: message to the room, countdown, language and keys blocks. Filled button under the message box.",
+    "moment": "The person typed a notice.",
+    "role": "button",
+    "does": "Puts the typed notice on the screens.",
+    "budget": 12,
+    "variables": [],
+    "cases": [],
+    "counts": "",
+    "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+    "concepts": [
+      "room_message"
+    ],
+    "notes": "One word."
+  },
+  {
+    "key": "message_hide",
+    "kind": "phone",
+    "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. More tab: message to the room, countdown, language and keys blocks. Quiet button beside it.",
+    "moment": "A notice is on the screens.",
+    "role": "button",
+    "does": "Takes the notice off the screens.",
+    "budget": 12,
+    "variables": [],
+    "cases": [],
+    "counts": "",
+    "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+    "concepts": [
+      "room_message"
+    ],
+    "notes": "One word; the pair of the show button."
+  },
+  {
+    "key": "message_showing",
+    "kind": "phone",
+    "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. More tab: message to the room, countdown, language and keys blocks. A small line under the buttons.",
+    "moment": "A notice is on the screens.",
+    "role": "state line",
+    "does": "Says that a notice is showing and quotes it.",
+    "budget": 40,
+    "variables": [
+      {
+        "name": "0",
+        "example": "The car park is full",
+        "meaning": "The notice's text."
+      }
+    ],
+    "cases": [],
+    "counts": "",
+    "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+    "concepts": [
+      "room_message"
+    ],
+    "notes": "The notice text is in the sentence."
+  },
+  {
+    "key": "countdown",
+    "kind": "phone",
+    "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. More tab: message to the room, countdown, language and keys blocks. Heading of the second block.",
+    "moment": "The person wants a countdown.",
+    "role": "heading",
+    "does": "Names the block that starts a timer counting down to the service.",
+    "budget": 20,
+    "variables": [],
+    "cases": [],
+    "counts": "",
+    "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+    "concepts": [
+      "countdown"
+    ],
+    "notes": "A noun."
+  },
+  {
+    "key": "minutes",
+    "kind": "phone",
+    "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. More tab: message to the room, countdown, language and keys blocks. A small word to the right of a number box showing 5; also the name a screen reader gives the box.",
+    "moment": "The person sets how long.",
+    "role": "unit",
+    "does": "Says the number beside is a number of minutes.",
+    "budget": 10,
+    "variables": [],
+    "cases": [],
+    "counts": "",
+    "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+    "concepts": [
+      "countdown"
+    ],
+    "notes": "One word."
+  },
+  {
+    "key": "start",
+    "kind": "phone",
+    "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. More tab: message to the room, countdown, language and keys blocks. Filled button under the number box.",
+    "moment": "The person set the minutes.",
+    "role": "button",
+    "does": "Starts the countdown.",
+    "budget": 10,
+    "variables": [],
+    "cases": [],
+    "counts": "",
+    "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+    "concepts": [
+      "countdown"
+    ],
+    "notes": "One word."
+  },
+  {
+    "key": "stop",
+    "kind": "phone",
+    "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. More tab: message to the room, countdown, language and keys blocks. Quiet button beside it.",
+    "moment": "A countdown is running.",
+    "role": "button",
+    "does": "Ends the countdown.",
+    "budget": 10,
+    "variables": [],
+    "cases": [],
+    "counts": "",
+    "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+    "concepts": [
+      "countdown"
+    ],
+    "notes": "One word; the pair of the start button."
+  },
+  {
+    "key": "language",
+    "kind": "phone",
+    "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. More tab: message to the room, countdown, language and keys blocks. Heading of the third block, over a list of languages.",
+    "moment": "The person wants the phone page in another language.",
+    "role": "heading",
+    "does": "Names the choice of the language of this phone page.",
+    "budget": 14,
+    "variables": [],
+    "cases": [],
+    "counts": "",
+    "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+    "concepts": [
+      "window_language"
+    ],
+    "notes": "One word."
+  },
+  {
+    "key": "keys_title",
+    "kind": "phone",
+    "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. More tab: message to the room, countdown, language and keys blocks. Heading of the last block.",
+    "moment": "The person looks at the keyboard hints for the computer.",
+    "role": "heading",
+    "does": "Names the block that lists the computer's keys.",
+    "budget": 12,
+    "variables": [],
+    "cases": [],
+    "counts": "",
+    "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+    "concepts": [
+      "keyboard"
+    ],
+    "notes": "One word."
+  },
+  {
+    "key": "keys_text",
+    "kind": "phone",
+    "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. More tab: message to the room, countdown, language and keys blocks. A paragraph in the last block.",
+    "moment": "The person looks for a key on the computer.",
+    "role": "help",
+    "does": "Lists the keys that move the slides and the three letters and three function keys that jump to a part or hide things, in one flowing paragraph.",
+    "budget": 160,
+    "variables": [],
+    "cases": [],
+    "counts": "",
+    "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+    "concepts": [
+      "keyboard",
+      "slide",
+      "section",
+      "chorus",
+      "bridge",
+      "black",
+      "logo",
+      "clear_text"
+    ],
+    "notes": "Key names (Space, F1, F2, F3, the letters) stay as printed on the keyboard; the explaining words are text. Which letter jumps to which part is the same as on the computer's key sheet."
+  },
+  {
+    "key": "lost",
+    "kind": "phone",
+    "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. A banner across the top over everything.",
+    "moment": "The connection to the computer dropped.",
+    "role": "banner",
+    "does": "Says the connection with the computer was lost.",
+    "budget": 28,
+    "variables": [],
+    "cases": [],
+    "counts": "",
+    "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+    "concepts": [
+      "phone_remote"
+    ],
+    "notes": "No full stop."
+  },
+  {
+    "key": "retrying",
+    "kind": "phone",
+    "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. A small line under the banner.",
+    "moment": "The page is trying again by itself.",
+    "role": "banner detail",
+    "does": "Says the page is reconnecting.",
+    "budget": 24,
+    "variables": [],
+    "cases": [],
+    "counts": "",
+    "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+    "concepts": [
+      "phone_remote"
+    ],
+    "notes": "No full stop."
+  },
+  {
+    "key": "label.verse",
+    "kind": "phone",
+    "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Names the operator sends in English for a part of a song; the phone shows them in the volunteer's own words. A chip over the live card, about 80 points wide. Patterns are matched case-insensitively; a numbered verse becomes the name plus its number.",
+    "moment": "A song's part is live.",
+    "role": "chip text",
+    "does": "Names the numbered part, with its number after it.",
+    "budget": 14,
+    "variables": [],
+    "cases": [],
+    "counts": "",
+    "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+    "concepts": [
+      "verse",
+      "section"
+    ],
+    "notes": "Must be the same word as the computer's section name."
+  },
+  {
+    "key": "label.chorus",
+    "kind": "phone",
+    "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Names the operator sends in English for a part of a song; the phone shows them in the volunteer's own words. A chip over the live card, about 80 points wide. Patterns are matched case-insensitively; a numbered verse becomes the name plus its number.",
+    "moment": "A song's part is live.",
+    "role": "chip text",
+    "does": "Names the repeated part.",
+    "budget": 14,
+    "variables": [],
+    "cases": [],
+    "counts": "",
+    "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+    "concepts": [
+      "chorus",
+      "section"
+    ],
+    "notes": "Must be the same word as the computer's section name."
+  },
+  {
+    "key": "label.pre_chorus",
+    "kind": "phone",
+    "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Names the operator sends in English for a part of a song; the phone shows them in the volunteer's own words. A chip over the live card, about 80 points wide. Patterns are matched case-insensitively; a numbered verse becomes the name plus its number.",
+    "moment": "A song's part is live.",
+    "role": "chip text",
+    "does": "Names the lead-in to the repeated part.",
+    "budget": 14,
+    "variables": [],
+    "cases": [],
+    "counts": "",
+    "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+    "concepts": [
+      "pre_chorus",
+      "section"
+    ],
+    "notes": "Must be the same word as the computer's section name."
+  },
+  {
+    "key": "label.bridge",
+    "kind": "phone",
+    "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Names the operator sends in English for a part of a song; the phone shows them in the volunteer's own words. A chip over the live card, about 80 points wide. Patterns are matched case-insensitively; a numbered verse becomes the name plus its number.",
+    "moment": "A song's part is live.",
+    "role": "chip text",
+    "does": "Names the bridge, optionally with a number.",
+    "budget": 14,
+    "variables": [],
+    "cases": [],
+    "counts": "",
+    "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+    "concepts": [
+      "bridge",
+      "section"
+    ],
+    "notes": "Must be the same word as the computer's section name."
+  },
+  {
+    "key": "label.intro",
+    "kind": "phone",
+    "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Names the operator sends in English for a part of a song; the phone shows them in the volunteer's own words. A chip over the live card, about 80 points wide. Patterns are matched case-insensitively; a numbered verse becomes the name plus its number.",
+    "moment": "A song's part is live.",
+    "role": "chip text",
+    "does": "Names the opening.",
+    "budget": 14,
+    "variables": [],
+    "cases": [],
+    "counts": "",
+    "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+    "concepts": [
+      "intro",
+      "section"
+    ],
+    "notes": "Must be the same word as the computer's section name."
+  },
+  {
+    "key": "label.ending",
+    "kind": "phone",
+    "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Names the operator sends in English for a part of a song; the phone shows them in the volunteer's own words. A chip over the live card, about 80 points wide. Patterns are matched case-insensitively; a numbered verse becomes the name plus its number.",
+    "moment": "A song's part is live.",
+    "role": "chip text",
+    "does": "Names the closing part.",
+    "budget": 14,
+    "variables": [],
+    "cases": [],
+    "counts": "",
+    "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+    "concepts": [
+      "ending",
+      "section"
+    ],
+    "notes": "Must be the same word as the computer's section name."
+  }
+]
