@@ -8071,5 +8071,74 @@
       "slide"
     ],
     "notes": "No plural in Indonesian."
+  },
+  {
+    "key": "LOOK_FOR_USUAL",
+    "kind": "const",
+    "screen": "Look dialog (opened by the Look button). At the top of the style controls sit two buttons of equal width of which look the dialog edits: the look every plan uses, or a look that belongs to the open plan alone. A church keeps one plan for each service; the morning service puts the words over a camera feed and Sunday school does not.",
+    "moment": "One of the two buttons, with a small screen icon.",
+    "role": "button label",
+    "does": "The choice that edits the look all plans share.",
+    "budget": 22,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "look"
+    ],
+    "notes": "The other choice is 'This plan's own look'. Say 'usual' as in 'the look we normally use'."
+  },
+  {
+    "key": "LOOK_FOR_PLAN",
+    "kind": "const",
+    "screen": "Look dialog (opened by the Look button). At the top of the style controls sit two buttons of equal width of which look the dialog edits: the look every plan uses, or a look that belongs to the open plan alone. A church keeps one plan for each service; the morning service puts the words over a camera feed and Sunday school does not.",
+    "moment": "Shown as the help text of the second button; the button itself reads the plan's name.",
+    "role": "tooltip",
+    "does": "Explains the button that gives the open plan a look of its own, copied from the usual one as a start.",
+    "budget": 26,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "look",
+      "plan"
+    ],
+    "notes": "The other button reads 'The usual look'."
+  },
+  {
+    "key": "PLAN_OWN_LOOK",
+    "kind": "const",
+    "screen": "Main window, left column. The list of plans under the title; a small picture mark sits before the name of a plan that has its own look.",
+    "moment": "Beside a plan's name in the list of plans, drawn as a small mark with no words; read out by a screen reader.",
+    "role": "accessible name of a mark",
+    "does": "Says that this plan has a look of its own.",
+    "budget": 24,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "look",
+      "plan"
+    ],
+    "notes": ""
+  },
+  {
+    "key": "look_own_dropped",
+    "kind": "fn",
+    "screen": "Toast after the plan goes back to the usual look, with an Undo button.",
+    "moment": "The volunteer chose 'The usual look' for a plan that had its own look.",
+    "role": "toast",
+    "does": "Says the named plan uses the usual look again; the plan's own look is kept for Undo.",
+    "budget": 50,
+    "variables": [
+      {
+        "name": "name",
+        "example": "Sunday school",
+        "what": "the name of the open plan"
+      }
+    ],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "look",
+      "plan"
+    ],
+    "notes": ""
   }
 ]

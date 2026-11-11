@@ -179,6 +179,8 @@ pub enum Undo {
     History(Box<artosia_core::learn::History>),
     /// A whole plan was deleted.
     Plan(Box<Plan>),
+    /// A plan went back to the usual look; this was its own, and `plan` is the plan it belonged to.
+    PlanLook { plan: i64, look: serde_json::Value },
 }
 
 pub struct Toast {
@@ -463,7 +465,8 @@ impl App {
             .unwrap_or_else(|| Plan::named(t::PLAN_DEFAULT_NAME()));
         let (remote_tx, remote_rx) = channel();
         let licence_edit = TextEdit::new(settings.licence.clone());
-        let look_edit = crate::ui::look::LookEdit::new(&settings.look);
+        let first_look = plan.look.clone().and_then(|own| serde_json::from_value(own).ok()).unwrap_or_else(|| settings.look.clone());
+        let look_edit = crate::ui::look::LookEdit::new(&first_look);
         let mut app = App {
             folder,
             store,
@@ -687,7 +690,7 @@ impl App {
     }
 
     pub fn deck_of_song(&self, song: &Song) -> Deck {
-        let mut deck = song_deck(song, self.settings.look.max_lines, &self.settings.licence);
+        let mut deck = song_deck(song, self.look().max_lines, &self.settings.licence);
         // The library names sections in English; a volunteer reads them in the window's language.
         for slide in &mut deck.slides {
             if let Some(tag) = slide.tag {
@@ -1284,7 +1287,7 @@ impl App {
         };
         OutputState {
             slide,
-            look: self.settings.look.clone(),
+            look: self.look(),
             black: self.black,
             text_hidden: self.text_hidden,
             logo: self.settings.logo.clone(),
@@ -1298,7 +1301,7 @@ impl App {
 
     /// The same state with another slide in place, for a slide tile.
     pub fn preview_state(&self, slide: Option<artosia_core::deck::Slide>) -> OutputState {
-        OutputState { slide, look: self.settings.look.clone(), ..OutputState::default() }
+        OutputState { slide, look: self.look(), ..OutputState::default() }
     }
 
     pub fn say(&mut self, text: impl Into<String>, undo: Option<Undo>) {

@@ -177,6 +177,7 @@ impl App {
                 }
             }
             Some(Undo::Plan(plan)) => self.restore_plan(*plan),
+            Some(Undo::PlanLook { plan, look }) => self.restore_plan_look(plan, look),
             None => {}
         }
     }
@@ -999,11 +1000,16 @@ impl App {
     // ---- Look ----
 
     pub fn set_look(&mut self, look: Look) {
-        let lines = self.settings.look.max_lines;
+        let lines = self.look().max_lines;
         let changed_lines = look.max_lines != lines;
         self.look_edit.sync(&look);
-        self.settings.look = look;
-        self.touch_settings();
+        if self.plan.look.is_some() {
+            self.plan.look = serde_json::to_value(&look).ok();
+            self.touch_plan();
+        } else {
+            self.settings.look = look;
+            self.touch_settings();
+        }
         if changed_lines {
             self.refresh_decks();
         }
@@ -1020,7 +1026,7 @@ impl App {
                 return;
             }
         };
-        let mut look = self.settings.look.clone();
+        let mut look = self.look();
         look.background = background;
         look.shadow = true;
         look.name = t::LOOK_CUSTOM().to_string();
@@ -1244,7 +1250,7 @@ impl App {
 
     /// Puts a camera behind the words, as a video background is.
     pub fn set_camera(&mut self, name: &str) {
-        let mut look = self.settings.look.clone();
+        let mut look = self.look();
         look.background = Background::Camera(name.to_string());
         look.shadow = true;
         look.name = t::LOOK_CUSTOM().to_string();
@@ -1471,7 +1477,7 @@ impl App {
     /// Decodes the background picture and the logo for the previews when their paths change.
     fn load_pictures(&mut self) {
         let Some(images) = &self.images else { return };
-        let wanted = match &self.settings.look.background {
+        let wanted = match &self.look().background {
             Background::Image(path) => Some(path.clone()),
             _ => None,
         };

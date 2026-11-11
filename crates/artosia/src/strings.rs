@@ -422,6 +422,10 @@ text!(PLAN_NEW_NAME, "New plan", "New plan");
 text!(PLAN_NAME_LABEL, "Plan name", "Plan name");
 text!(PLAN_DATE_LABEL, "Date", "Date");
 text!(PLAN_DATE_HINT, "Year-month-day, optional", "Year-month-day, optional");
+// A plan's own look. The Indonesian slots hold the English until a person writes them from the briefs.
+text!(LOOK_FOR_USUAL, "The usual look", "The usual look");
+text!(LOOK_FOR_PLAN, "This plan's own look", "This plan's own look");
+text!(PLAN_OWN_LOOK, "Has its own look", "Has its own look");
 text!(KIND_PLAN, "Plan", "Plan");
 
 /// How many things a plan holds, in the list of plans.
@@ -438,6 +442,14 @@ pub fn plan_copy_name(name: &str) -> String {
         return text;
     }
     format!("{name} copy")
+}
+
+/// The toast after a plan goes back to the usual look.
+pub fn look_own_dropped(name: &str) -> String {
+    if let Some(text) = say("look_own_dropped", None, None, &[("name", text_arg(name))]) {
+        return text;
+    }
+    format!("{name} uses the usual look again")
 }
 
 pub fn plan_deleted(name: &str) -> String {

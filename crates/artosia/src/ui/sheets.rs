@@ -23,7 +23,7 @@ fn file_name(path: &str) -> String {
 }
 
 fn looks(s: &App, k: &Kit, layer: &mut Vec<El>) {
-    let look = &s.settings.look;
+    let look = s.look();
     // The cameras the projector program found on this computer; none in a build without video.
     let cameras = s.link.status().cameras;
     let tile = 172.0;
@@ -118,7 +118,7 @@ fn looks(s: &App, k: &Kit, layer: &mut Vec<El>) {
                 .label(t::LOOK_LINES())
                 .fit()
                 .on_pick(move |s: &mut App, i, _: &mut Tx| {
-                    let mut look = s.settings.look.clone();
+                    let mut look = s.look();
                     look.max_lines = lines[i.min(lines.len() - 1)];
                     s.set_look(look);
                 })
@@ -131,7 +131,7 @@ fn looks(s: &App, k: &Kit, layer: &mut Vec<El>) {
                 .label(t::LOOK_SIZE())
                 .fit()
                 .on_pick(move |s: &mut App, i, _: &mut Tx| {
-                    let mut look = s.settings.look.clone();
+                    let mut look = s.look();
                     look.size = sizes[i.min(sizes.len() - 1)];
                     s.set_look(look);
                 })
@@ -144,7 +144,7 @@ fn looks(s: &App, k: &Kit, layer: &mut Vec<El>) {
                 .label(t::LOOK_PLACE())
                 .fit()
                 .on_pick(|s: &mut App, i, _: &mut Tx| {
-                    let mut look = s.settings.look.clone();
+                    let mut look = s.look();
                     look.place = [Place::Top, Place::Middle, Place::Bottom][i.min(2)];
                     s.set_look(look);
                 })

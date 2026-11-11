@@ -54,7 +54,7 @@ pub fn thumb(s: &App, state: &artosia_slides::frame::OutputState, width: f32) ->
     let picture = state.slide.as_ref().filter(|slide| !slide.image.is_empty()).and_then(|slide| s.slide_pictures.get(&slide.image));
     let base = media(s);
     // A video or camera shows its newest frame from the projector; a still picture is the fallback.
-    let moving = s.link.live_picture(&state.look, &s.settings.look);
+    let moving = s.link.live_picture(&state.look, &s.look());
     let media = Media { slide: picture.map(|image| image.pixels()), picture: moving.or(base.picture), ..base };
     artosia_slides::audience::thumbnail(state, width, media, s.now)
 }

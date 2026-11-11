@@ -32,6 +32,10 @@ pub struct Plan {
     /// Unix seconds when the plan last became the open one; the list of plans is ordered by it.
     #[serde(default)]
     pub used: i64,
+    /// This plan's own look, as the operator window stores it (a serialized `artosia_slides::look::Look`,
+    /// which this crate cannot name). None means the plan uses the usual look.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub look: Option<serde_json::Value>,
     pub items: Vec<PlanItem>,
     next_id: u64,
 }
@@ -66,12 +70,13 @@ impl PlanEntry {
 
 impl Plan {
     pub fn named(name: impl Into<String>) -> Plan {
-        Plan { id: 0, name: name.into(), date: String::new(), used: 0, items: Vec::new(), next_id: 1 }
+        Plan { id: 0, name: name.into(), date: String::new(), used: 0, look: None, items: Vec::new(), next_id: 1 }
     }
 
     /// A new plan holding the same items, for another service. It has no day and is not saved yet.
+    /// It keeps the look: a service that sings the same songs on the same screen looks the same.
     pub fn copy_named(&self, name: impl Into<String>) -> Plan {
-        Plan { id: 0, name: name.into(), date: String::new(), used: 0, items: self.items.clone(), next_id: self.next_id }
+        Plan { id: 0, name: name.into(), date: String::new(), used: 0, look: self.look.clone(), items: self.items.clone(), next_id: self.next_id }
     }
 
     /// The month and day of the plan's date, when it has one.
@@ -208,5 +213,19 @@ mod tests {
         plan.move_to(a, 2);
         let order: Vec<u64> = plan.items.iter().map(|item| item.id).collect();
         assert_eq!(order, [c, b, a]);
+    }
+
+    #[test]
+    fn a_plan_may_carry_a_look_and_a_copy_keeps_it() {
+        let old = r#"{"id":0,"name":"Today","items":[],"next_id":1}"#;
+        let plan: Plan = serde_json::from_str(old).expect("an old plan loads");
+        assert!(plan.look.is_none(), "a plan saved before looks has none");
+        assert!(!serde_json::to_string(&plan).unwrap_or_default().contains("look"), "nothing is written for no look");
+        let mut own = Plan::named("Sunday school");
+        own.look = Some(serde_json::json!({"name": "Plain"}));
+        let json = serde_json::to_string(&own).unwrap_or_default();
+        let loaded: Plan = serde_json::from_str(&json).expect("round trip");
+        assert_eq!(loaded.look, own.look);
+        assert_eq!(own.copy_named("Copy").look, own.look);
     }
 }

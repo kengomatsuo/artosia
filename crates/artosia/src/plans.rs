@@ -5,6 +5,7 @@
 
 use artosia_core::deck::Deck;
 use artosia_core::plan::{Plan, valid_date};
+use artosia_slides::look::Look;
 use rune::TextEdit;
 
 use crate::state::{App, Undo, entry_matches};
@@ -18,6 +19,8 @@ pub struct PlanRow {
     pub name: String,
     pub date: String,
     pub items: usize,
+    /// The plan has a look of its own.
+    pub own_look: bool,
 }
 
 /// The rename dialog's two fields.
@@ -73,8 +76,51 @@ impl App {
         plans
     }
 
+    /// The look the screens use now: the open plan's own, else the usual one.
+    pub fn look(&self) -> Look {
+        self.plan_look().unwrap_or_else(|| self.settings.look.clone())
+    }
+
+    /// The open plan's own look, when it has one.
+    pub fn plan_look(&self) -> Option<Look> {
+        serde_json::from_value(self.plan.look.clone()?).ok()
+    }
+
+    pub fn has_own_look(&self) -> bool {
+        self.plan_look().is_some()
+    }
+
+    /// Gives the open plan a look of its own, starting from the usual one.
+    pub fn use_own_look(&mut self) {
+        if self.has_own_look() {
+            return;
+        }
+        self.plan.look = serde_json::to_value(&self.settings.look).ok();
+        self.touch_plan();
+    }
+
+    /// Drops the plan's own look. The toast offers it back.
+    pub fn use_usual_look(&mut self) {
+        let Some(look) = self.plan.look.take() else { return };
+        self.touch_plan();
+        self.look_edit.sync(&self.look());
+        self.refresh_decks();
+        self.say(t::look_own_dropped(&self.plan_title()), Some(Undo::PlanLook { plan: self.plan.id, look }));
+    }
+
+    /// Undo of `use_usual_look`, when the plan is still the open one.
+    pub fn restore_plan_look(&mut self, plan: i64, look: serde_json::Value) {
+        if self.plan.id != plan {
+            return;
+        }
+        self.plan.look = Some(look);
+        self.touch_plan();
+        self.look_edit.sync(&self.look());
+        self.refresh_decks();
+    }
+
     pub fn refresh_plan_rows(&mut self) {
-        self.switcher.rows = self.all_plans().iter().map(|plan| PlanRow { id: plan.id, name: plan.name.clone(), date: plan.date.clone(), items: plan.items.len() }).collect();
+        self.switcher.rows = self.all_plans().iter().map(|plan| PlanRow { id: plan.id, name: plan.name.clone(), date: plan.date.clone(), items: plan.items.len(), own_look: plan.look.is_some() }).collect();
     }
 
     pub fn open_switcher(&mut self) {
@@ -106,8 +152,10 @@ impl App {
             self.save_plan_now();
         }
         plan.used = self.now as i64;
+        let lines = self.look().max_lines;
         self.plan = plan;
         self.save_plan_now();
+        self.look_edit.sync(&self.look());
         self.plan_drag = None;
         self.plan_menu = None;
         self.more_menu = false;
@@ -130,6 +178,13 @@ impl App {
                 }
             }
             None => {}
+        }
+        // Another plan may split lyrics into other line counts. The live deck keeps the words it
+        // has on the projector; the one in Preview and what is queued follow the new plan.
+        if self.look().max_lines != lines {
+            let live = self.live.take();
+            self.refresh_decks();
+            self.live = live;
         }
         self.requeue();
         self.refresh_plan_rows();
@@ -351,5 +406,50 @@ mod tests {
         let open = app.open.as_ref().expect("Preview is filled");
         assert_eq!(open.deck.source, app.live.as_ref().expect("still live").deck.source);
         assert_eq!(open.item, None);
+    }
+
+    #[test]
+    fn a_plan_with_its_own_look_wins_and_falls_back_when_it_is_cleared() {
+        use artosia_slides::look::{Background, Look};
+        let mut app = App::practice();
+        let usual = app.settings.look.clone();
+        assert_eq!(app.look(), usual);
+        app.use_own_look();
+        assert!(app.has_own_look());
+        let plain = Look { background: Background::Solid([10, 20, 30]), ..usual.clone() };
+        app.set_look(plain.clone());
+        assert_eq!(app.look(), plain, "the plan's look is the one in use");
+        assert_eq!(app.settings.look, usual, "the usual look was not touched");
+        assert_eq!(app.output_state().look, plain, "the projector gets it");
+        assert_eq!(app.preview_state(None).look, plain);
+        // Another plan without one uses the usual look; coming back finds the own look again.
+        app.save_plan_now();
+        let first = app.plan.id;
+        app.create_plan();
+        app.finish_rename(false);
+        assert_eq!(app.look(), usual);
+        app.switch_plan(first);
+        assert_eq!(app.look(), plain);
+        assert!(app.switcher.rows.iter().any(|row| row.id == first && row.own_look));
+        app.use_usual_look();
+        assert_eq!(app.look(), usual);
+        assert!(app.toast.as_ref().is_some_and(|toast| toast.undo.is_some()));
+        app.undo();
+        assert_eq!(app.look(), plain, "undo gives the own look back");
+        // The usual look still changes the usual look only while the plan has none.
+        app.use_usual_look();
+        let other = Look { size: 1.2, ..usual.clone() };
+        app.set_look(other.clone());
+        assert_eq!(app.settings.look, other);
+    }
+
+    #[test]
+    fn a_duplicate_keeps_the_look_and_the_plan_stays_loadable() {
+        let mut app = App::practice();
+        app.use_own_look();
+        let own = app.look();
+        app.duplicate_plan();
+        assert!(app.has_own_look());
+        assert_eq!(app.look(), own);
     }
 }
