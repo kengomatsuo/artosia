@@ -30,3 +30,14 @@ cd - > /dev/null
 rm -rf "$out/.git"
 
 echo "Site for ${tag#v} is on gh-pages."
+
+# HTTPS can be enforced only once the domain resolves and GitHub has issued its
+# certificate. Until then GitHub refuses ("The certificate does not exist yet"), and the
+# next publish asks again, so nobody has to remember it.
+if [ "$(gh api "repos/$repo/pages" --jq .https_enforced)" != "true" ]; then
+    if gh api -X PUT "repos/$repo/pages" -F https_enforced=true > /dev/null 2>&1; then
+        echo "HTTPS is now enforced."
+    else
+        echo "HTTPS is not enforced yet: GitHub has no certificate until the domain's DNS record exists."
+    fi
+fi

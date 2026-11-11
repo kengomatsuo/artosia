@@ -21,8 +21,9 @@ knows what to do with it.
 GitHub Pages serves the `gh-pages` branch at the address in its `CNAME` file. The owner's
 other product pages (`cutling.`, `undirect.`) work the same way. The domain's DNS is at
 Cloudflare and needs one record: type CNAME, name `artosia`, target `kengomatsuo.github.io`,
-proxy off (DNS only), so GitHub can issue the certificate. Once the name resolves:
-`gh api -X PUT repos/kengomatsuo/artosia/pages -F https_enforced=true`.
+proxy off (DNS only), so GitHub can issue the certificate. Before the name resolves GitHub
+refuses to enforce HTTPS ("The certificate does not exist yet", tried 2026-11-12), so
+`tools/publish-site.sh` asks again at the end of every publish until it is on.
 
 `tools/publish.sh` ends by running `tools/publish-site.sh`, so each release rewrites the
 version and size on the page. The script reads both from the newest release, never from
