@@ -3185,5 +3185,15 @@
   "text": "Sedang dipakai",
   "back": "In use",
   "why": "About use, not about being stored"
+ },
+ "PLANS_TITLE": {
+  "text": "Rundown",
+  "back": "Rundown",
+  "why": "Indonesian has no plural, so the plan word alone heads the list"
+ },
+ "PLANS_ALL": {
+  "text": "Semua rundown",
+  "back": "All rundowns",
+  "why": "Two words, every one of the plans; the program draws the number after it"
  }
 }

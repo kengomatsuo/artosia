@@ -35,6 +35,8 @@ pub fn dump() -> String {
     line(out, "KIND_BIBLE", KIND_BIBLE());
     line(out, "KIND_PLAN", KIND_PLAN());
     line(out, "PLAN_SWITCH_LABEL", PLAN_SWITCH_LABEL());
+    line(out, "PLANS_TITLE", PLANS_TITLE());
+    line(out, "PLANS_ALL", PLANS_ALL());
     line(out, "PLAN_DUPLICATE", PLAN_DUPLICATE());
     line(out, "PLAN_RENAME", PLAN_RENAME());
     line(out, "PLAN_DELETE", PLAN_DELETE());

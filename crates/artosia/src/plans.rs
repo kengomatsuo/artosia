@@ -39,9 +39,17 @@ pub struct Switcher {
     /// The church's plans, the open one first and then the most recently used.
     pub rows: Vec<PlanRow>,
     pub renaming: Option<Renaming>,
+    /// The menu of every plan, opened from the last row of the list under the plan.
+    pub all_open: bool,
+    /// The plan that was open when a new one was started, to go back to when its naming is cancelled.
+    pub before: Option<i64>,
     /// Another plan was opened since anything from a plan went live, so Next starts it from the top.
     pub fresh: bool,
 }
+
+/// The most plans drawn under the plan: three services and one more fit a 768 point screen
+/// beside a plan of ten items.
+pub const STRIP: usize = 4;
 
 /// A plan nobody renamed reads in the window's language.
 pub fn label(name: &str) -> String {
@@ -184,6 +192,32 @@ impl App {
         self.switcher.rows = self.all_plans().iter().map(|plan| PlanRow { id: plan.id, name: plan.name.clone(), date: plan.date.clone(), items: plan.items.len(), own_look: plan.look.is_some() }).collect();
     }
 
+    /// The rows drawn under the plan: the plans of the open plan's day (those with no day when
+    /// it has none), in the list's fixed order, at most `STRIP` with the open one among them,
+    /// and how many plans the church has beyond those. Switching inside a day moves no row.
+    pub fn plan_strip(&self) -> (Vec<PlanRow>, usize) {
+        let mut all = self.switcher.rows.clone();
+        if !all.iter().any(|row| row.id == self.plan.id) {
+            // An empty plan nobody saved is not in the list yet; it is still the open one.
+            all.insert(0, PlanRow { id: self.plan.id, name: self.plan.name.clone(), date: self.plan.date.clone(), items: self.plan.items.len(), own_look: self.plan.look.is_some() });
+        }
+        let day: Vec<PlanRow> = all.iter().filter(|row| row.date == self.plan.date).cloned().collect();
+        let open = day.iter().position(|row| row.id == self.plan.id).unwrap_or(0);
+        let shown: Vec<PlanRow> = day.into_iter().skip((open + 1).saturating_sub(STRIP)).take(STRIP).collect();
+        let others = all.len() - shown.len();
+        (shown, others)
+    }
+
+    /// The menu of every plan under the plan's own list.
+    pub fn toggle_all_plans(&mut self) {
+        if !self.switcher.all_open {
+            self.save_plan_now();
+            self.refresh_plan_rows();
+        }
+        self.switcher.all_open = !self.switcher.all_open;
+        self.switcher.open = false;
+    }
+
     pub fn open_switcher(&mut self) {
         self.save_plan_now();
         self.refresh_plan_rows();
@@ -264,6 +298,7 @@ impl App {
 
     pub fn switch_plan(&mut self, id: i64) {
         self.switcher.open = false;
+        self.switcher.all_open = false;
         if id == self.plan.id {
             return;
         }
@@ -275,7 +310,16 @@ impl App {
     /// Starts an empty plan beside the open one and asks for its name.
     pub fn create_plan(&mut self) {
         self.switcher.open = false;
-        self.enter_plan(Plan::named(t::PLAN_NEW_NAME()), true);
+        // Another service of the same day is the usual reason for a new plan, so it starts
+        // with the open plan's day and stays in the list under the plan; the box that names
+        // it shows the day, to be changed or cleared.
+        let mut plan = Plan::named(t::PLAN_NEW_NAME());
+        plan.date = self.plan.date.clone();
+        if self.plan.id != 0 || !self.plan.items.is_empty() {
+            self.save_plan_now();
+        }
+        self.switcher.before = (self.plan.id != 0).then_some(self.plan.id);
+        self.enter_plan(plan, true);
         self.begin_rename(true);
     }
 
@@ -307,7 +351,19 @@ impl App {
 
     pub fn finish_rename(&mut self, save: bool) {
         let Some(renaming) = self.switcher.renaming.take() else { return };
-        if !save || !self.rename_date_ok() {
+        let before = self.switcher.before.take();
+        if !save {
+            // Cancel on a plan started a moment ago takes it back, and the plan that was open
+            // is open again: the plus is one press away, and a slip left an empty "New plan".
+            if renaming.fresh && renaming.id == self.plan.id && self.plan.items.is_empty() {
+                let gone = self.plan.id;
+                let _ = self.store.delete_plan(gone);
+                let back = before.and_then(|id| self.stored_plan(id)).or_else(|| self.all_plans().into_iter().find(|plan| plan.id != gone)).unwrap_or_else(|| Plan::named(t::PLAN_DEFAULT_NAME()));
+                self.enter_plan(back, false);
+            }
+            return;
+        }
+        if !self.rename_date_ok() {
             return;
         }
         let name = renaming.name.text.trim();
@@ -337,6 +393,8 @@ impl App {
     pub fn demo_plans(&mut self) {
         self.plan.name = "Sunday 7:00".into();
         self.plan.date = "2026-11-15".into();
+        // Saved first, so the morning's plan is listed before the later ones, as a church makes them.
+        self.save_plan_now();
         let mut second = self.plan.copy_named("Sunday 10:00");
         second.date = "2026-11-15".into();
         second.items.truncate(3);
@@ -370,6 +428,66 @@ mod tests {
 
     fn live_source(app: &App) -> Option<DeckSource> {
         app.live.as_ref().map(|live| live.deck.source.clone())
+    }
+
+    /// Starts another plan and names it, as the box that follows the plus does on Save.
+    fn another_plan(app: &mut App, name: &str) {
+        app.create_plan();
+        if let Some(renaming) = app.switcher.renaming.as_mut() {
+            renaming.name.replace_text(name);
+        }
+        app.finish_rename(true);
+    }
+
+    #[test]
+    fn the_plans_of_the_open_plan_s_day_are_listed_under_it() {
+        let names = |app: &App| app.plan_strip().0.iter().map(|row| row.name.clone()).collect::<Vec<_>>();
+        let mut app = App::practice();
+        // One plan: it is the list.
+        assert_eq!((names(&app).len(), app.plan_strip().1), (1, 0));
+        app.demo_plans();
+        assert_eq!(names(&app), ["Sunday 7:00", "Sunday 10:00"]);
+        assert_eq!(app.plan_strip().1, 1, "the plan of another day is behind the last row");
+        // Switching inside the day moves no row.
+        let later = app.switcher.rows.iter().find(|row| row.name == "Sunday 10:00").map(|row| row.id).expect("the second plan");
+        app.switch_plan(later);
+        assert_eq!(names(&app), ["Sunday 7:00", "Sunday 10:00"]);
+        // A plan with no day lists the plans with no day.
+        let youth = app.switcher.rows.iter().find(|row| row.name == "Youth Saturday").map(|row| row.id).expect("the third plan");
+        app.switch_plan(youth);
+        assert_eq!((names(&app), app.plan_strip().1), (vec!["Youth Saturday".to_string()], 2));
+        // A new plan is another service of the same day until its day is changed, and an
+        // empty plan nobody saved is still listed as the open one.
+        app.switch_plan(later);
+        another_plan(&mut app, "Sunday school");
+        assert_eq!(app.plan.date, "2026-11-15");
+        assert_eq!(names(&app), ["Sunday 7:00", "Sunday 10:00", "Sunday school"]);
+        // Cancel on a plan started a moment ago takes it back and reopens the one before.
+        let school = app.plan.id;
+        app.create_plan();
+        assert_eq!(names(&app).len(), 4);
+        app.finish_rename(false);
+        assert_eq!(app.plan.id, school);
+        assert_eq!(names(&app), ["Sunday 7:00", "Sunday 10:00", "Sunday school"]);
+    }
+
+    #[test]
+    fn at_most_four_plans_of_a_day_are_listed_and_the_open_one_is_among_them() {
+        let mut app = App::practice();
+        app.demo_plans();
+        for name in ["Third", "Fourth", "Fifth", "Sixth"] {
+            let mut copy = app.plan.copy_named(name);
+            copy.date = app.plan.date.clone();
+            assert!(app.store.save_plan(&mut copy).is_ok());
+        }
+        app.refresh_plan_rows();
+        let (rows, others) = app.plan_strip();
+        assert_eq!(rows.len(), STRIP);
+        assert!(rows.iter().any(|row| row.id == app.plan.id));
+        assert_eq!(rows.len() + others, app.switcher.rows.len());
+        let last = app.switcher.rows.iter().find(|row| row.name == "Sixth").map(|row| row.id).expect("the last plan");
+        app.switch_plan(last);
+        assert!(app.plan_strip().0.iter().any(|row| row.id == last));
     }
 
     #[test]
@@ -455,8 +573,7 @@ mod tests {
         // A second plan holding one other song.
         let planned = song_ids(&app);
         let other = app.songs.iter().find(|song| !planned.contains(&song.id)).map(|song| (song.id, song.title.clone())).expect("a song outside the plan");
-        app.create_plan();
-        app.finish_rename(false);
+        another_plan(&mut app, "Second");
         app.plan.push(PlanEntry::song(other.0, other.1));
         app.touch_plan();
         assert_eq!(live_source(&app), source, "the live deck did not change");
@@ -520,8 +637,7 @@ mod tests {
         // Another plan without one uses the usual look; coming back finds the own look again.
         app.save_plan_now();
         let first = app.plan.id;
-        app.create_plan();
-        app.finish_rename(false);
+        another_plan(&mut app, "Second");
         assert_eq!(app.look(), usual);
         app.switch_plan(first);
         assert_eq!(app.look(), plain);

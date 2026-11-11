@@ -452,6 +452,8 @@ text!(PLAN_HEADING_WORSHIP, "Worship", "Pujian");
 text!(PLAN_HEADING_WORD, "Word", "Firman");
 // Several plans, one for each service. The Indonesian slots hold the English until a person writes them from the briefs.
 text!(PLAN_SWITCH_LABEL, "Plans", "Plans");
+text!(PLANS_TITLE, "Plans", "Plans");
+text!(PLANS_ALL, "All plans", "All plans");
 text!(PLAN_DUPLICATE, "Duplicate plan", "Duplicate plan");
 text!(PLAN_RENAME, "Rename plan", "Rename plan");
 text!(PLAN_DELETE, "Delete plan", "Delete plan");

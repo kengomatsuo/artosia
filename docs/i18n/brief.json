@@ -2382,7 +2382,7 @@
  {
   "key": "PLAN_NEW",
   "kind": "const",
-  "screen": "Two places: an item at the end of the plan selector's menu (opened from the plan's name at the top of the left column), and a row in the search panel.",
+  "screen": "Three places: an item at the end of the plan selector's menu (opened from the plan's name at the top of the left column), a row in the search panel, and the hover help of the plus beside the heading of the list of plans at the foot of the left column.",
   "moment": "The person wants a second plan for another service.",
   "role": "menu item",
   "does": "Names the action of starting a fresh empty plan next to the existing ones.",
@@ -2541,7 +2541,7 @@
  {
   "key": "PLAN_SWITCH_LABEL",
   "kind": "const",
-  "screen": "Plan column, title strip: hover help of the plan's name button (a small arrow beside the name opens a menu of plans).",
+  "screen": "Plan column, top: the open plan's name sits in the box of a drop-down list, with an edge and a small arrow. This is the hover help of that box; the box opens a menu of plans with the actions on the open plan under it.",
   "moment": "The person hovers the name.",
   "role": "tooltip",
   "does": "Names the button that switches between the church's plans.",
@@ -2554,6 +2554,40 @@
    "plan"
   ],
   "notes": "The plural: it holds many."
+ },
+ {
+  "key": "PLANS_TITLE",
+  "kind": "const",
+  "screen": "Main window, the foot of the left column, under the open plan's items and the button that adds to it: a short list of the church's plans for the same day as the open plan (one plan per service), each a row with the plan's name, the open one filled. This is the small grey heading over that list, with the day beside it and a plus at its right that starts a new plan.",
+  "moment": "Between two services the person looks for the next service's plan and finds the list under this heading.",
+  "role": "section heading",
+  "does": "Names the list: these are the plans.",
+  "budget": 14,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "plan"
+  ],
+  "notes": "One word if the language allows: the plural of the product's word for a plan. No full stop."
+ },
+ {
+  "key": "PLANS_ALL",
+  "kind": "const",
+  "screen": "Main window, the foot of the left column, under the open plan's items and the button that adds to it: a short list of the church's plans for the same day as the open plan (one plan per service), each a row with the plan's name, the open one filled. This is the last row of that list, shown when the church has more plans than the rows above it: the text, the number of all plans, and a small arrow. Pressing it opens a menu of every plan.",
+  "moment": "The plan the person wants is from another day, so it is not among the rows above.",
+  "role": "list row that opens a menu",
+  "does": "Opens the list of every plan the church keeps, of every day.",
+  "budget": 18,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "plan"
+  ],
+  "notes": "Two words: every one of the plans. No full stop. The number is drawn after it by the program."
  },
  {
   "key": "PLAN_DUPLICATE",

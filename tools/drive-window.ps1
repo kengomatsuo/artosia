@@ -7,7 +7,8 @@
 # Steps: key:<name>  down:<name>  up:<name>  type:<text without spaces>
 #        click:<x>,<y>  drag:<x>,<y>,<dx>,<dy> (points inside the window)
 #        post-click:<x>,<y> (a click sent to the window itself, which works while another
-#        program is in front and takes nothing from it)
+#        program is in front; the pointer goes to the spot for the click and back again,
+#        because Rune presses what is under the real pointer)
 #        shot:<name>  wait:<milliseconds>
 # Input goes to whatever window is in front, so every step first checks that this program's
 # window is the one in front and stops when it is not.
@@ -37,6 +38,7 @@ public static class Drive {
     [DllImport("user32.dll")] public static extern short VkKeyScanW(char c);
     [DllImport("user32.dll")] public static extern void mouse_event(uint flags, uint dx, uint dy, uint data, UIntPtr extra);
     [DllImport("user32.dll")] public static extern bool SetCursorPos(int x, int y);
+    [DllImport("user32.dll")] public static extern bool GetCursorPos(out POINT p);
 }
 "@
 [Drive]::SetProcessDpiAwarenessContext([IntPtr](-4)) | Out-Null
@@ -106,11 +108,21 @@ try {
                 $x, $y = $arg -split "," | ForEach-Object { [double]$_ }
                 $scale = [Drive]::GetDpiForWindow($h) / 96.0
                 $at = [IntPtr](([int]($y * $scale) -shl 16) -bor ([int]($x * $scale) -band 0xFFFF))
+                # Rune presses what is under the real pointer, whatever the message says, so the
+                # pointer goes there for the click and back to where the person had it.
+                $was = New-Object Drive+POINT
+                [Drive]::GetCursorPos([ref]$was) | Out-Null
+                $o = New-Object Drive+POINT
+                [Drive]::ClientToScreen($h, [ref]$o) | Out-Null
+                [Drive]::SetCursorPos([int]($o.X + $x * $scale), [int]($o.Y + $y * $scale)) | Out-Null
+                Start-Sleep -Milliseconds 60
                 [Drive]::PostMessage($h, 0x0200, [IntPtr]::Zero, $at) | Out-Null   # the pointer moves there
                 Start-Sleep -Milliseconds 120
                 [Drive]::PostMessage($h, 0x0201, [IntPtr]1, $at) | Out-Null        # left button down
                 Start-Sleep -Milliseconds 80
                 [Drive]::PostMessage($h, 0x0202, [IntPtr]::Zero, $at) | Out-Null   # and up
+                Start-Sleep -Milliseconds 120
+                [Drive]::SetCursorPos($was.X, $was.Y) | Out-Null
             }
             "type" {
                 foreach ($c in $arg.ToCharArray()) {

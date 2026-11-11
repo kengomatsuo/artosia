@@ -543,6 +543,7 @@ const SCENES: &[Scene] = &[
         s.demo_plans();
         s.open_switcher();
     }),
+    ("plans-under", |s| s.demo_plans()),
     ("plan-rename", |s| {
         s.demo_plans();
         s.begin_rename(false);
@@ -649,7 +650,11 @@ fn main() {
         on_key: Some(on_key),
         ..AppSpec::new("Artosia", (1366.0, 768.0), App::load, ui::view)
     };
-    let app = rune::App::new(spec).titlebar(Titlebar::new(theme::size::TOPBAR)).modifier_keys().on_close(|s: &mut App, _: &mut Tx| {
+    // The window opens filling its screen. At its own size Windows placed it 128 points in from
+    // the corner, and its foot hung under the taskbar of a 1080 point screen and off a 768
+    // point one, where the status bar and the lowest tiles could not be pressed (owner,
+    // 2026-11-11: "summoning the window partly out of bounds").
+    let app = rune::App::new(spec).titlebar(Titlebar::new(theme::size::TOPBAR)).maximized(true).modifier_keys().on_close(|s: &mut App, _: &mut Tx| {
         // Closing the operator on purpose closes the projector too, and ends a stream cleanly;
         // a crash never gets here, and then both go on.
         if let Some(stream) = s.stream.as_mut() {

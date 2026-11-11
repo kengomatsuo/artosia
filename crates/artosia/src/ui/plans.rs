@@ -84,6 +84,97 @@ pub(crate) fn title_bar(s: &App, k: &Kit, layer: &mut Vec<El>, tools: El) -> El 
         .child(tools)
 }
 
+/// One plan of the list under the plan. The open one is filled; a press opens another.
+fn strip_row(s: &App, k: &Kit, plan: &crate::plans::PlanRow) -> El {
+    let id = plan.id;
+    let open = id == s.plan.id;
+    let own_look = if open { s.has_own_look() } else { plan.own_look };
+    let mark = match own_look {
+        true => icon(&icons::LOOK, 14.0).color(k.c.icon_base).role("img").label(t::PLAN_OWN_LOOK()).help(t::PLAN_OWN_LOOK()),
+        false => el(),
+    };
+    row()
+        .key(format!("plans-under-{id}"))
+        .role("button")
+        .label(plan.label())
+        .w_full()
+        .h(STRIP_ROW)
+        .px(space::S3)
+        .gap(space::S2)
+        .center_y()
+        .radius(k.radius.md)
+        .fill(if open { k.c.layer_03 } else { rune::Color::TRANSPARENT })
+        .hover(k.c.hover)
+        .press(k.c.pressed)
+        .cursor(Cursor::Pointer)
+        .child(text(plan.label()).font(if open { type_::BODY_STRONG } else { type_::BODY }).color(k.c.text_base).truncate().grow(1.0).min_w(0.0))
+        .child(mark)
+        .on_press_tx(move |s: &mut App, tx: &mut Tx| {
+            s.switch_plan(id);
+            tx.blur();
+        })
+}
+
+/// Points of one row of the list under the plan.
+const STRIP_ROW: f32 = 30.0;
+
+/// The plans of the open plan's day, in view under the plan, where EasiSlides keeps its
+/// worship lists (owner, 2026-11-11: "how to access plan picker? In easislide the plan list is
+/// just below the plan"). One press opens another plan; the plus starts a new one; every
+/// other plan of the church is behind the last row.
+pub(crate) fn strip(s: &App, k: &Kit, layer: &mut Vec<El>) -> El {
+    let (rows, others) = s.plan_strip();
+    let day = crate::plans::day_text(&s.plan.date).unwrap_or_default();
+    let head = row()
+        .w_full()
+        .h(28.0)
+        .pl(space::S3)
+        .pr(space::S2)
+        .gap(space::S2)
+        .center_y()
+        .child(text(t::PLANS_TITLE()).font(type_::SMALL_STRONG).color(k.c.text_muted))
+        .child(text(day).font(type_::SMALL).color(k.c.text_faint).truncate().grow(1.0).min_w(0.0))
+        .child(btn(t::PLAN_NEW()).icon(&icons::PLUS).icon_only().ghost().small().build(k, |s, tx| {
+            s.create_plan();
+            tx.blur();
+        }));
+    let mut list = col().key("plans-under").role("list").label(t::PLANS_TITLE()).w_full().px(space::S2).gap(2.0);
+    for plan in &rows {
+        list = list.child(strip_row(s, k, plan));
+    }
+    if others > 0 {
+        let open = s.switcher.all_open;
+        let trigger = row()
+            .key("plans-all-button")
+            .role("button")
+            .label(t::PLANS_ALL())
+            .w_full()
+            .h(STRIP_ROW)
+            .px(space::S3)
+            .gap(space::S2)
+            .center_y()
+            .radius(k.radius.md)
+            .fill(if open { k.c.layer_03 } else { rune::Color::TRANSPARENT })
+            .hover(k.c.hover)
+            .press(k.c.pressed)
+            .cursor(Cursor::Pointer)
+            .child(text(t::PLANS_ALL()).font(type_::BODY).color(k.c.text_muted).truncate().grow(1.0).min_w(0.0))
+            .child(text((rows.len() + others).to_string()).font(type_::SMALL).color(k.c.text_faint))
+            .child(icon(k.glyph.chevron_down, 14.0).color(k.c.text_muted).a11y_hidden())
+            .on_press_tx(|s: &mut App, tx: &mut Tx| {
+                s.toggle_all_plans();
+                tx.blur();
+            });
+        let mut menu = Menu::new("plans-all").trigger(trigger).open(open).min_width(size::PLAN - 2.0 * space::S3).on_close(|s: &mut App| s.switcher.all_open = false);
+        for row in &s.switcher.rows {
+            let id = row.id;
+            menu = menu.item(MenuItem::new(row.label()).checked(id == s.plan.id).badge(row.detail()).on_select(move |s: &mut App| s.switch_plan(id)));
+        }
+        list = list.child(menu.build(k, layer));
+    }
+    col().key("plans-strip").w_full().pb(space::S2).child(head).child(list)
+}
+
 /// The dialog that names a plan and gives it a day.
 pub(crate) fn view(s: &App, k: &Kit, layer: &mut Vec<El>) {
     let Some(renaming) = s.switcher.renaming.as_ref() else { return };

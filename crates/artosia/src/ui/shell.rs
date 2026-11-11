@@ -567,7 +567,20 @@ fn live_pane(s: &App, k: &Kit, size: Option<Foot>, layer: &mut Vec<El>) -> El {
 fn plan_column(s: &App, k: &Kit, layer: &mut Vec<El>) -> El {
     // The title is the plan's name and switches between the plans of the day's services.
     let bar = crate::ui::plans::title_bar(s, k, layer, el());
-    col().key("plan").w(PLAN).h_full().min_h(0.0).fill(theme::surf().side).child(bar).child(crate::ui::plan::list(s, k, layer)).child(hline()).child(crate::ui::plan::add_bar(s, k, layer))
+    // The button that adds to the plan stays right under the plan's items; the list of plans
+    // is the foot of the column.
+    col()
+        .key("plan")
+        .w(PLAN)
+        .h_full()
+        .min_h(0.0)
+        .fill(theme::surf().side)
+        .child(bar)
+        .child(crate::ui::plan::list(s, k, layer))
+        .child(hline())
+        .child(crate::ui::plan::add_bar(s, k, layer))
+        .child(hline())
+        .child(crate::ui::plans::strip(s, k, layer))
 }
 
 /// The whole window under the title bar and over the status bar.

@@ -43,6 +43,8 @@ The owner tested the window on 2026-11-11 and wrote: "You're not making an app f
 |---|---|---|
 | No dialog ends in half a row | Both readers took a row cut by the fold for a defect | Design shows one part at a time (background, words, logo); Settings fits a 768 point window; the keys sheet scrolls under a title that stays |
 | What a pane holds is never cut to make room for buttons | Fourth blind test: "Q..." for a song's title on the target screen | The title has a line of its own under the pane's name (`ui/shell.rs` `title_bar`) |
+| What a person switches between is in view, never behind a title | The owner asked where the plan picker was; EasiSlides shows its worship list's box at the list, ProPresenter and FreeShow list playlists and projects beside the items | The day's plans are rows under the plan, one press apart; the plan's name is drawn as the box of a drop-down list |
+| Cancel leaves nothing behind | Found while pressing the plus: an empty "New plan" stayed after Cancel | Cancel in the box that names a new plan takes the plan back |
 | A dialog opens on what the person came for, never on its close button | House rule on dialog focus; Rune at the pinned rev picks "its `El::autofocus` control, else ... its first Tab stop", and the first stop is the close button | Design opens on the look being changed and, back from the gallery, on the gallery's button; Phone and Listen on their switch; Stream on the address, or on Start once there is one; Settings on its first row (`Tx::focus`, because a kit switch of segments cannot be named) |
 | What scrolls fades at the edge that hides more | The same finding, where scrolling cannot be avoided | `scroll_edge_fade` on every scrolling area (`theme::size::FADE`) |
 

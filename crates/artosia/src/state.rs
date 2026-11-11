@@ -637,6 +637,8 @@ impl App {
         if practice {
             app.seed_practice_plan();
         }
+        // The plans are listed under the plan from the first frame.
+        app.refresh_plan_rows();
         if data::has_flag("--import-easislides") {
             app.import_easislides();
             app.toast = None;
