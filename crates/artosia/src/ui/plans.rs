@@ -90,6 +90,11 @@ fn strip_row(s: &App, k: &Kit, plan: &PlanRow, layer: &mut Vec<El>) -> El {
     if own_look {
         line = line.child(icon(&icons::LOOK, 14.0).color(k.c.icon_base).role("img").label(t::PLAN_OWN_LOOK()).help(t::PLAN_OWN_LOOK()));
     }
+    // Ctrl Tab is drawn on the row it opens. Beside the heading it ran past the column's edge
+    // in Indonesian, whose word for the list is longer.
+    if s.plan_beside(true) == Some(id) {
+        line = line.child(crate::ui::widgets::keycaps(k, "Ctrl Tab", None));
+    }
     // Each plan carries its own menu, so a copy is made from the plan it copies.
     let menu_open = s.switcher.menu == Some(id);
     let trigger = btn(t::PLAN_ITEM_MENU())
@@ -133,8 +138,6 @@ pub(crate) fn strip(s: &App, k: &Kit, layer: &mut Vec<El>, tall: f32) -> El {
         .gap(space::S2)
         .center_y()
         .child(text(t::PLANS_TITLE()).font(type_::SMALL_STRONG).color(k.c.text_muted))
-        // The key that goes to the next plan, drawn where the plans are.
-        .child(crate::ui::widgets::keycaps(k, "Ctrl Tab", None))
         .child(spacer())
         .child(btn(t::PLAN_NEW()).icon(&icons::PLUS).icon_only().ghost().small().hint("Ctrl Shift N").build(k, |s, tx| {
             s.begin_new_plan();

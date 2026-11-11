@@ -391,14 +391,21 @@ impl App {
     /// round, as the same keys move between the tabs of a Windows program. The projector is
     /// not touched, as with every switch of plan.
     pub fn walk_plans(&mut self, forward: bool) {
+        if let Some(id) = self.plan_beside(forward) {
+            self.switch_plan(id);
+        }
+    }
+
+    /// The plan after or before the open one in the list, going round; none with one plan.
+    /// The list draws Ctrl Tab on the row of the one after.
+    pub fn plan_beside(&self, forward: bool) -> Option<i64> {
         let count = self.switcher.rows.len();
-        let Some(at) = self.switcher.rows.iter().position(|row| row.id == self.plan.id) else { return };
+        let at = self.switcher.rows.iter().position(|row| row.id == self.plan.id)?;
         if count < 2 {
-            return;
+            return None;
         }
         let to = if forward { (at + 1) % count } else { (at + count - 1) % count };
-        let id = self.switcher.rows[to].id;
-        self.switch_plan(id);
+        Some(self.switcher.rows[to].id)
     }
 
     /// Closes the box. With `save` the plan is made, copied or changed; without, nothing is.
