@@ -114,7 +114,7 @@ enum Hint {
 /// that acts on it (owner, 2026-11-11: keys listed at the bottom did not help; a key on the
 /// row does).
 #[allow(clippy::too_many_arguments)]
-fn list_row(k: &Kit, key: &str, index: usize, number: Option<usize>, slide: &Slide, mark: Mark, go_live: bool, hint: Hint) -> El {
+fn list_row(k: &Kit, key: &str, index: usize, number: Option<usize>, slide: &Slide, mark: Mark, go_live: bool, hint: Hint, starts: bool) -> El {
     let live = matches!(mark, Mark::Live | Mark::Hidden);
     let on_fill = if mark == Mark::Hidden { Color::BLACK } else { theme::on_live() };
     let ink = if live { on_fill } else { k.c.text_base };
@@ -178,7 +178,7 @@ fn list_row(k: &Kit, key: &str, index: usize, number: Option<usize>, slide: &Sli
             Mark::Rest => Color::TRANSPARENT,
         })
         .child(digit)
-        .child(el().w(46.0).child(chip))
+        .child(col().w(46.0).gap(2.0).child(chip).child(if starts { icon(&icons::PLAY, 12.0).color(faint).a11y_hidden() } else { el() }))
         .child(words)
         .child(trailing);
     if mark == Mark::Cursor {
@@ -213,6 +213,8 @@ struct Pane<'a> {
     next_at: Option<usize>,
     /// What Artosia offers to bring here next, over the list.
     strip: Option<El>,
+    /// The slide the plan item was marked to begin at.
+    start: Option<usize>,
     /// Shown in place of the list when there is no deck.
     empty: El,
     footer: El,
@@ -246,7 +248,7 @@ fn pane(k: &Kit, p: Pane<'_>) -> El {
                     _ if p.next_at == Some(index) => Hint::Next,
                     _ => Hint::None,
                 };
-                list = list.child(list_row(k, p.key, index, number, slide, mark, p.go_live, hint));
+                list = list.child(list_row(k, p.key, index, number, slide, mark, p.go_live, hint, p.start == Some(index)));
             }
         }
         _ => list = list.child(p.empty),
@@ -306,6 +308,7 @@ fn foot(size: Foot, picture: El, controls: El) -> El {
 fn open_tools(s: &App, k: &Kit) -> Vec<El> {
     let Some(open) = s.open.as_ref() else { return Vec::new() };
     let mut tools = Vec::new();
+    tools.extend(crate::ui::plan::start_tool(s, k));
     if !s.open_in_plan() {
         tools.push(btn(t::BTN_ADD_TO_PLAN()).icon(&icons::PLUS).icon_only().small().build(k, |s, tx| {
             s.add_open_to_plan();
@@ -381,6 +384,7 @@ fn preview_pane(s: &App, k: &Kit, size: Foot) -> El {
             next_at: None,
             // What was heard, or what usually follows: it comes into Preview, the safe side.
             strip: crate::ui::suggest::strip(s, k),
+            start: s.marked_start(),
             // With nothing open the pane says what to do first.
             empty: if open.is_some() { empty_words(k, t::DECK_EMPTY()) } else { crate::ui::slides::start(s, k) },
             footer: foot(size, picture(s, k, &state, size.picture, false), preview_controls(s, k, size)),
@@ -516,6 +520,7 @@ fn live_pane(s: &App, k: &Kit, size: Option<Foot>, layer: &mut Vec<El>) -> El {
             cursor: s.live_pick.filter(|pick| Some(*pick) != live.map(|l| l.index)),
             go_live: true,
             strip: None,
+            start: None,
             next_at: live.map(|l| l.index + 1).filter(|next| live.is_some_and(|l| *next < l.deck.slides.len())),
             empty: empty_words(k, t::LIVE_NOTHING()),
             footer,

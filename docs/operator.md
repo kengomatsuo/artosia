@@ -43,6 +43,21 @@ Next at the last slide of the live item shows what waits in Preview, at its ring
 
 The ring also works inside the live song. Esc puts the live song in Preview, Ctrl and an arrow move the ring to another part, and it stays there while the live slide moves (`OpenDeck::armed`) until Enter, or the Next that ends the song, shows it.
 
+### Where a song begins (medley start points)
+
+The owner, 2026-11-11: "They also want to set the medley checkpoints so the medley auto starts from the reff for example." A song of the plan can carry the section it begins at (`PlanEntry::Song::start`, a section's tag, stored in the plan's JSON and absent from a plan that sets none). It is a tag and not a slide number, so it follows the chorus when a verse is written in front of it, and falls back to the first slide when the section is cut (`artosia_core::plan::start_slide`, tests in `plan.rs`).
+
+Setting it, two ways that need no telling:
+
+- With the song in Preview, move the ring to the slide and press the play icon among Preview's tools (Ctrl M). It is lit while the ring's slide is the start; pressing it again clears it. With nothing marked and the ring on the first section it is dimmed, since the song begins there already. Its tooltip says what it does and its key is printed on it; the state is its look, not words.
+- The plan row's menu lists the song's sections under "Starts at", the current one checked, and "The beginning".
+
+Showing it: the plan row carries the section's chip (`C`, `V2`) and the Preview list marks the start slide with a play icon under its chip, so the ring's place on a freshly opened song is explained.
+
+Using it, everywhere a plan item comes into Preview at its start the ring begins on the start slide (`state.rs`: `open_plan_item`, `queue_next`, `walk_plan` through it, `start_service`, and `next` crossing into the next item; `starts.rs`, `show_start_of` for Show now from the search, the phone and the service start). So Enter, Show and the Next that ends the live song all start the song there. A ring a person moved by hand is never taken back.
+
+What the search learned ("Usually started at Chorus, 4 of 4 times", `learning.rs`) is offered on the row menu, under that section, as one press when the item has no start. It is never set by itself.
+
 ### Shift picks, and letting go shows
 
 Holding Shift, the arrows move a second ring through the live song in the Live list, and the projector does not change. Letting Shift go shows the slide it is on; Esc before that shows nothing (`state.rs`, `pick_slide`, `release_pick`). A far slide is reached without the ones between passing over the room's screen. The owner asked for it twice: "if shift or control hold then those arrows, it only moves the selector not change the actual live text", then on 2026-11-11 "when release the shift/ctrl it activates". Shift got the release and Ctrl kept the ring that waits, because a medley needs a ring that is still there after the fingers leave the keyboard.
@@ -150,6 +165,7 @@ The arrows are the ones EasiSlides taught the volunteers (owner, 2026-11-10: "Ea
 | Esc | Put the live item in Preview |
 | Tab, Shift Tab | Put the next or the previous plan item in Preview |
 | Alt Down, Alt Up | Move the Preview item in the plan |
+| Ctrl M | Start the Preview song at the ring's section, or clear it |
 | Delete | Take the Preview item out of the plan (Undo in the toast) |
 | F1, F2, F3 | No text, Black, Logo |
 | F6 | The Live switch: the projector on or off |

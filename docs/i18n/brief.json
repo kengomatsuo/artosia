@@ -8511,5 +8511,70 @@
       "listen"
     ],
     "notes": "Light and friendly; one short sentence."
+  },
+  {
+    "key": "KEY_START_HERE",
+    "kind": "const",
+    "screen": "Main window: the strip over the Preview list, where a small icon button sets the song's starting part.",
+    "moment": "Key cap inside that icon button.",
+    "role": "key name",
+    "does": "The Ctrl-plus-letter shortcut that sets the place a song of the plan begins.",
+    "budget": 8,
+    "variables": [],
+    "register": "None; this is a label, not speech. Follow what is printed on the keyboard.",
+    "vocabulary": [
+      "song"
+    ],
+    "notes": "A key name printed on a physical keyboard. Indonesian keyboards print the same Latin key names, so keep them as printed; the app shows them inside a small key cap. Keep as printed."
+  },
+  {
+    "key": "TIP_START_HERE",
+    "kind": "const",
+    "screen": "Main window, the Preview list of a song that is in today's plan. Each row of the list is one slide of the song, with a small pill naming its part (verse, chorus). One row has a ring around it: the slide that will go on the projector next. In a medley the band goes from one song straight into the chorus of the next, so the volunteer marks, while preparing, the part each song begins at.",
+    "moment": "The words that appear when the pointer rests on a small icon button (a play triangle and a key cap) in the strip over the list. The button is lit while the ring is on the slide the song begins at, and unlit otherwise; it has no words of its own.",
+    "role": "tooltip of an icon button",
+    "does": "Names what pressing the button does: the song will begin at the slide under the ring whenever it comes up. Pressing it again takes that away.",
+    "budget": 40,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "song",
+      "slide",
+      "plan"
+    ],
+    "notes": "Names the action, not the state: the lit or unlit look says the state. A fragment without a full stop."
+  },
+  {
+    "key": "PLAN_STARTS_AT",
+    "kind": "const",
+    "screen": "Main window, left column (the plan), the menu of one song row. Under a small heading it lists the song's parts (verse 1, chorus, bridge) and the choice 'the beginning', one of which has a check mark.",
+    "moment": "The small heading over that list of choices.",
+    "role": "menu heading",
+    "does": "Introduces the choice of the part this song begins at when it comes up in the service; the choices follow it.",
+    "budget": 16,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "song",
+      "section",
+      "plan"
+    ],
+    "notes": "Reads as the start of a sentence finished by the choice under it (Starts at / Chorus). A heading without a full stop."
+  },
+  {
+    "key": "PLAN_START_BEGINNING",
+    "kind": "const",
+    "screen": "Main window, left column (the plan), the menu of one song row. Under the heading 'Starts at' it lists the song's parts (verse 1, chorus, bridge) and one more choice, with a check mark on the one now in force.",
+    "moment": "The first choice in that list, above the song's parts.",
+    "role": "menu choice",
+    "does": "Makes the song begin at its first slide, taking away any other starting part that was chosen.",
+    "budget": 20,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "song",
+      "plan"
+    ],
+    "notes": "Sits under the heading PLAN_STARTS_AT, so the two read together."
   }
 ]

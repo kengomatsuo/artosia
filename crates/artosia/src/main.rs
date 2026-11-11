@@ -17,6 +17,7 @@ mod learning;
 mod link;
 mod palette;
 mod plans;
+mod starts;
 mod state;
 mod stream;
 mod strings;
@@ -227,6 +228,8 @@ fn on_key(s: &mut App, ev: &KeyEvent, tx: &mut Tx) -> bool {
         Key::Right | Key::End => s.go_to_edge(true),
         Key::Enter => s.enter(),
         Key::Tab => s.walk_plan(!ev.mods.shift),
+        // Ctrl M: the Preview song starts at the ring's section (docs/operator.md).
+        Key::Command('m') => s.toggle_start_here(),
         Key::Function(4) => s.open_last_heard(),
         Key::Function(5) => s.open_announcements(),
         Key::Escape if s.live.is_some() && !s.open_is_live() => s.open_live(),
@@ -440,7 +443,7 @@ const SCENES: &[Scene] = &[
     ("learned-browse", |s| {
         s.plan.items.clear();
         if let Some(id) = s.songs.first().map(|song| song.id) {
-            s.plan.push(artosia_core::plan::PlanEntry::Song { song_id: id, title: s.songs[0].title.clone() });
+            s.plan.push(artosia_core::plan::PlanEntry::song(id, s.songs[0].title.clone()));
         }
         s.seed_demo_history();
         s.open_song(0, None);
@@ -505,6 +508,28 @@ const SCENES: &[Scene] = &[
     ("search-plan", |s| {
         s.demo_plans();
         s.open_palette(Scope::All, "youth");
+    }),
+    // A medley: the second song of the plan is marked to begin at its chorus, and waits there.
+    ("plan-start", |s| {
+        if let Some((first, second, chorus)) = s.demo_medley() {
+            s.set_start(second, Some(chorus));
+            s.open_plan_item(first);
+            s.show(0);
+        }
+    }),
+    // The same song opened by hand, the ring on its chorus and nothing marked yet.
+    ("plan-start-offer", |s| {
+        if let Some((_, second, _)) = s.demo_medley() {
+            s.open_plan_item(second);
+            s.select(1);
+        }
+    }),
+    // The row's menu, with the sections to start at.
+    ("plan-start-menu", |s| {
+        if let Some((first, second, _)) = s.demo_medley() {
+            s.open_plan_item(first);
+            s.plan_menu = Some(second);
+        }
     }),
     ("toast", |s| {
         if let Some(id) = s.plan.items.get(2).map(|item| item.id) {

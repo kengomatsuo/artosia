@@ -362,7 +362,7 @@ mod tests {
         let other = app.songs.iter().find(|song| !planned.contains(&song.id)).map(|song| (song.id, song.title.clone())).expect("a song outside the plan");
         app.create_plan();
         app.finish_rename(false);
-        app.plan.push(PlanEntry::Song { song_id: other.0, title: other.1 });
+        app.plan.push(PlanEntry::song(other.0, other.1));
         app.touch_plan();
         assert_eq!(live_source(&app), source, "the live deck did not change");
         assert_eq!(app.live.as_ref().map(|live| live.index), index, "nor its slide");
@@ -381,7 +381,7 @@ mod tests {
     #[test]
     fn the_song_that_is_live_takes_its_place_in_the_plan_that_is_opened() {
         let mut app = App::practice();
-        let songs: Vec<(i64, String)> = app.plan.items.iter().filter_map(|item| if let PlanEntry::Song { song_id, title } = &item.entry { Some((*song_id, title.clone())) } else { None }).collect();
+        let songs: Vec<(i64, String)> = app.plan.items.iter().filter_map(|item| if let PlanEntry::Song { song_id, title, .. } = &item.entry { Some((*song_id, title.clone())) } else { None }).collect();
         assert!(songs.len() >= 2);
         let first = app.plan.items.iter().find(|item| matches!(item.entry, PlanEntry::Song { .. })).map(|item| item.id).expect("a song");
         app.open_plan_item(first);

@@ -658,7 +658,7 @@ impl App {
         self.plan.push(PlanEntry::Announcements);
         self.plan.push(PlanEntry::Heading { title: t::PLAN_HEADING_WORSHIP().to_string() });
         for song in self.songs.iter().take(3) {
-            self.plan.push(PlanEntry::Song { song_id: song.id, title: song.title.clone() });
+            self.plan.push(PlanEntry::song(song.id, song.title.clone()));
         }
         self.plan.push(PlanEntry::Heading { title: t::PLAN_HEADING_WORD().to_string() });
         let reference = Reference { book: 43, chapter: 3, verse: 16, end_chapter: 3, end_verse: 17 };
@@ -1031,7 +1031,7 @@ impl App {
             self.resume = Some(id);
         }
         let queued = match self.neighbour(true) {
-            Some((id, deck)) => OpenDeck { deck, item: Some(id), cursor: 0, queued: true, armed: false },
+            Some((id, deck)) => OpenDeck { cursor: self.start_cursor(id, &deck), deck, item: Some(id), queued: true, armed: false },
             None => OpenDeck { deck: live.deck.clone(), item: live.item, cursor: live.index, queued: true, armed: false },
         };
         self.open = Some(queued);
@@ -1076,7 +1076,7 @@ impl App {
         match first.map(|item| item.id) {
             Some(id) => {
                 self.open_plan_item(id);
-                self.show(0);
+                self.show_start_of(id);
             }
             None => self.say(t::PLAN_EMPTY(), None),
         }
@@ -1137,7 +1137,9 @@ impl App {
     pub fn open_plan_item(&mut self, id: u64) {
         let Some(item) = self.plan.items.iter().find(|item| item.id == id) else { return };
         if let Some(deck) = self.deck_for(&item.entry) {
-            self.open_deck(deck, Some(id), 0);
+            // A song marked to begin at its chorus opens with the ring there.
+            let cursor = self.start_cursor(id, &deck);
+            self.open_deck(deck, Some(id), cursor);
         }
     }
 
@@ -1229,8 +1231,9 @@ impl App {
             let cursor = self.open.as_ref().map(|open| open.cursor).unwrap_or(0);
             self.show(cursor);
         } else if let Some((id, deck)) = self.neighbour(true) {
-            self.open = Some(OpenDeck::new(deck, Some(id), 0));
-            self.show(0);
+            let cursor = self.start_cursor(id, &deck);
+            self.open = Some(OpenDeck::new(deck, Some(id), cursor));
+            self.show(cursor);
         }
     }
 

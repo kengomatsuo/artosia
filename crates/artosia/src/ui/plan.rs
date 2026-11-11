@@ -10,7 +10,9 @@ use crate::palette::Scope;
 use crate::state::{App, PlanDrag};
 use crate::strings as t;
 use crate::theme::{self, icons, size, space, type_};
-use crate::ui::widgets::{btn, state_pill};
+use crate::ui::widgets::{btn, state_pill, tag_chip};
+use artosia_core::deck::tag_group;
+use artosia_slides::stage::group_color;
 
 pub(crate) fn entry_icon(entry: &PlanEntry) -> &'static rune::Icon {
     match entry {
@@ -66,6 +68,11 @@ pub(crate) fn item_row(s: &App, k: &Kit, item: &PlanItem, menu: El) -> El {
     if missing {
         // An entry that cannot be shown says so in words across the row, not by a cursor.
         return body.child(state_pill(t::PLAN_MISSING(), theme::warn(), rune::Color::BLACK)).child(menu);
+    }
+    // A song marked to begin at one of its parts shows that part's chip, as the lists draw it.
+    let mut body = body;
+    if let Some(tag) = s.entry_start(&item.entry) {
+        body = body.label(format!("{}, {}", s.entry_title(&item.entry), t::starts_chip(&t::section_label(tag)))).child(tag_chip(&tag.short(), group_color(tag_group(tag))));
     }
     // The item on the projector carries a red dot where its menu button is; the button takes
     // the dot's place under the pointer, and while its menu is open (owner, 2026-11-11: a dot,
@@ -179,6 +186,35 @@ pub(crate) fn row_menu(s: &App, k: &Kit, item: &PlanItem, at: usize, layer: &mut
             s.plan_menu = None;
         }));
     }
+    // Where a song begins: its parts, with the one in force checked. Built only while the menu
+    // is open, since reading a song's parts costs a little.
+    if open && let PlanEntry::Song { song_id, .. } = &item.entry && let Some(place) = s.song_position(*song_id) {
+        let current = s.entry_start(&item.entry);
+        // What the search learned is offered here, never applied: one press, and the volunteer's.
+        let usual = s.start_suggestion(&item.entry);
+        menu = menu.separator().group_label(t::PLAN_STARTS_AT());
+        menu = menu.item(MenuItem::new(t::PLAN_START_BEGINNING()).checked(current.is_none()).on_select(move |s: &mut App| {
+            s.set_start(id, None);
+            s.plan_menu = None;
+        }));
+        let mut seen = Vec::new();
+        for section in s.songs[place].sections() {
+            if seen.contains(&section.tag) {
+                continue;
+            }
+            seen.push(section.tag);
+            let (tag, label) = (section.tag, t::section_label(section.tag));
+            let mut choice = MenuItem::new(label.clone()).checked(current == Some(tag));
+            if let Some((usual_tag, times, of)) = usual && usual_tag == tag {
+                choice = choice.description(t::starts_line(&label, times, of));
+            }
+            menu = menu.item(choice.on_select(move |s: &mut App| {
+                s.set_start(id, Some(tag));
+                s.plan_menu = None;
+            }));
+        }
+        menu = menu.separator();
+    }
     menu.item(MenuItem::new(t::PLAN_REMOVE()).icon(&icons::TRASH).danger(true).on_select(move |s: &mut App| s.remove_plan_item(id)))
         .build(k, layer)
 }
@@ -232,6 +268,17 @@ pub(crate) fn list(s: &App, k: &Kit, layer: &mut Vec<El>) -> El {
         list = list.child(draggable(s, body, item.id, at, &heights));
     }
     list.scroll_bar(k)
+}
+
+/// Preview's tool for a song of the plan: lit while the ring's slide is where the song starts,
+/// pressed to make it so, pressed again to clear it. Its key is printed on it.
+pub(crate) fn start_tool(s: &App, k: &Kit) -> Option<El> {
+    use crate::starts::StartState;
+    let (_, _, state) = s.start_control()?;
+    Some(btn(t::TIP_START_HERE()).icon(&icons::PLAY).icon_only().small().hint(t::KEY_START_HERE()).active(state == StartState::Marked).disabled(state == StartState::Beginning).build(k, |s, tx| {
+        s.toggle_start_here();
+        tx.blur();
+    }))
 }
 
 #[cfg(test)]
