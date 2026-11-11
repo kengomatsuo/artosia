@@ -174,6 +174,8 @@ impl App {
             },
             "language": self.settings.listen_language,
             "words": App::speech_built() && self.model_path().is_some_and(|path| path.is_file()),
+            // Which model read the words: its file's name, so a later reader can tell the sittings apart.
+            "model": self.model_path().filter(|path| App::speech_built() && path.is_file()).and_then(|path| path.file_stem().map(|stem| stem.to_string_lossy().to_string())),
             "songs": self.songs.len(),
         });
         let opened = std::fs::create_dir_all(&folder).and_then(|()| {

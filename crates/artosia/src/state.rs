@@ -137,6 +137,10 @@ pub struct Settings {
     pub keep_recordings: bool,
     /// The folder a person picked for them; empty keeps them beside the library.
     pub recordings_folder: String,
+    /// This PC read the first speech model quickly enough to be offered the better one.
+    pub listen_quick: bool,
+    /// The better speech model fell behind on this PC, so the first one is used.
+    pub listen_better_behind: bool,
     /// The streaming service's address, and the key it gave this church. Kept on this computer only.
     pub stream_address: String,
     pub stream_key: String,
@@ -179,6 +183,8 @@ impl Default for Settings {
             beat_blink: false,
             keep_recordings: false,
             recordings_folder: String::new(),
+            listen_quick: false,
+            listen_better_behind: false,
             stream_address: String::new(),
             stream_key: String::new(),
             stream_record: false,
@@ -332,6 +338,8 @@ pub enum Arrived {
     Update(Result<Option<String>, String>),
     /// The speech model's download ended.
     Model(Result<(), String>),
+    /// The better speech model's download ended.
+    BetterModel(Result<(), String>),
     /// The recordings were packed into one file: its name, or that it could not be written.
     RecordingsSaved(Result<String, ()>),
 }
@@ -408,6 +416,11 @@ pub struct App {
     /// see where they were and bring it back into Preview.
     /// Whether the speech model is on this PC (`speech_model.rs`).
     pub model: crate::speech_model::Model,
+    /// The better speech model's row in the Listen dialog.
+    pub better: crate::speech_model::Better,
+    /// How many phrases were read since the listener started, and the share of their own
+    /// length the readings took, newer ones weighing more.
+    pub read_speed: (u32, f32),
     pub history: Vec<LiveDeck>,
     pub history_menu: bool,
     /// The Live switch is off: the Live list keeps what it holds and the projector shows none
@@ -616,6 +629,8 @@ impl App {
             held_ctrl: false,
             held_shift: false,
             model: crate::speech_model::Model::Unknown,
+            better: crate::speech_model::Better::No,
+            read_speed: (0, 0.0),
             history: Vec::new(),
             history_menu: false,
             off_air: false,

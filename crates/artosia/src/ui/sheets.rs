@@ -917,6 +917,15 @@ fn listen(s: &App, k: &Kit, layer: &mut Vec<El>, tall: f32) {
             Model::Failed(why) => body = body.child(row_of(t::listen_model_failed(why), Some(get()))),
             Model::Ready | Model::Unknown => {}
         }
+        // A PC that read the first model quickly is offered the better one, here too.
+        use crate::speech_model::Better;
+        let better = || btn(t::BIBLES_DOWNLOAD()).icon(&icons::IMPORT).focusable().build(k, |s, _| s.download_better());
+        match &s.better {
+            Better::Offered => body = body.child(row_of(t::LISTEN_MODEL_BETTER().to_string(), Some(better())).key("speech-better")),
+            Better::Downloading => body = body.child(row_of(t::BIBLES_DOWNLOADING().to_string(), None).key("speech-better")),
+            Better::Failed(why) => body = body.child(row_of(t::listen_model_failed(why), Some(better())).key("speech-better")),
+            Better::No => {}
+        }
     }
     if let Some(problem) = &s.listen_problem {
         body = body.child(text(problem.clone()).font(type_::BODY).color(theme::warn_ink()).wrap());

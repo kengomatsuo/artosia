@@ -2731,6 +2731,11 @@
   "back": "One more file (57 MB) is needed to recognise voices",
   "why": "Says the size so the button is clear"
  },
+ "LISTEN_MODEL_BETTER": {
+  "text": "Komputer ini bisa pakai berkas suara lebih baik (190 MB)",
+  "back": "This computer can use a better voice file (190 MB)",
+  "why": "Same 'berkas suara' as the first file's row, with 'lebih baik'; no full stop"
+ },
  "listen_model_failed": {
   "text": "Berkas suara gagal diunduh: {why}",
   "back": "The voice file failed to download: {why}",

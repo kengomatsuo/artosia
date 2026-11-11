@@ -1069,8 +1069,9 @@ impl App {
         if !on {
             return;
         }
-        let folder = self.folder.clone().unwrap_or_else(std::env::temp_dir);
-        let model = folder.join("models").join("ggml-base-q5_1.bin");
+        self.read_speed = (0, 0.0);
+        // Practice has no library folder and so no model: the level and the tempo still work.
+        let model = self.model_path().unwrap_or_else(|| std::env::temp_dir().join("no-speech-model.bin"));
         let device = Some(self.settings.listen_device.clone()).filter(|name| !name.is_empty());
         let (inbox, waker) = (self.inbox.clone(), self.waker.clone());
         let (level, shown) = (self.listen_level.clone(), self.meter_shown.clone());
@@ -1593,6 +1594,7 @@ impl App {
                 Arrived::Heard(artosia_listen::Heard::Final(text)) => self.heard_final(text),
                 Arrived::Heard(artosia_listen::Heard::Kept { n, seconds }) => self.recording_kept(n, seconds),
                 Arrived::Heard(artosia_listen::Heard::Read { n, text }) => self.recording_read(n, text),
+                Arrived::Heard(artosia_listen::Heard::Speed { sound, took }) => self.note_reading(sound, took),
                 Arrived::Heard(artosia_listen::Heard::Problem(artosia_listen::Problem::Keep(_))) => {
                     self.recordings.failed = true;
                     self.end_sitting();
@@ -1608,6 +1610,7 @@ impl App {
                 }
                 Arrived::Heard(_) => {}
                 Arrived::Model(result) => self.model_arrived(result),
+                Arrived::BetterModel(result) => self.better_arrived(result),
                 Arrived::RecordingsSaved(saved) => self.recordings_saved(saved),
                 Arrived::Update(Ok(Some(version))) => self.say(t::update_ready(&version), None),
                 Arrived::Update(Ok(None)) => self.say(t::update_none(crate::update::VERSION), None),

@@ -74,7 +74,7 @@ Screenshots, source files and product cards for every screen (S01–S13) are in 
 |---|---|
 | RAM and CPU with a video background | Misses the target: 0.25 to 0.45 cores and about 300 MB in the output on an Intel Iris Xe laptop. Decode is 0.07 cores; the rest is Rune redrawing the window while a video surface is mounted, which needs a change in Rune. Numbers and the change: [output.md](output.md) |
 | Frame pacing | Lerret's cadence logic needs the app to own `present`, which Rune does not allow. Not ported |
-| Speech recognition | Written, never compiled. The 57 MB model is in `%APPDATA%\artosia\models` (downloaded 2026-11-10 with the owner's yes); the build still needs CMake and LLVM, which the owner installs |
+| Speech recognition | Built and shipped since 0.1.5 (whisper.cpp). Two models, chosen by measuring on real songs: the first for any PC, the better one offered to a PC that reads fast enough (`crates/artosia-listen/README.md`, "Measured: models and settings") |
 | Never tried | A real phone on the remote; a real streaming service; a Celeron; unplugging a screen by hand; a bent picture through the projector |
 
 ## Dependency notes

@@ -332,6 +332,7 @@ text!(LISTEN_INPUT_STOPPED, "The microphone stopped. Check its cable.", "The mic
 text!(LISTEN_BEAT_ONLY, "This version hears the beat, not words.", "This version hears the beat, not words.");
 text!(LISTEN_MODEL_DAMAGED, "The speech model is damaged. Download it again.", "The speech model is damaged. Download it again.");
 text!(LISTEN_MODEL_MISSING, "To hear words, Artosia needs its speech model, 57 MB", "To hear words, Artosia needs its speech model, 57 MB");
+text!(LISTEN_MODEL_BETTER, "This computer can run the better speech model, 190 MB", "This computer can run the better speech model, 190 MB");
 pub fn listen_model_failed(why: &str) -> String {
     if let Some(text) = say("listen_model_failed", None, None, &[("why", text_arg(why))]) {
         return text;

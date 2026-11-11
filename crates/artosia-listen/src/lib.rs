@@ -103,6 +103,9 @@ pub enum Heard {
     /// What the recogniser made of kept phrase `n`: its words, or none when it read nothing.
     /// It comes just before the `Final` of the same phrase.
     Read { n: u32, text: Option<String> },
+    /// A phrase that ended held `sound` seconds and took `took` seconds to read. A PC whose
+    /// readings take a small share of the sound can run a larger model.
+    Speed { sound: f32, took: f32 },
 }
 
 /// What went wrong while listening. The window words each kind in its own language; `Display`
@@ -441,7 +444,11 @@ impl Job {
                 let mut jobs = vec![first];
                 jobs.extend(rx.try_iter());
                 for phrase in coalesce(jobs) {
+                    let began = std::time::Instant::now();
                     let heard = read_phrase(recogniser.as_mut(), &phrase, &mut last_partial);
+                    if phrase.is_final {
+                        emit(Heard::Speed { sound: phrase.samples.len() as f32 / RECOGNISER_RATE as f32, took: began.elapsed().as_secs_f32() });
+                    }
                     // A kept phrase says what was read in it, words or none, before its `Final`.
                     if let (true, Some(n)) = (phrase.is_final, phrase.kept) {
                         let text = match &heard {

@@ -11,9 +11,11 @@ paper. Where a number is missing from the primary sources it says so.
 
 - **Recogniser: whisper.cpp through `whisper-rs`.** It is the only option that is small enough
   for a Celeron *and* knows Indonesian.
-- **First model: `ggml-base-q5_1.bin`** (57 MB on disk, multilingual). `ggml-tiny-q5_1.bin`
-  (31 MB) is the fallback for the slowest machines, `ggml-small-q5_1.bin` (181 MB) for anything
-  with four real cores.
+- **First model: `ggml-base-q5_1.bin`** (60 MB on disk, multilingual), for every PC.
+- **Better model: `ggml-small-q5_1.bin`** (190 MB), read with a beam of five, for a PC that reads
+  the first one in a tenth of the sound's own length. The operator times three phrases and
+  offers it; a PC that falls behind with it goes back to the first. It names twice the songs
+  (see "Measured: models and settings").
 - **Capture: `cpal`**, not GStreamer.
 - **Melody recognition: not built.** There is nothing to match against (see the last section).
 
@@ -116,8 +118,81 @@ model and the church's 1,333 songs as the library. The test is `names_its_song` 
 - The hymn's line is sung again and again, and the same word five times once put eight "words
   together" in a song that was not being sung. Each word of a phrase now counts once.
 - So the answer to "which song is this" is: a clear English hymn, yes, in about a minute; an
-  Indonesian song over a band, sometimes. The model is the limit, as the papers above say, and
-  `small` was not tried.
+  Indonesian song over a band, sometimes. The model is the limit, as the papers above say.
+  `small` was tried the same evening: the next section.
+
+### Measured: models and settings (2026-11-11)
+
+The owner, after trying the listener: "You just picked a random voice detector or what? So bad
+quality". The first model had been chosen for an old PC from papers, and the larger ones had
+never been run on a song. This is the measurement that should have come first.
+
+**The sound.** Eight Indonesian worship songs that the church's library holds, two of them live
+church recordings, and one sermon, each played from YouTube through the computer's own sound
+for about 110 seconds and kept as the phrases the listener cuts (`examples/tape.rs`): 74
+phrases of song and 14 of sermon. **The reading.** Every model and setting read the same kept
+phrases (`examples/read.rs`). **The naming.** Each reading went through the operator's own
+naming with the church's 1,333 songs (`kept_readings_name_their_song` in
+`crates/artosia/src/heard_test.rs`), which prints titles and counts. The PC is an i9-13900H
+laptop on four threads. The sound and the readings were deleted afterwards.
+
+All eight songs:
+
+| Model | Search | Right song first, of 74 phrases | Among the nearest three | Songs offered, of 8 | Offered in the sermon | Reading time, share of the sound |
+|---|---|---|---|---|---|---|
+| base q5_1 (60 MB) | plain, second reading on (as shipped) | 14% | 16% | 3 | 0 | 0.03 |
+| base q5_1 | beam of 5 | 18% | 21% | 2 | 0 | 0.05 |
+| base q5_1 | beam of 5, second reading on | 12% | 14% | 2 | 0 | 0.05 |
+| small q5_1 (190 MB) | plain | 28% | 32% | 5 | 0 | 0.11 |
+| small q5_1 | plain, second reading on | 29% | 39% | 5 | 0 | 0.10 |
+| **small q5_1** | **beam of 5** | **37%** | **43%** | **6** | **0** | **0.12** |
+| small q5_1 | beam of 5, second reading on | 36% | 40% | 5 | 0 | 0.14 |
+
+The six songs were first offered 24, 24, 60, 72, 79 and 108 seconds in. "Second reading" is
+whisper.cpp's default of reading again at a higher temperature when a reading looks wrong.
+
+The first four songs only, where the two largest models were also run:
+
+| Model | Search | Right song first, of 36 | Among three | Songs offered, of 4 | Offered in the sermon | Reading time |
+|---|---|---|---|---|---|---|
+| base q5_1 | as shipped | 16% | 19% | 2 | 0 | 0.03 |
+| small q5_1 | beam of 5 | 58% | 61% | 4 | 0 | 0.12 |
+| medium q5_0 (539 MB) | plain | 52% | 63% | 4 | 0 | 0.40 |
+| medium q5_0 | beam of 5 | 63% | 75% | 4 | 0 | 0.42 |
+| large-v3-turbo q5_0 (574 MB) | plain | 52% | 63% | 4 | 1, a wrong song | 0.54 |
+| large-v3-turbo q5_0 | beam of 5 | 58% | 66% | 3 | 0 | 0.58 |
+
+What follows from it:
+
+- **The model is what matters.** `small` with a beam offers twice the songs of `base` and names
+  the right one first in 37% of phrases against 14%. `medium` and `turbo` name no more songs
+  than `small` and take four to five times as long; `medium` held 859 MB of memory.
+- **The first model stays as it shipped.** A beam named a song first slightly more often and
+  offered one song fewer; on 74 phrases that is no gain.
+- **Neither model offered anything during the sermon.**
+- Also tried on the base model and worse: the whole 30 second window in place of the shortened
+  one (words in a quarter of the phrases), and windows of 24 seconds read every 12.
+- A matcher on runs of letters in place of whole words was tried in a script on the first four
+  songs: with `small` it put the right song among three in 66% of phrases against 61% and first
+  in 44% against 58%. Not built.
+
+What the sources say about the rest (read 2026-11-11, each at its own page):
+
+| Idea | Finding | Source |
+|---|---|---|
+| Small models on singing | Greek lyrics, no training: small 92%, medium 65%, large-v3 54% of words wrong | arXiv 2609.11302, Table 1 |
+| Removing the band first | Demucs made Whisper worse on whole songs (v2 28.8 to 34.8); a later paper uses it only to find where phrases begin | arXiv 2408.06370, 2506.15514 |
+| A small separator from Rust | Spleeter in sherpa-onnx runs at 0.07 of real time, with no Rust binding and no measured gain on lyrics | sherpa-onnx source-separation docs |
+| Scoring sound against known lyrics | The aligners that cover Indonesian (MMS) are CC-BY-NC | Hugging Face `facebook/mms-300m`, `mms-1b-all` |
+| Telling Whisper the words | A prompt holds 224 tokens; a grammar suits a few dozen items | OpenAI speech-to-text guide, whisper.cpp CLI README |
+| A model made for singing | Qwen3-ASR lists song figures for its 1.7B model only; the 0.6B is 879 MB | Hugging Face `Qwen/Qwen3-ASR-1.7B` |
+| Another product | VerseFlow removes instruments on the device, then matches its library; six European languages | verseflow.app |
+
+Limits of this measurement: one PC, eight songs and one sermon, sound straight from the
+computer, never a microphone in a room. To measure again: tape the songs, read them with
+`examples/read.rs` into one `.tsv` a song, and run the test with `ARTOSIA_HEARD` and
+`ARTOSIA_TRUTH` set. The operator's recordings (`docs/recordings.md`) keep the same kind of
+phrase from a real service.
 
 ## Hear notes and suggest the song (melody)
 
@@ -467,6 +542,8 @@ microphone path (`tests/speech.rs`, ignored: it needs the model and `fixtures/sp
   nothing. Phrases are cut and kept without a speech model too. The first write that fails ends the
   keeping with `Problem::Keep` and the listening goes on. What the app does with it:
   [docs/recordings.md](../../docs/recordings.md).
+- `Heard::Speed { sound, took }` follows every phrase that ended: how long it was and how long
+  its reading took. The operator offers the better model from it (`speech_model.rs`).
 - Call `Listener::start` off the UI thread's critical path (it waits for the device to open, a
   fraction of a second) and drop the `Listener` to stop; dropping waits for a recognition in
   progress, which can take seconds on a slow CPU, so drop it from a background thread.

@@ -16,3 +16,8 @@ whisper-rs = { version = "0.16", optional = true }
 
 [lints]
 workspace = true
+
+# Reads kept sound with a model of choice; it calls whisper-rs itself.
+[[example]]
+name = "read"
+required-features = ["whisper"]

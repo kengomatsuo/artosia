@@ -102,3 +102,62 @@ fn music_playing_on_this_computer_names_its_song() {
     named.sort_by(|a, b| b.1.cmp(&a.1));
     println!("named in all: {named:?}");
 }
+
+/// Runs kept readings (the listen crate's `examples/read.rs`) through the naming the live
+/// listener uses and prints, for each file, how many phrases had the file's song first or among
+/// the nearest three, and what was offered and when: titles and counts, never the words.
+///
+/// ARTOSIA_DATA=<library folder> ARTOSIA_HEARD=<folder of label.tsv> ARTOSIA_TRUTH="label=words of the title;..." \
+///   cargo test --release -p artosia kept_readings -- --ignored --nocapture
+#[test]
+#[ignore = "needs a library and readings kept outside the repository"]
+fn kept_readings_name_their_song() {
+    let folder = PathBuf::from(std::env::var_os("ARTOSIA_HEARD").expect("ARTOSIA_HEARD is not set"));
+    let truth: Vec<(String, String)> = std::env::var("ARTOSIA_TRUTH")
+        .unwrap_or_default()
+        .split(';')
+        .filter_map(|pair| pair.split_once('=').map(|(label, title)| (label.trim().to_string(), title.trim().to_lowercase())))
+        .collect();
+    let mut files: Vec<PathBuf> = std::fs::read_dir(&folder).expect("the folder of readings").flatten().map(|entry| entry.path()).filter(|path| path.extension().is_some_and(|ext| ext == "tsv")).collect();
+    files.sort();
+    let (mut all, mut all_first, mut all_three) = (0u32, 0u32, 0u32);
+    for file in files {
+        let label = file.file_stem().map(|stem| stem.to_string_lossy().to_string()).unwrap_or_default();
+        let wanted = truth.iter().find(|(known, _)| *known == label).map(|(_, title)| title.clone()).filter(|title| !title.is_empty());
+        let mut app = App::load();
+        let start = app.now;
+        let (mut phrases, mut worded, mut first, mut three) = (0u32, 0u32, 0u32, 0u32);
+        let mut offered: Vec<(String, f64)> = Vec::new();
+        for line in std::fs::read_to_string(&file).expect("a reading").lines() {
+            let mut parts = line.splitn(3, '\t');
+            let at: f64 = parts.next().and_then(|s| s.parse().ok()).unwrap_or(0.0);
+            let text = parts.nth(1).unwrap_or("").to_string();
+            phrases += 1;
+            // A phrase is read when it ends, twelve seconds after it began.
+            app.now = start + at + 12.0;
+            if text.trim().is_empty() {
+                continue;
+            }
+            worded += 1;
+            let near: Vec<String> = app.index.search(&text, 3).into_iter().filter(|hit| hit.together >= 2).filter_map(|hit| app.songs.get(hit.song).map(|song| song.title.to_lowercase())).collect();
+            if let Some(wanted) = &wanted {
+                first += u32::from(near.first().is_some_and(|title| title.contains(wanted)));
+                three += u32::from(near.iter().any(|title| title.contains(wanted)));
+            }
+            app.heard_final(text);
+            for offer in crate::suggest::suggestions(&app).into_iter().filter(|offer| offer.why == crate::suggest::Why::Heard) {
+                if !offered.iter().any(|(known, _)| *known == offer.title) {
+                    offered.push((offer.title, at + 12.0));
+                }
+            }
+        }
+        let offers: Vec<String> = offered.iter().map(|(title, at)| format!("{title} at {at:.0} s")).collect();
+        println!("{label:8} {phrases:2} phrases, {worded:2} with words, first {first:2}, in three {three:2}; offered {offers:?}");
+        if wanted.is_some() {
+            (all, all_first, all_three) = (all + phrases, all_first + first, all_three + three);
+        }
+    }
+    if all > 0 {
+        println!("songs: {all} phrases, right song first {}%, in three {}%", 100 * all_first / all, 100 * all_three / all);
+    }
+}

@@ -56,6 +56,7 @@ fn main() {
             Heard::Tempo(None) => {}
             // This example keeps no phrases, so neither arrives.
             Heard::Kept { .. } | Heard::Read { .. } => {}
+            Heard::Speed { sound, took } => println!("read {sound:.1} s of sound in {took:.2} s"),
             Heard::Problem(p) => println!("problem: {p}"),
         }
     }

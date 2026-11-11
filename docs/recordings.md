@@ -28,7 +28,7 @@ One folder is made each time the listener is switched on, named by its date and 
 
 | File | What it holds |
 |---|---|
-| `about.json` | Artosia's version, when it began, the kind of source (default microphone, a microphone, or system audio: never the device's name), the language listened for, whether words are read, how many songs the library has |
+| `about.json` | Artosia's version, when it began, the kind of source (default microphone, a microphone, or system audio: never the device's name), the language listened for, whether words are read and by which model's file, how many songs the library has |
 | `phrase-00001.wav` ... | Each phrase the listener cut, exactly as the recogniser was given it: 16 kHz, one channel, 16 bits, cut at a pause or after 12 seconds. About 115 MB for an hour of sound |
 | `attempts.jsonl` | One JSON object a line, in the order things happened, each with `t`, the seconds since the folder began |
 

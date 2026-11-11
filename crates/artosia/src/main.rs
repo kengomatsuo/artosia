@@ -484,6 +484,11 @@ const SCENES: &[Scene] = &[
         s.settings.recordings_folder = r"E:\Artosia recordings".to_string();
         s.recordings.failed = true;
     }),
+    // A PC that read the first speech model quickly is offered the better one.
+    ("listen-better", |s| {
+        s.sheet = Sheet::Listen;
+        s.better = crate::speech_model::Better::Offered;
+    }),
     ("listen-problem", |s| {
         s.sheet = Sheet::Listen;
         s.listen_problem = Some(crate::why::listen_error(&artosia_listen::ListenError::NoDevice(String::new())));

@@ -11060,6 +11060,23 @@
   "notes": "One sentence without a full stop. Keep the size as 57 MB."
  },
  {
+  "key": "LISTEN_MODEL_BETTER",
+  "kind": "const",
+  "screen": "The Listen dialog (opened from the top bar's microphone button). A row with a download icon at the left, these words in the middle and a Download button at the right.",
+  "moment": "The program has listened for a minute and found that this PC is fast. It already has the small file it needs to recognise words, and a larger file would let it recognise sung words much more often.",
+  "role": "notice in a row",
+  "does": "Says that this PC is able to use the better, larger file for recognising words, and how large that file is (190 MB), so the person knows what the button beside it will fetch. Fetching it is a free choice; the program works without it.",
+  "budget": 60,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "listener"
+  ],
+  "notes": "One sentence without a full stop. Keep the size as 190 MB. It names the same thing as the row about the first file, with a word for better."
+ },
+ {
   "key": "listen_model_failed",
   "kind": "sentence",
   "screen": "The Listen dialog, the same row as the offer to fetch the speech file, after a download that did not finish. The Download button is still at the right.",

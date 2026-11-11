@@ -113,6 +113,7 @@ pub fn dump() -> String {
     line(out, "LISTEN_BEAT_ONLY", LISTEN_BEAT_ONLY());
     line(out, "LISTEN_MODEL_DAMAGED", LISTEN_MODEL_DAMAGED());
     line(out, "LISTEN_MODEL_MISSING", LISTEN_MODEL_MISSING());
+    line(out, "LISTEN_MODEL_BETTER", LISTEN_MODEL_BETTER());
     line(out, "listen_model_failed", &listen_model_failed("there is no connection"));
     line(out, "LISTEN_PART_LISTENING", LISTEN_PART_LISTENING());
     line(out, "LISTEN_PART_RECORDINGS", LISTEN_PART_RECORDINGS());
