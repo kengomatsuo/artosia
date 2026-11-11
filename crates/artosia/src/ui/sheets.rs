@@ -784,5 +784,6 @@ pub fn view(s: &App, k: &Kit, layer: &mut Vec<El>) {
         Sheet::Listen => listen(s, k, layer),
         Sheet::Stream => stream(s, k, layer),
         Sheet::Bibles => crate::ui::bibles::view(s, k, layer),
+        Sheet::Backdrops => crate::ui::backdrops::view(s, k, layer),
     }
 }

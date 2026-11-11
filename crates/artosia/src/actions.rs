@@ -1540,6 +1540,7 @@ impl App {
             });
         }
         changed |= self.poll_desk(tx);
+        changed |= self.poll_backdrops();
 
         let state = self.output_state();
         if self.sent.as_ref() != Some(&state) {

@@ -10,6 +10,7 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 mod actions;
+mod backdrops;
 mod bibles;
 mod data;
 mod languages;
@@ -399,6 +400,14 @@ const SCENES: &[Scene] = &[
         s.settings.beat_blink = true;
     }),
     ("stream", |s| s.sheet = Sheet::Stream),
+    ("backdrops", |s| s.demo_backdrops("ready")),
+    ("backdrops-picked", |s| s.demo_backdrops("picked")),
+    ("backdrops-picked-video", |s| s.demo_backdrops("picked-video")),
+    ("backdrops-downloaded", |s| s.demo_backdrops("downloaded")),
+    ("backdrops-downloading", |s| s.demo_backdrops("downloading")),
+    ("backdrops-offline", |s| s.demo_backdrops("offline")),
+    ("backdrops-empty", |s| s.demo_backdrops("empty")),
+    ("backdrops-category", |s| s.demo_backdrops("category")),
     ("bibles", |s| s.demo_bibles("ready")),
     ("bibles-picked", |s| s.demo_bibles("picked")),
     ("bibles-picked-file", |s| s.demo_bibles("picked-file")),

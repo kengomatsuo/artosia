@@ -249,6 +249,8 @@ pub enum Sheet {
     Listen,
     Stream,
     Bibles,
+    /// The backdrop browser, until the Look dialog holds it as its Background panel.
+    Backdrops,
 }
 
 /// Something the room was heard to say or sing, offered for one click.
@@ -301,6 +303,8 @@ pub struct App {
     pub bibles_loading: Vec<String>,
     /// The Bibles dialog: files being converted and eBible's list.
     pub desk: crate::bibles::Desk,
+    /// The backdrop browser: ready pictures and videos to put behind the words.
+    pub backdrops: crate::backdrops::Desk,
     pub announcements: Vec<Announcement>,
     /// Everyone whose birthday the church keeps, for announcements that fill themselves.
     pub people: Vec<Person>,
@@ -513,6 +517,7 @@ impl App {
             bibles: HashMap::new(),
             bibles_loading: Vec::new(),
             desk: crate::bibles::Desk::default(),
+            backdrops: crate::backdrops::Desk::default(),
             announcements,
             people: Vec::new(),
             plan,
