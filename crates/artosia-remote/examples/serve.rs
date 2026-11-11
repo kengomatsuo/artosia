@@ -2,18 +2,10 @@
 //! It listens on this computer only; add `--lan` to open it from a phone on the same Wi-Fi,
 //! which is when Windows Firewall asks whether to allow it.
 //!
-//! A front listener answers `/?look=<name>` with `examples/directions/<name>.html` (and `/look/core.js`),
-//! read from disk on each request, and hands every other request to the real server untouched, so a
-//! look page talks to the same state and the same script API as the shipped page. Without `look` the
-//! shipped page is served.
-//!
 //! The state covers every control of the page: a plan with headings, sections, search hits,
 //! the logo, a message and a countdown. All text is made up for this example.
 
 use artosia_remote::*;
-use std::io::{Read, Write};
-use std::net::{Ipv4Addr, Shutdown, TcpListener, TcpStream};
-use std::path::{Path, PathBuf};
 use std::sync::{Mutex, mpsc};
 use std::time::{SystemTime, UNIX_EPOCH};
 
@@ -57,55 +49,6 @@ fn now() -> f64 {
     SystemTime::now().duration_since(UNIX_EPOCH).map_or(0.0, |d| d.as_secs_f64())
 }
 
-/// Serves a look page or copies the connection to the real server. The real server answers every
-/// request with `Connection: close`, so one connection is one request and routing on its first line is enough.
-fn front(mut client: TcpStream, upstream: u16, dir: &Path) {
-    let mut head = [0u8; 2048];
-    let n = loop {
-        match client.peek(&mut head) {
-            Ok(n) if n > 0 && (head[..n].contains(&b'\n') || n == head.len()) => break n,
-            Ok(n) if n > 0 => std::thread::sleep(std::time::Duration::from_millis(5)),
-            _ => return,
-        }
-    };
-    let text = String::from_utf8_lossy(&head[..n]).into_owned();
-    let target = text.lines().next().and_then(|l| l.strip_prefix("GET ")).and_then(|l| l.split(' ').next()).unwrap_or("");
-    let (path, query) = target.split_once('?').unwrap_or((target, ""));
-    let file = match path {
-        "/look/core.js" => Some(("text/javascript; charset=utf-8", "core.js".to_string())),
-        "/" => query.split('&').find_map(|kv| kv.strip_prefix("look=")).filter(|n| !n.is_empty() && n.chars().all(|c| c.is_ascii_lowercase() || c == '-'))
-            .map(|name| ("text/html; charset=utf-8", format!("{name}.html"))),
-        _ => None,
-    };
-    if let Some((ctype, name)) = file {
-        // Take the request off the socket, then answer it.
-        let mut seen = Vec::new();
-        let mut buf = [0u8; 1024];
-        while !seen.windows(4).any(|w| w == b"\r\n\r\n") {
-            match client.read(&mut buf) {
-                Ok(n) if n > 0 => seen.extend_from_slice(&buf[..n]),
-                _ => return,
-            }
-        }
-        let reply = match std::fs::read(dir.join(name)) {
-            Ok(body) => [format!("HTTP/1.1 200 OK\r\nContent-Type: {ctype}\r\nContent-Length: {}\r\nCache-Control: no-store\r\nConnection: close\r\n\r\n", body.len()).into_bytes(), body].concat(),
-            Err(_) => b"HTTP/1.1 404 Not Found\r\nContent-Length: 0\r\nConnection: close\r\n\r\n".to_vec(),
-        };
-        let _ = client.write_all(&reply);
-        return;
-    }
-    let Ok(mut server) = TcpStream::connect((Ipv4Addr::LOCALHOST, upstream)) else { return };
-    let (Ok(mut from_client), Ok(mut to_client)) = (client.try_clone(), client.try_clone()) else { return };
-    let Ok(mut to_server) = server.try_clone() else { return };
-    let up = std::thread::spawn(move || {
-        let _ = std::io::copy(&mut from_client, &mut to_server);
-        let _ = to_server.shutdown(Shutdown::Write);
-    });
-    let _ = std::io::copy(&mut server, &mut to_client);
-    let _ = to_client.shutdown(Shutdown::Both);
-    let _ = up.join();
-}
-
 fn main() -> std::io::Result<()> {
     let port = std::env::args().nth(1).and_then(|p| p.parse().ok()).unwrap_or(4791);
     let pin = std::env::var("PIN").unwrap_or_else(|_| "1234".into());
@@ -114,22 +57,16 @@ fn main() -> std::io::Result<()> {
     let lan = std::env::args().any(|arg| arg == "--lan");
     let (tx, rx) = mpsc::channel();
     let tx = Mutex::new(tx);
-    let server = RemoteServer::start(RemoteConfig { port: 0, pin: pin.clone(), local_only: true }, move |c| {
+    let server = RemoteServer::start(RemoteConfig { port, pin: pin.clone(), local_only: !lan }, move |c| {
         if let Ok(tx) = tx.lock() {
             let _ = tx.send(c);
         }
     })?;
-    let upstream = server.port();
-    let front_listener = TcpListener::bind((if lan { Ipv4Addr::UNSPECIFIED } else { Ipv4Addr::LOCALHOST }, port))?;
-    let dir = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("examples").join("directions");
-    std::thread::spawn(move || {
-        for client in front_listener.incoming().flatten() {
-            let dir = dir.clone();
-            std::thread::spawn(move || front(client, upstream, &dir));
-        }
-    });
-    println!("port {port}  pin {pin}{}", if lan { "" } else { "  (this computer only; pass --lan for a phone)" });
-    println!("http://127.0.0.1:{port}/?pin={pin}   or add look=<name> for a page in examples/directions");
+    println!("port {}  pin {pin}{}", server.port(), if lan { "" } else { "  (this computer only; pass --lan for a phone)" });
+    let urls = if lan { server.urls() } else { vec![format!("http://127.0.0.1:{}/", server.port())] };
+    for u in urls {
+        println!("{u}?pin={pin}");
+    }
     let deck = slides();
     let mut s = RemoteState {
         item_title: "Sample song".into(),

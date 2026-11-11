@@ -5,37 +5,70 @@ sections, the plan, search, a message and a countdown. The operator starts it fr
 top bar (`actions.rs`, port 4780, with a PIN). What it can do and what was tried is row 8 of
 [features.md](features.md).
 
-## How the page looks (2026-11-11)
+## How the page looks (2026-11-12)
 
-The owner on the page as it was: "it looks so ugly make it UIUX perfection and professional
-mature app with mature style, maybe matching the Rune". The page had its own black and grey
-palette, a blue fill for the live slide where the window uses red, text-only tabs and four
-grey blocks for the states. It is now drawn from the operator window's own tokens and means
-the same things by the same colours.
+The first redraw (2026-11-11) used the operator window's colours with no reference opened, and the owner
+reopened the look. Research was saved first, in `C:/Users/kenne/Shared/inspo/artosia-phone-remote/`: 29 Mobbin
+screens, 18 screenshots of six church remotes, 53 files of FreeShow's and OpenLP's own web remotes, and a language
+card per product. Four candidates were built as real pages on the example's data, and the owner picked **Slate
+drawer**. The page copies **Proclaim Remote** (Faithlife's iOS remote), whole: its navigation, its page skeleton, its
+rows and its buttons. It is dark only, as picked.
 
-| What | Now | From |
+**Why this product.** The first screen has to be Back and Next under a slide that reads at arm's length, with the
+rest one touch away and nothing to learn. Proclaim has no tab bar to hunt in: a top bar of a two-segment switch and
+two round buttons, the slide at full width, and a drawer that pulls up for the song's parts. The other three
+candidates were ProPresenter Remote (orange cards, five tabs), OpenLP Remote (flat list, header chevrons) and
+FreeShow's remote (magenta, five icon-only tabs). Their pages are in git at commit `a13067a`
+(`crates/artosia-remote/examples/directions/`), and the pictures of all four are in the research folder, `shots/`.
+
+**Saved files it was built from** (in the research folder; the paths are its own):
+
+| Part | Source |
+|---|---|
+| No tab bar, grouped dark round-rect buttons around a two-segment pill | `products/07-proclaim-remote-ios-2.jpg`, `languages/proclaim-remote.md` |
+| The slide full width on a dark field, a red ring while it is live | `products/07-proclaim-remote-ios-2.jpg`, `products/10-proclaim-remote-ios-5.jpg` |
+| The drawer with a grab handle, labelled thumbnails, two columns when pulled up | `products/07-proclaim-remote-ios-2.jpg`, `products/08-proclaim-remote-ios-3.jpg` |
+| The plan as headed groups of rows with a picture, a title, a line and two stacked pills; the round green button | `products/06-proclaim-remote-ios-1.jpg` |
+| The PIN as dark code cells, a filled Connect | `mobbin/xbox-code.jpg` |
+| The lost-connection banner, a bold line and one grey one | `mobbin/alta-offline.jpg` |
+| The countdown: a minus and a plus around the figure, a wide Start | `mobbin/opal-timer.jpg` |
+
+Proclaim is an iOS app and only screenshots of it exist, so no source file was ported: the page is drawn from the
+screenshots, and the code is this repository's.
+
+**Hand-built, with no source in the saved files.** Back and Next as two large buttons side by side under the slide
+(Proclaim steps by touching the slide). The four state buttons in one grouped row. The section buttons in the drawer
+(Proclaim's drawer holds only thumbnails). The message, countdown and language blocks, and the keys block that only a
+computer with a keyboard shows. The countdown pill on the live screen. The kind line under a plan item's title. The
+unit word beside the minutes box.
+
+**What differs from Proclaim, and why.**
+
+| Source | Page | Why |
 |---|---|---|
-| Surfaces | The window's tones for bars, page, cards and controls, hairlines between them, in dark and in light after the phone's own setting | `crates/artosia/src/theme.rs` `surf_for`, `dark_seed`, `light_seed` |
-| Red | Only what the room sees: the frame and pill of the live card, the live row of the list, the Live tile, the pill on the plan's live row | `theme::live` |
-| Yellow | Hidden or a warning: the lit No text, Black and Logo tiles, the pill that says why the room does not see the words, the live row while it is kept from the room, the countdown, the lost-connection bar | `theme::warn`; "a live slide kept off the projector is yellow, never red" |
-| States | Four equal tiles in one row, an icon over each word, lit while what they name is true; a long word takes two lines | the window's dock tiles |
-| Sections | Named in full on a chip in the section's own colour, in one row that slides sideways, and on each row of the list | the window's `section_chip` |
-| Slides | A numbered row: number, section chip, words | the window's Live list |
-| Plan | A kind's icon on each row, a heading as words and a hairline, the picked row in the accent | the window's plan column |
-| Tabs | An icon over each word; the open one is a fill | house rule: a selected state is a fill, never an edge bar |
-| Icons | Sixteen drawn in the page as one hidden sprite; the page still loads nothing from anywhere | `tests/remote.rs` `page_is_self_contained_and_in_house_punctuation` |
+| A yellow ring on the current slide | Blue in the drawer, red while the room sees it, yellow while something keeps it away | Red is what the room sees and yellow is hidden or a warning; yellow for the current slide would say hidden |
+| ON AIR and OFF AIR in tracked capitals | The live item carries a red Live pill; headings are the plan's own, in sentence case | No uppercase letter-spaced labels; the plan keeps its order |
+| A green LOCAL chip, then Follow over Control | A red Live pill, then Show over Not now on the picked row | The same stacking, with the words a volunteer needs |
+| Edit and Preview in the top segment | Live and Plan | The two things the page does first |
+| Thumbnails only in the drawer | Section buttons above the thumbnails | A song's parts are jumped to by name |
+| A disabled filled button dimmed | Grey with grey words | A dimmed blue still reads as pressable in a dim hall |
 
-Checked in the app's browser pane against the example server on this computer, at 320x568,
-375x812 and 414x896, dark and light, English and Indonesian, on all four tabs and the pairing
-screen: a script measured every button, tile, tab, pill and chip for words wider or taller
-than their box, and found none. Two were found and fixed on the way: "Mundur" was cut in the
-Back button, and "Bahasa Indonesia" in the language choice at 320 points. On a phone lower
-than 700 points the card of what comes next gives way, so the live words stay whole. Every
-token pair for words on a surface reads at 4.5 to 1 or more (computed: the lowest is the faint
-grey on a dark card, 4.9). Not tried: a real phone.
+Red appears only for what the room sees: the ring and pill of the slide, the thumbnail of the live slide, the live row
+of the plan and the Live state button. Yellow is hidden or a warning: the state pill and ring while the words are cleared,
+the screen is black, the logo shows or the projector is off, the lit Clear text, Black and Logo buttons, the Hide button
+while a message shows, the countdown pill, the lost-connection banner and the PIN error. A chosen state is a fill.
 
-To look at it: `.claude/launch.json` starts the example server on this computer only
-(`cargo run -p artosia-remote --example serve 47931`), and the page opens with `?pin=1234`.
+Every string is in `STR`. Indonesian keeps the table of the first redraw; the two keys that are new, `pin_hint` and
+`cancel`, say English until a writer who has the briefs in `docs/i18n/brief-phone.json` writes them. Three keys of the
+first redraw were dropped with the cards they labelled (`next`, `next_item`, `plan_pick`), and `pin` is now only the name
+a screen reader gives the four cells.
+
+Checked on the example server on this computer, dark, at 390x844 and 320x640 in English, and for fit also at 360, 375
+and 414 wide in English and in Indonesian. A script pressed every control: Back, Next, a section button, a thumbnail,
+the keys Space and B, the four state buttons and their pills, the pull-up drawer, a plan item picked, shown and put back,
+search, Show and Add from a result, the plus on the plan, the message, the minutes steppers, the countdown with its pill
+on the live screen, the language switch, a wrong PIN, and the lost-connection banner after a failed command. A second
+script found no word wider or taller than its box. Not tried: a real phone.
 
 ## Where it listens, and the firewall's question (2026-11-11)
 
