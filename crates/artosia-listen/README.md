@@ -288,7 +288,9 @@ note, slowly, or not at all; a pad with no attacks reads nothing, as designed.
 whatever is playing (the rise in each of 24 bands and the energy: not sound, and it cannot be
 played back), and `sources read <files>` runs them through the tracker again in a moment. Name a
 file `<stated tempo>-<anything>` and `TEMPO_EXPLAIN=1` also prints the figures at that tempo,
-half and double. The files stay out of the repository.
+half and double. The files stay out of the repository: the thirty-five live in
+`fixtures/tempo-steps/first` and `held-out`, which git ignores, and
+`python tools/score-tempo.py` reads them all and counts right, double, half and unread.
 
 ### What tempo is for, and what is not built
 
