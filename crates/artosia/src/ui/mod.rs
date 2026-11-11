@@ -5,6 +5,7 @@ mod announcements;
 mod bibles;
 mod editor;
 pub(crate) mod live;
+pub(crate) mod look;
 mod palette;
 pub(crate) mod plan;
 mod sheets;

@@ -280,6 +280,11 @@ const SCENES: &[Scene] = &[
         s.song_from_clipboard("Lantern Song\n\nVerse 1\nCarry the lantern through the night\nKeep the small flame burning bright\n\nChorus\nShine, shine on the road ahead\nShine till the morning comes\n");
     }),
     ("look", |s| s.sheet = Sheet::Looks),
+    ("look-styled", |s| {
+        s.sheet = Sheet::Looks;
+        let styled = artosia_slides::look::Look { ink: [255, 214, 0], font: "Georgia".into(), outline: artosia_slides::look::Outline::Thick, ..s.settings.look.clone() };
+        s.set_look(styled);
+    }),
     ("screens", |s| s.sheet = Sheet::Screens),
     ("screens-two", |s| {
         s.demo_screens = true;

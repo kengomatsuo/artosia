@@ -931,6 +931,7 @@ impl App {
     pub fn set_look(&mut self, look: Look) {
         let lines = self.settings.look.max_lines;
         let changed_lines = look.max_lines != lines;
+        self.look_edit.sync(&look);
         self.settings.look = look;
         self.touch_settings();
         if changed_lines {

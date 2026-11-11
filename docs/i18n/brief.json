@@ -7422,5 +7422,246 @@
       "projector"
     ],
     "notes": "A fragment without a full stop. Artosia is the program's name and stays as written."
+  },
+  {
+    "key": "LOOK_TEXT_COLOUR",
+    "kind": "const",
+    "screen": "Look dialog (opened by the Look button), row label",
+    "moment": "Followed by four coloured squares and a small field for a typed colour.",
+    "role": "field label",
+    "does": "Label of the row that sets the colour of the words the congregation reads on the projector screen.",
+    "budget": 22,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "look",
+      "projector"
+    ],
+    "notes": ""
+  },
+  {
+    "key": "LOOK_COLOUR_WHITE",
+    "kind": "const",
+    "screen": "Look dialog (opened by the Look button), name of a colour square",
+    "moment": "One of four squares in the text colour row, and one of three in the outline colour row.",
+    "role": "button",
+    "does": "Plain white.",
+    "budget": 14,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [],
+    "notes": "A colour name, as a person would say it aloud. It sits on a small square of that colour, so it also works as the square's name for a screen reader."
+  },
+  {
+    "key": "LOOK_COLOUR_WARM",
+    "kind": "const",
+    "screen": "Look dialog (opened by the Look button), name of a colour square",
+    "moment": "One of four squares in the text colour row.",
+    "role": "button",
+    "does": "A white with a slight yellow cast, like paper under a lamp.",
+    "budget": 18,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [],
+    "notes": "A colour name, as a person would say it aloud. It sits on a small square of that colour, so it also works as the square's name for a screen reader."
+  },
+  {
+    "key": "LOOK_COLOUR_YELLOW",
+    "kind": "const",
+    "screen": "Look dialog (opened by the Look button), name of a colour square",
+    "moment": "One of four squares in the text colour row.",
+    "role": "button",
+    "does": "A strong, clear yellow.",
+    "budget": 14,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [],
+    "notes": "A colour name, as a person would say it aloud. It sits on a small square of that colour, so it also works as the square's name for a screen reader."
+  },
+  {
+    "key": "LOOK_COLOUR_BLACK",
+    "kind": "const",
+    "screen": "Look dialog (opened by the Look button), name of a colour square",
+    "moment": "One of four squares in the text colour row, and one of three in the outline colour row.",
+    "role": "button",
+    "does": "Plain black. It is the colour, not the black screen button.",
+    "budget": 14,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [],
+    "notes": "Not 'Layar hitam', which means the screen blanked. This is only a paint colour."
+  },
+  {
+    "key": "LOOK_COLOUR_HEX",
+    "kind": "const",
+    "screen": "Look dialog (opened by the Look button), name of a small text field",
+    "moment": "Beside the colour squares, in the text colour row and in the outline colour row.",
+    "role": "field label",
+    "does": "Names the small field where a person types any colour they like as six hex digits.",
+    "budget": 20,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "look"
+    ],
+    "notes": "Only read by a screen reader; it is not drawn."
+  },
+  {
+    "key": "LOOK_COLOUR_HEX_HINT",
+    "kind": "const",
+    "screen": "Look dialog (opened by the Look button), placeholder inside the small colour field",
+    "moment": "Shown while the field is empty.",
+    "role": "placeholder",
+    "does": "Shows the shape of what to type, a colour as six hex digits, with the example ffcc00.",
+    "budget": 22,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [],
+    "notes": "Keep the example ffcc00 exactly as written. It is code, not a word."
+  },
+  {
+    "key": "LOOK_FONT",
+    "kind": "const",
+    "screen": "Look dialog (opened by the Look button), row label",
+    "moment": "Followed by a button that opens a searchable list of the fonts on this computer.",
+    "role": "field label",
+    "does": "Label of the row that sets the font family of the words on the projector screen.",
+    "budget": 14,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "look",
+      "projector"
+    ],
+    "notes": ""
+  },
+  {
+    "key": "LOOK_FONT_DEFAULT",
+    "kind": "const",
+    "screen": "Look dialog (opened by the Look button), first choice in the font list, and the button's text when no font was picked",
+    "moment": "At the top of the list of fonts.",
+    "role": "list item",
+    "does": "The choice that leaves the font to the program: Artosia draws the words in the font it ships with.",
+    "budget": 24,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [],
+    "notes": "Artosia is the program's name and stays as written."
+  },
+  {
+    "key": "LOOK_FONT_SEARCH",
+    "kind": "const",
+    "screen": "Look dialog (opened by the Look button), placeholder in the search field at the top of the font list",
+    "moment": "The list is open and nothing has been typed.",
+    "role": "placeholder",
+    "does": "Invites the person to type part of a font's name to narrow the list.",
+    "budget": 22,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [],
+    "notes": ""
+  },
+  {
+    "key": "LOOK_FONT_NONE",
+    "kind": "const",
+    "screen": "Look dialog (opened by the Look button), message in the font list",
+    "moment": "The person typed a name and no installed font contains it.",
+    "role": "empty state",
+    "does": "Says the typed name matches no font on this computer.",
+    "budget": 28,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [],
+    "notes": ""
+  },
+  {
+    "key": "LOOK_OUTLINE",
+    "kind": "const",
+    "screen": "Look dialog (opened by the Look button), row label",
+    "moment": "Followed by four choices of thickness and then a colour row below it.",
+    "role": "field label",
+    "does": "Label of the row that sets how thick the line drawn around each letter is.",
+    "budget": 16,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "look"
+    ],
+    "notes": "The line around the edge of each letter, like an outline drawn with a pen. Not an outline of a document."
+  },
+  {
+    "key": "LOOK_OUTLINE_OFF",
+    "kind": "const",
+    "screen": "Look dialog (opened by the Look button), segmented option",
+    "moment": "First of four, in the outline row.",
+    "role": "button",
+    "does": "No line round the letters.",
+    "budget": 12,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "look"
+    ],
+    "notes": "Means the outline is turned off."
+  },
+  {
+    "key": "LOOK_OUTLINE_THIN",
+    "kind": "const",
+    "screen": "Look dialog (opened by the Look button), segmented option",
+    "moment": "Second of four, in the outline row.",
+    "role": "button",
+    "does": "A thin line round the letters.",
+    "budget": 12,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "look"
+    ],
+    "notes": ""
+  },
+  {
+    "key": "LOOK_OUTLINE_MEDIUM",
+    "kind": "const",
+    "screen": "Look dialog (opened by the Look button), segmented option",
+    "moment": "Third of four, in the outline row.",
+    "role": "button",
+    "does": "A line of middle thickness round the letters.",
+    "budget": 12,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "look"
+    ],
+    "notes": ""
+  },
+  {
+    "key": "LOOK_OUTLINE_THICK",
+    "kind": "const",
+    "screen": "Look dialog (opened by the Look button), segmented option",
+    "moment": "Last of four, in the outline row.",
+    "role": "button",
+    "does": "A thick line round the letters.",
+    "budget": 12,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "look"
+    ],
+    "notes": ""
+  },
+  {
+    "key": "LOOK_OUTLINE_COLOUR",
+    "kind": "const",
+    "screen": "Look dialog (opened by the Look button), row label",
+    "moment": "Followed by black, white and a small field for a typed colour.",
+    "role": "field label",
+    "does": "Label of the row that sets the colour of the line drawn around each letter.",
+    "budget": 22,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "look"
+    ],
+    "notes": ""
   }
 ]
