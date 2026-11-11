@@ -730,6 +730,18 @@ fn listen(s: &App, k: &Kit, layer: &mut Vec<El>) {
         s.settings.beat_blink = !s.settings.beat_blink;
         s.touch_settings();
     }));
+    // A build that can hear words needs its model; a PC without one is offered it here.
+    if App::speech_built() {
+        use crate::speech_model::Model;
+        let row_of = |words: String, button: Option<El>| row().key("speech-model").w_full().min_h(40.0).gap(space::S3).center_y().child(rune::icon(&icons::IMPORT, 16.0).color(k.c.text_muted).a11y_hidden()).child(text(words).font(type_::BODY).color(k.c.text_base).wrap().grow(1.0).min_w(0.0)).children(button);
+        let get = || btn(t::BIBLES_DOWNLOAD()).icon(&icons::IMPORT).focusable().build(k, |s, _| s.download_model());
+        match &s.model {
+            Model::Missing => body = body.child(row_of(t::LISTEN_MODEL_MISSING().to_string(), Some(get()))),
+            Model::Downloading => body = body.child(row_of(t::BIBLES_DOWNLOADING().to_string(), None)),
+            Model::Failed(why) => body = body.child(row_of(t::listen_model_failed(why), Some(get()))),
+            Model::Ready | Model::Unknown => {}
+        }
+    }
     if let Some(problem) = &s.listen_problem {
         body = body.child(text(problem.clone()).font(type_::BODY).color(theme::warn_ink()).wrap());
     }

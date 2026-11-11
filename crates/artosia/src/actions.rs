@@ -924,6 +924,7 @@ impl App {
     /// Opens the listening dialog with the microphones this computer has now.
     pub fn open_listen(&mut self) {
         self.microphones = artosia_listen::devices();
+        self.check_model();
         self.sheet = Sheet::Listen;
     }
 
@@ -1403,6 +1404,7 @@ impl App {
                 Arrived::Heard(artosia_listen::Heard::Final(text)) => self.heard_final(text),
                 Arrived::Heard(artosia_listen::Heard::Problem(problem)) => self.listen_problem = Some(problem),
                 Arrived::Heard(_) => {}
+                Arrived::Model(result) => self.model_arrived(result),
                 Arrived::Update(Ok(Some(version))) => self.say(t::update_ready(&version), None),
                 Arrived::Update(Ok(None)) => self.say(t::update_none(crate::update::VERSION), None),
                 Arrived::Update(Err(problem)) => self.say(problem, None),

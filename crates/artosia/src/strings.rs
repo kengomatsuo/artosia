@@ -316,6 +316,13 @@ text!(LISTEN_INDONESIAN, "Indonesian", "Indonesia");
 text!(LISTEN_ENGLISH, "English", "Inggris");
 text!(LISTEN_LEVEL, "Sound coming in", "Tingkat suara");
 text!(LISTEN_HEARD, "Heard", "Yang terdengar");
+text!(LISTEN_MODEL_MISSING, "To hear words, Artosia needs its speech model, 57 MB", "To hear words, Artosia needs its speech model, 57 MB");
+pub fn listen_model_failed(why: &str) -> String {
+    if let Some(text) = say("listen_model_failed", None, None, &[("why", text_arg(why))]) {
+        return text;
+    }
+    format!("The speech model did not arrive: {why}")
+}
 text!(LISTEN_TEMPO, "Tempo", "Tempo");
 text!(LISTEN_BPM, "BPM", "BPM");
 text!(LISTEN_BEAT_BLINK, "Live marker follows the beat", "Live marker follows the beat");

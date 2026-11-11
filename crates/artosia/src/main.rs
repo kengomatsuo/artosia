@@ -18,6 +18,7 @@ mod link;
 mod palette;
 mod plans;
 mod starts;
+mod speech_model;
 mod state;
 mod stream;
 mod strings;

@@ -101,6 +101,8 @@ pub fn dump() -> String {
     line(out, "LISTEN_ENGLISH", LISTEN_ENGLISH());
     line(out, "LISTEN_LEVEL", LISTEN_LEVEL());
     line(out, "LISTEN_HEARD", LISTEN_HEARD());
+    line(out, "LISTEN_MODEL_MISSING", LISTEN_MODEL_MISSING());
+    line(out, "listen_model_failed", &listen_model_failed("there is no connection"));
     line(out, "LISTEN_TEMPO", LISTEN_TEMPO());
     line(out, "LISTEN_BPM", LISTEN_BPM());
     line(out, "LISTEN_BEAT_BLINK", LISTEN_BEAT_BLINK());

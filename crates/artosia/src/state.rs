@@ -282,6 +282,8 @@ pub enum Arrived {
     Heard(artosia_listen::Heard),
     /// A check for a newer Artosia: the version now waiting, none, or why it failed.
     Update(Result<Option<String>, String>),
+    /// The speech model's download ended.
+    Model(Result<(), String>),
 }
 
 pub struct App {
@@ -348,6 +350,8 @@ pub struct App {
     pub held_shift: bool,
     /// What was on the projector before, newest last, so a volunteer who went too far can
     /// see where they were and bring it back into Preview.
+    /// Whether the speech model is on this PC (`speech_model.rs`).
+    pub model: crate::speech_model::Model,
     pub history: Vec<LiveDeck>,
     pub history_menu: bool,
     /// The Live switch is off: the Live list keeps what it holds and the projector shows none
@@ -539,6 +543,7 @@ impl App {
             plan_dropped: false,
             held_ctrl: false,
             held_shift: false,
+            model: crate::speech_model::Model::Unknown,
             history: Vec::new(),
             history_menu: false,
             off_air: false,
