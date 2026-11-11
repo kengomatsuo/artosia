@@ -1022,16 +1022,25 @@ text!(NOTICE_NOTHING_TO_SHOW, "This card has nothing to show today", "This card 
 /// Which days a birthday card that follows the week covers.
 pub fn birthdays_cover_week(from: (u8, u8), to: (u8, u8)) -> String {
     let month = |month: u8| MONTHS()[usize::from(month.clamp(1, 12)) - 1];
+    if let Some(text) = say("birthdays_cover_week", None, None, &[("from_day", text_arg(from.1)), ("from_month", text_arg(month(from.0))), ("to_day", text_arg(to.1)), ("to_month", text_arg(month(to.0)))]) {
+        return text;
+    }
     format!("Covers {} {} to {} {}", from.1, month(from.0), to.1, month(to.0))
 }
 
 /// Which days a birthday card that follows the month covers.
 pub fn birthdays_cover_month(month: u8) -> String {
+    if let Some(text) = say("birthdays_cover_month", None, None, &[("month", text_arg(MONTHS()[usize::from(month.clamp(1, 12)) - 1]))]) {
+        return text;
+    }
     format!("Covers all of {}", MONTHS()[usize::from(month.clamp(1, 12)) - 1])
 }
 
 /// How many names a birthday card holds today.
 pub fn names_today(count: usize) -> String {
+    if let Some(text) = say("names_today", None, Some(count), &[]) {
+        return text;
+    }
     match count {
         0 => "No names today".to_string(),
         1 => "1 name today".to_string(),
@@ -1304,6 +1313,9 @@ text!(GROUP_RECENT, "Picked from the list lately", "Lagu yang baru dipilih");
 
 /// The heading over the songs that came after the live song.
 pub fn group_follows(title: &str) -> String {
+    if let Some(text) = say("group_follows", None, None, &[("title", text_arg(title))]) {
+        return text;
+    }
     if indonesian() {
         return format!("Lagu yang pernah menyusul {title}");
     }
@@ -1320,6 +1332,9 @@ fn services_of(count: u32) -> String {
 
 /// On the row: how often this text led to this song, with the text.
 pub fn habit_chip(typed: &str, picks: u32) -> String {
+    if let Some(text) = say("habit_chip", None, Some(picks as usize), &[("typed", text_arg(typed)), ("picks", text_arg(picks))]) {
+        return text;
+    }
     if indonesian() {
         return format!("Dipilih {picks} kali untuk \u{201c}{typed}\u{201d}");
     }
@@ -1328,6 +1343,9 @@ pub fn habit_chip(typed: &str, picks: u32) -> String {
 
 /// The same with the day of the last pick, in the preview.
 pub fn habit_line(typed: &str, picks: u32, when: &str) -> String {
+    if let Some(text) = say("habit_line", None, Some(picks as usize), &[("typed", text_arg(typed)), ("picks", text_arg(picks)), ("when", text_arg(when))]) {
+        return text;
+    }
     if indonesian() {
         return format!("Dipilih {picks} kali untuk \u{201c}{typed}\u{201d}, terakhir {when}");
     }
@@ -1336,6 +1354,9 @@ pub fn habit_line(typed: &str, picks: u32, when: &str) -> String {
 
 /// Under a song that came after the live one.
 pub fn follows_line(count: u32, when: &str) -> String {
+    if let Some(text) = say("follows_line", None, Some(count as usize), &[("when", text_arg(when))]) {
+        return text;
+    }
     if indonesian() {
         return format!("Menyusul {count} kali, terakhir {when}");
     }
@@ -1344,6 +1365,9 @@ pub fn follows_line(count: u32, when: &str) -> String {
 
 /// Under a song sung on this day of the week: in `count` of the last `of` services that day.
 pub fn weekday_line(count: u32, of: u32) -> String {
+    if let Some(text) = say("weekday_line", None, Some(of as usize), &[("count", text_arg(count)), ("of", text_arg(of))]) {
+        return text;
+    }
     if indonesian() {
         return format!("Dinyanyikan {count} dari {of} ibadah");
     }
@@ -1352,6 +1376,9 @@ pub fn weekday_line(count: u32, of: u32) -> String {
 
 /// Under a song picked from the list with nothing typed.
 pub fn recent_line(picks: u32, when: &str) -> String {
+    if let Some(text) = say("recent_line", None, Some(picks as usize), &[("picks", text_arg(picks)), ("when", text_arg(when))]) {
+        return text;
+    }
     if indonesian() {
         return format!("Dipilih {picks} kali, terakhir {when}");
     }
@@ -1360,6 +1387,9 @@ pub fn recent_line(picks: u32, when: &str) -> String {
 
 /// A short chip: the song usually begins at this section.
 pub fn starts_chip(section: &str) -> String {
+    if let Some(text) = say("starts_chip", None, None, &[("section", text_arg(section))]) {
+        return text;
+    }
     if indonesian() {
         return format!("Mulai di {section}");
     }
@@ -1368,6 +1398,9 @@ pub fn starts_chip(section: &str) -> String {
 
 /// In the preview: the section it usually begins at, and how often.
 pub fn starts_line(section: &str, times: u32, of: u32) -> String {
+    if let Some(text) = say("starts_line", None, None, &[("section", text_arg(section)), ("times", text_arg(times)), ("of", text_arg(of))]) {
+        return text;
+    }
     if indonesian() {
         return format!("Biasanya mulai di {section}, {times} dari {of} kali");
     }
@@ -1416,6 +1449,9 @@ text!(BIBLES_NOTICE_LOADING, "Reading the file's own notice", "Reading the file'
 text!(BIBLES_NOTICE_FAILED, "Could not read the file's notice", "Could not read the file's notice");
 
 pub fn bibles_download_failed(why: &str) -> String {
+    if let Some(text) = say("bibles_download_failed", None, None, &[("why", text_arg(why))]) {
+        return text;
+    }
     if indonesian() {
         return format!("Alkitab tidak bisa diunduh: {why}");
     }
@@ -1423,6 +1459,9 @@ pub fn bibles_download_failed(why: &str) -> String {
 }
 
 pub fn bible_added(name: &str, verses: usize) -> String {
+    if let Some(text) = say("bible_added", None, Some(verses), &[("name", text_arg(name)), ("verses", text_arg(verses))]) {
+        return text;
+    }
     if indonesian() {
         return format!("{name} ditambah, {verses} ayat");
     }
@@ -1430,6 +1469,9 @@ pub fn bible_added(name: &str, verses: usize) -> String {
 }
 
 pub fn bibles_file_failed(why: &str) -> String {
+    if let Some(text) = say("bibles_file_failed", None, None, &[("why", text_arg(why))]) {
+        return text;
+    }
     if indonesian() {
         return format!("Alkitab tidak bisa ditambah: {why}");
     }
