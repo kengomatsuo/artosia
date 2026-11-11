@@ -240,6 +240,8 @@ pub struct Notices {
     /// A picture shown with the words; empty for none.
     pub image: String,
     pub fill: Fill,
+    /// The reference of a passage card, as typed.
+    pub passage: TextEdit,
 }
 
 /// Results a worker thread hands back to the window.
@@ -717,13 +719,31 @@ impl App {
 
     /// Every announcement slide in order, each with the place of its announcement in the list.
     pub fn announcement_pages(&self) -> Vec<(usize, Slide)> {
-        announcement_pages(&self.announcements, &self.people, &self.today())
+        announcement_pages(&self.announcements, &self.people, &self.today(), self.bible().map(|bible| &**bible), self.settings.verses_per_slide)
     }
 
     pub fn announcements_deck(&self) -> Deck {
-        let mut deck = artosia_core::deck::announcements_deck(&self.announcements, &self.people, &self.today());
+        let mut deck = artosia_core::deck::announcements_deck(&self.announcements, &self.people, &self.today(), self.bible().map(|bible| &**bible), self.settings.verses_per_slide);
         deck.title = t::CMD_ANNOUNCEMENTS().to_string();
         deck
+    }
+
+    /// The slides one card gives today: none for a birthday card with nobody, or a passage card
+    /// the Bible cannot read.
+    pub fn card_slides(&self, card: &Announcement) -> Vec<Slide> {
+        announcement_pages(std::slice::from_ref(card), &self.people, &self.today(), self.bible().map(|bible| &**bible), self.settings.verses_per_slide).into_iter().map(|(_, slide)| slide).collect()
+    }
+
+    /// One saved card as a deck of its own, so it can be shown without the rest; None when it has
+    /// nothing to show today.
+    pub fn card_deck(&self, id: i64) -> Option<Deck> {
+        let card = self.announcements.iter().find(|card| card.id == id)?;
+        let slides = self.card_slides(card);
+        if slides.is_empty() {
+            return None;
+        }
+        let title = if card.title.is_empty() { slides[0].label.clone() } else { card.title.clone() };
+        Some(Deck { title, subtitle: String::new(), source: DeckSource::Announcement(id), slides })
     }
 
     /// The deck the number keys act on: what is live, else what is open.
@@ -1217,7 +1237,8 @@ impl App {
             match source {
                 DeckSource::Song(id) => app.song_position(*id).map(|at| app.deck_of_song(&app.songs[at])),
                 DeckSource::Passage { reference, .. } => app.deck_of_passage(reference),
-                DeckSource::Announcements | DeckSource::Announcement(_) => Some(app.announcements_deck()),
+                DeckSource::Announcements => Some(app.announcements_deck()),
+                DeckSource::Announcement(id) => app.card_deck(*id),
             }
         };
         if let Some(source) = self.open.as_ref().map(|open| open.deck.source.clone()) {

@@ -7903,5 +7903,167 @@
       "plan"
     ],
     "notes": "Same pattern as the toast for a removed plan item, but about a whole plan."
+  },
+  {
+    "key": "FILL_PASSAGE",
+    "kind": "const",
+    "screen": "Announcements editor, form on the right, segmented option under \"Fill in by itself\"",
+    "moment": "Second of four, between the manual choice and the two birthday choices.",
+    "role": "button",
+    "does": "Option that makes the notice read its words from a Bible verse or passage, typed by its reference.",
+    "budget": 16,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "announcements",
+      "bible"
+    ],
+    "notes": "Four choices share one row about 440 points wide, so keep it short."
+  },
+  {
+    "key": "ANNOUNCEMENT_PASSAGE",
+    "kind": "const",
+    "screen": "Announcements editor, form on the right, field label",
+    "moment": "Shown above the field only while the notice reads a Bible passage.",
+    "role": "field label",
+    "does": "Label for the box where the volunteer types which verse or passage the notice shows.",
+    "budget": 24,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "announcements",
+      "bible"
+    ],
+    "notes": ""
+  },
+  {
+    "key": "ANNOUNCEMENT_PASSAGE_HINT",
+    "kind": "const",
+    "screen": "Announcements editor, form on the right, placeholder inside the empty reference box",
+    "moment": "Shown only while the box is empty.",
+    "role": "placeholder",
+    "does": "An example of a reference a volunteer might type: a book, a chapter and a range of verses.",
+    "budget": 16,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "bible"
+    ],
+    "notes": "An example, not a real instruction. Write the book name the way a church in that language writes it. Never a verse a real translation would print."
+  },
+  {
+    "key": "PASSAGE_NO_BIBLE",
+    "kind": "const",
+    "screen": "Announcements editor, form on the right, small grey line under the reference box, beside a button that opens the Bibles dialog",
+    "moment": "Shown when no Bible is installed to read the verse from.",
+    "role": "status line",
+    "does": "Tells the volunteer the notice has no words because there is no Bible installed yet.",
+    "budget": 60,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "announcements",
+      "bible"
+    ],
+    "notes": ""
+  },
+  {
+    "key": "PASSAGE_UNREADABLE",
+    "kind": "const",
+    "screen": "Announcements editor, form on the right, small grey line under the reference box, beside a button that opens the Bibles dialog",
+    "moment": "Shown when the typed reference matches no verse in the Bible in use.",
+    "role": "status line",
+    "does": "Tells the volunteer the Bible in use has no verse at the reference they typed.",
+    "budget": 60,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "announcements",
+      "bible"
+    ],
+    "notes": ""
+  },
+  {
+    "key": "NOTICE_NOTHING_TO_SHOW",
+    "kind": "const",
+    "screen": "Toast at the bottom of the main window",
+    "moment": "After pressing Show now on a notice that has no slide today, such as a birthday notice nobody falls under or a Bible notice with no readable verse.",
+    "role": "toast",
+    "does": "Says the notice that was just chosen has nothing to put on the projector right now.",
+    "budget": 50,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "announcements"
+    ],
+    "notes": "A statement, not an apology."
+  },
+  {
+    "key": "birthdays_cover_week",
+    "kind": "fn",
+    "screen": "Announcements editor, form on the right, grey line under the \"Fill in by itself\" choice",
+    "moment": "Shown while the notice follows the week.",
+    "role": "status line",
+    "does": "Says from which day to which day the notice looks for birthdays: today and the six days after it.",
+    "budget": 40,
+    "variables": [
+      {
+        "name": "from",
+        "example": "11 November",
+        "what": "first day, a day number and a month name"
+      },
+      {
+        "name": "to",
+        "example": "17 November",
+        "what": "last day, a day number and a month name"
+      }
+    ],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "announcements"
+    ],
+    "notes": "The two dates can fall in different months. Month names come from the month list already in the app."
+  },
+  {
+    "key": "birthdays_cover_month",
+    "kind": "fn",
+    "screen": "Announcements editor, form on the right, grey line under the \"Fill in by itself\" choice",
+    "moment": "Shown while the notice follows the month.",
+    "role": "status line",
+    "does": "Says the notice looks for birthdays on every day of one month.",
+    "budget": 40,
+    "variables": [
+      {
+        "name": "month",
+        "example": "November",
+        "what": "name of the current month"
+      }
+    ],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "announcements"
+    ],
+    "notes": ""
+  },
+  {
+    "key": "names_today",
+    "kind": "fn",
+    "screen": "Announcements editor, form on the right, grey line under the days covered; also the detail line of a search result for a birthday notice",
+    "moment": "Updates with the date and the birthday list.",
+    "role": "status line",
+    "does": "Says how many people the birthday notice holds today; says so plainly when nobody.",
+    "budget": 24,
+    "variables": [
+      {
+        "name": "count",
+        "example": "3",
+        "what": "people whose birthday falls in the days covered; 0 and 1 are special in English only"
+      }
+    ],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "announcements"
+    ],
+    "notes": "At zero the sentence is different."
   }
 ]

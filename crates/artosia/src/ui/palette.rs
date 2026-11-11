@@ -340,7 +340,9 @@ fn preview(s: &App, k: &Kit) -> El {
         }
         Hit::Announcement { index, .. } => {
             if let Some(item) = s.announcements.get(*index) {
-                body = body.child(slide_preview(&s.preview_state(Some(announcement_slide(item)))));
+                // What the card gives today; a card with nothing to give shows its own words.
+                let slide = s.card_slides(item).into_iter().next().unwrap_or_else(|| announcement_slide(item));
+                body = body.child(slide_preview(&s.preview_state(Some(slide))));
             }
         }
         Hit::Look { index, name } => {
