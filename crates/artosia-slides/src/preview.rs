@@ -111,7 +111,7 @@ pub fn unpack(width: u32, height: u32, text: &str) -> Option<Vec<u8>> {
         return None;
     }
     let mut rgba = Vec::with_capacity(pixels * 4);
-    for p in rgb.chunks_exact(3) {
+    for p in rgb.as_chunks::<3>().0 {
         rgba.extend_from_slice(&[p[0], p[1], p[2], 255]);
     }
     Some(rgba)

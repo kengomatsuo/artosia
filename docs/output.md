@@ -76,8 +76,18 @@ Frame cadence (Lerret's `FrameClock` choosing frames on the vsync grid) needs th
 
 ## Not built yet
 
-- A still frame of the video in the operator's previews: they show the text on black, because the operator does not link GStreamer.
 - Streaming out, NDI.
+
+## The operator's pictures show the video (2026-11-11)
+
+The two small pictures in the operator window (under the Preview list and under the Live list) drew the words on plain black over a video or camera, while the projector showed them over the moving picture (owner: "Why the preview or live view not show the same thing on live?"). They now draw the words over what the projector draws them over.
+
+- **Where frames come from.** `artosia-video` has a tap (`tap.rs`): the appsink callback that feeds the surface, for a file and for a camera alike, offers the newest NV12 frame to one registered function at most every 250 ms, and only while an operator is connected. Off, a frame costs one atomic load. The output registers it in `video.rs`: `artosia_slides::preview::shrink` makes a 256-pixel-wide RGB picture straight from the NV12 planes (four samples averaged per pixel, BT.709 or BT.601, limited or full range, shape kept), and a writer thread sends the newest as `FromOutput::Preview { width, height, rgb }` with the RGB as base64 in the JSON line. A slow socket drops pictures and never holds the decoder.
+- **Dropping it.** `go_dark` (a look that is no longer moving, a failed or stopped video, a switch to another file) sends `PreviewEnd` under a lock shared with the writer, so a picture in flight cannot land after it. A closed socket also drops it. The operator keeps the newest picture in a `Pixels` (`link.rs`, `LivePicture`); `Pixels::set` wakes only the windows showing it, so the window redraws once per picture and not at all between them. `ui::thumb` hands it to `Media.picture` only for a look that is the moving look the projector plays now, so the looks list and the editor keep their still picture or colour.
+- **Transport.** Base64 in the JSON line, chosen by measuring: 256x144 at 4 a second is 147 KB a line, 0.56 MB/s on the local socket, and the writer thread and the operator's reader thread cost too little to separate from the noise below. A second connection of raw bytes would save a third of that and cost a second socket to keep alive; not built.
+- **Measured** (release, the 15 s `bg30.mp4` fixture in a window on the primary 144 Hz screen, `tools/ram/measure-cpu.ps1` with 36 s settle and 15 s window, a stand-in operator connected in every run; `ARTOSIA_NO_PREVIEW=1` makes no pictures): without pictures `cores=0.49 workingSetMB=260 privateMB=249` and `cores=0.51 workingSetMB=255 privateMB=245`; with them `cores=0.46 workingSetMB=256 privateMB=245` and `cores=0.42 workingSetMB=259 privateMB=248`. The difference is far inside this PC's run-to-run spread of 0.1 cores (see the table above), so the cost of the pictures is under what can be measured here. 19 pictures went out in each 5 s, and the file wrapped twice (`loops=2`, `video pos` 14.20 then 1.24 then 0.43 in the trace).
+- **Not tried.** A real camera (the owner's was open on the projector, so only a file was played; the camera shares the appsink callback, so it gives the same pictures); the pictures with the operator minimised (they are still decoded and sent).
+- Test hooks: `cargo run -p artosia -- --snap out.png --scene camera-background` renders both pictures over a made-up gradient handed in as if the projector had sent it.
 
 ## Checking the projector on a real screen
 
