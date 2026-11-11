@@ -100,6 +100,7 @@ pub(crate) fn make_sink(surface: &NativeSurface, shared: &Arc<Shared>, sync: boo
                 shared.frame_pushed();
                 return Ok(gst::FlowSuccess::Ok);
             }
+            crate::tap::offer(&sample);
             let pushed = frames::nv12_frame(&sample).and_then(|f| {
                 surface.push_bytes(f, next_id.fetch_add(1, Ordering::Relaxed)).map_err(VideoError::Frame)
             });

@@ -3,7 +3,7 @@
 use artosia_core::deck::{Slide, SlideKind};
 use artosia_core::song::{SectionKind, Tag};
 use artosia_slides::frame::{Countdown, OutputState, StageChip, StageInfo};
-use artosia_slides::look::{Look, presets};
+use artosia_slides::look::{Background, Look, Outline, presets};
 
 fn slide(kind: SlideKind, label: &str, tag: Option<Tag>, text: &str) -> Slide {
     Slide {
@@ -106,6 +106,24 @@ pub fn classic() -> OutputState {
 
 pub fn paper() -> OutputState {
     OutputState { look: look("Paper"), ..lyrics() }
+}
+
+/// Yellow text in Georgia with a thick black outline, over a dark gradient.
+pub fn styled() -> OutputState {
+    let look = Look { ink: [255, 214, 0], font: "Georgia".to_string(), outline: Outline::Thick, outline_ink: [0, 0, 0], ..look("Midnight") };
+    OutputState { look, ..lyrics() }
+}
+
+/// White text with a medium black outline over a bright background, where a picture would be.
+pub fn outlined() -> OutputState {
+    let look = Look { background: Background::Solid([232, 206, 140]), ink: [255, 255, 255], outline: Outline::Medium, ..look("Black") };
+    OutputState { look, ..lyrics() }
+}
+
+/// A font this computer lacks: the words must still show, in the default font.
+pub fn missing_font() -> OutputState {
+    let look = Look { font: "No Such Family 123".to_string(), outline: Outline::Thin, ..look("Midnight") };
+    OutputState { look, ..lyrics() }
 }
 
 pub fn black() -> OutputState {

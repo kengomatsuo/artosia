@@ -2127,37 +2127,6 @@
     "notes": ""
   },
   {
-    "key": "WELCOME_EASISLIDES",
-    "kind": "const",
-    "screen": "Main window, middle column, start screen (nothing open), banner above the cards, shown once",
-    "moment": "First start on a church computer that has it.",
-    "role": "title",
-    "does": "Tells the volunteer that the older presentation program EasiSlides is installed on this computer.",
-    "budget": 40,
-    "variables": [],
-    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
-    "vocabulary": [
-      "song"
-    ],
-    "notes": "EasiSlides is a proper noun."
-  },
-  {
-    "key": "WELCOME_EASISLIDES_DETAIL",
-    "kind": "const",
-    "screen": "Main window, middle column, start screen (nothing open), banner body",
-    "moment": "Under the banner heading, wraps to two lines.",
-    "role": "hint",
-    "does": "Offers to copy the older program's songs and Bibles across, and reassures that the older program stays untouched and keeps working.",
-    "budget": 80,
-    "variables": [],
-    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
-    "vocabulary": [
-      "song",
-      "bible"
-    ],
-    "notes": "EasiSlides and Artosia are proper nouns."
-  },
-  {
     "key": "BTN_BRING_OVER",
     "kind": "const",
     "screen": "Start-screen banner and import dialog",
@@ -2170,19 +2139,6 @@
     "vocabulary": [
       "song"
     ],
-    "notes": ""
-  },
-  {
-    "key": "BTN_NOT_NOW",
-    "kind": "const",
-    "screen": "Start-screen banner",
-    "moment": "Secondary button next to the primary one.",
-    "role": "button",
-    "does": "Button that closes the banner without doing the import now.",
-    "budget": 12,
-    "variables": [],
-    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
-    "vocabulary": [],
     "notes": ""
   },
   {
@@ -2477,18 +2433,17 @@
   {
     "key": "LIVE_NOTHING",
     "kind": "const",
-    "screen": "Main window, right column (live and controls), caption under the dark preview",
-    "moment": "Nothing is live yet.",
+    "screen": "The main window, right pane: the list of the slides of what is on the projector now.",
+    "moment": "Nothing is on the projector, so the list is empty and these grey words stand in its place.",
     "role": "empty state",
-    "does": "Invites the volunteer to send a slide to the congregation's screen by clicking one of the thumbnails.",
+    "does": "Says the projector shows nothing at the moment.",
     "budget": 32,
     "variables": [],
     "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
     "vocabulary": [
-      "slide",
       "projector"
     ],
-    "notes": ""
+    "notes": "A plain statement without a full stop. It gives no instruction."
   },
   {
     "key": "NEXT_NOTHING",
@@ -6954,7 +6909,7 @@
   {
     "key": "BIBLES_TITLE",
     "kind": "const",
-    "screen": "The Bibles dialog. Top: a search field over a list of free Bible translations from the internet, grouped by language, each row a translation's name with how much of the Bible it holds at the right. Under the list: a card for the translation that was picked, with its copyright notice and a download button. Bottom: a part for a Bible file the church already has on this computer.",
+    "screen": "The Bibles dialog. Top: a search field over a list of Bible translations from two internet sources, grouped by language, each row a translation's name with how much of the Bible it holds (or the file size) and the name of its source at the right. Under the list: a card for the translation that was picked, with its source, the copyright notice the translation's own file states and a download button. Bottom: a part for a Bible file the church already has on this computer.",
     "moment": "The dialog just opened. Also the label of a row in the Look dialog.",
     "role": "dialog title",
     "does": "Names the dialog where Bible translations are added.",
@@ -6984,7 +6939,7 @@
   {
     "key": "BIBLES_OWN_FILE",
     "kind": "const",
-    "screen": "The Bibles dialog. Top: a search field over a list of free Bible translations from the internet, grouped by language, each row a translation's name with how much of the Bible it holds at the right. Under the list: a card for the translation that was picked, with its copyright notice and a download button. Bottom: a part for a Bible file the church already has on this computer.",
+    "screen": "The Bibles dialog. Top: a search field over a list of Bible translations from two internet sources, grouped by language, each row a translation's name with how much of the Bible it holds (or the file size) and the name of its source at the right. Under the list: a card for the translation that was picked, with its source, the copyright notice the translation's own file states and a download button. Bottom: a part for a Bible file the church already has on this computer.",
     "moment": "Bottom part of the dialog.",
     "role": "section heading",
     "does": "Heads the part for a Bible file the church already holds on this computer or a USB stick.",
@@ -6999,7 +6954,7 @@
   {
     "key": "BIBLES_CHOOSE_FILE",
     "kind": "const",
-    "screen": "The Bibles dialog. Top: a search field over a list of free Bible translations from the internet, grouped by language, each row a translation's name with how much of the Bible it holds at the right. Under the list: a card for the translation that was picked, with its copyright notice and a download button. Bottom: a part for a Bible file the church already has on this computer.",
+    "screen": "The Bibles dialog. Top: a search field over a list of Bible translations from two internet sources, grouped by language, each row a translation's name with how much of the Bible it holds (or the file size) and the name of its source at the right. Under the list: a card for the translation that was picked, with its source, the copyright notice the translation's own file states and a download button. Bottom: a part for a Bible file the church already has on this computer.",
     "moment": "Bottom part. Pressing it opens the computer's file picker.",
     "role": "button",
     "does": "Lets the volunteer pick a Bible file from the computer to bring into Artosia.",
@@ -7014,7 +6969,7 @@
   {
     "key": "BIBLES_FILE_HINT",
     "kind": "const",
-    "screen": "The Bibles dialog. Top: a search field over a list of free Bible translations from the internet, grouped by language, each row a translation's name with how much of the Bible it holds at the right. Under the list: a card for the translation that was picked, with its copyright notice and a download button. Bottom: a part for a Bible file the church already has on this computer.",
+    "screen": "The Bibles dialog. Top: a search field over a list of Bible translations from two internet sources, grouped by language, each row a translation's name with how much of the Bible it holds (or the file size) and the name of its source at the right. Under the list: a card for the translation that was picked, with its source, the copyright notice the translation's own file states and a download button. Bottom: a part for a Bible file the church already has on this computer.",
     "moment": "Grey words beside that button.",
     "role": "hint beside a button",
     "does": "Lists the three kinds of file that can be read: MyBible, USFX, and a zip of USFM files.",
@@ -7027,12 +6982,12 @@
     "notes": "MyBible, USFX, USFM and zip are names of file formats: keep them as written. Only the joining words are yours."
   },
   {
-    "key": "BIBLES_FREE",
+    "key": "BIBLES_LIST",
     "kind": "const",
-    "screen": "The Bibles dialog. Top: a search field over a list of free Bible translations from the internet, grouped by language, each row a translation's name with how much of the Bible it holds at the right. Under the list: a card for the translation that was picked, with its copyright notice and a download button. Bottom: a part for a Bible file the church already has on this computer.",
-    "moment": "Top part of the dialog.",
+    "screen": "The Bibles dialog. Top: a search field over a list of Bible translations from two internet sources, grouped by language, each row a translation's name with how much of the Bible it holds (or the file size) and the name of its source at the right. Under the list: a card for the translation that was picked, with its source, the copyright notice the translation's own file states and a download button. Bottom: a part for a Bible file the church already has on this computer.",
+    "moment": "Top part of the dialog, over the search field and the list.",
     "role": "section heading",
-    "does": "Heads the list of Bible translations that may be downloaded and used free of charge.",
+    "does": "Heads the list of Bible translations that can be downloaded. Some are free to copy and some carry a restriction, so it must not say free.",
     "budget": 34,
     "variables": [],
     "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
@@ -7044,7 +6999,7 @@
   {
     "key": "BIBLES_SEARCH",
     "kind": "const",
-    "screen": "The Bibles dialog. Top: a search field over a list of free Bible translations from the internet, grouped by language, each row a translation's name with how much of the Bible it holds at the right. Under the list: a card for the translation that was picked, with its copyright notice and a download button. Bottom: a part for a Bible file the church already has on this computer.",
+    "screen": "The Bibles dialog. Top: a search field over a list of Bible translations from two internet sources, grouped by language, each row a translation's name with how much of the Bible it holds (or the file size) and the name of its source at the right. Under the list: a card for the translation that was picked, with its source, the copyright notice the translation's own file states and a download button. Bottom: a part for a Bible file the church already has on this computer.",
     "moment": "Grey words inside the empty search field over the list.",
     "role": "placeholder",
     "does": "Invites typing a language or the name of a translation to narrow the list.",
@@ -7059,7 +7014,7 @@
   {
     "key": "BIBLES_LOADING",
     "kind": "const",
-    "screen": "The Bibles dialog. Top: a search field over a list of free Bible translations from the internet, grouped by language, each row a translation's name with how much of the Bible it holds at the right. Under the list: a card for the translation that was picked, with its copyright notice and a download button. Bottom: a part for a Bible file the church already has on this computer.",
+    "screen": "The Bibles dialog. Top: a search field over a list of Bible translations from two internet sources, grouped by language, each row a translation's name with how much of the Bible it holds (or the file size) and the name of its source at the right. Under the list: a card for the translation that was picked, with its source, the copyright notice the translation's own file states and a download button. Bottom: a part for a Bible file the church already has on this computer.",
     "moment": "The list is being fetched from the internet; grey placeholder rows show meanwhile.",
     "role": "loading caption",
     "does": "Says the list of Bibles is on its way.",
@@ -7074,7 +7029,7 @@
   {
     "key": "BIBLES_LOAD_FAILED",
     "kind": "const",
-    "screen": "The Bibles dialog. Top: a search field over a list of free Bible translations from the internet, grouped by language, each row a translation's name with how much of the Bible it holds at the right. Under the list: a card for the translation that was picked, with its copyright notice and a download button. Bottom: a part for a Bible file the church already has on this computer.",
+    "screen": "The Bibles dialog. Top: a search field over a list of Bible translations from two internet sources, grouped by language, each row a translation's name with how much of the Bible it holds (or the file size) and the name of its source at the right. Under the list: a card for the translation that was picked, with its source, the copyright notice the translation's own file states and a download button. Bottom: a part for a Bible file the church already has on this computer.",
     "moment": "The list could not be fetched, for example with no internet. A retry button sits under these words.",
     "role": "error title",
     "does": "Says the list of Bibles could not be fetched.",
@@ -7089,7 +7044,7 @@
   {
     "key": "BIBLES_RETRY",
     "kind": "const",
-    "screen": "The Bibles dialog. Top: a search field over a list of free Bible translations from the internet, grouped by language, each row a translation's name with how much of the Bible it holds at the right. Under the list: a card for the translation that was picked, with its copyright notice and a download button. Bottom: a part for a Bible file the church already has on this computer.",
+    "screen": "The Bibles dialog. Top: a search field over a list of Bible translations from two internet sources, grouped by language, each row a translation's name with how much of the Bible it holds (or the file size) and the name of its source at the right. Under the list: a card for the translation that was picked, with its source, the copyright notice the translation's own file states and a download button. Bottom: a part for a Bible file the church already has on this computer.",
     "moment": "Under that error.",
     "role": "button",
     "does": "Tries to fetch the list again.",
@@ -7104,7 +7059,7 @@
   {
     "key": "BIBLES_INSTALLED",
     "kind": "const",
-    "screen": "The Bibles dialog. Top: a search field over a list of free Bible translations from the internet, grouped by language, each row a translation's name with how much of the Bible it holds at the right. Under the list: a card for the translation that was picked, with its copyright notice and a download button. Bottom: a part for a Bible file the church already has on this computer.",
+    "screen": "The Bibles dialog. Top: a search field over a list of Bible translations from two internet sources, grouped by language, each row a translation's name with how much of the Bible it holds (or the file size) and the name of its source at the right. Under the list: a card for the translation that was picked, with its source, the copyright notice the translation's own file states and a download button. Bottom: a part for a Bible file the church already has on this computer.",
     "moment": "A small pill on the row of a translation that is already on this computer.",
     "role": "state pill",
     "does": "Marks a translation as already added to Artosia.",
@@ -7119,7 +7074,7 @@
   {
     "key": "BIBLES_SCOPE_WHOLE",
     "kind": "const",
-    "screen": "The Bibles dialog. Top: a search field over a list of free Bible translations from the internet, grouped by language, each row a translation's name with how much of the Bible it holds at the right. Under the list: a card for the translation that was picked, with its copyright notice and a download button. Bottom: a part for a Bible file the church already has on this computer.",
+    "screen": "The Bibles dialog. Top: a search field over a list of Bible translations from two internet sources, grouped by language, each row a translation's name with how much of the Bible it holds (or the file size) and the name of its source at the right. Under the list: a card for the translation that was picked, with its source, the copyright notice the translation's own file states and a download button. Bottom: a part for a Bible file the church already has on this computer.",
     "moment": "Right end of a translation's row.",
     "role": "label",
     "does": "Says the translation holds the whole Bible, Old and New Testament.",
@@ -7134,7 +7089,7 @@
   {
     "key": "BIBLES_SCOPE_PART",
     "kind": "const",
-    "screen": "The Bibles dialog. Top: a search field over a list of free Bible translations from the internet, grouped by language, each row a translation's name with how much of the Bible it holds at the right. Under the list: a card for the translation that was picked, with its copyright notice and a download button. Bottom: a part for a Bible file the church already has on this computer.",
+    "screen": "The Bibles dialog. Top: a search field over a list of Bible translations from two internet sources, grouped by language, each row a translation's name with how much of the Bible it holds (or the file size) and the name of its source at the right. Under the list: a card for the translation that was picked, with its source, the copyright notice the translation's own file states and a download button. Bottom: a part for a Bible file the church already has on this computer.",
     "moment": "Right end of a translation's row.",
     "role": "label",
     "does": "Says the translation holds only some books of the Bible, not a whole Testament.",
@@ -7147,9 +7102,84 @@
     "notes": ""
   },
   {
+    "key": "BIBLES_SOURCE_EBIBLE",
+    "kind": "const",
+    "screen": "The Bibles dialog. Top: a search field over a list of Bible translations from two internet sources, grouped by language, each row a translation's name with how much of the Bible it holds (or the file size) and the name of its source at the right. Under the list: a card for the translation that was picked, with its source, the copyright notice the translation's own file states and a download button. Bottom: a part for a Bible file the church already has on this computer.",
+    "moment": "At the right end of a row, and in the picked translation card, for a translation that comes from the eBible website.",
+    "role": "proper name",
+    "does": "Names the website the translation comes from.",
+    "budget": 12,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "bible"
+    ],
+    "notes": "The name of a website. Keep it as written."
+  },
+  {
+    "key": "BIBLES_SOURCE_BEBLIA",
+    "kind": "const",
+    "screen": "The Bibles dialog. Top: a search field over a list of Bible translations from two internet sources, grouped by language, each row a translation's name with how much of the Bible it holds (or the file size) and the name of its source at the right. Under the list: a card for the translation that was picked, with its source, the copyright notice the translation's own file states and a download button. Bottom: a part for a Bible file the church already has on this computer.",
+    "moment": "At the right end of a row, and in the picked translation card, for a translation that comes from the Beblia collection of XML Bibles.",
+    "role": "proper name",
+    "does": "Names the collection the translation comes from.",
+    "budget": 12,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "bible"
+    ],
+    "notes": "The name of a collection. Keep it as written."
+  },
+  {
+    "key": "BIBLES_NO_COPYRIGHT",
+    "kind": "const",
+    "screen": "The Bibles dialog. Top: a search field over a list of Bible translations from two internet sources, grouped by language, each row a translation's name with how much of the Bible it holds (or the file size) and the name of its source at the right. Under the list: a card for the translation that was picked, with its source, the copyright notice the translation's own file states and a download button. Bottom: a part for a Bible file the church already has on this computer.",
+    "moment": "In the card of the picked translation, under the copyright label, when the downloaded file's own text says nothing about copyright.",
+    "role": "notice",
+    "does": "Says the file itself states no copyright. It does not say the Bible is free or that it is not.",
+    "budget": 40,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "bible"
+    ],
+    "notes": ""
+  },
+  {
+    "key": "BIBLES_NOTICE_LOADING",
+    "kind": "const",
+    "screen": "The Bibles dialog. Top: a search field over a list of Bible translations from two internet sources, grouped by language, each row a translation's name with how much of the Bible it holds (or the file size) and the name of its source at the right. Under the list: a card for the translation that was picked, with its source, the copyright notice the translation's own file states and a download button. Bottom: a part for a Bible file the church already has on this computer.",
+    "moment": "In the card of the picked translation, under the copyright label, for a moment while the first part of the file is fetched.",
+    "role": "status line",
+    "does": "Says the file's own copyright notice is being read.",
+    "budget": 40,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "bible"
+    ],
+    "notes": ""
+  },
+  {
+    "key": "BIBLES_NOTICE_FAILED",
+    "kind": "const",
+    "screen": "The Bibles dialog. Top: a search field over a list of Bible translations from two internet sources, grouped by language, each row a translation's name with how much of the Bible it holds (or the file size) and the name of its source at the right. Under the list: a card for the translation that was picked, with its source, the copyright notice the translation's own file states and a download button. Bottom: a part for a Bible file the church already has on this computer.",
+    "moment": "In the card of the picked translation, under the copyright label, when the first part of the file could not be fetched.",
+    "role": "error line",
+    "does": "Says the file's own copyright notice could not be read, so the volunteer should try again or not download it.",
+    "budget": 44,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "bible"
+    ],
+    "notes": ""
+  },
+  {
     "key": "BIBLES_PICK_HINT",
     "kind": "const",
-    "screen": "The Bibles dialog. Top: a search field over a list of free Bible translations from the internet, grouped by language, each row a translation's name with how much of the Bible it holds at the right. Under the list: a card for the translation that was picked, with its copyright notice and a download button. Bottom: a part for a Bible file the church already has on this computer.",
+    "screen": "The Bibles dialog. Top: a search field over a list of Bible translations from two internet sources, grouped by language, each row a translation's name with how much of the Bible it holds (or the file size) and the name of its source at the right. Under the list: a card for the translation that was picked, with its source, the copyright notice the translation's own file states and a download button. Bottom: a part for a Bible file the church already has on this computer.",
     "moment": "The card under the list while no translation is picked.",
     "role": "empty-state hint",
     "does": "Invites picking a translation from the list, after which its copyright notice appears here.",
@@ -7164,7 +7194,7 @@
   {
     "key": "BIBLES_COPYRIGHT",
     "kind": "const",
-    "screen": "The Bibles dialog. Top: a search field over a list of free Bible translations from the internet, grouped by language, each row a translation's name with how much of the Bible it holds at the right. Under the list: a card for the translation that was picked, with its copyright notice and a download button. Bottom: a part for a Bible file the church already has on this computer.",
+    "screen": "The Bibles dialog. Top: a search field over a list of Bible translations from two internet sources, grouped by language, each row a translation's name with how much of the Bible it holds (or the file size) and the name of its source at the right. Under the list: a card for the translation that was picked, with its source, the copyright notice the translation's own file states and a download button. Bottom: a part for a Bible file the church already has on this computer.",
     "moment": "In the card of the picked translation, over the publisher's own notice.",
     "role": "label",
     "does": "Labels the copyright notice of the translation.",
@@ -7179,7 +7209,7 @@
   {
     "key": "BIBLES_DOWNLOAD",
     "kind": "const",
-    "screen": "The Bibles dialog. Top: a search field over a list of free Bible translations from the internet, grouped by language, each row a translation's name with how much of the Bible it holds at the right. Under the list: a card for the translation that was picked, with its copyright notice and a download button. Bottom: a part for a Bible file the church already has on this computer.",
+    "screen": "The Bibles dialog. Top: a search field over a list of Bible translations from two internet sources, grouped by language, each row a translation's name with how much of the Bible it holds (or the file size) and the name of its source at the right. Under the list: a card for the translation that was picked, with its source, the copyright notice the translation's own file states and a download button. Bottom: a part for a Bible file the church already has on this computer.",
     "moment": "In the card, after the copyright notice.",
     "role": "button",
     "does": "Downloads that translation and adds it to Artosia.",
@@ -7194,7 +7224,7 @@
   {
     "key": "BIBLES_DOWNLOADING",
     "kind": "const",
-    "screen": "The Bibles dialog. Top: a search field over a list of free Bible translations from the internet, grouped by language, each row a translation's name with how much of the Bible it holds at the right. Under the list: a card for the translation that was picked, with its copyright notice and a download button. Bottom: a part for a Bible file the church already has on this computer.",
+    "screen": "The Bibles dialog. Top: a search field over a list of Bible translations from two internet sources, grouped by language, each row a translation's name with how much of the Bible it holds (or the file size) and the name of its source at the right. Under the list: a card for the translation that was picked, with its source, the copyright notice the translation's own file states and a download button. Bottom: a part for a Bible file the church already has on this computer.",
     "moment": "The same button while the download runs; it cannot be pressed.",
     "role": "button, busy",
     "does": "Says the download is running.",
@@ -7209,7 +7239,7 @@
   {
     "key": "BIBLES_USE",
     "kind": "const",
-    "screen": "The Bibles dialog. Top: a search field over a list of free Bible translations from the internet, grouped by language, each row a translation's name with how much of the Bible it holds at the right. Under the list: a card for the translation that was picked, with its copyright notice and a download button. Bottom: a part for a Bible file the church already has on this computer.",
+    "screen": "The Bibles dialog. Top: a search field over a list of Bible translations from two internet sources, grouped by language, each row a translation's name with how much of the Bible it holds (or the file size) and the name of its source at the right. Under the list: a card for the translation that was picked, with its source, the copyright notice the translation's own file states and a download button. Bottom: a part for a Bible file the church already has on this computer.",
     "moment": "In the card of a translation that is already added.",
     "role": "button",
     "does": "Makes this translation the one Artosia shows verses from.",
@@ -7224,7 +7254,7 @@
   {
     "key": "BIBLES_IN_USE",
     "kind": "const",
-    "screen": "The Bibles dialog. Top: a search field over a list of free Bible translations from the internet, grouped by language, each row a translation's name with how much of the Bible it holds at the right. Under the list: a card for the translation that was picked, with its copyright notice and a download button. Bottom: a part for a Bible file the church already has on this computer.",
+    "screen": "The Bibles dialog. Top: a search field over a list of Bible translations from two internet sources, grouped by language, each row a translation's name with how much of the Bible it holds (or the file size) and the name of its source at the right. Under the list: a card for the translation that was picked, with its source, the copyright notice the translation's own file states and a download button. Bottom: a part for a Bible file the church already has on this computer.",
     "moment": "The same button when this translation is already the one in use; it cannot be pressed.",
     "role": "button, disabled",
     "does": "Says this translation is the one being used now.",
@@ -7394,12 +7424,12 @@
     "notes": ""
   },
   {
-    "key": "CMD_BIBLES_DETAIL",
+    "key": "CMD_BIBLES_FIND_DETAIL",
     "kind": "const",
     "screen": "The search box, grey second line of that command.",
     "moment": "Same.",
     "role": "command detail",
-    "does": "Says free translations in many languages can be had there.",
+    "does": "Says translations in many languages can be downloaded there.",
     "budget": 40,
     "variables": [],
     "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
@@ -7422,6 +7452,935 @@
       "projector"
     ],
     "notes": "A fragment without a full stop. Artosia is the program's name and stays as written."
+  },
+  {
+    "key": "BTN_END",
+    "kind": "const",
+    "screen": "The main window. Under the list of what is on the projector now sits a small picture of the projector and, beside it, the buttons that act on the projector: back, next, hide the words, black screen, logo. This is one more button beside them.",
+    "moment": "A song or a passage is on the projector and the service has moved on: nothing should stay up.",
+    "role": "button",
+    "does": "Takes what is on the projector off it. The background stays, the list empties and the place in the plan is kept. A notice then offers to put it back.",
+    "budget": 10,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "projector"
+    ],
+    "notes": "One short word, as on a remote control. It must not be the word used for the black screen or for hiding the words, and it must not sound like closing the program."
+  },
+  {
+    "key": "LIVE_ENDED",
+    "kind": "const",
+    "screen": "A notice at the bottom of the main window, with an undo button after the words.",
+    "moment": "Right after the volunteer took what was showing off the projector.",
+    "role": "toast",
+    "does": "Confirms that the item is no longer on the projector.",
+    "budget": 32,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "projector"
+    ],
+    "notes": "No full stop."
+  },
+  {
+    "key": "BTN_PREVIOUS_ITEM",
+    "kind": "const",
+    "screen": "The main window. The middle pane, Preview, lists the slides of what is being prepared; nothing in it reaches the room until the volunteer sends it. Under its list sits its picture and, beside the picture, one large button that sends it to the projector and two smaller buttons side by side that step through the plan.",
+    "moment": "The volunteer wants the plan item before the one in Preview. The projector does not change.",
+    "role": "button with an icon",
+    "does": "Brings the plan item before this one into Preview.",
+    "budget": 16,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "plan item"
+    ],
+    "notes": "Two words at most; it sits beside its twin for the item after."
+  },
+  {
+    "key": "BTN_NEXT_ITEM",
+    "kind": "const",
+    "screen": "The main window. The middle pane, Preview, lists the slides of what is being prepared; nothing in it reaches the room until the volunteer sends it. Under its list sits its picture and, beside the picture, one large button that sends it to the projector and two smaller buttons side by side that step through the plan.",
+    "moment": "The volunteer wants the plan item after the one in Preview. The projector does not change. The same words follow the Tab key cap in the bottom bar.",
+    "role": "button with an icon",
+    "does": "Brings the plan item after this one into Preview.",
+    "budget": 16,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "plan item"
+    ],
+    "notes": "Two words at most; it sits beside its twin for the item before."
+  },
+  {
+    "key": "after_this",
+    "kind": "fn",
+    "screen": "The main window. The middle pane, Preview, lists the slides of what is being prepared; nothing in it reaches the room until the volunteer sends it. Under its list sits its picture and, beside the picture, one large button that sends it to the projector and two smaller buttons side by side that step through the plan. A line of small grey words sits under the buttons.",
+    "moment": "Read at a glance before pressing the large button.",
+    "role": "caption",
+    "does": "Names the plan item that comes into Preview by itself once the one there has been sent to the projector, so the volunteer knows what follows.",
+    "budget": 30,
+    "variables": [
+      {
+        "name": "title",
+        "example": "Kasih Setia-Mu",
+        "what": "title of the plan item that follows"
+      }
+    ],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "plan item"
+    ],
+    "notes": "A short label, a colon, then the title exactly as given. No full stop and no quotation marks."
+  },
+  {
+    "key": "KEY_ARROWS",
+    "kind": "const",
+    "screen": "The main window: a small key cap beside a pane's name and in the bottom bar.",
+    "moment": "Shown all the time while the arrow keys move in that pane.",
+    "role": "key name",
+    "does": "Names the arrow keys as a group.",
+    "budget": 8,
+    "variables": [],
+    "register": "None; this is a label, not speech. Follow what is printed on the keyboard.",
+    "vocabulary": [],
+    "notes": "One word. Other key caps name single arrows; this one means any of them."
+  },
+  {
+    "key": "KEY_CTRL_ARROWS",
+    "kind": "const",
+    "screen": "The main window: a small key cap beside the name of the Preview pane.",
+    "moment": "Shown while something is on the projector, when the plain arrows belong to the projector and Ctrl is needed to move in Preview.",
+    "role": "key name",
+    "does": "Names the arrow keys pressed while Ctrl is held.",
+    "budget": 14,
+    "variables": [],
+    "register": "None; this is a label, not speech. Follow what is printed on the keyboard.",
+    "vocabulary": [],
+    "notes": "Ctrl stays as printed on the keyboard. No plus sign."
+  },
+  {
+    "key": "KEY_SHIFT_ARROWS",
+    "kind": "const",
+    "screen": "The main window: a small key cap beside the name of the Live pane.",
+    "moment": "Shown while the volunteer holds Shift.",
+    "role": "key name",
+    "does": "Names the arrow keys pressed while Shift is held.",
+    "budget": 14,
+    "variables": [],
+    "register": "None; this is a label, not speech. Follow what is printed on the keyboard.",
+    "vocabulary": [],
+    "notes": "Shift stays as printed on the keyboard. No plus sign."
+  },
+  {
+    "key": "HELD_CTRL",
+    "kind": "const",
+    "screen": "The main window's bottom bar, right side: a row of key caps, each followed by a few words saying what that key does right now. The row is rewritten while Ctrl or Shift is held, because the arrow keys then do something else.",
+    "moment": "The volunteer is holding Ctrl down right now. This filled pill starts the row; the hints after it say what the keys do while it is held.",
+    "role": "state pill",
+    "does": "Says the Ctrl key is being held.",
+    "budget": 14,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [],
+    "notes": "Ctrl stays as printed. Two words."
+  },
+  {
+    "key": "HELD_SHIFT",
+    "kind": "const",
+    "screen": "The main window's bottom bar, right side: a row of key caps, each followed by a few words saying what that key does right now. The row is rewritten while Ctrl or Shift is held, because the arrow keys then do something else.",
+    "moment": "The volunteer is holding Shift down right now. This filled pill starts the row; the hints after it say what the keys do while it is held.",
+    "role": "state pill",
+    "does": "Says the Shift key is being held.",
+    "budget": 14,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [],
+    "notes": "Shift stays as printed. Two words."
+  },
+  {
+    "key": "HINT_RING",
+    "kind": "const",
+    "screen": "The main window's bottom bar, right side: a row of key caps, each followed by a few words saying what that key does right now. The row is rewritten while Ctrl or Shift is held, because the arrow keys then do something else.",
+    "moment": "Follows the key cap for the arrow keys, or the key cap Ctrl.",
+    "role": "key hint",
+    "does": "Says the arrows move the ring through the slides in Preview. The projector does not change.",
+    "budget": 20,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "ring",
+      "preview pane"
+    ],
+    "notes": "A verb phrase without a full stop."
+  },
+  {
+    "key": "HINT_SHOW_RING",
+    "kind": "const",
+    "screen": "The main window's bottom bar, right side: a row of key caps, each followed by a few words saying what that key does right now. The row is rewritten while Ctrl or Shift is held, because the arrow keys then do something else.",
+    "moment": "Follows the key cap Enter while something is already on the projector.",
+    "role": "key hint",
+    "does": "Says Enter sends what is in Preview to the projector, at the slide with the ring.",
+    "budget": 20,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "preview pane"
+    ],
+    "notes": "A verb phrase without a full stop. It must differ from the word for the next slide."
+  },
+  {
+    "key": "HINT_PICK",
+    "kind": "const",
+    "screen": "The main window's bottom bar, right side: a row of key caps, each followed by a few words saying what that key does right now. The row is rewritten while Ctrl or Shift is held, because the arrow keys then do something else.",
+    "moment": "Follows the key cap for the arrow keys while Shift is held.",
+    "role": "key hint",
+    "does": "Says the arrows choose a slide of the song that is on the projector, and nothing shows yet.",
+    "budget": 22,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "slide"
+    ],
+    "notes": "A verb phrase without a full stop."
+  },
+  {
+    "key": "HINT_LET_GO",
+    "kind": "const",
+    "screen": "The main window's bottom bar, right side: a row of key caps, each followed by a few words saying what that key does right now. The row is rewritten while Ctrl or Shift is held, because the arrow keys then do something else.",
+    "moment": "Follows the key cap Shift while Shift is held.",
+    "role": "key hint",
+    "does": "Says that letting the key go puts the chosen slide on the projector.",
+    "budget": 22,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [],
+    "notes": "A verb phrase without a full stop."
+  },
+  {
+    "key": "HINT_CANCEL",
+    "kind": "const",
+    "screen": "The main window's bottom bar, right side: a row of key caps, each followed by a few words saying what that key does right now. The row is rewritten while Ctrl or Shift is held, because the arrow keys then do something else.",
+    "moment": "Follows the key cap Esc while Shift is held.",
+    "role": "key hint",
+    "does": "Says Esc drops the choice and the projector stays as it is.",
+    "budget": 10,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [],
+    "notes": "One word."
+  },
+  {
+    "key": "PLAN_ADD_SONG",
+    "kind": "const",
+    "screen": "The plan column on the left of the main window. The button under the plan adds to it, and opens a short menu of what can be added: a song, a Bible passage, the announcements, a divider.",
+    "moment": "First line of that menu.",
+    "role": "menu item",
+    "does": "Names a song as the thing to add; choosing it opens the search for songs.",
+    "budget": 18,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "song"
+    ],
+    "notes": "A noun, no verb: the button above already says add."
+  },
+  {
+    "key": "PLAN_ADD_PASSAGE",
+    "kind": "const",
+    "screen": "The plan column on the left of the main window. The button under the plan adds to it, and opens a short menu of what can be added: a song, a Bible passage, the announcements, a divider.",
+    "moment": "Second line of that menu.",
+    "role": "menu item",
+    "does": "Names a Bible passage as the thing to add; choosing it opens the search of the Bible.",
+    "budget": 18,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [],
+    "notes": "A noun phrase, no verb."
+  },
+  {
+    "key": "PLAN_ADD_HEADING",
+    "kind": "const",
+    "screen": "The plan column on the left of the main window. The button under the plan adds to it, and opens a short menu of what can be added: a song, a Bible passage, the announcements, a divider.",
+    "moment": "Last line of that menu.",
+    "role": "menu item",
+    "does": "Names a divider: a line with a title, such as Worship or Word, that splits the plan into parts.",
+    "budget": 18,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "divider"
+    ],
+    "notes": "A noun, no verb. Use the word the plan already uses for these lines."
+  },
+  {
+    "key": "PLAN_DRAG",
+    "kind": "const",
+    "screen": "The plan column. Every row starts with six small dots.",
+    "moment": "The pointer rests on the dots.",
+    "role": "tooltip",
+    "does": "Says the row can be dragged to another place in the plan.",
+    "budget": 24,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [],
+    "notes": "No full stop."
+  },
+  {
+    "key": "ADDING_TO_PLAN",
+    "kind": "const",
+    "screen": "The search panel, inside its text field, before what is typed.",
+    "moment": "The search was opened with the plan's add button. Whatever is chosen now goes into the plan, and the search stays open for the next one.",
+    "role": "chip",
+    "does": "Says that choosing a result puts it in the plan.",
+    "budget": 22,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "plan"
+    ],
+    "notes": "A short phrase, no full stop."
+  },
+  {
+    "key": "BTN_DONE",
+    "kind": "const",
+    "screen": "The search panel while it adds to the plan: a button at the bottom, and the same word after the Esc key cap.",
+    "moment": "The volunteer has added what they wanted.",
+    "role": "button",
+    "does": "Closes the search.",
+    "budget": 10,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [],
+    "notes": "One word."
+  },
+  {
+    "key": "KEYS_SHOWING_ROWS[14].1",
+    "kind": "array",
+    "screen": "Keyboard shortcuts sheet (opened with ? or from the search box). Two columns per row: a key cap on the left, what the key does on the right.",
+    "moment": "First group of the sheet: keys used while the service is running. This row's key is F6.",
+    "role": "what a key does, one line",
+    "does": "Takes what is on the projector off it; the background stays.",
+    "budget": 44,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "projector"
+    ],
+    "notes": "No full stop."
+  },
+  {
+    "key": "PLAN_SWITCH_LABEL",
+    "kind": "const",
+    "screen": "Main window, left column (the plan). The title at the top of the column is a button with the open plan's name; it opens a list of the church's plans (one for each service, such as Sunday morning, Sunday evening, youth), and under the list a few actions on the open plan.",
+    "moment": "A volunteer hovers the title button, or a screen reader reads it.",
+    "role": "tooltip and accessible name",
+    "does": "Names the button that opens the list of plans.",
+    "budget": 14,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "plan"
+    ],
+    "notes": "A church keeps one plan for each service. Same noun for the plan everywhere."
+  },
+  {
+    "key": "PLAN_DUPLICATE",
+    "kind": "const",
+    "screen": "Main window, left column (the plan). The title at the top of the column is a button with the open plan's name; it opens a list of the church's plans (one for each service, such as Sunday morning, Sunday evening, youth), and under the list a few actions on the open plan.",
+    "moment": "In the menu under the list of plans.",
+    "role": "menu entry",
+    "does": "Makes a new plan holding the same items as the open one, for another service. The copy has no date.",
+    "budget": 24,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "plan"
+    ],
+    "notes": "A church keeps one plan for each service. Same noun for the plan everywhere."
+  },
+  {
+    "key": "PLAN_RENAME",
+    "kind": "const",
+    "screen": "Main window, left column (the plan). The title at the top of the column is a button with the open plan's name; it opens a list of the church's plans (one for each service, such as Sunday morning, Sunday evening, youth), and under the list a few actions on the open plan.",
+    "moment": "In the menu under the list of plans, and as the title of the dialog that follows.",
+    "role": "menu entry and dialog title",
+    "does": "Lets the volunteer give the open plan a name and an optional date, such as Sunday 10:00.",
+    "budget": 24,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "plan"
+    ],
+    "notes": "A church keeps one plan for each service. Same noun for the plan everywhere."
+  },
+  {
+    "key": "PLAN_DELETE",
+    "kind": "const",
+    "screen": "Main window, left column (the plan). The title at the top of the column is a button with the open plan's name; it opens a list of the church's plans (one for each service, such as Sunday morning, Sunday evening, youth), and under the list a few actions on the open plan.",
+    "moment": "Last entry of the menu under the list of plans, drawn in the danger colour.",
+    "role": "menu entry",
+    "does": "Deletes the open plan with all its items. A toast follows with an Undo button.",
+    "budget": 24,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "plan"
+    ],
+    "notes": "A church keeps one plan for each service. Same noun for the plan everywhere."
+  },
+  {
+    "key": "PLAN_NEW_DETAIL",
+    "kind": "const",
+    "screen": "The search panel, a command row: the name of the command is shown above this line.",
+    "moment": "The volunteer types something like new plan.",
+    "role": "command detail",
+    "does": "Says the command opens another, empty plan for a different service and keeps the open one.",
+    "budget": 40,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "plan"
+    ],
+    "notes": "A church keeps one plan for each service. Same noun for the plan everywhere."
+  },
+  {
+    "key": "PLAN_NEW_NAME",
+    "kind": "const",
+    "screen": "The list of plans, and the plan's title at the top of the column.",
+    "moment": "Right after a volunteer starts a new plan and before they have named it.",
+    "role": "default name",
+    "does": "The name a plan has until it is renamed.",
+    "budget": 14,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "plan"
+    ],
+    "notes": "A name, not a sentence; a volunteer replaces it at once. Unlike the default name of the first plan, it is not about today."
+  },
+  {
+    "key": "PLAN_NAME_LABEL",
+    "kind": "const",
+    "screen": "The rename dialog: two fields, one under the other, then Cancel and Save.",
+    "moment": "The volunteer is naming a plan.",
+    "role": "field label and placeholder",
+    "does": "Labels the field for the plan's name.",
+    "budget": 16,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "plan"
+    ],
+    "notes": "A church keeps one plan for each service. Same noun for the plan everywhere."
+  },
+  {
+    "key": "PLAN_DATE_LABEL",
+    "kind": "const",
+    "screen": "The rename dialog: the second field.",
+    "moment": "The volunteer is naming a plan.",
+    "role": "field label",
+    "does": "Labels the field for the day the service is held.",
+    "budget": 12,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [],
+    "notes": "A church keeps one plan for each service. Same noun for the plan everywhere."
+  },
+  {
+    "key": "PLAN_DATE_HINT",
+    "kind": "const",
+    "screen": "The rename dialog: grey text inside the empty date field.",
+    "moment": "The date field is empty.",
+    "role": "placeholder",
+    "does": "Says the date may be left empty and which order the parts go in (year, month, day, with dashes between).",
+    "budget": 30,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [],
+    "notes": "Keep the dashes; the field reads year-month-day only."
+  },
+  {
+    "key": "KIND_PLAN",
+    "kind": "const",
+    "screen": "The search panel: the grey line under a result.",
+    "moment": "A typed name matches one of the church's plans.",
+    "role": "result detail",
+    "does": "Says this result is a whole plan, and picking it opens that plan.",
+    "budget": 14,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "plan"
+    ],
+    "notes": "A church keeps one plan for each service. Same noun for the plan everywhere."
+  },
+  {
+    "key": "plan_items",
+    "kind": "fn",
+    "screen": "The list of plans: a small grey box at the end of a plan's row.",
+    "moment": "A plan has no date, so it shows how much it holds.",
+    "role": "row badge",
+    "does": "A count of the items in a plan.",
+    "budget": 14,
+    "variables": [
+      {
+        "name": "count",
+        "example": "7",
+        "what": "number of items (songs, passages, dividers) in the plan"
+      }
+    ],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "plan"
+    ],
+    "notes": "Shown as a small box; short. Plural follows the language's rules."
+  },
+  {
+    "key": "plan_copy_name",
+    "kind": "fn",
+    "screen": "The list of plans and the plan's title.",
+    "moment": "The volunteer duplicates a plan.",
+    "role": "default name",
+    "does": "The name a copy of a plan starts with, made from the original's name.",
+    "budget": 30,
+    "variables": [
+      {
+        "name": "name",
+        "example": "Sunday 10:00",
+        "what": "the name of the plan that was copied"
+      }
+    ],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "plan"
+    ],
+    "notes": "The name stays as written and only a short word marks it as a copy."
+  },
+  {
+    "key": "plan_deleted",
+    "kind": "fn",
+    "screen": "Toast after deleting a plan, with an Undo button.",
+    "moment": "The volunteer deleted a whole plan.",
+    "role": "toast",
+    "does": "Confirms a named plan was deleted; an Undo button sits beside it.",
+    "budget": 40,
+    "variables": [
+      {
+        "name": "name",
+        "example": "Youth Saturday",
+        "what": "the name of the deleted plan"
+      }
+    ],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "plan"
+    ],
+    "notes": "Same pattern as the toast for a removed plan item, but about a whole plan."
+  },
+  {
+    "key": "FILL_PASSAGE",
+    "kind": "const",
+    "screen": "Announcements editor, form on the right, segmented option under \"Fill in by itself\"",
+    "moment": "Second of four, between the manual choice and the two birthday choices.",
+    "role": "button",
+    "does": "Option that makes the notice read its words from a Bible verse or passage, typed by its reference.",
+    "budget": 16,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "announcements",
+      "bible"
+    ],
+    "notes": "Four choices share one row about 440 points wide, so keep it short."
+  },
+  {
+    "key": "ANNOUNCEMENT_PASSAGE",
+    "kind": "const",
+    "screen": "Announcements editor, form on the right, field label",
+    "moment": "Shown above the field only while the notice reads a Bible passage.",
+    "role": "field label",
+    "does": "Label for the box where the volunteer types which verse or passage the notice shows.",
+    "budget": 24,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "announcements",
+      "bible"
+    ],
+    "notes": ""
+  },
+  {
+    "key": "ANNOUNCEMENT_PASSAGE_HINT",
+    "kind": "const",
+    "screen": "Announcements editor, form on the right, placeholder inside the empty reference box",
+    "moment": "Shown only while the box is empty.",
+    "role": "placeholder",
+    "does": "An example of a reference a volunteer might type: a book, a chapter and a range of verses.",
+    "budget": 16,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "bible"
+    ],
+    "notes": "An example, not a real instruction. Write the book name the way a church in that language writes it. Never a verse a real translation would print."
+  },
+  {
+    "key": "PASSAGE_NO_BIBLE",
+    "kind": "const",
+    "screen": "Announcements editor, form on the right, small grey line under the reference box, beside a button that opens the Bibles dialog",
+    "moment": "Shown when no Bible is installed to read the verse from.",
+    "role": "status line",
+    "does": "Tells the volunteer the notice has no words because there is no Bible installed yet.",
+    "budget": 60,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "announcements",
+      "bible"
+    ],
+    "notes": ""
+  },
+  {
+    "key": "PASSAGE_UNREADABLE",
+    "kind": "const",
+    "screen": "Announcements editor, form on the right, small grey line under the reference box, beside a button that opens the Bibles dialog",
+    "moment": "Shown when the typed reference matches no verse in the Bible in use.",
+    "role": "status line",
+    "does": "Tells the volunteer the Bible in use has no verse at the reference they typed.",
+    "budget": 60,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "announcements",
+      "bible"
+    ],
+    "notes": ""
+  },
+  {
+    "key": "NOTICE_NOTHING_TO_SHOW",
+    "kind": "const",
+    "screen": "Toast at the bottom of the main window",
+    "moment": "After pressing Show now on a notice that has no slide today, such as a birthday notice nobody falls under or a Bible notice with no readable verse.",
+    "role": "toast",
+    "does": "Says the notice that was just chosen has nothing to put on the projector right now.",
+    "budget": 50,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "announcements"
+    ],
+    "notes": "A statement, not an apology."
+  },
+  {
+    "key": "birthdays_cover_week",
+    "kind": "fn",
+    "screen": "Announcements editor, form on the right, grey line under the \"Fill in by itself\" choice",
+    "moment": "Shown while the notice follows the week.",
+    "role": "status line",
+    "does": "Says from which day to which day the notice looks for birthdays: today and the six days after it.",
+    "budget": 40,
+    "variables": [
+      {
+        "name": "from",
+        "example": "11 November",
+        "what": "first day, a day number and a month name"
+      },
+      {
+        "name": "to",
+        "example": "17 November",
+        "what": "last day, a day number and a month name"
+      }
+    ],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "announcements"
+    ],
+    "notes": "The two dates can fall in different months. Month names come from the month list already in the app."
+  },
+  {
+    "key": "birthdays_cover_month",
+    "kind": "fn",
+    "screen": "Announcements editor, form on the right, grey line under the \"Fill in by itself\" choice",
+    "moment": "Shown while the notice follows the month.",
+    "role": "status line",
+    "does": "Says the notice looks for birthdays on every day of one month.",
+    "budget": 40,
+    "variables": [
+      {
+        "name": "month",
+        "example": "November",
+        "what": "name of the current month"
+      }
+    ],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "announcements"
+    ],
+    "notes": ""
+  },
+  {
+    "key": "names_today",
+    "kind": "fn",
+    "screen": "Announcements editor, form on the right, grey line under the days covered; also the detail line of a search result for a birthday notice",
+    "moment": "Updates with the date and the birthday list.",
+    "role": "status line",
+    "does": "Says how many people the birthday notice holds today; says so plainly when nobody.",
+    "budget": 24,
+    "variables": [
+      {
+        "name": "count",
+        "example": "3",
+        "what": "people whose birthday falls in the days covered; 0 and 1 are special in English only"
+      }
+    ],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "announcements"
+    ],
+    "notes": "At zero the sentence is different."
+  },
+  {
+    "key": "LOOK_TEXT_COLOUR",
+    "kind": "const",
+    "screen": "Look dialog (opened by the Look button), row label",
+    "moment": "Followed by four coloured squares and a small field for a typed colour.",
+    "role": "field label",
+    "does": "Label of the row that sets the colour of the words the congregation reads on the projector screen.",
+    "budget": 22,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "look",
+      "projector"
+    ],
+    "notes": ""
+  },
+  {
+    "key": "LOOK_COLOUR_WHITE",
+    "kind": "const",
+    "screen": "Look dialog (opened by the Look button), name of a colour square",
+    "moment": "One of four squares in the text colour row, and one of three in the outline colour row.",
+    "role": "button",
+    "does": "Plain white.",
+    "budget": 14,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [],
+    "notes": "A colour name, as a person would say it aloud. It sits on a small square of that colour, so it also works as the square's name for a screen reader."
+  },
+  {
+    "key": "LOOK_COLOUR_WARM",
+    "kind": "const",
+    "screen": "Look dialog (opened by the Look button), name of a colour square",
+    "moment": "One of four squares in the text colour row.",
+    "role": "button",
+    "does": "A white with a slight yellow cast, like paper under a lamp.",
+    "budget": 18,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [],
+    "notes": "A colour name, as a person would say it aloud. It sits on a small square of that colour, so it also works as the square's name for a screen reader."
+  },
+  {
+    "key": "LOOK_COLOUR_YELLOW",
+    "kind": "const",
+    "screen": "Look dialog (opened by the Look button), name of a colour square",
+    "moment": "One of four squares in the text colour row.",
+    "role": "button",
+    "does": "A strong, clear yellow.",
+    "budget": 14,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [],
+    "notes": "A colour name, as a person would say it aloud. It sits on a small square of that colour, so it also works as the square's name for a screen reader."
+  },
+  {
+    "key": "LOOK_COLOUR_BLACK",
+    "kind": "const",
+    "screen": "Look dialog (opened by the Look button), name of a colour square",
+    "moment": "One of four squares in the text colour row, and one of three in the outline colour row.",
+    "role": "button",
+    "does": "Plain black. It is the colour, not the black screen button.",
+    "budget": 14,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [],
+    "notes": "Not 'Layar hitam', which means the screen blanked. This is only a paint colour."
+  },
+  {
+    "key": "LOOK_COLOUR_HEX",
+    "kind": "const",
+    "screen": "Look dialog (opened by the Look button), name of a small text field",
+    "moment": "Beside the colour squares, in the text colour row and in the outline colour row.",
+    "role": "field label",
+    "does": "Names the small field where a person types any colour they like as six hex digits.",
+    "budget": 20,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "look"
+    ],
+    "notes": "Only read by a screen reader; it is not drawn."
+  },
+  {
+    "key": "LOOK_COLOUR_HEX_HINT",
+    "kind": "const",
+    "screen": "Look dialog (opened by the Look button), placeholder inside the small colour field",
+    "moment": "Shown while the field is empty.",
+    "role": "placeholder",
+    "does": "Shows the shape of what to type, a colour as six hex digits, with the example ffcc00.",
+    "budget": 22,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [],
+    "notes": "Keep the example ffcc00 exactly as written. It is code, not a word."
+  },
+  {
+    "key": "LOOK_FONT",
+    "kind": "const",
+    "screen": "Look dialog (opened by the Look button), row label",
+    "moment": "Followed by a button that opens a searchable list of the fonts on this computer.",
+    "role": "field label",
+    "does": "Label of the row that sets the font family of the words on the projector screen.",
+    "budget": 14,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "look",
+      "projector"
+    ],
+    "notes": ""
+  },
+  {
+    "key": "LOOK_FONT_DEFAULT",
+    "kind": "const",
+    "screen": "Look dialog (opened by the Look button), first choice in the font list, and the button's text when no font was picked",
+    "moment": "At the top of the list of fonts.",
+    "role": "list item",
+    "does": "The choice that leaves the font to the program: Artosia draws the words in the font it ships with.",
+    "budget": 24,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [],
+    "notes": "Artosia is the program's name and stays as written."
+  },
+  {
+    "key": "LOOK_FONT_SEARCH",
+    "kind": "const",
+    "screen": "Look dialog (opened by the Look button), placeholder in the search field at the top of the font list",
+    "moment": "The list is open and nothing has been typed.",
+    "role": "placeholder",
+    "does": "Invites the person to type part of a font's name to narrow the list.",
+    "budget": 22,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [],
+    "notes": ""
+  },
+  {
+    "key": "LOOK_FONT_NONE",
+    "kind": "const",
+    "screen": "Look dialog (opened by the Look button), message in the font list",
+    "moment": "The person typed a name and no installed font contains it.",
+    "role": "empty state",
+    "does": "Says the typed name matches no font on this computer.",
+    "budget": 28,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [],
+    "notes": ""
+  },
+  {
+    "key": "LOOK_OUTLINE",
+    "kind": "const",
+    "screen": "Look dialog (opened by the Look button), row label",
+    "moment": "Followed by four choices of thickness and then a colour row below it.",
+    "role": "field label",
+    "does": "Label of the row that sets how thick the line drawn around each letter is.",
+    "budget": 16,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "look"
+    ],
+    "notes": "The line around the edge of each letter, like an outline drawn with a pen. Not an outline of a document."
+  },
+  {
+    "key": "LOOK_OUTLINE_OFF",
+    "kind": "const",
+    "screen": "Look dialog (opened by the Look button), segmented option",
+    "moment": "First of four, in the outline row.",
+    "role": "button",
+    "does": "No line round the letters.",
+    "budget": 12,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "look"
+    ],
+    "notes": "Means the outline is turned off."
+  },
+  {
+    "key": "LOOK_OUTLINE_THIN",
+    "kind": "const",
+    "screen": "Look dialog (opened by the Look button), segmented option",
+    "moment": "Second of four, in the outline row.",
+    "role": "button",
+    "does": "A thin line round the letters.",
+    "budget": 12,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "look"
+    ],
+    "notes": ""
+  },
+  {
+    "key": "LOOK_OUTLINE_MEDIUM",
+    "kind": "const",
+    "screen": "Look dialog (opened by the Look button), segmented option",
+    "moment": "Third of four, in the outline row.",
+    "role": "button",
+    "does": "A line of middle thickness round the letters.",
+    "budget": 12,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "look"
+    ],
+    "notes": ""
+  },
+  {
+    "key": "LOOK_OUTLINE_THICK",
+    "kind": "const",
+    "screen": "Look dialog (opened by the Look button), segmented option",
+    "moment": "Last of four, in the outline row.",
+    "role": "button",
+    "does": "A thick line round the letters.",
+    "budget": 12,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "look"
+    ],
+    "notes": ""
+  },
+  {
+    "key": "LOOK_OUTLINE_COLOUR",
+    "kind": "const",
+    "screen": "Look dialog (opened by the Look button), row label",
+    "moment": "Followed by black, white and a small field for a typed colour.",
+    "role": "field label",
+    "does": "Label of the row that sets the colour of the line drawn around each letter.",
+    "budget": 22,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "look"
+    ],
+    "notes": ""
   },
   {
     "key": "CMD_TOUR",
@@ -7452,11 +8411,11 @@
   {
     "key": "TOUR_SKIP",
     "kind": "const",
-    "screen": "The first-start tour: a dimmed window with a ring round one part of it and a small card beside it. Five stops walk through the main window from left to right: the plan of today's service, Preview (the slide that comes next), the Show button, Live (what the congregation sees) and the search box. Every stop can be skipped.",
-    "moment": "A small quiet button at the left of the card's button row, on every stop.",
+    "screen": "The first-start tour: a dimmed window with a ring round one part of it and a small card beside it. Five stops walk through the main window from left to right: the plan of today's service, Preview (the slide that comes next), the Show button, Live (what the congregation sees, with a Live button that switches the projector on and off) and the search box. Every stop can be skipped.",
+    "moment": "A small quiet button with a cross at the left of the card's button row, on every stop. Fixed width, so the word must be short.",
     "role": "button label",
     "does": "Ends the tour at once, from any stop. The tour is not shown again by itself afterwards.",
-    "budget": 16,
+    "budget": 10,
     "variables": [],
     "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
     "vocabulary": [
@@ -7467,11 +8426,11 @@
   {
     "key": "TOUR_DONE",
     "kind": "const",
-    "screen": "The first-start tour: a dimmed window with a ring round one part of it and a small card beside it. Five stops walk through the main window from left to right: the plan of today's service, Preview (the slide that comes next), the Show button, Live (what the congregation sees) and the search box. Every stop can be skipped.",
-    "moment": "The filled button at the right of the card on the fifth and last stop, where the other stops say Next.",
+    "screen": "The first-start tour: a dimmed window with a ring round one part of it and a small card beside it. Five stops walk through the main window from left to right: the plan of today's service, Preview (the slide that comes next), the Show button, Live (what the congregation sees, with a Live button that switches the projector on and off) and the search box. Every stop can be skipped.",
+    "moment": "The filled button with a tick at the right of the card on the fifth and last stop, where the other stops say Next. Fixed width, so the word must be short.",
     "role": "button label",
     "does": "Ends the tour after the last stop.",
-    "budget": 14,
+    "budget": 10,
     "variables": [],
     "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
     "vocabulary": [],
@@ -7480,7 +8439,7 @@
   {
     "key": "TOUR_PLAN",
     "kind": "const",
-    "screen": "The first-start tour: a dimmed window with a ring round one part of it and a small card beside it. Five stops walk through the main window from left to right: the plan of today's service, Preview (the slide that comes next), the Show button, Live (what the congregation sees) and the search box. Every stop can be skipped.",
+    "screen": "The first-start tour: a dimmed window with a ring round one part of it and a small card beside it. Five stops walk through the main window from left to right: the plan of today's service, Preview (the slide that comes next), the Show button, Live (what the congregation sees, with a Live button that switches the projector on and off) and the search box. Every stop can be skipped.",
     "moment": "Stop 1 of 5. The plan, the column on the left, is ringed. Bold main line of the card.",
     "role": "card headline",
     "does": "Says the plan is the list of everything that will be shown today, in the order it will be shown.",
@@ -7495,7 +8454,7 @@
   {
     "key": "TOUR_PLAN_MORE",
     "kind": "const",
-    "screen": "The first-start tour: a dimmed window with a ring round one part of it and a small card beside it. Five stops walk through the main window from left to right: the plan of today's service, Preview (the slide that comes next), the Show button, Live (what the congregation sees) and the search box. Every stop can be skipped.",
+    "screen": "The first-start tour: a dimmed window with a ring round one part of it and a small card beside it. Five stops walk through the main window from left to right: the plan of today's service, Preview (the slide that comes next), the Show button, Live (what the congregation sees, with a Live button that switches the projector on and off) and the search box. Every stop can be skipped.",
     "moment": "Stop 1 of 5, the quieter second line of the card under the headline.",
     "role": "card detail",
     "does": "Says an item in the plan can be dragged to a new place.",
@@ -7510,7 +8469,7 @@
   {
     "key": "TOUR_PREVIEW",
     "kind": "const",
-    "screen": "The first-start tour: a dimmed window with a ring round one part of it and a small card beside it. Five stops walk through the main window from left to right: the plan of today's service, Preview (the slide that comes next), the Show button, Live (what the congregation sees) and the search box. Every stop can be skipped.",
+    "screen": "The first-start tour: a dimmed window with a ring round one part of it and a small card beside it. Five stops walk through the main window from left to right: the plan of today's service, Preview (the slide that comes next), the Show button, Live (what the congregation sees, with a Live button that switches the projector on and off) and the search box. Every stop can be skipped.",
     "moment": "Stop 2 of 5. The list of slides in the Preview pane is ringed. Bold main line.",
     "role": "card headline",
     "does": "Says Preview holds the slide that will be shown next.",
@@ -7525,7 +8484,7 @@
   {
     "key": "TOUR_PREVIEW_MORE",
     "kind": "const",
-    "screen": "The first-start tour: a dimmed window with a ring round one part of it and a small card beside it. Five stops walk through the main window from left to right: the plan of today's service, Preview (the slide that comes next), the Show button, Live (what the congregation sees) and the search box. Every stop can be skipped.",
+    "screen": "The first-start tour: a dimmed window with a ring round one part of it and a small card beside it. Five stops walk through the main window from left to right: the plan of today's service, Preview (the slide that comes next), the Show button, Live (what the congregation sees, with a Live button that switches the projector on and off) and the search box. Every stop can be skipped.",
     "moment": "Stop 2 of 5, the quieter second line.",
     "role": "card detail",
     "does": "Reassures: what is in Preview is never seen by the congregation.",
@@ -7540,40 +8499,40 @@
   {
     "key": "TOUR_SHOW",
     "kind": "const",
-    "screen": "The first-start tour: a dimmed window with a ring round one part of it and a small card beside it. Five stops walk through the main window from left to right: the plan of today's service, Preview (the slide that comes next), the Show button, Live (what the congregation sees) and the search box. Every stop can be skipped.",
-    "moment": "Stop 3 of 5. The Show button under Preview is ringed. Bold main line.",
+    "screen": "The first-start tour: a dimmed window with a ring round one part of it and a small card beside it. Five stops walk through the main window from left to right: the plan of today's service, Preview (the slide that comes next), the Show button, Live (what the congregation sees, with a Live button that switches the projector on and off) and the search box. Every stop can be skipped.",
+    "moment": "Stop 3 of 5. The buttons under Preview, with Show among them, are ringed. Bold main line.",
     "role": "card headline",
-    "does": "Says the Show button is what sends the Preview slide to the projector.",
+    "does": "Says the Show button moves what is in Preview into the Live pane.",
     "budget": 48,
     "variables": [],
     "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
     "vocabulary": [
       "preview",
-      "projector",
+      "live",
       "show"
     ],
-    "notes": "Show is the label of that button: use the same word the button uses."
+    "notes": "Show is the label of that button and Live the name of the next pane: use the same words they use."
   },
   {
     "key": "TOUR_SHOW_MORE",
     "kind": "const",
-    "screen": "The first-start tour: a dimmed window with a ring round one part of it and a small card beside it. Five stops walk through the main window from left to right: the plan of today's service, Preview (the slide that comes next), the Show button, Live (what the congregation sees) and the search box. Every stop can be skipped.",
+    "screen": "The first-start tour: a dimmed window with a ring round one part of it and a small card beside it. Five stops walk through the main window from left to right: the plan of today's service, Preview (the slide that comes next), the Show button, Live (what the congregation sees, with a Live button that switches the projector on and off) and the search box. Every stop can be skipped.",
     "moment": "Stop 3 of 5, the quieter second line.",
     "role": "card detail",
-    "does": "Says that until Show is pressed, the room sees nothing new.",
+    "does": "Says the congregation sees the slide only while the projector is switched on.",
     "budget": 52,
     "variables": [],
     "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
     "vocabulary": [
-      "show"
+      "projector"
     ],
     "notes": ""
   },
   {
     "key": "TOUR_LIVE",
     "kind": "const",
-    "screen": "The first-start tour: a dimmed window with a ring round one part of it and a small card beside it. Five stops walk through the main window from left to right: the plan of today's service, Preview (the slide that comes next), the Show button, Live (what the congregation sees) and the search box. Every stop can be skipped.",
-    "moment": "Stop 4 of 5. The row of buttons under the Live pane (Back, Next, Clear text, Black, Logo) is ringed. Bold main line.",
+    "screen": "The first-start tour: a dimmed window with a ring round one part of it and a small card beside it. Five stops walk through the main window from left to right: the plan of today's service, Preview (the slide that comes next), the Show button, Live (what the congregation sees, with a Live button that switches the projector on and off) and the search box. Every stop can be skipped.",
+    "moment": "Stop 4 of 5. The buttons under the Live pane (Back, Next, End, Clear text, Black, Logo and the Live button) are ringed. Bold main line.",
     "role": "card headline",
     "does": "Says Live is what the congregation sees at this moment.",
     "budget": 44,
@@ -7587,23 +8546,23 @@
   {
     "key": "TOUR_LIVE_MORE",
     "kind": "const",
-    "screen": "The first-start tour: a dimmed window with a ring round one part of it and a small card beside it. Five stops walk through the main window from left to right: the plan of today's service, Preview (the slide that comes next), the Show button, Live (what the congregation sees) and the search box. Every stop can be skipped.",
-    "moment": "Stop 4 of 5, the quieter second line; it names two of the buttons that are ringed.",
+    "screen": "The first-start tour: a dimmed window with a ring round one part of it and a small card beside it. Five stops walk through the main window from left to right: the plan of today's service, Preview (the slide that comes next), the Show button, Live (what the congregation sees, with a Live button that switches the projector on and off) and the search box. Every stop can be skipped.",
+    "moment": "Stop 4 of 5, the quieter second line; it names the Live button, one of the ringed buttons, which is lit while the congregation sees the projector.",
     "role": "card detail",
-    "does": "Says the Next button moves on to the following slide and the Black button blanks the screen.",
-    "budget": 44,
+    "does": "Says the Live button switches the projector on and off.",
+    "budget": 52,
     "variables": [],
     "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
     "vocabulary": [
-      "next",
-      "black"
+      "live",
+      "projector"
     ],
-    "notes": "Two short sentences. Use the same words as the buttons Next and Black."
+    "notes": "Live is the label of that button; use the same word it uses."
   },
   {
     "key": "TOUR_SEARCH",
     "kind": "const",
-    "screen": "The first-start tour: a dimmed window with a ring round one part of it and a small card beside it. Five stops walk through the main window from left to right: the plan of today's service, Preview (the slide that comes next), the Show button, Live (what the congregation sees) and the search box. Every stop can be skipped.",
+    "screen": "The first-start tour: a dimmed window with a ring round one part of it and a small card beside it. Five stops walk through the main window from left to right: the plan of today's service, Preview (the slide that comes next), the Show button, Live (what the congregation sees, with a Live button that switches the projector on and off) and the search box. Every stop can be skipped.",
     "moment": "Stop 5 of 5. The search box at the top of the window is ringed. Bold main line.",
     "role": "card headline",
     "does": "Says the search finds any song or Bible verse.",
@@ -7618,7 +8577,7 @@
   {
     "key": "TOUR_SEARCH_MORE",
     "kind": "const",
-    "screen": "The first-start tour: a dimmed window with a ring round one part of it and a small card beside it. Five stops walk through the main window from left to right: the plan of today's service, Preview (the slide that comes next), the Show button, Live (what the congregation sees) and the search box. Every stop can be skipped.",
+    "screen": "The first-start tour: a dimmed window with a ring round one part of it and a small card beside it. Five stops walk through the main window from left to right: the plan of today's service, Preview (the slide that comes next), the Show button, Live (what the congregation sees, with a Live button that switches the projector on and off) and the search box. Every stop can be skipped.",
     "moment": "Stop 5 of 5, the quieter second line; the tour ends after it.",
     "role": "card detail",
     "does": "Says to open the found item and then press the button named Add to plan.",
@@ -7633,8 +8592,8 @@
   {
     "key": "tour_place",
     "kind": "fn",
-    "screen": "The first-start tour: a dimmed window with a ring round one part of it and a small card beside it. Five stops walk through the main window from left to right: the plan of today's service, Preview (the slide that comes next), the Show button, Live (what the congregation sees) and the search box. Every stop can be skipped.",
-    "moment": "A small grey line at the bottom left of the card, above the buttons.",
+    "screen": "The first-start tour: a dimmed window with a ring round one part of it and a small card beside it. Five stops walk through the main window from left to right: the plan of today's service, Preview (the slide that comes next), the Show button, Live (what the congregation sees, with a Live button that switches the projector on and off) and the search box. Every stop can be skipped.",
+    "moment": "A small grey line at the top of the card, above the headline.",
     "role": "progress",
     "does": "Says which stop of the tour this is, out of how many.",
     "budget": 16,

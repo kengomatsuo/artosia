@@ -15,8 +15,22 @@ pub fn download_url(id: &str) -> String {
     format!("https://ebible.org/Scriptures/{id}_usfx.zip")
 }
 
+/// Where a translation is listed and downloaded from.
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Default)]
+pub enum Source {
+    #[default]
+    Ebible,
+    /// The Beblia repository of XML Bibles (`beblia.rs`).
+    Beblia,
+}
+
 #[derive(Clone, Debug, PartialEq, Default)]
 pub struct Translation {
+    pub source: Source,
+    /// The file in the Beblia repository, empty for eBible.
+    pub file: String,
+    /// The file's size in bytes when the list gives it (Beblia), else 0.
+    pub size: u64,
     pub id: String,
     /// eBible's language code; its first three letters are the ISO 639-3 code.
     pub language_code: String,
@@ -35,8 +49,12 @@ impl Translation {
         self.old_books >= 39 && self.new_books >= 27
     }
 
-    /// 0 whole Bible, 1 New Testament, 2 Old Testament, 3 some books.
+    /// 0 whole Bible, 1 New Testament, 2 Old Testament, 3 some books, 4 not known before the
+    /// download (Beblia's list has file names and sizes, not book counts).
     pub fn scope(&self) -> u8 {
+        if self.source == Source::Beblia {
+            return 4;
+        }
         match (self.old_books >= 39, self.new_books >= 27) {
             (true, true) => 0,
             (false, true) => 1,
@@ -114,6 +132,7 @@ pub fn parse_catalogue(csv: &str) -> Vec<Translation> {
             copyright: get(&row, copyright),
             old_books: books(old),
             new_books: books(new),
+            ..Translation::default()
         });
     }
     out

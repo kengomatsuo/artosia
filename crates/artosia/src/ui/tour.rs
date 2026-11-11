@@ -11,11 +11,14 @@ use rune_kit::Kit;
 
 use crate::state::{App, Sheet};
 use crate::strings as t;
-use crate::theme::{self, space, type_};
+use crate::theme::{self, icons, space, type_};
 use crate::ui::widgets::btn;
 
 /// The card's width.
-const CARD: f32 = 320.0;
+/// The card is wide enough for three buttons of one size in either language.
+const CARD: f32 = 360.0;
+/// Every button of the card has this width, so a longer word never changes the card.
+const BUTTON: f32 = 100.0;
 /// Room between a ring and the part it surrounds.
 const PAD: f32 = 4.0;
 
@@ -29,11 +32,13 @@ struct Stop {
     more: fn() -> &'static str,
 }
 
+/// The five stops and their words, in one table so they can be rewritten without touching the drawing.
 const STOPS: [Stop; 5] = [
     Stop { target: "plan", side: Side::Right, align: Align::Start, main: t::TOUR_PLAN, more: t::TOUR_PLAN_MORE },
     // The card goes under the list, over the strip with the picture, which this stop is not about.
     Stop { target: "slide-list", side: Side::Bottom, align: Align::Start, main: t::TOUR_PREVIEW, more: t::TOUR_PREVIEW_MORE },
-    Stop { target: "show-button", side: Side::Top, align: Align::Start, main: t::TOUR_SHOW, more: t::TOUR_SHOW_MORE },
+    // A ring goes round a container the shell keys, never one button: the buttons are rearranged often.
+    Stop { target: "preview-controls", side: Side::Top, align: Align::End, main: t::TOUR_SHOW, more: t::TOUR_SHOW_MORE },
     Stop { target: "transport", side: Side::Top, align: Align::End, main: t::TOUR_LIVE, more: t::TOUR_LIVE_MORE },
     Stop { target: "search-button", side: Side::Bottom, align: Align::Start, main: t::TOUR_SEARCH, more: t::TOUR_SEARCH_MORE },
 ];
@@ -119,16 +124,14 @@ pub(crate) fn view(s: &App, cx: &mut Cx<App>, k: &Kit, layer: &mut Vec<El>) {
 
 fn card(k: &Kit, at: usize, stop: &Stop) -> El {
     let last = at + 1 == STOP_COUNT;
-    let mut buttons = row()
-        .w_full()
-        .gap(space::S2)
-        .center_y()
-        .child(btn(t::TOUR_SKIP()).ghost().focusable().build(k, |s, _| s.end_tour()))
-        .child(spacer());
+    // One size whatever the language, each with its icon; Back stays as an empty place on the first stop.
+    let fixed = |button: El| row().w(BUTTON).child(button);
+    let mut buttons = row().w_full().gap(space::S2).center_y().child(fixed(btn(t::TOUR_SKIP()).icon(&icons::CLOSE).ghost().grow().focusable().build(k, |s, _| s.end_tour()))).child(spacer());
     if at > 0 {
-        buttons = buttons.child(btn(t::BTN_BACK()).focusable().build(k, |s, _| s.tour_back()));
+        buttons = buttons.child(fixed(btn(t::BTN_BACK()).icon(&icons::ARROW_LEFT).grow().focusable().build(k, |s, _| s.tour_back())));
     }
-    buttons = buttons.child(btn(if last { t::TOUR_DONE() } else { t::BTN_NEXT() }).primary().focusable().build(k, |s, _| s.tour_next()).key("tour-next"));
+    let (label, glyph) = if last { (t::TOUR_DONE(), &icons::CHECK) } else { (t::BTN_NEXT(), &icons::ARROW_RIGHT) };
+    buttons = buttons.child(fixed(btn(label).icon(glyph).primary().grow().focusable().build(k, |s, _| s.tour_next()).key("tour-next")));
     col()
         .key("tour-card")
         .role("dialog")

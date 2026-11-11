@@ -679,25 +679,10 @@
     "back": "Shown before the service starts",
     "why": "Plain."
   },
-  "WELCOME_EASISLIDES": {
-    "text": "EasiSlides ada di komputer ini",
-    "back": "EasiSlides is on this computer",
-    "why": "Plain."
-  },
-  "WELCOME_EASISLIDES_DETAIL": {
-    "text": "Salin lagu dan Alkitabnya ke sini. EasiSlides tetap utuh dan bisa dipakai.",
-    "back": "Copy its songs and Bibles here. EasiSlides stays whole and can still be used.",
-    "why": "Plain."
-  },
   "BTN_BRING_OVER": {
     "text": "Impor sekarang",
     "back": "Import now",
     "why": "Same family as the import commands."
-  },
-  "BTN_NOT_NOW": {
-    "text": "Nanti saja",
-    "back": "Later",
-    "why": "Plain."
   },
   "BTN_ADD_TO_PLAN": {
     "text": "Tambah ke acara",

@@ -224,8 +224,8 @@ impl Store {
         let mut statement = self.db().prepare(
             "with ordered as (
                  select service_date, song_id,
-                        lead(song_id) over (partition by service_date order by seq, id) as next_song,
-                        lead(shown_at) over (partition by service_date order by seq, id) as next_at
+                        lead(song_id) over (partition by service_date, coalesce(plan_id, 0) order by seq, id) as next_song,
+                        lead(shown_at) over (partition by service_date, coalesce(plan_id, 0) order by seq, id) as next_at
                  from service_songs where shown_at >= ?2
              )
              select next_song, count(distinct service_date) as services, max(next_at) from ordered
@@ -461,6 +461,23 @@ mod tests {
         assert!(store.followers_of(2, NOW).unwrap_or_default().is_empty());
         // Past 26 weeks nothing is read.
         assert!(store.followers_of(1, NOW + 200 * DAY).unwrap_or_default().is_empty());
+    }
+
+    #[test]
+    fn two_services_on_one_day_do_not_follow_each_other() {
+        let store = store();
+        // Two weeks of a 7:00 plan ending on song 1 and a 10:00 plan starting on song 9. Song 9 is
+        // never sung straight after song 1 in any one service.
+        for week in 1..=2i64 {
+            let day = moment(7 * week);
+            let _ = store.record_song_live(&day, Some(1), 4, "", "", true);
+            let _ = store.record_song_live(&day, Some(1), 1, "", "", true);
+            let _ = store.record_song_live(&day, Some(2), 9, "", "", true);
+            let _ = store.record_song_live(&day, Some(2), 5, "", "", true);
+        }
+        let found: Vec<i64> = store.followers_of(1, NOW).unwrap_or_default().iter().map(|f| f.song).collect();
+        assert!(found.is_empty(), "{found:?}");
+        assert_eq!(store.followers_of(4, NOW).unwrap_or_default().iter().map(|f| f.song).collect::<Vec<_>>(), [1]);
     }
 
     #[test]

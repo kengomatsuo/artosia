@@ -10,7 +10,7 @@ use std::collections::HashSet;
 use std::ops::Range;
 
 use artosia_core::bible::{Reference, english_name};
-use artosia_core::deck::DeckSource;
+use artosia_core::deck::{DeckSource, Fill};
 use artosia_core::palette::{self as kit, Doc, LABEL};
 use artosia_core::plan::PlanEntry;
 use artosia_core::search::LineHit;
@@ -143,7 +143,7 @@ impl Command {
             Command::ImportFolder => t::CMD_IMPORT_FOLDER_DETAIL(),
             Command::Remote => t::CMD_REMOTE_DETAIL(),
             Command::Heading => t::CMD_HEADING_DETAIL(),
-            Command::NewPlan => t::CMD_NEW_PLAN_DETAIL(),
+            Command::NewPlan => t::PLAN_NEW_DETAIL(),
             Command::Keys => t::CMD_KEYS_DETAIL(),
             Command::Tour => t::CMD_TOUR_DETAIL(),
             Command::StartService => t::CMD_START_DETAIL(),
@@ -163,7 +163,7 @@ impl Command {
             Command::Listen => t::CMD_LISTEN_DETAIL(),
             Command::Stream => t::CMD_STREAM_DETAIL(),
             Command::BibleFile => t::CMD_BIBLE_FILE_DETAIL(),
-            Command::Bibles => t::CMD_BIBLES_DETAIL(),
+            Command::Bibles => t::CMD_BIBLES_FIND_DETAIL(),
         }
     }
 
@@ -253,6 +253,8 @@ pub enum Hit {
     /// Something in today's plan that is not a song.
     PlanItem { id: u64, title: String },
     Announcement { index: usize, title: String, body: String },
+    /// Another of the church's plans, which opens in place of this one.
+    Plan { id: i64, name: String },
     /// A look Artosia ships, by its place in the presets.
     Look { index: usize, name: String },
     Bible { code: String, name: String },
@@ -284,6 +286,9 @@ pub struct Palette {
     pub picked: usize,
     /// How many songs matched before the list was cut, for the count line.
     pub total: usize,
+    /// Opened from the plan's Add button: Enter and a click put the row in the plan, and the
+    /// search stays open for the next one.
+    pub adding: bool,
 }
 
 const SONG_LIMIT: usize = 40;
@@ -328,6 +333,7 @@ fn section_aliases(tag: Tag) -> Vec<String> {
 impl App {
     pub fn open_palette(&mut self, scope: Scope, seed: &str) {
         self.palette.open = true;
+        self.palette.adding = false;
         self.palette.scope = scope;
         self.palette.chip = None;
         self.palette.query = TextEdit::new(seed);
@@ -336,14 +342,34 @@ impl App {
         self.palette.picked = 0;
         self.plan_menu = None;
         self.more_menu = false;
+        self.switcher.open = false;
+        self.refresh_plan_rows();
         self.want_bible(&self.settings.bible.clone());
         self.search();
     }
 
+    /// The search as the plan's Add button opens it (owner, 2026-11-11: "Pressing add to plan
+    /// only opens the palette?").
+    pub fn open_palette_adding(&mut self, scope: Scope) {
+        self.open_palette(scope, "");
+        self.palette.adding = true;
+        self.add_menu = false;
+    }
+
     pub fn close_palette(&mut self) {
         self.palette.open = false;
+        self.palette.adding = false;
         self.palette.chip = None;
         self.palette.query.focused = false;
+    }
+
+    fn pick_into_plan(&mut self, hit: Hit) {
+        match hit {
+            Hit::Song { song, .. } | Hit::Section { song, .. } => self.add_song_to_plan(song),
+            Hit::Passage { reference, .. } => self.add_passage_to_plan(&reference),
+            Hit::Announcement { .. } => self.add_announcements_to_plan(),
+            _ => {}
+        }
     }
 
     /// Escape: the first press empties the search, the next one closes it.
@@ -356,7 +382,7 @@ impl App {
         self.set_query("");
     }
 
-    fn set_query(&mut self, text: &str) {
+    pub fn set_query(&mut self, text: &str) {
         self.palette.query = TextEdit::new(text);
         self.palette.query.focused = true;
         self.palette.query.set_caret(text.len());
@@ -553,16 +579,33 @@ impl App {
                 PlanEntry::Song { .. } | PlanEntry::Heading { .. } => {}
             }
         }
+        // The church's other plans, found by name; the open one is already open.
+        for row in self.switcher.rows.iter().filter(|row| row.id != self.plan.id) {
+            let name = row.label();
+            let doc = Doc::new(format!("planfile:{}", row.id), "plans", name.clone()).detail(t::KIND_PLAN()).aliases(&["plan", "service", "rencana", "acara", "ibadah"]);
+            out.push((doc, Hit::Plan { id: row.id, name }));
+        }
         for command in Command::ALL {
             if command.usable(self) {
                 out.push((Doc::new(format!("command:{command:?}"), "action", command.label()).detail(command.detail()).aliases(command.aliases()), Hit::Command(command)));
             }
         }
         for (index, item) in self.announcements.iter().enumerate() {
-            let doc = Doc::new(format!("announcement:{}", item.id), "announcement", item.title.clone())
-                .detail(item.body.clone())
+            // A card that fills itself has no body of its own: it says what it holds today.
+            let body = match item.fill {
+                Fill::Nothing => item.body.clone(),
+                Fill::Passage => item.passage.clone(),
+                _ => t::names_today(artosia_core::deck::birthdays(&self.people, item.fill, &self.today()).len()),
+            };
+            let mut doc = Doc::new(format!("announcement:{}", item.id), "announcement", item.title.clone())
+                .detail(body.clone())
                 .aliases(&["announcement", "show announcement", "notice", "pengumuman", "tampilkan pengumuman", "warta"]);
-            out.push((doc, Hit::Announcement { index, title: item.title.clone(), body: item.body.clone() }));
+            doc = match item.fill {
+                Fill::BirthdaysWeek | Fill::BirthdaysMonth => doc.aliases(&["birthday", "birthdays", "show birthdays", "ulang tahun", "ultah", "tampilkan ulang tahun"]),
+                Fill::Passage => doc.aliases(&["verse of the week", "bible verse", "verse", "ayat", "ayat minggu ini"]),
+                Fill::Nothing => doc,
+            };
+            out.push((doc, Hit::Announcement { index, title: item.title.clone(), body }));
         }
         for (index, look) in presets().into_iter().enumerate() {
             let doc = Doc::new(format!("look:{}", look.name), "look", look.name.clone()).aliases(&["look", "theme", "background", "tampilan", "tema", "latar"]);
@@ -721,7 +764,20 @@ impl App {
     /// Acts on the picked result.
     pub fn pick(&mut self, how: Pick) {
         let Some(hit) = self.palette.hits.get(self.palette.picked).cloned() else { return };
+        // While adding, the main choice of a row that can be planned is to plan it.
+        let joins = matches!(hit, Hit::Song { .. } | Hit::Section { .. } | Hit::Announcement { .. } | Hit::Passage { step: None, .. });
+        let how = if self.palette.adding && how == Pick::Open && joins { Pick::AddToPlan } else { how };
         self.log_pick(&hit, how);
+        if self.palette.adding && how == Pick::AddToPlan && joins {
+            // The field empties for the next one.
+            self.pick_into_plan(hit);
+            self.palette.query = TextEdit::new("");
+            self.palette.query.focused = true;
+            self.palette.chip = None;
+            self.palette.picked = 0;
+            self.search();
+            return;
+        }
         match hit {
             Hit::Group(_) => {}
             Hit::Song { song, line, .. } => {
@@ -774,13 +830,20 @@ impl App {
                     self.show(0);
                 }
             }
+            Hit::Plan { id, .. } => {
+                self.close_palette();
+                self.switch_plan(id);
+            }
             Hit::Announcement { index, .. } => {
                 if how == Pick::AddToPlan {
                     self.add_announcements_to_plan();
                     return;
                 }
                 // An announcement that fills itself may have no slide today, or several.
-                let slide = self.announcement_slide_index(index).unwrap_or(0);
+                let Some(slide) = self.announcement_slide_index(index) else {
+                    self.say(t::NOTICE_NOTHING_TO_SHOW(), None);
+                    return;
+                };
                 self.open_announcements();
                 self.close_palette();
                 if let Some(open) = self.open.as_mut() {
@@ -793,8 +856,7 @@ impl App {
             Hit::Look { index, .. } => {
                 self.close_palette();
                 if let Some(preset) = presets().into_iter().nth(index) {
-                    let look = &self.settings.look;
-                    let chosen = artosia_slides::look::Look { max_lines: look.max_lines, size: look.size, place: look.place, ..preset };
+                    let chosen = self.settings.look.with_preset(preset);
                     self.set_look(chosen);
                 }
             }
@@ -906,6 +968,25 @@ mod tests {
         assert_eq!(first(&app), Some(&Hit::Command(Command::StartService)));
         search(&mut app, "mulai ibadah");
         assert!(app.palette.hits.contains(&Hit::Command(Command::StartService)));
+    }
+
+    #[test]
+    fn the_birthday_card_is_found_by_birthday_and_ulang_tahun() {
+        let mut app = App::practice();
+        app.demo_notices("birthdays");
+        app.open_palette(Scope::All, "");
+        let at = app.announcements.iter().position(|card| card.fill == artosia_core::deck::Fill::BirthdaysWeek).unwrap_or_default();
+        // The import command also answers to "birthday", so the card is only required to be
+        // among the hits there; asking to show birthdays puts it first.
+        for query in ["birthday", "ulang tahun", "show birthdays", "tampilkan ulang tahun"] {
+            search(&mut app, query);
+            assert!(app.palette.hits.iter().any(|hit| matches!(hit, Hit::Announcement { index, .. } if *index == at)), "{query:?}: {:?}", app.palette.hits);
+        }
+        search(&mut app, "show birthdays");
+        assert!(matches!(first(&app), Some(Hit::Announcement { index, .. }) if *index == at), "{:?}", first(&app));
+        // Ctrl Enter puts it on the projector at once, on the slide that holds the names.
+        app.pick(Pick::ShowNow);
+        assert!(app.live.as_ref().is_some_and(|live| live.deck.slides.iter().any(|slide| slide.text.contains("Sample Alpha"))));
     }
 
     #[test]

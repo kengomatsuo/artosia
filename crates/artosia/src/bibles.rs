@@ -2,12 +2,15 @@
 //! network run on worker threads; their answers wait in `events` until the next frame.
 //! Nothing is downloaded until a volunteer presses the button for that translation.
 
+use std::collections::HashMap;
+use std::io::Read;
 use std::path::{Path, PathBuf};
 use std::sync::{Arc, Mutex};
 use std::time::{Duration, SystemTime};
 
 use artosia_core::bible_file::{self, Details, ImportError, Installed};
-use artosia_core::ebible::{self, Translation};
+use artosia_core::beblia;
+use artosia_core::ebible::{self, Source, Translation};
 use rune::{TextEdit, Tx};
 
 use crate::state::{App, Sheet};
@@ -16,11 +19,24 @@ use crate::strings as t;
 /// How long a saved copy of eBible's list stands in for a fresh one.
 const CATALOGUE_FRESH: Duration = Duration::from_secs(7 * 24 * 3600);
 const CATALOGUE_FILE: &str = "ebible-translations.csv";
+const BEBLIA_FILE: &str = "beblia-files.json";
 
 pub enum Event {
     Installed(Result<Installed, ImportError>),
     Catalogue(Result<Vec<Translation>, String>),
     Downloaded(Result<Installed, String>),
+    /// What a Beblia file says about itself, by the translation's id.
+    Notice(String, Result<(String, String), String>),
+}
+
+/// What a Beblia file says about itself: the list holds only file names, so the first kilobytes
+/// are read when the row is picked.
+#[derive(Clone, Debug, PartialEq)]
+pub enum Notice {
+    Loading,
+    /// The translation's own name and its copyright line, either of them possibly empty.
+    Known { name: String, copyright: String },
+    Failed,
 }
 
 /// eBible's list as the dialog has it.
@@ -54,6 +70,8 @@ pub struct Desk {
     pub rows_for: Option<String>,
     /// The translation being downloaded, by id.
     pub downloading: Option<String>,
+    /// What picked Beblia files said about themselves, by id.
+    pub notices: HashMap<String, Notice>,
 }
 
 impl Default for Desk {
@@ -68,6 +86,7 @@ impl Default for Desk {
             rows: Vec::new(),
             rows_for: None,
             downloading: None,
+            notices: HashMap::new(),
         }
     }
 }
@@ -83,6 +102,14 @@ impl Desk {
     pub fn picked_translation(&self) -> Option<&Translation> {
         let id = self.picked.as_ref()?;
         self.translations().iter().find(|item| item.id == *id)
+    }
+
+    /// The name to show: the file's own once it was read, else the one the list derived.
+    pub fn title_of<'a>(&'a self, item: &'a Translation) -> &'a str {
+        match self.notices.get(&item.id) {
+            Some(Notice::Known { name, .. }) if !name.is_empty() => name,
+            _ => &item.title,
+        }
     }
 
     /// Arranges the list for what is typed. Cheap to call every frame: it works only on a change.
@@ -131,35 +158,67 @@ fn get(url: &str, limit: u64) -> Result<Vec<u8>, String> {
     response.body_mut().with_config().limit(limit).read_to_vec().map_err(net_error)
 }
 
-/// eBible's list: the saved copy when it is under a week old, else a fresh one (saved), else
-/// the old saved copy when the network fails, so a church with a poor connection keeps its list.
-fn load_catalogue(cache: Option<PathBuf>) -> Result<Vec<Translation>, String> {
+/// The first bytes of a file, for reading what it says about itself before it is downloaded.
+fn get_head(url: &str, bytes: u64) -> Result<Vec<u8>, String> {
+    let mut response = agent().get(url).header("Range", format!("bytes=0-{}", bytes - 1)).call().map_err(net_error)?;
+    let mut head = Vec::new();
+    // A server that ignores the range sends the whole file; only the start is taken.
+    response.body_mut().as_reader().take(bytes).read_to_end(&mut head).map_err(|error| error.to_string())?;
+    Ok(head)
+}
+
+/// A list's bytes: the saved copy when it is under a week old, else a fresh download (saved),
+/// else the old saved copy when the network fails, so a church with a poor connection keeps its list.
+fn cached_bytes(cache: &Option<PathBuf>, url: &str, limit: u64, usable: &dyn Fn(&[u8]) -> bool) -> Result<Vec<u8>, String> {
     let saved = cache.as_ref().and_then(|path| std::fs::read(path).ok().map(|bytes| (path.clone(), bytes)));
     let age = |path: &Path| std::fs::metadata(path).and_then(|meta| meta.modified()).ok().and_then(|at| SystemTime::now().duration_since(at).ok());
-    let parse = |bytes: &[u8]| ebible::parse_catalogue(&String::from_utf8_lossy(bytes));
     if let Some((path, bytes)) = &saved
         && age(path).is_some_and(|age| age < CATALOGUE_FRESH)
+        && usable(bytes)
     {
-        let list = parse(bytes);
-        if !list.is_empty() {
-            return Ok(list);
-        }
+        return Ok(bytes.clone());
     }
-    match get(ebible::CATALOGUE_URL, 8 * 1024 * 1024) {
+    match get(url, limit) {
         Ok(bytes) => {
-            let list = parse(&bytes);
-            if list.is_empty() {
+            if !usable(&bytes) {
                 return Err("the list was not in the shape expected".to_string());
             }
-            if let Some(path) = &cache {
+            if let Some(path) = cache {
                 let _ = std::fs::write(path, &bytes);
             }
-            Ok(list)
+            Ok(bytes)
         }
-        Err(error) => match saved.map(|(_, bytes)| parse(&bytes)).filter(|list| !list.is_empty()) {
-            Some(list) => Ok(list),
+        Err(error) => match saved.map(|(_, bytes)| bytes).filter(|bytes| usable(bytes)) {
+            Some(bytes) => Ok(bytes),
             None => Err(error),
         },
+    }
+}
+
+/// eBible's list.
+fn load_ebible(cache: Option<PathBuf>) -> Result<Vec<Translation>, String> {
+    let parse = |bytes: &[u8]| ebible::parse_catalogue(&String::from_utf8_lossy(bytes));
+    cached_bytes(&cache, ebible::CATALOGUE_URL, 8 * 1024 * 1024, &|bytes| !parse(bytes).is_empty()).map(|bytes| parse(&bytes))
+}
+
+/// The Beblia repository's files.
+fn load_beblia(cache: Option<PathBuf>) -> Result<Vec<Translation>, String> {
+    let parse = |bytes: &[u8]| beblia::parse_tree(&String::from_utf8_lossy(bytes));
+    cached_bytes(&cache, beblia::TREE_URL, 4 * 1024 * 1024, &|bytes| !parse(bytes).is_empty()).map(|bytes| parse(&bytes))
+}
+
+/// Both sources in one list. When one of them cannot be reached the other still shows, and the
+/// dialog fails only when neither can.
+fn load_catalogue(folder: Option<PathBuf>) -> Result<Vec<Translation>, String> {
+    let ebible = load_ebible(folder.as_ref().map(|folder| folder.join(CATALOGUE_FILE)));
+    let beblia = load_beblia(folder.as_ref().map(|folder| folder.join(BEBLIA_FILE)));
+    match (ebible, beblia) {
+        (Ok(mut list), Ok(more)) => {
+            list.extend(more);
+            Ok(list)
+        }
+        (Ok(list), Err(_)) | (Err(_), Ok(list)) => Ok(list),
+        (Err(why), Err(_)) => Err(why),
     }
 }
 
@@ -175,6 +234,18 @@ fn demo_list() -> Vec<Translation> {
         copyright: copyright.into(),
         old_books: old,
         new_books: new,
+        ..Translation::default()
+    };
+    let file = |id: &str, language: &str, title: &str, size: u64| Translation {
+        source: Source::Beblia,
+        file: format!("{id}Bible.xml"),
+        size,
+        id: id.into(),
+        language_code: if language == "Indonesian" { "ind" } else { "bbb" }.into(),
+        language: language.into(),
+        language_english: language.into(),
+        title: title.into(),
+        ..Translation::default()
     };
     vec![
         item("demoa", "ind", "Bahasa Contoh", "Indonesian", "Alkitab Contoh Lengkap", "Made up for a screenshot. Free to copy with this notice kept, not for sale. Second sentence that runs long enough to need a second line.", 39, 27),
@@ -185,6 +256,9 @@ fn demo_list() -> Vec<Translation> {
         item("demof", "ccc", "Ccc", "Czech", "Czech made up Bible", "Made up for a screenshot.", 39, 27),
         item("demog", "ccc", "Ccc", "Czech", "Czech second made up Bible", "Made up for a screenshot.", 0, 27),
         item("demoh", "ddd", "Ddd", "Danish", "Danish made up Bible", "Made up for a screenshot.", 39, 27),
+        file("DemoIndonesianOne", "Indonesian", "Indonesian Contoh", 5_400_000),
+        file("DemoIndonesianTwo", "Indonesian", "Indonesian Buatan", 1_450_000),
+        file("DemoBasqueOne", "Basque", "Basque Beblia made up", 3_900_000),
     ]
 }
 
@@ -200,6 +274,21 @@ impl App {
                 self.desk.catalogue = Catalogue::Ready(demo_list());
                 match state {
                     "picked" => self.desk.picked = Some("demoa".to_string()),
+                    "picked-file" => {
+                        self.desk.picked = Some("DemoIndonesianOne".to_string());
+                        self.desk.notices.insert(
+                            "DemoIndonesianOne".to_string(),
+                            Notice::Known { name: "Alkitab Contoh (made up for a screenshot)".to_string(), copyright: "Made up for a screenshot. Used with permission, all rights reserved.".to_string() },
+                        );
+                    }
+                    "picked-silent" => {
+                        self.desk.picked = Some("DemoIndonesianTwo".to_string());
+                        self.desk.notices.insert("DemoIndonesianTwo".to_string(), Notice::Known { name: String::new(), copyright: String::new() });
+                    }
+                    "picked-reading" => {
+                        self.desk.picked = Some("DemoBasqueOne".to_string());
+                        self.desk.notices.insert("DemoBasqueOne".to_string(), Notice::Loading);
+                    }
                     "empty" => self.desk.query.replace_text("zzzqq"),
                     _ => {}
                 }
@@ -222,7 +311,7 @@ impl App {
     /// Asks eBible for its list on a worker; the dialog shows a skeleton meanwhile.
     pub fn start_catalogue(&mut self) {
         self.desk.catalogue = Catalogue::Loading;
-        let cache = self.folder.as_ref().map(|folder| folder.join(CATALOGUE_FILE));
+        let cache = self.folder.clone();
         let (events, waker) = (self.desk.events.clone(), self.waker.clone());
         std::thread::spawn(move || {
             let result = load_catalogue(cache);
@@ -258,7 +347,30 @@ impl App {
         });
     }
 
-    /// Downloads one translation from eBible and installs it. Only a button press calls this.
+    /// Picks a row. A Beblia file's own name and copyright line are read first, from the start of
+    /// the file only (a few kilobytes); nothing is downloaded.
+    pub fn pick_bible(&mut self, id: &str) {
+        self.desk.picked = Some(id.to_string());
+        let Some(item) = self.desk.translations().iter().find(|item| item.id == id).cloned() else { return };
+        if item.source != Source::Beblia || matches!(self.desk.notices.get(id), Some(Notice::Loading | Notice::Known { .. })) || rune::is_headless() {
+            return;
+        }
+        self.desk.notices.insert(id.to_string(), Notice::Loading);
+        let (events, waker) = (self.desk.events.clone(), self.waker.clone());
+        std::thread::spawn(move || {
+            let result = get_head(&beblia::download_url(&item.file), beblia::HEADER_BYTES).and_then(|head| {
+                bible_file::beblia_header(&String::from_utf8_lossy(&head)).ok_or_else(|| "it is not a Beblia Bible".to_string())
+            });
+            if let Ok(mut events) = events.lock() {
+                events.push(Event::Notice(item.id.clone(), result));
+            }
+            if let Some(wake) = waker {
+                wake();
+            }
+        });
+    }
+
+    /// Downloads one translation and installs it. Only a button press calls this.
     pub fn download_bible(&mut self, id: &str) {
         let Some(item) = self.desk.translations().iter().find(|item| item.id == id).cloned() else { return };
         let Some(target) = self.bibles_folder() else {
@@ -271,10 +383,17 @@ impl App {
         self.desk.downloading = Some(id.to_string());
         let (events, waker) = (self.desk.events.clone(), self.waker.clone());
         std::thread::spawn(move || {
-            let result = get(&ebible::download_url(&item.id), 64 * 1024 * 1024).and_then(|bytes| {
-                let details = Details { code: item.id.clone(), name: item.title.clone(), language: item.language_english.clone(), copyright: item.copyright.clone() };
-                bible_file::install_bytes(&format!("{}_usfx.zip", item.id), &bytes, &target, &details).map_err(|error| error.to_string())
-            });
+            let result = match item.source {
+                Source::Ebible => get(&ebible::download_url(&item.id), 64 * 1024 * 1024).and_then(|bytes| {
+                    let details = Details { code: item.id.clone(), name: item.title.clone(), language: item.language_english.clone(), copyright: item.copyright.clone() };
+                    bible_file::install_bytes(&format!("{}_usfx.zip", item.id), &bytes, &target, &details).map_err(|error| error.to_string())
+                }),
+                // The name and the copyright line are the file's own: the details leave them empty.
+                Source::Beblia => get(&beblia::download_url(&item.file), 64 * 1024 * 1024).and_then(|bytes| {
+                    let details = Details { code: item.id.clone(), language: item.language_english.clone(), ..Details::default() };
+                    bible_file::install_bytes(&item.file, &bytes, &target, &details).map_err(|error| error.to_string())
+                }),
+            };
             if let Ok(mut events) = events.lock() {
                 events.push(Event::Downloaded(result));
             }
@@ -331,6 +450,12 @@ impl App {
                     self.desk.rows_for = None;
                 }
                 Event::Catalogue(Err(why)) => self.desk.catalogue = Catalogue::Failed(why),
+                Event::Notice(id, Ok((name, copyright))) => {
+                    self.desk.notices.insert(id, Notice::Known { name, copyright });
+                }
+                Event::Notice(id, Err(_)) => {
+                    self.desk.notices.insert(id, Notice::Failed);
+                }
                 Event::Downloaded(result) => {
                     self.desk.downloading = None;
                     match result {
@@ -400,7 +525,7 @@ mod tests {
         let cache = folder.join(CATALOGUE_FILE);
         std::fs::write(&cache, CSV).unwrap_or_else(|e| panic!("{e}"));
         // A file written a moment ago is fresh, so the network is never asked.
-        let list = load_catalogue(Some(cache)).unwrap_or_else(|e| panic!("{e}"));
+        let list = load_ebible(Some(cache)).unwrap_or_else(|e| panic!("{e}"));
         assert_eq!(list.len(), 2);
         let _ = std::fs::remove_dir_all(&folder);
     }
@@ -426,6 +551,78 @@ mod tests {
         let list = load_catalogue(None).unwrap_or_else(|e| panic!("{e}"));
         assert!(list.len() > 1000);
         assert!(list.iter().any(|item| item.language_code == "ind"));
+    }
+
+    const TREE: &str = r#"{"tree":[{"path":"IndonesianMadeBible.xml","type":"blob","size":1000},{"path":"README.md","type":"blob","size":3}]}"#;
+
+    #[test]
+    fn a_fresh_saved_beblia_list_is_used_without_the_network() {
+        let folder = std::env::temp_dir().join(format!("artosia-desk-beblia-{}", std::process::id()));
+        let _ = std::fs::remove_dir_all(&folder);
+        std::fs::create_dir_all(&folder).unwrap_or_else(|e| panic!("{e}"));
+        let cache = folder.join(BEBLIA_FILE);
+        std::fs::write(&cache, TREE).unwrap_or_else(|e| panic!("{e}"));
+        let list = load_beblia(Some(cache)).unwrap_or_else(|e| panic!("{e}"));
+        assert_eq!((list.len(), list[0].title.as_str(), list[0].source), (1, "Indonesian Made", Source::Beblia));
+        let _ = std::fs::remove_dir_all(&folder);
+    }
+
+    #[test]
+    fn both_sources_share_one_arranged_list_with_indonesian_first() {
+        let mut list = ebible::parse_catalogue(CSV);
+        list.extend(beblia::parse_tree(TREE));
+        let mut desk = Desk { catalogue: Catalogue::Ready(list), ..Desk::default() };
+        desk.arrange();
+        // Indonesian, its eBible row, its Beblia row, then Zedish.
+        assert!(matches!(&desk.rows[0], Row::Language { name, .. } if name == "Indonesian"));
+        let sources: Vec<Source> = desk.rows.iter().filter_map(|row| if let Row::Translation(at) = row { Some(desk.translations()[*at].source) } else { None }).collect();
+        assert_eq!(sources, [Source::Ebible, Source::Beblia, Source::Ebible]);
+    }
+
+    #[test]
+    fn a_files_own_name_replaces_the_derived_one() {
+        let mut desk = Desk { catalogue: Catalogue::Ready(beblia::parse_tree(TREE)), ..Desk::default() };
+        let item = desk.translations()[0].clone();
+        assert_eq!(desk.title_of(&item), "Indonesian Made");
+        desk.notices.insert(item.id.clone(), Notice::Known { name: "Made Up Name".into(), copyright: String::new() });
+        assert_eq!(desk.title_of(&item), "Made Up Name");
+        desk.notices.insert(item.id.clone(), Notice::Known { name: String::new(), copyright: String::new() });
+        assert_eq!(desk.title_of(&item), "Indonesian Made");
+    }
+
+    /// A real Indonesian file from the Beblia repository, downloaded into a temporary library
+    /// and counted, never printed: `cargo test -p artosia a_real_beblia -- --ignored --nocapture`.
+    #[test]
+    #[ignore = "uses the network"]
+    fn a_real_beblia_download_lands_in_the_library() {
+        let folder = std::env::temp_dir().join(format!("artosia-beblia-test-{}", std::process::id()));
+        let _ = std::fs::remove_dir_all(&folder);
+        let list = load_beblia(None).unwrap_or_else(|e| panic!("{e}"));
+        let indonesian: Vec<&Translation> = list.iter().filter(|item| item.language_english == "Indonesian").collect();
+        assert!(list.len() > 500 && indonesian.len() >= 5, "{} files, {} Indonesian", list.len(), indonesian.len());
+        // The smallest Indonesian file keeps the test quick.
+        let item = indonesian.iter().min_by_key(|item| item.size).copied().unwrap_or_else(|| panic!("no Indonesian file"));
+        let head = get_head(&beblia::download_url(&item.file), beblia::HEADER_BYTES).unwrap_or_else(|e| panic!("{e}"));
+        let (name, copyright) = bible_file::beblia_header(&String::from_utf8_lossy(&head)).unwrap_or_else(|| panic!("no header"));
+        assert!(!name.is_empty() && head.len() as u64 <= beblia::HEADER_BYTES);
+        let bytes = get(&beblia::download_url(&item.file), 64 * 1024 * 1024).unwrap_or_else(|e| panic!("{e}"));
+        let bibles = folder.join("bibles");
+        let details = Details { code: item.id.clone(), language: item.language_english.clone(), ..Details::default() };
+        let installed = bible_file::install_bytes(&item.file, &bytes, &bibles, &details).unwrap_or_else(|e| panic!("{e}"));
+        let bible = artosia_core::bible::Bible::open(&bibles.join(format!("{}.sqlite3", bible_file::file_code(&item.id)))).unwrap_or_else(|e| panic!("{e}"));
+        let chapters: usize = bible.books().iter().map(|book| book.chapters.len()).sum();
+        assert!(!bible.books().is_empty() && chapters > 0 && installed.verses > 0);
+        assert_eq!(installed.name, name);
+        println!(
+            "{} files listed, {} Indonesian; {} installed: {} books, {chapters} chapters, {} verses; the file states a copyright line: {}",
+            list.len(),
+            indonesian.len(),
+            item.file,
+            bible.books().len(),
+            installed.verses,
+            !copyright.is_empty()
+        );
+        let _ = std::fs::remove_dir_all(&folder);
     }
 
     #[test]
