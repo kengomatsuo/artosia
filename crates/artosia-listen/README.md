@@ -94,6 +94,31 @@ The conclusion: with a tiny or base model on a mixed signal, sung lyrics will co
 most words wrong. The useful case is a **soloist or a song leader on a close microphone** or the
 mixing desk's line out with the vocal loud. Plug the listener into a vocal channel, not the room.
 
+### Measured on real recordings (2026-11-11)
+
+Played from YouTube through system audio, 100 s each from the first half-minute, with the base
+model and the church's 1,333 songs as the library. The test is `names_its_song` in
+`crates/artosia/src/heard_test.rs`; it prints titles and word counts, never the words.
+
+| Played | What the model made of it | Named |
+|---|---|---|
+| An English hymn sung by a choir, in the library | 5 to 15 words a phrase | the right song from about a minute in, alone |
+| Four Indonesian worship songs with a band, in the library | 5 to 9 words in a 12 s phrase, two to four of them together in a line of the right song | one of the four, from 36 to 50 s, in each of three passes; the other three never |
+| A sermon in Indonesian | a phrase every five seconds | nothing |
+| The news, and a pop song that is not in the library | | nothing |
+
+- The right song was among a phrase's three nearest in about half the phrases on a good pass
+  and in one phrase of five on a bad pass of the same recording. A pass differs from the next
+  because the 12 s cuts fall elsewhere.
+- The matcher that 0.1.7 ships offered **five songs in 100 s of that sermon** and a wrong song
+  for one of the Indonesian recordings: a tail of three or four words sitting in a line was
+  enough. What replaced it is in `docs/palette-suggestions.md`, "How a heard phrase is read".
+- The hymn's line is sung again and again, and the same word five times once put eight "words
+  together" in a song that was not being sung. Each word of a phrase now counts once.
+- So the answer to "which song is this" is: a clear English hymn, yes, in about a minute; an
+  Indonesian song over a band, sometimes. The model is the limit, as the papers above say, and
+  `small` was not tried.
+
 ## Hear notes and suggest the song (melody)
 
 - **Audio fingerprinting** (Shazam, Wang 2003) identifies a *recording* by matching hashes of
