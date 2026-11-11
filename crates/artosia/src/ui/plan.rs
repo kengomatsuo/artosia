@@ -73,7 +73,7 @@ pub(crate) fn item_row(s: &App, k: &Kit, item: &PlanItem, menu: El) -> El {
     let slot = if live {
         let open_menu = s.plan_menu == Some(id);
         el().size(26.0, 26.0)
-            .child(el().pin(Some(0.0), Some(0.0), Some(0.0), Some(0.0)).center().child(el().size(8.0, 8.0).radius(4.0).fill(if s.on_air() { theme::live() } else { k.c.text_muted })).group_opacity(if open_menu { 0.0 } else { 1.0 }, 0.0).help(t::LIVE()))
+            .child(el().pin(Some(0.0), Some(0.0), Some(0.0), Some(0.0)).center().child(el().size(8.0, 8.0).radius(4.0).fill(if s.on_air() { theme::live() } else { k.c.text_muted }).layer_opacity(s.beat_glow(s.clock))).group_opacity(if open_menu { 0.0 } else { 1.0 }, 0.0).help(t::LIVE()))
             .child(menu)
     } else {
         menu

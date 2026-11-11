@@ -52,6 +52,8 @@ fn main() {
             Heard::Partial(t) | Heard::Final(t) if !show_text => println!("text arrived ({} characters)", t.chars().count()),
             Heard::Partial(t) => println!("partial: {t}"),
             Heard::Final(t) => println!("final: {t}"),
+            Heard::Tempo(Some(t)) => println!("tempo {:.1} BPM, confidence {:.2}, last beat {:.2} s ago", t.bpm, t.confidence, t.since_beat),
+            Heard::Tempo(None) => {}
             Heard::Problem(p) => println!("problem: {p}"),
         }
     }

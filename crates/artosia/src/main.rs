@@ -361,6 +361,18 @@ const SCENES: &[Scene] = &[
     ("tour-live", |s| s.tour = Some(3)),
     ("tour-search", |s| s.tour = Some(4)),
     ("listen", |s| s.sheet = Sheet::Listen),
+    ("listen-tempo", |s| {
+        s.demo_listening = true;
+        s.sheet = Sheet::Listen;
+        s.listen_level.store(0.55f32.to_bits(), std::sync::atomic::Ordering::Relaxed);
+        s.tempo = Some((artosia_listen::Tempo { bpm: 92.0, confidence: 0.7, period: 60.0 / 92.0, since_beat: 0.0 }, 0.0));
+    }),
+    ("listen-quiet", |s| {
+        s.demo_listening = true;
+        s.sheet = Sheet::Listen;
+        s.listen_level.store(0.1f32.to_bits(), std::sync::atomic::Ordering::Relaxed);
+        s.settings.beat_blink = true;
+    }),
     ("stream", |s| s.sheet = Sheet::Stream),
     ("bibles", |s| s.demo_bibles("ready")),
     ("bibles-picked", |s| s.demo_bibles("picked")),

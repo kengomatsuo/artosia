@@ -314,6 +314,10 @@ text!(LISTEN_INDONESIAN, "Indonesian", "Indonesia");
 text!(LISTEN_ENGLISH, "English", "Inggris");
 text!(LISTEN_LEVEL, "Sound coming in", "Tingkat suara");
 text!(LISTEN_HEARD, "Heard", "Yang terdengar");
+text!(LISTEN_TEMPO, "Tempo", "Tempo");
+text!(LISTEN_BPM, "BPM", "BPM");
+text!(LISTEN_BEAT_BLINK, "Live marker follows the beat", "Live marker follows the beat");
+text!(LISTEN_BEAT_BLINK_HINT, "A gentle pulse, just for fun.", "A gentle pulse, just for fun.");
 text!(CMD_UPDATE, "Check for a new version", "Periksa pembaruan");
 text!(CMD_UPDATE_DETAIL, "Artosia also checks by itself at each start", "Artosia juga memeriksa sendiri saat dibuka");
 

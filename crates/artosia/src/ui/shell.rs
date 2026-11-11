@@ -407,7 +407,8 @@ fn live_state(s: &App, k: &Kit) -> El {
     } else if s.text_hidden {
         warn(&icons::NO_TEXT, t::BTN_NO_TEXT())
     } else if s.live.is_some() {
-        icon(&icons::ON_AIR, 16.0).color(theme::live()).help(t::LIVE())
+        // With the switch in Listen on, the sign breathes on the beat the room is playing.
+        icon(&icons::ON_AIR, 16.0).color(theme::live()).layer_opacity(s.beat_glow(s.clock)).help(t::LIVE())
     } else {
         el()
     }

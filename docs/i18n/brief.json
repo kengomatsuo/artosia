@@ -8450,5 +8450,66 @@
       "search-box"
     ],
     "notes": ""
+  },
+  {
+    "key": "LISTEN_TEMPO",
+    "kind": "const",
+    "screen": "Listen dialog, label above the tempo number and its pulsing dot",
+    "moment": "The listener is on and a band or a keyboard is playing.",
+    "role": "field label",
+    "does": "Label of the row that shows the beats per minute heard in the room and a dot that pulses on each beat.",
+    "budget": 14,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "listen"
+    ],
+    "notes": "Musical sense: speed of the music. Indonesian musicians say tempo; keep it unless the glossary says otherwise."
+  },
+  {
+    "key": "LISTEN_BPM",
+    "kind": "const",
+    "screen": "Listen dialog, small unit after the tempo number",
+    "moment": "Next to a number such as 92.",
+    "role": "unit",
+    "does": "The unit after the tempo number: beats per minute.",
+    "budget": 6,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "listen"
+    ],
+    "notes": "A unit abbreviation. If Indonesian musicians use the same letters, keep them."
+  },
+  {
+    "key": "LISTEN_BEAT_BLINK",
+    "kind": "const",
+    "screen": "Listen dialog, label of a switch (off by default)",
+    "moment": "The volunteer wonders what the red Live label on the plan does while the band plays.",
+    "role": "switch label",
+    "does": "Turns on a gentle pulse of the red Live label in time with the music the microphone hears.",
+    "budget": 40,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "listen",
+      "live"
+    ],
+    "notes": "The label is the word on the plan that marks what is on the projector now; see the LIVE string. It is a switch label, so it must read naturally as on or off."
+  },
+  {
+    "key": "LISTEN_BEAT_BLINK_HINT",
+    "kind": "const",
+    "screen": "Listen dialog, grey line under the beat switch",
+    "moment": "They read the switch label and wonder if it matters.",
+    "role": "hint",
+    "does": "Says the pulse is only a small decoration, nothing more.",
+    "budget": 40,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "listen"
+    ],
+    "notes": "Light and friendly; one short sentence."
   }
 ]

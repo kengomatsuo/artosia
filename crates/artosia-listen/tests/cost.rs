@@ -22,3 +22,23 @@ fn processing_cost_of_one_minute_of_audio() {
     let took = started.elapsed();
     println!("60 s of audio processed in {took:?} ({:.2}% of one core), {phrases} phrases", took.as_secs_f64() / 60.0 * 100.0);
 }
+
+#[test]
+#[ignore = "timing only"]
+fn tempo_cost_of_one_minute_of_audio() {
+    // A click every half second over a hum, so the tracker has something to find.
+    let input: Vec<f32> = (0..48_000 * 60)
+        .map(|i| {
+            let in_beat = (i % 24_000) as f32 / 48_000.0;
+            (i as f32 * 0.05).sin() * 0.05 + (i as f32 * 0.9).sin() * (-in_beat * 60.0).exp() * 0.5
+        })
+        .collect();
+    let started = Instant::now();
+    let mut tracker = artosia_listen::TempoTracker::new(48_000);
+    let mut last = None;
+    for block in input.chunks(480) {
+        tracker.push(block, |t| last = t);
+    }
+    let took = started.elapsed();
+    println!("60 s of audio tempo-tracked in {took:?} ({:.2}% of one core), found {last:?}", took.as_secs_f64() / 60.0 * 100.0);
+}
