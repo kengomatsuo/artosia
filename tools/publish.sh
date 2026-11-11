@@ -54,9 +54,26 @@ target/release-tool/release/artosia-release.exe build --dir "$programs" --versio
 zip="dist/$version/Artosia-windows.zip"
 powershell -NoProfile -Command "Compress-Archive -Path '$programs/*' -DestinationPath '$zip' -Force"
 
+# What a person reads first on the release page: the one file to download. The page lists
+# about a hundred files of the self-update around it, and the owner could not tell which one
+# to take (2026-11-11: "there's not even a clear downloadable in the release").
+megabytes=$(( ($(stat -c %s "$zip") + 524288) / 1048576 ))
+body="dist/$version/release-notes.md"
+{
+    echo "**Download: [Artosia for Windows](https://github.com/kengomatsuo/artosia/releases/download/v$version/Artosia-windows.zip)** (zip, $megabytes MB)"
+    echo
+    echo "Unzip it into a folder of your own, such as Documents, and open \`artosia.exe\`. A copy you already have updates itself, so there is nothing to download again."
+    echo
+    echo "Every other file under Assets belongs to that self-update."
+    echo
+    echo "## What is new"
+    echo
+    echo "$notes"
+} > "$body"
+
 git tag "v$version"
 git push origin HEAD "v$version"
-gh release create "v$version" "$zip" --draft --title "Artosia $version" --notes "$notes"
+gh release create "v$version" "$zip" --draft --title "Artosia $version" --notes-file "$body"
 # About eighty files: a few at a time, so one slow upload does not fail the whole release.
 find "$feed" -type f -print0 | xargs -0 -n 12 gh release upload "v$version" --clobber
 gh release edit "v$version" --draft=false --latest
