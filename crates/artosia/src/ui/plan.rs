@@ -21,18 +21,26 @@ pub(crate) fn entry_icon(entry: &PlanEntry) -> &'static rune::Icon {
     }
 }
 
+/// A divider of the plan: the name of a part of the service, with a rule drawn on to the
+/// column's edge and room above it, so the items under it read as its own (owner, 2026-11-11:
+/// "I can't differentiate well enough the categories like firman and pujian, with the contents
+/// of them"). It was a row like any other: the same grip, the same dots, grey words. Its grip
+/// and its menu now come under the pointer only, and the items it holds are set in from it.
 pub(crate) fn heading_row(s: &App, k: &Kit, item: &PlanItem, menu: El) -> El {
     row()
         .key(format!("plan-{}", item.id))
         .w_full()
         .h(HEADING)
-        .px(space::S3)
+        .pl(space::S2)
+        .pr(space::S3)
+        .pt(10.0)
         .gap(space::S2)
         .center_y()
         .hover_group()
-        .child(grip(k))
-        .child(text(s.entry_title(&item.entry)).font(type_::SMALL_STRONG).color(k.c.text_muted).truncate().grow(1.0))
-        .child(menu)
+        .child(text(s.entry_title(&item.entry)).font(type_::SMALL_STRONG).color(k.c.text_base).truncate())
+        .child(el().h(1.0).grow(1.0).min_w(space::S3).fill(k.c.border_base).a11y_hidden())
+        // Out of the row's flow, over the end of the rule, so the rule runs to the edge at rest.
+        .child(row().pin(None, Some(8.0), Some(0.0), None).h(26.0).pl(space::S2).gap(space::S1).center_y().fill(theme::surf().side).group_opacity(0.0, 1.0).child(grip(k)).child(menu))
 }
 
 /// The dots at a row's start that say it can be carried (owner, 2026-11-11: "Where's the drag
@@ -46,7 +54,7 @@ fn tab_opens(s: &App, id: u64) -> bool {
     s.editor.is_none() && s.notices.is_none() && s.walk_target(true) == Some(id)
 }
 
-pub(crate) fn item_row(s: &App, k: &Kit, item: &PlanItem, menu: El) -> El {
+pub(crate) fn item_row(s: &App, k: &Kit, item: &PlanItem, menu: El, inside: bool) -> El {
     let id = item.id;
     let open = s.open.as_ref().is_some_and(|open| open.item == Some(id));
     let live = s.live.as_ref().is_some_and(|live| live.item == Some(id));
@@ -58,7 +66,8 @@ pub(crate) fn item_row(s: &App, k: &Kit, item: &PlanItem, menu: El) -> El {
         .label(s.entry_title(&item.entry))
         .w_full()
         .h(size::ROW)
-        .pl(space::S2)
+        // An item under a divider is set in from it, as a line under its heading.
+        .pl(if inside { space::S2 + INSET } else { space::S2 })
         .pr(space::S3)
         .gap(space::S2)
         .center_y()
@@ -121,7 +130,9 @@ pub(crate) fn item_row(s: &App, k: &Kit, item: &PlanItem, menu: El) -> El {
         })
 }
 
-const HEADING: f32 = 30.0;
+const HEADING: f32 = 38.0;
+/// Points an item under a divider is set in from it.
+const INSET: f32 = 10.0;
 /// Points between two rows of the plan.
 const GAP: f32 = 2.0;
 /// Points the pointer travels before a press on a row becomes a drag, as in the kit's lists.
@@ -182,7 +193,8 @@ pub(crate) fn row_menu(s: &App, k: &Kit, item: &PlanItem, at: usize, layer: &mut
     let id = item.id;
     let open = s.plan_menu == Some(id);
     // The live item's button waits under its dot, and the next item's under its key.
-    let rest = if s.live.as_ref().is_some_and(|live| live.item == Some(id)) || tab_opens(s, id) { 0.0 } else { 0.55 };
+    // A divider's button comes under the pointer only, so a divider never looks like an item.
+    let rest = if s.live.as_ref().is_some_and(|live| live.item == Some(id)) || tab_opens(s, id) || item.entry.is_heading() { 0.0 } else { 0.55 };
     let trigger = btn(t::PLAN_ITEM_MENU())
         .icon(&icons::DOTS)
         .icon_only()
@@ -289,9 +301,12 @@ pub(crate) fn list(s: &App, k: &Kit, layer: &mut Vec<El>) -> El {
     }
     let mut list = col().key("plan-list").role("list").label(s.plan_title()).w_full().grow(1.0).min_h(0.0).px(space::S2).py(space::S2).gap(GAP).scroll(ScrollSpec { stick_bottom: false }).scroll_edge_fade(crate::theme::size::FADE);
     let heights: Rc<[f32]> = s.plan.items.iter().map(|item| if item.entry.is_heading() { HEADING } else { size::ROW }).collect();
+    let mut inside = false;
     for (at, item) in s.plan.items.iter().enumerate() {
         let menu = row_menu(s, k, item, at, layer);
-        let body = if item.entry.is_heading() { heading_row(s, k, item, menu) } else { item_row(s, k, item, menu) };
+        // Everything after a divider is inside it, until the next one.
+        inside |= item.entry.is_heading();
+        let body = if item.entry.is_heading() { heading_row(s, k, item, menu) } else { item_row(s, k, item, menu, inside) };
         list = list.child(draggable(s, body, item.id, at, &heights));
     }
     list.scroll_bar(k)

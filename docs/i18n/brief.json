@@ -2382,7 +2382,7 @@
  {
   "key": "PLAN_NEW",
   "kind": "const",
-  "screen": "Three places: an item at the end of the plan selector's menu (opened from the plan's name at the top of the left column), a row in the search panel, and the hover help of the plus beside the heading of the list of plans at the foot of the left column.",
+  "screen": "Three places: the hover help of the plus beside the heading of the list of plans; a row in the search panel; and the title of the dialog that then sets the new plan's day and time.",
   "moment": "The person wants a second plan for another service.",
   "role": "menu item",
   "does": "Names the action of starting a fresh empty plan next to the existing ones.",
@@ -2539,26 +2539,9 @@
   "notes": "A word churches use for the preaching time."
  },
  {
-  "key": "PLAN_SWITCH_LABEL",
-  "kind": "const",
-  "screen": "Plan column, top: the open plan's name sits in the box of a drop-down list, with an edge and a small arrow. This is the hover help of that box; the box opens a menu of plans with the actions on the open plan under it.",
-  "moment": "The person hovers the name.",
-  "role": "tooltip",
-  "does": "Names the button that switches between the church's plans.",
-  "budget": 14,
-  "variables": [],
-  "cases": [],
-  "counts": "",
-  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
-  "concepts": [
-   "plan"
-  ],
-  "notes": "The plural: it holds many."
- },
- {
   "key": "PLANS_TITLE",
   "kind": "const",
-  "screen": "Main window, the foot of the left column, under the open plan's items and the button that adds to it: a short list of the church's plans for the same day as the open plan (one plan per service), each a row with the plan's name, the open one filled. This is the small grey heading over that list, with the day beside it and a plus at its right that starts a new plan.",
+  "screen": "Main window, the foot of the left column, under the open plan's items and the button that adds to it: the list of every plan the church keeps. A plan is a service held every week, so the plans stand in groups, one group for each day of the week with a small grey heading, today's group first; inside a group each row starts with the hour the service begins and then its name, when it has one. The open plan's row is filled; a press on another row opens that plan; every row has a small menu at its end. This is the small grey heading over the whole list, with a plus at its right that starts a new plan.",
   "moment": "Between two services the person looks for the next service's plan and finds the list under this heading.",
   "role": "section heading",
   "does": "Names the list: these are the plans.",
@@ -2573,13 +2556,13 @@
   "notes": "One word if the language allows: the plural of the product's word for a plan. No full stop."
  },
  {
-  "key": "PLANS_ALL",
+  "key": "PLANS_TODAY",
   "kind": "const",
-  "screen": "Main window, the foot of the left column, under the open plan's items and the button that adds to it: a short list of the church's plans for the same day as the open plan (one plan per service), each a row with the plan's name, the open one filled. This is the last row of that list, shown when the church has more plans than the rows above it: the text, the number of all plans, and a small arrow. Pressing it opens a menu of every plan.",
-  "moment": "The plan the person wants is from another day, so it is not among the rows above.",
-  "role": "list row that opens a menu",
-  "does": "Opens the list of every plan the church keeps, of every day.",
-  "budget": 18,
+  "screen": "Main window, the foot of the left column, under the open plan's items and the button that adds to it: the list of every plan the church keeps. A plan is a service held every week, so the plans stand in groups, one group for each day of the week with a small grey heading, today's group first; inside a group each row starts with the hour the service begins and then its name, when it has one. The open plan's row is filled; a press on another row opens that plan; every row has a small menu at its end. This is the heading of the group of plans whose day of the week is today.",
+  "moment": "The person looks for the services of the day they are in.",
+  "role": "group heading",
+  "does": "Says these are the plans of this very day.",
+  "budget": 14,
   "variables": [],
   "cases": [],
   "counts": "",
@@ -2587,12 +2570,29 @@
   "concepts": [
    "plan"
   ],
-  "notes": "Two words: every one of the plans. No full stop. The number is drawn after it by the program."
+  "notes": "One word. No full stop."
+ },
+ {
+  "key": "PLANS_NO_DAY",
+  "kind": "const",
+  "screen": "Main window, the foot of the left column, under the open plan's items and the button that adds to it: the list of every plan the church keeps. A plan is a service held every week, so the plans stand in groups, one group for each day of the week with a small grey heading, today's group first; inside a group each row starts with the hour the service begins and then its name, when it has one. The open plan's row is filled; a press on another row opens that plan; every row has a small menu at its end. This is the heading of the last group: plans that were made before days could be chosen and so have no day of the week yet.",
+  "moment": "The person sees an older plan standing apart from the ones that have a day.",
+  "role": "group heading",
+  "does": "Says the plans under it have not been given a day of the week yet.",
+  "budget": 22,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "plan"
+  ],
+  "notes": "Two or three words. No full stop. It reads as an invitation to give them a day, not as a fault."
  },
  {
   "key": "PLAN_DUPLICATE",
   "kind": "const",
-  "screen": "Plan selector's menu, one of its three actions below the list of plans, with a copy icon.",
+  "screen": "Three places: the second item of the small menu at the end of a plan's row in the list of plans, with a copy icon; a row in the search panel; and the title of the dialog that then sets the copy's day and time.",
   "moment": "The person wants a new plan that starts as a copy of this one.",
   "role": "menu item",
   "does": "Makes a second plan with the same items as the current one.",
@@ -2609,11 +2609,11 @@
  {
   "key": "PLAN_RENAME",
   "kind": "const",
-  "screen": "Two places: plan selector's menu item with a pencil icon, and the title of the small dialog that follows.",
+  "screen": "Three places: the first item of the small menu at the end of a plan's row in the list of plans, with a clock icon; a row in the search panel; and the title of the dialog it opens, which sets that plan's day of the week, its hour and its name.",
   "moment": "The person wants to change the plan's name or date.",
   "role": "menu item and dialog title",
-  "does": "Lets the person give the current plan another name.",
-  "budget": 26,
+  "does": "Opens the dialog where the plan's day of the week and starting time are chosen, and its name if it has one.",
+  "budget": 22,
   "variables": [],
   "cases": [],
   "counts": "",
@@ -2621,12 +2621,12 @@
   "concepts": [
    "plan"
   ],
-  "notes": "A menu item."
+  "notes": "Names what is changed: the day and the time. Two or three words, no verb needed. No full stop."
  },
  {
   "key": "PLAN_DELETE",
   "kind": "const",
-  "screen": "Plan selector's menu, last item, in red, with a bin icon.",
+  "screen": "Two places: the last item, in red with a bin icon, of the small menu at the end of a plan's row in the list of plans; and a row in the search panel.",
   "moment": "The person wants the whole plan gone.",
   "role": "menu item",
   "does": "Deletes the current plan and everything in its list; the songs themselves stay in the library.",
@@ -2660,47 +2660,13 @@
   "notes": "No full stop."
  },
  {
-  "key": "PLAN_NEW_NAME",
+  "key": "PLAN_DAY",
   "kind": "const",
-  "screen": "Plan selector: the name given to a plan the moment it is created.",
-  "moment": "The person started a plan and has not named it.",
-  "role": "default name",
-  "does": "Is the working name of a freshly made plan until the person renames it.",
-  "budget": 18,
-  "variables": [],
-  "cases": [],
-  "counts": "",
-  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
-  "concepts": [
-   "plan"
-  ],
-  "notes": "A short noun phrase."
- },
- {
-  "key": "PLAN_NAME_LABEL",
-  "kind": "const",
-  "screen": "Rename dialog: label over the first text field, and also the empty-box hint inside it.",
-  "moment": "The dialog is open and the name is editable.",
+  "screen": "A small dialog that sets a plan's day and time. It holds three rows of buttons to press, one row for the day of the week, one for the hour (00 to 23) and one for the minute (00, 05, 10 and so on), then one text field for a name, then at the bottom the day and time said back in words beside Cancel and Save. Nothing is typed except the name. This is the small label over the row of the seven days of the week.",
+  "moment": "The person is choosing on which day the service is held.",
   "role": "field label",
-  "does": "Names the field in which the plan's name is typed.",
-  "budget": 18,
-  "variables": [],
-  "cases": [],
-  "counts": "",
-  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
-  "concepts": [
-   "plan"
-  ],
-  "notes": "A noun phrase."
- },
- {
-  "key": "PLAN_DATE_LABEL",
-  "kind": "const",
-  "screen": "Rename dialog: label over the second text field.",
-  "moment": "The person may give the day the plan is for.",
-  "role": "field label",
-  "does": "Names the field in which the day of the service is typed.",
-  "budget": 14,
+  "does": "Names the row: the day of the week.",
+  "budget": 12,
   "variables": [],
   "cases": [],
   "counts": "",
@@ -2711,12 +2677,100 @@
   "notes": "One word."
  },
  {
-  "key": "PLAN_DATE_HINT",
+  "key": "PLAN_HOUR",
   "kind": "const",
-  "screen": "The small dialog that names a plan: two fields, the plan's name and its day. This text is the grey hint inside the empty day field.",
-  "moment": "The person is about to type the day of the service and wonders how to write it.",
-  "role": "placeholder",
-  "does": "Shows by one example how a day may be typed: the number of the day followed by the name of the month, here the fifteenth of November.",
+  "screen": "A small dialog that sets a plan's day and time. It holds three rows of buttons to press, one row for the day of the week, one for the hour (00 to 23) and one for the minute (00, 05, 10 and so on), then one text field for a name, then at the bottom the day and time said back in words beside Cancel and Save. Nothing is typed except the name. This is the small label over the two rows of hours, 00 to 23.",
+  "moment": "The person is choosing at what hour the service begins.",
+  "role": "field label",
+  "does": "Names the row: the hour of the day the service begins.",
+  "budget": 12,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "plan"
+  ],
+  "notes": "One word: the hour as on a clock, never a duration."
+ },
+ {
+  "key": "PLAN_MINUTE",
+  "kind": "const",
+  "screen": "A small dialog that sets a plan's day and time. It holds three rows of buttons to press, one row for the day of the week, one for the hour (00 to 23) and one for the minute (00, 05, 10 and so on), then one text field for a name, then at the bottom the day and time said back in words beside Cancel and Save. Nothing is typed except the name. This is the small label over the row of minutes.",
+  "moment": "The person is choosing the minutes past the hour.",
+  "role": "field label",
+  "does": "Names the row: the minutes past the hour.",
+  "budget": 12,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "plan"
+  ],
+  "notes": "One word."
+ },
+ {
+  "key": "time_of_day",
+  "kind": "sentence",
+  "screen": "Wherever a plan's starting hour is shown: at the start of its row in the list of plans, in its title, and in the dialog that sets it.",
+  "moment": "The person reads when a service begins.",
+  "role": "time of day",
+  "does": "Writes an hour and minute of the 24-hour clock the way the country writes a time in a schedule.",
+  "budget": 8,
+  "variables": [
+   {
+    "name": "hour",
+    "example": "07",
+    "meaning": "The hour, two digits, 00 to 23."
+   },
+   {
+    "name": "minute",
+    "example": "30",
+    "meaning": "The minutes past the hour, two digits."
+   }
+  ],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [],
+  "notes": "Only the two numbers and the mark between them, in the order the language uses. The numbers always have two digits each."
+ },
+ {
+  "key": "service_slot",
+  "kind": "sentence",
+  "screen": "A plan's title when it has no name of its own: at the top of the left column, in a toast, in the search results, and said back at the bottom of the dialog that sets it.",
+  "moment": "The person reads which weekly service a plan is for.",
+  "role": "plan title",
+  "does": "Names a weekly service by its day of the week and the time it begins.",
+  "budget": 24,
+  "variables": [
+   {
+    "name": "day",
+    "example": "Sunday",
+    "meaning": "The day of the week, as written by the day names."
+   },
+   {
+    "name": "time",
+    "example": "07:30",
+    "meaning": "The time, already written the country's way."
+   }
+  ],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "plan"
+  ],
+  "notes": "The two parts in the order a church writes them on its board. No extra words unless the language cannot do without one."
+ },
+ {
+  "key": "PLAN_NAME_LABEL",
+  "kind": "const",
+  "screen": "A small dialog that sets a plan's day and time. It holds three rows of buttons to press, one row for the day of the week, one for the hour (00 to 23) and one for the minute (00, 05, 10 and so on), then one text field for a name, then at the bottom the day and time said back in words beside Cancel and Save. Nothing is typed except the name. This is the small label over the text field for the name. The field may stay empty: its grey hint shows the day and time the plan will read as.",
+  "moment": "The person has chosen the day and the time and sees they may also give the plan a name, such as the name of a children's service.",
+  "role": "field label",
+  "does": "Names the field and says in the same breath that it may be left empty.",
   "budget": 26,
   "variables": [],
   "cases": [],
@@ -2725,7 +2779,7 @@
   "concepts": [
    "plan"
   ],
-  "notes": "An example: the word for 'for example' written in full (no abbreviation), then 15 and the month's name. No full stop."
+  "notes": "A short label that makes clear the name is not required. No full stop."
  },
  {
   "key": "LOOK_FOR_USUAL",
@@ -2766,7 +2820,7 @@
  {
   "key": "PLAN_OWN_LOOK",
   "kind": "const",
-  "screen": "Plan selector's menu: a small palette icon at the right of a plan; this phrase is its hover help and its name for a screen reader.",
+  "screen": "The list of plans at the foot of the left column: a small palette icon near the end of a plan's row; this phrase is its hover help and its name for a screen reader.",
   "moment": "The plan has its own design.",
   "role": "tooltip",
   "does": "Tells that this plan has a design of its own, not the usual one.",
@@ -2797,47 +2851,6 @@
    "plan"
   ],
   "notes": "The same word that names the plan elsewhere."
- },
- {
-  "key": "plan_items",
-  "kind": "sentence",
-  "screen": "Plan selector's menu, a grey count at the right of each plan's name.",
-  "moment": "The person looks at which plan is the right one.",
-  "role": "count",
-  "does": "Says how many things a plan holds.",
-  "budget": 14,
-  "variables": [],
-  "cases": [],
-  "counts": "count = the number of plan items; forms for one and many.",
-  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
-  "concepts": [
-   "plan",
-   "plan_item"
-  ],
-  "notes": "Number first, then the noun."
- },
- {
-  "key": "plan_copy_name",
-  "kind": "sentence",
-  "screen": "Plan selector: the name given to the copy made by the duplicate action.",
-  "moment": "The person duplicated a plan.",
-  "role": "default name",
-  "does": "Builds the name of a copy from the original's name: the original name and a word marking it as a copy.",
-  "budget": 40,
-  "variables": [
-   {
-    "name": "name",
-    "example": "Sunday morning",
-    "meaning": "The name of the plan that was copied."
-   }
-  ],
-  "cases": [],
-  "counts": "",
-  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
-  "concepts": [
-   "plan"
-  ],
-  "notes": "Keep the original name unchanged inside."
  },
  {
   "key": "look_own_dropped",
@@ -2875,8 +2888,8 @@
   "variables": [
    {
     "name": "name",
-    "example": "Sunday morning",
-    "meaning": "The name of the deleted plan."
+    "example": "Sunday 07:00",
+    "meaning": "What the deleted plan reads as: its name, or its day and time."
    }
   ],
   "cases": [],
@@ -7448,6 +7461,111 @@
   "notes": "Written the way it is in a date after a day number; no capital unless the language needs one."
  },
  {
+  "key": "WEEKDAYS[0]",
+  "kind": "months",
+  "screen": "Three places: a button in the row of seven days in the dialog that sets a plan's day and time; a small grey heading over a group of plans in the list of plans; and the first word of a plan's title when the plan has no name of its own, followed by its hour, as in a church's notice board.",
+  "moment": "The person reads on which day a service is held.",
+  "role": "day name",
+  "does": "Names the first day of the week when the week is counted from Monday: the day after Sunday.",
+  "budget": 12,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [],
+  "notes": "The full name of the day, written as it is in a notice of service times."
+ },
+ {
+  "key": "WEEKDAYS[1]",
+  "kind": "months",
+  "screen": "Three places: a button in the row of seven days in the dialog that sets a plan's day and time; a small grey heading over a group of plans in the list of plans; and the first word of a plan's title when the plan has no name of its own, followed by its hour, as in a church's notice board.",
+  "moment": "The person reads on which day a service is held.",
+  "role": "day name",
+  "does": "Names the second day of the week when the week is counted from Monday: the second working day.",
+  "budget": 12,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [],
+  "notes": "The full name of the day, written as it is in a notice of service times."
+ },
+ {
+  "key": "WEEKDAYS[2]",
+  "kind": "months",
+  "screen": "Three places: a button in the row of seven days in the dialog that sets a plan's day and time; a small grey heading over a group of plans in the list of plans; and the first word of a plan's title when the plan has no name of its own, followed by its hour, as in a church's notice board.",
+  "moment": "The person reads on which day a service is held.",
+  "role": "day name",
+  "does": "Names the third day of the week when the week is counted from Monday: the middle of the working week.",
+  "budget": 12,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [],
+  "notes": "The full name of the day, written as it is in a notice of service times."
+ },
+ {
+  "key": "WEEKDAYS[3]",
+  "kind": "months",
+  "screen": "Three places: a button in the row of seven days in the dialog that sets a plan's day and time; a small grey heading over a group of plans in the list of plans; and the first word of a plan's title when the plan has no name of its own, followed by its hour, as in a church's notice board.",
+  "moment": "The person reads on which day a service is held.",
+  "role": "day name",
+  "does": "Names the fourth day of the week when the week is counted from Monday: the day before Friday.",
+  "budget": 12,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [],
+  "notes": "The full name of the day, written as it is in a notice of service times."
+ },
+ {
+  "key": "WEEKDAYS[4]",
+  "kind": "months",
+  "screen": "Three places: a button in the row of seven days in the dialog that sets a plan's day and time; a small grey heading over a group of plans in the list of plans; and the first word of a plan's title when the plan has no name of its own, followed by its hour, as in a church's notice board.",
+  "moment": "The person reads on which day a service is held.",
+  "role": "day name",
+  "does": "Names the fifth day of the week when the week is counted from Monday: the last working day for most people.",
+  "budget": 12,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [],
+  "notes": "The full name of the day, written as it is in a notice of service times."
+ },
+ {
+  "key": "WEEKDAYS[5]",
+  "kind": "months",
+  "screen": "Three places: a button in the row of seven days in the dialog that sets a plan's day and time; a small grey heading over a group of plans in the list of plans; and the first word of a plan's title when the plan has no name of its own, followed by its hour, as in a church's notice board.",
+  "moment": "The person reads on which day a service is held.",
+  "role": "day name",
+  "does": "Names the sixth day of the week when the week is counted from Monday: the day before Sunday.",
+  "budget": 12,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [],
+  "notes": "The full name of the day, written as it is in a notice of service times."
+ },
+ {
+  "key": "WEEKDAYS[6]",
+  "kind": "months",
+  "screen": "Three places: a button in the row of seven days in the dialog that sets a plan's day and time; a small grey heading over a group of plans in the list of plans; and the first word of a plan's title when the plan has no name of its own, followed by its hour, as in a church's notice board.",
+  "moment": "The person reads on which day a service is held.",
+  "role": "day name",
+  "does": "Names the seventh day of the week when the week is counted from Monday: the day most churches hold their main service.",
+  "budget": 12,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [],
+  "notes": "The full name of the day, written as it is in a notice of service times."
+ },
+ {
   "key": "could_not_read",
   "kind": "sentence",
   "screen": "Main window, a toast in the warning colour.",
@@ -11540,40 +11658,6 @@
   "notes": "Two words: the verb for deleting and the word for song, so nobody takes it for removing a slide or a line."
  },
  {
-  "key": "CMD_PLANS",
-  "kind": "const",
-  "screen": "Search (the box at the top of the window): a list of results, each with a name in bold and one grey line under it that says what it does. This is the name of the command that opens the list of the church's plans, one per service.",
-  "moment": "The person wants to go to the plan of another service, such as the afternoon one.",
-  "role": "command name",
-  "does": "Names the list of all plans, from which another one is opened.",
-  "budget": 14,
-  "variables": [],
-  "cases": [],
-  "counts": "",
-  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
-  "concepts": [
-   "plan"
-  ],
-  "notes": "One or two words: the plural of the word for a plan."
- },
- {
-  "key": "CMD_PLANS_DETAIL",
-  "kind": "const",
-  "screen": "Search (the box at the top of the window): a list of results, each with a name in bold and one grey line under it that says what it does. This is the grey line under the command that opens the list of plans.",
-  "moment": "The person reads it to check this is how to change to another service's plan.",
-  "role": "command description",
-  "does": "Says this changes over to the plan of a different service.",
-  "budget": 44,
-  "variables": [],
-  "cases": [],
-  "counts": "",
-  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
-  "concepts": [
-   "plan"
-  ],
-  "notes": "A fragment, no full stop."
- },
- {
   "key": "CMD_PLAN_DUPLICATE_DETAIL",
   "kind": "const",
   "screen": "Search (the box at the top of the window): a list of results, each with a name in bold and one grey line under it that says what it does. This is the grey line under the command that makes a copy of the open plan.",
@@ -11594,10 +11678,10 @@
  {
   "key": "CMD_PLAN_RENAME_DETAIL",
   "kind": "const",
-  "screen": "Search (the box at the top of the window): a list of results, each with a name in bold and one grey line under it that says what it does. This is the grey line under the command that opens the small dialog with a plan's name and day.",
+  "screen": "Search (the box at the top of the window): a list of results, each with a name in bold and one grey line under it that says what it does. This is the grey line under the command that opens the dialog with the open plan's day of the week, its starting time and its name.",
   "moment": "The person wants to call the plan something else or set which day it is for.",
   "role": "command description",
-  "does": "Says this changes what the open plan is called and which day it is for.",
+  "does": "Tells the person this command is where the open plan gets another weekday, another starting hour or a name.",
   "budget": 40,
   "variables": [],
   "cases": [],

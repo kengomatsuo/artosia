@@ -34,6 +34,7 @@ LEFT_OUT = {
     "language_code": "not a text",
     "MONTHS": "briefed month by month as MONTHS[n]",
     "ANNOUNCEMENT_TEMPLATES": "briefed row by row",
+    "WEEKDAYS": "briefed day by day as WEEKDAYS[n]",
     "PRACTICE_NOTICES": "briefed row by row",
     "KEYS_SHOWING_KEYS": "the key column, drawn as the keyboard prints it",
     "KEYS_FINDING_KEYS": "the key column, drawn as the keyboard prints it",
@@ -46,7 +47,6 @@ LEFT_OUT = {
     "section_label": "briefed through section.* and section_numbered",
     "look_label": "chooses among the LOOK_* names, each briefed",
     "language_word": "chooses among the language names, each briefed",
-    "month_number": "not a text",
     "section_keys": "letters of keys, not a text",
     "as_sentence": "changes the first letter of a text that has its own brief",
 }
@@ -117,6 +117,9 @@ def expected_operator():
     for i, (first, second) in enumerate(rows):
         english["PRACTICE_NOTICES[%d].0" % i] = [first]
         english["PRACTICE_NOTICES[%d].1" % i] = [second]
+    m = re.search(r"const WEEKDAYS_EN: \[&str; 7\] = \[(.*?)\];", code, re.S)
+    for i, day in enumerate(literals(m.group(1))):
+        english["WEEKDAYS[%d]" % i] = [day]
     m = re.search(r"const MONTHS_EN: \[&str; 12\] = \[(.*?)\];", code, re.S)
     for i, month in enumerate(literals(m.group(1))):
         english["MONTHS[%d]" % i] = [month]

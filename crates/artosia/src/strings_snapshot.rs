@@ -34,17 +34,22 @@ pub fn dump() -> String {
     line(out, "KIND_LOOK", KIND_LOOK());
     line(out, "KIND_BIBLE", KIND_BIBLE());
     line(out, "KIND_PLAN", KIND_PLAN());
-    line(out, "PLAN_SWITCH_LABEL", PLAN_SWITCH_LABEL());
     line(out, "PLANS_TITLE", PLANS_TITLE());
-    line(out, "PLANS_ALL", PLANS_ALL());
+    line(out, "PLANS_TODAY", PLANS_TODAY());
+    line(out, "PLANS_NO_DAY", PLANS_NO_DAY());
+    line(out, "PLAN_DAY", PLAN_DAY());
+    line(out, "PLAN_HOUR", PLAN_HOUR());
+    line(out, "PLAN_MINUTE", PLAN_MINUTE());
+    line(out, "time_of_day(7, 0)", &time_of_day(7, 0));
+    line(out, "service_slot", &service_slot(WEEKDAYS()[6], &time_of_day(7, 0)));
+    for (i, day) in WEEKDAYS().iter().enumerate() {
+        line(out, &format!("WEEKDAYS[{i}]"), day);
+    }
     line(out, "PLAN_DUPLICATE", PLAN_DUPLICATE());
     line(out, "PLAN_RENAME", PLAN_RENAME());
     line(out, "PLAN_DELETE", PLAN_DELETE());
     line(out, "PLAN_NEW_DETAIL", PLAN_NEW_DETAIL());
-    line(out, "PLAN_NEW_NAME", PLAN_NEW_NAME());
     line(out, "PLAN_NAME_LABEL", PLAN_NAME_LABEL());
-    line(out, "PLAN_DATE_LABEL", PLAN_DATE_LABEL());
-    line(out, "PLAN_DATE_HINT", PLAN_DATE_HINT());
     line(out, "LOOK_FOR_USUAL", LOOK_FOR_USUAL());
     line(out, "LOOK_FOR_PLAN", LOOK_FOR_PLAN());
     line(out, "PLAN_OWN_LOOK", PLAN_OWN_LOOK());
@@ -141,8 +146,6 @@ pub fn dump() -> String {
     line(out, "LOOK_PAPER", LOOK_PAPER());
     line(out, "SETTINGS_ADD_BIBLE", SETTINGS_ADD_BIBLE());
     line(out, "BTN_DELETE_SONG", BTN_DELETE_SONG());
-    line(out, "CMD_PLANS", CMD_PLANS());
-    line(out, "CMD_PLANS_DETAIL", CMD_PLANS_DETAIL());
     line(out, "CMD_PLAN_DUPLICATE_DETAIL", CMD_PLAN_DUPLICATE_DETAIL());
     line(out, "CMD_PLAN_RENAME_DETAIL", CMD_PLAN_RENAME_DETAIL());
     line(out, "CMD_PLAN_DELETE_DETAIL", CMD_PLAN_DELETE_DETAIL());

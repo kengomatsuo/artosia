@@ -539,17 +539,14 @@ const SCENES: &[Scene] = &[
         }
     }),
     // Several plans: the list under the title with two more plans kept, and the rename dialog.
-    ("plans", |s| {
+    ("plans", |s| s.demo_plans()),
+    ("plan-new", |s| {
         s.demo_plans();
-        s.open_switcher();
+        s.begin_new_plan();
     }),
-    ("plans-under", |s| s.demo_plans()),
     ("plan-rename", |s| {
         s.demo_plans();
-        s.begin_rename(false);
-        if let Some(renaming) = s.switcher.renaming.as_mut() {
-            renaming.date.replace_text(crate::plans::day_words("2026-11-15"));
-        }
+        s.begin_edit(s.plan.id);
     }),
     // A plan with a look of its own: the dialog on it, and the list with that plan marked.
     ("look-plan", |s| {
@@ -562,7 +559,6 @@ const SCENES: &[Scene] = &[
     ("plans-own-look", |s| {
         s.demo_plans();
         s.use_own_look();
-        s.open_switcher();
     }),
     ("search-plan", |s| {
         s.demo_plans();

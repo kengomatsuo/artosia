@@ -637,8 +637,12 @@ impl App {
         if practice {
             app.seed_practice_plan();
         }
-        // The plans are listed under the plan from the first frame.
+        // The plans are listed under the plan from the first frame, and a real start opens the
+        // plan of the service at hand.
         app.refresh_plan_rows();
+        if !rune::is_headless() && !practice {
+            app.open_plan_for_now();
+        }
         if data::has_flag("--import-easislides") {
             app.import_easislides();
             app.toast = None;
@@ -773,7 +777,7 @@ impl App {
 
     /// The plan's name as its column shows it. A plan nobody renamed reads in the window's language.
     pub fn plan_title(&self) -> String {
-        if matches!(self.plan.name.as_str(), "Today" | "Acara hari ini" | "") { t::PLAN_DEFAULT_NAME().to_string() } else { self.plan.name.clone() }
+        crate::plans::plan_words(&self.plan.name, self.plan.day, self.plan.time)
     }
 
     /// A plan entry's title as the plan shows it.
@@ -823,7 +827,7 @@ impl App {
     /// Something with a field of its own has just opened: a dialog, the box that names a plan,
     /// an editor. Whoever closes the search then must not drop the keyboard focus.
     pub fn wants_focus(&self) -> bool {
-        self.sheet != Sheet::None || self.switcher.renaming.is_some() || self.editor.is_some() || self.notices.is_some()
+        self.sheet != Sheet::None || self.switcher.editing.is_some() || self.editor.is_some() || self.notices.is_some()
     }
 
     /// Today's date, for announcements that fill themselves with this week's birthdays.

@@ -41,12 +41,27 @@ pub struct Plan {
     /// Unix seconds when the plan last became the open one; the list of plans is ordered by it.
     #[serde(default)]
     pub used: i64,
+    /// The day of the week the service is held, 0 for Monday to 6 for Sunday, when the plan
+    /// is a service held every week. A plan made before days were picked has none.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub day: Option<u8>,
+    /// When that service starts, as minutes after midnight.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub time: Option<u16>,
     /// This plan's own look, as the operator window stores it (a serialized `artosia_slides::look::Look`,
     /// which this crate cannot name). None means the plan uses the usual look.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub look: Option<serde_json::Value>,
     pub items: Vec<PlanItem>,
     next_id: u64,
+}
+
+/// The day of the week of a date, 0 for Monday to 6 for Sunday (Sakamoto's method).
+pub fn weekday(year: i32, month: u32, day: u32) -> u8 {
+    const SHIFT: [i32; 12] = [0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4];
+    let year = if month < 3 { year - 1 } else { year };
+    let sunday_first = (year + year / 4 - year / 100 + year / 400 + SHIFT[(month.clamp(1, 12) - 1) as usize] + day as i32).rem_euclid(7);
+    ((sunday_first + 6) % 7) as u8
 }
 
 /// A day as year-month-day with a real month and day, or None. Accepts `-`, `/` and `.` between
@@ -98,13 +113,14 @@ pub fn start_slide(deck: &Deck, start: Option<Tag>) -> usize {
 
 impl Plan {
     pub fn named(name: impl Into<String>) -> Plan {
-        Plan { id: 0, name: name.into(), date: String::new(), used: 0, look: None, items: Vec::new(), next_id: 1 }
+        Plan { id: 0, name: name.into(), date: String::new(), used: 0, day: None, time: None, look: None, items: Vec::new(), next_id: 1 }
     }
 
-    /// A new plan holding the same items, for another service. It has no day and is not saved yet.
-    /// It keeps the look: a service that sings the same songs on the same screen looks the same.
+    /// A new plan holding the same items, for another service. It keeps the day of the week,
+    /// has no time yet and is not saved yet. It keeps the look: a service that sings the same
+    /// songs on the same screen looks the same.
     pub fn copy_named(&self, name: impl Into<String>) -> Plan {
-        Plan { id: 0, name: name.into(), date: String::new(), used: 0, look: self.look.clone(), items: self.items.clone(), next_id: self.next_id }
+        Plan { id: 0, name: name.into(), date: String::new(), used: 0, day: self.day, time: None, look: self.look.clone(), items: self.items.clone(), next_id: self.next_id }
     }
 
     /// The month and day of the plan's date, when it has one.
@@ -172,6 +188,23 @@ mod tests {
 
     fn song(id: i64) -> PlanEntry {
         PlanEntry::song(id, format!("Song {id}"))
+    }
+
+    #[test]
+    fn a_date_names_its_day_of_the_week() {
+        // 11 November 2026 is a Wednesday, 15 November a Sunday, 1 January 2024 a Monday.
+        assert_eq!((weekday(2026, 11, 11), weekday(2026, 11, 15), weekday(2024, 1, 1), weekday(2024, 2, 29)), (2, 6, 0, 3));
+    }
+
+    #[test]
+    fn a_plan_saved_before_days_were_picked_loads_with_none() {
+        let old = r#"{"id":3,"name":"Sunday","date":"2026-11-15","used":5,"items":[],"next_id":1}"#;
+        let plan: Plan = serde_json::from_str(old).expect("an old plan loads");
+        assert_eq!((plan.day, plan.time), (None, None));
+        let mut weekly = Plan::named("");
+        (weekly.day, weekly.time) = (Some(6), Some(7 * 60));
+        let back: Plan = serde_json::from_str(&serde_json::to_string(&weekly).expect("a plan is written")).expect("and read back");
+        assert_eq!((back.day, back.time), (Some(6), Some(420)));
     }
 
     fn practice_song(lyrics: &str) -> crate::song::Song {

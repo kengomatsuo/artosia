@@ -451,38 +451,44 @@ text!(PLAN_HEADING_NEW, "Heading", "Pemisah baru");
 text!(PLAN_HEADING_WORSHIP, "Worship", "Pujian");
 text!(PLAN_HEADING_WORD, "Word", "Firman");
 // Several plans, one for each service. The Indonesian slots hold the English until a person writes them from the briefs.
-text!(PLAN_SWITCH_LABEL, "Plans", "Plans");
 text!(PLANS_TITLE, "Plans", "Plans");
-text!(PLANS_ALL, "All plans", "All plans");
+text!(PLANS_TODAY, "Today", "Today");
+text!(PLANS_NO_DAY, "No day yet", "No day yet");
 text!(PLAN_DUPLICATE, "Duplicate plan", "Duplicate plan");
-text!(PLAN_RENAME, "Rename plan", "Rename plan");
+text!(PLAN_RENAME, "Day and time", "Day and time");
 text!(PLAN_DELETE, "Delete plan", "Delete plan");
 text!(PLAN_NEW_DETAIL, "Start a plan for another service", "Start a plan for another service");
-text!(PLAN_NEW_NAME, "New plan", "New plan");
-text!(PLAN_NAME_LABEL, "Plan name", "Plan name");
-text!(PLAN_DATE_LABEL, "Date", "Date");
-text!(PLAN_DATE_HINT, "Such as 15 November", "Such as 15 November");
+text!(PLAN_DAY, "Day", "Day");
+text!(PLAN_HOUR, "Hour", "Hour");
+text!(PLAN_MINUTE, "Minute", "Minute");
+text!(PLAN_NAME_LABEL, "Name, if it has one", "Name, if it has one");
+/// The days of the week, Monday first, as a plan's day is stored.
+const WEEKDAYS_EN: [&str; 7] = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+pub fn WEEKDAYS() -> &'static [&'static str; 7] {
+    if languages::has_table(language()) {
+        return languages::weekdays(language(), &WEEKDAYS_EN);
+    }
+    &WEEKDAYS_EN
+}
+/// A time of day as the language writes it: 07:00, and 07.00 where a dot is used.
+pub fn time_of_day(hour: u8, minute: u8) -> String {
+    if let Some(text) = say("time_of_day", None, None, &[("hour", text_arg(format!("{hour:02}"))), ("minute", text_arg(format!("{minute:02}")))]) {
+        return text;
+    }
+    format!("{hour:02}:{minute:02}")
+}
+/// A weekly service by its day and time: Sunday 07:00.
+pub fn service_slot(day: &str, time: &str) -> String {
+    if let Some(text) = say("service_slot", None, None, &[("day", text_arg(day)), ("time", text_arg(time))]) {
+        return text;
+    }
+    format!("{day} {time}")
+}
 // A plan's own look. The Indonesian slots hold the English until a person writes them from the briefs.
 text!(LOOK_FOR_USUAL, "The usual look", "The usual look");
 text!(LOOK_FOR_PLAN, "This plan's own look", "This plan's own look");
 text!(PLAN_OWN_LOOK, "Has its own look", "Has its own look");
 text!(KIND_PLAN, "Plan", "Plan");
-
-/// How many things a plan holds, in the list of plans.
-pub fn plan_items(count: usize) -> String {
-    if let Some(text) = say("plan_items", None, Some(count), &[]) {
-        return text;
-    }
-    if count == 1 { "1 item".to_string() } else { format!("{count} items") }
-}
-
-/// The name a copy of a plan starts with.
-pub fn plan_copy_name(name: &str) -> String {
-    if let Some(text) = say("plan_copy_name", None, None, &[("name", text_arg(name))]) {
-        return text;
-    }
-    format!("{name} copy")
-}
 
 /// The toast after a plan goes back to the usual look.
 pub fn look_own_dropped(name: &str) -> String {
@@ -732,10 +738,8 @@ pub fn look_label(name: &str) -> String {
 }
 text!(SETTINGS_ADD_BIBLE, "More versions", "More versions");
 text!(BTN_DELETE_SONG, "Delete song", "Delete song");
-text!(CMD_PLANS, "Plans", "Plans");
-text!(CMD_PLANS_DETAIL, "Switch to another service's plan", "Switch to another service's plan");
 text!(CMD_PLAN_DUPLICATE_DETAIL, "The same items again, for another service", "The same items again, for another service");
-text!(CMD_PLAN_RENAME_DETAIL, "This plan's name and its day", "This plan's name and its day");
+text!(CMD_PLAN_RENAME_DETAIL, "This plan's day, its time and its name", "This plan's day, its time and its name");
 text!(CMD_PLAN_DELETE_DETAIL, "Remove this plan. Undo brings it back", "Remove this plan. Undo brings it back");
 text!(CMD_START_HERE, "Start the song here", "Start the song here");
 text!(CMD_EARLIER, "Back to what was shown before", "Back to what was shown before");
@@ -801,18 +805,6 @@ pub fn section_keys() -> String {
     if verse_key_shown() { format!("{} V B", chorus_key()) } else { format!("{} B", chorus_key()) }
 }
 
-/// The month a word names, 1 to 12: the whole name or its first three letters or more, in
-/// English, in Indonesian and in the window's language.
-pub fn month_number(word: &str) -> Option<u32> {
-    let word = word.trim().to_lowercase();
-    if word.chars().count() < 3 {
-        return None;
-    }
-    if word == "agt" || word == "agst" {
-        return Some(8);
-    }
-    [&MONTHS_EN, &MONTHS_ID, MONTHS()].iter().find_map(|names| names.iter().position(|name| name.to_lowercase().starts_with(&word)).map(|at| at as u32 + 1))
-}
 text!(LOOK_BACKGROUND, "Picture or video", "Latar");
 text!(LOOK_CHOOSE_FILE, "Choose a file", "Pilih berkas");
 text!(LOOK_NO_FILE, "None chosen", "Belum ada berkas");

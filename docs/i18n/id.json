@@ -692,20 +692,15 @@
   "back": "The Word",
   "why": "Reading and preaching time"
  },
- "PLAN_SWITCH_LABEL": {
-  "text": "Semua rundown",
-  "back": "All rundowns",
-  "why": "Plural as asked"
- },
  "PLAN_DUPLICATE": {
   "text": "Salin rundown",
   "back": "Copy the rundown",
   "why": "The everyday verb"
  },
  "PLAN_RENAME": {
-  "text": "Ganti nama rundown",
-  "back": "Rename the rundown",
-  "why": "Menu item and dialog title"
+  "text": "Hari dan jam",
+  "back": "Day and hour",
+  "why": "Names what is changed, no verb"
  },
  "PLAN_DELETE": {
   "text": "Hapus rundown",
@@ -717,25 +712,10 @@
   "back": "For another service in the week",
   "why": "Fragment"
  },
- "PLAN_NEW_NAME": {
-  "text": "Rundown baru",
-  "back": "New rundown",
-  "why": "Working name"
- },
  "PLAN_NAME_LABEL": {
-  "text": "Nama rundown",
-  "back": "Rundown name",
-  "why": "Noun phrase"
- },
- "PLAN_DATE_LABEL": {
-  "text": "Tanggal",
-  "back": "Date",
-  "why": "One word"
- },
- "PLAN_DATE_HINT": {
-  "text": "contoh: 15 November",
-  "back": "example: 15 November",
-  "why": "'contoh' in full"
+  "text": "Nama (boleh kosong)",
+  "back": "Name (may stay empty)",
+  "why": "Says the name is not required"
  },
  "LOOK_FOR_USUAL": {
   "text": "Tema biasa",
@@ -756,16 +736,6 @@
   "text": "Rundown",
   "back": "Rundown",
   "why": "Same word as the plan"
- },
- "plan_items": {
-  "text": "{count} item",
-  "back": "{count} items",
-  "why": "Number first"
- },
- "plan_copy_name": {
-  "text": "{name} (salinan)",
-  "back": "{name} (copy)",
-  "why": "Original name kept intact"
  },
  "look_own_dropped": {
   "text": "{name} kembali memakai tema biasa",
@@ -3046,24 +3016,14 @@
   "back": "Delete song",
   "why": "Verb and object"
  },
- "CMD_PLANS": {
-  "text": "Semua rundown",
-  "back": "All rundowns",
-  "why": "Plural of the plan word"
- },
- "CMD_PLANS_DETAIL": {
-  "text": "Pindah ke rundown ibadah yang lain",
-  "back": "Move to the rundown of another service",
-  "why": "Fragment"
- },
  "CMD_PLAN_DUPLICATE_DETAIL": {
   "text": "Salinannya berisi lagu dan bacaan yang sama",
   "back": "The copy holds the same songs and readings",
   "why": "Fragment"
  },
  "CMD_PLAN_RENAME_DETAIL": {
-  "text": "Ubah nama dan tanggal rundown ini",
-  "back": "Change the name and date of this rundown",
+  "text": "Ganti hari, jam, atau nama rundown",
+  "back": "Change the day, hour, or name of the rundown",
   "why": "Fragment"
  },
  "CMD_PLAN_DELETE_DETAIL": {
@@ -3191,9 +3151,74 @@
   "back": "Rundown",
   "why": "Indonesian has no plural, so the plan word alone heads the list"
  },
- "PLANS_ALL": {
-  "text": "Semua rundown",
-  "back": "All rundowns",
-  "why": "Two words, every one of the plans; the program draws the number after it"
+ "PLANS_TODAY": {
+  "text": "Hari ini",
+  "back": "Today",
+  "why": "Group heading, one word phrase"
+ },
+ "PLANS_NO_DAY": {
+  "text": "Belum diberi hari",
+  "back": "Not yet given a day",
+  "why": "An invitation, not a fault"
+ },
+ "PLAN_DAY": {
+  "text": "Hari",
+  "back": "Day",
+  "why": "One word"
+ },
+ "PLAN_HOUR": {
+  "text": "Jam",
+  "back": "Hour (o'clock)",
+  "why": "The clock hour, never a duration"
+ },
+ "PLAN_MINUTE": {
+  "text": "Menit",
+  "back": "Minutes",
+  "why": "One word"
+ },
+ "time_of_day": {
+  "text": "{hour}.{minute}",
+  "back": "{hour}.{minute}",
+  "why": "Indonesian notices write a time 07.30"
+ },
+ "service_slot": {
+  "text": "{day} {time}",
+  "back": "{day} {time}",
+  "why": "Day then time, as on a church board"
+ },
+ "WEEKDAYS[0]": {
+  "text": "Senin",
+  "back": "Monday",
+  "why": "Full day name, week counted from Monday"
+ },
+ "WEEKDAYS[1]": {
+  "text": "Selasa",
+  "back": "Tuesday",
+  "why": "Full day name, week counted from Monday"
+ },
+ "WEEKDAYS[2]": {
+  "text": "Rabu",
+  "back": "Wednesday",
+  "why": "Full day name, week counted from Monday"
+ },
+ "WEEKDAYS[3]": {
+  "text": "Kamis",
+  "back": "Thursday",
+  "why": "Full day name, week counted from Monday"
+ },
+ "WEEKDAYS[4]": {
+  "text": "Jumat",
+  "back": "Friday",
+  "why": "Full day name, week counted from Monday"
+ },
+ "WEEKDAYS[5]": {
+  "text": "Sabtu",
+  "back": "Saturday",
+  "why": "Full day name, week counted from Monday"
+ },
+ "WEEKDAYS[6]": {
+  "text": "Minggu",
+  "back": "Sunday",
+  "why": "Full day name, week counted from Monday"
  }
 }

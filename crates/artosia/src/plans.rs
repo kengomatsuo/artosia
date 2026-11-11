@@ -1,10 +1,14 @@
-//! Many plans, one for each service: kept in the library, named, and switched between.
+//! Many plans, one for each service: kept in the library and switched between.
+//!
+//! A plan is a service the church holds every week: a day of the week and a starting time,
+//! picked from chips and never typed (owner, 2026-11-11: "why cant like every sunday hh:mm
+//! you love textfields too much"). A name is something a plan may also have.
 //!
 //! Switching never reaches the projector. What is live stays live, and Next goes on in the
 //! plan that was opened (docs/operator.md, "Several plans").
 
 use artosia_core::deck::Deck;
-use artosia_core::plan::{Plan, valid_date};
+use artosia_core::plan::{Plan, weekday};
 use artosia_slides::look::Look;
 use rune::TextEdit;
 
@@ -18,125 +22,105 @@ pub struct PlanRow {
     /// As stored; `label` is what it reads as.
     pub name: String,
     pub date: String,
+    /// The day of the week of the service, 0 for Monday, and its start in minutes after midnight.
+    pub day: Option<u8>,
+    pub time: Option<u16>,
     pub items: usize,
     /// The plan has a look of its own.
     pub own_look: bool,
 }
 
-/// The rename dialog's two fields.
-pub struct Renaming {
-    /// The plan was made a moment ago and is being named for the first time.
-    pub fresh: bool,
-    pub id: i64,
+/// What the box of day, time and name is making.
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub enum Editing {
+    /// A plan that does not exist until Save.
+    New,
+    /// A plan with the items of this one, for another service.
+    Copy(i64),
+    /// This plan's own day, time and name.
+    Existing(i64),
+}
+
+/// The box that sets a plan's day, time and name. Every part but the name is a chip to press.
+pub struct PlanEdit {
+    pub what: Editing,
+    pub day: u8,
+    pub hour: u8,
+    pub minute: u8,
     pub name: TextEdit,
-    pub date: TextEdit,
+}
+
+impl PlanEdit {
+    pub fn time(&self) -> u16 {
+        u16::from(self.hour) * 60 + u16::from(self.minute)
+    }
 }
 
 #[derive(Default)]
 pub struct Switcher {
-    /// The list under the title is showing.
-    pub open: bool,
-    /// The church's plans, the open one first and then the most recently used.
+    /// The church's plans in the order the list under the plan shows them.
     pub rows: Vec<PlanRow>,
-    pub renaming: Option<Renaming>,
-    /// The menu of every plan, opened from the last row of the list under the plan.
-    pub all_open: bool,
-    /// The plan that was open when a new one was started, to go back to when its naming is cancelled.
-    pub before: Option<i64>,
+    pub editing: Option<PlanEdit>,
+    /// The plan of the list whose menu is open.
+    pub menu: Option<i64>,
     /// Another plan was opened since anything from a plan went live, so Next starts it from the top.
     pub fresh: bool,
 }
 
-/// The most plans drawn under the plan: three services and one more fit a 768 point screen
-/// beside a plan of ten items.
-pub const STRIP: usize = 4;
-
-/// A plan nobody renamed reads in the window's language.
-pub fn label(name: &str) -> String {
-    if matches!(name, "Today" | "Acara hari ini" | "") { t::PLAN_DEFAULT_NAME().to_string() } else { name.to_string() }
+/// Whether a plan has no name of its own: empty, or one of the names the program gave.
+pub fn is_unnamed(name: &str) -> bool {
+    matches!(name.trim(), "Today" | "Acara hari ini" | "New plan" | "")
 }
 
-/// A day as people write it, as year-month-day. Reads "15 November", "15 Nov 2026",
-/// "November 15", "15/11", "15-11-2026" and "2026-11-15", with month names in English, in
-/// Indonesian and in the window's language. A day written without its year is the next such
-/// day: this year, or next year once it lies more than a month behind `today` (year, month, day).
-pub fn read_day(text: &str, today: (i32, u32, u32)) -> Option<String> {
-    let text = text.trim().to_lowercase();
-    if let Some(date) = valid_date(&text) {
-        return Some(date);
-    }
-    let parts: Vec<&str> = text.split(|c: char| !c.is_alphanumeric()).filter(|part| !part.is_empty()).collect();
-    let numbers: Vec<u32> = parts.iter().filter_map(|part| part.parse().ok()).collect();
-    let named: Vec<u32> = parts.iter().filter(|part| part.parse::<u32>().is_err()).filter_map(|part| t::month_number(part)).collect();
-    if numbers.len() + named.len() != parts.len() || named.len() > 1 {
-        return None;
-    }
-    let (day, month, year) = match (numbers.as_slice(), named.first()) {
-        (&[day], Some(&month)) => (day, month, None),
-        (&[a, b], Some(&month)) if a > 31 => (b, month, Some(a)),
-        (&[a, b], Some(&month)) => (a, month, Some(b)),
-        // Day then month, as Indonesia and most of the world write it; a month over twelve means the other order.
-        (&[a, b], None) if b > 12 && a <= 12 => (b, a, None),
-        (&[a, b], None) => (a, b, None),
-        (&[a, b, year], None) if b > 12 && a <= 12 => (b, a, Some(year)),
-        (&[a, b, year], None) => (a, b, Some(year)),
-        _ => return None,
-    };
-    let lengths = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-    if !(1..=12).contains(&month) || day == 0 || day > lengths[(month - 1) as usize] {
-        return None;
-    }
-    let year = match year {
-        Some(year) if year < 100 => 2000 + year as i32,
-        Some(year) if (1900..=9999).contains(&year) => year as i32,
-        Some(_) => return None,
-        // More than a month ago means the person is planning next year's.
-        None if month * 31 + day + 31 < today.1 * 31 + today.2 => today.0 + 1,
-        None => today.0,
-    };
-    Some(format!("{year:04}-{month:02}-{day:02}"))
+/// "Sunday 07:00" for a weekly service, in the window's language.
+pub fn slot_words(day: Option<u8>, time: Option<u16>) -> Option<String> {
+    let day = t::WEEKDAYS().get(usize::from(day?)).copied()?;
+    Some(match time {
+        Some(time) => t::service_slot(day, &clock_words(time)),
+        None => day.to_string(),
+    })
 }
 
-/// "15 November 2026" for the field a plan's day is typed in; nothing for a plan with no day.
-pub fn day_words(plan_date: &str) -> String {
-    let Some(date) = valid_date(plan_date) else { return String::new() };
-    let mut parts = date.split('-').filter_map(|part| part.parse::<u32>().ok());
-    match (parts.next(), parts.next(), parts.next()) {
-        (Some(year), Some(month), Some(day)) => format!("{day} {} {year}", t::MONTHS()[(month - 1) as usize]),
-        _ => String::new(),
-    }
+/// "07:00", as the window's language writes a time.
+pub fn clock_words(time: u16) -> String {
+    t::time_of_day((time / 60) as u8, (time % 60) as u8)
 }
 
-/// "15 November" for a plan that has a date.
-pub fn day_text(plan_date: &str) -> Option<String> {
-    let mut plan = Plan::named("");
-    plan.date = plan_date.to_string();
-    let (month, day) = plan.month_day()?;
-    Some(format!("{day} {}", t::MONTHS()[(month - 1) as usize]))
+/// What a plan reads as: its own name, else its day and time, else the name for a plan with neither.
+pub fn plan_words(name: &str, day: Option<u8>, time: Option<u16>) -> String {
+    if !is_unnamed(name) {
+        return name.trim().to_string();
+    }
+    slot_words(day, time).unwrap_or_else(|| t::PLAN_DEFAULT_NAME().to_string())
 }
 
 impl PlanRow {
     pub fn label(&self) -> String {
-        label(&self.name)
+        plan_words(&self.name, self.day, self.time)
     }
 
-    /// The date when the plan has one, else how much it holds.
-    pub fn detail(&self) -> String {
-        day_text(&self.date).unwrap_or_else(|| t::plan_items(self.items))
+    /// The name alone, when the plan has one of its own beside its day and time.
+    pub fn own_name(&self) -> Option<String> {
+        (!is_unnamed(&self.name)).then(|| self.name.trim().to_string())
     }
 }
 
 impl App {
+    /// Today's day of the week on this computer's clock, 0 for Monday, and the minutes after midnight.
+    pub fn weekday_now(&self) -> (u8, u16) {
+        let time = rune::LocalTime::at((self.now * 1000.0) as i64);
+        (weekday(time.year, time.month, time.day), (time.hour * 60 + time.minute) as u16)
+    }
+
     /// Every plan the library holds, the open one as it is in memory, in an order that never
-    /// changes by use.
+    /// changes by use: the weekly services from today's day of the week on, each day by its
+    /// time, then the plans with no day as they were made.
     fn all_plans(&self) -> Vec<Plan> {
         let mut plans: Vec<Plan> = self.store.plans().unwrap_or_default().into_iter().filter(|plan| plan.id != self.plan.id).collect();
-        if self.plan.id != 0 || !self.plan.items.is_empty() {
-            plans.push(self.plan.clone());
-        }
-        // A fixed order, so a row is where it was the last time the list opened: plans with a
-        // day first, by day, then the rest as they were made. The open one is marked, not moved.
-        plans.sort_by(|a, b| a.date.is_empty().cmp(&b.date.is_empty()).then(a.date.cmp(&b.date)).then(Self::made(a).cmp(&Self::made(b))));
+        plans.push(self.plan.clone());
+        let today = self.weekday_now().0;
+        let place = |plan: &Plan| (plan.day.is_none(), plan.day.map(|day| (day + 7 - today) % 7), plan.time, Self::made(plan));
+        plans.sort_by_key(place);
         plans
     }
 
@@ -189,45 +173,37 @@ impl App {
     }
 
     pub fn refresh_plan_rows(&mut self) {
-        self.switcher.rows = self.all_plans().iter().map(|plan| PlanRow { id: plan.id, name: plan.name.clone(), date: plan.date.clone(), items: plan.items.len(), own_look: plan.look.is_some() }).collect();
+        self.switcher.rows = self.all_plans().iter().map(|plan| PlanRow { id: plan.id, name: plan.name.clone(), date: plan.date.clone(), day: plan.day, time: plan.time, items: plan.items.len(), own_look: plan.look.is_some() }).collect();
     }
 
-    /// The rows drawn under the plan: the plans of the open plan's day (those with no day when
-    /// it has none), in the list's fixed order, at most `STRIP` with the open one among them,
-    /// and how many plans the church has beyond those. Switching inside a day moves no row.
-    pub fn plan_strip(&self) -> (Vec<PlanRow>, usize) {
-        let mut all = self.switcher.rows.clone();
-        if !all.iter().any(|row| row.id == self.plan.id) {
-            // An empty plan nobody saved is not in the list yet; it is still the open one.
-            all.insert(0, PlanRow { id: self.plan.id, name: self.plan.name.clone(), date: self.plan.date.clone(), items: self.plan.items.len(), own_look: self.plan.look.is_some() });
+    /// The list under the plan: every plan, in groups of one day of the week each (today's
+    /// first), and last the plans that have no day.
+    pub fn plan_groups(&self) -> Vec<(Option<u8>, Vec<PlanRow>)> {
+        let mut groups: Vec<(Option<u8>, Vec<PlanRow>)> = Vec::new();
+        for row in &self.switcher.rows {
+            match groups.last_mut() {
+                Some((day, rows)) if *day == row.day => rows.push(row.clone()),
+                _ => groups.push((row.day, vec![row.clone()])),
+            }
         }
-        let day: Vec<PlanRow> = all.iter().filter(|row| row.date == self.plan.date).cloned().collect();
-        let open = day.iter().position(|row| row.id == self.plan.id).unwrap_or(0);
-        let shown: Vec<PlanRow> = day.into_iter().skip((open + 1).saturating_sub(STRIP)).take(STRIP).collect();
-        let others = all.len() - shown.len();
-        (shown, others)
+        groups
     }
 
-    /// The menu of every plan under the plan's own list.
-    pub fn toggle_all_plans(&mut self) {
-        if !self.switcher.all_open {
-            self.save_plan_now();
-            self.refresh_plan_rows();
+    /// The service of today that is about to start or has just begun, when the program opens:
+    /// the first of today's plans that started less than an hour and a half ago, else the last.
+    pub fn plan_for_now(&self) -> Option<i64> {
+        let (today, minutes) = self.weekday_now();
+        let todays: Vec<&PlanRow> = self.switcher.rows.iter().filter(|row| row.day == Some(today)).collect();
+        todays.iter().find(|row| row.time.is_none_or(|time| time + 90 >= minutes)).or(todays.last()).map(|row| row.id)
+    }
+
+    /// At the start of the program the plan of the service at hand is the open one.
+    pub fn open_plan_for_now(&mut self) {
+        if self.live.is_none()
+            && let Some(id) = self.plan_for_now()
+        {
+            self.switch_plan(id);
         }
-        self.switcher.all_open = !self.switcher.all_open;
-        self.switcher.open = false;
-    }
-
-    pub fn open_switcher(&mut self) {
-        self.save_plan_now();
-        self.refresh_plan_rows();
-        self.switcher.open = true;
-        self.more_menu = false;
-        self.plan_menu = None;
-    }
-
-    pub fn close_switcher(&mut self) {
-        self.switcher.open = false;
     }
 
     fn stored_plan(&self, id: i64) -> Option<Plan> {
@@ -297,8 +273,7 @@ impl App {
     }
 
     pub fn switch_plan(&mut self, id: i64) {
-        self.switcher.open = false;
-        self.switcher.all_open = false;
+        self.switcher.menu = None;
         if id == self.plan.id {
             return;
         }
@@ -307,105 +282,142 @@ impl App {
         }
     }
 
-    /// Starts an empty plan beside the open one and asks for its name.
-    pub fn create_plan(&mut self) {
-        self.switcher.open = false;
-        // Another service of the same day is the usual reason for a new plan, so it starts
-        // with the open plan's day and stays in the list under the plan; the box that names
-        // it shows the day, to be changed or cleared.
-        let mut plan = Plan::named(t::PLAN_NEW_NAME());
-        plan.date = self.plan.date.clone();
-        if self.plan.id != 0 || !self.plan.items.is_empty() {
+    /// The number a plan of the list has in the library. The open plan may not be saved yet
+    /// and has none until it is, so it is saved here and its new number is the answer.
+    fn settled(&mut self, id: i64) -> i64 {
+        if id == self.plan.id {
             self.save_plan_now();
+            return self.plan.id;
         }
-        self.switcher.before = (self.plan.id != 0).then_some(self.plan.id);
-        self.enter_plan(plan, true);
-        self.begin_rename(true);
+        id
     }
 
-    pub fn duplicate_plan(&mut self) {
-        self.switcher.open = false;
-        let copy = self.plan.copy_named(t::plan_copy_name(&self.plan_title()));
-        self.enter_plan(copy, true);
+    /// A plan of the list as it is now: the open one from memory, another from the library.
+    fn plan_by_id(&mut self, id: i64) -> Option<Plan> {
+        if id == self.plan.id {
+            return Some(self.plan.clone());
+        }
+        self.stored_plan(id)
     }
 
-    /// Opens the rename dialog for the open plan. A new plan starts with an empty name field.
-    pub fn begin_rename(&mut self, blank: bool) {
-        self.switcher.open = false;
-        let mut name = TextEdit::new(if blank { String::new() } else { self.plan_title() });
-        name.focused = true;
-        name.set_caret(name.text.len());
-        self.switcher.renaming = Some(Renaming { fresh: blank, id: self.plan.id, name, date: TextEdit::new(day_words(&self.plan.date)) });
+    /// The day and time a new plan is offered: the open plan's day two hours after it, else
+    /// today at the next full hour.
+    fn offered_slot(&self) -> (u8, u8, u8) {
+        let (today, minutes) = self.weekday_now();
+        match (self.plan.day, self.plan.time) {
+            (Some(day), Some(time)) => (day, ((time / 60 + 2).min(23)) as u8, (time % 60) as u8),
+            (Some(day), None) => (day, ((minutes / 60 + 1).min(23)) as u8, 0),
+            _ => (today, ((minutes / 60 + 1).min(23)) as u8, 0),
+        }
     }
 
-    /// Today as year, month and day on this computer's clock.
-    fn this_day(&self) -> (i32, u32, u32) {
-        let time = rune::LocalTime::at((self.now * 1000.0) as i64);
-        (time.year, time.month, time.day)
+    /// Opens the box for a new plan. Nothing exists until Save.
+    pub fn begin_new_plan(&mut self) {
+        let (day, hour, minute) = self.offered_slot();
+        self.switcher.menu = None;
+        self.switcher.editing = Some(PlanEdit { what: Editing::New, day, hour, minute, name: TextEdit::new("") });
     }
 
-    /// The date field holds a day, or nothing.
-    pub fn rename_date_ok(&self) -> bool {
-        self.switcher.renaming.as_ref().is_none_or(|renaming| renaming.date.text.trim().is_empty() || read_day(&renaming.date.text, self.this_day()).is_some())
+    /// Opens the box for a copy of a plan, for another service with the same items.
+    pub fn begin_copy(&mut self, id: i64) {
+        let id = self.settled(id);
+        let Some(source) = self.plan_by_id(id) else { return };
+        let (today, minutes) = self.weekday_now();
+        let day = source.day.unwrap_or(today);
+        let (hour, minute) = match source.time {
+            Some(time) => (((time / 60 + 2).min(23)) as u8, (time % 60) as u8),
+            None => (((minutes / 60 + 1).min(23)) as u8, 0),
+        };
+        self.switcher.menu = None;
+        self.switcher.editing = Some(PlanEdit { what: Editing::Copy(id), day, hour, minute, name: TextEdit::new("") });
     }
 
-    pub fn finish_rename(&mut self, save: bool) {
-        let Some(renaming) = self.switcher.renaming.take() else { return };
-        let before = self.switcher.before.take();
+    /// Opens the box on a plan's own day, time and name.
+    pub fn begin_edit(&mut self, id: i64) {
+        let id = self.settled(id);
+        let Some(plan) = self.plan_by_id(id) else { return };
+        let (day, hour, minute) = match (plan.day, plan.time) {
+            (Some(day), Some(time)) => (day, (time / 60) as u8, (time % 60) as u8),
+            (Some(day), None) => (day, self.offered_slot().1, 0),
+            _ => self.offered_slot(),
+        };
+        let name = if is_unnamed(&plan.name) { String::new() } else { plan.name.clone() };
+        self.switcher.menu = None;
+        self.switcher.editing = Some(PlanEdit { what: Editing::Existing(id), day, hour, minute, name: TextEdit::new(name) });
+    }
+
+    /// Closes the box. With `save` the plan is made, copied or changed; without, nothing is.
+    pub fn finish_edit(&mut self, save: bool) {
+        let Some(edit) = self.switcher.editing.take() else { return };
         if !save {
-            // Cancel on a plan started a moment ago takes it back, and the plan that was open
-            // is open again: the plus is one press away, and a slip left an empty "New plan".
-            if renaming.fresh && renaming.id == self.plan.id && self.plan.items.is_empty() {
-                let gone = self.plan.id;
-                let _ = self.store.delete_plan(gone);
-                let back = before.and_then(|id| self.stored_plan(id)).or_else(|| self.all_plans().into_iter().find(|plan| plan.id != gone)).unwrap_or_else(|| Plan::named(t::PLAN_DEFAULT_NAME()));
-                self.enter_plan(back, false);
-            }
             return;
         }
-        if !self.rename_date_ok() {
-            return;
-        }
-        let name = renaming.name.text.trim();
-        let date = read_day(&renaming.date.text, self.this_day()).unwrap_or_default();
-        if renaming.id == self.plan.id {
-            if !name.is_empty() {
-                self.plan.name = name.to_string();
+        let (day, time, name) = (Some(edit.day.min(6)), Some(edit.time().min(24 * 60 - 1)), edit.name.text.trim().to_string());
+        match edit.what {
+            Editing::New => {
+                let mut plan = Plan::named(name);
+                (plan.day, plan.time) = (day, time);
+                self.enter_plan(plan, true);
             }
-            self.plan.date = date;
-            self.touch_plan();
+            Editing::Copy(id) => {
+                let Some(source) = self.plan_by_id(id) else { return };
+                let mut copy = source.copy_named(name);
+                (copy.day, copy.time) = (day, time);
+                self.enter_plan(copy, true);
+            }
+            Editing::Existing(id) if id == self.plan.id => {
+                (self.plan.name, self.plan.day, self.plan.time) = (name, day, time);
+                self.touch_plan();
+                self.save_plan_now();
+            }
+            Editing::Existing(id) => {
+                if let Some(mut plan) = self.stored_plan(id) {
+                    (plan.name, plan.day, plan.time) = (name, day, time);
+                    let _ = self.store.save_plan(&mut plan);
+                }
+            }
         }
         self.refresh_plan_rows();
     }
 
-    /// Deletes the open plan and opens the one used most recently before it, or an empty one.
-    pub fn delete_plan(&mut self) {
-        self.switcher.open = false;
-        self.save_plan_now();
-        let gone = self.plan.clone();
-        let _ = self.store.delete_plan(gone.id);
-        let next = self.all_plans().into_iter().find(|plan| plan.id != gone.id).unwrap_or_else(|| Plan::named(t::PLAN_DEFAULT_NAME()));
-        self.enter_plan(next, false);
-        self.say(t::plan_deleted(&label(&gone.name)), Some(Undo::Plan(Box::new(gone))));
+    /// Deletes a plan; the toast offers it back. Deleting the open one opens the plan before it
+    /// in the list, or an empty one.
+    pub fn delete_plan_id(&mut self, id: i64) {
+        self.switcher.menu = None;
+        if id == self.plan.id {
+            self.save_plan_now();
+            let gone = self.plan.clone();
+            let _ = self.store.delete_plan(gone.id);
+            let next = self.all_plans().into_iter().find(|plan| plan.id != gone.id).unwrap_or_else(|| Plan::named(""));
+            self.enter_plan(next, false);
+            self.say(t::plan_deleted(&plan_words(&gone.name, gone.day, gone.time)), Some(Undo::Plan(Box::new(gone))));
+        } else if let Some(gone) = self.stored_plan(id) {
+            let _ = self.store.delete_plan(id);
+            self.refresh_plan_rows();
+            self.say(t::plan_deleted(&plan_words(&gone.name, gone.day, gone.time)), Some(Undo::Plan(Box::new(gone))));
+        }
     }
 
-    /// Two more plans beside the practice one, for the scenes that show the list.
+    /// Deletes the open plan.
+    pub fn delete_plan(&mut self) {
+        self.delete_plan_id(self.plan.id);
+    }
+
+    /// Two more plans beside the practice one, for the scenes that show the list: two services
+    /// on Sunday and the young people's on Saturday.
     pub fn demo_plans(&mut self) {
-        self.plan.name = "Sunday 7:00".into();
-        self.plan.date = "2026-11-15".into();
-        // Saved first, so the morning's plan is listed before the later ones, as a church makes them.
+        (self.plan.name, self.plan.day, self.plan.time) = (String::new(), Some(6), Some(7 * 60));
+        // Saved first, so the morning's plan is the oldest, as a church makes them.
         self.save_plan_now();
-        let mut second = self.plan.copy_named("Sunday 10:00");
-        second.date = "2026-11-15".into();
+        let mut second = self.plan.copy_named("");
+        second.time = Some(10 * 60);
         second.items.truncate(3);
-        second.used = self.now as i64 - 3600;
-        let mut third = Plan::named("Youth Saturday");
+        let mut third = Plan::named("Youth");
+        (third.day, third.time) = (Some(5), Some(18 * 60));
         third.push(artosia_core::plan::PlanEntry::Announcements);
-        third.used = self.now as i64 - 7200;
         for plan in [&mut second, &mut third] {
             let _ = self.store.save_plan(plan);
         }
-        self.save_plan_now();
         self.refresh_plan_rows();
     }
 
@@ -430,64 +442,127 @@ mod tests {
         app.live.as_ref().map(|live| live.deck.source.clone())
     }
 
-    /// Starts another plan and names it, as the box that follows the plus does on Save.
-    fn another_plan(app: &mut App, name: &str) {
-        app.create_plan();
-        if let Some(renaming) = app.switcher.renaming.as_mut() {
-            renaming.name.replace_text(name);
+    /// Makes another plan on a day and time, as the box of chips does on Save.
+    fn another_plan(app: &mut App, day: u8, hour: u8) {
+        app.begin_new_plan();
+        if let Some(edit) = app.switcher.editing.as_mut() {
+            (edit.day, edit.hour, edit.minute) = (day, hour, 0);
         }
-        app.finish_rename(true);
+        app.finish_edit(true);
+    }
+
+    fn names(app: &App) -> Vec<String> {
+        app.switcher.rows.iter().map(|row| row.label()).collect()
     }
 
     #[test]
-    fn the_plans_of_the_open_plan_s_day_are_listed_under_it() {
-        let names = |app: &App| app.plan_strip().0.iter().map(|row| row.name.clone()).collect::<Vec<_>>();
+    fn a_plan_is_a_weekly_service_with_a_day_and_a_time() {
         let mut app = App::practice();
-        // One plan: it is the list.
-        assert_eq!((names(&app).len(), app.plan_strip().1), (1, 0));
-        app.demo_plans();
-        assert_eq!(names(&app), ["Sunday 7:00", "Sunday 10:00"]);
-        assert_eq!(app.plan_strip().1, 1, "the plan of another day is behind the last row");
-        // Switching inside the day moves no row.
-        let later = app.switcher.rows.iter().find(|row| row.name == "Sunday 10:00").map(|row| row.id).expect("the second plan");
-        app.switch_plan(later);
-        assert_eq!(names(&app), ["Sunday 7:00", "Sunday 10:00"]);
-        // A plan with no day lists the plans with no day.
-        let youth = app.switcher.rows.iter().find(|row| row.name == "Youth Saturday").map(|row| row.id).expect("the third plan");
-        app.switch_plan(youth);
-        assert_eq!((names(&app), app.plan_strip().1), (vec!["Youth Saturday".to_string()], 2));
-        // A new plan is another service of the same day until its day is changed, and an
-        // empty plan nobody saved is still listed as the open one.
-        app.switch_plan(later);
-        another_plan(&mut app, "Sunday school");
-        assert_eq!(app.plan.date, "2026-11-15");
-        assert_eq!(names(&app), ["Sunday 7:00", "Sunday 10:00", "Sunday school"]);
-        // Cancel on a plan started a moment ago takes it back and reopens the one before.
-        let school = app.plan.id;
-        app.create_plan();
-        assert_eq!(names(&app).len(), 4);
-        app.finish_rename(false);
-        assert_eq!(app.plan.id, school);
-        assert_eq!(names(&app), ["Sunday 7:00", "Sunday 10:00", "Sunday school"]);
+        let items = app.plan.items.len();
+        // Nothing exists until Save, and Cancel leaves nothing.
+        app.begin_new_plan();
+        assert_eq!(app.switcher.rows.len(), 1);
+        app.finish_edit(false);
+        assert_eq!((app.switcher.rows.len(), app.plan.items.len()), (1, items));
+        // Sunday at seven, with no name: it reads as its day and time.
+        another_plan(&mut app, 6, 7);
+        assert_eq!((app.plan.day, app.plan.time, app.plan.items.len()), (Some(6), Some(420), 0));
+        assert_eq!(app.plan_title(), "Sunday 07:00");
+        // A name is extra, and is what the plan reads as once it has one.
+        let open = app.plan.id;
+        app.begin_edit(open);
+        if let Some(edit) = app.switcher.editing.as_mut() {
+            edit.name.replace_text("Sunday school");
+            (edit.hour, edit.minute) = (10, 30);
+        }
+        app.finish_edit(true);
+        assert_eq!((app.plan_title().as_str(), app.plan.time), ("Sunday school", Some(630)));
+        assert_eq!(slot_words(app.plan.day, app.plan.time).as_deref(), Some("Sunday 10:30"));
     }
 
     #[test]
-    fn at_most_four_plans_of_a_day_are_listed_and_the_open_one_is_among_them() {
+    fn the_list_groups_plans_by_day_from_today_on_and_orders_a_day_by_time() {
         let mut app = App::practice();
-        app.demo_plans();
-        for name in ["Third", "Fourth", "Fifth", "Sixth"] {
-            let mut copy = app.plan.copy_named(name);
-            copy.date = app.plan.date.clone();
-            assert!(app.store.save_plan(&mut copy).is_ok());
+        let (today, _) = app.weekday_now();
+        let tomorrow = (today + 1) % 7;
+        another_plan(&mut app, tomorrow, 9);
+        another_plan(&mut app, today, 17);
+        another_plan(&mut app, today, 7);
+        let groups = app.plan_groups();
+        let days: Vec<Option<u8>> = groups.iter().map(|(day, _)| *day).collect();
+        assert_eq!(days, [Some(today), Some(tomorrow), None], "today first, the plan with no day last");
+        let times: Vec<Option<u16>> = groups[0].1.iter().map(|row| row.time).collect();
+        assert_eq!(times, [Some(420), Some(1020)]);
+        // Switching moves no row.
+        let before = names(&app);
+        let first = groups[0].1[0].id;
+        app.switch_plan(first);
+        assert_eq!(names(&app), before);
+    }
+
+    #[test]
+    fn a_copy_is_made_from_any_plan_of_the_list_and_keeps_its_items() {
+        let mut app = App::practice();
+        app.save_plan_now();
+        let (first, items) = (app.plan.id, app.plan.items.len());
+        another_plan(&mut app, 6, 7);
+        assert_eq!(app.plan.items.len(), 0);
+        // Copied from its row while another plan is open.
+        app.begin_copy(first);
+        if let Some(edit) = app.switcher.editing.as_mut() {
+            (edit.day, edit.hour, edit.minute) = (6, 17, 0);
         }
-        app.refresh_plan_rows();
-        let (rows, others) = app.plan_strip();
-        assert_eq!(rows.len(), STRIP);
-        assert!(rows.iter().any(|row| row.id == app.plan.id));
-        assert_eq!(rows.len() + others, app.switcher.rows.len());
-        let last = app.switcher.rows.iter().find(|row| row.name == "Sixth").map(|row| row.id).expect("the last plan");
-        app.switch_plan(last);
-        assert!(app.plan_strip().0.iter().any(|row| row.id == last));
+        app.finish_edit(true);
+        assert_eq!((app.plan.items.len(), app.plan.day, app.plan.time), (items, Some(6), Some(1020)));
+        assert_eq!(app.switcher.rows.len(), 3);
+    }
+
+    #[test]
+    fn a_plan_is_changed_and_deleted_from_its_row_with_undo() {
+        let mut app = App::practice();
+        app.save_plan_now();
+        let first = app.plan.id;
+        another_plan(&mut app, 6, 7);
+        let second = app.plan.id;
+        // The first plan gets a day while the second is the open one.
+        app.begin_edit(first);
+        if let Some(edit) = app.switcher.editing.as_mut() {
+            (edit.day, edit.hour, edit.minute) = (2, 19, 0);
+        }
+        app.finish_edit(true);
+        assert_eq!(app.plan.id, second, "the open plan stays open");
+        assert!(app.switcher.rows.iter().any(|row| row.id == first && row.day == Some(2) && row.time == Some(1140)));
+        // Deleting a plan that is not open leaves the open one, and Undo puts it back.
+        app.delete_plan_id(first);
+        assert_eq!(app.plan.id, second);
+        assert!(!app.switcher.rows.iter().any(|row| row.id == first));
+        app.undo();
+        assert!(app.switcher.rows.iter().any(|row| row.id == first));
+        // Deleting the open one opens another.
+        app.delete_plan_id(second);
+        assert_ne!(app.plan.id, second);
+        app.undo();
+        assert!(app.store.plans().unwrap_or_default().iter().any(|plan| plan.id == second));
+    }
+
+    #[test]
+    fn the_service_at_hand_is_the_open_plan_when_the_program_starts() {
+        let mut app = App::practice();
+        let (today, minutes) = app.weekday_now();
+        let hour = (minutes / 60) as u8;
+        // One service of today long over, one about now.
+        another_plan(&mut app, today, hour.saturating_sub(4));
+        let early = app.plan.id;
+        another_plan(&mut app, today, hour);
+        let now = app.plan.id;
+        app.switch_plan(early);
+        assert_eq!(app.plan_for_now(), if hour >= 4 { Some(now) } else { app.plan_for_now() });
+        app.open_plan_for_now();
+        if hour >= 4 {
+            assert_eq!(app.plan.id, now);
+        }
+        // A plan saved before days were picked reads by its name and sits in the group with no day.
+        assert!(app.plan_groups().iter().any(|(day, rows)| day.is_none() && !rows.is_empty()));
     }
 
     #[test]
@@ -495,63 +570,12 @@ mod tests {
         let mut app = App::practice();
         let before = app.plan.items.len();
         assert!(before > 0);
-        app.create_plan();
+        another_plan(&mut app, 6, 7);
         assert_eq!(app.plan.items.len(), 0);
         assert_eq!(app.switcher.rows.len(), 2, "the practice plan and the new one");
         let old = app.switcher.rows.iter().find(|row| row.items == before).map(|row| row.id).expect("the first plan is listed");
         app.switch_plan(old);
         assert_eq!(app.plan.items.len(), before);
-        assert_eq!(app.switcher.rows.first().map(|row| row.id), Some(old), "the open plan leads the list");
-    }
-
-    #[test]
-    fn a_plan_is_named_dated_duplicated_and_deleted_with_undo() {
-        let mut app = App::practice();
-        app.begin_rename(false);
-        if let Some(renaming) = app.switcher.renaming.as_mut() {
-            renaming.name.replace_text("Sunday 10:00");
-            renaming.date.replace_text("2026-11-15");
-        }
-        app.finish_rename(true);
-        assert_eq!((app.plan.name.as_str(), app.plan.date.as_str()), ("Sunday 10:00", "2026-11-15"));
-        let items = app.plan.items.len();
-        app.duplicate_plan();
-        assert_eq!((app.plan.items.len(), app.plan.date.as_str()), (items, ""), "a copy has the items and no day");
-        assert!(app.plan.name.starts_with("Sunday 10:00"));
-        let copy = app.plan.id;
-        assert_ne!(copy, 0);
-        // The day reads back in words, and words are read as the day.
-        app.begin_rename(false);
-        assert_eq!(app.switcher.renaming.as_ref().map(|renaming| renaming.date.text.clone()), Some(String::new()), "a copy has no day");
-        app.finish_rename(false);
-        let today = (2026, 11, 11);
-        assert_eq!(read_day("15 November", today).as_deref(), Some("2026-11-15"));
-        assert_eq!(read_day("15 nov 2027", today).as_deref(), Some("2027-11-15"));
-        assert_eq!(read_day("November 15", today).as_deref(), Some("2026-11-15"));
-        assert_eq!(read_day("17 Agustus", today).as_deref(), Some("2027-08-17"), "a day long past is next year's");
-        assert_eq!(read_day("25 Desember", today).as_deref(), Some("2026-12-25"));
-        assert_eq!(read_day("15/11", today).as_deref(), Some("2026-11-15"));
-        assert_eq!(read_day("15-11-2026", today).as_deref(), Some("2026-11-15"));
-        assert_eq!(read_day("11/15/2026", today).as_deref(), Some("2026-11-15"), "a month over twelve is a day");
-        assert_eq!(read_day("2026-11-15", today).as_deref(), Some("2026-11-15"));
-        assert_eq!(read_day("31 June", today), None);
-        assert_eq!(read_day("November", today), None);
-        assert_eq!(day_words("2026-11-15"), "15 November 2026");
-        // A date that is not a day is refused and the plan keeps what it had.
-        app.begin_rename(false);
-        if let Some(renaming) = app.switcher.renaming.as_mut() {
-            renaming.date.replace_text("tomorrow");
-        }
-        assert!(!app.rename_date_ok());
-        app.finish_rename(true);
-        assert_eq!(app.plan.date, "");
-        app.delete_plan();
-        assert_ne!(app.plan.id, copy);
-        assert!(app.toast.as_ref().is_some_and(|toast| toast.undo.is_some()));
-        assert!(!app.switcher.rows.iter().any(|row| row.id == copy));
-        app.undo();
-        assert!(app.switcher.rows.iter().any(|row| row.id == copy), "undo puts it back in the list");
-        assert!(app.store.plans().unwrap_or_default().iter().any(|plan| plan.id == copy));
     }
 
     #[test]
@@ -573,7 +597,7 @@ mod tests {
         // A second plan holding one other song.
         let planned = song_ids(&app);
         let other = app.songs.iter().find(|song| !planned.contains(&song.id)).map(|song| (song.id, song.title.clone())).expect("a song outside the plan");
-        another_plan(&mut app, "Second");
+        another_plan(&mut app, 6, 10);
         app.plan.push(PlanEntry::song(other.0, other.1));
         app.touch_plan();
         assert_eq!(live_source(&app), source, "the live deck did not change");
@@ -599,7 +623,8 @@ mod tests {
         app.open_plan_item(first);
         app.show(0);
         // A copy holds the same songs, so the live one is found in it and Next follows it.
-        app.duplicate_plan();
+        app.begin_copy(app.plan.id);
+        app.finish_edit(true);
         let at = app.live.as_ref().and_then(|live| live.item);
         assert!(at.is_some_and(|id| app.plan.position(id).is_some()));
         assert_eq!(live_source(&app), Some(DeckSource::Song(songs[0].0)));
@@ -613,7 +638,7 @@ mod tests {
         app.open_plan_item(first);
         app.show(0);
         assert!(app.open.as_ref().is_some_and(|open| open.queued));
-        app.create_plan();
+        another_plan(&mut app, 6, 10);
         // The new plan is empty: nothing is queued from the old one, and Preview holds the live deck.
         let open = app.open.as_ref().expect("Preview is filled");
         assert_eq!(open.deck.source, app.live.as_ref().expect("still live").deck.source);
@@ -637,7 +662,7 @@ mod tests {
         // Another plan without one uses the usual look; coming back finds the own look again.
         app.save_plan_now();
         let first = app.plan.id;
-        another_plan(&mut app, "Second");
+        another_plan(&mut app, 6, 10);
         assert_eq!(app.look(), usual);
         app.switch_plan(first);
         assert_eq!(app.look(), plain);
@@ -655,11 +680,12 @@ mod tests {
     }
 
     #[test]
-    fn a_duplicate_keeps_the_look_and_the_plan_stays_loadable() {
+    fn a_copy_keeps_the_look_and_the_plan_stays_loadable() {
         let mut app = App::practice();
         app.use_own_look();
         let own = app.look();
-        app.duplicate_plan();
+        app.begin_copy(app.plan.id);
+        app.finish_edit(true);
         assert!(app.has_own_look());
         assert_eq!(app.look(), own);
     }

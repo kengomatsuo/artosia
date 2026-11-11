@@ -43,7 +43,6 @@ pub enum Command {
     Remote,
     Heading,
     NewPlan,
-    Plans,
     PlanDuplicate,
     PlanRename,
     PlanDelete,
@@ -73,7 +72,7 @@ pub enum Command {
 }
 
 impl Command {
-    pub const ALL: [Command; 39] = [
+    pub const ALL: [Command; 38] = [
         Command::StartService,
         Command::Next,
         Command::Previous,
@@ -92,7 +91,6 @@ impl Command {
         Command::Heading,
         Command::StartHere,
         Command::Earlier,
-        Command::Plans,
         Command::NewPlan,
         Command::PlanDuplicate,
         Command::PlanRename,
@@ -129,7 +127,6 @@ impl Command {
             Command::Remote => t::CMD_REMOTE(),
             Command::Heading => t::CMD_HEADING(),
             Command::NewPlan => t::PLAN_NEW(),
-            Command::Plans => t::CMD_PLANS(),
             Command::PlanDuplicate => t::PLAN_DUPLICATE(),
             Command::PlanRename => t::PLAN_RENAME(),
             Command::PlanDelete => t::PLAN_DELETE(),
@@ -173,7 +170,6 @@ impl Command {
             Command::Remote => t::CMD_REMOTE_DETAIL(),
             Command::Heading => t::CMD_HEADING_DETAIL(),
             Command::NewPlan => t::PLAN_NEW_DETAIL(),
-            Command::Plans => t::CMD_PLANS_DETAIL(),
             Command::PlanDuplicate => t::CMD_PLAN_DUPLICATE_DETAIL(),
             Command::PlanRename => t::CMD_PLAN_RENAME_DETAIL(),
             Command::PlanDelete => t::CMD_PLAN_DELETE_DETAIL(),
@@ -220,9 +216,8 @@ impl Command {
             Command::ImportFolder => &["openlyrics", "impor lagu", "folder lagu"],
             Command::Remote => &["mobile", "qr", "hp", "ponsel", "telepon", "remote hp"],
             Command::Heading => &["divider", "section", "judul bagian", "pembatas"],
-            Command::Plans => &["plans", "services", "switch plan", "other service", "morning", "afternoon", "daftar rundown", "ganti rundown", "ibadah lain", "pagi", "sore"],
             Command::PlanDuplicate => &["copy plan", "duplicate plan", "clone", "same songs", "copy service", "salin rundown", "gandakan", "duplikat", "sama dengan"],
-            Command::PlanRename => &["rename plan", "name", "date", "day", "ganti nama", "tanggal", "hari"],
+            Command::PlanRename => &["rename plan", "name", "day", "time", "hour", "change time", "ganti nama", "hari", "jam", "ganti jam", "ganti hari"],
             Command::PlanDelete => &["delete plan", "remove plan", "hapus rundown", "buang rundown"],
             Command::Earlier => &["back", "go back", "earlier", "shown before", "previous song", "last song", "kembali", "balik", "tadi", "lagu tadi", "sebelumnya"],
             Command::StartHere => &["start at", "start from", "begin at", "medley", "start at chorus", "start here", "mulai dari", "mulai dari reff", "medley", "sambung"],
@@ -395,7 +390,6 @@ impl App {
         self.palette.picked = 0;
         self.plan_menu = None;
         self.more_menu = false;
-        self.switcher.open = false;
         self.refresh_plan_rows();
         self.want_bible(&self.settings.bible.clone());
         self.search();
@@ -647,10 +641,12 @@ impl App {
                 PlanEntry::Song { .. } | PlanEntry::Heading { .. } => {}
             }
         }
-        // The church's other plans, found by name; the open one is already open.
+        // The church's other plans, found by name, by day and time, and by the word for plans
+        // itself, which lists them all; the open one is already open.
         for row in self.switcher.rows.iter().filter(|row| row.id != self.plan.id) {
             let name = row.label();
-            let doc = Doc::new(format!("planfile:{}", row.id), "plans", name.clone()).detail(t::KIND_PLAN()).aliases(&["plan", "service", "rencana", "acara", "ibadah"]);
+            let slot = crate::plans::slot_words(row.day, row.time).unwrap_or_default();
+            let doc = Doc::new(format!("planfile:{}", row.id), "plans", name.clone()).detail(t::KIND_PLAN()).aliases(&["plan", "plans", "service", "services", "other service", "rundown", "semua rundown", "rencana", "acara", "ibadah", "ibadah lain", slot.as_str()]);
             out.push((doc, Hit::Plan { id: row.id, name }));
         }
         for command in Command::ALL {
@@ -984,9 +980,8 @@ impl App {
             Command::Remote => self.sheet = Sheet::Remote,
             Command::Heading => self.add_heading(),
             Command::NewPlan => self.new_plan(),
-            Command::Plans => self.open_switcher(),
-            Command::PlanDuplicate => self.duplicate_plan(),
-            Command::PlanRename => self.begin_rename(false),
+            Command::PlanDuplicate => self.begin_copy(self.plan.id),
+            Command::PlanRename => self.begin_edit(self.plan.id),
             Command::PlanDelete => self.delete_plan(),
             Command::Earlier => drop(self.open_earlier()),
             Command::StartHere => match self.start_control() {

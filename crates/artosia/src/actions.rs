@@ -151,7 +151,7 @@ impl App {
 
     /// Starts another plan beside the open one, which is kept (`plans.rs`).
     pub fn new_plan(&mut self) {
-        self.create_plan();
+        self.begin_new_plan();
     }
 
     pub(crate) fn save_plan_now(&mut self) {

@@ -200,6 +200,13 @@ pub fn months(lang: usize, english: &'static [&'static str; 12]) -> &'static [&'
     cache.entry(lang).or_insert_with(|| Box::leak(Box::new(std::array::from_fn(|i| text(lang, &format!("MONTHS[{i}]")).unwrap_or(english[i])))))
 }
 
+/// The seven names of the days of the week, Monday first, each English where the table lacks it.
+pub fn weekdays(lang: usize, english: &'static [&'static str; 7]) -> &'static [&'static str; 7] {
+    static CACHE: OnceLock<Mutex<HashMap<usize, &'static [&'static str; 7]>>> = OnceLock::new();
+    let mut cache = CACHE.get_or_init(Default::default).lock().unwrap_or_else(|poisoned| poisoned.into_inner());
+    cache.entry(lang).or_insert_with(|| Box::leak(Box::new(std::array::from_fn(|i| text(lang, &format!("WEEKDAYS[{i}]")).unwrap_or(english[i])))))
+}
+
 /// A seconds count as a clock, "1:05", for the sentences that carry one.
 pub fn clock(seconds: u64) -> String {
     format!("{}:{:02}", seconds / 60, seconds % 60)
