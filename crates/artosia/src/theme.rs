@@ -216,6 +216,10 @@ pub mod icons {
     // Artosia's mark, an A cut out of a round loaf (docs/brand.md, assets/brand/artosia-mark-mono.svg).
     icon!(LOGO, "a-logo", r#"<path d="M1.723 14.48L3.346 14.48L5.059 10.24L9.147 10.24L8.5 8.64L5.705 8.64L8 2.96L12.654 14.48L14.277 14.48A8 8 0 1 0 1.723 14.48Z" fill="currentColor"/>"#);
     icon!(MIC, "a-mic", r#"<rect x="6" y="1.8" width="4" height="7.4" rx="2" stroke="currentColor"/><path d="M3.5 7.5C3.5 10 5.5 11.8 8 11.8C10.5 11.8 12.5 10 12.5 7.5M8 11.8V14.2M5.8 14.2H10.2" stroke="currentColor" stroke-linecap="round"/>"#);
+    icon!(GRIP, "a-grip", r#"<circle cx="6" cy="4" r="1.1" fill="currentColor"/><circle cx="10" cy="4" r="1.1" fill="currentColor"/><circle cx="6" cy="8" r="1.1" fill="currentColor"/><circle cx="10" cy="8" r="1.1" fill="currentColor"/><circle cx="6" cy="12" r="1.1" fill="currentColor"/><circle cx="10" cy="12" r="1.1" fill="currentColor"/>"#);
+    icon!(HISTORY, "a-history", r#"<circle cx="8" cy="8" r="5.5" stroke="currentColor"/><path d="M8 5V8L10 9.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>"#);
+    icon!(ITEM_BEFORE, "a-item-before", r#"<path d="M4 3.5H12" stroke="currentColor" stroke-linecap="round"/><path d="M8 6.5L11.5 12H4.5Z" stroke="currentColor" stroke-linejoin="round"/>"#);
+    icon!(ITEM_AFTER, "a-item-after", r#"<path d="M4 12.5H12" stroke="currentColor" stroke-linecap="round"/><path d="M8 9.5L4.5 4H11.5Z" stroke="currentColor" stroke-linejoin="round"/>"#);
     icon!(MINUS, "a-minus", r#"<path d="M3 8H13" stroke="currentColor" stroke-linecap="round"/>"#);
     icon!(CAMERA, "a-camera", r#"<rect x="1.5" y="4.5" width="9" height="7" rx="1.5" stroke="currentColor"/><path d="M10.5 7.2L14.5 5V11L10.5 8.8" stroke="currentColor" stroke-linejoin="round"/>"#);
     icon!(STREAM, "a-stream", r#"<circle cx="8" cy="8" r="1.6" fill="currentColor"/><path d="M4.6 4.6C2.7 6.5 2.7 9.5 4.6 11.4M11.4 4.6C13.3 6.5 13.3 9.5 11.4 11.4M2.4 2.6C-0.4 5.6 -0.4 10.4 2.4 13.4M13.6 2.6C16.4 5.6 16.4 10.4 13.6 13.4" stroke="currentColor" stroke-linecap="round"/>"#);

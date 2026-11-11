@@ -110,6 +110,15 @@ impl App {
         self.show(at);
     }
 
+    /// For `--snap` scenes: the first two songs of the plan and the first chorus of the second.
+    pub fn demo_medley(&self) -> Option<(u64, u64, Tag)> {
+        let mut songs = self.plan.items.iter().filter(|item| matches!(item.entry, PlanEntry::Song { .. }));
+        let (first, second) = (songs.next()?, songs.next()?);
+        let deck = self.deck_for(&second.entry)?;
+        let chorus = deck.slides.iter().find_map(|slide| slide.tag.filter(|tag| tag.kind == artosia_core::song::SectionKind::Chorus))?;
+        Some((first.id, second.id, chorus))
+    }
+
     /// What the search learned about where this song is usually begun, for a plan item with no
     /// start set: the section, how often, and out of how many. Offered, never applied.
     pub fn start_suggestion(&self, entry: &PlanEntry) -> Option<(Tag, u32, u32)> {

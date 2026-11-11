@@ -85,6 +85,11 @@ impl Btn {
         self.height = 26.0;
         self
     }
+    /// A height worked out by the caller, for controls that fill the strip beside a picture.
+    pub fn height(mut self, height: f32) -> Self {
+        self.height = height;
+        self
+    }
     pub fn grow(mut self) -> Self {
         self.grow = true;
         self
@@ -121,9 +126,9 @@ impl Btn {
         let dark_fill = matches!(self.kind, Kind::Primary | Kind::Toggle(true) | Kind::Active);
         let (hover, pressed) = if dark_fill { (Color::BLACK.alpha(0.08), Color::BLACK.alpha(0.16)) } else { (c.hover, c.pressed) };
         let font = if self.height >= 44.0 { type_::TITLE } else { type_::BODY_STRONG };
-        let pad = if self.icon_only { 0.0 } else if self.height <= 26.0 { 8.0 } else { 12.0 };
+        let pad = if self.icon_only && self.hint.is_none() { 0.0 } else if self.icon_only { 6.0 } else if self.height <= 26.0 { 8.0 } else { 12.0 };
         let mut e = row().role("button").label(self.label.clone()).h(self.height).px(pad).gap(6.0).center().radius(k.radius.md).fill(fill);
-        if self.icon_only {
+        if self.icon_only && self.hint.is_none() {
             e = e.w(self.height);
         }
         if let Some(border) = border {
@@ -138,7 +143,7 @@ impl Btn {
         if let Some(hint) = self.hint {
             // A key cap on a filled button is inked for that fill, whatever the window's theme.
             e = e.child(match self.kind {
-                Kind::Primary => keycap_on(&hint, ink),
+                Kind::Primary | Kind::Active => keycap_on(&hint, ink),
                 Kind::Toggle(true) => keycap_on(&hint, Color::BLACK),
                 _ => keycap(k, &hint, false),
             });

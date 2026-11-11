@@ -35,8 +35,29 @@ pub struct PlanItem {
 pub struct Plan {
     pub id: i64,
     pub name: String,
+    /// The day of the service as year-month-day, or empty when the plan has no day.
+    #[serde(default)]
+    pub date: String,
+    /// Unix seconds when the plan last became the open one; the list of plans is ordered by it.
+    #[serde(default)]
+    pub used: i64,
     pub items: Vec<PlanItem>,
     next_id: u64,
+}
+
+/// A day as year-month-day with a real month and day, or None. Accepts `-`, `/` and `.` between
+/// the parts and returns it with `-` and two digits.
+pub fn valid_date(text: &str) -> Option<String> {
+    let parts: Vec<&str> = text.trim().split(['-', '/', '.']).collect();
+    let [year, month, day] = parts[..] else { return None };
+    if year.len() != 4 {
+        return None;
+    }
+    let (year, month, day): (u32, u32, u32) = (year.parse().ok()?, month.parse().ok()?, day.parse().ok()?);
+    if !(1..=12).contains(&month) || !(1..=31).contains(&day) {
+        return None;
+    }
+    Some(format!("{year:04}-{month:02}-{day:02}"))
 }
 
 impl PlanEntry {
@@ -73,7 +94,19 @@ pub fn start_slide(deck: &Deck, start: Option<Tag>) -> usize {
 
 impl Plan {
     pub fn named(name: impl Into<String>) -> Plan {
-        Plan { id: 0, name: name.into(), items: Vec::new(), next_id: 1 }
+        Plan { id: 0, name: name.into(), date: String::new(), used: 0, items: Vec::new(), next_id: 1 }
+    }
+
+    /// A new plan holding the same items, for another service. It has no day and is not saved yet.
+    pub fn copy_named(&self, name: impl Into<String>) -> Plan {
+        Plan { id: 0, name: name.into(), date: String::new(), used: 0, items: self.items.clone(), next_id: self.next_id }
+    }
+
+    /// The month and day of the plan's date, when it has one.
+    pub fn month_day(&self) -> Option<(u32, u32)> {
+        let date = valid_date(&self.date)?;
+        let mut parts = date.split('-').skip(1).filter_map(|part| part.parse().ok());
+        Some((parts.next()?, parts.next()?))
     }
 
     /// Appends an entry and returns its item id.
@@ -183,6 +216,39 @@ mod tests {
         let mut loaded: Plan = serde_json::from_str(&json).unwrap_or_default();
         let c = loaded.push(song(3));
         assert!(c != b && c != a);
+    }
+
+    #[test]
+    fn a_plan_saved_before_names_and_dates_still_loads() {
+        // The shape the library held until 2026-11-11: no date, no last-used time.
+        let old = r#"{"id":0,"name":"Today","items":[{"id":1,"entry":"Announcements"},{"id":2,"entry":{"Heading":{"title":"Word"}}}],"next_id":3}"#;
+        let plan: Plan = serde_json::from_str(old).expect("an old plan loads");
+        assert_eq!((plan.name.as_str(), plan.date.as_str(), plan.used, plan.items.len()), ("Today", "", 0, 2));
+    }
+
+    #[test]
+    fn a_copy_keeps_the_items_and_starts_without_a_day() {
+        let mut plan = Plan::named("Sunday 7");
+        plan.id = 4;
+        plan.date = "2026-11-15".into();
+        let a = plan.push(song(1));
+        let mut copy = plan.copy_named("Sunday 10");
+        assert_eq!((copy.id, copy.date.as_str(), copy.items.len()), (0, "", 1));
+        // Items added to the copy never reuse an id the original gave out.
+        let b = copy.push(song(2));
+        assert_ne!(a, b);
+    }
+
+    #[test]
+    fn dates_are_read_leniently_and_kept_one_way() {
+        assert_eq!(valid_date("2026-11-15").as_deref(), Some("2026-11-15"));
+        assert_eq!(valid_date(" 2026/1/5 ").as_deref(), Some("2026-01-05"));
+        assert_eq!(valid_date("2026-13-01"), None);
+        assert_eq!(valid_date("15-11-2026"), None);
+        assert_eq!(valid_date(""), None);
+        let mut plan = Plan::named("Youth");
+        plan.date = "2026-11-14".into();
+        assert_eq!(plan.month_day(), Some((11, 14)));
     }
 
     #[test]

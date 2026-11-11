@@ -1,0 +1,355 @@
+//! Many plans, one for each service: kept in the library, named, and switched between.
+//!
+//! Switching never reaches the projector. What is live stays live, and Next goes on in the
+//! plan that was opened (docs/operator.md, "Several plans").
+
+use artosia_core::deck::Deck;
+use artosia_core::plan::{Plan, valid_date};
+use rune::TextEdit;
+
+use crate::state::{App, Undo, entry_matches};
+use crate::strings as t;
+
+/// One line of the list of plans.
+#[derive(Clone, Debug, PartialEq)]
+pub struct PlanRow {
+    pub id: i64,
+    /// As stored; `label` is what it reads as.
+    pub name: String,
+    pub date: String,
+    pub items: usize,
+}
+
+/// The rename dialog's two fields.
+pub struct Renaming {
+    pub id: i64,
+    pub name: TextEdit,
+    pub date: TextEdit,
+}
+
+#[derive(Default)]
+pub struct Switcher {
+    /// The list under the title is showing.
+    pub open: bool,
+    /// The church's plans, the open one first and then the most recently used.
+    pub rows: Vec<PlanRow>,
+    pub renaming: Option<Renaming>,
+    /// Another plan was opened since anything from a plan went live, so Next starts it from the top.
+    pub fresh: bool,
+}
+
+/// A plan nobody renamed reads in the window's language.
+pub fn label(name: &str) -> String {
+    if matches!(name, "Today" | "Acara hari ini" | "") { t::PLAN_DEFAULT_NAME().to_string() } else { name.to_string() }
+}
+
+/// "15 November" for a plan that has a date.
+pub fn day_text(plan_date: &str) -> Option<String> {
+    let mut plan = Plan::named("");
+    plan.date = plan_date.to_string();
+    let (month, day) = plan.month_day()?;
+    Some(format!("{day} {}", t::MONTHS()[(month - 1) as usize]))
+}
+
+impl PlanRow {
+    pub fn label(&self) -> String {
+        label(&self.name)
+    }
+
+    /// The date when the plan has one, else how much it holds.
+    pub fn detail(&self) -> String {
+        day_text(&self.date).unwrap_or_else(|| t::plan_items(self.items))
+    }
+}
+
+impl App {
+    /// Every plan the library holds, the open one as it is in memory, the rest most recently used first.
+    fn all_plans(&self) -> Vec<Plan> {
+        let mut plans: Vec<Plan> = self.store.plans().unwrap_or_default().into_iter().filter(|plan| plan.id != self.plan.id).collect();
+        plans.sort_by(|a, b| b.used.cmp(&a.used).then(b.id.cmp(&a.id)));
+        if self.plan.id != 0 || !self.plan.items.is_empty() {
+            plans.insert(0, self.plan.clone());
+        }
+        plans
+    }
+
+    pub fn refresh_plan_rows(&mut self) {
+        self.switcher.rows = self.all_plans().iter().map(|plan| PlanRow { id: plan.id, name: plan.name.clone(), date: plan.date.clone(), items: plan.items.len() }).collect();
+    }
+
+    pub fn open_switcher(&mut self) {
+        self.save_plan_now();
+        self.refresh_plan_rows();
+        self.switcher.open = true;
+        self.more_menu = false;
+        self.plan_menu = None;
+    }
+
+    pub fn close_switcher(&mut self) {
+        self.switcher.open = false;
+    }
+
+    fn stored_plan(&self, id: i64) -> Option<Plan> {
+        self.store.plans().ok()?.into_iter().find(|plan| plan.id == id)
+    }
+
+    /// The first item of the open plan with something to show, with its deck.
+    pub(crate) fn plan_start(&self) -> Option<(u64, Deck)> {
+        self.plan.items.iter().filter(|item| !item.entry.is_heading()).find_map(|item| self.deck_for(&item.entry).filter(|deck| !deck.slides.is_empty()).map(|deck| (item.id, deck)))
+    }
+
+    /// Makes `plan` the open one. The projector is not touched: what is live stays live and loses
+    /// its place in the old plan, since item numbers belong to one plan. A live or open deck
+    /// that the new plan also holds takes its place there, so Next goes on after it.
+    fn enter_plan(&mut self, mut plan: Plan, keep_old: bool) {
+        if keep_old && (self.plan.id != 0 || !self.plan.items.is_empty()) {
+            self.save_plan_now();
+        }
+        plan.used = self.now as i64;
+        self.plan = plan;
+        self.save_plan_now();
+        self.plan_drag = None;
+        self.plan_menu = None;
+        self.more_menu = false;
+        self.resume = None;
+        self.switcher.fresh = true;
+        let place_of = |app: &App, source: &artosia_core::deck::DeckSource| app.plan.items.iter().find(|item| entry_matches(&item.entry, source)).map(|item| item.id);
+        if let Some(source) = self.live.as_ref().map(|live| live.deck.source.clone()) {
+            let item = place_of(self, &source);
+            if let Some(live) = self.live.as_mut() {
+                live.item = item;
+            }
+        }
+        match self.open.as_ref().map(|open| (open.queued, open.deck.source.clone())) {
+            // What Artosia queued came from the old plan, so it is queued again from the new one.
+            Some((true, _)) => self.open = None,
+            Some((false, source)) => {
+                let item = place_of(self, &source);
+                if let Some(open) = self.open.as_mut() {
+                    open.item = item;
+                }
+            }
+            None => {}
+        }
+        self.requeue();
+        self.refresh_plan_rows();
+    }
+
+    pub fn switch_plan(&mut self, id: i64) {
+        self.switcher.open = false;
+        if id == self.plan.id {
+            return;
+        }
+        if let Some(plan) = self.stored_plan(id) {
+            self.enter_plan(plan, true);
+        }
+    }
+
+    /// Starts an empty plan beside the open one and asks for its name.
+    pub fn create_plan(&mut self) {
+        self.switcher.open = false;
+        self.enter_plan(Plan::named(t::PLAN_NEW_NAME()), true);
+        self.begin_rename(true);
+    }
+
+    pub fn duplicate_plan(&mut self) {
+        self.switcher.open = false;
+        let copy = self.plan.copy_named(t::plan_copy_name(&self.plan_title()));
+        self.enter_plan(copy, true);
+    }
+
+    /// Opens the rename dialog for the open plan. A new plan starts with an empty name field.
+    pub fn begin_rename(&mut self, blank: bool) {
+        self.switcher.open = false;
+        let mut name = TextEdit::new(if blank { String::new() } else { self.plan_title() });
+        name.focused = true;
+        name.set_caret(name.text.len());
+        self.switcher.renaming = Some(Renaming { id: self.plan.id, name, date: TextEdit::new(self.plan.date.clone()) });
+    }
+
+    /// The date field holds a day, or nothing.
+    pub fn rename_date_ok(&self) -> bool {
+        self.switcher.renaming.as_ref().is_none_or(|renaming| renaming.date.text.trim().is_empty() || valid_date(&renaming.date.text).is_some())
+    }
+
+    pub fn finish_rename(&mut self, save: bool) {
+        let Some(renaming) = self.switcher.renaming.take() else { return };
+        if !save || !self.rename_date_ok() {
+            return;
+        }
+        let name = renaming.name.text.trim();
+        let date = valid_date(&renaming.date.text).unwrap_or_default();
+        if renaming.id == self.plan.id {
+            if !name.is_empty() {
+                self.plan.name = name.to_string();
+            }
+            self.plan.date = date;
+            self.touch_plan();
+        }
+        self.refresh_plan_rows();
+    }
+
+    /// Deletes the open plan and opens the one used most recently before it, or an empty one.
+    pub fn delete_plan(&mut self) {
+        self.switcher.open = false;
+        self.save_plan_now();
+        let gone = self.plan.clone();
+        let _ = self.store.delete_plan(gone.id);
+        let next = self.all_plans().into_iter().find(|plan| plan.id != gone.id).unwrap_or_else(|| Plan::named(t::PLAN_DEFAULT_NAME()));
+        self.enter_plan(next, false);
+        self.say(t::plan_deleted(&label(&gone.name)), Some(Undo::Plan(Box::new(gone))));
+    }
+
+    /// Two more plans beside the practice one, for the scenes that show the list.
+    pub fn demo_plans(&mut self) {
+        self.plan.name = "Sunday 7:00".into();
+        self.plan.date = "2026-11-15".into();
+        let mut second = self.plan.copy_named("Sunday 10:00");
+        second.date = "2026-11-15".into();
+        second.items.truncate(3);
+        second.used = self.now as i64 - 3600;
+        let mut third = Plan::named("Youth Saturday");
+        third.push(artosia_core::plan::PlanEntry::Announcements);
+        third.used = self.now as i64 - 7200;
+        for plan in [&mut second, &mut third] {
+            let _ = self.store.save_plan(plan);
+        }
+        self.save_plan_now();
+        self.refresh_plan_rows();
+    }
+
+    /// Undo of a deletion: the plan is back in the list, and the open plan stays open.
+    pub fn restore_plan(&mut self, plan: Plan) {
+        let _ = self.store.restore_plan(&plan);
+        self.refresh_plan_rows();
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use artosia_core::deck::DeckSource;
+    use artosia_core::plan::PlanEntry;
+
+    fn song_ids(app: &App) -> Vec<i64> {
+        app.plan.items.iter().filter_map(|item| if let PlanEntry::Song { song_id, .. } = item.entry { Some(song_id) } else { None }).collect()
+    }
+
+    fn live_source(app: &App) -> Option<DeckSource> {
+        app.live.as_ref().map(|live| live.deck.source.clone())
+    }
+
+    #[test]
+    fn the_first_plan_stays_when_another_is_made() {
+        let mut app = App::practice();
+        let before = app.plan.items.len();
+        assert!(before > 0);
+        app.create_plan();
+        assert_eq!(app.plan.items.len(), 0);
+        assert_eq!(app.switcher.rows.len(), 2, "the practice plan and the new one");
+        let old = app.switcher.rows.iter().find(|row| row.items == before).map(|row| row.id).expect("the first plan is listed");
+        app.switch_plan(old);
+        assert_eq!(app.plan.items.len(), before);
+        assert_eq!(app.switcher.rows.first().map(|row| row.id), Some(old), "the open plan leads the list");
+    }
+
+    #[test]
+    fn a_plan_is_named_dated_duplicated_and_deleted_with_undo() {
+        let mut app = App::practice();
+        app.begin_rename(false);
+        if let Some(renaming) = app.switcher.renaming.as_mut() {
+            renaming.name.replace_text("Sunday 10:00");
+            renaming.date.replace_text("2026-11-15");
+        }
+        app.finish_rename(true);
+        assert_eq!((app.plan.name.as_str(), app.plan.date.as_str()), ("Sunday 10:00", "2026-11-15"));
+        let items = app.plan.items.len();
+        app.duplicate_plan();
+        assert_eq!((app.plan.items.len(), app.plan.date.as_str()), (items, ""), "a copy has the items and no day");
+        assert!(app.plan.name.starts_with("Sunday 10:00"));
+        let copy = app.plan.id;
+        assert_ne!(copy, 0);
+        // A date that is not a day is refused and the plan keeps what it had.
+        app.begin_rename(false);
+        if let Some(renaming) = app.switcher.renaming.as_mut() {
+            renaming.date.replace_text("tomorrow");
+        }
+        assert!(!app.rename_date_ok());
+        app.finish_rename(true);
+        assert_eq!(app.plan.date, "");
+        app.delete_plan();
+        assert_ne!(app.plan.id, copy);
+        assert!(app.toast.as_ref().is_some_and(|toast| toast.undo.is_some()));
+        assert!(!app.switcher.rows.iter().any(|row| row.id == copy));
+        app.undo();
+        assert!(app.switcher.rows.iter().any(|row| row.id == copy), "undo puts it back in the list");
+        assert!(app.store.plans().unwrap_or_default().iter().any(|plan| plan.id == copy));
+    }
+
+    #[test]
+    fn deleting_the_only_plan_leaves_an_empty_one() {
+        let mut app = App::practice();
+        app.delete_plan();
+        assert!(app.plan.items.is_empty());
+        assert_eq!(app.switcher.rows.len(), 1);
+    }
+
+    #[test]
+    fn switching_while_something_is_live_leaves_the_projector_alone() {
+        let mut app = App::practice();
+        let first = app.plan.items.iter().find(|item| matches!(item.entry, PlanEntry::Song { .. })).map(|item| item.id).expect("a song");
+        app.open_plan_item(first);
+        app.show(1);
+        let (source, index) = (live_source(&app), app.live.as_ref().map(|live| live.index));
+        assert!(source.is_some());
+        // A second plan holding one other song.
+        let planned = song_ids(&app);
+        let other = app.songs.iter().find(|song| !planned.contains(&song.id)).map(|song| (song.id, song.title.clone())).expect("a song outside the plan");
+        app.create_plan();
+        app.finish_rename(false);
+        app.plan.push(PlanEntry::song(other.0, other.1));
+        app.touch_plan();
+        assert_eq!(live_source(&app), source, "the live deck did not change");
+        assert_eq!(app.live.as_ref().map(|live| live.index), index, "nor its slide");
+        assert_eq!(app.live.as_ref().and_then(|live| live.item), None, "it belongs to no item of the new plan");
+        // Next stays inside the live song until it ends, then goes on in the new plan.
+        let slides = app.live.as_ref().map(|live| live.deck.slides.len()).unwrap_or(0);
+        // Started on slide 1, so the last slide is `slides - 2` presses away and one more leaves it.
+        for _ in 0..slides - 1 {
+            assert_eq!(live_source(&app), source, "Next stayed in the live song");
+            app.next();
+        }
+        assert_eq!(live_source(&app), Some(DeckSource::Song(other.0)), "Next reached the new plan's first song");
+        assert_eq!(app.live.as_ref().map(|live| live.index), Some(0));
+    }
+
+    #[test]
+    fn the_song_that_is_live_takes_its_place_in_the_plan_that_is_opened() {
+        let mut app = App::practice();
+        let songs: Vec<(i64, String)> = app.plan.items.iter().filter_map(|item| if let PlanEntry::Song { song_id, title, .. } = &item.entry { Some((*song_id, title.clone())) } else { None }).collect();
+        assert!(songs.len() >= 2);
+        let first = app.plan.items.iter().find(|item| matches!(item.entry, PlanEntry::Song { .. })).map(|item| item.id).expect("a song");
+        app.open_plan_item(first);
+        app.show(0);
+        // A copy holds the same songs, so the live one is found in it and Next follows it.
+        app.duplicate_plan();
+        let at = app.live.as_ref().and_then(|live| live.item);
+        assert!(at.is_some_and(|id| app.plan.position(id).is_some()));
+        assert_eq!(live_source(&app), Some(DeckSource::Song(songs[0].0)));
+        assert!(app.next_item_title().is_some());
+    }
+
+    #[test]
+    fn what_artosia_queued_is_queued_again_from_the_new_plan() {
+        let mut app = App::practice();
+        let first = app.plan.items.iter().find(|item| matches!(item.entry, PlanEntry::Song { .. })).map(|item| item.id).expect("a song");
+        app.open_plan_item(first);
+        app.show(0);
+        assert!(app.open.as_ref().is_some_and(|open| open.queued));
+        app.create_plan();
+        // The new plan is empty: nothing is queued from the old one, and Preview holds the live deck.
+        let open = app.open.as_ref().expect("Preview is filled");
+        assert_eq!(open.deck.source, app.live.as_ref().expect("still live").deck.source);
+        assert_eq!(open.item, None);
+    }
+}
