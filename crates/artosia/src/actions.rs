@@ -161,6 +161,10 @@ impl App {
                 self.plan.items.insert(at.min(self.plan.items.len()), item);
                 self.touch_plan();
             }
+            Some(Undo::Live(live)) => {
+                self.live = Some(*live);
+                self.requeue();
+            }
             Some(Undo::Song(song)) => {
                 if self.store.restore_song(&song).is_ok() {
                     self.reload_songs();
@@ -541,11 +545,6 @@ impl App {
         } else {
             self.say(summary, None);
         }
-    }
-
-    pub fn dismiss_welcome(&mut self) {
-        self.settings.welcomed = true;
-        self.touch_settings();
     }
 
     // ---- Announcements ----

@@ -156,6 +156,8 @@ pub struct BibleFile {
 
 pub enum Undo {
     PlanItem { at: usize, item: PlanItem },
+    /// The live item was taken off the projector with End.
+    Live(Box<LiveDeck>),
     Song(Box<Song>),
     Announcement(Announcement),
     /// An editor closed with unsaved changes.
@@ -302,6 +304,12 @@ pub struct App {
     pub plan_drag: Option<PlanDrag>,
     /// A plan row was just dropped, so the press that ends the same gesture opens nothing.
     pub plan_dropped: bool,
+    /// Ctrl or Shift is down. The arrows mean something else with each, and the hint bar and
+    /// the panes say which while it is held.
+    pub held_ctrl: bool,
+    pub held_shift: bool,
+    /// The plan's Add menu is open.
+    pub add_menu: bool,
     /// The slide the loop is waiting on, and when it moves on, on the app clock.
     pub loop_at: (usize, f64),
     /// How many slide tiles fit in a row, for the arrow keys. The view writes it.
@@ -464,6 +472,9 @@ impl App {
             preview_pick: false,
             plan_drag: None,
             plan_dropped: false,
+            held_ctrl: false,
+            held_shift: false,
+            add_menu: false,
             loop_at: (0, 0.0),
             stream: None,
             stream_address: TextEdit::new(""),
@@ -747,6 +758,44 @@ impl App {
         true
     }
 
+    /// A click on a slide in Preview: the ring goes there and the projector is left alone.
+    /// Preview is the safe side of the window; only Show, Enter and the Live pane put
+    /// something on the projector (owner, 2026-11-11: "Why does clicking it show it on the live?").
+    pub fn select_at(&mut self, index: usize) {
+        let Some(open) = self.open.as_mut() else { return };
+        if index < open.deck.slides.len() {
+            open.cursor = index;
+            open.armed = true;
+            open.queued = false;
+        }
+    }
+
+    /// Takes the live item off the projector. The background stays, the Live pane empties and
+    /// the place in the plan is kept; the toast puts it back (owner, 2026-11-11: "Where is the
+    /// end live button???").
+    pub fn end_live(&mut self) {
+        let Some(live) = self.live.take() else { return };
+        if let Some(id) = live.item {
+            self.resume = Some(id);
+        }
+        self.live_pick = None;
+        self.looping = false;
+        self.say(t::LIVE_ENDED(), Some(Undo::Live(Box::new(live))));
+    }
+
+    /// The plan item that comes into Preview once the one there is shown.
+    pub fn after_preview_title(&self) -> Option<String> {
+        let mut id = self.open.as_ref()?.item.or(self.resume)?;
+        for _ in 0..self.plan.items.len() {
+            let item = self.plan.next_showable(id)?;
+            if self.deck_for(&item.entry).is_some_and(|deck| !deck.slides.is_empty()) {
+                return Some(self.entry_title(&item.entry));
+            }
+            id = item.id;
+        }
+        None
+    }
+
     /// Shift and an arrow: moves a ring through the live deck and leaves the projector alone.
     /// Letting Shift go shows the slide it is on, so a far slide is reached without the ones
     /// between passing over the room's screen (owner, 2026-11-11: "when release the shift/ctrl
@@ -846,15 +895,19 @@ impl App {
         }
     }
 
-    /// Opens the plan item before or after the open one, without showing it.
-    pub fn walk_plan(&mut self, forward: bool) {
+    /// The plan item before or after the one in Preview.
+    pub fn walk_target(&self, forward: bool) -> Option<u64> {
         let from = self.open.as_ref().and_then(|open| open.item).or(self.live.as_ref().and_then(|live| live.item)).or(self.resume);
-        let next = match from {
+        match from {
             Some(id) if forward => self.plan.next_showable(id).map(|item| item.id),
             Some(id) => self.plan.previous_showable(id).map(|item| item.id),
             None => self.plan.items.iter().find(|item| !item.entry.is_heading()).map(|item| item.id),
-        };
-        if let Some(id) = next {
+        }
+    }
+
+    /// Opens the plan item before or after the open one, without showing it.
+    pub fn walk_plan(&mut self, forward: bool) {
+        if let Some(id) = self.walk_target(forward) {
             self.open_plan_item(id);
         }
     }
@@ -1223,6 +1276,55 @@ mod tests {
 
     fn live_at(app: &App) -> Option<(Option<u64>, usize)> {
         app.live.as_ref().map(|live| (live.item, live.index))
+    }
+
+    #[test]
+    fn a_click_in_preview_moves_the_ring_and_leaves_the_projector() {
+        let mut app = App::practice();
+        let (first, second) = (song_item(&app, 0), song_item(&app, 1));
+        app.open_plan_item(first);
+        app.show(0);
+        app.open_plan_item(second);
+        app.select_at(1);
+        assert_eq!(live_at(&app), Some((Some(first), 0)), "the projector did not move");
+        assert_eq!(app.open.as_ref().map(|open| (open.item, open.cursor)), Some((Some(second), 1)));
+        // A slide the deck does not have is no place for the ring.
+        app.select_at(400);
+        assert_eq!(app.open.as_ref().map(|open| open.cursor), Some(1));
+        // Show sends it, at the ring.
+        assert!(app.preview_waits());
+        app.enter();
+        assert_eq!(live_at(&app), Some((Some(second), 1)));
+    }
+
+    #[test]
+    fn end_takes_the_live_item_off_and_the_toast_puts_it_back() {
+        let mut app = App::practice();
+        let (first, second) = (song_item(&app, 0), song_item(&app, 1));
+        app.open_plan_item(first);
+        app.show(1);
+        app.end_live();
+        assert!(app.live.is_none());
+        assert_eq!(app.output_state().slide, None, "the projector has no words");
+        // The place in the plan is kept: what waited in Preview is still next.
+        assert_eq!(app.open.as_ref().and_then(|open| open.item), Some(second));
+        app.undo();
+        assert_eq!(live_at(&app), Some((Some(first), 1)));
+        // With nothing live there is nothing to end, and no toast to undo by mistake.
+        app.end_live();
+        app.toast = None;
+        app.end_live();
+        assert!(app.toast.is_none());
+    }
+
+    #[test]
+    fn preview_names_what_comes_after_it() {
+        let mut app = App::practice();
+        let (first, second) = (song_item(&app, 0), song_item(&app, 1));
+        app.open_plan_item(first);
+        let after = app.plan.items.iter().find(|item| item.id == second).map(|item| app.entry_title(&item.entry));
+        assert_eq!(app.after_preview_title(), after);
+        assert_eq!(app.walk_target(true), Some(second));
     }
 
     #[test]

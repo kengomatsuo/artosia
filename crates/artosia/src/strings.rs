@@ -449,10 +449,7 @@ text!(START_BIBLE_DETAIL, "Pick a book and a verse", "Pilih kitab, lalu ayat");
 text!(START_NEW_DETAIL, "Type or paste the words", "Ketik atau tempel liriknya");
 text!(START_NO_SONGS, "The library has no songs yet", "Pustaka masih kosong, belum ada lagu");
 text!(START_ANNOUNCEMENTS_DETAIL, "Notices before the service", "Tayang sebelum ibadah mulai");
-text!(WELCOME_EASISLIDES, "EasiSlides is on this computer", "EasiSlides ada di komputer ini");
-text!(WELCOME_EASISLIDES_DETAIL, "Bring its songs and Bibles into Artosia. EasiSlides keeps working.", "Salin lagu dan Alkitabnya ke sini. EasiSlides tetap utuh dan bisa dipakai.");
 text!(BTN_BRING_OVER, "Bring them over", "Impor sekarang");
-text!(BTN_NOT_NOW, "Not now", "Nanti saja");
 text!(BTN_ADD_TO_PLAN, "Add to plan", "Tambah ke acara");
 text!(BTN_EDIT, "Edit", "Edit");
 text!(BTN_NEXT_VERSE, "Add the next verse", "Tambah ayat berikutnya");
@@ -490,9 +487,38 @@ pub fn state_countdown(clock: &str) -> String {
     }
     format!("Countdown {clock}")
 }
-text!(LIVE_NOTHING, "Click a slide to show it", "Klik slide untuk menayangkan");
+text!(LIVE_NOTHING, "Nothing is on the projector", "Nothing is on the projector");
 text!(NEXT_NOTHING, "Nothing open", "Belum ada yang dibuka");
 text!(BTN_SHOW, "Show", "Tayangkan");
+text!(BTN_END, "End", "End");
+text!(LIVE_ENDED, "Taken off the projector", "Taken off the projector");
+text!(BTN_PREVIOUS_ITEM, "Previous item", "Previous item");
+text!(BTN_NEXT_ITEM, "Next item", "Next item");
+pub fn after_this(title: &str) -> String {
+    if let Some(text) = say("after_this", None, None, &[("title", text_arg(title))]) {
+        return text;
+    }
+    if indonesian() {
+        return format!("Then: {title}");
+    }
+    format!("Then: {title}")
+}
+text!(KEY_ARROWS, "Arrows", "Arrows");
+text!(KEY_CTRL_ARROWS, "Ctrl arrows", "Ctrl arrows");
+text!(KEY_SHIFT_ARROWS, "Shift arrows", "Shift arrows");
+text!(HELD_CTRL, "Ctrl held", "Ctrl held");
+text!(HELD_SHIFT, "Shift held", "Shift held");
+text!(HINT_RING, "Move in Preview", "Move in Preview");
+text!(HINT_SHOW_RING, "Show Preview", "Show Preview");
+text!(HINT_PICK, "Pick a live slide", "Pick a live slide");
+text!(HINT_LET_GO, "Let go to show it", "Let go to show it");
+text!(HINT_CANCEL, "Cancel", "Cancel");
+text!(PLAN_ADD_SONG, "Song", "Song");
+text!(PLAN_ADD_PASSAGE, "Bible passage", "Bible passage");
+text!(PLAN_ADD_HEADING, "Divider", "Divider");
+text!(PLAN_DRAG, "Drag to reorder", "Drag to reorder");
+text!(ADDING_TO_PLAN, "Adding to the plan", "Adding to the plan");
+text!(BTN_DONE, "Done", "Done");
 text!(COUNTDOWN, "Countdown", "Hitung mundur");
 text!(COUNTDOWN_LABEL, "We start in", "Ibadah dimulai dalam");
 
@@ -934,7 +960,7 @@ text!(KEYS_SHOWING, "Showing", "Saat tayang");
 text!(KEYS_FINDING, "Finding", "Mencari");
 text!(KEYS_PLAN, "The plan", "Acara");
 text!(KEYS_EDITING, "Editing", "Editor lagu");
-const KEYS_SHOWING_ROWS_EN: [(&str, &str); 14] = [
+const KEYS_SHOWING_ROWS_EN: [(&str, &str); 15] = [
     ("Down, Space", "Next slide"),
     ("Up", "Previous slide"),
     ("Left", "First slide of the live song"),
@@ -949,8 +975,9 @@ const KEYS_SHOWING_ROWS_EN: [(&str, &str); 14] = [
     ("F3", "Logo"),
     ("F4", "Bring what the listener heard into Preview"),
     ("F5", "Bring the announcements into Preview"),
+    ("F6", "Take the live item off the projector"),
 ];
-const KEYS_SHOWING_ROWS_ID: [(&str, &str); 14] = [
+const KEYS_SHOWING_ROWS_ID: [(&str, &str); 15] = [
     ("Panah bawah, Spasi", "Tayangkan slide berikutnya"),
     ("Panah atas", "Tayangkan slide sebelumnya"),
     ("Panah kiri", "Loncat ke slide pertama lagu yang tayang"),
@@ -965,6 +992,7 @@ const KEYS_SHOWING_ROWS_ID: [(&str, &str); 14] = [
     ("F3", "Tayangkan logo saja"),
     ("F4", "Bawa ayat atau lagu yang dikenali ke pratinjau"),
     ("F5", "Bawa pengumuman ke pratinjau"),
+    ("F6", "Take the live item off the projector"),
 ];
 pub fn KEYS_SHOWING_ROWS() -> &'static [(&'static str, &'static str)] {
     if language() > INDONESIAN {

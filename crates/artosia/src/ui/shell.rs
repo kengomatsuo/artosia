@@ -6,6 +6,9 @@
 //! EasiSlides (`real-products-2/01-openlp-main-window.png` and
 //! `easislides/01-easislides-main-window.jpg` in the research folder): it is the shape the
 //! volunteers already know, and the words are readable in a list where a thumbnail is not.
+//!
+//! Preview is the safe side. A click there moves the ring and nothing else; only Show, Enter
+//! and the Live pane put something on the projector (owner, 2026-11-11).
 
 use artosia_core::deck::{Deck, DeckSource, Slide, SlideKind, tag_group};
 use artosia_slides::audience::clock_text;
@@ -13,23 +16,47 @@ use artosia_slides::stage::group_color;
 use rune::{Color, Cursor, Cx, El, ScrollSpec, Tx, col, el, icon, row, spacer, text};
 use rune_kit::{Kit, ScrollBar};
 
-use crate::palette::Scope;
 use crate::state::{App, section_starts};
 use crate::strings as t;
 use crate::theme::{self, icons, space, type_};
 use crate::ui::live;
-use crate::ui::widgets::{btn, state_pill, tag_chip};
+use crate::ui::widgets::{btn, keycap, state_pill, tag_chip};
 
 /// Height of a row in the two lists: room for four lines of words.
 const ROW: f32 = 76.0;
 const PLAN: f32 = 256.0;
-/// Height of the picture under each list, and of the controls beside it: Next over two rows
-/// of toggles, which is what the longer Indonesian words take at a laptop's width. Fixed, so
-/// the two panes end on one line in either language.
-const FOOT: f32 = 124.0;
-const PICTURE: f32 = 220.0;
+/// The least width the controls beside a picture need: two buttons side by side with the
+/// longer Indonesian words.
+const CONTROLS: f32 = 290.0;
 /// Width of the Live pane while an editor has the rest of the window.
 const NARROW: f32 = 288.0;
+
+/// The strip under each list: a picture as large as the pane allows, and the controls in what
+/// is left beside it, as tall as the picture (owner, 2026-11-11: the buttons took the width and
+/// left the picture small).
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub(crate) struct Foot {
+    pub picture: f32,
+    pub height: f32,
+    pub controls: f32,
+}
+
+impl Foot {
+    /// For a pane `pane` points wide in a work area `tall` points high. Both panes get the
+    /// same strip, so they end on one line.
+    pub(crate) fn fit(pane: f32, tall: f32) -> Self {
+        let inner = pane - 2.0 * space::S3;
+        // The lists keep most of the height; the picture takes up to about a third.
+        let highest = (tall * 0.36).clamp(128.0, 380.0);
+        let picture = (inner - space::S3 - CONTROLS).min(highest * 16.0 / 9.0).max(220.0).round();
+        Foot { picture, height: (picture * 9.0 / 16.0).round(), controls: (inner - space::S3 - picture).max(200.0) }
+    }
+
+    /// Key caps fit on the smaller buttons.
+    pub(crate) fn roomy(self) -> bool {
+        self.controls >= 400.0
+    }
+}
 
 #[derive(Clone, Copy, PartialEq)]
 enum Mark {
@@ -49,19 +76,14 @@ fn vline() -> El {
     el().w(1.0).h_full().fill(theme::surf().edge).a11y_hidden()
 }
 
-/// The strip over a panel: its name, what it holds, and whatever acts on it at the right.
-fn title_bar(k: &Kit, name: &str, detail: String, trailing: Vec<El>) -> El {
-    row()
-        .w_full()
-        .h(40.0)
-        .px(space::S3)
-        .gap(space::S2)
-        .center_y()
-        .fill(theme::surf().header)
-        .child(text(name.to_string()).font(type_::BODY_STRONG).color(k.c.text_base))
-        .child(text(detail).font(type_::SMALL).color(k.c.text_muted).truncate().min_w(0.0))
-        .child(spacer())
-        .children(trailing)
+/// The strip over a panel: its name, the keys that move in it, what it holds, and whatever
+/// acts on it at the right.
+fn title_bar(k: &Kit, name: &str, keys: Option<&str>, detail: String, trailing: Vec<El>) -> El {
+    let mut bar = row().w_full().h(40.0).px(space::S3).gap(space::S2).center_y().fill(theme::surf().header).child(text(name.to_string()).font(type_::BODY_STRONG).color(k.c.text_base));
+    if let Some(keys) = keys {
+        bar = bar.child(keycap(k, keys, false));
+    }
+    bar.child(text(detail).font(type_::SMALL).color(k.c.text_muted).truncate().min_w(0.0)).child(spacer()).children(trailing)
 }
 
 /// One row of a list: the number key that jumps to it, its section, and its words.
@@ -116,7 +138,8 @@ fn list_row(k: &Kit, key: &str, index: usize, number: Option<usize>, slide: &Sli
         body = body.border(2.0, k.c.text_base);
     }
     let line = body.hover(k.c.hover).cursor(Cursor::Pointer).on_press_tx(move |s: &mut App, tx: &mut Tx| {
-        if go_live { s.go_to(index) } else { s.show(index) }
+        // In the Live list a click moves the projector. In Preview it only moves the ring.
+        if go_live { s.go_to(index) } else { s.select_at(index) }
         tx.blur();
     });
     col().key(format!("{key}-{index}")).role("button").label(format!("{} {}", slide.label, index + 1)).w_full().child(line).child(hline())
@@ -125,6 +148,8 @@ fn list_row(k: &Kit, key: &str, index: usize, number: Option<usize>, slide: &Sli
 struct Pane<'a> {
     name: &'a str,
     key: &'a str,
+    /// The keys that move in this pane now, as a key cap beside its name.
+    keys: Option<&'a str>,
     detail: String,
     trailing: Vec<El>,
     deck: Option<&'a Deck>,
@@ -169,13 +194,13 @@ fn pane(k: &Kit, p: Pane<'_>) -> El {
         .h_full()
         .min_h(0.0)
         .fill(theme::surf().raised)
-        .child(title_bar(k, p.name, p.detail, p.trailing))
+        .child(title_bar(k, p.name, p.keys, p.detail, p.trailing))
         .child(list.scroll_bar(k))
         .child(hline())
         .child(p.footer);
     if let Some(ring) = p.ring {
-        // A ring on every side marks the pane that holds what the room sees. It is its own
-        // element, laid over the rest: the pane's own border is drawn under its children.
+        // A ring on every side marks the pane the keys act on. It is its own element, laid
+        // over the rest: the pane's own border is drawn under its children.
         frame = frame.child(el().pin(Some(0.0), Some(0.0), Some(0.0), Some(0.0)).border(3.0, ring).a11y_hidden());
     }
     frame
@@ -187,14 +212,21 @@ fn picture(s: &App, k: &Kit, state: &artosia_slides::frame::OutputState, width: 
 }
 
 /// The strip under a list: its picture, and what acts on it.
-fn foot(picture: El, controls: El) -> El {
-    row().w_full().h(FOOT + 2.0 * space::S3).px(space::S3).py(space::S3).gap(space::S3).items_start().fill(theme::surf().side).child(picture).child(controls)
+fn foot(size: Foot, picture: El, controls: El) -> El {
+    row().w_full().h(size.height + 2.0 * space::S3).px(space::S3).py(space::S3).gap(space::S3).items_start().fill(theme::surf().side).child(picture).child(controls)
 }
 
 /// What acts on the open item: add it to the plan, edit it, read on.
 fn open_tools(s: &App, k: &Kit) -> Vec<El> {
     let Some(open) = s.open.as_ref() else { return Vec::new() };
     let mut tools = vec![text(t::slides(open.deck.slides.len())).font(type_::SMALL).color(k.c.text_muted)];
+    if s.live.is_some() && !s.open_is_live() {
+        tools.push(btn(t::BTN_BACK_TO_LIVE()).small().hint("Esc").build(k, |s, tx| {
+            s.open_live();
+            crate::follow(s, tx);
+            tx.blur();
+        }));
+    }
     if !s.open_in_plan() {
         tools.push(btn(t::BTN_ADD_TO_PLAN()).icon(&icons::PLUS).small().build(k, |s, tx| {
             s.add_open_to_plan();
@@ -212,36 +244,59 @@ fn open_tools(s: &App, k: &Kit) -> Vec<El> {
     tools
 }
 
-fn preview_pane(s: &App, k: &Kit) -> El {
+/// Beside the Preview picture: the slide the ring is on, the one button that sends it to the
+/// projector, the two that take the item before or after from the plan, and what comes here
+/// once this is shown.
+fn preview_controls(s: &App, k: &Kit, size: Foot, live_here: bool, hidden: bool) -> El {
+    let slide = s.open.as_ref().and_then(|open| open.deck.slides.get(open.cursor));
+    let label = slide.map(|slide| slide.label.clone()).unwrap_or_else(|| t::NEXT_NOTHING().to_string());
+    let after = s.after_preview_title();
+    let step = if size.height < 150.0 { 28.0 } else { 32.0 };
+    let fixed = 20.0 + space::S2 + space::S2 + step + if after.is_some() { space::S2 + 16.0 } else { 0.0 };
+    let mut name = row().w_full().h(20.0).gap(space::S2).center_y().child(text(label).font(type_::BODY_STRONG).color(k.c.text_base).truncate().min_w(0.0));
+    if live_here && !s.preview_waits() {
+        name = name.child(state_pill(t::LIVE(), if hidden { theme::warn() } else { theme::live() }, if hidden { Color::BLACK } else { theme::on_live() }));
+    }
+    let show = btn(t::BTN_SHOW()).primary().height((size.height - fixed).max(36.0)).grow().hint(t::KEY_ENTER()).disabled(!s.preview_waits()).build(k, |s, tx| {
+        s.enter();
+        crate::follow(s, tx);
+        tx.blur();
+    });
+    let walk = |forward: bool| {
+        let (label, glyph, keys) = if forward { (t::BTN_NEXT_ITEM(), &icons::ITEM_AFTER, "Tab") } else { (t::BTN_PREVIOUS_ITEM(), &icons::ITEM_BEFORE, "Shift Tab") };
+        let mut button = btn(label).icon(glyph).height(step).grow().disabled(s.walk_target(forward).is_none());
+        if size.roomy() {
+            button = button.hint(keys);
+        }
+        button.build(k, move |s, tx| {
+            s.walk_plan(forward);
+            crate::follow(s, tx);
+            tx.blur();
+        })
+    };
+    let mut side = col().key("preview-controls").w(size.controls).h(size.height).gap(space::S2).child(name).child(row().w_full().child(show)).child(row().w_full().gap(space::S2).child(walk(false)).child(walk(true)));
+    if let Some(after) = after {
+        side = side.child(el().w_full().h(16.0).child(text(t::after_this(&after)).font(type_::SMALL).color(k.c.text_muted).truncate()));
+    }
+    side
+}
+
+fn preview_pane(s: &App, k: &Kit, size: Foot) -> El {
     let open = s.open.as_ref();
     // Preview holds the live deck when nothing follows it; its live slide is marked there too.
     let live_index = s.live.as_ref().map(|live| live.index).filter(|_| s.open_is_live());
     let hidden = s.black || s.logo_on || s.text_hidden;
     let cursor_slide = open.and_then(|o| o.deck.slides.get(o.cursor).cloned());
-    let label = cursor_slide.as_ref().map(|slide| slide.label.clone()).unwrap_or_else(|| t::NEXT_NOTHING().to_string());
-    let mut side = col().grow(1.0).min_w(0.0).gap(space::S2).child(text(label).font(type_::BODY_STRONG).color(k.c.text_base).truncate());
-    side = if s.preview_waits() || s.live.is_none() {
-        side.child(btn(t::BTN_SHOW()).primary().hint(t::KEY_ENTER()).disabled(!s.preview_waits()).build(k, |s, tx| {
-            s.enter();
-            crate::follow(s, tx);
-            tx.blur();
-        }))
-    } else {
-        side.child(row().child(state_pill(t::LIVE(), if hidden { theme::warn() } else { theme::live() }, if hidden { Color::BLACK } else { theme::on_live() })))
-    };
-    if live_index.is_none() && s.live.is_some() {
-        side = side.child(btn(t::BTN_BACK_TO_LIVE()).hint("Esc").build(k, |s, tx| {
-            s.open_live();
-            crate::follow(s, tx);
-            tx.blur();
-        }));
-    }
     let state = s.preview_state(cursor_slide);
+    // Ctrl moves the ring here while something is live; with nothing live the arrows do.
+    let ctrl = s.held_ctrl && !s.held_shift;
+    let keys = if s.live.is_some() { t::KEY_CTRL_ARROWS() } else { t::KEY_ARROWS() };
     pane(
         k,
         Pane {
             name: t::PANE_PREVIEW(),
             key: "slide",
+            keys: open.map(|_| keys),
             detail: open.map(|o| o.deck.title.clone()).unwrap_or_default(),
             trailing: open_tools(s, k),
             deck: open.map(|o| &o.deck),
@@ -252,8 +307,8 @@ fn preview_pane(s: &App, k: &Kit) -> El {
             go_live: false,
             // With nothing open the pane says what to do first.
             empty: if open.is_some() { empty_words(k, t::DECK_EMPTY()) } else { crate::ui::slides::start(s, k) },
-            footer: foot(picture(s, k, &state, PICTURE), side),
-            ring: None,
+            footer: foot(size, picture(s, k, &state, size.picture), preview_controls(s, k, size, live_index.is_some(), hidden)),
+            ring: (ctrl && s.live.is_some() && open.is_some()).then(theme::accent),
         },
     )
 }
@@ -303,13 +358,13 @@ fn off_pill(k: &Kit, key: &'static str, words: String, does: &'static str, off: 
 
 /// What the room sees. `narrow` is the pane beside an editor: the same list and controls in a
 /// thin column, so Next is still one click away while a song is being corrected.
-fn live_pane(s: &App, k: &Kit, narrow: bool) -> El {
+fn live_pane(s: &App, k: &Kit, size: Option<Foot>) -> El {
     let live = s.live.as_ref();
     let state = s.output_state();
-    let footer = if narrow {
-        col().w_full().px(space::S3).py(space::S3).gap(space::S3).fill(theme::surf().side).child(picture(s, k, &state, NARROW - 2.0 * space::S3)).child(live::transport(s, k))
-    } else {
-        foot(picture(s, k, &state, PICTURE), el().grow(1.0).min_w(0.0).child(live::transport(s, k)))
+    let narrow = size.is_none();
+    let footer = match size {
+        None => col().w_full().px(space::S3).py(space::S3).gap(space::S3).fill(theme::surf().side).child(picture(s, k, &state, NARROW - 2.0 * space::S3)).child(live::transport(s, k, None)),
+        Some(size) => foot(size, picture(s, k, &state, size.picture), live::transport(s, k, Some(size))),
     };
     // Red while the words show, yellow while something hides them.
     let hidden = s.black || s.logo_on || s.text_hidden;
@@ -340,6 +395,7 @@ fn live_pane(s: &App, k: &Kit, narrow: bool) -> El {
         Pane {
             name: t::LIVE(),
             key: "live-slide",
+            keys: live.filter(|_| !narrow).map(|_| if s.held_shift && !s.held_ctrl { t::KEY_SHIFT_ARROWS() } else { t::KEY_ARROWS() }),
             detail: live.filter(|_| !narrow).map(|l| l.deck.title.clone()).unwrap_or_default(),
             trailing,
             deck: live.map(|l| &l.deck),
@@ -357,20 +413,23 @@ fn live_pane(s: &App, k: &Kit, narrow: bool) -> El {
 }
 
 fn plan_column(s: &App, k: &Kit, layer: &mut Vec<El>) -> El {
-    let tools = row()
-        .gap(space::S1)
-        .center_y()
-        .child(btn(t::PLAN_ADD()).icon(&icons::PLUS).icon_only().ghost().small().build(k, |s, tx| {
-            s.open_palette(Scope::All, "");
-            tx.blur();
-        }))
-        .child(crate::ui::plan::header_menu(s, k, layer));
-    col().key("plan").w(PLAN).h_full().min_h(0.0).fill(theme::surf().side).child(title_bar(k, t::KEYS_PLAN(), s.plan_title(), vec![tools])).child(crate::ui::plan::list(s, k, layer))
+    col()
+        .key("plan")
+        .w(PLAN)
+        .h_full()
+        .min_h(0.0)
+        .fill(theme::surf().side)
+        .child(title_bar(k, t::KEYS_PLAN(), None, s.plan_title(), vec![crate::ui::plan::header_menu(s, k, layer)]))
+        .child(crate::ui::plan::list(s, k, layer))
+        .child(hline())
+        .child(crate::ui::plan::add_bar(s, k, layer))
 }
 
 /// The whole window under the title bar and over the status bar.
 pub fn view(s: &App, cx: &mut Cx<App>, k: &Kit, layer: &mut Vec<El>) -> El {
-    let width = cx.layout_size("centre").map(|size| size[0]).unwrap_or(1366.0 - PLAN);
+    let area = cx.layout_size("centre");
+    let width = area.map(|size| size[0]).unwrap_or(1366.0 - PLAN);
+    let tall = area.map(|size| size[1]).unwrap_or(680.0);
     // An editor takes the Preview pane; what the room sees stays in view beside it.
     let editor = if s.editor.is_some() {
         Some(crate::ui::editor::view(s, k, width - NARROW - 1.0))
@@ -381,8 +440,31 @@ pub fn view(s: &App, cx: &mut Cx<App>, k: &Kit, layer: &mut Vec<El>) -> El {
     };
     let centre = row().key("centre").grow(1.0).min_w(0.0).h_full().min_h(0.0);
     let centre = match editor {
-        Some(editor) => centre.child(col().grow(1.0).min_w(0.0).h_full().min_h(0.0).fill(theme::surf().work).child(editor)).child(vline()).child(live_pane(s, k, true)),
-        None => centre.child(preview_pane(s, k)).child(vline()).child(live_pane(s, k, false)),
+        Some(editor) => centre.child(col().grow(1.0).min_w(0.0).h_full().min_h(0.0).fill(theme::surf().work).child(editor)).child(vline()).child(live_pane(s, k, None)),
+        None => {
+            let size = Foot::fit((width - 1.0) / 2.0, tall);
+            centre.child(preview_pane(s, k, size)).child(vline()).child(live_pane(s, k, Some(size)))
+        }
     };
     row().key("columns").w_full().grow(1.0).min_h(0.0).child(plan_column(s, k, layer)).child(vline()).child(centre)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::Foot;
+
+    #[test]
+    fn the_picture_grows_with_the_window_and_the_controls_keep_their_room() {
+        // A 1366 by 768 laptop: each pane is 554 points wide.
+        let laptop = Foot::fit(554.0, 680.0);
+        assert_eq!((laptop.picture, laptop.height), (228.0, 128.0));
+        assert!(laptop.controls >= super::CONTROLS);
+        // A wide screen: the picture stops at about a third of the height.
+        let wide = Foot::fit(1151.0, 960.0);
+        assert_eq!(wide.height, 345.0);
+        assert!(wide.picture > 2.5 * laptop.picture);
+        assert_eq!(wide.picture + wide.controls + 12.0, 1151.0 - 24.0);
+        // A pane too thin for both still gets a picture.
+        assert_eq!(Foot::fit(300.0, 400.0).picture, 220.0);
+    }
 }

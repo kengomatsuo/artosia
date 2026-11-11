@@ -69,13 +69,18 @@ fn on_key(s: &mut App, ev: &KeyEvent, tx: &mut Tx) -> bool {
     // A modifier on its own. Shift let go shows the slide picked while it was held. This is a
     // key event because Rune's `App::on_modifiers` is never called in a single-window app:
     // `src/window.rs` at the pinned rev wires `modifier_keys` and leaves `on_mods` unset.
+    // Which of Ctrl and Shift is down is kept for the hint bar; every key event carries it.
+    let held = (ev.mods.ctrl || ev.mods.cmd, ev.mods.shift);
+    let held_changed = held != (s.held_ctrl, s.held_shift);
+    (s.held_ctrl, s.held_shift) = held;
     if let Key::Modifier { modifier, pressed } = &ev.key {
         let shift = matches!(modifier, rune::Modifier::ShiftLeft | rune::Modifier::ShiftRight);
         if shift && !pressed && !ev.mods.shift && s.release_pick() {
             follow(s, tx);
             return true;
         }
-        return false;
+        // A change is handled so the window draws the new hints.
+        return held_changed;
     }
     let focused = tx.focused().is_some();
     let editing = s.editor.is_some() || s.notices.is_some();
@@ -115,6 +120,10 @@ fn on_key(s: &mut App, ev: &KeyEvent, tx: &mut Tx) -> bool {
         }
         Key::Function(3) => {
             s.toggle_logo();
+            return true;
+        }
+        Key::Function(6) => {
+            s.end_live();
             return true;
         }
         Key::Escape if s.palette.open => {
@@ -313,6 +322,29 @@ const SCENES: &[Scene] = &[
         s.open_song(1, None);
         s.select(1);
     }),
+    ("ctrl-held", |s| {
+        s.open_song(0, None);
+        s.show(1);
+        s.open_song(1, None);
+        s.select(1);
+        s.held_ctrl = true;
+    }),
+    ("shift-held", |s| {
+        s.open_song(0, None);
+        s.show(1);
+        s.pick_slide(2);
+        s.held_shift = true;
+    }),
+    ("ended", |s| {
+        s.start_service();
+        s.next();
+        s.end_live();
+    }),
+    ("adding", |s| {
+        s.open_palette_adding(Scope::Songs);
+        s.set_query("gr");
+    }),
+    ("add-menu", |s| s.add_menu = true),
     ("announcements-live", |s| {
         s.open_announcements();
         s.show(0);

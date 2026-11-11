@@ -279,6 +279,9 @@ pub struct Palette {
     pub picked: usize,
     /// How many songs matched before the list was cut, for the count line.
     pub total: usize,
+    /// Opened from the plan's Add button: Enter and a click put the row in the plan, and the
+    /// search stays open for the next one.
+    pub adding: bool,
 }
 
 const SONG_LIMIT: usize = 40;
@@ -323,6 +326,7 @@ fn section_aliases(tag: Tag) -> Vec<String> {
 impl App {
     pub fn open_palette(&mut self, scope: Scope, seed: &str) {
         self.palette.open = true;
+        self.palette.adding = false;
         self.palette.scope = scope;
         self.palette.chip = None;
         self.palette.query = TextEdit::new(seed);
@@ -335,10 +339,28 @@ impl App {
         self.search();
     }
 
+    /// The search as the plan's Add button opens it (owner, 2026-11-11: "Pressing add to plan
+    /// only opens the palette?").
+    pub fn open_palette_adding(&mut self, scope: Scope) {
+        self.open_palette(scope, "");
+        self.palette.adding = true;
+        self.add_menu = false;
+    }
+
     pub fn close_palette(&mut self) {
         self.palette.open = false;
+        self.palette.adding = false;
         self.palette.chip = None;
         self.palette.query.focused = false;
+    }
+
+    fn pick_into_plan(&mut self, hit: Hit) {
+        match hit {
+            Hit::Song { song, .. } | Hit::Section { song, .. } => self.add_song_to_plan(song),
+            Hit::Passage { reference, .. } => self.add_passage_to_plan(&reference),
+            Hit::Announcement { .. } => self.add_announcements_to_plan(),
+            _ => {}
+        }
     }
 
     /// Escape: the first press empties the search, the next one closes it.
@@ -351,7 +373,7 @@ impl App {
         self.set_query("");
     }
 
-    fn set_query(&mut self, text: &str) {
+    pub fn set_query(&mut self, text: &str) {
         self.palette.query = TextEdit::new(text);
         self.palette.query.focused = true;
         self.palette.query.set_caret(text.len());
@@ -716,7 +738,20 @@ impl App {
     /// Acts on the picked result.
     pub fn pick(&mut self, how: Pick) {
         let Some(hit) = self.palette.hits.get(self.palette.picked).cloned() else { return };
+        // While adding, the main choice of a row that can be planned is to plan it.
+        let joins = matches!(hit, Hit::Song { .. } | Hit::Section { .. } | Hit::Announcement { .. } | Hit::Passage { step: None, .. });
+        let how = if self.palette.adding && how == Pick::Open && joins { Pick::AddToPlan } else { how };
         self.log_pick(&hit, how);
+        if self.palette.adding && how == Pick::AddToPlan && joins {
+            // The field empties for the next one.
+            self.pick_into_plan(hit);
+            self.palette.query = TextEdit::new("");
+            self.palette.query.focused = true;
+            self.palette.chip = None;
+            self.palette.picked = 0;
+            self.search();
+            return;
+        }
         match hit {
             Hit::Group(_) => {}
             Hit::Song { song, line, .. } => {

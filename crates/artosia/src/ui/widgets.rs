@@ -85,6 +85,11 @@ impl Btn {
         self.height = 26.0;
         self
     }
+    /// A height worked out by the caller, for controls that fill the strip beside a picture.
+    pub fn height(mut self, height: f32) -> Self {
+        self.height = height;
+        self
+    }
     pub fn grow(mut self) -> Self {
         self.grow = true;
         self
