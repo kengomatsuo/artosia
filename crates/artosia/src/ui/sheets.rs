@@ -88,7 +88,7 @@ fn looks(s: &App, k: &Kit, layer: &mut Vec<El>) {
         .gap(space::S2)
         .child(chooser)
         .child(el().h(space::S1))
-        .child(section_label(k, t::LOOK_BACKGROUND()))
+        .child(section_label(k, t::DESIGN_BACKGROUND()))
         .child(grid)
         .child(setting(
             k,

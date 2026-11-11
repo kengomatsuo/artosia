@@ -363,6 +363,7 @@ text!(CMD_LOOP_DETAIL, "Show each one in turn until you stop", "Tayang bergantia
 // Top bar and status bar.
 text!(BTN_LOOK, "Design", "Design");
 text!(BTN_SETTINGS, "Settings", "Settings");
+text!(DESIGN_BACKGROUND, "Background", "Background");
 text!(DESIGN_TEXT, "Words", "Words");
 text!(SETTINGS_SONGS, "Songs", "Songs");
 text!(SETTINGS_ABOUT, "About", "About");

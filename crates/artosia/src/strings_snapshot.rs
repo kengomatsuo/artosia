@@ -142,6 +142,7 @@ pub fn dump() -> String {
     line(out, "CMD_LOOP_DETAIL", CMD_LOOP_DETAIL());
     line(out, "BTN_LOOK", BTN_LOOK());
     line(out, "BTN_SETTINGS", BTN_SETTINGS());
+    line(out, "DESIGN_BACKGROUND", DESIGN_BACKGROUND());
     line(out, "DESIGN_TEXT", DESIGN_TEXT());
     line(out, "SETTINGS_SONGS", SETTINGS_SONGS());
     line(out, "SETTINGS_ABOUT", SETTINGS_ABOUT());

@@ -79,7 +79,7 @@ pub(crate) fn topbar(s: &App, k: &Kit, insets: rune::ChromeInsets, wide: bool) -
         .press(k.c.pressed)
         .cursor(Cursor::Text)
         .child(icon(&rune_kit::glyphs::SEARCH, 16.0).color(k.c.text_muted).a11y_hidden())
-        .child(text(t::SEARCH_PLACEHOLDER()).font(type_::BODY).color(k.c.text_muted).a11y_hidden())
+        .child(text(t::SEARCH_PLACEHOLDER()).font(type_::BODY).color(k.c.text_muted).truncate().min_w(0.0).a11y_hidden())
         .child(spacer())
         .child(keycap(k, t::KEY_SEARCH(), false))
         .on_press(|s: &mut App| s.open_palette(Scope::All, ""));
