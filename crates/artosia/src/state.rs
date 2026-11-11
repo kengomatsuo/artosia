@@ -802,6 +802,12 @@ impl App {
         format!("{book} {verses}")
     }
 
+    /// Something with a field of its own has just opened: a dialog, the box that names a plan,
+    /// an editor. Whoever closes the search then must not drop the keyboard focus.
+    pub fn wants_focus(&self) -> bool {
+        self.sheet != Sheet::None || self.switcher.renaming.is_some() || self.editor.is_some() || self.notices.is_some()
+    }
+
     /// Today's date, for announcements that fill themselves with this week's birthdays.
     pub fn today(&self) -> Today<'static> {
         let time = rune::LocalTime::at((self.now * 1000.0) as i64);

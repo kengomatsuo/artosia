@@ -203,8 +203,14 @@ fn order_block(s: &App, k: &Kit, editor: &Editor) -> El {
         order = order.child(text(t::ORDER_EMPTY()).font(type_::SMALL).color(k.c.text_muted));
     }
     let mut add = row().key("order-add").w_full().gap(6.0).flex_wrap().center_y();
-    for (at, tag) in written.iter().enumerate() {
-        let tag = *tag;
+    // Each section once, however often it was written: a chorus typed twice is one chorus to add.
+    let mut offered: Vec<Tag> = Vec::new();
+    for tag in &written {
+        if !offered.contains(tag) {
+            offered.push(*tag);
+        }
+    }
+    for (at, tag) in offered.into_iter().enumerate() {
         add = add.child(chip(format!("order-add-{at}"), tag, false, true).on_press(move |s: &mut App| s.order_add(tag)));
     }
     let has_chorus = written.iter().any(|tag| tag.kind == SectionKind::Chorus) && written.iter().any(|tag| tag.kind == SectionKind::Verse);

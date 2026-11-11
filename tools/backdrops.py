@@ -135,6 +135,10 @@ def licence_of(meta):
     if text_of(meta.get("Restrictions", {}).get("value")):
         return None
     author = text_of(meta.get("Artist", {}).get("value"))
+    # Commons prints an unknown author twice in one field.
+    half = len(author) // 2
+    if author and len(author) % 2 == 0 and author[:half] == author[half:]:
+        author = author[:half]
     if not author or len(author) > 120:
         return None
     url = text_of(meta.get("LicenseUrl", {}).get("value")).replace("http://", "https://", 1)

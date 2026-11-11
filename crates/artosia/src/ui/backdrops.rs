@@ -101,7 +101,8 @@ fn chip(k: &Kit, key: &str, label: &str, mark: &'static Icon, on: bool, press: i
 }
 
 fn chips(s: &App, k: &Kit) -> El {
-    let mut flow = row().w_full().gap(space::S2).flex_wrap();
+    // One Tab stop; the arrows move among the subjects.
+    let mut flow = row().key("backdrop-chips").role("toolbar").label(t::BACKDROPS_TITLE()).w_full().gap(space::S2).flex_wrap().focus_group();
     flow = flow.child(chip(k, "all", t::BACKDROPS_ALL(), &ALL, s.backdrops.category.is_none(), |s| s.choose_backdrop_category(None)));
     for name in backdrops::CATEGORIES {
         let on = s.backdrops.category.as_deref() == Some(name);
@@ -177,7 +178,9 @@ fn grid(s: &App, k: &Kit) -> El {
             s.show_rows(rows);
             false
         });
-    col().key("backdrop-scroll").role("list").label(t::BACKDROPS_TITLE()).w_full().h(GRID).min_h(0.0).scroll(ScrollSpec { stick_bottom: false }).scroll_edge_fade(crate::theme::size::FADE).child(list).scroll_bar(k)
+    // The grid is one Tab stop too, with the arrows moving from picture to picture: three
+    // hundred pictures cannot each be a stop on the way to the one button under them.
+    col().key("backdrop-scroll").role("grid").focus_group().label(t::BACKDROPS_TITLE()).w_full().h(GRID).min_h(0.0).scroll(ScrollSpec { stick_bottom: false }).scroll_edge_fade(crate::theme::size::FADE).child(list).scroll_bar(k)
 }
 
 fn clock(seconds: f32) -> String {
@@ -186,7 +189,7 @@ fn clock(seconds: f32) -> String {
 }
 
 fn fact(k: &Kit, label: &str, value: &str) -> El {
-    row().w_full().gap(space::S2).child(el().w(64.0).child(text(label.to_string()).font(type_::SMALL).color(k.c.text_muted))).child(text(value.to_string()).font(type_::SMALL).color(k.c.text_base).wrap().grow(1.0))
+    row().w_full().gap(space::S2).child(el().w(64.0).child(text(label.to_string()).font(type_::SMALL).color(k.c.text_muted))).child(text(value.to_string()).font(type_::SMALL).color(k.c.text_base).truncate_middle().grow(1.0).min_w(0.0))
 }
 
 fn detail(s: &App, k: &Kit) -> El {

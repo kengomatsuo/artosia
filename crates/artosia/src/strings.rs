@@ -1572,6 +1572,7 @@ text!(CMD_BACKDROPS_DETAIL, "Ready pictures and videos to put behind the words",
 // Why a download or a file failed: clauses that finish "Could not ...: {why}".
 text!(WHY_OFFLINE, "there is no internet connection", "there is no internet connection");
 text!(WHY_SLOW, "it took too long", "it took too long");
+text!(WHY_BUSY, "the site is busy, try again in a minute", "the site is busy, try again in a minute");
 text!(WHY_BROKEN, "the connection broke on the way", "the connection broke on the way");
 text!(WHY_UNREADABLE, "what arrived could not be read", "what arrived could not be read");
 text!(WHY_NOT_BIBLE, "the file is not a Bible", "the file is not a Bible");

@@ -156,6 +156,7 @@ pub fn dump() -> String {
     line(out, "KEYS_OR", KEYS_OR());
     line(out, "WHY_OFFLINE", WHY_OFFLINE());
     line(out, "WHY_SLOW", WHY_SLOW());
+    line(out, "WHY_BUSY", WHY_BUSY());
     line(out, "WHY_BROKEN", WHY_BROKEN());
     line(out, "WHY_UNREADABLE", WHY_UNREADABLE());
     line(out, "WHY_NOT_BIBLE", WHY_NOT_BIBLE());

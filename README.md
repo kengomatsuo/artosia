@@ -9,8 +9,11 @@ Artosia puts song words, Bible verses and announcements on a church's projector.
 | | |
 |---|---|
 | One window | The plan on the left, what comes next in the middle, what the room sees on the right |
-| One search | Songs by title or by any line, with typos forgiven. Bible references. Every command |
-| Keyboard | Up and Down move through the slides, as in EasiSlides. `?` lists every key |
+| Preview is safe | Only Show, Enter and Next put a slide in front of the room. The Live tile switches the projector off and on |
+| A plan per service | Morning, Sunday school and afternoon each keep their own list, and a plan can have its own background |
+| One search | Songs by title or by any line, with typos forgiven. Bible references. Every command, so nothing needs the mouse |
+| Keyboard | Up and Down move through the slides, as in EasiSlides. C jumps to the chorus, a digit to that section. `?` lists every key |
+| Backdrops | 318 free photos and looping videos from Wikimedia Commons, fetched one at a time when chosen |
 | Projector | A second screen is found and filled by itself. Its program is separate, so the words stay up if the operator window stops |
 | Announcements | Slides that loop before the service, typed in or brought in from a PowerPoint file or a birthday list |
 | Phone | A web page on the same Wi-Fi moves the slides |

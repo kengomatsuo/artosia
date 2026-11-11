@@ -130,7 +130,7 @@ fn agent() -> ureq::Agent {
         .timeout_connect(Some(Duration::from_secs(8)))
         // A line that stalls for this long has dropped; a slow one that keeps sending is let be.
         .timeout_per_read(Some(Duration::from_secs(20)))
-        .user_agent("Artosia (free worship presentation app)")
+        .user_agent(concat!("Artosia/", env!("CARGO_PKG_VERSION"), " (free worship presentation app)"))
         .build()
         .into()
 }
@@ -149,7 +149,20 @@ pub fn download(url: &str, target: &Path, got: &AtomicU64, total: &AtomicU64, ca
     if let Some(folder) = target.parent() {
         std::fs::create_dir_all(folder).map_err(|error| Failure::Disk(error.to_string()))?;
     }
-    let mut response = agent().get(url).call().map_err(failure_of)?;
+    let mut response = match agent().get(url).call() {
+        // The picture site asks a busy caller to wait: one more try after a pause, and a person
+        // who presses again in a minute gets it. It answered 429 to the first real press here.
+        Err(ureq::Error::StatusCode(429 | 503)) => {
+            for _ in 0..30 {
+                if cancel.load(Ordering::Relaxed) {
+                    return Err(Failure::Cancelled);
+                }
+                std::thread::sleep(Duration::from_millis(100));
+            }
+            agent().get(url).call().map_err(failure_of)?
+        }
+        other => other.map_err(failure_of)?,
+    };
     total.store(response.body().content_length().unwrap_or(0), Ordering::Relaxed);
     let part = target.with_extension("part");
     let result = (|| {
@@ -211,6 +224,10 @@ impl App {
     /// Opens the browser: reads which backdrops and previews are already on disk.
     pub fn open_backdrops(&mut self) {
         self.sheet = Sheet::Backdrops;
+        // A preview that did not arrive last time is asked for again.
+        self.backdrops.failed.clear();
+        // The search box is what a person opens this for, so typing works at once.
+        self.backdrops.query.focused = true;
         self.refresh_backdrops();
     }
 
@@ -258,6 +275,10 @@ impl App {
         if self.backdrops.fetch.is_some() {
             return;
         }
+        if rune::is_headless() {
+            self.say(t::BACKDROPS_OFFLINE(), None);
+            return;
+        }
         let target = backdrops::local_path(&self.backdrop_media(), &entry);
         let fetch = Fetch { id: id.to_string(), got: Arc::default(), total: Arc::default(), cancel: Arc::default() };
         let (got, total, cancel) = (fetch.got.clone(), fetch.total.clone(), fetch.cancel.clone());
@@ -288,6 +309,11 @@ impl App {
     }
 
     fn fetch_previews(&mut self) {
+        // A headless run draws and tests the window and asks nothing of the internet: a test
+        // that replays its steps would ask the picture site for the same files again and again.
+        if rune::is_headless() {
+            return;
+        }
         let media = self.backdrop_media();
         let rows = self.backdrops.visible.clone();
         let ids: Vec<String> = (rows.start * COLUMNS..(rows.end * COLUMNS).min(self.backdrops.shown.len()))

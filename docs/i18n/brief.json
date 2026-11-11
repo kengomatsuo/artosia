@@ -10903,6 +10903,21 @@
   "notes": "A clause that follows a colon inside a longer sentence: it starts in lower case and has no full stop. It must read naturally after sentences such as the ones that say a Bible, a backdrop or the speech file could not be fetched."
  },
  {
+  "key": "WHY_BUSY",
+  "kind": "const",
+  "screen": "A toast at the bottom of the main window, or a line inside a dialog, after something could not be fetched from the internet or read from a file. The program first says what failed (for example that a Bible or a backdrop could not be fetched), then a colon, then this text as the reason.",
+  "moment": "The website answered that too many people are asking it for files right now.",
+  "role": "reason inside a sentence",
+  "does": "Gives the reason: the website is serving too many requests at the moment, and advises trying once more after about a minute.",
+  "budget": 44,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [],
+  "notes": "A clause that follows a colon inside a longer sentence: it starts in lower case and has no full stop. It must read naturally after sentences such as the ones that say a Bible, a backdrop or the speech file could not be fetched."
+ },
+ {
   "key": "WHY_BROKEN",
   "kind": "const",
   "screen": "A toast at the bottom of the main window, or a line inside a dialog, after something could not be fetched from the internet or read from a file. The program first says what failed (for example that a Bible or a backdrop could not be fetched), then a colon, then this text as the reason.",

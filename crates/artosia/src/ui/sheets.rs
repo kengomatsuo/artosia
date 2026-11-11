@@ -52,7 +52,11 @@ fn looks(s: &App, k: &Kit, layer: &mut Vec<El>, tall: f32) {
         );
     }
     let background = match &look.background {
-        Background::Image(path) | Background::Video(path) => file_name(path),
+        // A backdrop from the gallery is named by its title, not by the name its file was saved under.
+        Background::Image(path) | Background::Video(path) => {
+            let stem = std::path::Path::new(path).file_stem().map(|stem| stem.to_string_lossy().to_string()).unwrap_or_default();
+            s.backdrops.entry(&stem).map(|entry| entry.title.clone()).unwrap_or_else(|| file_name(path))
+        }
         Background::Camera(name) => name.clone(),
         _ => t::LOOK_NO_FILE().to_string(),
     };

@@ -9,6 +9,7 @@ use crate::strings as t;
 /// A call over the network.
 pub fn net(error: ureq::Error) -> String {
     match error {
+        ureq::Error::StatusCode(429 | 503) => t::WHY_BUSY().to_string(),
         ureq::Error::StatusCode(code) => t::why_status(code),
         ureq::Error::Timeout(_) => t::WHY_SLOW().to_string(),
         ureq::Error::HostNotFound | ureq::Error::ConnectionFailed | ureq::Error::Io(_) => t::WHY_OFFLINE().to_string(),
@@ -31,6 +32,7 @@ pub fn backdrop(failure: &crate::backdrops::Failure) -> String {
     use crate::backdrops::Failure;
     match failure {
         Failure::Offline => t::WHY_OFFLINE().to_string(),
+        Failure::Server(429 | 503) => t::WHY_BUSY().to_string(),
         Failure::Server(code) => t::why_status(*code),
         Failure::Disk(_) => t::WHY_DISK().to_string(),
         Failure::Empty => t::WHY_DAMAGED().to_string(),

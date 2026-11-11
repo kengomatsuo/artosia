@@ -87,7 +87,7 @@ fn fetch(path: &Path) -> Result<(), String> {
     let agent: ureq::Agent = ureq::Agent::config_builder()
         .timeout_connect(Some(Duration::from_secs(8)))
         .timeout_global(Some(Duration::from_secs(1800)))
-        .user_agent("Artosia (free worship presentation app)")
+        .user_agent(concat!("Artosia/", env!("CARGO_PKG_VERSION"), " (free worship presentation app)"))
         .build()
         .into();
     let mut response = agent.get(URL).call().map_err(crate::why::net)?;

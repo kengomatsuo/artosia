@@ -3105,5 +3105,10 @@
   "text": "{passage} atau kata dalam ayatnya",
   "back": "{passage} or a word in its verse",
   "why": "Example first, then the alternative"
+ },
+ "WHY_BUSY": {
+  "text": "situs ramai, coba lagi sekitar semenit",
+  "back": "the website is busy, try again in about a minute",
+  "why": "Lower-case clause after a colon, no full stop; 'ramai' is how a busy site is said"
  }
 }

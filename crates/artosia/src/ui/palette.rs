@@ -165,7 +165,7 @@ fn hit_row(s: &App, k: &Kit, index: usize, hit: &Hit) -> El {
         .on_press_tx(move |s: &mut App, tx: &mut Tx| {
             s.palette.picked = index;
             s.pick(Pick::Open);
-            if !s.palette.open {
+            if !s.palette.open && !s.wants_focus() {
                 tx.blur();
             }
         })
@@ -437,7 +437,11 @@ fn input_row(s: &App, k: &Kit) -> El {
                         Pick::Open
                     };
                     s.pick(how);
-                    if !s.palette.open {
+                    // A pick that opened a dialog or an editor leaves the focus to it. A blur
+                    // here ran after the new field had asked for focus, in a real window only:
+                    // the box that names a plan and the gallery's search took no typing until
+                    // they were clicked (found pressing real keys, 2026-11-11).
+                    if !s.palette.open && !s.wants_focus() {
                         tx.blur();
                     }
                     return true;

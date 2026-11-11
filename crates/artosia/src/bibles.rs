@@ -139,7 +139,7 @@ fn agent() -> ureq::Agent {
     ureq::Agent::config_builder()
         .timeout_connect(Some(Duration::from_secs(8)))
         .timeout_global(Some(Duration::from_secs(120)))
-        .user_agent("Artosia (free worship presentation app)")
+        .user_agent(concat!("Artosia/", env!("CARGO_PKG_VERSION"), " (free worship presentation app)"))
         .build()
         .into()
 }

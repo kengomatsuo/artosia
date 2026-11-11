@@ -90,6 +90,14 @@ H.264 in MP4, which the release plays for certain, is not offered: Commons does 
 - Commons may delete or rename a file. The press then fails with a message, and files already downloaded keep working.
 - Whether a Commons CC0 mark is right for every file is the uploader's claim and Commons' check, not Artosia's.
 
+## Asking Wikimedia politely (2026-11-11)
+
+- The first real press of Use was answered 429 while tests on the same PC had asked for many files in a few minutes. `download` now waits three seconds and asks once more on 429 or 503, and the toast then says the site is busy instead of a number.
+- A preview that did not arrive is asked for again the next time the gallery opens.
+- A headless run asks the internet for nothing: a test that replays its steps would fetch the same files again and again.
+- The User-Agent is `Artosia/<version> (free worship presentation app)`. Wikimedia's policy asks for `<client name>/<version> (<contact information>)` and answers 403 to a generic one. Contact information is left out, because it would be the owner's address or account; adding the project's public address is the owner's call. (https://foundation.wikimedia.org/wiki/Policy:Wikimedia_Foundation_User-Agent_Policy, read 2026-11-11)
+- Checked in a real window on 2026-11-11: the gallery opened from search with its search box ready, nine candle previews arrived, Use fetched a 236 KB picture, and Design opened again with the words over it.
+
 ## What a video backdrop cost here (2026-11-11)
 
 Two catalogue files, fetched from Commons, played by `target/release/examples/loop.exe` until the position had wrapped twice, then measured for 20 seconds. Intel Iris Xe laptop; the window was minimised, so these are decode and upload costs and are lower than the drawn figures in [output.md](output.md).

@@ -332,6 +332,7 @@ A tester who could use only the keyboard and saw only screenshots failed two of 
 | Preview kept the old plan's item after a switch | `enter_plan` left what a person had opened | What Preview holds leaves with its plan, and with nothing live the new plan's first item opens |
 | Alt Enter put a slide in front of the room | Enter ignored its modifiers | Enter with Alt held does nothing |
 | Letters landed in the wrong field | The test harness sent the next key while a long text was still being typed | `tools/blind.py` waits for the text's length |
+| A dialog opened from search took no typing until it was clicked (real window only) | The search blurred the focus after the pick, which ran after the new dialog's field had asked for it | The search leaves the focus alone when its pick opened a dialog, the box that names a plan or an editor (`App::wants_focus`) |
 | "Ctrl held" stayed lit | A headless script never sends a key's release | Headless runs no longer set the badge from key events |
 
 Found while pressing real keys afterwards: **Enter did not start a new line in the lyrics box**, in any release so far. Rune at the pinned rev treats a field of several lines as a chat composer (Return submits, Shift Return breaks the line; `edit/input.rs`). `ui/widgets.rs` `enter_breaks_line` is called first in the `on_key` of every `TextArea` and passes Enter on as Shift Return.
