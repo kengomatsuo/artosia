@@ -120,12 +120,7 @@ text!(KEY_SEARCH, "Ctrl K", "Ctrl K");
 text!(KEY_ENTER, "Enter", "Enter");
 text!(KEY_SHOW_NOW, "Ctrl Enter", "Ctrl Enter");
 text!(KEY_ADD, "Shift Enter", "Shift Enter");
-text!(KEY_NEXT, "Space", "Spasi");
-text!(KEY_BACK, "Up", "Panah atas");
-text!(KEY_DOWN, "Down", "Panah bawah");
-text!(KEY_EDIT, "Ctrl E", "Ctrl E");
 text!(KEY_SAVE, "Ctrl S", "Ctrl S");
-text!(KEY_KEYS, "?", "?");
 
 pub fn ctrl_digit(digit: usize) -> String {
     if let Some(text) = say("ctrl_digit", None, None, &[("digit", text_arg(digit))]) {
@@ -208,6 +203,8 @@ pub fn songs(count: usize) -> String {
     if count == 1 { "1 song".to_string() } else { format!("{count} songs") }
 }
 
+/// The counted noun the plural tests of every language are written against.
+#[allow(dead_code)]
 pub fn slides(count: usize) -> String {
     if let Some(text) = say("slides", None, Some(count), &[]) {
         return text;
@@ -361,8 +358,6 @@ text!(CMD_LOOP_DETAIL, "Show each one in turn until you stop", "Tayang bergantia
 text!(BTN_LOOK, "Look", "Tampilan");
 text!(BTN_SCREENS, "Screens", "Layar");
 text!(BTN_PHONE, "Phone", "Remote HP");
-text!(HINT_NEXT, "Next slide", "Lanjut");
-text!(HINT_BACK, "Back", "Kembali");
 text!(HINT_KEYS, "Keys", "Tombol");
 text!(OUTPUT_OFF, "The projector is off", "Layar dimatikan");
 text!(OUTPUT_PRACTICE, "Practice mode: the projector is off", "Mode latihan: layar tidak dinyalakan");
@@ -487,7 +482,6 @@ text!(BTN_ADD_TO_PLAN, "Add to plan", "Tambah ke acara");
 text!(BTN_EDIT, "Edit", "Edit");
 text!(BTN_NEXT_VERSE, "Add the next verse", "Tambah ayat berikutnya");
 text!(DECK_EMPTY, "This has no slides", "Belum ada slide");
-text!(BTN_BACK_TO_LIVE, "Back to live", "Ke yang tayang");
 text!(BTN_LOOP_START, "Start the loop", "Putar otomatis");
 text!(BTN_LOOP_STOP, "Stop the loop", "Hentikan putaran");
 text!(PANE_PREVIEW, "Preview", "Pratinjau");
@@ -495,19 +489,14 @@ text!(LIVE, "Live", "Tayang");
 
 // Live column.
 text!(BTN_NEXT, "Next", "Lanjut");
-text!(BTN_BACK, "Back", "Kembali");
 text!(BTN_CLEAR_TEXT, "Clear text", "Sembunyikan teks");
 text!(BTN_BLACK, "Black", "Layar hitam");
 text!(BTN_LOGO, "Logo", "Logo");
 text!(LOGO_MISSING, "Choose a logo picture in Look first", "Pasang gambar logo di Tampilan dulu");
-text!(STATE_ON_SCREEN, "On screen", "Tayang");
 text!(STATE_BLACK, "Screen is black", "Layar sedang hitam");
 text!(STATE_LOGO, "Logo is showing", "Logo sedang tayang");
-text!(STATE_TEXT_HIDDEN, "Text is hidden", "Teks disembunyikan");
-text!(STATE_NOTHING, "Nothing", "Belum ada");
 text!(STATE_MESSAGE, "Message showing", "Pesan tampil");
 text!(STATE_STAGE_MESSAGE, "Stage message showing", "Pesan pemusik tampil");
-text!(HINT_SELECT, "Pick a slide, let go to show", "Pilih slide, lepas untuk tayang");
 text!(STAGE_MESSAGE_DETAIL, "Show this message on the stage screen", "Tampil di monitor panggung saja");
 text!(HEARD_NOTHING, "Nothing heard yet", "Belum ada yang dikenali");
 
@@ -521,28 +510,19 @@ pub fn state_countdown(clock: &str) -> String {
     format!("Countdown {clock}")
 }
 text!(LIVE_NOTHING, "Nothing is on the projector", "Nothing is on the projector");
-text!(NEXT_NOTHING, "Nothing open", "Belum ada yang dibuka");
 text!(BTN_SHOW, "Show", "Tayangkan");
-text!(BTN_END, "End", "End");
-text!(LIVE_ENDED, "Taken off the projector", "Taken off the projector");
+text!(BTN_PREV, "Prev", "Prev");
+text!(BTN_NO_TEXT, "No text", "No text");
+text!(STATE_OFF, "Off", "Off");
+text!(TIP_SHOW, "Send Preview to Live", "Send Preview to Live");
+text!(TIP_PREV, "Previous slide", "Previous slide");
+text!(TIP_NEXT, "Next slide", "Next slide");
+text!(TIP_LIVE, "Projector on or off", "Projector on or off");
 text!(BTN_PREVIOUS_ITEM, "Previous item", "Previous item");
 text!(BTN_NEXT_ITEM, "Next item", "Next item");
-pub fn after_this(title: &str) -> String {
-    if let Some(text) = say("after_this", None, None, &[("title", text_arg(title))]) {
-        return text;
-    }
-    if indonesian() {
-        return format!("Then: {title}");
-    }
-    format!("Then: {title}")
-}
-text!(KEY_ARROWS, "Arrows", "Arrows");
-text!(KEY_CTRL_ARROWS, "Ctrl arrows", "Ctrl arrows");
-text!(KEY_SHIFT_ARROWS, "Shift arrows", "Shift arrows");
 text!(HELD_CTRL, "Ctrl held", "Ctrl held");
 text!(HELD_SHIFT, "Shift held", "Shift held");
 text!(HINT_RING, "Move in Preview", "Move in Preview");
-text!(HINT_SHOW_RING, "Show Preview", "Show Preview");
 text!(HINT_PICK, "Pick a live slide", "Pick a live slide");
 text!(HINT_LET_GO, "Let go to show it", "Let go to show it");
 text!(HINT_CANCEL, "Cancel", "Cancel");
@@ -1044,15 +1024,15 @@ text!(KEYS_FINDING, "Finding", "Mencari");
 text!(KEYS_PLAN, "The plan", "Acara");
 text!(KEYS_EDITING, "Editing", "Editor lagu");
 const KEYS_SHOWING_ROWS_EN: [(&str, &str); 17] = [
-    ("Down, Space", "Next slide"),
+    ("Down Space", "Next slide"),
     ("Up", "Previous slide"),
     ("Left", "First slide of the live song"),
     ("Right", "Last slide of the live song"),
-    ("Shift arrow", "Pick a slide of the live song, let go to show it"),
-    ("Ctrl arrow", "Move the ring in Preview, Enter shows it"),
+    ("Shift Up Down", "Pick a slide of the live song, let go to show it"),
+    ("Ctrl Up Down", "Move the ring in Preview, Enter shows it"),
     ("Enter", "Show the slide with the ring"),
     ("1 to 9", "Jump to that section of the live song"),
-    ("C, V, B", "Jump to the chorus, the next verse, the bridge"),
+    ("C V B", "Jump to the chorus, the next verse, the bridge"),
     ("Ctrl 1 to 9", "Put the ring on that section in Preview"),
     ("Esc", "Bring the live song into Preview"),
     ("F1", "Clear the text"),
@@ -1060,7 +1040,7 @@ const KEYS_SHOWING_ROWS_EN: [(&str, &str); 17] = [
     ("F3", "Logo"),
     ("F4", "Bring what the listener heard into Preview"),
     ("F5", "Bring the announcements into Preview"),
-    ("F6", "Take the live item off the projector"),
+    ("F6", "Switch the projector on or off"),
 ];
 const KEYS_SHOWING_ROWS_ID: [(&str, &str); 17] = [
     ("Panah bawah, Spasi", "Tayangkan slide berikutnya"),
@@ -1079,8 +1059,22 @@ const KEYS_SHOWING_ROWS_ID: [(&str, &str); 17] = [
     ("F3", "Tayangkan logo saja"),
     ("F4", "Bawa ayat atau lagu yang dikenali ke pratinjau"),
     ("F5", "Bawa pengumuman ke pratinjau"),
-    ("F6", "Take the live item off the projector"),
+    ("F6", "Switch the projector on or off"),
 ];
+/// The key column of each group of the keys sheet. Keys are drawn as the keyboard prints
+/// them and are never translated; only the second column is.
+pub fn KEYS_SHOWING_KEYS() -> &'static [(&'static str, &'static str)] {
+    &KEYS_SHOWING_ROWS_EN
+}
+pub fn KEYS_FINDING_KEYS() -> &'static [(&'static str, &'static str)] {
+    &KEYS_FINDING_ROWS_EN
+}
+pub fn KEYS_PLAN_KEYS() -> &'static [(&'static str, &'static str)] {
+    &KEYS_PLAN_ROWS_EN
+}
+pub fn KEYS_EDITING_KEYS() -> &'static [(&'static str, &'static str)] {
+    &KEYS_EDITING_ROWS_EN
+}
 pub fn KEYS_SHOWING_ROWS() -> &'static [(&'static str, &'static str)] {
     if language() > INDONESIAN {
         return languages::rows(language(), "KEYS_SHOWING_ROWS", &KEYS_SHOWING_ROWS_EN);
@@ -1088,8 +1082,8 @@ pub fn KEYS_SHOWING_ROWS() -> &'static [(&'static str, &'static str)] {
     if indonesian() { &KEYS_SHOWING_ROWS_ID } else { &KEYS_SHOWING_ROWS_EN }
 }
 const KEYS_FINDING_ROWS_EN: [(&str, &str); 7] = [
-    ("Any letter", "Search songs, the Bible and commands"),
-    ("Ctrl K, /", "Search, or browse every song"),
+    ("A to Z", "Search songs, the Bible and commands"),
+    ("Ctrl K or /", "Search, or browse every song"),
     ("Enter", "Open the picked result"),
     ("Ctrl Enter", "Show it now"),
     ("Shift Enter", "Add it to the plan, next in line"),
@@ -1114,7 +1108,7 @@ pub fn KEYS_FINDING_ROWS() -> &'static [(&'static str, &'static str)] {
 const KEYS_PLAN_ROWS_EN: [(&str, &str); 4] = [
     ("Tab", "Bring the next plan item into Preview"),
     ("Shift Tab", "Bring the item before it into Preview"),
-    ("Alt Up, Down", "Move the Preview item earlier or later"),
+    ("Alt Up Down", "Move the Preview item earlier or later"),
     ("Delete", "Take the Preview item out of the plan"),
 ];
 const KEYS_PLAN_ROWS_ID: [(&str, &str); 4] = [

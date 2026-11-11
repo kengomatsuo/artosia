@@ -124,7 +124,7 @@ fn on_key(s: &mut App, ev: &KeyEvent, tx: &mut Tx) -> bool {
             return true;
         }
         Key::Function(6) => {
-            s.end_live();
+            s.toggle_live();
             return true;
         }
         // Ctrl and a digit put the Preview ring on that section.
@@ -373,10 +373,11 @@ const SCENES: &[Scene] = &[
         s.pick_slide(2);
         s.held_shift = true;
     }),
-    ("ended", |s| {
+    ("off-air", |s| {
         s.start_service();
         s.next();
-        s.end_live();
+        s.open_song(1, None);
+        s.toggle_live();
     }),
     ("adding", |s| {
         s.open_palette_adding(Scope::Songs);

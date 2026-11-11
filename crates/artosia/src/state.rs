@@ -171,8 +171,6 @@ pub fn marker_letter(tag: artosia_core::song::Tag) -> char {
 
 pub enum Undo {
     PlanItem { at: usize, item: PlanItem },
-    /// The live item was taken off the projector with End.
-    Live(Box<LiveDeck>),
     Song(Box<Song>),
     Announcement(Announcement),
     /// An editor closed with unsaved changes.
@@ -331,6 +329,9 @@ pub struct App {
     /// see where they were and bring it back into Preview.
     pub history: Vec<LiveDeck>,
     pub history_menu: bool,
+    /// The Live switch is off: the Live list keeps what it holds and the projector shows none
+    /// of it. Every start begins on, so a switch left off last week is not a trap this week.
+    pub off_air: bool,
     /// The plan's Add menu is open.
     pub add_menu: bool,
     /// The slide the loop is waiting on, and when it moves on, on the app clock.
@@ -504,6 +505,7 @@ impl App {
             held_shift: false,
             history: Vec::new(),
             history_menu: false,
+            off_air: false,
             add_menu: false,
             loop_at: (0, 0.0),
             stream: None,
@@ -873,32 +875,33 @@ impl App {
         }
     }
 
-    /// Takes the live item off the projector. The background stays, the Live pane empties and
-    /// the place in the plan is kept; the toast puts it back (owner, 2026-11-11: "Where is the
-    /// end live button???").
-    pub fn end_live(&mut self) {
-        let Some(live) = self.live.take() else { return };
-        if let Some(id) = live.item {
-            self.resume = Some(id);
-        }
-        self.live_pick = None;
-        self.looping = false;
-        self.history.retain(|shown| shown.deck.source != live.deck.source);
-        self.history.push(LiveDeck { deck: live.deck.clone(), item: live.item, index: live.index });
-        self.say(t::LIVE_ENDED(), Some(Undo::Live(Box::new(live))));
+    /// Whether the room sees what the Live list holds.
+    pub fn on_air(&self) -> bool {
+        !self.off_air && !self.settings.projector_off
     }
 
-    /// The plan item that comes into Preview once the one there is shown.
-    pub fn after_preview_title(&self) -> Option<String> {
-        let mut id = self.open.as_ref()?.item.or(self.resume)?;
-        for _ in 0..self.plan.items.len() {
-            let item = self.plan.next_showable(id)?;
-            if self.deck_for(&item.entry).is_some_and(|deck| !deck.slides.is_empty()) {
-                return Some(self.entry_title(&item.entry));
+    /// The Live switch. Show moves Preview into the Live list; this decides whether the
+    /// projector shows it (owner, 2026-11-11: "Show should not be same as live, it should only
+    /// move to live view but not force live on"). EasyWorship does the same: "To turn off the
+    /// live output, click the LIVE button". Off, the projector's window is gone and the list
+    /// keeps its place; on, it comes back where the Screens dialog put it.
+    pub fn toggle_live(&mut self) {
+        if self.on_air() {
+            self.off_air = true;
+        } else {
+            self.off_air = false;
+            if self.settings.projector_off {
+                self.settings.projector_off = false;
+                self.touch_settings();
             }
-            id = item.id;
         }
-        None
+        self.link.place(self.output_options());
+    }
+
+    /// The title of the plan item before or after the one in Preview.
+    pub fn walk_title(&self, forward: bool) -> Option<String> {
+        let id = self.walk_target(forward)?;
+        self.plan.items.iter().find(|item| item.id == id).map(|item| self.entry_title(&item.entry))
     }
 
     /// Shift and an arrow: moves a ring through the live deck and leaves the projector alone.
@@ -1310,7 +1313,7 @@ impl App {
             stage: self.settings.stage_screen,
             stage_window: self.settings.stage_window,
             here: self.settings.projector_here,
-            off: self.settings.projector_off,
+            off: self.settings.projector_off || self.off_air,
         }
     }
 
@@ -1457,32 +1460,34 @@ mod tests {
     }
 
     #[test]
-    fn end_takes_the_live_item_off_and_the_toast_puts_it_back() {
+    fn the_live_switch_keeps_the_list_and_takes_the_projector_away() {
         let mut app = App::practice();
         let (first, second) = (song_item(&app, 0), song_item(&app, 1));
         app.open_plan_item(first);
         app.show(1);
-        app.end_live();
-        assert!(app.live.is_none());
-        assert_eq!(app.output_state().slide, None, "the projector has no words");
-        // The place in the plan is kept: what waited in Preview is still next.
-        assert_eq!(app.open.as_ref().and_then(|open| open.item), Some(second));
-        app.undo();
+        assert!(app.on_air());
+        app.toggle_live();
+        assert!(!app.on_air() && app.output_options().off);
+        // The list keeps its place, and Show still moves Preview into it.
         assert_eq!(live_at(&app), Some((Some(first), 1)));
-        // With nothing live there is nothing to end, and no toast to undo by mistake.
-        app.end_live();
-        app.toast = None;
-        app.end_live();
-        assert!(app.toast.is_none());
+        app.enter();
+        assert_eq!(live_at(&app), Some((Some(second), 0)));
+        assert!(!app.on_air(), "Show does not switch the projector on");
+        app.toggle_live();
+        assert!(app.on_air() && !app.output_options().off);
+        // Switched off in the Screens dialog, the Live switch turns it back on for good.
+        app.settings.projector_off = true;
+        app.toggle_live();
+        assert!(app.on_air() && !app.settings.projector_off);
     }
 
     #[test]
-    fn preview_names_what_comes_after_it() {
+    fn preview_names_the_plan_items_beside_it() {
         let mut app = App::practice();
         let (first, second) = (song_item(&app, 0), song_item(&app, 1));
         app.open_plan_item(first);
         let after = app.plan.items.iter().find(|item| item.id == second).map(|item| app.entry_title(&item.entry));
-        assert_eq!(app.after_preview_title(), after);
+        assert_eq!(app.walk_title(true), after);
         assert_eq!(app.walk_target(true), Some(second));
     }
 

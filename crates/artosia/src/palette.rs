@@ -109,7 +109,7 @@ impl Command {
             Command::NewPlan => t::PLAN_NEW(),
             Command::Keys => t::CMD_KEYS(),
             Command::StartService => t::CMD_START(),
-            Command::Next => t::HINT_NEXT(),
+            Command::Next => t::TIP_NEXT(),
             Command::Previous => t::CMD_PREVIOUS(),
             Command::Black => t::BTN_BLACK(),
             Command::ClearText => t::BTN_CLEAR_TEXT(),

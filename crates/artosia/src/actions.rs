@@ -157,10 +157,6 @@ impl App {
                 self.plan.items.insert(at.min(self.plan.items.len()), item);
                 self.touch_plan();
             }
-            Some(Undo::Live(live)) => {
-                self.live = Some(*live);
-                self.requeue();
-            }
             Some(Undo::Song(song)) => {
                 if self.store.restore_song(&song).is_ok() {
                     self.reload_songs();
@@ -1190,7 +1186,10 @@ impl App {
         self.settings.stage_screen = options.stage;
         self.settings.stage_window = options.stage_window;
         self.settings.projector_here = options.here;
-        self.settings.projector_off = options.off;
+        // The Live switch is for this sitting only; it is never saved as the screen's setting.
+        if !self.off_air {
+            self.settings.projector_off = options.off;
+        }
         self.touch_settings();
         self.identify = false;
         self.link.place(options);

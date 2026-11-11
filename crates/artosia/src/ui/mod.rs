@@ -174,34 +174,27 @@ pub(crate) fn statusbar(s: &App, k: &Kit) -> El {
                 .radius(k.radius.sm)
                 .hover(k.c.hover)
                 .cursor(Cursor::Pointer)
-                .child(key_hint(k, t::KEY_KEYS(), t::HINT_KEYS()))
+                .gap(6.0)
+                .child(icon(&icons::KEYBOARD, 16.0).color(k.c.text_muted).a11y_hidden())
+                .child(key_hint(k, "?", t::HINT_KEYS()))
                 .on_press(|s: &mut App| s.sheet = Sheet::Keys),
         )
 }
 
-/// What the keys do right now. The arrows change their meaning with Ctrl or Shift held and
-/// while nothing is live, so the bar is rewritten for each (owner, 2026-11-11: "There's no
-/// guide at all that shows the hold ctrl controls the preview").
+/// What the keys do while Ctrl or Shift is held. A held key changes what the arrows mean, so
+/// the bar says so for as long as it is held and no longer; at rest every key is printed on
+/// the control it presses (owner, 2026-11-11: a list of keys at the bottom "doesn't really
+/// help").
 fn key_hints(s: &App, k: &Kit) -> Vec<El> {
     let held = |words: &str| crate::ui::widgets::state_pill(words, theme::accent(), rune::Color::WHITE);
     let live = s.live.is_some();
     if s.held_shift && !s.held_ctrl && live {
-        return vec![held(t::HELD_SHIFT()), key_hint(k, t::KEY_ARROWS(), t::HINT_PICK()), key_hint(k, "Shift", t::HINT_LET_GO()), key_hint(k, "Esc", t::HINT_CANCEL())];
+        return vec![held(t::HELD_SHIFT()), key_hint(k, "Up Down", t::HINT_PICK()), key_hint(k, "Shift", t::HINT_LET_GO()), key_hint(k, "Esc", t::HINT_CANCEL())];
     }
     if s.held_ctrl && !s.held_shift && live {
-        return vec![held(t::HELD_CTRL()), key_hint(k, t::KEY_ARROWS(), t::HINT_RING()), key_hint(k, t::KEY_ENTER(), t::HINT_SHOW_RING()), key_hint(k, "Tab", t::BTN_NEXT_ITEM())];
+        return vec![held(t::HELD_CTRL()), key_hint(k, "Up Down", t::HINT_RING()), key_hint(k, "Enter", t::BTN_SHOW())];
     }
-    if !live {
-        // With nothing on the projector the arrows move in Preview by themselves.
-        return vec![key_hint(k, t::KEY_ARROWS(), t::HINT_RING()), key_hint(k, t::KEY_ENTER(), t::BTN_SHOW()), key_hint(k, "Tab", t::BTN_NEXT_ITEM())];
-    }
-    vec![
-        key_hint(k, t::KEY_DOWN(), t::HINT_NEXT()),
-        key_hint(k, t::KEY_BACK(), t::HINT_BACK()),
-        key_hint(k, "Shift", t::HINT_SELECT()),
-        key_hint(k, "Ctrl", t::HINT_RING()),
-        key_hint(k, t::KEY_ENTER(), t::HINT_SHOW_RING()),
-    ]
+    Vec::new()
 }
 
 pub(crate) fn toast(s: &App, k: &Kit) -> Option<El> {

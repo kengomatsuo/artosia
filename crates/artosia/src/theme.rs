@@ -217,6 +217,13 @@ pub mod icons {
     icon!(LOGO, "a-logo", r#"<path d="M1.723 14.48L3.346 14.48L5.059 10.24L9.147 10.24L8.5 8.64L5.705 8.64L8 2.96L12.654 14.48L14.277 14.48A8 8 0 1 0 1.723 14.48Z" fill="currentColor"/>"#);
     icon!(MIC, "a-mic", r#"<rect x="6" y="1.8" width="4" height="7.4" rx="2" stroke="currentColor"/><path d="M3.5 7.5C3.5 10 5.5 11.8 8 11.8C10.5 11.8 12.5 10 12.5 7.5M8 11.8V14.2M5.8 14.2H10.2" stroke="currentColor" stroke-linecap="round"/>"#);
     icon!(GRIP, "a-grip", r#"<circle cx="6" cy="4" r="1.1" fill="currentColor"/><circle cx="10" cy="4" r="1.1" fill="currentColor"/><circle cx="6" cy="8" r="1.1" fill="currentColor"/><circle cx="10" cy="8" r="1.1" fill="currentColor"/><circle cx="6" cy="12" r="1.1" fill="currentColor"/><circle cx="10" cy="12" r="1.1" fill="currentColor"/>"#);
+    icon!(SPACE_BAR, "a-space-bar", r#"<path d="M2.5 6.5V10H13.5V6.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>"#);
+    icon!(SEND, "a-send", r#"<path d="M2.5 8H10.5M7.5 4.5L11 8L7.5 11.5M13.5 3V13" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>"#);
+    icon!(ON_AIR, "a-on-air", r#"<circle cx="8" cy="8" r="5.5" stroke="currentColor"/><circle cx="8" cy="8" r="2.6" fill="currentColor"/>"#);
+    icon!(OFF_AIR, "a-off-air", r#"<circle cx="8" cy="8" r="5.5" stroke="currentColor"/>"#);
+    icon!(NO_TEXT, "a-no-text", r#"<path d="M4 4.5H12M8 4.5V12" stroke="currentColor" stroke-linecap="round"/><path d="M2.5 13.5L13.5 2.5" stroke="currentColor" stroke-linecap="round"/>"#);
+    icon!(BLACK_SCREEN, "a-black-screen", r#"<rect x="2" y="3.5" width="12" height="8" rx="1.5" fill="currentColor"/><path d="M6 13.5H10" stroke="currentColor" stroke-linecap="round"/>"#);
+    icon!(BADGE, "a-badge", r#"<circle cx="8" cy="7" r="4.5" stroke="currentColor"/><path d="M6 10.8L5 14L8 12.6L11 14L10 10.8" stroke="currentColor" stroke-linejoin="round"/>"#);
     icon!(HISTORY, "a-history", r#"<circle cx="8" cy="8" r="5.5" stroke="currentColor"/><path d="M8 5V8L10 9.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>"#);
     icon!(ITEM_BEFORE, "a-item-before", r#"<path d="M4 3.5H12" stroke="currentColor" stroke-linecap="round"/><path d="M8 6.5L11.5 12H4.5Z" stroke="currentColor" stroke-linejoin="round"/>"#);
     icon!(ITEM_AFTER, "a-item-after", r#"<path d="M4 12.5H12" stroke="currentColor" stroke-linecap="round"/><path d="M8 9.5L4.5 4H11.5Z" stroke="currentColor" stroke-linejoin="round"/>"#);

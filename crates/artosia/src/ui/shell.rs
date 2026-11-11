@@ -20,15 +20,16 @@ use crate::state::{App, section_starts};
 use crate::strings as t;
 use crate::theme::{self, icons, space, type_};
 use crate::ui::live;
-use crate::ui::widgets::{btn, keycap, state_pill, tag_chip};
+use crate::ui::widgets::{btn, keycaps, state_pill, tag_chip, tile};
 
 /// Height of a row in the two lists: room for four lines of words.
 const ROW: f32 = 76.0;
 const PLAN: f32 = 256.0;
-/// The least width the controls beside a picture need: two buttons side by side with the
-/// longer Indonesian words.
+/// The least width the controls beside a picture need: four tiles side by side.
 const CONTROLS: f32 = 290.0;
-/// The least height of the strip under a list: Next at 60 points over two rows of 38.
+/// The most they take: past this a tile stops being a button and becomes a wall.
+const WIDEST: f32 = 440.0;
+/// The least height of the strip under a list: two rows of tiles 72 points high.
 const LOWEST: f32 = 152.0;
 /// Width of the Live pane while an editor has the rest of the window.
 const NARROW: f32 = 288.0;
@@ -52,12 +53,13 @@ impl Foot {
         let highest = (tall * 0.36).clamp(128.0, 380.0);
         let picture = (inner - space::S3 - CONTROLS).min(highest * 16.0 / 9.0).max(220.0).round();
         // The controls never get shorter than this, so every button stays an easy target.
-        Foot { picture, height: (picture * 9.0 / 16.0).round().max(LOWEST), controls: (inner - space::S3 - picture).max(200.0) }
+        Foot { picture, height: (picture * 9.0 / 16.0).round().max(LOWEST), controls: (inner - space::S3 - picture).clamp(200.0, WIDEST) }
     }
 
-    /// Key caps fit on the smaller buttons.
-    pub(crate) fn roomy(self) -> bool {
-        self.controls >= 400.0
+    /// The height of one tile. Two rows share the strip, and a tile stays a fair size: tall
+    /// enough to hit, never a slab.
+    pub(crate) fn tile(self) -> f32 {
+        ((self.height - space::S2) / 2.0).clamp(56.0, 92.0).floor()
     }
 }
 
@@ -67,6 +69,9 @@ enum Mark {
     /// The selector: the slide Enter shows.
     Cursor,
     Live,
+    /// The Live list's slide while the Live switch is off: it is in place and the room does
+    /// not see it.
+    Staged,
     /// The live slide while black, the logo or Clear text keeps it off the projector.
     Hidden,
 }
@@ -84,26 +89,31 @@ fn vline() -> El {
 fn title_bar(k: &Kit, name: &str, keys: Option<&str>, detail: String, trailing: Vec<El>) -> El {
     let mut bar = row().w_full().h(40.0).px(space::S3).gap(space::S2).center_y().fill(theme::surf().header).child(text(name.to_string()).font(type_::BODY_STRONG).color(k.c.text_base));
     if let Some(keys) = keys {
-        bar = bar.child(keycap(k, keys, false));
+        bar = bar.child(keycaps(k, keys, None));
     }
     bar.child(text(detail).font(type_::SMALL).color(k.c.text_muted).truncate().min_w(0.0)).child(spacer()).children(trailing)
 }
 
-/// What a row says about itself at its right end: the key or the button that acts on it.
+/// What a row carries at its right end: the key or the button that acts on it, or the sign
+/// of its state. A sign, never a word: the fill already says it, and the sign is the second
+/// cue for an eye that does not tell red from grey.
 #[derive(Clone, Copy, PartialEq)]
 enum Hint {
     None,
     /// The slide Next and Space will show.
     Next,
-    /// The ringed slide of Preview: Show sends it.
+    /// The ringed slide of Preview: its button sends it to Live.
     Show,
-    /// On the projector now.
+    /// In the Live list and seen by the room.
     Live,
+    /// In the Live list and not seen: hidden, or the Live switch is off.
+    Unseen,
 }
 
 /// One row of a list: the number key that jumps to it, its section, its words, and the key
 /// that acts on it (owner, 2026-11-11: keys listed at the bottom did not help; a key on the
 /// row does).
+#[allow(clippy::too_many_arguments)]
 fn list_row(k: &Kit, key: &str, index: usize, number: Option<usize>, slide: &Slide, mark: Mark, go_live: bool, hint: Hint) -> El {
     let live = matches!(mark, Mark::Live | Mark::Hidden);
     let on_fill = if mark == Mark::Hidden { Color::BLACK } else { theme::on_live() };
@@ -142,13 +152,15 @@ fn list_row(k: &Kit, key: &str, index: usize, number: Option<usize>, slide: &Sli
     };
     let trailing = match hint {
         Hint::None => el(),
-        Hint::Next => keycap(k, t::KEY_NEXT(), false),
-        Hint::Live => state_pill(t::LIVE(), on_fill.alpha(0.16), on_fill),
-        Hint::Show => btn(t::BTN_SHOW()).primary().small().hint(t::KEY_ENTER()).build(k, move |s, tx| {
+        Hint::Next => keycaps(k, "Space", None),
+        Hint::Live => icon(&icons::ON_AIR, 16.0).color(on_fill).help(t::LIVE()),
+        Hint::Unseen => icon(&icons::OFF_AIR, 16.0).color(faint).help(t::STATE_OFF()),
+        // One fixed-size button with its key beside it: the arrow points at the Live list.
+        Hint::Show => row().gap(6.0).center_y().child(keycaps(k, "Enter", None)).child(btn(t::TIP_SHOW()).icon(&icons::SEND).icon_only().primary().small().build(k, move |s, tx| {
             s.show(index);
             crate::follow(s, tx);
             tx.blur();
-        }),
+        })),
     };
     let mut body = row()
         .w_full()
@@ -161,6 +173,7 @@ fn list_row(k: &Kit, key: &str, index: usize, number: Option<usize>, slide: &Sli
         .fill(match mark {
             Mark::Live => theme::live(),
             Mark::Hidden => theme::warn(),
+            Mark::Staged => k.c.layer_04,
             Mark::Cursor => k.c.layer_03,
             Mark::Rest => Color::TRANSPARENT,
         })
@@ -190,6 +203,8 @@ struct Pane<'a> {
     live_at: Option<usize>,
     /// The live slide is kept off the projector.
     hidden: bool,
+    /// The Live switch is off.
+    staged: bool,
     /// A fixed width; without one the pane shares the row.
     width: Option<f32>,
     cursor: Option<usize>,
@@ -209,7 +224,13 @@ fn pane(k: &Kit, p: Pane<'_>) -> El {
             let starts = section_starts(deck);
             for (index, slide) in deck.slides.iter().enumerate() {
                 let mark = if p.live_at == Some(index) {
-                    if p.hidden { Mark::Hidden } else { Mark::Live }
+                    if p.staged {
+                        Mark::Staged
+                    } else if p.hidden {
+                        Mark::Hidden
+                    } else {
+                        Mark::Live
+                    }
                 } else if p.cursor == Some(index) {
                     Mark::Cursor
                 } else {
@@ -217,7 +238,8 @@ fn pane(k: &Kit, p: Pane<'_>) -> El {
                 };
                 let number = starts.iter().position(|start| *start == index);
                 let hint = match mark {
-                    Mark::Live | Mark::Hidden => Hint::Live,
+                    Mark::Live => Hint::Live,
+                    Mark::Hidden | Mark::Staged => Hint::Unseen,
                     Mark::Cursor if !p.go_live => Hint::Show,
                     _ if p.next_at == Some(index) => Hint::Next,
                     _ => Hint::None,
@@ -248,37 +270,49 @@ fn pane(k: &Kit, p: Pane<'_>) -> El {
     frame
 }
 
-/// The picture the projector would draw for a slide.
-fn picture(s: &App, k: &Kit, state: &artosia_slides::frame::OutputState, width: f32) -> El {
-    el().size(width, (width * 9.0 / 16.0).round()).radius(k.radius.md).clip_rounded(k.radius.md).border(1.0, theme::surf().edge).child(crate::ui::thumb(s, state, width))
+/// The picture the projector would draw for a slide, with the slide's section as a chip in
+/// its corner: a sign where a line of plain words used to sit under it.
+fn picture(s: &App, k: &Kit, state: &artosia_slides::frame::OutputState, width: f32, off: bool) -> El {
+    let mut frame = el().size(width, (width * 9.0 / 16.0).round()).radius(k.radius.md).clip_rounded(k.radius.md).border(1.0, theme::surf().edge).child(crate::ui::thumb(s, state, width));
+    if let Some(slide) = &state.slide {
+        let chip = match (slide.tag, slide.kind) {
+            (Some(tag), _) => Some(tag_chip(&slide.short, group_color(tag_group(tag)))),
+            (None, SlideKind::Scripture) => Some(state_pill(&slide.short, Color::BLACK.alpha(0.55), Color::WHITE)),
+            _ => None,
+        };
+        if let Some(chip) = chip {
+            frame = frame.child(el().pin(Some(6.0), Some(6.0), None, None).radius(6.0).fill(Color::BLACK.alpha(0.55)).child(chip));
+        }
+    }
+    if off {
+        // The Live switch is off: the slide is in place, dimmed, under the sign for off.
+        frame = frame.child(el().pin(Some(0.0), Some(0.0), Some(0.0), Some(0.0)).fill(Color::BLACK.alpha(0.62))).child(
+            row().pin(None, Some(6.0), Some(6.0), None).h(20.0).px(6.0).gap(4.0).center_y().radius(6.0).fill(Color::BLACK.alpha(0.7)).child(icon(&icons::OFF_AIR, 12.0).color(Color::WHITE)).child(text(t::STATE_OFF()).font(type_::TINY).color(Color::WHITE)),
+        );
+    }
+    frame
 }
 
-/// The strip under a list: its picture, and what acts on it.
+/// The strip under a list: its picture, and the tiles that act on it.
 fn foot(size: Foot, picture: El, controls: El) -> El {
-    row().w_full().h(size.height + 2.0 * space::S3).px(space::S3).py(space::S3).gap(space::S3).center_y().fill(theme::surf().side).child(picture).child(controls)
+    row().w_full().h(size.height + 2.0 * space::S3).px(space::S3).py(space::S3).center_y().fill(theme::surf().side).child(picture).child(spacer().min_w(space::S3)).child(controls)
 }
 
-/// What acts on the open item: add it to the plan, edit it, read on.
+/// What acts on the open item, as icons of one size: back to the live song, add to the
+/// plan, edit, read on. Each says its name on hover and prints its key where it has one.
 fn open_tools(s: &App, k: &Kit) -> Vec<El> {
     let Some(open) = s.open.as_ref() else { return Vec::new() };
-    let mut tools = vec![text(t::slides(open.deck.slides.len())).font(type_::SMALL).color(k.c.text_muted)];
-    if s.live.is_some() && !s.open_is_live() {
-        tools.push(btn(t::BTN_BACK_TO_LIVE()).small().hint("Esc").build(k, |s, tx| {
-            s.open_live();
-            crate::follow(s, tx);
-            tx.blur();
-        }));
-    }
+    let mut tools = Vec::new();
     if !s.open_in_plan() {
-        tools.push(btn(t::BTN_ADD_TO_PLAN()).icon(&icons::PLUS).small().build(k, |s, tx| {
+        tools.push(btn(t::BTN_ADD_TO_PLAN()).icon(&icons::PLUS).icon_only().small().build(k, |s, tx| {
             s.add_open_to_plan();
             tx.blur();
         }));
     }
     match open.deck.source {
-        DeckSource::Song(_) => tools.push(btn(t::BTN_EDIT()).icon(&icons::PENCIL).small().hint(t::KEY_EDIT()).build(k, |s, _| s.edit_open_song())),
-        DeckSource::Announcements | DeckSource::Announcement(_) => tools.push(btn(t::BTN_EDIT()).icon(&icons::PENCIL).small().build(k, |s, _| s.edit_announcements())),
-        DeckSource::Passage { .. } => tools.push(btn(t::BTN_NEXT_VERSE()).icon(&icons::PLUS).small().build(k, |s, tx| {
+        DeckSource::Song(_) => tools.push(btn(t::BTN_EDIT()).icon(&icons::PENCIL).icon_only().small().hint("Ctrl E").build(k, |s, _| s.edit_open_song())),
+        DeckSource::Announcements | DeckSource::Announcement(_) => tools.push(btn(t::BTN_EDIT()).icon(&icons::PENCIL).icon_only().small().build(k, |s, _| s.edit_announcements())),
+        DeckSource::Passage { .. } => tools.push(btn(t::BTN_NEXT_VERSE()).icon(&icons::PLUS).icon_only().small().build(k, |s, tx| {
             s.extend_passage();
             tx.blur();
         })),
@@ -286,46 +320,34 @@ fn open_tools(s: &App, k: &Kit) -> Vec<El> {
     tools
 }
 
-/// Beside the Preview picture: the slide the ring is on, the one button that sends it to the
-/// projector, the two that take the item before or after from the plan, and what comes here
-/// once this is shown.
-fn preview_controls(s: &App, k: &Kit, size: Foot, live_here: bool, hidden: bool) -> El {
-    let slide = s.open.as_ref().and_then(|open| open.deck.slides.get(open.cursor));
-    let label = slide.map(|slide| slide.label.clone()).unwrap_or_else(|| t::NEXT_NOTHING().to_string());
-    let after = s.after_preview_title();
-    // With room the two plan buttons share a row under the slide's name. Without it they
-    // stack, each with its words and its key, and the name gives way: the ringed row says it.
-    let roomy = size.roomy();
-    let step = if roomy { 32.0 } else { 28.0 };
-    let caption = if after.is_some() { space::S2 + 16.0 } else { 0.0 };
-    let fixed = if roomy { 20.0 + space::S2 + space::S2 + step + caption } else { space::S2 + step + space::S1 + step + caption };
-    let show = btn(t::BTN_SHOW()).primary().height((size.height - fixed).max(36.0)).grow().hint(t::KEY_ENTER()).disabled(!s.preview_waits()).build(k, |s, tx| {
+/// Beside the Preview picture: the one tile that sends the ringed slide to the Live list, and
+/// the two that bring the plan item before or after into Preview. Each of those two carries
+/// the title of the item it brings, so what comes next is read off the button that fetches it.
+fn preview_controls(s: &App, k: &Kit, size: Foot) -> El {
+    let high = size.tile();
+    let show = tile(t::BTN_SHOW()).icon(&icons::SEND).wide().primary().keys("Enter").height(high).help(t::TIP_SHOW()).disabled(!s.preview_waits()).build(k, |s, tx| {
         s.enter();
         crate::follow(s, tx);
         tx.blur();
     });
+    // Side by side with room for a title in each; stacked, each half as high, without.
+    let stacked = size.controls < 400.0;
+    let item_high = if stacked { ((high - space::S1) / 2.0).floor() } else { high };
     let walk = |forward: bool| {
-        let (label, glyph, keys) = if forward { (t::BTN_NEXT_ITEM(), &icons::ITEM_AFTER, "Tab") } else { (t::BTN_PREVIOUS_ITEM(), &icons::ITEM_BEFORE, "Shift Tab") };
-        btn(label).icon(glyph).height(step).grow().hint(keys).disabled(s.walk_target(forward).is_none()).build(k, move |s, tx| {
+        let (name, glyph, keys) = if forward { (t::BTN_NEXT_ITEM(), &icons::ITEM_AFTER, "Tab") } else { (t::BTN_PREVIOUS_ITEM(), &icons::ITEM_BEFORE, "Shift Tab") };
+        let title = s.walk_title(forward);
+        tile(title.clone().unwrap_or_default()).icon(glyph).wide().keys(keys).height(item_high).help(name).disabled(title.is_none()).build(k, move |s, tx| {
             s.walk_plan(forward);
             crate::follow(s, tx);
             tx.blur();
         })
     };
-    let mut side = col().key("preview-controls").w(size.controls).h(size.height).gap(space::S2);
-    if roomy {
-        let mut name = row().w_full().h(20.0).gap(space::S2).center_y().child(text(label).font(type_::BODY_STRONG).color(k.c.text_base).truncate().min_w(0.0));
-        if live_here && !s.preview_waits() {
-            name = name.child(state_pill(t::LIVE(), if hidden { theme::warn() } else { theme::live() }, if hidden { Color::BLACK } else { theme::on_live() }));
-        }
-        side = side.child(name).child(row().w_full().child(show)).child(row().w_full().gap(space::S2).child(walk(false)).child(walk(true)));
+    let items = if stacked {
+        col().w_full().gap(space::S1).child(row().w_full().child(walk(false))).child(row().w_full().child(walk(true)))
     } else {
-        side = side.child(row().w_full().child(show)).child(col().w_full().gap(space::S1).child(row().w_full().child(walk(false))).child(row().w_full().child(walk(true))));
-    }
-    if let Some(after) = after {
-        side = side.child(el().w_full().h(16.0).child(text(t::after_this(&after)).font(type_::SMALL).color(k.c.text_muted).truncate()));
-    }
-    side
+        col().w_full().child(row().w_full().gap(space::S2).child(walk(false)).child(walk(true)))
+    };
+    col().key("preview-controls").w(size.controls).gap(space::S2).child(row().w_full().child(show)).child(items)
 }
 
 fn preview_pane(s: &App, k: &Kit, size: Foot) -> El {
@@ -337,7 +359,7 @@ fn preview_pane(s: &App, k: &Kit, size: Foot) -> El {
     let state = s.preview_state(cursor_slide);
     // Ctrl moves the ring here while something is live; with nothing live the arrows do.
     let ctrl = s.held_ctrl && !s.held_shift;
-    let keys = if s.live.is_some() { t::KEY_CTRL_ARROWS() } else { t::KEY_ARROWS() };
+    let keys = if s.live.is_some() { "Ctrl Up Down" } else { "Up Down" };
     pane(
         k,
         Pane {
@@ -349,13 +371,14 @@ fn preview_pane(s: &App, k: &Kit, size: Foot) -> El {
             deck: open.map(|o| &o.deck),
             live_at: live_index,
             hidden,
+            staged: !s.on_air(),
             width: None,
             cursor: open.map(|o| o.cursor).filter(|cursor| Some(*cursor) != live_index),
             go_live: false,
             next_at: None,
             // With nothing open the pane says what to do first.
             empty: if open.is_some() { empty_words(k, t::DECK_EMPTY()) } else { crate::ui::slides::start(s, k) },
-            footer: foot(size, picture(s, k, &state, size.picture), preview_controls(s, k, size, live_index.is_some(), hidden)),
+            footer: foot(size, picture(s, k, &state, size.picture, false), preview_controls(s, k, size)),
             ring: (ctrl && s.live.is_some() && open.is_some()).then(theme::accent),
         },
     )
@@ -365,20 +388,24 @@ fn empty_words(k: &Kit, words: &str) -> El {
     col().w_full().h(120.0).center().child(text(words.to_string()).font(type_::BODY).color(k.c.text_muted))
 }
 
-/// What the projector is doing, as a pill.
-fn live_pill(s: &App, k: &Kit) -> El {
-    let (fill, ink, words) = if s.black {
-        (theme::warn(), Color::BLACK, t::STATE_BLACK())
+/// What the projector is doing. On, a red sign and no word: the red ring and the red row
+/// already say it. A word comes only with a warning, because a warning must be read.
+fn live_state(s: &App, k: &Kit) -> El {
+    let warn = |glyph: &'static rune::Icon, words: &str| row().h(20.0).px(6.0).gap(4.0).center_y().radius(6.0).fill(theme::warn()).child(icon(glyph, 12.0).color(Color::BLACK)).child(text(words.to_string()).font(type_::TINY).color(Color::BLACK));
+    if !s.on_air() {
+        return row().h(20.0).px(6.0).gap(4.0).center_y().radius(6.0).fill(k.c.layer_04).child(icon(&icons::OFF_AIR, 12.0).color(k.c.text_base)).child(text(t::STATE_OFF()).font(type_::TINY).color(k.c.text_base));
+    }
+    if s.black {
+        warn(&icons::BLACK_SCREEN, t::BTN_BLACK())
     } else if s.logo_on {
-        (theme::warn(), Color::BLACK, t::STATE_LOGO())
+        warn(&icons::BADGE, t::BTN_LOGO())
     } else if s.text_hidden {
-        (theme::warn(), Color::BLACK, t::STATE_TEXT_HIDDEN())
+        warn(&icons::NO_TEXT, t::BTN_NO_TEXT())
     } else if s.live.is_some() {
-        (theme::live(), theme::on_live(), t::STATE_ON_SCREEN())
+        icon(&icons::ON_AIR, 16.0).color(theme::live()).help(t::LIVE())
     } else {
-        (k.c.layer_03, k.c.text_muted, t::STATE_NOTHING())
-    };
-    state_pill(words, fill, ink)
+        el()
+    }
 }
 
 /// A yellow pill for something extra on a screen, with a cross: pressing it takes that off.
@@ -411,7 +438,7 @@ fn off_pill(k: &Kit, key: &'static str, words: String, does: &'static str, off: 
 /// passing over the room's screen (owner, 2026-11-11: a volunteer who pressed Next too often
 /// did not know how to get back).
 fn earlier(s: &App, k: &Kit, layer: &mut Vec<El>) -> El {
-    let trigger = btn(t::BTN_EARLIER()).icon(&icons::HISTORY).small().build(k, |s, tx| {
+    let trigger = btn(t::BTN_EARLIER()).icon(&icons::HISTORY).icon_only().small().build(k, |s, tx| {
         s.history_menu = !s.history_menu;
         tx.blur();
     });
@@ -427,13 +454,21 @@ fn live_pane(s: &App, k: &Kit, size: Option<Foot>, layer: &mut Vec<El>) -> El {
     let live = s.live.as_ref();
     let state = s.output_state();
     let narrow = size.is_none();
+    let off = !s.on_air();
     let footer = match size {
-        None => col().w_full().px(space::S3).py(space::S3).gap(space::S3).fill(theme::surf().side).child(picture(s, k, &state, NARROW - 2.0 * space::S3)).child(live::transport(s, k, None)),
-        Some(size) => foot(size, picture(s, k, &state, size.picture), live::transport(s, k, Some(size))),
+        None => col().w_full().px(space::S3).py(space::S3).gap(space::S3).fill(theme::surf().side).child(picture(s, k, &state, NARROW - 2.0 * space::S3, off)).child(live::transport(s, k, None)),
+        Some(size) => foot(size, picture(s, k, &state, size.picture, off), live::transport(s, k, Some(size))),
     };
-    // Red while the words show, yellow while something hides them.
+    // Red while the room sees the words, yellow while something hides them, no ring while
+    // the Live switch is off.
     let hidden = s.black || s.logo_on || s.text_hidden;
-    let ring = if hidden { Some(theme::warn()) } else { live.map(|_| theme::live()) };
+    let ring = if off {
+        None
+    } else if hidden {
+        Some(theme::warn())
+    } else {
+        live.map(|_| theme::live())
+    };
     // A countdown and the two messages are started from the search or the phone; while one
     // shows, its pill says so here and takes it off.
     let mut trailing = Vec::new();
@@ -447,9 +482,9 @@ fn live_pane(s: &App, k: &Kit, size: Option<Foot>, layer: &mut Vec<El>) -> El {
         trailing.push(off_pill(k, "stage-message-pill", t::STATE_STAGE_MESSAGE().to_string(), t::CMD_HIDE_MESSAGE(), |s| s.stage_message_on = false));
     }
     if live.is_some_and(|live| live.deck.source == DeckSource::Announcements) {
+        // Lit while the announcements turn by themselves; its name is in the tooltip.
         let label = if s.looping { t::BTN_LOOP_STOP() } else { t::BTN_LOOP_START() };
-        let toggle = btn(label).icon(&icons::LOOP).small().toggle(s.looping);
-        trailing.push(if narrow { toggle.icon_only() } else { toggle }.build(k, |s, tx| {
+        trailing.push(btn(label).icon(&icons::LOOP).icon_only().small().toggle(s.looping).build(k, |s, tx| {
             s.toggle_loop();
             tx.blur();
         }));
@@ -457,18 +492,19 @@ fn live_pane(s: &App, k: &Kit, size: Option<Foot>, layer: &mut Vec<El>) -> El {
     if !s.history.is_empty() && !narrow {
         trailing.push(earlier(s, k, layer));
     }
-    trailing.push(live_pill(s, k));
+    trailing.push(live_state(s, k));
     pane(
         k,
         Pane {
             name: t::LIVE(),
             key: "live-slide",
-            keys: live.filter(|_| !narrow).map(|_| if s.held_shift && !s.held_ctrl { t::KEY_SHIFT_ARROWS() } else { t::KEY_ARROWS() }),
+            keys: live.filter(|_| !narrow).map(|_| if s.held_shift && !s.held_ctrl { "Shift Up Down" } else { "Up Down" }),
             detail: live.filter(|_| !narrow).map(|l| l.deck.title.clone()).unwrap_or_default(),
             trailing,
             deck: live.map(|l| &l.deck),
             live_at: live.map(|l| l.index),
             hidden,
+            staged: off,
             width: narrow.then_some(NARROW),
             // The slide picked with Shift held, until Shift is let go.
             cursor: s.live_pick.filter(|pick| Some(*pick) != live.map(|l| l.index)),
@@ -525,7 +561,8 @@ mod tests {
         let wide = Foot::fit(1151.0, 960.0);
         assert_eq!(wide.height, 345.0);
         assert!(wide.picture > 2.5 * laptop.picture);
-        assert_eq!(wide.picture + wide.controls + 12.0, 1151.0 - 24.0);
+        assert_eq!(wide.controls, super::WIDEST, "the tiles stop growing");
+        assert_eq!((laptop.tile(), wide.tile()), (72.0, 92.0));
         // A pane too thin for both still gets a picture.
         assert_eq!(Foot::fit(300.0, 400.0).picture, 220.0);
     }

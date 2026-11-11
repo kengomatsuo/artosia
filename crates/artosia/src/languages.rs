@@ -232,7 +232,7 @@ mod tests {
     #[test]
     fn a_third_language_reads_array_rows_and_sections_and_falls_back_row_by_row() {
         pseudo();
-        assert_eq!(t::KEYS_SHOWING_ROWS()[0], ("Down, Space", "[xx] go on"));
+        assert_eq!(t::KEYS_SHOWING_ROWS()[0], ("Down Space", "[xx] go on"));
         assert_eq!(t::KEYS_SHOWING_ROWS()[1], ("Up", "Previous slide"));
         assert_eq!(t::ANNOUNCEMENT_TEMPLATES()[0], ("[xx] Hello", "We are glad you are here."));
         assert_eq!((t::MONTHS()[0], t::MONTHS()[1]), ("Xanuary", "February"));

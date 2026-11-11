@@ -3,7 +3,7 @@
 use std::rc::Rc;
 
 use artosia_core::plan::{PlanEntry, PlanItem};
-use rune::{Anim, Cursor, Drag, El, Phase, ScrollSpec, Tx, col, icon, row, text};
+use rune::{Anim, Cursor, Drag, El, Phase, ScrollSpec, Tx, col, el, icon, row, text};
 use rune_kit::{Kit, Menu, MenuItem, ScrollBar};
 
 use crate::palette::Scope;
@@ -47,7 +47,7 @@ pub(crate) fn item_row(s: &App, k: &Kit, item: &PlanItem, menu: El) -> El {
     let live = s.live.as_ref().is_some_and(|live| live.item == Some(id));
     let missing = s.entry_is_missing(&item.entry);
     let ink = if missing { k.c.text_muted } else { k.c.text_base };
-    let mut body = row()
+    let body = row()
         .key(format!("plan-{id}"))
         .role("listitem")
         .label(s.entry_title(&item.entry))
@@ -61,16 +61,24 @@ pub(crate) fn item_row(s: &App, k: &Kit, item: &PlanItem, menu: El) -> El {
         .fill(if open { k.c.layer_03 } else { rune::Color::TRANSPARENT })
         .hover_group()
         .child(grip(k))
-        .child(icon(entry_icon(&item.entry), 16.0).color(if live { theme::live() } else { k.c.text_muted }).a11y_hidden())
+        .child(icon(entry_icon(&item.entry), 16.0).color(if live && s.on_air() { theme::live() } else { k.c.text_muted }).a11y_hidden())
         .child(text(s.entry_title(&item.entry)).font(if open { type_::BODY_STRONG } else { type_::BODY }).color(ink).truncate().grow(1.0));
     if missing {
         // An entry that cannot be shown says so in words across the row, not by a cursor.
         return body.child(state_pill(t::PLAN_MISSING(), theme::warn(), rune::Color::BLACK)).child(menu);
     }
-    if live {
-        body = body.child(state_pill(t::LIVE(), theme::live(), theme::on_live()));
-    }
-    body.child(menu)
+    // The item on the projector carries a red dot where its menu button is; the button takes
+    // the dot's place under the pointer, and while its menu is open (owner, 2026-11-11: a dot,
+    // not the word, "like Claude does").
+    let slot = if live {
+        let open_menu = s.plan_menu == Some(id);
+        el().size(26.0, 26.0)
+            .child(el().pin(Some(0.0), Some(0.0), Some(0.0), Some(0.0)).center().child(el().size(8.0, 8.0).radius(4.0).fill(if s.on_air() { theme::live() } else { k.c.text_muted })).group_opacity(if open_menu { 0.0 } else { 1.0 }, 0.0).help(t::LIVE()))
+            .child(menu)
+    } else {
+        menu
+    };
+    body.child(slot)
         .hover(k.c.hover)
         .press(k.c.pressed)
         .cursor(Cursor::Pointer)
@@ -145,6 +153,8 @@ fn draggable(s: &App, body: El, id: u64, at: usize, heights: &Rc<[f32]>) -> El {
 pub(crate) fn row_menu(s: &App, k: &Kit, item: &PlanItem, at: usize, layer: &mut Vec<El>) -> El {
     let id = item.id;
     let open = s.plan_menu == Some(id);
+    // The live item's button waits under its dot.
+    let rest = if s.live.as_ref().is_some_and(|live| live.item == Some(id)) { 0.0 } else { 0.55 };
     let trigger = btn(t::PLAN_ITEM_MENU())
         .icon(&icons::DOTS)
         .icon_only()
@@ -155,7 +165,7 @@ pub(crate) fn row_menu(s: &App, k: &Kit, item: &PlanItem, at: usize, layer: &mut
             tx.blur();
         })
         .key(format!("plan-menu-{id}"))
-        .group_opacity(if open { 1.0 } else { 0.55 }, 1.0);
+        .group_opacity(if open { 1.0 } else { rest }, 1.0);
     let mut menu = Menu::new(format!("plan-menu-list-{id}")).trigger(trigger).open(open).on_close(|s: &mut App| s.plan_menu = None);
     if at > 0 {
         menu = menu.item(MenuItem::new(t::PLAN_MOVE_UP()).icon(&icons::ARROW_UP).on_select(move |s: &mut App| {

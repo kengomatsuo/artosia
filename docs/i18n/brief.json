@@ -75,36 +75,6 @@
     "notes": "A key name printed on a physical keyboard. Indonesian keyboards print the same Latin key names (Ctrl, Shift, Enter, Esc, F1 to F12, Delete, Tab), so keep them as printed; the app shows them inside a small key cap. Keep as printed."
   },
   {
-    "key": "KEY_NEXT",
-    "kind": "const",
-    "screen": "Main window: Next button, status bar, command rows",
-    "moment": "Key cap beside the big Next button and in the bottom status bar.",
-    "role": "key name",
-    "does": "The long space bar that moves to the next slide.",
-    "budget": 8,
-    "variables": [],
-    "register": "None; this is a label, not speech. Follow what is printed on the keyboard.",
-    "vocabulary": [
-      "slide"
-    ],
-    "notes": "A key name printed on a physical keyboard. Indonesian keyboards print the same Latin key names (Ctrl, Shift, Enter, Esc, F1 to F12, Delete, Tab), so keep them as printed; the app shows them inside a small key cap. The app prints a word for a bar that is blank on a keyboard. The phone page already writes this key in Indonesian running text (see glossary); the writer decides, but it must agree with the phone page."
-  },
-  {
-    "key": "KEY_EDIT",
-    "kind": "const",
-    "screen": "Main window: button above the open song",
-    "moment": "Key cap inside the Edit button.",
-    "role": "key name",
-    "does": "The Ctrl-plus-letter shortcut that opens the song editor.",
-    "budget": 8,
-    "variables": [],
-    "register": "None; this is a label, not speech. Follow what is printed on the keyboard.",
-    "vocabulary": [
-      "song"
-    ],
-    "notes": "A key name printed on a physical keyboard. Indonesian keyboards print the same Latin key names (Ctrl, Shift, Enter, Esc, F1 to F12, Delete, Tab), so keep them as printed; the app shows them inside a small key cap. Keep as printed."
-  },
-  {
     "key": "KEY_SAVE",
     "kind": "const",
     "screen": "Song editor and announcement editor: Save button",
@@ -116,19 +86,6 @@
     "register": "None; this is a label, not speech. Follow what is printed on the keyboard.",
     "vocabulary": [],
     "notes": "A key name printed on a physical keyboard. Indonesian keyboards print the same Latin key names (Ctrl, Shift, Enter, Esc, F1 to F12, Delete, Tab), so keep them as printed; the app shows them inside a small key cap. Keep as printed."
-  },
-  {
-    "key": "KEY_KEYS",
-    "kind": "const",
-    "screen": "Main window, status bar, far right",
-    "moment": "Key cap before a short word saying what it opens.",
-    "role": "key name",
-    "does": "The question-mark key, which opens the list of shortcuts.",
-    "budget": 3,
-    "variables": [],
-    "register": "None; this is a label, not speech. Follow what is printed on the keyboard.",
-    "vocabulary": [],
-    "notes": "A punctuation symbol, not a word. Keep as printed."
   },
   {
     "key": "ctrl_digit",
@@ -596,27 +553,6 @@
       "song"
     ],
     "notes": "Indonesian has no plural form. Write a form that works for any number, including 1."
-  },
-  {
-    "key": "slides",
-    "kind": "fn",
-    "screen": "Open item's subtitle line, previews",
-    "moment": "Subtitle line of the open item.",
-    "role": "list row detail",
-    "does": "A count of slides, shown under a song's title.",
-    "budget": 14,
-    "variables": [
-      {
-        "name": "count",
-        "example": "6",
-        "what": "number of slides"
-      }
-    ],
-    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
-    "vocabulary": [
-      "slide"
-    ],
-    "notes": "No plural in Indonesian."
   },
   {
     "key": "chapters",
@@ -1527,36 +1463,6 @@
     "notes": "Short form of the phone-remote word."
   },
   {
-    "key": "HINT_NEXT",
-    "kind": "const",
-    "screen": "Main window, bottom status bar, right side",
-    "moment": "Sits right after the key cap in the bottom bar and in a command row title.",
-    "role": "hint beside a key cap",
-    "does": "Short label next to the Space key cap: advance to the next slide.",
-    "budget": 12,
-    "variables": [],
-    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
-    "vocabulary": [
-      "slide"
-    ],
-    "notes": "Also the title of the next-slide command in the search box."
-  },
-  {
-    "key": "HINT_BACK",
-    "kind": "const",
-    "screen": "Main window, bottom status bar, right side",
-    "moment": "Bottom bar.",
-    "role": "hint beside a key cap",
-    "does": "Short label next to the Left key cap: go back one slide.",
-    "budget": 10,
-    "variables": [],
-    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
-    "vocabulary": [
-      "slide"
-    ],
-    "notes": ""
-  },
-  {
     "key": "HINT_KEYS",
     "kind": "const",
     "screen": "Main window, bottom status bar, right side",
@@ -2203,21 +2109,6 @@
     "notes": ""
   },
   {
-    "key": "BTN_BACK_TO_LIVE",
-    "kind": "const",
-    "screen": "Middle column header",
-    "moment": "The volunteer opened another item; the live one is elsewhere.",
-    "role": "button",
-    "does": "Button that returns the middle column to whatever is on the congregation's screen now.",
-    "budget": 20,
-    "variables": [],
-    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
-    "vocabulary": [
-      "live-preview"
-    ],
-    "notes": "Show with a left arrow icon."
-  },
-  {
     "key": "BTN_LOOP_START",
     "kind": "const",
     "screen": "Announcements editor header and open announcements item",
@@ -2271,21 +2162,6 @@
     "role": "button",
     "does": "Primary button that moves to the next slide on the congregation's screen.",
     "budget": 12,
-    "variables": [],
-    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
-    "vocabulary": [
-      "slide"
-    ],
-    "notes": "Phone page already writes this action; see glossary."
-  },
-  {
-    "key": "BTN_BACK",
-    "kind": "const",
-    "screen": "Main window, right column (live and controls), button left of the big one",
-    "moment": "Beside the big button, with an arrow icon.",
-    "role": "button",
-    "does": "Button that moves back to the slide before.",
-    "budget": 10,
     "variables": [],
     "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
     "vocabulary": [
@@ -2355,22 +2231,6 @@
     "notes": ""
   },
   {
-    "key": "STATE_ON_SCREEN",
-    "kind": "const",
-    "screen": "Main window, right column (live and controls), red pill at the top right",
-    "moment": "Beside the live heading.",
-    "role": "status line",
-    "does": "Pill saying a slide is showing now.",
-    "budget": 12,
-    "variables": [],
-    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
-    "vocabulary": [
-      "live-preview",
-      "projector"
-    ],
-    "notes": ""
-  },
-  {
     "key": "STATE_BLACK",
     "kind": "const",
     "screen": "Main window, right column (live and controls), yellow pill",
@@ -2401,36 +2261,6 @@
     "notes": ""
   },
   {
-    "key": "STATE_TEXT_HIDDEN",
-    "kind": "const",
-    "screen": "Main window, right column (live and controls), yellow pill",
-    "moment": "Shown after the hide-words button.",
-    "role": "status line",
-    "does": "Pill saying the words are hidden but the background still shows.",
-    "budget": 20,
-    "variables": [],
-    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
-    "vocabulary": [
-      "clear-text"
-    ],
-    "notes": ""
-  },
-  {
-    "key": "STATE_NOTHING",
-    "kind": "const",
-    "screen": "Main window, right column (live and controls), grey pill",
-    "moment": "Shown before the first slide.",
-    "role": "status line",
-    "does": "Pill saying that nothing is on the congregation's screen yet.",
-    "budget": 10,
-    "variables": [],
-    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
-    "vocabulary": [
-      "live-preview"
-    ],
-    "notes": ""
-  },
-  {
     "key": "LIVE_NOTHING",
     "kind": "const",
     "screen": "The main window, right pane: the list of the slides of what is on the projector now.",
@@ -2444,21 +2274,6 @@
       "projector"
     ],
     "notes": "A plain statement without a full stop. It gives no instruction."
-  },
-  {
-    "key": "NEXT_NOTHING",
-    "kind": "const",
-    "screen": "Main window, right column (live and controls), next-item area",
-    "moment": "Start of the service.",
-    "role": "list row detail",
-    "does": "Says no item is open, so there is nothing to follow.",
-    "budget": 24,
-    "variables": [],
-    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
-    "vocabulary": [
-      "plan"
-    ],
-    "notes": ""
   },
   {
     "key": "BTN_SHOW",
@@ -6464,47 +6279,6 @@
     "notes": ""
   },
   {
-    "key": "KEY_BACK",
-    "kind": "const",
-    "screen": "Main window, bottom status bar, right side",
-    "moment": "Key cap in the status bar, followed by the word for going back one slide.",
-    "role": "key name",
-    "does": "The Up arrow key, which moves the congregation's screen back one slide.",
-    "budget": 12,
-    "variables": [],
-    "register": "None; this is a label, not speech. Follow what is printed on the keyboard.",
-    "vocabulary": [],
-    "notes": "A key name printed on a physical keyboard. Indonesian keyboards print the same Latin key names (Ctrl, Shift, Alt, Enter, Esc, Tab, Delete, F1 to F12), so keep those exactly as printed; the app shows them inside a small key cap. An arrow key shows only an arrow symbol on the keyboard, and the app prints a word for it: use the words the glossary already has for arrow keys and for the space bar."
-  },
-  {
-    "key": "KEY_DOWN",
-    "kind": "const",
-    "screen": "Main window, bottom status bar, right side",
-    "moment": "Key cap in the status bar, followed by the word for the next slide.",
-    "role": "key name",
-    "does": "The Down arrow key, which moves the congregation's screen to the next slide.",
-    "budget": 12,
-    "variables": [],
-    "register": "None; this is a label, not speech. Follow what is printed on the keyboard.",
-    "vocabulary": [],
-    "notes": "A key name printed on a physical keyboard. Indonesian keyboards print the same Latin key names (Ctrl, Shift, Alt, Enter, Esc, Tab, Delete, F1 to F12), so keep those exactly as printed; the app shows them inside a small key cap. An arrow key shows only an arrow symbol on the keyboard, and the app prints a word for it: use the words the glossary already has for arrow keys and for the space bar."
-  },
-  {
-    "key": "HINT_SELECT",
-    "kind": "const",
-    "screen": "Main window, bottom status bar, right side. The main window has three parts side by side. Left: the plan (today's songs, readings and announcements in order). Middle: a pane that lists the slides of the item that comes next; one slide in it carries a white ring. Right: a pane that lists the slides of what the congregation sees now; the slide on their screen is filled red.",
-    "moment": "Sits right after a key cap that reads Shift. The volunteer glances at the bar to remember the trick.",
-    "role": "hint beside a key cap",
-    "does": "Says what holding Shift does: the arrow keys then pick another slide of the song that is showing without changing the congregation's screen, and letting go of Shift shows the picked slide.",
-    "budget": 34,
-    "variables": [],
-    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
-    "vocabulary": [
-      "the ring"
-    ],
-    "notes": "The key cap before it already says Shift, so do not repeat the key's name. A fragment is fine; it is a hint, not a sentence. Start with a capital letter like the hints beside it."
-  },
-  {
     "key": "STATE_MESSAGE",
     "kind": "const",
     "screen": "Main window, right pane, its title strip. A small yellow pill with a small cross at its end.",
@@ -7454,36 +7228,6 @@
     "notes": "A fragment without a full stop. Artosia is the program's name and stays as written."
   },
   {
-    "key": "BTN_END",
-    "kind": "const",
-    "screen": "The main window. Under the list of what is on the projector now sits a small picture of the projector and, beside it, the buttons that act on the projector: back, next, hide the words, black screen, logo. This is one more button beside them.",
-    "moment": "A song or a passage is on the projector and the service has moved on: nothing should stay up.",
-    "role": "button",
-    "does": "Takes what is on the projector off it. The background stays, the list empties and the place in the plan is kept. A notice then offers to put it back.",
-    "budget": 10,
-    "variables": [],
-    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
-    "vocabulary": [
-      "projector"
-    ],
-    "notes": "One short word, as on a remote control. It must not be the word used for the black screen or for hiding the words, and it must not sound like closing the program."
-  },
-  {
-    "key": "LIVE_ENDED",
-    "kind": "const",
-    "screen": "A notice at the bottom of the main window, with an undo button after the words.",
-    "moment": "Right after the volunteer took what was showing off the projector.",
-    "role": "toast",
-    "does": "Confirms that the item is no longer on the projector.",
-    "budget": 32,
-    "variables": [],
-    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
-    "vocabulary": [
-      "projector"
-    ],
-    "notes": "No full stop."
-  },
-  {
     "key": "BTN_PREVIOUS_ITEM",
     "kind": "const",
     "screen": "The main window. The middle pane, Preview, lists the slides of what is being prepared; nothing in it reaches the room until the volunteer sends it. Under its list sits its picture and, beside the picture, one large button that sends it to the projector and two smaller buttons side by side that step through the plan.",
@@ -7512,66 +7256,6 @@
       "plan item"
     ],
     "notes": "Two words at most; it sits beside its twin for the item before."
-  },
-  {
-    "key": "after_this",
-    "kind": "fn",
-    "screen": "The main window. The middle pane, Preview, lists the slides of what is being prepared; nothing in it reaches the room until the volunteer sends it. Under its list sits its picture and, beside the picture, one large button that sends it to the projector and two smaller buttons side by side that step through the plan. A line of small grey words sits under the buttons.",
-    "moment": "Read at a glance before pressing the large button.",
-    "role": "caption",
-    "does": "Names the plan item that comes into Preview by itself once the one there has been sent to the projector, so the volunteer knows what follows.",
-    "budget": 30,
-    "variables": [
-      {
-        "name": "title",
-        "example": "Kasih Setia-Mu",
-        "what": "title of the plan item that follows"
-      }
-    ],
-    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
-    "vocabulary": [
-      "plan item"
-    ],
-    "notes": "A short label, a colon, then the title exactly as given. No full stop and no quotation marks."
-  },
-  {
-    "key": "KEY_ARROWS",
-    "kind": "const",
-    "screen": "The main window: a small key cap beside a pane's name and in the bottom bar.",
-    "moment": "Shown all the time while the arrow keys move in that pane.",
-    "role": "key name",
-    "does": "Names the arrow keys as a group.",
-    "budget": 8,
-    "variables": [],
-    "register": "None; this is a label, not speech. Follow what is printed on the keyboard.",
-    "vocabulary": [],
-    "notes": "One word. Other key caps name single arrows; this one means any of them."
-  },
-  {
-    "key": "KEY_CTRL_ARROWS",
-    "kind": "const",
-    "screen": "The main window: a small key cap beside the name of the Preview pane.",
-    "moment": "Shown while something is on the projector, when the plain arrows belong to the projector and Ctrl is needed to move in Preview.",
-    "role": "key name",
-    "does": "Names the arrow keys pressed while Ctrl is held.",
-    "budget": 14,
-    "variables": [],
-    "register": "None; this is a label, not speech. Follow what is printed on the keyboard.",
-    "vocabulary": [],
-    "notes": "Ctrl stays as printed on the keyboard. No plus sign."
-  },
-  {
-    "key": "KEY_SHIFT_ARROWS",
-    "kind": "const",
-    "screen": "The main window: a small key cap beside the name of the Live pane.",
-    "moment": "Shown while the volunteer holds Shift.",
-    "role": "key name",
-    "does": "Names the arrow keys pressed while Shift is held.",
-    "budget": 14,
-    "variables": [],
-    "register": "None; this is a label, not speech. Follow what is printed on the keyboard.",
-    "vocabulary": [],
-    "notes": "Shift stays as printed on the keyboard. No plus sign."
   },
   {
     "key": "HELD_CTRL",
@@ -7614,21 +7298,6 @@
       "preview pane"
     ],
     "notes": "A verb phrase without a full stop."
-  },
-  {
-    "key": "HINT_SHOW_RING",
-    "kind": "const",
-    "screen": "The main window's bottom bar, right side: a row of key caps, each followed by a few words saying what that key does right now. The row is rewritten while Ctrl or Shift is held, because the arrow keys then do something else.",
-    "moment": "Follows the key cap Enter while something is already on the projector.",
-    "role": "key hint",
-    "does": "Says Enter sends what is in Preview to the projector, at the slide with the ring.",
-    "budget": 20,
-    "variables": [],
-    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
-    "vocabulary": [
-      "preview pane"
-    ],
-    "notes": "A verb phrase without a full stop. It must differ from the word for the next slide."
   },
   {
     "key": "HINT_PICK",
@@ -8381,5 +8050,26 @@
       "look"
     ],
     "notes": ""
+  },
+  {
+    "key": "slides",
+    "kind": "fn",
+    "screen": "Open item's subtitle line, previews",
+    "moment": "Subtitle line of the open item.",
+    "role": "list row detail",
+    "does": "A count of slides, shown under a song's title.",
+    "budget": 14,
+    "variables": [
+      {
+        "name": "count",
+        "example": "6",
+        "what": "number of slides"
+      }
+    ],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "slide"
+    ],
+    "notes": "No plural in Indonesian."
   }
 ]

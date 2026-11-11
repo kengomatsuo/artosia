@@ -24,30 +24,10 @@
     "back": "Shift Enter",
     "why": "Key names as printed."
   },
-  "KEY_NEXT": {
-    "text": "Spasi",
-    "back": "Space",
-    "why": "Phone page word for the space bar."
-  },
-  "KEY_BACK": {
-    "text": "Panah atas",
-    "back": "Arrow up",
-    "why": "Same as the keyboard sheet row."
-  },
-  "KEY_EDIT": {
-    "text": "Ctrl E",
-    "back": "Ctrl E",
-    "why": "Brief names no letter; E is a guess, check against the code binding."
-  },
   "KEY_SAVE": {
     "text": "Ctrl S",
     "back": "Ctrl S",
     "why": "Brief names no letter; S is a guess, check against the code binding."
-  },
-  "KEY_KEYS": {
-    "text": "?",
-    "back": "?",
-    "why": "Symbol as printed."
   },
   "ctrl_digit": {
     "text": "Ctrl {digit}",
@@ -188,11 +168,6 @@
     "text": "{count} lagu",
     "back": "{count} songs",
     "why": "No plural form."
-  },
-  "slides": {
-    "text": "{count} slide",
-    "back": "{count} slides",
-    "why": "'slide' is the loanword the phone page uses."
   },
   "chapters": {
     "text": "{count} pasal",
@@ -489,16 +464,6 @@
     "back": "Phone remote",
     "why": "Plain."
   },
-  "HINT_NEXT": {
-    "text": "Lanjut",
-    "back": "Next",
-    "why": "Phone page word."
-  },
-  "HINT_BACK": {
-    "text": "Kembali",
-    "back": "Back",
-    "why": "Phone page word."
-  },
   "HINT_KEYS": {
     "text": "Tombol",
     "back": "Keys",
@@ -704,11 +669,6 @@
     "back": "No slides yet",
     "why": "Plain."
   },
-  "BTN_BACK_TO_LIVE": {
-    "text": "Ke yang tayang",
-    "back": "To what is live",
-    "why": "Plain."
-  },
   "BTN_LOOP_START": {
     "text": "Putar otomatis",
     "back": "Run automatically",
@@ -728,11 +688,6 @@
     "text": "Lanjut",
     "back": "Next",
     "why": "Phone page action word."
-  },
-  "BTN_BACK": {
-    "text": "Kembali",
-    "back": "Back",
-    "why": "Phone page word."
   },
   "BTN_CLEAR_TEXT": {
     "text": "Sembunyikan teks",
@@ -754,11 +709,6 @@
     "back": "Set a logo picture in Look first",
     "why": "Plain."
   },
-  "STATE_ON_SCREEN": {
-    "text": "Tayang",
-    "back": "Live",
-    "why": "Pill."
-  },
   "STATE_BLACK": {
     "text": "Layar sedang hitam",
     "back": "The screen is black",
@@ -769,25 +719,10 @@
     "back": "The logo is live",
     "why": "Phone page wording."
   },
-  "STATE_TEXT_HIDDEN": {
-    "text": "Teks disembunyikan",
-    "back": "The text is hidden",
-    "why": "Phone page wording."
-  },
-  "STATE_NOTHING": {
-    "text": "Belum ada",
-    "back": "None yet",
-    "why": "Shortened from phone page 'Belum ada yang tayang' to fit 10."
-  },
   "LIVE_NOTHING": {
     "text": "Klik slide untuk menayangkan",
     "back": "Click a slide to put it live",
     "why": "Plain."
-  },
-  "NEXT_NOTHING": {
-    "text": "Belum ada yang dibuka",
-    "back": "Nothing is open yet",
-    "why": "Phone page wording."
   },
   "BTN_SHOW": {
     "text": "Tayangkan",
@@ -2154,11 +2089,6 @@
     "back": "Take out the preview item, it can be undone",
     "why": "Keluarkan is the recorded plan-removal word; Urungkan is the recorded undo word."
   },
-  "KEY_DOWN": {
-    "text": "Panah bawah",
-    "back": "Arrow down",
-    "why": "Same as the keyboard sheet row."
-  },
   "STATE_MESSAGE": {
     "text": "Pesan tampil",
     "back": "Message showing",
@@ -2198,11 +2128,6 @@
     "text": "Geser bingkai di pratinjau, tayang saat Enter",
     "back": "Move the frame in the preview, goes on screen when Enter",
     "why": "Same Geser bingkai di pratinjau wording as before; the ring waits and Enter shows it. 45 of 46."
-  },
-  "HINT_SELECT": {
-    "text": "Pilih slide, lepas untuk tayang",
-    "back": "Pick a slide, let go to show",
-    "why": "Pilih matches the sheet row; the Shift cap before it supplies what is released. 31 of 34."
   },
   "LEARN_SECTION": {
     "text": "Pencarian",
@@ -2428,5 +2353,10 @@
     "text": "Layar untuk Artosia sendiri",
     "back": "Screen for Artosia itself",
     "why": "Layar is the fixed word for a screen; 'untuk Artosia sendiri' says it is taken, so no choice is offered. 27 of 30."
+  },
+  "slides": {
+    "text": "{count} slide",
+    "back": "{count} slides",
+    "why": "'slide' is the loanword the phone page uses."
   }
 }

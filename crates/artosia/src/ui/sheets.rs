@@ -519,9 +519,11 @@ fn import(s: &App, k: &Kit, layer: &mut Vec<El>) {
 }
 
 /// One group of the key sheet: a heading and its rows.
-fn key_group(k: &Kit, heading: &'static str, rows: &[(&'static str, &'static str)]) -> El {
+fn key_group(k: &Kit, heading: &'static str, keys: &[(&'static str, &'static str)], rows: &[(&'static str, &'static str)]) -> El {
     let mut group = col().w_full().gap(space::S1).child(section_label(k, heading));
-    for (keys, does) in rows {
+    // The keys are the same in every language and are drawn as the keyboard prints them;
+    // only what a key does is written per language.
+    for ((keys, _), (_, does)) in keys.iter().zip(rows) {
         group = group.child(row().w_full().h(28.0).gap(space::S3).center_y().child(el().w(168.0).child(row().child(keycap(k, keys, false)))).child(text(*does).font(type_::BODY).color(k.c.text_base).truncate().grow(1.0)));
     }
     group
@@ -531,8 +533,8 @@ fn keys(s: &App, k: &Kit, layer: &mut Vec<El>) {
     let rows = row()
         .w_full()
         .gap(space::S6)
-        .child(col().grow(1.0).min_w(0.0).gap(space::S4).child(key_group(k, t::KEYS_SHOWING(), t::KEYS_SHOWING_ROWS())).child(key_group(k, t::KEYS_PLAN(), t::KEYS_PLAN_ROWS())))
-        .child(col().grow(1.0).min_w(0.0).gap(space::S4).child(key_group(k, t::KEYS_FINDING(), t::KEYS_FINDING_ROWS())).child(key_group(k, t::KEYS_EDITING(), t::KEYS_EDITING_ROWS())));
+        .child(col().grow(1.0).min_w(0.0).gap(space::S4).child(key_group(k, t::KEYS_SHOWING(), t::KEYS_SHOWING_KEYS(), t::KEYS_SHOWING_ROWS())).child(key_group(k, t::KEYS_PLAN(), t::KEYS_PLAN_KEYS(), t::KEYS_PLAN_ROWS())))
+        .child(col().grow(1.0).min_w(0.0).gap(space::S4).child(key_group(k, t::KEYS_FINDING(), t::KEYS_FINDING_KEYS(), t::KEYS_FINDING_ROWS())).child(key_group(k, t::KEYS_EDITING(), t::KEYS_EDITING_KEYS(), t::KEYS_EDITING_ROWS())));
     // Single-letter keys can be switched off, as WCAG 2.1.4 asks.
     let letters = switch_row(k, "letter-keys-switch", t::LETTER_KEYS(), t::LETTER_KEYS_HINT(), s.settings.letter_keys, |s| {
         s.settings.letter_keys = !s.settings.letter_keys;

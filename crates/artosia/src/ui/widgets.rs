@@ -6,7 +6,7 @@ use rune::{Color, Cursor, El, Icon, Span, TextStyle, Tx, el, icon, rich, row, te
 use rune_kit::Kit;
 
 use crate::state::App;
-use crate::theme::{self, type_};
+use crate::theme::{self, icons, type_};
 
 #[derive(Clone, Copy, PartialEq)]
 enum Kind {
@@ -80,22 +80,12 @@ impl Btn {
         self.hint = Some(keys.into());
         self
     }
-    /// The arrow key that presses this button, drawn as a key: no font is asked for an arrow.
-    pub fn key_icon(mut self, icon: &'static Icon) -> Self {
-        self.key_icon = Some(icon);
-        self
-    }
     pub fn tall(mut self) -> Self {
         self.height = 44.0;
         self
     }
     pub fn small(mut self) -> Self {
         self.height = 26.0;
-        self
-    }
-    /// A height worked out by the caller, for controls that fill the strip beside a picture.
-    pub fn height(mut self, height: f32) -> Self {
-        self.height = height;
         self
     }
     pub fn grow(mut self) -> Self {
@@ -136,8 +126,11 @@ impl Btn {
         let font = if self.height >= 44.0 { type_::TITLE } else { type_::BODY_STRONG };
         let pad = if self.icon_only { 0.0 } else if self.height <= 26.0 { 8.0 } else { 12.0 };
         let mut e = row().role("button").label(self.label.clone()).h(self.height).px(pad).gap(6.0).center().radius(k.radius.md).fill(fill);
-        if self.icon_only {
+        // An icon alone is a square; with its key beside it the pair is as wide as it needs.
+        if self.icon_only && self.hint.is_none() {
             e = e.w(self.height);
+        } else if self.icon_only {
+            e = e.px(6.0);
         }
         if let Some(border) = border {
             e = e.border(1.0, border);
@@ -179,15 +172,172 @@ impl Btn {
     }
 }
 
-/// A key name in a small box, as printed on a key.
+/// Keys as a keyboard prints them: an arrow key is its arrow, the space bar is a bar, and
+/// every other key is its name (owner, 2026-11-11: "show the exact thing showing on the
+/// keyboard"). `spec` is the same in every language: "Ctrl Up Down", "Shift Tab", "Space".
+/// A word in lower case ("to") is set as plain text between the keys.
+pub fn keycaps(k: &Kit, spec: &str, on: Option<Color>) -> El {
+    let (fill, ink) = match on {
+        Some(ink) => (ink.alpha(0.14), ink.alpha(0.85)),
+        None => (k.c.layer_03, k.c.text_muted),
+    };
+    let mut out = row().gap(3.0).center_y().a11y_hidden();
+    for token in spec.split([' ', ',']).filter(|token| !token.is_empty()) {
+        let cap = || el().h(18.0).min_w(18.0).px(4.0).center().radius(4.0).fill(fill);
+        let arrow = |glyph: &'static Icon| cap().child(icon(glyph, 12.0).color(ink));
+        out = out.child(match token {
+            "Up" => arrow(&icons::ARROW_UP),
+            "Down" => arrow(&icons::ARROW_DOWN),
+            "Left" => arrow(&icons::ARROW_LEFT),
+            "Right" => arrow(&icons::ARROW_RIGHT),
+            "Space" => cap().w(34.0).child(icon(&icons::SPACE_BAR, 14.0).color(ink)),
+            word if word.chars().all(|c| c.is_lowercase()) && word.len() > 1 => text(word.to_string()).font(type_::TINY).color(ink),
+            name => cap().child(text(name.to_string()).font(type_::TINY).color(ink)),
+        });
+    }
+    out
+}
+
+/// One key or chord in a small box.
 pub fn keycap(k: &Kit, keys: &str, on_light: bool) -> El {
-    let (fill, ink) = if on_light { (Color::BLACK.alpha(0.12), Color::BLACK.alpha(0.72)) } else { (k.c.layer_03, k.c.text_muted) };
-    el().px(5.0).h(18.0).center().radius(4.0).fill(fill).child(text(keys).font(type_::TINY).color(ink)).a11y_hidden()
+    keycaps(k, keys, on_light.then_some(Color::BLACK))
 }
 
 /// A key cap on a filled button, inked like the button's label.
 fn keycap_on(keys: &str, ink: Color) -> El {
-    el().px(5.0).h(18.0).center().radius(4.0).fill(ink.alpha(0.14)).child(text(keys).font(type_::TINY).color(ink.alpha(0.8))).a11y_hidden()
+    keycaps(theme::kit(), keys, Some(ink))
+}
+
+/// How a tile is filled.
+#[derive(Clone, Copy, PartialEq)]
+enum Tone {
+    Plain,
+    /// The one preferred action of its strip.
+    Primary,
+    /// A state that is on, in the colour that state has: yellow hides, red is live.
+    On(Color, Color),
+}
+
+/// A button of the strips under the lists: an icon over one word, its key in a corner. Tiles
+/// of one set are the same size, which comes from the strip and never from the word, so a
+/// longer language changes nothing; the preferred one differs by fill, never by size (Apple's
+/// guidelines on buttons: "Use style, not size, to visually distinguish the preferred choice").
+pub struct Tile {
+    label: String,
+    icon: Option<&'static Icon>,
+    /// The icon is an arrow key itself and is drawn as a key.
+    key_face: bool,
+    /// Icon, word and key side by side: for a tile much wider than it is high.
+    wide: bool,
+    keys: Option<&'static str>,
+    tone: Tone,
+    height: f32,
+    disabled: bool,
+    help: Option<String>,
+}
+
+pub fn tile(label: impl Into<String>) -> Tile {
+    Tile { label: label.into(), icon: None, key_face: false, wide: false, keys: None, tone: Tone::Plain, height: 64.0, disabled: false, help: None }
+}
+
+impl Tile {
+    pub fn icon(mut self, icon: &'static Icon) -> Self {
+        self.icon = Some(icon);
+        self
+    }
+    /// An arrow key as the tile's icon, drawn as the key it is.
+    pub fn arrow_key(mut self, icon: &'static Icon) -> Self {
+        self.icon = Some(icon);
+        self.key_face = true;
+        self
+    }
+    pub fn keys(mut self, keys: &'static str) -> Self {
+        self.keys = Some(keys);
+        self
+    }
+    /// Lays the icon, the word and the key in one line.
+    pub fn wide(mut self) -> Self {
+        self.wide = true;
+        self
+    }
+    pub fn primary(mut self) -> Self {
+        self.tone = Tone::Primary;
+        self
+    }
+    /// Filled while the state it names is on.
+    pub fn on(mut self, on: bool, fill: Color, ink: Color) -> Self {
+        if on {
+            self.tone = Tone::On(fill, ink);
+        }
+        self
+    }
+    pub fn height(mut self, height: f32) -> Self {
+        self.height = height;
+        self
+    }
+    pub fn disabled(mut self, disabled: bool) -> Self {
+        self.disabled = disabled;
+        self
+    }
+    pub fn help(mut self, text: impl Into<String>) -> Self {
+        self.help = Some(text.into());
+        self
+    }
+
+    pub fn build(self, k: &Kit, press: impl Fn(&mut App, &mut Tx) + 'static) -> El {
+        let c = &k.c;
+        let (fill, ink, border) = match self.tone {
+            Tone::Plain => (c.layer_02, c.text_base, Some(c.border_base)),
+            Tone::Primary => (c.text_base, c.page, None),
+            Tone::On(fill, ink) => (fill, ink, None),
+        };
+        let filled = self.tone != Tone::Plain;
+        let (hover, pressed) = if filled { (Color::BLACK.alpha(0.08), Color::BLACK.alpha(0.16)) } else { (c.hover, c.pressed) };
+        let name = self.help.clone().unwrap_or_else(|| self.label.clone());
+        if self.wide {
+            let mut e = row().role("button").label(name).h(self.height).grow(1.0).min_w(0.0).px(12.0).gap(8.0).center_y().radius(k.radius.md).fill(fill);
+            if let Some(border) = border {
+                e = e.border(1.0, border);
+            }
+            if let Some(glyph) = self.icon {
+                e = e.child(icon(glyph, 18.0).color(ink).a11y_hidden());
+            }
+            e = e.child(text(self.label.clone()).font(type_::BODY_STRONG).color(ink).truncate().grow(1.0).min_w(0.0).a11y_hidden());
+            if let Some(keys) = self.keys {
+                e = e.child(keycaps(k, keys, filled.then_some(ink)));
+            }
+            if let Some(tip) = self.help {
+                e = e.help(tip);
+            }
+            if self.disabled {
+                return e.layer_opacity(0.45).disabled(true);
+            }
+            return e.hover(hover).press(pressed).cursor(Cursor::Pointer).on_press_tx(move |s: &mut App, tx: &mut Tx| press(s, tx));
+        }
+        let mut e = rune::col().role("button").label(name).h(self.height).grow(1.0).min_w(0.0).px(6.0).gap(4.0).center().radius(k.radius.md).fill(fill);
+        if let Some(border) = border {
+            e = e.border(1.0, border);
+        }
+        if let Some(glyph) = self.icon {
+            e = e.child(if self.key_face {
+                el().size(28.0, 24.0).center().radius(5.0).fill(ink.alpha(0.14)).child(icon(glyph, 16.0).color(ink)).a11y_hidden()
+            } else {
+                icon(glyph, 20.0).color(ink).a11y_hidden()
+            });
+        }
+        e = e.child(el().w_full().center().child(text(self.label.clone()).font(type_::SMALL_STRONG).color(ink).truncate().a11y_hidden()));
+        if let Some(keys) = self.keys {
+            // The key sits in the corner, where it never changes the tile's size.
+            e = e.child(el().pin(None, Some(5.0), Some(5.0), None).child(keycaps(k, keys, filled.then_some(ink))));
+        }
+        if let Some(tip) = self.help {
+            e = e.help(tip);
+        }
+        if self.disabled {
+            return e.layer_opacity(0.45).disabled(true);
+        }
+        e.hover(hover).press(pressed).cursor(Cursor::Pointer).on_press_tx(move |s: &mut App, tx: &mut Tx| press(s, tx))
+    }
 }
 
 /// A hint line: a key cap and what it does.
