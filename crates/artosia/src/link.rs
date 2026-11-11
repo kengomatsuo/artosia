@@ -7,11 +7,13 @@ use std::io::{BufRead, BufReader, Write};
 use std::net::{Ipv4Addr, TcpStream};
 use std::path::PathBuf;
 use std::sync::mpsc::{Receiver, RecvTimeoutError, Sender, channel};
+use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::{Arc, Mutex};
 use std::time::{Duration, Instant};
 
 use artosia_slides::frame::{DisplayInfo, FromOutput, PORT, ToOutput, decode, encode, trace};
-use rune::Waker;
+use artosia_slides::look::Look;
+use rune::{Pixels, Waker};
 
 use crate::strings as t;
 
@@ -54,11 +56,45 @@ impl OutputOptions {
     }
 }
 
+/// The newest small picture of the projector's video or camera, which the two previews draw
+/// under the words. The output sends one a few times a second while a moving background plays
+/// (`artosia_slides::preview`). `Pixels::set` wakes only the windows showing it, so the window
+/// redraws once per picture and not at all between them.
+#[derive(Default)]
+pub struct LivePicture {
+    pixels: Pixels,
+    /// A picture has arrived and the moving background has not ended since.
+    on: AtomicBool,
+}
+
+impl LivePicture {
+    /// Keeps `rgba` as the newest picture. Returns true when it is the first since the
+    /// background started, so the caller wakes the window that is not yet drawing it.
+    pub fn accept(&self, width: u32, height: u32, rgba: Vec<u8>) -> bool {
+        self.pixels.set(width, height, rgba);
+        !self.on.swap(true, Ordering::AcqRel)
+    }
+
+    /// Drops the picture; the previews go back to the still picture or black. Returns true
+    /// when there was one.
+    pub fn drop_picture(&self) -> bool {
+        self.on.swap(false, Ordering::AcqRel)
+    }
+
+    /// The picture for a screen drawn with `look`, when `look` is the moving background the
+    /// projector is playing now (`playing`) and a picture is there. A look that is a picture,
+    /// a colour, or another video, gets none: what the projector plays is not what it shows.
+    pub fn for_look(&self, look: &Look, playing: &Look) -> Option<&Pixels> {
+        (self.on.load(Ordering::Acquire) && look.is_moving() && look.background == playing.background).then_some(&self.pixels)
+    }
+}
+
 #[derive(Default)]
 pub struct Link {
     tx: Option<Sender<ToOutput>>,
     status: Arc<Mutex<LinkStatus>>,
     options: Arc<Mutex<OutputOptions>>,
+    live: Arc<LivePicture>,
 }
 
 /// The GStreamer the projector and the streaming program run on, and whether it is the one
@@ -150,10 +186,10 @@ struct Last {
 }
 
 /// Talks to one connected output until the socket breaks. Returns true when asked to quit.
-fn serve(stream: TcpStream, rx: &Receiver<ToOutput>, last: &mut Last, options: &Arc<Mutex<OutputOptions>>, status: &Arc<Mutex<LinkStatus>>, waker: &Waker) -> bool {
+fn serve(stream: TcpStream, rx: &Receiver<ToOutput>, last: &mut Last, options: &Arc<Mutex<OutputOptions>>, status: &Arc<Mutex<LinkStatus>>, live: &Arc<LivePicture>, waker: &Waker) -> bool {
     let _ = stream.set_nodelay(true);
     let Ok(reader) = stream.try_clone() else { return false };
-    let (reader_status, reader_waker) = (status.clone(), waker.clone());
+    let (reader_status, reader_waker, reader_live) = (status.clone(), waker.clone(), live.clone());
     std::thread::spawn(move || {
         for line in BufReader::new(reader).lines() {
             let Ok(line) = line else { break };
@@ -168,8 +204,19 @@ fn serve(stream: TcpStream, rx: &Receiver<ToOutput>, last: &mut Last, options: &
                 }),
                 Some(FromOutput::MediaError(reason)) => set(&reader_status, &reader_waker, |s| s.media_error = Some(reason).filter(|reason| !reason.is_empty())),
                 Some(FromOutput::ProjectorHidden) => set(&reader_status, &reader_waker, |s| s.hidden_here = true),
-                None => {}
+                Some(FromOutput::Preview { width, height, rgb }) => {
+                    if let Some(rgba) = artosia_slides::preview::unpack(width, height, &rgb)
+                        && reader_live.accept(width, height, rgba) {
+                            reader_waker();
+                        }
+                }
+                Some(FromOutput::PreviewEnd) if reader_live.drop_picture() => reader_waker(),
+                Some(FromOutput::PreviewEnd) | None => {}
             }
+        }
+        // The projector is gone, and with it the picture.
+        if reader_live.drop_picture() {
+            reader_waker();
         }
     });
     set(status, waker, |s| {
@@ -233,7 +280,7 @@ impl Link {
         }
         let (tx, rx) = channel::<ToOutput>();
         self.tx = Some(tx);
-        let (status, options) = (self.status.clone(), self.options.clone());
+        let (status, options, live) = (self.status.clone(), self.options.clone(), self.live.clone());
         set(&status, &waker, |s| s.waiting_since = Some(Instant::now()));
         std::thread::spawn(move || {
             let mut last = Last::default();
@@ -244,7 +291,7 @@ impl Link {
                 match TcpStream::connect((Ipv4Addr::LOCALHOST, PORT)) {
                     Ok(stream) => {
                         starts = 0;
-                        if serve(stream, &rx, &mut last, &options, &status, &waker) {
+                        if serve(stream, &rx, &mut last, &options, &status, &live, &waker) {
                             return;
                         }
                         set(&status, &waker, |s| {
@@ -280,6 +327,16 @@ impl Link {
         });
     }
 
+    /// The picture of the projector's moving background for a screen drawn with `look`.
+    pub fn live_picture(&self, look: &Look, playing: &Look) -> Option<&Pixels> {
+        self.live.for_look(look, playing)
+    }
+
+    /// Hands the previews a picture as if the output had sent it, for headless renders.
+    pub fn inject_live_picture(&self, width: u32, height: u32, rgba: Vec<u8>) {
+        self.live.accept(width, height, rgba);
+    }
+
     pub fn is_started(&self) -> bool {
         self.tx.is_some()
     }
@@ -307,5 +364,35 @@ impl Link {
     /// Whether the person at the projector window closed it since this was last asked.
     pub fn take_hidden_here(&self) -> bool {
         self.status.lock().map(|mut status| std::mem::take(&mut status.hidden_here)).unwrap_or(false)
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use artosia_slides::look::Background;
+
+    fn look(background: Background) -> Look {
+        Look { background, ..Look::default() }
+    }
+
+    #[test]
+    fn the_operator_drops_the_picture_when_the_background_is_no_longer_moving() {
+        let link = Link::default();
+        let camera = look(Background::Camera(String::new()));
+        assert!(link.live_picture(&camera, &camera).is_none(), "nothing arrived yet");
+        assert!(link.live.accept(2, 1, vec![0; 8]), "the first picture is told");
+        assert!(!link.live.accept(2, 1, vec![0; 8]), "later ones are not");
+        assert!(link.live_picture(&camera, &camera).is_some());
+        // The look changes to a picture, a colour or another video: the projector no longer plays it.
+        let colour = look(Background::Solid([0, 0, 0]));
+        assert!(link.live_picture(&colour, &colour).is_none());
+        assert!(link.live_picture(&look(Background::Image("a.png".into())), &camera).is_none());
+        assert!(link.live_picture(&look(Background::Video("a.mp4".into())), &camera).is_none(), "another look's video");
+        assert!(link.live_picture(&camera, &colour).is_none(), "the projector plays a colour now");
+        // The output says the video ended.
+        assert!(link.live.drop_picture());
+        assert!(link.live_picture(&camera, &camera).is_none());
+        assert!(!link.live.drop_picture(), "nothing left to drop");
     }
 }

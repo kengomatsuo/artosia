@@ -60,6 +60,8 @@ pub enum Fill {
     BirthdaysWeek,
     /// The people whose birthday falls in this month.
     BirthdaysMonth,
+    /// The words of a Bible passage, read from the installed Bible each time the card is shown.
+    Passage,
 }
 
 impl Fill {
@@ -69,6 +71,7 @@ impl Fill {
             Fill::Nothing => "",
             Fill::BirthdaysWeek => "birthdays-week",
             Fill::BirthdaysMonth => "birthdays-month",
+            Fill::Passage => "passage",
         }
     }
 
@@ -76,6 +79,7 @@ impl Fill {
         match code {
             "birthdays-week" => Fill::BirthdaysWeek,
             "birthdays-month" => Fill::BirthdaysMonth,
+            "passage" => Fill::Passage,
             _ => Fill::Nothing,
         }
     }
@@ -94,6 +98,10 @@ pub struct Announcement {
     pub image: String,
     #[serde(default)]
     pub fill: Fill,
+    /// The reference of a passage card as the volunteer typed it ("Mazmur 23:1-3"); read with
+    /// the installed Bible's own parser. Empty on every other card.
+    #[serde(default)]
+    pub passage: String,
 }
 
 /// Someone whose birthday the church keeps. The year is never stored.
@@ -132,12 +140,47 @@ fn days_after(month: u8, day: u8, days: u8) -> (u8, u8) {
     (month, day)
 }
 
+/// The first and last day (month, day) a birthday card covers today; None for a card that
+/// holds no birthdays.
+pub fn birthday_days(fill: Fill, today: &Today) -> Option<((u8, u8), (u8, u8))> {
+    match fill {
+        Fill::BirthdaysWeek => Some(((today.month, today.day), days_after(today.month, today.day, 6))),
+        Fill::BirthdaysMonth => Some(((today.month, 1), (today.month, MONTH_DAYS[usize::from(today.month.clamp(1, 12)) - 1]))),
+        Fill::Nothing | Fill::Passage => None,
+    }
+}
+
+/// What a passage card can show right now.
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub enum PassageState {
+    /// The card is not a passage card.
+    NotAPassage,
+    /// No Bible is loaded to read the words from.
+    NoBible,
+    /// The Bible has nothing at the reference typed: empty, an unknown book or a missing verse.
+    Unreadable,
+    Ready(Reference),
+}
+
+/// Reads a passage card's reference with the Bible's own parser (`Bible::guess`, which knows
+/// the book names of its language and English). A bare book name is not enough for a card.
+pub fn passage_state(item: &Announcement, bible: Option<&Bible>) -> PassageState {
+    if item.fill != Fill::Passage {
+        return PassageState::NotAPassage;
+    }
+    let Some(bible) = bible else { return PassageState::NoBible };
+    match bible.guess(&item.passage).into_iter().next() {
+        Some(guess) if !guess.book_only && !bible.verses(&guess.reference).is_empty() => PassageState::Ready(guess.reference),
+        _ => PassageState::Unreadable,
+    }
+}
+
 /// The people an announcement fills itself with, in date order from today.
 pub fn birthdays<'a>(people: &'a [Person], fill: Fill, today: &Today) -> Vec<&'a Person> {
     let key = |month: u8, day: u8| u16::from(month) * 100 + u16::from(day);
     let from = key(today.month, today.day);
     let mut found: Vec<&Person> = match fill {
-        Fill::Nothing => Vec::new(),
+        Fill::Nothing | Fill::Passage => Vec::new(),
         Fill::BirthdaysMonth => people.iter().filter(|person| person.month == today.month).collect(),
         Fill::BirthdaysWeek => {
             let (month, day) = days_after(today.month, today.day, 6);
@@ -264,10 +307,21 @@ fn span_label(bible: &Bible, span: &Reference) -> String {
 
 /// The slides of every announcement in order, each with the place of its announcement in the
 /// list. One that fills itself with birthdays gives a slide per eight names, and none at all
-/// when nobody has one.
-pub fn announcement_pages(announcements: &[Announcement], people: &[Person], today: &Today) -> Vec<(usize, Slide)> {
+/// when nobody has one. A passage card gives its verses, `per_slide` to a slide, and none at all
+/// while its reference cannot be read from `bible`.
+pub fn announcement_pages(announcements: &[Announcement], people: &[Person], today: &Today, bible: Option<&Bible>, per_slide: usize) -> Vec<(usize, Slide)> {
     let mut pages = Vec::new();
     for (at, item) in announcements.iter().enumerate() {
+        if item.fill == Fill::Passage {
+            if let (PassageState::Ready(reference), Some(bible)) = (passage_state(item, bible), bible) {
+                for mut slide in passage_deck(bible, &reference, None, per_slide).slides {
+                    slide.heading = item.title.clone();
+                    slide.image = item.image.clone();
+                    pages.push((at, slide));
+                }
+            }
+            continue;
+        }
         if item.fill == Fill::Nothing {
             // A long list, such as a table brought in from PowerPoint, goes over several slides
             // so the words stay large enough to read from the back.
@@ -296,12 +350,12 @@ pub fn announcement_pages(announcements: &[Announcement], people: &[Person], tod
 }
 
 /// Every announcement as one deck, for the loop shown before a service.
-pub fn announcements_deck(announcements: &[Announcement], people: &[Person], today: &Today) -> Deck {
+pub fn announcements_deck(announcements: &[Announcement], people: &[Person], today: &Today, bible: Option<&Bible>, per_slide: usize) -> Deck {
     Deck {
         title: "Announcements".to_string(),
         subtitle: String::new(),
         source: DeckSource::Announcements,
-        slides: announcement_pages(announcements, people, today).into_iter().map(|(_, slide)| slide).collect(),
+        slides: announcement_pages(announcements, people, today, bible, per_slide).into_iter().map(|(_, slide)| slide).collect(),
     }
 }
 
@@ -369,19 +423,67 @@ mod tests {
             Announcement { title: "Welcome".into(), body: "Hello".into(), ..Announcement::default() },
             Announcement { title: "Birthdays".into(), fill: Fill::BirthdaysMonth, ..Announcement::default() },
         ];
-        let pages = announcement_pages(&items, &people, &today);
+        let pages = announcement_pages(&items, &people, &today, None, 2);
         assert_eq!(pages.len(), 2);
         assert_eq!(pages[1].1.text, "Tom\t20 December\nBudi\t30 December");
         // Ten more December birthdays spill onto a second slide; an empty month gives none.
         people.extend((1..=10).map(|day| person(&format!("Person {day:02}"), 12, day)));
-        assert_eq!(announcement_pages(&items, &people, &today).iter().filter(|(at, _)| *at == 1).count(), 2);
+        assert_eq!(announcement_pages(&items, &people, &today, None, 2).iter().filter(|(at, _)| *at == 1).count(), 2);
         let june = Today { month: 7, day: 1, months: &MONTHS };
-        assert_eq!(announcement_pages(&items, &people, &june).len(), 1);
+        assert_eq!(announcement_pages(&items, &people, &june, None, 2).len(), 1);
         // Twenty-five lines of a brought-in table become three slides of the same announcement.
         let long = vec![Announcement { title: "List".into(), body: (1..=25).map(|n| format!("Row {n}	{n}")).collect::<Vec<_>>().join("
 "), ..Announcement::default() }];
-        let pages = announcement_pages(&long, &[], &today);
+        let pages = announcement_pages(&long, &[], &today, None, 2);
         assert_eq!(pages.iter().map(|(_, slide)| slide.text.lines().count()).collect::<Vec<_>>(), [10, 10, 5]);
+    }
+
+    fn made_up_bible() -> Bible {
+        let verse = |v: u16, text: &str| Verse { book: 19, chapter: 23, verse: v, text: text.into() };
+        let names = vec![(19, "Mazmur".to_string(), "Mzm".to_string())];
+        Bible::from_parts("TST".into(), None, String::new(), names, vec![verse(1, "Made up one."), verse(2, "Made up two."), verse(3, "Made up three.")]).unwrap_or_else(|_| unreachable!())
+    }
+
+    #[test]
+    fn a_passage_card_fills_from_the_bible() {
+        const MONTHS: [&str; 12] = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        let today = Today { month: 5, day: 1, months: &MONTHS };
+        let bible = made_up_bible();
+        let card = Announcement { title: "Verse of the week".into(), fill: Fill::Passage, passage: "mazmur 23:1-3".into(), ..Announcement::default() };
+        assert_eq!(passage_state(&card, Some(&bible)), PassageState::Ready(Reference { book: 19, chapter: 23, verse: 1, end_chapter: 23, end_verse: 3 }));
+        let pages = announcement_pages(std::slice::from_ref(&card), &[], &today, Some(&bible), 2);
+        assert_eq!(pages.len(), 2);
+        assert_eq!(pages[0].1.heading, "Verse of the week");
+        assert_eq!(pages[0].1.text, "1 Made up one. 2 Made up two.");
+        assert_eq!(pages[1].1.caption, "Mazmur 23:3 TST");
+        // The English name reads too, and the reference is re-read when the Bible changes.
+        let english = Announcement { passage: "psalms 23:2".into(), ..card.clone() };
+        assert_eq!(announcement_pages(&[english], &[], &today, Some(&bible), 2)[0].1.text, "Made up two.");
+    }
+
+    #[test]
+    fn a_passage_card_says_why_it_has_no_words() {
+        let bible = made_up_bible();
+        let card = Announcement { fill: Fill::Passage, passage: "mazmur 23:1".into(), ..Announcement::default() };
+        assert_eq!(passage_state(&card, None), PassageState::NoBible);
+        for typed in ["", "mazmur", "mazmur 23:99", "nonsense words", "mazmur 24:1"] {
+            let card = Announcement { passage: typed.into(), ..card.clone() };
+            assert_eq!(passage_state(&card, Some(&bible)), PassageState::Unreadable, "{typed:?}");
+        }
+        let plain = Announcement { title: "Plain".into(), ..Announcement::default() };
+        assert_eq!(passage_state(&plain, Some(&bible)), PassageState::NotAPassage);
+        const MONTHS: [&str; 12] = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        let today = Today { month: 5, day: 1, months: &MONTHS };
+        assert!(announcement_pages(&[card], &[], &today, None, 2).is_empty());
+    }
+
+    #[test]
+    fn a_birthday_card_names_the_days_it_covers() {
+        const MONTHS: [&str; 12] = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        let today = Today { month: 12, day: 28, months: &MONTHS };
+        assert_eq!(birthday_days(Fill::BirthdaysWeek, &today), Some(((12, 28), (1, 3))));
+        assert_eq!(birthday_days(Fill::BirthdaysMonth, &today), Some(((12, 1), (12, 31))));
+        assert_eq!(birthday_days(Fill::Passage, &today), None);
     }
 
     #[test]

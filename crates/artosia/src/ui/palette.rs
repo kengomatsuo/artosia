@@ -47,6 +47,7 @@ fn plain_row(k: &Kit, hit: &Hit) -> (&'static rune::Icon, String, String) {
     let _ = k;
     match hit {
         Hit::PlanItem { title, .. } => (&icons::BOOK, title.clone(), t::IN_PLAN().to_string()),
+        Hit::Plan { name, .. } => (&icons::HEADING, name.clone(), t::KIND_PLAN().to_string()),
         Hit::Announcement { title, body, .. } => (&icons::ANNOUNCE, title.clone(), body.replace('\n', " ")),
         Hit::Look { name, .. } => (&icons::LOOK, name.clone(), t::KIND_LOOK().to_string()),
         Hit::Bible { name, .. } => (&icons::BOOK, name.clone(), t::KIND_BIBLE().to_string()),
@@ -142,10 +143,15 @@ fn hit_row(s: &App, k: &Kit, index: usize, hit: &Hit) -> El {
         .child(icon(glyph, 16.0).color(if picked { k.c.text_base } else { k.c.text_muted }).a11y_hidden())
         .child(col().grow(1.0).min_w(0.0).gap(2.0).child(title.truncate()).child(detail.truncate()))
         .children(trailing)
-        .on_press(move |s: &mut App| s.palette.picked = index)
-        .on_double_press(move |s: &mut App| {
+        // A click does what Enter does: it opens the row in Preview, or plans it while adding.
+        // Nothing here reaches the projector (owner, 2026-11-11: "clicking does nothing and
+        // double-clicking shows to live?").
+        .on_press_tx(move |s: &mut App, tx: &mut Tx| {
             s.palette.picked = index;
             s.pick(Pick::Open);
+            if !s.palette.open {
+                tx.blur();
+            }
         })
 }
 
@@ -249,8 +255,14 @@ fn grid(s: &App, k: &Kit) -> El {
     body.scroll_bar(k)
 }
 
-fn actions(k: &Kit, hit: &Hit) -> El {
+fn actions(s: &App, k: &Kit, hit: &Hit) -> El {
     let bar = row().key("preview-actions").w_full().padding(space::S3).gap(space::S2).center_y();
+    if s.palette.adding && matches!(hit, Hit::Song { .. } | Hit::Section { .. } | Hit::Announcement { .. } | Hit::Passage { step: None, .. }) {
+        return bar
+            .child(btn(t::BTN_DONE()).hint("Esc").build(k, |s, _| s.close_palette()))
+            .child(spacer())
+            .child(btn(t::BTN_ADD_TO_PLAN()).icon(&icons::PLUS).primary().hint(t::KEY_ENTER()).build(k, |s, _| s.pick(Pick::AddToPlan)));
+    }
     let choose = || btn(t::BTN_CHOOSE()).primary().hint(t::KEY_ENTER()).build(k, |s, _| s.pick(Pick::Open));
     // Only the main button carries its key: the row under the list names all three, and with
     // three key caps the Indonesian buttons ran past the panel's edge.
@@ -259,7 +271,7 @@ fn actions(k: &Kit, hit: &Hit) -> El {
     let open = || btn(t::BTN_OPEN()).primary().hint(t::KEY_ENTER()).build(k, |s, _| s.pick(Pick::Open));
     match hit {
         Hit::Group(_) => bar,
-        Hit::Command(_) | Hit::Look { .. } | Hit::Bible { .. } | Hit::Countdown(_) | Hit::Message(_) | Hit::StageMessage(_) | Hit::Language(_) => bar.child(spacer()).child(choose()),
+        Hit::Command(_) | Hit::Look { .. } | Hit::Bible { .. } | Hit::Countdown(_) | Hit::Message(_) | Hit::StageMessage(_) | Hit::Language(_) | Hit::Plan { .. } => bar.child(spacer()).child(choose()),
         Hit::Passage { step: Some(_), .. } => bar.child(spacer()).child(btn(t::BTN_ADD_TO_PLAN()).build(k, |s, _| s.pick(Pick::AddToPlan))).child(choose()),
         Hit::PlanItem { .. } => bar.child(spacer()).child(show()).child(open()),
         _ => bar.child(add()).child(spacer()).child(show()).child(open()),
@@ -328,14 +340,15 @@ fn preview(s: &App, k: &Kit) -> El {
         }
         Hit::Announcement { index, .. } => {
             if let Some(item) = s.announcements.get(*index) {
-                body = body.child(slide_preview(&s.preview_state(Some(announcement_slide(item)))));
+                // What the card gives today; a card with nothing to give shows its own words.
+                let slide = s.card_slides(item).into_iter().next().unwrap_or_else(|| announcement_slide(item));
+                body = body.child(slide_preview(&s.preview_state(Some(slide))));
             }
         }
         Hit::Look { index, name } => {
             if let Some(preset) = presets().into_iter().nth(*index) {
                 let mut state = s.preview_state(Some(crate::ui::sample_slide()));
-                let look = &s.settings.look;
-                state.look = artosia_slides::look::Look { max_lines: look.max_lines, size: look.size, place: look.place, ..preset };
+                state.look = s.settings.look.with_preset(preset);
                 body = body.child(slide_preview(&state)).child(text(name.clone()).font(type_::HEADING).color(k.c.text_base));
             }
         }
@@ -355,7 +368,7 @@ fn preview(s: &App, k: &Kit) -> El {
         .fill(k.c.layer_01)
         .child(body.scroll_bar(k))
         .child(crate::ui::widgets::divider(k))
-        .child(actions(k, hit))
+        .child(actions(s, k, hit))
 }
 
 fn input_row(s: &App, k: &Kit) -> El {
@@ -419,6 +432,21 @@ fn input_row(s: &App, k: &Kit) -> El {
             true
         });
     let mut line = row().key("palette-input").w_full().h(60.0).px(space::S4).gap(space::S3).center_y().child(icon(&rune_kit::glyphs::SEARCH, 16.0).color(k.c.text_muted).a11y_hidden());
+    if s.palette.adding {
+        // What Enter will do, said where the eye is while typing.
+        line = line.child(
+            row()
+                .key("palette-adding")
+                .h(28.0)
+                .px(space::S2)
+                .gap(6.0)
+                .center_y()
+                .radius(k.radius.md)
+                .fill(theme::accent().alpha(0.22))
+                .child(icon(&icons::PLUS, 16.0).color(k.c.text_base).a11y_hidden())
+                .child(text(t::ADDING_TO_PLAN()).font(type_::BODY_STRONG).color(k.c.text_base)),
+        );
+    }
     if let Some(song) = inside {
         // The song the search is inside. A click on it, or Backspace in an empty field, lets go.
         line = line.child(
@@ -485,10 +513,12 @@ fn footer(s: &App, k: &Kit) -> El {
         .h(36.0)
         .px(space::S4)
         .gap(space::S4)
-        .center_y()
-        .child(key_hint(k, t::KEY_ENTER(), t::HINT_OPEN()))
-        .child(key_hint(k, t::KEY_SHOW_NOW(), t::BTN_SHOW_NOW()))
-        .child(key_hint(k, t::KEY_ADD(), t::BTN_ADD_TO_PLAN()));
+        .center_y();
+    bar = if s.palette.adding {
+        bar.child(key_hint(k, t::KEY_ENTER(), t::BTN_ADD_TO_PLAN())).child(key_hint(k, "Esc", t::BTN_DONE()))
+    } else {
+        bar.child(key_hint(k, t::KEY_ENTER(), t::HINT_OPEN())).child(key_hint(k, t::KEY_SHOW_NOW(), t::BTN_SHOW_NOW())).child(key_hint(k, t::KEY_ADD(), t::BTN_ADD_TO_PLAN()))
+    };
     if let Some(does) = tab {
         bar = bar.child(key_hint(k, "Tab", does));
     }

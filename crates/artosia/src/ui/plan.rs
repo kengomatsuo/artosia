@@ -30,8 +30,15 @@ pub(crate) fn heading_row(s: &App, k: &Kit, item: &PlanItem, menu: El) -> El {
         .gap(space::S2)
         .center_y()
         .hover_group()
+        .child(grip(k))
         .child(text(s.entry_title(&item.entry)).font(type_::SMALL_STRONG).color(k.c.text_muted).truncate().grow(1.0))
         .child(menu)
+}
+
+/// The dots at a row's start that say it can be carried (owner, 2026-11-11: "Where's the drag
+/// handler?"). The whole row drags; the grip is what shows it.
+fn grip(k: &Kit) -> El {
+    icon(&icons::GRIP, 14.0).color(k.c.text_faint).help(t::PLAN_DRAG())
 }
 
 pub(crate) fn item_row(s: &App, k: &Kit, item: &PlanItem, menu: El) -> El {
@@ -46,12 +53,14 @@ pub(crate) fn item_row(s: &App, k: &Kit, item: &PlanItem, menu: El) -> El {
         .label(s.entry_title(&item.entry))
         .w_full()
         .h(size::ROW)
-        .px(space::S3)
+        .pl(space::S2)
+        .pr(space::S3)
         .gap(space::S2)
         .center_y()
         .radius(k.radius.md)
         .fill(if open { k.c.layer_03 } else { rune::Color::TRANSPARENT })
         .hover_group()
+        .child(grip(k))
         .child(icon(entry_icon(&item.entry), 16.0).color(if live { theme::live() } else { k.c.text_muted }).a11y_hidden())
         .child(text(s.entry_title(&item.entry)).font(if open { type_::BODY_STRONG } else { type_::BODY }).color(ink).truncate().grow(1.0));
     if missing {
@@ -70,12 +79,9 @@ pub(crate) fn item_row(s: &App, k: &Kit, item: &PlanItem, menu: El) -> El {
             if std::mem::take(&mut s.plan_dropped) {
                 return;
             }
+            // A click brings the item into Preview and never onto the projector.
             s.open_plan_item(id);
             tx.blur();
-        })
-        .on_double_press(move |s: &mut App| {
-            s.open_plan_item(id);
-            s.show(0);
         })
 }
 
@@ -167,27 +173,6 @@ pub(crate) fn row_menu(s: &App, k: &Kit, item: &PlanItem, at: usize, layer: &mut
         .build(k, layer)
 }
 
-/// The plan's own menu: start over, or add a divider.
-pub(crate) fn header_menu(s: &App, k: &Kit, layer: &mut Vec<El>) -> El {
-    let trigger = btn(t::PLAN_ITEM_MENU()).icon(&icons::DOTS).icon_only().ghost().build(k, |s, tx| {
-        s.more_menu = !s.more_menu;
-        tx.blur();
-    });
-    Menu::new("plan-header-menu")
-        .trigger(trigger.key("plan-header-menu-button"))
-        .open(s.more_menu)
-        .on_close(|s: &mut App| s.more_menu = false)
-        .item(MenuItem::new(t::CMD_HEADING()).icon(&icons::HEADING).on_select(|s: &mut App| {
-            s.add_heading();
-            s.more_menu = false;
-        }))
-        .item(MenuItem::new(t::PLAN_NEW()).icon(&icons::PLUS).on_select(|s: &mut App| {
-            s.new_plan();
-            s.more_menu = false;
-        }))
-        .build(k, layer)
-}
-
 pub(crate) fn empty(k: &Kit) -> El {
     col()
         .key("plan-empty")
@@ -197,7 +182,31 @@ pub(crate) fn empty(k: &Kit) -> El {
         .gap(space::S3)
         .padding(space::S4)
         .child(text(t::PLAN_EMPTY()).font(type_::BODY).color(k.c.text_muted))
-        .child(btn(t::PLAN_ADD()).icon(&icons::PLUS).build(k, |s, _| s.open_palette(Scope::All, "")))
+}
+
+/// The button under the plan that adds to it, and its menu of what can be added (owner,
+/// 2026-11-11: "I don't even know how to add the announcement or verses to the plan").
+pub(crate) fn add_bar(s: &App, k: &Kit, layer: &mut Vec<El>) -> El {
+    let trigger = btn(t::PLAN_ADD()).icon(&icons::PLUS).grow().build(k, |s, tx| {
+        s.add_menu = !s.add_menu;
+        tx.blur();
+    });
+    let menu = Menu::new("plan-add-menu")
+        .trigger(trigger.key("plan-add-button"))
+        .open(s.add_menu)
+        .on_close(|s: &mut App| s.add_menu = false)
+        .item(MenuItem::new(t::PLAN_ADD_SONG()).icon(&icons::SONG).on_select(|s: &mut App| s.open_palette_adding(Scope::Songs)))
+        .item(MenuItem::new(t::PLAN_ADD_PASSAGE()).icon(&icons::BOOK).on_select(|s: &mut App| s.open_palette_adding(Scope::Bible)))
+        .item(MenuItem::new(t::CMD_ANNOUNCEMENTS()).icon(&icons::ANNOUNCE).on_select(|s: &mut App| {
+            s.add_announcements_to_plan();
+            s.add_menu = false;
+        }))
+        .item(MenuItem::new(t::PLAN_ADD_HEADING()).icon(&icons::HEADING).on_select(|s: &mut App| {
+            s.add_heading();
+            s.add_menu = false;
+        }))
+        .build(k, layer);
+    row().key("plan-add").w_full().padding(space::S2).child(menu.grow(1.0))
 }
 
 /// The plan's rows, scrolling; the column and its title belong to the shell.

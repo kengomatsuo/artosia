@@ -9,12 +9,12 @@
 //!    proved it can read this room and then twice in a row finds nothing.
 //! 3. What usually follows the live song in this church.
 //!
-//! An offer only ever goes into Preview (`App::take_suggestion`). A misheard word never
+//! An offer only ever goes into Preview (`App::take_offer`). A misheard word never
 //! reaches the projector. The strip that draws them is `ui/suggest.rs`.
 
 use artosia_core::bible::Reference;
 use artosia_core::deck::DeckSource;
-use artosia_core::search::tokens;
+use artosia_core::text::words as split_words;
 use artosia_core::song::Tag;
 
 use crate::palette::Scope;
@@ -144,7 +144,7 @@ impl App {
     /// is searched alone, because a sung phrase runs over several lines and a library of
     /// thousands of lines holds every common word somewhere.
     fn read_songs(&self, text: &str) -> (usize, Vec<Match>) {
-        let words = tokens(text);
+        let words: Vec<String> = split_words(text).into_iter().map(|word| word.norm).collect();
         let count = words.len();
         if count < MIN_WORDS {
             return (count, Vec::new());
@@ -193,7 +193,7 @@ impl App {
     }
 
     /// Puts an offer in the Preview pane. The projector is never touched.
-    pub fn take_suggestion(&mut self, offer: &Suggestion) {
+    pub fn take_offer(&mut self, offer: &Suggestion) {
         match &offer.target {
             Target::Song { at, slide: Some(slide), .. } => {
                 // The live song, with the ring on the part the singing has reached.
@@ -325,8 +325,13 @@ mod tests {
     use super::*;
     use artosia_core::learn::Moment;
 
-    const MORNING: usize = 0;
-    const RIVER: usize = 1;
+    const MORNING: &str = "Morning on the Hill";
+    const RIVER: &str = "River of Mercy";
+
+    /// A song's place in the library, which is ordered by title.
+    fn at(app: &App, title: &str) -> usize {
+        app.songs.iter().position(|song| song.title == title).expect("a practice song")
+    }
 
     /// A practice app on a made-up clock, with the first song live at its first slide.
     fn app() -> App {
@@ -336,7 +341,8 @@ mod tests {
         app
     }
 
-    fn live(app: &mut App, song: usize, slide: usize) {
+    fn live(app: &mut App, title: &str, slide: usize) {
+        let song = at(app, title);
         app.open_song(song, None);
         app.show(slide);
     }
@@ -360,11 +366,11 @@ mod tests {
         assert_eq!(found.len(), 1, "{found:?}");
         assert_eq!(found[0].why, Why::Heard);
         assert_eq!(found[0].title, "River of Mercy");
-        assert!(matches!(found[0].target, Target::Song { at: RIVER, section: Some(0), slide: None }), "{:?}", found[0].target);
+        assert!(matches!(found[0].target, Target::Song { section: Some(0), slide: None, .. }), "{:?}", found[0].target);
         assert_eq!(found[0].tag.map(|tag| tag.short()), Some("V1".to_string()));
         // Taking it brings it into Preview at that section and leaves the projector alone.
         let live_before = app.live.as_ref().map(|live| (live.deck.title.clone(), live.index));
-        app.take_suggestion(&found[0]);
+        app.take_offer(&found[0]);
         assert_eq!(app.open.as_ref().map(|open| open.deck.title.clone()), Some("River of Mercy".to_string()));
         assert_eq!(app.live.as_ref().map(|live| (live.deck.title.clone(), live.index)), live_before);
         // Once it is in Preview there is nothing left to offer.
@@ -379,7 +385,7 @@ mod tests {
         let found = suggestions(&app);
         assert_eq!(found.len(), 1, "{found:?}");
         assert_eq!(found[0].tag.map(|tag| tag.short()), Some("C".to_string()));
-        app.take_suggestion(&found[0]);
+        app.take_offer(&found[0]);
         let open = app.open.as_ref().expect("a deck is in Preview");
         assert_eq!(open.deck.title, "Morning on the Hill");
         assert_eq!(open.deck.slides[open.cursor].short, "C");
@@ -407,7 +413,7 @@ mod tests {
         assert_eq!(found[0].tag.map(|tag| tag.short()), Some("B".to_string()));
         let Target::Song { slide: Some(slide), .. } = found[0].target else { panic!("{:?}", found[0].target) };
         assert!(slide >= 2);
-        app.take_suggestion(&found[0]);
+        app.take_offer(&found[0]);
         let open = app.open.as_ref().expect("the live song is in Preview");
         assert_eq!(open.cursor, slide);
         assert!(app.preview_waits(), "Enter would show the heard part");
@@ -447,6 +453,8 @@ mod tests {
         // A phrase that matches something puts the line away again.
         hear(&mut app, 12.0, RIVER_WORDS);
         assert!(suggestions(&app).iter().all(|offer| offer.why != Why::Lost));
+        // A heard song is offered first, and the warning waits until that offer is stale.
+        app.now += FRESH;
         // It goes when the singing stops.
         hear(&mut app, 12.0, GARBAGE[0]);
         hear(&mut app, 12.0, GARBAGE[1]);
@@ -474,7 +482,7 @@ mod tests {
         hear(&mut app, 12.0, GARBAGE[0]);
         hear(&mut app, 12.0, GARBAGE[1]);
         let found = suggestions(&app);
-        app.take_suggestion(&found[0]);
+        app.take_offer(&found[0]);
         assert!(app.palette.open);
         app.palette.open = false;
         assert!(suggestions(&app).is_empty());
@@ -482,11 +490,11 @@ mod tests {
 
     /// Song a is followed by song b on three Sundays, by c once.
     fn history(app: &mut App) {
-        let ids: Vec<i64> = app.songs.iter().map(|song| song.id).collect();
+        let (morning, river) = (app.songs[at(app, MORNING)].id, app.songs[at(app, RIVER)].id);
         for week in 1..=3i64 {
             let day = Moment::new(app.now as i64 - 7 * week * 86_400, 0);
-            let _ = app.store.record_song_live(&day, Some(1), ids[MORNING], "", "", true);
-            let _ = app.store.record_song_live(&day, Some(1), ids[RIVER], "", "", true);
+            let _ = app.store.record_song_live(&day, Some(1), morning, "", "", true);
+            let _ = app.store.record_song_live(&day, Some(1), river, "", "", true);
         }
     }
 
@@ -502,14 +510,16 @@ mod tests {
         assert_eq!(found.len(), 1, "{found:?}");
         assert_eq!((found[0].why, found[0].title.as_str()), (Why::Follows, "River of Mercy"));
         // A person opens something: it is no longer Artosia's own queue.
-        app.open_song(2, None);
+        let other = at(&app, "Quiet Harbour");
+        app.open_song(other, None);
         assert!(suggestions(&app).is_empty());
         // Back to nothing: Esc-style, the queue returns.
         app.open = None;
         assert_eq!(suggestions(&app).len(), 1);
         // The plan has an item after the live one: Preview waits with that, not with a guess.
-        app.add_song_to_plan(MORNING);
-        app.add_song_to_plan(2);
+        let (morning, other) = (at(&app, MORNING), at(&app, "Quiet Harbour"));
+        app.add_song_to_plan(morning);
+        app.add_song_to_plan(other);
         let first = app.plan.items.first().map(|item| item.id).unwrap_or(0);
         app.open_plan_item(first);
         app.show(0);
@@ -578,6 +588,17 @@ mod tests {
         hear(&mut app, 5.0, RIVER_WORDS);
         app.hearing.clear();
         assert!(suggestions(&app).is_empty());
+    }
+
+    #[test]
+    fn a_long_sung_phrase_is_read_to_its_end() {
+        let mut app = app();
+        live(&mut app, MORNING, 0);
+        // Twenty-five words over two songs: nothing past the twelfth word is dropped.
+        hear(&mut app, 5.0, &format!("{RIVER_WORDS} {BRIDGE_WORDS}"));
+        let found = suggestions(&app);
+        let kinds: Vec<Why> = found.iter().map(|offer| offer.why).collect();
+        assert!(kinds.contains(&Why::Heard) && kinds.contains(&Why::Here), "{found:?}");
     }
 
     #[test]

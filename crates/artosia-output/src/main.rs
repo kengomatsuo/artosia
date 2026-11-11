@@ -350,6 +350,8 @@ fn listen(listener: TcpListener) {
         if let Some(hello) = hello {
             shared.tell(&hello);
         }
+        #[cfg(feature = "video")]
+        video::operator_connected(true);
         std::thread::spawn(move || {
             for line in BufReader::new(reader).lines() {
                 let Ok(line) = line else { break };
@@ -357,6 +359,8 @@ fn listen(listener: TcpListener) {
                     apply(message);
                 }
             }
+            #[cfg(feature = "video")]
+            video::operator_connected(false);
         });
     }
 }
@@ -373,6 +377,9 @@ const SCENES: &[Scene] = &[
     ("classic", |_| shared().set_state(demo::classic())),
     ("paper", |_| shared().set_state(demo::paper())),
     ("black", |_| shared().set_state(demo::black())),
+    ("styled", |_| shared().set_state(demo::styled())),
+    ("outlined", |_| shared().set_state(demo::outlined())),
+    ("missing-font", |_| shared().set_state(demo::missing_font())),
     ("identify", |_| {
         shared().set_state(demo::lyrics());
         shared().identify.store(true, Ordering::Release);

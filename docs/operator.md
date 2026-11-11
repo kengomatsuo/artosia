@@ -51,6 +51,31 @@ Back and Next carry arrows that point up and down, the way the lists run and the
 
 A row follows the pointer after 4 points of travel and the rows it passes step aside (`ui/plan.rs`, `draggable`). It is written after the kit's `Reorder`, whose methods are private to the kit and which takes every row to be one height; a divider here is shorter than an item, so the landing place counts the rows whose middle was passed (`drop_place`, with a test). Rune sends the row's press after the drag's release, so the drop sets `plan_dropped` and the press that follows opens nothing. Escape puts the row back.
 
+## Several plans
+
+A church holds more than one service a week (Sunday morning and evening, youth on Saturday), and each needs its own list, kept and named (owner, 2026-11-11: "Where's the multiple-plan support? For different times of the worship schedule idk what it's called?"). The word stays **plan**: the window and the Indonesian interface (`Acara`) already used it, and it says what the list is without saying "service", which in a church also means the hour itself.
+
+**What others call it, from their own manuals.** OpenLP keeps a *service* as a file you open and save, with New, Open and Save As, so a church loads one at a time ([manual.openlp.org/service.html](https://manual.openlp.org/service.html)). FreeShow keeps *projects* in a list in its Show tab, made with a New project button, opened by a double press, and can turn one into a template for new ones ([freeshow.app/docs/projects](https://freeshow.app/docs/projects)). EasyWorship keeps a *schedule* as a file saved and reopened with File, Save As and Reopen, and has no switcher beside the list ([support.easyworship.com](https://support.easyworship.com/support/solutions/6000085139)). ProPresenter keeps *playlists* in a sidebar list, renamed from a right-click menu and duplicated to roll last week's list into this week's ([learn.renewedvision.com](https://learn.renewedvision.com/propresenter6/introduction-to-propresenter/playlists)). Two of the four are files, so a volunteer must find them on disk; the other two are a list inside the program. Artosia takes the list, because the church's PC is shared by volunteers who should never meet a file dialog, and ProPresenter's Duplicate because a new Sunday is nearly always last Sunday with other songs.
+
+**What a plan is.** A row of the `plans` table: a name, an optional date (`YYYY-MM-DD`), the time it last became the open one, and its items (`artosia-core/src/plan.rs`). The table always allowed many rows and the window only ever opened one; the old `New plan` command left each earlier plan behind as a hidden row named "Today". Those rows show in the list now, so nothing is lost. Plans saved before the date existed load with `#[serde(default)]` fields and are tested to do so (`plan.rs`, `store.rs`).
+
+**The controls.** The plan column's title is a button with the open plan's name; it opens a list, the open plan first (checked) and the others most recently used first, each with its date or, without one, how many items it holds. Under the list: New plan, Duplicate plan, Rename plan, Delete plan, all acting on the open plan (`ui/plans.rs`, `plans.rs`). New plan opens the rename dialog at once with the name empty. Rename asks for a name and a date; a date that is not a day disables Save. Duplicate copies the items and leaves the date empty, since a copy is another day. Delete removes the open plan, opens the one used before it (or an empty one), and offers Undo in a toast, which puts the plan back in the list without switching to it. The search finds a plan by its name and Enter opens it, so the keyboard alone switches; "new plan" is a command there too.
+
+**What a switch does to the projector: nothing.** Item numbers belong to one plan and two plans both count from 1, so a switch cannot keep `live.item` as it is. `plans.rs` `enter_plan` therefore:
+
+| State | After the switch |
+|---|---|
+| The live deck and its slide | Unchanged. The output is never sent anything |
+| `live.item` | The new plan's item for the same song or passage if it has one, else none. With one, Next goes on after it in the new plan |
+| `resume` | Cleared |
+| Preview, queued by Artosia | Dropped and queued again from the new plan |
+| Preview, opened by a person | Kept, its item looked up in the new plan the same way |
+| Next at the end of the live item, when the new plan has none of it | Shows the new plan's first showable item (`Switcher::fresh`, `plan_start`), so a switch mid-service leads straight into the next service's list |
+
+Tests in `plans.rs` hold each row of the table.
+
+**The learning log.** `palette_picks`, `service_songs` and `service_passages` already carry `plan_id`; the log writes the open plan's id and never reads it for ranking. Two services on one day broke one query: "what came after this song" partitioned by day, so the last song of the 7:00 plan counted as followed by the first of the 10:00 plan. It now partitions by day and plan (`learn.rs`, `followers_of`, with a test). The weekday group counts days and is unchanged. A deleted plan leaves its id in old rows; nothing reads it, and Undo restores the row under the same id.
+
 ## Search is the library
 
 One box finds songs, Bible passages, announcements and commands. Typing a letter anywhere in the window opens it; so does Ctrl K. It is built after the owner's house-kit palette (`core/palette` in `kengomatsuo/house-kit`): every part of the app contributes documents, the order is a cascade of single rules where a rule only speaks when every rule above it tied, and a document answers to its words in English and Indonesian (`crates/artosia-core/src/palette.rs`, `crates/artosia/src/palette.rs`).
@@ -103,7 +128,7 @@ The arrows are the ones EasiSlides taught the volunteers (owner, 2026-11-10: "Ea
 | Alt Down, Alt Up | Move the Preview item in the plan |
 | Delete | Take the Preview item out of the plan (Undo in the toast) |
 | F1, F2, F3 | Clear text, Black, Logo |
-| F4 | Put what the listener last recognised in Preview. It never goes to the projector by itself, because a misheard word must not reach the room |
+| F4 | Put the first suggestion in Preview: what the listener heard, else what usually follows the live song. It never goes to the projector by itself, because a misheard word must not reach the room |
 | F5 | Put the announcements in Preview |
 | Ctrl E, Ctrl N, Ctrl S | Edit the Preview song, new song, save |
 | Ctrl V with no field focused | Make a new song from the lyrics on the clipboard |
@@ -140,14 +165,21 @@ LRCLIB found 9 of 30 sampled titles from the church library: 7 of 10 English and
 
 The announcement editor takes the Preview pane and the dock: the list on the left with move, duplicate and delete on the picked row, the form on the right under a preview that changes as you type (`ui/announcements.rs`). What is being written is saved when another row is picked, when the editor closes and on Ctrl S.
 
+- **Every row has a Show now control** (the play icon), and the form has a labelled one beside Save. It puts that one card on the projector alone (`App::show_notice_now`, deck source `Announcement(id)`); the other cards stay out, the loop does not start. A card with nothing to show today (nobody has a birthday, a passage the Bible cannot read) leaves the button grey in the form and says so in a toast from the row and from search.
+- **Pressing a row's main area opens the card for editing and puts it in Preview** behind the editor (`pick_notice`, `preview_card`); closing the editor leaves it there. Opening it in Preview does not close the editor, because `open_deck` would.
+- **Add to plan sits in the editor's header** and reads "In today's plan" (grey) once the announcements are a plan row. The plan column has its own way to add; this one is for a volunteer who is already here.
+
 | Part | What it does |
 |---|---|
 | Seconds on screen | How long this one stays up in the loop |
 | Start the loop | Shows each announcement in turn on the projector until stopped or until something else is shown (`App::loop_step`). Showing one announcement by hand does not start it |
-| Fill in by itself | The announcement writes this week's or this month's birthdays from the birthday list each time it is shown, eight names to a slide |
+| Fill in by itself | Four choices: Manual, Bible passage, Birthdays this week, Birthdays this month. The two birthday choices write the names from the birthday list each time the card is shown, eight to a slide, and under the choice the card says which days it covers ("Covers 11 November to 17 November", or all of the month) and how many names it holds today, so a volunteer knows what will come up before showing it |
+| Bible passage | The volunteer types a reference, in Indonesian or English, and the words come from the Bible in use with the reference and its code as the small print (`deck::passage_state`, `announcement_pages`). It reads the reference with `Bible::guess`, the same parser the search uses, so "Mazmur 23:1-3" and "psalm 23 1-3" both work; a bare book name is not enough. It is read again whenever the Bible changes or finishes loading. With no Bible installed, or a reference the Bible has no verse for, the card says so under the field and offers the Bibles dialog; it shows nothing on the projector meanwhile. The "Verse of the week" ready-made card starts as a passage card; choosing Manual makes it plain text again |
 | Picture | A picture shown with the words |
 | Import a PowerPoint | Each slide becomes an announcement: a table row becomes a line with its cells in columns, a picture slide keeps its picture (`artosia-office`) |
 | Import a birthday list | A Word or PowerPoint table of names and dates replaces the birthday list; each person is kept once |
+
+Search finds the birthday card for "birthday" and "ulang tahun" and a passage card for "verse" and "ayat" (`palette.rs`, `documents`); its detail line says how many names it holds today, or the reference. Ctrl Enter shows it at once. A card with no slide today does not show another card's slide in its place: it says so.
 
 A list longer than ten lines goes over several slides. The church's own bulletin (6 slides) and birthday list (26 tables, 682 rows) were read on 2026-11-10: 6 announcements and 331 people after repeats were removed. Those files hold names, birthdays and gifts and stay out of the repository.
 
@@ -173,6 +205,19 @@ Rendering found what the briefs could not: three toggle buttons, a three-way cho
 Releases are GitHub Releases, made by `tools/publish.sh`; an installed copy needs no setting to find them. Full account: `crates/artosia-update/README.md`.
 
 Artosia looks for a newer version at each start and downloads it beside the program; the files are swapped the next time it starts (`artosia-update`, `update.rs`). Every file is checked against a signature made with the release key, whose public half is built into the program. A development build and a headless run never update themselves. "Check for a new version" in the search reports what it found either way.
+
+## What to show next
+
+One strip, `ui/suggest.rs`, over the slides of the Preview pane offers at most three things, each with an icon for why (an ear for what was heard, a clock for what usually follows), the song's title, its section as the coloured chip the lists use, and one icon button of a fixed size that brings it into Preview, with its key on it (F4 on the first). The reason in words is the tooltip. The model is `suggest.rs`, `suggestions(&App)`. An offer only ever fills Preview; nothing goes on the projector, because a misheard word must not reach the room.
+
+| Order | Offer | When |
+|---|---|---|
+| 1 | The song or passage the listener heard, at the section where the words are | A phrase of at least four words has a line holding 70% of a six-word chunk of it (and at least three words), or a Bible reference was spoken. Offered for 60 seconds, unless it is already in Preview at that section |
+| 1 | A far part of the live song ("the singing is here") | The heard words are in the live song at a section two or more slides from the live slide |
+| 2 | A warning that the words being sung are in no song | A song is live, the listener matched something in the last four minutes, and then two phrases in a row (within 90 seconds, the newest within 30) matched nothing. It keeps its words, in yellow, with a search button, because a warning cannot be a tooltip |
+| 3 | What usually follows the live song | Learning is on and recording (not in practice), Preview holds nothing a person chose, the plan has nothing after the live item. The song is not already in the plan |
+
+A phrase of the live song at or next to the live slide offers nothing. A phrase of fewer than four words neither matches nor misses. Stopping the listener forgets what it heard. Pressing an offer quiets the warning until a newer phrase arrives. Scenes `suggest-heard`, `suggest-follows` and `suggest-lost` draw the strip through a hook in `ui/mod.rs` (`Hearing::overlay`) until `ui/shell.rs` places it. Full account of how sure the warning can be: [palette-suggestions.md](palette-suggestions.md).
 
 ## Rules the code keeps
 

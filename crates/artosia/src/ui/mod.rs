@@ -5,8 +5,10 @@ mod announcements;
 mod bibles;
 mod editor;
 pub(crate) mod live;
+pub(crate) mod look;
 mod palette;
 pub(crate) mod plan;
+mod plans;
 mod sheets;
 mod shell;
 pub(crate) mod slides;
@@ -51,7 +53,10 @@ pub fn media(s: &App) -> Media<'_> {
 /// A screen state drawn small, with the slide's own picture when it has one.
 pub fn thumb(s: &App, state: &artosia_slides::frame::OutputState, width: f32) -> El {
     let picture = state.slide.as_ref().filter(|slide| !slide.image.is_empty()).and_then(|slide| s.slide_pictures.get(&slide.image));
-    let media = Media { slide: picture.map(|image| image.pixels()), ..media(s) };
+    let base = media(s);
+    // A video or camera shows its newest frame from the projector; a still picture is the fallback.
+    let moving = s.link.live_picture(&state.look, &s.settings.look);
+    let media = Media { slide: picture.map(|image| image.pixels()), picture: moving.or(base.picture), ..base };
     artosia_slides::audience::thumbnail(state, width, media, s.now)
 }
 
@@ -158,10 +163,7 @@ pub(crate) fn statusbar(s: &App, k: &Kit) -> El {
         bar = bar.child(text(t::REMOTE_ON()).font(type_::SMALL).color(k.c.text_muted));
     }
     bar.child(spacer())
-        .child(key_hint(k, t::KEY_DOWN(), t::HINT_NEXT()))
-        .child(key_hint(k, t::KEY_BACK(), t::HINT_BACK()))
-        .child(key_hint(k, "Shift", t::HINT_SELECT()))
-        .child(key_hint(k, t::KEY_ENTER(), t::BTN_SHOW()))
+        .children(key_hints(s, k))
         .child(
             row()
                 .key("keys-button")
@@ -176,6 +178,31 @@ pub(crate) fn statusbar(s: &App, k: &Kit) -> El {
                 .child(key_hint(k, t::KEY_KEYS(), t::HINT_KEYS()))
                 .on_press(|s: &mut App| s.sheet = Sheet::Keys),
         )
+}
+
+/// What the keys do right now. The arrows change their meaning with Ctrl or Shift held and
+/// while nothing is live, so the bar is rewritten for each (owner, 2026-11-11: "There's no
+/// guide at all that shows the hold ctrl controls the preview").
+fn key_hints(s: &App, k: &Kit) -> Vec<El> {
+    let held = |words: &str| crate::ui::widgets::state_pill(words, theme::accent(), rune::Color::WHITE);
+    let live = s.live.is_some();
+    if s.held_shift && !s.held_ctrl && live {
+        return vec![held(t::HELD_SHIFT()), key_hint(k, t::KEY_ARROWS(), t::HINT_PICK()), key_hint(k, "Shift", t::HINT_LET_GO()), key_hint(k, "Esc", t::HINT_CANCEL())];
+    }
+    if s.held_ctrl && !s.held_shift && live {
+        return vec![held(t::HELD_CTRL()), key_hint(k, t::KEY_ARROWS(), t::HINT_RING()), key_hint(k, t::KEY_ENTER(), t::HINT_SHOW_RING()), key_hint(k, "Tab", t::BTN_NEXT_ITEM())];
+    }
+    if !live {
+        // With nothing on the projector the arrows move in Preview by themselves.
+        return vec![key_hint(k, t::KEY_ARROWS(), t::HINT_RING()), key_hint(k, t::KEY_ENTER(), t::BTN_SHOW()), key_hint(k, "Tab", t::BTN_NEXT_ITEM())];
+    }
+    vec![
+        key_hint(k, t::KEY_DOWN(), t::HINT_NEXT()),
+        key_hint(k, t::KEY_BACK(), t::HINT_BACK()),
+        key_hint(k, "Shift", t::HINT_SELECT()),
+        key_hint(k, "Ctrl", t::HINT_RING()),
+        key_hint(k, t::KEY_ENTER(), t::HINT_SHOW_RING()),
+    ]
 }
 
 pub(crate) fn toast(s: &App, k: &Kit) -> Option<El> {
@@ -240,6 +267,7 @@ pub fn view(s: &App, cx: &mut Cx<App>) -> El {
         let width = cx.layout_size("slide").map(|size| size[0]).unwrap_or(554.0);
         layer.push(strip.w(width).pin(Some(257.0), Some(size::TOPBAR + 1.0 + 40.0), None, None));
     }
+    plans::view(s, k, &mut layer);
     layer.extend(toast(s, k));
     rune_kit::root(body, layer)
 }

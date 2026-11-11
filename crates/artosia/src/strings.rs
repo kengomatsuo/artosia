@@ -356,7 +356,6 @@ text!(CMD_EDIT_SONG_DETAIL, "Change the words of the open song", "Perbaiki lirik
 text!(CMD_UNDO_DETAIL, "Take back the last removal", "Mengembalikan yang terakhir dihapus");
 text!(CMD_LOOP, "Loop the announcements", "Putar pengumuman");
 text!(CMD_LOOP_DETAIL, "Show each one in turn until you stop", "Tayang bergantian sampai dihentikan");
-text!(CMD_NEW_PLAN_DETAIL, "Empty the plan for another service", "Acara hari ini dikosongkan untuk ibadah lain");
 
 // Top bar and status bar.
 text!(BTN_LOOK, "Look", "Tampilan");
@@ -418,6 +417,40 @@ text!(PLAN_MISSING, "Deleted", "Hilang");
 text!(PLAN_HEADING_NEW, "Heading", "Pemisah baru");
 text!(PLAN_HEADING_WORSHIP, "Worship", "Pujian");
 text!(PLAN_HEADING_WORD, "Word", "Firman");
+// Several plans, one for each service. The Indonesian slots hold the English until a person writes them from the briefs.
+text!(PLAN_SWITCH_LABEL, "Plans", "Plans");
+text!(PLAN_DUPLICATE, "Duplicate plan", "Duplicate plan");
+text!(PLAN_RENAME, "Rename plan", "Rename plan");
+text!(PLAN_DELETE, "Delete plan", "Delete plan");
+text!(PLAN_NEW_DETAIL, "Start a plan for another service", "Start a plan for another service");
+text!(PLAN_NEW_NAME, "New plan", "New plan");
+text!(PLAN_NAME_LABEL, "Plan name", "Plan name");
+text!(PLAN_DATE_LABEL, "Date", "Date");
+text!(PLAN_DATE_HINT, "Year-month-day, optional", "Year-month-day, optional");
+text!(KIND_PLAN, "Plan", "Plan");
+
+/// How many things a plan holds, in the list of plans.
+pub fn plan_items(count: usize) -> String {
+    if let Some(text) = say("plan_items", None, Some(count), &[]) {
+        return text;
+    }
+    if count == 1 { "1 item".to_string() } else { format!("{count} items") }
+}
+
+/// The name a copy of a plan starts with.
+pub fn plan_copy_name(name: &str) -> String {
+    if let Some(text) = say("plan_copy_name", None, None, &[("name", text_arg(name))]) {
+        return text;
+    }
+    format!("{name} copy")
+}
+
+pub fn plan_deleted(name: &str) -> String {
+    if let Some(text) = say("plan_deleted", None, None, &[("name", text_arg(name))]) {
+        return text;
+    }
+    format!("Deleted plan {name}")
+}
 
 pub fn added_to_plan(title: &str) -> String {
     if let Some(text) = say("added_to_plan", None, None, &[("title", text_arg(title))]) {
@@ -449,10 +482,7 @@ text!(START_BIBLE_DETAIL, "Pick a book and a verse", "Pilih kitab, lalu ayat");
 text!(START_NEW_DETAIL, "Type or paste the words", "Ketik atau tempel liriknya");
 text!(START_NO_SONGS, "The library has no songs yet", "Pustaka masih kosong, belum ada lagu");
 text!(START_ANNOUNCEMENTS_DETAIL, "Notices before the service", "Tayang sebelum ibadah mulai");
-text!(WELCOME_EASISLIDES, "EasiSlides is on this computer", "EasiSlides ada di komputer ini");
-text!(WELCOME_EASISLIDES_DETAIL, "Bring its songs and Bibles into Artosia. EasiSlides keeps working.", "Salin lagu dan Alkitabnya ke sini. EasiSlides tetap utuh dan bisa dipakai.");
 text!(BTN_BRING_OVER, "Bring them over", "Impor sekarang");
-text!(BTN_NOT_NOW, "Not now", "Nanti saja");
 text!(BTN_ADD_TO_PLAN, "Add to plan", "Tambah ke acara");
 text!(BTN_EDIT, "Edit", "Edit");
 text!(BTN_NEXT_VERSE, "Add the next verse", "Tambah ayat berikutnya");
@@ -495,9 +525,42 @@ pub fn state_countdown(clock: &str) -> String {
     }
     format!("Countdown {clock}")
 }
-text!(LIVE_NOTHING, "Click a slide to show it", "Klik slide untuk menayangkan");
+text!(LIVE_NOTHING, "Nothing is on the projector", "Nothing is on the projector");
 text!(NEXT_NOTHING, "Nothing open", "Belum ada yang dibuka");
 text!(BTN_SHOW, "Show", "Tayangkan");
+text!(BTN_END, "End", "End");
+text!(LIVE_ENDED, "Taken off the projector", "Taken off the projector");
+text!(BTN_PREVIOUS_ITEM, "Previous item", "Previous item");
+text!(BTN_NEXT_ITEM, "Next item", "Next item");
+pub fn after_this(title: &str) -> String {
+    if let Some(text) = say("after_this", None, None, &[("title", text_arg(title))]) {
+        return text;
+    }
+    if indonesian() {
+        return format!("Then: {title}");
+    }
+    format!("Then: {title}")
+}
+text!(KEY_ARROWS, "Arrows", "Arrows");
+text!(KEY_CTRL_ARROWS, "Ctrl arrows", "Ctrl arrows");
+text!(KEY_SHIFT_ARROWS, "Shift arrows", "Shift arrows");
+text!(HELD_CTRL, "Ctrl held", "Ctrl held");
+text!(HELD_SHIFT, "Shift held", "Shift held");
+text!(HINT_RING, "Move in Preview", "Move in Preview");
+text!(HINT_SHOW_RING, "Show Preview", "Show Preview");
+text!(HINT_PICK, "Pick a live slide", "Pick a live slide");
+text!(HINT_LET_GO, "Let go to show it", "Let go to show it");
+text!(HINT_CANCEL, "Cancel", "Cancel");
+text!(PLAN_ADD_SONG, "Song", "Song");
+text!(PLAN_ADD_PASSAGE, "Bible passage", "Bible passage");
+text!(PLAN_ADD_HEADING, "Divider", "Divider");
+text!(PLAN_DRAG, "Drag to reorder", "Drag to reorder");
+text!(ADDING_TO_PLAN, "Adding to the plan", "Adding to the plan");
+text!(BTN_DONE, "Done", "Done");
+text!(BTN_EARLIER, "Earlier", "Earlier");
+text!(EARLIER_HINT, "Shown before. Opens in Preview.", "Shown before. Opens in Preview.");
+text!(LETTER_KEYS, "Letters jump to sections", "Letters jump to sections");
+text!(LETTER_KEYS_HINT, "C is the chorus, V a verse. Off, every letter starts a search.", "C is the chorus, V a verse. Off, every letter starts a search.");
 text!(COUNTDOWN, "Countdown", "Hitung mundur");
 text!(COUNTDOWN_LABEL, "We start in", "Ibadah dimulai dalam");
 
@@ -647,6 +710,23 @@ text!(LOOK_WINDOW, "Artosia's window", "Warna jendela Artosia");
 text!(LOOK_WINDOW_AUTO, "As the computer", "Ikut komputer");
 text!(LOOK_WINDOW_LIGHT, "Light", "Terang");
 text!(LOOK_WINDOW_DARK, "Dark", "Gelap");
+text!(LOOK_TEXT_COLOUR, "Text colour", "Text colour");
+text!(LOOK_COLOUR_WHITE, "White", "White");
+text!(LOOK_COLOUR_WARM, "Warm white", "Warm white");
+text!(LOOK_COLOUR_YELLOW, "Yellow", "Yellow");
+text!(LOOK_COLOUR_BLACK, "Black", "Black");
+text!(LOOK_COLOUR_HEX, "Custom colour", "Custom colour");
+text!(LOOK_COLOUR_HEX_HINT, "Hex, like ffcc00", "Hex, like ffcc00");
+text!(LOOK_FONT, "Font", "Font");
+text!(LOOK_FONT_DEFAULT, "Artosia's font", "Artosia's font");
+text!(LOOK_FONT_SEARCH, "Search fonts", "Search fonts");
+text!(LOOK_FONT_NONE, "No font matches", "No font matches");
+text!(LOOK_OUTLINE, "Outline", "Outline");
+text!(LOOK_OUTLINE_OFF, "Off", "Off");
+text!(LOOK_OUTLINE_THIN, "Thin", "Thin");
+text!(LOOK_OUTLINE_MEDIUM, "Medium", "Medium");
+text!(LOOK_OUTLINE_THICK, "Thick", "Thick");
+text!(LOOK_OUTLINE_COLOUR, "Outline colour", "Outline colour");
 text!(SCREEN_PROJECTOR, "Projector", "Layar jemaat");
 text!(SCREEN_STAGE, "Stage", "Panggung");
 text!(SCREEN_UNUSED, "Not used", "Tak dipakai");
@@ -885,6 +965,35 @@ pub fn birthdays_imported(count: usize, unread: usize) -> String {
     }
 }
 text!(ANNOUNCEMENT_PREVIEW, "On the projector", "Pratinjau");
+
+// Cards that fill themselves: a Bible passage and the birthdays. Indonesian is written later
+// from the brief; English stands in both.
+text!(FILL_PASSAGE, "Bible passage", "Bible passage");
+text!(ANNOUNCEMENT_PASSAGE, "Bible reference", "Bible reference");
+text!(ANNOUNCEMENT_PASSAGE_HINT, "Psalm 23:1-3", "Psalm 23:1-3");
+text!(PASSAGE_NO_BIBLE, "No Bible is installed, so this card has no words", "No Bible is installed, so this card has no words");
+text!(PASSAGE_UNREADABLE, "The Bible has no verse at that reference", "The Bible has no verse at that reference");
+text!(NOTICE_NOTHING_TO_SHOW, "This card has nothing to show today", "This card has nothing to show today");
+
+/// Which days a birthday card that follows the week covers.
+pub fn birthdays_cover_week(from: (u8, u8), to: (u8, u8)) -> String {
+    let month = |month: u8| MONTHS()[usize::from(month.clamp(1, 12)) - 1];
+    format!("Covers {} {} to {} {}", from.1, month(from.0), to.1, month(to.0))
+}
+
+/// Which days a birthday card that follows the month covers.
+pub fn birthdays_cover_month(month: u8) -> String {
+    format!("Covers all of {}", MONTHS()[usize::from(month.clamp(1, 12)) - 1])
+}
+
+/// How many names a birthday card holds today.
+pub fn names_today(count: usize) -> String {
+    match count {
+        0 => "No names today".to_string(),
+        1 => "1 name today".to_string(),
+        _ => format!("{count} names today"),
+    }
+}
 /// Ready-made announcements: a title and words to replace.
 const ANNOUNCEMENT_TEMPLATES_EN: [(&str, &str); 6] = [
     ("Welcome", "We are glad you are here."),
@@ -939,7 +1048,7 @@ text!(KEYS_SHOWING, "Showing", "Saat tayang");
 text!(KEYS_FINDING, "Finding", "Mencari");
 text!(KEYS_PLAN, "The plan", "Acara");
 text!(KEYS_EDITING, "Editing", "Editor lagu");
-const KEYS_SHOWING_ROWS_EN: [(&str, &str); 14] = [
+const KEYS_SHOWING_ROWS_EN: [(&str, &str); 17] = [
     ("Down, Space", "Next slide"),
     ("Up", "Previous slide"),
     ("Left", "First slide of the live song"),
@@ -948,14 +1057,17 @@ const KEYS_SHOWING_ROWS_EN: [(&str, &str); 14] = [
     ("Ctrl arrow", "Move the ring in Preview, Enter shows it"),
     ("Enter", "Show the slide with the ring"),
     ("1 to 9", "Jump to that section of the live song"),
+    ("C, V, B", "Jump to the chorus, the next verse, the bridge"),
+    ("Ctrl 1 to 9", "Put the ring on that section in Preview"),
     ("Esc", "Bring the live song into Preview"),
     ("F1", "Clear the text"),
     ("F2", "Black"),
     ("F3", "Logo"),
     ("F4", "Bring what the listener heard into Preview"),
     ("F5", "Bring the announcements into Preview"),
+    ("F6", "Take the live item off the projector"),
 ];
-const KEYS_SHOWING_ROWS_ID: [(&str, &str); 14] = [
+const KEYS_SHOWING_ROWS_ID: [(&str, &str); 17] = [
     ("Panah bawah, Spasi", "Tayangkan slide berikutnya"),
     ("Panah atas", "Tayangkan slide sebelumnya"),
     ("Panah kiri", "Loncat ke slide pertama lagu yang tayang"),
@@ -964,12 +1076,15 @@ const KEYS_SHOWING_ROWS_ID: [(&str, &str); 14] = [
     ("Ctrl panah", "Geser bingkai di pratinjau, tayang saat Enter"),
     ("Enter", "Tayangkan slide yang berbingkai putih"),
     ("1 sampai 9", "Loncat ke bagian lagu sesuai nomor"),
+    ("C, V, B", "Jump to the chorus, the next verse, the bridge"),
+    ("Ctrl 1 to 9", "Put the ring on that section in Preview"),
     ("Esc", "Bawa lagu yang tayang ke pratinjau"),
     ("F1", "Sembunyikan teks, latar tetap tayang"),
     ("F2", "Hitamkan layar"),
     ("F3", "Tayangkan logo saja"),
     ("F4", "Bawa ayat atau lagu yang dikenali ke pratinjau"),
     ("F5", "Bawa pengumuman ke pratinjau"),
+    ("F6", "Take the live item off the projector"),
 ];
 pub fn KEYS_SHOWING_ROWS() -> &'static [(&'static str, &'static str)] {
     if language() > INDONESIAN {
@@ -979,7 +1094,7 @@ pub fn KEYS_SHOWING_ROWS() -> &'static [(&'static str, &'static str)] {
 }
 const KEYS_FINDING_ROWS_EN: [(&str, &str); 7] = [
     ("Any letter", "Search songs, the Bible and commands"),
-    ("Ctrl K", "Search, or browse every song"),
+    ("Ctrl K, /", "Search, or browse every song"),
     ("Enter", "Open the picked result"),
     ("Ctrl Enter", "Show it now"),
     ("Shift Enter", "Add it to the plan, next in line"),
@@ -1202,9 +1317,9 @@ text!(BIBLES_FILE_EMPTY, "That file holds no verses", "Berkas ini tidak berisi a
 text!(CMD_BIBLE_FILE, "Add a Bible from a file", "Tambah Alkitab dari berkas");
 text!(CMD_BIBLE_FILE_DETAIL, "MyBible, USFX, or a zip of USFM files", "MyBible, USFX, atau zip berisi USFM");
 text!(CMD_BIBLES, "Get more Bibles", "Tambah terjemahan Alkitab");
-text!(CMD_BIBLES_DETAIL, "Free translations in many languages", "Terjemahan gratis dalam banyak bahasa");
+text!(CMD_BIBLES_FIND_DETAIL, "Download translations in many languages", "Download translations in many languages");
 
-text!(BIBLES_FREE, "Free Bibles to download", "Terjemahan gratis");
+text!(BIBLES_LIST, "Bibles to download", "Bibles to download");
 text!(BIBLES_SEARCH, "Search by language or name", "Cari bahasa atau terjemahan");
 text!(BIBLES_LOADING, "Getting the list of Bibles", "Mengambil daftar Alkitab");
 text!(BIBLES_LOAD_FAILED, "Could not get the list of Bibles", "Daftar Alkitab tidak bisa diambil");
@@ -1218,6 +1333,11 @@ text!(BIBLES_COPYRIGHT, "Copyright", "Hak cipta");
 text!(BIBLES_PICK_HINT, "Pick a Bible to read its copyright", "Pilih terjemahan untuk melihat hak ciptanya");
 text!(BIBLES_SCOPE_WHOLE, "Whole Bible", "Alkitab lengkap");
 text!(BIBLES_SCOPE_PART, "Some books", "Sebagian kitab");
+text!(BIBLES_SOURCE_EBIBLE, "eBible", "eBible");
+text!(BIBLES_SOURCE_BEBLIA, "Beblia", "Beblia");
+text!(BIBLES_NO_COPYRIGHT, "This file states no copyright", "This file states no copyright");
+text!(BIBLES_NOTICE_LOADING, "Reading the file's own notice", "Reading the file's own notice");
+text!(BIBLES_NOTICE_FAILED, "Could not read the file's notice", "Could not read the file's notice");
 
 pub fn bibles_download_failed(why: &str) -> String {
     if indonesian() {

@@ -178,9 +178,37 @@ Built 2026-11-11 on the branch `worktree-agent-a6a81f3f442d350bf`, in four steps
 
 Not verified: a real download through the button (only the same fetch code on the catalogue), the file dialog in a real window, and the Look dialog's two new buttons in a real window (they were rendered, below the fold of the scrolling dialog, and not pressed). Not decided: TSI shipping (see "Not confirmed").
 
+## Beblia, the second source (2026-11-11, owner-directed)
+
+The owner asked for the Indonesian Bibles a church really reads and pointed at https://github.com/Beblia/Holy-Bible-XML-Format. The Bibles dialog lists that repository next to eBible: one list grouped by language with Indonesian first, a small source label on each row, the Beblia rows after eBible's inside a language.
+
+What the repository is, read with `gh api` on 2026-11-11:
+
+- Branch `master`, 1,052 files, 1,048 of them `*.xml` in the root, the rest `README.md`, `.gitattributes` and two files under `tools/`. GitHub reports no licence and the tree has no licence file.
+- Its README says: "Use at your own discretion, no need to ask for permission, no warranty's." It speaks for the repository's author. It cannot grant what the translators' own holders keep.
+- Eleven files start with `Indonesian`: `IndonesianBible.xml`, `IndonesianAGSBible.xml`, `IndonesianAMD2021Bible.xml`, `IndonesianBISBible.xml`, `IndonesianBPJBible.xml`, `IndonesianFAYHBible.xml`, `IndonesianINOTAZIBible.xml`, `IndonesianPBTB2Bible.xml`, `IndonesianTLBible.xml`, `IndonesianTSIBible.xml`, `IndonesianVMDBible.xml`.
+- What each file states about itself in its `<bible status="...">` attribute, summarised: `IndonesianBible.xml` is the Terjemahan Baru and names the Indonesian Bible Society as holder, 1974 and 2018. BIS names the Indonesian Bible Society, 1985. FAYH carries Biblica's all-rights-reserved notice. AMD names Bible League International. VMD names World Bible Translation Center, "used with permission". TSI names Yayasan Alkitab Bahasa Kita and Pioneer Bible Translators. AGS says Creative Commons Attribution-ShareAlike 4.0. TL and PBTB2 name only the Indonesian Bible Society, BPJ names World Bible Translation Center. INOTAZI names LAI 2004.
+
+So most of the Indonesian files are translations whose rights holders this page lists above as "no without written permission". The dialog does not decide that for the church. It shows the file's own statement on the card before the download button, and a download starts only on a press. The owner chose to offer the repository; whether a church may use a given translation stays the church's question, and the LAI email under "Recommendation" is still open. The "Never do these" list above predates this source and applies to what Artosia ships or fetches by itself, which is now the owner's decision for the Beblia list.
+
+The format, from a downloaded Indonesian file (counts only, no text kept): UTF-8 with a byte order mark; root `<bible translation="..." status="..." link="...">`; `<testament name="Old|New">`; `<book number="1..66">` in canon order; `<chapter number>`; `<verse number>text</verse>`. A full Bible has 66 books, 1,189 chapters and 31,102 verses; the smallest Indonesian file (a New Testament) 27 books and 7,959 verse tags. No inline markup, no book names, no language attribute. `bible_file::parse_beblia` reads it, books past 66 are skipped, and `install_bytes` detects it by the `<bible>` root when a `.xml` file has no `<usfx>` root, so "Your own file" takes a Beblia XML too.
+
+How the list is built (`beblia.rs`, `crates/artosia/src/bibles.rs`):
+
+- One call to the unauthenticated git-tree API, `https://api.github.com/repos/Beblia/Holy-Bible-XML-Format/git/trees/master?recursive=1`, cached in `<library>/beblia-files.json` for a week and served stale when the network fails, like eBible's list. GitHub allows 60 such calls an hour per address.
+- Only `<Language><Edition>Bible.xml` files in the root count. The language is the first capitalised word (`Indonesian`, `Chinese`, `Amharic`), the edition is the rest with spaces put between words and digits (`AGS`, `Tyndale 1537`, `Dawro DFBE`). A file with no edition is shown as the language alone.
+- The list has no book counts, so a Beblia row shows the file size instead of "Whole Bible".
+- When a row is picked, the first 4 KB of the file are fetched with a range request. The `<bible>` tag gives the translation's real name, which replaces the derived one in the row and the card, and the status line, which is the card's copyright text. A file with an empty status shows one plain string saying so. Nothing else is downloaded before the button is pressed.
+- A download is `https://raw.githubusercontent.com/Beblia/Holy-Bible-XML-Format/master/<file>`, converted once to `<library>/bibles/<file stem in lower case>.sqlite3`; the file's name and status are stored in the module.
+- A Beblia language that is also in eBible's list under the same English name joins its group (`Indonesian`). Languages of Indonesia in Beblia (Indonesian, Malaysian, Javanese, Sundanese, Balinese, Bugis, Aceh, Madurese, Sasak) sort with the other languages of Indonesia.
+- If one source cannot be reached the other still shows; the dialog fails only when both fail.
+
+Limits: the files carry no book names, so a slide reads "John 3:16" in English even for an Indonesian Beblia Bible; typing "Yoh 3 16" works. A name table per language is the fix and was not built.
+
 ## Sources
 
 All read on 2026-11-11.
+- https://github.com/Beblia/Holy-Bible-XML-Format (README, git tree, the `<bible>` tag of all eleven `Indonesian*` files, `IndonesianAGSBible.xml` and `IndonesianBible.xml` in full for the counts)
 
 - https://ebible.org/Scriptures/translations.csv (full file; counts computed from it)
 - https://ebible.org/find/ (redistribution wording, download formats)
