@@ -88,7 +88,10 @@ def render(session, state):
     with open(script, "w", encoding="utf-8") as f:
         json.dump({"events": events}, f)
     shot = os.path.join(here, f"{len(state['steps']):03d}.png")
-    exe = os.path.join(ROOT, "target", "debug", "artosia.exe" if os.name == "nt" else "artosia")
+    # A frozen copy, when there is one, so a rebuild in the middle of a test changes nothing.
+    name = "artosia.exe" if os.name == "nt" else "artosia"
+    frozen = os.path.join(ROOT, "target", "blind", "bin", name)
+    exe = os.environ.get("ARTOSIA_EXE") or (frozen if os.path.exists(frozen) else os.path.join(ROOT, "target", "debug", name))
     args = [exe, "--practice", "--script", script, "--snap", shot, "--at", "mark:end", "--size", state["size"], "--scale", "1"] + state["flags"]
     done = subprocess.run(args, capture_output=True, text=True, timeout=120)
     if not os.path.exists(shot):
