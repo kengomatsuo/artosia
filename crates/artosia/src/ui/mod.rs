@@ -68,7 +68,11 @@ pub(crate) fn topbar(s: &App, k: &Kit, insets: rune::ChromeInsets, wide: bool) -
         .role("button")
         .label(t::SEARCH_PLACEHOLDER())
         // A laptop's width leaves the search less room, so the buttons keep their words.
+        // The search box is the part that gives: a language with longer names for the six
+        // buttons narrows it, and never pushes Settings under the window's own buttons.
         .w(if wide { 340.0 } else { 260.0 })
+        .shrink()
+        .min_w(150.0)
         .h(34.0)
         .px(space::S3)
         .gap(space::S2)
