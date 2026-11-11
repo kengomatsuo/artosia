@@ -27,7 +27,6 @@ pub fn dump() -> String {
     line(out, "SCOPE_SONGS", SCOPE_SONGS());
     line(out, "SCOPE_BIBLE", SCOPE_BIBLE());
     line(out, "HINT_OPEN", HINT_OPEN());
-    line(out, "HINT_SCOPE", HINT_SCOPE());
     line(out, "HINT_SECTIONS", HINT_SECTIONS());
     line(out, "SEARCH_SECTIONS", SEARCH_SECTIONS());
     line(out, "IN_PLAN", IN_PLAN());
@@ -129,6 +128,7 @@ pub fn dump() -> String {
     line(out, "BACKDROPS_PICK_HINT", BACKDROPS_PICK_HINT());
     line(out, "BACKDROPS_DIM", BACKDROPS_DIM());
     line(out, "BACKDROPS_HERE", BACKDROPS_HERE());
+    line(out, "BACKDROPS_IN_USE", BACKDROPS_IN_USE());
     line(out, "backdrop_failed", &backdrop_failed("it took too long"));
     line(out, "CMD_BACKDROPS_DETAIL", CMD_BACKDROPS_DETAIL());
     line(out, "LOOK_MIDNIGHT", LOOK_MIDNIGHT());
@@ -145,6 +145,8 @@ pub fn dump() -> String {
     line(out, "CMD_PLAN_RENAME_DETAIL", CMD_PLAN_RENAME_DETAIL());
     line(out, "CMD_PLAN_DELETE_DETAIL", CMD_PLAN_DELETE_DETAIL());
     line(out, "CMD_START_HERE", CMD_START_HERE());
+    line(out, "CMD_EARLIER", CMD_EARLIER());
+    line(out, "CMD_EARLIER_DETAIL", CMD_EARLIER_DETAIL());
     line(out, "CMD_START_HERE_DETAIL", CMD_START_HERE_DETAIL());
     line(out, "START_HERE_HOW", START_HERE_HOW());
     line(out, "CMD_NEW_ANNOUNCEMENT_DETAIL", CMD_NEW_ANNOUNCEMENT_DETAIL());
@@ -587,6 +589,10 @@ pub fn dump() -> String {
     line(out, "section_label(Other, 2)", &section_label(Tag::new(SectionKind::Other, 2)));
     for (i, month) in MONTHS().iter().enumerate() {
         line(out, &format!("MONTHS[{i}]"), month);
+    }
+    for (i, (title, body)) in PRACTICE_NOTICES().iter().enumerate() {
+        line(out, &format!("PRACTICE_NOTICES[{i}].0"), title);
+        line(out, &format!("PRACTICE_NOTICES[{i}].1"), body);
     }
     for (i, (title, body)) in ANNOUNCEMENT_TEMPLATES().iter().enumerate() {
         line(out, &format!("ANNOUNCEMENT_TEMPLATES[{i}].0"), title);

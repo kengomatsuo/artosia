@@ -151,7 +151,7 @@ The arrows are the ones EasiSlides taught the volunteers (owner, 2026-11-10: "Ea
 
 | Key | Does |
 |---|---|
-| Down, Space, Page Down | Next slide. At the last slide of the item, what waits in Preview, at its ring. With nothing live, Space starts the plan |
+| Down, Space, Page Down | Next slide. At the last slide of the item, what waits in Preview, at its ring; the space bar is then drawn on that ringed row, beside Enter. With nothing live, Space starts the plan |
 | Up, Page Up | The slide before; at the first slide, the last slide of the plan item before |
 | Left, Home | First slide of the live item |
 | Right, End | Last slide of the live item |
@@ -163,7 +163,9 @@ The arrows are the ones EasiSlides taught the volunteers (owner, 2026-11-10: "Ea
 | Ctrl with 1 to 9 | The ring in Preview goes to that section |
 | / | The search, when a letter would jump |
 | Esc | Put the live item in Preview |
-| Tab, Shift Tab | Put the next or the previous plan item in Preview |
+| Backspace | Put what was on the projector before this into Preview, with the ring where it was left; pressed again, the one before that, then round to the newest (`open_earlier`). The room sees nothing until Enter. The Earlier button of the Live title prints the key |
+| Tab, Shift Tab | Put the next or the previous plan item in Preview. The row Tab opens carries the key where its menu button is; the button takes its place under the pointer |
+| Shift Enter | Add what Preview holds to the plan, as in the search. It never shows anything |
 | Alt Down, Alt Up | Move the Preview item in the plan |
 | Ctrl M | Start the Preview song at the ring's section, or clear it |
 | Delete | Take the Preview item out of the plan (Undo in the toast) |
@@ -219,14 +221,15 @@ Started again from the keys sheet (button at the bottom), from the search ("tour
 
 The words are plain text with marker lines, because that is what pastes in from anywhere and what EasiSlides wrote. The editor does the rest around the text (`ui/editor.rs`):
 
+- The words come right after the title, one Tab away; author, key, copyright and the CCLI number are the last rows, filled in when at all (two testers pressed Tab five times to reach the words).
 - Marker lines are coloured like their slides.
-- Verse, Chorus, Pre-chorus, Bridge and Ending write the next free marker at the caret (Ctrl 1 to 5).
+- Verse, Chorus, Pre-chorus, Bridge and Ending write the next free marker at the caret (Ctrl 1 to 5). Under a line of words the marker brings the empty line that stanzas are written with (`insert_marker`).
 - Tidy turns headings such as "Verse 1" or "Reff:" into markers and drops chord lines (`song::tidy_lyrics`).
 - A quiet strip over the words proposes marks while any stanza has none (`artosia-core/src/marks.rs`, `ui/editor.rs` `marks_strip`). It shows the sections the song would get as a row of chips, tinted where the words already say it and outlined where Mark would write it; the chip's tooltip says why (read from a written name, sung again word for word, short and late, next verse). Mark (Ctrl M) writes the marker lines as one edit that Ctrl Z undoes, and the caret stays before the same letter; the cross hides the strip for this song. Nothing is marked without a press. Pasting a song, filling one from the web and pressing Tidy leave words with no heading unmarked on purpose, so the strip is what offers the marks.
 - With the caret in a stanza that has no mark, a second row names what it would be and offers the six kinds (verse, chorus, pre-chorus, bridge, intro, ending) as chips of one width. A press writes one marker line before that stanza, numbered by `Proposal::tag_as`: a second verse is Verse 2 by itself, a second chorus worded differently is Chorus 2.
 - The proposal follows these rules, in this order, and its doc comment is the authority. A name in the text is read (`Reff`, `Bait 2`, `Chorus:`, `Jembatan`, also before the first line as `Reff: words`). A stanza that comes back word for word, ignoring case, punctuation and spacing, is the chorus; the most repeated wins. A short stanza sung once in the last third is a bridge, when the song has a chorus and four stanzas. The rest are verses in order, skipping numbers the text uses. A stanza under a mark keeps it. It cannot tell a pre-chorus from a verse, an intro or ending from a verse, a chorus sung once, or a chorus whose second singing is worded differently. After a mark, a stanza with none is read as that mark's next slide (that is how `parse_lyrics` reads it) unless fewer than half the stanzas are marked, so a song marked in more than half its stanzas by hand is never second-guessed.
 - The order is built from chips: a click on a chip in the order takes it out, a click on a section under it sings that section again. "Chorus after each verse" writes the usual hymn order. A star repeats: `C*2` (`song::parse_order`).
-- A new song's title offers whole songs under it, as an editor offers a completion. Songs already in the library come at once and open on Tab. Songs from the web arrive 0.4 seconds after the typing stops and fill title, author and words on Tab (`artosia-lyrics`, LRCLIB). The line under the title then says where the words came from and to check them.
+- A new song's title offers whole songs under it, as an editor offers a completion. Songs already in the library come at once and open with the down arrow and Enter. Songs from the web arrive 0.4 seconds after the typing stops and fill title, author and words the same way (`artosia-lyrics`, LRCLIB). The line under the title then says where the words came from and to check them.
 
 LRCLIB found 9 of 30 sampled titles from the church library: 7 of 10 English and 2 of 20 Indonesian (`crates/artosia-lyrics/README.md`). Paste stays the main way in for Indonesian songs. A song's title is sent to LRCLIB when a new song is being typed; nothing else leaves the computer.
 
@@ -350,6 +353,40 @@ The second keys-only test (2026-11-11, on the build before 0.1.5) did six of its
 | A grey example in an empty title was taken for a card | The hints begin with the words for "such as" |
 | Enter on the tour's first card ended the tour in the test | While the tour is up Enter is the tour's, whatever holds the focus |
 | The test tool stopped at step 108 | `tools/blind.py` waits up to fifteen minutes for a replay |
+
+The third keys-only test (2026-11-11, on 0.1.6, two testers) reached all twelve of its goals; where it had to guess, and what changed:
+
+| What happened | Now |
+|---|---|
+| Nothing on the plan said how to open an item | The row Tab opens carries Tab |
+| Space on a song's last slide went on into the next song, unannounced | The space bar is drawn on the ringed row of Preview, the slide it will show |
+| The Earlier button showed no key, and Up was a guess | Backspace brings what was shown before into Preview, as it goes back in Windows' own file windows; the button prints it, the search has it as a command |
+| "Tab: Songs or Bible" at the bottom of the search read as a riddle | Tab is drawn beside the switch it turns |
+| Shift Enter in Preview put the song in front of the room | It adds what Preview holds to the plan, as it does in the search, and the Add to plan button prints it |
+| Ctrl E with the ring on the second announcement opened the first | The card of the ringed slide opens (`card_at_slide`) |
+| "yellow" found Bible verses and no setting | Design answers to what a person wants from it (a colour's name, font, outline, lines) and opens on that part |
+| The arrows moved over the colour squares without choosing | A colour is one choice of several: the arrows choose as they move, as in the switches beside them |
+| Five Tab presses from a new song's title to its words | The words follow the title |
+| A chorus started with Ctrl 2 sat right under the verse | A heading started under words brings its empty line |
+| A picked backdrop took a Tab to reach Use (met while pressing real keys) | A second Enter, or a second click, on the picked backdrop uses it |
+| Design opened with the focus on its close button (the same) | Each dialog opens on what the person came for; back from the gallery, on the button that led there |
+
+Left as it was: Preview goes on to the next plan item when a song is shown, which one tester took for the wrong song going live until the Live title was read. That is the owner's rule ("Preview is what comes next"), and the tour's second stop teaches it. A black outline on the dark sample of Design cannot be seen, because it cannot be seen on the projector either.
+
+The fourth test (2026-11-11, on the build with the changes above, one tester with keys and one with the pointer in Indonesian) reached all fifteen of its goals; what it met:
+
+| What happened | Now |
+|---|---|
+| A song's title in Preview was cut to "Q..." beside its buttons, in Indonesian on a 1366 point screen | What a pane holds is named on a line of its own under the pane's name, in both panes |
+| Tab stopped on the first colour square and the arrows were never tried | The two arrow keys are drawn beside the squares |
+| No picture of the gallery showed which one the keys were on | The focused picture has a ring, drawn over the picture (`ui/backdrops.rs`) |
+| A tick on a fetched picture read as "already chosen", and the Use button with the sign for fetching read as a download | A tick is the backdrop behind the words now; a fetched file has the sign for fetched; Use carries a tick |
+| The six backgrounds still offered white words after the words were made yellow | A chosen text colour stays with a new background where it can be read on it (`Look::with_preset`, 4.5 to 1) |
+| Which of "The usual look" and "This plan's own look" was on could not be told | The chosen one carries a tick as well as its fill |
+| The button for what was shown before read as a label cut short in Indonesian | Its brief asks for a name that is complete as it stands |
+| The practice announcements were English in the Indonesian window | They are written in the window's language and follow a switch while nobody has changed them (`strings::PRACTICE_NOTICES`) |
+
+Left as it was: a double click on a plan row opens it in Preview and shows nothing, which is the owner's rule; Backspace and the Earlier menu fill Preview and wait for Enter, for the same reason; a toast lies over the tiles under Preview for the seconds it shows. The practice songs and the bundled Bible are English in every language.
 
 ## What a pointer-only volunteer met (2026-11-11, second blind test, in Indonesian)
 

@@ -48,6 +48,7 @@ pub enum Command {
     PlanRename,
     PlanDelete,
     StartHere,
+    Earlier,
     NewAnnouncement,
     Keys,
     StartService,
@@ -72,7 +73,7 @@ pub enum Command {
 }
 
 impl Command {
-    pub const ALL: [Command; 38] = [
+    pub const ALL: [Command; 39] = [
         Command::StartService,
         Command::Next,
         Command::Previous,
@@ -90,6 +91,7 @@ impl Command {
         Command::NewAnnouncement,
         Command::Heading,
         Command::StartHere,
+        Command::Earlier,
         Command::Plans,
         Command::NewPlan,
         Command::PlanDuplicate,
@@ -132,6 +134,7 @@ impl Command {
             Command::PlanRename => t::PLAN_RENAME(),
             Command::PlanDelete => t::PLAN_DELETE(),
             Command::StartHere => t::CMD_START_HERE(),
+            Command::Earlier => t::CMD_EARLIER(),
             Command::NewAnnouncement => t::ANNOUNCEMENT_NEW(),
             Command::Keys => t::CMD_KEYS(),
             Command::Tour => t::CMD_TOUR(),
@@ -175,6 +178,7 @@ impl Command {
             Command::PlanRename => t::CMD_PLAN_RENAME_DETAIL(),
             Command::PlanDelete => t::CMD_PLAN_DELETE_DETAIL(),
             Command::StartHere => t::CMD_START_HERE_DETAIL(),
+            Command::Earlier => t::CMD_EARLIER_DETAIL(),
             Command::NewAnnouncement => t::CMD_NEW_ANNOUNCEMENT_DETAIL(),
             Command::Keys => t::CMD_KEYS_DETAIL(),
             Command::Tour => t::CMD_TOUR_DETAIL(),
@@ -205,7 +209,10 @@ impl Command {
             Command::NewSong => &["add song", "create song", "lagu baru", "tambah lagu", "buat lagu"],
             Command::PasteSong => &["paste", "clipboard", "tempel lirik", "tempel lagu"],
             Command::Announcements => &["notices", "edit announcements", "pengumuman", "warta"],
-            Command::Looks => &["look", "theme", "background", "font", "text size", "colour", "outline", "tampilan", "desain", "tema", "latar", "ukuran teks"],
+            Command::Looks => &[
+                "look", "theme", "background", "font", "text size", "colour", "color", "text colour", "text color", "yellow", "white", "outline", "shadow", "words", "lines", "position", "tampilan", "desain", "tema", "latar", "ukuran teks", "warna", "warna teks", "kuning", "putih",
+                "huruf", "garis tepi", "baris", "posisi teks",
+            ],
             Command::Backdrops => &["backdrop", "backgrounds", "stock", "pictures", "videos", "wallpaper", "nature", "latar", "gambar", "video", "pemandangan"],
             Command::Settings => &["settings", "preferences", "options", "language", "dark", "light", "pengaturan", "setelan", "bahasa"],
             Command::Screens => &["projector", "monitor", "display", "stage", "layar", "proyektor"],
@@ -217,6 +224,7 @@ impl Command {
             Command::PlanDuplicate => &["copy plan", "duplicate plan", "clone", "same songs", "copy service", "salin rundown", "gandakan", "duplikat", "sama dengan"],
             Command::PlanRename => &["rename plan", "name", "date", "day", "ganti nama", "tanggal", "hari"],
             Command::PlanDelete => &["delete plan", "remove plan", "hapus rundown", "buang rundown"],
+            Command::Earlier => &["back", "go back", "earlier", "shown before", "previous song", "last song", "kembali", "balik", "tadi", "lagu tadi", "sebelumnya"],
             Command::StartHere => &["start at", "start from", "begin at", "medley", "start at chorus", "start here", "mulai dari", "mulai dari reff", "medley", "sambung"],
             Command::NewAnnouncement => &["new announcement", "notice", "verse of the week", "birthday", "welcome", "schedule", "offering", "pengumuman baru", "warta", "ayat minggu ini", "ayat hafalan", "ulang tahun", "selamat datang", "jadwal", "persembahan"],
             Command::NewPlan => &["new service", "reset plan", "rencana baru", "susunan baru", "ibadah baru"],
@@ -258,6 +266,7 @@ impl Command {
             Command::PlanDuplicate => app.plan.items.iter().any(|item| !item.entry.is_heading()),
             // Offered whenever the plan holds a song: a person who types "start at chorus" must find
             // it, and is told what to open first when Preview holds something else.
+            Command::Earlier => !app.history.is_empty(),
             Command::StartHere => app.plan.items.iter().any(|item| matches!(item.entry, artosia_core::plan::PlanEntry::Song { .. })),
             _ => true,
         }
@@ -954,7 +963,19 @@ impl App {
             Command::NewSong => self.edit_new_song(artosia_core::song::Song::default()),
             Command::PasteSong => self.want_paste = true,
             Command::Announcements => self.edit_announcements(),
-            Command::Looks => self.sheet = Sheet::Looks,
+            Command::Looks => {
+                // The part the typed word lives in opens first: "yellow" and "font" are about the words.
+                let typed = self.palette.query.text.to_lowercase();
+                let about = |words: &[&str]| words.iter().any(|word| typed.contains(word));
+                if about(&["logo"]) {
+                    self.design_part = 2;
+                } else if about(&["font", "huruf", "colo", "warna", "yellow", "kuning", "white", "putih", "outline", "garis", "shadow", "size", "ukuran", "word", "text", "teks", "line", "baris", "posi"]) {
+                    self.design_part = 1;
+                } else if about(&["background", "latar", "picture", "gambar", "video", "camera", "kamera"]) {
+                    self.design_part = 0;
+                }
+                self.sheet = Sheet::Looks;
+            }
             Command::Settings => self.sheet = Sheet::Settings,
             Command::Backdrops => self.open_backdrops(),
             Command::Screens => self.sheet = Sheet::Screens,
@@ -967,6 +988,7 @@ impl App {
             Command::PlanDuplicate => self.duplicate_plan(),
             Command::PlanRename => self.begin_rename(false),
             Command::PlanDelete => self.delete_plan(),
+            Command::Earlier => drop(self.open_earlier()),
             Command::StartHere => match self.start_control() {
                 Some((_, _, state)) if state != crate::starts::StartState::Beginning => self.toggle_start_here(),
                 _ => self.say(t::START_HERE_HOW(), None),
@@ -999,7 +1021,7 @@ impl App {
             Command::ImportBirthdays => self.want_birthdays = true,
             Command::CheckUpdate => crate::update::check(self.inbox.clone(), self.waker.clone(), true),
             Command::Listen => self.open_listen(),
-            Command::Stream => self.sheet = Sheet::Stream,
+            Command::Stream => self.open_stream(),
             Command::BibleFile => self.desk.want_file = true,
             Command::Bibles => self.open_bibles(),
         }
@@ -1035,6 +1057,37 @@ mod tests {
     fn search(app: &mut App, query: &str) {
         app.palette.query = TextEdit::new(query);
         app.search();
+    }
+
+    /// A tester typed "yellow" to make the words yellow and got Bible verses only.
+    #[test]
+    fn design_is_found_by_what_is_wanted_from_it_and_opens_on_that_part() {
+        let mut app = app();
+        for (typed, part) in [("yellow", 1), ("outline", 1), ("warna teks", 1), ("background", 0)] {
+            search(&mut app, typed);
+            assert!(matches!(app.palette.hits.first(), Some(Hit::Command(Command::Looks))), "{typed}");
+            app.design_part = 2;
+            app.pick(Pick::Open);
+            assert_eq!((app.sheet, app.design_part), (Sheet::Looks, part), "{typed}");
+            app.sheet = Sheet::None;
+        }
+    }
+
+    #[test]
+    fn what_was_shown_before_is_a_command_once_something_was() {
+        let mut app = app();
+        search(&mut app, "go back");
+        assert!(!app.palette.hits.iter().any(|hit| matches!(hit, Hit::Command(Command::Earlier))));
+        let songs: Vec<u64> = app.plan.items.iter().filter(|item| matches!(item.entry, artosia_core::plan::PlanEntry::Song { .. })).map(|item| item.id).collect();
+        app.open_plan_item(songs[0]);
+        app.show(0);
+        app.open_plan_item(songs[1]);
+        app.show(0);
+        search(&mut app, "go back");
+        assert!(matches!(app.palette.hits.first(), Some(Hit::Command(Command::Earlier))));
+        app.pick(Pick::Open);
+        assert_eq!(app.open.as_ref().map(|open| open.item), Some(Some(songs[0])));
+        assert_eq!(app.live.as_ref().map(|live| live.item), Some(Some(songs[1])));
     }
 
     fn first(app: &App) -> Option<&Hit> {

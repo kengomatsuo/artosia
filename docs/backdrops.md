@@ -90,6 +90,8 @@ H.264 in MP4, which the release plays for certain, is not offered: Commons does 
 - Commons may delete or rename a file. The press then fails with a message, and files already downloaded keep working.
 - Whether a Commons CC0 mark is right for every file is the uploader's claim and Commons' check, not Artosia's.
 
+In the grid a tick marks the backdrop behind the words now, and an arrow into a tray one whose file is already on this computer; the picture the keys are on has a ring. A second Enter or a second click on the picked backdrop uses it, as a second press opens a file in a file window; Use stays for the first-time reader. Design then opens again with the focus on the Backdrops button, where the person left it (`Desk::returned`).
+
 ## Asking Wikimedia politely (2026-11-11)
 
 - The first real press of Use was answered 429 while tests on the same PC had asked for many files in a few minutes. `download` now waits three seconds and asks once more on 429 or 503, and the toast then says the site is busy instead of a number.

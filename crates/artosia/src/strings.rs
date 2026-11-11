@@ -151,7 +151,6 @@ text!(SCOPE_ALL, "All", "Semua");
 text!(SCOPE_SONGS, "Songs", "Lagu");
 text!(SCOPE_BIBLE, "Bible", "Alkitab");
 text!(HINT_OPEN, "Open", "Buka");
-text!(HINT_SCOPE, "Songs or Bible", "Ganti filter");
 text!(HINT_SECTIONS, "Its sections", "Cari bagian");
 text!(SEARCH_SECTIONS, "Chorus, verse 2, or any line", "Bait 2, Reff, atau satu baris lirik");
 text!(IN_PLAN, "In today's plan", "Sudah ada di acara");
@@ -737,6 +736,8 @@ text!(CMD_PLAN_DUPLICATE_DETAIL, "The same items again, for another service", "T
 text!(CMD_PLAN_RENAME_DETAIL, "This plan's name and its day", "This plan's name and its day");
 text!(CMD_PLAN_DELETE_DETAIL, "Remove this plan. Undo brings it back", "Remove this plan. Undo brings it back");
 text!(CMD_START_HERE, "Start the song here", "Start the song here");
+text!(CMD_EARLIER, "Back to what was shown before", "Back to what was shown before");
+text!(CMD_EARLIER_DETAIL, "Opens it in Preview at the slide it had reached", "Opens it in Preview at the slide it had reached");
 text!(START_HERE_HOW, "Open the song in Preview and go to the slide it should start at, then choose this again", "Open the song in Preview and go to the slide it should start at, then choose this again");
 text!(CMD_START_HERE_DETAIL, "The Preview song begins at the picked slide, for a medley", "The Preview song begins at the picked slide, for a medley");
 text!(CMD_NEW_ANNOUNCEMENT_DETAIL, "A card for before the service, a verse or birthdays", "A card for before the service, a verse or birthdays");
@@ -1162,6 +1163,21 @@ pub fn names_today(count: usize) -> String {
     }
 }
 /// Ready-made announcements: a title and words to replace.
+/// The four announcements of the practice library, in the window's language: a welcome, an
+/// evening for the young people, a prayer meeting, and the week as a table (a tab between
+/// words makes columns, as a table brought in from PowerPoint has).
+const PRACTICE_NOTICES_EN: [(&str, &str); 4] = [
+    ("Welcome", "We are glad you are here.\nThe service starts soon."),
+    ("Youth night", "Friday at 7 pm in the hall.\nBring a friend."),
+    ("Prayer meeting", "Wednesday at 6 am.\nEveryone is welcome."),
+    ("This week", "Sunday\t9 am\tMain service\nSunday\t5 pm\tEvening service\nWednesday\t7 pm\tPrayer meeting\nSaturday\t4 pm\tYouth"),
+];
+pub fn PRACTICE_NOTICES() -> &'static [(&'static str, &'static str)] {
+    if languages::has_table(language()) {
+        return languages::rows(language(), "PRACTICE_NOTICES", &PRACTICE_NOTICES_EN);
+    }
+    &PRACTICE_NOTICES_EN
+}
 const ANNOUNCEMENT_TEMPLATES_EN: [(&str, &str); 6] = [
     ("Welcome", "We are glad you are here."),
     ("Service times", "Sunday at 9 am and 5 pm"),
@@ -1215,7 +1231,7 @@ text!(KEYS_SHOWING, "Showing", "Saat tayang");
 text!(KEYS_FINDING, "Finding", "Mencari");
 text!(KEYS_PLAN, "The plan", "Acara");
 text!(KEYS_EDITING, "Editing", "Editor lagu");
-const KEYS_SHOWING_ROWS_EN: [(&str, &str); 17] = [
+const KEYS_SHOWING_ROWS_EN: [(&str, &str); 18] = [
     ("Down Space", "Next slide"),
     ("Up", "Previous slide"),
     ("Left", "First slide of the live song"),
@@ -1227,6 +1243,7 @@ const KEYS_SHOWING_ROWS_EN: [(&str, &str); 17] = [
     ("C V B", "Jump to the chorus, the next verse, the bridge"),
     ("Ctrl 1 to 9", "Put the ring on that section in Preview"),
     ("Esc", "Bring the live song into Preview"),
+    ("Backspace", "Bring what was shown before into Preview"),
     ("F1", "Clear the text"),
     ("F2", "Black"),
     ("F3", "Logo"),
@@ -1234,7 +1251,7 @@ const KEYS_SHOWING_ROWS_EN: [(&str, &str); 17] = [
     ("F5", "Bring the announcements into Preview"),
     ("F6", "Switch the projector on or off"),
 ];
-const KEYS_SHOWING_ROWS_ID: [(&str, &str); 17] = [
+const KEYS_SHOWING_ROWS_ID: [(&str, &str); 18] = [
     ("Panah bawah, Spasi", "Tayangkan slide berikutnya"),
     ("Panah atas", "Tayangkan slide sebelumnya"),
     ("Panah kiri", "Loncat ke slide pertama lagu yang tayang"),
@@ -1246,6 +1263,7 @@ const KEYS_SHOWING_ROWS_ID: [(&str, &str); 17] = [
     ("C, V, B", "Jump to the chorus, the next verse, the bridge"),
     ("Ctrl 1 to 9", "Put the ring on that section in Preview"),
     ("Esc", "Bawa lagu yang tayang ke pratinjau"),
+    ("Backspace", "Bring what was shown before into Preview"),
     ("F1", "Sembunyikan teks, latar tetap tayang"),
     ("F2", "Hitamkan layar"),
     ("F3", "Tayangkan logo saja"),
@@ -1297,19 +1315,21 @@ pub fn KEYS_FINDING_ROWS() -> &'static [(&'static str, &'static str)] {
     }
     if indonesian() { &KEYS_FINDING_ROWS_ID } else { &KEYS_FINDING_ROWS_EN }
 }
-const KEYS_PLAN_ROWS_EN: [(&str, &str); 5] = [
+const KEYS_PLAN_ROWS_EN: [(&str, &str); 6] = [
     ("Tab", "Bring the next plan item into Preview"),
     ("Shift Tab", "Bring the item before it into Preview"),
     ("Alt Up Down", "Move the Preview item earlier or later"),
     ("Ctrl M", "Start the Preview song at the ring"),
     ("Delete", "Take the Preview item out of the plan"),
+    ("Shift Enter", "Add what is in Preview to the plan"),
 ];
-const KEYS_PLAN_ROWS_ID: [(&str, &str); 5] = [
+const KEYS_PLAN_ROWS_ID: [(&str, &str); 6] = [
     ("Tab", "Bawa item acara berikutnya ke pratinjau"),
     ("Shift Tab", "Bawa item acara sebelumnya ke pratinjau"),
     ("Alt panah atas, bawah", "Geser item pratinjau naik atau turun"),
     ("Ctrl M", "Start the Preview song at the ring"),
     ("Delete", "Keluarkan item pratinjau, bisa diurungkan"),
+    ("Shift Enter", "Add what is in Preview to the plan"),
 ];
 pub fn KEYS_PLAN_ROWS() -> &'static [(&'static str, &'static str)] {
     if languages::has_table(language()) {
@@ -1586,6 +1606,7 @@ text!(BACKDROPS_SIZE, "Size", "Size");
 text!(BACKDROPS_PICK_HINT, "Pick a backdrop to see its author and licence", "Pick a backdrop to see its author and licence");
 text!(BACKDROPS_DIM, "Bright or busy, so dim the look", "Bright or busy, so dim the look");
 text!(BACKDROPS_HERE, "On this computer", "On this computer");
+text!(BACKDROPS_IN_USE, "Behind the words now", "Behind the words now");
 
 pub fn backdrop_failed(why: &str) -> String {
     if let Some(text) = say("backdrop_failed", None, None, &[("why", text_arg(why))]) {

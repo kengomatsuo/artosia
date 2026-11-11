@@ -18,12 +18,15 @@ The owner tested the window on 2026-11-11 and wrote: "You're not making an app f
 
 | Rule | Source | In Artosia |
 |---|---|---|
-| A key is printed on the control it presses | The owner: a list at the bottom "doesn't really help", a key on the row does | Each tile has its key in a corner; the row Next will show carries the space bar; the ringed row carries Enter |
+| A key is printed on the control it presses | The owner: a list at the bottom "doesn't really help", a key on the row does | Each tile has its key in a corner; the row Next will show carries the space bar, and at a song's last slide that is the ringed row of Preview; the ringed row carries Enter; the plan row Tab opens carries Tab; Tab sits beside the switch of the search |
 | A key is drawn as the keyboard prints it | The owner: "show the exact thing showing on the keyboard: the arrow icons" | `keycaps` draws arrows as arrows and the space bar as a bar; key names are never translated |
 | A single letter can be switched off | WCAG 2.1.4, Character Key Shortcuts | Letters jump to sections (C, V, B); Settings has the switch |
 | Everything a pointer can do, keys can do | Microsoft, Keyboard accessibility: "Any UI that can be activated by pointer should also be invokable by keyboard" | Every action of a menu is also a command in search (copy a plan, rename it, delete it, start a song at a slide, a new announcement); the keys sheet ends with a line that says so |
 | A focused button takes Enter and Space | Microsoft, the same page: "For controls that can be invoked, implement keyboard event handlers for the Spacebar and Enter keys"; WAI-ARIA button pattern: "Enter: Activates the button" | `enter_key` on every element that asks for focus; Rune alone follows AppKit, where Return belongs to the default button |
 | A list is one Tab stop, and arrows move inside it | Microsoft, the same page: "keep the composite root in tab order and manage active descendants internally, rather than exposing every child as a separate tab stop" | The cards of the announcements and the row of examples are focus groups; a keys-only tester needed fourteen Tab presses to pass four cards before |
+| The key that goes back is Backspace | Microsoft, Keyboard shortcuts in Windows: File Explorer "Alt+Left arrow / Backspace: Navigate to the previous folder", Settings "Backspace: Navigate backwards" | Backspace brings what was on the projector before into Preview; the Earlier button prints it |
+| One chord does one thing in every pane | Third keys-only test: Shift Enter added to the plan in the search and showed the song in Preview | Shift Enter adds what Preview holds to the plan and shows nothing |
+| A choice of one follows the arrows | Rune at the pinned rev, `El::focus_follows`: "Radio and tab items always do" | The colour squares of Design choose as the arrows move, as its switches do |
 | A held key shows what it changed, while it is held | Raskin's quasimodes, in the research notes | With Ctrl held the Preview pane is ringed and the bar at the bottom names the keys; it is empty otherwise |
 
 ## Names
@@ -39,6 +42,8 @@ The owner tested the window on 2026-11-11 and wrote: "You're not making an app f
 | Rule | Source | In Artosia |
 |---|---|---|
 | No dialog ends in half a row | Both readers took a row cut by the fold for a defect | Design shows one part at a time (background, words, logo); Settings fits a 768 point window; the keys sheet scrolls under a title that stays |
+| What a pane holds is never cut to make room for buttons | Fourth blind test: "Q..." for a song's title on the target screen | The title has a line of its own under the pane's name (`ui/shell.rs` `title_bar`) |
+| A dialog opens on what the person came for, never on its close button | House rule on dialog focus; Rune at the pinned rev picks "its `El::autofocus` control, else ... its first Tab stop", and the first stop is the close button | Design opens on the look being changed and, back from the gallery, on the gallery's button; Phone and Listen on their switch; Stream on the address, or on Start once there is one; Settings on its first row (`Tx::focus`, because a kit switch of segments cannot be named) |
 | What scrolls fades at the edge that hides more | The same finding, where scrolling cannot be avoided | `scroll_edge_fade` on every scrolling area (`theme::size::FADE`) |
 
 ## Preview and Live

@@ -10,7 +10,7 @@ use crate::palette::Scope;
 use crate::state::{App, PlanDrag};
 use crate::strings as t;
 use crate::theme::{self, icons, size, space, type_};
-use crate::ui::widgets::{btn, state_pill};
+use crate::ui::widgets::{btn, keycaps, state_pill};
 
 pub(crate) fn entry_icon(entry: &PlanEntry) -> &'static rune::Icon {
     match entry {
@@ -39,6 +39,11 @@ pub(crate) fn heading_row(s: &App, k: &Kit, item: &PlanItem, menu: El) -> El {
 /// handler?"). The whole row drags; the grip is what shows it.
 fn grip(k: &Kit) -> El {
     icon(&icons::GRIP, 14.0).color(k.c.text_faint).help(t::PLAN_DRAG())
+}
+
+/// Whether Tab would bring this plan item into Preview now. An editor uses Tab for its fields.
+fn tab_opens(s: &App, id: u64) -> bool {
+    s.editor.is_none() && s.notices.is_none() && s.walk_target(true) == Some(id)
 }
 
 pub(crate) fn item_row(s: &App, k: &Kit, item: &PlanItem, menu: El) -> El {
@@ -92,6 +97,12 @@ pub(crate) fn item_row(s: &App, k: &Kit, item: &PlanItem, menu: El) -> El {
         el().size(26.0, 26.0)
             .child(el().pin(Some(0.0), Some(0.0), Some(0.0), Some(0.0)).center().child(el().size(8.0, 8.0).radius(4.0).fill(if s.on_air() { theme::live() } else { k.c.text_muted }).layer_opacity(s.beat_glow(s.clock))).group_opacity(if open_menu { 0.0 } else { 1.0 }, 0.0).help(t::LIVE()))
             .child(menu)
+    } else if tab_opens(s, id) {
+        // The row Tab opens says so itself, where its menu button is; the button takes the
+        // key's place under the pointer (owner, 2026-11-11: a key on the row helps, a list of
+        // keys at the bottom does not).
+        let open_menu = s.plan_menu == Some(id);
+        el().size(30.0, 26.0).child(el().pin(Some(0.0), Some(0.0), Some(0.0), Some(0.0)).center().child(keycaps(k, "Tab", None)).group_opacity(if open_menu { 0.0 } else { 1.0 }, 0.0)).child(menu)
     } else {
         menu
     };
@@ -170,8 +181,8 @@ fn draggable(s: &App, body: El, id: u64, at: usize, heights: &Rc<[f32]>) -> El {
 pub(crate) fn row_menu(s: &App, k: &Kit, item: &PlanItem, at: usize, layer: &mut Vec<El>) -> El {
     let id = item.id;
     let open = s.plan_menu == Some(id);
-    // The live item's button waits under its dot.
-    let rest = if s.live.as_ref().is_some_and(|live| live.item == Some(id)) { 0.0 } else { 0.55 };
+    // The live item's button waits under its dot, and the next item's under its key.
+    let rest = if s.live.as_ref().is_some_and(|live| live.item == Some(id)) || tab_opens(s, id) { 0.0 } else { 0.55 };
     let trigger = btn(t::PLAN_ITEM_MENU())
         .icon(&icons::DOTS)
         .icon_only()

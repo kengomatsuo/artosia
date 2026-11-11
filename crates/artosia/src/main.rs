@@ -142,6 +142,7 @@ fn on_key(s: &mut App, ev: &KeyEvent, tx: &mut Tx) -> bool {
         }
         Key::Command(',') => {
             s.sheet = if s.sheet == Sheet::Settings { Sheet::None } else { Sheet::Settings };
+            tx.focus(crate::ui::SETTINGS_FIRST, true);
             return true;
         }
         Key::Command('/') => {
@@ -243,6 +244,13 @@ fn on_key(s: &mut App, ev: &KeyEvent, tx: &mut Tx) -> bool {
         Key::Left | Key::Home => s.go_to_edge(false),
         Key::Right | Key::End => s.go_to_edge(true),
         Key::Enter if ev.mods.alt => return false,
+        // Shift Enter adds what Preview holds to the plan, as it does in the search, and shows
+        // nothing: a tester who knew it from the search put a song in front of the room.
+        Key::Enter if ev.mods.shift => {
+            if s.open.is_some() && !s.open_in_plan() {
+                s.add_open_to_plan();
+            }
+        }
         Key::Enter => s.enter(),
         Key::Tab => s.walk_plan(!ev.mods.shift),
         // Ctrl M: the Preview song starts at the ring's section (docs/operator.md).
@@ -253,6 +261,12 @@ fn on_key(s: &mut App, ev: &KeyEvent, tx: &mut Tx) -> bool {
         Key::Delete => {
             if let Some(id) = s.open.as_ref().and_then(|open| open.item) {
                 s.remove_plan_item(id);
+            }
+        }
+        // Back to what was shown before, in Preview: the room sees nothing until Enter.
+        Key::Backspace if plain && !ev.mods.shift => {
+            if !s.open_earlier() {
+                return false;
             }
         }
         Key::Command('z') => s.undo(),

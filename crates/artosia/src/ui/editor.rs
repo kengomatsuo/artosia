@@ -360,20 +360,6 @@ fn form(s: &App, k: &Kit) -> El {
         .scroll(ScrollSpec { stick_bottom: false }).scroll_edge_fade(crate::theme::size::FADE)
         .child(title_block(s, k, editor))
         .child(
-            row()
-                .w_full()
-                .gap(space::S3)
-                .child(el().grow(1.0).min_w(0.0).child(field(k, t::FIELD_AUTHOR(), &editor.author, |s| edit_of(s, |editor| &mut editor.author))))
-                .child(el().w(96.0).child(field(k, t::FIELD_KEY(), &editor.key, |s| edit_of(s, |editor| &mut editor.key)))),
-        )
-        .child(
-            row()
-                .w_full()
-                .gap(space::S3)
-                .child(el().grow(1.0).min_w(0.0).child(field(k, t::FIELD_COPYRIGHT(), &editor.copyright, |s| edit_of(s, |editor| &mut editor.copyright))))
-                .child(el().w(140.0).child(field(k, t::FIELD_CCLI(), &editor.ccli, |s| edit_of(s, |editor| &mut editor.ccli)))),
-        )
-        .child(
             col()
                 .w_full()
                 .gap(space::S1)
@@ -427,6 +413,23 @@ fn form(s: &App, k: &Kit) -> El {
             }
         })));
     }
+    // The words come right after the title, one Tab away; who wrote the song and its rights
+    // are filled in last, when at all (two testers pressed Tab five times to reach the words).
+    let column = column
+        .child(
+            row()
+                .w_full()
+                .gap(space::S3)
+                .child(el().grow(1.0).min_w(0.0).child(field(k, t::FIELD_AUTHOR(), &editor.author, |s| edit_of(s, |editor| &mut editor.author))))
+                .child(el().w(96.0).child(field(k, t::FIELD_KEY(), &editor.key, |s| edit_of(s, |editor| &mut editor.key)))),
+        )
+        .child(
+            row()
+                .w_full()
+                .gap(space::S3)
+                .child(el().grow(1.0).min_w(0.0).child(field(k, t::FIELD_COPYRIGHT(), &editor.copyright, |s| edit_of(s, |editor| &mut editor.copyright))))
+                .child(el().w(140.0).child(field(k, t::FIELD_CCLI(), &editor.ccli, |s| edit_of(s, |editor| &mut editor.ccli)))),
+        );
     column.scroll_bar(k)
 }
 

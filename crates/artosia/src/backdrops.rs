@@ -74,6 +74,8 @@ pub struct Desk {
     /// Ids whose preview is on disk.
     pub previews: HashSet<String>,
     pub failed: HashSet<String>,
+    /// Design was opened again from here, so its focus goes back to the button that led here.
+    pub returned: bool,
     loading: HashSet<String>,
     /// The rows of tiles on screen, as the grid last reported them.
     visible: std::ops::Range<usize>,
@@ -97,6 +99,7 @@ impl Desk {
             fetch: None,
             apply: false,
             events: Arc::default(),
+            returned: false,
             have: HashSet::new(),
             previews: HashSet::new(),
             failed: HashSet::new(),
@@ -231,6 +234,19 @@ impl App {
         self.refresh_backdrops();
     }
 
+    /// The file name of the picture or video behind the words now, when the look has one.
+    pub fn backdrop_in_use(&self) -> Option<String> {
+        let look = self.look();
+        let path = look.media_path()?;
+        std::path::Path::new(path).file_name().map(|name| name.to_string_lossy().to_string())
+    }
+
+    /// Back to Design, where the browser was opened.
+    pub fn close_backdrops(&mut self) {
+        self.sheet = Sheet::Looks;
+        self.backdrops.returned = true;
+    }
+
     pub fn refresh_backdrops(&mut self) {
         let media = self.backdrop_media();
         let folder = backdrops::folder(&media);
@@ -265,7 +281,7 @@ impl App {
     /// the sliders that dim a bright picture are.
     fn back_to_design(&mut self) {
         if self.sheet == Sheet::Backdrops {
-            self.sheet = Sheet::Looks;
+            self.close_backdrops();
         }
     }
 

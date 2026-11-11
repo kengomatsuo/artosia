@@ -10,7 +10,7 @@ use rune::{Cursor, El, GrowthSpec, Icon, ScrollSpec, SurfaceFit, col, el, icon, 
 use rune_kit::{Dialog, Kit, Progress, ScrollBar, TextInput};
 
 use crate::backdrops::COLUMNS;
-use crate::state::{App, Sheet};
+use crate::state::App;
 use crate::strings as t;
 use crate::theme::{self, icons, space, type_};
 use crate::ui::widgets::btn;
@@ -153,14 +153,22 @@ fn tile(s: &App, k: &Kit, at: usize) -> El {
     if entry.kind == Kind::Video {
         frame = frame.child(el().absolute(6.0, 6.0).child(badge(&icons::PLAY, entry.title.as_str())));
     }
-    if s.backdrops.have.contains(&entry.id) {
-        frame = frame.child(el().absolute(TILE_W - 26.0, TILE_H - 26.0).child(badge(&CHECK, t::BACKDROPS_HERE())));
+    // A tick is the one behind the words now; a file that is only on this computer has the
+    // sign for fetched. A tester took a tick on a fetched picture for "already chosen".
+    if s.backdrop_in_use().as_deref() == Some(entry.file_name().as_str()) {
+        frame = frame.child(el().absolute(TILE_W - 26.0, TILE_H - 26.0).child(badge(&CHECK, t::BACKDROPS_IN_USE())));
+    } else if s.backdrops.have.contains(&entry.id) {
+        frame = frame.child(el().absolute(TILE_W - 26.0, TILE_H - 26.0).child(badge(&icons::IMPORT, t::BACKDROPS_HERE())));
     }
     if picked {
         // Drawn over the picture, inside the tile, so the picture never covers it.
         frame = frame.child(el().absolute(0.0, 0.0).size(TILE_W, TILE_H).radius(k.radius.md).border(2.0, k.c.text_base).a11y_hidden());
     }
-    frame.on_press(move |s: &mut App| s.pick_backdrop(&id))
+    // The picture the keys are on. The items of a grid draw no ring of their own in Rune, and
+    // a ring on the tile itself is painted under its picture, so a child over the picture
+    // draws it (a tester moved through the grid and saw nothing move).
+    frame = frame.child(el().absolute(0.0, 0.0).size(TILE_W, TILE_H).radius(k.radius.md).focus_ring(3.0, -3.0, k.c.border_focus).a11y_hidden());
+    frame.on_press(move |s: &mut App| if s.backdrops.picked.as_deref() == Some(id.as_str()) { s.use_backdrop(&id) } else { s.pick_backdrop(&id) })
 }
 
 fn grid(s: &App, k: &Kit) -> El {
@@ -230,7 +238,9 @@ fn detail(s: &App, k: &Kit) -> El {
             .child(btn(t::BTN_CANCEL()).icon(&icons::CLOSE).focusable().build(k, |s, _| s.cancel_backdrop()))
     } else {
         let busy = s.backdrops.fetch.is_some();
-        let (label, mark) = (t::BACKDROPS_USE(), if s.backdrops.have.contains(&entry.id) { &icons::PLAY } else { &icons::IMPORT });
+        // The button chooses, whether or not the file has to be fetched first: with the sign
+        // for fetching on it a tester read it as a download and not as the choice.
+        let (label, mark) = (t::BACKDROPS_USE(), &CHECK);
         row().w_full().child(spacer()).child(btn(label).icon(mark).primary().disabled(busy).focusable().build(k, move |s, _| s.use_backdrop(&id)))
     };
     card.child(large).child(
@@ -278,5 +288,5 @@ pub(crate) fn mark() -> &'static Icon {
 /// closing it goes back to Design, where it was opened and where the sample is.
 pub fn view(s: &App, k: &Kit, layer: &mut Vec<El>) {
     let body = col().w_full().px(space::S4).pb(space::S4).child(panel(s, k, layer));
-    Dialog::new("backdrops", t::BACKDROPS_TITLE()).open(true).width(WIDTH + 2.0 * space::S4).fit().on_close(|s: &mut App| s.sheet = Sheet::Looks).child(body).build(k, layer);
+    Dialog::new("backdrops", t::BACKDROPS_TITLE()).open(true).width(WIDTH + 2.0 * space::S4).fit().on_close(|s: &mut App| s.close_backdrops()).child(body).build(k, layer);
 }

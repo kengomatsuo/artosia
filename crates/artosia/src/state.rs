@@ -841,6 +841,12 @@ impl App {
         deck
     }
 
+    /// The card a slide of the announcements came from. A card may give several slides or none.
+    pub fn card_at_slide(&self, slide: usize) -> Option<&Announcement> {
+        let pages = announcement_pages(&self.announcements, &self.people, &self.today(), self.bible().map(|bible| &**bible), self.settings.verses_per_slide);
+        pages.get(slide).and_then(|(at, _)| self.announcements.get(*at))
+    }
+
     /// The slides one card gives today: none for a birthday card with nobody, or a passage card
     /// the Bible cannot read.
     pub fn card_slides(&self, card: &Announcement) -> Vec<Slide> {
@@ -928,6 +934,19 @@ impl App {
             open.armed = true;
         }
         self.history_menu = false;
+    }
+
+    /// Backspace, the key that goes back in Windows' own file windows: what was on the projector
+    /// before this comes into Preview with the ring where it was left. Pressed again it is the
+    /// one before that, and after the oldest the newest again. False with nothing shown before.
+    pub fn open_earlier(&mut self) -> bool {
+        let Some(newest) = self.history.len().checked_sub(1) else { return false };
+        let held = self.open.as_ref().and_then(|open| self.history.iter().position(|shown| shown.deck.source == open.deck.source));
+        self.open_shown(match held {
+            Some(at) if at > 0 => at - 1,
+            _ => newest,
+        });
+        true
     }
 
     /// Moves the selector in the Preview pane and leaves the projector alone. Past either end
@@ -1535,6 +1554,27 @@ mod tests {
         assert_eq!(app.open.as_ref().map(|open| (open.item, open.cursor)), Some((Some(first), 1)));
         assert_eq!(live_at(&app), Some((Some(second), 0)));
         assert!(app.preview_waits());
+    }
+
+    #[test]
+    fn backspace_steps_back_through_what_was_shown() {
+        let mut app = App::practice();
+        assert!(!app.open_earlier(), "nothing was shown before");
+        let (first, second, third) = (song_item(&app, 0), song_item(&app, 1), song_item(&app, 2));
+        app.open_plan_item(first);
+        app.show(1);
+        app.open_plan_item(second);
+        app.show(0);
+        app.open_plan_item(third);
+        app.show(0);
+        // The newest first, then the one before it, then round to the newest again.
+        assert!(app.open_earlier());
+        assert_eq!(app.open.as_ref().map(|open| (open.item, open.cursor)), Some((Some(second), 0)));
+        assert!(app.open_earlier());
+        assert_eq!(app.open.as_ref().map(|open| (open.item, open.cursor)), Some((Some(first), 1)));
+        assert!(app.open_earlier());
+        assert_eq!(app.open.as_ref().map(|open| open.item), Some(Some(second)));
+        assert_eq!(live_at(&app), Some((Some(third), 0)), "the projector did not move");
     }
 
     #[test]

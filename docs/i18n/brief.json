@@ -142,25 +142,6 @@
   "notes": "One verb or verb phrase of one or two words. Same word as the Open button next to it."
  },
  {
-  "key": "HINT_SCOPE",
-  "kind": "const",
-  "screen": "Search panel, bottom row of key hints, shown when the text field is empty or no result is picked.",
-  "moment": "The panel's bottom row, when nothing is picked or the picked row is not a song: Tab switches between searching songs and searching the Bible.",
-  "role": "key hint label",
-  "does": "Says that this key cycles between searching songs and searching the Bible.",
-  "budget": 28,
-  "variables": [],
-  "cases": [],
-  "counts": "",
-  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
-  "concepts": [
-   "search",
-   "song",
-   "bible_translation"
-  ],
-  "notes": "Says what pressing Tab does now: switch the list between songs and the Bible. A short verb phrase with a plain word for 'or'; no slash. It starts with a capital letter, as the hints beside it do."
- },
- {
   "key": "HINT_SECTIONS",
   "kind": "const",
   "screen": "Search panel, bottom row of key hints, shown when a song is the picked result.",
@@ -4258,10 +4239,10 @@
  {
   "key": "BTN_EARLIER",
   "kind": "const",
-  "screen": "Main window, Preview title strip: a small icon-only clock button. This word is its hover help and the first word in a menu it opens.",
+  "screen": "Main window, title strip of the Live pane: a small button with a clock, this word, and the Backspace key drawn beside it. It appears once something else has been on the projector. The word is also the first line of the small menu the button opens.",
   "moment": "The person wants to go back to something shown earlier in this service.",
   "role": "tooltip",
-  "does": "A small button with a clock in the title of the Live pane. It opens a list of what was on the projector earlier in this service; picking one brings it into Preview at the slide it had reached, so the person can go back to it.",
+  "does": "Names a small button with a clock in the title of the Live pane. It opens a list of what was on the projector earlier in this service; picking one brings it into Preview at the slide it had reached.",
   "budget": 14,
   "variables": [],
   "cases": [],
@@ -4272,7 +4253,7 @@
    "preview",
    "live"
   ],
-  "notes": "It must read as the way back to something shown before: go back to. Two words at most."
+  "notes": "One word, two at most, that stands by itself as the button's name and says: what was shown before. It must be complete as it stands, so it cannot end in a word that needs another after it. The list under it names the items."
  },
  {
   "key": "EARLIER_HINT",
@@ -7749,6 +7730,150 @@
   "notes": "Count people who have a birthday; the words for 'names today' read as a name day. The zero case is a full statement."
  },
  {
+  "key": "PRACTICE_NOTICES[0].0",
+  "kind": "row",
+  "screen": "The practice library: made-up content a first-time volunteer finds in the program before the church's own library is there, so every button can be tried. It holds four example announcement cards, shown as slides before the service. This is the title of the first card.",
+  "moment": "A newcomer tries the program, opens the announcements and reads the examples to see what a card looks like.",
+  "role": "sample card title",
+  "does": "Names a card that greets the people arriving.",
+  "budget": 20,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "announcement",
+   "card"
+  ],
+  "notes": "Made-up sample content of a church, written the way a real church would write its own card. It is shown on the projector, so the register is the church speaking to its congregation: warm and plain. A title of one to three words. No full stop."
+ },
+ {
+  "key": "PRACTICE_NOTICES[0].1",
+  "kind": "row",
+  "screen": "The practice library: made-up content a first-time volunteer finds in the program before the church's own library is there, so every button can be tried. It holds four example announcement cards, shown as slides before the service. This is the text of the first card, two short lines.",
+  "moment": "A newcomer tries the program, opens the announcements and reads the examples to see what a card looks like.",
+  "role": "sample card text",
+  "does": "Greets the people who came, and tells them the service is about to begin.",
+  "budget": 60,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "announcement",
+   "card"
+  ],
+  "notes": "Made-up sample content of a church, written the way a real church would write its own card. It is shown on the projector, so the register is the church speaking to its congregation: warm and plain. Two lines, separated by one line break. Each line a short sentence."
+ },
+ {
+  "key": "PRACTICE_NOTICES[1].0",
+  "kind": "row",
+  "screen": "The practice library: made-up content a first-time volunteer finds in the program before the church's own library is there, so every button can be tried. It holds four example announcement cards, shown as slides before the service. This is the title of the second card.",
+  "moment": "A newcomer tries the program, opens the announcements and reads the examples to see what a card looks like.",
+  "role": "sample card title",
+  "does": "Names an evening gathering for the young people of the church.",
+  "budget": 22,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "announcement",
+   "card"
+  ],
+  "notes": "Made-up sample content of a church, written the way a real church would write its own card. It is shown on the projector, so the register is the church speaking to its congregation: warm and plain. A title of one to three words. No full stop."
+ },
+ {
+  "key": "PRACTICE_NOTICES[1].1",
+  "kind": "row",
+  "screen": "The practice library: made-up content a first-time volunteer finds in the program before the church's own library is there, so every button can be tried. It holds four example announcement cards, shown as slides before the service. This is the text of the second card, two short lines.",
+  "moment": "A newcomer tries the program, opens the announcements and reads the examples to see what a card looks like.",
+  "role": "sample card text",
+  "does": "Says when and where the young people's evening is (a weekday, an evening hour, the church's hall), and invites them to bring someone along.",
+  "budget": 56,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "announcement",
+   "card"
+  ],
+  "notes": "Made-up sample content of a church, written the way a real church would write its own card. It is shown on the projector, so the register is the church speaking to its congregation: warm and plain. Two lines, separated by one line break. Give the day by its name and the hour as the country writes it."
+ },
+ {
+  "key": "PRACTICE_NOTICES[2].0",
+  "kind": "row",
+  "screen": "The practice library: made-up content a first-time volunteer finds in the program before the church's own library is there, so every button can be tried. It holds four example announcement cards, shown as slides before the service. This is the title of the third card.",
+  "moment": "A newcomer tries the program, opens the announcements and reads the examples to see what a card looks like.",
+  "role": "sample card title",
+  "does": "Names a meeting where the congregation prays together.",
+  "budget": 22,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "announcement",
+   "card"
+  ],
+  "notes": "Made-up sample content of a church, written the way a real church would write its own card. It is shown on the projector, so the register is the church speaking to its congregation: warm and plain. A title of one to three words. No full stop."
+ },
+ {
+  "key": "PRACTICE_NOTICES[2].1",
+  "kind": "row",
+  "screen": "The practice library: made-up content a first-time volunteer finds in the program before the church's own library is there, so every button can be tried. It holds four example announcement cards, shown as slides before the service. This is the text of the third card, two short lines.",
+  "moment": "A newcomer tries the program, opens the announcements and reads the examples to see what a card looks like.",
+  "role": "sample card text",
+  "does": "Says the prayer meeting is on a weekday early in the morning, and that everyone may come.",
+  "budget": 56,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "announcement",
+   "card"
+  ],
+  "notes": "Made-up sample content of a church, written the way a real church would write its own card. It is shown on the projector, so the register is the church speaking to its congregation: warm and plain. Two lines, separated by one line break. Give the day by its name and the hour as the country writes it."
+ },
+ {
+  "key": "PRACTICE_NOTICES[3].0",
+  "kind": "row",
+  "screen": "The practice library: made-up content a first-time volunteer finds in the program before the church's own library is there, so every button can be tried. It holds four example announcement cards, shown as slides before the service. This is the title of the fourth card.",
+  "moment": "A newcomer tries the program, opens the announcements and reads the examples to see what a card looks like.",
+  "role": "sample card title",
+  "does": "Names a card that lists what happens at the church during the present week.",
+  "budget": 22,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "announcement",
+   "card"
+  ],
+  "notes": "Made-up sample content of a church, written the way a real church would write its own card. It is shown on the projector, so the register is the church speaking to its congregation: warm and plain. A title of one to three words. No full stop."
+ },
+ {
+  "key": "PRACTICE_NOTICES[3].1",
+  "kind": "row",
+  "screen": "The practice library: made-up content a first-time volunteer finds in the program before the church's own library is there, so every button can be tried. It holds four example announcement cards, shown as slides before the service. This is the text of the fourth card: a small table of four lines.",
+  "moment": "A newcomer tries the program, opens the announcements and reads the examples to see what a card looks like.",
+  "role": "sample card text",
+  "does": "Lists four gatherings of the week: the main Sunday service in the morning, a second Sunday service late in the afternoon, a midweek prayer meeting in the evening, and a youth gathering on Saturday afternoon.",
+  "budget": 150,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "announcement",
+   "card"
+  ],
+  "notes": "Made-up sample content of a church, written the way a real church would write its own card. It is shown on the projector, so the register is the church speaking to its congregation: warm and plain. Four lines, separated by line breaks. Each line has exactly three parts separated by one tab character: the day, the hour as the country writes it, and what the gathering is, in one to three words. The tabs make the columns, so write a real tab between the parts and nothing else."
+ },
+ {
   "key": "ANNOUNCEMENT_TEMPLATES[0].0",
   "kind": "row",
   "screen": "Announcements editor: a row of six buttons at the bottom of the left half under the heading for ready-made starting points. Pressing one fills a new card with its title and its text, which the person then overwrites.",
@@ -8300,6 +8425,24 @@
  {
   "key": "KEYS_SHOWING_ROWS[11].1",
   "kind": "row",
+  "screen": "Keyboard shortcuts sheet: a wide window with two columns of groups. Each row has the keys drawn as little key caps at the left (never translated) and a description at the right, about 300 points wide. This text is the description. First group (showing). The keys at the left are: Backspace.",
+  "moment": "The person opens the sheet to learn what pressing these keys does, and reads this line while looking at the key caps beside it.",
+  "role": "key description",
+  "does": "Brings what was on the projector before the present item into Preview, at the slide it had reached. Pressed again, the one before that.",
+  "budget": 48,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "earlier",
+   "preview"
+  ],
+  "notes": "Sentence fragment in the imperative or a noun phrase; no full stop. The row's keys are named in this brief only; the writer does not draw them."
+ },
+ {
+  "key": "KEYS_SHOWING_ROWS[12].1",
+  "kind": "row",
   "screen": "Keyboard shortcuts sheet: a wide window with two columns of groups. Each row has the keys drawn as little key caps at the left (never translated) and a description at the right, about 300 points wide. This text is the description. First group (showing). The keys at the left are: F1.",
   "moment": "The person opens the sheet to learn what pressing these keys does, and reads this line while looking at the key caps beside it.",
   "role": "key description",
@@ -8318,7 +8461,7 @@
   "notes": "Sentence fragment in the imperative or a noun phrase; no full stop. The row's keys are named in this brief only; the writer does not draw them."
  },
  {
-  "key": "KEYS_SHOWING_ROWS[12].1",
+  "key": "KEYS_SHOWING_ROWS[13].1",
   "kind": "row",
   "screen": "Keyboard shortcuts sheet: a wide window with two columns of groups. Each row has the keys drawn as little key caps at the left (never translated) and a description at the right, about 300 points wide. This text is the description. First group (showing). The keys at the left are: F2.",
   "moment": "The person opens the sheet to learn what pressing these keys does, and reads this line while looking at the key caps beside it.",
@@ -8336,7 +8479,7 @@
   "notes": "Sentence fragment in the imperative or a noun phrase; no full stop. The row's keys are named in this brief only; the writer does not draw them."
  },
  {
-  "key": "KEYS_SHOWING_ROWS[13].1",
+  "key": "KEYS_SHOWING_ROWS[14].1",
   "kind": "row",
   "screen": "Keyboard shortcuts sheet: a wide window with two columns of groups. Each row has the keys drawn as little key caps at the left (never translated) and a description at the right, about 300 points wide. This text is the description. First group (showing). The keys at the left are: F3.",
   "moment": "The person opens the sheet to learn what pressing these keys does, and reads this line while looking at the key caps beside it.",
@@ -8354,7 +8497,7 @@
   "notes": "Sentence fragment in the imperative or a noun phrase; no full stop. The row's keys are named in this brief only; the writer does not draw them."
  },
  {
-  "key": "KEYS_SHOWING_ROWS[14].1",
+  "key": "KEYS_SHOWING_ROWS[15].1",
   "kind": "row",
   "screen": "Keyboard shortcuts sheet: a wide window with two columns of groups. Each row has the keys drawn as little key caps at the left (never translated) and a description at the right, about 300 points wide. This text is the description. First group (showing). The keys at the left are: F4.",
   "moment": "The person opens the sheet to learn what pressing these keys does, and reads this line while looking at the key caps beside it.",
@@ -8373,7 +8516,7 @@
   "notes": "Sentence fragment in the imperative or a noun phrase; no full stop. The row's keys are named in this brief only; the writer does not draw them."
  },
  {
-  "key": "KEYS_SHOWING_ROWS[15].1",
+  "key": "KEYS_SHOWING_ROWS[16].1",
   "kind": "row",
   "screen": "Keyboard shortcuts sheet: a wide window with two columns of groups. Each row has the keys drawn as little key caps at the left (never translated) and a description at the right, about 300 points wide. This text is the description. First group (showing). The keys at the left are: F5.",
   "moment": "The person opens the sheet to learn what pressing these keys does, and reads this line while looking at the key caps beside it.",
@@ -8391,7 +8534,7 @@
   "notes": "Sentence fragment in the imperative or a noun phrase; no full stop. The row's keys are named in this brief only; the writer does not draw them."
  },
  {
-  "key": "KEYS_SHOWING_ROWS[16].1",
+  "key": "KEYS_SHOWING_ROWS[17].1",
   "kind": "row",
   "screen": "Keyboard shortcuts sheet: a wide window with two columns of groups. Each row has the keys drawn as little key caps at the left (never translated) and a description at the right, about 300 points wide. This text is the description. First group (showing). The keys at the left are: F6.",
   "moment": "The person opens the sheet to learn what pressing these keys does, and reads this line while looking at the key caps beside it.",
@@ -8607,6 +8750,24 @@
    "plan_item",
    "preview",
    "undo"
+  ],
+  "notes": "Fragment, no full stop."
+ },
+ {
+  "key": "KEYS_PLAN_ROWS[5].1",
+  "kind": "row",
+  "screen": "Keyboard shortcuts sheet: a wide window with two columns of groups. Each row has the keys drawn as little key caps at the left (never translated) and a description at the right, about 300 points wide. This text is the description. Third group (the plan). The keys at the left are: Shift Enter.",
+  "moment": "The person opens the sheet to learn what pressing these keys does, and reads this line while looking at the key caps beside it.",
+  "role": "key description",
+  "does": "Puts the item that Preview holds into the plan, when it is not in it yet. The same keys do this in the search.",
+  "budget": 48,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "preview",
+   "plan"
   ],
   "notes": "Fragment, no full stop."
  },
@@ -10837,7 +10998,7 @@
  {
   "key": "BACKDROPS_HERE",
   "kind": "const",
-  "screen": "The backdrop browser: a dialog opened from the Design dialog's background row (or from search). At the top a search field, under it a row of chips that narrow the grid to one subject, then a grid of small previews of photos and looping videos, and at the bottom a card about the picked one with a big preview, four facts and one button. It is the tooltip of a small tick on a preview in the grid.",
+  "screen": "The backdrop browser: a dialog opened from the Design dialog's background row (or from search). At the top a search field, under it a row of chips that narrow the grid to one subject, then a grid of small previews of photos and looping videos, and at the bottom a card about the picked one with a big preview, four facts and one button. It is the tooltip of a small sign, an arrow into a tray, in the corner of a preview in the grid.",
   "moment": "The person sees which backdrops were fetched before and work without the internet.",
   "role": "tooltip",
   "does": "Says this backdrop's file is already stored here, so it needs no internet.",
@@ -10848,6 +11009,24 @@
   "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
   "concepts": [],
   "notes": "A short fragment."
+ },
+ {
+  "key": "BACKDROPS_IN_USE",
+  "kind": "const",
+  "screen": "The backdrop browser: a dialog opened from the Design dialog's background row (or from search). At the top a search field, under it a row of chips that narrow the grid to one subject, then a grid of small previews of photos and looping videos, and at the bottom a card about the picked one with a big preview, four facts and one button. It is the tooltip of a small tick in the corner of one preview in the grid.",
+  "moment": "The person looks over the grid and wants to know which backdrop is the one behind the words at this moment.",
+  "role": "tooltip",
+  "does": "Says this backdrop is the one in use at this moment: it is behind the words on the projector.",
+  "budget": 26,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "backdrop",
+   "design"
+  ],
+  "notes": "A short phrase, no full stop. It must not read as 'fetched' or 'stored', which another sign on the previews says."
  },
  {
   "key": "backdrop_failed",
@@ -11430,6 +11609,44 @@
    "song"
   ],
   "notes": "A short imperative. It is about where a song begins, not about starting the service."
+ },
+ {
+  "key": "CMD_EARLIER",
+  "kind": "const",
+  "screen": "Search (the box at the top of the window): a list of results, each with a name in bold and one grey line under it that says what it does. This is the name of the command that brings back what was on the projector before the present item. The same thing is done by the small clock button in the title of the Live pane and by the Backspace key.",
+  "moment": "The person pressed the key for the next slide once too often and the next song came up, or the pastor returns to a song sung a moment ago. They type what they want: to get back to what was showing before.",
+  "role": "command name",
+  "does": "Brings what was on the projector before this back into Preview, at the slide it had reached. The room sees nothing until the person shows it.",
+  "budget": 30,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "earlier",
+   "preview",
+   "live"
+  ],
+  "notes": "A short verb phrase a person would recognise at a glance as the way back to what was shown before. No full stop. It must not read as the command that goes back one slide, which sits in the same list."
+ },
+ {
+  "key": "CMD_EARLIER_DETAIL",
+  "kind": "const",
+  "screen": "Search (the box at the top of the window): a list of results, each with a name in bold and one grey line under it that says what it does. This is the grey line under that command.",
+  "moment": "The person reads it to learn that choosing this is safe: it only fills Preview, with the highlight on the slide where that item was left.",
+  "role": "command description",
+  "does": "Tells the person the earlier item lands in Preview, with the highlight where that item stopped.",
+  "budget": 56,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "earlier",
+   "preview",
+   "ring"
+  ],
+  "notes": "A fragment, no full stop."
  },
  {
   "key": "START_HERE_HOW",

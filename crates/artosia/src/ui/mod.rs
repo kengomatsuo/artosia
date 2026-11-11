@@ -11,6 +11,7 @@ mod palette;
 pub(crate) mod plan;
 mod plans;
 mod sheets;
+pub use sheets::SETTINGS_FIRST;
 mod shell;
 pub(crate) mod slides;
 pub(crate) mod suggest;
@@ -117,10 +118,13 @@ pub(crate) fn topbar(s: &App, k: &Kit, insets: rune::ChromeInsets, wide: bool) -
         .child(el().w(1.0).h(20.0).fill(k.c.border_base).a11y_hidden())
         .child(btn(t::BTN_SCREENS()).icon(&icons::SCREEN).ghost().build(k, |s, _| s.sheet = Sheet::Screens))
         .child(btn(t::BTN_PHONE()).icon(&icons::PHONE).ghost().build(k, |s, _| s.sheet = Sheet::Remote))
-        .child(btn(t::BTN_STREAM()).icon(&icons::STREAM).ghost().active(s.stream.is_some()).build(k, |s, _| s.sheet = Sheet::Stream))
+        .child(btn(t::BTN_STREAM()).icon(&icons::STREAM).ghost().active(s.stream.is_some()).build(k, |s, _| s.open_stream()))
         .child(btn(t::BTN_LISTEN()).icon(&icons::MIC).ghost().build(k, |s, _| s.open_listen()))
         .child(el().w(1.0).h(20.0).fill(k.c.border_base).a11y_hidden())
-        .child(btn(t::BTN_SETTINGS()).icon(&icons::SLIDERS).ghost().build(k, |s, _| s.sheet = Sheet::Settings))
+        .child(btn(t::BTN_SETTINGS()).icon(&icons::SLIDERS).ghost().build(k, |s, tx| {
+            s.sheet = Sheet::Settings;
+            tx.focus(SETTINGS_FIRST, false);
+        }))
         // The clock gives way first: the taskbar has one.
         .children(wide.then(|| el().w(space::S2)))
         .children(wide.then_some(clock))

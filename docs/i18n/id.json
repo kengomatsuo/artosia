@@ -39,11 +39,6 @@
   "back": "Open",
   "why": "Same word as the Open button"
  },
- "HINT_SCOPE": {
-  "text": "Ganti ke lagu atau Alkitab",
-  "back": "Switch to songs or Bible",
-  "why": "Capital like the hints beside it"
- },
  "HINT_SECTIONS": {
   "text": "Cari bagian lagu",
   "back": "Look for a song part",
@@ -1153,9 +1148,9 @@
   "why": "One word"
  },
  "BTN_EARLIER": {
-  "text": "Kembali ke",
-  "back": "Go back to",
-  "why": "The way back to something shown before"
+  "text": "Sudah tayang",
+  "back": "Already on the projector",
+  "why": "Complete as it stands"
  },
  "EARLIER_HINT": {
   "text": "Sudah pernah tayang. Klik untuk ke Preview.",
@@ -2251,32 +2246,32 @@
   "back": "Bring the song on screen to Preview",
   "why": "Fragment"
  },
- "KEYS_SHOWING_ROWS[11].1": {
+ "KEYS_SHOWING_ROWS[12].1": {
   "text": "Sembunyikan teks, latar tetap tayang",
   "back": "Hide the text, the backdrop stays up",
   "why": "teks, tayang"
  },
- "KEYS_SHOWING_ROWS[12].1": {
+ "KEYS_SHOWING_ROWS[13].1": {
   "text": "Proyektor jadi hitam",
   "back": "The projector goes black",
   "why": "Fragment"
  },
- "KEYS_SHOWING_ROWS[13].1": {
+ "KEYS_SHOWING_ROWS[14].1": {
   "text": "Tayangkan logo gereja",
   "back": "Put the church logo on screen",
   "why": "Fragment"
  },
- "KEYS_SHOWING_ROWS[14].1": {
+ "KEYS_SHOWING_ROWS[15].1": {
   "text": "Saran dari Mikrofon masuk ke Preview",
   "back": "Suggestions from the Microphone go into Preview",
   "why": "New listener name"
  },
- "KEYS_SHOWING_ROWS[15].1": {
+ "KEYS_SHOWING_ROWS[16].1": {
   "text": "Pengumuman masuk ke Preview",
   "back": "Announcements go into Preview",
   "why": "Fragment"
  },
- "KEYS_SHOWING_ROWS[16].1": {
+ "KEYS_SHOWING_ROWS[17].1": {
   "text": "Nyalakan atau matikan proyektor",
   "back": "Switch the projector on or off",
   "why": "Pair nyala / mati"
@@ -3125,5 +3120,70 @@
   "text": "Mulai di sini",
   "back": "Start here",
   "why": "Two short words about where a song begins"
+ },
+ "CMD_EARLIER": {
+  "text": "Kembali ke yang tayang tadi",
+  "back": "Go back to what was on earlier",
+  "why": "A verb phrase unlike 'Mundur satu slide'"
+ },
+ "CMD_EARLIER_DETAIL": {
+  "text": "Masuk ke Preview, slide yang disorot di tempat berhenti",
+  "back": "Goes into Preview, the highlighted slide where it stopped",
+  "why": "Says it is safe: only Preview is filled"
+ },
+ "KEYS_SHOWING_ROWS[11].1": {
+  "text": "Yang tadi ke Preview, tekan lagi: sebelumnya",
+  "back": "What was on before to Preview, press again: the one before",
+  "why": "Fragment for Backspace"
+ },
+ "KEYS_PLAN_ROWS[5].1": {
+  "text": "Masukkan item di Preview ke rundown",
+  "back": "Put the item in Preview into the rundown",
+  "why": "Fragment; same item word"
+ },
+ "PRACTICE_NOTICES[0].0": {
+  "text": "Selamat datang",
+  "back": "Welcome",
+  "why": "Church greeting, warm and plain"
+ },
+ "PRACTICE_NOTICES[0].1": {
+  "text": "Selamat datang di rumah Tuhan.\nIbadah akan segera dimulai.",
+  "back": "Welcome to the house of the Lord.\nThe service will begin shortly.",
+  "why": "Two short sentences"
+ },
+ "PRACTICE_NOTICES[1].0": {
+  "text": "Malam Pemuda",
+  "back": "Youth night",
+  "why": "How a church names it"
+ },
+ "PRACTICE_NOTICES[1].1": {
+  "text": "Jumat pukul 19.00 di aula gereja\nAjak temanmu datang",
+  "back": "Friday at 19.00 in the church hall\nBring your friend along",
+  "why": "Hour written 19.00"
+ },
+ "PRACTICE_NOTICES[2].0": {
+  "text": "Doa pagi bersama",
+  "back": "Morning prayer together",
+  "why": "Plain title"
+ },
+ "PRACTICE_NOTICES[2].1": {
+  "text": "Selasa pukul 05.30 di ruang ibadah\nSemua boleh datang",
+  "back": "Tuesday at 05.30 in the sanctuary\nEveryone may come",
+  "why": "Early weekday hour"
+ },
+ "PRACTICE_NOTICES[3].0": {
+  "text": "Jadwal minggu ini",
+  "back": "This week's schedule",
+  "why": "Plain title"
+ },
+ "PRACTICE_NOTICES[3].1": {
+  "text": "Minggu\t07.00\tIbadah raya\nMinggu\t17.00\tIbadah sore\nRabu\t18.30\tDoa tengah minggu\nSabtu\t16.00\tKelompok remaja",
+  "back": "Sunday<tab>07.00<tab>Main service / Sunday<tab>17.00<tab>Afternoon service / Wednesday<tab>18.30<tab>Midweek prayer / Saturday<tab>16.00<tab>Teen group",
+  "why": "Four lines of three parts split by one tab"
+ },
+ "BACKDROPS_IN_USE": {
+  "text": "Sedang dipakai",
+  "back": "In use",
+  "why": "About use, not about being stored"
  }
 }

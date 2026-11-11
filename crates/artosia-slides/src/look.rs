@@ -121,9 +121,14 @@ impl Look {
         rgb(self.ink)
     }
 
-    /// This look with `preset`'s background and text colour. The size, lines, place, font and
-    /// outline are the person's own choices and stay.
+    /// This look with `preset`'s background. The size, lines, place, font and outline are the
+    /// person's own choices and stay. So does a text colour the person chose, as long as it can
+    /// be read on the new background (4.5 to 1, the house rule for text); a colour that only
+    /// came with the present look goes with it. A tester made the words yellow and the six
+    /// backgrounds still offered white ones.
     pub fn with_preset(&self, preset: Look) -> Look {
+        let chosen = presets().iter().find(|known| known.name == self.name).is_none_or(|known| known.ink != self.ink);
+        let ink = if chosen && reads_on(self.ink, &preset.background) { self.ink } else { preset.ink };
         Look {
             max_lines: self.max_lines,
             size: self.size,
@@ -131,6 +136,7 @@ impl Look {
             font: self.font.clone(),
             outline: self.outline,
             outline_ink: self.outline_ink,
+            ink,
             ..preset
         }
     }
@@ -173,6 +179,29 @@ pub fn presets() -> Vec<Look> {
     ]
 }
 
+/// How bright a colour is to the eye, from 0 to 1 (WCAG's relative luminance).
+fn luminance(color: [u8; 3]) -> f32 {
+    let linear = |value: u8| {
+        let value = f32::from(value) / 255.0;
+        if value <= 0.03928 { value / 12.92 } else { ((value + 0.055) / 1.055).powf(2.4) }
+    };
+    0.2126 * linear(color[0]) + 0.7152 * linear(color[1]) + 0.0722 * linear(color[2])
+}
+
+/// Whether text of this colour can be read on a plain background: 4.5 to 1 against every
+/// colour it is made of. A picture, a video or a camera is not judged.
+fn reads_on(ink: [u8; 3], background: &Background) -> bool {
+    let against = |ground: [u8; 3]| {
+        let (a, b) = (luminance(ink), luminance(ground));
+        (a.max(b) + 0.05) / (a.min(b) + 0.05) >= 4.5
+    };
+    match background {
+        Background::Solid(color) => against(*color),
+        Background::Gradient(top, bottom) => against(*top) && against(*bottom),
+        _ => true,
+    }
+}
+
 /// A colour typed as hex: `ffcc00`, `#ffcc00` or the short `fc0`.
 pub fn parse_hex(text: &str) -> Option<[u8; 3]> {
     let digits = text.trim().trim_start_matches('#');
@@ -196,6 +225,17 @@ pub fn hex_of(color: [u8; 3]) -> String {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn a_chosen_text_colour_stays_where_it_can_be_read() {
+        let named = |name: &str| presets().into_iter().find(|look| look.name == name).expect("a preset of that name");
+        let yellow = [255, 214, 0];
+        let mine = Look { ink: yellow, ..named("Midnight") };
+        assert_eq!(mine.with_preset(named("Forest")).ink, yellow, "yellow reads on the dark green");
+        assert_eq!(mine.with_preset(named("Paper")).ink, named("Paper").ink, "yellow cannot be read on cream");
+        // A colour that only came with the look goes with it.
+        assert_eq!(named("Midnight").with_preset(named("Ember")).ink, named("Ember").ink);
+    }
 
     #[test]
     fn a_look_saved_before_the_text_style_still_loads() {

@@ -102,13 +102,8 @@ pub fn practice_songs() -> Vec<Song> {
     ]
 }
 
+/// The practice announcements, in the window's language (`strings::PRACTICE_NOTICES`): a tester
+/// read "Wednesday" on a card of an Indonesian window.
 pub fn practice_announcements() -> Vec<Announcement> {
-    let item = |title: &str, body: &str| Announcement { title: title.into(), body: body.into(), seconds: 10, ..Announcement::default() };
-    vec![
-        item("Welcome", "We are glad you are here.\nThe service starts soon."),
-        item("Youth night", "Friday at 7 pm in the hall.\nBring a friend."),
-        item("Prayer meeting", "Wednesday at 6 am.\nEveryone is welcome."),
-        // A tab between words makes columns, as a table brought in from PowerPoint has.
-        item("This week", "Sunday\t9 am\tMain service\nSunday\t5 pm\tEvening service\nWednesday\t7 pm\tPrayer meeting\nSaturday\t4 pm\tYouth"),
-    ]
+    crate::strings::PRACTICE_NOTICES().iter().map(|(title, body)| Announcement { title: (*title).into(), body: (*body).into(), seconds: 10, ..Announcement::default() }).collect()
 }

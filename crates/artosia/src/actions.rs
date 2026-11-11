@@ -87,6 +87,7 @@ impl App {
             DeckSource::Announcements | DeckSource::Announcement(_) => PlanEntry::Announcements,
         };
         let was_live = self.open_is_live();
+        let title = open.deck.title.clone();
         let id = self.queue_entry(entry);
         if let Some(open) = self.open.as_mut() {
             open.item = Some(id);
@@ -96,6 +97,7 @@ impl App {
                 live.item = Some(id);
             }
         self.requeue();
+        self.say(t::added_to_plan(&title), None);
     }
 
     /// Adds an entry to the plan right after what is live, so it is the next one. With
@@ -226,6 +228,12 @@ impl App {
 
     /// Ctrl E: opens what is in Preview for editing. A song opens its editor, and the
     /// announcements open theirs; a Bible passage has nothing to edit.
+    /// The streaming dialog, with the caret in the address while there is none to stream to.
+    pub fn open_stream(&mut self) {
+        self.sheet = Sheet::Stream;
+        self.stream_address.focused = self.stream.is_none() && self.stream_address.text.trim().is_empty();
+    }
+
     pub fn edit_open(&mut self) {
         match self.open.as_ref().map(|open| &open.deck.source) {
             Some(DeckSource::Song(_)) => self.edit_open_song(),
@@ -552,8 +560,16 @@ impl App {
     pub fn insert_marker(&mut self, marker: &str) {
         let Some(editor) = self.editor.as_mut() else { return };
         let at = editor.lyrics.range().0.min(editor.lyrics.text.len());
-        let at_line_start = at == 0 || editor.lyrics.text[..at].ends_with('\n');
-        let text = if at_line_start { format!("{marker}\n") } else { format!("\n{marker}\n") };
+        // A heading stands after an empty line, as stanzas are written: under a line of words
+        // it brings that empty line itself.
+        let before = &editor.lyrics.text[..at];
+        let text = if before.is_empty() || before.ends_with("\n\n") {
+            format!("{marker}\n")
+        } else if before.ends_with('\n') {
+            format!("\n{marker}\n")
+        } else {
+            format!("\n\n{marker}\n")
+        };
         editor.lyrics.insert(&text);
         editor.lyrics.focused = true;
     }
@@ -650,9 +666,11 @@ impl App {
 
     /// Opens the announcement editor on the first announcement, or on a blank one.
     pub fn edit_announcements(&mut self) {
-        // A card opened on its own is the one to edit.
-        let opened = match self.open.as_ref().map(|open| &open.deck.source) {
-            Some(DeckSource::Announcement(id)) => self.announcements.iter().find(|card| card.id == *id),
+        // A card opened on its own is the one to edit; with all of them open, the card of the
+        // ringed slide is (a tester had the ring on the second card and got the first).
+        let opened = match self.open.as_ref().map(|open| (&open.deck.source, open.cursor)) {
+            Some((DeckSource::Announcement(id), _)) => self.announcements.iter().find(|card| card.id == *id),
+            Some((DeckSource::Announcements, ring)) => self.card_at_slide(ring),
             _ => None,
         };
         self.notices = Some(App::notices_for(opened.or(self.announcements.first())));
@@ -1399,8 +1417,18 @@ impl App {
 
     /// Switches the window to the language with this code, section names on the slides included.
     pub fn set_language(&mut self, code: &str) {
+        // The practice announcements nobody has changed follow the window's language.
+        let was = crate::data::practice_announcements();
+        let untouched = self.folder.is_none() && self.announcements.len() == was.len() && self.announcements.iter().zip(&was).all(|(card, was)| card.title == was.title && card.body == was.body);
         if !t::set_language(code) {
             return;
+        }
+        if untouched {
+            for (mut card, fresh) in self.announcements.clone().into_iter().zip(crate::data::practice_announcements()) {
+                (card.title, card.body) = (fresh.title, fresh.body);
+                let _ = self.store.save_announcement(&mut card);
+            }
+            self.reload_announcements();
         }
         self.settings.language = code.to_string();
         self.touch_settings();
@@ -1707,6 +1735,57 @@ mod notice_tests {
 
     fn passage_card(reference: &str) -> Announcement {
         Announcement { title: "Verse of the week".into(), fill: Fill::Passage, passage: reference.into(), seconds: 10, ..Announcement::default() }
+    }
+
+    #[test]
+    fn practice_announcements_nobody_changed_follow_the_window_s_language() {
+        let titles = |app: &App| app.announcements.iter().map(|card| card.title.clone()).collect::<Vec<_>>();
+        let fresh = || crate::data::practice_announcements().into_iter().map(|card| card.title).collect::<Vec<_>>();
+        let mut app = App::practice();
+        let english = titles(&app);
+        app.set_language("id");
+        assert_eq!(titles(&app), fresh());
+        assert_ne!(titles(&app), english, "the Indonesian table has its own practice cards");
+        app.set_language("en");
+        assert_eq!(titles(&app), english);
+        // A card a person rewrote is theirs, and the set stays as it is.
+        let mut card = app.announcements[0].clone();
+        card.title = "Our own welcome".into();
+        assert!(app.store.save_announcement(&mut card).is_ok());
+        app.reload_announcements();
+        let kept = titles(&app);
+        app.set_language("id");
+        assert_eq!(titles(&app), kept);
+    }
+
+    #[test]
+    fn editing_the_announcements_opens_the_card_of_the_ringed_slide() {
+        let mut app = App::practice();
+        app.open_announcements();
+        let second = app.announcements[1].id;
+        app.select_at(1);
+        app.edit_announcements();
+        assert_eq!(app.notices.as_ref().map(|form| form.id), Some(second));
+    }
+
+    #[test]
+    fn a_heading_started_under_words_brings_its_empty_line() {
+        let mut app = App::practice();
+        app.edit_new_song(artosia_core::song::Song::default());
+        let lyrics = |app: &App| app.editor.as_ref().map(|editor| editor.lyrics.text.clone()).unwrap_or_default();
+        app.insert_marker("[1]");
+        assert_eq!(lyrics(&app), "[1]\n");
+        if let Some(editor) = app.editor.as_mut() {
+            editor.lyrics.insert("Morning light on the hill\n");
+        }
+        app.insert_marker("[chorus]");
+        assert_eq!(lyrics(&app), "[1]\nMorning light on the hill\n\n[chorus]\n");
+        // In the middle of a line the heading still starts a stanza of its own.
+        if let Some(editor) = app.editor.as_mut() {
+            editor.lyrics.insert("Quiet road below");
+        }
+        app.insert_marker("[2]");
+        assert!(lyrics(&app).ends_with("Quiet road below\n\n[2]\n"), "{:?}", lyrics(&app));
     }
 
     #[test]

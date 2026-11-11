@@ -10,8 +10,14 @@ use crate::strings as t;
 use crate::theme::{self, icons, space, type_};
 use crate::ui::widgets::{btn, keycap, section_label};
 
+/// The key of the first control of Settings. Its dialog would open on the close button, the
+/// first Tab stop, and a kit switch of segments cannot be named as `autofocus`, so each place
+/// that opens Settings asks for the focus by this key (`Tx::focus`).
+pub const SETTINGS_FIRST: &str = "settings-first";
+
 fn close(s: &mut App) {
     s.sheet = Sheet::None;
+    s.backdrops.returned = false;
 }
 
 pub(super) fn setting(k: &Kit, label: &'static str, control: El) -> El {
@@ -108,7 +114,11 @@ fn looks(s: &App, k: &Kit, layer: &mut Vec<El>, tall: f32) {
                 .min_w(0.0)
                 .gap(space::S2)
                 .center_y()
-                .child(btn(t::BACKDROPS_TITLE()).icon(crate::ui::backdrops::mark()).focusable().help(t::CMD_BACKDROPS_DETAIL()).build(k, |s, _| s.open_backdrops()).key("design-backdrops"))
+                .child({
+                    let gallery = btn(t::BACKDROPS_TITLE()).icon(crate::ui::backdrops::mark()).focusable().help(t::CMD_BACKDROPS_DETAIL()).build(k, |s, _| s.open_backdrops()).key("design-backdrops");
+                    // Back from the gallery, the focus returns to the button that opened it.
+                    if s.backdrops.returned { gallery.autofocus() } else { gallery }
+                })
                 .child(btn(t::LOOK_CHOOSE_FILE()).icon(&icons::FOLDER).focusable().build(
                     k,
                     pick_file(t::LOOK_CHOOSE_FILE(), &["png", "jpg", "jpeg", "webp", "bmp", "mp4", "mov", "mkv", "webm", "m4v"], |s, path| s.set_background_file(path)),
@@ -203,7 +213,7 @@ fn settings(s: &App, k: &Kit, layer: &mut Vec<El>, tall: f32) {
         .pb(space::S4)
         .gap(space::S2)
         .child(section_label(k, t::SETTINGS_GENERAL()))
-        .child(setting(
+        .child(el().key(SETTINGS_FIRST).w_full().child(setting(
             k,
             t::LOOK_LANGUAGE(),
             SegmentedControl::new(&languages.iter().map(|language| language.name).collect::<Vec<_>>(), languages.iter().position(|language| language.code == t::language_code()))
@@ -215,7 +225,7 @@ fn settings(s: &App, k: &Kit, layer: &mut Vec<El>, tall: f32) {
                     }
                 })
                 .build(k),
-        ))
+        )))
         .child(setting(
             k,
             t::LOOK_WINDOW(),
@@ -327,11 +337,19 @@ fn bible_picker(s: &App, k: &Kit, second: bool) -> El {
 
 /// A line with a switch at its end: what it turns on, and a word of help under it.
 fn switch_row(k: &Kit, key: &'static str, label: &'static str, hint: &'static str, on: bool, flip: fn(&mut App)) -> El {
+    switch_row_at(k, key, label, hint, on, flip, false)
+}
+
+/// The same; `lead` makes it the control its dialog opens on.
+fn switch_row_at(k: &Kit, key: &'static str, label: &'static str, hint: &'static str, on: bool, flip: fn(&mut App), lead: bool) -> El {
     let mut words = col().grow(1.0).min_w(0.0).child(text(label).font(type_::BODY_STRONG).color(k.c.text_base));
     if !hint.is_empty() {
         words = words.child(text(hint).font(type_::SMALL).color(k.c.text_muted));
     }
-    row().key(key).w_full().min_h(40.0).gap(space::S3).center_y().child(words).child(Switch::new(on).label(label).hide_label().on_toggle(flip).build(k))
+    row().key(key).w_full().min_h(40.0).gap(space::S3).center_y().child(words).child({
+        let switch = Switch::new(on).label(label).hide_label().on_toggle(flip).build(k);
+        if lead { switch.autofocus() } else { switch }
+    })
 }
 
 /// A value with a button either side of it, for a setting that moves in steps.
@@ -538,7 +556,8 @@ fn remote(s: &App, k: &Kit, layer: &mut Vec<El>) {
                         s.set_remote(on);
                     })
                     .build(k)
-                    .key("remote-switch"),
+                    .key("remote-switch")
+                    .autofocus(),
             ),
     );
     if let Some(problem) = &s.remote_problem {
@@ -574,7 +593,7 @@ fn import(s: &App, k: &Kit, layer: &mut Vec<El>) {
             body = body
                 .child(text(t::IMPORT_FOUND()).font(type_::BODY).color(k.c.text_base).wrap())
                 .child(text(folder.display().to_string()).font(type_::SMALL).color(k.c.text_muted).truncate_middle())
-                .child(row().w_full().gap(space::S2).child(spacer()).child(btn(t::BTN_CANCEL()).focusable().build(k, |s, _| s.sheet = Sheet::None)).child(btn(t::BTN_BRING_OVER()).primary().focusable().build(k, |s, _| s.import_easislides())));
+                .child(row().w_full().gap(space::S2).child(spacer()).child(btn(t::BTN_CANCEL()).focusable().build(k, |s, _| s.sheet = Sheet::None)).child(btn(t::BTN_BRING_OVER()).primary().focusable().build(k, |s, _| s.import_easislides()).autofocus()));
         }
         None => body = body.child(text(t::IMPORT_NOT_FOUND()).font(type_::BODY).color(k.c.text_muted).wrap()),
     }
@@ -634,6 +653,11 @@ fn stream(s: &App, k: &Kit, layer: &mut Vec<El>) {
         body = body.child(text(t::STREAM_MISSING()).font(type_::BODY).color(k.c.text_muted).wrap());
         return Dialog::new("stream", t::CMD_STREAM()).open(true).width(560.0).fit().on_close(close).child(body).build(k, layer);
     }
+    // The dialog opens on what the person came for: the address while there is none
+    // (`App::open_stream`), the button that starts or stops once there is. Rune would pick
+    // the close button.
+    let ready = on || !s.stream_address.text.trim().is_empty();
+    let first = |control: El, lead: bool| if lead { control.autofocus() } else { control };
     body = body
         .child(text(t::STREAM_HINT()).font(type_::BODY).color(k.c.text_muted).wrap())
         .child(
@@ -667,7 +691,7 @@ fn stream(s: &App, k: &Kit, layer: &mut Vec<El>) {
     } else {
         foot = foot.child(spacer());
     }
-    foot = foot.child(btn(if on { t::BTN_STREAM_STOP() } else { t::BTN_STREAM_START() }).icon(&icons::STREAM).toggle(on).tall().focusable().build(k, |s, _| s.toggle_stream()));
+    foot = foot.child(first(btn(if on { t::BTN_STREAM_STOP() } else { t::BTN_STREAM_START() }).icon(&icons::STREAM).toggle(on).tall().focusable().build(k, |s, _| s.toggle_stream()), ready));
     if let Some(problem) = problem {
         body = body.child(text(problem).font(type_::BODY).color(theme::warn_ink()).wrap());
     }
@@ -697,10 +721,10 @@ fn tempo_row(s: &App, k: &Kit) -> El {
 fn listen(s: &App, k: &Kit, layer: &mut Vec<El>) {
     let on = s.listener.is_some() || s.demo_listening;
     let level = f32::from_bits(s.listen_level.load(std::sync::atomic::Ordering::Relaxed));
-    let mut body = col().w_full().px(space::S4).pb(space::S4).gap(space::S3).child(switch_row(k, "listen-switch", t::LISTEN_SWITCH(), t::LISTEN_HINT(), on, |s| {
+    let mut body = col().w_full().px(space::S4).pb(space::S4).gap(space::S3).child(switch_row_at(k, "listen-switch", t::LISTEN_SWITCH(), t::LISTEN_HINT(), on, |s| {
         let on = s.listener.is_none();
         s.set_listening(on);
-    }));
+    }, true));
     // The microphones as a row of choices, the computer's own first.
     let mut names: Vec<String> = vec![t::LISTEN_DEFAULT().to_string()];
     names.extend(s.microphones.iter().map(|device| device.name.clone()));

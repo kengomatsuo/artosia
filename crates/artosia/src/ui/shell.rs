@@ -83,15 +83,22 @@ fn vline() -> El {
     el().w(1.0).h_full().fill(theme::surf().edge).a11y_hidden()
 }
 
-/// The strip over a panel: its name, the keys that move in it, what it holds, and whatever
-/// acts on it at the right.
+/// The strip over a panel: its name, the keys that move in it, and whatever acts on it at the
+/// right. What the panel holds is named on a line of its own under that, with the pane's whole
+/// width: beside the buttons a song's title was cut to "Q..." on a 1366 point screen in
+/// Indonesian, and a volunteer reads that title to know what is about to be shown.
 fn title_bar(k: &Kit, name: &str, keys: Option<&str>, detail: String, trailing: Vec<El>) -> El {
-    let mut bar = row().w_full().h(40.0).px(space::S3).gap(space::S2).center_y().fill(theme::surf().header).child(text(name.to_string()).font(type_::BODY_STRONG).color(k.c.text_base));
+    let mut bar = row().w_full().h(40.0).px(space::S3).gap(space::S2).center_y().child(text(name.to_string()).font(type_::BODY_STRONG).color(k.c.text_base));
     if let Some(keys) = keys {
         bar = bar.child(keycaps(k, keys, None));
     }
-    bar.child(text(detail).font(type_::SMALL).color(k.c.text_muted).truncate().min_w(0.0)).child(spacer()).children(trailing)
+    let bar = bar.child(spacer()).children(trailing);
+    // The line is kept while a pane is empty, so the two lists always start level.
+    col().w_full().fill(theme::surf().header).child(bar).child(row().w_full().h(TITLE).px(space::S3).pb(space::S1).items_start().child(text(detail).font(type_::SMALL_STRONG).color(k.c.text_base).truncate().min_w(0.0)))
 }
+
+/// Points of the line that names what a pane holds.
+const TITLE: f32 = 24.0;
 
 /// What a row carries at its right end: the key or the button that acts on it, or the sign
 /// of its state. A sign, never a word: the fill already says it, and the sign is the second
@@ -103,6 +110,8 @@ enum Hint {
     Next,
     /// The ringed slide of Preview: its button sends it to Live.
     Show,
+    /// The same while the live item is on its last slide: Space and Next show it too.
+    ShowNext,
     /// In the Live list and seen by the room.
     Live,
     /// In the Live list and not seen: hidden, or the Live switch is off.
@@ -165,7 +174,7 @@ fn list_row(k: &Kit, key: &str, index: usize, number: Option<usize>, slide: &Sli
         Hint::Live => icon(&icons::ON_AIR, 16.0).color(on_fill).help(t::LIVE()),
         Hint::Unseen => icon(&icons::OFF_AIR, 16.0).color(faint).help(t::STATE_OFF()),
         // One fixed-size button with its key beside it: the arrow points at the Live list.
-        Hint::Show => row().gap(6.0).center_y().child(keycaps(k, "Enter", None)).child(btn(t::TIP_SHOW()).icon(&icons::SEND).icon_only().primary().small().build(k, move |s, tx| {
+        Hint::Show | Hint::ShowNext => row().gap(6.0).center_y().child(keycaps(k, if hint == Hint::ShowNext { "Enter or Space" } else { "Enter" }, None)).child(btn(t::TIP_SHOW()).icon(&icons::SEND).icon_only().primary().small().build(k, move |s, tx| {
             s.show(index);
             crate::follow(s, tx);
             tx.blur();
@@ -228,6 +237,8 @@ struct Pane<'a> {
     letters: bool,
     /// The slide Next will show, marked with its key.
     next_at: Option<usize>,
+    /// Next will show this pane's ringed slide: the live item is on its last one.
+    next_shows: bool,
     /// What Artosia offers to bring here next, over the list.
     strip: Option<El>,
     /// The slide the plan item was marked to begin at.
@@ -261,6 +272,7 @@ fn pane(k: &Kit, p: Pane<'_>) -> El {
                 let hint = match mark {
                     Mark::Live => Hint::Live,
                     Mark::Hidden | Mark::Staged => Hint::Unseen,
+                    Mark::Cursor if !p.go_live && p.next_shows => Hint::ShowNext,
                     Mark::Cursor if !p.go_live => Hint::Show,
                     _ if p.next_at == Some(index) => Hint::Next,
                     _ => Hint::None,
@@ -327,7 +339,7 @@ fn open_tools(s: &App, k: &Kit) -> Vec<El> {
     let mut tools = Vec::new();
     tools.extend(crate::ui::plan::start_tool(s, k));
     if !s.open_in_plan() {
-        tools.push(btn(t::BTN_ADD_TO_PLAN()).icon(&icons::PLUS).small().build(k, |s, tx| {
+        tools.push(btn(t::BTN_ADD_TO_PLAN()).icon(&icons::PLUS).small().hint(t::KEY_ADD()).build(k, |s, tx| {
             s.add_open_to_plan();
             tx.blur();
         }));
@@ -400,6 +412,8 @@ fn preview_pane(s: &App, k: &Kit, size: Foot) -> El {
             go_live: false,
             letters: s.settings.letter_keys && s.live.is_none(),
             next_at: None,
+            // Past the live item's last slide Space goes on with what waits here (`App::next`).
+            next_shows: s.live.as_ref().is_some_and(|live| live.index + 1 >= live.deck.slides.len()) && s.preview_waits(),
             // What was heard, or what usually follows: it comes into Preview, the safe side.
             strip: crate::ui::suggest::strip(s, k),
             start: s.marked_start(),
@@ -466,7 +480,7 @@ fn off_pill(k: &Kit, key: &'static str, words: String, does: &'static str, off: 
 /// passing over the room's screen (owner, 2026-11-11: a volunteer who pressed Next too often
 /// did not know how to get back).
 fn earlier(s: &App, k: &Kit, layer: &mut Vec<El>) -> El {
-    let trigger = btn(t::BTN_EARLIER()).icon(&icons::HISTORY).small().build(k, |s, tx| {
+    let trigger = btn(t::BTN_EARLIER()).icon(&icons::HISTORY).small().hint("Backspace").build(k, |s, tx| {
         s.history_menu = !s.history_menu;
         tx.blur();
     });
@@ -527,7 +541,8 @@ fn live_pane(s: &App, k: &Kit, size: Option<Foot>, layer: &mut Vec<El>) -> El {
             name: t::LIVE(),
             key: "live-slide",
             keys: live.filter(|_| !narrow).map(|_| if s.held_shift && !s.held_ctrl { "Shift Up Down" } else { "Up Down" }),
-            detail: live.filter(|_| !narrow).map(|l| l.deck.title.clone()).unwrap_or_default(),
+            // On its own line the title fits the thin column beside an editor too.
+            detail: live.map(|l| l.deck.title.clone()).unwrap_or_default(),
             trailing,
             deck: live.map(|l| &l.deck),
             live_at: live.map(|l| l.index),
@@ -541,6 +556,7 @@ fn live_pane(s: &App, k: &Kit, size: Option<Foot>, layer: &mut Vec<El>) -> El {
             strip: None,
             start: None,
             next_at: live.map(|l| l.index + 1).filter(|next| live.is_some_and(|l| *next < l.deck.slides.len())),
+            next_shows: false,
             empty: empty_words(k, t::LIVE_NOTHING()),
             footer,
             ring,

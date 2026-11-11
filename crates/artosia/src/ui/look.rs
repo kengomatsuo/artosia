@@ -56,6 +56,7 @@ fn swatch(k: &Kit, key: String, name: &'static str, color: [u8; 3], on: bool, pr
         .radius(k.radius.md + 2.0)
         .border(2.0, ring)
         .focusable(true).on_key(crate::ui::widgets::enter_key)
+        .focus_selected(on)
         .cursor(Cursor::Pointer)
         .child(el().size(26.0, 26.0).radius(k.radius.md).fill(rgb(color)).border(1.0, k.c.border_strong).hover(Color::WHITE.alpha(0.12)))
         .on_press(press)
@@ -85,7 +86,8 @@ fn hex_field(k: &Kit, edit: &TextEdit, outline: bool) -> El {
 }
 
 fn colour_row(k: &Kit, label: &'static str, current: [u8; 3], choices: &[(&'static str, [u8; 3])], edit: &TextEdit, outline: bool) -> El {
-    let mut squares = row().role("toolbar").label(label).gap(space::S1).center_y().focus_group();
+    // One choice of several: the arrows choose as they move, as in the switches of this dialog.
+    let mut squares = row().role("toolbar").label(label).gap(space::S1).center_y().focus_group().focus_follows();
     for (name, color) in choices {
         let color = *color;
         let key = format!("look-{}-{}", if outline { "outline" } else { "ink" }, hex_of(color));
@@ -99,6 +101,8 @@ fn colour_row(k: &Kit, label: &'static str, current: [u8; 3], choices: &[(&'stat
             s.set_look(look);
         }));
     }
+    // A tester stopped on the first square with Tab and never tried the arrows.
+    let squares = row().gap(space::S2).center_y().child(squares).child(crate::ui::widgets::keycaps(k, "Left Right", None));
     setting(k, label, row().grow(1.0).min_w(0.0).gap(space::S2).center_y().child(squares).child(rune::text("#").font(crate::theme::type_::BODY).color(k.c.text_muted).a11y_hidden()).child(hex_field(k, edit, outline)))
 }
 
@@ -174,14 +178,20 @@ pub fn preview(s: &App, k: &Kit) -> El {
 /// usual look drops it, with Undo in a toast.
 fn chooser(s: &App, k: &Kit) -> El {
     let own = s.has_own_look();
-    let usual = btn(t::LOOK_FOR_USUAL()).icon(&icons::SCREEN).focusable().grow();
+    // Design opens with the focus on the look being changed, never on its close button, which
+    // Rune would pick as the first Tab stop (house rule: a dialog opens on what the person
+    // came for). Back from the gallery the focus is the gallery's button instead.
+    let lead = !s.backdrops.returned;
+    let first = move |button: El, chosen: bool| if lead && chosen { button.autofocus() } else { button };
+    // The chosen one carries a tick as well as its fill: a tester could not tell which was on.
+    let usual = btn(t::LOOK_FOR_USUAL()).icon(if own { &icons::SCREEN } else { &icons::CHECK }).focusable().grow();
     let usual = if own { usual } else { usual.primary() };
-    let plan = btn(t::LOOK_FOR_PLAN()).icon(&icons::LOOK).help(s.plan_title()).focusable().grow();
+    let plan = btn(t::LOOK_FOR_PLAN()).icon(if own { &icons::CHECK } else { &icons::LOOK }).help(s.plan_title()).focusable().grow();
     let plan = if own { plan.primary() } else { plan };
     row()
         .key("look-for")
         .w_full()
         .gap(space::S2)
-        .child(el().w_full().max_w(280.0).grow(1.0).child(usual.build(k, |s: &mut App, _: &mut Tx| s.use_usual_look()).key("look-for-usual")))
-        .child(el().w_full().max_w(280.0).grow(1.0).child(plan.build(k, |s: &mut App, _: &mut Tx| s.use_own_look()).key("look-for-plan")))
+        .child(el().w_full().max_w(280.0).grow(1.0).child(first(usual.build(k, |s: &mut App, _: &mut Tx| s.use_usual_look()).key("look-for-usual"), !own)))
+        .child(el().w_full().max_w(280.0).grow(1.0).child(first(plan.build(k, |s: &mut App, _: &mut Tx| s.use_own_look()).key("look-for-plan"), own)))
 }

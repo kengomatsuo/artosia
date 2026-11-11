@@ -11,7 +11,7 @@ use crate::palette::{Command, Group, Hit, Pick, Reason, Scope};
 use crate::state::App;
 use crate::strings as t;
 use crate::theme::{self, icons, size, space, type_};
-use crate::ui::widgets::{btn, highlighted, key_hint, state_pill, tag_chip};
+use crate::ui::widgets::{btn, highlighted, key_hint, keycaps, state_pill, tag_chip};
 
 const WIDTH: f32 = 900.0;
 const HEIGHT: f32 = 560.0;
@@ -33,6 +33,7 @@ fn command_icon(command: Command) -> &'static rune::Icon {
         Command::PlanDuplicate => &icons::COPY,
         Command::PlanDelete => &icons::TRASH,
         Command::StartHere => &icons::PLAY,
+        Command::Earlier => &icons::HISTORY,
         Command::NewAnnouncement => &icons::ANNOUNCE,
         Command::Keys => &icons::KEYBOARD,
         Command::Tour => &icons::PLAY,
@@ -444,6 +445,9 @@ fn input_row(s: &App, k: &Kit) -> El {
                     if !s.palette.open && !s.wants_focus() {
                         tx.blur();
                     }
+                    if s.sheet == crate::state::Sheet::Settings {
+                        tx.focus(crate::ui::SETTINGS_FIRST, true);
+                    }
                     return true;
                 }
                 _ => return false,
@@ -510,7 +514,10 @@ fn input_row(s: &App, k: &Kit) -> El {
             s.palette.query.focused = true;
         })
         .build(k);
-    line.child(field).child(scopes)
+    // Tab turns this switch unless the picked row gives Tab another job: its key is drawn
+    // beside it, where the eye is when it wonders how to narrow the list.
+    let turns = !matches!(s.palette.hits.get(s.palette.picked), Some(Hit::Song { .. } | Hit::Passage { step: Some(_), .. }));
+    line.child(field).child(el().layer_opacity(if turns { 1.0 } else { 0.0 }).child(keycaps(k, "Tab", None))).child(scopes)
 }
 
 fn footer(s: &App, k: &Kit) -> El {
@@ -527,8 +534,7 @@ fn footer(s: &App, k: &Kit) -> El {
     let tab = match picked {
         _ if s.palette.chip.is_some() => None,
         Some(Hit::Song { .. }) => Some(t::HINT_SECTIONS()),
-        Some(Hit::Passage { step: Some(_), .. }) => None,
-        _ => Some(t::HINT_SCOPE()),
+        _ => None,
     };
     let mut bar = row()
         .key("palette-footer")

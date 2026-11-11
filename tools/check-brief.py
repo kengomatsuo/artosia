@@ -34,6 +34,7 @@ LEFT_OUT = {
     "language_code": "not a text",
     "MONTHS": "briefed month by month as MONTHS[n]",
     "ANNOUNCEMENT_TEMPLATES": "briefed row by row",
+    "PRACTICE_NOTICES": "briefed row by row",
     "KEYS_SHOWING_KEYS": "the key column, drawn as the keyboard prints it",
     "KEYS_FINDING_KEYS": "the key column, drawn as the keyboard prints it",
     "KEYS_PLAN_KEYS": "the key column, drawn as the keyboard prints it",
@@ -111,6 +112,11 @@ def expected_operator():
     for i, (first, second) in enumerate(rows):
         english["ANNOUNCEMENT_TEMPLATES[%d].0" % i] = [first]
         english["ANNOUNCEMENT_TEMPLATES[%d].1" % i] = [second]
+    m = re.search(r"const PRACTICE_NOTICES_EN: \[\(&str, &str\); (\d+)\] = \[(.*?)\n\];", code, re.S)
+    rows = re.findall(r'\("((?:[^"\\]|\\.)*)", "((?:[^"\\]|\\.)*)"\)', m.group(2))
+    for i, (first, second) in enumerate(rows):
+        english["PRACTICE_NOTICES[%d].0" % i] = [first]
+        english["PRACTICE_NOTICES[%d].1" % i] = [second]
     m = re.search(r"const MONTHS_EN: \[&str; 12\] = \[(.*?)\];", code, re.S)
     for i, month in enumerate(literals(m.group(1))):
         english["MONTHS[%d]" % i] = [month]
