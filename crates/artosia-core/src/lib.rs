@@ -7,6 +7,7 @@ pub mod deck;
 pub mod ebible;
 pub mod import;
 pub mod learn;
+pub mod marks;
 pub mod openlyrics;
 pub mod palette;
 pub mod plan;
