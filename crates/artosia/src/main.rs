@@ -280,6 +280,18 @@ const SCENES: &[Scene] = &[
         s.song_from_clipboard("Lantern Song\n\nVerse 1\nCarry the lantern through the night\nKeep the small flame burning bright\n\nChorus\nShine, shine on the road ahead\nShine till the morning comes\n");
     }),
     ("look", |s| s.sheet = Sheet::Looks),
+    // The owner's look: a camera behind words at the bottom. The frame is a made-up gradient
+    // handed over as if the projector had sent it, so both previews show it under the words.
+    ("camera-background", |s| {
+        let look = artosia_slides::look::Look { background: artosia_slides::look::Background::Camera(String::new()), place: artosia_slides::look::Place::Bottom, shadow: true, ..s.settings.look.clone() };
+        s.set_look(look);
+        s.open_song(0, None);
+        s.show(2);
+        s.open_song(1, None);
+        let (w, h) = (256u32, 144u32);
+        let rgba = (0..w * h).flat_map(|i| [(i % w * 255 / w) as u8, (i / w * 255 / h) as u8, 200 - (i % w * 150 / w) as u8, 255]).collect();
+        s.link.inject_live_picture(w, h, rgba);
+    }),
     ("screens", |s| s.sheet = Sheet::Screens),
     ("screens-two", |s| {
         s.demo_screens = true;
