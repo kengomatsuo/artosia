@@ -149,6 +149,7 @@ impl Store {
             ("songs", "edited", "integer not null default 0"),
             ("announcements", "image", "text not null default ''"),
             ("announcements", "fill", "text not null default ''"),
+            ("announcements", "passage", "text not null default ''"),
         ];
         for (table, column, definition) in added {
             let present = db.prepare(&format!("select 1 from pragma_table_info('{table}') where name = ?1"))?.exists([column])?;
@@ -327,10 +328,10 @@ impl Store {
     }
 
     pub fn announcements(&self) -> Result<Vec<Announcement>> {
-        let mut statement = self.db.prepare("select id, title, body, seconds, image, fill from announcements order by position, id")?;
+        let mut statement = self.db.prepare("select id, title, body, seconds, image, fill, passage from announcements order by position, id")?;
         let rows = statement.query_map([], |row| {
             let fill: String = row.get(5)?;
-            Ok(Announcement { id: row.get(0)?, title: row.get(1)?, body: row.get(2)?, seconds: row.get(3)?, image: row.get(4)?, fill: Fill::from_code(&fill) })
+            Ok(Announcement { id: row.get(0)?, title: row.get(1)?, body: row.get(2)?, seconds: row.get(3)?, image: row.get(4)?, fill: Fill::from_code(&fill), passage: row.get(6)? })
         })?;
         Ok(rows.collect::<rusqlite::Result<Vec<_>>>()?)
     }
@@ -338,15 +339,15 @@ impl Store {
     pub fn save_announcement(&self, announcement: &mut Announcement) -> Result<()> {
         if announcement.id == 0 {
             self.db.execute(
-                "insert into announcements (position, title, body, seconds, image, fill)
-                 values ((select coalesce(max(position), 0) + 1 from announcements), ?1, ?2, ?3, ?4, ?5)",
-                params![announcement.title, announcement.body, announcement.seconds, announcement.image, announcement.fill.code()],
+                "insert into announcements (position, title, body, seconds, image, fill, passage)
+                 values ((select coalesce(max(position), 0) + 1 from announcements), ?1, ?2, ?3, ?4, ?5, ?6)",
+                params![announcement.title, announcement.body, announcement.seconds, announcement.image, announcement.fill.code(), announcement.passage],
             )?;
             announcement.id = self.db.last_insert_rowid();
         } else {
             self.db.execute(
-                "update announcements set title = ?1, body = ?2, seconds = ?3, image = ?4, fill = ?5 where id = ?6",
-                params![announcement.title, announcement.body, announcement.seconds, announcement.image, announcement.fill.code(), announcement.id],
+                "update announcements set title = ?1, body = ?2, seconds = ?3, image = ?4, fill = ?5, passage = ?6 where id = ?7",
+                params![announcement.title, announcement.body, announcement.seconds, announcement.image, announcement.fill.code(), announcement.passage, announcement.id],
             )?;
         }
         Ok(())
@@ -503,6 +504,16 @@ Other words
     fn an_announcement_keeps_its_picture_and_what_fills_it() {
         let store = Store::in_memory().unwrap_or_else(|_| unreachable!());
         let mut item = Announcement { title: "Birthdays".into(), image: "cake.png".into(), fill: Fill::BirthdaysWeek, seconds: 12, ..Announcement::default() };
+        assert!(store.save_announcement(&mut item).is_ok());
+        assert_eq!(store.announcements().unwrap_or_default(), [item]);
+    }
+
+    #[test]
+    fn a_passage_card_keeps_its_reference() {
+        let store = Store::in_memory().unwrap_or_else(|_| unreachable!());
+        let mut item = Announcement { title: "Verse of the week".into(), fill: Fill::Passage, passage: "Mazmur 23:1-3".into(), seconds: 12, ..Announcement::default() };
+        assert!(store.save_announcement(&mut item).is_ok());
+        item.passage = "Mazmur 23:4".into();
         assert!(store.save_announcement(&mut item).is_ok());
         assert_eq!(store.announcements().unwrap_or_default(), [item]);
     }
