@@ -63,6 +63,10 @@ The signing key was made on 2026-11-10 with `artosia-release keygen` and lives o
 
 `tools/release.ps1` still makes an upload-ready folder for any other host; `ARTOSIA_UPDATE_FEED`, or one line in `update-feed.txt` beside the program, points a copy at it.
 
+### Speech recognition comes in the release when the tools exist
+
+`tools/publish.sh` sources `tools/speech-env.sh`; with CMake and libclang found it builds the operator with `--features speech` and prints "WITH speech recognition", otherwise "WITHOUT". whisper.cpp links statically, so no file is added to the release; `artosia.exe` grows to about 38 MB. The 57 MB model is not in the release.
+
 ### GStreamer comes in the release
 
 The projector built with video does not start at all on a computer without GStreamer: Windows cannot load it (`gio-2.0-0.dll: cannot open`, tried on 2026-11-10 with GStreamer off the PATH). So a release carries the part of GStreamer the programs need in a `gstreamer` folder: 31 plugins and the 40 libraries they import, 65 MB of the installer's 306 MB, with the installer's licence files in `licenses.zip`. `tools/gstreamer-subset.py` names each plugin with the reason Artosia needs it and follows every file's import table for the rest, so the list is derived, never kept by hand.

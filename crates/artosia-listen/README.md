@@ -142,15 +142,49 @@ impl Listener { pub fn start(device: Option<&str>, model: &Path, language: &str,
   says "No speech model installed (looked for ...)". Without the `whisper` feature a model file
   that exists gets "this build has no speech recogniser".
 
-### Not proven here
+### Building the recogniser on Windows (2026-11-11)
 
-- **The whisper path has not been compiled or run.** This PC has no CMake and no LLVM, and
-  installing them is a machine change that was not approved. The code follows whisper-rs 0.16.0's
-  own `basic_use` example and signatures read from the crate source, but treat it as unverified
-  until `cargo build -p artosia-listen --features whisper` succeeds once.
-- No model was downloaded; none exists on this PC (searched `C:\Users\kenne` and `F:\` for
-  `*.gguf`, `ggml-*.bin`, `vosk-model-*`, `*.onnx`).
-- No recognition accuracy, delay or CPU figure with a model. Capture-only numbers are below.
+It compiles and runs. The build needs two tools, both found by `tools/speech-env.sh`:
+
+- **CMake**, the copy inside Visual Studio 2022 Community
+  (`Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/bin`).
+- **libclang**, for `bindgen`: `libclang.dll` and clang's own headers unpacked from LLVM's
+  23.1.5 release into `~/.artosia-tools/llvm-23.1.5/bin`, named by `LIBCLANG_PATH`.
+
+```
+. tools/speech-env.sh        # exports PATH and LIBCLANG_PATH, says what is missing
+cargo build --release -p artosia --features speech
+cargo test --release -p artosia-listen --features whisper
+```
+
+- **The trap: `WHISPER_DONT_GENERATE_BINDINGS` does not work on Windows.** `whisper-rs-sys` then
+  uses the bindings bundled in the crate, which were generated on Linux; they fail a struct size
+  check on Windows. Real libclang is the only way.
+- whisper, ggml and ggml-cpu link **statically** (`whisper-rs-sys` `build.rs`: `BUILD_SHARED_LIBS=OFF`,
+  OpenMP off), so the release carries no extra DLL. The model is not shipped and **the app has no
+  downloader**: `set_listening` looks for `<library folder>\models\ggml-base-q5_1.bin` and says so
+  when it is missing.
+- A release-profile build of the operator with the feature takes about 6.5 minutes from a warm
+  cache; the speech-enabled `artosia.exe` is 38 MB.
+- Without the feature nothing changes: `cargo build` needs neither tool.
+
+### Proven here (2026-11-11, i9-13900H, base q5_1)
+
+Windows' own synthesiser (`tools/make-speech-sample.ps1`, voice Microsoft David) spoke made-up
+sentences; `hear_samples` ran them through the same resampler, segmenter and recogniser as the
+microphone path (`tests/speech.rs`, ignored: it needs the model and `fixtures/speech`).
+
+| Spoken | Heard | Audio | Time, model load included |
+|---|---|---|---|
+| The blue lantern waits beside the wooden gate. | The blue lantern waits beside the wooden gate. | 3.11 s | 0.23 to 0.28 s |
+
+- Peak working set of the test process with the model loaded and one phrase read: **133 MB**
+  (5 MB before).
+- **No Indonesian voice is installed on this PC** (voices: David and Zira en-US, Huihui zh-CN), so
+  Indonesian recognition is still unheard. The test skips itself and says so.
+- Synthesised speech is clean and slow, so this proves the path works, not accuracy with a real
+  room, accent or singing. The i9 says nothing about a Celeron.
+- `tests/speech.rs` and `crates/artosia/src/heard_test.rs` never open a microphone.
 
 ## Measured on this PC (i9-13900H laptop, Windows 11)
 
