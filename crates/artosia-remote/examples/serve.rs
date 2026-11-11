@@ -129,6 +129,7 @@ fn main() -> std::io::Result<()> {
             RemoteCommand::Message(t) => s.message = t,
             RemoteCommand::Countdown(0) => s.countdown_ends_at = None,
             RemoteCommand::Countdown(m) => s.countdown_ends_at = Some(now() + f64::from(m) * 60.0),
+            RemoteCommand::ToggleLive => s.off = !s.off,
         }
         server.set_state(s.clone());
     }

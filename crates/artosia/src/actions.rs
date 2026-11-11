@@ -1221,6 +1221,7 @@ impl App {
         let mut state = RemoteState {
             text_hidden: self.text_hidden,
             black: self.black,
+            off: !self.on_air(),
             logo_on: self.logo_on,
             logo_ready: !self.settings.logo.is_empty(),
             plan,
@@ -1566,6 +1567,7 @@ impl App {
             RemoteCommand::GoTo(index) => self.go_to(index),
             RemoteCommand::ToggleText => self.toggle_text(),
             RemoteCommand::ToggleBlack => self.toggle_black(),
+            RemoteCommand::ToggleLive => self.toggle_live(),
             RemoteCommand::ToggleLogo => self.toggle_logo(),
             RemoteCommand::ShowPlanItem(id) => {
                 self.open_plan_item(id);

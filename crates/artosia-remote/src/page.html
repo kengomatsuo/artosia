@@ -19,6 +19,7 @@
   --light: #ffffff;
   --on-light: #000000;
   --hide: #ffd60a;
+  --live: #c9002b;
   --on-hide: #000000;
   --danger: #ff9f9a;
   /* section colours, the same families as the operator window */
@@ -74,6 +75,8 @@ button:disabled { opacity: 0.4; cursor: default; }
 .btn:not(:disabled):active { filter: brightness(0.8); transform: scale(0.98); }
 .btn.on { background: var(--accent); color: var(--on-accent); }
 .btn.hides.on { background: var(--hide); color: var(--on-hide); }
+/* Lit while the room sees the Live list, as the Live tile in the window is. */
+.btn.onair.on { background: var(--live); color: #fff; }
 .btn.light { background: var(--light); color: var(--on-light); }
 @media (hover: hover) { .btn.light:not(:disabled):hover { filter: brightness(0.9); } }
 .btn.light:not(:disabled):active { filter: brightness(0.7); }
@@ -126,7 +129,8 @@ button:disabled { opacity: 0.4; cursor: default; }
 .g3 { --gc: var(--g3); } .g4 { --gc: var(--g4); } .g5 { --gc: var(--g5); }
 @media (hover: hover) { .chip:hover { filter: brightness(1.2); } }
 
-#toggles { flex: 0 0 auto; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: var(--gap); }
+/* Two rows of two: four equal buttons that fit a long word in any language. */
+#toggles { flex: 0 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap); }
 #toggles .btn { padding: 0 6px; }
 
 #list { flex: 1 1 0; min-height: 60px; display: flex; flex-direction: column; gap: 6px; }
@@ -219,6 +223,7 @@ button:disabled { opacity: 0.4; cursor: default; }
         <button id="text-btn" class="btn hides" type="button" aria-pressed="false" data-i="clear_text"></button>
         <button id="black-btn" class="btn hides" type="button" aria-pressed="false" data-i="black"></button>
         <button id="logo-btn" class="btn hides" type="button" aria-pressed="false" data-i="logo"></button>
+        <button id="live-btn" class="btn onair" type="button" aria-pressed="true" data-i="live"></button>
       </div>
       <p id="logo-note" class="note" hidden data-i="logo_needs"></p>
       <div id="list" class="scroll"></div>
@@ -297,6 +302,7 @@ const STR = {
     clear_text: "Clear text", black: "Black", logo: "Logo",
     logo_needs: "Set a logo picture in Artosia first",
     text_cleared: "Text is cleared", screen_black: "Screen is black", logo_showing: "Logo is showing",
+    live: "Live", projector_off: "Projector is off",
     jump: "Jump to a section",
     plan_pick: "Pick an item", plan_show: "Show {0}", plan_live: "Live", plan_empty: "The plan is empty",
     search_ph: "Search songs and verses", search_hint: "Type a title, a line or a verse like John 3 16",
@@ -320,6 +326,7 @@ const STR = {
     clear_text: "Sembunyikan teks", black: "Layar hitam", logo: "Logo",
     logo_needs: "Pasang gambar logo di Artosia dulu",
     text_cleared: "Teks disembunyikan", screen_black: "Layar sedang hitam", logo_showing: "Logo sedang tayang",
+    live: "Live", projector_off: "Projector is off",
     jump: "Loncat ke bagian",
     plan_pick: "Pilih satu item", plan_show: "Tayangkan {0}", plan_live: "Tayang", plan_empty: "Susunan acara masih kosong",
     search_ph: "Cari lagu atau ayat", search_hint: "Ketik judul, sepenggal lirik, atau ayat seperti Yoh 3 16",
@@ -562,8 +569,8 @@ function render() {
   const cur = live !== null ? s.slides[live] : null;
   $("live-tag").textContent = cur && cur.label ? nice(cur.label) : t("live");
   $("live-text").textContent = cur ? cur.text : t("nothing_live");
-  $("live").classList.toggle("dim", !cur || s.hidden || s.black || s.logo);
-  $("live-state").textContent = s.logo ? t("logo_showing") : (s.black ? t("screen_black") : (s.hidden ? t("text_cleared") : ""));
+  $("live").classList.toggle("dim", !cur || s.off || s.hidden || s.black || s.logo);
+  $("live-state").textContent = s.off ? t("projector_off") : (s.logo ? t("logo_showing") : (s.black ? t("screen_black") : (s.hidden ? t("text_cleared") : "")));
 
   const nextIdx = live !== null ? live + 1 : (n ? 0 : -1);
   const nx = nextIdx >= 0 && nextIdx < n ? s.slides[nextIdx] : null;
@@ -626,6 +633,7 @@ function renderToggles(s) {
   const set = (id, on) => { $(id).classList.toggle("on", on); $(id).setAttribute("aria-pressed", String(on)); };
   set("text-btn", s.hidden);
   set("black-btn", s.black);
+  set("live-btn", !s.off);
   set("logo-btn", s.logo);
   $("logo-btn").disabled = !s.logo_ready || lost;
   $("logo-note").hidden = s.logo_ready;
@@ -750,6 +758,7 @@ $("next-btn").addEventListener("click", next);
 $("prev-btn").addEventListener("click", back);
 $("text-btn").addEventListener("click", () => send({ cmd: "text" }));
 $("black-btn").addEventListener("click", () => send({ cmd: "black" }));
+$("live-btn").addEventListener("click", () => send({ cmd: "live" }));
 $("logo-btn").addEventListener("click", () => send({ cmd: "logo" }));
 $("plan-show").addEventListener("click", () => {
   if (picked === null) return;
@@ -817,6 +826,7 @@ document.addEventListener("keydown", (e) => {
   else if (k === "/") { setTab("search"); $("search").focus(); }
   else if (k === "F1") send({ cmd: "text" });
   else if (k === "F2") send({ cmd: "black" });
+  else if (k === "F6") send({ cmd: "live" });
   else if (k === "F3") { if (state && state.logo_ready) send({ cmd: "logo" }); }
   else if (k.length === 1 && /[a-z0-9]/i.test(k) && !e.repeat) jumpTo(k);
   else handled = false;

@@ -63,6 +63,8 @@ pub struct RemoteState {
     pub next_title: String,
     pub text_hidden: bool,
     pub black: bool,
+    /// The Live switch is off: the Live list is filled and the room sees none of it.
+    pub off: bool,
     /// The logo is showing in place of the slide.
     pub logo_on: bool,
     /// A logo picture is set, so the Logo button can do something.
@@ -85,6 +87,8 @@ pub enum RemoteCommand {
     GoTo(usize),
     ToggleText,
     ToggleBlack,
+    /// The Live switch: the projector on or off.
+    ToggleLive,
     ToggleLogo,
     /// Show the first slide of a plan item.
     ShowPlanItem(u64),

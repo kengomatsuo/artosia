@@ -149,6 +149,7 @@ fn state_json(s: &RemoteState, version: u64) -> Value {
         "next_title": s.next_title,
         "hidden": s.text_hidden,
         "black": s.black,
+        "off": s.off,
         "logo": s.logo_on,
         "logo_ready": s.logo_ready,
         "plan": s.plan.iter().map(|x| json!({"id": x.id, "title": x.title, "kind": x.kind, "live": x.live})).collect::<Vec<_>>(),
@@ -273,6 +274,7 @@ fn parse_command(body: &[u8], state: &RemoteState) -> Option<RemoteCommand> {
         "prev" => Some(RemoteCommand::Previous),
         "text" => Some(RemoteCommand::ToggleText),
         "black" => Some(RemoteCommand::ToggleBlack),
+        "live" => Some(RemoteCommand::ToggleLive),
         "logo" => Some(RemoteCommand::ToggleLogo),
         "goto" => {
             let i = usize::try_from(v.get("index")?.as_u64()?).ok()?;
