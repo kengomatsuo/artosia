@@ -330,6 +330,7 @@ text!(LISTEN_NOT_CONNECTED, "That microphone is not connected. Choose another.",
 text!(LISTEN_WOULD_NOT_OPEN, "That microphone would not open. Choose another.", "That microphone would not open. Choose another.");
 text!(LISTEN_INPUT_STOPPED, "The microphone stopped. Check its cable.", "The microphone stopped. Check its cable.");
 text!(LISTEN_BEAT_ONLY, "This version hears the beat, not words.", "This version hears the beat, not words.");
+text!(LISTEN_TOO_SLOW, "This computer reads words too slowly to keep up.", "This computer reads words too slowly to keep up.");
 text!(LISTEN_MODEL_DAMAGED, "The speech model is damaged. Download it again.", "The speech model is damaged. Download it again.");
 text!(LISTEN_MODEL_MISSING, "To hear words, Artosia needs its speech model, 57 MB", "To hear words, Artosia needs its speech model, 57 MB");
 text!(LISTEN_MODEL_BETTER, "This computer can run the better speech model, 190 MB", "This computer can run the better speech model, 190 MB");
@@ -892,6 +893,34 @@ text!(NUDGE_RIGHT, "Right", "Kanan");
 text!(LESS, "Less", "Kurangi");
 text!(MORE, "More", "Tambah");
 text!(LOOK_CAMERA, "Camera", "Kamera");
+text!(LOOK_CAMERA_FAR, "Network camera", "Network camera");
+text!(LOOK_CAMERA_FAR_HINT, "rtsp://192.168.1.20:8554/live", "rtsp://192.168.1.20:8554/live");
+text!(LOOK_CAMERA_FAR_USE, "Use", "Use");
+text!(LOOK_CAMERA_FAR_NOTE, "A phone works too, with a camera app that sends RTSP or SRT.", "A phone works too, with a camera app that sends RTSP or SRT.");
+text!(MEDIA_CAMERA_NONE, "No camera found. The background stays black.", "No camera found. The background stays black.");
+pub fn media_camera_missing(name: &str) -> String {
+    if let Some(text) = say("media_camera_missing", None, None, &[("name", text_arg(name))]) {
+        return text;
+    }
+    format!("Camera {name} is not connected. The background stays black.")
+}
+text!(MEDIA_CAMERA_BUSY, "The camera will not start. Another program may be using it.", "The camera will not start. Another program may be using it.");
+text!(MEDIA_CAMERA_STOPPED, "The camera stopped sending. The background stays black.", "The camera stopped sending. The background stays black.");
+text!(MEDIA_CAMERA_FAR, "The network camera does not answer. Trying again.", "The network camera does not answer. Trying again.");
+pub fn media_video_missing(file: &str) -> String {
+    if let Some(text) = say("media_video_missing", None, None, &[("file", text_arg(file))]) {
+        return text;
+    }
+    format!("Video file missing: {file}")
+}
+pub fn media_video_failed(file: &str) -> String {
+    if let Some(text) = say("media_video_failed", None, None, &[("file", text_arg(file))]) {
+        return text;
+    }
+    format!("The video will not play: {file}")
+}
+text!(MEDIA_VIDEO_NONE, "This copy of Artosia cannot play videos or cameras.", "This copy of Artosia cannot play videos or cameras.");
+text!(MEDIA_VIDEO_SOFTWARE, "The graphics card cannot play this video. The processor does.", "The graphics card cannot play this video. The processor does.");
 text!(SCREENS_HERE, "Show it on this screen", "Layar di jendela ini");
 text!(SCREENS_HERE_HINT, "Escape on the picture closes it.", "Tutup dengan Esc saat kursor di gambar");
 text!(LOOK_WINDOW, "Artosia's window", "Warna jendela Artosia");

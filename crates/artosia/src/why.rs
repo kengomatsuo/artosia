@@ -64,6 +64,25 @@ pub fn listen_error(error: &artosia_listen::ListenError) -> String {
 /// What the listener reported while it ran, as a whole sentence, or nothing when the dialog
 /// already says it (a missing model has its own row with the button that fetches it) or when it
 /// is not worth a volunteer's eye (one phrase that could not be read).
+/// A background the projector program could not show, in the window's language. The program
+/// sends a kind and what it is about with a tab between them (`artosia-output` `video.rs`).
+pub fn media_problem(code: &str) -> String {
+    let (kind, about) = code.split_once('\t').unwrap_or((code, ""));
+    match kind {
+        "camera-none" => t::MEDIA_CAMERA_NONE().to_string(),
+        "camera-missing" => t::media_camera_missing(about),
+        "camera-busy" => t::MEDIA_CAMERA_BUSY().to_string(),
+        "camera-stopped" => t::MEDIA_CAMERA_STOPPED().to_string(),
+        "camera-far" => t::MEDIA_CAMERA_FAR().to_string(),
+        "video-missing" => t::media_video_missing(about),
+        "video-failed" | "video-stopped" => t::media_video_failed(about),
+        "video-software" => t::MEDIA_VIDEO_SOFTWARE().to_string(),
+        "video-none" => t::MEDIA_VIDEO_NONE().to_string(),
+        // An older projector program still sends a sentence of its own.
+        _ => code.to_string(),
+    }
+}
+
 pub fn listen_problem(problem: &artosia_listen::Problem, speech_built: bool) -> Option<String> {
     use artosia_listen::Problem;
     match problem {
@@ -80,6 +99,15 @@ pub fn listen_problem(problem: &artosia_listen::Problem, speech_built: bool) -> 
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn a_background_that_fails_is_worded_here_and_names_what_it_is_about() {
+        assert_eq!(media_problem("camera-none"), t::MEDIA_CAMERA_NONE());
+        assert_eq!(media_problem("camera-missing\tFront camera"), t::media_camera_missing("Front camera"));
+        assert!(media_problem("video-missing\twater.mp4").contains("water.mp4"));
+        assert_eq!(media_problem("video-stopped\twater.mp4"), t::media_video_failed("water.mp4"));
+        assert_eq!(media_problem("camera-far"), t::MEDIA_CAMERA_FAR());
+    }
 
     #[test]
     fn a_reason_is_never_the_library_s_own_words() {

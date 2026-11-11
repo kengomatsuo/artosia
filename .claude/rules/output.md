@@ -8,6 +8,7 @@ paths:
 
 # The output process and what the screens draw (2026-11-10)
 
+- **A CAMERA WHOSE NAME IS AN ADDRESS IS OPENED OVER THE NETWORK, AND THE PROJECTOR PROGRAM SENDS A TROUBLE AS A KIND THAT THE OPERATOR WORDS (`camera.rs` `open_address`, `video.rs` `words_for_start_failure`, `crates/artosia/src/why.rs` `media_problem`, 2026-11-11).** Its English sentences reached an Indonesian status bar. Full account: [docs/output.md](../../docs/output.md)
 - **THE PROJECTOR IS ITS OWN PROCESS AND KEEPS ITS LAST STATE WHEN THE OPERATOR DIES (`artosia-output`, port 47823, 2026-11-10).** Only a `Quit` message closes it. Full account: [docs/output.md](../../docs/output.md)
 - **A VIDEO BACKGROUND COSTS 0.25 TO 0.45 CORES AND 300 MB IN THE OUTPUT, MEASURED DRAWN, AND MISSES THE TARGET (2026-11-10).** Decode and download are 0.07 cores; Rune redrawing the window 20 to 110 times a second while a surface is mounted is the rest; the d3d11 decoder saves 60 MB over d3d12. Re-measure with `tools/ram/measure-cpu.ps1` after any change to this path. Full account: [docs/output.md](../../docs/output.md)
 - **EVERY SIZE ON A SCREEN IS A FRACTION OF ITS HEIGHT, AND PREVIEWS ARE THE 1920x1080 VIEW SCALED DOWN (`artosia-slides`, 2026-11-10).** A preview must break lines where the projector does. Full account: [docs/output.md](../../docs/output.md)

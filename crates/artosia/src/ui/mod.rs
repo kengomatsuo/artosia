@@ -174,7 +174,7 @@ pub(crate) fn statusbar(s: &App, k: &Kit) -> El {
                 .child(text(words).font(type_::SMALL).color(k.c.text_muted).truncate()),
         );
     if let Some(error) = &status.media_error {
-        bar = bar.child(text(error.clone()).font(type_::SMALL).color(theme::warn_ink()).truncate());
+        bar = bar.child(text(crate::why::media_problem(error)).font(type_::SMALL).color(theme::warn_ink()).truncate());
     }
     if s.remote.is_some() {
         bar = bar.child(text(t::REMOTE_ON()).font(type_::SMALL).color(k.c.text_muted));

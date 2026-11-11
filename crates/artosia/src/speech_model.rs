@@ -120,18 +120,31 @@ impl App {
         }
         if self.reads_with_better() {
             if mean > BEHIND {
-                self.settings.listen_better_behind = true;
-                self.touch_settings();
-                if self.listener.is_some() {
-                    self.set_listening(true);
-                }
-                self.check_model();
+                self.readings_behind();
             }
         } else if mean <= QUICK && !self.settings.listen_quick {
             self.settings.listen_quick = true;
             self.touch_settings();
             self.check_model();
         }
+    }
+
+    /// The better model cannot keep up on this PC: its readings take too long, or ended
+    /// phrases are piling up unread (a PC so slow that not one reading came back in a minute
+    /// never reports a speed). The first model is used from now on.
+    pub fn readings_behind(&mut self) {
+        if !self.reads_with_better() {
+            // The first model is behind too, and there is nothing smaller: say so, where the
+            // listener's other troubles are said. The level and the tempo go on.
+            self.listen_problem = Some(crate::strings::LISTEN_TOO_SLOW().to_string());
+            return;
+        }
+        self.settings.listen_better_behind = true;
+        self.touch_settings();
+        if self.listener.is_some() {
+            self.set_listening(true);
+        }
+        self.check_model();
     }
 
     /// Fetches the first model on a worker. Only the button in the Listen dialog calls this.
@@ -297,6 +310,16 @@ mod tests {
         assert!(app.settings.listen_better_behind);
         assert!(app.model_path().is_some_and(|path| path.ends_with(FIRST.name)));
         assert_eq!(app.better, Better::No, "it is not offered again");
+        // Phrases piling up unread say the same, before any reading has come back.
+        app.settings.listen_better_behind = false;
+        assert!(app.reads_with_better());
+        app.readings_behind();
+        assert!(app.settings.listen_better_behind);
+        assert!(app.model_path().is_some_and(|path| path.ends_with(FIRST.name)));
+        // Behind with the first model too: the dialog says so.
+        assert_eq!(app.listen_problem, None);
+        app.readings_behind();
+        assert_eq!(app.listen_problem.as_deref(), Some(crate::strings::LISTEN_TOO_SLOW()));
         let _ = std::fs::remove_dir_all(folder);
     }
 }

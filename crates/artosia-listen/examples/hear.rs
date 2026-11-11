@@ -57,6 +57,7 @@ fn main() {
             // This example keeps no phrases, so neither arrives.
             Heard::Kept { .. } | Heard::Read { .. } => {}
             Heard::Speed { sound, took } => println!("read {sound:.1} s of sound in {took:.2} s"),
+            Heard::Behind => println!("behind: phrases are waiting to be read"),
             Heard::Problem(p) => println!("problem: {p}"),
         }
     }

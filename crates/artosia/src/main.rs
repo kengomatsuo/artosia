@@ -402,6 +402,12 @@ const SCENES: &[Scene] = &[
     }),
     // The owner's look: a camera behind words at the bottom. The frame is a made-up gradient
     // handed over as if the projector had sent it, so both previews show it under the words.
+    // Design with a camera on the network as the background: the address in its field, Use lit.
+    ("design-network-camera", |s| {
+        let look = artosia_slides::look::Look { background: artosia_slides::look::Background::Camera("rtsp://192.168.1.20:8554/live".into()), shadow: true, ..s.look() };
+        s.set_look(look);
+        s.sheet = Sheet::Looks;
+    }),
     ("camera-background", |s| {
         let look = artosia_slides::look::Look { background: artosia_slides::look::Background::Camera(String::new()), place: artosia_slides::look::Place::Bottom, shadow: true, ..s.look() };
         s.set_look(look);

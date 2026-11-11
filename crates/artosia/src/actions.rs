@@ -1242,6 +1242,12 @@ impl App {
         let lines = self.look().max_lines;
         let changed_lines = look.max_lines != lines;
         self.look_edit.sync(&look);
+        if let Background::Camera(name) = &look.background
+            && name.contains("://")
+            && self.camera_address.text != *name
+        {
+            self.camera_address.replace_text(name.clone());
+        }
         if self.plan.look.is_some() {
             self.plan.look = serde_json::to_value(&look).ok();
             self.touch_plan();
@@ -1498,6 +1504,24 @@ impl App {
         }
     }
 
+    /// The network camera's field shows the address the look holds.
+    pub(crate) fn sync_camera_address(&mut self) {
+        if let Background::Camera(name) = &self.look().background
+            && name.contains("://")
+        {
+            self.camera_address.replace_text(name.clone());
+        }
+    }
+
+    /// Puts the camera at the typed address behind the words. What is typed has to be an
+    /// address: a word alone would be looked for among this computer's cameras.
+    pub fn use_camera_address(&mut self) {
+        let address = self.camera_address.text.trim().to_string();
+        if address.contains("://") {
+            self.set_camera(&address);
+        }
+    }
+
     /// Puts a camera behind the words, as a video background is.
     pub fn set_camera(&mut self, name: &str) {
         let mut look = self.look();
@@ -1595,6 +1619,7 @@ impl App {
                 Arrived::Heard(artosia_listen::Heard::Kept { n, seconds }) => self.recording_kept(n, seconds),
                 Arrived::Heard(artosia_listen::Heard::Read { n, text }) => self.recording_read(n, text),
                 Arrived::Heard(artosia_listen::Heard::Speed { sound, took }) => self.note_reading(sound, took),
+                Arrived::Heard(artosia_listen::Heard::Behind) => self.readings_behind(),
                 Arrived::Heard(artosia_listen::Heard::Problem(artosia_listen::Problem::Keep(_))) => {
                     self.recordings.failed = true;
                     self.end_sitting();

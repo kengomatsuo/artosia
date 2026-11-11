@@ -29,6 +29,7 @@ LEFT_OUT = {
     "KEY_MARK": "keys as the keyboard prints them",
     "ctrl_digit": "a key as the keyboard prints it",
     "STREAM_ADDRESS_HINT": "a sample web address",
+    "LOOK_CAMERA_FAR_HINT": "a sample network address",
     "BIBLES_SOURCE_EBIBLE": "the name of a website",
     "BIBLES_SOURCE_BEBLIA": "the name of a website",
     "language_code": "not a text",

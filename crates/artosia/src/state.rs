@@ -434,6 +434,8 @@ pub struct App {
     /// Streaming or recording while this exists.
     pub stream: Option<crate::stream::Stream>,
     pub stream_address: TextEdit,
+    /// The address of a camera on the network, as typed in Design.
+    pub camera_address: TextEdit,
     pub stream_key: TextEdit,
     pub stream_problem: Option<String>,
     /// Listening to the room while this exists.
@@ -638,6 +640,7 @@ impl App {
             loop_at: (0, 0.0),
             stream: None,
             stream_address: TextEdit::new(""),
+            camera_address: TextEdit::new(""),
             stream_key: TextEdit::new("").secure(),
             stream_problem: None,
             listener: None,
@@ -698,6 +701,7 @@ impl App {
         app.people = app.store.people().unwrap_or_default();
         app.stream_address.replace_text(app.settings.stream_address.clone());
         app.stream_key.replace_text(app.settings.stream_key.clone());
+        app.sync_camera_address();
         app.list_bibles();
         app.start_learning();
         if practice {

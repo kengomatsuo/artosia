@@ -9,7 +9,7 @@ mod looper;
 mod poster;
 mod tap;
 
-pub use camera::{CameraLoop, Cameras};
+pub use camera::{CameraLoop, Cameras, is_address};
 pub use error::VideoError;
 pub use looper::{VideoLoop, VideoOptions};
 pub use poster::{Poster, poster};

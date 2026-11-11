@@ -544,6 +544,9 @@ microphone path (`tests/speech.rs`, ignored: it needs the model and `fixtures/sp
   [docs/recordings.md](../../docs/recordings.md).
 - `Heard::Speed { sound, took }` follows every phrase that ended: how long it was and how long
   its reading took. The operator offers the better model from it (`speech_model.rs`).
+- `Heard::Behind` is said once when three ended phrases wait unread. From then on only the two
+  newest waiting phrases are read: on a PC held to one slow core the better model finished no
+  reading in 110 seconds, so its speed was never reported and nothing sent it away.
 - Call `Listener::start` off the UI thread's critical path (it waits for the device to open, a
   fraction of a second) and drop the `Listener` to stop; dropping waits for a recognition in
   progress, which can take seconds on a slow CPU, so drop it from a background thread.

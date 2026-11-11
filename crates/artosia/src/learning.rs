@@ -223,7 +223,11 @@ impl App {
         let ids: Vec<i64> = self.songs.iter().map(|song| song.id).collect();
         let offset = self.local_offset();
         let today = self.moment();
-        let at = |days: i64, hours: i64| Moment::new(today.at - days * DAY + hours * 3600, offset);
+        // The demo's services begin at noon, so a service and the songs an hour or three into
+        // it fall on one day whatever the time is now: seeded after nine in the evening, the
+        // later songs landed on the next day and "usually follows" had nothing to show.
+        let noon = (today.at + i64::from(offset)).div_euclid(DAY) * DAY - i64::from(offset) + 12 * 3600;
+        let at = |days: i64, hours: i64| Moment::new(noon - days * DAY + hours * 3600, offset);
         let plan = Some(1);
         for week in 1..=5i64 {
             let day = at(7 * week, 0);

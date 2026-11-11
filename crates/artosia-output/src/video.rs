@@ -103,14 +103,17 @@ fn file_name(path: &str) -> String {
     Path::new(path).file_name().map(|name| name.to_string_lossy().into_owned()).unwrap_or_else(|| path.to_string())
 }
 
-/// What the operator reads when `wanted` could not start.
+/// Why `wanted` could not start, as a kind and what it is about with a tab between them. The
+/// operator words it in the window's language (`crates/artosia/src/why.rs` `media_problem`):
+/// a sentence written here reached an Indonesian window in English.
 fn words_for_start_failure(wanted: &Want, error: &VideoError) -> String {
     match (wanted, error) {
-        (Want::Camera(name), VideoError::NoCamera(_)) if name.is_empty() => "No camera found. The background is black until one is plugged in.".to_string(),
-        (Want::Camera(name), VideoError::NoCamera(_)) => format!("Camera {name} is not connected. The background is black until it returns."),
-        (Want::Camera(_), _) => "The camera could not start. Another program may be using it. Trying again.".to_string(),
-        (Want::File(path), VideoError::NotFound(_)) => format!("The video file is missing: {}. The background is black.", file_name(path)),
-        (Want::File(path), _) => format!("The video could not play: {}. The background is black.", file_name(path)),
+        (Want::Camera(name), _) if artosia_video::is_address(name) => "camera-far".to_string(),
+        (Want::Camera(name), VideoError::NoCamera(_)) if name.is_empty() => "camera-none".to_string(),
+        (Want::Camera(name), VideoError::NoCamera(_)) => format!("camera-missing\t{name}"),
+        (Want::Camera(_), _) => "camera-busy".to_string(),
+        (Want::File(path), VideoError::NotFound(_)) => format!("video-missing\t{}", file_name(path)),
+        (Want::File(path), _) => format!("video-failed\t{}", file_name(path)),
         (Want::Nothing, _) => String::new(),
     }
 }
@@ -182,9 +185,9 @@ impl Worker {
                         trace(|| format!("video started in {} ms, decoder {}", started.elapsed().as_millis(), video.decoder().unwrap_or_default()));
                         if let Some(why) = video.fallback() {
                             trace(|| format!("hardware decoding failed, using software: {why}"));
-                            self.tell("Hardware video decoding failed, so the video plays with the processor instead.".to_string());
+                            self.tell("video-software".to_string());
                         } else if software {
-                            self.tell("Hardware video decoding failed, so the video plays with the processor instead.".to_string());
+                            self.tell("video-software".to_string());
                         } else {
                             self.tell(String::new());
                         }
@@ -238,7 +241,7 @@ impl Worker {
         let was_camera = matches!(self.playing, Some(Playing::Camera { .. }));
         self.go_dark();
         if was_camera {
-            self.tell("The camera stopped sending. The background is black until it returns.".to_string());
+            self.tell("camera-stopped".to_string());
             self.retry_at = Some(Instant::now() + CAMERA_RETRY);
         } else if !software_already {
             // The hardware decoder gave up in the middle of the file: the processor tries next.
@@ -246,7 +249,7 @@ impl Worker {
             self.try_start(true);
         } else {
             let words = match &self.wanted {
-                Want::File(path) => format!("The video stopped playing: {}. The background is black.", file_name(path)),
+                Want::File(path) => format!("video-stopped\t{}", file_name(path)),
                 _ => String::new(),
             };
             self.tell(words);

@@ -13,7 +13,7 @@ mod text;
 
 use std::fmt;
 use std::path::{Path, PathBuf};
-use std::sync::atomic::{AtomicBool, Ordering};
+use std::sync::atomic::{AtomicBool, AtomicU32, Ordering};
 use std::sync::mpsc::{self, RecvTimeoutError};
 use std::sync::{Arc, Mutex};
 use std::thread::JoinHandle;
@@ -106,6 +106,9 @@ pub enum Heard {
     /// A phrase that ended held `sound` seconds and took `took` seconds to read. A PC whose
     /// readings take a small share of the sound can run a larger model.
     Speed { sound: f32, took: f32 },
+    /// Three phrases that ended are waiting to be read: this PC cannot keep up with the model.
+    /// Said once. From then on only the two newest waiting phrases are read.
+    Behind,
 }
 
 /// What went wrong while listening. The window words each kind in its own language; `Display`
@@ -234,6 +237,28 @@ impl Listener {
 
 /// Reads one phrase and says what to report, if anything. The live listener and
 /// [`hear_samples`] both go through here, so a test hears what the microphone path hears.
+/// Ended phrases waiting to be read at which the listener says it is behind.
+const WAITING_MOST: u32 = 3;
+/// Of the ended phrases waiting, how many are still read: one read a minute late names
+/// nothing a person can use.
+const WAITING_READ: usize = 2;
+
+/// The jobs with only the `keep` newest ended phrases left in, and how many were dropped.
+fn newest(jobs: Vec<Phrase>, keep: usize) -> (Vec<Phrase>, u32) {
+    let ended = jobs.iter().filter(|job| job.is_final).count();
+    let mut drop = ended.saturating_sub(keep);
+    let dropped = drop as u32;
+    let kept = jobs
+        .into_iter()
+        .filter(|job| {
+            let go = job.is_final && drop > 0;
+            drop -= usize::from(go);
+            !go
+        })
+        .collect();
+    (kept, dropped)
+}
+
 fn read_phrase(recogniser: &mut dyn recogniser::Recogniser, phrase: &Phrase, last_partial: &mut String) -> Option<Heard> {
     let raw = match recogniser.transcribe(&phrase.samples, phrase.is_final) {
         Ok(raw) => raw,
@@ -344,10 +369,21 @@ impl Job {
         };
 
         // The decoder runs on its own thread so a slow recognition never stalls capture or levels.
-        let decoder = self.spawn_decoder();
+        let waiting = Arc::new(AtomicU32::new(0));
+        let decoder = self.spawn_decoder(waiting.clone());
         let (phrase_tx, handle) = match decoder {
             Some((tx, handle)) => (Some(tx), Some(handle)),
             None => (None, None),
+        };
+        // Hands a phrase to the decoder, and says once when the ended ones pile up.
+        let mut behind = false;
+        let mut hand = |phrase: Phrase, phrase_tx: &Option<mpsc::Sender<Phrase>>| {
+            let Some(phrase_tx) = phrase_tx else { return };
+            if phrase.is_final && waiting.fetch_add(1, Ordering::Relaxed) + 1 >= WAITING_MOST && !behind {
+                behind = true;
+                (self.emit)(Heard::Behind);
+            }
+            let _ = phrase_tx.send(phrase);
         };
 
         let mut meter = LevelMeter::new(running.sample_rate, LEVELS_PER_SECOND);
@@ -371,9 +407,7 @@ impl Job {
                         resampler.push(&block, &mut resampled);
                         for mut phrase in segmenter.push(&resampled) {
                             keeper.keep(&mut phrase, &self.emit);
-                            if let Some(phrase_tx) = &phrase_tx {
-                                let _ = phrase_tx.send(phrase);
-                            }
+                            hand(phrase, &phrase_tx);
                         }
                     }
                 }
@@ -396,9 +430,7 @@ impl Job {
                             resampler.push(&silence, &mut resampled);
                             for mut phrase in segmenter.push(&resampled) {
                                 keeper.keep(&mut phrase, &self.emit);
-                                if let Some(phrase_tx) = &phrase_tx {
-                                    let _ = phrase_tx.send(phrase);
-                                }
+                                hand(phrase, &phrase_tx);
                             }
                         }
                     }
@@ -420,7 +452,7 @@ impl Job {
     }
 
     /// Starts the recognition thread, or reports why there is none and returns `None`.
-    fn spawn_decoder(&self) -> Option<(mpsc::Sender<Phrase>, JoinHandle<()>)> {
+    fn spawn_decoder(&self, waiting: Arc<AtomicU32>) -> Option<(mpsc::Sender<Phrase>, JoinHandle<()>)> {
         if !self.model.is_file() {
             (self.emit)(Heard::Problem(Problem::NoModel));
             return None;
@@ -443,10 +475,13 @@ impl Job {
             while let Ok(first) = rx.recv() {
                 let mut jobs = vec![first];
                 jobs.extend(rx.try_iter());
-                for phrase in coalesce(jobs) {
+                let (jobs, dropped) = newest(coalesce(jobs), WAITING_READ);
+                waiting.fetch_sub(dropped, Ordering::Relaxed);
+                for phrase in jobs {
                     let began = std::time::Instant::now();
                     let heard = read_phrase(recogniser.as_mut(), &phrase, &mut last_partial);
                     if phrase.is_final {
+                        waiting.fetch_sub(1, Ordering::Relaxed);
                         emit(Heard::Speed { sound: phrase.samples.len() as f32 / RECOGNISER_RATE as f32, took: began.elapsed().as_secs_f32() });
                     }
                     // A kept phrase says what was read in it, words or none, before its `Final`.
@@ -481,6 +516,16 @@ mod tests {
     fn a_source_that_is_not_there_is_named_in_the_error() {
         let error = probe(Some("no such microphone"), Duration::from_millis(10), |_, _| {}).err();
         assert!(matches!(error, Some(ListenError::NoDevice(m)) if m.contains("no such microphone")));
+    }
+
+    #[test]
+    fn of_the_ended_phrases_waiting_only_the_newest_are_read() {
+        let phrase = |is_final: bool, mark: f32| Phrase { samples: vec![mark], is_final, kept: None };
+        let (left, dropped) = newest(vec![phrase(true, 1.0), phrase(true, 2.0), phrase(true, 3.0), phrase(false, 4.0)], 2);
+        assert_eq!(dropped, 1);
+        assert_eq!(left.iter().map(|job| job.samples[0]).collect::<Vec<_>>(), [2.0, 3.0, 4.0]);
+        let (left, dropped) = newest(vec![phrase(true, 1.0), phrase(false, 2.0)], 2);
+        assert_eq!((left.len(), dropped), (2, 0));
     }
 
     fn heard() -> (Emit, Arc<Mutex<Vec<Heard>>>) {

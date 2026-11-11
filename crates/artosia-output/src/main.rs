@@ -311,7 +311,8 @@ fn apply(message: ToOutput) {
             });
             #[cfg(not(feature = "video"))]
             if state.look.is_moving() {
-                shared.tell(&FromOutput::MediaError("This copy of Artosia cannot play video or camera backgrounds".to_string()));
+                // A kind, worded by the operator in its own language (`why.rs` `media_problem`).
+                shared.tell(&FromOutput::MediaError("video-none".to_string()));
             }
             shared.set_state(*state);
         }

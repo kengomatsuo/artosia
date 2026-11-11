@@ -37,7 +37,7 @@ It prints `pos=<s> loops=<n> decoder=<factory>` once a second. Default file: `fi
 
 ## Camera
 
-`Cameras::start()` (about 2 s, about 50 MB for as long as it lives) watches GStreamer's device monitor; `Cameras::open(name, &surface)` starts the camera called `name` (empty: the first) and blocks until a picture arrives, up to 6 s. `CameraLoop::{since_frame, error, frames, name}` say whether it still works; dropping it stops the camera. `VideoError::NoCamera` is a missing one. `ARTOSIA_HIDE_CAMERAS_FILE` names a file of camera names to hide, for tests.
+`CameraLoop::open_address(address, &surface)` opens a camera on the network by its address (`rtsp://`, `srt://`, `http://`), with no device monitor; `Cameras::open` calls it for a name that `is_address`. `Cameras::start()` (about 2 s, about 50 MB for as long as it lives) watches GStreamer's device monitor; `Cameras::open(name, &surface)` starts the camera called `name` (empty: the first) and blocks until a picture arrives, up to 6 s. `CameraLoop::{since_frame, error, frames, name}` say whether it still works; dropping it stops the camera. `VideoError::NoCamera` is a missing one. `ARTOSIA_HIDE_CAMERAS_FILE` names a file of camera names to hide, for tests.
 
 ## Decoder choice
 

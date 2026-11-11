@@ -642,6 +642,51 @@
   "back": "Projector on monitor {number}",
   "why": "monitor for hardware"
  },
+ "MEDIA_CAMERA_NONE": {
+  "text": "Tidak ada kamera. Latar hitam sampai dipasang.",
+  "back": "There is no camera. The backdrop is black until one is plugged in.",
+  "why": "News first, then what is shown meanwhile"
+ },
+ "media_camera_missing": {
+  "text": "Kamera {name} belum terpasang. Latar hitam sampai dipasang.",
+  "back": "Camera {name} is not plugged in yet. The backdrop is black until it is.",
+  "why": "'belum terpasang' as in LISTEN_NOT_CONNECTED"
+ },
+ "MEDIA_CAMERA_BUSY": {
+  "text": "Kamera tidak mau mulai. Mungkin aplikasi lain memakainya.",
+  "back": "The camera will not start. Perhaps another app is using it.",
+  "why": "Two short statements"
+ },
+ "MEDIA_CAMERA_STOPPED": {
+  "text": "Gambar kamera berhenti masuk. Latar hitam untuk sementara.",
+  "back": "The camera picture stopped coming in. The backdrop is black for now.",
+  "why": "Two short statements"
+ },
+ "MEDIA_CAMERA_FAR": {
+  "text": "Kamera jaringan tidak menjawab. Mencoba lagi.",
+  "back": "The network camera does not answer. Trying again.",
+  "why": "Same name as the Design row"
+ },
+ "media_video_missing": {
+  "text": "Video tidak ditemukan: {file}",
+  "back": "The video was not found: {file}",
+  "why": "News first, then the file name"
+ },
+ "media_video_failed": {
+  "text": "Video tidak bisa diputar: {file}",
+  "back": "The video cannot be played: {file}",
+  "why": "News first, then the file name"
+ },
+ "MEDIA_VIDEO_SOFTWARE": {
+  "text": "Video diputar prosesor karena kartu grafis tidak bisa. Bisa tersendat.",
+  "back": "The video is played by the processor because the graphics card cannot. It may stutter.",
+  "why": "Calm, two statements"
+ },
+ "MEDIA_VIDEO_NONE": {
+  "text": "Versi ini tidak bisa memakai video atau kamera jadi latar.",
+  "back": "This version cannot use a video or a camera as the backdrop.",
+  "why": "A statement about the program ('versi ini', as in LISTEN_BEAT_ONLY), with the table's words video, kamera and latar"
+ },
  "library_in_memory": {
   "text": "Koleksi gagal dibuka, perubahan hilang saat program ditutup: {problem}",
   "back": "The collection failed to open, changes are lost when the program closes: {problem}",
@@ -1609,6 +1654,21 @@
   "text": "Kamera",
   "back": "Camera",
   "why": "One word"
+ },
+ "LOOK_CAMERA_FAR": {
+  "text": "Kamera jaringan",
+  "back": "Network camera",
+  "why": "A camera reached over the network"
+ },
+ "LOOK_CAMERA_FAR_USE": {
+  "text": "Pakai",
+  "back": "Use",
+  "why": "Same verb as BACKDROPS_USE"
+ },
+ "LOOK_CAMERA_FAR_NOTE": {
+  "text": "Ponsel juga bisa, lewat aplikasi kamera pengirim RTSP atau SRT.",
+  "back": "A phone can too, through a camera app that sends RTSP or SRT.",
+  "why": "RTSP and SRT stay; a plain sentence"
  },
  "SCREENS_HERE": {
   "text": "Tayangkan di jendela di monitor ini",
@@ -3265,6 +3325,11 @@
   "text": "Versi ini tidak memahami kata, hanya irama.",
   "back": "This version does not understand words, only the rhythm.",
   "why": "Recomposed with 'tidak' like the rest of the table; a fact about this copy, not a fault of the person"
+ },
+ "LISTEN_TOO_SLOW": {
+  "text": "Komputer ini terlalu lambat mengenali kata tepat waktu.",
+  "back": "This computer is too slow to recognise words on time.",
+  "why": "A statement about the computer, not the person"
  },
  "LISTEN_MODEL_DAMAGED": {
   "text": "Berkas suara rusak. Unduh lagi pakai tombol di atas.",

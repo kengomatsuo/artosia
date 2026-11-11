@@ -32,6 +32,8 @@ fn looks(s: &App, k: &Kit, layer: &mut Vec<El>, tall: f32) {
     let look = s.look();
     // The cameras the projector program found on this computer; none in a build without video.
     let cameras = s.link.status().cameras;
+    // The look's camera is one on the network.
+    let far = matches!(&look.background, Background::Camera(name) if name.contains("://"));
     let tile = 172.0;
     let mut grid = row().key("look-presets").w_full().gap(space::S3).flex_wrap();
     for preset in presets() {
@@ -125,6 +127,9 @@ fn looks(s: &App, k: &Kit, layer: &mut Vec<El>, tall: f32) {
                 ))
                 .child(text(background).font(type_::SMALL).color(k.c.text_muted).truncate().grow(1.0)),
         ))
+        // What is wrong with the background is said here too, over the camera rows, where it was just chosen:
+        // the status bar is behind this dialog, and the rows' own foot is under the fold.
+        .children(s.link.status().media_error.as_ref().map(|error| text(crate::why::media_problem(error)).key("design-media-problem").font(type_::SMALL).color(theme::warn_ink()).wrap()))
         .children((!cameras.is_empty()).then(|| {
             let current = match &look.background {
                 Background::Camera(name) => Some(name.clone()),
@@ -133,10 +138,26 @@ fn looks(s: &App, k: &Kit, layer: &mut Vec<El>, tall: f32) {
             let mut choices = row().grow(1.0).min_w(0.0).gap(space::S2).flex_wrap();
             for name in &cameras {
                 let (on, wanted) = (current.as_deref() == Some(name.as_str()), name.clone());
-                choices = choices.child(btn(name.clone()).icon(&icons::CAMERA).toggle(on).focusable().build(k, move |s, _| s.set_camera(&wanted)));
+                // Lit in the accent while it is the background: yellow means hidden or a warning.
+                choices = choices.child(btn(name.clone()).icon(&icons::CAMERA).active(on).focusable().build(k, move |s, _| s.set_camera(&wanted)));
             }
             setting(k, t::LOOK_CAMERA(), choices)
-        })),
+        }))
+        // A camera on the network, a phone among them: its address is typed or pasted once.
+        .children((s.link.status().video || far).then(|| {
+            setting(
+                k,
+                t::LOOK_CAMERA_FAR(),
+                row()
+                    .grow(1.0)
+                    .min_w(0.0)
+                    .gap(space::S2)
+                    .center_y()
+                    .child(el().grow(1.0).min_w(0.0).child(TextInput::new(&s.camera_address).width(None).label(t::LOOK_CAMERA_FAR()).placeholder(t::LOOK_CAMERA_FAR_HINT()).on_edit(|s: &mut App| &mut s.camera_address).build(k)))
+                    .child(btn(t::LOOK_CAMERA_FAR_USE()).icon(&icons::CAMERA).active(far).focusable().build(k, |s, _| s.use_camera_address()).key("camera-far-use")),
+            )
+        }))
+        .children((s.link.status().video || far).then(|| text(t::LOOK_CAMERA_FAR_NOTE()).font(type_::SMALL).color(k.c.text_muted).wrap())),
         1 => pane
         .children(rows)
         .child(setting(

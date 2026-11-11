@@ -6365,6 +6365,51 @@
   "notes": "One word."
  },
  {
+  "key": "LOOK_CAMERA_FAR",
+  "kind": "const",
+  "screen": "Design dialog: a window about 620 points wide over the main window. A preview picture of a projector slide at the top, two wide buttons under it, then rows of choices: a grid of backgrounds, a file chooser, then Words with colour, font, outline, lines per slide, size and position, then the church's emblem. Label at the left of a row of choices of cameras, below the picture grid. Under the row of this computer's cameras there is one more row: its label, a text field for an address with a sample address in grey, and a button; under the row, one small grey line. This text is the row's label, in a column about 150 points wide; it is also the name a screen reader gives the field.",
+  "moment": "The church has a camera that is not plugged into this computer: one on the network, or a phone that sends its picture over the wireless network.",
+  "role": "row label",
+  "does": "Names the choice of a camera that is reached over the network by its address.",
+  "budget": 18,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [],
+  "notes": "Two words at most. No colon."
+ },
+ {
+  "key": "LOOK_CAMERA_FAR_USE",
+  "kind": "const",
+  "screen": "Design dialog: a window about 620 points wide over the main window. A preview picture of a projector slide at the top, two wide buttons under it, then rows of choices: a grid of backgrounds, a file chooser, then Words with colour, font, outline, lines per slide, size and position, then the church's emblem. Label at the left of a row of choices of cameras, below the picture grid. Under the row of this computer's cameras there is one more row: its label, a text field for an address with a sample address in grey, and a button; under the row, one small grey line. This text is the button at the right of the address field; it is lit while that camera is the background.",
+  "moment": "The person typed or pasted the camera's address and wants its picture behind the words.",
+  "role": "button",
+  "does": "Puts the camera at that address behind the words.",
+  "budget": 10,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [],
+  "notes": "One short verb. No full stop."
+ },
+ {
+  "key": "LOOK_CAMERA_FAR_NOTE",
+  "kind": "const",
+  "screen": "Design dialog: a window about 620 points wide over the main window. A preview picture of a projector slide at the top, two wide buttons under it, then rows of choices: a grid of backgrounds, a file chooser, then Words with colour, font, outline, lines per slide, size and position, then the church's emblem. Label at the left of a row of choices of cameras, below the picture grid. Under the row of this computer's cameras there is one more row: its label, a text field for an address with a sample address in grey, and a button; under the row, one small grey line. This text is the small grey line under the row.",
+  "moment": "The person wonders whether a phone can be the camera, since the church has no network camera.",
+  "role": "hint",
+  "does": "Says a phone can be the camera too, through a camera app on the phone that sends its picture as RTSP or SRT (two names of ways to send video, kept as they are).",
+  "budget": 64,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [],
+  "notes": "One plain sentence. RTSP and SRT stay as written. Full stop."
+ },
+ {
   "key": "SCREENS_HERE",
   "kind": "const",
   "screen": "Screens dialog: a window about 600 points wide; at the top the projector on/off switch, one row for each monitor found (number, size, who it is for), then the Picture on the wall block. Label of a switch, shown when only one monitor exists.",
@@ -11024,6 +11069,176 @@
    "listener"
   ],
   "notes": "One sentence. It states a fact about this copy of the program, not a fault of the person. Full stop."
+ },
+ {
+  "key": "LISTEN_TOO_SLOW",
+  "kind": "const",
+  "screen": "The Listen dialog (opened from the top bar's microphone button). A line in the warning colour under the dialog's rows; it appears only when something is wrong.",
+  "moment": "Listening is on. This PC takes longer to recognise each sung or spoken phrase than the phrase itself lasts, so the words would arrive too late to be of any use.",
+  "role": "warning line",
+  "does": "Says that this PC is too slow to recognise words in time. The loudness bar and the tempo still work.",
+  "budget": 60,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "listener"
+  ],
+  "notes": "One plain statement about the PC, never about the person. Full stop."
+ },
+ {
+  "key": "MEDIA_CAMERA_NONE",
+  "kind": "const",
+  "screen": "Main window, the thin bar along the bottom edge. At its left a dot and a few words about the projector; beside them, in the warning colour, one line that appears only while the background behind the words cannot be shown. The line is cut with an ellipsis when the window is narrow, so the first words carry the news.",
+  "moment": "The look uses a camera, and this computer has none plugged in.",
+  "role": "warning line",
+  "does": "Says that this computer has no camera to use, and that there is only black behind the words until one is plugged in. The words on the projector are not affected.",
+  "budget": 50,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [],
+  "notes": "Two short statements, the news first. Full stops."
+ },
+ {
+  "key": "media_camera_missing",
+  "kind": "sentence",
+  "screen": "Main window, the thin bar along the bottom edge. At its left a dot and a few words about the projector; beside them, in the warning colour, one line that appears only while the background behind the words cannot be shown. The line is cut with an ellipsis when the window is narrow, so the first words carry the news.",
+  "moment": "The look uses a camera by name, and that camera is not plugged in now.",
+  "role": "warning line",
+  "does": "Says that the camera of that name is not plugged in, and that there is only black behind the words until it is.",
+  "budget": 70,
+  "variables": [
+   {
+    "name": "name",
+    "example": "Front camera",
+    "meaning": "The camera's name as the computer lists it."
+   }
+  ],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [],
+  "notes": "The camera's name early. Full stops."
+ },
+ {
+  "key": "MEDIA_CAMERA_BUSY",
+  "kind": "const",
+  "screen": "Main window, the thin bar along the bottom edge. At its left a dot and a few words about the projector; beside them, in the warning colour, one line that appears only while the background behind the words cannot be shown. The line is cut with an ellipsis when the window is narrow, so the first words carry the news.",
+  "moment": "The camera is plugged in and still gives no picture, most often because another program has it open. The program keeps trying.",
+  "role": "warning line",
+  "does": "Says the camera refuses to begin, and that a different app on this computer is probably holding it.",
+  "budget": 64,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [],
+  "notes": "Two short statements. Full stops."
+ },
+ {
+  "key": "MEDIA_CAMERA_STOPPED",
+  "kind": "const",
+  "screen": "Main window, the thin bar along the bottom edge. At its left a dot and a few words about the projector; beside them, in the warning colour, one line that appears only while the background behind the words cannot be shown. The line is cut with an ellipsis when the window is narrow, so the first words carry the news.",
+  "moment": "The camera was giving its picture and stopped. The program keeps trying.",
+  "role": "warning line",
+  "does": "Says the camera's picture no longer arrives, and that there is only black behind the words meanwhile.",
+  "budget": 60,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [],
+  "notes": "Two short statements. Full stops."
+ },
+ {
+  "key": "MEDIA_CAMERA_FAR",
+  "kind": "const",
+  "screen": "Main window, the thin bar along the bottom edge. At its left a dot and a few words about the projector; beside them, in the warning colour, one line that appears only while the background behind the words cannot be shown. The line is cut with an ellipsis when the window is narrow, so the first words carry the news.",
+  "moment": "The look uses a camera reached over the network by its address, and nothing comes from that address. The program keeps trying.",
+  "role": "warning line",
+  "does": "Says the camera on the network does not answer and that the program is trying again.",
+  "budget": 56,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [],
+  "notes": "Two short statements. Uses the same words for that camera as the row in Design. Full stops."
+ },
+ {
+  "key": "media_video_missing",
+  "kind": "sentence",
+  "screen": "Main window, the thin bar along the bottom edge. At its left a dot and a few words about the projector; beside them, in the warning colour, one line that appears only while the background behind the words cannot be shown. The line is cut with an ellipsis when the window is narrow, so the first words carry the news.",
+  "moment": "The look's background is a video file, and the file is no longer where it was.",
+  "role": "warning line",
+  "does": "Says the video file is missing and names it.",
+  "budget": 60,
+  "variables": [
+   {
+    "name": "file",
+    "example": "water.mp4",
+    "meaning": "The file's name with its ending."
+   }
+  ],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [],
+  "notes": "The news first, then the file's name. No full stop after the name."
+ },
+ {
+  "key": "media_video_failed",
+  "kind": "sentence",
+  "screen": "Main window, the thin bar along the bottom edge. At its left a dot and a few words about the projector; beside them, in the warning colour, one line that appears only while the background behind the words cannot be shown. The line is cut with an ellipsis when the window is narrow, so the first words carry the news.",
+  "moment": "The look's background is a video file that is there and cannot be played, or stopped playing.",
+  "role": "warning line",
+  "does": "Says the video file cannot be played, and names it.",
+  "budget": 60,
+  "variables": [
+   {
+    "name": "file",
+    "example": "water.mp4",
+    "meaning": "The file's name with its ending."
+   }
+  ],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [],
+  "notes": "The news first, then the file's name. No full stop after the name."
+ },
+ {
+  "key": "MEDIA_VIDEO_SOFTWARE",
+  "kind": "const",
+  "screen": "Main window, the thin bar along the bottom edge. At its left a dot and a few words about the projector; beside them, in the warning colour, one line that appears only while the background behind the words cannot be shown. The line is cut with an ellipsis when the window is narrow, so the first words carry the news.",
+  "moment": "The video is playing, by the slower way: the part of the computer that normally plays video could not play this one.",
+  "role": "warning line",
+  "does": "Says the graphics card could not play this video, so the processor plays it. The video still shows; on an old computer it may stutter.",
+  "budget": 70,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [],
+  "notes": "Two short statements, calm. Full stops."
+ },
+ {
+  "key": "MEDIA_VIDEO_NONE",
+  "kind": "const",
+  "screen": "Main window, the thin bar along the bottom edge. At its left a dot and a few words about the projector; beside them, in the warning colour, one line that appears only while the background behind the words cannot be shown. The line is cut with an ellipsis when the window is narrow, so the first words carry the news.",
+  "moment": "The look's background is a video or a camera, and the program on this computer was installed without the part that plays them. The words still show, on black.",
+  "role": "warning line",
+  "does": "Says that the Artosia installed here is a kind that has no way to show a moving background, whether a video file or a camera.",
+  "budget": 60,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [],
+  "notes": "One plain statement about the program, never about the person. Full stop."
  },
  {
   "key": "LISTEN_MODEL_DAMAGED",

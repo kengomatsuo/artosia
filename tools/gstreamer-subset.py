@@ -35,6 +35,15 @@ VIDEO = {
     "volume": "playbin3 builds a volume control even when muted",
     "audioconvert": "sound format conversion",
     "audioresample": "sound rate conversion",
+    # A camera on the network, a phone's camera app among them (srt itself is in STREAM).
+    "mpegtsdemux": "the MPEG-TS that an SRT camera sends",
+    "rtsp": "rtspsrc, for a camera at an rtsp:// address",
+    "rtpmanager": "the jitter buffer an RTSP camera needs",
+    "rtp": "unpacking H.264, H.265 and JPEG from RTP",
+    "udp": "RTSP's packets",
+    "tcp": "RTSP over TCP, and a plain tcp:// camera",
+    "soup": "a camera at an http:// address",
+    "multipart": "the JPEG stream a phone's camera app serves over HTTP",
 }
 STREAM = {
     "wasapi2": "the room's sound from a microphone or the PC",
