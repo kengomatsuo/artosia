@@ -40,7 +40,11 @@ pub(crate) fn title_bar(s: &App, k: &Kit, layer: &mut Vec<El>, tools: El) -> El 
         .gap(space::S1)
         .center_y()
         .radius(k.radius.md)
-        .fill(if open { k.c.layer_03 } else { rune::Color::TRANSPARENT })
+        // Drawn as the box of a list that drops down, with its edge and its arrow, as the
+        // worship list's box is in EasiSlides: as bare words it read as a title, and the owner
+        // could not find where the other plans were.
+        .fill(if open { k.c.layer_03 } else { k.c.layer_02 })
+        .border(1.0, k.c.border_base)
         .hover(k.c.hover)
         .press(k.c.pressed)
         .cursor(Cursor::Pointer)
