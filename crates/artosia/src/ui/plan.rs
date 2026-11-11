@@ -10,7 +10,9 @@ use crate::palette::Scope;
 use crate::state::{App, PlanDrag};
 use crate::strings as t;
 use crate::theme::{self, icons, size, space, type_};
-use crate::ui::widgets::{btn, state_pill};
+use crate::ui::widgets::{btn, state_pill, tag_chip};
+use artosia_core::deck::tag_group;
+use artosia_slides::stage::group_color;
 
 pub(crate) fn entry_icon(entry: &PlanEntry) -> &'static rune::Icon {
     match entry {
@@ -58,6 +60,11 @@ pub(crate) fn item_row(s: &App, k: &Kit, item: &PlanItem, menu: El) -> El {
         // An entry that cannot be shown says so in words across the row, not by a cursor.
         return body.child(state_pill(t::PLAN_MISSING(), theme::warn(), rune::Color::BLACK)).child(menu);
     }
+    // A song marked to begin at one of its parts says which, in the chip a list draws for it.
+    if let Some(tag) = s.entry_start(&item.entry) {
+        let chip = tag_chip(&tag.short(), group_color(tag_group(tag))).help(t::starts_chip(&t::section_label(tag)));
+        body = body.label(format!("{}, {}", s.entry_title(&item.entry), t::starts_chip(&t::section_label(tag)))).child(chip);
+    }
     if live {
         body = body.child(state_pill(t::LIVE(), theme::live(), theme::on_live()));
     }
@@ -75,7 +82,7 @@ pub(crate) fn item_row(s: &App, k: &Kit, item: &PlanItem, menu: El) -> El {
         })
         .on_double_press(move |s: &mut App| {
             s.open_plan_item(id);
-            s.show(0);
+            s.show_start_of(id);
         })
 }
 
@@ -162,6 +169,35 @@ pub(crate) fn row_menu(s: &App, k: &Kit, item: &PlanItem, at: usize, layer: &mut
             s.shift_plan_item(id, 1);
             s.plan_menu = None;
         }));
+    }
+    // Where a song begins: its parts, with the one in force checked. Built only while the menu
+    // is open, since reading a song's parts costs a little.
+    if open && let PlanEntry::Song { song_id, .. } = &item.entry && let Some(place) = s.song_position(*song_id) {
+        let current = s.entry_start(&item.entry);
+        // What the search learned is offered here, never applied: one press, and the volunteer's.
+        let usual = s.start_suggestion(&item.entry);
+        menu = menu.separator().group_label(t::PLAN_STARTS_AT());
+        menu = menu.item(MenuItem::new(t::PLAN_START_BEGINNING()).checked(current.is_none()).on_select(move |s: &mut App| {
+            s.set_start(id, None);
+            s.plan_menu = None;
+        }));
+        let mut seen = Vec::new();
+        for section in s.songs[place].sections() {
+            if seen.contains(&section.tag) {
+                continue;
+            }
+            seen.push(section.tag);
+            let (tag, label) = (section.tag, t::section_label(section.tag));
+            let mut choice = MenuItem::new(label.clone()).checked(current == Some(tag));
+            if let Some((usual_tag, times, of)) = usual && usual_tag == tag {
+                choice = choice.description(t::starts_line(&label, times, of));
+            }
+            menu = menu.item(choice.on_select(move |s: &mut App| {
+                s.set_start(id, Some(tag));
+                s.plan_menu = None;
+            }));
+        }
+        menu = menu.separator();
     }
     menu.item(MenuItem::new(t::PLAN_REMOVE()).icon(&icons::TRASH).danger(true).on_select(move |s: &mut App| s.remove_plan_item(id)))
         .build(k, layer)

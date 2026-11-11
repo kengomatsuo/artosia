@@ -3,11 +3,20 @@
 use serde::{Deserialize, Serialize};
 
 use crate::bible::Reference;
+use crate::deck::Deck;
+use crate::song::Tag;
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub enum PlanEntry {
-    /// `title` is kept so a deleted song still reads as itself in the plan.
-    Song { song_id: i64, title: String },
+    /// `title` is kept so a deleted song still reads as itself in the plan. `start` is the
+    /// section the song begins at, as a medley goes straight into the next song's chorus. It is
+    /// a section's tag and not a slide number, so it survives the song being edited.
+    Song {
+        song_id: i64,
+        title: String,
+        #[serde(default, skip_serializing_if = "Option::is_none")]
+        start: Option<Tag>,
+    },
     Passage { reference: Reference, bible: String, second: Option<String>, title: String },
     /// Every announcement, looping.
     Announcements,
@@ -41,6 +50,25 @@ impl PlanEntry {
     pub fn is_heading(&self) -> bool {
         matches!(self, PlanEntry::Heading { .. })
     }
+
+    /// A song entry with no start set: it begins at its first slide.
+    pub fn song(song_id: i64, title: impl Into<String>) -> PlanEntry {
+        PlanEntry::Song { song_id, title: title.into(), start: None }
+    }
+
+    /// The section a song entry was set to begin at; None for the beginning and for any other entry.
+    pub fn start(&self) -> Option<Tag> {
+        match self {
+            PlanEntry::Song { start, .. } => *start,
+            _ => None,
+        }
+    }
+}
+
+/// The slide of a deck that a plan item begins at: the first slide of the section `start` names,
+/// and the first slide when there is no start or the song no longer has that section.
+pub fn start_slide(deck: &Deck, start: Option<Tag>) -> usize {
+    start.and_then(|tag| deck.slides.iter().position(|slide| slide.tag == Some(tag))).unwrap_or(0)
 }
 
 impl Plan {
@@ -105,7 +133,44 @@ mod tests {
     use super::*;
 
     fn song(id: i64) -> PlanEntry {
-        PlanEntry::Song { song_id: id, title: format!("Song {id}") }
+        PlanEntry::song(id, format!("Song {id}"))
+    }
+
+    fn practice_song(lyrics: &str) -> crate::song::Song {
+        crate::song::Song { id: 1, title: "Practice".into(), lyrics: lyrics.into(), ..crate::song::Song::default() }
+    }
+
+    const CHORUS: Tag = Tag::new(crate::song::SectionKind::Chorus, 1);
+
+    #[test]
+    fn a_plan_saved_before_starts_still_loads_and_begins_at_the_top() {
+        let old = r#"{"id":3,"name":"Sunday","items":[{"id":1,"entry":{"Song":{"song_id":7,"title":"Old"}}}],"next_id":2}"#;
+        let plan: Plan = serde_json::from_str(old).expect("an old plan loads");
+        assert_eq!(plan.items[0].entry.start(), None);
+        // A plan with no starts is written as it always was.
+        assert!(!serde_json::to_string(&plan).unwrap_or_default().contains("start"));
+    }
+
+    #[test]
+    fn a_start_is_saved_and_follows_its_section_through_an_edit() {
+        let mut plan = Plan::named("Sunday");
+        plan.push(PlanEntry::Song { song_id: 1, title: "Practice".into(), start: Some(CHORUS) });
+        let json = serde_json::to_string(&plan).unwrap_or_default();
+        let loaded: Plan = serde_json::from_str(&json).expect("loads");
+        let start = loaded.items[0].entry.start();
+        assert_eq!(start, Some(CHORUS));
+        let before = practice_song("[1]\nFirst line\n\n[chorus]\nChorus line");
+        let deck = crate::deck::song_deck(&before, 4, "");
+        assert_eq!(start_slide(&deck, start), 1);
+        // A verse is written in front of it: the chorus moved, the start moved with it.
+        let after = practice_song("[1]\nFirst line\n\n[2]\nSecond line\n\n[chorus]\nChorus line");
+        let deck = crate::deck::song_deck(&after, 4, "");
+        assert_eq!(start_slide(&deck, start), 2);
+        // The chorus is cut: the song begins at the top again.
+        let without = practice_song("[1]\nFirst line\n\n[2]\nSecond line");
+        let deck = crate::deck::song_deck(&without, 4, "");
+        assert_eq!(start_slide(&deck, start), 0);
+        assert_eq!(start_slide(&deck, None), 0);
     }
 
     #[test]

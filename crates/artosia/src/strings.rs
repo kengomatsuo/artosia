@@ -126,6 +126,7 @@ text!(KEY_DOWN, "Down", "Panah bawah");
 text!(KEY_EDIT, "Ctrl E", "Ctrl E");
 text!(KEY_SAVE, "Ctrl S", "Ctrl S");
 text!(KEY_KEYS, "?", "?");
+text!(KEY_START_HERE, "Ctrl M", "Ctrl M");
 
 pub fn ctrl_digit(digit: usize) -> String {
     if let Some(text) = say("ctrl_digit", None, None, &[("digit", text_arg(digit))]) {
@@ -996,16 +997,18 @@ pub fn KEYS_FINDING_ROWS() -> &'static [(&'static str, &'static str)] {
     }
     if indonesian() { &KEYS_FINDING_ROWS_ID } else { &KEYS_FINDING_ROWS_EN }
 }
-const KEYS_PLAN_ROWS_EN: [(&str, &str); 4] = [
+const KEYS_PLAN_ROWS_EN: [(&str, &str); 5] = [
     ("Tab", "Bring the next plan item into Preview"),
     ("Shift Tab", "Bring the item before it into Preview"),
     ("Alt Up, Down", "Move the Preview item earlier or later"),
+    ("Ctrl M", "Start the Preview song at the ring"),
     ("Delete", "Take the Preview item out of the plan"),
 ];
-const KEYS_PLAN_ROWS_ID: [(&str, &str); 4] = [
+const KEYS_PLAN_ROWS_ID: [(&str, &str); 5] = [
     ("Tab", "Bawa item acara berikutnya ke pratinjau"),
     ("Shift Tab", "Bawa item acara sebelumnya ke pratinjau"),
     ("Alt panah atas, bawah", "Geser item pratinjau naik atau turun"),
+    ("Ctrl M", "Start the Preview song at the ring"),
     ("Delete", "Keluarkan item pratinjau, bisa diurungkan"),
 ];
 pub fn KEYS_PLAN_ROWS() -> &'static [(&'static str, &'static str)] {
@@ -1183,7 +1186,15 @@ pub fn starts_line(section: &str, times: u32, of: u32) -> String {
     format!("Usually started at {section}, {times} of {of} times")
 }
 
-text!(SCREEN_OWN, "Artosia is on this screen", "Layar untuk Artosia sendiri");
+// Where a song of the plan begins. Indonesian is written later from the brief; English stands in both.
+text!(BTN_START_HERE, "Start here", "Start here");
+text!(BTN_STARTS_HERE, "Starts here", "Starts here");
+text!(BTN_STARTS_BEGINNING, "At the beginning", "At the beginning");
+text!(PLAN_STARTS_AT, "Starts at", "Starts at");
+text!(PLAN_START_BEGINNING, "The beginning", "The beginning");
+text!(MARK_START, "Start", "Start");
+
+text!(SCREEN_OWN,"Artosia is on this screen", "Layar untuk Artosia sendiri");
 
 // Bibles: a file the church holds, and eBible's free list.
 text!(BIBLES_TITLE, "Bibles", "Tambah Alkitab");

@@ -14,6 +14,7 @@ use rune::{Color, Cursor, Cx, El, ScrollSpec, Tx, col, el, icon, row, spacer, te
 use rune_kit::{Kit, ScrollBar};
 
 use crate::palette::Scope;
+use crate::starts::StartState;
 use crate::state::{App, section_starts};
 use crate::strings as t;
 use crate::theme::{self, icons, space, type_};
@@ -65,7 +66,7 @@ fn title_bar(k: &Kit, name: &str, detail: String, trailing: Vec<El>) -> El {
 }
 
 /// One row of a list: the number key that jumps to it, its section, and its words.
-fn list_row(k: &Kit, key: &str, index: usize, number: Option<usize>, slide: &Slide, mark: Mark, go_live: bool) -> El {
+fn list_row(k: &Kit, key: &str, index: usize, number: Option<usize>, slide: &Slide, mark: Mark, go_live: bool, starts: bool) -> El {
     let live = matches!(mark, Mark::Live | Mark::Hidden);
     let on_fill = if mark == Mark::Hidden { Color::BLACK } else { theme::on_live() };
     let ink = if live { on_fill } else { k.c.text_base };
@@ -110,7 +111,7 @@ fn list_row(k: &Kit, key: &str, index: usize, number: Option<usize>, slide: &Sli
             Mark::Rest => Color::TRANSPARENT,
         })
         .child(text(shown).font(type_::SMALL_STRONG).color(faint).w(20.0))
-        .child(el().w(46.0).child(chip))
+        .child(col().w(46.0).gap(2.0).child(chip).child(if starts { text(t::MARK_START()).font(type_::TINY).color(faint) } else { el() }))
         .child(words);
     if mark == Mark::Cursor {
         body = body.border(2.0, k.c.text_base);
@@ -119,7 +120,8 @@ fn list_row(k: &Kit, key: &str, index: usize, number: Option<usize>, slide: &Sli
         if go_live { s.go_to(index) } else { s.show(index) }
         tx.blur();
     });
-    col().key(format!("{key}-{index}")).role("button").label(format!("{} {}", slide.label, index + 1)).w_full().child(line).child(hline())
+    let name = if starts { format!("{} {}, {}", slide.label, index + 1, t::BTN_STARTS_HERE()) } else { format!("{} {}", slide.label, index + 1) };
+    col().key(format!("{key}-{index}")).role("button").label(name).w_full().child(line).child(hline())
 }
 
 struct Pane<'a> {
@@ -135,6 +137,8 @@ struct Pane<'a> {
     width: Option<f32>,
     cursor: Option<usize>,
     go_live: bool,
+    /// The slide the plan item was marked to begin at, marked in the list.
+    start: Option<usize>,
     /// Shown in place of the list when there is no deck.
     empty: El,
     footer: El,
@@ -155,7 +159,7 @@ fn pane(k: &Kit, p: Pane<'_>) -> El {
                     Mark::Rest
                 };
                 let number = starts.iter().position(|start| *start == index);
-                list = list.child(list_row(k, p.key, index, number, slide, mark, p.go_live));
+                list = list.child(list_row(k, p.key, index, number, slide, mark, p.go_live, p.start == Some(index)));
             }
         }
         _ => list = list.child(p.empty),
@@ -195,6 +199,18 @@ fn foot(picture: El, controls: El) -> El {
 fn open_tools(s: &App, k: &Kit) -> Vec<El> {
     let Some(open) = s.open.as_ref() else { return Vec::new() };
     let mut tools = vec![text(t::slides(open.deck.slides.len())).font(type_::SMALL).color(k.c.text_muted)];
+    // A song of the plan can begin at a part other than its first, as a medley goes into a chorus.
+    if let Some((_, _, state)) = s.start_control() {
+        let (label, lit) = match state {
+            StartState::Offer => (t::BTN_START_HERE(), false),
+            StartState::Marked => (t::BTN_STARTS_HERE(), true),
+            StartState::Beginning => (t::BTN_STARTS_BEGINNING(), false),
+        };
+        tools.push(btn(label).icon(&icons::PLAY).small().toggle(lit).hint(t::KEY_START_HERE()).disabled(state == StartState::Beginning).build(k, |s, tx| {
+            s.toggle_start_here();
+            tx.blur();
+        }));
+    }
     if !s.open_in_plan() {
         tools.push(btn(t::BTN_ADD_TO_PLAN()).icon(&icons::PLUS).small().build(k, |s, tx| {
             s.add_open_to_plan();
@@ -250,6 +266,7 @@ fn preview_pane(s: &App, k: &Kit) -> El {
             width: None,
             cursor: open.map(|o| o.cursor).filter(|cursor| Some(*cursor) != live_index),
             go_live: false,
+            start: s.marked_start(),
             // With nothing open the pane says what to do first.
             empty: if open.is_some() { empty_words(k, t::DECK_EMPTY()) } else { crate::ui::slides::start(s, k) },
             footer: foot(picture(s, k, &state, PICTURE), side),
@@ -349,6 +366,7 @@ fn live_pane(s: &App, k: &Kit, narrow: bool) -> El {
             // The slide picked with Shift held, until Shift is let go.
             cursor: s.live_pick.filter(|pick| Some(*pick) != live.map(|l| l.index)),
             go_live: true,
+            start: None,
             empty: empty_words(k, t::LIVE_NOTHING()),
             footer,
             ring,

@@ -766,7 +766,7 @@ impl App {
                 self.open_plan_item(id);
                 self.close_palette();
                 if how == Pick::ShowNow {
-                    self.show(0);
+                    self.show_start_of(id);
                 }
             }
             Hit::Announcement { index, .. } => {

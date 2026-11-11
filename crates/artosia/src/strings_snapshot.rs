@@ -139,6 +139,13 @@ pub fn dump() -> String {
     line(out, "PLAN_MOVE_DOWN", PLAN_MOVE_DOWN());
     line(out, "PLAN_REMOVE", PLAN_REMOVE());
     line(out, "PLAN_MISSING", PLAN_MISSING());
+    line(out, "KEY_START_HERE", KEY_START_HERE());
+    line(out, "BTN_START_HERE", BTN_START_HERE());
+    line(out, "BTN_STARTS_HERE", BTN_STARTS_HERE());
+    line(out, "BTN_STARTS_BEGINNING", BTN_STARTS_BEGINNING());
+    line(out, "PLAN_STARTS_AT", PLAN_STARTS_AT());
+    line(out, "PLAN_START_BEGINNING", PLAN_START_BEGINNING());
+    line(out, "MARK_START", MARK_START());
     line(out, "PLAN_HEADING_NEW", PLAN_HEADING_NEW());
     line(out, "PLAN_HEADING_WORSHIP", PLAN_HEADING_WORSHIP());
     line(out, "PLAN_HEADING_WORD", PLAN_HEADING_WORD());

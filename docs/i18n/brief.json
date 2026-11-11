@@ -7422,5 +7422,119 @@
       "projector"
     ],
     "notes": "A fragment without a full stop. Artosia is the program's name and stays as written."
+  },
+  {
+    "key": "KEY_START_HERE",
+    "kind": "const",
+    "screen": "Main window: the strip over the Preview list, where a button sets the song's starting part.",
+    "moment": "Key cap inside the button that makes the highlighted part the place the song begins.",
+    "role": "key name",
+    "does": "The Ctrl-plus-letter shortcut that sets the place a song of the plan begins.",
+    "budget": 8,
+    "variables": [],
+    "register": "None; this is a label, not speech. Follow what is printed on the keyboard.",
+    "vocabulary": [
+      "song"
+    ],
+    "notes": "A key name printed on a physical keyboard. Indonesian keyboards print the same Latin key names, so keep them as printed; the app shows them inside a small key cap. Keep as printed."
+  },
+  {
+    "key": "BTN_START_HERE",
+    "kind": "const",
+    "screen": "Main window, the Preview list of a song that is in today's plan. Each row of the list is one slide of the song, with a small pill naming its part (verse, chorus). One row has a ring around it: the slide that will go on the projector next. In a medley the band goes from one song straight into the chorus of the next, so the volunteer marks, while preparing, the part each song begins at.",
+    "moment": "A small button in the strip over the list, next to a key cap. Shown while the ring sits on a part the song does not yet begin at.",
+    "role": "button",
+    "does": "Makes the part under the ring the place this song begins whenever it comes up, so it starts there by itself.",
+    "budget": 14,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "song",
+      "section",
+      "chorus",
+      "plan"
+    ],
+    "notes": "An instruction to press, in the same spot as BTN_STARTS_HERE and BTN_STARTS_BEGINNING, which say how things stand."
+  },
+  {
+    "key": "BTN_STARTS_HERE",
+    "kind": "const",
+    "screen": "Main window, the Preview list of a song that is in today's plan. Each row of the list is one slide of the song, with a small pill naming its part. One row has a ring around it. In a medley the band goes from one song straight into the chorus of the next, so the volunteer marks the part each song begins at.",
+    "moment": "The same small button as the one that sets the starting part, now lit because the ring sits on the part the song already begins at. Pressing it again takes the mark away.",
+    "role": "button, switched on",
+    "does": "Says the song begins at the part under the ring; pressing it clears that.",
+    "budget": 14,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "song",
+      "section",
+      "plan"
+    ],
+    "notes": "A statement of how things stand, where BTN_START_HERE is an instruction. The two sit in the same place and the difference should be easy to see."
+  },
+  {
+    "key": "BTN_STARTS_BEGINNING",
+    "kind": "const",
+    "screen": "Main window, the Preview list of a song that is in today's plan. Each row of the list is one slide of the song, with a small pill naming its part. One row has a ring around it. In a medley the band goes from one song straight into the chorus of the next, so the volunteer marks the part each song begins at.",
+    "moment": "The same small button as the one that sets the starting part, greyed out and not pressable, shown while the ring is on the song's first part and no other starting part was marked.",
+    "role": "button, unavailable",
+    "does": "Says the song begins at its beginning, so there is nothing to set here.",
+    "budget": 20,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "song",
+      "plan"
+    ],
+    "notes": "Fits in the place of BTN_START_HERE, so it must not be much longer."
+  },
+  {
+    "key": "PLAN_STARTS_AT",
+    "kind": "const",
+    "screen": "Main window, left column (the plan), the menu of one song row. Under a small heading it lists the song's parts (verse 1, chorus, bridge) and the choice 'the beginning', one of which has a check mark.",
+    "moment": "The small heading over that list of choices.",
+    "role": "menu heading",
+    "does": "Introduces the choice of the part this song begins at when it comes up in the service; the choices follow it.",
+    "budget": 16,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "song",
+      "section",
+      "plan"
+    ],
+    "notes": "Reads as the start of a sentence finished by the choice under it (Starts at / Chorus). A heading without a full stop."
+  },
+  {
+    "key": "PLAN_START_BEGINNING",
+    "kind": "const",
+    "screen": "Main window, left column (the plan), the menu of one song row. Under the heading 'Starts at' it lists the song's parts (verse 1, chorus, bridge) and one more choice, with a check mark on the one now in force.",
+    "moment": "The first choice in that list, above the song's parts.",
+    "role": "menu choice",
+    "does": "Makes the song begin at its first slide, taking away any other starting part that was chosen.",
+    "budget": 20,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "song",
+      "plan"
+    ],
+    "notes": "Sits under the heading PLAN_STARTS_AT, so the two read together."
+  },
+  {
+    "key": "MARK_START",
+    "kind": "const",
+    "screen": "Main window, the Preview list. Each row of the list is one slide of the song: a number, a small pill naming its part, then its words. The row is about 46 points wide in the pill column.",
+    "moment": "A tiny grey word under the part pill of the one slide the song has been marked to begin at.",
+    "role": "marker in a list row",
+    "does": "Marks this slide as where the song begins when it comes up, so the ring's place on it is explained.",
+    "budget": 7,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "song"
+    ],
+    "notes": "One short word that fits in a very narrow column; no full stop."
   }
 ]

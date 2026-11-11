@@ -53,7 +53,7 @@ impl App {
     pub fn add_song_to_plan(&mut self, at: usize) {
         let Some(song) = self.songs.get(at) else { return };
         let (id, title) = (song.id, song.title.clone());
-        self.queue_entry(PlanEntry::Song { song_id: id, title: title.clone() });
+        self.queue_entry(PlanEntry::song(id, title.clone()));
         self.requeue();
         self.say(t::added_to_plan(&title), None);
     }
@@ -70,7 +70,7 @@ impl App {
     pub fn add_open_to_plan(&mut self) {
         let Some(open) = self.open.as_ref() else { return };
         let entry = match &open.deck.source {
-            DeckSource::Song(id) => PlanEntry::Song { song_id: *id, title: open.deck.title.clone() },
+            DeckSource::Song(id) => PlanEntry::song(*id, open.deck.title.clone()),
             DeckSource::Passage { reference, bible, second } => {
                 PlanEntry::Passage { reference: *reference, bible: bible.clone(), second: second.clone(), title: open.deck.title.clone() }
             }
@@ -371,7 +371,7 @@ impl App {
                 self.editor = None;
                 self.reload_songs();
                 for item in &mut self.plan.items {
-                    if let PlanEntry::Song { song_id, title } = &mut item.entry
+                    if let PlanEntry::Song { song_id, title, .. } = &mut item.entry
                         && *song_id == id && *title != song.title {
                             *title = song.title.clone();
                             self.plan_dirty = true;
@@ -1367,9 +1367,7 @@ impl App {
             RemoteCommand::ToggleLogo => self.toggle_logo(),
             RemoteCommand::ShowPlanItem(id) => {
                 self.open_plan_item(id);
-                if self.open.as_ref().is_some_and(|open| open.item == Some(id)) {
-                    self.show(0);
-                }
+                self.show_start_of(id);
             }
             RemoteCommand::Search(query) => self.remote_search(&query),
             RemoteCommand::ShowHit(id) => {
