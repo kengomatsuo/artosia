@@ -44,6 +44,9 @@ impl OpenDeck {
 }
 
 /// A plan row on its way to a new place under the pointer.
+/// A tempo report waiting to be taken, with when it arrived (see `App::listen_tempo_slot`).
+pub type TempoSlot = Arc<Mutex<Option<(Option<artosia_listen::Tempo>, std::time::Instant)>>>;
+
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub struct PlanDrag {
     pub id: u64,
@@ -103,6 +106,8 @@ pub struct Settings {
     pub listen_device: String,
     /// The language it listens for: "id" or "en".
     pub listen_language: String,
+    /// The red Live marker pulses gently on the beat the listener hears. Off by default.
+    pub beat_blink: bool,
     /// The streaming service's address, and the key it gave this church. Kept on this computer only.
     pub stream_address: String,
     pub stream_key: String,
@@ -141,6 +146,7 @@ impl Default for Settings {
             legacy_indonesian: false,
             listen_device: String::new(),
             listen_language: "id".to_string(),
+            beat_blink: false,
             stream_address: String::new(),
             stream_key: String::new(),
             stream_record: false,
@@ -345,8 +351,17 @@ pub struct App {
     pub listener: Option<artosia_listen::Listener>,
     /// How loud the room is, 0 to 1, as the bits of an f32 the listening thread writes.
     pub listen_level: Arc<std::sync::atomic::AtomicU32>,
-    /// The level meter is on screen, so the listening thread should wake the window for it.
+    /// The level meter or the beat is on screen, so the listening thread should wake the window.
     pub meter_shown: Arc<std::sync::atomic::AtomicBool>,
+    /// The newest tempo report the listening thread has not handed over yet, with its arrival time.
+    /// The outer `Option` is "nothing new"; the inner one is "no steady pulse".
+    pub listen_tempo_slot: TempoSlot,
+    /// The beat as of the last report, with the app clock at which it was reported.
+    pub tempo: Option<(artosia_listen::Tempo, f64)>,
+    /// A headless scene shows the Listen dialog as it looks while listening.
+    pub demo_listening: bool,
+    /// The system asks for reduced motion; the view writes it, since only a view can read it.
+    pub motion_reduced: std::sync::atomic::AtomicBool,
     pub listen_problem: Option<String>,
     /// The last few things heard, newest last.
     pub heard: Vec<String>,
@@ -513,6 +528,10 @@ impl App {
             listener: None,
             listen_level: Arc::new(std::sync::atomic::AtomicU32::new(0)),
             meter_shown: Arc::new(std::sync::atomic::AtomicBool::new(false)),
+            listen_tempo_slot: Arc::new(Mutex::new(None)),
+            tempo: None,
+            demo_listening: false,
+            motion_reduced: std::sync::atomic::AtomicBool::new(false),
             listen_problem: None,
             heard: Vec::new(),
             heard_hits: Vec::new(),

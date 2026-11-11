@@ -232,6 +232,7 @@ pub fn view(s: &App, cx: &mut Cx<App>) -> El {
         crate::state::Appearance::Dark => true,
     });
     t::set_language(&s.settings.language);
+    s.motion_reduced.store(cx.system_reduced_motion(), std::sync::atomic::Ordering::Relaxed);
     let k = theme::kit();
     cx.caption_color(k.c.text_base);
     let insets = cx.chrome_insets();

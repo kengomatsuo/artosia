@@ -15,6 +15,11 @@ use crate::link::OutputOptions;
 use crate::state::{App, Arrived, Editor, HeardHit, Notices, OpenDeck, Sheet, Suggestion, Undo, entry_matches, section_starts, unix_now};
 use crate::strings as t;
 
+/// Seconds between frames while something pulses on the beat: gentle enough for a slow PC.
+const BEAT_FRAME: f64 = 0.05;
+/// A tempo report older than this is forgotten: the listener has stopped or the pulse is gone.
+const TEMPO_STALE: f64 = 2.5;
+
 /// A QR code as a picture, eight pixels to a module, black on white.
 fn qr_picture(text: &str) -> Option<rune::Pixels> {
     let modules = artosia_remote::qr_modules(text)?;
@@ -934,6 +939,10 @@ impl App {
         }
         self.listen_problem = None;
         self.listen_level.store(0, std::sync::atomic::Ordering::Relaxed);
+        self.tempo = None;
+        if let Ok(mut slot) = self.listen_tempo_slot.lock() {
+            *slot = None;
+        }
         if !on {
             return;
         }
@@ -942,11 +951,19 @@ impl App {
         let device = Some(self.settings.listen_device.clone()).filter(|name| !name.is_empty());
         let (inbox, waker) = (self.inbox.clone(), self.waker.clone());
         let (level, shown) = (self.listen_level.clone(), self.meter_shown.clone());
+        let tempo_slot = self.listen_tempo_slot.clone();
         let started = artosia_listen::Listener::start(device.as_deref(), &model, &self.settings.listen_language, move |heard| {
             let wake = match heard {
                 artosia_listen::Heard::Level(now) => {
                     level.store(now.clamp(0.0, 1.0).to_bits(), std::sync::atomic::Ordering::Relaxed);
                     // The meter only needs drawing while someone can see it.
+                    shown.load(std::sync::atomic::Ordering::Relaxed)
+                }
+                artosia_listen::Heard::Tempo(tempo) => {
+                    // Only the newest report matters, so it is a slot and not a queue.
+                    if let Ok(mut slot) = tempo_slot.lock() {
+                        *slot = Some((tempo, std::time::Instant::now()));
+                    }
                     shown.load(std::sync::atomic::Ordering::Relaxed)
                 }
                 other => {
@@ -963,6 +980,44 @@ impl App {
         match started {
             Ok(listener) => self.listener = Some(listener),
             Err(error) => self.listen_problem = Some(error.to_string()),
+        }
+    }
+
+    /// Takes the newest tempo report from the listening thread. True when it changed what shows.
+    fn take_tempo(&mut self, clock: f64) -> bool {
+        let fresh = self.listen_tempo_slot.lock().ok().and_then(|mut slot| slot.take());
+        let Some((tempo, arrived)) = fresh else {
+            return false;
+        };
+        let before = self.tempo.map(|(tempo, _)| tempo.bpm.round() as i32);
+        self.tempo = tempo.map(|tempo| (tempo, clock - arrived.elapsed().as_secs_f64()));
+        before != self.tempo.map(|(tempo, _)| tempo.bpm.round() as i32)
+    }
+
+    /// The beat as it is `now` (the app clock), or none when there is no recent steady pulse.
+    pub fn beat_phase(&self, now: f64) -> Option<f32> {
+        let (tempo, at) = self.tempo?;
+        let after = now - at;
+        (after < TEMPO_STALE).then(|| tempo.phase_after(after as f32))
+    }
+
+    /// Something is pulsing on the beat and the window should redraw often.
+    fn beat_moving(&self) -> bool {
+        let shown = self.sheet == Sheet::Listen || self.settings.beat_blink;
+        shown && !self.motion_reduced.load(std::sync::atomic::Ordering::Relaxed) && self.beat_phase(self.clock).is_some()
+    }
+
+    /// How much of its full strength the red Live marker is drawn with at app clock `now`: 1.0 on
+    /// the beat, down to 0.8 between beats, so it breathes and never flashes. 1.0 when the switch
+    /// is off, the system asks for reduced motion, or the beat is not known.
+    #[allow(dead_code, reason = "ui/shell.rs applies it to the Live marker once its rewrite lands")]
+    pub fn beat_glow(&self, now: f64) -> f32 {
+        if !self.settings.beat_blink || self.motion_reduced.load(std::sync::atomic::Ordering::Relaxed) {
+            return 1.0;
+        }
+        match self.beat_phase(now) {
+            Some(phase) => 0.8 + 0.2 * beat_pulse(phase),
+            None => 1.0,
         }
     }
 
@@ -1297,6 +1352,13 @@ impl App {
             wake = until.min(wake);
             changed |= was != self.live.as_ref().map(|live| live.index);
         }
+        self.meter_shown.store(self.listener.is_some() && (self.sheet == Sheet::Listen || self.settings.beat_blink), std::sync::atomic::Ordering::Relaxed);
+        changed |= self.take_tempo(clock);
+        if self.beat_moving() {
+            // The dot and the Live marker pulse, which needs a frame every so often.
+            changed = true;
+            wake = wake.min(BEAT_FRAME);
+        }
         if let Some(at) = self.editor.as_ref().and_then(|editor| editor.ask_at) {
             if clock >= at { self.ask_web() } else { wake = (at - clock).max(0.05).min(wake) }
         }
@@ -1359,7 +1421,6 @@ impl App {
             self.toast = None;
             changed = true;
         }
-        self.meter_shown.store(self.sheet == Sheet::Listen && self.listener.is_some(), std::sync::atomic::Ordering::Relaxed);
         if self.stream.as_mut().is_some_and(|stream| stream.finished()) {
             // The helper has gone: by Stop, or by itself, in which case its last words stay up.
             let last = self.stream.take().and_then(|stream| stream.status().problem);
@@ -1498,6 +1559,12 @@ impl App {
             self.slide_pictures.entry(path.clone()).or_insert_with(image);
         }
     }
+}
+
+/// 1 on the beat, 0 half a beat later, smooth all the way round.
+pub fn beat_pulse(phase: f32) -> f32 {
+    let wave = 0.5 + 0.5 * (std::f32::consts::TAU * phase).cos();
+    wave.powf(1.5)
 }
 
 #[cfg(test)]

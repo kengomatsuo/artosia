@@ -103,6 +103,10 @@ pub fn dump() -> String {
     line(out, "LISTEN_ENGLISH", LISTEN_ENGLISH());
     line(out, "LISTEN_LEVEL", LISTEN_LEVEL());
     line(out, "LISTEN_HEARD", LISTEN_HEARD());
+    line(out, "LISTEN_TEMPO", LISTEN_TEMPO());
+    line(out, "LISTEN_BPM", LISTEN_BPM());
+    line(out, "LISTEN_BEAT_BLINK", LISTEN_BEAT_BLINK());
+    line(out, "LISTEN_BEAT_BLINK_HINT", LISTEN_BEAT_BLINK_HINT());
     line(out, "CMD_UPDATE", CMD_UPDATE());
     line(out, "CMD_UPDATE_DETAIL", CMD_UPDATE_DETAIL());
     line(out, "CMD_KEYS", CMD_KEYS());

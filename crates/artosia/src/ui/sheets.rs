@@ -591,8 +591,27 @@ fn stream(s: &App, k: &Kit, layer: &mut Vec<El>) {
     Dialog::new("stream", t::CMD_STREAM()).open(true).width(560.0).fit().on_close(close).child(body).build(k, layer);
 }
 
+/// The beats per minute the room is playing, and a dot that lights on each beat. With no steady
+/// pulse the dot is grey and there is no number.
+fn tempo_row(s: &App, k: &Kit) -> El {
+    let phase = s.beat_phase(s.clock);
+    let still = s.motion_reduced.load(std::sync::atomic::Ordering::Relaxed);
+    let strength = match phase {
+        Some(phase) if !still => 0.3 + 0.7 * crate::actions::beat_pulse(phase),
+        _ => 1.0,
+    };
+    let dot = el().key("beat-dot").w(12.0).h(12.0).radius(6.0).fill(if phase.is_some() { theme::accent() } else { k.c.layer_03 }).layer_opacity(strength);
+    let mut line = row().key("tempo").w_full().h(28.0).gap(space::S3).center_y().child(dot);
+    if let (Some((tempo, _)), Some(_)) = (s.tempo, phase) {
+        line = line
+            .child(text((tempo.bpm.round() as i32).to_string()).font(type_::TITLE).color(k.c.text_base))
+            .child(text(t::LISTEN_BPM()).font(type_::SMALL).color(k.c.text_muted));
+    }
+    col().w_full().gap(space::S1).child(section_label(k, t::LISTEN_TEMPO())).child(line)
+}
+
 fn listen(s: &App, k: &Kit, layer: &mut Vec<El>) {
-    let on = s.listener.is_some();
+    let on = s.listener.is_some() || s.demo_listening;
     let level = f32::from_bits(s.listen_level.load(std::sync::atomic::Ordering::Relaxed));
     let mut body = col().w_full().px(space::S4).pb(space::S4).gap(space::S3).child(switch_row(k, "listen-switch", t::LISTEN_SWITCH(), t::LISTEN_HINT(), on, |s| {
         let on = s.listener.is_none();
@@ -655,6 +674,13 @@ fn listen(s: &App, k: &Kit, layer: &mut Vec<El>) {
             ),
         );
     }
+    if on {
+        body = body.child(tempo_row(s, k));
+    }
+    body = body.child(switch_row(k, "beat-switch", t::LISTEN_BEAT_BLINK(), t::LISTEN_BEAT_BLINK_HINT(), s.settings.beat_blink, |s| {
+        s.settings.beat_blink = !s.settings.beat_blink;
+        s.touch_settings();
+    }));
     if let Some(problem) = &s.listen_problem {
         body = body.child(text(problem.clone()).font(type_::BODY).color(theme::warn_ink()).wrap());
     }
