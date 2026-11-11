@@ -53,7 +53,7 @@
  {
   "key": "wrong_pin",
   "kind": "phone",
-  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Pairing screen, the first thing shown: a title, a PIN field, a Connect button and an error line. A line in red under the button.",
+  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Pairing screen, the first thing shown: a title, a PIN field, a Connect button and an error line. A line in the warning colour under the number box.",
   "moment": "The number typed is not the right one.",
   "role": "error",
   "does": "Says that the number is wrong.",
@@ -70,7 +70,7 @@
  {
   "key": "too_many",
   "kind": "phone",
-  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Pairing screen, the first thing shown: a title, a PIN field, a Connect button and an error line. A line in red under the button.",
+  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Pairing screen, the first thing shown: a title, a PIN field, a Connect button and an error line. A line in the warning colour under the number box.",
   "moment": "Many wrong numbers were typed in a row and the computer is locking out for a minute.",
   "role": "error",
   "does": "Says there have been too many attempts and to wait one minute.",
@@ -87,7 +87,7 @@
  {
   "key": "unreachable",
   "kind": "phone",
-  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Pairing screen, the first thing shown: a title, a PIN field, a Connect button and an error line. A line in red under the button.",
+  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Pairing screen, the first thing shown: a title, a PIN field, a Connect button and an error line. A line in the warning colour under the number box.",
   "moment": "The phone cannot find the computer, usually because it is on mobile data instead of the church's wireless network.",
   "role": "error",
   "does": "Says the computer cannot be reached.",
@@ -170,7 +170,7 @@
  {
   "key": "live",
   "kind": "phone",
-  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Live tab: title of what is open at the top, a slide counter, the words now live in a large card, the words coming next in a smaller card, buttons that jump to sections, three toggle buttons and Back and Next at the bottom. The small label above the words that are live when no part name applies, and a marker beside a plan row that is live. The same word also labels the red button, in the row of four state buttons, that is lit while the projector shows the slide and switches the projector off and on.",
+  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Live tab: title of what is open at the top, a slide counter, the words now live in a large card, the words coming next in a smaller card, buttons that jump to sections, a row of four tiles with an icon above each word, a numbered list of the slides, and Back and Next at the bottom. A small red pill at the top left of the live card while the room sees the words, and a red pill beside the plan row that is live. The same word also labels the red tile, the fourth of the row of four, that is lit while the projector shows the slide and switches the projector off and on.",
   "moment": "Something is on the projector.",
   "role": "label",
   "does": "Names what the room is seeing now.",
@@ -187,7 +187,7 @@
  {
   "key": "next",
   "kind": "phone",
-  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Live tab: title of what is open at the top, a slide counter, the words now live in a large card, the words coming next in a smaller card, buttons that jump to sections, three toggle buttons and Back and Next at the bottom. The small label above the next card when no part name applies.",
+  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Live tab: title of what is open at the top, a slide counter, the words now live in a large card, the words coming next in a smaller card, buttons that jump to sections, a row of four tiles with an icon above each word, a numbered list of the slides, and Back and Next at the bottom. The small label above the next card when no part name applies.",
   "moment": "A slide follows.",
   "role": "label",
   "does": "Names the slide that comes after this one.",
@@ -204,7 +204,7 @@
  {
   "key": "next_item",
   "kind": "phone",
-  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Live tab: title of what is open at the top, a slide counter, the words now live in a large card, the words coming next in a smaller card, buttons that jump to sections, three toggle buttons and Back and Next at the bottom. The small label above the next card when the live item is on its last slide.",
+  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Live tab: title of what is open at the top, a slide counter, the words now live in a large card, the words coming next in a smaller card, buttons that jump to sections, a row of four tiles with an icon above each word, a numbered list of the slides, and Back and Next at the bottom. The small label above the next card when the live item is on its last slide.",
   "moment": "The live song ends and the plan item after it is named below.",
   "role": "label",
   "does": "Names the next plan item, the one after the current song or passage ends.",
@@ -221,7 +221,7 @@
  {
   "key": "next_btn",
   "kind": "phone",
-  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Live tab: title of what is open at the top, a slide counter, the words now live in a large card, the words coming next in a smaller card, buttons that jump to sections, three toggle buttons and Back and Next at the bottom. The big button at the bottom right.",
+  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Live tab: title of what is open at the top, a slide counter, the words now live in a large card, the words coming next in a smaller card, buttons that jump to sections, a row of four tiles with an icon above each word, a numbered list of the slides, and Back and Next at the bottom. The big button at the bottom right.",
   "moment": "The person wants the projector one slide on.",
   "role": "button",
   "does": "Moves the projector one slide forward.",
@@ -239,7 +239,7 @@
  {
   "key": "back",
   "kind": "phone",
-  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Live tab: title of what is open at the top, a slide counter, the words now live in a large card, the words coming next in a smaller card, buttons that jump to sections, three toggle buttons and Back and Next at the bottom. The big button at the bottom left.",
+  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Live tab: title of what is open at the top, a slide counter, the words now live in a large card, the words coming next in a smaller card, buttons that jump to sections, a row of four tiles with an icon above each word, a numbered list of the slides, and Back and Next at the bottom. The big button at the bottom left.",
   "moment": "The person wants the projector one slide back.",
   "role": "button",
   "does": "Moves the projector one slide back.",
@@ -257,7 +257,7 @@
  {
   "key": "nothing_open",
   "kind": "phone",
-  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Live tab: title of what is open at the top, a slide counter, the words now live in a large card, the words coming next in a smaller card, buttons that jump to sections, three toggle buttons and Back and Next at the bottom. The title line.",
+  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Live tab: title of what is open at the top, a slide counter, the words now live in a large card, the words coming next in a smaller card, buttons that jump to sections, a row of four tiles with an icon above each word, a numbered list of the slides, and Back and Next at the bottom. The title line.",
   "moment": "No plan item has been opened.",
   "role": "empty state",
   "does": "States that nothing has been opened on the computer.",
@@ -274,7 +274,7 @@
  {
   "key": "nothing_live",
   "kind": "phone",
-  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Live tab: title of what is open at the top, a slide counter, the words now live in a large card, the words coming next in a smaller card, buttons that jump to sections, three toggle buttons and Back and Next at the bottom. The text of the large card.",
+  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Live tab: title of what is open at the top, a slide counter, the words now live in a large card, the words coming next in a smaller card, buttons that jump to sections, a row of four tiles with an icon above each word, a numbered list of the slides, and Back and Next at the bottom. The text of the large card.",
   "moment": "Nothing is on the projector.",
   "role": "empty state",
   "does": "States that nothing is on the projector at the moment.",
@@ -292,7 +292,7 @@
  {
   "key": "n_of",
   "kind": "phone",
-  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Live tab: title of what is open at the top, a slide counter, the words now live in a large card, the words coming next in a smaller card, buttons that jump to sections, three toggle buttons and Back and Next at the bottom. The slide counter at the top right.",
+  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Live tab: title of what is open at the top, a slide counter, the words now live in a large card, the words coming next in a smaller card, buttons that jump to sections, a row of four tiles with an icon above each word, a numbered list of the slides, and Back and Next at the bottom. The slide counter at the top right.",
   "moment": "The song's slides are numbered.",
   "role": "counter",
   "does": "Says which slide of how many is on the projector.",
@@ -320,7 +320,7 @@
  {
   "key": "n_slides",
   "kind": "phone",
-  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Live tab: title of what is open at the top, a slide counter, the words now live in a large card, the words coming next in a smaller card, buttons that jump to sections, three toggle buttons and Back and Next at the bottom. The slide counter when nothing is live yet.",
+  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Live tab: title of what is open at the top, a slide counter, the words now live in a large card, the words coming next in a smaller card, buttons that jump to sections, a row of four tiles with an icon above each word, a numbered list of the slides, and Back and Next at the bottom. The slide counter when nothing is live yet.",
   "moment": "An item is open but not shown.",
   "role": "counter",
   "does": "Says how many slides the open item has.",
@@ -343,7 +343,7 @@
  {
   "key": "clear_text",
   "kind": "phone",
-  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Live tab: title of what is open at the top, a slide counter, the words now live in a large card, the words coming next in a smaller card, buttons that jump to sections, three toggle buttons and Back and Next at the bottom. First of three toggle buttons about 110 points wide; it is filled while it is on.",
+  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Live tab: title of what is open at the top, a slide counter, the words now live in a large card, the words coming next in a smaller card, buttons that jump to sections, a row of four tiles with an icon above each word, a numbered list of the slides, and Back and Next at the bottom. First of the four tiles, each about 80 points wide with an icon above its word; a long word takes two lines. It is filled yellow while it is on.",
   "moment": "The person wants the words gone but the background kept.",
   "role": "toggle",
   "does": "Names the state in which the projector shows no words.",
@@ -360,7 +360,7 @@
  {
   "key": "black",
   "kind": "phone",
-  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Live tab: title of what is open at the top, a slide counter, the words now live in a large card, the words coming next in a smaller card, buttons that jump to sections, three toggle buttons and Back and Next at the bottom. Second toggle button; filled while on.",
+  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Live tab: title of what is open at the top, a slide counter, the words now live in a large card, the words coming next in a smaller card, buttons that jump to sections, a row of four tiles with an icon above each word, a numbered list of the slides, and Back and Next at the bottom. Second tile; filled yellow while on.",
   "moment": "The person wants the screen dark.",
   "role": "toggle",
   "does": "Names the state of the projector being dark.",
@@ -377,7 +377,7 @@
  {
   "key": "logo",
   "kind": "phone",
-  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Live tab: title of what is open at the top, a slide counter, the words now live in a large card, the words coming next in a smaller card, buttons that jump to sections, three toggle buttons and Back and Next at the bottom. Third toggle button; filled while on.",
+  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Live tab: title of what is open at the top, a slide counter, the words now live in a large card, the words coming next in a smaller card, buttons that jump to sections, a row of four tiles with an icon above each word, a numbered list of the slides, and Back and Next at the bottom. Third tile; filled yellow while on.",
   "moment": "The person wants the emblem on the screen.",
   "role": "toggle",
   "does": "Names the state of the projector showing the church's emblem.",
@@ -394,7 +394,7 @@
  {
   "key": "logo_needs",
   "kind": "phone",
-  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Live tab: title of what is open at the top, a slide counter, the words now live in a large card, the words coming next in a smaller card, buttons that jump to sections, three toggle buttons and Back and Next at the bottom. A small note under the toggles, shown when the Logo toggle cannot work.",
+  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Live tab: title of what is open at the top, a slide counter, the words now live in a large card, the words coming next in a smaller card, buttons that jump to sections, a row of four tiles with an icon above each word, a numbered list of the slides, and Back and Next at the bottom. A small note under the tiles, shown when the Logo toggle cannot work.",
   "moment": "The person pressed Logo but the computer has no emblem.",
   "role": "note",
   "does": "Tells that an emblem picture must be set on the computer first.",
@@ -412,7 +412,7 @@
  {
   "key": "text_cleared",
   "kind": "phone",
-  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Live tab: title of what is open at the top, a slide counter, the words now live in a large card, the words coming next in a smaller card, buttons that jump to sections, three toggle buttons and Back and Next at the bottom. A small state line under the live card.",
+  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Live tab: title of what is open at the top, a slide counter, the words now live in a large card, the words coming next in a smaller card, buttons that jump to sections, a row of four tiles with an icon above each word, a numbered list of the slides, and Back and Next at the bottom. A small yellow pill at the top right of the live card.",
   "moment": "The words are hidden.",
   "role": "state line",
   "does": "States that the words are hidden.",
@@ -429,7 +429,7 @@
  {
   "key": "screen_black",
   "kind": "phone",
-  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Live tab: title of what is open at the top, a slide counter, the words now live in a large card, the words coming next in a smaller card, buttons that jump to sections, three toggle buttons and Back and Next at the bottom. The same state line.",
+  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Live tab: title of what is open at the top, a slide counter, the words now live in a large card, the words coming next in a smaller card, buttons that jump to sections, a row of four tiles with an icon above each word, a numbered list of the slides, and Back and Next at the bottom. The same yellow pill.",
   "moment": "The screen is black.",
   "role": "state line",
   "does": "States that the screen is black.",
@@ -446,7 +446,7 @@
  {
   "key": "logo_showing",
   "kind": "phone",
-  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Live tab: title of what is open at the top, a slide counter, the words now live in a large card, the words coming next in a smaller card, buttons that jump to sections, three toggle buttons and Back and Next at the bottom. The same state line.",
+  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Live tab: title of what is open at the top, a slide counter, the words now live in a large card, the words coming next in a smaller card, buttons that jump to sections, a row of four tiles with an icon above each word, a numbered list of the slides, and Back and Next at the bottom. The same yellow pill.",
   "moment": "The emblem is up.",
   "role": "state line",
   "does": "States that the emblem is on the screen.",
@@ -463,7 +463,7 @@
  {
   "key": "jump",
   "kind": "phone",
-  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Live tab: title of what is open at the top, a slide counter, the words now live in a large card, the words coming next in a smaller card, buttons that jump to sections, three toggle buttons and Back and Next at the bottom. Accessibility name of the row of buttons, one for each part of the song. Never visible.",
+  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Live tab: title of what is open at the top, a slide counter, the words now live in a large card, the words coming next in a smaller card, buttons that jump to sections, a row of four tiles with an icon above each word, a numbered list of the slides, and Back and Next at the bottom. Accessibility name of the row of buttons, one for each part of the song. Never visible.",
   "moment": "A screen reader lands on the row.",
   "role": "accessibility label",
   "does": "Names the row of buttons that jump to a part of the song.",
@@ -521,7 +521,7 @@
  {
   "key": "plan_live",
   "kind": "phone",
-  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Plan tab: the list of plan items, then a wide button at the bottom. A small word at the right of the row that is live.",
+  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Plan tab: the list of plan items, then a wide button at the bottom. A small red pill at the right of the row that is live.",
   "moment": "The row is on the projector.",
   "role": "tag",
   "does": "Marks the plan row that is live.",
@@ -976,7 +976,7 @@
  {
   "key": "label.verse",
   "kind": "phone",
-  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Names the operator sends in English for a part of a song; the phone shows them in the volunteer's own words. A chip over the live card, about 80 points wide. Patterns are matched case-insensitively; a numbered verse becomes the name plus its number.",
+  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Names the operator sends in English for a part of a song; the phone shows them in the volunteer's own words. A rounded chip in the section's own colour, about 80 points wide: in a row over the tiles, at the top of the live card, and in each row of the slide list. Patterns are matched case-insensitively; a numbered verse becomes the name plus its number.",
   "moment": "A song's part is live.",
   "role": "chip text",
   "does": "Names the numbered part, with its number after it.",
@@ -994,7 +994,7 @@
  {
   "key": "label.chorus",
   "kind": "phone",
-  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Names the operator sends in English for a part of a song; the phone shows them in the volunteer's own words. A chip over the live card, about 80 points wide. Patterns are matched case-insensitively; a numbered verse becomes the name plus its number.",
+  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Names the operator sends in English for a part of a song; the phone shows them in the volunteer's own words. A rounded chip in the section's own colour, about 80 points wide: in a row over the tiles, at the top of the live card, and in each row of the slide list. Patterns are matched case-insensitively; a numbered verse becomes the name plus its number.",
   "moment": "A song's part is live.",
   "role": "chip text",
   "does": "Names the repeated part.",
@@ -1012,7 +1012,7 @@
  {
   "key": "label.pre_chorus",
   "kind": "phone",
-  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Names the operator sends in English for a part of a song; the phone shows them in the volunteer's own words. A chip over the live card, about 80 points wide. Patterns are matched case-insensitively; a numbered verse becomes the name plus its number.",
+  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Names the operator sends in English for a part of a song; the phone shows them in the volunteer's own words. A rounded chip in the section's own colour, about 80 points wide: in a row over the tiles, at the top of the live card, and in each row of the slide list. Patterns are matched case-insensitively; a numbered verse becomes the name plus its number.",
   "moment": "A song's part is live.",
   "role": "chip text",
   "does": "Names the lead-in to the repeated part.",
@@ -1030,7 +1030,7 @@
  {
   "key": "label.bridge",
   "kind": "phone",
-  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Names the operator sends in English for a part of a song; the phone shows them in the volunteer's own words. A chip over the live card, about 80 points wide. Patterns are matched case-insensitively; a numbered verse becomes the name plus its number.",
+  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Names the operator sends in English for a part of a song; the phone shows them in the volunteer's own words. A rounded chip in the section's own colour, about 80 points wide: in a row over the tiles, at the top of the live card, and in each row of the slide list. Patterns are matched case-insensitively; a numbered verse becomes the name plus its number.",
   "moment": "A song's part is live.",
   "role": "chip text",
   "does": "Names the bridge, optionally with a number.",
@@ -1048,7 +1048,7 @@
  {
   "key": "label.intro",
   "kind": "phone",
-  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Names the operator sends in English for a part of a song; the phone shows them in the volunteer's own words. A chip over the live card, about 80 points wide. Patterns are matched case-insensitively; a numbered verse becomes the name plus its number.",
+  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Names the operator sends in English for a part of a song; the phone shows them in the volunteer's own words. A rounded chip in the section's own colour, about 80 points wide: in a row over the tiles, at the top of the live card, and in each row of the slide list. Patterns are matched case-insensitively; a numbered verse becomes the name plus its number.",
   "moment": "A song's part is live.",
   "role": "chip text",
   "does": "Names the opening.",
@@ -1066,7 +1066,7 @@
  {
   "key": "label.ending",
   "kind": "phone",
-  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Names the operator sends in English for a part of a song; the phone shows them in the volunteer's own words. A chip over the live card, about 80 points wide. Patterns are matched case-insensitively; a numbered verse becomes the name plus its number.",
+  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. The big controls are at the bottom; a row of four tabs sits under them. Names the operator sends in English for a part of a song; the phone shows them in the volunteer's own words. A rounded chip in the section's own colour, about 80 points wide: in a row over the tiles, at the top of the live card, and in each row of the slide list. Patterns are matched case-insensitively; a numbered verse becomes the name plus its number.",
   "moment": "A song's part is live.",
   "role": "chip text",
   "does": "Names the closing part.",
@@ -1084,7 +1084,7 @@
  {
   "key": "projector_off",
   "kind": "phone",
-  "screen": "The phone page, a small line under the card of the slide that is live, where the page also says that the screen is black or that the words are hidden.",
+  "screen": "The phone page, a small yellow pill at the top right of the card of the slide that is live, where the page also says that the screen is black or that the words are hidden.",
   "moment": "The Live switch is off: the slide in the card is in place and the room does not see it.",
   "role": "status line",
   "does": "Says the projector is switched off, so the person knows why the room sees nothing.",

@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "remote-example",
+      "runtimeExecutable": "cargo",
+      "runtimeArgs": ["run", "-p", "artosia-remote", "--example", "serve", "47931"],
+      "port": 47931
+    }
+  ]
+}

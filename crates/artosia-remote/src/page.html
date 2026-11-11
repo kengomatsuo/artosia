@@ -3,25 +3,32 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="color-scheme" content="dark">
-<meta name="theme-color" content="#000000">
+<meta name="color-scheme" content="dark light">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#08090c">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#dbdee3">
 <title>Artosia remote</title>
 <style>
+/* The operator window's own tokens (crates/artosia/src/theme.rs): surfaces that differ by tone,
+   red for what is on the projector and nothing else, yellow for hidden or a warning. The hex
+   values are for phones that know no oklch; the same tones in oklch follow. */
 :root {
-  --bg: #000000;
-  --surface: #1c1c1e;
-  --surface-2: #2c2c2e;
-  --surface-3: #48484a;
-  --text: #ffffff;
-  --text-dim: #a1a1a6;
-  --accent: #0060df;
-  --on-accent: #ffffff;
-  --light: #ffffff;
-  --on-light: #000000;
-  --hide: #ffd60a;
-  --live: #c9002b;
-  --on-hide: #000000;
-  --danger: #ff9f9a;
+  --chrome: #08090c;
+  --side: #0f1216;
+  --work: #1c1e23;
+  --raised: #282b31;
+  --edge: #3a3d44;
+  --text: #eff0f3;
+  --muted: #adb1b9;
+  --faint: #888c94;
+  --accent: #5599f3;
+  --on-accent: #07101c;
+  --live: #c50220;
+  --on-live: #ffffff;
+  --warn: #f7cd3a;
+  --on-warn: #201a09;
+  --warn-ink: #f7cd3a;
+  --primary: var(--text);
+  --on-primary: var(--side);
   /* section colours, the same families as the operator window */
   --g0: #5fa2ee;
   --g1: #f0a04a;
@@ -29,30 +36,48 @@
   --g3: #3fbcc4;
   --g4: #a5a8b3;
   --g5: #54c17b;
-  --on-group: #000000;
+  --tint: 16%;
+  --tint-strong: 30%;
+  --ink-mix: white 45%;
   --gap: 10px;
   --pad: 14px;
-  --radius: 14px;
-  --radius-sm: 10px;
-  --font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --fs-title: 1.1rem;
-  --fs-small: 0.8rem;
+  --radius: 12px;
+  --radius-sm: 8px;
+  --font: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --fs-title: 1.0625rem;
+  --fs-small: 0.8125rem;
   --fs-body: 1rem;
-  --fs-row: 0.95rem;
-  --fs-live: clamp(1.4rem, 6.4vw, 2.1rem);
-  --fs-next: clamp(1rem, 4.2vw, 1.3rem);
+  --fs-row: 0.9375rem;
+  --fs-tile: 0.78rem;
+  --fs-live: clamp(1.35rem, 6vw, 2rem);
+  --fs-next: clamp(0.95rem, 4vw, 1.2rem);
   --fs-clock: 1.6rem;
-  --btn-h: 52px;
-  --btn-big-h: 76px;
-  --row-h: 52px;
-  --row-slim-h: 40px;
-  --hit-h: 64px;
-  --tab-h: 50px;
-  --chip-h: 40px;
-  --dim-opacity: 0.35;
+  --btn-h: 48px;
+  --dock-h: 68px;
+  --row-h: 48px;
+  --slide-h: 44px;
+  --hit-h: 62px;
+  --tab-h: 54px;
+  --tile-h: 62px;
+  --chip-h: 34px;
+  --dim-opacity: 0.4;
 }
 @supports (color: oklch(0.7 0.1 100)) {
   :root {
+    --chrome: oklch(0.14 0.008 265);
+    --side: oklch(0.18 0.01 265);
+    --work: oklch(0.235 0.01 265);
+    --raised: oklch(0.29 0.012 265);
+    --edge: oklch(0.36 0.012 265);
+    --text: oklch(0.955 0.004 265);
+    --muted: oklch(0.76 0.012 265);
+    --faint: oklch(0.64 0.012 265);
+    --accent: oklch(0.68 0.15 256);
+    --on-accent: oklch(0.17 0.03 256);
+    --live: oklch(0.52 0.21 25);
+    --warn: oklch(0.86 0.16 92);
+    --on-warn: oklch(0.22 0.03 92);
+    --warn-ink: oklch(0.86 0.16 92);
     --g0: oklch(0.72 0.13 250);
     --g1: oklch(0.78 0.15 62);
     --g2: oklch(0.72 0.15 305);
@@ -61,181 +86,297 @@
     --g5: oklch(0.76 0.14 152);
   }
 }
+@media (prefers-color-scheme: light) {
+  :root {
+    --chrome: #dbdee3;
+    --side: #e9ebf0;
+    --work: #fbfcfd;
+    --raised: #e0e3e8;
+    --edge: #c1c4cb;
+    --text: #16181e;
+    --muted: #44484f;
+    --faint: #545860;
+    --accent: #005fc6;
+    --on-accent: #ffffff;
+    --live: #be0019;
+    --warn-ink: #815200;
+    --tint: 20%;
+    --tint-strong: 36%;
+    --ink-mix: black 70%;
+  }
+  @supports (color: oklch(0.7 0.1 100)) {
+    :root {
+      --chrome: oklch(0.9 0.008 265);
+      --side: oklch(0.94 0.007 265);
+      --work: oklch(0.99 0.002 265);
+      --raised: oklch(0.915 0.008 265);
+      --edge: oklch(0.82 0.01 265);
+      --text: oklch(0.21 0.012 265);
+      --muted: oklch(0.4 0.014 265);
+      --faint: oklch(0.46 0.014 265);
+      --accent: oklch(0.5 0.18 256);
+      --live: oklch(0.5 0.21 25);
+      --warn-ink: oklch(0.48 0.11 75);
+    }
+  }
+}
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-html, body { height: 100%; margin: 0; background: var(--bg); color: var(--text); font-family: var(--font); font-size: var(--fs-body); }
+html, body { height: 100%; margin: 0; background: var(--side); color: var(--text); font-family: var(--font); font-size: var(--fs-body); line-height: 1.3; -webkit-font-smoothing: antialiased; }
 body { overscroll-behavior: none; }
 [hidden] { display: none !important; }
 button, input { font: inherit; color: inherit; }
-button { border: 0; cursor: pointer; touch-action: manipulation; user-select: none; -webkit-user-select: none; }
-button:focus-visible, input:focus-visible { outline: 2px solid var(--text); outline-offset: 2px; }
-button:disabled { opacity: 0.4; cursor: default; }
+button { border: 0; background: none; cursor: pointer; touch-action: manipulation; user-select: none; -webkit-user-select: none; }
+button:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+button:disabled { opacity: 0.45; cursor: default; }
+svg.ic { width: 20px; height: 20px; flex: 0 0 auto; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 
-.btn { background: var(--surface-2); color: var(--text); border-radius: var(--radius); min-height: var(--btn-h); padding: 0 var(--pad); font-weight: 600; transition: filter 80ms, transform 80ms; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-@media (hover: hover) { .btn:not(:disabled):hover { filter: brightness(1.25); } }
-.btn:not(:disabled):active { filter: brightness(0.8); transform: scale(0.98); }
-.btn.on { background: var(--accent); color: var(--on-accent); }
-.btn.hides.on { background: var(--hide); color: var(--on-hide); }
-/* Lit while the room sees the Live list, as the Live tile in the window is. */
-.btn.onair.on { background: var(--live); color: #fff; }
-.btn.light { background: var(--light); color: var(--on-light); }
-@media (hover: hover) { .btn.light:not(:disabled):hover { filter: brightness(0.9); } }
-.btn.light:not(:disabled):active { filter: brightness(0.7); }
-.btn.small { min-height: 44px; padding: 0 12px; border-radius: var(--radius-sm); }
+/* A pressed control moves a hair; a hover lifts its tone on a device that has one. */
+.press { transition: transform 80ms, filter 80ms, background-color 80ms; }
+.press:not(:disabled):active { transform: scale(0.98); filter: brightness(0.9); }
+@media (hover: hover) { .press:not(:disabled):hover { filter: brightness(1.12); } }
 
-.field { background: var(--surface); border: 2px solid var(--surface-2); border-radius: var(--radius); height: var(--btn-h); padding: 0 var(--pad); width: 100%; min-width: 0; }
-.field::placeholder { color: var(--text-dim); opacity: 1; }
-.field:focus { border-color: var(--text); outline: none; }
-.note { color: var(--text-dim); font-size: var(--fs-small); margin: 0; overflow-wrap: anywhere; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: var(--raised); color: var(--text); border: 1px solid var(--edge); border-radius: var(--radius-sm); min-height: var(--btn-h); padding: 0 var(--pad); font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.btn > span { overflow: hidden; text-overflow: ellipsis; }
+.btn.primary { background: var(--primary); color: var(--on-primary); border-color: transparent; }
+/* A main button that cannot be pressed yet steps back among the others, and stays readable. */
+.btn.primary:disabled { background: var(--raised); color: var(--muted); border-color: var(--edge); opacity: 1; }
+.btn.hides.on { background: var(--warn); color: var(--on-warn); border-color: transparent; }
+.btn.small { min-height: 44px; padding: 0 12px; font-size: var(--fs-row); }
+.btn.ghost { background: transparent; }
+
+.field { background: var(--work); border: 1px solid var(--edge); border-radius: var(--radius-sm); height: var(--btn-h); padding: 0 var(--pad); width: 100%; min-width: 0; }
+.field::placeholder { color: var(--faint); opacity: 1; }
+.field:focus { border-color: var(--accent); outline: none; }
+.note { color: var(--muted); font-size: var(--fs-small); margin: 0; overflow-wrap: anywhere; }
 .note:empty { display: none; }
-.lang-switch { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap); }
+
+/* A choice between a few: one filled segment, as the operator's. */
+.seg { display: flex; gap: 2px; padding: 3px; background: var(--raised); border: 1px solid var(--edge); border-radius: var(--radius-sm); }
+/* A long name takes two lines; it is never cut. */
+.seg-btn { flex: 1 1 0; min-width: 0; min-height: 44px; padding: 4px 8px; border-radius: 6px; color: var(--muted); font-weight: 600; font-size: var(--fs-row); line-height: 1.15; overflow-wrap: anywhere; }
+.seg-btn.on { background: var(--work); color: var(--text); box-shadow: 0 0 0 1px var(--edge); }
+
+.pill { display: inline-flex; align-items: center; height: 22px; padding: 0 8px; border-radius: 999px; font-size: var(--fs-small); font-weight: 600; white-space: nowrap; }
+.pill.live { background: var(--live); color: var(--on-live); }
+.pill.warn { background: var(--warn); color: var(--on-warn); }
+.pill:empty { display: none; }
 
 /* pairing */
-#pair { min-height: 100%; display: flex; flex-direction: column; justify-content: center; gap: var(--gap); padding: 24px; max-width: 420px; margin: 0 auto; }
-#pair h1 { margin: 0 0 6px; font-size: 1.5rem; }
-#pair label { color: var(--text-dim); font-size: var(--fs-small); }
-#pin { background: var(--surface); border: 2px solid var(--surface-2); border-radius: var(--radius); height: 72px; font-size: 2.2rem; letter-spacing: 0.4em; text-align: center; width: 100%; }
-#pin::placeholder { color: var(--text-dim); opacity: 0.6; }
-#pin:focus { border-color: var(--text); outline: none; }
-#pair-error { color: var(--danger); min-height: 1.4em; margin: 0; }
-#pair .btn { min-height: 58px; }
+#pair { min-height: 100%; display: flex; flex-direction: column; justify-content: center; gap: 12px; padding: 24px; max-width: 400px; margin: 0 auto; }
+#pair .mark { width: 44px; height: 44px; border-radius: 12px; background: var(--work); border: 1px solid var(--edge); display: grid; place-items: center; color: var(--text); margin-bottom: 4px; }
+#pair .mark svg.ic { width: 24px; height: 24px; }
+#pair h1 { margin: 0 0 8px; font-size: 1.5rem; font-weight: 700; letter-spacing: -0.01em; }
+#pair label { color: var(--muted); font-size: var(--fs-small); font-weight: 600; }
+#pin { background: var(--work); border: 1px solid var(--edge); border-radius: var(--radius); height: 68px; font-size: 2rem; font-weight: 600; letter-spacing: 0.4em; text-indent: 0.4em; text-align: center; width: 100%; font-variant-numeric: tabular-nums; }
+#pin::placeholder { color: var(--faint); opacity: 0.6; }
+#pin:focus { border-color: var(--accent); outline: none; }
+#pair-error { color: var(--warn-ink); min-height: 1.4em; margin: 0; font-size: var(--fs-small); font-weight: 600; }
+#pair .btn { min-height: 54px; font-size: 1.05rem; }
+#pair .seg { margin-top: 8px; }
 
 /* remote */
-#remote { height: 100dvh; display: flex; flex-direction: column; gap: var(--gap); padding: max(12px, env(safe-area-inset-top)) 12px max(10px, env(safe-area-inset-bottom)); max-width: 720px; margin: 0 auto; }
-#head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding: 0 4px; flex: 0 0 auto; }
-#title { margin: 0; font-size: var(--fs-title); font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
-#head-right { display: flex; gap: 10px; align-items: baseline; white-space: nowrap; color: var(--text-dim); font-size: var(--fs-small); font-variant-numeric: tabular-nums; }
-#clock-pill { background: var(--hide); color: var(--on-hide); border-radius: 999px; padding: 2px 10px; font-weight: 700; }
+#remote { height: 100dvh; display: flex; flex-direction: column; max-width: 640px; margin: 0 auto; background: var(--side); }
+#head { flex: 0 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 48px; padding: max(8px, env(safe-area-inset-top)) 16px 8px; background: var(--chrome); border-bottom: 1px solid var(--edge); }
+#title { margin: 0; font-size: var(--fs-title); font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+#head-right { display: flex; gap: 8px; align-items: center; white-space: nowrap; color: var(--muted); font-size: var(--fs-small); font-variant-numeric: tabular-nums; }
+#clock-pill { font-variant-numeric: tabular-nums; }
 
-#panes { flex: 1 1 0; min-height: 0; display: flex; flex-direction: column; }
+#lost { flex: 0 0 auto; display: flex; align-items: center; gap: 10px; background: var(--warn); color: var(--on-warn); padding: 8px 16px; font-weight: 600; font-size: var(--fs-row); }
+#lost small { display: block; font-weight: 400; font-size: var(--fs-small); }
+
+#panes { flex: 1 1 0; min-height: 0; display: flex; flex-direction: column; padding: 12px 12px 0; }
 .pane { flex: 1 1 0; min-height: 0; display: flex; flex-direction: column; gap: var(--gap); }
 .scroll { overflow-y: auto; min-height: 0; scrollbar-width: thin; }
 
-.card { background: var(--surface); border-radius: var(--radius); padding: var(--pad); }
-.card .tag { color: var(--text-dim); font-size: var(--fs-small); margin-bottom: 4px; }
+.card { background: var(--work); border: 1px solid var(--edge); border-radius: var(--radius); padding: 12px var(--pad); }
 .card .body { white-space: pre-wrap; overflow-wrap: anywhere; }
-#live { flex: 0 1 auto; max-height: 26vh; overflow-y: auto; min-height: 80px; }
-#live .body { font-size: var(--fs-live); line-height: 1.25; font-weight: 600; transition: opacity 120ms; }
-#live.dim .body { opacity: var(--dim-opacity); }
-#live .state { color: var(--text-dim); font-size: var(--fs-small); margin-top: 6px; }
-#live .state:empty { display: none; }
-#next { flex: 0 0 auto; padding: 10px var(--pad); background: transparent; border: 1px solid var(--surface-2); }
-#next .body { font-size: var(--fs-next); line-height: 1.25; color: var(--text-dim); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.card-head { display: flex; align-items: center; gap: 8px; min-height: 22px; margin-bottom: 6px; }
+.card-head .tag { color: var(--muted); font-size: var(--fs-small); font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+.card-head .tag:empty { display: none; }
+.card-head .end { margin-left: auto; }
 
-#sections { flex: 0 0 auto; display: flex; flex-wrap: wrap; gap: 6px; max-height: calc(var(--chip-h) * 2 + 6px); overflow-y: auto; }
-.chip { min-width: 44px; height: var(--chip-h); padding: 0 8px; border-radius: var(--radius-sm); background: var(--surface-2); color: var(--gc, var(--text)); font-weight: 700; transition: filter 80ms, transform 80ms; }
-.chip:active { filter: brightness(0.75); transform: scale(0.96); }
-.chip.live { background: var(--gc, var(--light)); color: var(--on-group); }
+/* What the room sees. Its frame is red while the room sees it, all the way round. */
+#live { flex: 0 1 auto; max-height: 28vh; overflow-y: auto; min-height: 84px; }
+#live.onair { border-color: var(--live); box-shadow: 0 0 0 1px var(--live); }
+#live .body { font-size: var(--fs-live); line-height: 1.22; font-weight: 600; letter-spacing: -0.01em; transition: opacity 120ms; }
+#live.dim .body { opacity: var(--dim-opacity); }
+#next { flex: 0 0 auto; padding: 8px var(--pad) 10px; background: transparent; }
+#next .card-head { margin-bottom: 2px; }
+#next .body { font-size: var(--fs-next); line-height: 1.25; color: var(--muted); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+/* A section is named in full on its chip, in its own colour, as in the window. One row that
+   slides sideways when a song has many. */
+#sections { flex: 0 0 auto; display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; margin: 0 -12px; padding: 0 12px; }
+#sections::-webkit-scrollbar { display: none; }
+.chip { flex: 0 0 auto; height: var(--chip-h); padding: 0 12px; border-radius: 999px; background: var(--raised); color: var(--gc, var(--text)); font-weight: 600; font-size: var(--fs-small); white-space: nowrap; }
+.chip.live { background: var(--gc, var(--primary)); color: #0b0c0f; }
+.tagchip { display: inline-block; max-width: 100%; padding: 2px 8px; border-radius: 999px; background: var(--raised); color: var(--gc, var(--muted)); font-size: 0.75rem; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; vertical-align: middle; }
 .g0 { --gc: var(--g0); } .g1 { --gc: var(--g1); } .g2 { --gc: var(--g2); }
 .g3 { --gc: var(--g3); } .g4 { --gc: var(--g4); } .g5 { --gc: var(--g5); }
-@media (hover: hover) { .chip:hover { filter: brightness(1.2); } }
+@supports (color: color-mix(in srgb, red 50%, blue)) {
+  .chip, .tagchip { background: color-mix(in srgb, var(--gc, var(--muted)) var(--tint), transparent); color: color-mix(in srgb, var(--gc, var(--muted)), var(--ink-mix)); }
+  .chip.live { background: var(--gc, var(--primary)); color: #0b0c0f; }
+}
 
-/* Two rows of two: four equal buttons that fit a long word in any language. */
-#toggles { flex: 0 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap); }
-#toggles .btn { padding: 0 6px; }
+/* Four equal tiles with an icon each, lit while what they name is true: yellow hides
+   something from the room, red is the room seeing the Live list. */
+#toggles { flex: 0 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.tile { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; min-width: 0; height: var(--tile-h); padding: 4px; border-radius: var(--radius-sm); background: var(--work); border: 1px solid var(--edge); color: var(--text); font-size: var(--fs-tile); font-weight: 600; line-height: 1.1; text-align: center; }
+.tile span { overflow-wrap: anywhere; max-width: 100%; }
+.tile.hides.on { background: var(--warn); color: var(--on-warn); border-color: transparent; }
+.tile.onair.on { background: var(--live); color: var(--on-live); border-color: transparent; }
 
-#list { flex: 1 1 0; min-height: 60px; display: flex; flex-direction: column; gap: 6px; }
-.slide { display: grid; grid-template-columns: 5.2rem 1fr; align-items: center; gap: 8px; text-align: left; background: var(--surface); border-radius: var(--radius-sm); padding: 0 12px; width: 100%; height: var(--row-slim-h); flex: 0 0 auto; transition: filter 80ms, transform 80ms; }
-@media (hover: hover) { .slide:hover { filter: brightness(1.3); } }
-.slide:active { filter: brightness(0.8); transform: scale(0.99); }
-.slide.live { background: var(--accent); color: var(--on-accent); }
-.slide .l { font-size: var(--fs-small); color: var(--text-dim); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.slide.live .l { color: var(--on-accent); }
+/* The slides as the window lists them: a number, the section, the first words. */
+#list { flex: 1 1 0; min-height: 56px; display: flex; flex-direction: column; background: var(--work); border: 1px solid var(--edge); border-radius: var(--radius); }
+#list:empty { display: none; }
+.slide { display: grid; grid-template-columns: 1.6rem minmax(0, 5.6rem) minmax(0, 1fr); align-items: center; gap: 8px; text-align: left; padding: 0 12px 0 8px; width: 100%; height: var(--slide-h); flex: 0 0 auto; border-bottom: 1px solid var(--edge); color: var(--text); }
+.slide:last-child { border-bottom: 0; }
+.slide .n { color: var(--faint); font-size: var(--fs-small); font-variant-numeric: tabular-nums; text-align: right; }
 .slide .t { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: var(--fs-row); }
+.slide.live { background: var(--live); color: var(--on-live); }
+.slide.live .n { color: var(--on-live); opacity: 0.8; }
+.slide.live .tagchip { background: rgba(255, 255, 255, 0.2); color: var(--on-live); }
+.kept .slide.live { background: var(--warn); color: var(--on-warn); }
+.kept .slide.live .n { color: var(--on-warn); }
+.kept .slide.live .tagchip { background: rgba(0, 0, 0, 0.14); color: var(--on-warn); }
+.slide:first-child { border-radius: 11px 11px 0 0; }
+.slide:last-child { border-radius: 0 0 11px 11px; }
+.slide:only-child { border-radius: 11px; }
 
 /* plan */
-#plan-list { flex: 1 1 0; display: flex; flex-direction: column; gap: 6px; }
-.row { display: flex; align-items: center; justify-content: space-between; gap: 10px; text-align: left; width: 100%; height: var(--row-h); flex: 0 0 auto; padding: 0 14px; border-radius: var(--radius-sm); background: var(--surface); transition: filter 80ms, transform 80ms; }
-.row .t { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
-.row .w { flex: 0 0 auto; font-size: var(--fs-small); color: var(--text-dim); }
-@media (hover: hover) { .row:hover { filter: brightness(1.3); } }
-.row:active { filter: brightness(0.8); transform: scale(0.99); }
-.row.picked { background: var(--surface-3); }
-.row.live { background: var(--accent); color: var(--on-accent); }
-.row.live .w { color: var(--on-accent); }
-.divider { flex: 0 0 auto; height: var(--row-slim-h); display: flex; align-items: flex-end; padding: 0 4px 6px; color: var(--text-dim); font-size: var(--fs-small); font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.divider span { overflow: hidden; text-overflow: ellipsis; }
-#plan-show { flex: 0 0 auto; min-height: 56px; }
+#plan-list { flex: 1 1 0; display: flex; flex-direction: column; gap: 6px; padding-bottom: 4px; }
+.row { display: flex; align-items: center; gap: 10px; text-align: left; width: 100%; height: var(--row-h); flex: 0 0 auto; padding: 0 12px; border-radius: var(--radius-sm); background: var(--work); border: 1px solid var(--edge); color: var(--text); }
+.row svg.ic { color: var(--faint); }
+.row .t { flex: 1 1 auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; font-size: var(--fs-row); font-weight: 500; }
+.row.picked { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+.row.picked svg.ic { color: var(--accent); }
+@supports (color: color-mix(in srgb, red 50%, blue)) { .row.picked { background: color-mix(in srgb, var(--accent) 14%, var(--work)); } }
+/* A heading of the plan reads as a heading: its words, then a hairline to the edge. */
+.divider { flex: 0 0 auto; height: 34px; display: flex; align-items: flex-end; gap: 10px; padding: 0 4px 6px; color: var(--muted); font-size: var(--fs-small); font-weight: 600; }
+.divider span { flex: 0 1 auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.divider::after { content: ""; flex: 1 1 24px; height: 1px; background: var(--edge); margin-bottom: 0.5em; }
+#plan-show { flex: 0 0 auto; min-height: 52px; }
 
 /* search */
-#search-hint { padding: 14px 4px; }
-#hits { flex: 1 1 0; display: flex; flex-direction: column; gap: 6px; }
-.hit { display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: 8px; height: var(--hit-h); flex: 0 0 auto; padding: 0 8px 0 14px; background: var(--surface); border-radius: var(--radius-sm); }
+.search-box { position: relative; flex: 0 0 auto; }
+.search-box svg.ic { position: absolute; left: 14px; top: 50%; margin-top: -10px; color: var(--faint); pointer-events: none; }
+.search-box .field { padding-left: 44px; }
+#search-hint { padding: 6px 4px; }
+#hits { flex: 1 1 0; display: flex; flex-direction: column; gap: 6px; padding-bottom: 4px; }
+.hit { display: grid; grid-template-columns: auto minmax(0, 1fr) auto auto; align-items: center; gap: 8px; min-height: var(--hit-h); flex: 0 0 auto; padding: 8px 8px 8px 12px; background: var(--work); border: 1px solid var(--edge); border-radius: var(--radius-sm); }
+.hit > svg.ic { color: var(--faint); }
 .hit .txt { min-width: 0; }
 .hit .t, .hit .d { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .hit .t { font-weight: 600; font-size: var(--fs-row); }
-.hit .d { color: var(--text-dim); font-size: var(--fs-small); }
+.hit .d { color: var(--muted); font-size: var(--fs-small); margin-top: 2px; }
 
 /* more */
-.card h2 { margin: 0 0 8px; font-size: var(--fs-body); font-weight: 700; }
+#pane-more { gap: var(--gap); padding-bottom: 8px; }
+.card h2 { margin: 0 0 10px; font-size: var(--fs-row); font-weight: 600; }
 .card .line { display: flex; gap: var(--gap); align-items: center; }
+.card .line > .btn { flex: 1 1 0; }
 .card .line + .line, .card .line + .note, .card .note + .line, .card .field + .line { margin-top: 10px; }
-#clock-left { font-size: var(--fs-clock); font-weight: 700; font-variant-numeric: tabular-nums; flex: 1 1 auto; }
-#minutes { width: 88px; flex: 0 0 auto; text-align: center; }
+#clock-left { font-size: var(--fs-clock); font-weight: 600; font-variant-numeric: tabular-nums; flex: 1 1 auto; }
+#minutes { width: 84px; flex: 0 0 auto; text-align: center; font-variant-numeric: tabular-nums; }
 #keys-card { display: none; }
 @media (hover: hover) and (pointer: fine) { #keys-card { display: block; } }
-#keys-text { margin: 0; color: var(--text-dim); font-size: var(--fs-small); line-height: 1.5; }
+#keys-text { margin: 0; color: var(--muted); font-size: var(--fs-small); line-height: 1.5; }
 
-/* bars */
-#bar { flex: 0 0 auto; display: grid; grid-template-columns: 1fr 2fr; gap: var(--gap); }
-#next-btn { min-height: var(--btn-big-h); font-size: 1.5rem; }
-#prev-btn { min-height: var(--btn-big-h); }
-#tabs { flex: 0 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
-.tab { height: var(--tab-h); border-radius: var(--radius-sm); background: transparent; color: var(--text-dim); font-weight: 600; transition: filter 80ms, transform 80ms; }
-.tab:active { filter: brightness(0.7); transform: scale(0.97); }
-.tab[aria-selected="true"] { background: var(--surface-3); color: var(--text); }
-@media (hover: hover) { .tab:hover { filter: brightness(1.3); } }
+/* The two bars at the thumb: back and next, then where to go. */
+#bar { flex: 0 0 auto; display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); gap: var(--gap); padding: 10px 12px; }
+#bar .btn { min-height: var(--dock-h); border-radius: var(--radius); font-size: 1rem; padding: 0 10px; }
+#bar #next-btn { font-size: 1.25rem; }
+#next-btn svg.ic, #prev-btn svg.ic { width: 22px; height: 22px; }
+#tabs { flex: 0 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; padding: 6px 8px max(6px, env(safe-area-inset-bottom)); background: var(--chrome); border-top: 1px solid var(--edge); }
+.tab { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; height: var(--tab-h); border-radius: var(--radius-sm); color: var(--muted); font-size: 0.72rem; font-weight: 600; }
+.tab span { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding: 0 2px; }
+.tab[aria-selected="true"] { background: var(--raised); color: var(--text); }
 
-#lost { flex: 0 0 auto; background: var(--light); color: var(--on-light); border-radius: var(--radius); padding: 8px 16px; font-weight: 600; text-align: center; }
-#lost small { display: block; font-weight: 400; color: #3a3a3c; }
+/* A short phone: what the room sees stays whole, so what comes next gives way to the list,
+   which shows it too, and the tiles and bars sit lower. */
+@media (max-height: 700px) {
+  :root { --fs-live: clamp(1.15rem, 5.4vw, 1.5rem); --tile-h: 60px; --dock-h: 58px; --tab-h: 50px; }
+  .tile { gap: 3px; }
+  .tile svg.ic { width: 18px; height: 18px; }
+  #next { display: none; }
+  #live { max-height: 36vh; }
+}
 </style>
 </head>
 <body>
 
+<!-- The icons, drawn once. Each is used by its name. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-down" viewBox="0 0 24 24"><path d="M12 5v14M6 13l6 6 6-6"/></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6"/></symbol>
+  <symbol id="i-text" viewBox="0 0 24 24"><path d="M6 6h12M12 6v12M4 20L20 4"/></symbol>
+  <symbol id="i-black" viewBox="0 0 24 24"><rect x="4" y="6.5" width="16" height="11" rx="2" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-logo" viewBox="0 0 24 24"><circle cx="12" cy="9" r="5"/><path d="M9 13.2 7.6 20l4.4-2 4.4 2L15 13.2"/></symbol>
+  <symbol id="i-live" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-plan" viewBox="0 0 24 24"><path d="M9 7h10M9 12h10M9 17h10M5 7h.01M5 12h.01M5 17h.01"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.3-4.3"/></symbol>
+  <symbol id="i-more" viewBox="0 0 24 24"><path d="M4 8h8M18 8h2M4 16h2M12 16h8"/><circle cx="15" cy="8" r="2.5"/><circle cx="9" cy="16" r="2.5"/></symbol>
+  <symbol id="i-song" viewBox="0 0 24 24"><path d="M9 17.5V6l10-2v11.5"/><circle cx="6.8" cy="17.5" r="2.2"/><circle cx="16.8" cy="15.5" r="2.2"/></symbol>
+  <symbol id="i-passage" viewBox="0 0 24 24"><path d="M5 5.5A1.5 1.5 0 0 1 6.5 4H19v13H6.5A1.5 1.5 0 0 0 5 18.5zM5 18.5A1.5 1.5 0 0 0 6.5 20H19"/></symbol>
+  <symbol id="i-announcements" viewBox="0 0 24 24"><path d="M4 10v4h3l7 4V6l-7 4zM17.5 9.5a4 4 0 0 1 0 5"/></symbol>
+  <symbol id="i-item" viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="2.5"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-remote" viewBox="0 0 24 24"><rect x="7" y="3" width="10" height="18" rx="2.5"/><circle cx="12" cy="8" r="1.6"/><path d="M12 13v3"/></symbol>
+  <symbol id="i-lost" viewBox="0 0 24 24"><path d="M4.5 9.5a11 11 0 0 1 15 0M7.5 13a7 7 0 0 1 9 0M12 17h.01M4 4l16 16"/></symbol>
+</svg>
+
 <main id="pair" hidden>
+  <div class="mark" aria-hidden="true"><svg class="ic"><use href="#i-remote"/></svg></div>
   <h1 data-i="pair_title">Artosia remote</h1>
   <label for="pin" data-i="pin">PIN</label>
   <input id="pin" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="one-time-code" placeholder="0000">
   <p id="pair-error" role="alert"></p>
-  <button id="pair-btn" class="btn light" type="button" data-i="connect">Connect</button>
-  <div class="lang-switch" data-lang-switch></div>
+  <button id="pair-btn" class="btn primary press" type="button" data-i="connect">Connect</button>
+  <div class="seg" data-lang-switch></div>
 </main>
 
 <main id="remote" hidden>
   <div id="head">
     <h1 id="title"></h1>
-    <div id="head-right"><span id="clock-pill" hidden></span><span id="count"></span></div>
+    <div id="head-right"><span id="clock-pill" class="pill warn" hidden></span><span id="count"></span></div>
   </div>
-  <div id="lost" role="status" hidden><span data-i="lost"></span><small data-i="retrying"></small></div>
+  <div id="lost" role="status" hidden><svg class="ic" aria-hidden="true"><use href="#i-lost"/></svg><div><span data-i="lost"></span><small data-i="retrying"></small></div></div>
 
   <div id="panes">
     <section id="pane-live" class="pane" role="tabpanel">
       <section id="live" class="card">
-        <div class="tag" id="live-tag"></div>
+        <div class="card-head">
+          <span class="pill live" id="live-pill" data-i="live"></span>
+          <span class="tag" id="live-tag"></span>
+          <span class="pill warn end" id="live-state"></span>
+        </div>
         <div class="body" id="live-text"></div>
-        <div class="state" id="live-state"></div>
       </section>
       <section id="next" class="card">
-        <div class="tag" id="next-tag"></div>
+        <div class="card-head"><span class="tag" id="next-tag"></span></div>
         <div class="body" id="next-text"></div>
       </section>
       <div id="sections" data-i-aria="jump"></div>
       <div id="toggles">
-        <button id="text-btn" class="btn hides" type="button" aria-pressed="false" data-i="clear_text"></button>
-        <button id="black-btn" class="btn hides" type="button" aria-pressed="false" data-i="black"></button>
-        <button id="logo-btn" class="btn hides" type="button" aria-pressed="false" data-i="logo"></button>
-        <button id="live-btn" class="btn onair" type="button" aria-pressed="true" data-i="live"></button>
+        <button id="text-btn" class="tile hides press" type="button" aria-pressed="false"><svg class="ic" aria-hidden="true"><use href="#i-text"/></svg><span data-i="clear_text"></span></button>
+        <button id="black-btn" class="tile hides press" type="button" aria-pressed="false"><svg class="ic" aria-hidden="true"><use href="#i-black"/></svg><span data-i="black"></span></button>
+        <button id="logo-btn" class="tile hides press" type="button" aria-pressed="false"><svg class="ic" aria-hidden="true"><use href="#i-logo"/></svg><span data-i="logo"></span></button>
+        <button id="live-btn" class="tile onair press" type="button" aria-pressed="true"><svg class="ic" aria-hidden="true"><use href="#i-live"/></svg><span data-i="live"></span></button>
       </div>
       <p id="logo-note" class="note" hidden data-i="logo_needs"></p>
       <div id="list" class="scroll"></div>
     </section>
 
     <section id="pane-plan" class="pane" role="tabpanel" hidden>
-      <button id="plan-show" class="btn light" type="button" disabled></button>
       <div id="plan-list" class="scroll"></div>
+      <button id="plan-show" class="btn primary press" type="button" disabled></button>
     </section>
 
     <section id="pane-search" class="pane" role="tabpanel" hidden>
-      <input id="search" class="field" type="search" maxlength="100" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="search" data-i-ph="search_ph" data-i-aria="search_ph">
+      <div class="search-box">
+        <svg class="ic" aria-hidden="true"><use href="#i-search"/></svg>
+        <input id="search" class="field" type="search" maxlength="100" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="search" data-i-ph="search_ph" data-i-aria="search_ph">
+      </div>
       <p id="search-hint" class="note"></p>
       <div id="hits" class="scroll"></div>
     </section>
@@ -245,8 +386,8 @@ button:disabled { opacity: 0.4; cursor: default; }
         <h2 data-i="message"></h2>
         <input id="msg" class="field" maxlength="200" autocomplete="off" data-i-ph="message_ph" data-i-aria="message">
         <div class="line">
-          <button id="msg-show" class="btn light" type="button" style="flex:1" data-i="message_show"></button>
-          <button id="msg-hide" class="btn hides" type="button" style="flex:1" data-i="message_hide"></button>
+          <button id="msg-show" class="btn primary press" type="button" data-i="message_show"></button>
+          <button id="msg-hide" class="btn hides press" type="button" data-i="message_hide"></button>
         </div>
         <p id="msg-state" class="note"></p>
       </section>
@@ -258,13 +399,13 @@ button:disabled { opacity: 0.4; cursor: default; }
           <span class="note" data-i="minutes"></span>
         </div>
         <div class="line">
-          <button id="cd-start" class="btn light" type="button" style="flex:1" data-i="start"></button>
-          <button id="cd-stop" class="btn" type="button" style="flex:1" data-i="stop"></button>
+          <button id="cd-start" class="btn primary press" type="button" data-i="start"></button>
+          <button id="cd-stop" class="btn press" type="button" data-i="stop"></button>
         </div>
       </section>
       <section class="card">
         <h2 data-i="language"></h2>
-        <div class="lang-switch" data-lang-switch></div>
+        <div class="seg" data-lang-switch></div>
       </section>
       <section id="keys-card" class="card">
         <h2 data-i="keys_title"></h2>
@@ -274,14 +415,14 @@ button:disabled { opacity: 0.4; cursor: default; }
   </div>
 
   <div id="bar">
-    <button id="prev-btn" class="btn" type="button" data-i="back"></button>
-    <button id="next-btn" class="btn light" type="button" data-i="next_btn"></button>
+    <button id="prev-btn" class="btn press" type="button"><svg class="ic" aria-hidden="true"><use href="#i-up"/></svg><span data-i="back"></span></button>
+    <button id="next-btn" class="btn primary press" type="button"><svg class="ic" aria-hidden="true"><use href="#i-down"/></svg><span data-i="next_btn"></span></button>
   </div>
   <nav id="tabs" role="tablist">
-    <button class="tab" type="button" role="tab" data-tab="live" data-i="tab_live" data-keep></button>
-    <button class="tab" type="button" role="tab" data-tab="plan" data-i="tab_plan" data-keep></button>
-    <button class="tab" type="button" role="tab" data-tab="search" data-i="tab_search" data-keep></button>
-    <button class="tab" type="button" role="tab" data-tab="more" data-i="tab_more" data-keep></button>
+    <button class="tab press" type="button" role="tab" data-tab="live" data-keep><svg class="ic" aria-hidden="true"><use href="#i-live"/></svg><span data-i="tab_live"></span></button>
+    <button class="tab press" type="button" role="tab" data-tab="plan" data-keep><svg class="ic" aria-hidden="true"><use href="#i-plan"/></svg><span data-i="tab_plan"></span></button>
+    <button class="tab press" type="button" role="tab" data-tab="search" data-keep><svg class="ic" aria-hidden="true"><use href="#i-search"/></svg><span data-i="tab_search"></span></button>
+    <button class="tab press" type="button" role="tab" data-tab="more" data-keep><svg class="ic" aria-hidden="true"><use href="#i-more"/></svg><span data-i="tab_more"></span></button>
   </nav>
 </main>
 
@@ -443,7 +584,7 @@ function applyLang() {
     box.replaceChildren();
     for (const [code, name] of LANGS) {
       const b = document.createElement("button");
-      b.type = "button"; b.className = "btn small" + (lang === code ? " on" : "");
+      b.type = "button"; b.className = "seg-btn press" + (lang === code ? " on" : "");
       b.textContent = name; b.dataset.keep = "";
       b.setAttribute("aria-pressed", String(lang === code));
       b.addEventListener("click", () => setLang(code));
@@ -585,6 +726,19 @@ function el(tag, cls, text) {
   return e;
 }
 
+function icon(name) {
+  /* The namespace is read off the page's own drawing: the page names no address at all. */
+  const ns = document.querySelector("svg").namespaceURI;
+  const svg = document.createElementNS(ns, "svg");
+  svg.setAttribute("class", "ic");
+  svg.setAttribute("aria-hidden", "true");
+  const use = document.createElementNS(ns, "use");
+  use.setAttribute("href", "#i-" + name);
+  svg.append(use);
+  return svg;
+}
+function groupClass(group) { return " g" + Math.min(Math.max(group | 0, 0), 5); }
+
 function liveSection(s) {
   let at = -1;
   if (s.live === null) return at;
@@ -600,9 +754,15 @@ function render() {
   $("count").textContent = n && live !== null ? t("n_of", live + 1, n) : (n ? t("n_slides", n) : "");
 
   const cur = live !== null ? s.slides[live] : null;
-  $("live-tag").textContent = cur && cur.label ? nice(cur.label) : t("live");
+  /* Red while the room sees these words; a yellow word for what keeps them from it. */
+  const kept = !cur || s.off || s.hidden || s.black || s.logo;
+  $("live-tag").textContent = cur && cur.label ? nice(cur.label) : "";
   $("live-text").textContent = cur ? cur.text : t("nothing_live");
-  $("live").classList.toggle("dim", !cur || s.off || s.hidden || s.black || s.logo);
+  $("live").classList.toggle("dim", kept);
+  $("live").classList.toggle("onair", !kept);
+  $("live-pill").hidden = kept;
+  /* As in the window: the live slide is yellow, never red, while the room does not see it. */
+  $("list").classList.toggle("kept", kept);
   $("live-state").textContent = s.off ? t("projector_off") : (s.logo ? t("logo_showing") : (s.black ? t("screen_black") : (s.hidden ? t("text_cleared") : "")));
 
   const nextIdx = live !== null ? live + 1 : (n ? 0 : -1);
@@ -627,7 +787,7 @@ function renderSections(s) {
   if (changed("sections", [s.sections, lang])) {
     box.replaceChildren();
     s.sections.forEach((x) => {
-      const b = el("button", "chip g" + Math.min(Math.max(x.group | 0, 0), 5), x.short || x.label);
+      const b = el("button", "chip press" + groupClass(x.group), nice(x.label) || x.short);
       b.type = "button";
       b.setAttribute("aria-label", nice(x.label));
       b.addEventListener("click", () => send({ cmd: "goto", index: x.slide }));
@@ -639,16 +799,26 @@ function renderSections(s) {
     b.classList.toggle("live", i === at);
     if (i === at) b.setAttribute("aria-current", "true"); else b.removeAttribute("aria-current");
   });
+  /* The chip of the part being sung stays in view when the row is longer than the phone. */
+  const liveChip = box.children[at];
+  if (liveChip && changed("liveChip", [at, s.sections.length]) && box.scrollWidth > box.clientWidth) {
+    box.scrollTo({ left: liveChip.offsetLeft - (box.clientWidth - liveChip.offsetWidth) / 2, behavior: "smooth" });
+  }
 }
 
 function renderSlides(s, live) {
   const list = $("list");
-  if (changed("slides", [s.slides, lang])) {
+  if (changed("slides", [s.slides, s.sections, lang])) {
     list.replaceChildren();
     s.slides.forEach((sl, i) => {
-      const b = el("button", "slide");
+      const b = el("button", "slide press");
       b.type = "button";
-      b.append(el("span", "l", nice(sl.label) || String(i + 1)), el("span", "t", sl.text));
+      /* A number, the section in its own colour, the words: the row the window draws. */
+      let group = null;
+      s.sections.forEach((x) => { if (x.slide <= i) group = x.group; });
+      const tag = el("span", "l");
+      if (sl.label) tag.append(el("span", "tagchip" + (group === null ? "" : groupClass(group)), nice(sl.label)));
+      b.append(el("span", "n", String(i + 1)), tag, el("span", "t", sl.text));
       b.addEventListener("click", () => send({ cmd: "goto", index: i }));
       list.append(b);
     });
@@ -685,9 +855,10 @@ function renderPlan(s) {
         list.append(d);
         return;
       }
-      const b = el("button", "row");
+      const b = el("button", "row press");
       b.type = "button"; b.dataset.id = p.id;
-      b.append(el("span", "t", p.title), el("span", "w", p.live ? t("plan_live") : ""));
+      const kind = ["song", "passage", "announcements"].includes(p.kind) ? p.kind : "item";
+      b.append(icon(kind), el("span", "t", p.title), el("span", "pill live", p.live ? t("plan_live") : ""));
       b.addEventListener("click", () => { picked = picked === p.id ? null : p.id; markPicked(); refreshPlanShow(); });
       list.append(b);
     });
@@ -727,17 +898,17 @@ function renderHits(s) {
       const row = el("div", "hit");
       const txt = el("div", "txt");
       txt.append(el("div", "t", h.title), el("div", "d", h.detail));
-      const show = el("button", "btn small light", t("show"));
+      const show = el("button", "btn small primary press", t("show"));
       show.type = "button"; show.setAttribute("aria-label", t("show_aria", h.title));
       show.addEventListener("click", () => { send({ cmd: "hit", id: h.id }); setTab("live"); });
-      const add = el("button", "btn small", t("add"));
+      const add = el("button", "btn small press", t("add"));
       add.type = "button"; add.setAttribute("aria-label", t("add_aria", h.title));
       add.addEventListener("click", () => {
         send({ cmd: "add", id: h.id });
         add.textContent = t("added"); add.disabled = true;
         setTimeout(() => { add.textContent = t("add"); add.disabled = lost; }, 1500);
       });
-      row.append(txt, show, add);
+      row.append(icon(["song", "passage"].includes(h.kind) ? h.kind : "item"), txt, show, add);
       list.append(row);
     });
   }
