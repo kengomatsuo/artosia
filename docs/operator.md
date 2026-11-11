@@ -8,15 +8,27 @@ The window reads left to right in the order things happen (`ui/shell.rs`).
 
 | Panel | What it holds | The one action |
 |---|---|---|
-| Plan (left) | Today's songs, passages and announcements, in order | Click an item to put it in Preview; drag it to move it |
-| Preview (middle) | What comes next, as a numbered list of its slides over a picture of the slide with the ring | Enter, or click a row |
-| Live (right) | The same list for what the room sees, over its picture, with Back, Next, Clear text, Black and Logo | Down, Space or Next |
+| Plan (left) | The songs, passages and announcements of one service, in order, with Add under them | Click an item to put it in Preview; drag it to move it |
+| Preview (middle) | What comes next, as a numbered list of its slides over a picture of the slide with the ring | Show, or Enter: the ringed slide moves into Live |
+| Live (right) | The same list for what the projector holds, over its picture, with Prev, Next and the four states | Next, Down or Space |
 
 The owner picked this arrangement on 2026-11-10 from four drawn after OpenLP, ProPresenter, FreeShow and Lerret. It is the shape OpenLP and EasiSlides have, which the volunteers already know. A list row shows the words at reading size where a thumbnail could not, and its number is the digit key that jumps there. A deck with no sections, such as a passage, numbers every slide.
 
 Panels differ by tone (`theme::surf`): the plan sits furthest back, the two lists are lifted, and each panel has a title strip. The owner's complaint was that the dark window "doesn't show at all the section hierarchy". A test in `theme.rs` holds the text and the grey text at 4.5 to 1 on every surface in both themes; the light kit's stock grey failed it at 3.7 and is replaced there.
 
-A red ring round the Live pane, a red row and a red pill mark what is on the projector. Red means nothing else anywhere in the window. Yellow replaces all three while Black, Clear text or the logo keeps the slide off the projector. The ring is its own element pinned over the pane: Rune draws a border under the element's children, so the pane's own border showed only down its two sides, which read as edge bars.
+A red ring round the Live pane, a red row with a round sign and a red dot on the plan item mark what the room sees. Red means nothing else anywhere in the window. Yellow replaces them while Black, No text or the logo keeps the slide off the projector, and there is no ring while the Live switch is off. The ring is its own element pinned over the pane: Rune draws a border under the element's children, so the pane's own border showed only down its two sides, which read as edge bars.
+
+### Preview is safe, and Show is one thing and Live another (2026-11-11, owner-directed)
+
+Nothing reaches the projector from a click in Preview, on a plan row or on a search result. A click in Preview moves the ring (`state.rs` `select_at`). Three things send to the Live list: Show (or Enter), Next at the end of the live item, and Show now in the search. Inside the Live list a click or an arrow moves the projector, because that list is the projector.
+
+Show moves Preview into the Live list. Whether the room sees the Live list is the Live switch (the Live tile, F6, `toggle_live`): on, the tile is red and the pane is ringed; off, the projector's window is gone, the Live list keeps its place in grey, and Show still fills it. The owner: "Show should not be same as live, it should only move to live view but not force live on." EasyWorship has the same switch ("To turn off the live output, click the LIVE button"). The switch is on at every start and is never saved, so a service that ended with it off does not begin the next one dark; the saved switch is the one in the Screens dialog, and pressing Live turns that one on too.
+
+Going back: the Live title has a clock button once something has left the projector. It lists what was shown before, newest first, each with the slide it was on (`App::history`). Choosing one brings it into Preview with the ring where it was left, and Show returns to it in one step, with none of the songs between passing over the room's screen.
+
+### The strips under the lists
+
+Each list stands over a strip: the picture of its slide, and the tiles that act on it (`ui/shell.rs` `Foot`, `ui/widgets.rs` `Tile`, `ui/live.rs`). The picture takes the width the pane can give, up to about a third of the window's height, and wears its slide's section as a chip. The tiles are equal within a row and sized from the strip, never from their words, so every language draws the same strip. Under Preview: Show, and two tiles that bring the plan item before or after into Preview, each carrying the title of the item it brings. Under Live: Prev and Next, then No text, Black, Logo and Live, each lit while on. Every tile prints its key, drawn as the keyboard prints it. The rules and their sources are in [ux-principles.md](ux-principles.md).
 
 ### Preview is what comes next
 
@@ -42,10 +54,6 @@ The release is heard as a key (`Key::Modifier`, switched on with `App::modifier_
 The two message fields and the countdown sat in a strip under both panes until 2026-11-10. The owner had them taken out for the room they cost: "That space can be used to enlargen the preview and live view". They are started from the search (`countdown 5`, `message the car park is full`, `stage one more chorus`) or the phone, and while one shows, a yellow pill in the Live title strip says so; pressing the pill takes it off. The stage message has no field on the phone page.
 
 While a song or the announcements are being edited, the editor takes the Preview pane, and Live stays as a thin column. Next is one click away while a typo is being fixed.
-
-The strip under each list has a fixed height. At a laptop's width the three toggles take two rows, and before the height was fixed the two panes ended on different lines in Indonesian.
-
-Back and Next carry arrows that point up and down, the way the lists run and the way their keys point. They and the three toggles keep their words: the three toggles have no icon a volunteer already knows, and a wrong press takes the words off the room's screen.
 
 ### Dragging a plan row
 
@@ -135,12 +143,17 @@ The arrows are the ones EasiSlides taught the volunteers (owner, 2026-11-10: "Ea
 | Shift with an arrow | The same four moves for a ring in the live song. The projector does not change until Shift is let go, which shows the ringed slide. Esc first shows nothing |
 | Ctrl with an arrow | The same four moves for the ring in Preview, which stays where it is put. Past either end it goes on into the plan item before or after. With nothing live the arrows do this without Ctrl |
 | Enter | Show the slide with the ring; with the ring on the live slide, Next |
-| 1 to 9, 0 | Jump to that section of the live song in sung order (0 is the tenth). With nothing live, start the open song there. Each list row shows its number |
+| 1 to 9, 0 | Jump to that section of the live song in sung order (0 is the tenth). With nothing live, the ring goes there and nothing starts. Each list row shows its number as a key |
+| C, V, B, P, I, E | The next section of that kind in the live song, going round to the first: chorus, verse, bridge, pre-chorus, intro, ending (`jump_to_marker`). Only letters the song has are taken; any other letter starts a search. Settings switches this off, as WCAG 2.1.4 asks of single-letter keys |
+| Ctrl with 1 to 9 | The ring in Preview goes to that section |
+| / | The search, when a letter would jump |
 | Esc | Put the live item in Preview |
 | Tab, Shift Tab | Put the next or the previous plan item in Preview |
 | Alt Down, Alt Up | Move the Preview item in the plan |
 | Delete | Take the Preview item out of the plan (Undo in the toast) |
-| F1, F2, F3 | Clear text, Black, Logo |
+| F1, F2, F3 | No text, Black, Logo |
+| F6 | The Live switch: the projector on or off |
+| Ctrl comma | Settings |
 | F4 | Put the first suggestion in Preview: what the listener heard, else what usually follows the live song. It never goes to the projector by itself, because a misheard word must not reach the room |
 | F5 | Put the announcements in Preview |
 | Ctrl E, Ctrl N, Ctrl S | Edit the Preview song, new song, save |
