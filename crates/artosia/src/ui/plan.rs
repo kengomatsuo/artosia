@@ -173,23 +173,6 @@ pub(crate) fn row_menu(s: &App, k: &Kit, item: &PlanItem, at: usize, layer: &mut
         .build(k, layer)
 }
 
-/// The plan's own menu: start over, or add a divider.
-pub(crate) fn header_menu(s: &App, k: &Kit, layer: &mut Vec<El>) -> El {
-    let trigger = btn(t::PLAN_ITEM_MENU()).icon(&icons::DOTS).icon_only().ghost().build(k, |s, tx| {
-        s.more_menu = !s.more_menu;
-        tx.blur();
-    });
-    Menu::new("plan-header-menu")
-        .trigger(trigger.key("plan-header-menu-button"))
-        .open(s.more_menu)
-        .on_close(|s: &mut App| s.more_menu = false)
-        .item(MenuItem::new(t::PLAN_NEW()).icon(&icons::PLUS).on_select(|s: &mut App| {
-            s.new_plan();
-            s.more_menu = false;
-        }))
-        .build(k, layer)
-}
-
 pub(crate) fn empty(k: &Kit) -> El {
     col()
         .key("plan-empty")

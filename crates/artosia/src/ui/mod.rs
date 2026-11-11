@@ -7,6 +7,7 @@ mod editor;
 pub(crate) mod live;
 mod palette;
 pub(crate) mod plan;
+mod plans;
 mod sheets;
 mod shell;
 pub(crate) mod slides;
@@ -253,6 +254,7 @@ pub fn view(s: &App, cx: &mut Cx<App>) -> El {
         palette::view(s, k, &mut layer);
     }
     sheets::view(s, k, &mut layer);
+    plans::view(s, k, &mut layer);
     layer.extend(toast(s, k));
     rune_kit::root(body, layer)
 }

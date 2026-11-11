@@ -4,7 +4,7 @@ use std::sync::Arc;
 
 use artosia_core::bible::Reference;
 use artosia_core::deck::{Announcement, DeckSource, Fill, Person};
-use artosia_core::plan::{Plan, PlanEntry};
+use artosia_core::plan::PlanEntry;
 use artosia_core::song::{SectionKind, Song, Tag, parse_order, song_from_paste, tidy_lyrics, write_order};
 use artosia_remote::{RemoteCommand, RemoteConfig, RemoteHit, RemotePlanItem, RemoteSection, RemoteServer, RemoteSlide, RemoteState};
 use artosia_slides::frame::ToOutput;
@@ -137,16 +137,12 @@ impl App {
         }
     }
 
+    /// Starts another plan beside the open one, which is kept (`plans.rs`).
     pub fn new_plan(&mut self) {
-        self.save_plan_now();
-        self.plan = Plan::named(t::PLAN_DEFAULT_NAME());
-        self.settings.plan = 0;
-        self.open = None;
-        self.touch_plan();
-        self.touch_settings();
+        self.create_plan();
     }
 
-    fn save_plan_now(&mut self) {
+    pub(crate) fn save_plan_now(&mut self) {
         if self.store.save_plan(&mut self.plan).is_ok() && self.settings.plan != self.plan.id {
             self.settings.plan = self.plan.id;
             self.settings_dirty = true;
@@ -184,6 +180,7 @@ impl App {
                     self.reload_announcements();
                 }
             }
+            Some(Undo::Plan(plan)) => self.restore_plan(*plan),
             None => {}
         }
     }

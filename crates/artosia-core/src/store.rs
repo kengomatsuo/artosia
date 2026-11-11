@@ -321,6 +321,13 @@ impl Store {
         Ok(())
     }
 
+    /// Puts a deleted plan back under its old id, so the learning log still points at it.
+    pub fn restore_plan(&self, plan: &Plan) -> Result<()> {
+        let body = serde_json::to_string(plan)?;
+        self.db.execute("insert or replace into plans (id, name, body) values (?1, ?2, ?3)", params![plan.id, plan.name, body])?;
+        Ok(())
+    }
+
     pub fn delete_plan(&self, id: i64) -> Result<()> {
         self.db.execute("delete from plans where id = ?1", [id])?;
         Ok(())
@@ -487,6 +494,30 @@ Other words
         assert!(store.set_setting("lines", &4usize).is_ok());
         assert_eq!(store.setting::<usize>("lines"), Some(4));
         assert_eq!(store.setting::<usize>("missing"), None);
+    }
+
+    #[test]
+    fn the_plan_a_library_already_holds_becomes_the_first_of_many() {
+        let store = store();
+        // A row written before plans had a day: only the old fields in its body.
+        let old = r#"{"id":0,"name":"Today","items":[{"id":1,"entry":"Announcements"}],"next_id":2}"#;
+        store.db().execute("insert into plans (name, body) values ('Today', ?1)", [old]).expect("insert");
+        let mut second = Plan::named("Youth");
+        second.date = "2026-11-14".into();
+        second.used = 99;
+        assert!(store.save_plan(&mut second).is_ok());
+        let plans = store.plans().unwrap_or_default();
+        assert_eq!(plans.len(), 2);
+        let first = plans.iter().find(|plan| plan.name == "Today").expect("the old plan is still there");
+        assert_eq!((first.items.len(), first.date.as_str(), first.used), (1, "", 0));
+        let youth = plans.iter().find(|plan| plan.name == "Youth").expect("the new plan is there");
+        assert_eq!((youth.date.as_str(), youth.used), ("2026-11-14", 99));
+        // A deleted plan comes back under its own id.
+        assert!(store.delete_plan(youth.id).is_ok());
+        assert_eq!(store.plans().unwrap_or_default().len(), 1);
+        assert!(store.restore_plan(youth).is_ok());
+        let back = store.plans().unwrap_or_default();
+        assert!(back.iter().any(|plan| plan.id == youth.id && plan.name == "Youth"));
     }
 
     #[test]

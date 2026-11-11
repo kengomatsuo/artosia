@@ -16,6 +16,7 @@ mod languages;
 mod learning;
 mod link;
 mod palette;
+mod plans;
 mod state;
 mod stream;
 mod strings;
@@ -373,6 +374,22 @@ const SCENES: &[Scene] = &[
     ("learned-search", |s| {
         s.seed_demo_history();
         s.open_palette(Scope::All, "mor");
+    }),
+    // Several plans: the list under the title with two more plans kept, and the rename dialog.
+    ("plans", |s| {
+        s.demo_plans();
+        s.open_switcher();
+    }),
+    ("plan-rename", |s| {
+        s.demo_plans();
+        s.begin_rename(false);
+        if let Some(renaming) = s.switcher.renaming.as_mut() {
+            renaming.date.replace_text("2026-11-15");
+        }
+    }),
+    ("search-plan", |s| {
+        s.demo_plans();
+        s.open_palette(Scope::All, "youth");
     }),
     ("toast", |s| {
         if let Some(id) = s.plan.items.get(2).map(|item| item.id) {

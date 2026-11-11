@@ -164,6 +164,8 @@ pub enum Undo {
     Editor(Box<Editor>),
     /// The search history was forgotten.
     History(Box<artosia_core::learn::History>),
+    /// A whole plan was deleted.
+    Plan(Box<Plan>),
 }
 
 pub struct Toast {
@@ -339,6 +341,8 @@ pub struct App {
     pub toast: Option<Toast>,
     pub plan_menu: Option<u64>,
     pub more_menu: bool,
+    /// The list of plans, the rename dialog, and where Next starts after a switch (`plans.rs`).
+    pub switcher: crate::plans::Switcher,
     pub easislides: Option<PathBuf>,
 
     pub link: Link,
@@ -494,6 +498,7 @@ impl App {
             toast: None,
             plan_menu: None,
             more_menu: false,
+            switcher: Default::default(),
             easislides: artosia_core::import::easislides_folder(),
             link: Link::default(),
             remote: None,
@@ -1035,7 +1040,13 @@ impl App {
     /// The plan item after the live one, with its deck.
     fn neighbour(&self, forward: bool) -> Option<(u64, Deck)> {
         let live = self.live.as_ref()?;
-        let mut id = live.item.or(if forward { self.resume } else { None })?;
+        let mut id = match live.item.or(if forward { self.resume } else { None }) {
+            Some(id) => id,
+            // Right after another plan was opened, what is live belongs to none of its items and
+            // Next goes on from the top of the new plan.
+            None if forward && self.switcher.fresh => return self.plan_start(),
+            None => return None,
+        };
         // Skips entries with nothing to show, such as a deleted song.
         for _ in 0..self.plan.items.len() {
             let item = if forward { self.plan.next_showable(id) } else { self.plan.previous_showable(id) }?;

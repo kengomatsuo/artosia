@@ -7694,5 +7694,214 @@
       "projector"
     ],
     "notes": "No full stop."
+  },
+  {
+    "key": "PLAN_SWITCH_LABEL",
+    "kind": "const",
+    "screen": "Main window, left column (the plan). The title at the top of the column is a button with the open plan's name; it opens a list of the church's plans (one for each service, such as Sunday morning, Sunday evening, youth), and under the list a few actions on the open plan.",
+    "moment": "A volunteer hovers the title button, or a screen reader reads it.",
+    "role": "tooltip and accessible name",
+    "does": "Names the button that opens the list of plans.",
+    "budget": 14,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "plan"
+    ],
+    "notes": "A church keeps one plan for each service. Same noun for the plan everywhere."
+  },
+  {
+    "key": "PLAN_DUPLICATE",
+    "kind": "const",
+    "screen": "Main window, left column (the plan). The title at the top of the column is a button with the open plan's name; it opens a list of the church's plans (one for each service, such as Sunday morning, Sunday evening, youth), and under the list a few actions on the open plan.",
+    "moment": "In the menu under the list of plans.",
+    "role": "menu entry",
+    "does": "Makes a new plan holding the same items as the open one, for another service. The copy has no date.",
+    "budget": 24,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "plan"
+    ],
+    "notes": "A church keeps one plan for each service. Same noun for the plan everywhere."
+  },
+  {
+    "key": "PLAN_RENAME",
+    "kind": "const",
+    "screen": "Main window, left column (the plan). The title at the top of the column is a button with the open plan's name; it opens a list of the church's plans (one for each service, such as Sunday morning, Sunday evening, youth), and under the list a few actions on the open plan.",
+    "moment": "In the menu under the list of plans, and as the title of the dialog that follows.",
+    "role": "menu entry and dialog title",
+    "does": "Lets the volunteer give the open plan a name and an optional date, such as Sunday 10:00.",
+    "budget": 24,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "plan"
+    ],
+    "notes": "A church keeps one plan for each service. Same noun for the plan everywhere."
+  },
+  {
+    "key": "PLAN_DELETE",
+    "kind": "const",
+    "screen": "Main window, left column (the plan). The title at the top of the column is a button with the open plan's name; it opens a list of the church's plans (one for each service, such as Sunday morning, Sunday evening, youth), and under the list a few actions on the open plan.",
+    "moment": "Last entry of the menu under the list of plans, drawn in the danger colour.",
+    "role": "menu entry",
+    "does": "Deletes the open plan with all its items. A toast follows with an Undo button.",
+    "budget": 24,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "plan"
+    ],
+    "notes": "A church keeps one plan for each service. Same noun for the plan everywhere."
+  },
+  {
+    "key": "PLAN_NEW_DETAIL",
+    "kind": "const",
+    "screen": "The search panel, a command row: the name of the command is shown above this line.",
+    "moment": "The volunteer types something like new plan.",
+    "role": "command detail",
+    "does": "Says the command opens another, empty plan for a different service and keeps the open one.",
+    "budget": 40,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "plan"
+    ],
+    "notes": "A church keeps one plan for each service. Same noun for the plan everywhere."
+  },
+  {
+    "key": "PLAN_NEW_NAME",
+    "kind": "const",
+    "screen": "The list of plans, and the plan's title at the top of the column.",
+    "moment": "Right after a volunteer starts a new plan and before they have named it.",
+    "role": "default name",
+    "does": "The name a plan has until it is renamed.",
+    "budget": 14,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "plan"
+    ],
+    "notes": "A name, not a sentence; a volunteer replaces it at once. Unlike the default name of the first plan, it is not about today."
+  },
+  {
+    "key": "PLAN_NAME_LABEL",
+    "kind": "const",
+    "screen": "The rename dialog: two fields, one under the other, then Cancel and Save.",
+    "moment": "The volunteer is naming a plan.",
+    "role": "field label and placeholder",
+    "does": "Labels the field for the plan's name.",
+    "budget": 16,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "plan"
+    ],
+    "notes": "A church keeps one plan for each service. Same noun for the plan everywhere."
+  },
+  {
+    "key": "PLAN_DATE_LABEL",
+    "kind": "const",
+    "screen": "The rename dialog: the second field.",
+    "moment": "The volunteer is naming a plan.",
+    "role": "field label",
+    "does": "Labels the field for the day the service is held.",
+    "budget": 12,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [],
+    "notes": "A church keeps one plan for each service. Same noun for the plan everywhere."
+  },
+  {
+    "key": "PLAN_DATE_HINT",
+    "kind": "const",
+    "screen": "The rename dialog: grey text inside the empty date field.",
+    "moment": "The date field is empty.",
+    "role": "placeholder",
+    "does": "Says the date may be left empty and which order the parts go in (year, month, day, with dashes between).",
+    "budget": 30,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [],
+    "notes": "Keep the dashes; the field reads year-month-day only."
+  },
+  {
+    "key": "KIND_PLAN",
+    "kind": "const",
+    "screen": "The search panel: the grey line under a result.",
+    "moment": "A typed name matches one of the church's plans.",
+    "role": "result detail",
+    "does": "Says this result is a whole plan, and picking it opens that plan.",
+    "budget": 14,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "plan"
+    ],
+    "notes": "A church keeps one plan for each service. Same noun for the plan everywhere."
+  },
+  {
+    "key": "plan_items",
+    "kind": "fn",
+    "screen": "The list of plans: a small grey box at the end of a plan's row.",
+    "moment": "A plan has no date, so it shows how much it holds.",
+    "role": "row badge",
+    "does": "A count of the items in a plan.",
+    "budget": 14,
+    "variables": [
+      {
+        "name": "count",
+        "example": "7",
+        "what": "number of items (songs, passages, dividers) in the plan"
+      }
+    ],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "plan"
+    ],
+    "notes": "Shown as a small box; short. Plural follows the language's rules."
+  },
+  {
+    "key": "plan_copy_name",
+    "kind": "fn",
+    "screen": "The list of plans and the plan's title.",
+    "moment": "The volunteer duplicates a plan.",
+    "role": "default name",
+    "does": "The name a copy of a plan starts with, made from the original's name.",
+    "budget": 30,
+    "variables": [
+      {
+        "name": "name",
+        "example": "Sunday 10:00",
+        "what": "the name of the plan that was copied"
+      }
+    ],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "plan"
+    ],
+    "notes": "The name stays as written and only a short word marks it as a copy."
+  },
+  {
+    "key": "plan_deleted",
+    "kind": "fn",
+    "screen": "Toast after deleting a plan, with an Undo button.",
+    "moment": "The volunteer deleted a whole plan.",
+    "role": "toast",
+    "does": "Confirms a named plan was deleted; an Undo button sits beside it.",
+    "budget": 40,
+    "variables": [
+      {
+        "name": "name",
+        "example": "Youth Saturday",
+        "what": "the name of the deleted plan"
+      }
+    ],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "plan"
+    ],
+    "notes": "Same pattern as the toast for a removed plan item, but about a whole plan."
   }
 ]

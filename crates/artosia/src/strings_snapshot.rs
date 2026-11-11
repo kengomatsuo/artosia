@@ -40,6 +40,16 @@ pub fn dump() -> String {
     line(out, "PLAN_CHIP", PLAN_CHIP());
     line(out, "KIND_LOOK", KIND_LOOK());
     line(out, "KIND_BIBLE", KIND_BIBLE());
+    line(out, "KIND_PLAN", KIND_PLAN());
+    line(out, "PLAN_SWITCH_LABEL", PLAN_SWITCH_LABEL());
+    line(out, "PLAN_DUPLICATE", PLAN_DUPLICATE());
+    line(out, "PLAN_RENAME", PLAN_RENAME());
+    line(out, "PLAN_DELETE", PLAN_DELETE());
+    line(out, "PLAN_NEW_DETAIL", PLAN_NEW_DETAIL());
+    line(out, "PLAN_NEW_NAME", PLAN_NEW_NAME());
+    line(out, "PLAN_NAME_LABEL", PLAN_NAME_LABEL());
+    line(out, "PLAN_DATE_LABEL", PLAN_DATE_LABEL());
+    line(out, "PLAN_DATE_HINT", PLAN_DATE_HINT());
     line(out, "COUNTDOWN_DETAIL", COUNTDOWN_DETAIL());
     line(out, "MESSAGE_DETAIL", MESSAGE_DETAIL());
     line(out, "BIBLE_LOADING", BIBLE_LOADING());
@@ -114,7 +124,6 @@ pub fn dump() -> String {
     line(out, "CMD_UNDO_DETAIL", CMD_UNDO_DETAIL());
     line(out, "CMD_LOOP", CMD_LOOP());
     line(out, "CMD_LOOP_DETAIL", CMD_LOOP_DETAIL());
-    line(out, "CMD_NEW_PLAN_DETAIL", CMD_NEW_PLAN_DETAIL());
     line(out, "BTN_LOOK", BTN_LOOK());
     line(out, "BTN_SCREENS", BTN_SCREENS());
     line(out, "BTN_PHONE", BTN_PHONE());
