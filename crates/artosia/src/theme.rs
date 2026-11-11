@@ -225,6 +225,7 @@ pub mod icons {
     icon!(BLACK_SCREEN, "a-black-screen", r#"<rect x="2" y="3.5" width="12" height="8" rx="1.5" fill="currentColor"/><path d="M6 13.5H10" stroke="currentColor" stroke-linecap="round"/>"#);
     icon!(BADGE, "a-badge", r#"<circle cx="8" cy="7" r="4.5" stroke="currentColor"/><path d="M6 10.8L5 14L8 12.6L11 14L10 10.8" stroke="currentColor" stroke-linejoin="round"/>"#);
     icon!(HISTORY, "a-history", r#"<circle cx="8" cy="8" r="5.5" stroke="currentColor"/><path d="M8 5V8L10 9.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>"#);
+    icon!(EAR, "a-ear", r#"<path d="M3.8 7.2C3.8 4.3 5.8 2.4 8.3 2.4C10.9 2.4 12.4 4.3 12.4 6.6C12.4 8.4 11.5 9.3 10.6 10.2C9.9 10.9 9.6 11.4 9.6 12C9.6 13 8.8 13.7 7.8 13.7C6.9 13.7 6.3 13.2 6.1 12.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path d="M6.6 7.2C6.6 6 7.4 5.2 8.4 5.2C9.4 5.2 10 6 10 6.9C10 7.8 9.3 8.1 8.9 8.7" stroke="currentColor" stroke-linecap="round"/>"#);
     icon!(ITEM_BEFORE, "a-item-before", r#"<path d="M4 3.5H12" stroke="currentColor" stroke-linecap="round"/><path d="M8 6.5L11.5 12H4.5Z" stroke="currentColor" stroke-linejoin="round"/>"#);
     icon!(ITEM_AFTER, "a-item-after", r#"<path d="M4 12.5H12" stroke="currentColor" stroke-linecap="round"/><path d="M8 9.5L4.5 4H11.5Z" stroke="currentColor" stroke-linejoin="round"/>"#);
     icon!(CHECK, "a-check", r#"<path d="M3 8.5L6.5 12L13 4.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>"#);

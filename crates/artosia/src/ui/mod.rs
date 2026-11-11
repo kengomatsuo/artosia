@@ -12,6 +12,7 @@ mod plans;
 mod sheets;
 mod shell;
 pub(crate) mod slides;
+pub(crate) mod suggest;
 pub(crate) mod tour;
 pub mod widgets;
 

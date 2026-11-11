@@ -361,6 +361,8 @@ pub struct App {
     /// The last few things heard, newest last.
     pub heard: Vec<String>,
     pub heard_hits: Vec<HeardHit>,
+    /// What the listener's phrases matched, for the suggestion strip (`suggest.rs`).
+    pub hearing: crate::suggest::Hearing,
     pub microphones: Vec<artosia_listen::Device>,
     /// The corner of the projector picture the nudge buttons move: 0 top left, clockwise.
     pub warp_corner: usize,
@@ -530,6 +532,7 @@ impl App {
             listen_problem: None,
             heard: Vec::new(),
             heard_hits: Vec::new(),
+            hearing: Default::default(),
             microphones: Vec::new(),
             warp_corner: 0,
             demo_screens: false,

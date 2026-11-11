@@ -141,7 +141,7 @@ The arrows are the ones EasiSlides taught the volunteers (owner, 2026-11-10: "Ea
 | Alt Down, Alt Up | Move the Preview item in the plan |
 | Delete | Take the Preview item out of the plan (Undo in the toast) |
 | F1, F2, F3 | Clear text, Black, Logo |
-| F4 | Put what the listener last recognised in Preview. It never goes to the projector by itself, because a misheard word must not reach the room |
+| F4 | Put the first suggestion in Preview: what the listener heard, else what usually follows the live song. It never goes to the projector by itself, because a misheard word must not reach the room |
 | F5 | Put the announcements in Preview |
 | Ctrl E, Ctrl N, Ctrl S | Edit the Preview song, new song, save |
 | Ctrl V with no field focused | Make a new song from the lyrics on the clipboard |
@@ -240,6 +240,19 @@ Rendering found what the briefs could not: three toggle buttons, a three-way cho
 Releases are GitHub Releases, made by `tools/publish.sh`; an installed copy needs no setting to find them. Full account: `crates/artosia-update/README.md`.
 
 Artosia looks for a newer version at each start and downloads it beside the program; the files are swapped the next time it starts (`artosia-update`, `update.rs`). Every file is checked against a signature made with the release key, whose public half is built into the program. A development build and a headless run never update themselves. "Check for a new version" in the search reports what it found either way.
+
+## What to show next
+
+One strip, `ui/suggest.rs`, over the slides of the Preview pane offers at most three things, each with an icon for why (an ear for what was heard, a clock for what usually follows), the song's title, its section as the coloured chip the lists use, and one icon button of a fixed size that brings it into Preview, with its key on it (F4 on the first). The reason in words is the tooltip. The model is `suggest.rs`, `suggestions(&App)`. An offer only ever fills Preview; nothing goes on the projector, because a misheard word must not reach the room.
+
+| Order | Offer | When |
+|---|---|---|
+| 1 | The song or passage the listener heard, at the section where the words are | A phrase of at least four words has a line holding 70% of a six-word chunk of it (and at least three words), or a Bible reference was spoken. Offered for 60 seconds, unless it is already in Preview at that section |
+| 1 | A far part of the live song ("the singing is here") | The heard words are in the live song at a section two or more slides from the live slide |
+| 2 | A warning that the words being sung are in no song | A song is live, the listener matched something in the last four minutes, and then two phrases in a row (within 90 seconds, the newest within 30) matched nothing. It keeps its words, in yellow, with a search button, because a warning cannot be a tooltip |
+| 3 | What usually follows the live song | Learning is on and recording (not in practice), Preview holds nothing a person chose, the plan has nothing after the live item. The song is not already in the plan |
+
+A phrase of the live song at or next to the live slide offers nothing. A phrase of fewer than four words neither matches nor misses. Stopping the listener forgets what it heard. Pressing an offer quiets the warning until a newer phrase arrives. Scenes `suggest-heard`, `suggest-follows` and `suggest-lost` draw the strip through a hook in `ui/mod.rs` (`Hearing::overlay`) until `ui/shell.rs` places it. Full account of how sure the warning can be: [palette-suggestions.md](palette-suggestions.md).
 
 ## Rules the code keeps
 

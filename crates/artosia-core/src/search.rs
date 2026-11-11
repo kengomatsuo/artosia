@@ -237,6 +237,11 @@ pub struct SongHit {
     pub preferred: bool,
     /// The song holds every word of the query.
     pub complete: bool,
+    /// The most query words found in one title or one lyric line, and how many words the query
+    /// has: a heard phrase that sits in one line is a much stronger match than one whose words
+    /// are scattered over the song.
+    pub together: u8,
+    pub words: u8,
     /// The words were found in the title, not only in the lyrics.
     pub in_title: bool,
     /// How often the volunteer picked this song for the typed text lately (0 to 5). It only
@@ -459,6 +464,8 @@ impl SongIndex {
                     song: hit.song as usize,
                     preferred: hit.facts.preferred.0,
                     complete: usize::from(hit.facts.covered.0) == count,
+                    together: hit.facts.together.0,
+                    words: count as u8,
                     in_title: hit.facts.in_title.0,
                     habit: hit.facts.habit.0,
                     title_ranges,

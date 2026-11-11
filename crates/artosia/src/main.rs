@@ -22,6 +22,7 @@ mod stream;
 mod strings;
 #[cfg(test)]
 mod strings_snapshot;
+mod suggest;
 mod theme;
 mod ui;
 mod update;
@@ -432,6 +433,32 @@ const SCENES: &[Scene] = &[
     ("learned-search", |s| {
         s.seed_demo_history();
         s.open_palette(Scope::All, "mor");
+    }),
+    // The suggestion strip, drawn over the top of the Preview pane: what the listener heard
+    // (made-up words of two practice songs), what usually follows, and the lost-words line.
+    ("suggest-heard", |s| {
+        s.plan.items.clear();
+        s.open_song(s.songs.iter().position(|song| song.title == "Morning on the Hill").unwrap_or(0), None);
+        s.show(0);
+        s.heard_final("down by the river we gather mercy flowing like the rain we will not be moved we will not be moved you are with us still".into());
+    }),
+    ("suggest-follows", |s| {
+        s.plan.items.clear();
+        s.hearing.demo = true;
+        s.seed_demo_history();
+        s.open_song(0, None);
+        s.show(0);
+    }),
+    ("suggest-lost", |s| {
+        s.plan.items.clear();
+        s.hearing.demo = true;
+        s.seed_demo_history();
+        s.open_song(s.songs.iter().position(|song| song.title == "Morning on the Hill").unwrap_or(0), None);
+        s.show(0);
+        for words in ["first light breaks over the valley we wake and lift our voices", "lantern carpet violin tractor window pencil", "marble ladder compass orchard blanket whistle"] {
+            s.now += 12.0;
+            s.heard_final(words.into());
+        }
     }),
     // Several plans: the list under the title with two more plans kept, and the rename dialog.
     ("plans", |s| {

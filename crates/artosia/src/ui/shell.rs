@@ -211,6 +211,8 @@ struct Pane<'a> {
     go_live: bool,
     /// The slide Next will show, marked with its key.
     next_at: Option<usize>,
+    /// What Artosia offers to bring here next, over the list.
+    strip: Option<El>,
     /// Shown in place of the list when there is no deck.
     empty: El,
     footer: El,
@@ -259,6 +261,7 @@ fn pane(k: &Kit, p: Pane<'_>) -> El {
         .min_h(0.0)
         .fill(theme::surf().raised)
         .child(title_bar(k, p.name, p.keys, p.detail, p.trailing))
+        .children(p.strip)
         .child(list.scroll_bar(k))
         .child(hline())
         .child(p.footer);
@@ -376,6 +379,8 @@ fn preview_pane(s: &App, k: &Kit, size: Foot) -> El {
             cursor: open.map(|o| o.cursor).filter(|cursor| Some(*cursor) != live_index),
             go_live: false,
             next_at: None,
+            // What was heard, or what usually follows: it comes into Preview, the safe side.
+            strip: crate::ui::suggest::strip(s, k),
             // With nothing open the pane says what to do first.
             empty: if open.is_some() { empty_words(k, t::DECK_EMPTY()) } else { crate::ui::slides::start(s, k) },
             footer: foot(size, picture(s, k, &state, size.picture, false), preview_controls(s, k, size)),
@@ -509,6 +514,7 @@ fn live_pane(s: &App, k: &Kit, size: Option<Foot>, layer: &mut Vec<El>) -> El {
             // The slide picked with Shift held, until Shift is let go.
             cursor: s.live_pick.filter(|pick| Some(*pick) != live.map(|l| l.index)),
             go_live: true,
+            strip: None,
             next_at: live.map(|l| l.index + 1).filter(|next| live.is_some_and(|l| *next < l.deck.slides.len())),
             empty: empty_words(k, t::LIVE_NOTHING()),
             footer,

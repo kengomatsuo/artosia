@@ -930,6 +930,7 @@ impl App {
             std::thread::spawn(move || drop(listener));
         }
         self.listen_problem = None;
+        self.hearing.clear();
         self.listen_level.store(0, std::sync::atomic::Ordering::Relaxed);
         if !on {
             return;
@@ -965,7 +966,8 @@ impl App {
 
     /// Turns a sentence that was heard into what it may have named: a passage, or songs that
     /// hold its words.
-    fn heard_final(&mut self, text: String) {
+    pub(crate) fn heard_final(&mut self, text: String) {
+        self.note_heard(&text);
         let mut hits: Vec<HeardHit> = Vec::new();
         if let Some(bible) = self.bible()
             && let Some(guess) = bible.guess(&text).first() {
@@ -980,9 +982,14 @@ impl App {
         self.heard.drain(..extra);
     }
 
-    /// F4: puts what the listener last recognised in the Preview pane, where Enter shows it.
-    /// It never goes to the projector by itself: a misheard word must not reach the room.
+    /// F4: puts the first suggestion in the Preview pane, where Enter shows it: what the listener
+    /// heard, else what usually follows the live song. It never goes to the projector by itself:
+    /// a misheard word must not reach the room.
     pub fn open_last_heard(&mut self) {
+        if let Some(first) = crate::suggest::suggestions(self).into_iter().next() {
+            self.take_offer(&first);
+            return;
+        }
         match self.heard_hits.first().cloned() {
             Some(hit) => self.open_heard(&hit),
             None => self.say(t::HEARD_NOTHING(), None),
@@ -1296,6 +1303,7 @@ impl App {
             changed = self.countdown.is_some() || (now / 60.0).floor() != (self.now / 60.0).floor();
         }
         self.now = now;
+        changed |= self.hearing_aged();
         let mut wake = if self.countdown.is_some() { 0.25 } else { 1.0 };
         let was = self.live.as_ref().map(|live| live.index);
         if let Some(until) = self.loop_step(clock) {

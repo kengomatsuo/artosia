@@ -8371,5 +8371,84 @@
     "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
     "vocabulary": [],
     "notes": "Like '2 of 5'. Both numbers stay as digits."
+  },
+  {
+    "key": "SUGGEST_HEARD",
+    "kind": "const",
+    "screen": "Main window, the strip at the top of the Preview pane. It holds up to three rows, each with a small sign (an ear for what the microphone helper heard, a clock for what is often sung next), a song title, a small coloured pill naming a section and one small icon button. Nothing in it ever reaches the projector.",
+    "moment": "Tooltip on the ear sign at the left of a row, read when the pointer rests on it and by a screen reader. The row is offered for about a minute after the helper recognised words from another song or a Bible passage.",
+    "role": "tooltip",
+    "does": "Says why this row is offered: the helper heard words of it a moment ago.",
+    "budget": 24,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "listen",
+      "song"
+    ],
+    "notes": "A short phrase, no full stop."
+  },
+  {
+    "key": "SUGGEST_HERE",
+    "kind": "const",
+    "screen": "Main window, the strip at the top of the Preview pane. It holds up to three rows, each with a small sign (an ear for what the microphone helper heard, a clock for what is often sung next), a song title, a small coloured pill naming a section and one small icon button. Nothing in it ever reaches the projector.",
+    "moment": "Tooltip on the ear sign at the left of a row. The helper heard words from a later part of the song that is on the projector now, some slides away from the slide showing; the pill beside the title names that part.",
+    "role": "tooltip",
+    "does": "Says the singing has reached the part named in the pill, so the volunteer can bring it into Preview and be ready to follow.",
+    "budget": 28,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "listen",
+      "section"
+    ],
+    "notes": "A short phrase, no full stop."
+  },
+  {
+    "key": "SUGGEST_FOLLOWS",
+    "kind": "const",
+    "screen": "Main window, the strip at the top of the Preview pane. It holds up to three rows, each with a small sign (an ear for what the microphone helper heard, a clock for what is often sung next), a song title, a small coloured pill naming a section and one small icon button. Nothing in it ever reaches the projector.",
+    "moment": "Tooltip on the clock sign at the left of a row. The song on the projector is the last of the plan, and this church has often sung the row's song right after it in past services.",
+    "role": "tooltip",
+    "does": "Says why this song is offered: it often comes after the song that is live.",
+    "budget": 30,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "song",
+      "live"
+    ],
+    "notes": "Past services of this church on this computer, never other churches. A short phrase, no full stop."
+  },
+  {
+    "key": "SUGGEST_LOST",
+    "kind": "const",
+    "screen": "Main window, the strip at the top of the Preview pane. It holds up to three rows, each with a small sign (an ear for what the microphone helper heard, a clock for what is often sung next), a song title, a small coloured pill naming a section and one small icon button. Nothing in it ever reaches the projector.",
+    "moment": "A single row with a yellow tint, with a microphone sign, shown when the helper has read the singing well for a while and then twice in a row heard words that are in no song of the library. Its words stay on screen because a warning cannot be a tooltip. A button with a magnifier at its right end opens the search.",
+    "role": "warning line",
+    "does": "Tells the volunteer that what the room is singing now is not what the screen shows and is not in any song the program knows, so it must be found or typed by hand.",
+    "budget": 48,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "listen",
+      "song"
+    ],
+    "notes": "Plain statement, no blame and no 'sorry'. It must not claim to know why."
+  },
+  {
+    "key": "SUGGEST_SEARCH",
+    "kind": "const",
+    "screen": "Main window, the strip at the top of the Preview pane. It holds up to three rows, each with a small sign (an ear for what the microphone helper heard, a clock for what is often sung next), a song title, a small coloured pill naming a section and one small icon button. Nothing in it ever reaches the projector.",
+    "moment": "Tooltip on the icon button with a magnifier at the right end of the yellow warning row; it also names the button for a screen reader.",
+    "role": "tooltip",
+    "does": "Opens the search box so the volunteer can look for the song being sung.",
+    "budget": 12,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "search-box"
+    ],
+    "notes": ""
   }
 ]
