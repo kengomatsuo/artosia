@@ -165,6 +165,12 @@ pub fn sentence(lang: usize, key: &str, case: Option<&str>, count: Option<usize>
 }
 
 /// One text, keyed as the brief keys it.
+/// Whether a language is written in a table. English never is; a language without a table is
+/// written in `strings.rs`.
+pub fn has_table(lang: usize) -> bool {
+    LANGUAGES.get(lang).is_some_and(|language| language.table.is_some())
+}
+
 pub fn text(lang: usize, key: &str) -> Option<&'static str> {
     pick(lang, tables().get(lang)?.get(key)?, None)
 }

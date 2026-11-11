@@ -56,7 +56,8 @@ macro_rules! text {
         pub fn $name() -> &'static str {
             match language() {
                 ENGLISH => $en,
-                INDONESIAN => $id,
+                // Indonesian reads its table once it has one, and what is written here until then.
+                INDONESIAN => languages::text(INDONESIAN, stringify!($name)).unwrap_or($id),
                 other => languages::text(other, stringify!($name)).unwrap_or($en),
             }
         }
@@ -67,7 +68,7 @@ macro_rules! text {
 /// itself, and for a key the table lacks, which the function then writes in English.
 fn say(key: &str, case: Option<&str>, count: Option<usize>, args: &[(&str, Arg)]) -> Option<String> {
     let lang = language();
-    if lang <= INDONESIAN {
+    if !languages::has_table(lang) {
         return None;
     }
     languages::sentence(lang, key, case, count, args)
@@ -75,7 +76,7 @@ fn say(key: &str, case: Option<&str>, count: Option<usize>, args: &[(&str, Arg)]
 
 /// What an import of a song folder said, in a table language.
 fn import_summary_table(added: usize, updated: usize, kept: usize) -> Option<String> {
-    if language() <= INDONESIAN {
+    if !languages::has_table(language()) {
         return None;
     }
     let both = [("added", counted("songs", added)), ("updated", counted("songs", updated)), ("kept", counted("songs", kept))];
@@ -931,7 +932,7 @@ text!(BIRTHDAYS_NONE_FOUND, "No names with dates were found in that file", "Tida
 const MONTHS_EN: [&str; 12] = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 const MONTHS_ID: [&str; 12] = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
 pub fn MONTHS() -> &'static [&'static str; 12] {
-    if language() > INDONESIAN {
+    if languages::has_table(language()) {
         return languages::months(language(), &MONTHS_EN);
     }
     if indonesian() { &MONTHS_ID } else { &MONTHS_EN }
@@ -1038,7 +1039,7 @@ const ANNOUNCEMENT_TEMPLATES_ID: [(&str, &str); 6] = [
     ("Ulang tahun", "Tulis nama yang berulang tahun minggu ini"),
 ];
 pub fn ANNOUNCEMENT_TEMPLATES() -> &'static [(&'static str, &'static str)] {
-    if language() > INDONESIAN {
+    if languages::has_table(language()) {
         return languages::rows(language(), "ANNOUNCEMENT_TEMPLATES", &ANNOUNCEMENT_TEMPLATES_EN);
     }
     if indonesian() { &ANNOUNCEMENT_TEMPLATES_ID } else { &ANNOUNCEMENT_TEMPLATES_EN }
@@ -1127,7 +1128,7 @@ pub fn KEYS_EDITING_KEYS() -> &'static [(&'static str, &'static str)] {
     &KEYS_EDITING_ROWS_EN
 }
 pub fn KEYS_SHOWING_ROWS() -> &'static [(&'static str, &'static str)] {
-    if language() > INDONESIAN {
+    if languages::has_table(language()) {
         return languages::rows(language(), "KEYS_SHOWING_ROWS", &KEYS_SHOWING_ROWS_EN);
     }
     if indonesian() { &KEYS_SHOWING_ROWS_ID } else { &KEYS_SHOWING_ROWS_EN }
@@ -1151,7 +1152,7 @@ const KEYS_FINDING_ROWS_ID: [(&str, &str); 7] = [
     ("Esc", "Hapus ketikan, tekan lagi untuk menutup"),
 ];
 pub fn KEYS_FINDING_ROWS() -> &'static [(&'static str, &'static str)] {
-    if language() > INDONESIAN {
+    if languages::has_table(language()) {
         return languages::rows(language(), "KEYS_FINDING_ROWS", &KEYS_FINDING_ROWS_EN);
     }
     if indonesian() { &KEYS_FINDING_ROWS_ID } else { &KEYS_FINDING_ROWS_EN }
@@ -1169,7 +1170,7 @@ const KEYS_PLAN_ROWS_ID: [(&str, &str); 4] = [
     ("Delete", "Keluarkan item pratinjau, bisa diurungkan"),
 ];
 pub fn KEYS_PLAN_ROWS() -> &'static [(&'static str, &'static str)] {
-    if language() > INDONESIAN {
+    if languages::has_table(language()) {
         return languages::rows(language(), "KEYS_PLAN_ROWS", &KEYS_PLAN_ROWS_EN);
     }
     if indonesian() { &KEYS_PLAN_ROWS_ID } else { &KEYS_PLAN_ROWS_EN }
@@ -1191,7 +1192,7 @@ const KEYS_EDITING_ROWS_ID: [(&str, &str); 6] = [
     ("Ctrl Z", "Kembalikan yang terakhir dihapus"),
 ];
 pub fn KEYS_EDITING_ROWS() -> &'static [(&'static str, &'static str)] {
-    if language() > INDONESIAN {
+    if languages::has_table(language()) {
         return languages::rows(language(), "KEYS_EDITING_ROWS", &KEYS_EDITING_ROWS_EN);
     }
     if indonesian() { &KEYS_EDITING_ROWS_ID } else { &KEYS_EDITING_ROWS_EN }
@@ -1248,7 +1249,7 @@ pub fn stage_place(index: &str, count: &str) -> String {
 
 /// A song section's name as a volunteer reads it: "Verse 2", "Chorus"; "Bait 2", "Reff".
 pub fn section_label(tag: artosia_core::song::Tag) -> String {
-    if language() > INDONESIAN {
+    if languages::has_table(language()) {
         return section_label_table(tag);
     }
     use artosia_core::song::SectionKind;
