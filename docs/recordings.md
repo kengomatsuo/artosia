@@ -110,11 +110,11 @@ was the song on the projector.
 | Save, Move, Delete by script | On a copy, with the file windows answered by the script: a zip of 13 files (3.9 MB from 4.2 MB), the folder moved into `Artosia recordings` inside the one picked and the old one removed, the sittings set aside by Delete all, and brought back by Ctrl Z over the open dialog |
 | A delete cut short | The script's run ended with the toast still up; the next start removed what was set aside |
 | Ctrl Z in a real window | Before the change the real key did nothing over the dialog and the files went when the toast left. After it, Delete all then the real Ctrl Z read "5 MB kept" again and the sitting was back on the disk |
+| The system's own Save and folder windows | In the released 0.1.11, on a library holding a sitting made from a made-up tone: Save as one file opened the Windows save window, its file-name field was given a path and Enter pressed, the zip was written and the toast read "Saved as second.zip". Move folder opened the folder window; one Enter went into the picked folder and a second picked it, the row then read `...\picked\Artosia recordings` and the sitting was there, with the old folder gone. Answered with `tools/answer-dialog.ps1` |
 | A second sitting, nothing on the projector | 8 phrases in 96 seconds with the build that rounds its figures (`71.4`, `0.3`, `as heard`). The song playing was the nearest in three of the four phrases with words and was offered after 25 seconds; `learn-from.py` says of such a sitting that no song was shown to measure against |
 
 The first log wrote 32-bit figures as they stood (`71.4000015258789`); they are rounded now, and
 a test holds that.
 
-Not tried: the system's own Save and folder windows by hand (the window driver cannot type into
-them), a whole service, the 1 GB limit on a real folder (a test holds it with small numbers), a
-microphone in a room, and a folder inside a drive that really copies itself.
+Not tried: a whole service, the 1 GB limit on a real folder (a test holds it with small
+numbers), a microphone in a room, and a folder inside a drive that really copies itself.

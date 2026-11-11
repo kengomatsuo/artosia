@@ -198,6 +198,8 @@ Played through `crates/artosia/scripts/arrows-and-ring.json` on 2026-11-10: Spac
 
 Pressed in a real window on 2026-11-11 with `tools/drive-window.ps1`, which sends real key and mouse input to one program's window and saves a picture after each step: Space, Down, Shift held with two Downs and then let go, Esc while Shift was held, Ctrl Down, Tab, Right, the Next that goes on, a plan row dragged, F5. The Shift release was the one step that failed the first time.
 
+`tools/answer-dialog.ps1` answers a Windows save or folder window that the program opened (2026-11-11): it sets the focused field's text, reads it back and presses Enter, twice for a folder window, and stops when the window in front is another program's. Keys typed into such a window lost a character of a long path, and the colon after the drive letter.
+
 `tools/drive-window.ps1` `post-click` now puts the real pointer on the spot for the click and back again: Rune presses what is under the real pointer whatever the posted message says, so a posted click used to land wherever the mouse happened to rest (found 2026-11-11, when clicks on the plan list pressed a tile under the resting pointer).
 
 Pressed again in a real practice window on 2026-11-11 after the tile rework: Enter moved the tour one stop and Esc ended it; Space, Tab and Enter put a song up; C jumped to its chorus; F6 switched the Live tile off (no ring, the row grey, the picture dimmed, the plan dot grey) and on again; Ctrl held ringed Preview and wrote its keys in the bar. Shift let go was pressed on a last slide, where there is nowhere to pick, so that run says nothing new about it.
