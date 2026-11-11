@@ -356,7 +356,6 @@ text!(CMD_EDIT_SONG_DETAIL, "Change the words of the open song", "Perbaiki lirik
 text!(CMD_UNDO_DETAIL, "Take back the last removal", "Mengembalikan yang terakhir dihapus");
 text!(CMD_LOOP, "Loop the announcements", "Putar pengumuman");
 text!(CMD_LOOP_DETAIL, "Show each one in turn until you stop", "Tayang bergantian sampai dihentikan");
-text!(CMD_NEW_PLAN_DETAIL, "Empty the plan for another service", "Acara hari ini dikosongkan untuk ibadah lain");
 
 // Top bar and status bar.
 text!(BTN_LOOK, "Look", "Tampilan");
@@ -418,6 +417,40 @@ text!(PLAN_MISSING, "Deleted", "Hilang");
 text!(PLAN_HEADING_NEW, "Heading", "Pemisah baru");
 text!(PLAN_HEADING_WORSHIP, "Worship", "Pujian");
 text!(PLAN_HEADING_WORD, "Word", "Firman");
+// Several plans, one for each service. The Indonesian slots hold the English until a person writes them from the briefs.
+text!(PLAN_SWITCH_LABEL, "Plans", "Plans");
+text!(PLAN_DUPLICATE, "Duplicate plan", "Duplicate plan");
+text!(PLAN_RENAME, "Rename plan", "Rename plan");
+text!(PLAN_DELETE, "Delete plan", "Delete plan");
+text!(PLAN_NEW_DETAIL, "Start a plan for another service", "Start a plan for another service");
+text!(PLAN_NEW_NAME, "New plan", "New plan");
+text!(PLAN_NAME_LABEL, "Plan name", "Plan name");
+text!(PLAN_DATE_LABEL, "Date", "Date");
+text!(PLAN_DATE_HINT, "Year-month-day, optional", "Year-month-day, optional");
+text!(KIND_PLAN, "Plan", "Plan");
+
+/// How many things a plan holds, in the list of plans.
+pub fn plan_items(count: usize) -> String {
+    if let Some(text) = say("plan_items", None, Some(count), &[]) {
+        return text;
+    }
+    if count == 1 { "1 item".to_string() } else { format!("{count} items") }
+}
+
+/// The name a copy of a plan starts with.
+pub fn plan_copy_name(name: &str) -> String {
+    if let Some(text) = say("plan_copy_name", None, None, &[("name", text_arg(name))]) {
+        return text;
+    }
+    format!("{name} copy")
+}
+
+pub fn plan_deleted(name: &str) -> String {
+    if let Some(text) = say("plan_deleted", None, None, &[("name", text_arg(name))]) {
+        return text;
+    }
+    format!("Deleted plan {name}")
+}
 
 pub fn added_to_plan(title: &str) -> String {
     if let Some(text) = say("added_to_plan", None, None, &[("title", text_arg(title))]) {

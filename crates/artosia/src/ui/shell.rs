@@ -365,7 +365,8 @@ fn plan_column(s: &App, k: &Kit, layer: &mut Vec<El>) -> El {
             tx.blur();
         }))
         .child(crate::ui::plan::header_menu(s, k, layer));
-    col().key("plan").w(PLAN).h_full().min_h(0.0).fill(theme::surf().side).child(title_bar(k, t::KEYS_PLAN(), s.plan_title(), vec![tools])).child(crate::ui::plan::list(s, k, layer))
+    let bar = crate::ui::plans::title_bar(s, k, layer, tools);
+    col().key("plan").w(PLAN).h_full().min_h(0.0).fill(theme::surf().side).child(bar).child(crate::ui::plan::list(s, k, layer))
 }
 
 /// The whole window under the title bar and over the status bar.

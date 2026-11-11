@@ -140,7 +140,7 @@ impl Command {
             Command::ImportFolder => t::CMD_IMPORT_FOLDER_DETAIL(),
             Command::Remote => t::CMD_REMOTE_DETAIL(),
             Command::Heading => t::CMD_HEADING_DETAIL(),
-            Command::NewPlan => t::CMD_NEW_PLAN_DETAIL(),
+            Command::NewPlan => t::PLAN_NEW_DETAIL(),
             Command::Keys => t::CMD_KEYS_DETAIL(),
             Command::StartService => t::CMD_START_DETAIL(),
             Command::Next => t::CMD_NEXT_DETAIL(),
@@ -248,6 +248,8 @@ pub enum Hit {
     /// Something in today's plan that is not a song.
     PlanItem { id: u64, title: String },
     Announcement { index: usize, title: String, body: String },
+    /// Another of the church's plans, which opens in place of this one.
+    Plan { id: i64, name: String },
     /// A look Artosia ships, by its place in the presets.
     Look { index: usize, name: String },
     Bible { code: String, name: String },
@@ -331,6 +333,8 @@ impl App {
         self.palette.picked = 0;
         self.plan_menu = None;
         self.more_menu = false;
+        self.switcher.open = false;
+        self.refresh_plan_rows();
         self.want_bible(&self.settings.bible.clone());
         self.search();
     }
@@ -547,6 +551,12 @@ impl App {
                 // Songs in the plan are found as songs, ahead of the rest of the library.
                 PlanEntry::Song { .. } | PlanEntry::Heading { .. } => {}
             }
+        }
+        // The church's other plans, found by name; the open one is already open.
+        for row in self.switcher.rows.iter().filter(|row| row.id != self.plan.id) {
+            let name = row.label();
+            let doc = Doc::new(format!("planfile:{}", row.id), "plans", name.clone()).detail(t::KIND_PLAN()).aliases(&["plan", "service", "rencana", "acara", "ibadah"]);
+            out.push((doc, Hit::Plan { id: row.id, name }));
         }
         for command in Command::ALL {
             if command.usable(self) {
@@ -768,6 +778,10 @@ impl App {
                 if how == Pick::ShowNow {
                     self.show(0);
                 }
+            }
+            Hit::Plan { id, .. } => {
+                self.close_palette();
+                self.switch_plan(id);
             }
             Hit::Announcement { index, .. } => {
                 if how == Pick::AddToPlan {

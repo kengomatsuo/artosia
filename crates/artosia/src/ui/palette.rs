@@ -47,6 +47,7 @@ fn plain_row(k: &Kit, hit: &Hit) -> (&'static rune::Icon, String, String) {
     let _ = k;
     match hit {
         Hit::PlanItem { title, .. } => (&icons::BOOK, title.clone(), t::IN_PLAN().to_string()),
+        Hit::Plan { name, .. } => (&icons::HEADING, name.clone(), t::KIND_PLAN().to_string()),
         Hit::Announcement { title, body, .. } => (&icons::ANNOUNCE, title.clone(), body.replace('\n', " ")),
         Hit::Look { name, .. } => (&icons::LOOK, name.clone(), t::KIND_LOOK().to_string()),
         Hit::Bible { name, .. } => (&icons::BOOK, name.clone(), t::KIND_BIBLE().to_string()),
@@ -259,7 +260,7 @@ fn actions(k: &Kit, hit: &Hit) -> El {
     let open = || btn(t::BTN_OPEN()).primary().hint(t::KEY_ENTER()).build(k, |s, _| s.pick(Pick::Open));
     match hit {
         Hit::Group(_) => bar,
-        Hit::Command(_) | Hit::Look { .. } | Hit::Bible { .. } | Hit::Countdown(_) | Hit::Message(_) | Hit::StageMessage(_) | Hit::Language(_) => bar.child(spacer()).child(choose()),
+        Hit::Command(_) | Hit::Look { .. } | Hit::Bible { .. } | Hit::Countdown(_) | Hit::Message(_) | Hit::StageMessage(_) | Hit::Language(_) | Hit::Plan { .. } => bar.child(spacer()).child(choose()),
         Hit::Passage { step: Some(_), .. } => bar.child(spacer()).child(btn(t::BTN_ADD_TO_PLAN()).build(k, |s, _| s.pick(Pick::AddToPlan))).child(choose()),
         Hit::PlanItem { .. } => bar.child(spacer()).child(show()).child(open()),
         _ => bar.child(add()).child(spacer()).child(show()).child(open()),
