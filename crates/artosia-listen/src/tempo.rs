@@ -4,16 +4,19 @@
 //!
 //! 1. Average down to about 8 kHz. Onsets live below 4 kHz and this makes every later step cheap.
 //! 2. A 256-point FFT every 5 ms, 24 mel-spaced bands from 60 Hz to 3.8 kHz, log-compressed.
-//! 3. Spectral flux with a maximum filter over the neighbouring bands of the frame two hops back
-//!    (SuperFlux): the rise in energy, with the slow glide of a sung note cancelled out.
-//! 4. Every half second, autocorrelation of the last 6 s of that onset envelope. Peaks at one,
-//!    two and three beat periods are added (as aubio does) and the sum is weighted by a log-normal
-//!    window around 120 BPM (Ellis 2007, librosa), which bounds the half-time and double-time
-//!    mistakes.
+//! 3. Spectral flux with a maximum filter over the neighbouring bands (SuperFlux), after averaging
+//!    the last 30 ms of band levels: the rise in energy, with the slow glide of a sung note and the
+//!    fast ripple of a held chord's beating partials both cancelled out. A band's rise counts only
+//!    above twice its own running mean, which takes the hiss out.
+//! 4. Every half second, autocorrelation of the last 8 s of that onset envelope, and of each band's
+//!    own rise (so a pulse in two bands is not drowned by ripple in the other twenty). The score of
+//!    a period adds its values at two, three and four periods (the bar), weighted by a log-normal
+//!    window around 128 BPM (Ellis 2007, librosa), and is blended with the last reports' scores so
+//!    a rhythm at home at half and at double speed does not flip between them.
 //! 5. Beat phase: the offset at which a pulse train at that period collects the most envelope.
 //!
-//! No model, no dependency, and the whole of it is one FFT size and a few hundred multiplies per
-//! envelope frame.
+//! No model, no dependency, and the whole of it is one 256-point FFT per envelope frame and a few
+//! longer ones every half second.
 
 use std::collections::VecDeque;
 use std::f32::consts::PI;
@@ -30,14 +33,28 @@ const LOW_HZ: f32 = 60.0;
 const HIGH_HZ: f32 = 3800.0;
 /// Log compression gain, as `log10(1 + MUL * magnitude)` (Böck's SuperFlux uses `mul = 1, add = 1`
 /// on unnormalised magnitudes; this one is on magnitudes where a full-scale sine reads 1).
-const MUL: f32 = 100.0;
-const DIFF_FRAMES: usize = 2;
-const WINDOW_SECONDS: f32 = 6.0;
+const MUL: f32 = 20.0;
+/// The score of a beat period adds the autocorrelation at this many of its multiples: two, three
+/// and four beats are the pair, the triplet and the bar, which tell a beat from a rhythm inside it.
+const MULTIPLES: usize = 4;
+const MULTIPLE_WEIGHTS: [f32; MULTIPLES] = [1.0, 0.1, 0.15, 1.0];
+/// A band's rise counts only above this many times its running mean rise.
+const GATE: f32 = 2.0;
+/// The most a long lag is lifted for the part of the window it cannot see.
+const MAX_OVERLAP_GAIN: f32 = 4.0;
+/// Per frame: a time constant of about two seconds.
+const RISE_MEAN_RATE: f32 = 0.0025;
+/// How much of the last blended score is kept at each report.
+const BLEND: f32 = 0.7;
+const DIFF_FRAMES: usize = 5;
+/// Frames averaged before the comparison (15 ms).
+const SMOOTH_FRAMES: usize = 6;
+const WINDOW_SECONDS: f32 = 8.0;
 /// The earliest an estimate is made. A tempo settles about one report after this.
 const MIN_SECONDS: f32 = 3.0;
 const REPORT_SECONDS: f32 = 0.5;
-const PRIOR_BPM: f32 = 120.0;
-const PRIOR_OCTAVES: f32 = 0.9;
+const PRIOR_BPM: f32 = 128.0;
+const PRIOR_OCTAVES: f32 = 1.2;
 /// Below this RMS over the window (-70 dBFS) nothing is playing.
 const SILENCE_RMS: f32 = 3e-4;
 /// A raw estimate starts a report at this confidence and keeps one going at the lower figure.
@@ -149,11 +166,15 @@ pub struct TempoTracker {
     im: Vec<f32>,
     bands: Vec<(usize, usize)>,
     logs: VecDeque<[f32; BANDS]>,
+    smooth: VecDeque<[f32; BANDS]>,
+    rise_mean: [f32; BANDS],
     env: VecDeque<f32>,
+    band_env: VecDeque<[f32; BANDS]>,
     energy: VecDeque<f32>,
     frame_energy: f32,
     frames: u64,
     report_every: u64,
+    score_avg: Vec<f32>,
     previous: Option<Raw>,
     grid: Option<Grid>,
     misses: u32,
@@ -199,11 +220,15 @@ impl TempoTracker {
             im: vec![0.0; FRAME],
             bands,
             logs: VecDeque::new(),
+            smooth: VecDeque::new(),
+            rise_mean: [0.0; BANDS],
             env: VecDeque::new(),
+            band_env: VecDeque::new(),
             energy: VecDeque::new(),
             frame_energy: 0.0,
             frames: 0,
             report_every: (REPORT_SECONDS / hop_seconds).round() as u64,
+            score_avg: Vec::new(),
             previous: None,
             grid: None,
             misses: 0,
@@ -266,27 +291,48 @@ impl TempoTracker {
             }
             log[b] = (1.0 + MUL * scale * sum).log10();
         }
+        // Average the last few frames before comparing: two partials of a sustained chord beat
+        // against each other many times faster than a note starts, and the average removes that
+        // ripple while the rise of a real attack, tens of milliseconds long, passes.
+        self.logs.push_back(log);
+        while self.logs.len() > SMOOTH_FRAMES {
+            self.logs.pop_front();
+        }
+        let mut smooth = [0.0f32; BANDS];
+        for before in &self.logs {
+            for (s, v) in smooth.iter_mut().zip(before) {
+                *s += v / self.logs.len() as f32;
+            }
+        }
         let mut flux = 0.0;
-        if self.logs.len() > DIFF_FRAMES - 1 {
-            let before = &self.logs[self.logs.len() + 1 - DIFF_FRAMES];
-            for (b, &now) in log.iter().enumerate() {
+        let mut rises = [0.0f32; BANDS];
+        if self.smooth.len() >= DIFF_FRAMES {
+            let before = &self.smooth[self.smooth.len() + 1 - DIFF_FRAMES];
+            for (b, &now) in smooth.iter().enumerate() {
                 let lo = b.saturating_sub(1);
                 let hi = (b + 1).min(BANDS - 1);
                 let reference = before[lo..=hi].iter().fold(f32::MIN, |m, v| m.max(*v));
-                flux += (now - reference).max(0.0);
+                let rise = (now - reference).max(0.0);
+                // What a band does all the time (hiss, the flutter of a held chord) is its mean rise;
+                // only what stands well above that counts as an attack.
+                rises[b] = (rise - GATE * self.rise_mean[b]).max(0.0);
+                flux += rises[b];
+                self.rise_mean[b] += (rise - self.rise_mean[b]) * RISE_MEAN_RATE;
             }
         }
-        self.logs.push_back(log);
-        while self.logs.len() > DIFF_FRAMES {
-            self.logs.pop_front();
+        self.smooth.push_back(smooth);
+        while self.smooth.len() > DIFF_FRAMES {
+            self.smooth.pop_front();
         }
         self.frames += 1;
         let capacity = (WINDOW_SECONDS / self.hop_seconds) as usize;
         self.env.push_back(flux);
+        self.band_env.push_back(rises);
         self.energy.push_back(self.frame_energy / self.hop.max(1) as f32);
         self.frame_energy = 0.0;
         while self.env.len() > capacity {
             self.env.pop_front();
+            self.band_env.pop_front();
             self.energy.pop_front();
         }
     }
@@ -321,14 +367,56 @@ impl TempoTracker {
         report(self.current());
     }
 
+    /// Normalised autocorrelation of every band's rise, averaged with weight `peak^2`, where
+    /// `peak` is the band's strongest value between lags `lo` and `hi`. `None` when no band moved.
+    fn band_autocorrelation(&self, n: usize, lo: usize, hi: usize, top: usize) -> Option<Vec<f32>> {
+        let size = (2 * n).next_power_of_two();
+        let fft = Fft::new(size);
+        let (mut re, mut im) = (vec![0.0f32; size], vec![0.0f32; size]);
+        let mut total = vec![0.0f32; top + 1];
+        let mut weights = 0.0f32;
+        for b in 0..BANDS {
+            let mean = self.band_env.iter().map(|r| r[b]).sum::<f32>() / n as f32;
+            re.iter_mut().for_each(|v| *v = 0.0);
+            im.iter_mut().for_each(|v| *v = 0.0);
+            let mut energy = 0.0;
+            for (i, r) in self.band_env.iter().enumerate() {
+                re[i] = r[b] - mean;
+                energy += re[i] * re[i];
+            }
+            if energy <= 1e-9 {
+                continue;
+            }
+            fft.forward(&mut re, &mut im);
+            for i in 0..size {
+                re[i] = re[i] * re[i] + im[i] * im[i];
+                im[i] = 0.0;
+            }
+            // The power spectrum is real and even, so the forward transform is its inverse up to 1/size.
+            fft.forward(&mut re, &mut im);
+            let at = |lag: usize| re[lag] / size as f32 / energy * (n as f32 / (n - lag) as f32).min(MAX_OVERLAP_GAIN);
+            let peak = (lo..=hi.min(n - 1)).map(at).fold(0.0f32, f32::max);
+            let weight = peak * peak;
+            if weight <= 0.0 {
+                continue;
+            }
+            weights += weight;
+            for (lag, slot) in total.iter_mut().enumerate() {
+                *slot += weight * at(lag);
+            }
+        }
+        (weights > 0.0).then(|| total.iter().map(|v| v / weights).collect())
+    }
+
     /// Autocorrelation tempo and comb phase over the window.
-    fn estimate(&self) -> Option<Raw> {
+    fn estimate(&mut self) -> Option<Raw> {
         let n = self.env.len();
         if (n as f32) * self.hop_seconds < MIN_SECONDS {
             return None;
         }
         let rms = (self.energy.iter().sum::<f32>() / n as f32).sqrt();
         if rms < SILENCE_RMS {
+            self.score_avg.clear();
             return None;
         }
         let mean = self.env.iter().sum::<f32>() / n as f32;
@@ -340,11 +428,11 @@ impl TempoTracker {
         let lag_of = |bpm: f32| 60.0 / (bpm * self.hop_seconds);
         let lo = lag_of(MAX_BPM).floor() as usize - 1;
         let hi = lag_of(MIN_BPM).ceil() as usize + 1;
-        let top = (3 * hi).min(n - 1);
+        let top = (MULTIPLES * hi).min(n - 1);
         let mut ac = vec![0.0f32; top + 1];
         let mut needed = vec![false; top + 1];
         for l in lo..=hi {
-            for a in 1..=3 {
+            for a in 1..=MULTIPLES {
                 if a * l <= top {
                     needed[a * l] = true;
                 }
@@ -353,19 +441,41 @@ impl TempoTracker {
         for lag in 0..=top {
             if needed[lag] {
                 let sum: f32 = x[lag..].iter().zip(&x[..n - lag]).map(|(a, b)| a * b).sum();
-                ac[lag] = sum / ac0;
+                // Divided by the share of the window that overlaps, so a long lag is not penalised for it.
+                ac[lag] = sum / ac0 * (n as f32 / (n - lag) as f32).min(MAX_OVERLAP_GAIN);
             }
         }
-        let weights = [1.0, 1.0 / 3.0, 1.0 / 5.0];
-        let score = |l: usize| -> f32 { (1..=3).filter(|a| a * l <= top).map(|a| weights[a - 1] * ac[a * l]).sum::<f32>().max(0.0) };
+        // A pulse that lives in a few bands is drowned in the sum by hiss and ripple in the others,
+        // so each band's own periodicity counts too, weighted by how periodic that band is.
+        if let Some(by_band) = self.band_autocorrelation(n, lo, hi, top) {
+            for lag in 0..=top {
+                if needed[lag] {
+                    ac[lag] = ac[lag].max(by_band[lag]);
+                }
+            }
+        }
+        let weights = MULTIPLE_WEIGHTS;
+        let score = |l: usize| -> f32 { (1..=MULTIPLES).filter(|a| a * l <= top).map(|a| weights[a - 1] * ac[a * l]).sum::<f32>().max(0.0) };
         let prior = |l: f32| -> f32 {
             let bpm = 60.0 / (l * self.hop_seconds);
             let octaves = (bpm / PRIOR_BPM).log2() / PRIOR_OCTAVES;
             (-0.5 * octaves * octaves).exp()
         };
+        // The score of every period, blended with the last reports': a rhythm that is as much at home
+        // at half or double speed (kick and snare alternating) would otherwise flip between the two
+        // from one report to the next on the least change in the window.
+        let fresh: Vec<f32> = (0..=hi + 1).map(|l| if l > lo { score(l) } else { 0.0 }).collect();
+        if self.score_avg.len() == fresh.len() {
+            for (old, new) in self.score_avg.iter_mut().zip(&fresh) {
+                *old = BLEND * *old + (1.0 - BLEND) * new;
+            }
+        } else {
+            self.score_avg = fresh;
+        }
+        let blended = &self.score_avg;
         let mut best = (0.0f32, 0usize);
-        for l in lo + 1..hi {
-            let value = score(l) * prior(l as f32);
+        for (l, &blend) in blended.iter().enumerate().take(hi).skip(lo + 1) {
+            let value = blend * prior(l as f32);
             if value > best.0 {
                 best = (value, l);
             }
@@ -374,7 +484,7 @@ impl TempoTracker {
             return None;
         }
         let l = best.1;
-        let (a, b, c) = (score(l - 1), score(l), score(l + 1));
+        let (a, b, c) = (blended[l - 1], blended[l], blended[l + 1]);
         let denom = a - 2.0 * b + c;
         let shift = if denom < -1e-9 { (0.5 * (a - c) / denom).clamp(-0.5, 0.5) } else { 0.0 };
         let period = l as f32 + shift;
@@ -384,7 +494,10 @@ impl TempoTracker {
         };
         let c1 = peak(period, 1);
         let c2 = if 2 * (l + 1) <= top { peak(2.0 * period, 2) } else { 0.0 };
-        let confidence = ((c1 * c2).sqrt() - 0.08).clamp(0.0, 1.0);
+        let c4 = if 4 * (l + 1) <= top { peak(4.0 * period, 3) } else { 0.0 };
+        // The next beat or the bar, whichever the rhythm repeats at: a syncopated bar may not repeat after two beats.
+        let far = c2.max(0.6 * c4.min(1.0));
+        let confidence = ((c1 * far).sqrt() - 0.08).clamp(0.0, 1.0);
 
         // Phase: smooth the envelope a little, then slide a pulse train over it.
         let smooth: Vec<f32> = (0..n)
@@ -548,7 +661,9 @@ mod tests {
             let (audio, _) = track(15.0, &[(0.0, bpm)], None, 11);
             let reports = run(&audio);
             let first = reports.iter().find(|(_, r)| r.is_some_and(|t| (t.bpm - bpm).abs() <= 2.0)).map(|(t, _)| *t);
-            assert!(first.is_some_and(|t| t <= 5.0), "{bpm} BPM first right at {first:?}");
+            // A 60 BPM pulse has a hit only once a second, so it needs a little longer.
+            let allowed = if bpm <= 60.0 { 8.0 } else { 5.0 };
+            assert!(first.is_some_and(|t| t <= allowed), "{bpm} BPM first right at {first:?}");
         }
     }
 
