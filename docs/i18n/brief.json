@@ -6954,7 +6954,7 @@
   {
     "key": "BIBLES_TITLE",
     "kind": "const",
-    "screen": "The Bibles dialog. Top: a search field over a list of free Bible translations from the internet, grouped by language, each row a translation's name with how much of the Bible it holds at the right. Under the list: a card for the translation that was picked, with its copyright notice and a download button. Bottom: a part for a Bible file the church already has on this computer.",
+    "screen": "The Bibles dialog. Top: a search field over a list of Bible translations from two internet sources, grouped by language, each row a translation's name with how much of the Bible it holds (or the file size) and the name of its source at the right. Under the list: a card for the translation that was picked, with its source, the copyright notice the translation's own file states and a download button. Bottom: a part for a Bible file the church already has on this computer.",
     "moment": "The dialog just opened. Also the label of a row in the Look dialog.",
     "role": "dialog title",
     "does": "Names the dialog where Bible translations are added.",
@@ -6984,7 +6984,7 @@
   {
     "key": "BIBLES_OWN_FILE",
     "kind": "const",
-    "screen": "The Bibles dialog. Top: a search field over a list of free Bible translations from the internet, grouped by language, each row a translation's name with how much of the Bible it holds at the right. Under the list: a card for the translation that was picked, with its copyright notice and a download button. Bottom: a part for a Bible file the church already has on this computer.",
+    "screen": "The Bibles dialog. Top: a search field over a list of Bible translations from two internet sources, grouped by language, each row a translation's name with how much of the Bible it holds (or the file size) and the name of its source at the right. Under the list: a card for the translation that was picked, with its source, the copyright notice the translation's own file states and a download button. Bottom: a part for a Bible file the church already has on this computer.",
     "moment": "Bottom part of the dialog.",
     "role": "section heading",
     "does": "Heads the part for a Bible file the church already holds on this computer or a USB stick.",
@@ -6999,7 +6999,7 @@
   {
     "key": "BIBLES_CHOOSE_FILE",
     "kind": "const",
-    "screen": "The Bibles dialog. Top: a search field over a list of free Bible translations from the internet, grouped by language, each row a translation's name with how much of the Bible it holds at the right. Under the list: a card for the translation that was picked, with its copyright notice and a download button. Bottom: a part for a Bible file the church already has on this computer.",
+    "screen": "The Bibles dialog. Top: a search field over a list of Bible translations from two internet sources, grouped by language, each row a translation's name with how much of the Bible it holds (or the file size) and the name of its source at the right. Under the list: a card for the translation that was picked, with its source, the copyright notice the translation's own file states and a download button. Bottom: a part for a Bible file the church already has on this computer.",
     "moment": "Bottom part. Pressing it opens the computer's file picker.",
     "role": "button",
     "does": "Lets the volunteer pick a Bible file from the computer to bring into Artosia.",
@@ -7014,7 +7014,7 @@
   {
     "key": "BIBLES_FILE_HINT",
     "kind": "const",
-    "screen": "The Bibles dialog. Top: a search field over a list of free Bible translations from the internet, grouped by language, each row a translation's name with how much of the Bible it holds at the right. Under the list: a card for the translation that was picked, with its copyright notice and a download button. Bottom: a part for a Bible file the church already has on this computer.",
+    "screen": "The Bibles dialog. Top: a search field over a list of Bible translations from two internet sources, grouped by language, each row a translation's name with how much of the Bible it holds (or the file size) and the name of its source at the right. Under the list: a card for the translation that was picked, with its source, the copyright notice the translation's own file states and a download button. Bottom: a part for a Bible file the church already has on this computer.",
     "moment": "Grey words beside that button.",
     "role": "hint beside a button",
     "does": "Lists the three kinds of file that can be read: MyBible, USFX, and a zip of USFM files.",
@@ -7027,12 +7027,12 @@
     "notes": "MyBible, USFX, USFM and zip are names of file formats: keep them as written. Only the joining words are yours."
   },
   {
-    "key": "BIBLES_FREE",
+    "key": "BIBLES_LIST",
     "kind": "const",
-    "screen": "The Bibles dialog. Top: a search field over a list of free Bible translations from the internet, grouped by language, each row a translation's name with how much of the Bible it holds at the right. Under the list: a card for the translation that was picked, with its copyright notice and a download button. Bottom: a part for a Bible file the church already has on this computer.",
-    "moment": "Top part of the dialog.",
+    "screen": "The Bibles dialog. Top: a search field over a list of Bible translations from two internet sources, grouped by language, each row a translation's name with how much of the Bible it holds (or the file size) and the name of its source at the right. Under the list: a card for the translation that was picked, with its source, the copyright notice the translation's own file states and a download button. Bottom: a part for a Bible file the church already has on this computer.",
+    "moment": "Top part of the dialog, over the search field and the list.",
     "role": "section heading",
-    "does": "Heads the list of Bible translations that may be downloaded and used free of charge.",
+    "does": "Heads the list of Bible translations that can be downloaded. Some are free to copy and some carry a restriction, so it must not say free.",
     "budget": 34,
     "variables": [],
     "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
@@ -7044,7 +7044,7 @@
   {
     "key": "BIBLES_SEARCH",
     "kind": "const",
-    "screen": "The Bibles dialog. Top: a search field over a list of free Bible translations from the internet, grouped by language, each row a translation's name with how much of the Bible it holds at the right. Under the list: a card for the translation that was picked, with its copyright notice and a download button. Bottom: a part for a Bible file the church already has on this computer.",
+    "screen": "The Bibles dialog. Top: a search field over a list of Bible translations from two internet sources, grouped by language, each row a translation's name with how much of the Bible it holds (or the file size) and the name of its source at the right. Under the list: a card for the translation that was picked, with its source, the copyright notice the translation's own file states and a download button. Bottom: a part for a Bible file the church already has on this computer.",
     "moment": "Grey words inside the empty search field over the list.",
     "role": "placeholder",
     "does": "Invites typing a language or the name of a translation to narrow the list.",
@@ -7059,7 +7059,7 @@
   {
     "key": "BIBLES_LOADING",
     "kind": "const",
-    "screen": "The Bibles dialog. Top: a search field over a list of free Bible translations from the internet, grouped by language, each row a translation's name with how much of the Bible it holds at the right. Under the list: a card for the translation that was picked, with its copyright notice and a download button. Bottom: a part for a Bible file the church already has on this computer.",
+    "screen": "The Bibles dialog. Top: a search field over a list of Bible translations from two internet sources, grouped by language, each row a translation's name with how much of the Bible it holds (or the file size) and the name of its source at the right. Under the list: a card for the translation that was picked, with its source, the copyright notice the translation's own file states and a download button. Bottom: a part for a Bible file the church already has on this computer.",
     "moment": "The list is being fetched from the internet; grey placeholder rows show meanwhile.",
     "role": "loading caption",
     "does": "Says the list of Bibles is on its way.",
@@ -7074,7 +7074,7 @@
   {
     "key": "BIBLES_LOAD_FAILED",
     "kind": "const",
-    "screen": "The Bibles dialog. Top: a search field over a list of free Bible translations from the internet, grouped by language, each row a translation's name with how much of the Bible it holds at the right. Under the list: a card for the translation that was picked, with its copyright notice and a download button. Bottom: a part for a Bible file the church already has on this computer.",
+    "screen": "The Bibles dialog. Top: a search field over a list of Bible translations from two internet sources, grouped by language, each row a translation's name with how much of the Bible it holds (or the file size) and the name of its source at the right. Under the list: a card for the translation that was picked, with its source, the copyright notice the translation's own file states and a download button. Bottom: a part for a Bible file the church already has on this computer.",
     "moment": "The list could not be fetched, for example with no internet. A retry button sits under these words.",
     "role": "error title",
     "does": "Says the list of Bibles could not be fetched.",
@@ -7089,7 +7089,7 @@
   {
     "key": "BIBLES_RETRY",
     "kind": "const",
-    "screen": "The Bibles dialog. Top: a search field over a list of free Bible translations from the internet, grouped by language, each row a translation's name with how much of the Bible it holds at the right. Under the list: a card for the translation that was picked, with its copyright notice and a download button. Bottom: a part for a Bible file the church already has on this computer.",
+    "screen": "The Bibles dialog. Top: a search field over a list of Bible translations from two internet sources, grouped by language, each row a translation's name with how much of the Bible it holds (or the file size) and the name of its source at the right. Under the list: a card for the translation that was picked, with its source, the copyright notice the translation's own file states and a download button. Bottom: a part for a Bible file the church already has on this computer.",
     "moment": "Under that error.",
     "role": "button",
     "does": "Tries to fetch the list again.",
@@ -7104,7 +7104,7 @@
   {
     "key": "BIBLES_INSTALLED",
     "kind": "const",
-    "screen": "The Bibles dialog. Top: a search field over a list of free Bible translations from the internet, grouped by language, each row a translation's name with how much of the Bible it holds at the right. Under the list: a card for the translation that was picked, with its copyright notice and a download button. Bottom: a part for a Bible file the church already has on this computer.",
+    "screen": "The Bibles dialog. Top: a search field over a list of Bible translations from two internet sources, grouped by language, each row a translation's name with how much of the Bible it holds (or the file size) and the name of its source at the right. Under the list: a card for the translation that was picked, with its source, the copyright notice the translation's own file states and a download button. Bottom: a part for a Bible file the church already has on this computer.",
     "moment": "A small pill on the row of a translation that is already on this computer.",
     "role": "state pill",
     "does": "Marks a translation as already added to Artosia.",
@@ -7119,7 +7119,7 @@
   {
     "key": "BIBLES_SCOPE_WHOLE",
     "kind": "const",
-    "screen": "The Bibles dialog. Top: a search field over a list of free Bible translations from the internet, grouped by language, each row a translation's name with how much of the Bible it holds at the right. Under the list: a card for the translation that was picked, with its copyright notice and a download button. Bottom: a part for a Bible file the church already has on this computer.",
+    "screen": "The Bibles dialog. Top: a search field over a list of Bible translations from two internet sources, grouped by language, each row a translation's name with how much of the Bible it holds (or the file size) and the name of its source at the right. Under the list: a card for the translation that was picked, with its source, the copyright notice the translation's own file states and a download button. Bottom: a part for a Bible file the church already has on this computer.",
     "moment": "Right end of a translation's row.",
     "role": "label",
     "does": "Says the translation holds the whole Bible, Old and New Testament.",
@@ -7134,7 +7134,7 @@
   {
     "key": "BIBLES_SCOPE_PART",
     "kind": "const",
-    "screen": "The Bibles dialog. Top: a search field over a list of free Bible translations from the internet, grouped by language, each row a translation's name with how much of the Bible it holds at the right. Under the list: a card for the translation that was picked, with its copyright notice and a download button. Bottom: a part for a Bible file the church already has on this computer.",
+    "screen": "The Bibles dialog. Top: a search field over a list of Bible translations from two internet sources, grouped by language, each row a translation's name with how much of the Bible it holds (or the file size) and the name of its source at the right. Under the list: a card for the translation that was picked, with its source, the copyright notice the translation's own file states and a download button. Bottom: a part for a Bible file the church already has on this computer.",
     "moment": "Right end of a translation's row.",
     "role": "label",
     "does": "Says the translation holds only some books of the Bible, not a whole Testament.",
@@ -7147,9 +7147,84 @@
     "notes": ""
   },
   {
+    "key": "BIBLES_SOURCE_EBIBLE",
+    "kind": "const",
+    "screen": "The Bibles dialog. Top: a search field over a list of Bible translations from two internet sources, grouped by language, each row a translation's name with how much of the Bible it holds (or the file size) and the name of its source at the right. Under the list: a card for the translation that was picked, with its source, the copyright notice the translation's own file states and a download button. Bottom: a part for a Bible file the church already has on this computer.",
+    "moment": "At the right end of a row, and in the picked translation card, for a translation that comes from the eBible website.",
+    "role": "proper name",
+    "does": "Names the website the translation comes from.",
+    "budget": 12,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "bible"
+    ],
+    "notes": "The name of a website. Keep it as written."
+  },
+  {
+    "key": "BIBLES_SOURCE_BEBLIA",
+    "kind": "const",
+    "screen": "The Bibles dialog. Top: a search field over a list of Bible translations from two internet sources, grouped by language, each row a translation's name with how much of the Bible it holds (or the file size) and the name of its source at the right. Under the list: a card for the translation that was picked, with its source, the copyright notice the translation's own file states and a download button. Bottom: a part for a Bible file the church already has on this computer.",
+    "moment": "At the right end of a row, and in the picked translation card, for a translation that comes from the Beblia collection of XML Bibles.",
+    "role": "proper name",
+    "does": "Names the collection the translation comes from.",
+    "budget": 12,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "bible"
+    ],
+    "notes": "The name of a collection. Keep it as written."
+  },
+  {
+    "key": "BIBLES_NO_COPYRIGHT",
+    "kind": "const",
+    "screen": "The Bibles dialog. Top: a search field over a list of Bible translations from two internet sources, grouped by language, each row a translation's name with how much of the Bible it holds (or the file size) and the name of its source at the right. Under the list: a card for the translation that was picked, with its source, the copyright notice the translation's own file states and a download button. Bottom: a part for a Bible file the church already has on this computer.",
+    "moment": "In the card of the picked translation, under the copyright label, when the downloaded file's own text says nothing about copyright.",
+    "role": "notice",
+    "does": "Says the file itself states no copyright. It does not say the Bible is free or that it is not.",
+    "budget": 40,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "bible"
+    ],
+    "notes": ""
+  },
+  {
+    "key": "BIBLES_NOTICE_LOADING",
+    "kind": "const",
+    "screen": "The Bibles dialog. Top: a search field over a list of Bible translations from two internet sources, grouped by language, each row a translation's name with how much of the Bible it holds (or the file size) and the name of its source at the right. Under the list: a card for the translation that was picked, with its source, the copyright notice the translation's own file states and a download button. Bottom: a part for a Bible file the church already has on this computer.",
+    "moment": "In the card of the picked translation, under the copyright label, for a moment while the first part of the file is fetched.",
+    "role": "status line",
+    "does": "Says the file's own copyright notice is being read.",
+    "budget": 40,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "bible"
+    ],
+    "notes": ""
+  },
+  {
+    "key": "BIBLES_NOTICE_FAILED",
+    "kind": "const",
+    "screen": "The Bibles dialog. Top: a search field over a list of Bible translations from two internet sources, grouped by language, each row a translation's name with how much of the Bible it holds (or the file size) and the name of its source at the right. Under the list: a card for the translation that was picked, with its source, the copyright notice the translation's own file states and a download button. Bottom: a part for a Bible file the church already has on this computer.",
+    "moment": "In the card of the picked translation, under the copyright label, when the first part of the file could not be fetched.",
+    "role": "error line",
+    "does": "Says the file's own copyright notice could not be read, so the volunteer should try again or not download it.",
+    "budget": 44,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "bible"
+    ],
+    "notes": ""
+  },
+  {
     "key": "BIBLES_PICK_HINT",
     "kind": "const",
-    "screen": "The Bibles dialog. Top: a search field over a list of free Bible translations from the internet, grouped by language, each row a translation's name with how much of the Bible it holds at the right. Under the list: a card for the translation that was picked, with its copyright notice and a download button. Bottom: a part for a Bible file the church already has on this computer.",
+    "screen": "The Bibles dialog. Top: a search field over a list of Bible translations from two internet sources, grouped by language, each row a translation's name with how much of the Bible it holds (or the file size) and the name of its source at the right. Under the list: a card for the translation that was picked, with its source, the copyright notice the translation's own file states and a download button. Bottom: a part for a Bible file the church already has on this computer.",
     "moment": "The card under the list while no translation is picked.",
     "role": "empty-state hint",
     "does": "Invites picking a translation from the list, after which its copyright notice appears here.",
@@ -7164,7 +7239,7 @@
   {
     "key": "BIBLES_COPYRIGHT",
     "kind": "const",
-    "screen": "The Bibles dialog. Top: a search field over a list of free Bible translations from the internet, grouped by language, each row a translation's name with how much of the Bible it holds at the right. Under the list: a card for the translation that was picked, with its copyright notice and a download button. Bottom: a part for a Bible file the church already has on this computer.",
+    "screen": "The Bibles dialog. Top: a search field over a list of Bible translations from two internet sources, grouped by language, each row a translation's name with how much of the Bible it holds (or the file size) and the name of its source at the right. Under the list: a card for the translation that was picked, with its source, the copyright notice the translation's own file states and a download button. Bottom: a part for a Bible file the church already has on this computer.",
     "moment": "In the card of the picked translation, over the publisher's own notice.",
     "role": "label",
     "does": "Labels the copyright notice of the translation.",
@@ -7179,7 +7254,7 @@
   {
     "key": "BIBLES_DOWNLOAD",
     "kind": "const",
-    "screen": "The Bibles dialog. Top: a search field over a list of free Bible translations from the internet, grouped by language, each row a translation's name with how much of the Bible it holds at the right. Under the list: a card for the translation that was picked, with its copyright notice and a download button. Bottom: a part for a Bible file the church already has on this computer.",
+    "screen": "The Bibles dialog. Top: a search field over a list of Bible translations from two internet sources, grouped by language, each row a translation's name with how much of the Bible it holds (or the file size) and the name of its source at the right. Under the list: a card for the translation that was picked, with its source, the copyright notice the translation's own file states and a download button. Bottom: a part for a Bible file the church already has on this computer.",
     "moment": "In the card, after the copyright notice.",
     "role": "button",
     "does": "Downloads that translation and adds it to Artosia.",
@@ -7194,7 +7269,7 @@
   {
     "key": "BIBLES_DOWNLOADING",
     "kind": "const",
-    "screen": "The Bibles dialog. Top: a search field over a list of free Bible translations from the internet, grouped by language, each row a translation's name with how much of the Bible it holds at the right. Under the list: a card for the translation that was picked, with its copyright notice and a download button. Bottom: a part for a Bible file the church already has on this computer.",
+    "screen": "The Bibles dialog. Top: a search field over a list of Bible translations from two internet sources, grouped by language, each row a translation's name with how much of the Bible it holds (or the file size) and the name of its source at the right. Under the list: a card for the translation that was picked, with its source, the copyright notice the translation's own file states and a download button. Bottom: a part for a Bible file the church already has on this computer.",
     "moment": "The same button while the download runs; it cannot be pressed.",
     "role": "button, busy",
     "does": "Says the download is running.",
@@ -7209,7 +7284,7 @@
   {
     "key": "BIBLES_USE",
     "kind": "const",
-    "screen": "The Bibles dialog. Top: a search field over a list of free Bible translations from the internet, grouped by language, each row a translation's name with how much of the Bible it holds at the right. Under the list: a card for the translation that was picked, with its copyright notice and a download button. Bottom: a part for a Bible file the church already has on this computer.",
+    "screen": "The Bibles dialog. Top: a search field over a list of Bible translations from two internet sources, grouped by language, each row a translation's name with how much of the Bible it holds (or the file size) and the name of its source at the right. Under the list: a card for the translation that was picked, with its source, the copyright notice the translation's own file states and a download button. Bottom: a part for a Bible file the church already has on this computer.",
     "moment": "In the card of a translation that is already added.",
     "role": "button",
     "does": "Makes this translation the one Artosia shows verses from.",
@@ -7224,7 +7299,7 @@
   {
     "key": "BIBLES_IN_USE",
     "kind": "const",
-    "screen": "The Bibles dialog. Top: a search field over a list of free Bible translations from the internet, grouped by language, each row a translation's name with how much of the Bible it holds at the right. Under the list: a card for the translation that was picked, with its copyright notice and a download button. Bottom: a part for a Bible file the church already has on this computer.",
+    "screen": "The Bibles dialog. Top: a search field over a list of Bible translations from two internet sources, grouped by language, each row a translation's name with how much of the Bible it holds (or the file size) and the name of its source at the right. Under the list: a card for the translation that was picked, with its source, the copyright notice the translation's own file states and a download button. Bottom: a part for a Bible file the church already has on this computer.",
     "moment": "The same button when this translation is already the one in use; it cannot be pressed.",
     "role": "button, disabled",
     "does": "Says this translation is the one being used now.",
@@ -7394,12 +7469,12 @@
     "notes": ""
   },
   {
-    "key": "CMD_BIBLES_DETAIL",
+    "key": "CMD_BIBLES_FIND_DETAIL",
     "kind": "const",
     "screen": "The search box, grey second line of that command.",
     "moment": "Same.",
     "role": "command detail",
-    "does": "Says free translations in many languages can be had there.",
+    "does": "Says translations in many languages can be downloaded there.",
     "budget": 40,
     "variables": [],
     "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
