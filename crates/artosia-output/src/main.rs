@@ -373,6 +373,9 @@ const SCENES: &[Scene] = &[
     ("classic", |_| shared().set_state(demo::classic())),
     ("paper", |_| shared().set_state(demo::paper())),
     ("black", |_| shared().set_state(demo::black())),
+    ("styled", |_| shared().set_state(demo::styled())),
+    ("outlined", |_| shared().set_state(demo::outlined())),
+    ("missing-font", |_| shared().set_state(demo::missing_font())),
     ("identify", |_| {
         shared().set_state(demo::lyrics());
         shared().identify.store(true, Ordering::Release);
