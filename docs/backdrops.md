@@ -84,7 +84,7 @@ H.264 in MP4, which the release plays for certain, is not offered: Commons does 
 
 ## Not verified
 
-- A video backdrop was played in `artosia-video`'s loop example (table below) and not yet watched on the projector window of Artosia itself.
+- A video backdrop was watched in the projector program alone, started with `--demo-video` (below), and not from a press of Use through to a second screen in one run.
 - The grid was rendered with made-up entries and generated previews. A scroll through real previews on a real connection was not watched.
 - The large preview of a video shows its poster frame, not the motion.
 - Commons may delete or rename a file. The press then fails with a message, and files already downloaded keep working.
@@ -109,6 +109,8 @@ Two catalogue files, fetched from Commons, played by `target/release/examples/lo
 | Street lamps, 10 s | 848x480 VP9 | `d3d11vp9dec` | 0.23 | 214 MB |
 | The same | 848x480 VP9 | `vp9dec` (software) | 0.24 | 181 MB |
 | `fixtures/bg30.mp4`, for comparison | 1920x1080 H.264 | `avdec_h264` (software) | 0.45 | 341 MB |
+
+In the projector program itself (`artosia-output --here --demo-video`, release build, 2026-11-11) the 848x480 street-lamp video played behind four lines of words: the position wrapped twice, the decoder was `d3d11vp9dec`, the window redrew 109 times a second, and the program held 249 MB. The window was captured with `tools/grab-window.ps1` and showed the words over the video.
 
 So VP9 in software cost less here than H.264 in software, and a PC whose graphics chip cannot decode VP9 still plays the 1080 line files. This PC is not the budget target; the number to trust comes from the target machine.
 
