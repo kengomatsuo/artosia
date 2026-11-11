@@ -8383,26 +8383,11 @@
     "notes": ""
   },
   {
-    "key": "LOOK_FOR_LABEL",
-    "kind": "const",
-    "screen": "Look dialog (opened by the Look button). At its top, above the sample slide, sits a two-way choice of which look the dialog edits: the look every plan uses, or a look that belongs to the open plan alone. A church keeps one plan for each service; the morning service puts the words over a camera feed and Sunday school does not.",
-    "moment": "Read by a screen reader for the two-way choice; not drawn.",
-    "role": "accessible name",
-    "does": "Names the choice at the top of the dialog: which look is being edited.",
-    "budget": 24,
-    "variables": [],
-    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
-    "vocabulary": [
-      "look"
-    ],
-    "notes": ""
-  },
-  {
     "key": "LOOK_FOR_USUAL",
     "kind": "const",
-    "screen": "Look dialog (opened by the Look button). At its top, above the sample slide, sits a two-way choice of which look the dialog edits: the look every plan uses, or a look that belongs to the open plan alone. A church keeps one plan for each service; the morning service puts the words over a camera feed and Sunday school does not.",
-    "moment": "One of the two choices, drawn as a button.",
-    "role": "choice label",
+    "screen": "Look dialog (opened by the Look button). At the top of the style controls sit two buttons of equal width of which look the dialog edits: the look every plan uses, or a look that belongs to the open plan alone. A church keeps one plan for each service; the morning service puts the words over a camera feed and Sunday school does not.",
+    "moment": "One of the two buttons, with a small screen icon.",
+    "role": "button label",
     "does": "The choice that edits the look all plans share.",
     "budget": 22,
     "variables": [],
@@ -8415,10 +8400,10 @@
   {
     "key": "LOOK_FOR_PLAN",
     "kind": "const",
-    "screen": "Look dialog (opened by the Look button). At its top, above the sample slide, sits a two-way choice of which look the dialog edits: the look every plan uses, or a look that belongs to the open plan alone. A church keeps one plan for each service; the morning service puts the words over a camera feed and Sunday school does not.",
-    "moment": "One of the two choices, drawn as a button.",
-    "role": "choice label",
-    "does": "The choice that gives the open plan a look of its own, copied from the usual one as a start.",
+    "screen": "Look dialog (opened by the Look button). At the top of the style controls sit two buttons of equal width of which look the dialog edits: the look every plan uses, or a look that belongs to the open plan alone. A church keeps one plan for each service; the morning service puts the words over a camera feed and Sunday school does not.",
+    "moment": "Shown as the help text of the second button; the button itself reads the plan's name.",
+    "role": "tooltip",
+    "does": "Explains the button that gives the open plan a look of its own, copied from the usual one as a start.",
     "budget": 26,
     "variables": [],
     "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
@@ -8426,23 +8411,7 @@
       "look",
       "plan"
     ],
-    "notes": "The other choice is 'The usual look'."
-  },
-  {
-    "key": "LOOK_FOR_USUAL_HINT",
-    "kind": "const",
-    "screen": "Look dialog (opened by the Look button). At its top, above the sample slide, sits a two-way choice of which look the dialog edits: the look every plan uses, or a look that belongs to the open plan alone. A church keeps one plan for each service; the morning service puts the words over a camera feed and Sunday school does not.",
-    "moment": "A line of help under the two choices while the usual look is chosen.",
-    "role": "help line",
-    "does": "Says which plans use the usual look: every plan that has no look of its own.",
-    "budget": 44,
-    "variables": [],
-    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
-    "vocabulary": [
-      "look",
-      "plan"
-    ],
-    "notes": ""
+    "notes": "The other button reads 'The usual look'."
   },
   {
     "key": "PLAN_OWN_LOOK",
@@ -8453,28 +8422,6 @@
     "does": "Says that this plan has a look of its own.",
     "budget": 24,
     "variables": [],
-    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
-    "vocabulary": [
-      "look",
-      "plan"
-    ],
-    "notes": ""
-  },
-  {
-    "key": "look_only_for",
-    "kind": "fn",
-    "screen": "Look dialog (opened by the Look button). At its top, above the sample slide, sits a two-way choice of which look the dialog edits: the look every plan uses, or a look that belongs to the open plan alone. A church keeps one plan for each service; the morning service puts the words over a camera feed and Sunday school does not.",
-    "moment": "A line under the two choices while the plan's own look is chosen.",
-    "role": "help line",
-    "does": "Says the look being edited belongs to this one named plan alone.",
-    "budget": 44,
-    "variables": [
-      {
-        "name": "name",
-        "example": "Sunday school",
-        "what": "the name of the open plan"
-      }
-    ],
     "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
     "vocabulary": [
       "look",

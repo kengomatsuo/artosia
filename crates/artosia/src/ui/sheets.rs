@@ -234,7 +234,7 @@ fn looks(s: &App, k: &Kit, layer: &mut Vec<El>) {
         );
     // Taller than a small laptop screen once every setting is in, so the settings scroll under the looks.
     let body = col().w_full().max_h(440.0).scroll(rune::ScrollSpec { stick_bottom: false }).child(body).scroll_bar(k);
-    let content = col().w_full().child(super::look::chooser(s, k)).child(super::look::preview(s, k)).child(body);
+    let content = col().w_full().child(super::look::preview(s, k)).child(body);
     Dialog::new("looks", t::BTN_LOOK()).open(true).width(620.0).fit().on_close(close).child(content).build(k, layer);
 }
 

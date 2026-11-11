@@ -74,6 +74,19 @@ A church holds more than one service a week (Sunday morning and evening, youth o
 
 Tests in `plans.rs` hold each row of the table.
 
+### A plan's own look (2026-11-11, owner's example: morning service, Sunday school, afternoon service)
+
+One week holds a morning service that puts the words over the camera, a Sunday school with other songs and no camera, and an afternoon service that repeats the morning's songs. One look for everything cannot do that, so a plan may carry its own (`Plan.look`, `plans.rs` `look`, `plan_look`, `use_own_look`, `use_usual_look`).
+
+- **Storage.** `Plan.look` is an optional JSON value, because `artosia-core` cannot name `artosia_slides::look::Look`; the operator window reads and writes it as a `Look`. A plan saved before this has none and uses the usual look (`serde(default)`). Nothing is written for a plan without one.
+- **Which look is in use.** `App::look()` is the open plan's own look, else `settings.look`. `output_state`, `preview_state`, the pane pictures, the moving-background picture, the search's look previews and `deck_of_song` (lines per slide) all read it, so the projector follows the open plan. Nothing reads `settings.look` directly except `look()` and the first load.
+- **The Look dialog** starts its style controls with two buttons of one size: the usual look (screen icon) and the open plan's own (the plan's name and the same mark the plan list uses); the chosen one is filled. Everything below edits whichever is chosen (`set_look` writes to the plan when it has its own, to the settings otherwise). The language, Bible and logo settings further down are not looks and stay shared. Choosing the plan's own copies the usual look as a start. Choosing the usual look drops the plan's own and offers Undo in a toast (`Undo::PlanLook`, which only restores while that plan is still open).
+- **The plan list** marks a plan that has its own look with the same small icon before its name; the other rows keep the room so names line up. Duplicate copies the look (`Plan::copy_named`).
+- **The search's saved looks** (`Hit::Look`) apply through `set_look`, so they change whichever look the dialog would edit.
+- **A switch while something is live.** The words stay on the projector (see the table above). The whole look follows the new plan at once, background and text style together, because the output draws one `Look` for the screen. The slide's split into lines is part of the deck already on the projector and does not change; the deck in Preview and the next one queued are rebuilt with the new plan's lines per slide.
+
+Tests in `plans.rs` and `plan.rs` hold: an old plan loads, a plan's look wins and falls back when cleared (with Undo), a duplicate keeps it. Scenes `look-plan` and `plans-own-look`.
+
 **The learning log.** `palette_picks`, `service_songs` and `service_passages` already carry `plan_id`; the log writes the open plan's id and never reads it for ranking. Two services on one day broke one query: "what came after this song" partitioned by day, so the last song of the 7:00 plan counted as followed by the first of the 10:00 plan. It now partitions by day and plan (`learn.rs`, `followers_of`, with a test). The weekday group counts days and is unchanged. A deleted plan leaves its id in old rows; nothing reads it, and Undo restores the row under the same id.
 
 ## Search is the library

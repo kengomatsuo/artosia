@@ -312,7 +312,7 @@ const SCENES: &[Scene] = &[
     // The owner's look: a camera behind words at the bottom. The frame is a made-up gradient
     // handed over as if the projector had sent it, so both previews show it under the words.
     ("camera-background", |s| {
-        let look = artosia_slides::look::Look { background: artosia_slides::look::Background::Camera(String::new()), place: artosia_slides::look::Place::Bottom, shadow: true, ..s.settings.look.clone() };
+        let look = artosia_slides::look::Look { background: artosia_slides::look::Background::Camera(String::new()), place: artosia_slides::look::Place::Bottom, shadow: true, ..s.look() };
         s.set_look(look);
         s.open_song(0, None);
         s.show(2);

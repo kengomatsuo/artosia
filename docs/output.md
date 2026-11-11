@@ -39,6 +39,10 @@ Test hooks: `ARTOSIA_HIDE_DISPLAYS_FILE` and `ARTOSIA_HIDE_CAMERAS_FILE` name a 
 - Text shadow is a blurred black copy of the text, drawn on the output only. It costs a blur pass per frame while video plays (below), so a look turns it on only for pictures and video.
 - The text style is three fields of `Look` (`look.rs`): `ink` (colour), `font` (family name, empty is Rune's own font) and `outline` (off, thin, medium, thick) with `outline_ink`. A look saved before them loads with the defaults (`#[serde(default)]`), and a preset keeps the person's font and outline (`Look::with_preset`). The stage view draws in its own white style and ignores all three.
 
+## One look for each plan (2026-11-11)
+
+The output still receives one `Look` in every `OutputState`; the operator chooses which. It sends the open plan's own look when the plan has one, else the usual look, so the camera behind the words in the morning service and the plain background in Sunday school are the same code path, and a switch of plan that happens while a slide is live changes the background (video or camera included, through the usual `video::want`) on the next state without touching the slide. Full account: [operator.md](operator.md), "A plan's own look".
+
 ## Text colour, font and outline (2026-11-11)
 
 Rune at the pinned rev has no text stroke or outline. Its `TextStyle` carries size, weight, family, line height, tracking, OpenType settings and italic only (`crates/rune/src/tok.rs`); the one text effect is `El::shadow` and `blur` on a whole element.

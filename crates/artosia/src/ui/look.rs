@@ -3,13 +3,14 @@
 
 use artosia_slides::fonts;
 use artosia_slides::look::{Look, Outline, hex_of, parse_hex, rgb};
-use rune::{Color, Cursor, El, TextEdit, Tx, col, el, row, text};
+use rune::{Color, Cursor, El, TextEdit, Tx, el, row};
 use rune_kit::{Combobox, ComboboxOption, ComboboxState, Kit, SegmentedControl, TextInput};
 
 use super::sheets::setting;
+use super::widgets::btn;
 use crate::state::App;
 use crate::strings as t;
-use crate::theme::{space, type_};
+use crate::theme::{icons, space};
 
 /// What the dialog's typed colours and its font list hold between frames.
 pub struct LookEdit {
@@ -133,6 +134,7 @@ pub fn rows(s: &App, k: &Kit, layer: &mut Vec<El>) -> Vec<El> {
     let look = s.look();
     let at = Outline::ALL.iter().position(|outline| *outline == look.outline);
     vec![
+        chooser(s, k),
         colour_row(k, t::LOOK_TEXT_COLOUR(), look.ink, &text_colours(), &s.look_edit.ink, false),
         font_row(s, k, layer),
         setting(
@@ -166,23 +168,20 @@ pub fn preview(s: &App, k: &Kit) -> El {
         .child(el().size(width, height).radius(k.radius.md).clip_rounded(k.radius.md).child(super::thumb(s, &state, width)))
 }
 
-/// What the dialog edits: the usual look, or the open plan's own. Choosing the plan's own copies
-/// the usual look as a start; going back to the usual look drops it, with Undo in a toast.
-pub fn chooser(s: &App, k: &Kit) -> El {
+/// What the dialog edits: the usual look, or the open plan's own. Two buttons of equal width
+/// whatever the language, the chosen one filled; the plan's own carries the plan's name and the
+/// same mark the plan list uses. Choosing it copies the usual look as a start; going back to the
+/// usual look drops it, with Undo in a toast.
+fn chooser(s: &App, k: &Kit) -> El {
     let own = s.has_own_look();
-    let hint = if own { t::look_only_for(&s.plan_title()) } else { t::LOOK_FOR_USUAL_HINT().to_string() };
-    col()
+    let usual = btn(t::LOOK_FOR_USUAL()).icon(&icons::SCREEN).focusable().grow();
+    let usual = if own { usual } else { usual.primary() };
+    let plan = btn(s.plan_title()).icon(&icons::LOOK).help(t::LOOK_FOR_PLAN()).focusable().grow();
+    let plan = if own { plan.primary() } else { plan };
+    row()
         .key("look-for")
         .w_full()
-        .px(space::S4)
-        .pb(space::S2)
-        .gap(space::S1)
-        .child(
-            SegmentedControl::new(&[t::LOOK_FOR_USUAL(), t::LOOK_FOR_PLAN()], Some(usize::from(own)))
-                .label(t::LOOK_FOR_LABEL())
-                .fit()
-                .on_pick(|s: &mut App, picked, _: &mut Tx| if picked == 0 { s.use_usual_look() } else { s.use_own_look() })
-                .build(k),
-        )
-        .child(text(hint).font(type_::SMALL).color(k.c.text_muted).truncate())
+        .gap(space::S2)
+        .child(el().w_full().max_w(280.0).grow(1.0).child(usual.build(k, |s: &mut App, _: &mut Tx| s.use_usual_look()).key("look-for-usual")))
+        .child(el().w_full().max_w(280.0).grow(1.0).child(plan.build(k, |s: &mut App, _: &mut Tx| s.use_own_look()).key("look-for-plan")))
 }
