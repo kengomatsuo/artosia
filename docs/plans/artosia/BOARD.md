@@ -7,8 +7,8 @@
 ## Ready
 
 ## Doing (limit 1 per session)
-- **SITE1** A homepage at artosia.matsuokengo.com in the matsuokengo.com look, with the one file to download · source: owner 2026-11-11 · plan: web/ static page ported from the brand's saved code, real renders as pictures, published to gh-pages with CNAME · done when: the page serves from GitHub Pages with the custom domain set and the download button fetches the zip · verify: site-design lint.mjs and inspect.mjs 0 FAIL at 1440, 768, 390; curl of the Pages URL returns 200 · claim: main 2026-11-11T16:22:31Z
 
 ## Needs review
+- **SITE1** A homepage at artosia.matsuokengo.com in the matsuokengo.com look, with the one file to download · source: owner 2026-11-11 · plan: web/ static page ported from the brand's saved code, real renders as pictures, published to gh-pages with CNAME · done when: the page serves from GitHub Pages with the custom domain set and the download button fetches the zip · verify: site-design lint.mjs and inspect.mjs 0 FAIL at 1440, 768, 390; curl of the Pages URL returns 200 · DNS record for artosia.matsuokengo.com is the owner's to add at Cloudflare; not opened on a real phone · commit: 86edc0c · check: site-design lint 0 fail; inspect 0 fail at 1440, 768, 390 in both languages; GitHub's server answers 200 for /, /id/ and a picture under the custom name
 
 ## Done
