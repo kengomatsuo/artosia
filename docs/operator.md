@@ -82,7 +82,7 @@ A church holds more than one service a week (Sunday morning and evening, youth o
 
 **What a plan is.** A row of the `plans` table: a name, an optional date (`YYYY-MM-DD`), the time it last became the open one, and its items (`artosia-core/src/plan.rs`). The table always allowed many rows and the window only ever opened one; the old `New plan` command left each earlier plan behind as a hidden row named "Today". Those rows show in the list now, so nothing is lost. Plans saved before the date existed load with `#[serde(default)]` fields and are tested to do so (`plan.rs`, `store.rs`).
 
-**A plan is a weekly service (2026-11-11, owner: "why cant like every sunday hh:mm you love textfields too much").** A plan has a day of the week and a starting time (`Plan::day`, `Plan::time` in `artosia-core/src/plan.rs`; a plan saved before this loads with neither). Both are picked from chips in one box: seven days, the hours 00 to 23 and the minutes in steps of five, with the result said back in words beside Save (`ui/plans.rs` `view`). Nothing is typed. A name is extra, in a field that may stay empty, and a plan without one reads as its day and time, "Sunday 07:00" (`plans.rs` `plan_words`; Indonesian writes `07.00`). A new plan is offered the open plan's day two hours later, or today at the next full hour. Nothing exists until Save, so Cancel leaves nothing behind. Microsoft's guidance on date and time controls gives a picker for "a single time value" and a calendar where "the day of the week" matters, and NN/g keeps typing only as an addition to picking; the free-text date this replaces had neither.
+**A plan is a weekly service (2026-11-11, owner: "why cant like every sunday hh:mm you love textfields too much").** A plan has a day of the week and a starting time (`Plan::day`, `Plan::time` in `artosia-core/src/plan.rs`; a plan saved before this loads with neither). Both are picked from chips in one box: seven days, the hours 00 to 23 and the minutes in steps of five, with the result said back in words beside Save (`ui/plans.rs` `view`). Nothing is typed. A name is extra, in a field that may stay empty, and a plan without one reads as its day and time, "Sunday 07:00" (`plans.rs` `plan_words`; Indonesian writes `07.00`). A new plan is offered the open plan's day two hours later, or today at the next full hour. Nothing exists until Save, so Cancel leaves nothing behind. No hour is offered: a guessed one was taken for a setting, so Save waits until an hour is pressed. With keys the time is typed as it is said while a chip has the focus (`0730`, `1830`, `7`; `plan_box_digit`), the arrows choose as they move, and Enter saves. Microsoft's guidance on date and time controls gives a picker for "a single time value" and a calendar where "the day of the week" matters, and NN/g keeps typing only as an addition to picking; the free-text date this replaces had neither.
 
 **Every plan is in view under the plan, and nothing drops down (2026-11-11, owner: "how to access plan picker? In easislide the plan list is just below the plan", then "make it show title only id rather have that than a clipping dropdown").** The foot of the plan column lists every plan the church keeps, grouped by day of the week with today's group first, each day in the order of its times, and last the plans that have no day yet (`plans.rs` `plan_groups`, `ui/plans.rs` `strip`). The open plan is filled and one press opens another. The list is at most about five rows high and scrolls past that, with the fade at the edge that hides more. Each row carries its own menu: Day and time, Duplicate plan, Delete plan, so a copy is made from the plan it copies; a tester had looked for exactly that on the row. The plus beside the heading opens the box for a new plan. The column's top is the open plan's title and nothing else. The owner chose the list over a drop-down and over tabs; the drop-down that first stayed at the top cut long names and moved its commands a row down for every plan, and is gone. On a real start the plan of today's service that is about to begin or began less than an hour and a half ago is the open one (`plan_for_now`). EasiSlides shows its worship list's box at the list (`easislides/01-easislides-main-window.jpg` in the research folder); ProPresenter and FreeShow keep their lists of playlists and projects in view beside the items, as the paragraph above records.
 
@@ -143,7 +143,7 @@ Nothing typed lists every song. The Bible tab shows the 66 books as buttons, the
 | Shift Enter | Add it to the plan and stay in the search |
 | Tab | On a song: search inside it (its sections become the results, so another song's chorus is two keys away). On a book: step into it. Otherwise: switch between All, Songs and Bible |
 | Backspace in an empty box | Let go of the song the search is inside |
-| Esc | Empty the search; a second press closes it |
+| Esc | Close the search at once; from inside a song, first back out to the whole search. It used to empty the box first, and a tester who opened the search by a slip of a letter key pressed it once and was still inside. The panel also has a close button for the pointer |
 
 Commands that change the projector (Black, Clear text, Next, Start the service, Loop the announcements) run on Enter, like every command. They reach the top of the list only when their own name is typed from its start, so a song search does not put one under the Enter key.
 
@@ -170,6 +170,7 @@ The arrows are the ones EasiSlides taught the volunteers (owner, 2026-11-10: "Ea
 | Backspace | Put what was on the projector before this into Preview, with the ring where it was left; pressed again, the one before that, then round to the newest (`open_earlier`). The room sees nothing until Enter. The Earlier button of the Live title prints the key |
 | Tab, Shift Tab | Put the next or the previous plan item in Preview. The row Tab opens carries the key where its menu button is; the button takes its place under the pointer |
 | Shift Enter | Add what Preview holds to the plan, as in the search. It never shows anything |
+| Ctrl Tab, Ctrl Shift Tab | The plan after or before the open one in the list of plans, going round, as the same keys move between tabs in Windows (Microsoft, Keyboard shortcuts in Windows: "Ctrl+Tab: Move to the next tab"). The projector is not touched. The keys are drawn beside the heading of the list |
 | Alt Down, Alt Up | Move the Preview item in the plan |
 | Ctrl M | Start the Preview song at the ring's section, or clear it |
 | Delete | Take the Preview item out of the plan (Undo in the toast) |
@@ -395,6 +396,22 @@ The fourth test (2026-11-11, on the build with the changes above, one tester wit
 | The practice announcements were English in the Indonesian window | They are written in the window's language and follow a switch while nobody has changed them (`strings::PRACTICE_NOTICES`) |
 
 Left as it was: a double click on a plan row opens it in Preview and shows nothing, which is the owner's rule; Backspace and the Earlier menu fill Preview and wait for Enter, for the same reason; a toast lies over the tiles under Preview for the seconds it shows. The practice songs and the bundled Bible are English in every language.
+
+The test of weekly plans (2026-11-11, one tester with the pointer in Indonesian, one with keys). The pointer did all eight goals in 31 steps and told the dividers from the items at once; the keys did one goal in thirty steps. What they met:
+
+| What happened | Now |
+|---|---|
+| Four plans in two day groups did not fit the list's five rows, and the open plan scrolled out of sight | The list takes about a third of the column, and a plan just made or changed is scrolled into view |
+| The open plan's fill read as a hover | It carries a tick as well |
+| A plan's menu opened beside another row | The menu's first line names its plan |
+| The box offered an hour nobody chose | No hour is chosen until one is pressed, and Save waits |
+| After a song was added with its plus the search stayed open, with no way out for the pointer | The search has a close button |
+| Nine arrow presses from 16 to 07, six for the minutes | Digits type the time |
+| Enter on an hour did nothing | Enter saves the box |
+| No key between plans | Ctrl Tab and Ctrl Shift Tab |
+| "copy plan" was not offered while the open plan was empty | It always is |
+| "plan" filled the search with chapters of a book of the Bible | A book guessed from a word that names a command or a plan does not go first |
+| A plan with no name and no day read "Today" under a heading that can read Today | It reads as a plan |
 
 ## What a pointer-only volunteer met (2026-11-11, second blind test, in Indonesian)
 
