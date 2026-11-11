@@ -98,7 +98,7 @@ pub(crate) fn topbar(s: &App, k: &Kit, insets: rune::ChromeInsets, wide: bool) -
         .window_drag()
         .pl(space::S4 + insets.leading)
         .pr(space::S4 + insets.trailing)
-        .gap(space::S3)
+        .gap(if wide { space::S3 } else { space::S2 })
         .center_y()
         .fill(k.c.bg_base)
         .child(

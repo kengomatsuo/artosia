@@ -174,6 +174,17 @@ fn yes() -> bool {
 }
 
 /// The key that names a section's kind: V, P, C, B, I, E, and X for any other.
+/// The letter drawn beside a section in the lists: the language's own letter for a chorus,
+/// V beside a verse only where the word for a verse begins with it, the usual letter otherwise.
+pub fn shown_letter(tag: artosia_core::song::Tag) -> Option<char> {
+    use artosia_core::song::SectionKind;
+    match tag.kind {
+        SectionKind::Chorus => Some(t::chorus_key()),
+        SectionKind::Verse => t::verse_key_shown().then_some('V'),
+        _ => Some(marker_letter(tag)),
+    }
+}
+
 pub fn marker_letter(tag: artosia_core::song::Tag) -> char {
     tag.short().chars().next().unwrap_or('X')
 }
@@ -330,6 +341,8 @@ pub struct App {
     /// Where an editor field writes once the editor has closed under it.
     pub spare_edit: TextEdit,
     pub sheet: Sheet,
+    /// The song being written was started from the plan's Add menu, so saving it adds it.
+    pub plan_new_song: bool,
     /// The part of the Design dialog that shows: 0 background, 1 words, 2 logo.
     pub design_part: usize,
     /// The tour's stop, while the tour is open (`ui/tour.rs`).
@@ -540,6 +553,7 @@ impl App {
             editor: None,
             spare_edit: TextEdit::new(""),
             sheet: Sheet::None,
+            plan_new_song: false,
             design_part: 0,
             tour: None,
             tour_entered_at: -1.0,
@@ -869,6 +883,7 @@ impl App {
         // R is the chorus too: a church that says "reff" reaches for R, and no kind of section owns that letter.
         if letters.contains(&'C') {
             letters.push('R');
+            letters.push(t::chorus_key());
         }
         letters.sort_unstable();
         letters.dedup();
@@ -880,7 +895,7 @@ impl App {
     /// marker"). False when the deck has no such section.
     pub fn jump_to_marker(&mut self, letter: char) -> bool {
         let Some(deck) = self.target_deck() else { return false };
-        let letter = if letter == 'R' { 'C' } else { letter };
+        let letter = if letter == 'R' || letter == t::chorus_key() { 'C' } else { letter };
         let from = self.live.as_ref().map(|live| live.index).or(self.open.as_ref().map(|open| open.cursor)).unwrap_or(0);
         let starts: Vec<usize> = section_starts(deck).into_iter().filter(|&at| deck.slides[at].tag.is_some_and(|tag| marker_letter(tag) == letter)).collect();
         let Some(&to) = starts.iter().find(|&&at| at > from).or(starts.first()) else { return false };

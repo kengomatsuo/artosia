@@ -9,7 +9,7 @@ use crate::theme::{self, icons, size, space, type_};
 use crate::ui::widgets::{btn, section_label};
 
 /// Room for the name in the title bar, between the padding and the two tools beside it.
-const NAME: f32 = size::PLAN - 2.0 * space::S3 - 2.0 * space::S2 - 26.0 - 32.0 - 12.0;
+const NAME: f32 = size::PLAN - 2.0 * space::S2;
 
 fn edit_name(s: &mut App) -> &mut rune::TextEdit {
     match s.switcher.renaming.as_mut() {
@@ -114,5 +114,5 @@ pub(crate) fn view(s: &App, k: &Kit, layer: &mut Vec<El>) {
         .child(btn(t::BTN_CANCEL()).focusable().build(k, |s, _| s.finish_rename(false)))
         .child(btn(t::BTN_SAVE()).primary().disabled(!ok).focusable().build(k, |s, _| s.finish_rename(true)));
     let body = col().w_full().px(space::S4).pb(space::S4).gap(space::S3).child(field(t::PLAN_NAME_LABEL(), name)).child(field(t::PLAN_DATE_LABEL(), date)).child(el().h(space::S1)).child(foot);
-    Dialog::new("plan-rename", t::PLAN_RENAME()).open(true).width(420.0).fit().on_close(|s: &mut App| s.finish_rename(false)).child(body).build(k, layer);
+    Dialog::new("plan-rename", if renaming.fresh { t::PLAN_NEW() } else { t::PLAN_RENAME() }).open(true).width(420.0).fit().on_close(|s: &mut App| s.finish_rename(false)).child(body).build(k, layer);
 }

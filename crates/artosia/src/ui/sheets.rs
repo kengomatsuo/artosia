@@ -587,6 +587,9 @@ fn key_group(k: &Kit, heading: &'static str, keys: &[(&'static str, &'static str
     // The keys are the same in every language and are drawn as the keyboard prints them;
     // only what a key does is written per language.
     for ((keys, _), (_, does)) in keys.iter().zip(rows) {
+        // The row about section letters shows this language's own letters.
+        let own = t::section_keys();
+        let keys: &str = if *keys == "C V B" { own.as_str() } else { keys };
         group = group.child(row().w_full().h(24.0).gap(space::S3).center_y().child(el().w(132.0).child(row().child(keycap(k, keys, false)))).child(text(*does).font(type_::BODY).color(k.c.text_base).truncate().grow(1.0)));
     }
     group

@@ -339,6 +339,22 @@ Found while pressing real keys afterwards: **Enter did not start a new line in t
 
 F1 hides the words here, where Windows programs open help; the tester pressed it for help once and undid it at once, because the tile lights up yellow. The keys of the three screen states stay where two releases put them, and `?` opens the keys.
 
+## What a pointer-only volunteer met (2026-11-11, second blind test, in Indonesian)
+
+All fifteen goals were reached; these are the places where the tester had to guess, and what changed.
+
+| What happened | Now |
+|---|---|
+| No visible way to write a new song from the plan | "New song" is in the plan's Add menu, and a song written from there joins the plan when it is saved |
+| The box that names a new plan was titled "Rename plan" | It is titled with the action that opened it |
+| The way back after too many presses of Next was a clock named for what it lists | The button reads as the way back to what was shown before |
+| Gallery tiles were blank grey until their previews arrived | A tile without its picture shows the backdrop's title |
+| One announcement card in Preview offered "Add to plan" though the plan held the announcements | A single card counts as in the plan when the plan holds the announcements |
+| Save on an announcement confirmed nothing | A toast says the announcement was saved |
+| The plan's name was cut in its header | The name has the column's whole width: room was kept for two buttons that no longer exist |
+| A play triangle with "Ctrl M" explained nothing | The two tools of the Preview title carry a word each: Start here, Edit |
+| A plan row's title was cut by the chip of the section it begins at | That section is a small line under the title |
+
 ## Checking a screen
 
 `tools/snap.sh <folder>` renders every scene in `main.rs` (`SCENES`) to PNG with the practice library; `--query "<text>"` opens the search on any text; `--background <file>` puts a picture behind the text; `--script crates/artosia/scripts/type-and-show.json --at mark:live` plays a keyboard flow first. `--data <folder>` points at a real library.

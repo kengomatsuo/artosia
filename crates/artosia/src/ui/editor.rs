@@ -297,7 +297,7 @@ fn marks_strip(s: &App, k: &Kit, editor: &Editor) -> Option<El> {
     for (at, stanza) in proposal.stanzas.iter().enumerate() {
         chips = chips.child(stanza_chip(k, at, stanza));
     }
-    let apply = row().w(184.0).child(btn(t::MARKS_APPLY()).icon(&icons::CHECK).small().hint(t::KEY_MARK()).help(t::MARKS_APPLY_HELP()).grow().build(k, |s, _| s.apply_marks()));
+    let apply = row().min_w(148.0).child(btn(t::MARKS_APPLY()).icon(&icons::CHECK).small().hint(t::KEY_MARK()).help(t::MARKS_APPLY_HELP()).build(k, |s, _| s.apply_marks()));
     let hide = btn(t::MARKS_HIDE()).icon(&icons::CLOSE).small().ghost().icon_only().build(k, |s, _| s.hide_marks());
     let mut strip = col()
         .key("marks-strip")

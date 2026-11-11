@@ -40,14 +40,14 @@
   "why": "Same word as the Open button"
  },
  "HINT_SCOPE": {
-  "text": "ganti ke lagu atau Alkitab",
-  "back": "switch to songs or Bible",
-  "why": "Plain 'atau', no slash"
+  "text": "Ganti ke lagu atau Alkitab",
+  "back": "Switch to songs or Bible",
+  "why": "Capital like the hints beside it"
  },
  "HINT_SECTIONS": {
-  "text": "cari bagian lagu",
-  "back": "look for a song part",
-  "why": "Verb phrase for what Tab does"
+  "text": "Cari bagian lagu",
+  "back": "Look for a song part",
+  "why": "Capital like the hints beside it"
  },
  "SEARCH_SECTIONS": {
   "text": "Reff, bait 2, atau sebaris liriknya",
@@ -215,9 +215,9 @@
   "why": "monitor for hardware"
  },
  "CMD_REMOTE": {
-  "text": "Kendali ponsel",
-  "back": "Phone control",
-  "why": "One local name, no English plus abbreviation"
+  "text": "Remote ponsel",
+  "back": "Phone remote",
+  "why": "'remote' is what volunteers say for a remote control"
  },
  "CMD_REMOTE_DETAIL": {
   "text": "Ponsel di Wi-Fi yang sama bisa mengganti slide",
@@ -265,9 +265,9 @@
   "why": "Said as is at the desk"
  },
  "BTN_LISTEN": {
-  "text": "Pendengar",
-  "back": "Listener",
-  "why": "A noun for a tool, not a command"
+  "text": "Mikrofon",
+  "back": "Microphone",
+  "why": "Named by what the volunteer sees; a person-word would read as the congregation"
  },
  "STREAM_HINT": {
   "text": "Gambarnya sama dengan proyektor, lengkap dengan suara ruangan.",
@@ -343,8 +343,8 @@
   "why": "'gambar' for a lost video frame"
  },
  "CMD_LISTEN": {
-  "text": "Pendengar",
-  "back": "Listener",
+  "text": "Mikrofon",
+  "back": "Microphone",
   "why": "Same name as the button"
  },
  "CMD_LISTEN_DETAIL": {
@@ -363,9 +363,9 @@
   "why": "Reassurance kept hard"
  },
  "LISTEN_MICROPHONE": {
-  "text": "Mikrofon",
-  "back": "Microphone",
-  "why": "One word"
+  "text": "Pilih mikrofon",
+  "back": "Choose a microphone",
+  "why": "The title is now Mikrofon, so the list heading asks for a choice"
  },
  "LISTEN_DEFAULT": {
   "text": "Bawaan komputer",
@@ -623,9 +623,9 @@
   "why": "State"
  },
  "REMOTE_ON": {
-  "text": "Kendali ponsel menyala",
-  "back": "The phone control is on",
-  "why": "menyala"
+  "text": "Remote ponsel menyala",
+  "back": "The phone remote is on",
+  "why": "New name"
  },
  "output_on_screen": {
   "text": "Proyektor di monitor {number}",
@@ -1018,9 +1018,9 @@
   "why": "Short reason"
  },
  "SUGGEST_FOLLOWS": {
-  "text": "Biasa dinyanyikan sesudah lagu ini",
-  "back": "Usually sung after this song",
-  "why": "Plain words for sung after"
+  "text": "Sering dinyanyikan setelah lagu ini",
+  "back": "Often sung after this song",
+  "why": "Same wording as the group heading"
  },
  "SUGGEST_LOST": {
   "text": "Jemaat sepertinya menyanyikan lagu lain",
@@ -1053,9 +1053,9 @@
   "why": "Pair of Maju"
  },
  "BTN_NO_TEXT": {
-  "text": "Teks mati",
-  "back": "Text off",
-  "why": "Says the words go; same 'mati' as the projector"
+  "text": "Tanpa teks",
+  "back": "Without text",
+  "why": "Says the words are gone; two lines on the tile"
  },
  "STATE_OFF": {
   "text": "Proyektor mati",
@@ -1153,9 +1153,9 @@
   "why": "One word"
  },
  "BTN_EARLIER": {
-  "text": "Sudah tayang",
-  "back": "Already shown",
-  "why": "Not 'riwayat', which now names the search history"
+  "text": "Kembali ke",
+  "back": "Go back to",
+  "why": "The way back to something shown before"
  },
  "EARLIER_HINT": {
   "text": "Sudah pernah tayang. Klik untuk ke Preview.",
@@ -1168,9 +1168,9 @@
   "why": "Reads next to a switch"
  },
  "LETTER_KEYS_HINT": {
-  "text": "C ke reff, V ke bait berikutnya. Kalau mati, huruf membuka pencarian.",
-  "back": "C to chorus, V to next verse. When off, letters open the search.",
-  "why": "Letters are the fixed keys"
+  "text": "R ke reff, B ke bridge. Kalau dimatikan, huruf membuka pencarian.",
+  "back": "R to chorus, B to bridge. When switched off, letters open the search.",
+  "why": "Letters are the caps the program shows"
  },
  "COUNTDOWN": {
   "text": "Hitung mundur",
@@ -1228,9 +1228,9 @@
   "why": "One word"
  },
  "FIELD_ORDER": {
-  "text": "Atau ketik urutan, contoh: V1 C*2 V2 C B",
-  "back": "Or type the order, for example: V1 C*2 V2 C B",
-  "why": "Code kept exactly"
+  "text": "Ketik urutan, contoh: Bait1 Reff*2 Bait2 Reff Bridge",
+  "back": "Type the order, example: Verse1 Chorus*2 Verse2 Chorus Bridge",
+  "why": "The program reads these section names"
  },
  "ORDER": {
   "text": "Urutan",
@@ -1797,9 +1797,9 @@
   "why": "'zoom' is what people say"
  },
  "REMOTE_SWITCH": {
-  "text": "Kendali ponsel",
-  "back": "Phone control",
-  "why": "Same as the dialog title"
+  "text": "Remote ponsel",
+  "back": "Phone remote",
+  "why": "Same name as the dialog"
  },
  "REMOTE_SWITCH_DETAIL": {
   "text": "Ponsel di Wi-Fi yang sama bisa mengganti slide",
@@ -1825,9 +1825,9 @@
   "why": "Zero is a full statement"
  },
  "remote_failed": {
-  "text": "Kendali ponsel gagal menyala: {problem}",
-  "back": "The phone control failed to start: {problem}",
-  "why": "Reason after a colon"
+  "text": "Remote ponsel gagal menyala: {problem}",
+  "back": "The phone remote failed to start: {problem}",
+  "why": "New name"
  },
  "IMPORT_FOUND": {
   "text": "Lagu dan Alkitab dari EasiSlides disalin ke sini. Aslinya tidak diubah.",
@@ -1880,9 +1880,9 @@
   "why": "Wide button"
  },
  "ANNOUNCEMENT_BODY": {
-  "text": "Keterangan",
-  "back": "Details",
-  "why": "One word"
+  "text": "Isi pengumuman",
+  "back": "Content of the announcement",
+  "why": "The text of a notice, not a caption"
  },
  "ANNOUNCEMENT_TITLE_HINT": {
   "text": "Persekutuan Pemuda",
@@ -1910,9 +1910,9 @@
   "why": "Fits 16"
  },
  "ANNOUNCEMENT_FILL": {
-  "text": "Sumber isi",
-  "back": "Source of the content",
-  "why": "Not 'automatic', since the first choice is manual"
+  "text": "Isi diambil dari",
+  "back": "The content is taken from",
+  "why": "Where the text comes from; not 'automatic'"
  },
  "FILL_NOTHING": {
   "text": "Manual",
@@ -2039,11 +2039,11 @@
  },
  "birthdays_on_file": {
   "text": {
-   "zero": "Belum ada nama tersimpan",
-   "other": "{count} nama tersimpan"
+   "zero": "Daftar ulang tahun masih kosong",
+   "other": "{count} ulang tahun tersimpan"
   },
-  "back": "No names stored yet / {count} names stored",
-  "why": "Count names; zero is its own statement"
+  "back": "The list of birthdays is still empty / {count} birthdays stored",
+  "why": "Says birthdays; zero says no list yet"
  },
  "birthdays_imported": {
   "text": {
@@ -2237,9 +2237,9 @@
   "why": "Fragment"
  },
  "KEYS_SHOWING_ROWS[8].1": {
-  "text": "C ke reff, V ke bait berikutnya, B ke bridge",
-  "back": "C to chorus, V to the next verse, B to bridge",
-  "why": "Each letter with its own target"
+  "text": "R ke reff berikutnya, B ke bridge berikutnya",
+  "back": "R to the next chorus, B to the next bridge",
+  "why": "The caps this language shows"
  },
  "KEYS_SHOWING_ROWS[9].1": {
   "text": "Sorot bagian bernomor di Preview",
@@ -2267,9 +2267,9 @@
   "why": "Fragment"
  },
  "KEYS_SHOWING_ROWS[14].1": {
-  "text": "Saran dari Pendengar masuk ke Preview",
-  "back": "Suggestions from the Listener go into Preview",
-  "why": "Listener's new name"
+  "text": "Saran dari Mikrofon masuk ke Preview",
+  "back": "Suggestions from the Microphone go into Preview",
+  "why": "New listener name"
  },
  "KEYS_SHOWING_ROWS[15].1": {
   "text": "Pengumuman masuk ke Preview",
@@ -2417,14 +2417,14 @@
   "why": "One word"
  },
  "LEARN_ON": {
-  "text": "Ingat lagu yang dipilih",
-  "back": "Remember the songs picked",
-  "why": "Phrase next to a switch"
+  "text": "Ingat pilihan di pencarian",
+  "back": "Remember picks in the search",
+  "why": "Says what is remembered"
  },
  "LEARN_ON_HINT": {
-  "text": "Lagu yang sering dipilih lebih dulu, kalau hasilnya sama",
-  "back": "Songs picked often come first, when the results are equal",
-  "why": "Plain speech"
+  "text": "Kalau hasilnya sama, lagu yang sering dipilih di atas",
+  "back": "When the results are equal, songs picked often are on top",
+  "why": "Condition first"
  },
  "LEARN_FORGET": {
   "text": "Hapus riwayat pencarian",
@@ -2447,9 +2447,9 @@
   "why": "Group heading"
  },
  "group_follows": {
-  "text": "Kerap dinyanyikan usai {title}",
+  "text": "Sering dinyanyikan setelah {title}",
   "back": "Often sung after {title}",
-  "why": "Full verb, fits 44"
+  "why": "Same wording as the reason line"
  },
  "habit_chip": {
   "text": "dipilih {picks} kali untuk “{typed}”",
@@ -2462,14 +2462,14 @@
   "why": "Day then month name"
  },
  "follows_line": {
-  "text": "Sesudahnya {count} kali, terakhir {when}",
+  "text": "Setelahnya {count} kali, terakhir {when}",
   "back": "After it {count} times, last {when}",
-  "why": "Plain words for after"
+  "why": "'setelah' everywhere"
  },
  "weekday_line": {
-  "text": "Dinyanyikan {count} dari {of} ibadah di hari yang sama",
-  "back": "Sung in {count} of {of} services on the same day",
-  "why": "No 'that day' under a heading about today"
+  "text": "Dinyanyikan {count} dari {of} ibadah serupa",
+  "back": "Sung in {count} of {of} similar services",
+  "why": "Short, no 'that day'"
  },
  "recent_line": {
   "text": "Dipilih {picks} kali, terakhir {when}",
@@ -2737,9 +2737,9 @@
   "why": "Index moved: this row is now the removal"
  },
  "TIP_START_HERE": {
-  "text": "Mulai dari sini, klik lagi untuk batal",
-  "back": "Start from here, click again to cancel",
-  "why": "Both facts in one line"
+  "text": "Lagu dibuka dari slide yang disorot",
+  "back": "The song opens from the highlighted slide",
+  "why": "Adds what the button's two words cannot"
  },
  "PLAN_STARTS_AT": {
   "text": "Mulai dari",
@@ -3110,5 +3110,20 @@
   "text": "situs ramai, coba lagi sekitar semenit",
   "back": "the website is busy, try again in about a minute",
   "why": "Lower-case clause after a colon, no full stop; 'ramai' is how a busy site is said"
+ },
+ "START_HERE_HOW": {
+  "text": "Buka lagu di Preview, sorot slide tempat lagu mulai, lalu pilih perintah ini lagi",
+  "back": "Open the song in Preview, highlight the slide where the song starts, then choose this command again",
+  "why": "One instruction sentence in order of doing; 'sorot' matches 'slide yang disorot'"
+ },
+ "NOTICE_SAVED": {
+  "text": "Pengumuman disimpan",
+  "back": "Announcement saved",
+  "why": "Pair of 'Lagu disimpan'"
+ },
+ "BTN_START_HERE": {
+  "text": "Mulai di sini",
+  "back": "Start here",
+  "why": "Two short words about where a song begins"
  }
 }

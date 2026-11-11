@@ -60,6 +60,22 @@ impl Tag {
         if numbered { format!("{letter}{}", self.number) } else { letter.to_string() }
     }
 
+    /// One word of the typed play order: the window's word with its number attached ("Bait1",
+    /// "Reff"), when the reader knows the word, else the short code ("V1", "C").
+    pub fn order_word(&self) -> String {
+        let local = MARKER_WORDS.with(|words| {
+            let words = words.borrow();
+            let word = words.as_ref()?.get(self.kind as usize)?.trim().to_string();
+            if word.is_empty() || word.contains(char::is_whitespace) {
+                return None;
+            }
+            let numbered = matches!(self.kind, SectionKind::Verse | SectionKind::Other) || self.number > 1;
+            let text = if numbered { format!("{word}{}", self.number) } else { word };
+            (parse_tag(&text) == Some(*self)).then_some(text)
+        });
+        local.unwrap_or_else(|| self.short())
+    }
+
     /// The marker line written back into lyrics text: in the words of the window's language
     /// when it gave some and they read back as this very section, else in the plain form.
     pub fn marker(&self) -> String {
@@ -315,7 +331,7 @@ pub fn write_order(tags: &[Tag]) -> String {
     let mut at = 0;
     while at < tags.len() {
         let run = tags[at..].iter().take_while(|tag| **tag == tags[at]).count();
-        out.push(if run > 1 { format!("{}*{run}", tags[at].short()) } else { tags[at].short() });
+        out.push(if run > 1 { format!("{}*{run}", tags[at].order_word()) } else { tags[at].order_word() });
         at += run;
     }
     out.join(" ")
@@ -470,8 +486,14 @@ mod tests {
         for tag in [Tag::new(SectionKind::Verse, 2), Tag::new(SectionKind::Chorus, 1), Tag::new(SectionKind::Chorus, 2), Tag::new(SectionKind::PreChorus, 1), Tag::new(SectionKind::Bridge, 1)] {
             assert_eq!(heading(&tag.marker()), Some(tag));
         }
+        // The typed order uses the same words, and reads them back.
+        let order = [Tag::new(SectionKind::Verse, 1), Tag::new(SectionKind::Chorus, 1), Tag::new(SectionKind::Chorus, 1), Tag::new(SectionKind::Verse, 2), Tag::new(SectionKind::Bridge, 1)];
+        let written = write_order(&order);
+        assert_eq!(written, "Bait1 Reff*2 Bait2 Bridge");
+        assert_eq!(parse_order(&written), order);
         set_marker_words(None);
         assert_eq!(Tag::new(SectionKind::Chorus, 1).marker(), "[chorus]");
+        assert_eq!(write_order(&order), "V1 C*2 V2 B");
     }
 
     /// The words a church writes above a stanza: the lyrics box shows `[Bait 1]` and `[Reff]`

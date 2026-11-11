@@ -134,7 +134,7 @@ A second reader of a finished language found one thing under two or three names,
 
 **`suggestion`** An offer, in a strip at the top of Preview, of what to show next: because the listener heard it, because it is often sung after the live song, or because the singing seems to have left the words on the screen. A suggestion only ever fills Preview and is never sent to the room by itself.
 
-**`listener`** The microphone helper. It listens to the room, works out which song or verse is being sung or read, and makes suggestions. It never shows anything on its own. It can also feel the beat of the music.
+**`listener`** The microphone helper. It listens to the room, works out which song or verse is being sung or read, and makes suggestions. It never shows anything on its own. It can also feel the beat of the music. Name it by the thing a volunteer sees, the microphone, or by what it does for them; a word for a person who listens reads as the congregation.
 
 **`keyboard`** The shortcut keys of the window, listed in a sheet. Key names such as Ctrl, Shift, Enter and the F keys are drawn as printed on a keyboard and are never translated.
 

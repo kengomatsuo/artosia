@@ -62,7 +62,19 @@ pub(crate) fn item_row(s: &App, k: &Kit, item: &PlanItem, menu: El) -> El {
         .hover_group()
         .child(grip(k))
         .child(icon(entry_icon(&item.entry), 16.0).color(if live && s.on_air() { theme::live() } else { k.c.text_muted }).a11y_hidden())
-        .child(text(s.entry_title(&item.entry)).font(if open { type_::BODY_STRONG } else { type_::BODY }).color(ink).truncate().grow(1.0));
+        .child({
+            // The title has the row's whole width. Where the song begins is a small line under
+            // it, in the section's colour: beside the title it took the room the name needs.
+            let title = text(s.entry_title(&item.entry)).font(if open { type_::BODY_STRONG } else { type_::BODY }).color(ink).truncate();
+            match s.entry_start(&item.entry).filter(|_| !missing) {
+                Some(tag) => {
+                    let color = theme::ink_of(artosia_slides::stage::group_color(artosia_core::deck::tag_group(tag)));
+                    let begins = row().gap(3.0).center_y().child(icon(&icons::PLAY, 9.0).color(color).a11y_hidden()).child(text(t::section_label(tag)).font(type_::TINY).color(color).truncate());
+                    rune::col().grow(1.0).min_w(0.0).child(title).child(begins)
+                }
+                None => rune::col().grow(1.0).min_w(0.0).child(title),
+            }
+        });
     if missing {
         // An entry that cannot be shown says so in words across the row, not by a cursor.
         return body.child(state_pill(t::PLAN_MISSING(), theme::warn(), rune::Color::BLACK)).child(menu);
@@ -70,7 +82,7 @@ pub(crate) fn item_row(s: &App, k: &Kit, item: &PlanItem, menu: El) -> El {
     // A song marked to begin at one of its parts shows that part's chip, as the lists draw it.
     let mut body = body;
     if let Some(tag) = s.entry_start(&item.entry) {
-        body = body.label(format!("{}, {}", s.entry_title(&item.entry), t::starts_chip(&t::section_label(tag)))).child(crate::ui::widgets::section_chip(tag));
+        body = body.label(format!("{}, {}", s.entry_title(&item.entry), t::starts_chip(&t::section_label(tag))));
     }
     // The item on the projector carries a red dot where its menu button is; the button takes
     // the dot's place under the pointer, and while its menu is open (owner, 2026-11-11: a dot,
@@ -240,6 +252,12 @@ pub(crate) fn add_bar(s: &App, k: &Kit, layer: &mut Vec<El>) -> El {
         .open(s.add_menu)
         .on_close(|s: &mut App| s.add_menu = false)
         .item(MenuItem::new(t::PLAN_ADD_SONG()).icon(&icons::SONG).on_select(|s: &mut App| s.open_palette_adding(Scope::Songs)))
+        .item(MenuItem::new(t::CMD_NEW_SONG()).icon(&icons::PLUS).on_select(|s: &mut App| {
+            // A tester who wanted to write a song looked here first and found only songs that exist.
+            s.add_menu = false;
+            s.edit_new_song(artosia_core::song::Song::default());
+            s.plan_new_song = true;
+        }))
         .item(MenuItem::new(t::PLAN_ADD_PASSAGE()).icon(&icons::BOOK).on_select(|s: &mut App| s.open_palette_adding(Scope::Bible)))
         .item(MenuItem::new(t::CMD_ANNOUNCEMENTS()).icon(&icons::ANNOUNCE).on_select(|s: &mut App| {
             s.add_announcements_to_plan();
@@ -273,7 +291,7 @@ pub(crate) fn list(s: &App, k: &Kit, layer: &mut Vec<El>) -> El {
 pub(crate) fn start_tool(s: &App, k: &Kit) -> Option<El> {
     use crate::starts::StartState;
     let (_, _, state) = s.start_control()?;
-    Some(btn(t::TIP_START_HERE()).icon(&icons::PLAY).icon_only().small().hint(t::KEY_START_HERE()).active(state == StartState::Marked).disabled(state == StartState::Beginning).build(k, |s, tx| {
+    Some(btn(t::BTN_START_HERE()).icon(&icons::PLAY).small().hint(t::KEY_START_HERE()).help(t::TIP_START_HERE()).active(state == StartState::Marked).disabled(state == StartState::Beginning).build(k, |s, tx| {
         s.toggle_start_here();
         tx.blur();
     }))

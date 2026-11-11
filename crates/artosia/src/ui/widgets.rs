@@ -368,8 +368,15 @@ impl Tile {
                 icon(glyph, 20.0).color(ink).a11y_hidden()
             });
         }
-        let face = if self.label.chars().count() > 8 { type_::TINY } else { type_::SMALL_STRONG };
-        e = e.child(el().w_full().center().child(text(self.label.clone()).font(face).color(ink).truncate().a11y_hidden()));
+        // One word on one line. Two short words that do not fit side by side take two lines,
+        // a size smaller: the tile's width is the strip's, never the word's.
+        let long = self.label.chars().count() > 8;
+        let label = match (long, self.label.contains(' ')) {
+            (true, true) => text(self.label.clone()).font(type_::TINY).color(ink).align(rune::Align::Center).wrap().max_lines(2),
+            (true, false) => text(self.label.clone()).font(type_::TINY).color(ink).truncate(),
+            _ => text(self.label.clone()).font(type_::SMALL_STRONG).color(ink).truncate(),
+        };
+        e = e.child(el().w_full().center().child(label.a11y_hidden()));
         if let Some(keys) = self.keys {
             // The key sits in the corner, where it never changes the tile's size.
             e = e.child(el().pin(None, Some(5.0), Some(5.0), None).child(keycaps(k, keys, filled.then_some(ink))));

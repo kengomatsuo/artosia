@@ -25,6 +25,8 @@ pub struct PlanRow {
 
 /// The rename dialog's two fields.
 pub struct Renaming {
+    /// The plan was made a moment ago and is being named for the first time.
+    pub fresh: bool,
     pub id: i64,
     pub name: TextEdit,
     pub date: TextEdit,
@@ -289,7 +291,7 @@ impl App {
         let mut name = TextEdit::new(if blank { String::new() } else { self.plan_title() });
         name.focused = true;
         name.set_caret(name.text.len());
-        self.switcher.renaming = Some(Renaming { id: self.plan.id, name, date: TextEdit::new(day_words(&self.plan.date)) });
+        self.switcher.renaming = Some(Renaming { fresh: blank, id: self.plan.id, name, date: TextEdit::new(day_words(&self.plan.date)) });
     }
 
     /// Today as year, month and day on this computer's clock.

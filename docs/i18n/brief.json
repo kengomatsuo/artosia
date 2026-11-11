@@ -158,7 +158,7 @@
    "song",
    "bible_translation"
   ],
-  "notes": "Says what pressing Tab does now: switch the list between songs and the Bible. A short verb phrase with a plain word for 'or'; no slash."
+  "notes": "Says what pressing Tab does now: switch the list between songs and the Bible. A short verb phrase with a plain word for 'or'; no slash. It starts with a capital letter, as the hints beside it do."
  },
  {
   "key": "HINT_SECTIONS",
@@ -177,7 +177,7 @@
    "section",
    "song"
   ],
-  "notes": "Says what pressing Tab does now: look inside the picked song for one of its parts. A short verb phrase."
+  "notes": "Says what pressing Tab does now: look inside the picked song for one of its parts. A short verb phrase. It starts with a capital letter, as the hints beside it do."
  },
  {
   "key": "SEARCH_SECTIONS",
@@ -808,7 +808,7 @@
   "concepts": [
    "phone_remote"
   ],
-  "notes": "Same wording as the top bar button's long form."
+  "notes": "The name of the feature that turns a phone into a remote control for the slides. Use the word volunteers actually say for a remote control; a bookish word for 'control' is wrong. The top bar's button is its short form."
  },
  {
   "key": "CMD_REMOTE_DETAIL",
@@ -992,7 +992,7 @@
   "concepts": [
    "listener"
   ],
-  "notes": "One word, ten characters at most: a noun that names a tool which listens. A bare imperative verb reads as an order to the volunteer."
+  "notes": "One word, ten characters at most, with a microphone icon beside it. Name the tool by the thing a volunteer sees, the microphone, or by what it does for them. A word for a person who listens reads as the congregation, and a bare imperative reads as an order."
  },
  {
   "key": "STREAM_HINT",
@@ -1276,7 +1276,7 @@
   "concepts": [
    "listener"
   ],
-  "notes": "Row title: a short name for the action, the thing a person types or reads to find it."
+  "notes": "The same name as the button in the top bar."
  },
  {
   "key": "CMD_LISTEN_DETAIL",
@@ -3764,7 +3764,7 @@
    "suggestion",
    "search_memory"
   ],
-  "notes": "A short reason, with the plain words for sung after. No verb that means catching up with or trailing behind."
+  "notes": "A short reason in the same everyday words as the heading of such songs in the search: usually sung after this song."
  },
  {
   "key": "SUGGEST_LOST",
@@ -3892,7 +3892,7 @@
   "moment": "The person wants the words gone but the background kept.",
   "role": "tile label",
   "does": "Names the state in which the projector shows no words, only the background.",
-  "budget": 9,
+  "budget": 11,
   "variables": [],
   "cases": [],
   "counts": "",
@@ -3903,7 +3903,7 @@
    "live",
    "slide_words"
   ],
-  "notes": "A state name, lit while it is on; not a verb. Nine characters at most. It must say that the words are gone from the screen, in the language's own words: no English 'off'."
+  "notes": "A state name, lit while it is on; not a verb. Two short words that say there are no words on the screen (the tile sets two words on two lines), eleven characters at most with the space. No English, and not the word that means dead or switched off, which the projector's own tile uses."
  },
  {
   "key": "STATE_OFF",
@@ -4261,8 +4261,8 @@
   "screen": "Main window, Preview title strip: a small icon-only clock button. This word is its hover help and the first word in a menu it opens.",
   "moment": "The person wants to go back to something shown earlier in this service.",
   "role": "tooltip",
-  "does": "Names the list of things shown earlier.",
-  "budget": 12,
+  "does": "A small button with a clock in the title of the Live pane. It opens a list of what was on the projector earlier in this service; picking one brings it into Preview at the slide it had reached, so the person can go back to it.",
+  "budget": 14,
   "variables": [],
   "cases": [],
   "counts": "",
@@ -4272,7 +4272,7 @@
    "preview",
    "live"
   ],
-  "notes": "One word."
+  "notes": "It must read as the way back to something shown before: go back to. Two words at most."
  },
  {
   "key": "EARLIER_HINT",
@@ -4318,7 +4318,7 @@
   "screen": "Settings dialog, grey line under the letter-keys switch's label.",
   "moment": "The person wonders what the letters do.",
   "role": "explanatory text",
-  "does": "Gives the two examples, a letter for the repeated part and a letter for a verse, and says that with the switch off every letter opens the search.",
+  "does": "Explains the switch above it with examples: a letter key jumps to the part of the live song it stands for, and when the switch is off every letter opens the search instead.",
   "budget": 70,
   "variables": [],
   "cases": [],
@@ -4331,7 +4331,7 @@
    "verse",
    "search"
   ],
-  "notes": "The two letters are the same ones used on the phone remote and the keys sheet. Two sentences are fine."
+  "notes": "Give the letters of YOUR language as the examples: for Indonesian, R goes to the chorus and B to the bridge. Say 'when switched off' the natural way. One or two short sentences."
  },
  {
   "key": "COUNTDOWN",
@@ -4532,8 +4532,8 @@
   "screen": "Song editor: it takes the place of the Preview pane. Heading and Delete, Cancel and Save buttons across the top; below them the fields Title, Author, Key, Copyright and CCLI song number; then the big box for the words with a row of small buttons above it; under it the order of the song; and a column of slide thumbnails at the right. Hint inside the thin text field under the order chips.",
   "moment": "The person may type the order in code instead of clicking chips.",
   "role": "placeholder",
-  "does": "Tells the person they may type the order as short codes and gives one example.",
-  "budget": 40,
+  "does": "The grey hint in the empty field where the order of a song's parts may be typed. It says the order may be typed, and gives one example: the first verse, the chorus sung twice, the second verse, the chorus, the bridge.",
+  "budget": 56,
   "variables": [],
   "cases": [],
   "counts": "",
@@ -4544,7 +4544,7 @@
    "chorus",
    "bridge"
   ],
-  "notes": "The example is program code that must stay exactly V1 C*2 V2 C B: V is a verse, C the chorus, B the bridge, *2 means twice. Only the lead-in words change."
+  "notes": "Write the example with the language's own names for the parts, each number attached to its name without a space, and a star with a number for a part sung several times: in the shape Name1 Name*2 Name2 Name Name. The program reads these names. No full stop."
  },
  {
   "key": "ORDER",
@@ -6619,7 +6619,7 @@
   "concepts": [
    "phone_remote"
   ],
-  "notes": "Same wording as the dialog's title."
+  "notes": "The same name as the dialog's title."
  },
  {
   "key": "REMOTE_SWITCH_DETAIL",
@@ -6945,7 +6945,7 @@
   "screen": "Announcements editor: it takes the place of the Preview pane. Top row: heading, an add-to-plan button, a loop button and Close. Left half: a New announcement button, the numbered list of cards (title and seconds each), an Import block and a row of ready-made starting points. Right half: a preview picture, then Title, Details, Seconds on screen, Fill in by itself and Picture. Small bold label over the larger text box under Title.",
   "moment": "The person writes the main words of the card.",
   "role": "field label",
-  "does": "Names the box for the text of the announcement under its title.",
+  "does": "Labels the box that holds the words of the announcement, under its title.",
   "budget": 14,
   "variables": [],
   "cases": [],
@@ -6955,7 +6955,7 @@
    "announcement",
    "card"
   ],
-  "notes": "One word."
+  "notes": "The word for the text of a notice. Not the word for a caption or a remark."
  },
  {
   "key": "ANNOUNCEMENT_TITLE_HINT",
@@ -7065,7 +7065,7 @@
    "announcement",
    "passage"
   ],
-  "notes": "It must not say automatic, because the first choice is typing by hand. A word like content or source."
+  "notes": "It must not say automatic, because the first choice is typing by hand. Plain speech: where the text comes from, the way a volunteer would ask it; nothing bookish."
  },
  {
   "key": "FILL_NOTHING",
@@ -7513,7 +7513,7 @@
    "card",
    "import"
   ],
-  "notes": "Count names or people: so many names stored."
+  "notes": "Count names, and say they are birthdays: so many birthdays stored. The zero form says no list of birthdays has been stored yet."
  },
  {
   "key": "birthdays_imported",
@@ -8242,10 +8242,10 @@
  {
   "key": "KEYS_SHOWING_ROWS[8].1",
   "kind": "row",
-  "screen": "Keyboard shortcuts sheet: a wide window with two columns of groups. Each row has the keys drawn as little key caps at the left (never translated) and a description at the right, about 300 points wide. This text is the description. First group (showing). The keys at the left are: the letters C, V and B.",
+  "screen": "Keyboard shortcuts sheet: a wide window with two columns of groups. Each row has the keys drawn as little key caps at the left (never translated) and a description at the right, about 300 points wide. This text is the description. First group (showing). The keys at the left are: this language's letters for the chorus and the bridge (R and B in Indonesian; C, V and B in English).",
   "moment": "The person opens the sheet to learn what pressing these keys does, and reads this line while looking at the key caps beside it.",
   "role": "key description",
-  "does": "Says what three letter keys do, each key named with its own target: C goes to the chorus, V goes to the verse after the current one, B goes to the bridge.",
+  "does": "Says what the letter keys drawn at the left do. The caps show this language's own letters: the first letter of its word for the chorus, the letter V only where its word for a verse begins with V, and B for the bridge. Each letter jumps to the next part of that kind in the live song.",
   "budget": 48,
   "variables": [],
   "cases": [],
@@ -8258,7 +8258,7 @@
    "verse",
    "bridge"
   ],
-  "notes": "Name each letter with its target, so nobody has to match two lists by position. Fragment, no full stop."
+  "notes": "Name each letter that YOUR language shows with its target. For Indonesian the caps are R and B: R goes to the chorus, B to the bridge. Fragment, no full stop."
  },
  {
   "key": "KEYS_SHOWING_ROWS[9].1",
@@ -8940,7 +8940,7 @@
   "screen": "Settings dialog: a window about 620 points wide with small bold headings and rows of controls. Bold label of a switch row.",
   "moment": "The person decides whether the program may remember which songs get picked.",
   "role": "switch label",
-  "does": "Names the choice of letting the search remember the songs the church picks.",
+  "does": "Labels the switch that lets the search remember which songs the church picks, so those come first next time.",
   "budget": 26,
   "variables": [],
   "cases": [],
@@ -8951,7 +8951,7 @@
    "search",
    "settings"
   ],
-  "notes": "A phrase next to a switch."
+  "notes": "Say what is remembered: the songs picked in the search."
  },
  {
   "key": "LEARN_ON_HINT",
@@ -8969,7 +8969,7 @@
    "search_memory",
    "search"
   ],
-  "notes": "Plain speech, nothing bookish: songs picked often come first when results match equally well. One short sentence, no full stop."
+  "notes": "Plain speech with the condition first: when results match equally well, songs picked often come first. One short sentence, no full stop."
  },
  {
   "key": "LEARN_FORGET",
@@ -9050,7 +9050,7 @@
   "moment": "A song is live and the person opens the search.",
   "role": "group heading",
   "does": "Heads the group of songs that were often sung straight after the named song in past services.",
-  "budget": 44,
+  "budget": 64,
   "variables": [
    {
     "name": "title",
@@ -9066,7 +9066,7 @@
    "suggestion",
    "song"
   ],
-  "notes": "The plain words for often sung after the named song. A full verb, not just the word for after."
+  "notes": "The plain everyday words for 'often sung after' followed by the song's name; no written-language words. The same wording as the reason a suggestion gives."
  },
  {
   "key": "habit_chip",
@@ -9167,7 +9167,7 @@
   "moment": "The song is often sung on this weekday.",
   "role": "row detail",
   "does": "Says in how many of the recent services held on this same weekday the song was sung, out of how many.",
-  "budget": 50,
+  "budget": 40,
   "variables": [
    {
     "name": "count",
@@ -9187,7 +9187,7 @@
    "search_memory",
    "song"
   ],
-  "notes": "It stands under a heading that speaks of today, so it must not then say 'that day'. Name it as this weekday."
+  "notes": "It stands under a heading that speaks of today, so it must not then say 'that day'. Short enough to show whole in a narrow list: sung in N of M such services."
  },
  {
   "key": "recent_line",
@@ -10252,7 +10252,7 @@
    "start_mark",
    "plan_item"
   ],
-  "notes": "One line, no full stop."
+  "notes": "The tooltip of the button whose text says to begin here: one sentence that adds what the button's two words cannot, that the song will open at the highlighted slide when its turn comes."
  },
  {
   "key": "PLAN_STARTS_AT",
@@ -11432,6 +11432,26 @@
   "notes": "A short imperative. It is about where a song begins, not about starting the service."
  },
  {
+  "key": "START_HERE_HOW",
+  "kind": "const",
+  "screen": "A toast at the bottom of the main window, after the person chose the command that makes a song begin at a chosen slide while Preview held no song of the plan, or while its first slide was the highlighted one.",
+  "moment": "The person asked for a song to begin somewhere other than its start, and the program does not yet know which song or which slide.",
+  "role": "toast",
+  "does": "Tells the person what to do first: bring the song into Preview, move the highlight to the slide the song should open at, and then pick the same command once more.",
+  "budget": 96,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "start_mark",
+   "preview",
+   "ring",
+   "song"
+  ],
+  "notes": "One sentence of instruction, no full stop. Use the product's own words for Preview and for the highlighted slide."
+ },
+ {
   "key": "CMD_START_HERE_DETAIL",
   "kind": "const",
   "screen": "Search (the box at the top of the window): a list of results, each with a name in bold and one grey line under it that says what it does. This is the grey line under that command.",
@@ -11527,5 +11547,41 @@
    "search"
   ],
   "notes": "The example comes first, then the alternative: a few words out of the verse. No full stop."
+ },
+ {
+  "key": "NOTICE_SAVED",
+  "kind": "const",
+  "screen": "A toast at the bottom of the main window, after the person pressed Save in the announcement editor.",
+  "moment": "The card was stored, and the person wants to know the press worked.",
+  "role": "toast",
+  "does": "Confirms that the announcement card has been stored.",
+  "budget": 26,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "announcement",
+   "card"
+  ],
+  "notes": "Two or three words, no full stop. The pair of the toast that confirms a song was stored."
+ },
+ {
+  "key": "BTN_START_HERE",
+  "kind": "const",
+  "screen": "Main window, the title of the Preview pane, at its right: a small button with a play triangle, this text and the keys Ctrl M. It is lit blue while the song in Preview has a start mark at the highlighted slide.",
+  "moment": "A medley: the person wants the song in Preview to open at the highlighted slide when its turn comes.",
+  "role": "button",
+  "does": "Marks the highlighted slide as the place where this song will begin. Pressed again, it takes the mark away.",
+  "budget": 14,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "start_mark",
+   "ring"
+  ],
+  "notes": "Two short words: begin at this spot. It is about where a song begins, not about starting the service."
  }
 ]

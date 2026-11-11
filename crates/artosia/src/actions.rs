@@ -53,7 +53,11 @@ impl App {
     }
 
     pub fn open_in_plan(&self) -> bool {
-        self.open.as_ref().is_some_and(|open| open.item.is_some() || self.plan_has(&open.deck.source))
+        self.open.as_ref().is_some_and(|open| {
+            // The plan holds the announcements as one item, so a single card has nothing to add.
+            let card_of_plan = matches!(open.deck.source, DeckSource::Announcement(_)) && self.plan.items.iter().any(|item| matches!(item.entry, PlanEntry::Announcements));
+            open.item.is_some() || card_of_plan || self.plan_has(&open.deck.source)
+        })
     }
 
     pub fn add_song_to_plan(&mut self, at: usize) {
@@ -393,6 +397,9 @@ impl App {
                 }
                 if let Some(at) = self.song_position(id) {
                     self.open_song(at, None);
+                    if std::mem::take(&mut self.plan_new_song) {
+                        self.add_song_to_plan(at);
+                    }
                 }
                 self.say(t::SONG_SAVED(), None);
             }
@@ -665,6 +672,7 @@ impl App {
                 form.id = draft.id;
             }
             self.reload_announcements();
+            self.say(t::NOTICE_SAVED(), None);
         }
     }
 

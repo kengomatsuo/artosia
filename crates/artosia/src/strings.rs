@@ -737,6 +737,7 @@ text!(CMD_PLAN_DUPLICATE_DETAIL, "The same items again, for another service", "T
 text!(CMD_PLAN_RENAME_DETAIL, "This plan's name and its day", "This plan's name and its day");
 text!(CMD_PLAN_DELETE_DETAIL, "Remove this plan. Undo brings it back", "Remove this plan. Undo brings it back");
 text!(CMD_START_HERE, "Start the song here", "Start the song here");
+text!(START_HERE_HOW, "Open the song in Preview and go to the slide it should start at, then choose this again", "Open the song in Preview and go to the slide it should start at, then choose this again");
 text!(CMD_START_HERE_DETAIL, "The Preview song begins at the picked slide, for a medley", "The Preview song begins at the picked slide, for a medley");
 text!(CMD_NEW_ANNOUNCEMENT_DETAIL, "A card for before the service, a verse or birthdays", "A card for before the service, a verse or birthdays");
 text!(KEYS_MORE, "Everything else is in search: type what you want, such as copy plan or design", "Everything else is in search: type what you want, such as copy plan or design");
@@ -749,6 +750,8 @@ pub fn search_bible(passage: &str) -> String {
     }
     format!("{passage}, or words from the verse")
 }
+text!(NOTICE_SAVED, "Announcement saved", "Announcement saved");
+text!(BTN_START_HERE, "Start here", "Start here");
 text!(TOUR_BACK, "Back", "Back");
 text!(TOUR_NEXT, "Next", "Next");
 text!(KEYS_TO, "to", "to");
@@ -770,6 +773,29 @@ pub fn as_sentence(clause: &str) -> String {
         Some(first) => first.to_uppercase().chain(letters).collect(),
         None => String::new(),
     }
+}
+
+/// The key that jumps to the chorus: the first letter of the language's own word for it (R
+/// where the word is Reff), unless another kind of section owns that letter; C otherwise. C
+/// works in every language as well. Three native readers each said a volunteer who reads
+/// Reff never learns that C means it.
+pub fn chorus_key() -> char {
+    let word = section_label(artosia_core::song::Tag::new(artosia_core::song::SectionKind::Chorus, 1));
+    match word.chars().next().map(|letter| letter.to_ascii_uppercase()) {
+        Some(letter) if letter.is_ascii_alphabetic() && !"VPBIEX".contains(letter) => letter,
+        _ => 'C',
+    }
+}
+
+/// Whether the language's word for a verse begins with V, so that the V key can stand beside
+/// one. Where it does not, verses are reached by their digits and V still works unseen.
+pub fn verse_key_shown() -> bool {
+    section_label(artosia_core::song::Tag::new(artosia_core::song::SectionKind::Verse, 1)).to_uppercase().starts_with('V')
+}
+
+/// The letters of the keys sheet's row about sections, as this language shows them.
+pub fn section_keys() -> String {
+    if verse_key_shown() { format!("{} V B", chorus_key()) } else { format!("{} B", chorus_key()) }
 }
 
 /// The month a word names, 1 to 12: the whole name or its first three letters or more, in

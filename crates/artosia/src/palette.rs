@@ -256,7 +256,9 @@ impl Command {
             Command::Undo => app.toast.as_ref().is_some_and(|toast| toast.undo.is_some()),
             Command::LoopAnnouncements => !app.announcements.is_empty(),
             Command::PlanDuplicate => app.plan.items.iter().any(|item| !item.entry.is_heading()),
-            Command::StartHere => app.start_control().is_some_and(|(_, _, state)| state != crate::starts::StartState::Beginning),
+            // Offered whenever the plan holds a song: a person who types "start at chorus" must find
+            // it, and is told what to open first when Preview holds something else.
+            Command::StartHere => app.plan.items.iter().any(|item| matches!(item.entry, artosia_core::plan::PlanEntry::Song { .. })),
             _ => true,
         }
     }
@@ -950,7 +952,10 @@ impl App {
             Command::PlanDuplicate => self.duplicate_plan(),
             Command::PlanRename => self.begin_rename(false),
             Command::PlanDelete => self.delete_plan(),
-            Command::StartHere => self.toggle_start_here(),
+            Command::StartHere => match self.start_control() {
+                Some((_, _, state)) if state != crate::starts::StartState::Beginning => self.toggle_start_here(),
+                _ => self.say(t::START_HERE_HOW(), None),
+            },
             Command::NewAnnouncement => {
                 self.edit_announcements();
                 self.new_notice("", "");

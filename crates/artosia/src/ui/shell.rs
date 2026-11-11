@@ -151,7 +151,7 @@ fn list_row(k: &Kit, key: &str, index: usize, number: Option<usize>, slide: &Sli
     // Beside the digit, the letter that jumps to the next section of this kind: C beside a
     // chorus teaches the key where the eye already is (owner, 2026-11-11: a key shown "at
     // the rows" helps, a list of keys at the bottom does not).
-    let letter = slide.tag.filter(|_| letters && number.is_some()).map(|tag| crate::state::marker_letter(tag).to_string());
+    let letter = slide.tag.filter(|_| letters && number.is_some()).and_then(crate::state::shown_letter).map(|letter| letter.to_string());
     let mut digit = row().w(40.0).gap(2.0).a11y_hidden();
     if let Some(sign) = shown {
         digit = digit.child(cap(sign));
@@ -333,8 +333,8 @@ fn open_tools(s: &App, k: &Kit) -> Vec<El> {
         }));
     }
     match open.deck.source {
-        DeckSource::Song(_) => tools.push(btn(t::BTN_EDIT()).icon(&icons::PENCIL).icon_only().small().hint("Ctrl E").build(k, |s, _| s.edit_open_song())),
-        DeckSource::Announcements | DeckSource::Announcement(_) => tools.push(btn(t::BTN_EDIT()).icon(&icons::PENCIL).icon_only().small().build(k, |s, _| s.edit_announcements())),
+        DeckSource::Song(_) => tools.push(btn(t::BTN_EDIT()).icon(&icons::PENCIL).small().hint("Ctrl E").build(k, |s, _| s.edit_open_song())),
+        DeckSource::Announcements | DeckSource::Announcement(_) => tools.push(btn(t::BTN_EDIT()).icon(&icons::PENCIL).small().hint("Ctrl E").build(k, |s, _| s.edit_announcements())),
         DeckSource::Passage { .. } => tools.push(btn(t::BTN_NEXT_VERSE()).icon(&icons::PLUS).icon_only().small().build(k, |s, tx| {
             s.extend_passage();
             tx.blur();

@@ -16,7 +16,7 @@ use crate::theme::{self, icons, space, type_};
 use crate::ui::widgets::keycap;
 
 /// Height of one row.
-pub const ROW: f32 = 40.0;
+pub const ROW: f32 = 48.0;
 /// Width of the button on every row, the same whatever the language: an icon, and a key cap
 /// on the first.
 const BUTTON: f32 = 116.0;
@@ -93,8 +93,13 @@ fn line(k: &Kit, at: usize, offer: Suggestion) -> El {
     let mut out = base
         .child(why_sign)
         .child(icon(kind, 16.0).color(k.c.text_muted).a11y_hidden())
-        .child(text(offer.title.clone()).font(type_::BODY_STRONG).color(k.c.text_base).truncate().min_w(60.0))
-        .child(text(words).font(type_::SMALL).color(k.c.text_muted).truncate().grow(1.0).min_w(0.0));
+        .child(
+            col()
+                .grow(1.0)
+                .min_w(0.0)
+                .child(text(offer.title.clone()).font(type_::BODY_STRONG).color(k.c.text_base).truncate())
+                .child(text(words).font(type_::SMALL).color(k.c.text_muted).truncate()),
+        );
     if let Some(tag) = offer.tag {
         out = out.child(section_chip(tag));
     }

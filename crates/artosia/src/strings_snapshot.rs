@@ -146,10 +146,13 @@ pub fn dump() -> String {
     line(out, "CMD_PLAN_DELETE_DETAIL", CMD_PLAN_DELETE_DETAIL());
     line(out, "CMD_START_HERE", CMD_START_HERE());
     line(out, "CMD_START_HERE_DETAIL", CMD_START_HERE_DETAIL());
+    line(out, "START_HERE_HOW", START_HERE_HOW());
     line(out, "CMD_NEW_ANNOUNCEMENT_DETAIL", CMD_NEW_ANNOUNCEMENT_DETAIL());
     line(out, "KEYS_MORE", KEYS_MORE());
     line(out, "SETTINGS_GENERAL", SETTINGS_GENERAL());
     line(out, "search_bible", &search_bible("Psalms 23:1"));
+    line(out, "NOTICE_SAVED", NOTICE_SAVED());
+    line(out, "BTN_START_HERE", BTN_START_HERE());
     line(out, "TOUR_BACK", TOUR_BACK());
     line(out, "TOUR_NEXT", TOUR_NEXT());
     line(out, "KEYS_TO", KEYS_TO());

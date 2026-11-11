@@ -137,8 +137,18 @@ fn tile(s: &App, k: &Kit, at: usize) -> El {
     let mut frame = el().key(format!("backdrop-{}", entry.id)).role("button").label(entry.title.clone()).w(TILE_W).h(TILE_H).radius(k.radius.md).clip_rounded(k.radius.md).fill(k.c.layer_04).focusable(true).on_key(crate::ui::widgets::enter_key).cursor(Cursor::Pointer);
     match picture_of(s, entry, false) {
         Some(image) => frame = frame.pixels_fit(image.pixels(), SurfaceFit::Fill),
-        None if s.backdrops.failed.contains(&entry.id) => frame = frame.center().child(icon(&icons::IMAGE, 20.0).color(k.c.text_muted).a11y_hidden()),
-        None => {}
+        // Waiting for its preview, or without one: the title says what it is, so an empty
+        // tile never looks broken (a tester could not tell loading from failing, 2026-11-11).
+        None => {
+            let waiting = !s.backdrops.failed.contains(&entry.id);
+            frame = frame.center().padding(space::S2).child(
+                col()
+                    .gap(space::S1)
+                    .center()
+                    .child(icon(&icons::IMAGE, 16.0).color(k.c.text_muted).layer_opacity(if waiting { 0.5 } else { 1.0 }).a11y_hidden())
+                    .child(text(entry.title.clone()).font(type_::TINY).color(k.c.text_muted).align(rune::Align::Center).wrap().max_lines(2)),
+            );
+        }
     }
     if entry.kind == Kind::Video {
         frame = frame.child(el().absolute(6.0, 6.0).child(badge(&icons::PLAY, entry.title.as_str())));
