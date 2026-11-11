@@ -482,6 +482,20 @@ pub fn removed_from_plan(title: &str) -> String {
 // Slides.
 text!(START_TITLE, "What do you want to show?", "Mau menayangkan apa?");
 text!(START_HINT, "or just start typing", "atau langsung ketik");
+text!(CMD_TOUR, "Take the tour", "Take the tour");
+text!(CMD_TOUR_DETAIL, "Five short stops through this window", "Five short stops through this window");
+text!(TOUR_SKIP, "Skip", "Skip");
+text!(TOUR_DONE, "Done", "Done");
+text!(TOUR_PLAN, "The plan holds everything you will show, in order.", "The plan holds everything you will show, in order.");
+text!(TOUR_PLAN_MORE, "Drag an item to move it.", "Drag an item to move it.");
+text!(TOUR_PREVIEW, "Preview is the slide that comes next.", "Preview is the slide that comes next.");
+text!(TOUR_PREVIEW_MORE, "Nothing here reaches the room.", "Nothing here reaches the room.");
+text!(TOUR_SHOW, "Show moves Preview into Live.", "Show moves Preview into Live.");
+text!(TOUR_SHOW_MORE, "The room sees it only while the projector is on.", "The room sees it only while the projector is on.");
+text!(TOUR_LIVE, "Live is what the room sees right now.", "Live is what the room sees right now.");
+text!(TOUR_LIVE_MORE, "The Live button switches the projector on and off.", "The Live button switches the projector on and off.");
+text!(TOUR_SEARCH, "Search finds any song or verse.", "Search finds any song or verse.");
+text!(TOUR_SEARCH_MORE, "Open it, then press Add to plan.", "Open it, then press Add to plan.");
 text!(START_SONGS, "Songs", "Lagu");
 text!(START_SONGS_DETAIL, "Browse every song", "Telusuri semua lagu");
 text!(START_BIBLE, "Bible", "Alkitab");
@@ -1183,6 +1197,17 @@ pub fn stage_next(label: &str) -> String {
         return format!("Berikutnya: {label}");
     }
     format!("Next: {label}")
+}
+
+/// Which stop of the tour is showing, out of how many.
+pub fn tour_place(at: usize, total: usize) -> String {
+    if let Some(text) = say("tour_place", None, None, &[("at", text_arg(at.to_string())), ("total", text_arg(total.to_string()))]) {
+        return text;
+    }
+    if indonesian() {
+        return format!("{at} dari {total}");
+    }
+    format!("{at} of {total}")
 }
 
 /// Which slide of how many. Called with "{index}" and "{count}" it gives the pattern itself.

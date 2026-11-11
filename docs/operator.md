@@ -162,6 +162,28 @@ Pressed in a real window on 2026-11-11 with `tools/drive-window.ps1`, which send
 
 Dialogs and the two editors are different: Tab moves through their buttons and fields, and Enter or Space presses the focused button (`Btn::focusable`).
 
+## The tour
+
+A first start on a library, and every practice run, opens a tour of this window (`ui/tour.rs`, 2026-11-11, owner-asked: "Not even a tutorial onboarding phase at all? Especially one that can be re-triggered easily?"). It has five stops over the real window and its plan, one part ringed in the accent colour at each, with a card beside it holding the stop's words, "2 of 5", and three buttons of one fixed width, each with an icon: Skip, Back, and Next (the filled one, a tick and Done at the end). Headless `--snap` runs never start it; the scenes `tour-plan`, `tour-preview`, `tour-show`, `tour-live` and `tour-search` render each stop.
+
+The research the shape follows (`ux-principles/principles.md`, section 5): tutorials mostly fail when they are long or in the way, so five stops of a few words each, Skip on every stop, never shown again by itself once finished or skipped (`Settings::toured`), and findable again.
+
+The stops and their words are one table, `STOPS` in `tour.rs`, so the words can change without touching the drawing. A ring goes round a container the shell keys, never one button, because the buttons are rearranged often.
+
+| Stop | Ring (key) | Says |
+|---|---|---|
+| 1 | The plan (`plan`) | It holds everything to show, in order; drag to move |
+| 2 | Preview's slide list (`slide-list`) | It is the slide that comes next; nothing here reaches the room |
+| 3 | The buttons under Preview (`preview-controls`) | Show moves Preview into Live; the room sees it only while the projector is on |
+| 4 | The buttons under Live (`transport`) | Live is what the room sees; the Live button switches the projector on and off |
+| 5 | The search box (`search-button`) | It finds any song or verse; open it, then Add to plan |
+
+Stops 3 and 4 are written to the model the owner gave on 2026-11-11: Show moves Preview into the Live view, and a separate Live button turns the projector on and off. If that model changes again, change those four strings and nothing else.
+
+**It teaches the model, never keys, and it owns the keyboard while open.** Enter or Right is next, Left is back, Esc skips, and every other key is taken and does nothing, so nothing in it can change the projector (`App::tour_key`, called first in `on_key`). Enter is left to a focused button, which Rune presses itself, so the window does not step twice. The card is a Rune modal: the background is inert and Tab stays on the card's buttons, which take focus as dialogs' buttons do; Next has it first.
+
+Started again from the keys sheet (button at the bottom), from the search ("tour", "tutorial", "help", "panduan", "bantuan"), and from a quiet button on the first screen that fills Preview while nothing is open. A part that is not on screen (an editor has the Preview pane) is skipped by dimming the whole window and centring the card.
+
 ## The song editor
 
 The words are plain text with marker lines, because that is what pastes in from anywhere and what EasiSlides wrote. The editor does the rest around the text (`ui/editor.rs`):

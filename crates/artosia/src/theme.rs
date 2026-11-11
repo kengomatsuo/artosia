@@ -227,6 +227,7 @@ pub mod icons {
     icon!(HISTORY, "a-history", r#"<circle cx="8" cy="8" r="5.5" stroke="currentColor"/><path d="M8 5V8L10 9.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>"#);
     icon!(ITEM_BEFORE, "a-item-before", r#"<path d="M4 3.5H12" stroke="currentColor" stroke-linecap="round"/><path d="M8 6.5L11.5 12H4.5Z" stroke="currentColor" stroke-linejoin="round"/>"#);
     icon!(ITEM_AFTER, "a-item-after", r#"<path d="M4 12.5H12" stroke="currentColor" stroke-linecap="round"/><path d="M8 9.5L4.5 4H11.5Z" stroke="currentColor" stroke-linejoin="round"/>"#);
+    icon!(CHECK, "a-check", r#"<path d="M3 8.5L6.5 12L13 4.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>"#);
     icon!(MINUS, "a-minus", r#"<path d="M3 8H13" stroke="currentColor" stroke-linecap="round"/>"#);
     icon!(CAMERA, "a-camera", r#"<rect x="1.5" y="4.5" width="9" height="7" rx="1.5" stroke="currentColor"/><path d="M10.5 7.2L14.5 5V11L10.5 8.8" stroke="currentColor" stroke-linejoin="round"/>"#);
     icon!(STREAM, "a-stream", r#"<circle cx="8" cy="8" r="1.6" fill="currentColor"/><path d="M4.6 4.6C2.7 6.5 2.7 9.5 4.6 11.4M11.4 4.6C13.3 6.5 13.3 9.5 11.4 11.4M2.4 2.6C-0.4 5.6 -0.4 10.4 2.4 13.4M13.6 2.6C16.4 5.6 16.4 10.4 13.6 13.4" stroke="currentColor" stroke-linecap="round"/>"#);

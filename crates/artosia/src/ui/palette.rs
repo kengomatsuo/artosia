@@ -29,6 +29,7 @@ fn command_icon(command: Command) -> &'static rune::Icon {
         Command::Remote => &icons::PHONE,
         Command::Heading | Command::NewPlan => &icons::HEADING,
         Command::Keys => &icons::KEYBOARD,
+        Command::Tour => &icons::PLAY,
         Command::StartService => &icons::PLAY,
         Command::Next => &icons::ARROW_RIGHT,
         Command::Previous => &icons::ARROW_LEFT,

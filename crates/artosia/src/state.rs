@@ -84,6 +84,8 @@ pub struct Settings {
     pub plan: i64,
     /// The first-run card has been dismissed.
     pub welcomed: bool,
+    /// The first-start tour has been finished or skipped.
+    pub toured: bool,
     pub remote_on: bool,
     /// The screen the projector uses; None lets the output process choose.
     pub audience_screen: Option<usize>,
@@ -130,6 +132,7 @@ impl Default for Settings {
             second_bible: String::new(),
             plan: 0,
             welcomed: false,
+            toured: false,
             remote_on: false,
             audience_screen: None,
             stage_screen: None,
@@ -310,6 +313,10 @@ pub struct App {
     /// Where an editor field writes once the editor has closed under it.
     pub spare_edit: TextEdit,
     pub sheet: Sheet,
+    /// The tour's stop, while the tour is open (`ui/tour.rs`).
+    pub tour: Option<usize>,
+    /// The tour has just opened and its Next button should take keyboard focus.
+    pub tour_focus: bool,
     pub notices: Option<Notices>,
     /// The announcements are advancing by themselves on the projector.
     pub looping: bool,
@@ -497,6 +504,8 @@ impl App {
             editor: None,
             spare_edit: TextEdit::new(""),
             sheet: Sheet::None,
+            tour: None,
+            tour_focus: false,
             notices: None,
             looping: false,
             resume: None,

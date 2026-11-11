@@ -60,10 +60,11 @@ pub enum Command {
     Stream,
     BibleFile,
     Bibles,
+    Tour,
 }
 
 impl Command {
-    pub const ALL: [Command; 29] = [
+    pub const ALL: [Command; 30] = [
         Command::StartService,
         Command::Next,
         Command::Previous,
@@ -92,6 +93,7 @@ impl Command {
         Command::ImportBirthdays,
         Command::Import,
         Command::Keys,
+        Command::Tour,
         Command::CheckUpdate,
     ];
 
@@ -108,6 +110,7 @@ impl Command {
             Command::Heading => t::CMD_HEADING(),
             Command::NewPlan => t::PLAN_NEW(),
             Command::Keys => t::CMD_KEYS(),
+            Command::Tour => t::CMD_TOUR(),
             Command::StartService => t::CMD_START(),
             Command::Next => t::TIP_NEXT(),
             Command::Previous => t::CMD_PREVIOUS(),
@@ -142,6 +145,7 @@ impl Command {
             Command::Heading => t::CMD_HEADING_DETAIL(),
             Command::NewPlan => t::PLAN_NEW_DETAIL(),
             Command::Keys => t::CMD_KEYS_DETAIL(),
+            Command::Tour => t::CMD_TOUR_DETAIL(),
             Command::StartService => t::CMD_START_DETAIL(),
             Command::Next => t::CMD_NEXT_DETAIL(),
             Command::Previous => t::CMD_PREVIOUS_DETAIL(),
@@ -177,6 +181,7 @@ impl Command {
             Command::Heading => &["divider", "section", "judul bagian", "pembatas"],
             Command::NewPlan => &["new service", "reset plan", "rencana baru", "susunan baru", "ibadah baru"],
             Command::Keys => &["shortcuts", "help", "hotkeys", "pintasan", "tombol", "bantuan"],
+            Command::Tour => &["tutorial", "help", "guide", "walkthrough", "intro", "onboarding", "panduan", "bantuan", "tur", "pengenalan", "cara pakai"],
             Command::StartService => &["start live", "go live", "begin", "mulai", "mulai ibadah", "tayangkan"],
             Command::Next => &["forward", "lanjut", "berikutnya", "maju"],
             Command::Previous => &["back", "sebelumnya", "kembali", "mundur"],
@@ -898,6 +903,7 @@ impl App {
             Command::Heading => self.add_heading(),
             Command::NewPlan => self.new_plan(),
             Command::Keys => self.sheet = Sheet::Keys,
+            Command::Tour => self.start_tour(),
             Command::StartService => self.start_service(),
             Command::Next => self.next(),
             Command::Previous => self.previous(),

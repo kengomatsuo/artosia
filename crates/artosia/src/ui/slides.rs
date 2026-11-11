@@ -8,7 +8,7 @@ use crate::palette::{Command, Scope};
 use crate::state::App;
 use crate::strings as t;
 use crate::theme::{icons, space, type_};
-use crate::ui::widgets::key_hint;
+use crate::ui::widgets::{btn, key_hint};
 
 pub(crate) fn quick(k: &Kit, label: &'static str, detail: &'static str, glyph: &'static rune::Icon, press: impl Fn(&mut App, &mut Tx) + 'static) -> El {
     row()
@@ -61,6 +61,8 @@ pub(crate) fn start(s: &App, k: &Kit) -> El {
                     })),
             ),
     );
+    // A quiet way into the tour while there is nothing else to do.
+    column = column.child(btn(t::CMD_TOUR()).icon(&icons::PLAY).ghost().build(k, |s, _| s.start_tour()));
     // EasiSlides is brought over from the search ("import"), never offered here: the first
     // screen is for a church that starts with Artosia (owner, 2026-11-11).
     if s.songs.is_empty() {

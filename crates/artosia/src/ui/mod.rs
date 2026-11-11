@@ -12,6 +12,7 @@ mod plans;
 mod sheets;
 mod shell;
 pub(crate) mod slides;
+pub(crate) mod tour;
 pub mod widgets;
 
 use artosia_slides::audience::Media;
@@ -253,5 +254,6 @@ pub fn view(s: &App, cx: &mut Cx<App>) -> El {
     sheets::view(s, k, &mut layer);
     plans::view(s, k, &mut layer);
     layer.extend(toast(s, k));
+    tour::view(s, cx, k, &mut layer);
     rune_kit::root(body, layer)
 }

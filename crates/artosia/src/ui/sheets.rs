@@ -540,7 +540,8 @@ fn keys(s: &App, k: &Kit, layer: &mut Vec<El>) {
         s.settings.letter_keys = !s.settings.letter_keys;
         s.touch_settings();
     });
-    let body = col().w_full().px(space::S4).pb(space::S4).gap(space::S4).child(rows).child(letters);
+    let tour = row().w_full().child(btn(t::CMD_TOUR()).icon(&icons::PLAY).focusable().build(k, |s, _| s.start_tour()));
+    let body = col().w_full().px(space::S4).pb(space::S4).gap(space::S4).child(rows).child(letters).child(tour);
     Dialog::new("keys", t::KEYS_TITLE()).open(true).width(1060.0).fit().on_close(close).child(body).build(k, layer);
 }
 
