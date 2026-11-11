@@ -170,6 +170,21 @@ pub enum FromOutput {
     ProjectorHidden,
 }
 
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::look::Outline;
+
+    #[test]
+    fn the_state_line_keeps_the_text_style() {
+        let look = Look { ink: [255, 214, 0], font: "Georgia".into(), outline: Outline::Thick, outline_ink: [10, 20, 30], ..Look::default() };
+        let state = OutputState { look: look.clone(), ..OutputState::default() };
+        let line = encode(&ToOutput::State(Box::new(state)));
+        let Some(ToOutput::State(back)) = decode::<ToOutput>(&line) else { panic!("the line decodes") };
+        assert_eq!(back.look, look);
+    }
+}
+
 /// Prints a line to stderr when `ARTOSIA_TRACE` is set, for following the two processes.
 pub fn trace(line: impl FnOnce() -> String) {
     static ON: std::sync::OnceLock<bool> = std::sync::OnceLock::new();

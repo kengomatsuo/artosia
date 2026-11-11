@@ -2,6 +2,7 @@
 //! output process, and the messages the two processes exchange.
 
 pub mod audience;
+pub mod fonts;
 pub mod frame;
 pub mod look;
 pub mod stage;

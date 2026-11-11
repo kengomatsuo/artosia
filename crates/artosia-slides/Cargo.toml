@@ -8,6 +8,8 @@ description = "What the projector and the stage screen draw, shared by the opera
 [dependencies]
 artosia-core = { path = "../artosia-core" }
 rune.workspace = true
+# The list of installed font families; Rune has none. Already built for Rune's own use.
+fontique = { version = "0.12", default-features = false, features = ["std", "system"] }
 serde = { version = "1.0.229", features = ["derive"] }
 serde_json = "1.0.154"
 

@@ -340,6 +340,8 @@ pub struct App {
     /// This version has told the updater it started well.
     pub confirmed: bool,
     pub licence_edit: TextEdit,
+    /// The Look dialog's hex fields and font picker.
+    pub look_edit: crate::ui::look::LookEdit,
     pub toast: Option<Toast>,
     pub plan_menu: Option<u64>,
     pub more_menu: bool,
@@ -441,6 +443,7 @@ impl App {
             .unwrap_or_else(|| Plan::named(t::PLAN_DEFAULT_NAME()));
         let (remote_tx, remote_rx) = channel();
         let licence_edit = TextEdit::new(settings.licence.clone());
+        let look_edit = crate::ui::look::LookEdit::new(&settings.look);
         let mut app = App {
             folder,
             store,
@@ -497,6 +500,7 @@ impl App {
             demo_screens: false,
             confirmed: false,
             licence_edit,
+            look_edit,
             toast: None,
             plan_menu: None,
             more_menu: false,

@@ -851,8 +851,7 @@ impl App {
             Hit::Look { index, .. } => {
                 self.close_palette();
                 if let Some(preset) = presets().into_iter().nth(index) {
-                    let look = &self.settings.look;
-                    let chosen = artosia_slides::look::Look { max_lines: look.max_lines, size: look.size, place: look.place, ..preset };
+                    let chosen = self.settings.look.with_preset(preset);
                     self.set_look(chosen);
                 }
             }
