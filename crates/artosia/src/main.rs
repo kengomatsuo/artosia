@@ -80,7 +80,7 @@ fn poll(s: &mut App, clock: f64, tx: &mut Tx) -> bool {
 fn on_key(s: &mut App, ev: &KeyEvent, tx: &mut Tx) -> bool {
     // The tour takes every key, so none of them reaches the projector.
     if s.tour.is_some() {
-        s.tour_key(&ev.key, tx.focused().is_some());
+        s.tour_key(&ev.key);
         return true;
     }
     // A modifier on its own. Shift let go shows the slide picked while it was held. This is a

@@ -64,6 +64,13 @@ impl App {
         }
     }
 
+    /// The Next button's own press. Dropped when the Enter that caused it already moved on.
+    pub fn tour_press_next(&mut self) {
+        if self.clock != self.tour_entered_at {
+            self.tour_next();
+        }
+    }
+
     pub fn tour_back(&mut self) {
         if let Some(at) = self.tour {
             self.tour = Some(at.saturating_sub(1));
@@ -83,11 +90,15 @@ impl App {
 
     /// A key while the tour is open. Enter or Right goes on, Left goes back, Escape skips; every
     /// other key is taken and does nothing, so no key can change what is on the projector.
-    /// `focused`: a button has focus, and Rune presses it on Enter itself.
-    pub fn tour_key(&mut self, key: &Key, focused: bool) {
+    /// Enter always goes on: a headless run showed Enter doing nothing while the Next button
+    /// held focus, so the tour does not wait for Rune to press it.
+    pub fn tour_key(&mut self, key: &Key) {
         match key {
             Key::Right => self.tour_next(),
-            Key::Enter if !focused => self.tour_next(),
+            Key::Enter => {
+                self.tour_entered_at = self.clock;
+                self.tour_next();
+            }
             Key::Left => self.tour_back(),
             Key::Escape => self.end_tour(),
             _ => {}
@@ -131,7 +142,7 @@ fn card(k: &Kit, at: usize, stop: &Stop) -> El {
         buttons = buttons.child(fixed(btn(t::BTN_PREV()).icon(&icons::ARROW_LEFT).grow().focusable().build(k, |s, _| s.tour_back())));
     }
     let (label, glyph) = if last { (t::TOUR_DONE(), &icons::CHECK) } else { (t::BTN_NEXT(), &icons::ARROW_RIGHT) };
-    buttons = buttons.child(fixed(btn(label).icon(glyph).primary().grow().focusable().build(k, |s, _| s.tour_next()).key("tour-next")));
+    buttons = buttons.child(fixed(btn(label).icon(glyph).primary().grow().focusable().build(k, |s, _| s.tour_press_next()).key("tour-next")));
     col()
         .key("tour-card")
         .role("dialog")
@@ -197,14 +208,12 @@ mod tests {
         app.show(1);
         let live = app.live.as_ref().map(|live| (live.deck.title.clone(), live.index));
         let keys = [Key::Down, Key::Up, Key::PageDown, Key::PageUp, Key::Home, Key::End, Key::Tab, Key::Delete, Key::Function(2), Key::Text(" ".into()), Key::Text("1".into()), Key::Command('z')];
-        for focused in [false, true] {
-            app.start_tour();
-            for key in &keys {
-                app.tour_key(key, focused);
-                assert_eq!(app.live.as_ref().map(|live| (live.deck.title.clone(), live.index)), live);
-                assert!(!app.black);
-                assert!(app.tour.is_some(), "only Enter, Left, Right and Escape move the tour");
-            }
+        app.start_tour();
+        for key in &keys {
+            app.tour_key(key);
+            assert_eq!(app.live.as_ref().map(|live| (live.deck.title.clone(), live.index)), live);
+            assert!(!app.black);
+            assert!(app.tour.is_some(), "only Enter, Left, Right and Escape move the tour");
         }
     }
 
@@ -212,15 +221,20 @@ mod tests {
     fn keys_move_the_tour() {
         let mut app = App::practice();
         app.start_tour();
-        app.tour_key(&Key::Right, false);
-        app.tour_key(&Key::Enter, false);
+        app.tour_key(&Key::Right);
+        app.tour_key(&Key::Enter);
         assert_eq!(app.tour, Some(2));
-        // A focused button presses itself on Enter; the window must not step twice.
-        app.tour_key(&Key::Enter, true);
+        // If the focused button also presses itself for that Enter, the tour steps once.
+        app.tour_press_next();
         assert_eq!(app.tour, Some(2));
-        app.tour_key(&Key::Left, false);
+        // A press of its own, later, steps.
+        app.clock += 1.0;
+        app.tour_press_next();
+        assert_eq!(app.tour, Some(3));
+        app.tour_key(&Key::Left);
+        app.tour_key(&Key::Left);
         assert_eq!(app.tour, Some(1));
-        app.tour_key(&Key::Escape, false);
+        app.tour_key(&Key::Escape);
         assert_eq!(app.tour, None);
     }
 }

@@ -326,6 +326,9 @@ pub struct App {
     pub tour: Option<usize>,
     /// The tour has just opened and its Next button should take keyboard focus.
     pub tour_focus: bool,
+    /// The clock when Enter last moved the tour. If Rune also presses the focused button for
+    /// the same Enter, that press is the same step and is dropped.
+    pub tour_entered_at: f64,
     pub notices: Option<Notices>,
     /// The announcements are advancing by themselves on the projector.
     pub looping: bool,
@@ -525,6 +528,7 @@ impl App {
             spare_edit: TextEdit::new(""),
             sheet: Sheet::None,
             tour: None,
+            tour_entered_at: -1.0,
             tour_focus: false,
             notices: None,
             looping: false,
