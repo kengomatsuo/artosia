@@ -6,6 +6,12 @@
       "runtimeExecutable": "cargo",
       "runtimeArgs": ["run", "-p", "artosia-remote", "--example", "serve", "47931"],
       "port": 47931
+    },
+    {
+      "name": "site",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "47932", "--directory", "target/site"],
+      "port": 47932
     }
   ]
 }

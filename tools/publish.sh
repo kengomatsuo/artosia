@@ -78,3 +78,5 @@ gh release create "v$version" "$zip" --draft --title "Artosia $version" --notes-
 find "$feed" -type f -print0 | xargs -0 -n 12 gh release upload "v$version" --clobber
 gh release edit "v$version" --draft=false --latest
 echo "Published v$version."
+# The homepage names the newest version and its size.
+tools/publish-site.sh

@@ -28,6 +28,7 @@ It is authoritative; update it (and this file's headlines) whenever a decision c
 - `crates/artosia-office` — reads a church's PowerPoint and Word files; `crates/artosia-update` — self-update and the release tool
 - `spikes/` — throwaway experiments with their own `Cargo.toml`; [spikes/SPEC.md](spikes/SPEC.md) is the shared test
 - `tools/` — `snap.sh`, `ram/measure.ps1`, `ram/measure-cpu.ps1`, `grab-window.ps1`, `make-fixture.sh`, `make-bible-asset.py`
+- `site/` — the homepage at artosia.matsuokengo.com, one template in English and Indonesian ([docs/site.md](docs/site.md))
 - `fixtures/` — generated media and the church's own library, gitignored
 - `docs/` — full accounts behind every rule: [operator.md](docs/operator.md) (the window and its rules), [output.md](docs/output.md) (the output process and its measured cost), [features.md](docs/features.md) (the owner's features and where each stands), [research.md](docs/research.md) (the stack survey)
 - `.claude/rules/` — subsystem conventions, path-scoped
@@ -55,6 +56,8 @@ cargo clippy
 tools/make-fixture.sh                         # needs ffmpeg on PATH or FFMPEG=<path>
 powershell -File tools/ram/measure-cpu.ps1 -Exe <exe> -ArgLine "<args>" -Label <name>
 tools/publish.sh <version> "<notes>"          # builds, signs and publishes a GitHub release
+tools/site-shots.sh                           # the homepage's pictures, rendered from the real programs
+tools/publish-site.sh                         # builds the homepage and replaces the gh-pages branch
 ```
 
 With GStreamer's development files installed (variables in `crates/artosia-video/README.md`):

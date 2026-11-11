@@ -22,6 +22,8 @@ Artosia puts song words, Bible verses and announcements on a church's projector.
 
 ## Getting it
 
+The homepage, in English and Indonesian: [artosia.matsuokengo.com](https://artosia.matsuokengo.com).
+
 1. Download [Artosia-windows.zip](https://github.com/kengomatsuo/artosia/releases/latest/download/Artosia-windows.zip).
 2. Unzip it into a folder you can write to, such as Documents. Program Files will not do, because Artosia updates its own files.
 3. Start `artosia.exe`.

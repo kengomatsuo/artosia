@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="{{lang}}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{meta_title}}</title>
+<meta name="description" content="{{meta_description}}">
+<link rel="canonical" href="{{canonical}}">
+<link rel="alternate" hreflang="en" href="{{site}}/">
+<link rel="alternate" hreflang="id" href="{{site}}/id/">
+<link rel="alternate" hreflang="x-default" href="{{site}}/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Artosia">
+<meta property="og:title" content="{{meta_title}}">
+<meta property="og:description" content="{{meta_description}}">
+<meta property="og:url" content="{{canonical}}">
+<meta property="og:image" content="{{site}}/img/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0d0d0d" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="{{root}}favicon.ico" sizes="32x32">
+<link rel="icon" href="{{root}}img/icon.svg" type="image/svg+xml">
+<link rel="preload" href="{{root}}fonts/PlusJakartaSans.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="{{root}}style.css">
+<script>document.documentElement.classList.add("js");setTimeout(function(){document.documentElement.classList.add("late")},4000)</script>
+<noscript><style>.stage-keys,.stage-count{display:none}</style></noscript>
+{{language_redirect}}
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Artosia","applicationCategory":"MultimediaApplication","operatingSystem":"Windows 10, Windows 11","softwareVersion":"{{version}}","description":"{{json:meta_description}}","url":"{{canonical}}","downloadUrl":"{{download}}","license":"https://www.gnu.org/licenses/gpl-3.0.html","inLanguage":["en","id"],"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Person","name":"Kenneth Fang","url":"https://matsuokengo.com/"}}
+</script>
+</head>
+<body>
+
+<nav class="appear">
+  <a class="nav-logo" href="{{home}}" aria-label="Artosia">
+    <svg viewBox="0 0 999.998 809.997" aria-hidden="true"><path d="M107.698 809.997L209.1 809.997L316.167 544.997L571.663 544.997L531.261 444.997L356.57 444.997L499.999 89.997L790.898 809.997L892.3 809.997A500 500 0 1 0 107.698 809.997Z"/></svg>
+    Artosia
+  </a>
+  <ul class="nav-links">
+    <li class="nav-far"><a href="#what">{{nav_what}}</a></li>
+    <li class="nav-far"><a href="#start">{{nav_start}}</a></li>
+    <li><a href="{{other_href}}" hreflang="{{other_lang}}" lang="{{other_lang}}" data-lang="{{other_lang}}">{{nav_other_language}}</a></li>
+    <li><a class="hero-btn" href="{{download}}">{{nav_download}}</a></li>
+  </ul>
+</nav>
+
+<main>
+<section id="hero">
+  <div class="hero-inner">
+    <h1 class="appear">{{hero_title}}</h1>
+    <p class="hero-sub appear">{{hero_lead}}</p>
+    <div class="hero-actions appear">
+      <div class="hero-links">
+        <a class="hero-btn hero-btn--primary" href="{{download}}">{{download_button}}</a>
+        <a class="hero-btn hero-btn--quiet" href="https://github.com/kengomatsuo/artosia">{{source_button}}</a>
+      </div>
+      <p class="release-note">{{release_note}}</p>
+    </div>
+  </div>
+
+  <div class="stage appear" id="stage">
+    <div class="stage-frames">
+      <picture class="current">
+        <source media="(prefers-color-scheme: dark)" srcset="{{root}}img/{{lang}}/hero-0-dark.png">
+        <img src="{{root}}img/{{lang}}/hero-0-light.png" width="2560" height="1600" alt="{{stage_alt_0}}" fetchpriority="high">
+      </picture>
+      <picture>
+        <source media="(prefers-color-scheme: dark)" data-srcset="{{root}}img/{{lang}}/hero-1-dark.png">
+        <img data-src="{{root}}img/{{lang}}/hero-1-light.png" width="2560" height="1600" alt="{{stage_alt_1}}">
+      </picture>
+      <picture>
+        <source media="(prefers-color-scheme: dark)" data-srcset="{{root}}img/{{lang}}/hero-2-dark.png">
+        <img data-src="{{root}}img/{{lang}}/hero-2-light.png" width="2560" height="1600" alt="{{stage_alt_2}}">
+      </picture>
+      <picture>
+        <source media="(prefers-color-scheme: dark)" data-srcset="{{root}}img/{{lang}}/hero-3-dark.png">
+        <img data-src="{{root}}img/{{lang}}/hero-3-light.png" width="2560" height="1600" alt="{{stage_alt_3}}">
+      </picture>
+    </div>
+    <div class="stage-bar">
+      <div class="stage-keys">
+        <button class="hero-btn" type="button" data-step="-1" disabled>{{stage_prev}}</button>
+        <button class="hero-btn" type="button" data-step="1">{{stage_next}}</button>
+      </div>
+      <p class="stage-count" aria-live="polite" data-count="{{stage_count}}"></p>
+      <p class="stage-caption">{{stage_caption}}</p>
+    </div>
+  </div>
+</section>
+
+<section id="what" class="band-alt">
+  <div class="section-inner">
+    <h2 class="section-title appear">{{what_title}}</h2>
+    <div class="features">
+
+      <article class="feature appear">
+        <div class="feature-words">
+          <h3 class="feature-title">{{wall_title}}</h3>
+          <p class="feature-text">{{wall_text}}</p>
+        </div>
+        <figure class="shot">
+          <img src="{{root}}img/projector.png" {{wh:img/projector.png}} alt="{{wall_alt}}" loading="lazy">
+          <figcaption>{{wall_caption}}</figcaption>
+        </figure>
+      </article>
+
+      <article class="feature feature--wide appear">
+        <div class="feature-words">
+          <h3 class="feature-title">{{search_title}}</h3>
+          <p class="feature-text">{{search_text}}</p>
+        </div>
+        <figure class="shot">
+          <picture>
+            <source media="(prefers-color-scheme: dark)" srcset="{{root}}img/{{lang}}/search-dark.png">
+            <img src="{{root}}img/{{lang}}/search-light.png" {{wh:img/en/search-light.png}} alt="{{search_alt}}" loading="lazy">
+          </picture>
+          <figcaption>{{search_caption}}</figcaption>
+        </figure>
+      </article>
+
+      <article class="feature feature--flip appear">
+        <div class="feature-words">
+          <h3 class="feature-title">{{look_title}}</h3>
+          <p class="feature-text">{{look_text}}</p>
+        </div>
+        <figure class="shot">
+          <picture>
+            <source media="(prefers-color-scheme: dark)" srcset="{{root}}img/{{lang}}/design-dark.png">
+            <img src="{{root}}img/{{lang}}/design-light.png" {{wh:img/en/design-light.png}} alt="{{look_alt}}" loading="lazy">
+          </picture>
+          <figcaption>{{look_caption}}</figcaption>
+        </figure>
+      </article>
+
+      <article class="feature appear">
+        <div class="feature-words">
+          <h3 class="feature-title">{{screens_title}}</h3>
+          <p class="feature-text">{{screens_text}}</p>
+        </div>
+        <figure class="shot">
+          <picture>
+            <source media="(prefers-color-scheme: dark)" srcset="{{root}}img/{{lang}}/screens-dark.png">
+            <img src="{{root}}img/{{lang}}/screens-light.png" {{wh:img/en/screens-light.png}} alt="{{screens_alt}}" loading="lazy">
+          </picture>
+          <figcaption>{{screens_caption}}</figcaption>
+        </figure>
+      </article>
+
+      <article class="feature feature--flip appear">
+        <div class="feature-words">
+          <h3 class="feature-title">{{notices_title}}</h3>
+          <p class="feature-text">{{notices_text}}</p>
+        </div>
+        <figure class="shot">
+          <picture>
+            <source media="(prefers-color-scheme: dark)" srcset="{{root}}img/{{lang}}/announcements-dark.png">
+            <img src="{{root}}img/{{lang}}/announcements-light.png" {{wh:img/en/announcements-light.png}} alt="{{notices_alt}}" loading="lazy">
+          </picture>
+          <figcaption>{{notices_caption}}</figcaption>
+        </figure>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<section id="start">
+  <div class="section-inner">
+    <h2 class="section-title appear">{{start_title}}</h2>
+    <ol class="steps appear">
+      <li>
+        <h3 class="feature-title">{{step_download_title}}</h3>
+        <p class="feature-text">{{step_download_text}}</p>
+      </li>
+      <li>
+        <h3 class="feature-title">{{step_unzip_title}}</h3>
+        <p class="feature-text">{{step_unzip_text}}</p>
+      </li>
+      <li>
+        <h3 class="feature-title">{{step_open_title}}</h3>
+        <p class="feature-text">{{step_open_text}}</p>
+      </li>
+    </ol>
+    <div class="appear">
+      <div class="hero-links">
+        <a class="hero-btn hero-btn--primary" href="{{download}}">{{download_button}}</a>
+      </div>
+      <p class="release-note">{{release_note}}</p>
+    </div>
+  </div>
+</section>
+
+<section id="facts" class="band-alt">
+  <div class="section-inner">
+    <h2 class="section-title appear">{{facts_title}}</h2>
+    <dl class="facts appear">
+      <div><dt>{{fact_runs_term}}</dt><dd>{{fact_runs_text}}</dd></div>
+      <div><dt>{{fact_needs_term}}</dt><dd>{{fact_needs_text}}</dd></div>
+      <div><dt>{{fact_bible_term}}</dt><dd>{{fact_bible_text}}</dd></div>
+      <div><dt>{{fact_library_term}}</dt><dd>{{fact_library_text}}</dd></div>
+      <div><dt>{{fact_phone_term}}</dt><dd>{{fact_phone_text}}</dd></div>
+      <div><dt>{{fact_language_term}}</dt><dd>{{fact_language_text}}</dd></div>
+      <div><dt>{{fact_updates_term}}</dt><dd>{{fact_updates_text}}</dd></div>
+      <div><dt>{{fact_price_term}}</dt><dd>{{fact_price_text}}</dd></div>
+    </dl>
+  </div>
+</section>
+</main>
+
+<footer class="appear">
+  <div class="footer-inner">
+    <span>Artosia</span>
+    <div class="footer-links">
+      <a href="https://github.com/kengomatsuo/artosia">{{footer_source}}</a>
+      <a href="https://github.com/kengomatsuo/artosia/releases">{{footer_releases}}</a>
+      <a href="https://github.com/kengomatsuo/artosia/blob/main/LICENSE">{{footer_licence}}</a>
+      <a href="https://matsuokengo.com/">matsuokengo.com</a>
+    </div>
+    <span>&copy; 2026 Kenneth Fang</span>
+  </div>
+</footer>
+
+<script src="{{root}}script.js" defer></script>
+</body>
+</html>
