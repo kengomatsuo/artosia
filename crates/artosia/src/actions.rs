@@ -1292,7 +1292,7 @@ impl App {
         }
         self.remote_pin = artosia_remote::new_pin();
         let (tx, waker) = (self.remote_tx.clone(), self.waker.clone());
-        let started = RemoteServer::start(RemoteConfig { port: 4780, pin: self.remote_pin.clone() }, move |command| {
+        let started = RemoteServer::start(RemoteConfig { port: 4780, pin: self.remote_pin.clone(), local_only: false }, move |command| {
             let _ = tx.send(command);
             if let Some(wake) = &waker {
                 wake();

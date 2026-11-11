@@ -108,6 +108,10 @@ pub struct RemoteConfig {
     /// 0 picks a free port.
     pub port: u16,
     pub pin: String,
+    /// Listen on this computer only (127.0.0.1), for tests and the example. A program that
+    /// listens on the network makes Windows Firewall ask whether to allow it: the example did
+    /// so twice on 2026-11-11 and its question sat on the owner's screen for hours.
+    pub local_only: bool,
 }
 
 /// Dropping the server stops it and joins its threads.
@@ -121,7 +125,7 @@ impl RemoteServer {
     /// `on_command` runs on a connection thread, not the caller's: several phones can call it
     /// at the same moment, so it must be quick and thread safe (send into a channel, say).
     pub fn start(config: RemoteConfig, on_command: impl Fn(RemoteCommand) + Send + Sync + 'static) -> io::Result<RemoteServer> {
-        let listener = TcpListener::bind((Ipv4Addr::UNSPECIFIED, config.port))?;
+        let listener = TcpListener::bind((if config.local_only { Ipv4Addr::LOCALHOST } else { Ipv4Addr::UNSPECIFIED }, config.port))?;
         let port = listener.local_addr()?.port();
         let shared = Arc::new(Shared {
             pin: config.pin,

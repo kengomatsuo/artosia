@@ -12,7 +12,7 @@ type Seen = Arc<Mutex<Vec<RemoteCommand>>>;
 fn start() -> (RemoteServer, Seen) {
     let seen: Seen = Arc::default();
     let s2 = seen.clone();
-    let srv = RemoteServer::start(RemoteConfig { port: 0, pin: "4321".into() }, move |c| {
+    let srv = RemoteServer::start(RemoteConfig { port: 0, pin: "4321".into(), local_only: true }, move |c| {
         s2.lock().unwrap().push(c);
     })
     .unwrap();

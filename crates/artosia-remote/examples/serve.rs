@@ -1,4 +1,6 @@
 //! Run the remote with placeholder content: `cargo run -p artosia-remote --example serve [port]`.
+//! It listens on this computer only; add `--lan` to open it from a phone on the same Wi-Fi,
+//! which is when Windows Firewall asks whether to allow it.
 //!
 //! The state covers every control of the page: a plan with headings, sections, search hits,
 //! the logo, a message and a countdown. All text is made up for this example.
@@ -50,15 +52,19 @@ fn now() -> f64 {
 fn main() -> std::io::Result<()> {
     let port = std::env::args().nth(1).and_then(|p| p.parse().ok()).unwrap_or(4791);
     let pin = std::env::var("PIN").unwrap_or_else(|_| "1234".into());
+    // On this computer only unless `--lan` is given: a phone needs the network, a test does
+    // not, and listening on the network makes Windows Firewall ask the person at the screen.
+    let lan = std::env::args().any(|arg| arg == "--lan");
     let (tx, rx) = mpsc::channel();
     let tx = Mutex::new(tx);
-    let server = RemoteServer::start(RemoteConfig { port, pin: pin.clone() }, move |c| {
+    let server = RemoteServer::start(RemoteConfig { port, pin: pin.clone(), local_only: !lan }, move |c| {
         if let Ok(tx) = tx.lock() {
             let _ = tx.send(c);
         }
     })?;
-    println!("port {}  pin {pin}", server.port());
-    for u in server.urls() {
+    println!("port {}  pin {pin}{}", server.port(), if lan { "" } else { "  (this computer only; pass --lan for a phone)" });
+    let urls = if lan { server.urls() } else { vec![format!("http://127.0.0.1:{}/", server.port())] };
+    for u in urls {
         println!("{u}?pin={pin}");
     }
     let deck = slides();
