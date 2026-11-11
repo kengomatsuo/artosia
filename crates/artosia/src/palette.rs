@@ -10,7 +10,7 @@ use std::collections::HashSet;
 use std::ops::Range;
 
 use artosia_core::bible::{Reference, english_name};
-use artosia_core::deck::DeckSource;
+use artosia_core::deck::{DeckSource, Fill};
 use artosia_core::palette::{self as kit, Doc, LABEL};
 use artosia_core::plan::PlanEntry;
 use artosia_core::search::LineHit;
@@ -554,10 +554,21 @@ impl App {
             }
         }
         for (index, item) in self.announcements.iter().enumerate() {
-            let doc = Doc::new(format!("announcement:{}", item.id), "announcement", item.title.clone())
-                .detail(item.body.clone())
+            // A card that fills itself has no body of its own: it says what it holds today.
+            let body = match item.fill {
+                Fill::Nothing => item.body.clone(),
+                Fill::Passage => item.passage.clone(),
+                _ => t::names_today(artosia_core::deck::birthdays(&self.people, item.fill, &self.today()).len()),
+            };
+            let mut doc = Doc::new(format!("announcement:{}", item.id), "announcement", item.title.clone())
+                .detail(body.clone())
                 .aliases(&["announcement", "show announcement", "notice", "pengumuman", "tampilkan pengumuman", "warta"]);
-            out.push((doc, Hit::Announcement { index, title: item.title.clone(), body: item.body.clone() }));
+            doc = match item.fill {
+                Fill::BirthdaysWeek | Fill::BirthdaysMonth => doc.aliases(&["birthday", "birthdays", "show birthdays", "ulang tahun", "ultah", "tampilkan ulang tahun"]),
+                Fill::Passage => doc.aliases(&["verse of the week", "bible verse", "verse", "ayat", "ayat minggu ini"]),
+                Fill::Nothing => doc,
+            };
+            out.push((doc, Hit::Announcement { index, title: item.title.clone(), body }));
         }
         for (index, look) in presets().into_iter().enumerate() {
             let doc = Doc::new(format!("look:{}", look.name), "look", look.name.clone()).aliases(&["look", "theme", "background", "tampilan", "tema", "latar"]);
@@ -775,7 +786,10 @@ impl App {
                     return;
                 }
                 // An announcement that fills itself may have no slide today, or several.
-                let slide = self.announcement_slide_index(index).unwrap_or(0);
+                let Some(slide) = self.announcement_slide_index(index) else {
+                    self.say(t::NOTICE_NOTHING_TO_SHOW(), None);
+                    return;
+                };
                 self.open_announcements();
                 self.close_palette();
                 if let Some(open) = self.open.as_mut() {
@@ -900,6 +914,25 @@ mod tests {
         assert_eq!(first(&app), Some(&Hit::Command(Command::StartService)));
         search(&mut app, "mulai ibadah");
         assert!(app.palette.hits.contains(&Hit::Command(Command::StartService)));
+    }
+
+    #[test]
+    fn the_birthday_card_is_found_by_birthday_and_ulang_tahun() {
+        let mut app = App::practice();
+        app.demo_notices("birthdays");
+        app.open_palette(Scope::All, "");
+        let at = app.announcements.iter().position(|card| card.fill == artosia_core::deck::Fill::BirthdaysWeek).unwrap_or_default();
+        // The import command also answers to "birthday", so the card is only required to be
+        // among the hits there; asking to show birthdays puts it first.
+        for query in ["birthday", "ulang tahun", "show birthdays", "tampilkan ulang tahun"] {
+            search(&mut app, query);
+            assert!(app.palette.hits.iter().any(|hit| matches!(hit, Hit::Announcement { index, .. } if *index == at)), "{query:?}: {:?}", app.palette.hits);
+        }
+        search(&mut app, "show birthdays");
+        assert!(matches!(first(&app), Some(Hit::Announcement { index, .. }) if *index == at), "{:?}", first(&app));
+        // Ctrl Enter puts it on the projector at once, on the slide that holds the names.
+        app.pick(Pick::ShowNow);
+        assert!(app.live.as_ref().is_some_and(|live| live.deck.slides.iter().any(|slide| slide.text.contains("Sample Alpha"))));
     }
 
     #[test]

@@ -140,14 +140,21 @@ LRCLIB found 9 of 30 sampled titles from the church library: 7 of 10 English and
 
 The announcement editor takes the Preview pane and the dock: the list on the left with move, duplicate and delete on the picked row, the form on the right under a preview that changes as you type (`ui/announcements.rs`). What is being written is saved when another row is picked, when the editor closes and on Ctrl S.
 
+- **Every row has a Show now control** (the play icon), and the form has a labelled one beside Save. It puts that one card on the projector alone (`App::show_notice_now`, deck source `Announcement(id)`); the other cards stay out, the loop does not start. A card with nothing to show today (nobody has a birthday, a passage the Bible cannot read) leaves the button grey in the form and says so in a toast from the row and from search.
+- **Pressing a row's main area opens the card for editing and puts it in Preview** behind the editor (`pick_notice`, `preview_card`); closing the editor leaves it there. Opening it in Preview does not close the editor, because `open_deck` would.
+- **Add to plan sits in the editor's header** and reads "In today's plan" (grey) once the announcements are a plan row. The plan column has its own way to add; this one is for a volunteer who is already here.
+
 | Part | What it does |
 |---|---|
 | Seconds on screen | How long this one stays up in the loop |
 | Start the loop | Shows each announcement in turn on the projector until stopped or until something else is shown (`App::loop_step`). Showing one announcement by hand does not start it |
-| Fill in by itself | The announcement writes this week's or this month's birthdays from the birthday list each time it is shown, eight names to a slide |
+| Fill in by itself | Four choices: Manual, Bible passage, Birthdays this week, Birthdays this month. The two birthday choices write the names from the birthday list each time the card is shown, eight to a slide, and under the choice the card says which days it covers ("Covers 11 November to 17 November", or all of the month) and how many names it holds today, so a volunteer knows what will come up before showing it |
+| Bible passage | The volunteer types a reference, in Indonesian or English, and the words come from the Bible in use with the reference and its code as the small print (`deck::passage_state`, `announcement_pages`). It reads the reference with `Bible::guess`, the same parser the search uses, so "Mazmur 23:1-3" and "psalm 23 1-3" both work; a bare book name is not enough. It is read again whenever the Bible changes or finishes loading. With no Bible installed, or a reference the Bible has no verse for, the card says so under the field and offers the Bibles dialog; it shows nothing on the projector meanwhile. The "Verse of the week" ready-made card starts as a passage card; choosing Manual makes it plain text again |
 | Picture | A picture shown with the words |
 | Import a PowerPoint | Each slide becomes an announcement: a table row becomes a line with its cells in columns, a picture slide keeps its picture (`artosia-office`) |
 | Import a birthday list | A Word or PowerPoint table of names and dates replaces the birthday list; each person is kept once |
+
+Search finds the birthday card for "birthday" and "ulang tahun" and a passage card for "verse" and "ayat" (`palette.rs`, `documents`); its detail line says how many names it holds today, or the reference. Ctrl Enter shows it at once. A card with no slide today does not show another card's slide in its place: it says so.
 
 A list longer than ten lines goes over several slides. The church's own bulletin (6 slides) and birthday list (26 tables, 682 rows) were read on 2026-11-10: 6 announcements and 331 people after repeats were removed. Those files hold names, birthdays and gifts and stay out of the repository.
 

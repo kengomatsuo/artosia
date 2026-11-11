@@ -880,6 +880,35 @@ pub fn birthdays_imported(count: usize, unread: usize) -> String {
     }
 }
 text!(ANNOUNCEMENT_PREVIEW, "On the projector", "Pratinjau");
+
+// Cards that fill themselves: a Bible passage and the birthdays. Indonesian is written later
+// from the brief; English stands in both.
+text!(FILL_PASSAGE, "Bible passage", "Bible passage");
+text!(ANNOUNCEMENT_PASSAGE, "Bible reference", "Bible reference");
+text!(ANNOUNCEMENT_PASSAGE_HINT, "Psalm 23:1-3", "Psalm 23:1-3");
+text!(PASSAGE_NO_BIBLE, "No Bible is installed, so this card has no words", "No Bible is installed, so this card has no words");
+text!(PASSAGE_UNREADABLE, "The Bible has no verse at that reference", "The Bible has no verse at that reference");
+text!(NOTICE_NOTHING_TO_SHOW, "This card has nothing to show today", "This card has nothing to show today");
+
+/// Which days a birthday card that follows the week covers.
+pub fn birthdays_cover_week(from: (u8, u8), to: (u8, u8)) -> String {
+    let month = |month: u8| MONTHS()[usize::from(month.clamp(1, 12)) - 1];
+    format!("Covers {} {} to {} {}", from.1, month(from.0), to.1, month(to.0))
+}
+
+/// Which days a birthday card that follows the month covers.
+pub fn birthdays_cover_month(month: u8) -> String {
+    format!("Covers all of {}", MONTHS()[usize::from(month.clamp(1, 12)) - 1])
+}
+
+/// How many names a birthday card holds today.
+pub fn names_today(count: usize) -> String {
+    match count {
+        0 => "No names today".to_string(),
+        1 => "1 name today".to_string(),
+        _ => format!("{count} names today"),
+    }
+}
 /// Ready-made announcements: a title and words to replace.
 const ANNOUNCEMENT_TEMPLATES_EN: [(&str, &str); 6] = [
     ("Welcome", "We are glad you are here."),
