@@ -552,6 +552,10 @@ text!(PLAN_ADD_HEADING, "Divider", "Divider");
 text!(PLAN_DRAG, "Drag to reorder", "Drag to reorder");
 text!(ADDING_TO_PLAN, "Adding to the plan", "Adding to the plan");
 text!(BTN_DONE, "Done", "Done");
+text!(BTN_EARLIER, "Earlier", "Earlier");
+text!(EARLIER_HINT, "Shown before. Opens in Preview.", "Shown before. Opens in Preview.");
+text!(LETTER_KEYS, "Letters jump to sections", "Letters jump to sections");
+text!(LETTER_KEYS_HINT, "C is the chorus, V a verse. Off, every letter starts a search.", "C is the chorus, V a verse. Off, every letter starts a search.");
 text!(COUNTDOWN, "Countdown", "Hitung mundur");
 text!(COUNTDOWN_LABEL, "We start in", "Ibadah dimulai dalam");
 
@@ -1039,7 +1043,7 @@ text!(KEYS_SHOWING, "Showing", "Saat tayang");
 text!(KEYS_FINDING, "Finding", "Mencari");
 text!(KEYS_PLAN, "The plan", "Acara");
 text!(KEYS_EDITING, "Editing", "Editor lagu");
-const KEYS_SHOWING_ROWS_EN: [(&str, &str); 15] = [
+const KEYS_SHOWING_ROWS_EN: [(&str, &str); 17] = [
     ("Down, Space", "Next slide"),
     ("Up", "Previous slide"),
     ("Left", "First slide of the live song"),
@@ -1048,6 +1052,8 @@ const KEYS_SHOWING_ROWS_EN: [(&str, &str); 15] = [
     ("Ctrl arrow", "Move the ring in Preview, Enter shows it"),
     ("Enter", "Show the slide with the ring"),
     ("1 to 9", "Jump to that section of the live song"),
+    ("C, V, B", "Jump to the chorus, the next verse, the bridge"),
+    ("Ctrl 1 to 9", "Put the ring on that section in Preview"),
     ("Esc", "Bring the live song into Preview"),
     ("F1", "Clear the text"),
     ("F2", "Black"),
@@ -1056,7 +1062,7 @@ const KEYS_SHOWING_ROWS_EN: [(&str, &str); 15] = [
     ("F5", "Bring the announcements into Preview"),
     ("F6", "Take the live item off the projector"),
 ];
-const KEYS_SHOWING_ROWS_ID: [(&str, &str); 15] = [
+const KEYS_SHOWING_ROWS_ID: [(&str, &str); 17] = [
     ("Panah bawah, Spasi", "Tayangkan slide berikutnya"),
     ("Panah atas", "Tayangkan slide sebelumnya"),
     ("Panah kiri", "Loncat ke slide pertama lagu yang tayang"),
@@ -1065,6 +1071,8 @@ const KEYS_SHOWING_ROWS_ID: [(&str, &str); 15] = [
     ("Ctrl panah", "Geser bingkai di pratinjau, tayang saat Enter"),
     ("Enter", "Tayangkan slide yang berbingkai putih"),
     ("1 sampai 9", "Loncat ke bagian lagu sesuai nomor"),
+    ("C, V, B", "Jump to the chorus, the next verse, the bridge"),
+    ("Ctrl 1 to 9", "Put the ring on that section in Preview"),
     ("Esc", "Bawa lagu yang tayang ke pratinjau"),
     ("F1", "Sembunyikan teks, latar tetap tayang"),
     ("F2", "Hitamkan layar"),
@@ -1081,7 +1089,7 @@ pub fn KEYS_SHOWING_ROWS() -> &'static [(&'static str, &'static str)] {
 }
 const KEYS_FINDING_ROWS_EN: [(&str, &str); 7] = [
     ("Any letter", "Search songs, the Bible and commands"),
-    ("Ctrl K", "Search, or browse every song"),
+    ("Ctrl K, /", "Search, or browse every song"),
     ("Enter", "Open the picked result"),
     ("Ctrl Enter", "Show it now"),
     ("Shift Enter", "Add it to the plan, next in line"),

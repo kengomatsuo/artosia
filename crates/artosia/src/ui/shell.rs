@@ -14,7 +14,7 @@ use artosia_core::deck::{Deck, DeckSource, Slide, SlideKind, tag_group};
 use artosia_slides::audience::clock_text;
 use artosia_slides::stage::group_color;
 use rune::{Color, Cursor, Cx, El, ScrollSpec, Tx, col, el, icon, row, spacer, text};
-use rune_kit::{Kit, ScrollBar};
+use rune_kit::{Kit, Menu, MenuItem, ScrollBar};
 
 use crate::state::{App, section_starts};
 use crate::strings as t;
@@ -28,6 +28,8 @@ const PLAN: f32 = 256.0;
 /// The least width the controls beside a picture need: two buttons side by side with the
 /// longer Indonesian words.
 const CONTROLS: f32 = 290.0;
+/// The least height of the strip under a list: Next at 60 points over two rows of 38.
+const LOWEST: f32 = 152.0;
 /// Width of the Live pane while an editor has the rest of the window.
 const NARROW: f32 = 288.0;
 
@@ -49,7 +51,8 @@ impl Foot {
         // The lists keep most of the height; the picture takes up to about a third.
         let highest = (tall * 0.36).clamp(128.0, 380.0);
         let picture = (inner - space::S3 - CONTROLS).min(highest * 16.0 / 9.0).max(220.0).round();
-        Foot { picture, height: (picture * 9.0 / 16.0).round(), controls: (inner - space::S3 - picture).max(200.0) }
+        // The controls never get shorter than this, so every button stays an easy target.
+        Foot { picture, height: (picture * 9.0 / 16.0).round().max(LOWEST), controls: (inner - space::S3 - picture).max(200.0) }
     }
 
     /// Key caps fit on the smaller buttons.
@@ -86,8 +89,22 @@ fn title_bar(k: &Kit, name: &str, keys: Option<&str>, detail: String, trailing: 
     bar.child(text(detail).font(type_::SMALL).color(k.c.text_muted).truncate().min_w(0.0)).child(spacer()).children(trailing)
 }
 
-/// One row of a list: the number key that jumps to it, its section, and its words.
-fn list_row(k: &Kit, key: &str, index: usize, number: Option<usize>, slide: &Slide, mark: Mark, go_live: bool) -> El {
+/// What a row says about itself at its right end: the key or the button that acts on it.
+#[derive(Clone, Copy, PartialEq)]
+enum Hint {
+    None,
+    /// The slide Next and Space will show.
+    Next,
+    /// The ringed slide of Preview: Show sends it.
+    Show,
+    /// On the projector now.
+    Live,
+}
+
+/// One row of a list: the number key that jumps to it, its section, its words, and the key
+/// that acts on it (owner, 2026-11-11: keys listed at the bottom did not help; a key on the
+/// row does).
+fn list_row(k: &Kit, key: &str, index: usize, number: Option<usize>, slide: &Slide, mark: Mark, go_live: bool, hint: Hint) -> El {
     let live = matches!(mark, Mark::Live | Mark::Hidden);
     let on_fill = if mark == Mark::Hidden { Color::BLACK } else { theme::on_live() };
     let ink = if live { on_fill } else { k.c.text_base };
@@ -116,7 +133,23 @@ fn list_row(k: &Kit, key: &str, index: usize, number: Option<usize>, slide: &Sli
         _ => el(),
     };
     // The number shown is the key that jumps here; a section's later slides carry none.
-    let shown = number.filter(|n| *n < 10).map(|n| ((n + 1) % 10).to_string()).unwrap_or_default();
+    let shown = number.filter(|n| *n < 10).map(|n| ((n + 1) % 10).to_string());
+    // Drawn as a key, because it is one.
+    let digit = match shown {
+        Some(digit) if live => el().w(20.0).child(el().w(18.0).h(18.0).center().radius(4.0).fill(on_fill.alpha(0.16)).child(text(digit).font(type_::TINY).color(on_fill))),
+        Some(digit) => el().w(20.0).child(el().w(18.0).h(18.0).center().radius(4.0).fill(k.c.layer_03).child(text(digit).font(type_::TINY).color(k.c.text_muted))),
+        None => el().w(20.0),
+    };
+    let trailing = match hint {
+        Hint::None => el(),
+        Hint::Next => keycap(k, t::KEY_NEXT(), false),
+        Hint::Live => state_pill(t::LIVE(), on_fill.alpha(0.16), on_fill),
+        Hint::Show => btn(t::BTN_SHOW()).primary().small().hint(t::KEY_ENTER()).build(k, move |s, tx| {
+            s.show(index);
+            crate::follow(s, tx);
+            tx.blur();
+        }),
+    };
     let mut body = row()
         .w_full()
         .h(ROW)
@@ -131,9 +164,10 @@ fn list_row(k: &Kit, key: &str, index: usize, number: Option<usize>, slide: &Sli
             Mark::Cursor => k.c.layer_03,
             Mark::Rest => Color::TRANSPARENT,
         })
-        .child(text(shown).font(type_::SMALL_STRONG).color(faint).w(20.0))
+        .child(digit)
         .child(el().w(46.0).child(chip))
-        .child(words);
+        .child(words)
+        .child(trailing);
     if mark == Mark::Cursor {
         body = body.border(2.0, k.c.text_base);
     }
@@ -160,6 +194,8 @@ struct Pane<'a> {
     width: Option<f32>,
     cursor: Option<usize>,
     go_live: bool,
+    /// The slide Next will show, marked with its key.
+    next_at: Option<usize>,
     /// Shown in place of the list when there is no deck.
     empty: El,
     footer: El,
@@ -180,7 +216,13 @@ fn pane(k: &Kit, p: Pane<'_>) -> El {
                     Mark::Rest
                 };
                 let number = starts.iter().position(|start| *start == index);
-                list = list.child(list_row(k, p.key, index, number, slide, mark, p.go_live));
+                let hint = match mark {
+                    Mark::Live | Mark::Hidden => Hint::Live,
+                    Mark::Cursor if !p.go_live => Hint::Show,
+                    _ if p.next_at == Some(index) => Hint::Next,
+                    _ => Hint::None,
+                };
+                list = list.child(list_row(k, p.key, index, number, slide, mark, p.go_live, hint));
             }
         }
         _ => list = list.child(p.empty),
@@ -213,7 +255,7 @@ fn picture(s: &App, k: &Kit, state: &artosia_slides::frame::OutputState, width: 
 
 /// The strip under a list: its picture, and what acts on it.
 fn foot(size: Foot, picture: El, controls: El) -> El {
-    row().w_full().h(size.height + 2.0 * space::S3).px(space::S3).py(space::S3).gap(space::S3).items_start().fill(theme::surf().side).child(picture).child(controls)
+    row().w_full().h(size.height + 2.0 * space::S3).px(space::S3).py(space::S3).gap(space::S3).center_y().fill(theme::surf().side).child(picture).child(controls)
 }
 
 /// What acts on the open item: add it to the plan, edit it, read on.
@@ -264,11 +306,9 @@ fn preview_controls(s: &App, k: &Kit, size: Foot, live_here: bool, hidden: bool)
     });
     let walk = |forward: bool| {
         let (label, glyph, keys) = if forward { (t::BTN_NEXT_ITEM(), &icons::ITEM_AFTER, "Tab") } else { (t::BTN_PREVIOUS_ITEM(), &icons::ITEM_BEFORE, "Shift Tab") };
-        let mut button = btn(label).icon(glyph).height(step).grow().disabled(s.walk_target(forward).is_none());
-        if size.roomy() {
-            button = button.hint(keys);
-        }
-        button.build(k, move |s, tx| {
+        // The key is printed on the button; with little room the icon gives way to it.
+        let button = btn(label).height(step).grow().hint(keys).disabled(s.walk_target(forward).is_none());
+        if size.roomy() { button.icon(glyph) } else { button }.build(k, move |s, tx| {
             s.walk_plan(forward);
             crate::follow(s, tx);
             tx.blur();
@@ -305,6 +345,7 @@ fn preview_pane(s: &App, k: &Kit, size: Foot) -> El {
             width: None,
             cursor: open.map(|o| o.cursor).filter(|cursor| Some(*cursor) != live_index),
             go_live: false,
+            next_at: None,
             // With nothing open the pane says what to do first.
             empty: if open.is_some() { empty_words(k, t::DECK_EMPTY()) } else { crate::ui::slides::start(s, k) },
             footer: foot(size, picture(s, k, &state, size.picture), preview_controls(s, k, size, live_index.is_some(), hidden)),
@@ -358,7 +399,24 @@ fn off_pill(k: &Kit, key: &'static str, words: String, does: &'static str, off: 
 
 /// What the room sees. `narrow` is the pane beside an editor: the same list and controls in a
 /// thin column, so Next is still one click away while a song is being corrected.
-fn live_pane(s: &App, k: &Kit, size: Option<Foot>) -> El {
+/// What was on the projector before this, newest first. Choosing one brings it into Preview
+/// with the ring where it was left; Show then returns to it in one step, with nothing between
+/// passing over the room's screen (owner, 2026-11-11: a volunteer who pressed Next too often
+/// did not know how to get back).
+fn earlier(s: &App, k: &Kit, layer: &mut Vec<El>) -> El {
+    let trigger = btn(t::BTN_EARLIER()).icon(&icons::HISTORY).small().build(k, |s, tx| {
+        s.history_menu = !s.history_menu;
+        tx.blur();
+    });
+    let mut menu = Menu::new("earlier-menu").trigger(trigger.key("earlier-button")).open(s.history_menu).min_width(260.0).on_close(|s: &mut App| s.history_menu = false).group_label(t::EARLIER_HINT());
+    for (at, shown) in s.history.iter().enumerate().rev() {
+        let place = shown.deck.slides.get(shown.index).map(|slide| slide.label.clone()).unwrap_or_default();
+        menu = menu.item(MenuItem::new(shown.deck.title.clone()).badge(place).on_select(move |s: &mut App| s.open_shown(at)));
+    }
+    menu.build(k, layer)
+}
+
+fn live_pane(s: &App, k: &Kit, size: Option<Foot>, layer: &mut Vec<El>) -> El {
     let live = s.live.as_ref();
     let state = s.output_state();
     let narrow = size.is_none();
@@ -389,6 +447,9 @@ fn live_pane(s: &App, k: &Kit, size: Option<Foot>) -> El {
             tx.blur();
         }));
     }
+    if !s.history.is_empty() && !narrow {
+        trailing.push(earlier(s, k, layer));
+    }
     trailing.push(live_pill(s, k));
     pane(
         k,
@@ -405,6 +466,7 @@ fn live_pane(s: &App, k: &Kit, size: Option<Foot>) -> El {
             // The slide picked with Shift held, until Shift is let go.
             cursor: s.live_pick.filter(|pick| Some(*pick) != live.map(|l| l.index)),
             go_live: true,
+            next_at: live.map(|l| l.index + 1).filter(|next| live.is_some_and(|l| *next < l.deck.slides.len())),
             empty: empty_words(k, t::LIVE_NOTHING()),
             footer,
             ring,
@@ -433,10 +495,10 @@ pub fn view(s: &App, cx: &mut Cx<App>, k: &Kit, layer: &mut Vec<El>) -> El {
     };
     let centre = row().key("centre").grow(1.0).min_w(0.0).h_full().min_h(0.0);
     let centre = match editor {
-        Some(editor) => centre.child(col().grow(1.0).min_w(0.0).h_full().min_h(0.0).fill(theme::surf().work).child(editor)).child(vline()).child(live_pane(s, k, None)),
+        Some(editor) => centre.child(col().grow(1.0).min_w(0.0).h_full().min_h(0.0).fill(theme::surf().work).child(editor)).child(vline()).child(live_pane(s, k, None, layer)),
         None => {
             let size = Foot::fit((width - 1.0) / 2.0, tall);
-            centre.child(preview_pane(s, k, size)).child(vline()).child(live_pane(s, k, Some(size)))
+            centre.child(preview_pane(s, k, size)).child(vline()).child(live_pane(s, k, Some(size), layer))
         }
     };
     row().key("columns").w_full().grow(1.0).min_h(0.0).child(plan_column(s, k, layer)).child(vline()).child(centre)
@@ -450,7 +512,7 @@ mod tests {
     fn the_picture_grows_with_the_window_and_the_controls_keep_their_room() {
         // A 1366 by 768 laptop: each pane is 554 points wide.
         let laptop = Foot::fit(554.0, 680.0);
-        assert_eq!((laptop.picture, laptop.height), (228.0, 128.0));
+        assert_eq!((laptop.picture, laptop.height), (228.0, 152.0));
         assert!(laptop.controls >= super::CONTROLS);
         // A wide screen: the picture stops at about a third of the height.
         let wide = Foot::fit(1151.0, 960.0);

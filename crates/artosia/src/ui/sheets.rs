@@ -527,14 +527,18 @@ fn key_group(k: &Kit, heading: &'static str, rows: &[(&'static str, &'static str
     group
 }
 
-fn keys(k: &Kit, layer: &mut Vec<El>) {
-    let body = row()
+fn keys(s: &App, k: &Kit, layer: &mut Vec<El>) {
+    let rows = row()
         .w_full()
-        .px(space::S4)
-        .pb(space::S4)
         .gap(space::S6)
         .child(col().grow(1.0).min_w(0.0).gap(space::S4).child(key_group(k, t::KEYS_SHOWING(), t::KEYS_SHOWING_ROWS())).child(key_group(k, t::KEYS_PLAN(), t::KEYS_PLAN_ROWS())))
         .child(col().grow(1.0).min_w(0.0).gap(space::S4).child(key_group(k, t::KEYS_FINDING(), t::KEYS_FINDING_ROWS())).child(key_group(k, t::KEYS_EDITING(), t::KEYS_EDITING_ROWS())));
+    // Single-letter keys can be switched off, as WCAG 2.1.4 asks.
+    let letters = switch_row(k, "letter-keys-switch", t::LETTER_KEYS(), t::LETTER_KEYS_HINT(), s.settings.letter_keys, |s| {
+        s.settings.letter_keys = !s.settings.letter_keys;
+        s.touch_settings();
+    });
+    let body = col().w_full().px(space::S4).pb(space::S4).gap(space::S4).child(rows).child(letters);
     Dialog::new("keys", t::KEYS_TITLE()).open(true).width(1060.0).fit().on_close(close).child(body).build(k, layer);
 }
 
@@ -688,7 +692,7 @@ pub fn view(s: &App, k: &Kit, layer: &mut Vec<El>) {
         Sheet::Screens => screens(s, k, layer),
         Sheet::Remote => remote(s, k, layer),
         Sheet::Import => import(s, k, layer),
-        Sheet::Keys => keys(k, layer),
+        Sheet::Keys => keys(s, k, layer),
         Sheet::Listen => listen(s, k, layer),
         Sheet::Stream => stream(s, k, layer),
         Sheet::Bibles => crate::ui::bibles::view(s, k, layer),

@@ -127,6 +127,13 @@ fn on_key(s: &mut App, ev: &KeyEvent, tx: &mut Tx) -> bool {
             s.end_live();
             return true;
         }
+        // Ctrl and a digit put the Preview ring on that section.
+        Key::Command(digit) if digit.is_ascii_digit() && !editing && !s.palette.open && s.sheet == Sheet::None => {
+            let digit = digit.to_digit(10).unwrap_or(1) as usize;
+            s.select_section(if digit == 0 { 9 } else { digit - 1 });
+            follow(s, tx);
+            return true;
+        }
         Key::Escape if s.palette.open => {
             s.palette_escape();
             return true;
@@ -215,6 +222,13 @@ fn on_key(s: &mut App, ev: &KeyEvent, tx: &mut Tx) -> bool {
         Key::Text(typed) if plain && typed.len() == 1 && typed.chars().all(|c| c.is_ascii_digit()) && s.target_deck().is_some_and(|deck| state::section_starts(deck).len() > 1) => {
             let digit = typed.parse::<usize>().unwrap_or(1);
             s.jump_to_section(if digit == 0 { 9 } else { digit - 1 });
+        }
+        Key::Text(typed) if typed == "/" => s.open_palette(Scope::All, ""),
+        // A letter that names a section of the song the keys act on goes there. Any other
+        // letter starts a search, and so does every letter once this is switched off.
+        Key::Text(typed) if plain && s.settings.letter_keys && typed.chars().count() == 1 && typed.chars().next().is_some_and(|c| c.is_ascii_alphabetic() && s.marker_letters().contains(&c.to_ascii_uppercase())) => {
+            let letter = typed.chars().next().unwrap_or('C').to_ascii_uppercase();
+            s.jump_to_marker(letter);
         }
         Key::Text(typed) if plain && typed.chars().all(char::is_alphanumeric) && !typed.is_empty() => {
             // Typing anywhere starts a search.
