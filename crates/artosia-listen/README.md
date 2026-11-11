@@ -110,6 +110,32 @@ mixing desk's line out with the vocal loud. Plug the listener into a vocal chann
   a pitch-contour matcher becomes a weekend project. Until then the lyrics path (fuzzy words ->
   `SongIndex::search`) is the only song identifier, and it needs a vocal loud enough to read.
 
+## Sources: microphones and the computer's own sound
+
+- `devices()` lists the inputs of the default host; each has cpal's `host:id` string and a name.
+  The operator saves the **id**. Its first version saved the name and handed it to
+  `Listener::start`, which looked it up as an id, so every microphone but the default failed
+  with "device ... is not connected". `find_input` now takes either: the id first, then the name,
+  which also reads what older settings hold.
+- **`SYSTEM_AUDIO` ("system-audio") is what the computer plays.** On Windows it is WASAPI
+  loopback of the default output device. cpal 0.18.2 says so in its own source: "If you use a
+  WASAPI output device as an input device it will transparently enable loopback mode"
+  (`host/wasapi/mod.rs`), and `device.rs` sets `AUDCLNT_STREAMFLAGS_LOOPBACK` when a render
+  device is opened for capture. `system_audio_available()` is true on Windows and macOS; ALSA
+  has nothing like it.
+- **Loopback delivers nothing while nothing plays**, so the listener feeds the meter and the
+  tracker silence on a timer; otherwise the level would freeze at its last value.
+- The operator lists the sources as the computer's own microphone, every microphone by name,
+  then "System audio".
+- `cargo run -p artosia-listen --example sources -- list | mic <name-or-id> | tone | tempo <bpm> |
+  hear <seconds> [keep <file>] | read <file>...` opens each source through the listener's own
+  code and prints what arrived. It keeps no sound.
+
+Opened on this PC, 2026-11-11: the default microphone and a USB microphone by name (48 kHz,
+one channel), the laptop's microphone array (48 kHz, two channels), a virtual cable (opens,
+silent), and system audio (a 440 Hz tone played at low volume came back at -20.7 dBFS peak).
+Not tried: a wireless headset, a device at 44.1 or 16 kHz, a device unplugged while it runs.
+
 ## Tempo and the beat
 
 `TempoTracker` (`src/tempo.rs`) is fed the same mono blocks as the level meter and reports, twice
@@ -261,13 +287,17 @@ impl Listener { pub fn start(device: Option<&str>, model: &Path, language: &str,
 - `recogniser.rs`: the `Recogniser` trait and the whisper implementation, behind the
   **`whisper` cargo feature, off by default**. Greedy decoding, no context between phrases,
   single segment, audio context trimmed to the phrase, threads = cores - 1 (max 4).
-- No model file: `Listener::start` still succeeds, levels flow, and one `Heard::Problem`
-  says "No speech model installed (looked for ...)". Without the `whisper` feature a model file
-  that exists gets "this build has no speech recogniser".
+- No model file: `Listener::start` still succeeds, levels and tempo flow, and one
+  `Heard::Problem(Problem::NoModel)` says so. Without the `whisper` feature a model file that
+  exists gets `Problem::NoRecogniser`.
+- **A problem is a kind, never a sentence.** `Problem` (`NoModel`, `NoRecogniser`, `Model`,
+  `Input`, `Reading`) and `ListenError` (`NoDevice`, `Stream`, `Thread`) carry the library's own
+  text only for logs. The operator words each kind in the window's language
+  (`crates/artosia/src/why.rs` `listen_error`, `listen_problem`): the first version put
+  "No speech model installed (looked for C:\...)" on the Listen dialog, in English, with a path.
 
 - `tempo.rs`: the beat tracker, below. Needs no model and no feature flag.
 
-### Not proven here
 ### Building the recogniser on Windows (2026-11-11)
 
 It compiles and runs. The build needs two tools, both found by `tools/speech-env.sh`:
@@ -287,9 +317,9 @@ cargo test --release -p artosia-listen --features whisper
   uses the bindings bundled in the crate, which were generated on Linux; they fail a struct size
   check on Windows. Real libclang is the only way.
 - whisper, ggml and ggml-cpu link **statically** (`whisper-rs-sys` `build.rs`: `BUILD_SHARED_LIBS=OFF`,
-  OpenMP off), so the release carries no extra DLL. The model is not shipped and **the app has no
-  downloader**: `set_listening` looks for `<library folder>\models\ggml-base-q5_1.bin` and says so
-  when it is missing.
+  OpenMP off), so the release carries no extra DLL. The model is not shipped: `set_listening`
+  looks for `<library folder>\models\ggml-base-q5_1.bin`, and when it is missing the Listen
+  dialog offers the download in a row of its own (`crates/artosia/src/speech_model.rs`).
 - A release-profile build of the operator with the feature takes about 6.5 minutes from a warm
   cache; the speech-enabled `artosia.exe` is 38 MB.
 - Without the feature nothing changes: `cargo build` needs neither tool.

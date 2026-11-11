@@ -22,6 +22,8 @@ use std::time::Duration;
 pub use audio::{LevelMeter, RECOGNISER_RATE, Resampler, level_from_rms, mix_to_mono, read_wav, rms};
 pub use segment::{Phrase, Segmenter, SegmenterConfig, audio_ctx_for, coalesce};
 pub use tempo::{MAX_BPM, MIN_BPM, Tempo, TempoTracker};
+#[doc(hidden)]
+pub use tempo::Frame as TempoFrame;
 pub use text::clean_text;
 
 /// An audio input the system offers.
@@ -93,8 +95,36 @@ pub enum Heard {
     Partial(String),
     /// A phrase that ended. Search with this one.
     Final(String),
-    /// Something a person should be told, in words (no model installed, a device unplugged).
-    Problem(String),
+    /// Something a person should be told: no model installed, a device unplugged.
+    Problem(Problem),
+}
+
+/// What went wrong while listening. The window words each kind in its own language; `Display`
+/// is for logs and examples, and its text never reaches a volunteer.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub enum Problem {
+    /// No model file: the level and the tempo work, words do not.
+    NoModel,
+    /// This build has no recogniser.
+    NoRecogniser,
+    /// The model file would not load.
+    Model(String),
+    /// The input reported an error while it ran.
+    Input(String),
+    /// One phrase could not be read.
+    Reading(String),
+}
+
+impl fmt::Display for Problem {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            Self::NoModel => f.write_str("no speech model installed; the level and the tempo work, words need the model"),
+            Self::NoRecogniser => f.write_str("this build has no speech recogniser"),
+            Self::Model(why) => write!(f, "the speech model would not load: {why}"),
+            Self::Input(why) => write!(f, "the audio input reported: {why}"),
+            Self::Reading(why) => write!(f, "a phrase could not be read: {why}"),
+        }
+    }
 }
 
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -180,7 +210,7 @@ impl Listener {
 fn read_phrase(recogniser: &mut dyn recogniser::Recogniser, phrase: &Phrase, last_partial: &mut String) -> Option<Heard> {
     let raw = match recogniser.transcribe(&phrase.samples, phrase.is_final) {
         Ok(raw) => raw,
-        Err(message) => return Some(Heard::Problem(message)),
+        Err(message) => return Some(Heard::Problem(Problem::Reading(message))),
     };
     let cleaned = clean_text(&raw);
     if phrase.is_final {
@@ -290,7 +320,7 @@ impl Job {
                 }
                 Ok(capture::Capture::Error(message)) => {
                     if message != last_error {
-                        (self.emit)(Heard::Problem(format!("The audio input reported: {message}")));
+                        (self.emit)(Heard::Problem(Problem::Input(message.clone())));
                         last_error = message;
                     }
                 }
@@ -330,10 +360,7 @@ impl Job {
     /// Starts the recognition thread, or reports why there is none and returns `None`.
     fn spawn_decoder(&self) -> Option<(mpsc::Sender<Phrase>, JoinHandle<()>)> {
         if !self.model.is_file() {
-            (self.emit)(Heard::Problem(format!(
-                "No speech model installed (looked for {}). The level meter works; text needs the model.",
-                self.model.display()
-            )));
+            (self.emit)(Heard::Problem(Problem::NoModel));
             return None;
         }
         let (tx, rx) = mpsc::channel::<Phrase>();
@@ -344,7 +371,7 @@ impl Job {
             let mut recogniser = match recogniser::load(&model, &language) {
                 Ok(r) => r,
                 Err(message) => {
-                    emit(Heard::Problem(message));
+                    emit(Heard::Problem(if cfg!(feature = "whisper") { Problem::Model(message) } else { Problem::NoRecogniser }));
                     // Keep draining so the sender never blocks, then end when it closes.
                     while rx.recv().is_ok() {}
                     return;
@@ -364,7 +391,7 @@ impl Job {
         match spawned {
             Ok(handle) => Some((tx, handle)),
             Err(e) => {
-                (self.emit)(Heard::Problem(format!("Could not start the recogniser thread: {e}")));
+                (self.emit)(Heard::Problem(Problem::Model(e.to_string())));
                 None
             }
         }

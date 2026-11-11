@@ -35,6 +35,26 @@ fn show(label: &str, result: Result<Probe, artosia_listen::ListenError>) {
     }
 }
 
+/// One line to compare with the tempo the music states: when the first reading came, the middle
+/// reading, and how many readings stand within 2 BPM of it.
+fn sum_up(reads: &[(f32, f32, f32)], all: bool) {
+    let mut sorted: Vec<f32> = reads.iter().map(|read| read.1).collect();
+    sorted.sort_by(f32::total_cmp);
+    match sorted.get(sorted.len() / 2) {
+        Some(middle) => {
+            let near = sorted.iter().filter(|bpm| (*bpm - middle).abs() <= 2.0).count();
+            let first = reads.first().map(|read| read.0).unwrap_or(0.0);
+            println!("tempo: first reading at {first:.1} s, middle {middle:.1} BPM, {near} of {} readings within 2 BPM of it, from {:.1} to {:.1}", sorted.len(), sorted[0], sorted[sorted.len() - 1]);
+        }
+        None => println!("tempo: no reading"),
+    }
+    if all {
+        for (at, bpm, confidence) in reads {
+            println!("  {at:5.1} s  {bpm:6.1} BPM  confidence {confidence:.2}");
+        }
+    }
+}
+
 fn db(v: f32) -> f32 {
     if v <= 0.0 { f32::NEG_INFINITY } else { 20.0 * v.log10() }
 }
@@ -171,6 +191,92 @@ fn main() {
                 println!("  {at:5.1} s  {b:6.1} BPM  confidence {c:.2}");
             }
             println!("first reading within 2 BPM of {bpm}: {first_stable:?}");
+        }
+        // Listens to whatever the computer is playing (music started by hand in a browser,
+        // say) and prints what the tempo tracker reads, with no sound of its own. With
+        // `keep <file>` the tracker's own 5 ms steps are written (rises per band, never sound),
+        // so the same music can be read again by `read` after the tracker changes.
+        Some("hear") => {
+            let seconds: u64 = args.get(1).and_then(|s| s.parse().ok()).unwrap_or(20);
+            let keep = (args.get(2).map(String::as_str) == Some("keep")).then(|| args.get(3).cloned()).flatten();
+            let tracker: Arc<Mutex<Option<TempoTracker>>> = Arc::new(Mutex::new(None));
+            let mut fed = 0usize;
+            let mut reads: Vec<(f32, f32, f32)> = Vec::new();
+            let mut heard_rate = 0u32;
+            let result = probe(Some(SYSTEM_AUDIO), Duration::from_secs(seconds), |block, rate| {
+                let mut slot = tracker.lock().unwrap();
+                let tracker = slot.get_or_insert_with(|| {
+                    let mut tracker = TempoTracker::new(rate);
+                    tracker.keep_frames();
+                    tracker
+                });
+                heard_rate = rate;
+                fed += block.len();
+                let now = fed as f32 / rate as f32;
+                tracker.push(block, |t| {
+                    if let Some(t) = t {
+                        reads.push((now, t.bpm, t.confidence));
+                    }
+                });
+            });
+            show("system audio, as it plays", result);
+            sum_up(&reads, args.get(2).map(String::as_str) == Some("all"));
+            if let (Some(file), Some(tracker)) = (keep, tracker.lock().unwrap().as_mut()) {
+                let mut bytes = heard_rate.to_le_bytes().to_vec();
+                for frame in tracker.take_frames() {
+                    bytes.extend(frame.flux.to_le_bytes());
+                    frame.rises.iter().for_each(|rise| bytes.extend(rise.to_le_bytes()));
+                    bytes.extend(frame.energy.to_le_bytes());
+                }
+                match std::fs::write(&file, bytes) {
+                    Ok(()) => println!("kept the steps in {file}"),
+                    Err(error) => println!("could not write {file}: {error}"),
+                }
+            }
+        }
+        // Reads kept steps again: one line per file, with the file's name.
+        Some("read") => {
+            for file in &args[1..] {
+                let Ok(bytes) = std::fs::read(file) else {
+                    println!("{file}: cannot be read");
+                    continue;
+                };
+                let number = |at: usize| f32::from_le_bytes([bytes[at], bytes[at + 1], bytes[at + 2], bytes[at + 3]]);
+                let rate = u32::from_le_bytes([bytes[0], bytes[1], bytes[2], bytes[3]]);
+                let mut tracker = TempoTracker::new(rate);
+                let explain = std::env::var_os("TEMPO_EXPLAIN").is_some();
+                if explain {
+                    tracker.keep_frames();
+                }
+                let mut frame = artosia_listen::TempoFrame { flux: 0.0, rises: Default::default(), energy: 0.0 };
+                let width = 4 * (frame.rises.len() + 2);
+                let mut reads: Vec<(f32, f32, f32)> = Vec::new();
+                for (at, start) in (4..bytes.len().saturating_sub(width - 1)).step_by(width).enumerate() {
+                    frame.flux = number(start);
+                    for (band, rise) in frame.rises.iter_mut().enumerate() {
+                        *rise = number(start + 4 + 4 * band);
+                    }
+                    frame.energy = number(start + width - 4);
+                    let now = at as f32 * 0.005;
+                    tracker.push_frame(frame, |t| {
+                        if let Some(t) = t {
+                            reads.push((now, t.bpm, t.confidence));
+                        }
+                    });
+                }
+                let name = std::path::Path::new(file).file_name().map(|name| name.to_string_lossy().to_string()).unwrap_or_default();
+                print!("{name}: ");
+                sum_up(&reads, false);
+                if explain {
+                    println!("    {}", tracker.explain());
+                    // A file named "<stated tempo>-<anything>" is also explained at that tempo, half and double.
+                    if let Some(stated) = name.split('-').next().and_then(|first| first.parse::<f32>().ok()) {
+                        for bpm in [stated / 2.0, stated, stated * 2.0] {
+                            println!("    {}", tracker.explain_at(bpm));
+                        }
+                    }
+                }
+            }
         }
         Some(other) => println!("unknown command {other}"),
     }

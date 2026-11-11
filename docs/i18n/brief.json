@@ -10637,6 +10637,91 @@
   "notes": "Two or three words."
  },
  {
+  "key": "LISTEN_NOT_CONNECTED",
+  "kind": "const",
+  "screen": "The Listen dialog: a switch that turns listening on, a list of the sound sources to pick from (the computer's own microphone, every other microphone by name, and the sound the computer itself plays), a bar that shows how loud the sound is, the tempo as a number. Under these, in the warning colour, one short line appears only when something is wrong. This is that line. ",
+  "moment": "The person switched listening on, but the microphone that was picked earlier is not plugged into the computer today.",
+  "role": "warning line",
+  "does": "Says the picked microphone is not plugged in, and tells the person to pick a different one from the list above.",
+  "budget": 56,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "listener"
+  ],
+  "notes": "Two short sentences: what is wrong, then what to do. No technical word, no device name. Full stops."
+ },
+ {
+  "key": "LISTEN_WOULD_NOT_OPEN",
+  "kind": "const",
+  "screen": "The Listen dialog: a switch that turns listening on, a list of the sound sources to pick from (the computer's own microphone, every other microphone by name, and the sound the computer itself plays), a bar that shows how loud the sound is, the tempo as a number. Under these, in the warning colour, one short line appears only when something is wrong. This is that line. ",
+  "moment": "The person switched listening on and the picked microphone is plugged in, but the computer could not start taking sound from it. The cause is not known.",
+  "role": "warning line",
+  "does": "Says the picked microphone could not be started, and tells the person to pick a different one from the list above.",
+  "budget": 56,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "listener"
+  ],
+  "notes": "Two short sentences: what is wrong, then what to do. It does not guess a cause. Full stops."
+ },
+ {
+  "key": "LISTEN_INPUT_STOPPED",
+  "kind": "const",
+  "screen": "The Listen dialog: a switch that turns listening on, a list of the sound sources to pick from (the computer's own microphone, every other microphone by name, and the sound the computer itself plays), a bar that shows how loud the sound is, the tempo as a number. Under these, in the warning colour, one short line appears only when something is wrong. This is that line. ",
+  "moment": "Listening was working, then in the middle of a service the sound from the microphone stopped arriving, most often because its cable came loose.",
+  "role": "warning line",
+  "does": "Says the microphone no longer sends sound, and tells the person to look at its cable.",
+  "budget": 48,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "listener"
+  ],
+  "notes": "Two short sentences: what happened, then what to check. Calm, no alarm. Full stops."
+ },
+ {
+  "key": "LISTEN_BEAT_ONLY",
+  "kind": "const",
+  "screen": "The Listen dialog: a switch that turns listening on, a list of the sound sources to pick from (the computer's own microphone, every other microphone by name, and the sound the computer itself plays), a bar that shows how loud the sound is, the tempo as a number. Under these, in the warning colour, one short line appears only when something is wrong. This is that line. ",
+  "moment": "The person switched listening on in a copy of Artosia that was made without the part that understands spoken or sung words. The loudness bar and the tempo number work; no song or verse will ever be suggested from what is heard.",
+  "role": "warning line",
+  "does": "Says this copy of the program can follow the beat of the music but cannot understand words.",
+  "budget": 48,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "listener"
+  ],
+  "notes": "One sentence. It states a fact about this copy of the program, not a fault of the person. Full stop."
+ },
+ {
+  "key": "LISTEN_MODEL_DAMAGED",
+  "kind": "const",
+  "screen": "The Listen dialog: a switch that turns listening on, a list of the sound sources to pick from (the computer's own microphone, every other microphone by name, and the sound the computer itself plays), a bar that shows how loud the sound is, the tempo as a number. Under these, in the warning colour, one short line appears only when something is wrong. This is that line. ",
+  "moment": "The person switched listening on. The file that lets Artosia understand words is on the computer but is broken, so it could not be opened. Just above this line a row with a download button offers to fetch the file again.",
+  "role": "warning line",
+  "does": "Says the file that understands speech is broken, and tells the person to fetch it again with the button above.",
+  "budget": 52,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "listener"
+  ],
+  "notes": "Two short sentences: what is wrong, then what to do. Use the same word for this file as the row above uses. Full stops."
+ },
+ {
   "key": "LISTEN_MODEL_MISSING",
   "kind": "const",
   "screen": "The Listen dialog (opened from the top bar's microphone button). A row with a download icon at the left, these words in the middle and a Download button at the right.",

@@ -326,6 +326,11 @@ text!(LISTEN_INDONESIAN, "Indonesian", "Indonesia");
 text!(LISTEN_ENGLISH, "English", "Inggris");
 text!(LISTEN_LEVEL, "Sound coming in", "Tingkat suara");
 text!(LISTEN_HEARD, "Heard", "Yang terdengar");
+text!(LISTEN_NOT_CONNECTED, "That microphone is not connected. Choose another.", "That microphone is not connected. Choose another.");
+text!(LISTEN_WOULD_NOT_OPEN, "That microphone would not open. Choose another.", "That microphone would not open. Choose another.");
+text!(LISTEN_INPUT_STOPPED, "The microphone stopped. Check its cable.", "The microphone stopped. Check its cable.");
+text!(LISTEN_BEAT_ONLY, "This version hears the beat, not words.", "This version hears the beat, not words.");
+text!(LISTEN_MODEL_DAMAGED, "The speech model is damaged. Download it again.", "The speech model is damaged. Download it again.");
 text!(LISTEN_MODEL_MISSING, "To hear words, Artosia needs its speech model, 57 MB", "To hear words, Artosia needs its speech model, 57 MB");
 pub fn listen_model_failed(why: &str) -> String {
     if let Some(text) = say("listen_model_failed", None, None, &[("why", text_arg(why))]) {

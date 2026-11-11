@@ -52,6 +52,29 @@ pub fn lyrics(error: &artosia_lyrics::LyricsError) -> String {
     }
 }
 
+/// A source that would not open, as a whole sentence for the Listen dialog.
+pub fn listen_error(error: &artosia_listen::ListenError) -> String {
+    use artosia_listen::ListenError;
+    match error {
+        ListenError::NoDevice(_) => t::LISTEN_NOT_CONNECTED().to_string(),
+        ListenError::Stream(_) | ListenError::Thread(_) => t::LISTEN_WOULD_NOT_OPEN().to_string(),
+    }
+}
+
+/// What the listener reported while it ran, as a whole sentence, or nothing when the dialog
+/// already says it (a missing model has its own row with the button that fetches it) or when it
+/// is not worth a volunteer's eye (one phrase that could not be read).
+pub fn listen_problem(problem: &artosia_listen::Problem, speech_built: bool) -> Option<String> {
+    use artosia_listen::Problem;
+    match problem {
+        Problem::NoModel if speech_built => None,
+        Problem::NoModel | Problem::NoRecogniser => Some(t::LISTEN_BEAT_ONLY().to_string()),
+        Problem::Model(_) => Some(t::LISTEN_MODEL_DAMAGED().to_string()),
+        Problem::Input(_) => Some(t::LISTEN_INPUT_STOPPED().to_string()),
+        Problem::Reading(_) => None,
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -63,5 +86,19 @@ mod tests {
         assert_eq!(net(ureq::Error::StatusCode(404)), "the server answered 404");
         assert_eq!(backdrop(&crate::backdrops::Failure::Disk("os error 5".into())), t::WHY_DISK());
         assert!(!lyrics(&artosia_lyrics::LyricsError::Network("dns error".into())).contains("dns"));
+    }
+
+    #[test]
+    fn a_listening_problem_never_shows_a_path_or_a_device_id() {
+        use artosia_listen::{ListenError, Problem};
+        t::set_indonesian(false);
+        assert_eq!(listen_error(&ListenError::NoDevice("device wasapi:{0.0.1} is not connected".into())), t::LISTEN_NOT_CONNECTED());
+        assert_eq!(listen_error(&ListenError::Stream("0x88890008".into())), t::LISTEN_WOULD_NOT_OPEN());
+        assert_eq!(listen_problem(&Problem::Input("device lost".into()), true).as_deref(), Some(t::LISTEN_INPUT_STOPPED()));
+        // A missing model has its own row with the button that fetches it, so it adds no line.
+        assert_eq!(listen_problem(&Problem::NoModel, true), None);
+        assert_eq!(listen_problem(&Problem::NoModel, false).as_deref(), Some(t::LISTEN_BEAT_ONLY()));
+        assert_eq!(listen_problem(&Problem::Model(r"C:\Users\x\models\file.bin".into()), true).as_deref(), Some(t::LISTEN_MODEL_DAMAGED()));
+        assert_eq!(listen_problem(&Problem::Reading("decoder".into()), true), None);
     }
 }

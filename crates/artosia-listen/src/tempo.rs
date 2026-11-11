@@ -178,6 +178,21 @@ pub struct TempoTracker {
     previous: Option<Raw>,
     grid: Option<Grid>,
     misses: u32,
+    kept: Option<Vec<Frame>>,
+    last_ac: Vec<f32>,
+    last_sum_ac: Vec<f32>,
+    last_band_ac: Vec<f32>,
+}
+
+/// One 5 ms step as the estimator sees it: the summed rise, each band's rise, the energy. It is
+/// not sound and cannot be played, so real music can be measured and read again later without
+/// keeping a recording of it.
+#[doc(hidden)]
+#[derive(Clone, Copy)]
+pub struct Frame {
+    pub flux: f32,
+    pub rises: [f32; BANDS],
+    pub energy: f32,
 }
 
 impl TempoTracker {
@@ -232,6 +247,61 @@ impl TempoTracker {
             previous: None,
             grid: None,
             misses: 0,
+            kept: None,
+            last_ac: Vec::new(),
+            last_sum_ac: Vec::new(),
+            last_band_ac: Vec::new(),
+        }
+    }
+
+    /// What the last estimate held for one tempo, for tuning: the blended score, then the
+    /// autocorrelation of the summed rises and of the bands at one, two and four periods.
+    #[doc(hidden)]
+    pub fn explain_at(&self, bpm: f32) -> String {
+        let l = (60.0 / (bpm * self.hop_seconds)).round() as usize;
+        let near = |v: &Vec<f32>, lag: usize| (lag.saturating_sub(2)..=lag + 2).filter_map(|i| v.get(i)).copied().fold(0.0f32, f32::max);
+        let score = (l.saturating_sub(2)..=l + 2).filter_map(|i| self.score_avg.get(i)).copied().fold(0.0f32, f32::max);
+        format!(
+            "{bpm:.0}: score {score:.2} sum[{:.2} {:.2} {:.2}] band[{:.2} {:.2} {:.2}]",
+            near(&self.last_sum_ac, l),
+            near(&self.last_sum_ac, 2 * l),
+            near(&self.last_sum_ac, 4 * l),
+            near(&self.last_band_ac, l),
+            near(&self.last_band_ac, 2 * l),
+            near(&self.last_band_ac, 4 * l)
+        )
+    }
+
+    /// The strongest periods of the last estimate, for tuning: tempo, blended score, and the
+    /// autocorrelation at half the period, the period, twice and four times it. Filled only
+    /// after `keep_frames`.
+    #[doc(hidden)]
+    pub fn explain(&self) -> String {
+        let (scores, ac) = (&self.score_avg, &self.last_ac);
+        let at = |lag: usize| ac.get(lag).copied().unwrap_or(0.0);
+        let mut peaks: Vec<(f32, usize)> = (2..scores.len().saturating_sub(1)).filter(|&l| scores[l] > 0.0 && scores[l] >= scores[l - 1] && scores[l] >= scores[l + 1]).map(|l| (scores[l], l)).collect();
+        peaks.sort_by(|a, b| b.0.total_cmp(&a.0));
+        peaks.iter().take(5).map(|&(score, l)| format!("{:.0}:{score:.2}[{:.2} {:.2} {:.2} {:.2}]", 60.0 / (l as f32 * self.hop_seconds), at(l / 2), at(l), at(2 * l), at(4 * l))).collect::<Vec<_>>().join("  ")
+    }
+
+    /// Starts keeping every step for `take_frames`.
+    #[doc(hidden)]
+    pub fn keep_frames(&mut self) {
+        self.kept = Some(Vec::new());
+    }
+
+    /// The steps kept since the last call.
+    #[doc(hidden)]
+    pub fn take_frames(&mut self) -> Vec<Frame> {
+        self.kept.as_mut().map(std::mem::take).unwrap_or_default()
+    }
+
+    /// Feeds one step kept earlier in place of sound.
+    #[doc(hidden)]
+    pub fn push_frame(&mut self, frame: Frame, mut report: impl FnMut(Option<Tempo>)) {
+        self.step(frame);
+        if self.frames.is_multiple_of(self.report_every) {
+            self.estimate_and_report(&mut report);
         }
     }
 
@@ -324,12 +394,21 @@ impl TempoTracker {
         while self.smooth.len() > DIFF_FRAMES {
             self.smooth.pop_front();
         }
+        let energy = self.frame_energy / self.hop.max(1) as f32;
+        self.frame_energy = 0.0;
+        self.step(Frame { flux, rises, energy });
+    }
+
+    /// Takes one step into the window the estimate is made over.
+    fn step(&mut self, frame: Frame) {
+        if let Some(kept) = self.kept.as_mut() {
+            kept.push(frame);
+        }
         self.frames += 1;
         let capacity = (WINDOW_SECONDS / self.hop_seconds) as usize;
-        self.env.push_back(flux);
-        self.band_env.push_back(rises);
-        self.energy.push_back(self.frame_energy / self.hop.max(1) as f32);
-        self.frame_energy = 0.0;
+        self.env.push_back(frame.flux);
+        self.band_env.push_back(frame.rises);
+        self.energy.push_back(frame.energy);
         while self.env.len() > capacity {
             self.env.pop_front();
             self.band_env.pop_front();
@@ -447,12 +526,23 @@ impl TempoTracker {
         }
         // A pulse that lives in a few bands is drowned in the sum by hiss and ripple in the others,
         // so each band's own periodicity counts too, weighted by how periodic that band is.
+        let explaining = self.kept.is_some();
+        if explaining {
+            self.last_sum_ac.clone_from(&ac);
+            self.last_band_ac.clear();
+        }
         if let Some(by_band) = self.band_autocorrelation(n, lo, hi, top) {
+            if explaining {
+                self.last_band_ac.clone_from(&by_band);
+            }
             for lag in 0..=top {
                 if needed[lag] {
                     ac[lag] = ac[lag].max(by_band[lag]);
                 }
             }
+        }
+        if explaining {
+            self.last_ac.clone_from(&ac);
         }
         let weights = MULTIPLE_WEIGHTS;
         let score = |l: usize| -> f32 { (1..=MULTIPLES).filter(|a| a * l <= top).map(|a| weights[a - 1] * ac[a * l]).sum::<f32>().max(0.0) };

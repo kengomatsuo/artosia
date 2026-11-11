@@ -1095,7 +1095,7 @@ impl App {
         });
         match started {
             Ok(listener) => self.listener = Some(listener),
-            Err(error) => self.listen_problem = Some(error.to_string()),
+            Err(error) => self.listen_problem = Some(crate::why::listen_error(&error)),
         }
     }
 
@@ -1530,7 +1530,15 @@ impl App {
                     }
                 }
                 Arrived::Heard(artosia_listen::Heard::Final(text)) => self.heard_final(text),
-                Arrived::Heard(artosia_listen::Heard::Problem(problem)) => self.listen_problem = Some(problem),
+                Arrived::Heard(artosia_listen::Heard::Problem(problem)) => {
+                    // A model that would not load is offered again by the row that fetches it.
+                    if matches!(problem, artosia_listen::Problem::Model(_)) {
+                        self.model = crate::speech_model::Model::Missing;
+                    }
+                    if let Some(words) = crate::why::listen_problem(&problem, App::speech_built()) {
+                        self.listen_problem = Some(words);
+                    }
+                }
                 Arrived::Heard(_) => {}
                 Arrived::Model(result) => self.model_arrived(result),
                 Arrived::Update(Ok(Some(version))) => self.say(t::update_ready(&version), None),

@@ -3226,6 +3226,31 @@
   "back": "Sound from this computer",
   "why": "A phrase for listening to the computer's own sound instead of a microphone"
  },
+ "LISTEN_NOT_CONNECTED": {
+  "text": "Mikrofon yang dipilih belum terpasang. Pilih yang lain.",
+  "back": "The picked microphone is not plugged in yet. Pick another one.",
+  "why": "What is wrong, then what to do; no device name"
+ },
+ "LISTEN_WOULD_NOT_OPEN": {
+  "text": "Mikrofon ini tidak bisa dipakai. Pilih yang lain.",
+  "back": "This microphone cannot be used. Pick another one.",
+  "why": "No guessed cause; 'dipakai' avoids 'nyala', which is the projector's word"
+ },
+ "LISTEN_INPUT_STOPPED": {
+  "text": "Mikrofon berhenti mengirim suara. Cek kabelnya.",
+  "back": "The microphone stopped sending sound. Check its cable.",
+  "why": "Calm, names the cable as the thing to look at"
+ },
+ "LISTEN_BEAT_ONLY": {
+  "text": "Versi ini tidak memahami kata, hanya irama.",
+  "back": "This version does not understand words, only the rhythm.",
+  "why": "Recomposed with 'tidak' like the rest of the table; a fact about this copy, not a fault of the person"
+ },
+ "LISTEN_MODEL_DAMAGED": {
+  "text": "Berkas suara rusak. Unduh lagi pakai tombol di atas.",
+  "back": "The voice file is broken. Download it again with the button above.",
+  "why": "'Berkas suara' is the name the download row uses"
+ },
  "KEYS_PLAN_ROWS[7].1": {
   "text": "Rundown baru, pilih hari dan jamnya",
   "back": "A new rundown, choose its day and hour",

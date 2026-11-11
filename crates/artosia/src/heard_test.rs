@@ -52,3 +52,49 @@ fn a_spoken_practice_title_comes_out_as_that_song() {
     println!("hits: {titles:?}");
     assert_eq!(titles.first().copied(), Some("Hill of Morning Stars"), "heard {:?}", app.heard);
 }
+
+/// Listens to whatever this computer is playing (a song started by hand in a browser, say) and
+/// prints, for every phrase read, how many words it had and the titles it named: never the words.
+/// The library is the one `ARTOSIA_DATA` names. Nothing is asserted: it is a measurement.
+///
+/// ARTOSIA_DATA=<library folder> ARTOSIA_HEAR_SECONDS=90 ARTOSIA_HEAR_LANGUAGE=id \
+///   cargo test --release -p artosia --features speech names_its_song -- --ignored --nocapture
+#[test]
+#[ignore = "needs the model, a library and music playing on this computer"]
+fn music_playing_on_this_computer_names_its_song() {
+    let seconds: u64 = std::env::var("ARTOSIA_HEAR_SECONDS").ok().and_then(|s| s.parse().ok()).unwrap_or(60);
+    let language = std::env::var("ARTOSIA_HEAR_LANGUAGE").unwrap_or_else(|_| "id".to_string());
+    let mut app = App::load();
+    println!("library: {} songs", app.songs.len());
+    let (tx, rx) = std::sync::mpsc::channel();
+    let listener = artosia_listen::Listener::start(Some(artosia_listen::SYSTEM_AUDIO), &model(), &language, move |heard| {
+        let _ = tx.send(heard);
+    })
+    .expect("the computer's own sound opens");
+    let began = std::time::Instant::now();
+    let start = app.now;
+    let mut named: Vec<(String, u32)> = Vec::new();
+    while began.elapsed() < std::time::Duration::from_secs(seconds) {
+        let Ok(heard) = rx.recv_timeout(std::time::Duration::from_millis(200)) else { continue };
+        match heard {
+            Heard::Final(text) => {
+                app.now = start + began.elapsed().as_secs_f64();
+                let words = text.split_whitespace().count();
+                app.heard_final(text);
+                let offers: Vec<String> = crate::suggest::suggestions(&app).into_iter().filter(|offer| offer.why == crate::suggest::Why::Heard).map(|offer| offer.title).collect();
+                println!("{:5.1} s  {words:2} words  named {offers:?}", began.elapsed().as_secs_f32());
+                for title in offers {
+                    match named.iter_mut().find(|(known, _)| *known == title) {
+                        Some((_, times)) => *times += 1,
+                        None => named.push((title, 1)),
+                    }
+                }
+            }
+            Heard::Problem(problem) => println!("problem: {problem}"),
+            _ => {}
+        }
+    }
+    drop(listener);
+    named.sort_by(|a, b| b.1.cmp(&a.1));
+    println!("named in all: {named:?}");
+}
