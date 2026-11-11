@@ -116,6 +116,9 @@ pub fn dump() -> String {
     line(out, "listen_model_failed", &listen_model_failed("there is no connection"));
     line(out, "LISTEN_TEMPO", LISTEN_TEMPO());
     line(out, "LISTEN_BPM", LISTEN_BPM());
+    line(out, "LISTEN_TEMPO_HALF", LISTEN_TEMPO_HALF());
+    line(out, "LISTEN_TEMPO_AS_HEARD", LISTEN_TEMPO_AS_HEARD());
+    line(out, "LISTEN_TEMPO_DOUBLE", LISTEN_TEMPO_DOUBLE());
     line(out, "LISTEN_BEAT_BLINK", LISTEN_BEAT_BLINK());
     line(out, "LISTEN_BEAT_BLINK_HINT", LISTEN_BEAT_BLINK_HINT());
     line(out, "BACKDROPS_TITLE", BACKDROPS_TITLE());

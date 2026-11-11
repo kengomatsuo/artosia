@@ -402,6 +402,21 @@
   "back": "BPM",
   "why": "Musicians use the international abbreviation"
  },
+ "LISTEN_TEMPO_HALF": {
+  "text": "Setengah",
+  "back": "Half",
+  "why": "Plain amount word, as a musician says it"
+ },
+ "LISTEN_TEMPO_AS_HEARD": {
+  "text": "Apa adanya",
+  "back": "As it is",
+  "why": "Names the plain reading, not a technical default"
+ },
+ "LISTEN_TEMPO_DOUBLE": {
+  "text": "Dua kali",
+  "back": "Twice",
+  "why": "Pairs with Setengah as a plain amount"
+ },
  "LISTEN_BEAT_BLINK": {
   "text": "Titik merah berkedip ikut irama",
   "back": "The red dot blinks along with the rhythm",

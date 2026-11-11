@@ -305,6 +305,10 @@ Tried and put back, each scored on the kept tracks and on the made-up table:
 | A prior centred lower (118, 110, 100 BPM) with those weights | more fast tracks halved | not run |
 | A prior centred lower (100, 92, 91 BPM) with the cap | 120 BPM read as 60 | not run |
 
+Since the sound cannot settle it, a person can: Half, As heard and Double sit beside the number
+in the Listen dialog and hold the tempo for the song (`docs/operator.md`, "Listening and
+streaming").
+
 Still wrong: a ballad at 60 to 66 BPM with strong eighth notes can read double, because its
 double is under the cap; music in six or twelve eighth notes to the bar reads at the eighth
 note, slowly, or not at all; a pad with no attacks reads nothing, as designed.

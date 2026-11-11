@@ -13,13 +13,15 @@ use artosia_slides::look::{Background, Look};
 use rune::{TextEdit, Tx};
 
 use crate::link::OutputOptions;
-use crate::state::{App, Arrived, Editor, HeardHit, Notices, OpenDeck, Sheet, Suggestion, Undo, entry_matches, section_starts, unix_now};
+use crate::state::{App, Arrived, Editor, HeardHit, Notices, OpenDeck, Sheet, Suggestion, TempoCount, Undo, entry_matches, section_starts, unix_now};
 use crate::strings as t;
 
 /// Seconds between frames while something pulses on the beat: gentle enough for a slow PC.
 const BEAT_FRAME: f64 = 0.05;
 /// A tempo report older than this is forgotten: the listener has stopped or the pulse is gone.
 const TEMPO_STALE: f64 = 2.5;
+/// A reading within this share of the one a person corrected is still the same song.
+const TEMPO_SAME: f32 = 0.06;
 
 /// A QR code as a picture, eight pixels to a module, black on white.
 fn qr_picture(text: &str) -> Option<rune::Pixels> {
@@ -1056,6 +1058,7 @@ impl App {
         self.hearing.clear();
         self.listen_level.store(0, std::sync::atomic::Ordering::Relaxed);
         self.tempo = None;
+        (self.tempo_count, self.tempo_wanted, self.tempo_half) = (TempoCount::AsHeard, None, None);
         if let Ok(mut slot) = self.listen_tempo_slot.lock() {
             *slot = None;
         }
@@ -1105,16 +1108,62 @@ impl App {
         let Some((tempo, arrived)) = fresh else {
             return false;
         };
-        let before = self.tempo.map(|(tempo, _)| tempo.bpm.round() as i32);
+        let before = self.tempo_shown().map(|bpm| bpm.round() as i32);
         self.tempo = tempo.map(|tempo| (tempo, clock - arrived.elapsed().as_secs_f64()));
-        before != self.tempo.map(|(tempo, _)| tempo.bpm.round() as i32)
+        if let Some((tempo, at)) = self.tempo {
+            // A person said what the tempo is. The tracker changes its own count within a song
+            // (a ballad read 60, then 120, then 60), so the count that reaches that tempo is
+            // taken anew for every reading; when none does, it is another song.
+            if let Some(wanted) = self.tempo_wanted {
+                let reach = |count: TempoCount| (tempo.bpm * count.times() - wanted).abs();
+                let nearest = [TempoCount::Half, TempoCount::AsHeard, TempoCount::Double].into_iter().min_by(|a, b| reach(*a).total_cmp(&reach(*b))).unwrap_or(TempoCount::AsHeard);
+                if reach(nearest) <= TEMPO_SAME * wanted {
+                    self.tempo_count = nearest;
+                } else {
+                    (self.tempo_count, self.tempo_wanted) = (TempoCount::AsHeard, None);
+                }
+            }
+            // Which of every two beats the halved count falls on.
+            let last_beat = at - f64::from(tempo.since_beat);
+            let odd = self.tempo_half.is_some_and(|(before, odd)| odd ^ ((((last_beat - before) / f64::from(tempo.period)).round() as i64).rem_euclid(2) == 1));
+            self.tempo_half = Some((last_beat, odd));
+        }
+        before != self.tempo_shown().map(|bpm| bpm.round() as i32)
     }
 
-    /// The beat as it is `now` (the app clock), or none when there is no recent steady pulse.
+    /// Counts the tempo at half or double what the sound gives, and keeps the tempo that makes
+    /// until the song changes. As heard lets the reading stand again.
+    pub fn set_tempo_count(&mut self, count: TempoCount) {
+        self.tempo_count = count;
+        self.tempo_wanted = match (count, self.tempo) {
+            (TempoCount::AsHeard, _) | (_, None) => None,
+            (_, Some((tempo, _))) => Some(tempo.bpm * count.times()),
+        };
+    }
+
+    /// The tempo as it is counted: the tracker's reading, halved or doubled by a press.
+    pub fn tempo_shown(&self) -> Option<f32> {
+        self.tempo.map(|(tempo, _)| tempo.bpm * self.tempo_count.times())
+    }
+
+    /// The beat as it is `now` (the app clock), counted as a person said, or none when there is
+    /// no recent steady pulse.
     pub fn beat_phase(&self, now: f64) -> Option<f32> {
         let (tempo, at) = self.tempo?;
         let after = now - at;
-        (after < TEMPO_STALE).then(|| tempo.phase_after(after as f32))
+        if after >= TEMPO_STALE {
+            return None;
+        }
+        let phase = tempo.phase_after(after as f32);
+        Some(match self.tempo_count {
+            TempoCount::AsHeard => phase,
+            TempoCount::Double => (phase * 2.0).rem_euclid(1.0),
+            TempoCount::Half => {
+                let beats = ((tempo.since_beat + after as f32) / tempo.period).floor() as i64;
+                let odd = self.tempo_half.is_some_and(|(_, odd)| odd) ^ (beats.rem_euclid(2) == 1);
+                (phase + f32::from(u8::from(odd))) / 2.0
+            }
+        })
     }
 
     /// Something is pulsing on the beat and the window should redraw often.
@@ -1936,5 +1985,84 @@ mod mark_tests {
         app.tidy_editor();
         assert_eq!(lyrics(&app), "Chords\nAlpha line one\nAlpha line two\n\nBeta line one\nBeta line two\n");
         assert!(app.marks_offer().is_some());
+    }
+}
+
+#[cfg(test)]
+mod tempo_tests {
+    use super::*;
+
+    fn report(app: &mut App, clock: f64, bpm: f32, since_beat: f32) {
+        let tempo = artosia_listen::Tempo { bpm, confidence: 0.7, period: 60.0 / bpm, since_beat };
+        if let Ok(mut slot) = app.listen_tempo_slot.lock() {
+            *slot = Some((Some(tempo), std::time::Instant::now()));
+        }
+        app.take_tempo(clock);
+    }
+
+    fn near(a: f32, b: f32) -> bool {
+        (a - b).abs() < 0.02
+    }
+
+    #[test]
+    fn a_press_halves_the_number_and_the_pulse() {
+        let mut app = App::practice();
+        report(&mut app, 100.0, 136.0, 0.0);
+        assert_eq!(app.tempo_shown().map(f32::round), Some(136.0));
+        app.set_tempo_count(TempoCount::Half);
+        assert_eq!(app.tempo_shown().map(f32::round), Some(68.0));
+        let beat = f64::from(60.0f32 / 136.0);
+        let phase = |app: &App, beats: f64| app.beat_phase(100.0 + beats * beat).unwrap_or(-1.0);
+        assert!(near(phase(&app, 0.01), 0.005), "{}", phase(&app, 0.01));
+        assert!(near(phase(&app, 1.0), 0.5), "the heard beat between two counted ones is half way: {}", phase(&app, 1.0));
+        assert!(near(phase(&app, 1.99), 0.995), "{}", phase(&app, 1.99));
+    }
+
+    #[test]
+    fn the_halved_pulse_does_not_jump_when_the_next_report_comes() {
+        let mut app = App::practice();
+        report(&mut app, 100.0, 136.0, 0.0);
+        app.set_tempo_count(TempoCount::Half);
+        let beat = 60.0f32 / 136.0;
+        let before = app.beat_phase(100.5).unwrap_or(-1.0);
+        // Half a second later the tracker reports again: its last beat is the one after.
+        report(&mut app, 100.5, 136.0, 0.5 - beat);
+        let after = app.beat_phase(100.5).unwrap_or(-1.0);
+        assert!(near(before, after), "{before} then {after}");
+    }
+
+    #[test]
+    fn a_press_doubles_the_number_and_the_pulse() {
+        let mut app = App::practice();
+        report(&mut app, 100.0, 70.0, 0.0);
+        app.set_tempo_count(TempoCount::Double);
+        assert_eq!(app.tempo_shown().map(f32::round), Some(140.0));
+        let beat = f64::from(60.0f32 / 70.0);
+        assert!(near(app.beat_phase(100.0 + beat * 0.25).unwrap_or(-1.0), 0.5));
+        assert!(near(app.beat_phase(100.0 + beat * 0.51).unwrap_or(-1.0), 0.02));
+    }
+
+    #[test]
+    fn the_count_holds_for_the_song_and_ends_with_it() {
+        let mut app = App::practice();
+        report(&mut app, 100.0, 136.0, 0.0);
+        app.set_tempo_count(TempoCount::Half);
+        // The same song a little faster keeps the count.
+        report(&mut app, 100.5, 139.0, 0.1);
+        assert_eq!(app.tempo_count, TempoCount::Half);
+        assert_eq!(app.tempo_shown().map(f32::round), Some(70.0));
+        // The tracker changes its own count, as it did on a real ballad: the number stays.
+        report(&mut app, 101.0, 68.2, 0.1);
+        assert_eq!((app.tempo_count, app.tempo_shown().map(f32::round)), (TempoCount::AsHeard, Some(68.0)));
+        report(&mut app, 101.5, 136.4, 0.1);
+        assert_eq!((app.tempo_count, app.tempo_shown().map(f32::round)), (TempoCount::Half, Some(68.0)));
+        // Another tempo is another song: the number is as heard again.
+        report(&mut app, 130.0, 96.0, 0.1);
+        assert_eq!(app.tempo_count, TempoCount::AsHeard);
+        assert_eq!(app.tempo_shown().map(f32::round), Some(96.0));
+        // Switching the listener off forgets it as well.
+        app.set_tempo_count(TempoCount::Double);
+        app.set_listening(false);
+        assert_eq!(app.tempo_count, TempoCount::AsHeard);
     }
 }

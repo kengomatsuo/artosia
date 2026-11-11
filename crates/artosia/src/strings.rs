@@ -340,6 +340,9 @@ pub fn listen_model_failed(why: &str) -> String {
 }
 text!(LISTEN_TEMPO, "Tempo", "Tempo");
 text!(LISTEN_BPM, "BPM", "BPM");
+text!(LISTEN_TEMPO_HALF, "Half", "Half");
+text!(LISTEN_TEMPO_AS_HEARD, "As heard", "As heard");
+text!(LISTEN_TEMPO_DOUBLE, "Double", "Double");
 text!(LISTEN_BEAT_BLINK, "Live marker follows the beat", "Live marker follows the beat");
 text!(LISTEN_BEAT_BLINK_HINT, "A gentle pulse, just for fun.", "A gentle pulse, just for fun.");
 text!(CMD_UPDATE, "Check for a new version", "Periksa pembaruan");

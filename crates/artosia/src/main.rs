@@ -429,6 +429,13 @@ const SCENES: &[Scene] = &[
         s.listen_level.store(0.55f32.to_bits(), std::sync::atomic::Ordering::Relaxed);
         s.tempo = Some((artosia_listen::Tempo { bpm: 92.0, confidence: 0.7, period: 60.0 / 92.0, since_beat: 0.0 }, 0.0));
     }),
+    ("listen-tempo-half", |s| {
+        s.demo_listening = true;
+        s.sheet = Sheet::Listen;
+        s.listen_level.store(0.55f32.to_bits(), std::sync::atomic::Ordering::Relaxed);
+        s.tempo = Some((artosia_listen::Tempo { bpm: 136.0, confidence: 0.7, period: 60.0 / 136.0, since_beat: 0.0 }, 0.0));
+        s.set_tempo_count(crate::state::TempoCount::Half);
+    }),
     ("listen-quiet", |s| {
         s.demo_listening = true;
         s.sheet = Sheet::Listen;

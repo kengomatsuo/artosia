@@ -1485,6 +1485,57 @@
   "notes": "A short unit abbreviation. If the musicians of this church use the international abbreviation, it may stay as is."
  },
  {
+  "key": "LISTEN_TEMPO_HALF",
+  "kind": "const",
+  "screen": "The Listen dialog, while listening is on. One row shows a dot that lights on every beat, the tempo as a number, and at its right end three choices side by side, one of them filled. The number is read from the sound and can come out at twice or at half what the band counts. The choices say how to count it: the first shows half of the reading, the middle one the reading itself (chosen at first), the third twice the reading. This is the first choice.",
+  "moment": "A musician at the sound desk looks at the number, knows the song, and sees the number is twice or half the tempo the band counts.",
+  "role": "choice in a row of three",
+  "does": "Counts the tempo at half of what was read from the sound.",
+  "budget": 10,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "listener"
+  ],
+  "notes": "One or two short words, as a musician says it. Sentence case, no full stop. It must sit beside the other two choices as one of a kind."
+ },
+ {
+  "key": "LISTEN_TEMPO_AS_HEARD",
+  "kind": "const",
+  "screen": "The Listen dialog, while listening is on. One row shows a dot that lights on every beat, the tempo as a number, and at its right end three choices side by side, one of them filled. The number is read from the sound and can come out at twice or at half what the band counts. The choices say how to count it: the first shows half of the reading, the middle one the reading itself (chosen at first), the third twice the reading. This is the middle choice.",
+  "moment": "A musician at the sound desk looks at the number, knows the song, and sees the number is twice or half the tempo the band counts.",
+  "role": "choice in a row of three",
+  "does": "Leaves the tempo exactly as it was read from the sound, neither halved nor doubled.",
+  "budget": 12,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "listener"
+  ],
+  "notes": "One or two short words. Sentence case, no full stop. It names the plain reading, not a setting called default or normal in a technical sense."
+ },
+ {
+  "key": "LISTEN_TEMPO_DOUBLE",
+  "kind": "const",
+  "screen": "The Listen dialog, while listening is on. One row shows a dot that lights on every beat, the tempo as a number, and at its right end three choices side by side, one of them filled. The number is read from the sound and can come out at twice or at half what the band counts. The choices say how to count it: the first shows half of the reading, the middle one the reading itself (chosen at first), the third twice the reading. This is the third choice.",
+  "moment": "A musician at the sound desk looks at the number, knows the song, and sees the number is twice or half the tempo the band counts.",
+  "role": "choice in a row of three",
+  "does": "Counts the tempo at twice what was read from the sound.",
+  "budget": 10,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "listener"
+  ],
+  "notes": "One or two short words, as a musician says it. Sentence case, no full stop. It must sit beside the other two choices as one of a kind."
+ },
+ {
   "key": "LISTEN_BEAT_BLINK",
   "kind": "const",
   "screen": "Listen dialog, label of the last switch row.",

@@ -44,6 +44,28 @@ impl OpenDeck {
 }
 
 /// A plan row on its way to a new place under the pointer.
+/// How the tempo read from the sound is counted. A slow song's eighth notes look exactly like a
+/// faster song's beats to the tracker (`crates/artosia-listen/README.md`, "Measured on real
+/// music"), so a person can say which it is.
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub enum TempoCount {
+    Half,
+    #[default]
+    AsHeard,
+    Double,
+}
+
+impl TempoCount {
+    /// What the reading is multiplied by.
+    pub fn times(self) -> f32 {
+        match self {
+            TempoCount::Half => 0.5,
+            TempoCount::AsHeard => 1.0,
+            TempoCount::Double => 2.0,
+        }
+    }
+}
+
 /// A tempo report waiting to be taken, with when it arrived (see `App::listen_tempo_slot`).
 pub type TempoSlot = Arc<Mutex<Option<(Option<artosia_listen::Tempo>, std::time::Instant)>>>;
 
@@ -401,6 +423,15 @@ pub struct App {
     pub listen_tempo_slot: TempoSlot,
     /// The beat as of the last report, with the app clock at which it was reported.
     pub tempo: Option<(artosia_listen::Tempo, f64)>,
+    /// How the reading is counted now, and the tempo a person said the song has by pressing
+    /// Half or Double. The tracker flips between a tempo and its double within one song, so the
+    /// count follows the reading to keep that tempo, and ends when no count reaches it: that is
+    /// another song.
+    pub tempo_count: TempoCount,
+    pub tempo_wanted: Option<f32>,
+    /// The app clock of the last beat reported and whether it is an off beat of the halved
+    /// count, carried from report to report so the slower pulse does not jump.
+    pub tempo_half: Option<(f64, bool)>,
     /// A headless scene shows the Listen dialog as it looks while listening.
     pub demo_listening: bool,
     /// The system asks for reduced motion; the view writes it, since only a view can read it.
@@ -583,6 +614,9 @@ impl App {
             listen_level: Arc::new(std::sync::atomic::AtomicU32::new(0)),
             meter_shown: Arc::new(std::sync::atomic::AtomicBool::new(false)),
             listen_tempo_slot: Arc::new(Mutex::new(None)),
+            tempo_count: TempoCount::AsHeard,
+            tempo_wanted: None,
+            tempo_half: None,
             tempo: None,
             demo_listening: false,
             motion_reduced: std::sync::atomic::AtomicBool::new(false),

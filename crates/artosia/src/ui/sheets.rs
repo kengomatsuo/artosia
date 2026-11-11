@@ -709,11 +709,22 @@ fn tempo_row(s: &App, k: &Kit) -> El {
         _ => 1.0,
     };
     let dot = el().key("beat-dot").w(12.0).h(12.0).radius(6.0).fill(if phase.is_some() { theme::accent() } else { k.c.layer_03 }).layer_opacity(strength);
-    let mut line = row().key("tempo").w_full().h(28.0).gap(space::S3).center_y().child(dot);
-    if let (Some((tempo, _)), Some(_)) = (s.tempo, phase) {
+    let mut line = row().key("tempo").w_full().min_h(32.0).gap(space::S3).center_y().child(dot);
+    if let (Some(bpm), Some(_)) = (s.tempo_shown(), phase) {
+        use crate::state::TempoCount;
+        let counts = [TempoCount::Half, TempoCount::AsHeard, TempoCount::Double];
+        // The sound cannot say whether a pulse is the beat or half of it, so a person can: the
+        // number and the pulse follow the choice until the tempo changes.
+        let count = SegmentedControl::new(&[t::LISTEN_TEMPO_HALF(), t::LISTEN_TEMPO_AS_HEARD(), t::LISTEN_TEMPO_DOUBLE()], counts.iter().position(|count| *count == s.tempo_count))
+            .label(t::LISTEN_TEMPO())
+            .fit()
+            .on_pick(move |s: &mut App, picked, _: &mut Tx| s.set_tempo_count(counts[picked.min(2)]))
+            .build(k);
         line = line
-            .child(text((tempo.bpm.round() as i32).to_string()).font(type_::TITLE).color(k.c.text_base))
-            .child(text(t::LISTEN_BPM()).font(type_::SMALL).color(k.c.text_muted));
+            .child(text((bpm.round() as i32).to_string()).font(type_::TITLE.features("'tnum' 1")).color(k.c.text_base))
+            .child(text(t::LISTEN_BPM()).font(type_::SMALL).color(k.c.text_muted))
+            .child(spacer())
+            .child(count);
     }
     col().w_full().gap(space::S1).child(section_label(k, t::LISTEN_TEMPO())).child(line)
 }
