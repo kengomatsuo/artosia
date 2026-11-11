@@ -278,6 +278,9 @@ pub(crate) fn follow(s: &App, tx: &mut Tx) {
 
 type Scene = (&'static str, fn(&mut App));
 
+/// Words written for the scenes that show the section suggestions: no marks, a chorus sung three times.
+const MARKS_DEMO: &str = "Lantern Song\n\nCarry the lantern through the night\nKeep the small flame burning bright\n\nShine, shine on the road ahead\nShine till the morning comes\n\nWalk beside me down the hill\nHold my hand and hold me still\n\nShine, shine on the road ahead\nShine till the morning comes\n\nCold wind over the sleeping sea\nStars come out for you and me\n\nShine, shine on the road ahead\nShine till the morning comes\n";
+
 /// Screens a headless run can render: `--scene <name> --snap out.png`.
 const SCENES: &[Scene] = &[
     ("start", |_| {}),
@@ -328,6 +331,22 @@ const SCENES: &[Scene] = &[
     }),
     ("new-song", |s| {
         s.song_from_clipboard("Lantern Song\n\nVerse 1\nCarry the lantern through the night\nKeep the small flame burning bright\n\nChorus\nShine, shine on the road ahead\nShine till the morning comes\n");
+    }),
+    // A pasted song with no marks: the strip proposes its sections. The second scene has the
+    // caret in a verse, which is offered the other kinds too.
+    ("editor-marks", |s| {
+        s.song_from_clipboard(MARKS_DEMO);
+        if let Some(editor) = s.editor.as_mut() {
+            editor.lyrics.focused = false;
+        }
+    }),
+    ("editor-marks-caret", |s| {
+        s.song_from_clipboard(MARKS_DEMO);
+        if let Some(editor) = s.editor.as_mut() {
+            let at = editor.lyrics.text.find("Walk beside").map_or(0, |at| at + 5);
+            editor.lyrics.set_caret(at);
+            editor.lyrics.focused = true;
+        }
     }),
     ("look", |s| s.sheet = Sheet::Looks),
     ("settings", |s| s.sheet = Sheet::Settings),

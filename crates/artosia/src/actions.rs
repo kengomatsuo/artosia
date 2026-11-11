@@ -5,6 +5,7 @@ use std::sync::Arc;
 use artosia_core::bible::Reference;
 use artosia_core::deck::{Announcement, DeckSource, Fill, Person};
 use artosia_core::plan::PlanEntry;
+use artosia_core::marks;
 use artosia_core::song::{SectionKind, Song, Tag, parse_order, song_from_paste, tidy_lyrics, write_order};
 use artosia_remote::{RemoteCommand, RemoteConfig, RemoteHit, RemotePlanItem, RemoteSection, RemoteServer, RemoteSlide, RemoteState};
 use artosia_slides::frame::ToOutput;
@@ -464,6 +465,57 @@ impl App {
             }
             editor.lyrics.focused = true;
         }
+    }
+
+    /// What the words would get from `marks::propose`, while some stanza has no mark and the
+    /// strip was not dismissed for this song.
+    pub fn marks_offer(&self) -> Option<marks::Proposal> {
+        let editor = self.editor.as_ref().filter(|editor| !editor.marks_hidden)?;
+        let proposal = marks::propose(&editor.lyrics.text);
+        (proposal.pending() > 0).then_some(proposal)
+    }
+
+    pub fn hide_marks(&mut self) {
+        if let Some(editor) = self.editor.as_mut() {
+            editor.marks_hidden = true;
+            editor.lyrics.focused = true;
+        }
+    }
+
+    /// Writes every proposed marker line into the words, as one edit that Ctrl Z undoes and
+    /// with the caret before the same letter.
+    pub fn apply_marks(&mut self) {
+        let Some(proposal) = self.editor.as_ref().map(|editor| marks::propose(&editor.lyrics.text)) else { return };
+        self.write_marks(&proposal.changes());
+    }
+
+    /// Gives the stanza that starts at byte `start` the kind a person picked for it.
+    pub fn mark_stanza(&mut self, start: usize, kind: SectionKind) {
+        let Some(editor) = self.editor.as_ref() else { return };
+        let proposal = marks::propose(&editor.lyrics.text);
+        let Some(at) = proposal.stanzas.iter().position(|stanza| stanza.start == start) else { return };
+        let tag = proposal.tag_as(at, kind);
+        // A stanza already marked is left to the person's own hands.
+        if proposal.stanzas[at].is_unmarked() {
+            self.write_marks(&proposal.change_for(at, tag).into_iter().collect::<Vec<_>>());
+        }
+    }
+
+    fn write_marks(&mut self, changes: &[marks::Change]) {
+        let Some(editor) = self.editor.as_mut() else { return };
+        if changes.is_empty() {
+            return;
+        }
+        let (from, to) = editor.lyrics.range();
+        let written = marks::apply(&editor.lyrics.text, changes);
+        let len = editor.lyrics.text.len();
+        editor.lyrics.undo_group(|lyrics| {
+            lyrics.set_selection(0, len);
+            lyrics.insert(&written);
+        });
+        let (from, to) = (marks::caret_after(changes, from), marks::caret_after(changes, to));
+        editor.lyrics.set_selection(from, to);
+        editor.lyrics.focused = true;
     }
 
     pub fn insert_marker(&mut self, marker: &str) {
@@ -1668,5 +1720,84 @@ mod notice_tests {
         assert!(deck.slides[0].text.contains("Sample Alpha"));
         app.show_notice_now(id);
         assert_eq!(app.live.as_ref().map(|live| live.deck.slides.len()), Some(deck.slides.len()));
+    }
+}
+
+#[cfg(test)]
+mod mark_tests {
+    use super::*;
+
+    const PASTED: &str = "Test Song\n\nAlpha line one\nAlpha line two\n\nBeta line one\nBeta line two\n\nAlpha line one\nAlpha line two\n\nGamma line one\nGamma line two\n";
+    const WORDS: &str = "Alpha line one\nAlpha line two\n\nBeta line one\nBeta line two\n\nAlpha line one\nAlpha line two\n\nGamma line one\nGamma line two\n";
+
+    fn pasted() -> App {
+        let mut app = App::practice();
+        app.song_from_clipboard(PASTED);
+        app
+    }
+
+    fn lyrics(app: &App) -> String {
+        app.editor.as_ref().map(|editor| editor.lyrics.text.clone()).unwrap_or_default()
+    }
+
+    #[test]
+    fn a_pasted_song_with_no_marks_is_offered_marks_and_nothing_is_written() {
+        let app = pasted();
+        assert_eq!(lyrics(&app), WORDS);
+        let offer = app.marks_offer().unwrap_or_else(|| panic!("no offer"));
+        let tags: Vec<String> = offer.stanzas.iter().map(|stanza| stanza.tag.short()).collect();
+        assert_eq!(tags, ["C", "V1", "C", "V2"]);
+    }
+
+    #[test]
+    fn applying_the_marks_is_one_edit_and_undo_restores_the_text() {
+        let mut app = pasted();
+        let caret = WORDS.find("Beta line two").unwrap_or(0) + 3;
+        if let Some(editor) = app.editor.as_mut() {
+            editor.lyrics.set_caret(caret);
+        }
+        app.apply_marks();
+        let written = lyrics(&app);
+        assert_eq!(written, "[chorus]\nAlpha line one\nAlpha line two\n\n[1]\nBeta line one\nBeta line two\n\n[chorus]\nAlpha line one\nAlpha line two\n\n[2]\nGamma line one\nGamma line two\n");
+        assert!(app.marks_offer().is_none(), "a fully marked song proposes nothing");
+        // The caret is before the same letter.
+        let at = app.editor.as_ref().map_or(0, |editor| editor.lyrics.range().0);
+        assert_eq!(&written[at..at + 4], "a li");
+        // One undo gives the pasted words back.
+        if let Some(editor) = app.editor.as_mut() {
+            editor.lyrics.undo();
+        }
+        assert_eq!(lyrics(&app), WORDS);
+        assert!(app.marks_offer().is_some());
+    }
+
+    #[test]
+    fn a_picked_kind_marks_one_stanza() {
+        let mut app = pasted();
+        let start = WORDS.find("Gamma").unwrap_or(0);
+        app.mark_stanza(start, SectionKind::Bridge);
+        assert!(lyrics(&app).ends_with("\n\n[bridge]\nGamma line one\nGamma line two\n"));
+        // The others are still offered.
+        assert_eq!(app.marks_offer().map(|offer| offer.pending()), Some(3));
+    }
+
+    #[test]
+    fn dismissing_the_offer_keeps_it_away_for_this_song() {
+        let mut app = pasted();
+        app.hide_marks();
+        assert!(app.marks_offer().is_none());
+        assert_eq!(lyrics(&app), WORDS);
+    }
+
+    #[test]
+    fn the_web_and_tidy_leave_the_stanzas_for_the_offer() {
+        let mut app = pasted();
+        let fetched = "Chords\nG  D\nAlpha line one  \nAlpha line two\n\n\nBeta line one\nBeta line two\n";
+        if let Some(editor) = app.editor.as_mut() {
+            editor.lyrics.replace_text(fetched);
+        }
+        app.tidy_editor();
+        assert_eq!(lyrics(&app), "Chords\nAlpha line one\nAlpha line two\n\nBeta line one\nBeta line two\n");
+        assert!(app.marks_offer().is_some());
     }
 }

@@ -270,6 +270,15 @@ pub fn dump() -> String {
     line(out, "MARK_BRIDGE", MARK_BRIDGE());
     line(out, "MARK_PRECHORUS", MARK_PRECHORUS());
     line(out, "MARK_ENDING", MARK_ENDING());
+    line(out, "KEY_MARK", KEY_MARK());
+    line(out, "MARKS_APPLY", MARKS_APPLY());
+    line(out, "MARKS_APPLY_HELP", MARKS_APPLY_HELP());
+    line(out, "MARKS_HIDE", MARKS_HIDE());
+    line(out, "MARKS_THIS", MARKS_THIS());
+    line(out, "MARKS_WHY_NAMED", MARKS_WHY_NAMED());
+    line(out, "MARKS_WHY_REPEAT", MARKS_WHY_REPEAT());
+    line(out, "MARKS_WHY_BRIDGE", MARKS_WHY_BRIDGE());
+    line(out, "MARKS_WHY_ORDER", MARKS_WHY_ORDER());
     line(out, "BTN_ADD_SECOND", BTN_ADD_SECOND());
     line(out, "BTN_SAVE", BTN_SAVE());
     line(out, "BTN_CANCEL", BTN_CANCEL());

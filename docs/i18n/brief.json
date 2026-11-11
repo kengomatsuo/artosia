@@ -10327,5 +10327,149 @@
    "listener"
   ],
   "notes": "The reason is put in as given, in English, after a colon."
+ },
+ {
+  "key": "MARKS_APPLY",
+  "kind": "const",
+  "screen": "The song editor: the lyrics field in the middle, and above it a quiet strip that proposes section names for the parts of the song that have none, drawn as the row of small coloured section chips the song would get. Button.",
+  "moment": "Shown while some part of the words has no section name yet, beside a row of small coloured section chips.",
+  "role": "button",
+  "does": "Button that accepts the suggestion: it writes a section marker before every part of the words that has none, so the row of chips beside it becomes the song's sections. Sits beside a check icon and a key cap.",
+  "budget": 8,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "section",
+   "song"
+  ],
+  "notes": "One word, at most eight characters. The key Ctrl M is printed beside it."
+ },
+ {
+  "key": "MARKS_APPLY_HELP",
+  "kind": "const",
+  "screen": "The song editor: the lyrics field in the middle, and above it a quiet strip that proposes section names for the parts of the song that have none, drawn as the row of small coloured section chips the song would get. Tooltip on that button.",
+  "moment": "Hover over the button.",
+  "role": "tooltip",
+  "does": "Says the button writes the suggested section markers into the words, as one change that can be undone.",
+  "budget": 50,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "section",
+   "song"
+  ],
+  "notes": "No full stop."
+ },
+ {
+  "key": "MARKS_HIDE",
+  "kind": "const",
+  "screen": "The song editor: the lyrics field in the middle, and above it a quiet strip that proposes section names for the parts of the song that have none, drawn as the row of small coloured section chips the song would get. Icon-only close button.",
+  "moment": "Hover over the small cross at the end of the strip; also read aloud by a screen reader.",
+  "role": "tooltip",
+  "does": "Names the small button that closes the suggestion strip for the song being edited. Nothing is written into the words.",
+  "budget": 28,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "section",
+   "song"
+  ],
+  "notes": "No full stop."
+ },
+ {
+  "key": "MARKS_THIS",
+  "kind": "const",
+  "screen": "The song editor: the lyrics field in the middle, and above it a quiet strip that proposes section names for the parts of the song that have none, drawn as the row of small coloured section chips the song would get. Small label at the start of a second row.",
+  "moment": "Shown while the text cursor is in a part of the words that has no section name; the row beside it offers the kinds of section to pick for that part.",
+  "role": "section heading",
+  "does": "Names the part of the words where the text cursor is, a block of lines parted from the next by an empty line. The chips after it say what that part could be.",
+  "budget": 16,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "section",
+   "song"
+  ],
+  "notes": "No full stop."
+ },
+ {
+  "key": "MARKS_WHY_NAMED",
+  "kind": "const",
+  "screen": "The song editor: the lyrics field in the middle, and above it a quiet strip that proposes section names for the parts of the song that have none, drawn as the row of small coloured section chips the song would get. Tooltip on a section chip.",
+  "moment": "Hover over a chip whose section name the writer already typed in the words, such as Reff or Bait 2.",
+  "role": "tooltip",
+  "does": "Explains that this chip's kind comes from a section name the writer had already typed among the lyrics.",
+  "budget": 44,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "section",
+   "song"
+  ],
+  "notes": "No full stop."
+ },
+ {
+  "key": "MARKS_WHY_REPEAT",
+  "kind": "const",
+  "screen": "The song editor: the lyrics field in the middle, and above it a quiet strip that proposes section names for the parts of the song that have none, drawn as the row of small coloured section chips the song would get. Tooltip on a section chip.",
+  "moment": "Hover over a chip for a part that comes back with exactly the same words.",
+  "role": "tooltip",
+  "does": "Says the chip's section is suggested because that part of the words is sung again with exactly the same words, as a chorus is.",
+  "budget": 36,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "section",
+   "song"
+  ],
+  "notes": "No full stop."
+ },
+ {
+  "key": "MARKS_WHY_BRIDGE",
+  "kind": "const",
+  "screen": "The song editor: the lyrics field in the middle, and above it a quiet strip that proposes section names for the parts of the song that have none, drawn as the row of small coloured section chips the song would get. Tooltip on a section chip.",
+  "moment": "Hover over a chip for a short part that comes once near the end.",
+  "role": "tooltip",
+  "does": "Says the chip is suggested as a bridge because the part is short, comes only once, and comes late in the song.",
+  "budget": 44,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "section",
+   "song"
+  ],
+  "notes": "No full stop."
+ },
+ {
+  "key": "MARKS_WHY_ORDER",
+  "kind": "const",
+  "screen": "The song editor: the lyrics field in the middle, and above it a quiet strip that proposes section names for the parts of the song that have none, drawn as the row of small coloured section chips the song would get. Tooltip on a section chip.",
+  "moment": "Hover over a chip for a part that is neither repeated nor short and late.",
+  "role": "tooltip",
+  "does": "Says the chip is suggested as the next numbered verse, because the part follows the earlier ones in order.",
+  "budget": 36,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "section",
+   "song"
+  ],
+  "notes": "No full stop."
  }
 ]

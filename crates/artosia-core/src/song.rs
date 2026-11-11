@@ -138,9 +138,9 @@ fn kind_from_word(word: &str) -> Option<SectionKind> {
         "verse" | "v" | "vers" | "stanza" | "bait" | "ayat" => SectionKind::Verse,
         "chorus" | "c" | "refrain" | "ref" | "reff" | "koor" | "chor" => SectionKind::Chorus,
         "prechorus" | "pre" | "p" => SectionKind::PreChorus,
-        "bridge" | "b" => SectionKind::Bridge,
-        "intro" | "i" => SectionKind::Intro,
-        "ending" | "end" | "outro" | "tag" | "coda" | "e" => SectionKind::Ending,
+        "bridge" | "b" | "jembatan" => SectionKind::Bridge,
+        "intro" | "i" | "pembuka" => SectionKind::Intro,
+        "ending" | "end" | "outro" | "tag" | "coda" | "penutup" | "akhir" | "e" => SectionKind::Ending,
         "part" | "x" | "o" | "other" => SectionKind::Other,
         _ => return None,
     })
@@ -191,7 +191,7 @@ pub fn heading(line: &str) -> Option<Tag> {
     let word = lower.split(|c: char| c.is_whitespace() || c.is_ascii_digit()).next().unwrap_or("");
     let full = matches!(
         word,
-        "verse" | "chorus" | "refrain" | "bridge" | "intro" | "outro" | "ending" | "pre-chorus" | "prechorus" | "tag" | "reff" | "bait"
+        "verse" | "chorus" | "refrain" | "bridge" | "intro" | "outro" | "ending" | "pre-chorus" | "prechorus" | "tag" | "reff" | "bait" | "koor" | "jembatan" | "pembuka" | "penutup"
     );
     if full && line.len() <= 16 { parse_tag(line) } else { None }
 }
@@ -315,9 +315,29 @@ fn is_chord_line(line: &str) -> bool {
 
 /// Cleans words pasted from anywhere: headings such as "Verse 1" or "Reff:" become markers,
 /// chord lines go, stray spaces go, and unmarked verses are numbered.
+///
+/// Words with no heading at all keep their stanzas unmarked: `marks::propose` offers them
+/// marks, and numbering them here would call a chorus sung three times "Verse 2, 4 and 6".
 pub fn tidy_lyrics(text: &str) -> String {
     let text = text.replace("\r\n", "\n");
     let kept: Vec<&str> = text.lines().filter(|line| !is_chord_line(line.trim())).collect();
+    if !kept.iter().any(|line| heading(line).is_some()) {
+        let mut out = String::new();
+        let mut gap = false;
+        for line in kept.iter().map(|line| line.trim()) {
+            if line.is_empty() {
+                gap = !out.is_empty();
+                continue;
+            }
+            if gap {
+                out.push('\n');
+                gap = false;
+            }
+            out.push_str(line);
+            out.push('\n');
+        }
+        return out;
+    }
     write_lyrics(&parse_lyrics(&kept.join("\n")))
 }
 
@@ -394,7 +414,7 @@ pub fn song_from_paste(text: &str) -> Song {
         let body = std::iter::once(first.as_str()).chain(rest.iter().copied()).collect::<Vec<_>>().join("\n");
         (String::new(), body)
     };
-    let mut song = Song { title, lyrics: write_lyrics(&parse_lyrics(&body)), ..Song::default() };
+    let mut song = Song { title, lyrics: tidy_lyrics(&body), ..Song::default() };
     if song.title.is_empty() {
         song.title = song.first_line().unwrap_or_default();
     }
@@ -423,6 +443,13 @@ mod tests {
         assert_eq!(tidy_lyrics(pasted), "[1]\nWalk the long road\nA single line\n[chorus]\nSing it once more\n");
         // A line of words that happen to start with chord letters stays.
         assert_eq!(tidy_lyrics("[1]\nA Friend Goes Before\n"), "[1]\nA Friend Goes Before\n");
+    }
+
+    #[test]
+    fn tidying_words_with_no_heading_keeps_the_stanzas_unmarked() {
+        let pasted = "G   D\nFirst line  \nSecond line\n\n\n\nThird line\n\n";
+        assert_eq!(tidy_lyrics(pasted), "First line\nSecond line\n\nThird line\n");
+        assert_eq!(song_from_paste("Title\n\nOne\nTwo\n\nThree").lyrics, "One\nTwo\n\nThree\n");
     }
 
     #[test]

@@ -7,6 +7,7 @@
 //! built from chips, and a new song's title offers whole songs to fill in.
 
 use artosia_core::deck::tag_group;
+use artosia_core::marks::{Basis, Proposal, Stanza};
 use artosia_core::song::{SectionKind, Tag, heading};
 use artosia_slides::stage::group_color;
 use rune::{Cursor, El, Key, KeyEvent, ScrollSpec, Span, TextEdit, Tx, col, el, icon, row, spacer, text};
@@ -43,10 +44,15 @@ fn escape_closes(s: &mut App, ev: &KeyEvent, tx: &mut Tx) -> bool {
     true
 }
 
-/// Keys in the words: Ctrl with 1 to 5 starts a section, Escape closes.
+/// Keys in the words: Ctrl with 1 to 5 starts a section, Ctrl M writes the suggested marks,
+/// Escape closes.
 fn lyrics_keys(s: &mut App, ev: &KeyEvent, tx: &mut Tx) -> bool {
     if let Key::Command(digit @ '1'..='5') = ev.key {
         s.insert_section(SECTION_KEYS[digit as usize - '1' as usize]);
+        return true;
+    }
+    if matches!(ev.key, Key::Command('m')) && s.marks_offer().is_some() {
+        s.apply_marks();
         return true;
     }
     escape_closes(s, ev, tx)
@@ -216,6 +222,97 @@ fn order_block(s: &App, k: &Kit, editor: &Editor) -> El {
         .child(TextInput::new(&editor.order).width(None).label(t::ORDER()).placeholder(t::FIELD_ORDER()).on_edit(|s: &mut App| edit_of(s, |editor| &mut editor.order)).on_key(escape_closes).build(k))
 }
 
+/// The kinds a person can pick for a stanza, in the order of the section buttons and Intro.
+const PICKABLE: [SectionKind; 6] =
+    [SectionKind::Verse, SectionKind::Chorus, SectionKind::PreChorus, SectionKind::Bridge, SectionKind::Intro, SectionKind::Ending];
+
+/// Why a stanza has the tag it has, said when the pointer rests on its chip.
+fn why(stanza: &Stanza) -> String {
+    match stanza.basis {
+        Basis::Marked => t::section_label(stanza.tag),
+        Basis::Named => t::MARKS_WHY_NAMED().to_string(),
+        Basis::Repeat => t::MARKS_WHY_REPEAT().to_string(),
+        Basis::Bridge => t::MARKS_WHY_BRIDGE().to_string(),
+        Basis::Order => t::MARKS_WHY_ORDER().to_string(),
+    }
+}
+
+/// One stanza of the proposal: tinted where the words already have its mark, outlined where
+/// pressing Mark would write it.
+fn stanza_chip(k: &Kit, at: usize, stanza: &Stanza) -> El {
+    let color = group_color(tag_group(stanza.tag));
+    let ink = theme::ink_of(color);
+    let written = !stanza.is_pending();
+    el().key(format!("mark-chip-{at}"))
+        .px(space::S2)
+        .min_w(32.0)
+        .h(24.0)
+        .center()
+        .radius(k.radius.sm)
+        .fill(if written { theme::tint_of(color, true) } else { rune::Color::TRANSPARENT })
+        .border(1.0, ink.alpha(if written { 0.0 } else { 0.6 }))
+        .help(why(stanza))
+        .child(text(stanza.tag.short()).font(type_::SMALL_STRONG).color(ink))
+}
+
+/// One kind a person can pick for the stanza at the caret. All are one width, so a longer
+/// language changes nothing; the one the proposal chose is filled.
+fn kind_chip(k: &Kit, start: usize, kind: SectionKind, tag: Tag, chosen: bool) -> El {
+    let color = group_color(tag_group(tag));
+    let ink = theme::ink_of(color);
+    let name = t::section_label(tag);
+    row()
+        .key(format!("mark-kind-{}", tag.short()))
+        .role("button")
+        .label(name.clone())
+        .w(96.0)
+        .h(26.0)
+        .gap(4.0)
+        .center()
+        .radius(k.radius.sm)
+        .fill(if chosen { theme::tint_of(color, true) } else { rune::Color::TRANSPARENT })
+        .border(1.0, ink.alpha(if chosen { 0.0 } else { 0.5 }))
+        .hover(k.c.hover)
+        .cursor(Cursor::Pointer)
+        .child(icon(&icons::HEADING, 12.0).color(ink).a11y_hidden())
+        .child(text(name).font(type_::SMALL_STRONG).color(ink).truncate().a11y_hidden())
+        .on_press(move |s: &mut App| s.mark_stanza(start, kind))
+}
+
+/// A quiet strip over the words while some stanza has no mark: the sections the song would
+/// get, one button that writes them, one that dismisses them; and, with the caret in an
+/// unmarked stanza, the kinds to pick for that stanza alone.
+fn marks_strip(s: &App, k: &Kit, editor: &Editor) -> Option<El> {
+    let proposal: Proposal = s.marks_offer()?;
+    let mut chips = row().key("marks-chips").grow(1.0).min_w(0.0).gap(6.0).flex_wrap().center_y();
+    for (at, stanza) in proposal.stanzas.iter().enumerate() {
+        chips = chips.child(stanza_chip(k, at, stanza));
+    }
+    let apply = row().w(148.0).child(btn(t::MARKS_APPLY()).icon(&icons::CHECK).small().hint(t::KEY_MARK()).help(t::MARKS_APPLY_HELP()).grow().build(k, |s, _| s.apply_marks()));
+    let hide = btn(t::MARKS_HIDE()).icon(&icons::CLOSE).small().ghost().icon_only().build(k, |s, _| s.hide_marks());
+    let mut strip = col()
+        .key("marks-strip")
+        .w_full()
+        .padding(space::S2)
+        .gap(space::S2)
+        .radius(k.radius.md)
+        .fill(k.c.layer_02)
+        .border(1.0, k.c.border_muted)
+        .child(row().w_full().gap(space::S2).center_y().child(chips).child(apply).child(hide));
+    let here = editor.lyrics.focused.then(|| proposal.stanza_at(editor.lyrics.range().0)).flatten().filter(|at| proposal.stanzas[*at].is_unmarked());
+    if let Some(at) = here {
+        let stanza = &proposal.stanzas[at];
+        let mut line = row().key("marks-here").w_full().gap(6.0).flex_wrap().center_y().child(section_label(k, t::MARKS_THIS()));
+        for kind in PICKABLE {
+            let chosen = kind == stanza.tag.kind;
+            let tag = if chosen { stanza.tag } else { proposal.tag_as(at, kind) };
+            line = line.child(kind_chip(k, stanza.start, kind, tag, chosen));
+        }
+        strip = strip.child(line);
+    }
+    Some(strip)
+}
+
 fn form(s: &App, k: &Kit) -> El {
     let Some(editor) = s.editor.as_ref() else { return el() };
     let mut sections = row().gap(space::S1).center_y();
@@ -261,6 +358,7 @@ fn form(s: &App, k: &Kit) -> El {
                         .child(sections)
                         .child(btn(t::BTN_TIDY()).small().ghost().help(t::TIDY_HELP()).build(k, |s, _| s.tidy_editor())),
                 )
+                .children(marks_strip(s, k, editor))
                 .child(
                     TextArea::new(&editor.lyrics)
                         .width(None)

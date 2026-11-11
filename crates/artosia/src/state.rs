@@ -231,6 +231,8 @@ pub struct Editor {
     pub fetching: bool,
     /// Where filled-in words came from: the source's name and the page.
     pub credit: Option<(String, String)>,
+    /// The strip proposing section marks was dismissed for this song.
+    pub marks_hidden: bool,
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
