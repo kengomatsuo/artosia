@@ -21,6 +21,8 @@ mod starts;
 mod state;
 mod stream;
 mod strings;
+#[cfg(all(test, feature = "speech"))]
+mod heard_test;
 #[cfg(test)]
 mod strings_snapshot;
 mod suggest;
