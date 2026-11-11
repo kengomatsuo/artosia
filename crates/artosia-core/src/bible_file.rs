@@ -48,6 +48,8 @@ pub struct Parsed {
     /// What the file says about itself, empty when it says nothing.
     pub name: String,
     pub language: String,
+    /// The copyright or status line the file carries, empty when it carries none.
+    pub copyright: String,
 }
 
 #[derive(Debug)]
@@ -216,6 +218,84 @@ pub fn parse_usfx(xml: &str) -> Result<Parsed, ImportError> {
         return Err(ImportError::Empty);
     }
     Ok(Parsed { verses: collector.out, ..Parsed::default() })
+}
+
+/// What a Beblia XML file says about itself in its `<bible>` tag: (translation name, status line).
+/// Beblia's repository publishes one XML file per Bible (https://github.com/Beblia/Holy-Bible-XML-Format).
+/// Works on the first kilobytes of a file, so a copyright line can be read before the download.
+/// None when the text is not a Beblia file.
+pub fn beblia_header(xml: &str) -> Option<(String, String)> {
+    let mut reader = Reader::from_str(xml.trim_start_matches('\u{feff}'));
+    loop {
+        match reader.read_event().ok()? {
+            Event::Start(start) | Event::Empty(start) => {
+                if start.local_name().as_ref() != "bible" {
+                    return None;
+                }
+                let read = |name: &str| {
+                    let value = start.try_get_attribute(name).ok().flatten().and_then(|attribute| attribute.normalized_value(quick_xml::XmlVersion::Implicit1_0).ok().map(|value| value.into_owned()));
+                    value.unwrap_or_default().split_whitespace().collect::<Vec<_>>().join(" ")
+                };
+                return Some((read("translation"), read("status")));
+            }
+            Event::Eof => return None,
+            _ => {}
+        }
+    }
+}
+
+/// Reads one Beblia XML Bible: `<bible translation status><testament><book number><chapter number>
+/// <verse number>text</verse>`. A book's number is its place in the 66-book canon; books past 66
+/// are skipped.
+pub fn parse_beblia(xml: &str) -> Result<Parsed, ImportError> {
+    let xml = xml.trim_start_matches('\u{feff}');
+    let Some((name, copyright)) = beblia_header(xml) else { return Err(ImportError::Unsupported) };
+    let mut reader = Reader::from_str(xml);
+    let (mut book, mut chapter, mut verse) = (0u8, 0u16, 0u16);
+    let mut inside = false;
+    let mut text = String::new();
+    let mut out: Vec<Verse> = Vec::new();
+    let number = |start: &quick_xml::events::BytesStart<'_>| attribute(start, "number").trim().parse::<u32>().unwrap_or(0);
+    loop {
+        let event = reader.read_event().map_err(|error| ImportError::Read(error.to_string()))?;
+        match event {
+            Event::Start(start) => match start.local_name().as_ref() {
+                "book" => book = u8::try_from(number(&start)).ok().filter(|n| (1..=66).contains(n)).unwrap_or(0),
+                "chapter" => chapter = u16::try_from(number(&start)).unwrap_or(0),
+                "verse" => {
+                    verse = u16::try_from(number(&start)).unwrap_or(0);
+                    inside = true;
+                    text.clear();
+                }
+                _ => {}
+            },
+            Event::Text(content) if inside => text.push_str(&content),
+            Event::GeneralRef(entity) if inside => {
+                if let Ok(Some(character)) = entity.resolve_char_ref() {
+                    text.push(character);
+                } else if let Some(value) = resolve_predefined_entity(&entity) {
+                    text.push_str(value);
+                }
+            }
+            Event::End(end) => match end.local_name().as_ref() {
+                "verse" if inside => {
+                    inside = false;
+                    let body = text.split_whitespace().collect::<Vec<_>>().join(" ");
+                    if book > 0 && chapter > 0 && verse > 0 && !body.is_empty() {
+                        out.push(Verse { book, chapter, verse, text: body.into_boxed_str() });
+                    }
+                }
+                "book" => book = 0,
+                _ => {}
+            },
+            Event::Eof => break,
+            _ => {}
+        }
+    }
+    if out.is_empty() {
+        return Err(ImportError::Empty);
+    }
+    Ok(Parsed { verses: out, names: Vec::new(), name, language: String::new(), copyright })
 }
 
 /// The long book names in eBible's `BookNames.xml`, as (book, name).
@@ -395,7 +475,8 @@ pub fn write_mybible(path: &Path, details: &Details, parsed: &Parsed) -> Result<
     )?;
     let name = if details.name.is_empty() { &parsed.name } else { &details.name };
     let language = if details.language.is_empty() { &parsed.language } else { &details.language };
-    for (key, value) in [("description", name.as_str()), ("language", language.as_str()), ("detailed_info", details.copyright.as_str())] {
+    let copyright = if details.copyright.is_empty() { &parsed.copyright } else { &details.copyright };
+    for (key, value) in [("description", name.as_str()), ("language", language.as_str()), ("detailed_info", copyright.as_str())] {
         tx.execute("insert into info (name, value) values (?1, ?2)", [key, value])?;
     }
     for (book, long, short) in &parsed.names {
@@ -492,7 +573,9 @@ pub fn install_bytes(file_name: &str, bytes: &[u8], bibles: &Path, details: &Det
         let parsed = if lower.ends_with(".zip") {
             parse_archive(bytes)?
         } else if lower.ends_with(".xml") {
-            parse_usfx(&utf8(bytes.to_vec()))?
+            let text = utf8(bytes.to_vec());
+            // USFX has a <usfx> root; a Beblia file has a <bible> root with numbered books.
+            if text.contains("<usfx") { parse_usfx(&text)? } else { parse_beblia(&text)? }
         } else if lower.ends_with(".usfm") || lower.ends_with(".sfm") {
             let mut parsed = Parsed::default();
             parse_usfm(&utf8(bytes.to_vec()), &mut parsed);
@@ -665,6 +748,44 @@ mod tests {
         assert_eq!(bible.books().len(), 27);
         assert!(!bible.guess("yoh 3 16").is_empty());
         assert!(bible.verses(&bible.guess("yoh 3 16")[0].reference).iter().all(|v| !v.text.contains("1:1")));
+        let _ = std::fs::remove_dir_all(&bibles);
+    }
+
+    /// Made up, in the shape of a Beblia file: book 99 is past the canon and is skipped.
+    const BEBLIA: &str = "\u{feff}<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\
+        <bible translation=\"Made Up (Alkitab Buatan)\" status=\"Made up status &amp; line\" link=\"https://example.invalid/x\">\n\
+        \t<testament name=\"Old\">\n\t\t<book number=\"1\">\n\t\t\t<chapter number=\"1\">\n\
+        \t\t\t\t<verse number=\"1\">First made   up line &amp; more.</verse>\n\
+        \t\t\t\t<verse number=\"2\">Second made up line.</verse>\n\
+        \t\t\t\t<verse number=\"3\"></verse>\n\
+        \t\t\t</chapter>\n\t\t</book>\n\t</testament>\n\
+        \t<testament name=\"New\">\n\t\t<book number=\"66\"><chapter number=\"22\"><verse number=\"21\">Last made up line.</verse></chapter></book>\n\
+        \t\t<book number=\"99\"><chapter number=\"1\"><verse number=\"1\">Outside the canon.</verse></chapter></book>\n\t</testament>\n</bible>";
+
+    #[test]
+    fn a_beblia_file_keeps_its_verses_name_and_copyright() {
+        let parsed = parse_beblia(BEBLIA).unwrap_or_else(|e| panic!("{e}"));
+        assert_eq!(texts(&parsed), [(1, 1, 1, "First made up line & more.".to_string()), (1, 1, 2, "Second made up line.".to_string()), (66, 22, 21, "Last made up line.".to_string())]);
+        assert_eq!((parsed.name.as_str(), parsed.copyright.as_str()), ("Made Up (Alkitab Buatan)", "Made up status & line"));
+        // The first kilobyte is enough to read what the file says about itself.
+        assert_eq!(beblia_header(&BEBLIA[..300]), Some(("Made Up (Alkitab Buatan)".to_string(), "Made up status & line".to_string())));
+        assert_eq!(beblia_header("<usfx></usfx>"), None);
+        assert!(matches!(parse_beblia("<usfx></usfx>"), Err(ImportError::Unsupported)));
+        assert!(matches!(parse_beblia("<bible translation=\"x\"></bible>"), Err(ImportError::Empty)));
+    }
+
+    #[test]
+    fn a_beblia_file_installs_with_the_name_and_notice_it_carries() {
+        let bibles = folder("beblia");
+        let details = Details { language: "Indonesian".into(), ..Details::default() };
+        let installed = install_bytes("IndonesianMade.xml", BEBLIA.as_bytes(), &bibles, &details).unwrap_or_else(|e| panic!("{e}"));
+        assert_eq!((installed.code.as_str(), installed.name.as_str(), installed.verses), ("INDONESIANMADE", "Made Up (Alkitab Buatan)", 3));
+        let bible = crate::bible::Bible::open(&bibles.join("indonesianmade.sqlite3")).unwrap_or_else(|e| panic!("{e}"));
+        assert_eq!(bible.language, "Indonesian");
+        let detail: String = rusqlite::Connection::open(bibles.join("indonesianmade.sqlite3"))
+            .and_then(|db| db.query_row("select value from info where name = 'detailed_info'", [], |row| row.get(0)))
+            .unwrap_or_else(|e| panic!("{e}"));
+        assert_eq!(detail, "Made up status & line");
         let _ = std::fs::remove_dir_all(&bibles);
     }
 

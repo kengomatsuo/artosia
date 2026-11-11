@@ -1,6 +1,7 @@
 //! Artosia core: library, search, Bible and service plan. No UI.
 
 pub mod bible;
+pub mod beblia;
 pub mod bible_file;
 pub mod deck;
 pub mod ebible;
