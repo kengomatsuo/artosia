@@ -8511,5 +8511,141 @@
       "listen"
     ],
     "notes": "Light and friendly; one short sentence."
+  },
+  {
+    "key": "KEY_MARK",
+    "kind": "const",
+    "screen": "Song editor, the button that writes the suggested section markers",
+    "moment": "Key cap inside that button.",
+    "role": "key name",
+    "does": "The Ctrl-plus-letter shortcut that writes the suggested section markers into the words.",
+    "budget": 8,
+    "variables": [],
+    "register": "None; this is a label, not speech. Follow what is printed on the keyboard.",
+    "vocabulary": [],
+    "notes": "A key name printed on a physical keyboard. Indonesian keyboards print the same Latin key names (Ctrl, Shift, Enter, Esc, F1 to F12, Delete, Tab), so keep them as printed; the app shows them inside a small key cap. Keep as printed."
+  },
+  {
+    "key": "MARKS_APPLY",
+    "kind": "const",
+    "screen": "Song editor (middle column), a quiet strip above the words, button",
+    "moment": "Shown while some part of the words has no section name yet, beside a row of small coloured section chips.",
+    "role": "button",
+    "does": "Button that accepts the suggestion: it writes a section marker before every part of the words that has none, so the row of chips beside it becomes the song's sections. Sits beside a check icon and a key cap.",
+    "budget": 8,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "section",
+      "verse",
+      "chorus"
+    ],
+    "notes": ""
+  },
+  {
+    "key": "MARKS_APPLY_HELP",
+    "kind": "const",
+    "screen": "Song editor (middle column), a quiet strip above the words, tooltip on that button",
+    "moment": "Hover over the button.",
+    "role": "tooltip",
+    "does": "Says the button writes the suggested section markers into the words, as one change that can be undone.",
+    "budget": 50,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "section"
+    ],
+    "notes": ""
+  },
+  {
+    "key": "MARKS_HIDE",
+    "kind": "const",
+    "screen": "Song editor (middle column), a quiet strip above the words, icon-only close button",
+    "moment": "Hover over the small cross at the end of the strip; also read aloud by a screen reader.",
+    "role": "tooltip",
+    "does": "Names the small button that closes the suggestion strip for the song being edited. Nothing is written into the words.",
+    "budget": 28,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "section"
+    ],
+    "notes": ""
+  },
+  {
+    "key": "MARKS_THIS",
+    "kind": "const",
+    "screen": "Song editor (middle column), a quiet strip above the words, small label at the start of a second row",
+    "moment": "Shown while the text cursor is in a part of the words that has no section name; the row beside it offers the kinds of section to pick for that part.",
+    "role": "section heading",
+    "does": "Names the part of the words where the text cursor is, a block of lines parted from the next by an empty line. The chips after it say what that part could be.",
+    "budget": 16,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "verse",
+      "section"
+    ],
+    "notes": ""
+  },
+  {
+    "key": "MARKS_WHY_NAMED",
+    "kind": "const",
+    "screen": "Song editor (middle column), a quiet strip above the words, tooltip on a section chip",
+    "moment": "Hover over a chip whose section name the writer already typed in the words, such as Reff or Bait 2.",
+    "role": "tooltip",
+    "does": "Says the chip's section was read from the name the writer typed in the words.",
+    "budget": 44,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "section"
+    ],
+    "notes": ""
+  },
+  {
+    "key": "MARKS_WHY_REPEAT",
+    "kind": "const",
+    "screen": "Song editor (middle column), a quiet strip above the words, tooltip on a section chip",
+    "moment": "Hover over a chip for a part that comes back with exactly the same words.",
+    "role": "tooltip",
+    "does": "Says the chip's section is suggested because that part of the words is sung again with exactly the same words, as a chorus is.",
+    "budget": 36,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "chorus"
+    ],
+    "notes": ""
+  },
+  {
+    "key": "MARKS_WHY_BRIDGE",
+    "kind": "const",
+    "screen": "Song editor (middle column), a quiet strip above the words, tooltip on a section chip",
+    "moment": "Hover over a chip for a short part that comes once near the end.",
+    "role": "tooltip",
+    "does": "Says the chip is suggested as a bridge because the part is short, comes only once, and comes late in the song.",
+    "budget": 44,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "bridge"
+    ],
+    "notes": ""
+  },
+  {
+    "key": "MARKS_WHY_ORDER",
+    "kind": "const",
+    "screen": "Song editor (middle column), a quiet strip above the words, tooltip on a section chip",
+    "moment": "Hover over a chip for a part that is neither repeated nor short and late.",
+    "role": "tooltip",
+    "does": "Says the chip is suggested as the next numbered verse, because the part follows the earlier ones in order.",
+    "budget": 36,
+    "variables": [],
+    "register": "The program speaks to a volunteer at the console: plain, short, the informal-polite register of a church volunteer group. No honorifics, no 'Anda' unless it cannot be avoided, no jargon, no slang. Match the phone page's wording (see glossary).",
+    "vocabulary": [
+      "verse"
+    ],
+    "notes": ""
   }
 ]
