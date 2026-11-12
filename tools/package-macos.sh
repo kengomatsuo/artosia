@@ -46,7 +46,19 @@ export PKG_CONFIG="$gst/bin/pkg-config"
 export PKG_CONFIG_LIBDIR="$gst/lib/pkgconfig"
 unset PKG_CONFIG_PATH
 
-cargo build --release -p artosia -p artosia-output --features artosia-output/video
+# Speech recognition needs CMake and libclang; with both the operator carries it, as on Linux.
+# Xcode has libclang, and whisper.cpp links only the system's own frameworks there, so the app
+# gains no file.
+features="artosia-output/video"
+libclang="$(xcode-select -p 2>/dev/null)/Toolchains/XcodeDefault.xctoolchain/usr/lib"
+if command -v cmake >/dev/null 2>&1 && [ -f "$libclang/libclang.dylib" ]; then
+    export LIBCLANG_PATH="$libclang"
+    features="$features,artosia/speech"
+    echo "This build is WITH speech recognition."
+else
+    echo "This build is WITHOUT speech recognition (CMake or Xcode's libclang is missing)."
+fi
+cargo build --release -p artosia -p artosia-output --features "$features"
 
 app="$out/Artosia.app"
 contents="$app/Contents"

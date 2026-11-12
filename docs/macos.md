@@ -94,18 +94,18 @@ On a MacBook with Apple silicon, macOS 27.0.1, 16 GB, busy with other work throu
 | The Mac's language and country | `["en-GB", "id-ID", "ja-ID"]`, region `ID`: what System Settings shows. |
 | Headless render | The operator in light and in dark Indonesian, the keys sheet, and the projector's lyrics slide (`target/port/macos-check/`). |
 | GStreamer from our own folder | `vtdec`, `vtdec_hw`, `avfvideosrc`, `playbin3`, `qtdemux`, `h264parse`, `avdec_h264`, `matroskademux`, `vp9dec`, `dav1ddec`, `rtspsrc`, `srtsrc` and `souphttpsrc` all load from the thinned subset, through its own plugin scanner. |
-| The package | `Artosia-macos-aarch64.dmg`, 55 MB; the app 123 MB in 85 files with no symbolic link: `artosia` 37 MB, `artosia-output` 25 MB, GStreamer 63 MB (27 plugins, 42 libraries, the plugin scanner), nine `.lproj` folders. Built without speech recognition. |
+| The package | `Artosia-macos-aarch64.dmg`, 55 MB; the app 123 MB in 85 files with no symbolic link: `artosia` 37 MB, `artosia-output` 25 MB, GStreamer 63 MB (27 plugins, 42 libraries, the plugin scanner), nine `.lproj` folders. The first package tried was built without speech recognition; with it the operator is 45 MB and the app gains no file. |
 | The seal | `codesign --verify --deep --strict` passes on the app, and on the app inside the mounted image. `spctl --assess` says "rejected", which is the first-open refusal a downloaded copy meets. |
 | Nothing from outside the app | With the unpacked GStreamer moved away, `artosia-output --probe` ends with 0 from the app and from the mounted image, and the operator and the projector render from the app. The projector program's only run path is `@executable_path/../Resources/gstreamer/lib`. |
 | A video with no window | `cargo test -p artosia-video a_video_loops` on the app's own GStreamer alone: decoder `vtdec_hw` (Apple's hardware decoder), 867 frames, round to its start twice in 28.9 s. This settles what the research left open: `vtdec` loads from a moved, ad-hoc signed copy on macOS 27. |
 | Self-update | Version 0.1.22, copied into a scratch folder and opened hidden through LaunchServices on an empty library with the projector off, fetched 0.1.23 from a feed on 127.0.0.1 (2 files, the ones that differ, of 85), kept its seal while the download waited beside it, and at the next start came up as 0.1.23: the app verified and was release 0.1.23 file for file (`diff -r`), and the replaced files were gone once the new version had started. Both versions trusted a key made for the test. |
 | The update list made on the release PC | The app's `Contents` brought to WSL by rsync gives the same list as the one made on the Mac: 76 files with the same hashes, sizes and executable marks. |
+| Speech recognition | `cargo build --release -p artosia --features speech` builds with Homebrew's CMake and Xcode's libclang, links only the system's frameworks, and the listening crate's tests pass (36; five that need a model are ignored). The package script builds with it when both tools are there. Hearing a real room was not tried. |
 | Permission sentences | `plutil -p` reads each language's `InfoPlist.strings`; the dialogs themselves were not seen. |
 
 ## Not built
 
 - **Streaming.** As on Linux: the streaming program needs a screen capture, a sound source and an encoder of the Mac's own before the Stream dialog offers it, and the app does not carry the program.
-- **Speech recognition.** The package is built without it; nobody has tried the build with it on a Mac.
 - **F1 to F6 on a MacBook.** Its top row is brightness and sound unless Fn is held or the keyboard setting is changed, and No text, Black, Logo and Live are on those keys.
 
 ## Not checked
