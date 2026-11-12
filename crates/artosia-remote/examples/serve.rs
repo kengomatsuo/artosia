@@ -10,10 +10,12 @@ use std::sync::{Mutex, mpsc};
 use std::time::{SystemTime, UNIX_EPOCH};
 
 fn slides() -> Vec<(RemoteSlide, usize, &'static str)> {
-    let mk = |l: &str, t: &str, g: usize, s: &'static str| (RemoteSlide { label: l.into(), text: t.into() }, g, s);
+    let mk = |l: &str, t: &str, g: usize, s: &'static str| (RemoteSlide { label: l.into(), text: t.into(), ..Default::default() }, g, s);
+    // The first two slides carry two further languages, as a song in three languages does.
+    let more = |(slide, group, short): (RemoteSlide, usize, &'static str), further: &[&str]| (RemoteSlide { more: further.iter().map(|text| text.to_string()).collect(), ..slide }, group, short);
     vec![
-        mk("Verse 1", "Placeholder line one\nPlaceholder line two\nPlaceholder line three", 0, "V1"),
-        mk("Chorus", "Sample chorus text goes here\nAnd a second sample line", 1, "C"),
+        more(mk("Verse 1", "Placeholder line one\nPlaceholder line two\nPlaceholder line three", 0, "V1"), &["Baris contoh satu\nBaris contoh dua\nBaris contoh tiga", "示例第一行\n示例第二行\n示例第三行"]),
+        more(mk("Chorus", "Sample chorus text goes here\nAnd a second sample line", 1, "C"), &["Contoh teks reff di sini\nDan baris contoh kedua", "这里是示例副歌\n还有第二行示例"]),
         mk("Verse 2", "Another made-up verse\nWith a second line\nAnd a third", 0, "V2"),
         mk("Chorus", "Sample chorus text goes here\nAnd a second sample line", 1, "C"),
         mk("Bridge", "A short made-up bridge", 2, "B"),

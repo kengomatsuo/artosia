@@ -52,6 +52,10 @@ pub struct Plan {
     /// which this crate cannot name). None means the plan uses the usual look.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub look: Option<serde_json::Value>,
+    /// The languages this plan's songs show together, in order, when it has a choice of its own
+    /// (a youth service in one language, a joint service in three). None follows the church's usual.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub languages: Option<Vec<String>>,
     pub items: Vec<PlanItem>,
     next_id: u64,
 }
@@ -113,14 +117,14 @@ pub fn start_slide(deck: &Deck, start: Option<Tag>) -> usize {
 
 impl Plan {
     pub fn named(name: impl Into<String>) -> Plan {
-        Plan { id: 0, name: name.into(), date: String::new(), used: 0, day: None, time: None, look: None, items: Vec::new(), next_id: 1 }
+        Plan { id: 0, name: name.into(), date: String::new(), used: 0, day: None, time: None, look: None, languages: None, items: Vec::new(), next_id: 1 }
     }
 
     /// A new plan holding the same items, for another service. It keeps the day of the week,
-    /// has no time yet and is not saved yet. It keeps the look: a service that sings the same
+    /// has no time yet and is not saved yet. It keeps the look and the languages: a service that sings the same
     /// songs on the same screen looks the same.
     pub fn copy_named(&self, name: impl Into<String>) -> Plan {
-        Plan { id: 0, name: name.into(), date: String::new(), used: 0, day: self.day, time: None, look: self.look.clone(), items: self.items.clone(), next_id: self.next_id }
+        Plan { id: 0, name: name.into(), date: String::new(), used: 0, day: self.day, time: None, look: self.look.clone(), languages: self.languages.clone(), items: self.items.clone(), next_id: self.next_id }
     }
 
     /// The month and day of the plan's date, when it has one.
@@ -325,5 +329,17 @@ mod tests {
         let loaded: Plan = serde_json::from_str(&json).expect("round trip");
         assert_eq!(loaded.look, own.look);
         assert_eq!(own.copy_named("Copy").look, own.look);
+    }
+
+    #[test]
+    fn a_plan_may_carry_its_own_languages_and_a_copy_keeps_them() {
+        let old = r#"{"id":0,"name":"Today","items":[],"next_id":1}"#;
+        let plan: Plan = serde_json::from_str(old).expect("an old plan loads");
+        assert!(plan.languages.is_none() && !serde_json::to_string(&plan).unwrap_or_default().contains("languages"));
+        let mut own = Plan::named("Youth");
+        own.languages = Some(vec!["en".into()]);
+        let loaded: Plan = serde_json::from_str(&serde_json::to_string(&own).unwrap_or_default()).expect("round trip");
+        assert_eq!(loaded.languages, own.languages);
+        assert_eq!(own.copy_named("Copy").languages, own.languages);
     }
 }

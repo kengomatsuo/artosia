@@ -1315,20 +1315,10 @@
   "back": "Words from {source}. Compare first with the church's own copy.",
   "why": "Checking advice kept"
  },
- "FIELD_SECOND": {
-  "text": "Lirik bahasa kedua",
-  "back": "Second language words",
-  "why": "Phrase"
- },
  "LYRICS_PLACEHOLDER": {
   "text": "[Bait 1]\nBaris pertama lagu ini\n\n[Reff]\nBaris reff lagu ini",
   "back": "[Verse 1]\nFirst line of this song\n\n[Chorus]\nChorus line of this song",
   "why": "Marker syntax guessed as square brackets, see report"
- },
- "SECOND_PLACEHOLDER": {
-  "text": "Tulis dengan bagian dan urutan yang sama",
-  "back": "Write with the same parts and order",
-  "why": "One sentence"
  },
  "MARK_VERSE": {
   "text": "Bait",
@@ -1354,11 +1344,6 @@
   "text": "Penutup",
   "back": "Closing",
   "why": "Everyday word the reader knows"
- },
- "BTN_ADD_SECOND": {
-  "text": "Tambah bahasa kedua",
-  "back": "Add a second language",
-  "why": "Phrase"
  },
  "BTN_SAVE": {
   "text": "Simpan",
@@ -3655,5 +3640,95 @@
   "text": "{day} {month}",
   "back": "{day} {month}",
   "why": "Day then month name"
+ },
+ "LANGUAGE_ADD": {
+  "text": "Tambah bahasa lirik",
+  "back": "Add lyrics language",
+  "why": "A verb and its object, so the act is in the words; 'bahasa lirik' stays apart from the window's language"
+ },
+ "LANGUAGE_PICK_TITLE": {
+  "text": "Tambah bahasa lirik apa?",
+  "back": "Add which lyrics language?",
+  "why": "A short question like the other dialog titles"
+ },
+ "LANGUAGE_FILTER": {
+  "text": "Ketik nama bahasa",
+  "back": "Type the name of a language",
+  "why": "Same invitation as the country filter"
+ },
+ "editor_language_empty": {
+  "text": "Ketik atau tempel lirik bahasa {language}, dengan penanda bagian yang sama",
+  "back": "Type or paste the lyrics in the language {language}, with the same part marks",
+  "why": "Reads right with any language name"
+ },
+ "LANGUAGE_REMOVE": {
+  "text": "Hapus bahasa lirik",
+  "back": "Delete the lyrics language",
+  "why": "Verb and object; Hapus, since undo is offered"
+ },
+ "language_removed": {
+  "text": "Bahasa lirik {language} dihapus",
+  "back": "Lyrics language {language} deleted",
+  "why": "Plain statement like the other removal toasts"
+ },
+ "LANGUAGES_ON_SLIDE": {
+  "text": "Bahasa lirik di slide",
+  "back": "Lyrics languages on the slide",
+  "why": "A noun phrase about songs on the projector"
+ },
+ "LANGUAGES_HINT": {
+  "text": "Lagu yang punya bahasa ini tayang bersama di satu slide, urut dari atas ke bawah",
+  "back": "A song that has these languages goes up together on one slide, in order from top to bottom",
+  "why": "One sentence; 'tayang' is the one verb for being on the projector"
+ },
+ "LANGUAGES_USUAL": {
+  "text": "Seperti biasa",
+  "back": "As usual",
+  "why": "Pairs with the tile for this plan only"
+ },
+ "LANGUAGES_THIS_PLAN": {
+  "text": "Khusus rundown ini",
+  "back": "Only for this rundown",
+  "why": "Same words as the plan's own look tile"
+ },
+ "LIVE_LANGUAGES": {
+  "text": "Bahasa lirik yang tayang",
+  "back": "Lyrics languages on the projector",
+  "why": "Name of the row for a screen reader"
+ },
+ "only_language_showing": {
+  "text": "Hanya lirik bahasa {language} yang tayang",
+  "back": "Only the lyrics in the language {language} are up",
+  "why": "Says lyrics, as the reader asked; 40 characters with Indonesia, under 44"
+ },
+ "cmd_only_language": {
+  "text": "Tayangkan lirik bahasa {language} saja",
+  "back": "Put only the lyrics in the language {language} on the projector",
+  "why": "Still starts with the verb; 'lirik' keeps it apart from the window's language; 37 characters, under 40"
+ },
+ "CMD_ALL_LANGUAGES": {
+  "text": "Tayangkan semua bahasa lirik",
+  "back": "Put all the lyrics languages on the projector",
+  "why": "A command like the one before"
+ },
+ "ONBOARD_SING_TITLE": {
+  "text": "Gerejamu menyanyi dalam bahasa apa saja?",
+  "back": "In which languages does your church sing?",
+  "why": "A question like the other first-run questions"
+ },
+ "ONBOARD_SING_HINT": {
+  "text": "Lagu yang punya bahasa ini tayang bersama di satu slide. Pilihan ini bisa diubah nanti",
+  "back": "A song that has these languages goes up together on one slide. This choice can be changed later",
+  "why": "Two short sentences"
+ },
+ "languages_own_dropped": {
+  "text": "{name} kembali memakai bahasa lirik biasa",
+  "back": "{name} goes back to using the usual lyrics languages",
+  "why": "Same wording as the theme toast, with the round 24 term for song languages"
+ },
+ "match_language": {
+  "text": "Lirik {language}",
+  "back": "{language} lyrics",
+  "why": "Names the lyrics language with 'lirik', so a bare name is not read as the window's language or a country"
  }
 }

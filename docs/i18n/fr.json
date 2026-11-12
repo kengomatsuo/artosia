@@ -1408,20 +1408,10 @@
   "back": "Words taken from {source}. Compare with your copy.",
   "why": "checking advice kept"
  },
- "FIELD_SECOND": {
-  "text": "Traduction des paroles",
-  "back": "Translation of the words",
-  "why": "same word"
- },
  "LYRICS_PLACEHOLDER": {
   "text": "[Couplet 1]\nTu es bon\n\n[Refrain]\nGloire",
   "back": "[Verse 1] / You are good / [Chorus] / Glory",
   "why": "own word for a verse, space, 1, in brackets"
- },
- "SECOND_PLACEHOLDER": {
-  "text": "Mêmes parties et même ordre, traduits",
-  "back": "Same parts and same order, translated",
-  "why": "no full stop"
  },
  "MARK_VERSE": {
   "text": "Couplet",
@@ -1447,11 +1437,6 @@
   "text": "Fin",
   "back": "Ending",
   "why": "everyday word"
- },
- "BTN_ADD_SECOND": {
-  "text": "Ajouter une traduction",
-  "back": "Add a translation",
-  "why": "clearer than seconde langue"
  },
  "BTN_SAVE": {
   "text": "Valider",
@@ -3738,5 +3723,95 @@
   "text": "{day} {month}",
   "back": "{day} {month}",
   "why": "French order, no joining word"
+ },
+ "LANGUAGE_ADD": {
+  "text": "Ajouter une langue",
+  "back": "Add a language",
+  "why": "a plain action label, no colon"
+ },
+ "LANGUAGE_PICK_TITLE": {
+  "text": "Ajouter une langue des paroles",
+  "back": "Add a language of the words",
+  "why": "same phrase"
+ },
+ "LANGUAGE_FILTER": {
+  "text": "Taper un nom de langue",
+  "back": "Type a language name",
+  "why": "like the country filter"
+ },
+ "editor_language_empty": {
+  "text": "Écrivez ou collez les paroles en {language}, avec les mêmes marques de partie",
+  "back": "Write or paste the words in {language}, with the same part marks",
+  "why": "en {language} reads right for any name"
+ },
+ "LANGUAGE_REMOVE": {
+  "text": "Retirer cette langue",
+  "back": "Remove this language",
+  "why": "like other remove items"
+ },
+ "language_removed": {
+  "text": "Paroles retirées : {language}",
+  "back": "Words removed: {language}",
+  "why": "name last, no elision"
+ },
+ "LANGUAGES_ON_SLIDE": {
+  "text": "Langues des paroles",
+  "back": "Languages of the words",
+  "why": "same phrase in the plural"
+ },
+ "LANGUAGES_HINT": {
+  "text": "Le chant affiche ces langues ensemble sur une diapo, de haut en bas dans cet ordre",
+  "back": "The song shows these languages together on a slide, top to bottom in this order",
+  "why": "afficher names the languages' referent and the song does not project"
+ },
+ "LANGUAGES_USUAL": {
+  "text": "Langues par défaut",
+  "back": "Default languages",
+  "why": "pairs with Apparence par défaut"
+ },
+ "LANGUAGES_THIS_PLAN": {
+  "text": "Pour ce programme",
+  "back": "For this plan",
+  "why": "plain wording for a tile"
+ },
+ "LIVE_LANGUAGES": {
+  "text": "Langues des paroles",
+  "back": "Languages of the words",
+  "why": "same phrase"
+ },
+ "only_language_showing": {
+  "text": "Paroles en {language} seulement",
+  "back": "Words in {language} only",
+  "why": "plain statement"
+ },
+ "cmd_only_language": {
+  "text": "Projeter uniquement en {language}",
+  "back": "Project only in {language}",
+  "why": "en makes it grammatical with a bare name"
+ },
+ "CMD_ALL_LANGUAGES": {
+  "text": "Projeter toutes les langues",
+  "back": "Project all the languages",
+  "why": "verb like the others"
+ },
+ "ONBOARD_SING_TITLE": {
+  "text": "Dans quelles langues sont vos chants ?",
+  "back": "In which languages are your songs?",
+  "why": "question like the others"
+ },
+ "ONBOARD_SING_HINT": {
+  "text": "Un chant affiche ces langues ensemble sur une diapo. Choix modifiable plus tard",
+  "back": "A song shows these languages together on a slide. Choice changeable later",
+  "why": "same verb as the hint of the dialog"
+ },
+ "languages_own_dropped": {
+  "text": "{name} : langues par défaut rétablies",
+  "back": "{name}: default languages restored",
+  "why": "twin of look_own_dropped, same par défaut wording as LANGUAGES_USUAL"
+ },
+ "match_language": {
+  "text": "Paroles en {language}",
+  "back": "Words in {language}",
+  "why": "en before the bare name reads right for any initial"
  }
 }

@@ -473,23 +473,21 @@ impl Song {
         std::iter::once((self.lang.as_str(), self.lyrics.as_str())).chain(self.translations.iter().map(|t| (t.lang.as_str(), t.text.as_str())))
     }
 
-    /// The first further language's words, which the editor's one extra box shows; empty when
-    /// the song has none.
-    pub fn second_text(&self) -> &str {
-        self.translations.first().map_or("", |t| t.text.as_str())
+    /// Every language as (code, words), owned, for an editor to hold and give back to `set_texts`.
+    pub fn owned_texts(&self) -> Vec<(String, String)> {
+        self.texts().map(|(code, words)| (code.to_string(), words.to_string())).collect()
     }
 
-    /// Sets the first further language's words, keeping its code and every language after it;
-    /// empty words remove it.
-    pub fn set_second(&mut self, text: String) {
-        match (self.translations.first_mut(), text.trim().is_empty()) {
-            (Some(_), true) => {
-                self.translations.remove(0);
-            }
-            (Some(first), false) => first.text = text,
-            (None, false) => self.translations.push(Translation { lang: String::new(), text }),
-            (None, true) => {}
+    /// Sets every language from `texts`, the first language first. A further language with no
+    /// code and no words is nothing and is left out; one with a code is kept even with no words
+    /// yet, so a language added in the editor stays until it is removed.
+    pub fn set_texts(&mut self, texts: &[(String, String)]) {
+        let mut each = texts.iter();
+        if let Some((code, words)) = each.next() {
+            self.lang = code.clone();
+            self.lyrics = words.clone();
         }
+        self.translations = each.filter(|(code, words)| !code.is_empty() || !words.trim().is_empty()).map(|(lang, text)| Translation { lang: lang.clone(), text: text.clone() }).collect();
     }
 
     /// Sections in the order they are sung: the written order, or `order` when it names
@@ -691,16 +689,19 @@ mod tests {
     }
 
     #[test]
-    fn the_editor_s_second_box_keeps_the_codes_and_the_languages_after_it() {
-        let mut song = Song { lang: "id".into(), ..Song::default() };
-        song.set_second("[1]\nsatu\n".into());
-        assert_eq!(song.translations, [Translation { lang: String::new(), text: "[1]\nsatu\n".into() }]);
-        song.translations[0].lang = "en".into();
-        song.translations.push(Translation { lang: "zh-Hans".into(), text: "x".into() });
-        song.set_second("[1]\nedited\n".into());
-        assert_eq!((song.second_text(), song.translations[0].lang.as_str(), song.translations.len()), ("[1]\nedited\n", "en", 2));
-        song.set_second("  ".into());
-        assert_eq!((song.translations.len(), song.translations[0].lang.as_str()), (1, "zh-Hans"));
+    fn the_editor_gives_every_language_back_and_keeps_a_named_empty_one() {
+        let mut song = Song { lang: "id".into(), lyrics: "[1]\nsatu\n".into(), ..Song::default() };
+        let mut texts = song.owned_texts();
+        assert_eq!(texts, [("id".to_string(), "[1]\nsatu\n".to_string())]);
+        texts.push(("en".into(), String::new()));
+        texts.push((String::new(), String::new()));
+        texts.push((String::new(), "[1]\nuno\n".into()));
+        song.set_texts(&texts);
+        assert_eq!(song.translations, [Translation { lang: "en".into(), text: String::new() }, Translation { lang: String::new(), text: "[1]\nuno\n".into() }]);
+        assert_eq!(song.owned_texts().len(), 3);
+        // The first language's code and words are the song's own.
+        song.set_texts(&[("zh-Hans".into(), "x".into())]);
+        assert_eq!((song.lang.as_str(), song.lyrics.as_str(), song.translations.len()), ("zh-Hans", "x", 0));
     }
 
     #[test]

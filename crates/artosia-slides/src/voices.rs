@@ -84,18 +84,24 @@ pub fn column(items: &[(usize, &str)], width: f32, height: f32, gap: f32, ink_of
     blocks
 }
 
-/// The room a slide's text has on the 1920x1080 screen every size is a fraction of, with the
-/// foot of the slide (credit or place) kept free: the projector's own margins.
-fn room() -> (f32, f32) {
-    let (mx, my) = ((1920.0f32 * 0.07).round(), (1080.0f32 * 0.085).round());
-    (1920.0 - 2.0 * mx, 1080.0 - 2.0 * my - 64.0)
+/// The room a slide's text has on a screen `size` (width, height in pixels), as the projector
+/// leaves it: every size is a fraction of the height, so the room is measured on a screen 1080
+/// high and as wide as the real one is, with the foot of the slide (credit or place) kept free.
+fn room(size: (f32, f32)) -> (f32, f32) {
+    let width = (1080.0 * size.0 / size.1.max(1.0)).round();
+    let (mx, my) = ((width * 0.07).round(), (1080.0f32 * 0.085).round());
+    (width - 2.0 * mx, 1080.0 - 2.0 * my - 64.0)
 }
 
-/// Whether blocks of lines, one per language, can be drawn at a readable size in a look: the
-/// test `song_deck` gives the deck builder. It measures on the 1920x1080 screen, because a
-/// preview is that screen scaled and so breaks where the projector does.
-pub fn fits(look: &Look) -> impl Fn(&[&[String]]) -> bool + use<> {
-    let (width, height) = room();
+/// The shape of a screen nobody has measured: the projector most rooms have.
+pub const WIDESCREEN: (f32, f32) = (1920.0, 1080.0);
+
+/// Whether blocks of lines, one per language, can be drawn at a readable size in a look on a
+/// screen `size`: the test `song_deck` gives the deck builder. A preview is the 1920x1080 view
+/// scaled, so it breaks where a 16:9 projector does; a projector of another shape breaks where
+/// `size` says, and the operator passes the real one once the projector has reported it.
+pub fn fits(look: &Look, size: (f32, f32)) -> impl Fn(&[&[String]]) -> bool + use<> {
+    let (width, height) = room(size);
     let face = face(look);
     let base = (96.0 * look.size).round();
     move |blocks: &[&[String]]| {
@@ -106,10 +112,10 @@ pub fn fits(look: &Look) -> impl Fn(&[&[String]]) -> bool + use<> {
 }
 
 /// A song's slides in the languages `languages` picks, split where the blocks would not be
-/// readable in `look`. The look decides the split (its font, weight and size), so a deck is
-/// built again when the look changes.
-pub fn song_deck(song: &Song, max_lines: usize, licence: &str, languages: &Languages, look: &Look) -> artosia_core::deck::Deck {
-    artosia_core::deck::song_deck_in(song, max_lines, licence, languages, &fits(look))
+/// readable in `look` on a screen `size`. The look and the shape decide the split, so a deck is
+/// built again when either changes.
+pub fn song_deck(song: &Song, max_lines: usize, licence: &str, languages: &Languages, look: &Look, size: (f32, f32)) -> artosia_core::deck::Deck {
+    artosia_core::deck::song_deck_in(song, max_lines, licence, languages, &fits(look, size))
 }
 
 #[cfg(test)]
@@ -138,7 +144,7 @@ mod tests {
 
     #[test]
     fn a_verse_in_three_languages_fits_and_eight_lines_in_each_do_not() {
-        let fits = fits(&Look::default());
+        let fits = fits(&Look::default(), WIDESCREEN);
         let song = three_languages();
         let block = |at: usize| song.texts().nth(at).map(|(_, text)| artosia_core::song::parse_lyrics(text)[1].lines.clone()).unwrap_or_default();
         let four: Vec<Vec<String>> = (0..3).map(block).collect();
@@ -152,20 +158,32 @@ mod tests {
     }
 
     #[test]
+    fn the_split_follows_the_shape_of_the_real_projector() {
+        let look = Look::default();
+        let song = three_languages();
+        let verse: Vec<Vec<String>> = (0..3).map(|at| song.texts().nth(at).map(|(_, text)| artosia_core::song::parse_lyrics(text)[1].lines.clone()).unwrap_or_default()).collect();
+        let refs: Vec<&[String]> = verse.iter().map(Vec::as_slice).collect();
+        assert!(fits(&look, WIDESCREEN)(&refs));
+        // The same verse on a screen as narrow as a phone stood on its end has no room.
+        assert!(!fits(&look, (608.0, 1080.0))(&refs));
+        assert!(room((1440.0, 1080.0)).0 < room(WIDESCREEN).0 && room((2560.0, 1080.0)).0 > room(WIDESCREEN).0);
+    }
+
+    #[test]
     fn the_deck_splits_exactly_where_the_screen_would_go_under_the_floor() {
         let look = Look::default();
-        let deck = song_deck(&eight_lines(), 0, "", &all(), &look);
+        let deck = song_deck(&eight_lines(), 0, "", &all(), &look, WIDESCREEN);
         assert_eq!(deck.slides.iter().map(|slide| slide.part).collect::<Vec<_>>(), [Some((1, 2)), Some((2, 2))]);
         // Every slide of the split is drawn at or above the floor, in the size the screen will use.
         for slide in &deck.slides {
             let items = of(slide);
             let texts: Vec<&str> = items.iter().map(|(_, words)| *words).collect();
-            let (w, h) = room();
+            let (w, h) = room(WIDESCREEN);
             let size = fit(&texts, face(&look), w, h, gap(1080.0), (96.0f32 * look.size).round(), HARD_FLOOR);
             assert!(size >= FLOOR, "{size}");
         }
         // The same song in one language is one slide, however long.
-        let alone = song_deck(&eight_lines(), 0, "", &Languages::default(), &look);
+        let alone = song_deck(&eight_lines(), 0, "", &Languages::default(), &look, WIDESCREEN);
         assert_eq!((alone.slides.len(), alone.slides[0].part), (1, None));
     }
 
@@ -174,18 +192,18 @@ mod tests {
     fn building_a_deck_of_a_three_language_song_is_quick() {
         let look = Look::default();
         let song = three_languages();
-        let _ = song_deck(&song, 4, "", &all(), &look);
+        let _ = song_deck(&song, 4, "", &all(), &look, WIDESCREEN);
         let start = std::time::Instant::now();
         let runs = 20;
         let mut slides = 0;
         for _ in 0..runs {
-            slides = song_deck(&song, 4, "", &all(), &look).slides.len();
+            slides = song_deck(&song, 4, "", &all(), &look, WIDESCREEN).slides.len();
         }
         let plain = start.elapsed() / runs;
         let start = std::time::Instant::now();
         let mut split = 0;
         for _ in 0..runs {
-            split = song_deck(&eight_lines(), 0, "", &all(), &look).slides.len();
+            split = song_deck(&eight_lines(), 0, "", &all(), &look, WIDESCREEN).slides.len();
         }
         let cut = start.elapsed() / runs;
         eprintln!("DECK three languages: {slides} slides in {plain:?}; eight-line section split into {split} slides in {cut:?}");

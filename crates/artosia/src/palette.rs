@@ -70,10 +70,14 @@ pub enum Command {
     Bibles,
     Tour,
     FirstRun,
+    /// Which languages a song's slides show together (board card MULTI1).
+    Languages,
+    /// All the languages together again, while one shows alone.
+    AllLanguages,
 }
 
 impl Command {
-    pub const ALL: [Command; 39] = [
+    pub const ALL: [Command; 41] = [
         Command::StartService,
         Command::Next,
         Command::Previous,
@@ -97,6 +101,8 @@ impl Command {
         Command::PlanRename,
         Command::PlanDelete,
         Command::Looks,
+        Command::Languages,
+        Command::AllLanguages,
         Command::Backdrops,
         Command::Settings,
         Command::Screens,
@@ -138,6 +144,8 @@ impl Command {
             Command::Keys => t::CMD_KEYS(),
             Command::Tour => t::CMD_TOUR(),
             Command::FirstRun => t::CMD_FIRST_RUN(),
+            Command::Languages => t::LANGUAGES_ON_SLIDE(),
+            Command::AllLanguages => t::CMD_ALL_LANGUAGES(),
             Command::StartService => t::CMD_START(),
             Command::Next => t::TIP_NEXT(),
             Command::Previous => t::CMD_PREVIOUS(),
@@ -182,6 +190,9 @@ impl Command {
             Command::Keys => t::CMD_KEYS_DETAIL(),
             Command::Tour => t::CMD_TOUR_DETAIL(),
             Command::FirstRun => t::CMD_FIRST_RUN_DETAIL(),
+            Command::Languages => t::LANGUAGES_HINT(),
+            // A command that changes which languages show is named by what it belongs to, as a look is.
+            Command::AllLanguages => t::LANGUAGES_ON_SLIDE(),
             Command::StartService => t::CMD_START_DETAIL(),
             Command::Next => t::CMD_NEXT_DETAIL(),
             Command::Previous => t::CMD_PREVIOUS_DETAIL(),
@@ -230,6 +241,8 @@ impl Command {
             Command::Keys => &["shortcuts", "help", "hotkeys", "pintasan", "tombol", "bantuan"],
             Command::Tour => &["tutorial", "help", "guide", "walkthrough", "intro", "onboarding", "panduan", "bantuan", "tur", "pengenalan", "cara pakai"],
             Command::FirstRun => &["setup", "set up", "first run", "first start", "welcome", "onboarding", "again", "language", "country", "region"],
+            Command::Languages => &["language", "languages", "translation", "translations", "lyrics language", "bilingual", "bahasa", "bahasa lagu", "terjemahan", "dua bahasa"],
+            Command::AllLanguages => &["language", "languages", "both", "together", "every language", "bahasa", "semua bahasa", "bersama"],
             Command::StartService => &["start live", "go live", "begin", "mulai", "mulai ibadah", "tayangkan"],
             Command::Next => &["forward", "lanjut", "berikutnya", "maju"],
             Command::Previous => &["back", "sebelumnya", "kembali", "mundur"],
@@ -274,6 +287,7 @@ impl Command {
             // it, and is told what to open first when Preview holds something else.
             Command::Earlier => !app.history.is_empty(),
             Command::StartHere => app.plan.items.iter().any(|item| matches!(item.entry, artosia_core::plan::PlanEntry::Song { .. })),
+            Command::AllLanguages => app.only_language.is_some(),
             _ => true,
         }
     }
@@ -318,6 +332,8 @@ pub enum Hit {
     Look { index: usize, name: String },
     Bible { code: String, name: String },
     Command(Command),
+    /// Show one of the live song's languages alone.
+    OnlyLanguage { code: String, name: String },
     Countdown(u32),
     Message(String),
     /// A message for the musicians, on the stage screen only.
@@ -694,6 +710,12 @@ impl App {
             let doc = Doc::new(format!("look:{}", look.name), "look", t::look_label(&look.name)).aliases(&["look", "theme", "background", "tampilan", "tema", "latar"]).aliases(&[look.name.as_str()]);
             out.push((doc, Hit::Look { index, name: t::look_label(&look.name) }));
         }
+        // One command for each language the live song shows, as a chip of the Live pane is.
+        for (code, name, _) in self.live_languages() {
+            let words = t::cmd_only_language(&artosia_core::languages::name_in_sentence(&code, t::language_code()));
+            let doc = Doc::new(format!("onlylanguage:{code}"), "action", words).detail(t::LANGUAGES_ON_SLIDE()).aliases(&["language", "alone", "only", "just", "bahasa", "saja", "hanya", name.as_str()]);
+            out.push((doc, Hit::OnlyLanguage { code, name }));
+        }
         for (_, language) in crate::languages::listed() {
             let doc = Doc::new(format!("language:{}", language.code), "language", language.name).aliases(&["language", "bahasa"]).aliases(language.aliases);
             out.push((doc, Hit::Language(language.code)));
@@ -960,6 +982,10 @@ impl App {
                 self.close_palette();
                 self.set_language(code);
             }
+            Hit::OnlyLanguage { code, .. } => {
+                self.close_palette();
+                self.toggle_only_language(&code);
+            }
             Hit::Message(text) => {
                 self.close_palette();
                 self.message.replace_text(text);
@@ -1014,6 +1040,8 @@ impl App {
             Command::Keys => self.sheet = Sheet::Keys,
             Command::Tour => self.start_tour(),
             Command::FirstRun => self.start_onboarding(),
+            Command::Languages => self.open_languages(self.plan.languages.is_some()),
+            Command::AllLanguages => self.show_all_languages(),
             Command::StartService => self.start_service(),
             Command::Next => self.next(),
             Command::Previous => self.previous(),

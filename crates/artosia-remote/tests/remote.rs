@@ -42,8 +42,8 @@ fn sample() -> RemoteState {
     RemoteState {
         item_title: "Sample".into(),
         slides: vec![
-            RemoteSlide { label: "Verse 1".into(), text: "one".into() },
-            RemoteSlide { label: "Chorus".into(), text: "two".into() },
+            RemoteSlide { label: "Verse 1".into(), text: "one".into(), more: vec!["uno".into(), "yi".into()] },
+            RemoteSlide { label: "Chorus".into(), text: "two".into(), ..Default::default() },
         ],
         live_index: Some(0),
         ..Default::default()
@@ -243,8 +243,8 @@ fn rich() -> RemoteState {
     RemoteState {
         item_title: "Sample".into(),
         slides: vec![
-            RemoteSlide { label: "Verse 1".into(), text: "one".into() },
-            RemoteSlide { label: "Chorus".into(), text: "two".into() },
+            RemoteSlide { label: "Verse 1".into(), text: "one".into(), more: vec!["uno".into(), "yi".into()] },
+            RemoteSlide { label: "Chorus".into(), text: "two".into(), ..Default::default() },
         ],
         live_index: Some(0),
         logo_on: true,
@@ -276,6 +276,9 @@ fn state_carries_every_new_field() {
     let v: Value = serde_json::from_str(&b).unwrap();
     assert_eq!(v["logo"], true);
     assert_eq!(v["logo_ready"], true);
+    // Each shown language's lines travel with the slide, in order; a one-language slide sends none.
+    assert_eq!(v["slides"][0], json!({"label": "Verse 1", "text": "one", "more": ["uno", "yi"]}));
+    assert_eq!(v["slides"][1]["more"], json!([]));
     assert_eq!(v["plan"][0], json!({"id": 7, "title": "Sample", "kind": "song", "live": true}));
     assert_eq!(v["plan"][1]["kind"], "heading");
     assert_eq!(v["sections"][1], json!({"label": "Chorus", "short": "C", "group": 1, "slide": 1}));

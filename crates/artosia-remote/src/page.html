@@ -89,8 +89,14 @@ svg.ic { width: 22px; height: 22px; flex: 0 0 auto; fill: none; stroke: currentC
 #slide { position: relative; margin: 0; background: #14141c; aspect-ratio: 16 / 9; max-height: 42vh; width: 100%; display: flex; align-items: center; justify-content: center; padding: 14px 18px; text-align: center; outline: 3px solid transparent; outline-offset: -3px; }
 #slide.onair { outline-color: var(--live); }
 #slide.kept { outline-color: var(--warn); }
-#slide p { margin: 0; font-weight: 700; font-size: clamp(1.15rem, 5.4vw, 1.75rem); line-height: 1.25; white-space: pre-wrap; overflow-wrap: anywhere; transition: opacity 120ms; }
-#slide.kept p { opacity: 0.4; }
+#slide p, #slide .voices { margin: 0; font-weight: 700; font-size: clamp(1.15rem, 5.4vw, 1.75rem); line-height: 1.25; white-space: pre-wrap; overflow-wrap: anywhere; transition: opacity 120ms; }
+#slide.kept .block { opacity: 0.4; }
+#slide .voices { display: flex; flex-direction: column; gap: 0.5em; min-width: 0; }
+.block { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+#slide .block.further { font-size: 0.8em; font-weight: 600; opacity: 0.72; }
+.tile .block.further { font-size: 0.85em; opacity: 0.72; }
+.tile .block { margin-top: 0.25em; }
+.tile .block:first-child { margin-top: 0; }
 #slide .tag { position: absolute; left: 10px; top: 8px; max-width: 45%; overflow: hidden; text-overflow: ellipsis; }
 #slide .tag.name { background: rgba(255,255,255,0.14); color: var(--text); }
 #slide .state { position: absolute; right: 10px; top: 8px; max-width: 55%; overflow: hidden; text-overflow: ellipsis; }
@@ -234,7 +240,7 @@ svg.ic { width: 22px; height: 22px; flex: 0 0 auto; fill: none; stroke: currentC
     <section id="pane-live" class="screen" role="tabpanel">
       <div id="stage">
         <div id="now"><b id="title"></b><span class="pill warn" id="clock-pill" data-clock-pill data-clock hidden></span><span id="count"></span></div>
-        <div id="slide"><span class="pill tag name" id="live-tag"></span><span class="pill state" id="live-state"></span><p id="live-text"></p></div>
+        <div id="slide"><span class="pill tag name" id="live-tag"></span><span class="pill state" id="live-state"></span><div id="live-text" class="voices"></div></div>
         <div id="steps">
           <button class="press" type="button" data-act="prev"><svg class="ic" aria-hidden="true"><use href="#i-up"/></svg><span data-i="back"></span></button>
           <button class="go press" type="button" data-act="next"><svg class="ic" aria-hidden="true"><use href="#i-down"/></svg><span data-i="next_btn"></span></button>
@@ -684,12 +690,18 @@ function view(s) {
   };
 }
 
+/* A slide's languages as blocks in the order the room reads them: the first as it is, the further ones dimmer and smaller. */
+function fillBlocks(box, sl, fallback) {
+  const all = sl ? [sl.text].concat(sl.more || []) : [fallback];
+  box.replaceChildren(...all.map((text, i) => el("p", "block" + (i ? " further" : ""), text)));
+}
+
 function render() {
   const s = state;
   const v = view(s);
   $("title").textContent = v.title;
   $("count").textContent = v.count;
-  $("live-text").textContent = v.text;
+  fillBlocks($("live-text"), v.cur, v.text);
   $("live-tag").textContent = v.label;
   $("slide").classList.toggle("onair", v.onair);
   $("slide").classList.toggle("kept", v.kept && !!v.cur);
@@ -732,6 +744,12 @@ function renderSections(s, v) {
   }
 }
 
+function tile(sl) {
+  const box = el("span", "tile");
+  fillBlocks(box, sl, "");
+  return box;
+}
+
 /* The slides as labelled thumbnails: a strip in the drawer, two columns when it is pulled up. */
 function renderSlides(s, v) {
   const list = $("list");
@@ -740,7 +758,7 @@ function renderSlides(s, v) {
     s.slides.forEach((sl, i) => {
       const b = el("button", "thumb press");
       b.type = "button";
-      b.append(el("span", "cap", (i + 1) + (sl.label ? " " + nice(sl.label) : "")), el("span", "tile", sl.text));
+      b.append(el("span", "cap", (i + 1) + (sl.label ? " " + nice(sl.label) : "")), tile(sl));
       b.addEventListener("click", () => send({ cmd: "goto", index: i }));
       list.append(b);
     });

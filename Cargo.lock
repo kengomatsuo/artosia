@@ -229,6 +229,7 @@ dependencies = [
 name = "artosia-core"
 version = "0.0.1"
 dependencies = [
+ "artosia-locale",
  "flate2",
  "quick-xml 0.42.0",
  "rusqlite",

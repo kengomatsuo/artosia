@@ -1,4 +1,4 @@
-//! The first run's window: a card of seven pages, one question on each, drawn from what
+//! The first run's window: a card of eight pages, one question on each, drawn from what
 //! `crate::onboard` says. The state machine decides; this file draws it, hands it the presses
 //! and keys, and carries out what comes back (`App::onboard_perform`).
 //!
@@ -135,6 +135,7 @@ impl App {
             // heading: only a Bible the person chose is brought into view.
             Page::Bible => ("onboard-list", onboard.bible.as_ref().filter(|_| onboard.bible_chosen).map(|(id, _)| format!("bible-{id}"))),
             Page::Songs => ("onboard-list", None),
+            Page::Sing => ("onboard-filter", None),
             Page::Screens | Page::Ready | Page::Done => ("onboard-primary", None),
         };
         self.onboard_work.focus = Some(focus);
@@ -155,6 +156,11 @@ impl App {
                     }
                     self.desk.arrange();
                     self.onboard_sync_pick();
+                }
+                Effect::SaveSongLanguages(list) => {
+                    self.settings.song_languages = list;
+                    self.touch_settings();
+                    self.refresh_decks();
                 }
                 Effect::LoadCatalogue => {
                     if !rune::is_headless() {
@@ -337,6 +343,19 @@ impl App {
         self.onboard_do(|onboard| onboard.pick_songs(row));
     }
 
+    fn onboard_tick(&mut self, code: &str) {
+        if let Some(onboard) = self.onboard.as_mut() {
+            onboard.tick_language(code);
+        }
+    }
+
+    fn onboard_sing_query_changed(&mut self) {
+        if let Some(onboard) = self.onboard.as_mut() {
+            onboard.sing_query_changed();
+            self.onboard_work.scroll = Some(format!("onboard-lang-{}", onboard.sing_cursor));
+        }
+    }
+
     fn onboard_query_changed(&mut self) {
         if let Some(onboard) = self.onboard.as_mut() {
             onboard.query_changed();
@@ -365,6 +384,7 @@ impl App {
                 Page::Language => Some(format!("onboard-row-{}", onboard.language)),
                 Page::Country => Some(format!("onboard-row-{}", onboard.country)),
                 Page::Bible => onboard.bible.as_ref().map(|(id, _)| format!("bible-{id}")),
+                Page::Sing => Some(format!("onboard-lang-{}", onboard.sing_cursor)),
                 _ => None,
             };
             if let Some(key) = key {
@@ -400,6 +420,21 @@ impl App {
                     onboard.query.focused = true;
                 }
                 self.onboard_query_changed();
+            }
+            // On the languages page the space bar ticks the language the arrows rest on, and any other typing filters.
+            Key::Text(typed) if !focused && self.onboard.as_ref().is_some_and(|onboard| onboard.page == Page::Sing) && typed.chars().all(|c| !c.is_control()) => {
+                if typed == " " {
+                    let cursor = self.onboard.as_ref().map(|onboard| onboard.sing_cursor.clone()).unwrap_or_default();
+                    if !cursor.is_empty() {
+                        self.onboard_tick(&cursor);
+                    }
+                } else {
+                    if let Some(onboard) = self.onboard.as_mut() {
+                        onboard.sing_query.insert(typed);
+                        onboard.sing_query.focused = true;
+                    }
+                    self.onboard_sing_query_changed();
+                }
             }
             _ => {}
         }
@@ -532,6 +567,7 @@ fn glyph(page: Page) -> &'static rune::Icon {
         Page::Language | Page::Country => &icons::GLOBE,
         Page::Bible => &icons::BOOK,
         Page::Songs => &icons::SONG,
+        Page::Sing => &icons::GLOBE,
         Page::Screens => &icons::SCREEN,
         Page::Ready => &icons::IMPORT,
         Page::Done => &icons::CHECK,
@@ -621,6 +657,62 @@ fn countries_page(o: &Onboard, k: &Kit) -> El {
                 let Some((code, name)) = o.visible_countries().get(at).copied() else { return el() };
                 let (on, pick) = (code == o.country, code.to_string());
                 col().w_full().h(ROW + 2.0).child(option_row(theme::kit(), format!("onboard-row-{code}"), name.to_string(), on, ROW, move |s: &mut App| s.onboard_pick_country(&pick)).child(row_text(theme::kit(), name.to_string(), on)))
+            },
+        )
+    };
+    col().w_full().grow(1.0).min_h(0.0).gap(space::S3).child(field).child(list_box(k, inside))
+}
+
+/// A square tick box: the languages of this page are many, so each is ticked on its own.
+fn tick_box(k: &Kit, on: bool) -> El {
+    let square = el().size(18.0, 18.0).radius(4.0).center().a11y_hidden();
+    if on { square.fill(theme::accent()).child(icon(&icons::CHECK, 14.0).color(rune::Color::WHITE)) } else { square.border(1.5, k.c.border_strong) }
+}
+
+/// Which languages the church sings in: a filter and a list with ticks, the country's languages
+/// first. The ticked ones are shown together on a slide, in the order they were ticked.
+fn sing_page(o: &Onboard, k: &Kit) -> El {
+    let field = TextInput::new(&o.sing_query)
+        .width(None)
+        .height(38.0)
+        .label(t::LANGUAGE_FILTER())
+        .placeholder(t::LANGUAGE_FILTER())
+        .leading_icon(&rune_kit::glyphs::SEARCH)
+        .on_edit(|s: &mut App| match s.onboard.as_mut() {
+            Some(onboard) => &mut onboard.sing_query,
+            None => &mut s.spare_edit,
+        })
+        .on_change(|s: &mut App, _: &mut Tx| s.onboard_sing_query_changed())
+        .on_key(|s: &mut App, ev: &KeyEvent, tx: &mut Tx| match ev.key {
+            Key::Down | Key::Up | Key::PageDown | Key::PageUp | Key::Enter | Key::Escape => s.onboard_key(ev, tx),
+            _ => false,
+        })
+        .build(k)
+        .key("onboard-filter");
+    let visible = o.visible_languages();
+    let inside = if visible.is_empty() {
+        col().w_full().h(ROW).center_y().px(space::S4).child(crate::ui::widgets::wrapped(t::nothing_found(o.sing_query.text.trim())).font(type_::BODY).color(k.c.text_muted).wrap())
+    } else {
+        col().w_full().growth(GrowthSpec::default()).virtual_rows(
+            visible.len(),
+            ROW + 2.0,
+            |s: &App, at| match s.onboard.as_ref().and_then(|onboard| onboard.visible_languages().get(at).map(|(code, _)| code.clone())) {
+                Some(code) => format!("onboard-lang-{code}").into(),
+                None => format!("onboard-gap-{at}").into(),
+            },
+            |s: &App, at| {
+                let Some(o) = s.onboard.as_ref() else { return el() };
+                let Some((code, name)) = o.visible_languages().get(at).cloned() else { return el() };
+                let (on, here, pick) = (o.sing.contains(&code), o.sing_cursor == code, code.clone());
+                let k = theme::kit();
+                let mut line = row().key(format!("onboard-lang-{code}")).role("option").label(name.clone()).w_full().h(ROW).px(space::S4).gap(space::S3).center_y().radius(k.radius.md).hover(k.c.hover).cursor(rune::Cursor::Pointer);
+                if on {
+                    line = line.fill(theme::accent().alpha(0.18));
+                }
+                if here {
+                    line = line.border(1.0, theme::accent());
+                }
+                col().w_full().h(ROW + 2.0).child(line.child(tick_box(k, on)).child(row_text(k, name, on)).on_press(move |s: &mut App| s.onboard_tick(&pick)))
             },
         )
     };
@@ -852,6 +944,7 @@ pub(crate) fn view(s: &App, cx: &mut Cx<App>, k: &Kit, layer: &mut Vec<El>) {
         Page::Country => (t::ONBOARD_COUNTRY_TITLE(), Some(t::ONBOARD_COUNTRY_HINT())),
         Page::Bible => (t::ONBOARD_BIBLE_TITLE(), Some(t::ONBOARD_BIBLE_HINT())),
         Page::Songs => (t::ONBOARD_SONGS_TITLE(), None),
+        Page::Sing => (t::ONBOARD_SING_TITLE(), Some(t::ONBOARD_SING_HINT())),
         Page::Screens if o.two_screens() || o.shown.is_some() => (t::ONBOARD_SCREENS_TITLE(), Some(t::ONBOARD_SCREENS_HINT())),
         Page::Screens => (t::ONBOARD_NO_PROJECTOR(), Some(t::ONBOARD_NO_PROJECTOR_HINT())),
         Page::Ready => (t::ONBOARD_READY_TITLE(), Some(t::ONBOARD_READY_HINT())),
@@ -862,6 +955,7 @@ pub(crate) fn view(s: &App, cx: &mut Cx<App>, k: &Kit, layer: &mut Vec<El>) {
         Page::Country => countries_page(o, k),
         Page::Bible => bible_page(s, o, k),
         Page::Songs => songs_page(o, k),
+        Page::Sing => sing_page(o, k),
         Page::Screens => screens_page(o, k),
         Page::Ready => ready_page(o, k),
         Page::Done => done_page(k),
@@ -940,6 +1034,13 @@ impl App {
                 }
             }
             "songs" => onboard.page = Page::Songs,
+            "sing" => {
+                onboard.page = Page::Sing;
+                // The window's own language is ticked already; two more are ticked by hand.
+                onboard.tick_language("en");
+                onboard.tick_language("su");
+                onboard.sing_cursor = "jv".to_string();
+            }
             "screens" => {
                 onboard.page = Page::Screens;
                 onboard.screens = two();
@@ -969,6 +1070,7 @@ impl App {
             self.desk.picked = Some("demoa".to_string());
         }
         self.onboard_work.scroll = Some(match onboard.page {
+            Page::Sing => String::new(),
             Page::Country => row_to_reveal(onboard.visible_countries().iter().map(|(code, _)| *code), &onboard.country),
             _ => String::new(),
         });

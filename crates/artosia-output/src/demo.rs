@@ -65,7 +65,7 @@ pub fn languages(codes: &[&str], look_name: &str, split: bool) -> OutputState {
     let look = look(look_name);
     let shown = Languages { shown: codes.iter().map(|code| code.to_string()).collect(), solo: None };
     let max_lines = if split { 0 } else { look.max_lines };
-    let deck = voices::song_deck(&song, max_lines, "", &shown, &look);
+    let deck = voices::song_deck(&song, max_lines, "", &shown, &look, voices::WIDESCREEN);
     let at = deck.slides.iter().position(|slide| slide.label == "Chorus" || split).unwrap_or(0);
     let chip = |text: &str, group: usize, active: bool| StageChip { text: text.to_string(), group, active };
     let stage = StageInfo {

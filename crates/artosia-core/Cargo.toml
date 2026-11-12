@@ -6,6 +6,7 @@ license.workspace = true
 description = "Artosia's library, search, Bible and service plan. No UI."
 
 [dependencies]
+artosia-locale = { path = "../artosia-locale" }
 flate2 = "1.1.11"
 quick-xml = "0.42.0"
 rusqlite = { version = "0.41.1", features = ["bundled"] }

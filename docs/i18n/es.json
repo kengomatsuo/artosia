@@ -1408,20 +1408,10 @@
   "back": "Words from {source}. Compare them with your church's before using them.",
   "why": "Checking advice kept."
  },
- "FIELD_SECOND": {
-  "text": "Letra en otro idioma",
-  "back": "Words in another language",
-  "why": "A phrase."
- },
  "LYRICS_PLACEHOLDER": {
   "text": "[Estrofa 1]\nTu paz guía\n\n[Coro]\nAleluya",
   "back": "[Verse 1] / Your peace guides / [Chorus] / Hallelujah",
   "why": "Markers are the section names; sample lines kept short to fit 40 in all."
- },
- "SECOND_PLACEHOLDER": {
-  "text": "Escribe las mismas partes, en el mismo orden",
-  "back": "Write the same parts in the same order",
-  "why": "No full stop."
  },
  "MARK_VERSE": {
   "text": "Estrofa",
@@ -1447,11 +1437,6 @@
   "text": "Final",
   "back": "Ending",
   "why": "Everyday musician word."
- },
- "BTN_ADD_SECOND": {
-  "text": "Agregar segundo idioma",
-  "back": "Add second language",
-  "why": "Agregar."
  },
  "BTN_SAVE": {
   "text": "Guardar",
@@ -3735,5 +3720,95 @@
   "text": "{day} de {month}",
   "back": "{day} of {month}",
   "why": "Spanish date order."
+ },
+ "LANGUAGE_ADD": {
+  "text": "Agregar idioma de la letra",
+  "back": "Add language of the words",
+  "why": "Plainer than 'de canto'; 26 of 28."
+ },
+ "LANGUAGE_PICK_TITLE": {
+  "text": "¿Qué idioma de la letra?",
+  "back": "Which language of the words?",
+  "why": "Same phrase as the button; 24 of 30."
+ },
+ "LANGUAGE_FILTER": {
+  "text": "Escribe un idioma",
+  "back": "Type a language",
+  "why": "Same invitation as the country filter."
+ },
+ "editor_language_empty": {
+  "text": "Escribe o pega la letra en {language} con las mismas marcas de estrofa y coro",
+  "back": "Type or paste the words in {language} with the same verse and chorus marks",
+  "why": "Uses Estrofa and Coro as the table does; 'parte' was a calque."
+ },
+ "LANGUAGE_REMOVE": {
+  "text": "Quitar idioma de la letra",
+  "back": "Remove language of the words",
+  "why": "Same phrase as the add item; 25 of 26."
+ },
+ "language_removed": {
+  "text": "Se quitó la letra en {language}",
+  "back": "The words in {language} were removed",
+  "why": "Active, plain."
+ },
+ "LANGUAGES_ON_SLIDE": {
+  "text": "Idiomas en la diapositiva",
+  "back": "Languages on the slide",
+  "why": "Slide word kept."
+ },
+ "LANGUAGES_HINT": {
+  "text": "Las canciones con estos idiomas los muestran juntos en una diapositiva, de arriba abajo",
+  "back": "Songs with these languages show them together on one slide, from top to bottom",
+  "why": "One sentence."
+ },
+ "LANGUAGES_USUAL": {
+  "text": "Idiomas generales",
+  "back": "General languages",
+  "why": "Pairs with Diseño general."
+ },
+ "LANGUAGES_THIS_PLAN": {
+  "text": "Solo para este culto",
+  "back": "Only for this plan",
+  "why": "Same words as the design pair."
+ },
+ "LIVE_LANGUAGES": {
+  "text": "Idiomas que se muestran",
+  "back": "Languages being shown",
+  "why": "Screen reader name."
+ },
+ "only_language_showing": {
+  "text": "Solo se muestra {language}",
+  "back": "Only {language} is showing",
+  "why": "Plain statement."
+ },
+ "cmd_only_language": {
+  "text": "Mostrar solo {language}",
+  "back": "Show only {language}",
+  "why": "Starts with the verb like other commands."
+ },
+ "CMD_ALL_LANGUAGES": {
+  "text": "Mostrar todos los idiomas",
+  "back": "Show all languages",
+  "why": "Same start."
+ },
+ "ONBOARD_SING_TITLE": {
+  "text": "¿En qué idiomas canta tu iglesia?",
+  "back": "In which languages does your church sing?",
+  "why": "Question in the first-run voice."
+ },
+ "ONBOARD_SING_HINT": {
+  "text": "Si hay varios, se muestran juntos en una diapositiva. Podrás cambiarlo después",
+  "back": "If there are several, they show together on one slide. You can change it later",
+  "why": "Two short sentences."
+ },
+ "languages_own_dropped": {
+  "text": "«{name}» usa de nuevo los idiomas habituales",
+  "back": "«{name}» uses the usual languages again",
+  "why": "Twin of look_own_dropped, name first."
+ },
+ "match_language": {
+  "text": "Letra en {language}",
+  "back": "Words in {language}",
+  "why": "Chip names the language of the matched words; 'en' keeps it from reading as the window's language."
  }
 }

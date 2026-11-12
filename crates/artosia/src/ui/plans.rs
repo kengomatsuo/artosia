@@ -122,6 +122,10 @@ pub(crate) fn title_bar(s: &App, k: &Kit, layer: &mut Vec<El>, tools: El, tall: 
             s.close_switcher();
             s.begin_new_plan();
         }))
+        .item(MenuItem::new(t::LANGUAGES_ON_SLIDE()).icon(&icons::GLOBE).on_select(|s: &mut App| {
+            s.close_switcher();
+            s.open_languages(true);
+        }))
         .item(MenuItem::new(t::PLAN_RENAME()).icon(&icons::TIMER).on_select(move |s: &mut App| {
             s.close_switcher();
             s.begin_edit(here);
@@ -230,6 +234,11 @@ fn strip_row(s: &App, k: &Kit, plan: &PlanRow, layer: &mut Vec<El>) -> El {
         // The menu names the plan it acts on: it may open beside another row.
         .group_label(plan.label())
         .on_close(|s: &mut App| s.switcher.menu = None)
+        .item(MenuItem::new(t::LANGUAGES_ON_SLIDE()).icon(&icons::GLOBE).on_select(move |s: &mut App| {
+            // The dialog edits the open plan: the plan this menu belongs to is opened first.
+            s.switch_plan(id);
+            s.open_languages(true);
+        }))
         .item(MenuItem::new(t::PLAN_RENAME()).icon(&icons::TIMER).on_select(move |s: &mut App| s.begin_edit(id)))
         .item(MenuItem::new(t::PLAN_DUPLICATE()).icon(&icons::COPY).on_select(move |s: &mut App| s.begin_copy(id)))
         .item(MenuItem::new(t::PLAN_DELETE()).icon(&icons::TRASH).danger(true).on_select(move |s: &mut App| s.delete_plan_id(id)))

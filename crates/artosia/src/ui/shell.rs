@@ -534,6 +534,8 @@ fn live_pane(s: &App, k: &Kit, size: Option<Foot>, layer: &mut Vec<El>) -> El {
     if !s.history.is_empty() && !narrow {
         trailing.push(earlier(s, k, layer));
     }
+    // One chip for each language the live song shows; pressing one shows that language alone.
+    trailing.extend(crate::ui::languages::live_chips(s, k, narrow));
     trailing.push(live_state(s, k));
     pane(
         k,
@@ -590,7 +592,7 @@ pub fn view(s: &App, cx: &mut Cx<App>, k: &Kit, layer: &mut Vec<El>) -> El {
     let tall = area.map(|size| size[1]).unwrap_or(680.0);
     // An editor takes the Preview pane; what the room sees stays in view beside it.
     let editor = if s.editor.is_some() {
-        Some(crate::ui::editor::view(s, k, width - NARROW - 1.0))
+        Some(crate::ui::editor::view(s, k, width - NARROW - 1.0, layer))
     } else if s.notices.is_some() {
         Some(crate::ui::announcements::view(s, k, width - NARROW - 1.0))
     } else {

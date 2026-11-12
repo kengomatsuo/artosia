@@ -22,6 +22,7 @@ mod palette;
 mod plans;
 mod recordings;
 mod starts;
+mod song_languages;
 mod speech_model;
 mod state;
 mod store;
@@ -333,6 +334,11 @@ pub(crate) fn follow(s: &App, tx: &mut Tx) {
 
 type Scene = (&'static str, fn(&mut App));
 
+/// The place of the practice library's song in three languages.
+fn three_language_song(s: &App) -> usize {
+    s.songs.iter().position(|song| song.translations.len() == 2).unwrap_or(0)
+}
+
 /// Words written for the scenes that show the section suggestions: no marks, a chorus sung three times.
 const MARKS_DEMO: &str = "Lantern Song\n\nCarry the lantern through the night\nKeep the small flame burning bright\n\nShine, shine on the road ahead\nShine till the morning comes\n\nWalk beside me down the hill\nHold my hand and hold me still\n\nShine, shine on the road ahead\nShine till the morning comes\n\nCold wind over the sleeping sea\nStars come out for you and me\n\nShine, shine on the road ahead\nShine till the morning comes\n";
 
@@ -403,6 +409,65 @@ const SCENES: &[Scene] = &[
             editor.lyrics.focused = true;
         }
     }),
+    // A song in several languages (board card MULTI1): the editor's chips and picker, the dialog
+    // from a plan and from Settings, the Live pane's chips and one language alone, a search hit
+    // found by a line in another language.
+    ("editor-languages", |s| {
+        let at = three_language_song(s);
+        s.open_song(at, None);
+        s.edit_open_song();
+        if let Some(editor) = s.editor.as_mut() {
+            editor.show(1);
+            editor.lyrics.focused = false;
+        }
+    }),
+    ("editor-language-picker", |s| {
+        let at = three_language_song(s);
+        s.open_song(at, None);
+        s.edit_open_song();
+        s.open_language_pick(crate::song_languages::PickFor::AddToSong);
+    }),
+    ("editor-language-empty", |s| {
+        let at = three_language_song(s);
+        s.open_song(at, None);
+        s.edit_open_song();
+        if let Some(editor) = s.editor.as_mut() {
+            editor.add_language("ko");
+            editor.lyrics.focused = false;
+        }
+    }),
+    ("languages-plan", |s| {
+        s.demo_plans();
+        s.use_own_languages();
+        s.set_languages(vec!["en".into(), "id".into()]);
+        s.open_languages(true);
+    }),
+    ("languages-settings", |s| s.open_languages(false)),
+    ("languages-picker", |s| {
+        s.open_languages(false);
+        s.open_language_pick(crate::song_languages::PickFor::Slide);
+    }),
+    ("settings-songs-languages", |s| s.sheet = Sheet::Settings),
+    ("live-languages", |s| {
+        let at = three_language_song(s);
+        s.open_song(at, None);
+        s.show(0);
+    }),
+    ("live-language-solo", |s| {
+        let at = three_language_song(s);
+        s.open_song(at, None);
+        s.show(0);
+        s.toggle_only_language("en");
+    }),
+    ("search-other-language", |s| {
+        s.open_palette(Scope::All, "thank gladly");
+    }),
+    ("search-only-language", |s| {
+        let at = three_language_song(s);
+        s.open_song(at, None);
+        s.show(0);
+        s.open_palette(Scope::All, "alone");
+    }),
     ("look", |s| s.sheet = Sheet::Looks),
     ("settings", |s| s.sheet = Sheet::Settings),
     // The language drop-down of Settings, open: its list must stay inside the dialog and the window.
@@ -466,6 +531,7 @@ const SCENES: &[Scene] = &[
     ("onboard-bible", |s| s.demo_onboard("bible")),
     ("onboard-bible-offline", |s| s.demo_onboard("bible-offline")),
     ("onboard-songs", |s| s.demo_onboard("songs")),
+    ("onboard-sing", |s| s.demo_onboard("sing")),
     ("onboard-screens", |s| s.demo_onboard("screens")),
     ("onboard-one-screen", |s| s.demo_onboard("one-screen")),
     ("onboard-ready", |s| s.demo_onboard("ready")),

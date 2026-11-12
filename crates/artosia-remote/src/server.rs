@@ -144,7 +144,7 @@ fn state_json(s: &RemoteState, version: u64) -> Value {
         "version": version,
         "now": now_secs(),
         "title": s.item_title,
-        "slides": s.slides.iter().map(|x| json!({"label": x.label, "text": x.text})).collect::<Vec<_>>(),
+        "slides": s.slides.iter().map(|x| json!({"label": x.label, "text": x.text, "more": x.more})).collect::<Vec<_>>(),
         "live": s.live_index,
         "next_title": s.next_title,
         "hidden": s.text_hidden,

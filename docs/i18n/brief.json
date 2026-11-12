@@ -5136,24 +5136,6 @@
   "notes": "Two short statements; the checking advice matters."
  },
  {
-  "key": "FIELD_SECOND",
-  "kind": "const",
-  "screen": "Song editor: it takes the place of the Preview pane. Heading and Delete, Cancel and Save buttons across the top; below them the fields Title, Author, Key, Copyright and CCLI song number; then the big box for the words with a row of small buttons above it; under it the order of the song; and a column of slide thumbnails at the right. Small bold label over a second box that appears below the order block after the person adds a second language.",
-  "moment": "The person wants the lyrics in a second language shown under the first.",
-  "role": "field label",
-  "does": "Names the box for the words of the same song in another language.",
-  "budget": 24,
-  "variables": [],
-  "cases": [],
-  "counts": "",
-  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
-  "concepts": [
-   "second_language",
-   "song"
-  ],
-  "notes": "A phrase."
- },
- {
   "key": "LYRICS_PLACEHOLDER",
   "kind": "const",
   "screen": "Song editor: it takes the place of the Preview pane. Heading and Delete, Cancel and Save buttons across the top; below them the fields Title, Author, Key, Copyright and CCLI song number; then the big box for the words with a row of small buttons above it; under it the order of the song; and a column of slide thumbnails at the right. Hint inside the empty big words box, three or four short lines.",
@@ -5172,24 +5154,6 @@
    "song"
   ],
   "notes": "The first marker line is your own word for a verse, a space and the number 1, inside square brackets; the second is your own word for the chorus inside square brackets. The program reads your words for the parts, so write them exactly as you named the parts. The sample sung lines are yours to make up: plain lines of about four words, not a real song."
- },
- {
-  "key": "SECOND_PLACEHOLDER",
-  "kind": "const",
-  "screen": "Song editor: it takes the place of the Preview pane. Heading and Delete, Cancel and Save buttons across the top; below them the fields Title, Author, Key, Copyright and CCLI song number; then the big box for the words with a row of small buttons above it; under it the order of the song; and a column of slide thumbnails at the right. Hint inside the empty second-language box.",
-  "moment": "The second language box was just added.",
-  "role": "placeholder",
-  "does": "Tells the person to write the same parts, in the same order, in the second language.",
-  "budget": 44,
-  "variables": [],
-  "cases": [],
-  "counts": "",
-  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
-  "concepts": [
-   "second_language",
-   "section"
-  ],
-  "notes": "One sentence, no full stop."
  },
  {
   "key": "MARK_VERSE",
@@ -5280,24 +5244,6 @@
    "section"
   ],
   "notes": "If church musicians of the language have their own everyday word for the closing part of a song, use it; the reader knows that word."
- },
- {
-  "key": "BTN_ADD_SECOND",
-  "kind": "const",
-  "screen": "Song editor: it takes the place of the Preview pane. Heading and Delete, Cancel and Save buttons across the top; below them the fields Title, Author, Key, Copyright and CCLI song number; then the big box for the words with a row of small buttons above it; under it the order of the song; and a column of slide thumbnails at the right. A quiet wide button at the bottom of the form, with a plus icon.",
-  "moment": "The person wants to add words in another language.",
-  "role": "button",
-  "does": "Opens the box for the words in a second language.",
-  "budget": 30,
-  "variables": [],
-  "cases": [],
-  "counts": "",
-  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
-  "concepts": [
-   "second_language",
-   "song"
-  ],
-  "notes": "A phrase."
  },
  {
   "key": "BTN_SAVE",
@@ -13492,5 +13438,357 @@
    "search_memory"
   ],
   "notes": "Plain digits for the day. Some languages put the month first, some add a word or a mark after the day."
+ },
+ {
+  "key": "LANGUAGE_ADD",
+  "kind": "const",
+  "screen": "Two places with one act. In the song editor, a row of rounded chips sits over the song's words, one chip for each language the song has; this is the last chip of that row, with a plus icon. In the dialog that chooses which languages a slide shows, it is the button under the list of languages.",
+  "moment": "The church sings this song, or sings at all, in one more language.",
+  "role": "button",
+  "does": "Opens a list of languages to pick one more from.",
+  "budget": 28,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "song_language"
+  ],
+  "notes": "A verb and its object: the act of adding must be in the words, not left to the plus icon. A language of a song's words, never the language of the window."
+ },
+ {
+  "key": "LANGUAGE_PICK_TITLE",
+  "kind": "const",
+  "screen": "A small dialog with a filter field and a list of the world's languages, each in the window's language. It opens from the button that adds a language to a song or to the languages a slide shows.",
+  "moment": "The person is about to pick one language from the list.",
+  "role": "dialog title",
+  "does": "Asks which language to add.",
+  "budget": 36,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "song_language"
+  ],
+  "notes": "A short question or a noun phrase, as your other dialog titles are."
+ },
+ {
+  "key": "LANGUAGE_FILTER",
+  "kind": "const",
+  "screen": "The filter field at the top of a list of languages: in the dialog that adds a language, and on the first-run page that asks which languages the church sings in.",
+  "moment": "The list is long and the person wants one language.",
+  "role": "placeholder",
+  "does": "Invites typing a language's name to shorten the list.",
+  "budget": 28,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "song_language"
+  ],
+  "notes": "Grey text inside the field. Match the way your other filter fields invite typing."
+ },
+ {
+  "key": "editor_language_empty",
+  "kind": "sentence",
+  "screen": "Song editor. The large field for a song's words, shown empty because this language was just added to the song. The words of the first language are one chip away and already carry their part marks.",
+  "moment": "A language was added and has no words yet.",
+  "role": "placeholder",
+  "does": "Asks for this language's words to be entered here, by keyboard or from the clipboard, carrying the same part marks as the first language, so that the languages stay in step.",
+  "budget": 80,
+  "variables": [
+   {
+    "name": "language",
+    "example": "Mandarin"
+   }
+  ],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "song_language",
+   "section"
+  ],
+  "notes": "One sentence, grey, wrapping to two lines at most. The language's name arrives in the window's language; word the sentence so it reads right for any language name."
+ },
+ {
+  "key": "LANGUAGE_REMOVE",
+  "kind": "const",
+  "screen": "Song editor. The small menu of a language's chip, over the song's words.",
+  "moment": "The song should no longer carry this language's words.",
+  "role": "menu item",
+  "does": "Takes this language's words out of the song. A toast offers to undo it.",
+  "budget": 26,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "song_language"
+  ],
+  "notes": "A verb and its object, as your other remove items are. Not a danger word: it can be undone."
+ },
+ {
+  "key": "language_removed",
+  "kind": "sentence",
+  "screen": "A toast at the bottom of the window, with an Undo button beside it.",
+  "moment": "A language's words were just taken out of a song.",
+  "role": "toast",
+  "does": "Says which language's words were removed from the song.",
+  "budget": 44,
+  "variables": [
+   {
+    "name": "language",
+    "example": "Mandarin"
+   }
+  ],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "song_language"
+  ],
+  "notes": "A plain statement of what happened, as your other removal toasts are. The language's name arrives in the window's language."
+ },
+ {
+  "key": "LANGUAGES_ON_SLIDE",
+  "kind": "const",
+  "screen": "Three places with one name: the title of the dialog that chooses which of a song's languages a slide shows together; the item in a plan's menu that opens it; and the label of the row in Settings that opens it.",
+  "moment": "A church that sings in more than one language decides what the room reads.",
+  "role": "title",
+  "does": "Names the choice of which languages appear together on a slide.",
+  "budget": 26,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "song_language",
+   "slide"
+  ],
+  "notes": "A noun phrase. It is about the words of songs on the projector, never the language of the window."
+ },
+ {
+  "key": "LANGUAGES_HINT",
+  "kind": "const",
+  "screen": "The dialog that chooses which languages a slide shows: a grey line under its title, over a list of languages with a switch on each.",
+  "moment": "The person reads what the switches will do.",
+  "role": "hint",
+  "does": "Says that a song which has these languages shows them together on one slide, in this order from top to bottom.",
+  "budget": 90,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "song_language",
+   "slide"
+  ],
+  "notes": "One sentence. A song that lacks one of the languages simply shows the others; do not explain that here."
+ },
+ {
+  "key": "LANGUAGES_USUAL",
+  "kind": "const",
+  "screen": "The dialog that chooses which languages a slide shows, opened from a plan's menu: two tiles of equal size side by side at the top. This is the left one, lit when the plan follows what the church usually shows.",
+  "moment": "This service shows what every service shows.",
+  "role": "tile",
+  "does": "Makes this plan follow the church's usual languages.",
+  "budget": 22,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "plan",
+   "song_language"
+  ],
+  "notes": "Two or three words naming the state, as the same pair of tiles in the dialog for a plan's own look does in your table."
+ },
+ {
+  "key": "LANGUAGES_THIS_PLAN",
+  "kind": "const",
+  "screen": "The same dialog: the right tile of the two, lit when this plan has its own choice of languages.",
+  "moment": "One service differs: a youth service in one language, a joint service in three.",
+  "role": "tile",
+  "does": "Gives this plan its own choice of languages, leaving the other plans as they are.",
+  "budget": 24,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "plan",
+   "song_language"
+  ],
+  "notes": "Two to four words naming the state, the pair of the tile before it."
+ },
+ {
+  "key": "LIVE_LANGUAGES",
+  "kind": "const",
+  "screen": "The Live pane: a small row of chips beside its heading, one chip for each language the slide is showing. Pressing a chip shows that language alone; pressing it again shows them all. This text is what a screen reader says for the row; it is not drawn.",
+  "moment": "A person who cannot see the chips reaches the row.",
+  "role": "label",
+  "does": "Names the row: the languages the room is reading now.",
+  "budget": 28,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "song_language",
+   "live"
+  ],
+  "notes": "A short noun phrase."
+ },
+ {
+  "key": "only_language_showing",
+  "kind": "sentence",
+  "screen": "The thin status line at the bottom of the window, in the yellow that means something is held back from the room.",
+  "moment": "One language's chip was pressed in the Live pane, so the room reads that language alone until it is pressed again.",
+  "role": "status",
+  "does": "Says that only this language is showing for now.",
+  "budget": 44,
+  "variables": [
+   {
+    "name": "language",
+    "example": "Indonesian"
+   }
+  ],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "song_language",
+   "live"
+  ],
+  "notes": "A plain statement of what is true. The language's name arrives in the window's language."
+ },
+ {
+  "key": "match_language",
+  "kind": "sentence",
+  "screen": "The search: a small chip at the right of a song's row in the list of results, beside the chip that names the part of the song.",
+  "moment": "The words the person typed were found in a line of the song that is not in the song's first language.",
+  "role": "chip",
+  "does": "Names the language of the song's words in which the match was found, so that nobody takes the bare name of a language for the language of the window.",
+  "budget": 24,
+  "variables": [
+   {
+    "name": "language",
+    "example": "English",
+    "meaning": "The language's name in the window's language, in the form it takes inside a sentence."
+   }
+  ],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "song_language",
+   "search"
+  ],
+  "notes": "Two or three words: the language and your word for a song's words. No verb, no full stop."
+ },
+ {
+  "key": "cmd_only_language",
+  "kind": "sentence",
+  "screen": "The search: one row among the commands, one such row for each language the slide is showing.",
+  "moment": "The person types a language's name or the word for showing, to do with the keyboard what a chip in the Live pane does.",
+  "role": "command name",
+  "does": "Shows this one language alone on the slides, until every language is asked for again.",
+  "budget": 40,
+  "variables": [
+   {
+    "name": "language",
+    "example": "English"
+   }
+  ],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "song_language",
+   "live"
+  ],
+  "notes": "A command as your other commands are named, starting the way your commands start. The language's name arrives in the window's language."
+ },
+ {
+  "key": "CMD_ALL_LANGUAGES",
+  "kind": "const",
+  "screen": "The search: one row among the commands, there while one language alone is showing.",
+  "moment": "The room should read every language of the plan again.",
+  "role": "command name",
+  "does": "Shows all of the plan's languages together again.",
+  "budget": 32,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "song_language",
+   "live"
+  ],
+  "notes": "A command as your other commands are named."
+ },
+ {
+  "key": "ONBOARD_SING_TITLE",
+  "kind": "const",
+  "screen": "First-run window, shown once when Artosia starts for a new church: a card with one question in large type, a grey line of help under it, the page's content, and the buttons at the bottom. This page comes after the one about where the church's songs are. Its content is a filter field and a list of languages with a tick on each; the window's own language is ticked already.",
+  "moment": "The church says which languages it sings in.",
+  "role": "question",
+  "does": "Asks which languages the church sings in.",
+  "budget": 48,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "first_run",
+   "song_language"
+  ],
+  "notes": "A question in the voice of your other first-run questions."
+ },
+ {
+  "key": "ONBOARD_SING_HINT",
+  "kind": "const",
+  "screen": "The same first-run page: the grey line under the question.",
+  "moment": "The person wonders what ticking more than one language does.",
+  "role": "hint",
+  "does": "Says that a song which has these languages shows them together on one slide, and that the choice can be changed later.",
+  "budget": 90,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "first_run",
+   "song_language"
+  ],
+  "notes": "One or two short sentences."
+ },
+ {
+  "key": "languages_own_dropped",
+  "kind": "sentence",
+  "screen": "Main window, a toast.",
+  "moment": "The person chose the church's usual languages for a plan that had its own choice of languages, so its own choice was dropped; an Undo button sits beside the toast.",
+  "role": "toast",
+  "does": "Says that the named plan now goes back to showing the church's usual languages.",
+  "budget": 54,
+  "variables": [
+   {
+    "name": "name",
+    "example": "Sunday morning",
+    "meaning": "The name of the plan."
+   }
+  ],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "song_language",
+   "plan",
+   "notice"
+  ],
+  "notes": "Name first or last as the language prefers. The languages are those of a song's words, never the window's."
  }
 ]

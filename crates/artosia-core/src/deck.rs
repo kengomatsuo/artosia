@@ -144,6 +144,8 @@ pub struct Today<'a> {
     pub month: u8,
     pub day: u8,
     pub months: &'a [&'a str; 12],
+    /// How a day and a month's name read as a date in the window's language.
+    pub date: fn(u8, &str) -> String,
 }
 
 /// The most names on one birthday slide; more go on a second slide.
@@ -252,12 +254,17 @@ pub struct Languages {
 
 impl Languages {
     /// The song's languages to draw, as (place in the list, index into `Song::texts`), in the
-    /// order of the list. A listed language the song lacks is left out; when none is left, the
-    /// first language alone is drawn, so a slide is never empty for want of a match. A solo code
-    /// the song lacks changes nothing.
+    /// order of the list. A listed code fits a song's language by `artosia_locale::pick`
+    /// (`en` fits `en-US`, `zh-Hant` fits `zh-TW`), and a transliteration (`ja-Latn`) fits no
+    /// language but its own. A listed language the song lacks is left out; when none is left, the
+    /// first language alone is drawn, so a slide is never empty for want of a match.
+    ///
+    /// A translation with no code (the second text of a library from 0.1.16 never had one) that
+    /// the list does not name follows the others, as 0.1.16 drew `second`, in a place after the
+    /// list's own. A solo code the song lacks changes nothing.
     pub fn pick(&self, song: &Song) -> Vec<(u8, usize)> {
         let texts: Vec<(&str, &str)> = song.texts().collect();
-        let find = |code: &str| texts.iter().position(|(have, text)| !code.is_empty() && have.eq_ignore_ascii_case(code) && !text.trim().is_empty());
+        let find = |code: &str| texts.iter().position(|(have, text)| fits(have, code) && !text.trim().is_empty());
         let mut picked: Vec<(u8, usize)> = Vec::new();
         for (slot, code) in self.shown.iter().enumerate() {
             if let Some(at) = find(code).filter(|at| picked.iter().all(|(_, have)| have != at)) {
@@ -267,8 +274,33 @@ impl Languages {
         if let Some(only) = self.solo.as_deref().and_then(find).and_then(|at| picked.iter().find(|(_, have)| *have == at)) {
             return vec![*only];
         }
-        if picked.is_empty() { vec![(0, 0)] } else { picked }
+        if picked.is_empty() {
+            picked.push((0, 0));
+        }
+        let mut next = (self.shown.len()).max(picked.iter().map(|(slot, _)| usize::from(*slot) + 1).max().unwrap_or(0));
+        for (at, (code, text)) in texts.iter().enumerate().skip(1) {
+            if code.is_empty() && !text.trim().is_empty() && picked.iter().all(|(_, have)| *have != at) {
+                picked.push((u8::try_from(next).unwrap_or(u8::MAX), at));
+                next += 1;
+            }
+        }
+        picked
     }
+}
+
+/// Whether a song's language `have` is the listed language `listed`: the rule of
+/// `artosia-locale`, with a script a tag names kept apart (`ja-Latn` is not `ja`).
+pub fn fits(have: &str, listed: &str) -> bool {
+    if have.is_empty() || listed.is_empty() {
+        return false;
+    }
+    let script = |tag: &str| tag.split(['-', '_']).skip(1).find(|part| part.len() == 4 && part.chars().all(|c| c.is_ascii_alphabetic())).map(str::to_ascii_lowercase);
+    let chinese = |tag: &str| tag.get(..2).is_some_and(|first| first.eq_ignore_ascii_case("zh"));
+    if chinese(have) && chinese(listed) && script(listed).is_some() {
+        // Chinese is told apart by script: Taiwan's tag is Traditional and fits no Simplified entry.
+        return artosia_locale::pick(have, &["zh-Hans", "zh-Hant"]).is_some_and(|got| script(got) == script(listed));
+    }
+    artosia_locale::pick(have, &[listed]).is_some() && (script(have).is_none() || script(have) == script(listed))
 }
 
 /// Cuts one slide's lines, a list of lines for each language, into the fewest pieces in which
@@ -345,7 +377,8 @@ pub fn song_deck_in(song: &Song, max_lines: usize, licence: &str, languages: &La
             for (at, part) in parts.into_iter().enumerate() {
                 let mut shown = voices.iter().zip(part).filter(|(_, lines)| !lines.is_empty());
                 let Some(((first, _), first_lines)) = shown.next() else { continue };
-                let voice = |k: usize, lines: &[String]| Voice { lang: texts[picked[k].1].0.to_string(), slot: picked[k].0, text: lines.join("\n") };
+                let voice = |k: usize, lines: &[String]| Voice { lang: texts[picked[k].1].0.to_string(), slot: picked[k].0, text: lines.join("
+") };
                 let lead = voice(*first, &first_lines);
                 slides.push(Slide {
                     kind: SlideKind::Lyrics,
@@ -456,9 +489,10 @@ pub fn announcement_pages(announcements: &[Announcement], people: &[Person], tod
         for group in found.chunks(BIRTHDAYS_PER_SLIDE) {
             let lines: Vec<String> = group
                 .iter()
-                .map(|person| format!("{}\t{} {}", person.name, person.day, today.months[usize::from(person.month.clamp(1, 12)) - 1]))
+                .map(|person| format!("{}\t{}", person.name, (today.date)(person.day, today.months[usize::from(person.month.clamp(1, 12)) - 1])))
                 .collect();
-            let filled = Announcement { body: lines.join("\n"), ..item.clone() };
+            let filled = Announcement { body: lines.join("
+"), ..item.clone() };
             pages.push((at, announcement_slide(&filled)));
         }
     }
@@ -526,12 +560,16 @@ mod tests {
         assert!(deck.slides[1].caption.is_empty());
     }
 
+    fn day_first(day: u8, month: &str) -> String {
+        format!("{day} {month}")
+    }
+
     #[test]
     fn a_birthday_announcement_fills_itself_and_pages() {
         const MONTHS: [&str; 12] = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
         let person = |name: &str, month: u8, day: u8| Person { id: 0, name: name.into(), day, month };
         let mut people = vec![person("Rina", 1, 2), person("Budi", 12, 30), person("Tom", 12, 20), person("Ana", 6, 1)];
-        let today = Today { month: 12, day: 28, months: &MONTHS };
+        let today = Today { month: 12, day: 28, months: &MONTHS, date: day_first };
         // The week from 28 December runs into January, and 20 December is already past.
         let week: Vec<&str> = birthdays(&people, Fill::BirthdaysWeek, &today).iter().map(|p| p.name.as_str()).collect();
         assert_eq!(week, ["Budi", "Rina"]);
@@ -544,10 +582,13 @@ mod tests {
         let pages = announcement_pages(&items, &people, &today, None, 2);
         assert_eq!(pages.len(), 2);
         assert_eq!(pages[1].1.text, "Tom\t20 December\nBudi\t30 December");
+        // A language that names the month first writes its dates that way.
+        let month_first = Today { date: |day, month| format!("{month} {day}"), ..today };
+        assert_eq!(announcement_pages(&items, &people, &month_first, None, 2)[1].1.text, "Tom\tDecember 20\nBudi\tDecember 30");
         // Ten more December birthdays spill onto a second slide; an empty month gives none.
         people.extend((1..=10).map(|day| person(&format!("Person {day:02}"), 12, day)));
         assert_eq!(announcement_pages(&items, &people, &today, None, 2).iter().filter(|(at, _)| *at == 1).count(), 2);
-        let june = Today { month: 7, day: 1, months: &MONTHS };
+        let june = Today { month: 7, day: 1, months: &MONTHS, date: day_first };
         assert_eq!(announcement_pages(&items, &people, &june, None, 2).len(), 1);
         // Twenty-five lines of a brought-in table become three slides of the same announcement.
         let long = vec![Announcement { title: "List".into(), body: (1..=25).map(|n| format!("Row {n}	{n}")).collect::<Vec<_>>().join("
@@ -565,7 +606,7 @@ mod tests {
     #[test]
     fn a_passage_card_fills_from_the_bible() {
         const MONTHS: [&str; 12] = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-        let today = Today { month: 5, day: 1, months: &MONTHS };
+        let today = Today { month: 5, day: 1, months: &MONTHS, date: day_first };
         let bible = made_up_bible();
         let card = Announcement { title: "Verse of the week".into(), fill: Fill::Passage, passage: "mazmur 23:1-3".into(), ..Announcement::default() };
         assert_eq!(passage_state(&card, Some(&bible)), PassageState::Ready(Reference { book: 19, chapter: 23, verse: 1, end_chapter: 23, end_verse: 3 }));
@@ -591,14 +632,14 @@ mod tests {
         let plain = Announcement { title: "Plain".into(), ..Announcement::default() };
         assert_eq!(passage_state(&plain, Some(&bible)), PassageState::NotAPassage);
         const MONTHS: [&str; 12] = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-        let today = Today { month: 5, day: 1, months: &MONTHS };
+        let today = Today { month: 5, day: 1, months: &MONTHS, date: day_first };
         assert!(announcement_pages(&[card], &[], &today, None, 2).is_empty());
     }
 
     #[test]
     fn a_birthday_card_names_the_days_it_covers() {
         const MONTHS: [&str; 12] = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-        let today = Today { month: 12, day: 28, months: &MONTHS };
+        let today = Today { month: 12, day: 28, months: &MONTHS, date: day_first };
         assert_eq!(birthday_days(Fill::BirthdaysWeek, &today), Some(((12, 28), (1, 3))));
         assert_eq!(birthday_days(Fill::BirthdaysMonth, &today), Some(((12, 1), (12, 31))));
         assert_eq!(birthday_days(Fill::Passage, &today), None);
@@ -661,6 +702,45 @@ mod tests {
         for (a, b) in alone.slides.iter().zip(&plain.slides) {
             assert_eq!((&a.label, &a.text, &a.second, &a.caption, a.more.len(), a.part), (&b.label, &b.text, &b.second, &b.caption, 0, None));
         }
+    }
+
+    /// A song as 0.1.16 stored it: no codes, the second text in the one extra box.
+    fn old_song() -> Song {
+        Song { lyrics: "[1]\none\ntwo\n".into(), translations: vec![Translation { lang: String::new(), text: "[1]\nuno\ndos\n".into() }], ..Song::default() }
+    }
+
+    #[test]
+    fn a_translation_with_no_code_follows_the_first_language_whatever_the_list_says() {
+        let song = old_song();
+        // No list, a list that names other languages, and a list of one: the second text stays in view.
+        for list in [Languages::default(), languages(&["en", "id"]), languages(&["zh-Hans"]), languages(&["id"])] {
+            let deck = song_deck_in(&song, 4, "", &list, &room(99));
+            assert_eq!((deck.slides[0].text.as_str(), deck.slides[0].more.len()), ("one\ntwo", 1), "{list:?}");
+            assert_eq!(deck.slides[0].more[0].text, "uno\ndos");
+        }
+        // Its colour is a place after the list's own, so it never takes a listed language's colour.
+        let deck = song_deck_in(&song, 4, "", &languages(&["en", "id"]), &room(99));
+        assert_eq!(deck.slides[0].more[0].slot, 2);
+        // A language the list does name is drawn once, in its listed place, not twice.
+        let mut named = song.clone();
+        named.translations[0].lang = "es".into();
+        let deck = song_deck_in(&named, 4, "", &languages(&["es"]), &room(99));
+        assert_eq!((deck.slides[0].lang.as_str(), deck.slides[0].more.len()), ("es", 0));
+        // A translation that has a code the list leaves out stays out.
+        let deck = song_deck_in(&named, 4, "", &languages(&["id"]), &room(99));
+        assert_eq!(deck.slides[0].more.len(), 0);
+    }
+
+    #[test]
+    fn a_listed_code_fits_a_song_s_language_by_the_locale_rule() {
+        assert!(fits("en-US", "en") && fits("en", "en-GB") && fits("zh-TW", "zh-Hant") && fits("zh-Hant", "zh-Hant"));
+        assert!(!fits("zh-TW", "zh-Hans") && !fits("zh-CN", "zh-Hant") && fits("zh-CN", "zh-Hans"));
+        assert!(!fits("id", "en") && !fits("", "en") && !fits("en", ""));
+        // A transliteration is kept apart from the language it writes.
+        assert!(!fits("ja-Latn", "ja") && fits("ja-Latn", "ja-Latn") && fits("ja", "ja"));
+        let song = Song { lang: "en-US".into(), lyrics: "[1]\na\n".into(), translations: vec![Translation { lang: "zh-TW".into(), text: "[1]\nb\n".into() }], ..Song::default() };
+        let deck = song_deck_in(&song, 4, "", &languages(&["zh-Hant", "en"]), &room(99));
+        assert_eq!((deck.slides[0].lang.as_str(), deck.slides[0].slot, deck.slides[0].more[0].slot), ("zh-TW", 0, 1));
     }
 
     #[test]

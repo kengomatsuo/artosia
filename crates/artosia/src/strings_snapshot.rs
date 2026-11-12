@@ -371,9 +371,7 @@ pub fn dump() -> String {
     line(out, "SUGGEST_LIBRARY", SUGGEST_LIBRARY());
     line(out, "SUGGEST_FETCHING", SUGGEST_FETCHING());
     line(out, "LICENCE_NOTE", LICENCE_NOTE());
-    line(out, "FIELD_SECOND", FIELD_SECOND());
     line(out, "LYRICS_PLACEHOLDER", LYRICS_PLACEHOLDER());
-    line(out, "SECOND_PLACEHOLDER", SECOND_PLACEHOLDER());
     line(out, "MARK_VERSE", MARK_VERSE());
     line(out, "MARK_CHORUS", MARK_CHORUS());
     line(out, "MARK_BRIDGE", MARK_BRIDGE());
@@ -388,7 +386,6 @@ pub fn dump() -> String {
     line(out, "MARKS_WHY_REPEAT", MARKS_WHY_REPEAT());
     line(out, "MARKS_WHY_BRIDGE", MARKS_WHY_BRIDGE());
     line(out, "MARKS_WHY_ORDER", MARKS_WHY_ORDER());
-    line(out, "BTN_ADD_SECOND", BTN_ADD_SECOND());
     line(out, "BTN_SAVE", BTN_SAVE());
     line(out, "BTN_CANCEL", BTN_CANCEL());
     line(out, "BTN_DELETE", BTN_DELETE());

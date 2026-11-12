@@ -527,6 +527,68 @@ text!(LOOK_FOR_PLAN, "This plan's own look", "This plan's own look");
 text!(PLAN_OWN_LOOK, "Has its own look", "Has its own look");
 text!(KIND_PLAN, "Plan", "Plan");
 
+// A song in several languages (board card MULTI1).
+text!(LANGUAGE_ADD, "Add lyric language", "Tambah bahasa lirik");
+text!(LANGUAGE_PICK_TITLE, "Which lyric language to add?", "Tambah bahasa lirik apa?");
+text!(LANGUAGE_FILTER, "Type a language's name", "Ketik nama bahasa");
+text!(LANGUAGE_REMOVE, "Remove lyric language", "Hapus bahasa lirik");
+text!(LANGUAGES_ON_SLIDE, "Lyric languages on slides", "Bahasa lirik di slide");
+text!(LANGUAGES_HINT, "A song with these lyric languages puts them on one slide, top to bottom.", "Lagu yang punya bahasa ini tayang bersama di satu slide, urut dari atas ke bawah");
+text!(LANGUAGES_USUAL, "Usual lyric languages", "Seperti biasa");
+text!(LANGUAGES_THIS_PLAN, "Chosen for this plan", "Khusus rundown ini");
+text!(LIVE_LANGUAGES, "Lyric languages on screen", "Bahasa lirik yang tayang");
+text!(CMD_ALL_LANGUAGES, "Show all lyric languages", "Tayangkan semua bahasa lirik");
+text!(ONBOARD_SING_TITLE, "Which languages does your church sing in?", "Gerejamu menyanyi dalam bahasa apa saja?");
+text!(ONBOARD_SING_HINT, "A song in these languages puts them on one slide. You can change this later", "Lagu yang punya bahasa ini tayang bersama di satu slide. Pilihan ini bisa diubah nanti");
+
+/// The toast after a plan went back to the church's usual languages.
+pub fn languages_own_dropped(name: &str) -> String {
+    if let Some(text) = say("languages_own_dropped", None, None, &[("name", text_arg(name))]) {
+        return text;
+    }
+    format!("{name} uses the usual lyric languages again")
+}
+
+/// The placeholder of the empty field of a language just added to a song.
+pub fn editor_language_empty(language: &str) -> String {
+    if let Some(text) = say("editor_language_empty", None, None, &[("language", text_arg(language))]) {
+        return text;
+    }
+    format!("Type or paste the words in {language}, marked the way the first one is.")
+}
+
+/// The toast after a language's words were taken out of a song.
+pub fn language_removed(language: &str) -> String {
+    if let Some(text) = say("language_removed", None, None, &[("language", text_arg(language))]) {
+        return text;
+    }
+    format!("Removed the {language} lyrics")
+}
+
+/// The status line while one language is showing alone.
+pub fn only_language_showing(language: &str) -> String {
+    if let Some(text) = say("only_language_showing", None, None, &[("language", text_arg(language))]) {
+        return text;
+    }
+    format!("Showing only {language} lyrics")
+}
+
+/// The chip on a search result that was found by a line in another language of the song.
+pub fn match_language(language: &str) -> String {
+    if let Some(text) = say("match_language", None, None, &[("language", text_arg(language))]) {
+        return text;
+    }
+    format!("{language} lyrics")
+}
+
+/// The command that shows one language alone.
+pub fn cmd_only_language(language: &str) -> String {
+    if let Some(text) = say("cmd_only_language", None, None, &[("language", text_arg(language))]) {
+        return text;
+    }
+    format!("Show only {language} lyrics")
+}
+
 /// The toast after a plan goes back to the usual look.
 pub fn look_own_dropped(name: &str) -> String {
     if let Some(text) = say("look_own_dropped", None, None, &[("name", text_arg(name))]) {
@@ -694,9 +756,7 @@ pub fn words_from(source: &str) -> String {
     }
     format!("Words from {source}. Check them against your own copy.")
 }
-text!(FIELD_SECOND, "Second language", "Lirik bahasa kedua");
 text!(LYRICS_PLACEHOLDER, "[1]\nFirst verse\n\n[chorus]\nChorus", "[1]\nBaris bait satu\n[chorus]\nBaris reff");
-text!(SECOND_PLACEHOLDER, "The same sections in the other language", "Ketik bagian yang sama dalam bahasa kedua");
 text!(MARK_VERSE, "Verse", "Bait");
 text!(MARK_CHORUS, "Chorus", "Reff");
 text!(MARK_BRIDGE, "Bridge", "Bridge");
@@ -711,7 +771,6 @@ text!(MARKS_WHY_NAMED, "Read from the name written in the words", "Read from the
 text!(MARKS_WHY_REPEAT, "Sung again word for word", "Sung again word for word");
 text!(MARKS_WHY_BRIDGE, "Short, and sung once near the end", "Short, and sung once near the end");
 text!(MARKS_WHY_ORDER, "The next verse in order", "The next verse in order");
-text!(BTN_ADD_SECOND, "Add a second language", "Tambah bahasa kedua");
 text!(BTN_SAVE, "Save", "Simpan");
 text!(BTN_CANCEL, "Cancel", "Batal");
 text!(BTN_DELETE, "Delete", "Hapus");

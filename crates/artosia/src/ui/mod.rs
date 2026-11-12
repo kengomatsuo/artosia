@@ -5,6 +5,7 @@ mod announcements;
 mod backdrops;
 mod bibles;
 mod editor;
+mod languages;
 pub(crate) mod onboard;
 pub(crate) mod live;
 pub(crate) mod look;
@@ -178,6 +179,10 @@ pub(crate) fn statusbar(s: &App, k: &Kit) -> El {
     if let Some(error) = &status.media_error {
         bar = bar.child(text(crate::why::media_problem(error)).font(type_::SMALL).color(theme::warn_ink()).truncate());
     }
+    // One language alone is held back from the room's others: the whole line turns yellow, as for anything hidden.
+    if let Some(only) = &s.only_language {
+        bar = bar.child(text(t::only_language_showing(&crate::ui::languages::name_in_sentence(only))).font(type_::SMALL_STRONG).color(theme::warn_ink()).truncate().key("only-language-status"));
+    }
     if s.remote.is_some() {
         bar = bar.child(text(t::REMOTE_ON()).font(type_::SMALL).color(k.c.text_muted));
     }
@@ -276,7 +281,7 @@ pub fn view(s: &App, cx: &mut Cx<App>) -> El {
         .child(hline())
         .child(shell::view(s, cx, k, &mut layer))
         .child(hline())
-        .child(statusbar(s, k).fill(sf.chrome))
+        .child(statusbar(s, k).fill(if s.only_language.is_some() { theme::warn().alpha(0.22) } else { sf.chrome }))
         .on_paste(|s: &mut App, text: &str, _: &mut Tx| s.song_from_clipboard(text))
         .on_drop_files(|s: &mut App, paths: &[std::path::PathBuf], _: &mut Tx| {
             if let Some(path) = paths.first() {
@@ -287,6 +292,7 @@ pub fn view(s: &App, cx: &mut Cx<App>) -> El {
         palette::view(s, k, &mut layer);
     }
     sheets::view(s, k, &mut layer, cx.layout_size("window").map(|size| size[1]).unwrap_or(768.0));
+    languages::picker(s, k, &mut layer);
     plans::view(s, k, &mut layer);
     layer.extend(toast(s, k));
     tour::view(s, cx, k, &mut layer);

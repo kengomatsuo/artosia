@@ -342,13 +342,13 @@ fn marks_strip(s: &App, k: &Kit, editor: &Editor) -> Option<El> {
     Some(strip)
 }
 
-fn form(s: &App, k: &Kit) -> El {
+fn form(s: &App, k: &Kit, layer: &mut Vec<El>) -> El {
     let Some(editor) = s.editor.as_ref() else { return el() };
     let mut sections = row().gap(space::S1).center_y();
     for (at, kind) in SECTION_KEYS.into_iter().enumerate() {
         sections = sections.child(btn(section_name(kind)).small().help(t::ctrl_digit(at + 1)).build(k, move |s, _| s.insert_section(kind)));
     }
-    let mut column = col()
+    let column = col()
         .key("editor-form")
         .grow(1.0)
         .min_w(0.0)
@@ -373,12 +373,13 @@ fn form(s: &App, k: &Kit) -> El {
                         .child(sections)
                         .child(btn(t::BTN_TIDY()).small().ghost().help(t::TIDY_HELP()).build(k, |s, _| s.tidy_editor())),
                 )
+                .child(crate::ui::languages::chips(k, editor, layer))
                 .children(marks_strip(s, k, editor))
                 .child(
                     TextArea::new(&editor.lyrics)
                         .width(None)
                         .label(t::FIELD_LYRICS())
-                        .placeholder(t::LYRICS_PLACEHOLDER())
+                        .placeholder(if editor.at == 0 { t::LYRICS_PLACEHOLDER().to_string() } else { t::editor_language_empty(&crate::ui::languages::name_in_sentence(&editor.codes[editor.at])) })
                         .auto_grow(10, 400)
                         .decorations(marker_spans(&editor.lyrics.text))
                         .on_edit(|s: &mut App| edit_of(s, |editor| &mut editor.lyrics))
@@ -391,28 +392,6 @@ fn form(s: &App, k: &Kit) -> El {
                 ),
         )
         .child(order_block(s, k, editor));
-    if editor.show_second {
-        column = column.child(
-            col().w_full().gap(space::S1).child(section_label(k, t::FIELD_SECOND())).child(
-                TextArea::new(&editor.second)
-                    .width(None)
-                    .label(t::FIELD_SECOND())
-                    .placeholder(t::SECOND_PLACEHOLDER())
-                    .auto_grow(8, 400)
-                    .decorations(marker_spans(&editor.second.text))
-                    .on_edit(|s: &mut App| edit_of(s, |editor| &mut editor.second))
-                    .on_key(|s: &mut App, ev: &KeyEvent, tx: &mut Tx| crate::ui::widgets::enter_breaks_line(ev, tx) || escape_closes(s, ev, tx))
-                    .build(k),
-            ),
-        );
-    } else {
-        column = column.child(row().child(btn(t::BTN_ADD_SECOND()).icon(&icons::PLUS).ghost().focusable().build(k, |s, _| {
-            if let Some(editor) = s.editor.as_mut() {
-                editor.show_second = true;
-                editor.second.focused = true;
-            }
-        })));
-    }
     // The words come right after the title, one Tab away; who wrote the song and its rights
     // are filled in last, when at all (two testers pressed Tab five times to reach the words).
     let column = column
@@ -456,7 +435,7 @@ fn slides(s: &App, k: &Kit) -> El {
     col().w(PREVIEW).h_full().min_h(0.0).fill(k.c.bg_base).child(column.scroll_bar(k))
 }
 
-pub fn view(s: &App, k: &Kit, _width: f32) -> El {
+pub fn view(s: &App, k: &Kit, _width: f32, layer: &mut Vec<El>) -> El {
     let Some(editor) = s.editor.as_ref() else { return el() };
     let existing = editor.id != 0;
     let id = editor.id;
@@ -486,7 +465,7 @@ pub fn view(s: &App, k: &Kit, _width: f32) -> El {
             tx.blur();
         }));
     col().key("editor").w_full().h_full().min_h(0.0).child(header).child(
-        row().w_full().grow(1.0).min_h(0.0).child(form(s, k)).child(crate::ui::widgets::vertical_divider(k)).child(slides(s, k)),
+        row().w_full().grow(1.0).min_h(0.0).child(form(s, k, layer)).child(crate::ui::widgets::vertical_divider(k)).child(slides(s, k)),
     )
 }
 

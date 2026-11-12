@@ -1,9 +1,9 @@
-//! The first run, as a state machine with no window: seven pages, one question on each, every
+//! The first run, as a state machine with no window: eight pages, one question on each, every
 //! one already answered from what Windows knows. The window (`ui/onboard.rs`) draws what this
 //! says and sends it what a person pressed; what a press must start or store comes back as
 //! `Effect`s for the window to carry out (`docs/operator.md`, "The first run").
 //!
-//! Pages: language, country, Bible, songs, screens, getting ready, done. Nothing here blocks a
+//! Pages: language, country, Bible, songs, the languages songs show, screens, getting ready, done. Nothing here blocks a
 //! person: every page can be left with a button, Skip setup closes from any of them, and a
 //! failed download or import is a line on the getting-ready page.
 
@@ -23,13 +23,15 @@ pub enum Page {
     Country,
     Bible,
     Songs,
+    /// Which languages the church sings in: the languages a song's slide shows together.
+    Sing,
     Screens,
     Ready,
     Done,
 }
 
 impl Page {
-    pub const ALL: [Page; 7] = [Page::Language, Page::Country, Page::Bible, Page::Songs, Page::Screens, Page::Ready, Page::Done];
+    pub const ALL: [Page; 8] = [Page::Language, Page::Country, Page::Bible, Page::Songs, Page::Sing, Page::Screens, Page::Ready, Page::Done];
 
     /// Its place from 1, for the dots.
     pub fn number(self) -> usize {
@@ -147,6 +149,8 @@ pub enum Effect {
     SetLanguage(String),
     /// Saved in settings as two capital letters.
     SaveCountry(String),
+    /// The languages the church usually shows together on a slide, in the order they were ticked.
+    SaveSongLanguages(Vec<String>),
     /// Ask eBible and Beblia for their lists.
     LoadCatalogue,
     /// Download and install this translation in the background, then use it.
@@ -202,6 +206,13 @@ pub struct Onboard {
     pub country: String,
     /// What is typed to find a country.
     pub query: TextEdit,
+    /// The languages ticked on the Sing page, in the order they were ticked.
+    pub sing: Vec<String>,
+    /// What is typed to find a language, and the one the arrow keys rest on.
+    pub sing_query: TextEdit,
+    pub sing_cursor: String,
+    /// A person ticked or unticked one: the window's language no longer sets the default.
+    sing_chosen: bool,
     /// The translation picked on the Bible page, by id, and its title for the getting-ready page.
     pub bible: Option<(String, String)>,
     /// A person picked it; Artosia's own default no longer moves it.
@@ -261,12 +272,17 @@ fn stepped(ids: &[String], current: Option<&str>, delta: i32) -> Option<String> 
 
 impl Onboard {
     pub fn new(facts: Facts) -> Onboard {
+        let sing = artosia_core::languages::first_run_ticks(&facts.language);
         Onboard {
             page: Page::Language,
             offered: facts.offered,
             language: facts.language,
             country: facts.country,
             query: TextEdit::new(""),
+            sing_cursor: sing.first().cloned().unwrap_or_default(),
+            sing,
+            sing_query: TextEdit::new(""),
+            sing_chosen: false,
             bible: None,
             bible_chosen: false,
             songs: if facts.easislides.is_some() && !facts.has_songs { Songs::Easislides } else { Songs::Nowhere },
@@ -295,6 +311,18 @@ impl Onboard {
             let hay = normalize(name);
             words.iter().all(|word| hay.contains(word.as_str()))
         }).collect()
+    }
+
+    /// The languages the Sing page lists: the country's first, then every other by name, narrowed by what is typed.
+    pub fn visible_languages(&self) -> Vec<(String, String)> {
+        let words: Vec<String> = normalize(&self.sing_query.text).split_whitespace().map(str::to_string).collect();
+        artosia_core::languages::ordered(&self.language, &self.country, &[], &[])
+            .into_iter()
+            .filter(|(code, name)| {
+                let hay = normalize(name);
+                words.iter().all(|word| hay.contains(word.as_str()) || code.to_lowercase().contains(word.as_str()))
+            })
+            .collect()
     }
 
     /// The rows of the songs page, in order: EasiSlides only where it was found.
@@ -327,7 +355,7 @@ impl Onboard {
             Page::Language | Page::Country => (Action::Yes, true, vec![]),
             Page::Bible if self.catalogue_failed.is_some() => (Action::TryAgain, true, vec![Action::SkipForNow]),
             Page::Bible => (Action::Next, self.bible.is_some() || self.locked(), vec![Action::SkipForNow]),
-            Page::Songs | Page::Ready => (Action::Next, true, vec![]),
+            Page::Songs | Page::Sing | Page::Ready => (Action::Next, true, vec![]),
             Page::Screens if self.two_screens() => (Action::Works, true, vec![Action::TryOther]),
             Page::Screens => (Action::Next, true, vec![]),
             Page::Done => (Action::TakeTour, true, vec![Action::OpenPlan, Action::NewSong]),
@@ -372,6 +400,10 @@ impl Onboard {
             return Vec::new();
         }
         self.language = code.to_string();
+        // Until a person ticks one, the language ticked is the window's own.
+        if !self.sing_chosen {
+            self.sing = artosia_core::languages::first_run_ticks(code);
+        }
         vec![Effect::SetLanguage(code.to_string())]
     }
 
@@ -410,6 +442,21 @@ impl Onboard {
     pub fn catalogue_failed(&mut self, why: String) {
         self.catalogue_ready = false;
         self.catalogue_failed = Some(why);
+    }
+
+    /// Ticks or unticks a language of the Sing page; the order ticked is the order on the slide.
+    pub fn tick_language(&mut self, code: &str) {
+        self.sing_chosen = true;
+        self.sing_cursor = code.to_string();
+        artosia_core::languages::tick(&mut self.sing, code);
+    }
+
+    /// The filter on the Sing page changed: the cursor stays on a language the filter shows.
+    pub fn sing_query_changed(&mut self) {
+        let visible = self.visible_languages();
+        if !visible.is_empty() && !visible.iter().any(|(code, _)| *code == self.sing_cursor) {
+            self.sing_cursor = visible[0].0.clone();
+        }
     }
 
     /// Picks a row of the songs page. The folder row opens the picker and is picked once a folder is chosen.
@@ -456,6 +503,14 @@ impl Onboard {
                     && let Some((id, title)) = bibles.iter().find(|(each, _)| *each == id)
                 {
                     self.pick_bible(id, title);
+                }
+                Vec::new()
+            }
+            Page::Sing => {
+                let ids: Vec<String> = self.visible_languages().into_iter().map(|(code, _)| code).collect();
+                let current = (!self.sing_cursor.is_empty()).then_some(self.sing_cursor.as_str());
+                if let Some(code) = stepped(&ids, current, delta) {
+                    self.sing_cursor = code;
                 }
                 Vec::new()
             }
@@ -522,6 +577,11 @@ impl Onboard {
                         Songs::Nowhere => {}
                     }
                 }
+                effects.extend(self.go(Page::Sing));
+                effects
+            }
+            (Page::Sing, Action::Next) => {
+                let mut effects = vec![Effect::SaveSongLanguages(self.sing.clone())];
                 effects.extend(self.go(Page::Screens));
                 effects
             }
@@ -686,7 +746,7 @@ mod tests {
         let onboard = Onboard::new(facts(None));
         assert_eq!((onboard.page, onboard.language.as_str(), onboard.country.as_str()), (Page::Language, "id", "ID"));
         assert_eq!(onboard.start(), [Effect::SetLanguage("id".into()), Effect::LoadCatalogue]);
-        assert_eq!(Page::ALL.iter().map(|page| page.number()).collect::<Vec<_>>(), [1, 2, 3, 4, 5, 6, 7]);
+        assert_eq!(Page::ALL.iter().map(|page| page.number()).collect::<Vec<_>>(), [1, 2, 3, 4, 5, 6, 7, 8]);
     }
 
     #[test]
@@ -716,6 +776,8 @@ mod tests {
         onboard.bible = Some(("a".into(), "A".into()));
         assert_eq!(of(&onboard), (Action::Next, vec![Action::SkipForNow]));
         onboard.page = Page::Songs;
+        assert_eq!(of(&onboard), (Action::Next, vec![]));
+        onboard.page = Page::Sing;
         assert_eq!(of(&onboard), (Action::Next, vec![]));
         onboard.page = Page::Screens;
         assert_eq!(of(&onboard), (Action::Next, vec![]), "no second screen yet");
@@ -906,7 +968,7 @@ mod tests {
     fn next_on_the_songs_page_starts_the_import_that_was_picked() {
         let mut onboard = at(Page::Songs, Some(961));
         assert_eq!(onboard.press(Action::Next), [Effect::ImportEasislides]);
-        assert_eq!((onboard.page, &onboard.songs_job), (Page::Screens, &SongsJob::Reading));
+        assert_eq!((onboard.page, &onboard.songs_job), (Page::Sing, &SongsJob::Reading));
         onboard.songs_read(961);
         onboard.songs_progress(412, 961);
         assert_eq!(onboard.jobs().last(), Some(&JobRow::Songs(SongsJob::Importing { done: 412, of: 961 })));
@@ -940,8 +1002,58 @@ mod tests {
     }
 
     #[test]
+    fn the_sing_page_ticks_the_windows_language_and_lists_the_countrys_first() {
+        let onboard = at(Page::Sing, None);
+        assert_eq!(onboard.sing, ["id"]);
+        let rows = onboard.visible_languages();
+        assert_eq!(rows.iter().take(4).map(|(code, _)| code.as_str()).collect::<Vec<_>>(), ["id", "en", "jv", "su"]);
+        // Another country puts its own first.
+        let mut brazil = at(Page::Sing, None);
+        brazil.pick_country("BR");
+        assert_eq!(brazil.visible_languages().iter().take(3).map(|(code, _)| code.as_str()).collect::<Vec<_>>(), ["id", "en", "pt"], "the window's language and English first, then the country's");
+    }
+
+    #[test]
+    fn until_a_person_ticks_the_window_s_language_is_the_tick_and_after_that_it_is_left_alone() {
+        let mut onboard = at(Page::Language, None);
+        onboard.pick_language("en");
+        assert_eq!(onboard.sing, ["en"]);
+        onboard.tick_language("id");
+        onboard.pick_language("id");
+        assert_eq!(onboard.sing, ["en", "id"], "a person's ticks stay");
+    }
+
+    #[test]
+    fn next_keeps_the_ticked_languages_in_the_order_ticked_and_one_means_one() {
+        let mut onboard = at(Page::Sing, None);
+        onboard.tick_language("en");
+        onboard.tick_language("zh-Hans");
+        onboard.tick_language("id");
+        onboard.tick_language("id");
+        assert_eq!(onboard.press(Action::Next), [Effect::SaveSongLanguages(vec!["en".into(), "zh-Hans".into(), "id".into()])]);
+        assert_eq!(onboard.page, Page::Screens);
+        let mut one = at(Page::Sing, None);
+        assert_eq!(one.press(Action::Next), [Effect::SaveSongLanguages(vec!["id".into()])]);
+        // Skipping saves nothing, as on the other pages.
+        let mut skipped = at(Page::Sing, None);
+        assert_eq!(skipped.skip(), [Effect::Finish(Finish::Skip)]);
+    }
+
+    #[test]
+    fn the_filter_narrows_the_languages_in_the_windows_language_and_the_arrows_stay_inside_it() {
+        let mut onboard = at(Page::Sing, None);
+        onboard.sing_query.insert("jaw");
+        onboard.sing_query_changed();
+        let rows = onboard.visible_languages();
+        assert!(!rows.is_empty() && rows.iter().all(|(_, name)| name.to_lowercase().contains("jaw")), "{rows:?}");
+        assert_eq!(onboard.sing_cursor, rows[0].0);
+        onboard.step(5, &[]);
+        assert_eq!(onboard.sing_cursor, rows[rows.len() - 1].0, "held at the end of what the filter shows");
+    }
+
+    #[test]
     fn with_one_screen_the_page_has_one_next_and_shows_no_picture() {
-        let mut onboard = at(Page::Songs, None);
+        let mut onboard = at(Page::Sing, None);
         let seen = onboard.screens_seen(vec![screen(1920, true)], None);
         assert!(seen.is_empty());
         onboard.press(Action::Next);
@@ -955,9 +1067,9 @@ mod tests {
 
     #[test]
     fn with_two_screens_the_picture_goes_where_the_projector_would_and_yes_keeps_it() {
-        let mut onboard = at(Page::Songs, None);
+        let mut onboard = at(Page::Sing, None);
         onboard.screens_seen(vec![screen(1920, true), screen(1280, false)], Some(1));
-        assert_eq!(onboard.press(Action::Next), [Effect::ShowTestPicture(1)]);
+        assert_eq!(onboard.press(Action::Next), [Effect::SaveSongLanguages(vec!["id".into()]), Effect::ShowTestPicture(1)]);
         assert_eq!(onboard.buttons().primary, Action::Works);
         assert_eq!(onboard.buttons().others, [Action::TryOther]);
         assert_eq!(onboard.screen_rows(), Some(ScreenRows { window: 1, picture: 2, width: 1280, height: 720 }));
@@ -983,7 +1095,7 @@ mod tests {
         assert_eq!(onboard.screens_seen(vec![screen(1920, true), screen(1280, false)], None), [Effect::ShowTestPicture(1)]);
         assert!(onboard.screens_seen(vec![screen(1920, true), screen(1280, false)], Some(1)).is_empty(), "shown once");
         assert_eq!(onboard.back(), [Effect::HideTestPicture]);
-        assert_eq!(onboard.page, Page::Songs);
+        assert_eq!(onboard.page, Page::Sing);
     }
 
     #[test]
@@ -992,7 +1104,7 @@ mod tests {
         assert!(onboard.back().is_empty());
         assert_eq!(onboard.page, Page::Language);
         onboard.page = Page::Done;
-        for want in [Page::Ready, Page::Screens, Page::Songs, Page::Bible, Page::Country, Page::Language] {
+        for want in [Page::Ready, Page::Screens, Page::Sing, Page::Songs, Page::Bible, Page::Country, Page::Language] {
             onboard.back();
             assert_eq!(onboard.page, want);
         }

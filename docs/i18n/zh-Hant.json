@@ -1402,20 +1402,10 @@
   "back": "Words taken from {source}; check them against the church's own copy before use.",
   "why": "核對建議很重要"
  },
- "FIELD_SECOND": {
-  "text": "第二語言歌詞",
-  "back": "Second-language words",
-  "why": "片語"
- },
  "LYRICS_PLACEHOLDER": {
   "text": "[主歌 1]\n讚美歸給主\n\n[副歌]\n歌頌祂的名",
   "back": "[Verse 1] / Praise to the Lord / [Chorus] / Sing His name",
   "why": "標記用段落名，主歌後空一格再 1"
- },
- "SECOND_PLACEHOLDER": {
-  "text": "用第二語言，依相同順序寫同樣的段落",
-  "back": "In the second language, write the same parts in the same order",
-  "why": "一句"
  },
  "MARK_VERSE": {
   "text": "主歌",
@@ -1441,11 +1431,6 @@
   "text": "結尾",
   "back": "Ending",
   "why": "日常說法"
- },
- "BTN_ADD_SECOND": {
-  "text": "加入第二語言歌詞",
-  "back": "Add second-language words",
-  "why": "片語"
  },
  "BTN_SAVE": {
   "text": "儲存",
@@ -3704,5 +3689,95 @@
   "text": "{month}{day}日",
   "back": "{month}{day}",
   "why": "中文先月後日，月名已含月字"
+ },
+ "LANGUAGE_ADD": {
+  "text": "加入歌詞語言",
+  "back": "Add a song-words language",
+  "why": "歌詞語言：和介面語言分開的詞"
+ },
+ "LANGUAGE_PICK_TITLE": {
+  "text": "要加入哪一種歌詞語言？",
+  "back": "Which song-words language to add?",
+  "why": "問句，與其他對話框標題同風格"
+ },
+ "LANGUAGE_FILTER": {
+  "text": "輸入語言名稱來篩選",
+  "back": "Type a language name to narrow the list",
+  "why": "與字型篩選欄同一說法"
+ },
+ "editor_language_empty": {
+  "text": "在此輸入或貼上{language}歌詞，段落標記與第一種語言相同，各語言才對得上",
+  "back": "Type or paste the words in {language} here; use the same part marks as the first language so the languages line up",
+  "why": "語言名放在歌詞前，任何語言名都通順"
+ },
+ "LANGUAGE_REMOVE": {
+  "text": "移除這個語言的歌詞",
+  "back": "Remove this language's words",
+  "why": "動詞加受詞，不用危險字眼"
+ },
+ "language_removed": {
+  "text": "已移除{language}歌詞",
+  "back": "Removed the {language} words",
+  "why": "與其他移除提示同樣的過去式"
+ },
+ "LANGUAGES_ON_SLIDE": {
+  "text": "投影片的歌詞語言",
+  "back": "Song-words languages of the slide",
+  "why": "名詞片語，不是介面語言"
+ },
+ "LANGUAGES_HINT": {
+  "text": "有這些語言的詩歌，會由上到下依這個順序，一起投影在同一張投影片上",
+  "back": "A song that has these languages is shown together on one slide, in this order from top to bottom",
+  "why": "投影是全程唯一的送給現場的動詞"
+ },
+ "LANGUAGES_USUAL": {
+  "text": "預設歌詞語言",
+  "back": "Default song-words languages",
+  "why": "「一般」不清楚；「預設」明指全教會的起點，與「只用於這個流程」成對"
+ },
+ "LANGUAGES_THIS_PLAN": {
+  "text": "只用於這個流程",
+  "back": "Only for this plan",
+  "why": "與流程自己的外觀按鈕同詞"
+ },
+ "LIVE_LANGUAGES": {
+  "text": "現場正在讀的語言",
+  "back": "Languages the room is reading now",
+  "why": "螢幕閱讀器用，不顯示"
+ },
+ "only_language_showing": {
+  "text": "目前只投影{language}",
+  "back": "For now only {language} is on the projector",
+  "why": "陳述事實"
+ },
+ "cmd_only_language": {
+  "text": "只投影{language}",
+  "back": "Show only {language}",
+  "why": "指令以動詞開頭"
+ },
+ "CMD_ALL_LANGUAGES": {
+  "text": "投影所有語言",
+  "back": "Show all languages",
+  "why": "與只投影成對"
+ },
+ "ONBOARD_SING_TITLE": {
+  "text": "教會用哪些語言唱詩歌？",
+  "back": "Which languages does the church sing in?",
+  "why": "與其他首次設定問句同口吻"
+ },
+ "ONBOARD_SING_HINT": {
+  "text": "有這些語言的詩歌，會一起投影在同一張投影片上。之後也可以更改",
+  "back": "A song that has these languages is shown together on one slide. You can change it later",
+  "why": "兩短句"
+ },
+ "languages_own_dropped": {
+  "text": "「{name}」改回使用預設歌詞語言",
+  "back": "\"{name}\" goes back to the default song-words languages",
+  "why": "與 LANGUAGES_USUAL 同詞"
+ },
+ "match_language": {
+  "text": "{language}歌詞",
+  "back": "{language} song words",
+  "why": "語言名加歌詞，與其他處同詞，不會被當成介面語言"
  }
 }

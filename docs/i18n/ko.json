@@ -1402,20 +1402,10 @@
   "back": "Words from: {source}. Compare with the church's own copy before using.",
   "why": ""
  },
- "FIELD_SECOND": {
-  "text": "다른 언어 가사",
-  "back": "Words in another language",
-  "why": ""
- },
  "LYRICS_PLACEHOLDER": {
   "text": "[벌스 1]\n주님의 사랑 크시네\n\n[후렴]\n주님을 찬양해",
   "back": "[Verse 1] / The Lord's love is great / [Chorus] / We praise the Lord",
   "why": "marker names are the section names"
- },
- "SECOND_PLACEHOLDER": {
-  "text": "같은 부분을 같은 순서로 다른 언어로 쓰세요",
-  "back": "Write the same parts in the same order in the other language",
-  "why": ""
  },
  "MARK_VERSE": {
   "text": "벌스",
@@ -1440,11 +1430,6 @@
  "MARK_ENDING": {
   "text": "마무리",
   "back": "Ending",
-  "why": ""
- },
- "BTN_ADD_SECOND": {
-  "text": "다른 언어 가사 추가",
-  "back": "Add words in another language",
   "why": ""
  },
  "BTN_SAVE": {
@@ -3706,5 +3691,95 @@
   "text": "{month} {day}일",
   "back": "{month} {day}",
   "why": ""
+ },
+ "LANGUAGE_ADD": {
+  "text": "가사 언어 추가",
+  "back": "Add a lyrics language",
+  "why": "가사 언어 is the language of a song's words; 프로그램 언어 stays the window's"
+ },
+ "LANGUAGE_PICK_TITLE": {
+  "text": "어느 가사 언어를 추가할까요?",
+  "back": "Which lyrics language shall we add?",
+  "why": "a question, like the first-run titles"
+ },
+ "LANGUAGE_FILTER": {
+  "text": "언어 이름 입력",
+  "back": "Type a language name",
+  "why": "same invitation as the typeface filter"
+ },
+ "editor_language_empty": {
+  "text": "{language} 가사를 입력하거나 붙여넣고, 첫 언어와 같은 부분 표시를 넣으세요",
+  "back": "Type or paste the {language} words, and put in the same part marks as the first language",
+  "why": "no particle after the language name"
+ },
+ "LANGUAGE_REMOVE": {
+  "text": "이 가사 언어 빼기",
+  "back": "Take out this lyrics language",
+  "why": "빼기 like the plan item, not a danger word"
+ },
+ "language_removed": {
+  "text": "{language} 가사를 뺐어요",
+  "back": "The {language} words were taken out",
+  "why": ""
+ },
+ "LANGUAGES_ON_SLIDE": {
+  "text": "슬라이드의 가사 언어",
+  "back": "Lyrics languages on the slide",
+  "why": ""
+ },
+ "LANGUAGES_HINT": {
+  "text": "이 가사 언어가 있는 곡은 한 슬라이드에 위에서 아래로 이 순서대로 함께 나와요",
+  "back": "A song with these lyrics languages shows them together on one slide, in this order from top to bottom",
+  "why": ""
+ },
+ "LANGUAGES_USUAL": {
+  "text": "기본 가사 언어",
+  "back": "Usual lyrics languages",
+  "why": "pairs with 기본 디자인"
+ },
+ "LANGUAGES_THIS_PLAN": {
+  "text": "이 예배 순서에만 적용",
+  "back": "Applies only to this plan",
+  "why": "pairs with the design tile"
+ },
+ "LIVE_LANGUAGES": {
+  "text": "지금 나오는 가사 언어",
+  "back": "Lyrics languages showing now",
+  "why": ""
+ },
+ "only_language_showing": {
+  "text": "지금은 {language}만 나와요",
+  "back": "Only {language} is showing for now",
+  "why": "만 needs no particle choice"
+ },
+ "cmd_only_language": {
+  "text": "{language}만 띄우기",
+  "back": "Put up only {language}",
+  "why": "commands start with the object, verb 띄우기"
+ },
+ "CMD_ALL_LANGUAGES": {
+  "text": "모든 가사 언어 함께 띄우기",
+  "back": "Put up all lyrics languages together",
+  "why": ""
+ },
+ "ONBOARD_SING_TITLE": {
+  "text": "교회에서는 어느 언어로 찬양하나요?",
+  "back": "Which languages does the church sing in?",
+  "why": ""
+ },
+ "ONBOARD_SING_HINT": {
+  "text": "이 언어가 있는 곡은 한 슬라이드에 함께 나와요. 나중에 바꿀 수 있어요",
+  "back": "A song with these languages shows them together on one slide. You can change it later",
+  "why": ""
+ },
+ "languages_own_dropped": {
+  "text": "{name}: 기본 가사 언어로 돌아갔어요",
+  "back": "{name}: back to the usual lyrics languages",
+  "why": "same shape as look_own_dropped: name first with a colon avoids particles"
+ },
+ "match_language": {
+  "text": "{language} 가사",
+  "back": "{language} lyrics",
+  "why": "uses 가사, the window's word for a song's words"
  }
 }

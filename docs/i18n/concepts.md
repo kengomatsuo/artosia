@@ -48,6 +48,8 @@ A second reader of a finished language found one thing under two or three names,
 
 **`second_language`** A song may carry its words in two languages; the second language shows under the first on the screen.
 
+**`song_language`** A song's words may exist in more than one language: the church sings the same song in Indonesian, English and Mandarin at once. Each language of a song is a full set of its words with the same parts. A slide can show several of these languages together, each in its own block and colour, so the whole room reads along. Which languages show is chosen for the church and may differ for one plan; one language can be shown alone for a while from the Live pane. This is never the language of the window itself, and Artosia never writes a language's words by itself: they are typed, pasted or brought in from a file. Choose your word for "a language of a song's words" so that it cannot be mistaken for the window's language setting.
+
 **`licence`** Permission to show song words in church. Churches usually hold one from a licensing body whose name is the letters CCLI, and write its number in Settings. CCLI is a name and stays as it is.
 
 ## What a song is made of

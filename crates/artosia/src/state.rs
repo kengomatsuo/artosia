@@ -6,7 +6,7 @@ use std::sync::mpsc::{Receiver, Sender, channel};
 use std::sync::{Arc, Mutex};
 
 use artosia_core::bible::{Bible, Reference};
-use artosia_core::deck::{Announcement, Deck, DeckSource, Fill, Person, Slide, Today, announcement_pages, passage_deck, song_deck, tag_group};
+use artosia_core::deck::{Announcement, Deck, DeckSource, Fill, Person, Slide, Today, announcement_pages, passage_deck, tag_group};
 use artosia_core::plan::{Plan, PlanEntry, PlanItem};
 use artosia_core::search::SongIndex;
 use artosia_core::song::Song;
@@ -161,6 +161,9 @@ pub struct Settings {
     /// turned off.
     #[serde(default = "yes")]
     pub letter_keys: bool,
+    /// The languages the church usually shows together on a slide, in the order they are drawn
+    /// (BCP 47 codes). A plan may have its own list; empty shows each song's first language.
+    pub song_languages: Vec<String>,
 }
 
 impl Default for Settings {
@@ -199,6 +202,7 @@ impl Default for Settings {
             warp: artosia_slides::frame::Warp::default(),
             learn: true,
             letter_keys: true,
+            song_languages: Vec::new(),
         }
     }
 }
@@ -244,6 +248,10 @@ pub enum Undo {
     Plan(Box<Plan>),
     /// A plan went back to the usual look; this was its own, and `plan` is the plan it belonged to.
     PlanLook { plan: i64, look: serde_json::Value },
+    /// A plan went back to the church's usual languages; this was its own list.
+    PlanLanguages { plan: i64, list: Vec<String> },
+    /// A language's words were taken out of the song in the editor, from this place in its list.
+    EditorLanguage { at: usize, entry: (String, String) },
     /// Every recording was deleted; they wait beside the folder until the toast leaves.
     Recordings,
 }
@@ -273,9 +281,16 @@ pub struct Editor {
     pub ccli: TextEdit,
     pub key: TextEdit,
     pub order: TextEdit,
+    /// The words of the language that shows in the field (`at`); the others wait in `parked`.
     pub lyrics: TextEdit,
-    pub second: TextEdit,
-    pub show_second: bool,
+    /// The code of each language the song has, the first language first; empty for one nobody named.
+    pub codes: Vec<String>,
+    /// The words of each language as they were when it last left the field. The one `at` is stale.
+    pub parked: Vec<String>,
+    /// The language in the field.
+    pub at: usize,
+    /// The chip whose menu is open.
+    pub menu: Option<usize>,
     pub suggestions: Vec<Suggestion>,
     /// The suggestion Tab or Enter takes.
     pub suggestion: usize,
@@ -307,6 +322,8 @@ pub enum Sheet {
     Listen,
     Stream,
     Bibles,
+    /// Which languages a slide shows together; from a plan's menu it edits the plan's own list.
+    Languages,
     /// The backdrop browser, until the Look dialog holds it as its Background panel.
     Backdrops,
 }
@@ -402,6 +419,16 @@ pub struct App {
     pub tour: Option<usize>,
     /// The language drop-down of Settings is open.
     pub language_open: bool,
+    /// One language is showing alone, chosen from the Live pane or the search. Never saved.
+    pub only_language: Option<String>,
+    /// Languages switched off in the dialog stay in their rows until it closes.
+    pub languages_off: Vec<String>,
+    /// The languages dialog was opened from a plan, so it holds the two tiles.
+    pub languages_from_plan: bool,
+    /// The list of languages to pick one from, while it is open.
+    pub language_pick: Option<crate::song_languages::Pick>,
+    /// The shape of the projector's screen, in pixels, once it is known: the slides split for it.
+    pub projector_shape: Option<(u32, u32)>,
     /// The first run, while it is open (`onboard.rs`, `ui/onboard.rs`).
     pub onboard: Option<crate::onboard::Onboard>,
     /// This start is a new church's: the first run opens by itself.
@@ -599,7 +626,11 @@ impl App {
         // A library that never saved settings is a new church's: the first run opens (`onboard.rs`).
         let stored: Option<Settings> = store.setting("settings");
         let first_run = crate::onboard::opens_at_start(folder.is_some(), stored.is_some(), stored.as_ref().is_some_and(|settings| settings.first_run_open), rune::is_headless());
-        let settings: Settings = stored.unwrap_or_default();
+        let mut settings: Settings = stored.unwrap_or_default();
+        // The practice library's song in three languages shows all three, so the feature can be seen without setting anything up.
+        if practice {
+            settings.song_languages = vec!["id".to_string(), "en".to_string(), "zh-Hans".to_string()];
+        }
         let announcements = store.announcements().unwrap_or_default();
         let plans = store.plans().unwrap_or_default();
         let plan = plans
@@ -648,6 +679,11 @@ impl App {
             tour: None,
             onboard: None,
             language_open: false,
+            only_language: None,
+            languages_off: Vec::new(),
+            languages_from_plan: false,
+            language_pick: None,
+            projector_shape: None,
             first_run,
             onboard_entered_at: -1.0,
             onboard_work: Default::default(),
@@ -870,7 +906,7 @@ impl App {
     }
 
     pub fn deck_of_song(&self, song: &Song) -> Deck {
-        let mut deck = song_deck(song, self.look().max_lines, &self.settings.licence);
+        let mut deck = artosia_slides::voices::song_deck(song, self.look().max_lines, &self.settings.licence, &self.song_languages(), &self.look(), self.slide_shape());
         // The library names sections in English; a volunteer reads them in the window's language.
         for slide in &mut deck.slides {
             if let Some(tag) = slide.tag {
@@ -938,7 +974,7 @@ impl App {
     /// Today's date, for announcements that fill themselves with this week's birthdays.
     pub fn today(&self) -> Today<'static> {
         let time = rune::LocalTime::at((self.now * 1000.0) as i64);
-        Today { month: time.month.clamp(1, 12) as u8, day: time.day.clamp(1, 31) as u8, months: t::MONTHS() }
+        Today { month: time.month.clamp(1, 12) as u8, day: time.day.clamp(1, 31) as u8, months: t::MONTHS(), date: t::day_month }
     }
 
     /// Every announcement slide in order, each with the place of its announcement in the list.
@@ -1558,7 +1594,7 @@ impl App {
             match rebuilt(self, &source) {
                 Some(deck) => {
                     if let Some(open) = self.open.as_mut() {
-                        open.cursor = open.cursor.min(deck.slides.len().saturating_sub(1));
+                        open.cursor = crate::song_languages::same_place(&open.deck, open.cursor, &deck);
                         open.deck = deck;
                     }
                 }
@@ -1568,7 +1604,7 @@ impl App {
         if let Some(source) = self.live.as_ref().map(|live| live.deck.source.clone())
             && let Some(deck) = rebuilt(self, &source)
                 && let Some(live) = self.live.as_mut() {
-                    live.index = live.index.min(deck.slides.len().saturating_sub(1));
+                    live.index = crate::song_languages::same_place(&live.deck, live.index, &deck);
                     live.deck = deck;
                 }
     }

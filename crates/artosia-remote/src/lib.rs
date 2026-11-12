@@ -19,6 +19,9 @@ use std::time::Duration;
 pub struct RemoteSlide {
     pub label: String,
     pub text: String,
+    /// The same lines in each further language the slide shows, in the order they are drawn
+    /// under `text`; empty for a slide of one language.
+    pub more: Vec<String>,
 }
 
 /// One line of today's plan.

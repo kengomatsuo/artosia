@@ -1402,20 +1402,10 @@
   "back": "Words taken from {source}. Compare with the church's own copy before showing.",
   "why": "Checking advice kept"
  },
- "FIELD_SECOND": {
-  "text": "Lời ngôn ngữ thứ hai",
-  "back": "Words in the second language",
-  "why": "A phrase"
- },
  "LYRICS_PLACEHOLDER": {
   "text": "[Lời 1]\nDòng một\n\n[Điệp khúc]\nDòng hai",
   "back": "[Verse 1] / line one / [Chorus] / line two",
   "why": "Markers are my part names in brackets"
- },
- "SECOND_PLACEHOLDER": {
-  "text": "Viết lại các phần theo cùng thứ tự",
-  "back": "Write the same parts in the same order",
-  "why": "No full stop"
  },
  "MARK_VERSE": {
   "text": "Lời",
@@ -1441,11 +1431,6 @@
   "text": "Đoạn kết",
   "back": "Closing part",
   "why": "Plain"
- },
- "BTN_ADD_SECOND": {
-  "text": "Thêm ngôn ngữ thứ hai",
-  "back": "Add a second language",
-  "why": "A phrase"
  },
  "BTN_SAVE": {
   "text": "Lưu",
@@ -3704,5 +3689,95 @@
   "text": "{day} {month}",
   "back": "{day} {month}",
   "why": "Month already reads tháng 11"
+ },
+ "LANGUAGE_ADD": {
+  "text": "Thêm ngôn ngữ hát",
+  "back": "Add a sung language",
+  "why": "ngôn ngữ hát (language sung) keeps it apart from the window's Ngôn ngữ"
+ },
+ "LANGUAGE_PICK_TITLE": {
+  "text": "Thêm ngôn ngữ hát nào?",
+  "back": "Add which sung language?",
+  "why": "A short question like the other titles"
+ },
+ "LANGUAGE_FILTER": {
+  "text": "Gõ tên ngôn ngữ",
+  "back": "Type a language name",
+  "why": "Same invitation as the typeface filter"
+ },
+ "editor_language_empty": {
+  "text": "Gõ hoặc dán lời {language}, đánh dấu các phần giống ngôn ngữ đầu tiên để khớp nhau",
+  "back": "Type or paste the {language} words, mark the parts like the first language so they match up",
+  "why": "Dropped bằng and the unclear dấu phần; tiếng now comes inside the name"
+ },
+ "LANGUAGE_REMOVE": {
+  "text": "Bỏ ngôn ngữ hát này",
+  "back": "Remove this sung language",
+  "why": "Bỏ, the verb for leaving, not deleting, since it can be undone"
+ },
+ "language_removed": {
+  "text": "Đã bỏ lời {language} khỏi bài hát",
+  "back": "Removed the {language} words from the song",
+  "why": "Past tense, like the other removal toasts"
+ },
+ "LANGUAGES_ON_SLIDE": {
+  "text": "Ngôn ngữ hát trên trang",
+  "back": "Sung languages on the slide",
+  "why": "trang is the slide word"
+ },
+ "LANGUAGES_HINT": {
+  "text": "Bài hát có các ngôn ngữ này sẽ hiện cùng trên một trang, theo thứ tự từ trên xuống",
+  "back": "A song that has these languages shows them together on one slide, in order from top to bottom",
+  "why": "Smoother word order; trang stays the one slide word of the window"
+ },
+ "LANGUAGES_USUAL": {
+  "text": "Dùng cho mọi thứ tự lễ",
+  "back": "Use for every order of service",
+  "why": "Same pair as the plan's own display style tiles"
+ },
+ "LANGUAGES_THIS_PLAN": {
+  "text": "Chỉ thứ tự lễ này",
+  "back": "Only this order of service",
+  "why": "Pair of the tile before it, thứ tự lễ is the plan"
+ },
+ "LIVE_LANGUAGES": {
+  "text": "Ngôn ngữ hát đang chiếu",
+  "back": "Sung languages being shown",
+  "why": "chiếu is the one verb for being on the projector"
+ },
+ "only_language_showing": {
+  "text": "Chỉ đang chiếu {language}",
+  "back": "Only {language} is being shown",
+  "why": "A plain statement"
+ },
+ "cmd_only_language": {
+  "text": "Chỉ chiếu {language}",
+  "back": "Show only {language}",
+  "why": "Commands start with a verb"
+ },
+ "CMD_ALL_LANGUAGES": {
+  "text": "Chiếu mọi ngôn ngữ hát",
+  "back": "Show every sung language",
+  "why": "Command with a verb"
+ },
+ "ONBOARD_SING_TITLE": {
+  "text": "Nhà thờ hát bằng những ngôn ngữ nào?",
+  "back": "In which languages does the church sing?",
+  "why": "A question like the other first-run ones"
+ },
+ "ONBOARD_SING_HINT": {
+  "text": "Bài hát có các ngôn ngữ này sẽ hiện cùng trên một trang. Có thể đổi lại sau",
+  "back": "A song that has these languages shows them together on one slide. It can be changed later",
+  "why": "Same wording as the settings hint"
+ },
+ "languages_own_dropped": {
+  "text": "“{name}” dùng lại ngôn ngữ hát chung",
+  "back": "“{name}” uses the common sung languages again",
+  "why": "Twin of look_own_dropped, name first, ngôn ngữ hát from round 24"
+ },
+ "match_language": {
+  "text": "Lời {language}",
+  "back": "Words in {language}",
+  "why": "Lời is the song's words as in the editor; the name arrives with tiếng already"
  }
 }

@@ -38,7 +38,7 @@ fn command_icon(command: Command) -> &'static rune::Icon {
         Command::NewAnnouncement => &icons::ANNOUNCE,
         Command::Keys => &icons::KEYBOARD,
         Command::Tour => &icons::PLAY,
-        Command::FirstRun => &icons::GLOBE,
+        Command::FirstRun | Command::Languages | Command::AllLanguages => &icons::GLOBE,
         Command::StartService => &icons::PLAY,
         Command::Next => &icons::ARROW_RIGHT,
         Command::Previous => &icons::ARROW_LEFT,
@@ -65,6 +65,7 @@ fn plain_row(k: &Kit, hit: &Hit) -> (&'static rune::Icon, String, String) {
         Hit::Countdown(minutes) => (&icons::TIMER, t::countdown_for(*minutes), t::COUNTDOWN_DETAIL().to_string()),
         Hit::Message(words) => (&icons::ANNOUNCE, words.clone(), t::MESSAGE_DETAIL().to_string()),
         Hit::StageMessage(words) => (&icons::ANNOUNCE, words.clone(), t::STAGE_MESSAGE_DETAIL().to_string()),
+        Hit::OnlyLanguage { code, .. } => (&icons::GLOBE, t::cmd_only_language(&crate::ui::languages::name_in_sentence(code)), t::LANGUAGES_ON_SLIDE().to_string()),
         Hit::Language(code) => (&icons::GLOBE, crate::languages::index_of(code).map_or("", |at| crate::languages::LANGUAGES[at].name).to_string(), t::LOOK_LANGUAGE().to_string()),
         Hit::Song { .. } | Hit::Section { .. } | Hit::Passage { .. } | Hit::Group(_) => (&icons::SONG, String::new(), String::new()),
     }
@@ -109,6 +110,10 @@ fn hit_row(s: &App, k: &Kit, index: usize, hit: &Hit) -> El {
                     (&icons::SONG, title, text(s.reason_line(why)).font(type_::SMALL).color(k.c.text_muted))
                 }
                 (Some(line), _) => {
+                    // A song found by a line in another language says which language that line is in.
+                    if line.lang != found.lang {
+                        trailing.push(state_pill(&t::match_language(&crate::ui::languages::name_in_sentence(&line.lang)), k.c.layer_04, k.c.text_base).key("found-in-language"));
+                    }
                     if !habit {
                         trailing.push(tag_chip(&t::section_label(line.tag), group_color(tag_group(line.tag))));
                     }
@@ -290,7 +295,7 @@ fn actions(s: &App, k: &Kit, hit: &Hit) -> El {
     let open = || btn(t::BTN_OPEN()).primary().hint(t::KEY_ENTER()).build(k, |s, _| s.pick(Pick::Open));
     match hit {
         Hit::Group(_) => bar,
-        Hit::Command(_) | Hit::Look { .. } | Hit::Bible { .. } | Hit::Countdown(_) | Hit::Message(_) | Hit::StageMessage(_) | Hit::Language(_) | Hit::Plan { .. } => bar.child(spacer()).child(choose()),
+        Hit::Command(_) | Hit::OnlyLanguage { .. } | Hit::Look { .. } | Hit::Bible { .. } | Hit::Countdown(_) | Hit::Message(_) | Hit::StageMessage(_) | Hit::Language(_) | Hit::Plan { .. } => bar.child(spacer()).child(choose()),
         Hit::Passage { step: Some(_), .. } => bar.child(spacer()).child(btn(t::BTN_ADD_TO_PLAN()).build(k, |s, _| s.pick(Pick::AddToPlan))).child(choose()),
         Hit::PlanItem { .. } => bar.child(spacer()).child(show()).child(open()),
         _ => bar.child(add()).child(spacer()).child(show()).child(open()),
@@ -541,7 +546,7 @@ fn footer(s: &App, k: &Kit) -> El {
     // Tab says what it will do to the picked row.
     let picked = s.palette.hits.get(s.palette.picked);
     // A row that is chosen, such as a command or a book of the Bible, has one key: Enter.
-    let chosen = matches!(picked, Some(Hit::Command(_) | Hit::Look { .. } | Hit::Bible { .. } | Hit::Countdown(_) | Hit::Message(_) | Hit::StageMessage(_) | Hit::Language(_) | Hit::Plan { .. } | Hit::Passage { step: Some(_), .. }));
+    let chosen = matches!(picked, Some(Hit::Command(_) | Hit::OnlyLanguage { .. } | Hit::Look { .. } | Hit::Bible { .. } | Hit::Countdown(_) | Hit::Message(_) | Hit::StageMessage(_) | Hit::Language(_) | Hit::Plan { .. } | Hit::Passage { step: Some(_), .. }));
     let tab = match picked {
         _ if s.palette.chip.is_some() => None,
         Some(Hit::Song { .. }) => Some(t::HINT_SECTIONS()),

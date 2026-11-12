@@ -301,6 +301,7 @@ fn settings(s: &App, k: &Kit, layer: &mut Vec<El>, tall: f32) {
                     .build(k),
             ),
         ))
+        .child(row().w_full().min_h(36.0).gap(space::S3).center_y().flex_wrap().child(btn(t::LANGUAGES_ON_SLIDE()).icon(&icons::GLOBE).focusable().build(k, |s, _| s.open_languages(false)).key("settings-languages")).child(text(s.settings.song_languages.iter().map(|code| crate::ui::languages::name_of(code)).collect::<Vec<_>>().join(", ")).font(type_::SMALL).color(k.c.text_muted).truncate().grow(1.0).min_w(0.0)))
         .child(el().h(2.0))
         .child(section_label(k, t::LEARN_SECTION()))
         .child(switch_row(k, "learn-switch", t::LEARN_ON(), t::LEARN_ON_HINT(), s.settings.learn, |s| {
@@ -1019,5 +1020,6 @@ pub fn view(s: &App, k: &Kit, layer: &mut Vec<El>, tall: f32) {
         Sheet::Stream => stream(s, k, layer),
         Sheet::Bibles => crate::ui::bibles::view(s, k, layer),
         Sheet::Backdrops => crate::ui::backdrops::view(s, k, layer),
+        Sheet::Languages => crate::ui::languages::dialog(s, k, layer, tall),
     }
 }

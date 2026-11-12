@@ -196,6 +196,8 @@ impl App {
             }
             Some(Undo::Plan(plan)) => self.restore_plan(*plan),
             Some(Undo::PlanLook { plan, look }) => self.restore_plan_look(plan, look),
+            Some(Undo::PlanLanguages { plan, list }) => self.restore_plan_languages(plan, list),
+            Some(Undo::EditorLanguage { at, entry }) => self.restore_editor_language(at, entry),
             Some(Undo::Recordings) => self.restore_recordings(),
             None => {}
         }
@@ -213,10 +215,9 @@ impl App {
             key: TextEdit::new(song.key.clone()),
             order: TextEdit::new(song.order.clone()),
             lyrics: TextEdit::new(song.lyrics.clone()),
-            second: TextEdit::new(song.second_text().to_string()),
-            show_second: !song.second_text().trim().is_empty(),
             ..Editor::default()
         };
+        (editor.codes, editor.parked) = Editor::languages_of(song.owned_texts());
         if song.title.is_empty() {
             editor.title.focused = true;
         } else {
@@ -396,11 +397,10 @@ impl App {
             ccli: editor.ccli.text.trim().to_string(),
             key: editor.key.text.trim().to_string(),
             order: editor.order.text.trim().to_string(),
-            lyrics: editor.lyrics.text.replace("\r\n", "\n"),
             ..existing
         };
-        // The one extra box edits the first further language; its code and any language after it stay.
-        song.set_second(if editor.show_second { editor.second.text.replace("\r\n", "\n") } else { String::new() });
+        // Every language, the one in the field as it is typed now; nothing is ever written for one that was not typed.
+        song.set_texts(&editor.texts());
         Some(song)
     }
 
@@ -1422,7 +1422,7 @@ impl App {
         };
         if let Some(live) = &self.live {
             state.item_title = live.deck.title.clone();
-            state.slides = live.deck.slides.iter().map(|slide| RemoteSlide { label: slide.label.clone(), text: slide.text.clone() }).collect();
+            state.slides = live.deck.slides.iter().map(|slide| RemoteSlide { label: slide.label.clone(), text: slide.text.clone(), more: slide.more.iter().map(|voice| voice.text.clone()).collect() }).collect();
             state.live_index = Some(live.index);
             state.next_title = self.next_item_title().unwrap_or_default();
             // One entry each time a section is sung, so a repeated chorus appears twice.
@@ -1780,6 +1780,7 @@ impl App {
         changed |= self.poll_desk(tx);
         changed |= self.poll_backdrops();
         changed |= self.poll_onboard(tx);
+        changed |= self.track_projector_shape();
 
         let state = self.output_state();
         if self.sent.as_ref() != Some(&state) {

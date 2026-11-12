@@ -1404,20 +1404,10 @@
   "back": "The words come from {source}. Check them against the church's own copy before use.",
   "why": "checking advice kept"
  },
- "FIELD_SECOND": {
-  "text": "第二语言歌词",
-  "back": "Second-language words",
-  "why": "phrase"
- },
  "LYRICS_PLACEHOLDER": {
   "text": "[主歌 1]\n这里写歌词\n\n[副歌]\n这里写歌词",
   "back": "[verse 1] sample, blank line, [chorus] sample",
   "why": "names exactly as the parts are named"
- },
- "SECOND_PLACEHOLDER": {
-  "text": "用第二种语言按同样的顺序写出相同的段落",
-  "back": "Write the same parts in the same order in the second language",
-  "why": "no full stop"
  },
  "MARK_VERSE": {
   "text": "主歌",
@@ -1443,11 +1433,6 @@
   "text": "结尾",
   "back": "Ending",
   "why": "everyday word"
- },
- "BTN_ADD_SECOND": {
-  "text": "添加第二语言",
-  "back": "Add second language",
-  "why": "phrase"
  },
  "BTN_SAVE": {
   "text": "保存",
@@ -3706,5 +3691,95 @@
   "text": "{month}{day}日",
   "back": "{month}{day}日",
   "why": "month first then day"
+ },
+ "LANGUAGE_ADD": {
+  "text": "添加歌词语言",
+  "back": "Add a lyrics language",
+  "why": "歌词语言 cannot be taken for 界面语言, the window's language"
+ },
+ "LANGUAGE_PICK_TITLE": {
+  "text": "添加哪种歌词语言？",
+  "back": "Which lyrics language to add?",
+  "why": "a short question like the other dialog titles"
+ },
+ "LANGUAGE_FILTER": {
+  "text": "输入语言名称",
+  "back": "Type a language name",
+  "why": "same invitation as the Bible filter"
+ },
+ "editor_language_empty": {
+  "text": "在这里输入或粘贴{language}歌词，段落标记要和第一种歌词语言一致",
+  "back": "Type or paste the {language} words here; the part marks must match the first lyrics language",
+  "why": "{language}歌词 reads right after any language name"
+ },
+ "LANGUAGE_REMOVE": {
+  "text": "移除这种歌词语言",
+  "back": "Take out this lyrics language",
+  "why": "移除 like the plan's take-out item, not a danger word"
+ },
+ "language_removed": {
+  "text": "已移除{language}歌词",
+  "back": "Removed the {language} words",
+  "why": "plain past-tense statement"
+ },
+ "LANGUAGES_ON_SLIDE": {
+  "text": "幻灯片上的歌词语言",
+  "back": "Lyrics languages on the slide",
+  "why": "noun phrase, about song words not the window"
+ },
+ "LANGUAGES_HINT": {
+  "text": "有这些语言歌词的诗歌，会按从上到下的顺序，一起显示在同一张幻灯片上",
+  "back": "A song that has these languages shows them together on one slide, in this order from top to bottom",
+  "why": "one sentence"
+ },
+ "LANGUAGES_USUAL": {
+  "text": "所有流程通用的歌词语言",
+  "back": "Lyrics languages common to all plans",
+  "why": "says it applies to every plan, as the reader asked; exactly 22 wide"
+ },
+ "LANGUAGES_THIS_PLAN": {
+  "text": "仅用于此流程",
+  "back": "Only for this plan",
+  "why": "same words as the plan's own design tile"
+ },
+ "LIVE_LANGUAGES": {
+  "text": "正在显示的歌词语言",
+  "back": "Lyrics languages being shown",
+  "why": "screen reader name of the chip row"
+ },
+ "only_language_showing": {
+  "text": "现在只显示{language}",
+  "back": "Only {language} is showing now",
+  "why": "plain statement"
+ },
+ "cmd_only_language": {
+  "text": "只显示{language}",
+  "back": "Show only {language}",
+  "why": "starts with a verb like the other commands"
+ },
+ "CMD_ALL_LANGUAGES": {
+  "text": "显示全部歌词语言",
+  "back": "Show all lyrics languages",
+  "why": "command with a verb first"
+ },
+ "ONBOARD_SING_TITLE": {
+  "text": "教会用哪些语言唱诗歌？",
+  "back": "In which languages does the church sing?",
+  "why": "question like the other first-run ones"
+ },
+ "ONBOARD_SING_HINT": {
+  "text": "有这些语言歌词的诗歌，会一起显示在同一张幻灯片上。以后还可以更改",
+  "back": "A song with these languages shows them together on one slide. It can be changed later",
+  "why": "two short sentences, no final full stop"
+ },
+ "languages_own_dropped": {
+  "text": "“{name}”改回使用通用歌词语言",
+  "back": "\"{name}\" goes back to the usual lyrics languages",
+  "why": "same shape as look_own_dropped, name first"
+ },
+ "match_language": {
+  "text": "{language}歌词",
+  "back": "{language} lyrics",
+  "why": "names the lyrics language of the match with the same 歌词语言 word used everywhere"
  }
 }

@@ -1408,20 +1408,10 @@
   "back": "Lyrics from {source}. Compare with the church copy before use.",
   "why": "-"
  },
- "FIELD_SECOND": {
-  "text": "Letra em outro idioma",
-  "back": "Lyrics in another language",
-  "why": "-"
- },
  "LYRICS_PLACEHOLDER": {
   "text": "[Estrofe 1]\nTua graça me sustenta\n\n[Refrão]\nCantamos o teu nome",
   "back": "[Verse 1] Your grace holds me up / [Chorus] We sing your name",
   "why": "made-up song lines; width read per line"
- },
- "SECOND_PLACEHOLDER": {
-  "text": "As mesmas partes, na mesma ordem",
-  "back": "The same parts, in the same order",
-  "why": "-"
  },
  "MARK_VERSE": {
   "text": "Estrofe",
@@ -1446,11 +1436,6 @@
  "MARK_ENDING": {
   "text": "Final",
   "back": "Ending",
-  "why": "-"
- },
- "BTN_ADD_SECOND": {
-  "text": "Adicionar outro idioma",
-  "back": "Add another language",
   "why": "-"
  },
  "BTN_SAVE": {
@@ -3735,5 +3720,95 @@
   "text": "{day} de {month}",
   "back": "{day} of {month}",
   "why": "-"
+ },
+ "LANGUAGE_ADD": {
+  "text": "Adicionar idioma da letra",
+  "back": "Add language of the lyrics",
+  "why": "reader: Adicionar is the usual word, and PLAN_ADD already uses it"
+ },
+ "LANGUAGE_PICK_TITLE": {
+  "text": "Adicionar letra em qual idioma?",
+  "back": "Add lyrics in which language?",
+  "why": "reader: natural order, same verb as the button"
+ },
+ "LANGUAGE_FILTER": {
+  "text": "Digite o nome do idioma",
+  "back": "Type the name of the language",
+  "why": "same invitation as the font filter"
+ },
+ "editor_language_empty": {
+  "text": "Digite ou cole a letra em {language}, com as mesmas partes da primeira",
+  "back": "Type or paste the lyrics in {language}, with the same parts as the first",
+  "why": "em before the name reads right for any language"
+ },
+ "LANGUAGE_REMOVE": {
+  "text": "Remover idioma da letra",
+  "back": "Remove language of the lyrics",
+  "why": "Remover, like the picture button"
+ },
+ "language_removed": {
+  "text": "Letra em {language} removida",
+  "back": "Lyrics in {language} removed",
+  "why": "-"
+ },
+ "LANGUAGES_ON_SLIDE": {
+  "text": "Idiomas da letra no slide",
+  "back": "Languages of the lyrics on the slide",
+  "why": "-"
+ },
+ "LANGUAGES_HINT": {
+  "text": "Músicas com letra nesses idiomas mostram todos juntos no slide, de cima para baixo",
+  "back": "Songs with lyrics in these languages show them all together on the slide, top to bottom",
+  "why": "reader: the old sentence was stiff, this one is plain"
+ },
+ "LANGUAGES_USUAL": {
+  "text": "Idiomas padrão",
+  "back": "Usual languages",
+  "why": "pairs with Aparência padrão"
+ },
+ "LANGUAGES_THIS_PLAN": {
+  "text": "Só para este roteiro",
+  "back": "Only for this plan",
+  "why": "pairs with the plan look tile"
+ },
+ "LIVE_LANGUAGES": {
+  "text": "Idiomas da letra exibidos",
+  "back": "Languages of the lyrics shown",
+  "why": "exibir is the one projector verb"
+ },
+ "only_language_showing": {
+  "text": "Exibindo só a letra em {language}",
+  "back": "Showing only the lyrics in {language}",
+  "why": "-"
+ },
+ "cmd_only_language": {
+  "text": "Exibir só a letra em {language}",
+  "back": "Show only the lyrics in {language}",
+  "why": "commands start with an infinitive"
+ },
+ "CMD_ALL_LANGUAGES": {
+  "text": "Exibir todos os idiomas da letra",
+  "back": "Show all the languages of the lyrics",
+  "why": "-"
+ },
+ "ONBOARD_SING_TITLE": {
+  "text": "Em quais idiomas a igreja canta?",
+  "back": "In which languages does the church sing?",
+  "why": "canta says sung, not the window"
+ },
+ "ONBOARD_SING_HINT": {
+  "text": "Músicas com letra nesses idiomas mostram todos juntos no slide. Dá para mudar depois",
+  "back": "Songs with lyrics in these languages show them all together on the slide. It can be changed later",
+  "why": "reader: same plain sentence as the settings hint"
+ },
+ "languages_own_dropped": {
+  "text": "{name} volta aos idiomas padrão",
+  "back": "{name} goes back to the usual languages",
+  "why": "Twin of look_own_dropped, same wording, with Idiomas padrão from the tile"
+ },
+ "match_language": {
+  "text": "Letra em {language}",
+  "back": "lyrics in {language}",
+  "why": "names the language of the song's words, so a bare language name is not read as the window's language"
  }
 }

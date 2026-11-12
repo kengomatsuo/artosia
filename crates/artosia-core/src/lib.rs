@@ -8,6 +8,7 @@ pub mod countries;
 pub mod deck;
 pub mod ebible;
 pub mod import;
+pub mod languages;
 pub mod learn;
 pub mod marks;
 pub mod openlyrics;

@@ -347,6 +347,13 @@ impl Link {
         }
     }
 
+    /// The size in pixels of the screen the projector is on, once the output has reported its
+    /// screens; None before that, with no projector, or for a screen that gave no size.
+    pub fn projector_size(&self) -> Option<(u32, u32)> {
+        let status = self.status.lock().ok()?;
+        status.audience.and_then(|at| status.displays.get(at)).map(|display| (display.width, display.height)).filter(|(width, height)| *width > 0 && *height > 0)
+    }
+
     pub fn status(&self) -> LinkStatus {
         self.status.lock().map(|status| status.clone()).unwrap_or_default()
     }
