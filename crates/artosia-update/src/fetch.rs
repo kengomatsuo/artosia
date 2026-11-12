@@ -84,13 +84,14 @@ pub fn check_with(
         .map_err(|e| UpdateError::BadVersion(format!("{current}: {e}")))?;
     let base = feed.trim_end_matches('/').to_string();
     let agent = agent(Some(CHECK_TIMEOUT));
-    let manifest_bytes = get_small(&agent, &format!("{base}/{MANIFEST_NAME}"))?;
-    let signature =
-        String::from_utf8_lossy(&get_small(&agent, &format!("{base}/{SIGNATURE_NAME}"))?)
-            .trim()
-            .to_string();
+    // Each platform has a list of its own on the host.
+    let platform = this_platform();
+    let manifest_bytes = get_small(&agent, &format!("{base}/{}", manifest::remote_manifest_name(&platform)))?;
+    let signature = String::from_utf8_lossy(&get_small(&agent, &format!("{base}/{}", manifest::remote_signature_name(&platform)))?)
+        .trim()
+        .to_string();
     let m = manifest::verify(&manifest_bytes, &signature, keys)?;
-    if m.platform != this_platform() {
+    if m.platform != platform {
         return Err(UpdateError::WrongPlatform);
     }
     let latest = semver::Version::parse(&m.version)

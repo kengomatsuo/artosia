@@ -2,8 +2,7 @@
 
 use crate::error::UpdateError;
 use crate::manifest::{
-    self, FORMAT, FileEntry, MANIFEST_NAME, Manifest, SIGNATURE_NAME, from_hex, sha256_hex_of_file,
-    this_platform,
+    self, FORMAT, FileEntry, Manifest, from_hex, sha256_hex_of_file, this_platform,
 };
 use std::fs;
 use std::path::{Path, PathBuf};
@@ -26,17 +25,20 @@ pub fn parse_seed(text: &str) -> Result<[u8; 32], UpdateError> {
 }
 
 /// Copies every file of `spec.dir` flat into `spec.out`, then writes the manifest and its
-/// signature next to them.
+/// signature next to them, all under the names the platform has on the host
+/// (`manifest::remote_manifest_name`), so the folders of several platforms can be uploaded
+/// to one release.
 pub fn build_release(spec: &ReleaseSpec, seed: &[u8; 32]) -> Result<Manifest, UpdateError> {
     semver::Version::parse(spec.version)
         .map_err(|e| UpdateError::BadVersion(format!("{}: {e}", spec.version)))?;
     fs::create_dir_all(spec.out)?;
+    let platform = spec.platform.map_or_else(this_platform, str::to_string);
     let mut found = Vec::new();
     walk(spec.dir, spec.dir, &mut found)?;
     found.sort();
     let mut files = Vec::new();
     for (rel, full) in found {
-        let name = rel.replace('/', "__");
+        let name = manifest::remote_file_name(&platform, &rel);
         let dest = spec.out.join(&name);
         fs::copy(&full, &dest)?;
         files.push(FileEntry {
@@ -50,7 +52,7 @@ pub fn build_release(spec: &ReleaseSpec, seed: &[u8; 32]) -> Result<Manifest, Up
     let m = Manifest {
         format: FORMAT,
         version: spec.version.to_string(),
-        platform: spec.platform.map_or_else(this_platform, str::to_string),
+        platform: platform.clone(),
         notes: spec.notes.to_string(),
         released: spec.date.map_or_else(today, str::to_string),
         files,
@@ -60,8 +62,8 @@ pub fn build_release(spec: &ReleaseSpec, seed: &[u8; 32]) -> Result<Manifest, Up
     // Prove the result checks out against the matching public key before anyone uploads it.
     let keys = manifest::TrustedKeys::from_keys(vec![manifest::public_key_of(seed)?]);
     manifest::verify(&bytes, &sig, &keys)?;
-    fs::write(spec.out.join(MANIFEST_NAME), &bytes)?;
-    fs::write(spec.out.join(SIGNATURE_NAME), format!("{sig}\n"))?;
+    fs::write(spec.out.join(manifest::remote_manifest_name(&platform)), &bytes)?;
+    fs::write(spec.out.join(manifest::remote_signature_name(&platform)), format!("{sig}\n"))?;
     Ok(m)
 }
 

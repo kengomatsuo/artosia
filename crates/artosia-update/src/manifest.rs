@@ -7,9 +7,32 @@ use serde::{Deserialize, Serialize};
 use std::io::Read;
 use std::path::Path;
 
+/// The list's name in the staging folder of an installed copy, and on the host for Windows.
 pub const MANIFEST_NAME: &str = "manifest.json";
 pub const SIGNATURE_NAME: &str = "manifest.json.sig";
 pub const FORMAT: u32 = 1;
+
+/// The platform that was published first. Its list and files keep the plain names on the
+/// host, because every installed Windows copy and the setup ask for exactly those.
+pub const FIRST_PLATFORM: &str = "windows-x86_64";
+
+/// The name of a platform's list on the host: `manifest.json` for Windows,
+/// `manifest-linux-x86_64.json` for another, so one release holds a list per platform.
+pub fn remote_manifest_name(platform: &str) -> String {
+    if platform == FIRST_PLATFORM { MANIFEST_NAME.to_string() } else { format!("manifest-{platform}.json") }
+}
+
+/// The name of that list's signature on the host.
+pub fn remote_signature_name(platform: &str) -> String {
+    format!("{}.sig", remote_manifest_name(platform))
+}
+
+/// The name of one file on the host. Names are flat, so any file host works; a platform other
+/// than Windows puts its own name in front, so two platforms' files never share a name.
+pub fn remote_file_name(platform: &str, path: &str) -> String {
+    let flat = path.replace('/', "__");
+    if platform == FIRST_PLATFORM { flat } else { format!("{platform}__{flat}") }
+}
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
 pub struct FileEntry {

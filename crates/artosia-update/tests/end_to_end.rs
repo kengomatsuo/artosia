@@ -438,7 +438,7 @@ fn a_wrong_signature_is_refused() {
     assert!(matches!(err, UpdateError::BadSignature));
     assert_eq!(err.to_string(), "This update is not from Artosia");
     // The manifest edited after signing.
-    let path = w.out.join(manifest::MANIFEST_NAME);
+    let path = w.out.join(manifest::remote_manifest_name(&manifest::this_platform()));
     let edited = fs::read_to_string(&path)
         .unwrap()
         .replace("New songs page", "Free gift");
@@ -635,6 +635,34 @@ fn every_message_is_short_and_plain() {
     }
 }
 
+/// One release holds every platform: Windows keeps the plain names each installed copy and the
+/// setup ask for, and another platform's list and files carry its name, so the two folders can
+/// be uploaded side by side.
+#[test]
+fn each_platform_has_a_list_of_its_own_on_the_host() {
+    assert_eq!(manifest::remote_manifest_name("windows-x86_64"), "manifest.json");
+    assert_eq!(manifest::remote_signature_name("windows-x86_64"), "manifest.json.sig");
+    assert_eq!(manifest::remote_file_name("windows-x86_64", "gstreamer/bin/x.dll"), "gstreamer__bin__x.dll");
+    assert_eq!(manifest::remote_manifest_name("linux-x86_64"), "manifest-linux-x86_64.json");
+    assert_eq!(manifest::remote_signature_name("macos-aarch64"), "manifest-macos-aarch64.json.sig");
+    assert_eq!(manifest::remote_file_name("linux-x86_64", "artosia"), "linux-x86_64__artosia");
+
+    let root = std::env::temp_dir().join(format!("artosia-update-platforms-{}", std::process::id()));
+    let _ = fs::remove_dir_all(&root);
+    let built = root.join("built");
+    blob(&built.join("artosia"), 5, 4_000);
+    let out = root.join("out");
+    for platform in ["windows-x86_64", "linux-x86_64"] {
+        let spec = ReleaseSpec { dir: &built, version: "1.2.3", notes: "Hello", platform: Some(platform), date: Some("2026-11-12"), out: &out };
+        let made = build_release(&spec, &SEED).unwrap();
+        assert_eq!(made.platform, platform);
+    }
+    let names: std::collections::BTreeSet<String> = fs::read_dir(&out).unwrap().map(|entry| entry.unwrap().file_name().to_string_lossy().into_owned()).collect();
+    let want = ["artosia", "linux-x86_64__artosia", "manifest-linux-x86_64.json", "manifest-linux-x86_64.json.sig", "manifest.json", "manifest.json.sig"];
+    assert_eq!(names, want.iter().map(|name| (*name).to_string()).collect());
+    let _ = fs::remove_dir_all(&root);
+}
+
 #[test]
 fn the_release_tool_makes_a_folder_the_app_accepts() {
     let root =
@@ -690,10 +718,11 @@ fn the_release_tool_makes_a_folder_the_app_accepts() {
         "{}",
         String::from_utf8_lossy(&ok.stderr)
     );
-    assert!(out.join("sub__x.dll").is_file());
+    let platform = manifest::this_platform();
+    assert!(out.join(manifest::remote_file_name(&platform, "sub/x.dll")).is_file());
 
-    let bytes = fs::read(out.join(manifest::MANIFEST_NAME)).unwrap();
-    let sig = fs::read_to_string(out.join(manifest::SIGNATURE_NAME)).unwrap();
+    let bytes = fs::read(out.join(manifest::remote_manifest_name(&platform))).unwrap();
+    let sig = fs::read_to_string(out.join(manifest::remote_signature_name(&platform))).unwrap();
     let m = manifest::verify(&bytes, sig.trim(), &TrustedKeys::from_text(&public)).unwrap();
     assert_eq!(m.files.len(), 2);
     for f in &m.files {

@@ -28,7 +28,7 @@ Pages that could not be read: `docs.velopack.io/reference/rust` (404). The Velop
 
 ## Manifest format
 
-A feed is a folder (the "feed URL") holding `manifest.json`, `manifest.json.sig` and each file, flat. One feed per platform; the manifest names its platform and `check` refuses another.
+A feed is a folder (the "feed URL") holding a signed list and each file, flat. One folder holds every platform (2026-11-12, for the Linux and macOS editions): Windows, published first, keeps the plain names every installed copy and the setup ask for (`manifest.json`, `manifest.json.sig`, `artosia.exe`), and every other platform's list and files carry its name (`manifest-linux-x86_64.json`, `manifest-linux-x86_64.json.sig`, `linux-x86_64__artosia`; `manifest::remote_manifest_name`, `remote_signature_name`, `remote_file_name`). A copy asks for its own platform's list, the manifest names its platform, and `check` refuses another. In the staging folder of an installed copy the list is always `manifest.json`.
 
 ```json
 {
