@@ -1,0 +1,20 @@
+{
+ "short_description": "O Artosia é um programa grátis que mostra letras de músicas, versículos e avisos no projetor da igreja, para quem cuida da mesa de mídia nos cultos.",
+ "description": "O Artosia é um programa grátis para a mesa de mídia da igreja, em computadores com Windows 10 ou 11. Ele mostra letras de músicas, versículos e avisos em um projetor ou em qualquer segunda tela.\n\nAche uma música pelo título ou por qualquer linha da letra, mesmo com erros de digitação. Ache um trecho da Bíblia pela referência ou pelas palavras. As Bíblias vêm de coleções grátis, cada uma com a sua linha de direitos autorais à frente, ou de um arquivo da própria igreja.\n\nCada culto tem o seu roteiro, com músicas, trechos da Bíblia e avisos em ordem. A Prévia mostra o que vem a seguir e o Ao vivo mostra o que a igreja vê. Nada chega ao projetor até você apertar Exibir.\n\nEm Aparência você escolhe tamanho, lugar e fonte do texto, sobre uma cor, uma imagem, um vídeo em loop ou uma câmera ao vivo. Há uma galeria de fundos grátis. Em Telas você diz qual monitor é o projetor. A tela da banda mostra a letra, o que vem a seguir e um relógio.\n\nDurante o culto, o controle pelo celular, no Wi-Fi da igreja e com um código de quatro dígitos, troca slides, escolhe partes da música, manda um recado e inicia uma contagem. Avisos e aniversários se repetem antes do culto. O microfone pode ouvir a sala e sugerir a música cantada, com a voz lida no próprio computador e nada enviado. O streaming leva a imagem do projetor para o endereço e a chave da própria igreja.\n\nO Artosia é grátis, sem conta, sem propaganda e sem coletar nada, e tem código aberto sob a GPL-3.0-or-later. Traz músicas do EasiSlides e de arquivos OpenLyrics. A janela fala dez idiomas: indonésio, inglês, chinês (simplificado e tradicional), coreano, japonês, espanhol, português, francês e vietnamita. A biblioteca da igreja fica na pasta Documentos, em uma pasta chamada Artosia, e continua lá se o programa for removido.",
+ "feature_1": "Músicas achadas pelo título ou por qualquer linha, com erros de digitação perdoados",
+ "feature_2": "Trechos da Bíblia pela referência ou pelas palavras",
+ "feature_3": "Um roteiro para cada culto, com a Prévia ao lado do Ao vivo",
+ "feature_4": "Fundos: cor, imagem, vídeo em loop ou câmera ao vivo",
+ "feature_5": "Qualquer projetor ou segunda tela, com uma tela para a banda",
+ "feature_6": "Controle pelo celular, no Wi-Fi",
+ "feature_7": "Traz músicas do EasiSlides e do OpenLyrics",
+ "feature_8": "Grátis e de código aberto, sem conta e sem coletar nada",
+ "keywords": "letras de músicas, programa para igreja, slides de louvor, versículos bíblicos, projetor, mesa de mídia, culto",
+ "whats_new": "Esta é a primeira versão do Artosia na Microsoft Store. Agora ele começa com uma configuração inicial curta, que pergunta o idioma, o país, uma Bíblia para baixar e onde estão as músicas da igreja.",
+ "caption_window": "A janela do operador: o roteiro à esquerda, com a Prévia e o Ao vivo lado a lado",
+ "caption_search": "A busca achando as músicas que têm a linha digitada, com a linha que bate marcada",
+ "caption_design": "A janela Aparência: o texto sobre um fundo",
+ "caption_screens": "A janela Telas: qual monitor é o projetor, com cantos e cor",
+ "caption_notices": "Avisos que se repetem antes do culto",
+ "caption_first_run": "A configuração inicial: uma pergunta por página, já respondida pelo que o computador sabe"
+}

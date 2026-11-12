@@ -1,0 +1,20 @@
+{
+ "short_description": "Artosia projette les paroles des chants, les versets de la Bible et les annonces sur le projecteur de l'église. Gratuit, pour les bénévoles de la régie.",
+ "description": "Artosia est un logiciel gratuit pour la régie d'une église. Il projette les paroles des chants, les versets de la Bible et les annonces pendant le culte, sur un projecteur ou un second écran.\n\nUn chant se trouve par son titre ou par une ligne de ses paroles. Les fautes de frappe sont pardonnées et la ligne qui correspond est montrée. Un passage de la Bible se trouve par sa référence ou par ses mots. Les Bibles se téléchargent depuis des collections libres ou s'ouvrent depuis le fichier de l'église. Artosia reprend aussi les chants d'EasiSlides et d'OpenLyrics.\n\nChaque culte a son programme : chants, passages et annonces dans l'ordre. L'aperçu montre ce qui vient ensuite et le direct ce que voit la salle. Rien n'arrive au projecteur avant d'appuyer sur Projeter.\n\nDans Apparence, vous réglez la taille, la place et la police du texte, sur une couleur, une image, une vidéo en boucle ou une caméra. Une seconde fenêtre montre aux musiciens les paroles, la suite et une horloge.\n\nUne télécommande sur téléphone, par le Wi-Fi de l'église et un code à quatre chiffres, change les diapos, va aux parties du chant, ouvre le programme, envoie un message ou un décompte. Les annonces et les anniversaires tournent avant le culte. Artosia peut écouter la salle par un microphone et proposer le chant en cours ; la voix est lue sur l'ordinateur, rien n'est envoyé. Il peut aussi diffuser l'image du projecteur en direct.\n\nArtosia est gratuit, sans compte ni publicité, et ne collecte rien. Le code source est ouvert sous GPL-3.0-or-later. La fenêtre parle dix langues : indonésien, anglais, chinois (simplifié et traditionnel), coréen, japonais, espagnol, portugais, français et vietnamien. Les chants sont gardés dans le dossier Artosia, dans Documents, et restent si vous retirez le logiciel.",
+ "feature_1": "Chants trouvés par titre ou par une ligne, fautes de frappe pardonnées",
+ "feature_2": "Passages de la Bible par référence ou par mots",
+ "feature_3": "Un programme par culte, avec l'aperçu à côté du direct",
+ "feature_4": "Fonds : couleur, image, vidéo en boucle ou caméra",
+ "feature_5": "Tout projecteur ou second écran, avec un écran pour les musiciens",
+ "feature_6": "Une télécommande sur téléphone, par Wi-Fi",
+ "feature_7": "Reprend les chants d'EasiSlides et d'OpenLyrics",
+ "feature_8": "Gratuit et libre, sans compte, rien n'est collecté",
+ "keywords": "paroles de chants, projection église, logiciel de culte, versets bibliques, annonces église, chants d'église, présentation culte",
+ "whats_new": "Première version d'Artosia dans le Microsoft Store. Elle démarre maintenant par une courte installation qui demande la langue, le pays, une Bible à télécharger et où sont les chants de l'église.",
+ "caption_window": "La fenêtre d'Artosia : le programme à gauche, l'aperçu et le direct côte à côte, un chant projeté.",
+ "caption_search": "La recherche : une ligne tapée, les chants qui la contiennent et la ligne trouvée en évidence.",
+ "caption_design": "Apparence : le style du texte sur un fond.",
+ "caption_screens": "Écrans : quel écran est le projecteur, avec ses coins et ses couleurs.",
+ "caption_notices": "Annonces : des cartes qui tournent en boucle avant le culte.",
+ "caption_first_run": "Le premier démarrage : une question par page, déjà remplie d'après l'ordinateur."
+}

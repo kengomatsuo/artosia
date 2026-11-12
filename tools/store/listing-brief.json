@@ -1,0 +1,53 @@
+{
+  "_listing": "Artosia's page in the Microsoft Store. Artosia is a free program for a church's media desk: it puts the words of songs, Bible verses and announcements on the projector during a service. It runs on a Windows 10 or 11 computer. The reader is a church volunteer of any age who searched the Store or was sent the link, and decides in a few seconds whether this is what the church needs. Register: plain, modest and concrete, the way a friendly program speaks in your language; say what the thing is and does, then stop. No exclamation mark, no em-dash, no en-dash, no middle dot, no emoji, no word such as best, powerful, seamless or ultimate, and no promise the facts below do not make. Sentence case. Program names (Artosia, EasiSlides, OpenLyrics, PowerPoint, Windows, Wi-Fi, GPL-3.0-or-later) stay as written. Names of things inside the program are the words you chose for its window (Design, Screens, Announcements, the plan, Preview and Live, the phone remote). The Store shows plain text: no markup, a blank line between paragraphs.",
+  "_facts": [
+    "Shows song words, Bible verses and announcements on a projector or any second screen; the operator's window stays on the first screen.",
+    "Finds a song by its title or by any line of its words, forgives typing mistakes, and shows the matching line.",
+    "Finds a Bible passage by its reference or by its words. Bibles are downloaded from free collections, each showing its own copyright line first, or opened from a church's own file.",
+    "A plan for each service: songs, passages and announcements in order. Preview shows what comes next and Live shows what the room sees; nothing reaches the projector until Show is pressed.",
+    "Design: the text's size, place and font, over a colour, a picture, a looping video or a live camera. A gallery of free backdrops is built in.",
+    "A second window for the band's own screen shows the words, what comes next and a clock.",
+    "A remote on a phone over the church's Wi-Fi, joined with a four-digit code: next and back, sections of the song, the plan, search, a message to the room, a countdown.",
+    "Announcement and birthday cards loop before the service.",
+    "It can listen to the room through a microphone and offer the song being sung; the speech is read on the computer itself and nothing is sent anywhere.",
+    "It can send the projector's picture to a live stream with the church's own stream address and key.",
+    "It brings in songs from EasiSlides and from OpenLyrics files, and words pasted from anywhere.",
+    "Free, with no account, no advertising and nothing collected. Open source under GPL-3.0-or-later.",
+    "The window speaks ten languages: Indonesian, English, Chinese (simplified and traditional), Korean, Japanese, Spanish, Portuguese, French and Vietnamese.",
+    "The church's library is kept in the Documents folder, in a folder named Artosia, so it stays when the program is removed."
+  ],
+  "short_description": {
+    "where": "under the program's name at the top of its Store page, and in Store search results; about 200 characters show",
+    "does": "one or two sentences: what Artosia is, for whom, and that it is free",
+    "max": 200
+  },
+  "description": {
+    "where": "the long text of the Store page, read after the pictures",
+    "does": "four to six short paragraphs, each of two or three sentences, in this order: what Artosia is and who it is for; finding a song or a Bible passage and showing it; the plan, Preview and Live; how it looks and where it shows (Design, backgrounds, the projector, the band's screen); what helps during a service (the phone remote, announcements, listening, the live stream); what it costs and collects (nothing), that it is open source, the languages it speaks, and where the library is kept. Use only the facts given",
+    "max": 1800
+  },
+  "feature_1": {"where": "first line of the Store page's short list of features", "does": "songs found by title or any line, typing mistakes forgiven", "max": 90},
+  "feature_2": {"where": "feature list", "does": "Bible passages by reference or by words", "max": 90},
+  "feature_3": {"where": "feature list", "does": "a plan for each service, with Preview beside Live", "max": 90},
+  "feature_4": {"where": "feature list", "does": "backgrounds: colour, picture, looping video or a live camera", "max": 90},
+  "feature_5": {"where": "feature list", "does": "works with any projector or second screen, with a screen for the band", "max": 90},
+  "feature_6": {"where": "feature list", "does": "a remote on the phone over Wi-Fi", "max": 90},
+  "feature_7": {"where": "feature list", "does": "brings songs from EasiSlides and OpenLyrics", "max": 90},
+  "feature_8": {"where": "feature list", "does": "free and open source, no account, nothing collected", "max": 90},
+  "keywords": {
+    "where": "search terms of the Store page, never shown: what a volunteer would type into the Store's search to find a program like this",
+    "does": "seven terms a person of your language would type, separated by commas, each of one to three words: the kind of program, what it shows, and where (church, worship, song words, projector, Bible verses and the like, in your language's own search words)",
+    "max": 200
+  },
+  "whats_new": {
+    "where": "the 'what's new in this version' box of the Store page",
+    "does": "one or two sentences: this is Artosia's first version in the Microsoft Store, and it now starts with a short setup that asks the language, the country, a Bible to download and where the church's songs are",
+    "max": 300
+  },
+  "caption_window": {"where": "under the first picture: the operator's window with a song on the projector, the plan at the left, Preview and Live side by side", "does": "says what the picture shows in one short sentence", "max": 110},
+  "caption_search": {"where": "under the picture of the search: a typed line of a song, with the songs that hold it and the matching line marked", "does": "one short sentence", "max": 110},
+  "caption_design": {"where": "under the picture of the Design dialog: the text's look over a background", "does": "one short sentence", "max": 110},
+  "caption_screens": {"where": "under the picture of the Screens dialog: which screen is the projector, with its corners and colour", "does": "one short sentence", "max": 110},
+  "caption_notices": {"where": "under the picture of the announcements: cards that loop before the service", "does": "one short sentence", "max": 110},
+  "caption_first_run": {"where": "under the picture of the first start: one question on a page, already answered from the computer's own settings", "does": "one short sentence", "max": 110}
+}

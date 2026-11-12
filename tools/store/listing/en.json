@@ -1,0 +1,20 @@
+{
+  "short_description": "Artosia is a free program for a church's media desk. It puts song words, Bible verses and announcements on the projector during a service.",
+  "description": "Artosia is a free program for a church's media desk. It runs on Windows 10 or 11 and puts song words, Bible verses and announcements on the projector during a service.\n\nFind a song by its title or by any line of its words. Typing mistakes are forgiven, and the matching line is shown. Find a Bible passage by its reference or by its words. Bibles are downloaded from free collections, each showing its own copyright line first, or opened from your church's own file.\n\nEach service has a plan: songs, passages and announcements in order. Preview shows what comes next and Live shows what the room sees. Nothing reaches the projector until you press Show.\n\nIn Design you set the text's size, place and font over a colour, a picture, a looping video or a live camera, and a gallery of free backdrops is built in. Any projector or second screen works. A second window shows the band the words, what comes next and a clock.\n\nDuring a service you can run Artosia from a phone on the church's Wi-Fi, joined with a four-digit code. It moves next and back, opens the plan and search, and sends a message or a countdown to the room. Announcement and birthday cards loop before the service. It can listen to the room through a microphone and offer the song being sung. The speech is read on the computer itself and nothing is sent anywhere. Artosia can also send the projector's picture to a live stream using your own stream address.\n\nArtosia is free, with no account, no advertising and nothing collected. It is open source under GPL-3.0-or-later. The window speaks Indonesian, English, Chinese (simplified and traditional), Korean, Japanese, Spanish, Portuguese, French and Vietnamese. Your church's library is kept in the Documents folder, in a folder named Artosia, so it stays when the program is removed.",
+  "feature_1": "Find a song by its title or any line of its words; typing mistakes are forgiven",
+  "feature_2": "Find a Bible passage by its reference or by its words",
+  "feature_3": "A plan for each service, with Preview beside Live",
+  "feature_4": "Backgrounds: a colour, a picture, a looping video or a live camera",
+  "feature_5": "Works with any projector or second screen, with a screen for the band",
+  "feature_6": "A remote on your phone over the church's Wi-Fi",
+  "feature_7": "Brings in songs from EasiSlides and OpenLyrics",
+  "feature_8": "Free and open source, with no account and nothing collected",
+  "keywords": "church presentation, worship software, song words, projector software, Bible verses, church projector, lyrics display",
+  "whats_new": "This is Artosia's first version in the Microsoft Store. It now starts with a short setup that asks for the language, the country, a Bible to download and where the church's songs are.",
+  "caption_window": "The operator's window with a song on the projector, the plan at the left, and Preview beside Live.",
+  "caption_search": "A typed line of a song finds the songs that hold it, with the matching line marked.",
+  "caption_design": "The Design dialog shows the text's look over a background.",
+  "caption_screens": "The Screens dialog sets which screen is the projector, with its corners and colour.",
+  "caption_notices": "Announcement cards loop before the service.",
+  "caption_first_run": "The first start asks one question on a page, already answered from the computer's own settings."
+}

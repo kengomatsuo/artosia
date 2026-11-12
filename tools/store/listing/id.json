@@ -1,0 +1,20 @@
+{
+  "short_description": "Artosia adalah program gratis untuk meja multimedia gereja. Program ini menayangkan lirik lagu, ayat Alkitab, dan pengumuman di proyektor saat ibadah, di komputer Windows.",
+  "description": "Artosia adalah program gratis untuk meja multimedia gereja. Program ini menayangkan lirik lagu, ayat Alkitab, dan pengumuman di proyektor atau monitor kedua, sementara jendela operator tetap di monitor pertama. Artosia berjalan di Windows 10 dan 11.\n\nCari lagu dari judulnya atau dari baris mana pun di liriknya. Salah ketik dimaafkan. Ayat Alkitab dicari lewat rujukannya atau lewat kata di dalamnya. Alkitab diunduh dari koleksi gratis, dan baris hak ciptanya selalu ditunjukkan lebih dulu.\n\nSetiap ibadah punya rundown sendiri, berisi lagu, ayat, dan pengumuman. Preview menunjukkan apa yang berikutnya, dan Live menunjukkan apa yang dilihat jemaat. Tidak ada yang sampai ke proyektor sebelum Tayangkan ditekan.\n\nDi Tema kamu mengatur ukuran, posisi, dan font teks di atas warna, gambar, video berulang, atau kamera langsung. Jendela kedua untuk monitor pemusik menunjukkan lirik, slide berikutnya, dan jam.\n\nRemote ponsel lewat Wi-Fi gereja tersambung dengan kode empat angka: kamu bisa maju dan mundur, pindah bagian lagu, mencari, mengirim pesan untuk jemaat, dan memulai hitung mundur. Pengumuman dan kartu ulang tahun berputar sebelum ibadah. Artosia juga bisa mendengarkan ruangan lewat mikrofon dan menawarkan lagu yang sedang dinyanyikan. Suaranya dibaca di komputer itu sendiri dan tidak dikirim ke mana pun. Gambar proyektor bisa dikirim ke siaran langsung dengan alamat dan kunci streaming gereja.\n\nArtosia gratis, tanpa akun, tanpa iklan, dan tidak mengumpulkan apa pun. Kodenya terbuka dengan lisensi GPL-3.0-or-later. Jendelanya berbahasa Indonesia, Inggris, Tionghoa (sederhana dan tradisional), Korea, Jepang, Spanyol, Portugis, Prancis, dan Vietnam. Koleksi gereja disimpan di folder Dokumen, dalam folder bernama Artosia, jadi tetap ada ketika program dihapus.",
+  "feature_1": "Lagu ketemu dari judul atau baris mana pun, salah ketik dimaafkan",
+  "feature_2": "Ayat Alkitab dicari lewat rujukan atau lewat kata",
+  "feature_3": "Satu rundown untuk tiap ibadah, Preview di samping Live",
+  "feature_4": "Latar: warna, gambar, video berulang, atau kamera langsung",
+  "feature_5": "Cocok dengan proyektor atau monitor kedua mana pun, plus layar untuk pemusik",
+  "feature_6": "Remote ponsel lewat Wi-Fi",
+  "feature_7": "Membawa lagu dari EasiSlides dan OpenLyrics",
+  "feature_8": "Gratis dan sumber terbuka, tanpa akun, tidak ada data yang dikumpulkan",
+  "keywords": "program ibadah,lirik lagu,ayat Alkitab,proyektor gereja,slide ibadah,multimedia gereja,pengganti EasiSlides",
+  "whats_new": "Ini versi pertama Artosia di Microsoft Store. Sekarang Artosia dimulai dengan pengaturan awal singkat yang menanyakan bahasa, negara, Alkitab yang akan diunduh, dan di mana lagu gereja disimpan.",
+  "caption_window": "Jendela Artosia: rundown di kiri, Preview dan Live berdampingan, dengan lagu tayang di proyektor.",
+  "caption_search": "Satu baris lagu diketik, lalu lagu yang memuatnya muncul dengan baris yang cocok ditandai.",
+  "caption_design": "Jendela Tema: teks dengan latar di belakangnya.",
+  "caption_screens": "Jendela Monitor: monitor mana yang jadi proyektor, dengan sudut dan warnanya.",
+  "caption_notices": "Pengumuman yang berputar sebelum ibadah.",
+  "caption_first_run": "Awal pertama: satu pertanyaan per halaman, sudah terjawab dari pengaturan komputer."
+}

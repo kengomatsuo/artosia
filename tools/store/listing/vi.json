@@ -1,0 +1,20 @@
+{
+ "short_description": "Artosia chiếu lời bài hát, câu Kinh Thánh và thông báo lên máy chiếu của nhà thờ, cho người phụ trách truyền thông. Miễn phí.",
+ "description": "Artosia là phần mềm miễn phí cho bàn truyền thông của nhà thờ. Phần mềm chiếu lời bài hát, câu Kinh Thánh và thông báo lên máy chiếu trong buổi lễ. Chạy trên máy tính Windows 10 hoặc 11.\n\nTìm bài hát theo tên hoặc theo bất kỳ dòng lời nào, gõ sai vẫn tìm được và dòng khớp được hiện ra. Tìm đoạn Kinh Thánh theo sách và chương hoặc theo chữ trong câu. Kinh Thánh tải từ các kho miễn phí, mỗi bản hiện dòng bản quyền của nó trước, hoặc mở từ tệp của nhà thờ.\n\nMỗi buổi lễ có một danh sách gồm bài hát, đoạn Kinh Thánh và thông báo theo thứ tự. Xem trước cho thấy trang sẽ chiếu tiếp theo, còn Live cho thấy những gì hội chúng đang thấy. Không có gì lên máy chiếu cho đến khi bấm Chiếu.\n\nTrong Thiết kế, bạn chỉnh cỡ chữ, vị trí và phông chữ trên nền màu, ảnh, video lặp hoặc camera trực tiếp, và có sẵn kho nền miễn phí. Chữ lên máy chiếu hoặc màn hình thứ hai. Một cửa sổ riêng cho màn hình ban nhạc hiện lời, phần tiếp theo và đồng hồ.\n\nĐiện thoại cùng Wi-Fi của nhà thờ làm điều khiển từ xa, nối bằng mã bốn số: tiếp và trước, các phần của bài, danh sách, tìm kiếm, lời nhắn và đếm ngược. Thông báo và thẻ sinh nhật chạy lặp trước giờ lễ. Artosia có thể nghe phòng bằng micro để gợi ý bài đang hát, lời được đọc ngay trên máy và không gửi đi đâu. Hình máy chiếu cũng có thể phát livestream bằng địa chỉ và mã của nhà thờ.\n\nMiễn phí, không cần tài khoản, không quảng cáo và không thu thập gì. Mã nguồn mở theo GPL-3.0-or-later. Cửa sổ có mười ngôn ngữ, và thư viện của nhà thờ nằm trong thư mục Artosia ở Documents nên vẫn còn khi gỡ phần mềm.",
+ "feature_1": "Tìm bài hát theo tên hoặc bất kỳ dòng lời nào, gõ sai vẫn tìm được",
+ "feature_2": "Tìm đoạn Kinh Thánh theo sách và chương hoặc theo chữ trong câu",
+ "feature_3": "Danh sách cho mỗi buổi lễ, Xem trước bên cạnh Live",
+ "feature_4": "Nền: màu, ảnh, video lặp hoặc camera trực tiếp",
+ "feature_5": "Dùng với máy chiếu hoặc màn hình thứ hai, có màn hình cho ban nhạc",
+ "feature_6": "Điều khiển từ xa bằng điện thoại qua Wi-Fi",
+ "feature_7": "Nhập bài hát từ EasiSlides và OpenLyrics",
+ "feature_8": "Miễn phí, mã nguồn mở, không tài khoản, không thu thập gì",
+ "keywords": "nhà thờ, thờ phượng, lời bài hát, máy chiếu, câu Kinh Thánh, thánh ca, trình chiếu",
+ "whats_new": "Đây là phiên bản đầu tiên của Artosia trên Microsoft Store. Giờ phần mềm mở đầu bằng một phần thiết lập ngắn hỏi ngôn ngữ, quốc gia, bản Kinh Thánh cần tải và nơi nhà thờ giữ bài hát.",
+ "caption_window": "Cửa sổ Artosia: danh sách bên trái, Xem trước cạnh Live, một bài hát đang chiếu.",
+ "caption_search": "Tìm theo một dòng lời hát: các bài chứa dòng đó, dòng khớp được đánh dấu.",
+ "caption_design": "Hộp thoại Thiết kế: kiểu chữ trên một nền.",
+ "caption_screens": "Hộp thoại Màn hình: màn hình nào là máy chiếu, cùng bốn góc và màu.",
+ "caption_notices": "Các thông báo chạy lặp trước giờ lễ.",
+ "caption_first_run": "Lần đầu mở: mỗi trang một câu hỏi, đã trả lời sẵn theo cài đặt của máy."
+}
