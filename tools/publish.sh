@@ -138,7 +138,7 @@ linux="dist/$version/linux"
 if command -v wsl.exe >/dev/null 2>&1 && wsl.exe -d Ubuntu -e true >/dev/null 2>&1; then
     in_wsl() { wsl.exe -d Ubuntu -e wslpath -a "$(cygpath -m "$1")" | tr -d '\r\000'; }
     printf '%s' "$notes" > "dist/$version/notes.txt"
-    if MSYS_NO_PATHCONV=1 wsl.exe -d Ubuntu -e bash -lc "cd ~/artosia && git pull --no-rebase -q && tools/package-linux.sh '$version' --out '$(in_wsl "$PWD")/$linux' --key-file '$(in_wsl "$key")' --notes-file '$(in_wsl "$PWD")/dist/$version/notes.txt'"; then
+    if MSYS_NO_PATHCONV=1 wsl.exe -d Ubuntu -e bash -lc "cd ~/artosia && git pull --no-rebase -q && bash tools/package-linux.sh '$version' --out '$(in_wsl "$PWD")/$linux' --key-file '$(in_wsl "$key")' --notes-file '$(in_wsl "$PWD")/dist/$version/notes.txt'"; then
         gh release upload "v$version" "$linux/Artosia-linux-x86_64.tar.gz" --clobber
         find "$linux/feed" -type f -print0 | xargs -0 -n 12 gh release upload "v$version" --clobber
         linux_megabytes=$(( ($(stat -c %s "$linux/Artosia-linux-x86_64.tar.gz") + 524288) / 1048576 ))

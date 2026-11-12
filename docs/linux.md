@@ -57,7 +57,7 @@ The list is a superset: it was written from Rune's and GStreamer's documentation
 `tools/publish.sh <version> "<notes>"` on the Windows PC, after it has pushed the commit and uploaded the Windows files, runs in WSL:
 
 ```bash
-cd ~/artosia && git pull --no-rebase -q && tools/package-linux.sh <version> --out <the Windows checkout>/dist/<version>/linux --key-file <the signing key> --notes-file <notes>
+cd ~/artosia && git pull --no-rebase -q && bash tools/package-linux.sh <version> --out <the Windows checkout>/dist/<version>/linux --key-file <the signing key> --notes-file <notes>
 ```
 
 and uploads `Artosia-linux-x86_64.tar.gz` and everything in `dist/<version>/linux/feed` to the same release, then adds the Linux download to the release's notes. The key never leaves the PC: WSL reads the same file under `/mnt/c`. Without WSL, or when the Linux build fails, the release carries Windows only and the script says so. The homepage does not offer the Linux download yet (board card SITEOS1).
