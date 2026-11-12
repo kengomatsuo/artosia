@@ -105,13 +105,22 @@ fn gstreamer_root() -> Option<(PathBuf, bool)> {
     if let Ok(exe) = std::env::current_exe()
         && let Some(folder) = exe.parent() {
             roots.push((folder.join("gstreamer"), true));
+            // A Mac app carries it in `Contents/Resources`, laid out as GStreamer's own
+            // framework is (`lib`, `lib/gstreamer-1.0`), so its libraries find one another
+            // by the paths they were built with (`docs/macos.md`).
+            if let Some(contents) = folder.parent().filter(|_| folder.ends_with("Contents/MacOS")) {
+                roots.push((contents.join("Resources").join("gstreamer"), true));
+            }
         }
     if let Some(root) = std::env::var_os("GSTREAMER_1_0_ROOT_MSVC_X86_64") {
         roots.push((PathBuf::from(root), false));
     }
     roots.push((PathBuf::from(r"C:\Program Files\gstreamer\1.0\msvc_x86_64"), false));
     roots.push((PathBuf::from(r"C:\gstreamer\1.0\msvc_x86_64"), false));
-    roots.into_iter().find(|(root, _)| root.join("bin").is_dir())
+    // Windows loads GStreamer's libraries from `bin`; a Mac's are in `lib`, found by the
+    // programs' own run paths, so only the plugins' folder tells that one is there.
+    let sign = if cfg!(target_os = "macos") { PathBuf::from("lib").join("gstreamer-1.0") } else { PathBuf::from("bin") };
+    roots.into_iter().find(|(root, _)| root.join(&sign).is_dir())
 }
 
 /// GStreamer's `bin` folder, which the output process needs on its PATH to play video.
