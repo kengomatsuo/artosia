@@ -218,6 +218,7 @@ pub fn keycaps(k: &Kit, spec: &str, on: Option<Color>) -> El {
         Some(ink) => (ink.alpha(0.14), ink.alpha(0.85)),
         None => (k.c.layer_03, k.c.text_muted),
     };
+    let with_tab = spec.split([' ', ',']).any(|token| token == "Tab");
     let mut out = row().gap(3.0).center_y().a11y_hidden();
     for token in spec.split([' ', ',']).filter(|token| !token.is_empty()) {
         let cap = || el().h(18.0).min_w(18.0).px(4.0).center().radius(4.0).fill(fill);
@@ -232,10 +233,38 @@ pub fn keycaps(k: &Kit, spec: &str, on: Option<Color>) -> El {
             "to" => text(t::KEYS_TO()).font(type_::TINY).color(ink),
             "or" => text(t::KEYS_OR()).font(type_::TINY).color(ink),
             word if word.chars().all(|c| c.is_lowercase()) && word.len() > 1 => text(word.to_string()).font(type_::TINY).color(ink),
-            name => cap().child(text(name.to_string()).font(type_::TINY).color(ink)),
+            name => cap().child(text(printed_key(name, with_tab, cfg!(target_os = "macos")).to_string()).font(type_::TINY).color(ink)),
         });
     }
     out
+}
+
+/// A key's name as this computer's keyboard prints it. The table names keys as a Windows
+/// keyboard does, and a Mac's differ. Its shortcut key is Command (⌘): Rune reports that key
+/// as the primary modifier wherever a shortcut here says Ctrl. With Tab it is Control (⌃),
+/// because Command and Tab switches programs in macOS and never reaches Artosia. The rest are
+/// the marks Apple's menus draw and its keyboards outside the United States print: Option ⌥,
+/// Shift ⇧, Return ↩, Delete ⌫ (a Windows keyboard's Backspace) and Forward Delete ⌦ (its
+/// Delete), so the two delete keys are not one word.
+pub fn printed_key(name: &str, with_tab: bool, mac: bool) -> &str {
+    if !mac {
+        return name;
+    }
+    match name {
+        "Ctrl" if with_tab => "⌃",
+        "Ctrl" => "⌘",
+        "Alt" => "⌥",
+        "Shift" => "⇧",
+        "Enter" => "↩",
+        "Backspace" => "⌫",
+        "Delete" => "⌦",
+        other => other,
+    }
+}
+
+/// A short line that names a held key ("Ctrl held"), in this keyboard's own marks.
+pub fn held_key_words(line: &str) -> String {
+    if cfg!(target_os = "macos") { line.replace("Ctrl", "⌘").replace("Shift", "⇧") } else { line.to_string() }
 }
 
 /// One key or chord in a small box.
@@ -446,4 +475,28 @@ pub fn divider(k: &Kit) -> El {
 
 pub fn vertical_divider(k: &Kit) -> El {
     el().w(1.0).h_full().fill(k.c.border_muted).a11y_hidden()
+}
+
+#[cfg(test)]
+mod key_tests {
+    use super::printed_key;
+
+    #[test]
+    fn a_mac_prints_command_for_a_shortcut_and_control_only_with_tab() {
+        let caps = |spec: &str, mac: bool| -> Vec<String> {
+            let with_tab = spec.split(' ').any(|token| token == "Tab");
+            spec.split(' ').map(|token| printed_key(token, with_tab, mac).to_string()).collect()
+        };
+        assert_eq!(caps("Ctrl K", true), ["⌘", "K"]);
+        assert_eq!(caps("Ctrl Shift N", true), ["⌘", "⇧", "N"]);
+        assert_eq!(caps("Ctrl Tab", true), ["⌃", "Tab"]);
+        assert_eq!(caps("Shift Tab", true), ["⇧", "Tab"]);
+        assert_eq!(caps("Ctrl Enter", true), ["⌘", "↩"]);
+        assert_eq!(caps("Alt Up Down", true), ["⌥", "Up", "Down"]);
+        assert_eq!(caps("Backspace", true), ["⌫"]);
+        assert_eq!(caps("Delete", true), ["⌦"]);
+        // Every other keyboard prints what the table says.
+        assert_eq!(caps("Ctrl Shift N", false), ["Ctrl", "Shift", "N"]);
+        assert_eq!(caps("Ctrl Tab", false), ["Ctrl", "Tab"]);
+    }
 }

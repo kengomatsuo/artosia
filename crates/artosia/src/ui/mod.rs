@@ -225,7 +225,7 @@ pub(crate) fn statusbar(s: &App, k: &Kit) -> El {
 /// the control it presses (owner, 2026-11-11: a list of keys at the bottom "doesn't really
 /// help").
 fn key_hints(s: &App, k: &Kit) -> Vec<El> {
-    let held = |words: &str| crate::ui::widgets::state_pill(words, theme::accent(), rune::Color::WHITE);
+    let held = |words: &str| crate::ui::widgets::state_pill(&crate::ui::widgets::held_key_words(words), theme::accent(), rune::Color::WHITE);
     let live = s.live.is_some();
     if s.held_shift && !s.held_ctrl && live {
         return vec![held(t::HELD_SHIFT()), key_hint(k, "Up Down", t::HINT_PICK()), key_hint(k, "Shift", t::HINT_LET_GO()), key_hint(k, "Esc", t::HINT_CANCEL())];
