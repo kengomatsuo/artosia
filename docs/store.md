@@ -67,7 +67,7 @@ identity is in `tools/store/identity.json`. What was done, in order:
 | Packages | `tools/store-package.sh 0.1.16` made `dist/0.1.16/Artosia-0.1.16-x64.msix` (72 MB); Partner Center validated it and warned only that `runFullTrust` needs approval |
 | Store listings | `tools/store/listing-csv.py` fills the template Partner Center exports with the ten languages of `tools/store/listing/`; the file is imported with Import listings. Screenshots come from `tools/store-shots.sh` and are uploaded on each listing's own page, six a language. A listing's page holds each picture's own bytes, so a picture is checked by its SHA-256 against the local file, beside the caption on its tile: that check found the Chinese (Simplified) listing holding one picture twice and another not at all, and the tile's own file input put the right one back with its caption kept (2026-11-12). A page draws its tiles in no fixed order and loads the last one late, so count six before reading |
 | Submission options | The `runFullTrust` justification and the notes for the testers, both in `tools/store/submission.md` |
-| Age ratings | The owner's: the questionnaire takes the owner's e-mail address |
+| Age ratings | The questionnaire is answered for the King James text that ships inside the program (answers and the ratings they give in `tools/store/submission.md`: Teen, PEGI 12, USK 16, as the largest Bible app carries). Microsoft passes the publisher's name and e-mail address to IARC by itself; the one thing left to the owner is the tick that agrees to IARC's Terms of Use |
 
 The package was tried before it was uploaded: its loose folder was registered on this PC,
 the release's own `artosia.exe --edition` answered `edition=store`, version `1.1.16.0` and
