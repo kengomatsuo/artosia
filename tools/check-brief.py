@@ -142,6 +142,8 @@ def expected_phone():
         keys[m.group(1)] = [m.group(2)]
     for kind in ("verse", "chorus", "pre_chorus", "bridge", "intro", "ending"):
         keys["label." + kind] = []
+    # The pattern that joins a part's name to its number (`labelRules` in page.html).
+    keys["label.numbered"] = []
     return keys
 
 

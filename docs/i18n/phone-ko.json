@@ -70,8 +70,8 @@
   "why": ""
  },
  "nothing_open": {
-  "text": "열린 항목 없음",
-  "back": "Nothing open",
+  "text": "열린 항목이 없어요",
+  "back": "Nothing is open",
   "why": ""
  },
  "nothing_live": {
@@ -160,7 +160,7 @@
   "why": "reference written with spaces"
  },
  "searching": {
-  "text": "찾는 중",
+  "text": "찾고 있어요",
   "back": "Searching",
   "why": ""
  },

@@ -18,7 +18,8 @@ read -r tag setup zip < <(gh api "repos/$repo/releases/latest" --jq '[.tag_name,
 [ -n "${setup:-}" ] && [ -n "${zip:-}" ] || { echo "the newest release lacks the setup or the zip" >&2; exit 1; }
 
 out=target/site
-python -I tools/build-site.py --version "${tag#v}" --setup-bytes "$setup" --zip-bytes "$zip" --out "$out"
+# SITE_LANGS=en,id publishes only those languages, for a language whose pictures are not rendered yet.
+python -I tools/build-site.py --version "${tag#v}" --setup-bytes "$setup" --zip-bytes "$zip" --out "$out" ${SITE_LANGS:+--langs "$SITE_LANGS"}
 
 here=$(wsl.exe -d Ubuntu -e wslpath -a "$(cygpath -m "$PWD")" | tr -d '\r\0')
 wsl.exe -d Ubuntu -e bash -lc "

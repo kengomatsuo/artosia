@@ -1,307 +1,307 @@
 {
- "pair_title": {
-  "text": "スマホリモコン",
-  "back": "Phone remote",
-  "why": "Same name as on the computer"
- },
- "pin": {
-  "text": "PIN",
-  "back": "PIN",
-  "why": "Same as the computer's label"
- },
- "pin_hint": {
-  "text": "パソコンのスマホリモコン画面に出ている数字を入力",
-  "back": "Type the number shown on the computer's phone remote screen",
-  "why": "Short sentence"
- },
- "connect": {
-  "text": "接続",
-  "back": "Connect",
-  "why": "One word"
- },
- "wrong_pin": {
-  "text": "PINが違います",
-  "back": "The PIN is wrong",
-  "why": "No full stop"
- },
- "too_many": {
-  "text": "試した回数が多すぎます。1分お待ちください",
-  "back": "Too many tries. Please wait a minute",
-  "why": "Two statements"
- },
- "unreachable": {
-  "text": "パソコンに届きません",
-  "back": "Cannot reach the computer",
-  "why": "No full stop"
- },
- "tab_live": {
-  "text": "ライブ",
-  "back": "Live",
-  "why": "Same as the computer"
- },
- "tab_plan": {
-  "text": "式次第",
-  "back": "Plan",
-  "why": "Same word"
- },
- "tab_search": {
-  "text": "曲・聖書を探す",
-  "back": "Find songs and Bible",
-  "why": "Screen reader only"
- },
- "tab_more": {
-  "text": "その他の機能",
-  "back": "More tools",
-  "why": "Screen reader only"
- },
- "live": {
-  "text": "ライブ",
-  "back": "Live",
-  "why": "Same as the computer"
- },
- "next_btn": {
-  "text": "次へ",
-  "back": "Next",
-  "why": "Same as the computer's Next"
- },
- "back": {
-  "text": "前へ",
-  "back": "Back",
-  "why": "Pair of 次へ"
- },
- "nothing_open": {
-  "text": "何も開いていません",
-  "back": "Nothing is open",
-  "why": "No full stop"
- },
- "nothing_live": {
-  "text": "何も映っていません",
-  "back": "Nothing is showing",
-  "why": "No full stop"
- },
- "n_of": {
-  "text": "{0}/{1}",
-  "back": "{0}/{1}",
-  "why": "Two numbers"
- },
- "n_slides": {
-  "text": "{0}スライド",
-  "back": "{0} slides",
-  "why": "Number and noun"
- },
- "clear_text": {
-  "text": "文字なし",
-  "back": "No text",
-  "why": "Same as the computer's tile"
- },
- "black": {
-  "text": "黒画面",
-  "back": "Black screen",
-  "why": "Same as the computer's tile"
- },
- "logo": {
-  "text": "ロゴ",
-  "back": "Logo",
-  "why": "Same as the computer's tile"
- },
- "logo_needs": {
-  "text": "先にパソコンでロゴを設定してください",
-  "back": "Set a logo on the computer first",
-  "why": "One sentence"
- },
- "text_cleared": {
-  "text": "文字が消えています",
-  "back": "The text is hidden",
-  "why": "A state"
- },
- "screen_black": {
-  "text": "黒画面です",
-  "back": "The screen is black",
-  "why": "A state"
- },
- "logo_showing": {
-  "text": "ロゴを映しています",
-  "back": "Showing the logo",
-  "why": "映す"
- },
- "jump": {
-  "text": "パートへ移動",
-  "back": "Jump to a part",
-  "why": "Screen reader only"
- },
- "plan_show": {
-  "text": "{0}を映す",
-  "back": "Show {0}",
-  "why": "Screen reader only"
- },
- "plan_live": {
-  "text": "ライブ",
-  "back": "Live",
-  "why": "One word"
- },
- "plan_empty": {
-  "text": "項目がありません",
-  "back": "There are no items",
-  "why": "No full stop"
- },
- "cancel": {
-  "text": "やめる",
-  "back": "Never mind",
-  "why": "Light refusal"
- },
- "search_ph": {
-  "text": "曲名や聖書箇所を入力",
-  "back": "Type a song title or Bible passage",
-  "why": "Invitation"
- },
- "search_hint": {
-  "text": "曲名、歌詞の一行、聖書箇所（例：詩篇 23 1）",
-  "back": "A song title, a line of the words, or a Bible passage (for example Psalms 23 1)",
-  "why": "Example with spaces"
- },
- "searching": {
-  "text": "検索中",
-  "back": "Searching",
-  "why": "No full stop"
- },
- "no_results": {
-  "text": "見つかりません",
-  "back": "Nothing found",
-  "why": "No full stop"
- },
- "show": {
-  "text": "映す",
-  "back": "Show",
-  "why": "Same as the computer's Show tile"
- },
- "add": {
-  "text": "追加",
-  "back": "Add",
-  "why": "One word"
- },
- "added": {
-  "text": "追加済み",
-  "back": "Added",
-  "why": "One word"
- },
- "show_aria": {
-  "text": "{0}を今すぐ映す",
-  "back": "Show {0} right now",
-  "why": "Screen reader only"
- },
- "add_aria": {
-  "text": "{0}を式次第に追加",
-  "back": "Add {0} to the plan",
-  "why": "Screen reader only"
- },
- "message": {
-  "text": "会場へメッセージ",
-  "back": "Message to the room",
-  "why": "Phrase"
- },
- "message_ph": {
-  "text": "メッセージを入力",
-  "back": "Type the message",
-  "why": "Invitation"
- },
- "message_show": {
-  "text": "映す",
-  "back": "Show",
-  "why": "One word"
- },
- "message_hide": {
-  "text": "消す",
-  "back": "Remove",
-  "why": "Pair"
- },
- "message_showing": {
-  "text": "「{0}」を映しています",
-  "back": "\"{0}\" is showing",
-  "why": "Quotes the notice"
- },
- "countdown": {
-  "text": "カウントダウン",
-  "back": "Countdown",
-  "why": "Same as the computer"
- },
- "minutes": {
-  "text": "分",
-  "back": "min",
-  "why": "One word"
- },
- "start": {
-  "text": "開始",
-  "back": "Start",
-  "why": "Pair"
- },
- "stop": {
-  "text": "終了",
-  "back": "End",
-  "why": "Pair"
- },
- "language": {
-  "text": "言語",
-  "back": "Language",
-  "why": "One word"
- },
- "keys_title": {
-  "text": "キー一覧",
-  "back": "Key list",
-  "why": "Same as the computer"
- },
- "keys_text": {
-  "text": "Spaceと下矢印で次へ、上矢印で前へ進みます。/で検索を開きます。Cでサビ、Vで次のバース、Bでブリッジへ飛びます。1〜9でそのパートへ飛びます。F1で文字を消し、F2で黒画面、F3でロゴを映します。F6でプロジェクターをオン・オフします。",
-  "back": "Space and the down arrow go one slide forward. The up arrow goes one back. The / key opens search. C goes to the chorus, V to the next verse, B to the bridge. Keys 1 to 9 go to that part. F1 hides the text, F2 black screen, F3 shows the logo. F6 switches the projector on and off.",
-  "why": "Whole short sentences"
- },
- "lost": {
-  "text": "接続が切れました",
-  "back": "The connection was lost",
-  "why": "No full stop"
- },
- "retrying": {
-  "text": "再接続しています",
-  "back": "Reconnecting",
-  "why": "No full stop"
- },
- "label.verse": {
-  "text": "バース",
-  "back": "Verse",
-  "why": "Same as the computer"
- },
- "label.chorus": {
-  "text": "サビ",
-  "back": "Chorus",
-  "why": "Same as the computer"
- },
- "label.pre_chorus": {
-  "text": "プレサビ",
-  "back": "Pre-chorus",
-  "why": "Same as the computer"
- },
- "label.bridge": {
-  "text": "ブリッジ",
-  "back": "Bridge",
-  "why": "Same as the computer"
- },
- "label.intro": {
-  "text": "イントロ",
-  "back": "Intro",
-  "why": "Same as the computer"
- },
- "label.ending": {
-  "text": "アウトロ",
-  "back": "Outro",
-  "why": "Same as the computer"
- },
- "projector_off": {
-  "text": "プロジェクターはオフ",
-  "back": "The projector is off",
-  "why": "Same off word as the window"
- },
- "label.numbered": {
-  "text": "{0}{1}",
-  "back": "the part's name and its number, in the order the window uses",
-  "why": "carried from section_numbered so the phone and the window agree"
- }
+  "pair_title": {
+    "text": "スマホリモコン",
+    "back": "Phone remote",
+    "why": "Same name as on the computer"
+  },
+  "pin": {
+    "text": "PIN",
+    "back": "PIN",
+    "why": "Same as the computer's label"
+  },
+  "pin_hint": {
+    "text": "パソコンのスマホリモコン画面に出ている数字を入力",
+    "back": "Type the number shown on the computer's phone remote screen",
+    "why": "Short sentence"
+  },
+  "connect": {
+    "text": "接続",
+    "back": "Connect",
+    "why": "One word"
+  },
+  "wrong_pin": {
+    "text": "PINが違います",
+    "back": "The PIN is wrong",
+    "why": "No full stop"
+  },
+  "too_many": {
+    "text": "試した回数が多すぎます。1分お待ちください",
+    "back": "Too many tries. Please wait a minute",
+    "why": "Two statements"
+  },
+  "unreachable": {
+    "text": "パソコンに届きません",
+    "back": "Cannot reach the computer",
+    "why": "No full stop"
+  },
+  "tab_live": {
+    "text": "ライブ",
+    "back": "Live",
+    "why": "Same as the computer"
+  },
+  "tab_plan": {
+    "text": "式次第",
+    "back": "Plan",
+    "why": "Same word"
+  },
+  "tab_search": {
+    "text": "曲・聖書を探す",
+    "back": "Find songs and Bible",
+    "why": "Screen reader only"
+  },
+  "tab_more": {
+    "text": "その他の機能",
+    "back": "More tools",
+    "why": "Screen reader only"
+  },
+  "live": {
+    "text": "ライブ",
+    "back": "Live",
+    "why": "Same as the computer"
+  },
+  "next_btn": {
+    "text": "次へ",
+    "back": "Next",
+    "why": "Same as the computer's Next"
+  },
+  "back": {
+    "text": "前へ",
+    "back": "Back",
+    "why": "Pair of 次へ"
+  },
+  "nothing_open": {
+    "text": "何も開いていません",
+    "back": "Nothing is open",
+    "why": "No full stop"
+  },
+  "nothing_live": {
+    "text": "何も映っていません",
+    "back": "Nothing is showing",
+    "why": "No full stop"
+  },
+  "n_of": {
+    "text": "{0}/{1}",
+    "back": "{0}/{1}",
+    "why": "Two numbers"
+  },
+  "n_slides": {
+    "text": "{0}枚",
+    "back": "{0} slides",
+    "why": "枚"
+  },
+  "clear_text": {
+    "text": "文字なし",
+    "back": "No text",
+    "why": "Same as the computer's tile"
+  },
+  "black": {
+    "text": "黒画面",
+    "back": "Black screen",
+    "why": "Same as the computer's tile"
+  },
+  "logo": {
+    "text": "ロゴ",
+    "back": "Logo",
+    "why": "Same as the computer's tile"
+  },
+  "logo_needs": {
+    "text": "先にパソコンでロゴを設定してください",
+    "back": "Set a logo on the computer first",
+    "why": "One sentence"
+  },
+  "text_cleared": {
+    "text": "文字が消えています",
+    "back": "The text is hidden",
+    "why": "A state"
+  },
+  "screen_black": {
+    "text": "黒画面です",
+    "back": "The screen is black",
+    "why": "A state"
+  },
+  "logo_showing": {
+    "text": "ロゴを映しています",
+    "back": "Showing the logo",
+    "why": "映す"
+  },
+  "jump": {
+    "text": "パートへ移動",
+    "back": "Jump to a part",
+    "why": "Screen reader only"
+  },
+  "plan_show": {
+    "text": "{0}を映す",
+    "back": "Show {0}",
+    "why": "Screen reader only"
+  },
+  "plan_live": {
+    "text": "ライブ",
+    "back": "Live",
+    "why": "One word"
+  },
+  "plan_empty": {
+    "text": "項目がありません",
+    "back": "There are no items",
+    "why": "No full stop"
+  },
+  "cancel": {
+    "text": "やめる",
+    "back": "Never mind",
+    "why": "Light refusal"
+  },
+  "search_ph": {
+    "text": "曲名や聖書箇所を入力",
+    "back": "Type a song title or Bible passage",
+    "why": "Invitation"
+  },
+  "search_hint": {
+    "text": "曲名、歌詞の一行、聖書箇所（例：詩篇 23 1）",
+    "back": "A song title, a line of the words, or a Bible passage (for example Psalms 23 1)",
+    "why": "Example with spaces"
+  },
+  "searching": {
+    "text": "検索中",
+    "back": "Searching",
+    "why": "No full stop"
+  },
+  "no_results": {
+    "text": "見つかりません",
+    "back": "Nothing found",
+    "why": "No full stop"
+  },
+  "show": {
+    "text": "映す",
+    "back": "Show",
+    "why": "Same as the computer's Show tile"
+  },
+  "add": {
+    "text": "追加",
+    "back": "Add",
+    "why": "One word"
+  },
+  "added": {
+    "text": "追加済み",
+    "back": "Added",
+    "why": "One word"
+  },
+  "show_aria": {
+    "text": "{0}を今すぐ映す",
+    "back": "Show {0} right now",
+    "why": "Screen reader only"
+  },
+  "add_aria": {
+    "text": "{0}を式次第に追加",
+    "back": "Add {0} to the plan",
+    "why": "Screen reader only"
+  },
+  "message": {
+    "text": "会場へメッセージ",
+    "back": "Message to the room",
+    "why": "Phrase"
+  },
+  "message_ph": {
+    "text": "メッセージを入力",
+    "back": "Type the message",
+    "why": "Invitation"
+  },
+  "message_show": {
+    "text": "映す",
+    "back": "Show",
+    "why": "One word"
+  },
+  "message_hide": {
+    "text": "消す",
+    "back": "Remove",
+    "why": "Pair"
+  },
+  "message_showing": {
+    "text": "「{0}」を映しています",
+    "back": "\"{0}\" is showing",
+    "why": "Quotes the notice"
+  },
+  "countdown": {
+    "text": "カウントダウン",
+    "back": "Countdown",
+    "why": "Same as the computer"
+  },
+  "minutes": {
+    "text": "分",
+    "back": "min",
+    "why": "One word"
+  },
+  "start": {
+    "text": "開始",
+    "back": "Start",
+    "why": "Pair"
+  },
+  "stop": {
+    "text": "終了",
+    "back": "End",
+    "why": "Pair"
+  },
+  "language": {
+    "text": "言語",
+    "back": "Language",
+    "why": "One word"
+  },
+  "keys_title": {
+    "text": "キー操作",
+    "back": "Key controls",
+    "why": "Same as the window"
+  },
+  "keys_text": {
+    "text": "Spaceと下矢印で次へ、上矢印で前へ進みます。/で検索を開きます。Cでサビ、Vで次の番、Bでブリッジへ飛びます。1～9でそのパートへ飛びます。F1で文字を消し、F2で黒画面、F3でロゴを映します。F6でプロジェクターをオン・オフします。",
+    "back": "Space and the down arrow go on, the up arrow goes back. / opens search. C jumps to the chorus, V to the next verse, B to the bridge. 1 to 9 jump to that part. F1 hides the text, F2 black screen, F3 shows the logo. F6 switches the projector on and off.",
+    "why": "Round 23, rewritten from the reader marks"
+  },
+  "lost": {
+    "text": "接続が切れました",
+    "back": "The connection was lost",
+    "why": "No full stop"
+  },
+  "retrying": {
+    "text": "再接続しています",
+    "back": "Reconnecting",
+    "why": "No full stop"
+  },
+  "label.verse": {
+    "text": "番",
+    "back": "Verse",
+    "why": "Round 23, rewritten from the reader marks"
+  },
+  "label.chorus": {
+    "text": "サビ",
+    "back": "Chorus",
+    "why": "Same as the computer"
+  },
+  "label.pre_chorus": {
+    "text": "プレサビ",
+    "back": "Pre-chorus",
+    "why": "Same as the computer"
+  },
+  "label.bridge": {
+    "text": "ブリッジ",
+    "back": "Bridge",
+    "why": "Same as the computer"
+  },
+  "label.intro": {
+    "text": "イントロ",
+    "back": "Intro",
+    "why": "Same as the computer"
+  },
+  "label.ending": {
+    "text": "アウトロ",
+    "back": "Outro",
+    "why": "Same as the computer"
+  },
+  "projector_off": {
+    "text": "プロジェクターはオフ",
+    "back": "The projector is off",
+    "why": "Same off word as the window"
+  },
+  "label.numbered": {
+    "text": "{1}{0}",
+    "back": "number then name",
+    "why": "same order as section_numbered"
+  }
 }

@@ -45,9 +45,9 @@
     "why": "パート is the section word"
   },
   "SEARCH_SECTIONS": {
-    "text": "サビ、バース2、歌詞の一行",
-    "back": "Chorus, verse 2, a line of the words",
-    "why": "Same section words as the editor"
+    "text": "サビ、2番、歌詞の一部",
+    "back": "Chorus, verse 2, part of the words",
+    "why": "One form with the chips"
   },
   "IN_PLAN": {
     "text": "式次第に追加済み",
@@ -130,10 +130,10 @@
   },
   "slides": {
     "text": {
-      "other": "{count}スライド"
+      "other": "{count}枚"
     },
     "back": "{count} slides",
-    "why": "Bare noun fits the width"
+    "why": "枚 for slides throughout"
   },
   "chapters": {
     "text": {
@@ -160,14 +160,14 @@
     "why": "Noun-style, no full stop"
   },
   "CMD_PASTE_SONG": {
-    "text": "コピーした歌詞を曲にする",
-    "back": "Make the copied words a song",
-    "why": "Plain action"
+    "text": "コピーした歌詞から曲を作る",
+    "back": "Make a song from the copied words",
+    "why": "Round 23, rewritten from the reader marks"
   },
   "CMD_PASTE_SONG_DETAIL": {
-    "text": "ウェブや文書の歌詞を先にコピーしてから選びます",
-    "back": "Copy the words from a web page or document first, then pick this",
-    "why": "Polite sentence"
+    "text": "先にウェブや文書の歌詞をコピーしてください",
+    "back": "Copy the words from the web or a document first",
+    "why": "Polite"
   },
   "CMD_ANNOUNCEMENTS": {
     "text": "お知らせ",
@@ -185,9 +185,9 @@
     "why": "見出し is the plain word for a divider"
   },
   "CMD_HEADING_DETAIL": {
-    "text": "賛美とみことば",
-    "back": "Praise and the Word",
-    "why": "Same as the fresh plan's dividers"
+    "text": "賛美と聖書と説教",
+    "back": "Praise, Bible and sermon",
+    "why": "Same as the first dividers"
   },
   "CMD_LOOKS": {
     "text": "デザイン",
@@ -255,9 +255,9 @@
     "why": "パソコン for the computer"
   },
   "CMD_STREAM": {
-    "text": "配信と録画",
+    "text": "配信・録画",
     "back": "Broadcast and recording",
-    "why": "配信 is the stream noun"
+    "why": "One name"
   },
   "CMD_STREAM_DETAIL": {
     "text": "プロジェクターの映像を配信か保存します",
@@ -265,14 +265,14 @@
     "why": "映像 for picture"
   },
   "BTN_STREAM": {
-    "text": "配信",
-    "back": "Broadcast",
-    "why": "One word"
+    "text": "配信・録画",
+    "back": "Broadcast and recording",
+    "why": "One name"
   },
   "BTN_LISTEN": {
-    "text": "聴き取り",
-    "back": "Listening",
-    "why": "Verbal noun, not an order"
+    "text": "曲の認識",
+    "back": "Song recognition",
+    "why": "One name for the feature"
   },
   "STREAM_HINT": {
     "text": "プロジェクターと同じ映像を、会場の音とともに配信します。",
@@ -325,9 +325,9 @@
     "why": "State"
   },
   "STREAM_MISSING": {
-    "text": "このArtosiaには配信の機能が入っていません",
-    "back": "This Artosia does not include the broadcast part",
-    "why": "No bug or error word"
+    "text": "この版のArtosiaには配信機能がありません",
+    "back": "This version of Artosia has no broadcast function",
+    "why": "Round 23, rewritten from the reader marks"
   },
   "STREAM_NOTHING": {
     "text": "配信先のアドレスを入れるか、録画をオンにしてください",
@@ -350,9 +350,9 @@
     "why": "コマ counts frames"
   },
   "CMD_LISTEN": {
-    "text": "聴き取り",
-    "back": "Listening",
-    "why": "Same as the top-bar button"
+    "text": "曲の認識",
+    "back": "Song recognition",
+    "why": "Same as the button"
   },
   "CMD_LISTEN_DETAIL": {
     "text": "音から曲や聖句を見つけて候補に出します",
@@ -360,14 +360,14 @@
     "why": "候補 for suggestion"
   },
   "LISTEN_SWITCH": {
-    "text": "会場の音を聴く",
+    "text": "会場の音を聞く",
     "back": "Listen to the room",
-    "why": "Action beside a switch"
+    "why": "Beside a switch"
   },
   "LISTEN_HINT": {
-    "text": "提案するだけです。勝手に映すことはありません",
-    "back": "It only suggests. It never shows anything on its own",
-    "why": "Kept firm"
+    "text": "曲を提案するだけで、自動では映しません",
+    "back": "It only suggests songs; it never shows anything by itself",
+    "why": "Firm"
   },
   "LISTEN_MICROPHONE": {
     "text": "マイク",
@@ -385,9 +385,9 @@
     "why": "Phrase"
   },
   "LISTEN_LANGUAGE": {
-    "text": "会場の言語",
-    "back": "Language of the room",
-    "why": "Not the window language"
+    "text": "歌う言語",
+    "back": "Language sung",
+    "why": "The voices in the room"
   },
   "LISTEN_INDONESIAN": {
     "text": "インドネシア語",
@@ -405,13 +405,13 @@
     "why": "Meter heading"
   },
   "LISTEN_HEARD": {
-    "text": "聴き取った言葉",
-    "back": "Words caught",
-    "why": "Past sense"
+    "text": "認識した言葉",
+    "back": "Words recognised",
+    "why": "Round 23, rewritten from the reader marks"
   },
   "LISTEN_PART_LISTENING": {
-    "text": "聴き取り",
-    "back": "Listening",
+    "text": "認識",
+    "back": "Recognition",
     "why": "Pairs with 録音"
   },
   "LISTEN_PART_RECORDINGS": {
@@ -425,9 +425,9 @@
     "why": "Same noun as the tab"
   },
   "REC_HINT": {
-    "text": "聴いた短い音と推測の一覧を、このパソコン内に保存します。",
-    "back": "Saves the short sounds heard and the list of guesses on this computer.",
-    "why": "Says what and where"
+    "text": "聞こえた短い音声と認識結果を、このパソコン内に保存します。",
+    "back": "Saves the short sounds heard and the recognition results on this computer.",
+    "why": "Plain"
   },
   "REC_NONE": {
     "text": "まだありません",
@@ -435,9 +435,9 @@
     "why": "Short"
   },
   "rec_kept": {
-    "text": "{size}を保存",
-    "back": "{size} saved",
-    "why": "Size and one word"
+    "text": "保存済み {size}",
+    "back": "Saved {size}",
+    "why": "Not a command"
   },
   "REC_OPEN": {
     "text": "フォルダを開く",
@@ -475,9 +475,9 @@
     "why": "Past tense"
   },
   "REC_FAILED": {
-    "text": "ここには保存できません。「保存先を変更」で別の場所へ。",
-    "back": "It cannot be saved here. Use Change save place for another location.",
-    "why": "Uses the second button's words"
+    "text": "保存できません。「保存先を変更」で別の場所を選んでください。",
+    "back": "It cannot be saved. Choose another place with Change save place.",
+    "why": "Full sentence"
   },
   "REC_ON": {
     "text": "録音中",
@@ -510,14 +510,14 @@
     "why": "Musician's wording"
   },
   "LISTEN_BEAT_BLINK": {
-    "text": "赤い点を曲のテンポに合わせて点滅",
-    "back": "Red dot blinks to the tempo of the music",
-    "why": "No Live word"
+    "text": "曲のテンポに合わせて赤い点を点滅",
+    "back": "Red dot blinks to the tempo of the song",
+    "why": "Plain"
   },
   "LISTEN_BEAT_BLINK_HINT": {
-    "text": "ごくわずかな装飾で、他は変わりません",
-    "back": "A faint decoration, nothing else changes",
-    "why": "Neutral"
+    "text": "見た目だけの効果です",
+    "back": "Only a visual effect",
+    "why": "Plain"
   },
   "CMD_UPDATE": {
     "text": "更新を確認",
@@ -530,9 +530,9 @@
     "why": "Reassurance"
   },
   "update_ready": {
-    "text": "{version}版を取得しました。次回の起動で切り替わります",
+    "text": "{version}版をダウンロードしました。次回の起動で切り替わります",
     "back": "Version {version} was downloaded. It takes over at the next start",
-    "why": "Two clauses"
+    "why": "Round 23, rewritten from the reader marks"
   },
   "update_none": {
     "text": "{version}は最新版です",
@@ -540,9 +540,9 @@
     "why": "Number in the sentence"
   },
   "CMD_KEYS": {
-    "text": "キー一覧",
-    "back": "Key list",
-    "why": "Same as the sheet heading"
+    "text": "キー操作",
+    "back": "Key controls",
+    "why": "One name for the sheet"
   },
   "CMD_KEYS_DETAIL": {
     "text": "操作できるキーをすべて載せています",
@@ -625,9 +625,9 @@
     "why": "元に戻す is the undo word"
   },
   "CMD_LOOP": {
-    "text": "お知らせを順に映す",
-    "back": "Show announcements in turn",
-    "why": "Cards take turns"
+    "text": "お知らせを順に自動で映す",
+    "back": "Show announcements in turn by itself",
+    "why": "Round 23, rewritten from the reader marks"
   },
   "CMD_LOOP_DETAIL": {
     "text": "お知らせを順番に映し、止めるまで続けます",
@@ -675,9 +675,9 @@
     "why": "Names the device"
   },
   "HINT_KEYS": {
-    "text": "キー一覧",
-    "back": "Key list",
-    "why": "Same as the sheet"
+    "text": "キー操作",
+    "back": "Key controls",
+    "why": "One name for the sheet"
   },
   "OUTPUT_OFF": {
     "text": "プロジェクターはオフです",
@@ -685,9 +685,9 @@
     "why": "オン/オフ pair"
   },
   "OUTPUT_PRACTICE": {
-    "text": "練習モード、実際には映しません",
-    "back": "Practice mode, nothing is shown for real",
-    "why": "Does not say off"
+    "text": "練習モードです。実際には映しません",
+    "back": "Practice mode. Nothing is shown for real",
+    "why": "Two sentences"
   },
   "OUTPUT_STARTING": {
     "text": "プロジェクターを起動中",
@@ -790,9 +790,9 @@
     "why": "Churches say 賛美 for the singing time"
   },
   "PLAN_HEADING_WORD": {
-    "text": "みことば",
-    "back": "The Word",
-    "why": "みことば covers reading and preaching"
+    "text": "聖書と説教",
+    "back": "Bible and sermon",
+    "why": "聖書, one word for the Bible"
   },
   "PLANS_TITLE": {
     "text": "式次第一覧",
@@ -815,9 +815,9 @@
     "why": "Everyday word コピー"
   },
   "PLAN_RENAME": {
-    "text": "曜日と時刻を変更",
-    "back": "Change day and time",
-    "why": "Names what changes"
+    "text": "曜日・時刻・名前を変更",
+    "back": "Change day, time, name",
+    "why": "Round 23, rewritten from the reader marks"
   },
   "PLAN_DELETE": {
     "text": "式次第を削除",
@@ -865,9 +865,9 @@
     "why": "Pairs with the plan's own"
   },
   "LOOK_FOR_PLAN": {
-    "text": "この式次第だけ",
-    "back": "Only this plan",
-    "why": "Short"
+    "text": "この式次第だけ別のデザイン",
+    "back": "A separate design for this plan only",
+    "why": "Round 23, rewritten from the reader marks"
   },
   "PLAN_OWN_LOOK": {
     "text": "この式次第専用のデザインです",
@@ -920,9 +920,9 @@
     "why": "Plain"
   },
   "TOUR_SKIP": {
-    "text": "スキップ",
+    "text": "飛ばす",
     "back": "Skip",
-    "why": "Loan word on buttons"
+    "why": "Round 23, rewritten from the reader marks"
   },
   "TOUR_DONE": {
     "text": "完了",
@@ -930,9 +930,9 @@
     "why": "One word"
   },
   "TOUR_PLAN": {
-    "text": "左の列は、礼拝で映すものを順番に並べた式次第です",
-    "back": "The left column is the plan: everything to show in the service, in order",
-    "why": "One sentence"
+    "text": "左の列は式次第、礼拝で映すものの一覧です",
+    "back": "The left column is the plan, the list of what is shown at the service",
+    "why": "Shorter"
   },
   "TOUR_PLAN_MORE": {
     "text": "行をドラッグで並べ替えられます",
@@ -940,9 +940,9 @@
     "why": "Short"
   },
   "TOUR_PREVIEW": {
-    "text": "真ん中のプレビューには、次に映すスライドが入ります",
-    "back": "The middle Preview holds the slides that come next",
-    "why": "Pane name as its title"
+    "text": "プレビューには、次に映すスライドが表示されます",
+    "back": "Preview shows the slide that comes next",
+    "why": "Round 23, rewritten from the reader marks"
   },
   "TOUR_PREVIEW_MORE": {
     "text": "ここは会場の人には見えません",
@@ -950,9 +950,9 @@
     "why": "Reassurance"
   },
   "TOUR_SHOW": {
-    "text": "「映す」で、プレビューの内容がライブに移ります",
-    "back": "Show moves the Preview contents into Live",
-    "why": "Tile name quoted"
+    "text": "「映す」でプレビューの内容がライブへ送られます",
+    "back": "Show sends the Preview contents to Live",
+    "why": "Round 23, rewritten from the reader marks"
   },
   "TOUR_SHOW_MORE": {
     "text": "プロジェクターがオンのときだけ、会場に映ります",
@@ -960,14 +960,14 @@
     "why": "オン/オフ pair"
   },
   "TOUR_LIVE": {
-    "text": "右のライブには、いま会場に映っているものが入ります",
-    "back": "The right Live pane holds what the room sees now",
-    "why": "Pane, not list"
+    "text": "ライブには、いま会場に映っているものが表示されます",
+    "back": "Live shows what the room sees now",
+    "why": "Round 23, rewritten from the reader marks"
   },
   "TOUR_LIVE_MORE": {
-    "text": "赤い「ライブ」タイル(F6)でプロジェクターをオン/オフ",
-    "back": "The red Live tile (F6) switches the projector on and off",
-    "why": "Says tile"
+    "text": "赤い「ライブ」がプロジェクターのオン・オフです（F6）",
+    "back": "The red Live is the projector on/off (F6)",
+    "why": "Round 23, rewritten from the reader marks"
   },
   "TOUR_SEARCH": {
     "text": "この検索欄で、曲も聖書箇所もすべて探せます",
@@ -975,9 +975,9 @@
     "why": "Plain"
   },
   "TOUR_SEARCH_MORE": {
-    "text": "見つけたら開いて「式次第に追加」を押す",
+    "text": "見つけたら開き、「式次第に追加」を押します",
     "back": "Open what you find, then press Add to plan",
-    "why": "Same label as the button"
+    "why": "Polite"
   },
   "START_SONGS": {
     "text": "曲",
@@ -1040,9 +1040,9 @@
     "why": "Statement"
   },
   "BTN_LOOP_START": {
-    "text": "順に映す",
-    "back": "Show in turn",
-    "why": "Fits cards taking turns"
+    "text": "順に自動で映す",
+    "back": "Show in turn by itself",
+    "why": "Round 23, rewritten from the reader marks"
   },
   "BTN_LOOP_STOP": {
     "text": "止める",
@@ -1095,14 +1095,14 @@
     "why": "映す"
   },
   "STATE_MESSAGE": {
-    "text": "メッセージあり",
-    "back": "Message up",
-    "why": "A state"
+    "text": "メッセージ表示中",
+    "back": "Message showing",
+    "why": "Round 23, rewritten from the reader marks"
   },
   "STATE_STAGE_MESSAGE": {
-    "text": "ステージメッセージあり",
-    "back": "Stage message up",
-    "why": "Pair with the room pill"
+    "text": "ステージにメッセージ",
+    "back": "Message on the stage",
+    "why": "Round 23, rewritten from the reader marks"
   },
   "STAGE_MESSAGE_DETAIL": {
     "text": "入力した文字は演奏者の画面にだけ映ります",
@@ -1110,19 +1110,19 @@
     "why": "映す"
   },
   "HEARD_NOTHING": {
-    "text": "まだ何も聴き取れていません",
+    "text": "まだ何も認識できていません",
     "back": "Nothing has been picked up yet",
-    "why": "No full stop"
+    "why": "Round 23: one name 認識 for the listener"
   },
   "SUGGEST_HEARD": {
-    "text": "いま聴き取った歌詞から",
-    "back": "From the words just picked up",
-    "why": "Short reason"
+    "text": "いま認識した歌詞から",
+    "back": "From the words just recognised",
+    "why": "Round 23, rewritten from the reader marks"
   },
   "SUGGEST_HERE": {
-    "text": "いまこのパートを歌っています",
-    "back": "This part is being sung now",
-    "why": "Short reason"
+    "text": "いま歌われている箇所",
+    "back": "The place being sung now",
+    "why": "Plain"
   },
   "SUGGEST_FOLLOWS": {
     "text": "この曲のあとによく歌う",
@@ -1130,9 +1130,9 @@
     "why": "Everyday words"
   },
   "SUGGEST_LOST": {
-    "text": "映している歌詞と違う歌を歌っているようです",
-    "back": "They seem to be singing something other than the words shown",
-    "why": "Full sentence"
+    "text": "映している歌詞と違う曲のようです",
+    "back": "It seems to be a different song from the words shown",
+    "why": "Shorter"
   },
   "SUGGEST_SEARCH": {
     "text": "探す",
@@ -1140,9 +1140,9 @@
     "why": "One word"
   },
   "state_countdown": {
-    "text": "カウントダウン {clock}",
-    "back": "Countdown {clock}",
-    "why": "Clock as 4:32"
+    "text": "開始まで {clock}",
+    "back": "{clock} until the start",
+    "why": "Round 23, rewritten from the reader marks"
   },
   "LIVE_NOTHING": {
     "text": "いまは何も映していません",
@@ -1185,9 +1185,9 @@
     "why": "Tooltip"
   },
   "TIP_LIVE": {
-    "text": "プロジェクターのオン/オフ",
-    "back": "Projector on/off",
-    "why": "Tooltip"
+    "text": "プロジェクターのオン・オフ",
+    "back": "Projector on and off",
+    "why": "Round 23, rewritten from the reader marks"
   },
   "BTN_PREVIOUS_ITEM": {
     "text": "前の項目",
@@ -1210,9 +1210,9 @@
     "why": "Key name as printed"
   },
   "HINT_RING": {
-    "text": "選択枠を動かす",
-    "back": "Move the pick frame",
-    "why": "Ring named by what it means"
+    "text": "選択位置を動かす",
+    "back": "Move the pick position",
+    "why": "選択位置"
   },
   "HINT_PICK": {
     "text": "ライブのスライドを選ぶ",
@@ -1225,24 +1225,24 @@
     "why": "映す"
   },
   "HINT_CANCEL": {
-    "text": "中止",
-    "back": "Cancel",
-    "why": "One word"
+    "text": "やめる",
+    "back": "Stop",
+    "why": "Plain"
   },
   "PLAN_ADD_SONG": {
-    "text": "曲",
-    "back": "Song",
-    "why": "Same word"
+    "text": "曲を選ぶ",
+    "back": "Pick a song",
+    "why": "Round 23, rewritten from the reader marks"
   },
   "PLAN_ADD_PASSAGE": {
-    "text": "聖書",
-    "back": "Bible",
-    "why": "Same as the Bible tile"
+    "text": "聖書を選ぶ",
+    "back": "Pick from the Bible",
+    "why": "Round 23, rewritten from the reader marks"
   },
   "PLAN_ADD_HEADING": {
-    "text": "見出し",
-    "back": "Heading",
-    "why": "Same as divider"
+    "text": "見出しを追加",
+    "back": "Add a heading",
+    "why": "Round 23, rewritten from the reader marks"
   },
   "PLAN_DRAG": {
     "text": "ドラッグで並べ替え",
@@ -1255,9 +1255,9 @@
     "why": "Same as the button"
   },
   "BTN_DONE": {
-    "text": "完了",
-    "back": "Done",
-    "why": "One word"
+    "text": "閉じる",
+    "back": "Close",
+    "why": "Not 完了"
   },
   "BTN_EARLIER": {
     "text": "映した履歴",
@@ -1270,9 +1270,9 @@
     "why": "Two short statements"
   },
   "LETTER_KEYS": {
-    "text": "文字キーでパートに移動",
-    "back": "Letter keys jump to a part",
-    "why": "Reads beside a switch"
+    "text": "英字キーで曲の途中へ移動",
+    "back": "Letter keys jump within the song",
+    "why": "Clearer"
   },
   "LETTER_KEYS_HINT": {
     "text": "Cでサビ、Bでブリッジへ。オフにすると、どの文字でも検索が開きます",
@@ -1315,9 +1315,9 @@
     "why": "Writer"
   },
   "FIELD_KEY": {
-    "text": "キー",
-    "back": "Key",
-    "why": "Musicians' word"
+    "text": "調（キー）",
+    "back": "Key (musical)",
+    "why": "Not the keyboard key"
   },
   "FIELD_COPYRIGHT": {
     "text": "著作権",
@@ -1335,19 +1335,19 @@
     "why": "Word for song words"
   },
   "FIELD_ORDER": {
-    "text": "順番を入力。例 バース1 サビ*2 バース2 サビ ブリッジ",
-    "back": "Type the order. Example: verse1 chorus*2 verse2 chorus bridge",
-    "why": "Name then number, as the program reads"
+    "text": "歌う順を入力。例：V1 C*2 V2 C B",
+    "back": "Type the singing order. Example: V1 C*2 V2 C B",
+    "why": "Letter codes, since 番 cannot carry the number after it"
   },
   "ORDER": {
-    "text": "順番",
-    "back": "Order",
-    "why": "One word"
+    "text": "歌う順番",
+    "back": "Singing order",
+    "why": "Says what order"
   },
   "ORDER_AS_WRITTEN": {
-    "text": "歌詞の順に戻す",
-    "back": "Back to lyrics order",
-    "why": "Uses 歌詞"
+    "text": "歌詞の並びに戻す",
+    "back": "Back to the order of the lyrics",
+    "why": "Clearer"
   },
   "ORDER_EMPTY": {
     "text": "歌詞をパートに分けると順番が出ます",
@@ -1355,9 +1355,9 @@
     "why": "No full stop"
   },
   "ORDER_CHORUS_EACH": {
-    "text": "各バースのあとにサビを入れる",
+    "text": "各番のあとにサビを入れる",
     "back": "Put the chorus after each verse",
-    "why": "Plain"
+    "why": "番"
   },
   "BTN_TIDY": {
     "text": "歌詞を整える",
@@ -1365,9 +1365,9 @@
     "why": "Names its object"
   },
   "TIDY_HELP": {
-    "text": "パート名の行を印に変え、コードだけの行を消します",
-    "back": "Part-name lines become markers; chord-only lines are removed",
-    "why": "Tooltip"
+    "text": "パート名の行を区切りに変え、コードだけの行を消します",
+    "back": "Part-name lines become dividers; chord-only lines are removed",
+    "why": "区切り"
   },
   "SUGGEST_LABEL": {
     "text": "同じタイトルの曲",
@@ -1380,9 +1380,9 @@
     "why": "No full stop"
   },
   "SUGGEST_FETCHING": {
-    "text": "ネットから歌詞を取得中",
-    "back": "Getting words from the internet",
-    "why": "Progress"
+    "text": "インターネットから歌詞を検索中",
+    "back": "Searching for words on the internet",
+    "why": "Round 23, rewritten from the reader marks"
   },
   "LICENCE_NOTE": {
     "text": "教会で歌詞を映すにはライセンスが必要です（多くはCCLI）",
@@ -1403,14 +1403,14 @@
     "why": "Checking advice kept"
   },
   "FIELD_SECOND": {
-    "text": "第2言語の歌詞",
-    "back": "Words in a second language",
-    "why": "Phrase"
+    "text": "別の言語の歌詞",
+    "back": "Words in another language",
+    "why": "Round 23, rewritten from the reader marks"
   },
   "LYRICS_PLACEHOLDER": {
     "text": "[1番]\nここに一行目\n\n[サビ]\nサビの一行目",
     "back": "[Verse 1]\nFirst line here\n\n[Chorus]\nFirst line of the chorus",
-    "why": "Marker syntax guessed as square brackets"
+    "why": "One marker form everywhere"
   },
   "SECOND_PLACEHOLDER": {
     "text": "同じパートを同じ順に、別の言語で入力",
@@ -1418,9 +1418,9 @@
     "why": "No full stop"
   },
   "MARK_VERSE": {
-    "text": "バース",
-    "back": "Verse",
-    "why": "Loan word; number follows"
+    "text": "1番",
+    "back": "Verse 1",
+    "why": "Same word as the chip"
   },
   "MARK_CHORUS": {
     "text": "サビ",
@@ -1443,9 +1443,9 @@
     "why": "Pairs with イントロ"
   },
   "BTN_ADD_SECOND": {
-    "text": "第2言語の歌詞を追加",
-    "back": "Add words in a second language",
-    "why": "Phrase"
+    "text": "別の言語の歌詞を追加",
+    "back": "Add words in another language",
+    "why": "Round 23, rewritten from the reader marks"
   },
   "BTN_SAVE": {
     "text": "保存",
@@ -1543,9 +1543,9 @@
     "why": "Button"
   },
   "LOOK_NO_FILE": {
-    "text": "未選択",
-    "back": "Not chosen",
-    "why": "State"
+    "text": "選択なし",
+    "back": "Nothing chosen",
+    "why": "Round 23, rewritten from the reader marks"
   },
   "LOOK_LINES": {
     "text": "1スライドの行数",
@@ -1663,9 +1663,9 @@
     "why": "補正 says it corrects"
   },
   "WALL_HINT": {
-    "text": "図の四隅を1つ選び、壁の映像がまっすぐになるよう動かします",
-    "back": "Pick one corner of the figure and move it until the picture on the wall is straight",
-    "why": "Instruction"
+    "text": "四隅のどれかを選び、矢印で壁の映像の傾きを直します",
+    "back": "Pick a corner and fix the tilt of the picture on the wall with the arrows",
+    "why": "Round 23, rewritten from the reader marks"
   },
   "WALL_RESET": {
     "text": "リセット",
@@ -1688,24 +1688,24 @@
     "why": "Saturation, not bare 色"
   },
   "CORNER_TOP_LEFT": {
-    "text": "左上の角",
+    "text": "左上の隅",
     "back": "Top left corner",
-    "why": "Noun phrase"
+    "why": "隅 with 四隅"
   },
   "CORNER_TOP_RIGHT": {
-    "text": "右上の角",
+    "text": "右上の隅",
     "back": "Top right corner",
-    "why": "Noun phrase"
+    "why": "隅 with 四隅"
   },
   "CORNER_BOTTOM_RIGHT": {
-    "text": "右下の角",
+    "text": "右下の隅",
     "back": "Bottom right corner",
-    "why": "Noun phrase"
+    "why": "隅 with 四隅"
   },
   "CORNER_BOTTOM_LEFT": {
-    "text": "左下の角",
+    "text": "左下の隅",
     "back": "Bottom left corner",
-    "why": "Noun phrase"
+    "why": "隅 with 四隅"
   },
   "NUDGE_UP": {
     "text": "上へ",
@@ -1768,24 +1768,24 @@
     "why": "Key as printed"
   },
   "LOOK_WINDOW": {
-    "text": "ウィンドウの色",
-    "back": "Window colour",
-    "why": "Not the projector"
+    "text": "画面の配色",
+    "back": "Colour scheme of the window",
+    "why": "Round 23, rewritten from the reader marks"
   },
   "LOOK_WINDOW_AUTO": {
-    "text": "パソコンに合わせる",
-    "back": "Match the computer",
-    "why": "Phrase"
+    "text": "自動",
+    "back": "Automatic",
+    "why": "Round 23, rewritten from the reader marks"
   },
   "LOOK_WINDOW_LIGHT": {
-    "text": "明るい",
+    "text": "ライト",
     "back": "Light",
-    "why": "One word"
+    "why": "Round 23, rewritten from the reader marks"
   },
   "LOOK_WINDOW_DARK": {
-    "text": "暗い",
+    "text": "ダーク",
     "back": "Dark",
-    "why": "One word"
+    "why": "Round 23, rewritten from the reader marks"
   },
   "LOOK_TEXT_COLOUR": {
     "text": "文字の色",
@@ -1883,14 +1883,14 @@
     "why": "Pair"
   },
   "SCREEN_UNUSED": {
-    "text": "使わない",
+    "text": "使用しない",
     "back": "Not used",
-    "why": "Short phrase"
+    "why": "Round 23, rewritten from the reader marks"
   },
   "SCREENS_STAGE_WINDOW": {
-    "text": "ステージ画面を別ウィンドウに映す",
+    "text": "ステージ画面を別ウィンドウで表示",
     "back": "Show the stage screen in a separate window",
-    "why": "Next to a switch"
+    "why": "Round 23, rewritten from the reader marks"
   },
   "SCREENS_IDENTIFY": {
     "text": "モニター番号を表示",
@@ -1939,14 +1939,14 @@
     "why": "People say PIN"
   },
   "REMOTE_FIREWALL_ASKING": {
-    "text": "スマホがつながるよう、Windowsが1回だけ許可を求めます",
+    "text": "スマホから接続できるよう、Windowsが一度だけ許可を求めます",
     "back": "So phones can connect, Windows asks permission once",
-    "why": "Names no button"
+    "why": "Round 23, rewritten from the reader marks"
   },
   "REMOTE_FIREWALL_REFUSED": {
-    "text": "スマホがファイアウォールで止められています。オフにしてからオンにすると許可の確認が出ます。",
-    "back": "The firewall is stopping phones. Switch off then on and the permission box returns.",
-    "why": "Problem, then the known switch"
+    "text": "ファイアウォールが接続を止めています。オフにしてオンにすると、許可の確認が表示されます。",
+    "back": "The firewall blocks the connection. Switch off and on and the permission box appears.",
+    "why": "Round 23, rewritten from the reader marks"
   },
   "phones": {
     "text": {
@@ -2029,9 +2029,9 @@
     "why": "Starts with 'for example'"
   },
   "ANNOUNCEMENT_SECONDS": {
-    "text": "1枚を映す秒数",
-    "back": "Seconds each card is shown",
-    "why": "Makes numbers read as seconds"
+    "text": "表示時間（秒）",
+    "back": "Display time (seconds)",
+    "why": "Unit shown"
   },
   "ANNOUNCEMENT_START_FROM": {
     "text": "ひな形から作る",
@@ -2044,9 +2044,9 @@
     "why": "Short phrase"
   },
   "ANNOUNCEMENT_FILL": {
-    "text": "文字の出どころ",
-    "back": "Where the text comes from",
-    "why": "Not 'automatic'"
+    "text": "表示する内容",
+    "back": "What to show",
+    "why": "Round 23, rewritten from the reader marks"
   },
   "FILL_NOTHING": {
     "text": "手入力",
@@ -2225,9 +2225,9 @@
     "why": "Counted phrases"
   },
   "ANNOUNCEMENT_PREVIEW": {
-    "text": "映り方の見本",
-    "back": "Sample of how it shows",
-    "why": "Phrase"
+    "text": "表示イメージ",
+    "back": "Display image",
+    "why": "Round 23, rewritten from the reader marks"
   },
   "FILL_PASSAGE": {
     "text": "聖書",
@@ -2240,9 +2240,9 @@
     "why": "Noun phrase"
   },
   "PASSAGE_NO_BIBLE": {
-    "text": "聖書の訳が入っていないため、カードは空になります",
-    "back": "No Bible translation is installed, so the card stays empty",
-    "why": "One sentence"
+    "text": "聖書の訳が未登録のため、このお知らせは空のままです",
+    "back": "No translation is registered, so this announcement stays empty",
+    "why": "Round 23, rewritten from the reader marks"
   },
   "PASSAGE_UNREADABLE": {
     "text": "この訳にその聖書箇所はありません",
@@ -2267,10 +2267,10 @@
   "names_today": {
     "text": {
       "zero": "誕生日の人はいません",
-      "other": "{count}人が誕生日"
+      "other": "誕生日の人は{count}人"
     },
     "back": "No one has a birthday / {count} people have a birthday",
-    "why": "Counts people"
+    "why": "Round 23, rewritten from the reader marks"
   },
   "PRACTICE_NOTICES[0].0": {
     "text": "ようこそ",
@@ -2343,14 +2343,14 @@
     "why": "One weekday example"
   },
   "ANNOUNCEMENT_TEMPLATES[3].0": {
-    "text": "今週のみことば",
+    "text": "今週の聖句",
     "back": "Verse of the week",
-    "why": "みことば for scripture"
+    "why": "聖書 family"
   },
   "ANNOUNCEMENT_TEMPLATES[3].1": {
     "text": "ここに聖句を入力してください",
     "back": "Type the verse here",
-    "why": "Instruction to the editor"
+    "why": "Round 23, rewritten from the reader marks"
   },
   "ANNOUNCEMENT_TEMPLATES[4].0": {
     "text": "献金のご案内",
@@ -2386,9 +2386,9 @@
     "why": "Shortest form"
   },
   "KEYS_TITLE": {
-    "text": "キーボード",
-    "back": "Keyboard",
-    "why": "Group heading"
+    "text": "キー操作",
+    "back": "Key controls",
+    "why": "One name for the sheet"
   },
   "KEYS_SHOWING": {
     "text": "進行",
@@ -2436,13 +2436,13 @@
     "why": "映す"
   },
   "KEYS_SHOWING_ROWS[5].1": {
-    "text": "プレビューの選択枠を動かし、Enterで映す",
-    "back": "Move the pick frame in Preview, Enter shows it",
+    "text": "プレビューの選択位置を動かし、Enterで映す",
+    "back": "Move the pick position in Preview, Enter shows it",
     "why": "Ring named by meaning"
   },
   "KEYS_SHOWING_ROWS[6].1": {
-    "text": "選択枠のスライドを映す",
-    "back": "Show the slide with the pick frame",
+    "text": "選択位置のスライドを映す",
+    "back": "Show the slide with the pick position",
     "why": "映す"
   },
   "KEYS_SHOWING_ROWS[7].1": {
@@ -2456,7 +2456,7 @@
     "why": "Chorus key C and bridge key B are fixed by the program"
   },
   "KEYS_SHOWING_ROWS[9].1": {
-    "text": "プレビューで、その番号のパートに選択枠を置く",
+    "text": "プレビューで、その番号のパートに選択位置を置く",
     "back": "In Preview, put the frame on that numbered part",
     "why": "Fragment"
   },
@@ -2486,9 +2486,9 @@
     "why": "映す"
   },
   "KEYS_SHOWING_ROWS[15].1": {
-    "text": "聴き取った曲をプレビューに出す",
+    "text": "認識した曲をプレビューに出す",
     "back": "Bring what was picked up into Preview",
-    "why": "Fragment"
+    "why": "Round 23: one name 認識 for the listener"
   },
   "KEYS_SHOWING_ROWS[16].1": {
     "text": "お知らせをプレビューに出す",
@@ -2551,9 +2551,9 @@
     "why": "Fragment"
   },
   "KEYS_PLAN_ROWS[3].1": {
-    "text": "選択枠のスライドから曲を始める印をつける",
-    "back": "Mark the framed slide as where the song starts",
-    "why": "開始位置"
+    "text": "選択位置のスライドを歌い始めの位置にする",
+    "back": "Make the picked slide where singing starts",
+    "why": "Matches the button"
   },
   "KEYS_PLAN_ROWS[4].1": {
     "text": "プレビューの項目を式次第から外す",
@@ -2591,9 +2591,9 @@
     "why": "Fragment"
   },
   "KEYS_EDITING_ROWS[3].1": {
-    "text": "バース・サビ・プレサビ・ブリッジ・アウトロの印",
-    "back": "Markers for verse, chorus, pre-chorus, bridge, outro",
-    "why": "Fragment"
+    "text": "パートの区切りを入れる",
+    "back": "Insert a part divider",
+    "why": "区切り is the marker line"
   },
   "KEYS_EDITING_ROWS[4].1": {
     "text": "題名の下の候補を選び、全体を入力する",
@@ -2661,9 +2661,9 @@
     "why": "Says what is remembered"
   },
   "LEARN_ON_HINT": {
-    "text": "同じくらい合う結果では、よく選ぶ曲が先に出ます",
-    "back": "Among equally good matches, songs you pick often come first",
-    "why": "Condition first"
+    "text": "同じくらい合う結果では、よく選ぶ曲を上にします",
+    "back": "Among equally good matches, songs picked often go on top",
+    "why": "Round 23, rewritten from the reader marks"
   },
   "LEARN_FORGET": {
     "text": "検索の履歴を消す",
@@ -2676,9 +2676,9 @@
     "why": "No full stop"
   },
   "GROUP_WEEKDAY": {
-    "text": "今日の曜日によく歌う曲",
-    "back": "Songs often sung on today's weekday",
-    "why": "Phrase"
+    "text": "今日と同じ曜日によく歌う曲",
+    "back": "Songs often sung on the same weekday as today",
+    "why": "Round 23, rewritten from the reader marks"
   },
   "GROUP_RECENT": {
     "text": "最近選んだ曲",
@@ -2692,24 +2692,24 @@
   },
   "habit_chip": {
     "text": {
-      "other": "「{typed}」で{picks}回"
+      "other": "「{typed}」で{picks}回選択"
     },
-    "back": "{picks} times for \"{typed}\"",
-    "why": "回 is the word for times"
+    "back": "{picks} times chosen for \"{typed}\"",
+    "why": "Round 23, rewritten from the reader marks"
   },
   "habit_line": {
     "text": {
       "other": "「{typed}」で{picks}回選ばれ、最後は{when}"
     },
-    "back": "Picked {picks} times for \"{typed}\", last on {when}",
-    "why": "{when} arrives as day then month; see report"
+    "back": "Chosen {picks} times for \"{typed}\", last on {when}",
+    "why": "Round 23, rewritten from the reader marks"
   },
   "follows_line": {
     "text": {
-      "other": "あとに{count}回歌い、最後は{when}"
+      "other": "このあと{count}回歌われ、最後は{when}"
     },
     "back": "Sung after it {count} times, last on {when}",
-    "why": "Plain wording"
+    "why": "Round 23, rewritten from the reader marks"
   },
   "weekday_line": {
     "text": {
@@ -2720,10 +2720,10 @@
   },
   "recent_line": {
     "text": {
-      "other": "{picks}回選択、最後は{when}"
+      "other": "{picks}回選ばれ、最後は{when}"
     },
-    "back": "Picked {picks} times, last on {when}",
-    "why": "Short"
+    "back": "Chosen {picks} times, last on {when}",
+    "why": "Round 23, rewritten from the reader marks"
   },
   "starts_chip": {
     "text": "{section}から開始",
@@ -2741,9 +2741,9 @@
     "why": "State"
   },
   "BIBLES_TITLE": {
-    "text": "聖書の追加",
-    "back": "Add Bibles",
-    "why": "Dialog title"
+    "text": "ほかの訳を探す",
+    "back": "Find other translations",
+    "why": "Same name as the button"
   },
   "BIBLES_MORE": {
     "text": "ほかの訳を探す",
@@ -2751,19 +2751,19 @@
     "why": "Button"
   },
   "BIBLES_OWN_FILE": {
-    "text": "手持ちのファイル",
-    "back": "Your own file",
-    "why": "Phrase"
+    "text": "パソコン内のファイル",
+    "back": "A file on the computer",
+    "why": "Round 23, rewritten from the reader marks"
   },
   "BIBLES_CHOOSE_FILE": {
-    "text": "聖書ファイルを選ぶ",
+    "text": "聖書のファイルを選ぶ",
     "back": "Choose a Bible file",
-    "why": "Also the chooser title"
+    "why": "Round 23, rewritten from the reader marks"
   },
   "BIBLES_FILE_HINT": {
-    "text": "MyBible、USFX、USFMファイルのZIP",
-    "back": "MyBible, USFX, a ZIP of USFM files",
-    "why": "ZIP in capitals"
+    "text": "対応形式：MyBible、USFX、USFM（ZIPも可）",
+    "back": "Supported: MyBible, USFX, USFM (ZIP too)",
+    "why": "Round 23, rewritten from the reader marks"
   },
   "BIBLES_PRACTICE": {
     "text": "練習モードでは聖書を保存しません",
@@ -2786,19 +2786,19 @@
     "why": "Row title"
   },
   "CMD_BIBLE_FILE_DETAIL": {
-    "text": "MyBible、USFX、USFMのZIP",
-    "back": "MyBible, USFX, ZIP of USFM",
-    "why": "ZIP in capitals"
+    "text": "対応形式：MyBible、USFX、USFM（ZIPも可）",
+    "back": "Supported: MyBible, USFX, USFM (ZIP too)",
+    "why": "Round 23, rewritten from the reader marks"
   },
   "CMD_BIBLES": {
-    "text": "聖書の訳を探す",
-    "back": "Find Bible translations",
-    "why": "Row title"
+    "text": "ほかの訳を探す",
+    "back": "Find other translations",
+    "why": "One name"
   },
   "CMD_BIBLES_FIND_DETAIL": {
-    "text": "多くの言語の聖書を取得できます",
-    "back": "Bibles in many languages can be fetched",
-    "why": "No full stop"
+    "text": "多くの言語の聖書をダウンロードできます",
+    "back": "Bibles in many languages can be downloaded",
+    "why": "ダウンロード for the internet"
   },
   "BIBLES_LIST": {
     "text": "ダウンロードできる訳",
@@ -2811,19 +2811,19 @@
     "why": "Invitation"
   },
   "BIBLES_LOADING": {
-    "text": "一覧を取得しています",
-    "back": "Fetching the list",
-    "why": "Progress"
+    "text": "一覧を読み込んでいます",
+    "back": "Loading the list",
+    "why": "Round 23, rewritten from the reader marks"
   },
   "BIBLES_LOAD_FAILED": {
-    "text": "訳の一覧を取得できませんでした",
-    "back": "Could not fetch the list of translations",
-    "why": "Natural order"
+    "text": "訳の一覧を読み込めませんでした",
+    "back": "Could not load the list of translations",
+    "why": "Round 23, rewritten from the reader marks"
   },
   "BIBLES_RETRY": {
-    "text": "再試行",
-    "back": "Retry",
-    "why": "Short"
+    "text": "もう一度試す",
+    "back": "Try again",
+    "why": "Round 23, rewritten from the reader marks"
   },
   "BIBLES_INSTALLED": {
     "text": "入手済み",
@@ -2851,39 +2851,39 @@
     "why": "State"
   },
   "BIBLES_COPYRIGHT": {
-    "text": "著作権",
-    "back": "Copyright",
+    "text": "著作権表示",
+    "back": "Copyright notice",
     "why": "One word"
   },
   "BIBLES_PICK_HINT": {
-    "text": "訳を選ぶと、著作権の表示が出ます",
-    "back": "Pick a translation and its rights notice appears",
-    "why": "One sentence"
+    "text": "訳を選ぶと、著作権表示が見られます",
+    "back": "Pick a translation to see its copyright notice",
+    "why": "Round 23, rewritten from the reader marks"
   },
   "BIBLES_SCOPE_WHOLE": {
-    "text": "聖書全体",
-    "back": "Whole Bible",
-    "why": "Short"
+    "text": "全巻",
+    "back": "All books",
+    "why": "Round 23, rewritten from the reader marks"
   },
   "BIBLES_SCOPE_PART": {
-    "text": "一部の書のみ",
-    "back": "Some books only",
-    "why": "Short"
+    "text": "一部のみ",
+    "back": "Some only",
+    "why": "Round 23, rewritten from the reader marks"
   },
   "BIBLES_NO_COPYRIGHT": {
-    "text": "ファイルに著作権の記載がありません",
-    "back": "The file states no copyright",
-    "why": "One sentence"
+    "text": "ファイルに著作権表示がありません",
+    "back": "The file has no copyright notice",
+    "why": "One word"
   },
   "BIBLES_NOTICE_LOADING": {
-    "text": "著作権の表示を取得しています",
-    "back": "Fetching the rights notice",
-    "why": "Not a reading-aloud verb"
+    "text": "著作権表示を読み込んでいます",
+    "back": "Loading the copyright notice",
+    "why": "Round 23, rewritten from the reader marks"
   },
   "BIBLES_NOTICE_FAILED": {
-    "text": "著作権の表示を読めませんでした",
-    "back": "Could not read the rights notice",
-    "why": "No full stop"
+    "text": "著作権表示を読めませんでした",
+    "back": "Could not read the copyright notice",
+    "why": "One word 著作権表示"
   },
   "bibles_download_failed": {
     "text": "ダウンロードできませんでした：{why}",
@@ -2972,9 +2972,9 @@
     "why": "Musicians' word"
   },
   "section.other": {
-    "text": "その他",
-    "back": "Other",
-    "why": "General word"
+    "text": "パート",
+    "back": "Part",
+    "why": "Reads right after a number"
   },
   "section.pre_chorus": {
     "text": "プレサビ",
@@ -2982,14 +2982,14 @@
     "why": "Short form"
   },
   "section.verse": {
-    "text": "バース",
+    "text": "番",
     "back": "Verse",
-    "why": "A loan word so the number can follow and no Bible-verse reading arises"
+    "why": "Number goes before: 1番, 2番, as songbooks print them"
   },
   "section_numbered": {
-    "text": "{name}{number}",
-    "back": "{name}{number}",
-    "why": "Name then number"
+    "text": "{number}{name}",
+    "back": "{number}{name}",
+    "why": "Number first: 1番, 2サビ (band shorthand), 2ブリッジ"
   },
   "DESIGN_BACKGROUND": {
     "text": "背景",
@@ -2997,29 +2997,29 @@
     "why": "One noun"
   },
   "TIP_START_HERE": {
-    "text": "順番が来ると、選択枠のスライドから始まる",
-    "back": "When its turn comes, it starts at the framed slide",
+    "text": "順番が来たら選択位置から歌い始めます",
+    "back": "When its turn comes it starts singing from the picked position",
     "why": "One sentence"
   },
   "PLAN_STARTS_AT": {
-    "text": "始める位置",
-    "back": "Where it starts",
-    "why": "Heading"
+    "text": "歌い始める位置",
+    "back": "Where singing starts",
+    "why": "Matches the button"
   },
   "PLAN_START_BEGINNING": {
-    "text": "最初のスライド",
-    "back": "First slide",
-    "why": "Plain"
+    "text": "最初から",
+    "back": "From the beginning",
+    "why": "Short"
   },
   "LISTEN_NOT_CONNECTED": {
-    "text": "このマイクはつながっていません。別のを選んでください。",
-    "back": "This microphone is not connected. Choose another.",
-    "why": "Problem then fix"
+    "text": "マイクがつながっていません。別のマイクを選んでください。",
+    "back": "The microphone is not connected. Choose another microphone.",
+    "why": "Full sentence"
   },
   "LISTEN_WOULD_NOT_OPEN": {
-    "text": "このマイクは始められません。別のを選んでください。",
-    "back": "This microphone could not be started. Choose another.",
-    "why": "No guess at the cause"
+    "text": "マイクを開始できません。別のマイクを選んでください。",
+    "back": "The microphone cannot be started. Choose another microphone.",
+    "why": "Full sentence"
   },
   "LISTEN_INPUT_STOPPED": {
     "text": "音が届きません。マイクのケーブルを見てください。",
@@ -3027,14 +3027,14 @@
     "why": "Calm"
   },
   "LISTEN_BEAT_ONLY": {
-    "text": "このArtosiaは拍子だけで、言葉は聴き取れません。",
+    "text": "このArtosiaは拍子だけで、言葉は認識できません。",
     "back": "This Artosia follows the beat only; it cannot pick up words.",
-    "why": "A fact about the copy"
+    "why": "Round 23: one name 認識 for the listener"
   },
   "LISTEN_TOO_SLOW": {
-    "text": "このパソコンは遅く、言葉の聴き取りが間に合いません。",
+    "text": "このパソコンは遅く、言葉の認識が間に合いません。",
     "back": "This computer is slow; word recognition cannot keep up.",
-    "why": "About the PC"
+    "why": "Round 23: one name 認識 for the listener"
   },
   "MEDIA_CAMERA_NONE": {
     "text": "カメラがありません。つなぐまで背景は黒です。",
@@ -3082,34 +3082,34 @@
     "why": "About the program"
   },
   "LISTEN_MODEL_DAMAGED": {
-    "text": "聴き取りファイルが壊れています。上で再取得を。",
+    "text": "認識ファイルが壊れています。上で再取得を。",
     "back": "The listening file is broken. Fetch it again with the button above.",
-    "why": "Same word for the file as the row above"
+    "why": "Round 23: one name 認識 for the listener"
   },
   "LISTEN_MODEL_MISSING": {
-    "text": "聴き取りファイル（57 MB）が追加で必要です",
+    "text": "認識ファイル（57 MB）が追加で必要です",
     "back": "A listening file (57 MB) is needed in addition",
-    "why": "Size kept"
+    "why": "Round 23: one name 認識 for the listener"
   },
   "LISTEN_MODEL_BETTER": {
-    "text": "より精度の高い聴き取りファイル（190 MB）が使えます",
+    "text": "より精度の高い認識ファイル（190 MB）が使えます",
     "back": "A more accurate listening file (190 MB) can be used",
-    "why": "Same noun with 'better'"
+    "why": "Round 23: one name 認識 for the listener"
   },
   "listen_model_failed": {
-    "text": "聴き取りファイルを取得できませんでした：{why}",
-    "back": "Could not fetch the listening file: {why}",
-    "why": "Reason after a colon"
+    "text": "認識ファイルをダウンロードできませんでした：{why}",
+    "back": "Could not download the recognition file: {why}",
+    "why": "Round 23, rewritten from the reader marks"
   },
   "MARKS_APPLY": {
-    "text": "この印を使う",
-    "back": "Use these marks",
-    "why": "Says what is applied"
+    "text": "この区切りを使う",
+    "back": "Use these dividers",
+    "why": "区切り"
   },
   "MARKS_APPLY_HELP": {
-    "text": "提案したパートの印を歌詞に入れます（元に戻せます）",
-    "back": "Puts the proposed part marks into the lyrics (can be undone)",
-    "why": "No full stop"
+    "text": "提案した区切りを歌詞に入れます（元に戻せます）",
+    "back": "Puts the proposed dividers into the lyrics (can be undone)",
+    "why": "区切り"
   },
   "MARKS_HIDE": {
     "text": "提案を閉じる",
@@ -3117,9 +3117,9 @@
     "why": "Screen reader too"
   },
   "MARKS_THIS": {
-    "text": "ここのパート",
-    "back": "This part",
-    "why": "The block under the cursor"
+    "text": "カーソルの位置",
+    "back": "Where the cursor is",
+    "why": "Says which part"
   },
   "MARKS_WHY_NAMED": {
     "text": "歌詞に書かれたパート名から判断",
@@ -3137,19 +3137,19 @@
     "why": "No full stop"
   },
   "MARKS_WHY_ORDER": {
-    "text": "前のバースの次に来るため",
+    "text": "前の番の次に来るため",
     "back": "Because it follows the earlier verses",
-    "why": "No full stop"
+    "why": "番"
   },
   "BACKDROPS_TITLE": {
-    "text": "背景素材",
-    "back": "Background materials",
-    "why": "One collection name everywhere"
+    "text": "背景ギャラリー",
+    "back": "Background gallery",
+    "why": "One name for the collection"
   },
   "BACKDROPS_SEARCH": {
-    "text": "例えば 海、ろうそく",
-    "back": "For example sea, candle",
-    "why": "'For example' in full"
+    "text": "例：海、ろうそく",
+    "back": "Example: sea, candle",
+    "why": "Round 23, rewritten from the reader marks"
   },
   "BACKDROPS_ALL": {
     "text": "すべて",
@@ -3197,14 +3197,14 @@
     "why": "Plain noun"
   },
   "BACKDROPS_PEOPLE": {
-    "text": "人",
+    "text": "人物",
     "back": "People",
-    "why": "Plain noun"
+    "why": "Round 23, rewritten from the reader marks"
   },
   "BACKDROPS_TEXTURE": {
-    "text": "質感",
-    "back": "Texture",
-    "why": "Plain surfaces"
+    "text": "模様",
+    "back": "Patterns",
+    "why": "Round 23, rewritten from the reader marks"
   },
   "BACKDROPS_USE": {
     "text": "使う",
@@ -3217,9 +3217,9 @@
     "why": "No dots"
   },
   "BACKDROPS_OFFLINE": {
-    "text": "ネットにつながっていません",
+    "text": "インターネットに未接続です",
     "back": "Not connected to the internet",
-    "why": "No full stop"
+    "why": "One phrase"
   },
   "BACKDROPS_AUTHOR": {
     "text": "作者",
@@ -3232,9 +3232,9 @@
     "why": "ライセンス is too wide for the label"
   },
   "BACKDROPS_PAGE": {
-    "text": "ページ",
-    "back": "Page",
-    "why": "Web page"
+    "text": "出典",
+    "back": "Source",
+    "why": "Round 23, rewritten from the reader marks"
   },
   "BACKDROPS_SIZE": {
     "text": "サイズ",
@@ -3242,9 +3242,9 @@
     "why": "Usual loan word"
   },
   "BACKDROPS_PICK_HINT": {
-    "text": "画像を押すと、作者と利用条件が出ます",
-    "back": "Press a picture to see its author and terms",
-    "why": "One sentence"
+    "text": "画像を選ぶと、作者と利用条件が表示されます",
+    "back": "Pick a picture to see its author and terms",
+    "why": "Round 23, rewritten from the reader marks"
   },
   "BACKDROPS_DIM": {
     "text": "明るく細かい画像です。デザインで背景を暗く",
@@ -3262,14 +3262,14 @@
     "why": "Not 'stored'"
   },
   "backdrop_failed": {
-    "text": "背景素材を取得できませんでした：{why}",
-    "back": "Could not fetch the background material: {why}",
-    "why": "Reason after a colon"
+    "text": "背景をダウンロードできませんでした：{why}",
+    "back": "Could not download the background: {why}",
+    "why": "Round 23, rewritten from the reader marks"
   },
   "WHY_OFFLINE": {
-    "text": "ネットに接続されていません",
+    "text": "インターネットに未接続です",
     "back": "not connected to the internet",
-    "why": "Clause after a colon"
+    "why": "One phrase"
   },
   "WHY_SLOW": {
     "text": "応答に時間がかかりすぎました",
@@ -3349,14 +3349,14 @@
     "why": "Colour mood"
   },
   "LOOK_CLASSIC_BLUE": {
-    "text": "定番ブルー",
+    "text": "定番の青",
     "back": "Classic blue",
-    "why": "Fits 14"
+    "why": "Round 23, rewritten from the reader marks"
   },
   "LOOK_BLACK": {
-    "text": "黒",
-    "back": "Black",
-    "why": "Same word as the black screen button's stem"
+    "text": "黒の背景",
+    "back": "Black background",
+    "why": "Not the black screen"
   },
   "LOOK_FOREST": {
     "text": "森",
@@ -3364,14 +3364,14 @@
     "why": "Colour mood"
   },
   "LOOK_EMBER": {
-    "text": "おき火",
+    "text": "熾火",
     "back": "Embers",
-    "why": "Glowing coals"
+    "why": "Round 23, rewritten from the reader marks"
   },
   "LOOK_PAPER": {
-    "text": "紙",
-    "back": "Paper",
-    "why": "Colour mood"
+    "text": "生成り",
+    "back": "Cream",
+    "why": "A colour"
   },
   "TOUR_BACK": {
     "text": "戻る",
@@ -3384,19 +3384,19 @@
     "why": "Not the slide word 次へ"
   },
   "KEYS_TO": {
-    "text": "〜",
+    "text": "～",
     "back": "to",
-    "why": "Range mark"
+    "why": "Full-width tilde"
   },
   "KEYS_OR": {
-    "text": "か",
+    "text": "/",
     "back": "or",
-    "why": "Particle between caps"
+    "why": "Budget too small for または"
   },
   "SETTINGS_ADD_BIBLE": {
-    "text": "訳を追加",
-    "back": "Add translation",
-    "why": "Does not repeat the heading"
+    "text": "聖書を追加",
+    "back": "Add a Bible",
+    "why": "Round 23, rewritten from the reader marks"
   },
   "BTN_DELETE_SONG": {
     "text": "曲を削除",
@@ -3419,9 +3419,9 @@
     "why": "Fragment"
   },
   "CMD_START_HERE": {
-    "text": "ここから曲を始める",
-    "back": "Start the song from here",
-    "why": "About where a song begins"
+    "text": "この曲をここから歌い始める",
+    "back": "Start singing this song from here",
+    "why": "Says what starts"
   },
   "CMD_EARLIER": {
     "text": "前に映したものに戻る",
@@ -3429,22 +3429,22 @@
     "why": "Not the one-slide-back command"
   },
   "CMD_EARLIER_DETAIL": {
-    "text": "プレビューに出て、選択枠は中断した所に付く",
-    "back": "Appears in Preview, with the pick frame where it stopped",
+    "text": "プレビューに出て、選択位置は中断した所に付く",
+    "back": "Appears in Preview, with the pick position where it stopped",
     "why": "Fragment"
   },
   "START_HERE_HOW": {
-    "text": "曲をプレビューに出し、始めたいスライドに選択枠を動かして、もう一度この操作を選んでください",
-    "back": "Bring the song into Preview, move the pick frame to the slide to begin at, then choose this again",
+    "text": "曲をプレビューに出し、始めたいスライドに選択位置を動かして、もう一度この操作を選んでください",
+    "back": "Bring the song into Preview, move the pick position to the slide to begin at, then choose this again",
     "why": "No full stop"
   },
   "CMD_START_HERE_DETAIL": {
-    "text": "選択枠のスライドから曲が始まる（メドレー用）",
-    "back": "The song begins at the framed slide (for medleys)",
+    "text": "選択位置のスライドから曲が始まる（メドレー用）",
+    "back": "The song begins at the picked slide (for medleys)",
     "why": "メドレー known to musicians"
   },
   "CMD_NEW_ANNOUNCEMENT_DETAIL": {
-    "text": "お知らせ、今週のみことば、誕生日の一覧のカード",
+    "text": "お知らせ、今週の聖句、誕生日の一覧のカード",
     "back": "Cards for a notice, the verse of the week, a list of birthdays",
     "why": "Fragment"
   },
@@ -3459,9 +3459,9 @@
     "why": "Usual group heading"
   },
   "search_bible": {
-    "text": "{passage}、または節の中の言葉",
-    "back": "{passage}, or words from the verse",
-    "why": "Example first"
+    "text": "例：{passage}、または節の中の言葉",
+    "back": "Example: {passage}, or words from the verse",
+    "why": "Round 23, rewritten from the reader marks"
   },
   "NOTICE_SAVED": {
     "text": "お知らせを保存しました",
@@ -3469,9 +3469,9 @@
     "why": "Pair of 曲を保存しました"
   },
   "BTN_START_HERE": {
-    "text": "ここから開始",
-    "back": "Begin here",
-    "why": "Where a song begins"
+    "text": "ここから歌う",
+    "back": "Sing from here",
+    "why": "Says what starts"
   },
   "ONBOARD_SKIP": {
     "text": "あとで設定",
@@ -3681,7 +3681,7 @@
   "CMD_FIRST_RUN_DETAIL": {
     "text": "言語、国、聖書、曲、画面を順に質問します",
     "back": "Asks about language, country, Bible, songs and screen in turn",
-    "why": "No full stop"
+    "why": "Round 23, rewritten from the reader marks"
   },
   "onboard_songs_found": {
     "text": {

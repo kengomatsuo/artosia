@@ -1066,6 +1066,33 @@
   "notes": "Must be the same word as the computer's section name."
  },
  {
+  "key": "label.numbered",
+  "kind": "phone",
+  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. Dark screens with no row of tabs. Names the operator sends in English for a part of a song; the phone shows them in the volunteer's own words. A rounded chip: on the section buttons in the drawer, in the tag at the top left of the slide, and in each thumbnail's caption. Patterns are matched case-insensitively; a numbered verse becomes the name plus its number.",
+  "moment": "A numbered part is live: the second verse, a second chorus.",
+  "role": "pattern",
+  "does": "Joins the name of a part with its number into one chip label, in the same order as the operator window's own pattern for a numbered part.",
+  "budget": 16,
+  "variables": [
+   {
+    "name": "0",
+    "example": "the part's name, as label.verse gives it"
+   },
+   {
+    "name": "1",
+    "example": "2"
+   }
+  ],
+  "cases": [],
+  "counts": "",
+  "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+  "concepts": [
+   "verse",
+   "section"
+  ],
+  "notes": "Word order and spacing are the language's own. It serves every kind of part, so it must read right with each of your part names."
+ },
+ {
   "key": "projector_off",
   "kind": "phone",
   "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. Dark screens with no row of tabs. Live screen: a top bar with a two-segment switch (Live, Plan) and two round buttons (search, a gear); under it the title of what is open with a slide counter, the live slide at full width, Back and Next as two large buttons side by side, four state buttons in one grouped row, and at the bottom a drawer with the song's sections as buttons and the slides as labelled thumbnails. The same yellow pill at the top right of the slide, where the page also says that the screen is black or that the words are hidden.",
