@@ -9,6 +9,17 @@ state = {
     "black": False, "text_hidden": False, "logo": "", "logo_on": False, "message": "", "countdown": None,
     "stage": {"title": "", "next": None, "next_title": "", "index": 0, "count": 0, "chips": [], "message": ""},
 }
+# A third argument "languages" sends a song's slide in three languages, each a block of made-up lines.
+if len(sys.argv) > 3 and sys.argv[3] == "languages":
+    state["slide"].update({
+        "text": "Baris contoh pertama\nBaris contoh kedua\nBaris contoh ketiga\nBaris contoh keempat",
+        "lang": "id",
+        "slot": 0,
+        "more": [
+            {"lang": "en", "slot": 1, "text": "A first made-up line\nA second made-up line\nA third made-up line\nA fourth made-up line"},
+            {"lang": "zh-Hans", "slot": 2, "text": "第一行示例文字\n第二行示例文字\n第三行示例文字\n第四行示例文字"},
+        ],
+    })
 for attempt in range(40):
     try:
         s = socket.create_connection(("127.0.0.1", port), timeout=1)
