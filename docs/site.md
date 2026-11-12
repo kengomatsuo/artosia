@@ -1,6 +1,6 @@
 # The homepage
 
-`artosia.matsuokengo.com` is one static page in English and one in Indonesian. Its job is
+`artosia.matsuokengo.com` is one static page in each of ten languages (English, Indonesian, Simplified and Traditional Chinese, Korean, Japanese, Spanish, Brazilian Portuguese, French and Vietnamese), and a privacy page in English. Its job is
 the one the owner named on 2026-11-11: a volunteer finds the single file to download and
 knows what to do with it.
 
@@ -9,8 +9,9 @@ knows what to do with it.
 | Thing | Place |
 |---|---|
 | The page, once, with `{{key}}` holes | `site/page.html` |
-| Its words | `site/strings/en.json`, `site/strings/id.json` |
-| What each Indonesian string must do | `site/strings/brief.json` |
+| Its words | `site/strings/<code>.json`, one per language |
+| What each string must do | `site/strings/brief.json` |
+| The privacy page | `site/privacy.html` and `site/privacy.json`; its facts and their proof are in [privacy-facts.md](privacy-facts.md) |
 | Look and motion | `site/style.css`, `site/script.js` |
 | Pictures | `site/img/`, made by `tools/site-shots.sh` |
 | The built site | `target/site/`, made by `tools/build-site.py` |
@@ -44,6 +45,10 @@ The download button points at
 which always answers with the newest release's setup ([setup.md](setup.md)). The zip of the
 same release is the second way, for a computer with no internet, under the three steps.
 
+## Languages
+
+`tools/build-site.py` builds the page in every language of its `LANGUAGES`. The top bar holds a language menu: the page's language in its own name, and a list of all ten. Each page carries `hreflang` links to the others. The first page sends a browser to its own language once, by the rule of `crates/artosia-locale` repeated in `REDIRECT` (the same code first, Chinese by script, then the same first part; [i18n/README.md](i18n/README.md)). The privacy page is at `/privacy/` and exists in English only.
+
 ## The look
 
 It wears the matsuokengo.com look, and its rules come from that site's own files, saved
@@ -64,8 +69,8 @@ Three things differ from that site, each on purpose.
 ## The pictures are the program
 
 Every picture is a headless render of a real scene (`artosia --scene … --snap`), in the
-page's language and in both themes, and the browser picks the theme. Nothing is drawn by
-hand. The first picture is four captures of one window with Next pressed between them; the
+page's language and in both themes, and the browser picks the theme. A language not rendered
+yet shows the English pictures. Nothing is drawn by hand. The first picture is four captures of one window with Next pressed between them; the
 page's own Prev and Next step through them, so a visitor presses the key the program is
 about. `tools/site-shots.sh` renders all of them again after a screen changes.
 
@@ -75,9 +80,10 @@ cannot leave the page blank.
 
 ## Words
 
-No language is translated from the other. The English is written first as a fact sheet
-(each claim is in `README.md` or `docs/features.md`). The Indonesian is composed by a
-writer who sees only `brief.json` and the program's own Indonesian words. Change a brief
+No language is translated from another. The English is written first as a fact sheet
+(each claim is in `README.md` or `docs/features.md`). Every other language is composed by its
+own writer, who sees only `brief.json` and the program's own words in that language (owner,
+2026-11-12: writers compose every language, then native speakers correct). Change a brief
 before changing a string. `tools/build-site.py` stops when a language lacks a key, when
 the page asks for a string nobody wrote, or when a string is never shown.
 

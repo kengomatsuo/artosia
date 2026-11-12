@@ -1,9 +1,9 @@
 {
   "meta_title": "Artosia: free worship presentation software for Windows",
-  "meta_description": "Artosia puts song words, Bible verses and announcements on a church's projector. Free for Windows, in English and Indonesian.",
+  "meta_description": "Artosia puts song words, Bible verses and announcements on a church's projector. Free for Windows, in English and nine other languages.",
   "nav_what": "What it does",
   "nav_start": "Start",
-  "nav_other_language": "Bahasa Indonesia",
+  "nav_language": "Language",
   "nav_download": "Download",
   "hero_title": "Song words on the projector.",
   "hero_lead": "Artosia is free software that puts songs, Bible verses and announcements on a church's projector, from the Windows PC at the media desk.",
@@ -60,12 +60,13 @@
   "fact_phone_term": "Phone",
   "fact_phone_text": "A web page on the same Wi-Fi moves the slides.",
   "fact_language_term": "Languages",
-  "fact_language_text": "English and Indonesian, in the window and in the search.",
+  "fact_language_text": "English, Indonesian, Chinese (simplified and traditional), Korean, Japanese, Spanish, Portuguese, French, Vietnamese",
   "fact_updates_term": "Updates",
   "fact_updates_text": "Each copy fetches the newest release by itself and checks its signature.",
   "fact_price_term": "Price",
   "fact_price_text": "Free. The source is open under GPL-3.0-or-later.",
   "footer_source": "Source",
   "footer_releases": "Releases",
-  "footer_licence": "Licence"
+  "footer_licence": "Licence",
+  "footer_privacy": "Privacy"
 }

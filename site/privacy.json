@@ -1,0 +1,67 @@
+{
+  "title": "Privacy",
+  "updated": "2026-11-12",
+  "lead": "Artosia has no accounts and no analytics, and it sends nothing about your church to the people who make it. Your songs, plans and settings stay on your computer. This page lists the few times Artosia talks to the internet, and why.",
+  "sections": [
+    {
+      "heading": "What Artosia collects",
+      "paragraphs": [
+        "Nothing. Artosia has no sign-in, no account, no advertising, no usage statistics and no crash reports. Nobody who makes Artosia receives a copy of your library, your plans, your settings or anything you type.",
+        "Artosia is free software. Its code is public at github.com/kengomatsuo/artosia, so anyone can check what is written here against it."
+      ]
+    },
+    {
+      "heading": "What leaves the computer, and when",
+      "paragraphs": [
+        "Artosia talks to the internet in the cases below and no others. Each one is a plain request for a file or a list. Every web server sees the internet address of the computer that asks, and Artosia cannot hide that.",
+        "Updates (direct download only). Each time it starts, the direct download looks at the project's releases page on GitHub for a newer version. It asks for two small files and sends nothing from your library. If a newer version is there, Artosia downloads it beside the program and swaps it in the next time it starts. The command Check for updates does the same on your press. The Microsoft Store edition never does this; the Store updates it.",
+        "Lyrics from the web. When you start a new song, leave the words empty and type a title of four letters or more, Artosia waits a moment after you stop typing and sends that title to lrclib.net, a free lyrics service, to offer songs to fill in. If you pick one, it asks lrclib.net for that song's words by its number. Nothing is sent if the song already has words.",
+        "Bibles. Opening the Bibles window asks ebible.org and the Beblia project on GitHub (api.github.com and raw.githubusercontent.com) for their lists of translations. Artosia keeps the lists on your computer for a week. Choosing a translation from Beblia reads the start of its file to show the copyright line. Pressing the download button fetches the Bible.",
+        "Backdrop pictures and videos. The list of backdrops is inside Artosia. Opening the backdrops window fetches small previews of the tiles on screen from Wikimedia (thumb.wikimedia.org). Pressing Use on one fetches the full picture from thumb.wikimedia.org or the full video from upload.wikimedia.org. The file is then kept on your computer.",
+        "The speech model. The first time you ask for listening, or when Artosia offers a better model, a button downloads the speech model file from huggingface.co. Only a press does it, and Artosia checks the file against a known checksum.",
+        "Live stream. If you start the live stream, Artosia sends the picture of the projector to the address and key you typed there, and to no other place. If you choose a network camera and type its address, Artosia opens a connection to that address to read the camera's picture.",
+        "Artosia's own parts also talk to each other on the same computer, through 127.0.0.1. That traffic never leaves the computer."
+      ]
+    },
+    {
+      "heading": "The phone remote",
+      "paragraphs": [
+        "The phone remote is off until you switch on Phone in the top bar. While it is on, Artosia serves one web page on port 4780 to phones that can reach the computer over Wi-Fi or the local network. It does not use any server on the internet. If you left it on when you closed Artosia, it starts again with the program.",
+        "A phone must enter the four-digit PIN shown on the computer. After five wrong tries, pairing locks for one minute. A paired phone is remembered only while Artosia runs.",
+        "A paired phone can see what is on the projector, the slides of the song, the plan, the sections of the song, search results (titles), the message and the countdown. It can press Next and Back, show a slide, a plan item or a search result, add a result to the plan, hide the words, black the screen, switch Live and the logo, show a short message and start a countdown. It cannot read or change your library, your settings or any file.",
+        "The page is sent as plain web traffic, not encrypted, so use it on a network you trust. In the direct download, Windows Firewall is asked to allow phones from the local network only. Switching Phone off stops the server."
+      ]
+    },
+    {
+      "heading": "Microphone and camera",
+      "paragraphs": [
+        "The microphone is used only while the Listen switch is on, and Listen is off every time Artosia starts. It listens to the microphone you pick, or to the sound the computer is playing. It uses this to read the level, to follow the tempo and to turn what it hears into words that help suggest the next song or Bible passage. The words are read on the computer itself, by a speech model that sits in your library folder. The sound and the words are not sent anywhere. Artosia never puts what it hears on the projector by itself.",
+        "Recordings are a second, separate switch, Keep recordings in the Listen window, and it is off until you turn it on. While it is on, a mark reading Recording shows at the bottom of the window. Artosia then saves each phrase it heard as a sound file, with a log of what it read and what was on the projector. It does not save the name of your microphone, the words of your songs or the title of a notice. A phrase is anything the microphone hears, so it can hold singing, preaching, prayer and people talking nearby. Artosia never sends these files. The Recordings part of the Listen window can pack them into one file for you to send, move the folder, or delete all of it. The folder holds at most 1 GB and drops the oldest recordings first.",
+        "The camera is used as a moving background behind the words, when you pick a camera in Design. Its picture is drawn on the screen and in the small preview. Artosia sends no camera picture anywhere by itself. A picture leaves the computer only if you start the live stream while the camera is the background, because then the projector's picture, camera included, goes to the stream address you typed. If you switch on recording in the stream settings, the projector's picture is saved as a video file in your library folder, camera included."
+      ]
+    },
+    {
+      "heading": "What is kept on the computer",
+      "paragraphs": [
+        "Your library is one database file and some folders: songs, plans, announcements, settings, Bibles you downloaded, backdrops, the speech model, recordings and recorded streams. In the direct download it is in the roaming AppData folder, at %APPDATA%\\artosia. In the Microsoft Store edition it is in Documents\\Artosia. The church's own files, such as songs and bulletins, stay in that folder and are not uploaded.",
+        "Settings include the stream address and stream key you typed. They are saved in the library as plain text, so keep the library folder private, and clear the key before you give the folder to anyone.",
+        "Learn from use is on by default. When a song or Bible passage goes on the projector, or you pick something in search, Artosia writes a short note in the library: the day, the weekday, which plan, what was picked and the search text you typed (folded to lower case). It uses these notes to put songs you pick often first among equal matches, and to offer what usually follows. It does not save lyrics, titles of notices, messages, countdowns or the stream key. Nothing is written in the practice library. Notes older than two years are deleted. To stop it, turn off Learn from use in Settings under Search. To erase the notes, press Forget what the search learned in the same place.",
+        "Uninstalling the direct download removes the program, its shortcuts and its entry in the list of installed apps. It never opens your library, so your songs, settings, plans and recordings stay until you delete the folder yourself. Uninstalling the Store edition removes the program the same way, and Documents\\Artosia stays."
+      ]
+    },
+    {
+      "heading": "The Microsoft Store edition",
+      "paragraphs": [
+        "The Store edition is the same program, packaged for the Microsoft Store. It differs in three ways. It never checks for or downloads updates itself, because the Store does that. It keeps the library in Documents\\Artosia so that an uninstall does not erase the church's songs. It asks Windows, in its package, to list the microphone and camera in Windows privacy settings, where you can turn each off for Artosia.",
+        "Microsoft handles the install and its updates. What Microsoft collects when you get an app from the Store is covered by Microsoft's own privacy statement, not by this page."
+      ]
+    },
+    {
+      "heading": "Changes to this page",
+      "paragraphs": [
+        "When Artosia starts to collect something or to contact a new place, this page changes first, and the date at the bottom changes with it. Earlier versions of this page are in the project's history on GitHub."
+      ]
+    }
+  ],
+  "contact": "To ask a question about privacy, open an issue at https://github.com/kengomatsuo/artosia/issues. Issues are public, so leave out anything private."
+}

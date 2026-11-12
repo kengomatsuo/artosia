@@ -1,5 +1,5 @@
 {
-  "_page": "The public homepage of Artosia at artosia.matsuokengo.com. Artosia is a free program for a church's media desk: it puts the words of songs, Bible verses and announcements on the projector during a service. It runs on a Windows computer. The reader is a church volunteer of any age who was sent the link and wants to know what this is and how to get it. Register: informal and warm, addressing the reader as kamu where a pronoun is needed. Plain, modest, concrete: say what the thing is and does, then stop. No exclamation marks, no em-dash, no en-dash, no middle dot, no emoji. Sentence case. Program names (Artosia, EasiSlides, OpenLyrics, PowerPoint, Windows, Wi-Fi, GPL-3.0-or-later, artosia.exe) stay as written. Names of things inside the program must be the words the program itself uses in Indonesian: look them up in docs/i18n/id.json (Design, Screens, Announcements, Search, Prev and Next, the plan, Preview and Live).",
+  "_page": "The public homepage of Artosia at artosia.matsuokengo.com. Artosia is a free program for a church's media desk: it puts the words of songs, Bible verses and announcements on the projector during a service. It runs on a Windows computer. The reader is a church volunteer of any age who was sent the link and wants to know what this is and how to get it. Register: informal and warm, addressing the reader the way a friendly program does in your language (kamu in Indonesian) where a pronoun is needed. Plain, modest, concrete: say what the thing is and does, then stop. No exclamation marks, no em-dash, no en-dash, no middle dot, no emoji. Sentence case. Program names (Artosia, EasiSlides, OpenLyrics, PowerPoint, Windows, Wi-Fi, GPL-3.0-or-later, artosia.exe) stay as written. Names of things inside the program must be the words the program itself uses in your language, the ones you chose for its window (Design, Screens, Announcements, Search, Prev and Next, the plan, Preview and Live).",
   "meta_title": {
     "where": "the browser tab and the search engine result's blue line",
     "does": "names the program, then says in a few words what kind of program it is (free, for worship services, shows words on a projector, for Windows). Starts with 'Artosia:'",
@@ -7,7 +7,7 @@
   },
   "meta_description": {
     "where": "the grey text under a search engine result",
-    "does": "one or two sentences: Artosia puts song words, Bible verses and announcements on a church's projector; it is free, for Windows, and the program itself speaks Indonesian and English",
+    "does": "one or two sentences: Artosia puts song words, Bible verses and announcements on a church's projector; it is free, for Windows, and the program itself speaks your language (name it) and nine others",
     "max": 155
   },
   "nav_what": {
@@ -20,10 +20,10 @@
     "does": "names that part, one word if possible",
     "max": 10
   },
-  "nav_other_language": {
-    "where": "top bar link on the Indonesian page that opens the English page",
-    "does": "the name of the English language as English speakers write it",
-    "max": 10
+  "nav_language": {
+    "where": "top bar: what a screen reader says for the language menu. The menu shows this page's language in its own name and opens a list of the ten languages, each in its own name",
+    "does": "the one word for 'language'",
+    "max": 12
   },
   "nav_download": {
     "where": "small button at the right of the top bar; pressing it downloads the program",
@@ -307,8 +307,8 @@
   },
   "fact_language_text": {
     "where": "the fact under that label",
-    "does": "Indonesian and English, both in the program's window and in its search (Indonesian named first on this page)",
-    "max": 80
+    "does": "the ten languages of the program's window, each named in your language, yours first: Indonesian, English, Chinese (simplified and traditional), Korean, Japanese, Spanish, Portuguese, French, Vietnamese. A plain list, no sentence around it",
+    "max": 130
   },
   "fact_updates_term": {
     "where": "bold label of a fact",
@@ -344,5 +344,10 @@
     "where": "small footer link to the licence text",
     "does": "one word",
     "max": 10
+  },
+  "footer_privacy": {
+    "where": "small footer link to the privacy page, beside the licence link",
+    "does": "one word: privacy",
+    "max": 14
   }
 }

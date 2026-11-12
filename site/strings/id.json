@@ -1,9 +1,9 @@
 {
   "meta_title": "Artosia: lirik lagu di proyektor, gratis, untuk Windows",
-  "meta_description": "Artosia menayangkan lirik lagu, ayat Alkitab, dan pengumuman di proyektor gereja. Gratis, untuk Windows, programnya berbahasa Indonesia dan Inggris.",
+  "meta_description": "Artosia menayangkan lirik lagu, ayat Alkitab, dan pengumuman di proyektor gereja. Gratis, untuk Windows, berbahasa Indonesia dan sembilan bahasa lain.",
   "nav_what": "Fitur",
   "nav_start": "Mulai",
-  "nav_other_language": "English",
+  "nav_language": "Bahasa",
   "nav_download": "Unduh",
   "hero_title": "Lirik lagu tayang di proyektor.",
   "hero_lead": "Artosia program gratis untuk menayangkan lagu, ayat Alkitab, dan pengumuman di proyektor gereja, dijalankan dari komputer Windows di meja multimedia.",
@@ -44,6 +44,10 @@
   "step_download_text": "Program pemasang Artosia yang kecil, {size} MB.",
   "step_open_title": "Buka Artosia-setup.exe",
   "step_open_text": "Windows mungkin memperingatkan bahwa penerbitnya tidak dikenal, sebab berkas program belum memakai tanda tangan kode berbayar.",
+  "step_ready_title": "Artosia buka sendiri",
+  "step_ready_text": "Berkas ini mengambil program dari internet, membuat pintasan di desktop dan menu Start, lalu membuka Artosia. Perlu koneksi internet.",
+  "zip_note": "Kalau komputernya tidak punya internet, ada cara lain: berkas zip {zipsize} MB yang kamu ekstrak ke folder sendiri.",
+  "zip_link": "Unduh zip →",
   "facts_title": "Yang perlu kamu tahu",
   "fact_runs_term": "Berjalan di",
   "fact_runs_text": "Dibuat untuk Windows 10 dan 11, 64-bit. Baru dicoba di Windows 11. Versi Mac dan Linux direncanakan, belum diuji.",
@@ -56,7 +60,7 @@
   "fact_phone_term": "Ponsel",
   "fact_phone_text": "Halaman web di ponsel yang tersambung ke Wi-Fi sama bisa mengganti slide.",
   "fact_language_term": "Bahasa",
-  "fact_language_text": "Indonesia dan Inggris, di jendela program maupun di pencariannya.",
+  "fact_language_text": "Indonesia, Inggris, Tionghoa (sederhana dan tradisional), Korea, Jepang, Spanyol, Portugis, Prancis, Vietnam",
   "fact_updates_term": "Pembaruan",
   "fact_updates_text": "Setiap salinan mengambil versi terbaru sendiri dan memeriksa tanda tangan digitalnya.",
   "fact_price_term": "Harga",
@@ -64,8 +68,5 @@
   "footer_source": "Kode sumber",
   "footer_releases": "Semua versi",
   "footer_licence": "Lisensi",
-  "step_ready_title": "Artosia buka sendiri",
-  "step_ready_text": "Berkas ini mengambil program dari internet, membuat pintasan di desktop dan menu Start, lalu membuka Artosia. Perlu koneksi internet.",
-  "zip_note": "Kalau komputernya tidak punya internet, ada cara lain: berkas zip {zipsize} MB yang kamu ekstrak ke folder sendiri.",
-  "zip_link": "Unduh zip →"
+  "footer_privacy": "Privasi"
 }

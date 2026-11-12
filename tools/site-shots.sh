@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# Renders the homepage's pictures from the real programs, in both languages and themes.
+# Renders the homepage's pictures from the real programs, in every language and both themes.
+#   SITE_LANGS="ko ja" tools/site-shots.sh renders only those languages.
 #   tools/site-shots.sh        needs target/debug/artosia.exe and artosia-output.exe
 # Every picture is a headless render of a scene; a dialog is cut out with a little
 # of the dimmed window around it. Rerun after a screen changes, then look at site/img.
@@ -9,7 +10,10 @@ cd "$(dirname "$0")/.."
 exe=target/debug/artosia.exe
 out=site/img
 tmp=target/site-shots
-mkdir -p "$tmp" "$out/en" "$out/id"
+# Every language the page is written in (tools/build-site.py, LANGUAGES).
+langs="${SITE_LANGS:-en id zh-Hans zh-Hant ko ja es pt-BR fr vi}"
+mkdir -p "$tmp"
+for lang in $langs; do mkdir -p "$out/$lang"; done
 
 # Three presses of Next, with a mark before and after each.
 cat > "$tmp/steps.json" <<'EOF'
@@ -31,8 +35,8 @@ cut() {
     -X0 "$3" -Y0 "$4" -X1 "$5" -Y1 "$6"
 }
 
-for lang in en id; do
-  flag=""; [ "$lang" = id ] && flag="--indonesian"
+for lang in $langs; do
+  flag="--language $lang"
   for theme in light dark; do
     for n in 0 1 2 3; do
       "$exe" --scene song --script "$tmp/steps.json" --at "mark:f$n" \

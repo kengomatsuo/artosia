@@ -6,9 +6,7 @@
 <title>{{meta_title}}</title>
 <meta name="description" content="{{meta_description}}">
 <link rel="canonical" href="{{canonical}}">
-<link rel="alternate" hreflang="en" href="{{site}}/">
-<link rel="alternate" hreflang="id" href="{{site}}/id/">
-<link rel="alternate" hreflang="x-default" href="{{site}}/">
+{{alternates}}
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Artosia">
 <meta property="og:title" content="{{meta_title}}">
@@ -28,7 +26,7 @@
 <noscript><style>.stage-keys,.stage-count{display:none}</style></noscript>
 {{language_redirect}}
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Artosia","applicationCategory":"MultimediaApplication","operatingSystem":"Windows 10, Windows 11","softwareVersion":"{{version}}","description":"{{json:meta_description}}","url":"{{canonical}}","downloadUrl":"{{download}}","license":"https://www.gnu.org/licenses/gpl-3.0.html","inLanguage":["en","id"],"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Person","name":"Kenneth Fang","url":"https://matsuokengo.com/"}}
+{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Artosia","applicationCategory":"MultimediaApplication","operatingSystem":"Windows 10, Windows 11","softwareVersion":"{{version}}","description":"{{json:meta_description}}","url":"{{canonical}}","downloadUrl":"{{download}}","license":"https://www.gnu.org/licenses/gpl-3.0.html","inLanguage":{{in_language}},"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Person","name":"Kenneth Fang","url":"https://matsuokengo.com/"}}
 </script>
 </head>
 <body>
@@ -41,7 +39,12 @@
   <ul class="nav-links">
     <li class="nav-far"><a href="#what">{{nav_what}}</a></li>
     <li class="nav-far"><a href="#start">{{nav_start}}</a></li>
-    <li><a href="{{other_href}}" hreflang="{{other_lang}}" lang="{{other_lang}}" data-lang="{{other_lang}}">{{nav_other_language}}</a></li>
+    <li class="lang-menu">
+      <details>
+        <summary aria-label="{{nav_language}}">{{language_name}}</summary>
+        <ul>{{language_links}}</ul>
+      </details>
+    </li>
     <li><a class="hero-btn" href="{{download}}">{{nav_download}}</a></li>
   </ul>
 </nav>
@@ -63,20 +66,20 @@
   <div class="stage appear" id="stage">
     <div class="stage-frames">
       <picture class="current">
-        <source media="(prefers-color-scheme: dark)" srcset="{{root}}img/{{lang}}/hero-0-dark.png">
-        <img src="{{root}}img/{{lang}}/hero-0-light.png" width="2560" height="1600" alt="{{stage_alt_0}}" fetchpriority="high">
+        <source media="(prefers-color-scheme: dark)" srcset="{{root}}img/{{img_lang}}/hero-0-dark.png">
+        <img src="{{root}}img/{{img_lang}}/hero-0-light.png" width="2560" height="1600" alt="{{stage_alt_0}}" fetchpriority="high">
       </picture>
       <picture>
-        <source media="(prefers-color-scheme: dark)" data-srcset="{{root}}img/{{lang}}/hero-1-dark.png">
-        <img data-src="{{root}}img/{{lang}}/hero-1-light.png" width="2560" height="1600" alt="{{stage_alt_1}}">
+        <source media="(prefers-color-scheme: dark)" data-srcset="{{root}}img/{{img_lang}}/hero-1-dark.png">
+        <img data-src="{{root}}img/{{img_lang}}/hero-1-light.png" width="2560" height="1600" alt="{{stage_alt_1}}">
       </picture>
       <picture>
-        <source media="(prefers-color-scheme: dark)" data-srcset="{{root}}img/{{lang}}/hero-2-dark.png">
-        <img data-src="{{root}}img/{{lang}}/hero-2-light.png" width="2560" height="1600" alt="{{stage_alt_2}}">
+        <source media="(prefers-color-scheme: dark)" data-srcset="{{root}}img/{{img_lang}}/hero-2-dark.png">
+        <img data-src="{{root}}img/{{img_lang}}/hero-2-light.png" width="2560" height="1600" alt="{{stage_alt_2}}">
       </picture>
       <picture>
-        <source media="(prefers-color-scheme: dark)" data-srcset="{{root}}img/{{lang}}/hero-3-dark.png">
-        <img data-src="{{root}}img/{{lang}}/hero-3-light.png" width="2560" height="1600" alt="{{stage_alt_3}}">
+        <source media="(prefers-color-scheme: dark)" data-srcset="{{root}}img/{{img_lang}}/hero-3-dark.png">
+        <img data-src="{{root}}img/{{img_lang}}/hero-3-light.png" width="2560" height="1600" alt="{{stage_alt_3}}">
       </picture>
     </div>
     <div class="stage-bar">
@@ -113,8 +116,8 @@
         </div>
         <figure class="shot">
           <picture>
-            <source media="(prefers-color-scheme: dark)" srcset="{{root}}img/{{lang}}/search-dark.png">
-            <img src="{{root}}img/{{lang}}/search-light.png" {{wh:img/en/search-light.png}} alt="{{search_alt}}" loading="lazy">
+            <source media="(prefers-color-scheme: dark)" srcset="{{root}}img/{{img_lang}}/search-dark.png">
+            <img src="{{root}}img/{{img_lang}}/search-light.png" {{wh:img/en/search-light.png}} alt="{{search_alt}}" loading="lazy">
           </picture>
           <figcaption>{{search_caption}}</figcaption>
         </figure>
@@ -127,8 +130,8 @@
         </div>
         <figure class="shot">
           <picture>
-            <source media="(prefers-color-scheme: dark)" srcset="{{root}}img/{{lang}}/design-dark.png">
-            <img src="{{root}}img/{{lang}}/design-light.png" {{wh:img/en/design-light.png}} alt="{{look_alt}}" loading="lazy">
+            <source media="(prefers-color-scheme: dark)" srcset="{{root}}img/{{img_lang}}/design-dark.png">
+            <img src="{{root}}img/{{img_lang}}/design-light.png" {{wh:img/en/design-light.png}} alt="{{look_alt}}" loading="lazy">
           </picture>
           <figcaption>{{look_caption}}</figcaption>
         </figure>
@@ -141,8 +144,8 @@
         </div>
         <figure class="shot">
           <picture>
-            <source media="(prefers-color-scheme: dark)" srcset="{{root}}img/{{lang}}/screens-dark.png">
-            <img src="{{root}}img/{{lang}}/screens-light.png" {{wh:img/en/screens-light.png}} alt="{{screens_alt}}" loading="lazy">
+            <source media="(prefers-color-scheme: dark)" srcset="{{root}}img/{{img_lang}}/screens-dark.png">
+            <img src="{{root}}img/{{img_lang}}/screens-light.png" {{wh:img/en/screens-light.png}} alt="{{screens_alt}}" loading="lazy">
           </picture>
           <figcaption>{{screens_caption}}</figcaption>
         </figure>
@@ -155,8 +158,8 @@
         </div>
         <figure class="shot">
           <picture>
-            <source media="(prefers-color-scheme: dark)" srcset="{{root}}img/{{lang}}/announcements-dark.png">
-            <img src="{{root}}img/{{lang}}/announcements-light.png" {{wh:img/en/announcements-light.png}} alt="{{notices_alt}}" loading="lazy">
+            <source media="(prefers-color-scheme: dark)" srcset="{{root}}img/{{img_lang}}/announcements-dark.png">
+            <img src="{{root}}img/{{img_lang}}/announcements-light.png" {{wh:img/en/announcements-light.png}} alt="{{notices_alt}}" loading="lazy">
           </picture>
           <figcaption>{{notices_caption}}</figcaption>
         </figure>
@@ -217,6 +220,7 @@
       <a href="https://github.com/kengomatsuo/artosia">{{footer_source}}</a>
       <a href="https://github.com/kengomatsuo/artosia/releases">{{footer_releases}}</a>
       <a href="https://github.com/kengomatsuo/artosia/blob/main/LICENSE">{{footer_licence}}</a>
+      <a href="{{privacy}}">{{footer_privacy}}</a>
       <a href="https://matsuokengo.com/">matsuokengo.com</a>
     </div>
     <span>&copy; 2026 Kenneth Fang</span>

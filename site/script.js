@@ -13,6 +13,17 @@ document.querySelectorAll("[data-lang]").forEach((link) => {
   });
 });
 
+// The language menu closes on a press outside it and on Escape.
+const languageMenu = document.querySelector(".lang-menu details");
+if (languageMenu) {
+  document.addEventListener("click", (event) => {
+    if (!languageMenu.contains(event.target)) languageMenu.open = false;
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") languageMenu.open = false;
+  });
+}
+
 window.addEventListener("load", () => {
   const loadTime = Date.now();
   const HERO_DONE = 550;
