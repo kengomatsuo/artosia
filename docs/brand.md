@@ -26,31 +26,30 @@ All numbers are in mark units, the mark 1000 units wide, read from the construct
 - Slit: 104 wide (10.4% of the width), parallel to the right leg, cutting the crossbar's right end. Slit to crossbar is 1.04.
 - Notch: the counter's two edges continue down through the base, which leaves two flat feet, each 101.4 wide.
 - Measured on the finished path: 1 radius; straight edges only at 0° and ±68°; every corner hard (51.7°, 68°, 112°, 136°); thinnest feature 9.0% of the width; ink 0.724 of the convex hull; slit width spread 0.000.
-- App icon (Windows, Linux): a 1024-unit square, the mark 896 wide with a 64-unit margin, in Mid crust, the A left transparent. One SVG serves every size; no size needed its own drawing.
-- macOS icon: a 1024 canvas, a Crust plate 824 square at inset 100 with corner radius 185.4, the mark 560 wide in Crumb. In the .icns, the 16 px entry uses a 700-unit mark (`icons/macos/artosia-macos-16.svg`), because at the master size the A closed up to a smudge.
+- App icon (Windows, Linux, macOS): a 1024 canvas, a black plate 824 square at inset 100 with corner radius 185.4, the mark 560 wide in white and centred, the cut showing the plate. `artosia-icon.svg` and `icons/macos/artosia-macos.svg` are the same drawing. A bare mark is no longer an icon: black vanishes on a dark taskbar, so the plate carries it.
+- Small icon: under 24 px (16, 20 and 22) the A closes up at 560 units, so those sizes draw `artosia-icon-small.svg`, the same plate with the mark 700 wide. Checked at 800% on the 16, 20, 22, 24 and 32 px renders: at 16, 20 and 22 the counter and crossbar run together at 560 and stay apart at 700; at 24 the crossbar already reads at 560. The .icns 16 px entry is the same drawing (`icons/macos/artosia-macos-16.svg`).
 - Mono glyph: a 16-unit square, the mark 16 wide and centred vertically, one path filled with `currentColor`. The counter, slit and notch form one cut that opens at the base, so the glyph is a single outline with no inner subpath and draws the same under the nonzero and even-odd fill rules. The app header draws the mono glyph in the window's text colour.
 
 ## Colour
 
+**Decision, 2026-11-12.** The brown mark clashed with the program's neutral window. The owner offered two ways out, a black logo or a program themed in the brand's colours, and the black logo was picked. The mark's meaning is its shape, a capital A cut out of a round loaf; the program's colours already carry meaning (red is live, yellow is a warning or something hidden); and the homepage is ink on white. The four browns and creams the brand had before (Crust, Ink, Crumb and Mid crust; their values are in git history) left the mark and the icons. No coordinate of the mark, the wordmark or the lockups changed.
+
+The logo has two colours and no hue.
+
 | Name | Hex | OKLCH | Use |
 |---|---|---|---|
-| Crust | `#6a3913` | `oklch(0.399 0.085 54.4)` | The mark on white and light grounds; the macOS icon plate. |
-| Ink | `#251e16` | `oklch(0.241 0.018 70.5)` | The wordmark on white and light grounds. |
-| Crumb | `#f0e7d6` | `oklch(0.930 0.025 83.4)` | Mark and wordmark on dark grounds; the mark on the macOS plate. |
-| Mid crust | `#ad6e2f` | `oklch(0.594 0.111 62.4)` | The app icon on Windows and Linux, which must hold on light and dark taskbars. |
+| Black | `#000000` | `oklch(0 0 0)` | Mark, wordmark and both lockups on white and light grounds; the plate of the app icon. |
+| White | `#ffffff` | `oklch(1 0 0)` | Mark, wordmark and both lockups on dark grounds; the mark on the plate. |
 
-Contrast, WCAG 2: Crust on white 9.51:1; Ink on white 16.46:1; Crumb on the app's dark surface `#16181d` 14.47:1; Crumb on Crust 7.75:1. Mid crust on a light taskbar `#f3f3f3` 3.75:1, on a dark taskbar `#202020` 3.92:1, on `#16181d` 4.27:1, on the macOS light Dock `#e8e8e8` 3.40:1. Mid crust meets the 3:1 level for graphics everywhere and is not for text.
+Contrast, WCAG 2: black on white 21.00:1; white on the app's dark surface `#16181d` 17.76:1; the white mark on the black plate 21.00:1. The plate's edge against a light taskbar `#f3f3f3` is 18.93:1 and against the macOS light Dock `#e8e8e8` 17.14:1. Against a dark taskbar `#202020` it is 1.29:1 (1.18:1 on `#16181d`), so on a dark ground the plate melts into the bar and the icon reads as the white mark, which is 16.29:1 on `#202020`. No outline is added to hold the plate there; that is a do-not.
 
-Mid crust moved from `#b77534` (oklch 0.620 0.115 62.2) to `#ad6e2f` (oklch 0.594 0.111 62.4). The old value gave 3.37:1 on a light taskbar and 4.35:1 on a dark one; the new one gives 3.75:1 and 3.92:1, so the worse of the two rises, and the lower lightness reads as baked crust instead of orange. The other three colours are kept as they were.
-
-The app uses red at hue 25 for live and yellow at hue 92 for warning. Crust (hue 54) and Mid crust (hue 62) sit between the two at low chroma and read as brown. Crumb's hue is close to the warning hue, but its chroma is 0.025, near grey, so it reads as cream.
+Black has no hue, so it cannot be taken for the app's red (hue 25) or yellow (hue 92).
 
 ## Typography
 
 - Typeface: Vollkorn by Friedrich Althausen, Medium (wght 500), a static instance cut from the variable font. Licence: SIL Open Font License 1.1. Source: https://github.com/FAlthausen/Vollkorn-Typeface (also on Google Fonts).
 - The wordmark is "Artosia" in plain Vollkorn Medium outlines, with no letter changed, by owner decision. It ships as outlines, so nothing needs the font installed.
 - Spacing: the font's advance widths plus these pair adjustments, in font units of a 1000-unit em: Ar -28, rt -2, to -12, os -7, si +4, ia -8. The font's own kerning is not applied on top.
-- Vollkorn has no polytonic Greek. Greek quotations in the brand kit PDF are set in Times New Roman, embedded; its embedding licence is unchecked, so swap it for an OFL face before the PDF is published.
 
 ## Clear space and minimum sizes
 
@@ -63,26 +62,24 @@ The app uses red at hue 25 for live and yellow at hue 92 for warning. Crust (hue
 
 All in `assets/brand/`. Each PNG is the SVG named beside it, scaled by a plain SVG renderer.
 
-- `artosia.ico`: frames 16, 20, 24, 30, 32, 36, 40, 48, 60, 64, 72, 80, 96, 256, transparent, each rendered from `artosia-icon.svg` at its exact size (32-bit frames with alpha below 256, PNG at 256). `crates/artosia/build.rs` embeds it.
-- `artosia-icon-{16,24,32,48,64,128,256,512}.png`: from `artosia-icon.svg`. `crates/artosia/src/main.rs` loads the 256 as the window icon.
-- `artosia-icon.svg`: the app icon master. No size has its own file.
-- `icons/macos/artosia-macos.svg`: macOS art on a 1024 canvas with its plate; `icons/artosia.icns` is built from it; the 16 px entry uses a 700-unit mark (`icons/macos/artosia-macos-16.svg`).
-- `icons/macos/artosia-macos-square.svg` and `icons/macos/artosia-macos-square-1024.png`: the same art on a full-bleed square with no corners, for Icon Composer, which applies its own mask.
-- `icons/linux/hicolor/<n>x<n>/apps/artosia.png` for 16, 22, 24, 32, 48, 64, 128, 256, 512: from `artosia-icon.svg`; `scalable/apps/artosia.svg` is that file.
-- `artosia-mark.svg` (Crust), `-on-dark` (Crumb), `-black`, `-white`; `artosia-mark-mono.svg` (16 by 16, `currentColor`).
-- `artosia-wordmark.svg` (Ink), `-on-dark` (Crumb), `-black`, `-white`.
-- `artosia-lockup-horizontal.svg` and `artosia-lockup-stacked.svg`, each in the same four versions.
-- `png/full-color/`, `png/black/`, `png/white/`: the mark at 16, 32, 64, 128, 256, 512, 1024 px wide; the wordmark and both lockups at 256, 512, 1024, 2048 px wide.
+- `artosia.ico`: frames 16, 20, 24, 30, 32, 36, 40, 48, 60, 64, 72, 80, 96, 256, transparent, each rendered at its exact size from `artosia-icon.svg`, or from `artosia-icon-small.svg` under 24 px (32-bit frames with alpha below 256, PNG at 256). `crates/artosia/build.rs` embeds it.
+- `artosia-icon-{16,24,32,48,64,128,256,512}.png`: the same rule. `crates/artosia/src/main.rs` loads the 256 as the window icon.
+- `artosia-icon.svg`: the app icon master, a black plate with the white mark. `artosia-icon-small.svg`: the same plate with the 700-unit mark, for sizes under 24 px.
+- `icons/macos/artosia-macos.svg`: the same drawing as `artosia-icon.svg`; `icons/artosia.icns` is built from it; the 16 px entry draws `icons/macos/artosia-macos-16.svg`, the same drawing as `artosia-icon-small.svg`.
+- `icons/macos/artosia-macos-square.svg` and `icons/macos/artosia-macos-square-1024.png`: the same art on a full-bleed black square with no corners, for Icon Composer, which applies its own mask.
+- `icons/linux/hicolor/<n>x<n>/apps/artosia.png` for 16, 22, 24, 32, 48, 64, 128, 256, 512: the same rule as the icon PNGs; `scalable/apps/artosia.svg` is `artosia-icon.svg`.
+- `artosia-mark.svg` (black), `-on-dark` (white), `-black`, `-white`; `artosia-mark-mono.svg` (16 by 16, `currentColor`).
+- `artosia-wordmark.svg` (black), `-on-dark` (white), `-black`, `-white`.
+- `artosia-lockup-horizontal.svg` and `artosia-lockup-stacked.svg`, each in the same four versions. Since the logo went black, the plain file and `-black` draw the same thing, and so do `-on-dark` and `-white`; the pairs stay so that every path that names one still works.
+- `png/black/`, `png/white/`: the mark at 16, 32, 64, 128, 256, 512, 1024 px wide; the wordmark and both lockups at 256, 512, 1024, 2048 px wide.
 - `explorations/`: `candidates.png` and `compare.png`.
-- `brand-kit.pdf`: this document, designed.
 
 ## Do not
 
-- Colour the mark red, orange-red or yellow. The app keeps red for live and yellow for warning.
+- Colour the mark. It is black or white. The app keeps red for live and yellow for a warning or something hidden.
 - Fill the A or close the notch. The cut stays open to whatever is behind it.
-- Put Crust on a dark ground (it is 1.87:1 on `#16181d`); use Crumb there.
-- Set text in Mid crust.
-- Draw a ring around the circle, outline the mark, or put it inside a second shape, except the macOS plate.
+- Put the black mark on a dark ground (it is 1.18:1 on `#16181d`) or the white mark on a light one. Plain files go on light grounds, `-on-dark` files on dark ones, and the plate carries the icon on any ground.
+- Draw a ring around the circle, outline the mark, or put it inside a second shape, except the icon's plate.
 - Stretch, rotate or crop the mark, or round off its flat base.
 - Redraw, track or swap a letter of the wordmark, or set it in another typeface.
 - Add a cross, dove, flame, halo, rays, an open Bible, praying hands, wheat, a gradient or a shadow.
@@ -99,7 +96,7 @@ The SVGs are the masters. From the repo root (a standalone tool, outside the wor
 cargo run --release --target-dir target/agent-logo --manifest-path assets/brand/tool/Cargo.toml
 ```
 
-It rewrites every PNG under `assets/brand/` (icons, `png/`, `icons/linux/`), `artosia.ico` and `icons/artosia.icns` from the SVGs. A size with its own `artosia-icon-<n>.svg` or `icons/macos/artosia-macos-<n>.svg` draws that file; every other size draws the master. The SVGs themselves were generated from a construction spec outside the repo; edit them by hand only with the numbers in Construction.
+It rewrites every PNG under `assets/brand/` (icons, `png/`, `icons/linux/`, `icons/macos/artosia-macos-square-1024.png`), `artosia.ico` and `icons/artosia.icns` from the SVGs. Icon sizes under 24 px draw `artosia-icon-small.svg` and every other size draws `artosia-icon.svg`; a macOS size with its own `icons/macos/artosia-macos-<n>.svg` draws that file. The tool holds no colour: the fills live in the SVGs. The SVGs themselves were generated from a construction spec outside the repo; edit them by hand only with the numbers in Construction.
 
 ## Checked for look-alikes
 

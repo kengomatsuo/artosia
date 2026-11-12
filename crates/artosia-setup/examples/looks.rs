@@ -159,9 +159,9 @@ fn contrast(a: Color, b: Color) -> f32 {
     (a.max(b) + 0.05) / (a.min(b) + 0.05)
 }
 
-const CRUST: &str = "#6a3913";
-const INK: &str = "#251e16";
-const CRUMB: &str = "#f0e7d6";
+// The brand is black on light and white on dark (docs/brand.md, 2026-11-12), as `src/window.rs` draws it.
+const INK: &str = "#111111";
+const PAPER: &str = "#f4f4f4";
 
 /// One look in one theme: every colour as sRGB hex so the contrast of each pair is computed from
 /// the same text the picture is drawn from.
@@ -214,11 +214,11 @@ fn palette(look: Look, dark: bool) -> Pal {
     let base = if dark {
         Pal {
             page: "#1b1611",
-            ink: CRUMB,
+            ink: PAPER,
             muted: "#c8bda9",
             line: "#3d352b",
             track: "#3a3127",
-            accent: CRUMB,
+            accent: PAPER,
             on_accent: INK,
             second: "#2a241d",
             second_line: "#7a6f5e",
@@ -226,7 +226,7 @@ fn palette(look: Look, dark: bool) -> Pal {
             dialog: "#2a241d",
             panel_a: "#2a1a0d",
             panel_b: "#5a3414",
-            on_panel: CRUMB,
+            on_panel: PAPER,
             title_bg: "#202020",
             title_fg: "#ffffff",
         }
@@ -237,7 +237,7 @@ fn palette(look: Look, dark: bool) -> Pal {
             muted: "#5a5044",
             line: "#d9d0c0",
             track: "#e6dccb",
-            accent: CRUST,
+            accent: INK,
             on_accent: "#ffffff",
             second: "#ffffff",
             second_line: "#9a8f7c",
@@ -245,18 +245,18 @@ fn palette(look: Look, dark: bool) -> Pal {
             dialog: "#ffffff",
             panel_a: "#3e220b",
             panel_b: "#7a4a1f",
-            on_panel: CRUMB,
+            on_panel: PAPER,
             title_bg: "#f3f3f3",
             title_fg: "#1b1b1b",
         }
     };
     match (look, dark) {
         (Look::Opera, _) => base,
-        (Look::Firefox, true) => Pal { page: "#1b120b", strip: "#241810", ..base },
+        (Look::Firefox, true) => Pal { page: "#0b0c0f", strip: "#241810", ..base },
         (Look::Firefox, false) => Pal { page: "#f7f2e8", strip: "#ffffff", ..base },
         (Look::Epic, true) => Pal { page: "#26211b", strip: "#26211b", panel_a: "#12100d", panel_b: "#12100d", ..base },
         (Look::Epic, false) => Pal { page: "#f0f0f0", strip: "#f0f0f0", panel_a: INK, panel_b: INK, ..base },
-        (Look::Vscode, _) => Pal { panel_a: CRUST, panel_b: CRUST, ..base },
+        (Look::Vscode, _) => Pal { panel_a: INK, panel_b: INK, ..base },
     }
 }
 
@@ -291,12 +291,12 @@ macro_rules! brand {
 
 struct Art {
     mark: Image,
-    mark_crumb: Image,
+    mark_on_dark: Image,
     lockup: Image,
-    lockup_crumb: Image,
+    lockup_on_dark: Image,
     wordmark: Image,
-    wordmark_crumb: Image,
-    stacked_crumb: Image,
+    wordmark_on_dark: Image,
+    stacked_on_dark: Image,
     hero_light: Image,
     hero_dark: Image,
 }
@@ -306,17 +306,17 @@ impl Art {
         let svg = |bytes: &'static [u8]| cache.svg(bytes, 640.0, 2.0);
         let art = Art {
             mark: svg(brand!("artosia-mark.svg")),
-            mark_crumb: svg(brand!("artosia-mark-on-dark.svg")),
+            mark_on_dark: svg(brand!("artosia-mark-on-dark.svg")),
             lockup: svg(brand!("artosia-lockup-horizontal.svg")),
-            lockup_crumb: svg(brand!("artosia-lockup-horizontal-on-dark.svg")),
+            lockup_on_dark: svg(brand!("artosia-lockup-horizontal-on-dark.svg")),
             wordmark: svg(brand!("artosia-wordmark.svg")),
-            wordmark_crumb: svg(brand!("artosia-wordmark-on-dark.svg")),
-            stacked_crumb: svg(brand!("artosia-lockup-stacked-on-dark.svg")),
+            wordmark_on_dark: svg(brand!("artosia-wordmark-on-dark.svg")),
+            stacked_on_dark: svg(brand!("artosia-lockup-stacked-on-dark.svg")),
             hero_light: cache.load(include_bytes!("../../../site/img/en/hero-0-light.png").as_slice()),
             hero_dark: cache.load(include_bytes!("../../../site/img/en/hero-0-dark.png").as_slice()),
         };
         // A headless frame is drawn once, so every picture is decoded before it.
-        for image in [&art.mark, &art.mark_crumb, &art.lockup, &art.lockup_crumb, &art.wordmark, &art.wordmark_crumb, &art.stacked_crumb, &art.hero_light, &art.hero_dark] {
+        for image in [&art.mark, &art.mark_on_dark, &art.lockup, &art.lockup_on_dark, &art.wordmark, &art.wordmark_on_dark, &art.stacked_on_dark, &art.hero_light, &art.hero_dark] {
             let _ = image.wait();
         }
         art
@@ -471,7 +471,7 @@ fn checkbox(on: bool, label: String, p: &Pal) -> El {
 /// window's own caption buttons sit over its trailing edge.
 fn title_band(cx: &Cx<State>, s: &State, p: &Pal, label: &str) -> El {
     let a = art(s);
-    let mark = if s.dark { &a.mark_crumb } else { &a.mark };
+    let mark = if s.dark { &a.mark_on_dark } else { &a.mark };
     row()
         .w_full()
         .h(TITLE_BAR)
@@ -513,7 +513,7 @@ fn view(s: &State, cx: &mut Cx<State>) -> El {
 fn opera(s: &State, p: &Pal) -> El {
     let w = &s.words;
     let a = art(s);
-    let lockup = if s.dark { &a.lockup_crumb } else { &a.lockup };
+    let lockup = if s.dark { &a.lockup_on_dark } else { &a.lockup };
     let cross = el().absolute(700.0 - 38.0, 12.0).size(26.0, 26.0).center().role("button").label(w.get(Key::Close)).child(icon(&CLOSE, 14.0).color(c(p.muted)));
     let page = |body: El| el().w_full().h_full().fill(c(p.page)).clip_soft(0.0).child(body).child(cross);
 
@@ -611,7 +611,7 @@ fn opera(s: &State, p: &Pal) -> El {
                 .child(el().absolute(700.0 - 36.0 - 292.0, 440.0 - 36.0 - 38.0).child(row().gap(12.0).child(focused(w.get(Key::Cancel), p, 140.0, 38.0, 4.0, 14.0)).child(primary(w.get(Key::RemoveYes), p, 140.0, 38.0, 4.0, 14.0)))),
         ),
         Screen::CloseFirst => {
-            let ring = el().size(88.0, 88.0).center().child(el().absolute(0.0, 0.0).child(arc(88.0, 3.0, 1.0, c(p.line)))).child(el().absolute(0.0, 0.0).child(arc(88.0, 3.0, 0.25, c(p.accent)))).child(pic(if s.dark { &a.mark_crumb } else { &a.mark }, 38.0));
+            let ring = el().size(88.0, 88.0).center().child(el().absolute(0.0, 0.0).child(arc(88.0, 3.0, 1.0, c(p.line)))).child(el().absolute(0.0, 0.0).child(arc(88.0, 3.0, 0.25, c(p.accent)))).child(pic(if s.dark { &a.mark_on_dark } else { &a.mark }, 38.0));
             page(
                 el().w_full().h_full().child(
                     col()
@@ -636,9 +636,9 @@ fn opera(s: &State, p: &Pal) -> El {
 // 04-firefox-stub-error.png, 14-firefox-uninstall-refresh-official.png, 15-firefox-stub-already-running.png,
 // github/code/firefox-installing_page.css (label 40, bar 60 percent wide and 24 high, radius 8, inset 3, line 20).
 
-/// The stub's soft wave in the lower right, in the brand's browns.
+/// The stub's soft wave in the lower right, in greys.
 fn firefox_waves(p: &Pal, dark: bool, w: f32, h: f32) -> El {
-    let (a, b, d) = if dark { (c("#ad6e2f").alpha(0.55), c("#6a3913").alpha(0.9), c("#3e220b").alpha(0.9)) } else { (c("#e8d5b2"), c("#d9bd8d"), c("#f0e3c8")) };
+    let (a, b, d) = if dark { (c("#8c8c8c").alpha(0.55), c("#2e2e2e").alpha(0.9), c("#0b0c0f").alpha(0.9)) } else { (c("#e4e4e4"), c("#d0d0d0"), c("#ececec")) };
     let _ = p;
     el().absolute(0.0, 0.0).size(w, h).clip_soft(0.0).child(wave(w * 0.30, h * 0.72, w * 1.1, h * 0.55, -0.12, d, b)).child(wave(w * 0.52, h * 0.84, w * 0.9, h * 0.45, -0.2, b, a))
 }
@@ -647,9 +647,9 @@ fn firefox(s: &State, cx: &Cx<State>, p: &Pal) -> El {
     let w = &s.words;
     let a = art(s);
     let (width, height) = window_size(Look::Firefox, s.screen);
-    let wordmark = if s.dark { &a.wordmark_crumb } else { &a.wordmark };
-    let lockup = if s.dark { &a.lockup_crumb } else { &a.lockup };
-    let mark = if s.dark { &a.mark_crumb } else { &a.mark };
+    let wordmark = if s.dark { &a.wordmark_on_dark } else { &a.wordmark };
+    let lockup = if s.dark { &a.lockup_on_dark } else { &a.lockup };
+    let mark = if s.dark { &a.mark_on_dark } else { &a.mark };
     let body_h = height - TITLE_BAR;
     // The body has the height under the title bar, so a strip pinned to its foot stays in the window.
     let window = |body: El| col().w_full().h_full().fill(c(p.page)).child(title_band(cx, s, p, &w.get(Key::Title))).child(el().w_full().h(body_h).clip_soft(0.0).child(body));
@@ -707,7 +707,7 @@ fn firefox(s: &State, cx: &Cx<State>, p: &Pal) -> El {
         Screen::Done => window(foot(stage(w.proposed(New::DoneHeading), pic(mark, 84.0), centered(w.proposed(New::DoneBody), 20.0, 400.0, c(p.ink), 560.0)))),
         Screen::Remove => {
             // products/e-browsers-tools/14: an art panel on the left, a question, two short lines, the buttons at the foot.
-            let panel = el().w(170.0).h_full().fill(c("#1b120b")).clip_soft(0.0).child(el().absolute(-120.0, 70.0).child(pic(&a.mark_crumb, 400.0)));
+            let panel = el().w(170.0).h_full().fill(c("#0b0c0f")).clip_soft(0.0).child(el().absolute(-120.0, 70.0).child(pic(&a.mark_on_dark, 400.0)));
             let right = col().grow(1.0).h_full().pl(20.0).pr(24.0).pt(56.0).gap(14.0).child(para(w.get(Key::RemoveHeading), 22.0, 700.0, c(p.ink), 290.0)).child(para(w.get(Key::RemoveBody), 13.0, 400.0, c(p.ink), 290.0));
             let strip = row().w_full().h(54.0).fill(c(p.strip)).center_y().justify_end().px(16.0).gap(8.0).child(primary(w.get(Key::RemoveYes), p, 96.0, 28.0, 4.0, 13.0)).child(focused(w.get(Key::Cancel), p, 96.0, 28.0, 4.0, 13.0));
             window(col().w_full().h_full().child(row().w_full().grow(1.0).child(panel).child(right)).child(strip))
@@ -733,7 +733,7 @@ fn epic(s: &State, cx: &Cx<State>, p: &Pal) -> El {
     if borderless(Look::Epic, s.screen) {
         // The splash: always dark, as Epic's is; the mark large and centred.
         let ground = c("#1d1812");
-        let ink = c(CRUMB);
+        let ink = c(PAPER);
         let soft = c("#cfc4b0");
         let track = c("#3a3229");
         let inner = match s.screen {
@@ -742,7 +742,7 @@ fn epic(s: &State, cx: &Cx<State>, p: &Pal) -> El {
                 .h_full()
                 .center_y()
                 .pt(78.0)
-                .child(pic(&a.stacked_crumb, 84.0))
+                .child(pic(&a.stacked_on_dark, 84.0))
                 .child(el().h(54.0))
                 .child(t(w.get(Key::InstallHeading), 15.0, 500.0, ink))
                 .child(el().h(20.0))
@@ -756,7 +756,7 @@ fn epic(s: &State, cx: &Cx<State>, p: &Pal) -> El {
                 .h_full()
                 .center_y()
                 .pt(78.0)
-                .child(pic(&a.stacked_crumb, 84.0))
+                .child(pic(&a.stacked_on_dark, 84.0))
                 .child(el().h(40.0))
                 .child(disk(40.0, ink, &CHECK, ground))
                 .child(el().h(18.0))
@@ -782,7 +782,7 @@ fn epic(s: &State, cx: &Cx<State>, p: &Pal) -> El {
         .px(24.0)
         .child(col().gap(6.0).child(t(banner_title, 16.0, 700.0, c(p.on_panel))).child(if banner_line.is_empty() { el() } else { el().pl(16.0).child(t(banner_line, 12.0, 400.0, c(p.on_panel))) }))
         .child(spacer())
-        .child(pic(&a.mark_crumb, 36.0));
+        .child(pic(&a.mark_on_dark, 36.0));
     let version = t(format!("{} {VERSION}", w.proposed(New::Version)), 12.0, 400.0, c(p.muted));
     let footer = |buttons: El| {
         col().w_full().child(el().w_full().h(1.0).fill(c(p.line))).child(row().w_full().h(66.0).center_y().px(16.0).child(version).child(spacer()).child(buttons))
@@ -817,7 +817,7 @@ fn epic(s: &State, cx: &Cx<State>, p: &Pal) -> El {
 fn vscode(s: &State, cx: &Cx<State>, p: &Pal) -> El {
     let w = &s.words;
     let a = art(s);
-    let small = if s.dark { &a.mark_crumb } else { &a.mark };
+    let small = if s.dark { &a.mark_on_dark } else { &a.mark };
     let window = |page: El, buttons: El| {
         col()
             .w_full()
@@ -833,7 +833,7 @@ fn vscode(s: &State, cx: &Cx<State>, p: &Pal) -> El {
         row()
             .w_full()
             .h_full()
-            .child(el().w(164.0).h_full().fill(c(p.panel_a)).child(el().absolute(27.0, 40.0).child(pic(&a.mark_crumb, 110.0))))
+            .child(el().w(164.0).h_full().fill(c(p.panel_a)).child(el().absolute(27.0, 40.0).child(pic(&a.mark_on_dark, 110.0))))
             .child(col().grow(1.0).h_full().pl(20.0).pr(24.0).pt(24.0).gap(14.0).child(para(heading, 18.0, 700.0, c(p.ink), 380.0)).child(body))
     };
     // The other pages: a header (bold title, one line, the small mark at the right), then the body.
@@ -954,10 +954,9 @@ mod tests {
 
     #[test]
     fn contrast_matches_the_brand_page() {
-        // docs/brand.md: Crust on white 9.51, Ink on white 16.46, Crumb on Crust 7.75.
-        assert!((contrast(c(CRUST), c("#ffffff")) - 9.51).abs() < 0.02);
-        assert!((contrast(c(INK), c("#ffffff")) - 16.46).abs() < 0.05);
-        assert!((contrast(c(CRUMB), c(CRUST)) - 7.75).abs() < 0.02);
+        // The setup's ink on white 18.88, its paper on its ink 17.17.
+        assert!((contrast(c(INK), c("#ffffff")) - 18.88).abs() < 0.02);
+        assert!((contrast(c(PAPER), c(INK)) - 17.17).abs() < 0.02);
         assert!((contrast(c("#000000"), c("#ffffff")) - 21.0).abs() < 0.01);
     }
 

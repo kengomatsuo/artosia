@@ -65,7 +65,7 @@ Where it came from: the owner chose it on 2026-11-12 from four directions drawn 
 
 | screen | what it shows | source |
 |---|---|---|
-| S01 Start | a brown panel with four short lines and line icons on the left; on the right the mark and name, "Song words on the projector", one sentence, one filled Install button at the foot | copied from Opera (`products/e-browsers-tools/24-opera-gfg-install.png`); Opera's legal line and Options link are left out because the setup has neither |
+| S01 Start | a black panel with four short lines and line icons on the left; on the right the mark and name, "Song words on the projector", one sentence, one filled Install button at the foot | copied from Opera (`products/e-browsers-tools/24-opera-gfg-install.png`); Opera's legal line and Options link are left out because the setup has neither |
 | S02 Progress | the name, the step the updater is on (looking for the version, "Downloading, 27 of 161 MB" with the percent beside it, setting up), one thin bar, "Installing Artosia" with a sentence, the real Artosia window cut off at the lower right, a quiet Cancel | copied from Opera (`25-opera-gfg-extracting.png`); Cancel is added, because Opera shows none and the window needs a way to stop; it stays on screen but dim once the files are being swapped in |
 | S03 Failure | a yellow disc with a cross, "Artosia was not installed", what happened in words, Close and Try again | restyled (Mobbin `s03-glassdoor-didnt-upload-try-again.webp`); Opera has no failure screen |
 | S04 Done | a tick, "Artosia is installed", "Artosia is opening now."; Artosia starts and the window closes by itself 1.6 seconds later | restyled (Mobbin `s04-air-launching-app.webp`) |

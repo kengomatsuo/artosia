@@ -462,9 +462,9 @@ macro_rules! preview {
 
 struct Art {
     mark: Image,
-    mark_crumb: Image,
+    mark_on_dark: Image,
     lockup: Image,
-    lockup_crumb: Image,
+    lockup_on_dark: Image,
     /// The real Artosia window in the setup's language, the part of it the progress screen
     /// shows: light, then dark.
     previews: [Image; 2],
@@ -475,13 +475,13 @@ impl Art {
         let svg = |bytes: &'static [u8]| cache.svg(bytes, 640.0, 2.0);
         let art = Art {
             mark: svg(brand!("artosia-mark.svg")),
-            mark_crumb: svg(brand!("artosia-mark-on-dark.svg")),
+            mark_on_dark: svg(brand!("artosia-mark-on-dark.svg")),
             lockup: svg(brand!("artosia-lockup-horizontal.svg")),
-            lockup_crumb: svg(brand!("artosia-lockup-horizontal-on-dark.svg")),
+            lockup_on_dark: svg(brand!("artosia-lockup-horizontal-on-dark.svg")),
             previews: preview_bytes(language).map(|bytes| cache.load(bytes)),
         };
         // A headless frame is drawn once, so every picture is decoded before it.
-        for image in [&art.mark, &art.mark_crumb, &art.lockup, &art.lockup_crumb].into_iter().chain(art.previews.iter()) {
+        for image in [&art.mark, &art.mark_on_dark, &art.lockup, &art.lockup_on_dark].into_iter().chain(art.previews.iter()) {
             let _ = image.wait();
         }
         art
@@ -636,8 +636,8 @@ fn view(s: &Ui, cx: &mut Cx<Ui>) -> El {
     cx.focus_ring(2.0, 2.0, c(p.accent));
     let w = &s.strings;
     let a = art(s);
-    let lockup = if dark { &a.lockup_crumb } else { &a.lockup };
-    let mark = if dark { &a.mark_crumb } else { &a.mark };
+    let lockup = if dark { &a.lockup_on_dark } else { &a.lockup };
+    let mark = if dark { &a.mark_on_dark } else { &a.mark };
     let close_label = w.get(Key::Close).to_string();
     let cross = el()
         .key("cross")

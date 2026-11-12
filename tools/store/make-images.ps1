@@ -1,5 +1,5 @@
-# The manifest's three pictures, scaled from the brand mark (assets/brand/artosia-icon-512.png, a
-# transparent mark): StoreLogo 50, Square44x44Logo 44, Square150x150Logo 150.
+# The manifest's three pictures, scaled from the app icon (assets/brand/artosia-icon-512.png, the
+# white mark on a black plate): StoreLogo 50, Square44x44Logo 44, Square150x150Logo 150.
 #   powershell -File tools/store/make-images.ps1 -Out <folder>
 param([Parameter(Mandatory)][string]$Out)
 $ErrorActionPreference = "Stop"
