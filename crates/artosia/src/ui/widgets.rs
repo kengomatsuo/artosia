@@ -16,8 +16,8 @@ use crate::theme::{self, icons, type_};
 /// keys"; WAI-ARIA button pattern: "Enter: Activates the button"). A keys-only tester took
 /// every dialog button for broken (2026-11-11). Hung on each element that asks for focus.
 pub fn enter_key(s: &mut App, ev: &rune::KeyEvent, tx: &mut Tx) -> bool {
-    // The tour owns Enter: it means the next card even while Skip holds the focus.
-    if ev.key != rune::Key::Enter || ev.mods != rune::Mods::default() || s.tour.is_some() {
+    // The tour and the first run own Enter: it means the next card, or the page's primary button, even while another button holds the focus.
+    if ev.key != rune::Key::Enter || ev.mods != rune::Mods::default() || s.tour.is_some() || s.onboard.is_some() {
         return false;
     }
     if !tx.key_repeat() {
@@ -63,6 +63,12 @@ pub struct Btn {
     help: Option<String>,
     icon_only: bool,
     focus: bool,
+}
+
+/// Text for a box that wraps. Every wrapping text of the window starts here, so a Korean word
+/// is never cut in two (`artosia_core::text::keep_words`).
+pub fn wrapped(words: impl Into<String>) -> El {
+    text(artosia_core::text::keep_words(&words.into()).into_owned())
 }
 
 pub fn btn(label: impl Into<String>) -> Btn {
@@ -373,7 +379,7 @@ impl Tile {
         // a size smaller: the tile's width is the strip's, never the word's.
         let long = self.label.chars().count() > 8;
         let label = match (long, self.label.contains(' ')) {
-            (true, true) => text(self.label.clone()).font(type_::TINY).color(ink).align(rune::Align::Center).wrap().max_lines(2),
+            (true, true) => crate::ui::widgets::wrapped(self.label.clone()).font(type_::TINY).color(ink).align(rune::Align::Center).wrap().max_lines(2),
             (true, false) => text(self.label.clone()).font(type_::TINY).color(ink).truncate(),
             _ => text(self.label.clone()).font(type_::SMALL_STRONG).color(ink).truncate(),
         };

@@ -3,7 +3,7 @@
 use artosia_slides::frame::ToOutput;
 use artosia_slides::look::{Background, Place, presets};
 use rune::{Cursor, El, FileDialogOptions, Tx, col, el, row, spacer, text};
-use rune_kit::{Dialog, Kit, ScrollBar, SegmentedControl, Switch, TextInput};
+use rune_kit::{Dialog, Kit, ScrollBar, SegmentedControl, Select, Switch, TextInput};
 
 use crate::state::{App, Appearance, HeardHit, Sheet};
 use crate::strings as t;
@@ -129,7 +129,7 @@ fn looks(s: &App, k: &Kit, layer: &mut Vec<El>, tall: f32) {
         ))
         // What is wrong with the background is said here too, over the camera rows, where it was just chosen:
         // the status bar is behind this dialog, and the rows' own foot is under the fold.
-        .children(s.link.status().media_error.as_ref().map(|error| text(crate::why::media_problem(error)).key("design-media-problem").font(type_::SMALL).color(theme::warn_ink()).wrap()))
+        .children(s.link.status().media_error.as_ref().map(|error| crate::ui::widgets::wrapped(crate::why::media_problem(error)).key("design-media-problem").font(type_::SMALL).color(theme::warn_ink()).wrap()))
         .children((!cameras.is_empty()).then(|| {
             let current = match &look.background {
                 Background::Camera(name) => Some(name.clone()),
@@ -157,7 +157,7 @@ fn looks(s: &App, k: &Kit, layer: &mut Vec<El>, tall: f32) {
                     .child(btn(t::LOOK_CAMERA_FAR_USE()).icon(&icons::CAMERA).active(far).focusable().build(k, |s, _| s.use_camera_address()).key("camera-far-use")),
             )
         }))
-        .children((s.link.status().video || far).then(|| text(t::LOOK_CAMERA_FAR_NOTE()).font(type_::SMALL).color(k.c.text_muted).wrap())),
+        .children((s.link.status().video || far).then(|| crate::ui::widgets::wrapped(t::LOOK_CAMERA_FAR_NOTE()).font(type_::SMALL).color(k.c.text_muted).wrap())),
         1 => pane
         .children(rows)
         .child(setting(
@@ -228,6 +228,8 @@ fn looks(s: &App, k: &Kit, layer: &mut Vec<El>, tall: f32) {
 /// experience").
 fn settings(s: &App, k: &Kit, layer: &mut Vec<El>, tall: f32) {
     let languages: Vec<&crate::languages::Language> = crate::languages::listed().map(|(_, language)| language).collect();
+    // The drop-down's list is laid out after the dialog: an overlay finds its anchor only among the elements before it.
+    let mut popups: Vec<El> = Vec::new();
     let body = col()
         .w_full()
         .px(space::S4)
@@ -237,15 +239,22 @@ fn settings(s: &App, k: &Kit, layer: &mut Vec<El>, tall: f32) {
         .child(el().key(SETTINGS_FIRST).w_full().child(setting(
             k,
             t::LOOK_LANGUAGE(),
-            SegmentedControl::new(&languages.iter().map(|language| language.name).collect::<Vec<_>>(), languages.iter().position(|language| language.code == t::language_code()))
+            // One drop-down whatever the number of languages, each in its own name: a row of segments
+            // ran off the dialog's edge with ten.
+            Select::new("settings-language", &languages.iter().map(|language| language.name).collect::<Vec<_>>())
                 .label(t::LOOK_LANGUAGE())
-                .fit()
-                .on_pick(|s: &mut App, picked, _: &mut Tx| {
-                    if let Some((_, language)) = crate::languages::listed().nth(picked) {
+                .width(220.0)
+                .current(languages.iter().find(|language| language.code == t::language_code()).map(|language| language.name))
+                .open(s.language_open)
+                .on_toggle(|s: &mut App| s.language_open = !s.language_open)
+                .on_close(|s: &mut App| s.language_open = false)
+                .on_choose(|s: &mut App, name: &str, _: &mut Tx| {
+                    s.language_open = false;
+                    if let Some((_, language)) = crate::languages::listed().find(|(_, language)| language.name == name) {
                         s.set_language(language.code);
                     }
                 })
-                .build(k),
+                .build(k, &mut popups),
         )))
         .child(setting(
             k,
@@ -316,20 +325,28 @@ fn settings(s: &App, k: &Kit, layer: &mut Vec<El>, tall: f32) {
         .child(el().h(2.0))
         .child(section_label(k, t::SETTINGS_ABOUT()))
         .child(
+            // Three buttons and the version no longer fit one line in every language: the row wraps.
             row()
                 .w_full()
-                .h(36.0)
+                .min_h(36.0)
                 .gap(space::S3)
                 .center_y()
+                .flex_wrap()
                 .child(btn(t::CMD_TOUR()).icon(&icons::CHECK).focusable().build(k, |s, _| {
                     s.sheet = Sheet::None;
                     s.start_tour();
                 }))
-                .child(btn(t::CMD_UPDATE()).icon(&icons::IMPORT).focusable().build(k, |s, _| s.run(crate::palette::Command::CheckUpdate)))
+                .child(btn(t::CMD_FIRST_RUN()).icon(&icons::GLOBE).focusable().build(k, |s, _| {
+                    s.sheet = Sheet::None;
+                    s.start_onboarding();
+                }))
+                // The Store updates the program itself, so its edition offers no check of its own.
+                .children((!crate::store::packaged()).then(|| btn(t::CMD_UPDATE()).icon(&icons::IMPORT).focusable().build(k, |s, _| s.run(crate::palette::Command::CheckUpdate))))
                 .child(text(t::about_version(crate::update::VERSION)).font(type_::SMALL).color(k.c.text_muted)),
         );
     let body = col().w_full().max_h((tall - 84.0).max(240.0)).scroll(rune::ScrollSpec { stick_bottom: false }).scroll_edge_fade(crate::theme::size::FADE).child(body).scroll_bar(k);
     Dialog::new("settings", t::BTN_SETTINGS()).open(true).width(620.0).fit().on_close(close).child(body).build(k, layer);
+    layer.extend(popups);
 }
 
 /// The translations as a row of choices; the second picker starts with "None".
@@ -426,7 +443,7 @@ fn wall(s: &App, k: &Kit) -> El {
         .w_full()
         .gap(space::S2)
         .child(row().w_full().center_y().child(text(t::WALL()).font(type_::BODY_STRONG).color(k.c.text_base).grow(1.0)).children((!warp.is_identity()).then(|| btn(t::WALL_RESET()).small().ghost().focusable().build(k, |s, _| s.reset_warp()))))
-        .child(text(t::WALL_HINT()).font(type_::SMALL).color(k.c.text_muted).wrap())
+        .child(crate::ui::widgets::wrapped(t::WALL_HINT()).font(type_::SMALL).color(k.c.text_muted).wrap())
         .child(row().w_full().gap(space::S5).center_y().child(screen).child(pad))
         .child(stepper(k, t::WALL_BRIGHTNESS(), format!("{:+}", (warp.brightness * 100.0).round() as i32), 0, 0.02))
         .child(stepper(k, t::WALL_CONTRAST(), percent(warp.contrast), 1, 0.05))
@@ -444,7 +461,7 @@ fn screens(s: &App, k: &Kit, layer: &mut Vec<El>) {
     let options = s.output_options();
     let mut body = col().w_full().px(space::S4).pb(space::S4).gap(space::S3);
     if !started {
-        body = body.child(text(t::SCREENS_OFF()).font(type_::BODY).color(k.c.text_muted).wrap());
+        body = body.child(crate::ui::widgets::wrapped(t::SCREENS_OFF()).font(type_::BODY).color(k.c.text_muted).wrap());
     } else {
         // The switch works whatever the output is doing, so the projector can always be turned off.
         body = body.child(switch_row(k, "projector-switch", t::SCREENS_SWITCH(), "", !options.off, |s| {
@@ -453,12 +470,12 @@ fn screens(s: &App, k: &Kit, layer: &mut Vec<El>) {
         }));
         let stuck = status.waiting_since.is_some_and(|since| since.elapsed() > std::time::Duration::from_secs(8));
         if let Some(problem) = &status.problem {
-            body = body.child(text(problem.clone()).font(type_::BODY).color(theme::warn_ink()).wrap());
+            body = body.child(crate::ui::widgets::wrapped(problem.clone()).font(type_::BODY).color(theme::warn_ink()).wrap());
         } else if !status.connected {
-            body = body.child(text(if stuck { t::OUTPUT_STUCK() } else { t::OUTPUT_STARTING() }).font(type_::BODY).color(k.c.text_muted).wrap());
+            body = body.child(crate::ui::widgets::wrapped(if stuck { t::OUTPUT_STUCK() } else { t::OUTPUT_STARTING() }).font(type_::BODY).color(k.c.text_muted).wrap());
         }
         if status.connected && status.displays.len() < 2 {
-            body = body.child(text(t::SCREENS_ONE()).font(type_::BODY).color(k.c.text_muted).wrap()).child(switch_row(k, "here-switch", t::SCREENS_HERE(), t::SCREENS_HERE_HINT(), options.here && !options.off, |s| {
+            body = body.child(crate::ui::widgets::wrapped(t::SCREENS_ONE()).font(type_::BODY).color(k.c.text_muted).wrap()).child(switch_row(k, "here-switch", t::SCREENS_HERE(), t::SCREENS_HERE_HINT(), options.here && !options.off, |s| {
                 let mut next = s.output_options();
                 next.here = !(next.here && !next.off);
                 next.off = false;
@@ -584,12 +601,12 @@ fn remote(s: &App, k: &Kit, layer: &mut Vec<El>) {
     );
     // What Windows is about to ask comes before its box; the warning replaces it when the answer was no.
     match s.firewall {
-        crate::firewall::Standing::Asking => body = body.child(text(t::REMOTE_FIREWALL_ASKING()).font(type_::BODY).color(k.c.text_muted).wrap()),
-        crate::firewall::Standing::Refused => body = body.child(text(t::REMOTE_FIREWALL_REFUSED()).font(type_::BODY).color(theme::warn_ink()).wrap()),
+        crate::firewall::Standing::Asking => body = body.child(crate::ui::widgets::wrapped(t::REMOTE_FIREWALL_ASKING()).font(type_::BODY).color(k.c.text_muted).wrap()),
+        crate::firewall::Standing::Refused => body = body.child(crate::ui::widgets::wrapped(t::REMOTE_FIREWALL_REFUSED()).font(type_::BODY).color(theme::warn_ink()).wrap()),
         _ => {}
     }
     if let Some(problem) = &s.remote_problem {
-        body = body.child(text(t::remote_failed(problem)).font(type_::BODY).color(theme::warn_ink()).wrap());
+        body = body.child(crate::ui::widgets::wrapped(t::remote_failed(problem)).font(type_::BODY).color(theme::warn_ink()).wrap());
     }
     if let (Some(url), Some(server)) = (s.remote_url(), s.remote.as_ref()) {
         let mut card = row().w_full().padding(space::S4).gap(space::S4).center_y().radius(k.radius.lg).fill(k.c.layer_02);
@@ -619,11 +636,11 @@ fn import(s: &App, k: &Kit, layer: &mut Vec<El>) {
     match &s.easislides {
         Some(folder) => {
             body = body
-                .child(text(t::IMPORT_FOUND()).font(type_::BODY).color(k.c.text_base).wrap())
+                .child(crate::ui::widgets::wrapped(t::IMPORT_FOUND()).font(type_::BODY).color(k.c.text_base).wrap())
                 .child(text(folder.display().to_string()).font(type_::SMALL).color(k.c.text_muted).truncate_middle())
                 .child(row().w_full().gap(space::S2).child(spacer()).child(btn(t::BTN_CANCEL()).focusable().build(k, |s, _| s.sheet = Sheet::None)).child(btn(t::BTN_BRING_OVER()).primary().focusable().build(k, |s, _| s.import_easislides()).autofocus()));
         }
-        None => body = body.child(text(t::IMPORT_NOT_FOUND()).font(type_::BODY).color(k.c.text_muted).wrap()),
+        None => body = body.child(crate::ui::widgets::wrapped(t::IMPORT_NOT_FOUND()).font(type_::BODY).color(k.c.text_muted).wrap()),
     }
     Dialog::new("import", t::CMD_IMPORT()).open(true).width(480.0).fit().on_close(close).child(body).build(k, layer);
 }
@@ -678,7 +695,7 @@ fn stream(s: &App, k: &Kit, layer: &mut Vec<El>) {
     let on = running.is_some();
     let mut body = col().w_full().px(space::S4).pb(space::S4).gap(space::S3);
     if !crate::stream::available() {
-        body = body.child(text(t::STREAM_MISSING()).font(type_::BODY).color(k.c.text_muted).wrap());
+        body = body.child(crate::ui::widgets::wrapped(t::STREAM_MISSING()).font(type_::BODY).color(k.c.text_muted).wrap());
         return Dialog::new("stream", t::CMD_STREAM()).open(true).width(560.0).fit().on_close(close).child(body).build(k, layer);
     }
     // The dialog opens on what the person came for: the address while there is none
@@ -687,7 +704,7 @@ fn stream(s: &App, k: &Kit, layer: &mut Vec<El>) {
     let ready = on || !s.stream_address.text.trim().is_empty();
     let first = |control: El, lead: bool| if lead { control.autofocus() } else { control };
     body = body
-        .child(text(t::STREAM_HINT()).font(type_::BODY).color(k.c.text_muted).wrap())
+        .child(crate::ui::widgets::wrapped(t::STREAM_HINT()).font(type_::BODY).color(k.c.text_muted).wrap())
         .child(
             col().w_full().gap(space::S1).child(section_label(k, t::STREAM_ADDRESS())).child(
                 TextInput::new(&s.stream_address).width(None).label(t::STREAM_ADDRESS()).placeholder(t::STREAM_ADDRESS_HINT()).disabled(on).on_edit(|s: &mut App| &mut s.stream_address).build(k),
@@ -721,7 +738,7 @@ fn stream(s: &App, k: &Kit, layer: &mut Vec<El>) {
     }
     foot = foot.child(first(btn(if on { t::BTN_STREAM_STOP() } else { t::BTN_STREAM_START() }).icon(&icons::STREAM).toggle(on).tall().focusable().build(k, |s, _| s.toggle_stream()), ready));
     if let Some(problem) = problem {
-        body = body.child(text(problem).font(type_::BODY).color(theme::warn_ink()).wrap());
+        body = body.child(crate::ui::widgets::wrapped(problem).font(type_::BODY).color(theme::warn_ink()).wrap());
     }
     body = body.child(foot);
     Dialog::new("stream", t::CMD_STREAM()).open(true).width(560.0).fit().on_close(close).child(body).build(k, layer);
@@ -822,7 +839,7 @@ fn recordings_part(s: &App, k: &Kit) -> El {
         .child(place)
         .child(col().w_full().gap(space::S2).child(pair(open.key("rec-open"), moved.key("rec-move"))).child(pair(save.key("rec-save"), delete.key("rec-delete"))));
     if s.recordings.failed {
-        part = part.child(text(t::REC_FAILED()).font(type_::BODY).color(theme::warn_ink()).wrap());
+        part = part.child(crate::ui::widgets::wrapped(t::REC_FAILED()).font(type_::BODY).color(theme::warn_ink()).wrap());
     }
     part
 }
@@ -937,7 +954,7 @@ fn listen(s: &App, k: &Kit, layer: &mut Vec<El>, tall: f32) {
     // A build that can hear words needs its model; a PC without one is offered it here.
     if App::speech_built() {
         use crate::speech_model::Model;
-        let row_of = |words: String, button: Option<El>| row().key("speech-model").w_full().min_h(40.0).gap(space::S3).center_y().child(rune::icon(&icons::IMPORT, 16.0).color(k.c.text_muted).a11y_hidden()).child(text(words).font(type_::BODY).color(k.c.text_base).wrap().grow(1.0).min_w(0.0)).children(button);
+        let row_of = |words: String, button: Option<El>| row().key("speech-model").w_full().min_h(40.0).gap(space::S3).center_y().child(rune::icon(&icons::IMPORT, 16.0).color(k.c.text_muted).a11y_hidden()).child(crate::ui::widgets::wrapped(words).font(type_::BODY).color(k.c.text_base).wrap().grow(1.0).min_w(0.0)).children(button);
         let get = || btn(t::BIBLES_DOWNLOAD()).icon(&icons::IMPORT).focusable().build(k, |s, _| s.download_model());
         match &s.model {
             Model::Missing => body = body.child(row_of(t::LISTEN_MODEL_MISSING().to_string(), Some(get()))),
@@ -956,10 +973,10 @@ fn listen(s: &App, k: &Kit, layer: &mut Vec<El>, tall: f32) {
         }
     }
     if let Some(problem) = &s.listen_problem {
-        body = body.child(text(problem.clone()).font(type_::BODY).color(theme::warn_ink()).wrap());
+        body = body.child(crate::ui::widgets::wrapped(problem.clone()).font(type_::BODY).color(theme::warn_ink()).wrap());
     }
     if let Some(last) = s.heard.last() {
-        body = body.child(col().w_full().gap(space::S1).child(section_label(k, t::LISTEN_HEARD())).child(text(last.clone()).font(type_::BODY).color(k.c.text_base).wrap()));
+        body = body.child(col().w_full().gap(space::S1).child(section_label(k, t::LISTEN_HEARD())).child(crate::ui::widgets::wrapped(last.clone()).font(type_::BODY).color(k.c.text_base).wrap()));
     }
     for (at, hit) in s.heard_hits.iter().enumerate() {
         let (title, glyph) = match hit {

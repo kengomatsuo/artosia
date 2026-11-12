@@ -5,6 +5,7 @@
 use std::collections::HashMap;
 use std::io::Read;
 use std::path::{Path, PathBuf};
+use std::sync::atomic::{AtomicU32, Ordering};
 use std::sync::{Arc, Mutex};
 use std::time::{Duration, SystemTime};
 
@@ -72,6 +73,10 @@ pub struct Desk {
     pub downloading: Option<String>,
     /// What picked Beblia files said about themselves, by id.
     pub notices: HashMap<String, Notice>,
+    /// The languages of the country the list is arranged for, first in its order (`ebible::ranking`).
+    pub ranking: Vec<String>,
+    /// How much of the running download has arrived, in percent; 0 until the server says how long the file is.
+    pub progress: Arc<AtomicU32>,
 }
 
 impl Default for Desk {
@@ -87,6 +92,8 @@ impl Default for Desk {
             rows_for: None,
             downloading: None,
             notices: HashMap::new(),
+            ranking: ebible::ranking(crate::onboard::FALLBACK_COUNTRY),
+            progress: Arc::default(),
         }
     }
 }
@@ -112,6 +119,14 @@ impl Desk {
         }
     }
 
+    /// Arranges the list for a church in `country` (two capital letters): its languages come first.
+    /// A library that never said where the church is keeps the order it always had, Indonesia's.
+    pub fn set_country(&mut self, country: &str) {
+        let country = if country.is_empty() { crate::onboard::FALLBACK_COUNTRY } else { country };
+        self.ranking = ebible::ranking(country);
+        self.rows_for = None;
+    }
+
     /// Arranges the list for what is typed. Cheap to call every frame: it works only on a change.
     pub fn arrange(&mut self) -> bool {
         let query = self.query.text.trim().to_string();
@@ -120,7 +135,7 @@ impl Desk {
         }
         let list = self.translations();
         let mut rows = Vec::new();
-        for group in ebible::grouped(list, &query) {
+        for group in ebible::grouped(list, &query, &self.ranking) {
             rows.push(Row::Language { name: group.language.clone(), local: if group.local == group.language { String::new() } else { group.local.clone() } });
             rows.extend(group.items.into_iter().map(Row::Translation));
         }
@@ -151,6 +166,26 @@ fn net_error(error: ureq::Error) -> String {
 fn get(url: &str, limit: u64) -> Result<Vec<u8>, String> {
     let mut response = agent().get(url).call().map_err(net_error)?;
     response.body_mut().with_config().limit(limit).read_to_vec().map_err(net_error)
+}
+
+/// A download that reports how much has arrived, in percent, when the server says how long it is.
+fn get_with_progress(url: &str, limit: u64, progress: &AtomicU32) -> Result<Vec<u8>, String> {
+    let mut response = agent().get(url).call().map_err(net_error)?;
+    let length = response.body().content_length().filter(|length| *length > 0);
+    progress.store(0, Ordering::Relaxed);
+    let mut reader = response.body_mut().with_config().limit(limit).reader();
+    let mut bytes = Vec::with_capacity(length.map_or(0, |length| length.min(limit) as usize));
+    let mut chunk = [0u8; 64 * 1024];
+    loop {
+        let read = reader.read(&mut chunk).map_err(|error| net_error(ureq::Error::Io(error)))?;
+        if read == 0 {
+            return Ok(bytes);
+        }
+        bytes.extend_from_slice(&chunk[..read]);
+        if let Some(length) = length {
+            progress.store((bytes.len() as u64 * 100 / length).min(100) as u32, Ordering::Relaxed);
+        }
+    }
 }
 
 /// The first bytes of a file, for reading what it says about itself before it is downloaded.
@@ -292,6 +327,12 @@ impl App {
         }
     }
 
+    /// Fills the list with the made-up translations of the headless renders.
+    pub fn demo_catalogue(&mut self) {
+        self.desk.catalogue = Catalogue::Ready(demo_list());
+        self.desk.rows_for = None;
+    }
+
     pub fn open_bibles(&mut self) {
         self.sheet = Sheet::Bibles;
         if matches!(self.desk.catalogue, Catalogue::Idle | Catalogue::Failed(_)) && !rune::is_headless() {
@@ -376,15 +417,15 @@ impl App {
             return;
         }
         self.desk.downloading = Some(id.to_string());
-        let (events, waker) = (self.desk.events.clone(), self.waker.clone());
+        let (events, waker, progress) = (self.desk.events.clone(), self.waker.clone(), self.desk.progress.clone());
         std::thread::spawn(move || {
             let result = match item.source {
-                Source::Ebible => get(&ebible::download_url(&item.id), 64 * 1024 * 1024).and_then(|bytes| {
+                Source::Ebible => get_with_progress(&ebible::download_url(&item.id), 64 * 1024 * 1024, &progress).and_then(|bytes| {
                     let details = Details { code: item.id.clone(), name: item.title.clone(), language: item.language_english.clone(), copyright: item.copyright.clone() };
                     bible_file::install_bytes(&format!("{}_usfx.zip", item.id), &bytes, &target, &details).map_err(|error| error.to_string())
                 }),
                 // The name and the copyright line are the file's own: the details leave them empty.
-                Source::Beblia => get(&beblia::download_url(&item.file), 64 * 1024 * 1024).and_then(|bytes| {
+                Source::Beblia => get_with_progress(&beblia::download_url(&item.file), 64 * 1024 * 1024, &progress).and_then(|bytes| {
                     let details = Details { code: item.id.clone(), language: item.language_english.clone(), ..Details::default() };
                     bible_file::install_bytes(&item.file, &bytes, &target, &details).map_err(|error| error.to_string())
                 }),
@@ -411,7 +452,9 @@ impl App {
         if self.settings.bible == installed.code || self.settings.second_bible == installed.code {
             self.want_bible(&installed.code);
         }
-        self.say(t::bible_added(&installed.name, installed.verses), None);
+        if self.onboard.is_none() {
+            self.say(t::bible_added(&installed.name, installed.verses), None);
+        }
     }
 
     /// Runs before every frame: opens the file dialog when asked and takes what the workers did.
@@ -452,15 +495,28 @@ impl App {
                     self.desk.notices.insert(id, Notice::Failed);
                 }
                 Event::Downloaded(result) => {
-                    self.desk.downloading = None;
+                    let id = self.desk.downloading.take();
                     match result {
-                        Ok(installed) => self.bible_installed(installed),
-                        Err(why) => self.say(t::bibles_download_failed(&why), None),
+                        Ok(installed) => {
+                            let code = installed.code.clone();
+                            self.bible_installed(installed);
+                            // The Bible the first run asked for becomes the window's own.
+                            if let Some(id) = id {
+                                self.onboard_bible_arrived(&id, &code);
+                            }
+                        }
+                        Err(why) => {
+                            // The first run shows its own reason on its getting-ready page.
+                            let shown = id.as_deref().is_some_and(|id| self.onboard_bible_failed(id, &why));
+                            if !shown {
+                                self.say(t::bibles_download_failed(&why), None);
+                            }
+                        }
                     }
                 }
             }
         }
-        if self.sheet == Sheet::Bibles {
+        if self.sheet == Sheet::Bibles || self.onboard.is_some() {
             changed |= self.desk.arrange();
         }
         changed

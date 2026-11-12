@@ -15,10 +15,11 @@ use crate::theme::{self, icons, space, type_};
 use crate::ui::widgets::btn;
 
 /// The card's width.
-/// The card is wide enough for three buttons of one size in either language.
-const CARD: f32 = 360.0;
-/// Every button of the card has this width, so a longer word never changes the card.
-const BUTTON: f32 = 100.0;
+/// The card is wide enough for three buttons of one size in every language.
+const CARD: f32 = 432.0;
+/// Every button of the card has this width, so a longer word never changes the card. It holds
+/// an icon and the nine letters a button's brief allows ("Siguiente" was cut at 100).
+const BUTTON: f32 = 124.0;
 /// Room between a ring and the part it surrounds.
 const PAD: f32 = 4.0;
 
@@ -159,8 +160,8 @@ fn card(k: &Kit, at: usize, stop: &Stop) -> El {
                 .w_full()
                 .gap(space::S1)
                 .child(text(t::tour_place(at + 1, STOP_COUNT)).font(type_::SMALL).color(k.c.text_muted))
-                .child(text((stop.main)()).font(type_::TITLE).color(k.c.text_base).wrap())
-                .child(text((stop.more)()).font(type_::BODY).color(k.c.text_muted).wrap()),
+                .child(crate::ui::widgets::wrapped((stop.main)()).font(type_::TITLE).color(k.c.text_base).wrap())
+                .child(crate::ui::widgets::wrapped((stop.more)()).font(type_::BODY).color(k.c.text_muted).wrap()),
         )
         .child(buttons)
         .modal(false, |s: &mut App| s.end_tour())

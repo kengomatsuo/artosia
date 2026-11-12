@@ -75,7 +75,13 @@ pub trait Runner {
 /// Whether the program should look at the firewall at all: on Windows, in a real window on a
 /// real library, and for a server that listens on the network.
 pub fn applies(windows: bool, interactive: bool, local_only: bool) -> bool {
-    windows && interactive && !local_only
+    applies_in(windows, interactive, local_only, crate::store::packaged())
+}
+
+/// `applies` with the edition given. A packaged program never runs its own elevated step: its
+/// manifest declares the rule (`docs/store.md`).
+pub fn applies_in(windows: bool, interactive: bool, local_only: bool, packaged: bool) -> bool {
+    windows && interactive && !local_only && !packaged
 }
 
 /// The parameters of the one elevated `cmd.exe`: delete every rule of this program, then add
@@ -424,9 +430,10 @@ mod tests {
 
     #[test]
     fn the_firewall_is_looked_at_only_on_windows_in_a_real_window_for_a_network_server() {
-        assert!(applies(true, true, false));
-        assert!(!applies(false, true, false), "off Windows");
-        assert!(!applies(true, false, false), "practice, headless, a test");
-        assert!(!applies(true, true, true), "a server that listens on this computer only");
+        assert!(applies_in(true, true, false, false));
+        assert!(!applies_in(false, true, false, false), "off Windows");
+        assert!(!applies_in(true, false, false, false), "practice, headless, a test");
+        assert!(!applies_in(true, true, true, false), "a server that listens on this computer only");
+        assert!(!applies_in(true, true, false, true), "packaged: the manifest declares the rule");
     }
 }

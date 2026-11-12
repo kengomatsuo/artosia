@@ -100,6 +100,28 @@ pub fn words(text: &str) -> Vec<Word> {
 }
 
 /// The folded words of a text joined by single spaces.
+/// Korean text for a box that wraps: a word joiner between the syllables of each word, so a
+/// line breaks at a space and never inside a word. Korean readers take a word cut in two as
+/// a mistake, and the text engine has no setting for it. Text with no Korean in it comes
+/// back as it is.
+pub fn keep_words(text: &str) -> std::borrow::Cow<'_, str> {
+    let hangul = |c: char| ('\u{ac00}'..='\u{d7a3}').contains(&c);
+    if !text.chars().any(hangul) {
+        return std::borrow::Cow::Borrowed(text);
+    }
+    let mut out = String::with_capacity(text.len() + text.len() / 2);
+    let mut before: Option<char> = None;
+    for c in text.chars() {
+        // A number written against a word ("2절") stays with it too.
+        if before.is_some_and(|b| (hangul(b) && (hangul(c) || c.is_ascii_digit())) || (b.is_ascii_digit() && hangul(c))) {
+            out.push('\u{2060}');
+        }
+        out.push(c);
+        before = Some(c);
+    }
+    std::borrow::Cow::Owned(out)
+}
+
 pub fn normalize(text: &str) -> String {
     let mut out = String::with_capacity(text.len());
     for word in words(text) {
@@ -249,6 +271,14 @@ pub fn highlight_ranges(text: &str, tokens: &[String]) -> Vec<std::ops::Range<us
 
 #[cfg(test)]
 mod tests {
+    #[test]
+    fn korean_words_stay_whole_and_other_text_is_untouched() {
+        assert!(matches!(super::keep_words("Bread for the road"), std::borrow::Cow::Borrowed(_)));
+        let kept = super::keep_words("\u{c608}\u{bc30} \u{c21c}\u{c11c} 2\u{c808}");
+        assert_eq!(kept, "\u{c608}\u{2060}\u{bc30} \u{c21c}\u{2060}\u{c11c} 2\u{2060}\u{c808}");
+        assert_eq!(kept.replace('\u{2060}', ""), "\u{c608}\u{bc30} \u{c21c}\u{c11c} 2\u{c808}");
+    }
+
     use super::*;
 
     #[test]

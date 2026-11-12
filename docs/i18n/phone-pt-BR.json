@@ -95,8 +95,8 @@
   "why": "-"
  },
  "black": {
-  "text": "Preto",
-  "back": "Black",
+  "text": "Blackout",
+  "back": "Blackout",
   "why": "-"
  },
  "logo": {
@@ -195,12 +195,12 @@
   "why": "-"
  },
  "message": {
-  "text": "Recado para a igreja",
+  "text": "Mensagem para a igreja",
   "back": "Message for the church",
   "why": "-"
  },
  "message_ph": {
-  "text": "Escreva o recado",
+  "text": "Escreva a mensagem",
   "back": "Write the message",
   "why": "-"
  },
@@ -215,12 +215,12 @@
   "why": "-"
  },
  "message_showing": {
-  "text": "Recado exibido: “{0}”",
-  "back": "Message shown: \"{0}\"",
+  "text": "Mensagem na tela: “{0}”",
+  "back": "Message on the screen: \"{0}\"",
   "why": "-"
  },
  "countdown": {
-  "text": "Contagem",
+  "text": "Contagem regressiva",
   "back": "Countdown",
   "why": "-"
  },
@@ -245,8 +245,8 @@
   "why": "-"
  },
  "keys_title": {
-  "text": "Teclas",
-  "back": "Keys",
+  "text": "Atalhos",
+  "back": "Shortcuts",
   "why": "-"
  },
  "keys_text": {

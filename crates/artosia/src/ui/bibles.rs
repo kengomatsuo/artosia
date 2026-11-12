@@ -32,7 +32,7 @@ fn source_name(source: Source) -> &'static str {
 }
 
 /// How much of the Bible a row holds, or the file's size when the list cannot say.
-fn extent(item: &Translation) -> String {
+pub(crate) fn extent(item: &Translation) -> String {
     if item.scope() < 4 {
         return scope_name(item.scope()).to_string();
     }
@@ -43,7 +43,7 @@ fn extent(item: &Translation) -> String {
     }
 }
 
-fn installed(s: &App, id: &str) -> bool {
+pub(crate) fn installed(s: &App, id: &str) -> bool {
     let code = installed_code(id);
     s.bible_files.iter().any(|file| file.code == code)
 }
@@ -68,12 +68,12 @@ fn failed(k: &Kit, why: &str) -> El {
         .gap(space::S3)
         .padding(space::S4)
         .child(text(t::BIBLES_LOAD_FAILED()).font(type_::BODY_STRONG).color(theme::warn_ink()))
-        .child(text(t::as_sentence(why)).font(type_::SMALL).color(k.c.text_muted).wrap())
+        .child(crate::ui::widgets::wrapped(t::as_sentence(why)).font(type_::SMALL).color(k.c.text_muted).wrap())
         .child(btn(t::BIBLES_RETRY()).icon(&icons::LOOP).focusable().build(k, |s, _| s.start_catalogue()))
 }
 
 fn nothing(s: &App, k: &Kit) -> El {
-    col().key("bibles-empty").w_full().h(LIST).center().padding(space::S4).child(text(t::nothing_found(s.desk.query.text.trim())).font(type_::BODY).color(k.c.text_muted).wrap())
+    col().key("bibles-empty").w_full().h(LIST).center().padding(space::S4).child(crate::ui::widgets::wrapped(t::nothing_found(s.desk.query.text.trim())).font(type_::BODY).color(k.c.text_muted).wrap())
 }
 
 fn line(s: &App, k: &Kit, at: usize) -> El {
@@ -140,6 +140,18 @@ fn list(s: &App, k: &Kit) -> El {
     col().key("bibles-list").w_full().h(LIST).radius(k.radius.lg).fill(k.c.layer_02).clip_rounded(k.radius.lg).child(inside)
 }
 
+/// A translation's own copyright line, shown before anything of it downloads. eBible's list
+/// carries it; a Beblia file carries it inside, read when the row was picked.
+pub(crate) fn copyright_line(s: &App, item: &Translation) -> String {
+    match (item.source, s.desk.notices.get(&item.id)) {
+        (Source::Ebible, _) => if item.copyright.is_empty() { item.description.clone() } else { item.copyright.clone() },
+        (Source::Beblia, Some(Notice::Known { copyright, .. })) if copyright.is_empty() => t::BIBLES_NO_COPYRIGHT().to_string(),
+        (Source::Beblia, Some(Notice::Known { copyright, .. })) => copyright.clone(),
+        (Source::Beblia, Some(Notice::Failed)) => t::BIBLES_NOTICE_FAILED().to_string(),
+        (Source::Beblia, _) => t::BIBLES_NOTICE_LOADING().to_string(),
+    }
+}
+
 /// What the picked Bible is, its copyright line, and the button that fetches it.
 fn detail(s: &App, k: &Kit) -> El {
     let card = col().key("bibles-detail").w_full().h(132.0).padding(space::S3).gap(space::S1).radius(k.radius.lg).fill(k.c.layer_02);
@@ -148,14 +160,7 @@ fn detail(s: &App, k: &Kit) -> El {
     };
     let code = installed_code(&item.id);
     let title = s.desk.title_of(item).to_string();
-    // eBible's list carries the copyright line. A Beblia file carries it inside, read when the row was picked.
-    let notice = match (item.source, s.desk.notices.get(&item.id)) {
-        (Source::Ebible, _) => if item.copyright.is_empty() { item.description.clone() } else { item.copyright.clone() },
-        (Source::Beblia, Some(Notice::Known { copyright, .. })) if copyright.is_empty() => t::BIBLES_NO_COPYRIGHT().to_string(),
-        (Source::Beblia, Some(Notice::Known { copyright, .. })) => copyright.clone(),
-        (Source::Beblia, Some(Notice::Failed)) => t::BIBLES_NOTICE_FAILED().to_string(),
-        (Source::Beblia, _) => t::BIBLES_NOTICE_LOADING().to_string(),
-    };
+    let notice = copyright_line(s, item);
     let (have, using) = (installed(s, &item.id), s.settings.bible == code);
     let id = item.id.clone();
     let busy = s.desk.downloading.is_some();

@@ -12,6 +12,7 @@ speech = ["artosia-listen/whisper"]
 
 [dependencies]
 artosia-listen = { path = "../artosia-listen" }
+artosia-locale = { path = "../artosia-locale" }
 artosia-lyrics = { path = "../artosia-lyrics" }
 artosia-office = { path = "../artosia-office" }
 artosia-core = { path = "../artosia-core" }
@@ -26,7 +27,7 @@ ureq = "3.5"
 
 # Windows only: the elevated command that adds the phone remote's firewall rule (`firewall.rs`).
 [target.'cfg(windows)'.dependencies]
-windows = { version = "0.62", features = ["Win32_Foundation", "Win32_System_Com", "Win32_System_Registry", "Win32_System_Threading", "Win32_UI_Shell", "Win32_UI_WindowsAndMessaging"] }
+windows = { version = "0.62", features = ["Win32_Foundation", "Win32_System_Com", "Win32_System_Registry", "Win32_Storage_Packaging_Appx", "Win32_System_Threading", "Win32_UI_Shell", "Win32_UI_WindowsAndMessaging"] }
 
 # Windows only: puts Artosia's mark on the program file.
 [build-dependencies]

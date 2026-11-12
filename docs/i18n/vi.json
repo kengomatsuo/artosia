@@ -50,9 +50,9 @@
   "why": "Same section names as the editor"
  },
  "IN_PLAN": {
-  "text": "Đã có trong danh sách",
-  "back": "Already in the list",
-  "why": "A state, replaces Add"
+  "text": "Đã thêm",
+  "back": "Added",
+  "why": "One phrase for one state, same as the search chip"
  },
  "PLAN_CHIP": {
   "text": "Đã thêm",
@@ -60,7 +60,7 @@
   "why": "Reads as a statement about the song"
  },
  "KIND_LOOK": {
-  "text": "Thiết kế",
+  "text": "Hiển thị",
   "back": "Design",
   "why": "Same word as the Design button"
  },
@@ -190,7 +190,7 @@
   "why": "Same as the first dividers"
  },
  "CMD_LOOKS": {
-  "text": "Thiết kế",
+  "text": "Hiển thị",
   "back": "Design",
   "why": "Same as the button"
  },
@@ -220,19 +220,19 @@
   "why": "hội chúng is the congregation"
  },
  "CMD_REMOTE": {
-  "text": "Điều khiển từ xa",
+  "text": "Điện thoại điều khiển",
   "back": "Remote control",
   "why": "What volunteers say for a remote"
  },
  "CMD_REMOTE_DETAIL": {
-  "text": "Điện thoại cùng Wi-Fi có thể chuyển trang chiếu",
+  "text": "Điện thoại cùng Wi-Fi có thể chuyển trang",
   "back": "Phones on the same Wi-Fi can change the slides",
   "why": "Full sentence"
  },
  "CMD_IMPORT_FOLDER": {
-  "text": "Nhập bài hát từ thư mục",
-  "back": "Import songs from a folder",
-  "why": "Nhập is import"
+  "text": "Lấy bài hát từ thư mục",
+  "back": "Take songs from a folder",
+  "why": "Lấy, since nhập also means typing"
  },
  "CMD_IMPORT_FOLDER_DETAIL": {
   "text": "Các tệp theo định dạng OpenLyrics",
@@ -245,8 +245,8 @@
   "why": "One sentence"
  },
  "CMD_IMPORT": {
-  "text": "Nhập từ EasiSlides",
-  "back": "Import from EasiSlides",
+  "text": "Lấy từ EasiSlides",
+  "back": "Take from EasiSlides",
   "why": "Copy, not move"
  },
  "CMD_IMPORT_DETAIL": {
@@ -390,8 +390,8 @@
   "why": "Voices in the room, not the window"
  },
  "LISTEN_INDONESIAN": {
-  "text": "Tiếng Indo",
-  "back": "Indonesian",
+  "text": "Indonesia",
+  "back": "Indonesia",
   "why": "Tiếng Indonesia is 15 characters and the limit is 14"
  },
  "LISTEN_ENGLISH": {
@@ -425,19 +425,19 @@
   "why": "Same noun as the tab"
  },
  "REC_HINT": {
-  "text": "Đoạn âm ngắn và phỏng đoán, nằm trong một thư mục trên máy.",
-  "back": "Short sound pieces and the program's guesses, only in one folder on this computer.",
-  "why": "What and where"
+  "text": "Đoạn âm ngắn và chữ máy nhận ra, lưu trong một thư mục trên máy",
+  "back": "Short sound pieces and the words the machine recognised, in one folder on this computer",
+  "why": "Not a guess of the recording"
  },
  "REC_NONE": {
-  "text": "Chưa có gì",
-  "back": "Nothing yet",
-  "why": "Short"
+  "text": "Chưa có bản ghi",
+  "back": "No recordings yet",
+  "why": "Plain"
  },
  "rec_kept": {
-  "text": "Đã giữ {size}",
-  "back": "Kept {size}",
-  "why": "Size and one word"
+  "text": "Đã lưu {size}",
+  "back": "Saved {size}",
+  "why": "Lưu, not giữ"
  },
  "REC_OPEN": {
   "text": "Mở thư mục",
@@ -450,14 +450,14 @@
   "why": "Pairs with open"
  },
  "REC_SAVE": {
-  "text": "Gói thành một tệp",
-  "back": "Pack into one file",
+  "text": "Nén thành một tệp",
+  "back": "Compress into one file",
   "why": "Says one file"
  },
  "REC_SAVING": {
-  "text": "Đang gói",
-  "back": "Packing",
-  "why": "Ongoing form of gói"
+  "text": "Đang nén",
+  "back": "Compressing",
+  "why": "Ongoing form"
  },
  "REC_DELETE": {
   "text": "Xóa tất cả",
@@ -475,9 +475,9 @@
   "why": "Past tense"
  },
  "REC_FAILED": {
-  "text": "Không ghi được vào thư mục này. Bấm Đổi thư mục.",
-  "back": "Cannot write to this folder. Press Change folder.",
-  "why": "Uses the second button's words"
+  "text": "Không ghi được vào thư mục này. Hãy chọn Đổi thư mục.",
+  "back": "Cannot write to this folder. Please choose Change folder.",
+  "why": "Chọn like the other dialogs"
  },
  "REC_ON": {
   "text": "Đang ghi âm",
@@ -495,9 +495,9 @@
   "why": "International abbreviation"
  },
  "LISTEN_TEMPO_HALF": {
-  "text": "Một nửa",
-  "back": "Half",
-  "why": "One of three"
+  "text": "Nửa tốc độ",
+  "back": "Half speed",
+  "why": "Says half of what"
  },
  "LISTEN_TEMPO_AS_HEARD": {
   "text": "Như đã nghe",
@@ -555,8 +555,8 @@
   "why": "Plain"
  },
  "CMD_START_DETAIL": {
-  "text": "Chiếu ngay mục đầu tiên của danh sách",
-  "back": "Show the first item of the list at once",
+  "text": "Chiếu ngay mục đầu tiên của thứ tự lễ",
+  "back": "Show the first item of the order of service at once",
   "why": "Uses chiếu"
  },
  "CMD_PREVIOUS": {
@@ -585,7 +585,7 @@
   "why": "Plain"
  },
  "CMD_LOGO_DETAIL": {
-  "text": "Logo nhà thờ thay cho trang chiếu",
+  "text": "Logo nhà thờ thay cho trang",
   "back": "The church logo replaces the slide",
   "why": "Plain"
  },
@@ -635,7 +635,7 @@
   "why": "Plain"
  },
  "BTN_LOOK": {
-  "text": "Thiết kế",
+  "text": "Hiển thị",
   "back": "Design",
   "why": "One word"
  },
@@ -655,9 +655,9 @@
   "why": "Same noun"
  },
  "SETTINGS_ABOUT": {
-  "text": "Giới thiệu",
-  "back": "About",
-  "why": "Usual About heading"
+  "text": "Về Artosia",
+  "back": "About Artosia",
+  "why": "The About heading"
  },
  "about_version": {
   "text": "Artosia {version}",
@@ -725,7 +725,7 @@
   "why": "State"
  },
  "REMOTE_ON": {
-  "text": "Điều khiển từ xa đang bật",
+  "text": "Điện thoại điều khiển đang bật",
   "back": "Remote control is on",
   "why": "bật is the on of the on/off pair"
  },
@@ -740,18 +740,18 @@
   "why": "Warning first"
  },
  "PLAN_EMPTY": {
-  "text": "Danh sách còn trống",
-  "back": "The list is empty",
+  "text": "Thứ tự lễ còn trống",
+  "back": "The order of service is empty",
   "why": "danh sách is the plan of the service"
  },
  "PLAN_ADD": {
-  "text": "Thêm vào danh sách",
-  "back": "Add to the list",
+  "text": "Thêm vào thứ tự lễ",
+  "back": "Add to the order of service",
   "why": "Wide button"
  },
  "PLAN_NEW": {
-  "text": "Danh sách mới",
-  "back": "New list",
+  "text": "Thứ tự lễ mới",
+  "back": "New order of service",
   "why": "Plain"
  },
  "PLAN_ITEM_MENU": {
@@ -770,8 +770,8 @@
   "why": "Pair with Chuyển lên"
  },
  "PLAN_REMOVE": {
-  "text": "Bỏ khỏi danh sách",
-  "back": "Take out of the list",
+  "text": "Bỏ khỏi thứ tự lễ",
+  "back": "Take out of the order of service",
   "why": "Bỏ, not xóa, since the song stays"
  },
  "PLAN_MISSING": {
@@ -795,7 +795,7 @@
   "why": "The preaching time"
  },
  "PLANS_TITLE": {
-  "text": "Danh sách",
+  "text": "Thứ tự lễ",
   "back": "Lists",
   "why": "Vietnamese has no plural form"
  },
@@ -810,8 +810,8 @@
   "why": "Reads as an invitation"
  },
  "PLAN_DUPLICATE": {
-  "text": "Sao chép danh sách",
-  "back": "Copy the list",
+  "text": "Sao chép thứ tự lễ",
+  "back": "Copy the order of service",
   "why": "sao chép is the everyday verb"
  },
  "PLAN_RENAME": {
@@ -820,13 +820,13 @@
   "why": "Names what is changed"
  },
  "PLAN_DELETE": {
-  "text": "Xóa danh sách",
-  "back": "Delete the list",
+  "text": "Xóa thứ tự lễ",
+  "back": "Delete the order of service",
   "why": "Reads as a removal"
  },
  "PLAN_NEW_DETAIL": {
-  "text": "Lập danh sách cho buổi lễ khác trong tuần",
-  "back": "Make a list for another service in the week",
+  "text": "Lập thứ tự lễ cho buổi lễ khác trong tuần",
+  "back": "Make a order of service for another service in the week",
   "why": "Plain"
  },
  "PLAN_DAY": {
@@ -860,43 +860,43 @@
   "why": "Says it is optional"
  },
  "LOOK_FOR_USUAL": {
-  "text": "Thiết kế chung",
-  "back": "Common design",
-  "why": "Pair with the plan's own"
+  "text": "Dùng cho mọi thứ tự lễ",
+  "back": "Use for every order of service",
+  "why": "Pairs with the plan's own"
  },
  "LOOK_FOR_PLAN": {
-  "text": "Chỉ dùng cho danh sách này",
-  "back": "Only for this list",
+  "text": "Chỉ dùng cho thứ tự lễ này",
+  "back": "Only for this order of service",
   "why": "Tooltip"
  },
  "PLAN_OWN_LOOK": {
-  "text": "Có thiết kế riêng",
-  "back": "Has its own design",
-  "why": "A statement"
+  "text": "Có kiểu hiển thị riêng",
+  "back": "Has its own display style",
+  "why": "Hiển thị is the one name for how the projector looks"
  },
  "KIND_PLAN": {
-  "text": "Danh sách",
+  "text": "Thứ tự lễ",
   "back": "List",
   "why": "Same word as the plan"
  },
  "look_own_dropped": {
-  "text": "“{name}” dùng lại thiết kế chung",
-  "back": "“{name}” uses the common design again",
+  "text": "“{name}” dùng lại kiểu hiển thị chung",
+  "back": "“{name}” uses the common display style again",
   "why": "Name first"
  },
  "plan_deleted": {
-  "text": "Đã xóa danh sách {name}",
-  "back": "Deleted the list {name}",
+  "text": "Đã xóa thứ tự lễ {name}",
+  "back": "Deleted the order of service {name}",
   "why": "Past tense"
  },
  "added_to_plan": {
-  "text": "Đã thêm “{title}” vào danh sách",
-  "back": "Added “{title}” to the list",
+  "text": "Đã thêm “{title}” vào thứ tự lễ",
+  "back": "Added “{title}” to the order of service",
   "why": "Title in quotes"
  },
  "removed_from_plan": {
-  "text": "Đã bỏ “{title}” khỏi danh sách",
-  "back": "Took “{title}” out of the list",
+  "text": "Đã bỏ “{title}” khỏi thứ tự lễ",
+  "back": "Took “{title}” out of the order of service",
   "why": "Past tense"
  },
  "START_TITLE": {
@@ -930,9 +930,9 @@
   "why": "One word"
  },
  "TOUR_PLAN": {
-  "text": "Cột này là danh sách mọi thứ sẽ chiếu, theo thứ tự",
-  "back": "This column is the list of everything to be shown, in order",
-  "why": "One sentence"
+  "text": "Cột này liệt kê những gì sẽ chiếu, theo thứ tự",
+  "back": "This column lists what will be shown, in order",
+  "why": "Not stiff"
  },
  "TOUR_PLAN_MORE": {
   "text": "Kéo một dòng để đổi chỗ",
@@ -960,9 +960,9 @@
   "why": "bật is the on of the pair"
  },
  "TOUR_LIVE": {
-  "text": "Khung Live là những gì mọi người thấy lúc này",
-  "back": "The Live panel is what everyone sees right now",
-  "why": "khung is a part of a window"
+  "text": "Phần Live là những gì mọi người đang thấy",
+  "back": "The Live part is what everyone is seeing",
+  "why": "Phần, not khung"
  },
  "TOUR_LIVE_MORE": {
   "text": "Nút Live đỏ bên dưới bật hoặc tắt máy chiếu (F6)",
@@ -970,13 +970,13 @@
   "why": "Red tile, not the list"
  },
  "TOUR_SEARCH": {
-  "text": "Một ô tìm thấy mọi bài hát và mọi đoạn Kinh Thánh",
-  "back": "One box finds every song and every Bible passage",
-  "why": "One sentence"
+  "text": "Một ô tìm mọi bài hát và đoạn Kinh Thánh",
+  "back": "One box finds every song and Bible passage",
+  "why": "Short so Kinh Thánh does not break"
  },
  "TOUR_SEARCH_MORE": {
-  "text": "Mở kết quả trước, rồi bấm Thêm vào danh sách",
-  "back": "Open the result first, then press Add to the list",
+  "text": "Mở kết quả trước, rồi bấm Thêm vào thứ tự lễ",
+  "back": "Open the result first, then press Add to the order of service",
   "why": "Same label as the button"
  },
  "START_SONGS": {
@@ -1015,13 +1015,13 @@
   "why": "Plain"
  },
  "BTN_BRING_OVER": {
-  "text": "Bắt đầu nhập",
-  "back": "Start importing",
-  "why": "Nhập is import"
+  "text": "Bắt đầu lấy",
+  "back": "Start taking",
+  "why": "Pairs with Lấy"
  },
  "BTN_ADD_TO_PLAN": {
-  "text": "Thêm vào danh sách",
-  "back": "Add to the list",
+  "text": "Thêm vào thứ tự lễ",
+  "back": "Add to the order of service",
   "why": "Exactly 18 characters"
  },
  "BTN_EDIT": {
@@ -1035,7 +1035,7 @@
   "why": "Tooltip"
  },
  "DECK_EMPTY": {
-  "text": "Không có trang chiếu nào",
+  "text": "Không có trang nào",
   "back": "No slides at all",
   "why": "Plain"
  },
@@ -1080,7 +1080,7 @@
   "why": "Loan word volunteers say"
  },
  "LOGO_MISSING": {
-  "text": "Chưa chọn logo, vào Thiết kế để chọn",
+  "text": "Chưa chọn logo, vào Hiển thị để chọn",
   "back": "No logo chosen, go to Design to choose",
   "why": "Names Design as the button does"
  },
@@ -1160,9 +1160,9 @@
   "why": "Pair of Tiếp"
  },
  "BTN_NO_TEXT": {
-  "text": "Không chữ",
-  "back": "No text",
-  "why": "State name, says no words"
+  "text": "Ẩn chữ",
+  "back": "Hide text",
+  "why": "Same word as the keys sheet and the phone"
  },
  "STATE_OFF": {
   "text": "Máy chiếu đang tắt",
@@ -1175,12 +1175,12 @@
   "why": "Tooltip"
  },
  "TIP_PREV": {
-  "text": "Lùi một trang chiếu",
+  "text": "Lùi một trang",
   "back": "Back one slide",
   "why": "Tooltip"
  },
  "TIP_NEXT": {
-  "text": "Tiến một trang chiếu",
+  "text": "Tiến một trang",
   "back": "Forward one slide",
   "why": "Tooltip"
  },
@@ -1210,19 +1210,19 @@
   "why": "Key name as printed"
  },
  "HINT_RING": {
-  "text": "Chọn trang xem trước",
-  "back": "Pick the preview page",
-  "why": "Ring named by meaning"
+  "text": "Chọn trang Xem trước",
+  "back": "Pick a Preview page",
+  "why": "Same pattern as the Shift hint"
  },
  "HINT_PICK": {
-  "text": "Chọn trang trong Live",
-  "back": "Pick a page in Live",
-  "why": "Short phrase"
+  "text": "Chọn trang Live",
+  "back": "Pick a Live page",
+  "why": "Same pattern as the Ctrl hint"
  },
  "HINT_LET_GO": {
-  "text": "Thả ra để chiếu",
-  "back": "Let go to show",
-  "why": "Short phrase"
+  "text": "Nhả Shift để chiếu",
+  "back": "Release Shift to show",
+  "why": "Names the key"
  },
  "HINT_CANCEL": {
   "text": "Hủy",
@@ -1250,8 +1250,8 @@
   "why": "Tooltip"
  },
  "ADDING_TO_PLAN": {
-  "text": "Thêm vào danh sách",
-  "back": "Add to the list",
+  "text": "Thêm vào thứ tự lễ",
+  "back": "Add to the order of service",
   "why": "Same words as the button"
  },
  "BTN_DONE": {
@@ -1315,9 +1315,9 @@
   "why": "One word"
  },
  "FIELD_KEY": {
-  "text": "Tông",
-  "back": "Key",
-  "why": "Musicians' loan word for key, not voice"
+  "text": "Tông nhạc",
+  "back": "Musical key",
+  "why": "Musicians' loan word with a noun"
  },
  "FIELD_COPYRIGHT": {
   "text": "Bản quyền",
@@ -1345,9 +1345,9 @@
   "why": "Short"
  },
  "ORDER_AS_WRITTEN": {
-  "text": "Theo lời đã gõ",
-  "back": "As the words were typed",
-  "why": "Uses the editor's word for lyrics"
+  "text": "Như trong phần lời",
+  "back": "As in the words box",
+  "why": "Plain"
  },
  "ORDER_EMPTY": {
   "text": "Thứ tự sẽ có khi lời được chia thành các phần",
@@ -1360,9 +1360,9 @@
   "why": "Same section names"
  },
  "BTN_TIDY": {
-  "text": "Dọn lời",
-  "back": "Tidy words",
-  "why": "Names its object"
+  "text": "Làm gọn lời",
+  "back": "Tidy the words",
+  "why": "Names its object, the tooltip explains"
  },
  "TIDY_HELP": {
   "text": "Dòng tên phần thành dấu phần, bỏ dòng chỉ có hợp âm",
@@ -1658,13 +1658,13 @@
   "why": "Same noun as everywhere"
  },
  "WALL": {
-  "text": "Chỉnh hình trên tường",
-  "back": "Adjust the picture on the wall",
+  "text": "Chỉnh hình chiếu thẳng",
+  "back": "Straighten the projected picture",
   "why": "Says it adjusts"
  },
  "WALL_HINT": {
-  "text": "Chọn một góc rồi dịch góc đó để hình trên tường có cạnh thẳng",
-  "back": "Pick a corner and shift it so the picture on the wall has straight edges",
+  "text": "Chọn một góc, rồi nhích góc đó cho cạnh hình chiếu thẳng",
+  "back": "Pick a corner, then nudge it so the edges of the picture are straight",
   "why": "One instruction"
  },
  "WALL_RESET": {
@@ -1683,9 +1683,9 @@
   "why": "Usual word"
  },
  "WALL_COLOUR": {
-  "text": "Độ đậm màu",
-  "back": "Colour strength",
-  "why": "Saturation, apart from plain colour"
+  "text": "Độ bão hòa màu",
+  "back": "Colour saturation",
+  "why": "The photo editor term"
  },
  "CORNER_TOP_LEFT": {
   "text": "Góc trên bên trái",
@@ -1768,9 +1768,9 @@
   "why": "Key name as printed"
  },
  "LOOK_WINDOW": {
-  "text": "Màu cửa sổ",
-  "back": "Window colour",
-  "why": "Not the projector"
+  "text": "Giao diện",
+  "back": "Interface look",
+  "why": "Window light or dark, kept apart from Hiển thị"
  },
  "LOOK_WINDOW_AUTO": {
   "text": "Theo máy tính",
@@ -1888,13 +1888,13 @@
   "why": "Short phrase"
  },
  "SCREENS_STAGE_WINDOW": {
-  "text": "Màn hình ban nhạc trong một cửa sổ",
-  "back": "The band screen in a window",
+  "text": "Gộp màn hình ban nhạc vào một cửa sổ",
+  "back": "Put the band screen into one window",
   "why": "A phrase"
  },
  "SCREENS_IDENTIFY": {
-  "text": "Hiện số trên từng màn hình",
-  "back": "Show the number on each screen",
+  "text": "Hiện số thứ tự từng màn hình",
+  "back": "Show the number of each screen",
   "why": "Button"
  },
  "screen_name": {
@@ -1913,18 +1913,18 @@
  "screen_detail": {
   "text": {
    "normal_zoom": "{width} × {height}",
-   "with_zoom": "{width} × {height}, tỷ lệ {scale}"
+   "with_zoom": "{width} × {height}, thu phóng {scale}"
   },
-  "back": "{width} × {height}; {width} × {height}, scale {scale}",
-  "why": "Times sign, not the letter x"
+  "back": "{width} × {height}; with zoom {scale}",
+  "why": "Thu phóng is the Windows word"
  },
  "REMOTE_SWITCH": {
-  "text": "Điều khiển từ xa",
+  "text": "Điện thoại điều khiển",
   "back": "Remote control",
   "why": "Same as the dialog title"
  },
  "REMOTE_SWITCH_DETAIL": {
-  "text": "Điện thoại cùng Wi-Fi có thể chuyển trang chiếu",
+  "text": "Điện thoại cùng Wi-Fi có thể chuyển trang",
   "back": "Phones on the same Wi-Fi can change the slides",
   "why": "Full sentence"
  },
@@ -1939,12 +1939,12 @@
   "why": "PIN is what people say"
  },
  "REMOTE_FIREWALL_ASKING": {
-  "text": "Windows sẽ hỏi quyền một lần để điện thoại kết nối được",
-  "back": "Windows will ask permission once so phones can connect",
+  "text": "Windows sẽ hỏi quyền một lần. Hãy cho phép để điện thoại kết nối được",
+  "back": "Windows will ask permission once. Allow it so phones can connect",
   "why": "Names no button"
  },
  "REMOTE_FIREWALL_REFUSED": {
-  "text": "Tường lửa đang chặn điện thoại. Hãy tắt rồi bật lại điều khiển từ xa để hỏi quyền lại.",
+  "text": "Tường lửa đang chặn điện thoại. Hãy tắt rồi bật lại điện thoại điều khiển để hỏi quyền lại.",
   "back": "The firewall is blocking phones. Switch the remote off and on again to ask permission again.",
   "why": "Problem then a known switch"
  },
@@ -1957,7 +1957,7 @@
   "why": "Zero is its own statement"
  },
  "remote_failed": {
-  "text": "Không bật được điều khiển từ xa: {problem}",
+  "text": "Không bật được điện thoại điều khiển: {problem}",
   "back": "Could not switch on the remote: {problem}",
   "why": "Reason after colon"
  },
@@ -1973,10 +1973,10 @@
  },
  "import_done": {
   "text": {
-   "songs_only": "Đã nhập {songs}",
-   "songs_and_bibles": "Đã nhập {songs} và {bibles}"
+   "songs_only": "Đã lấy {songs}",
+   "songs_and_bibles": "Đã lấy {songs} và {bibles}"
   },
-  "back": "Imported {songs}; imported {songs} and {bibles}",
+  "back": "Took {songs}; took {songs} and {bibles}",
   "why": "Counted phrases"
  },
  "import_summary": {
@@ -2039,14 +2039,14 @@
   "why": "A phrase"
  },
  "ANNOUNCEMENT_BRING_IN": {
-  "text": "Nhập từ tệp",
-  "back": "Import from a file",
-  "why": "Short phrase"
+  "text": "Lấy từ tệp",
+  "back": "Take from a file",
+  "why": "Lấy"
  },
  "ANNOUNCEMENT_FILL": {
-  "text": "Nội dung lấy từ",
-  "back": "Content taken from",
-  "why": "Where the text comes from"
+  "text": "Nguồn nội dung",
+  "back": "Source of the content",
+  "why": "No calque"
  },
  "FILL_NOTHING": {
   "text": "Tự gõ",
@@ -2074,19 +2074,19 @@
   "why": "Not the plan's Bỏ"
  },
  "CMD_IMPORT_PPTX": {
-  "text": "Nhập từ PowerPoint",
-  "back": "Import from PowerPoint",
-  "why": "Program name kept"
+  "text": "Lấy từ PowerPoint",
+  "back": "Take from PowerPoint",
+  "why": "Lấy"
  },
  "CMD_IMPORT_PPTX_DETAIL": {
-  "text": "Mỗi trang chiếu thành một thông báo",
+  "text": "Mỗi trang thành một thông báo",
   "back": "Each slide becomes one announcement",
   "why": "No full stop"
  },
  "CMD_IMPORT_BIRTHDAYS": {
-  "text": "Nhập bảng sinh nhật",
-  "back": "Import a birthday table",
-  "why": "bảng says many, not one"
+  "text": "Lấy bảng sinh nhật từ tệp",
+  "back": "Take a birthday table from a file",
+  "why": "Bảng says many, not one"
  },
  "CMD_IMPORT_BIRTHDAYS_DETAIL": {
   "text": "Bảng tên và ngày sinh, từ Word hoặc PowerPoint",
@@ -2240,9 +2240,9 @@
   "why": "Noun phrase"
  },
  "PASSAGE_NO_BIBLE": {
-  "text": "Chưa có bản dịch Kinh Thánh nào nên thông báo sẽ trống",
-  "back": "No Bible translation yet so the announcement will be empty",
-  "why": "One sentence"
+  "text": "Chưa có bản dịch Kinh Thánh, nên thông báo sẽ để trống",
+  "back": "No Bible translation yet, so the announcement will stay empty",
+  "why": "Two clauses"
  },
  "PASSAGE_UNREADABLE": {
   "text": "Kinh Thánh không có câu nào ở chỗ bạn gõ",
@@ -2401,8 +2401,8 @@
   "why": "Heading"
  },
  "KEYS_PLAN": {
-  "text": "Danh sách",
-  "back": "The list",
+  "text": "Thứ tự lễ",
+  "back": "The order of service",
   "why": "Same word as the plan"
  },
  "KEYS_EDITING": {
@@ -2411,12 +2411,12 @@
   "why": "Heading"
  },
  "KEYS_SHOWING_ROWS[0].1": {
-  "text": "Chuyển tới trang chiếu sau",
+  "text": "Chuyển tới trang sau",
   "back": "Go to the next slide",
   "why": "Fragment"
  },
  "KEYS_SHOWING_ROWS[1].1": {
-  "text": "Lùi về trang chiếu trước",
+  "text": "Lùi về trang trước",
   "back": "Go back to the previous slide",
   "why": "Fragment"
  },
@@ -2466,9 +2466,9 @@
   "why": "Fragment"
  },
  "KEYS_SHOWING_ROWS[11].1": {
-  "text": "Mục vừa chiếu về Xem trước, bấm nữa lùi thêm",
-  "back": "The item just shown back to Preview, press again to go further back",
-  "why": "Fragment"
+  "text": "Đưa mục vừa chiếu về Xem trước, bấm tiếp để lùi",
+  "back": "Bring the item just shown back to Preview, press again to go back",
+  "why": "Has a verb"
  },
  "KEYS_SHOWING_ROWS[12].1": {
   "text": "Ẩn chữ, giữ nguyên hình nền",
@@ -2486,9 +2486,9 @@
   "why": "Fragment"
  },
  "KEYS_SHOWING_ROWS[15].1": {
-  "text": "Đưa bài micro nhận ra vào Xem trước",
-  "back": "Bring what the microphone recognised into Preview",
-  "why": "Fragment"
+  "text": "Đưa bài mà micro nghe ra vào Xem trước",
+  "back": "Bring the song the microphone heard into Preview",
+  "why": "Plain"
  },
  "KEYS_SHOWING_ROWS[16].1": {
   "text": "Đưa các thông báo vào Xem trước",
@@ -2501,9 +2501,9 @@
   "why": "The on/off pair"
  },
  "KEYS_FINDING_ROWS[0].1": {
-  "text": "Bắt đầu tìm bài hát, Kinh Thánh, thao tác",
-  "back": "Start a search for songs, Bible, actions",
-  "why": "Fragment"
+  "text": "Bắt đầu tìm bài hát, Kinh Thánh hoặc lệnh",
+  "back": "Start a search for songs, Bible or commands",
+  "why": "Lệnh ends the list clearly"
  },
  "KEYS_FINDING_ROWS[1].1": {
   "text": "Mở tìm kiếm, chưa gõ gì sẽ hiện mọi bài hát",
@@ -2521,8 +2521,8 @@
   "why": "Fragment"
  },
  "KEYS_FINDING_ROWS[4].1": {
-  "text": "Thêm kết quả vào danh sách, sau mục đang chiếu",
-  "back": "Add the result to the list, after the item being shown",
+  "text": "Thêm kết quả vào thứ tự lễ, sau mục đang chiếu",
+  "back": "Add the result to the order of service, after the item being shown",
   "why": "Fragment"
  },
  "KEYS_FINDING_ROWS[5].1": {
@@ -2536,14 +2536,14 @@
   "why": "Fragment"
  },
  "KEYS_PLAN_ROWS[0].1": {
-  "text": "Đưa mục kế tiếp vào Xem trước",
+  "text": "Đưa mục sau vào Xem trước",
   "back": "Bring the next item into Preview",
-  "why": "Fragment"
+  "why": "Pair"
  },
  "KEYS_PLAN_ROWS[1].1": {
-  "text": "Đưa mục phía trước vào Xem trước",
+  "text": "Đưa mục trước vào Xem trước",
   "back": "Bring the previous item into Preview",
-  "why": "Fragment"
+  "why": "Trước, not phía trước"
  },
  "KEYS_PLAN_ROWS[2].1": {
   "text": "Chuyển mục trong Xem trước lên hoặc xuống",
@@ -2556,23 +2556,23 @@
   "why": "Fragment"
  },
  "KEYS_PLAN_ROWS[4].1": {
-  "text": "Bỏ mục trong Xem trước khỏi danh sách",
-  "back": "Take the item in Preview out of the list",
+  "text": "Bỏ mục trong Xem trước khỏi thứ tự lễ",
+  "back": "Take the item in Preview out of the order of service",
   "why": "Fragment"
  },
  "KEYS_PLAN_ROWS[5].1": {
-  "text": "Thêm mục Xem trước vào danh sách nếu chưa có",
-  "back": "Add the Preview item to the list if not there",
+  "text": "Thêm mục Xem trước vào thứ tự lễ nếu chưa có",
+  "back": "Add the Preview item to the order of service if not there",
   "why": "Fragment"
  },
  "KEYS_PLAN_ROWS[6].1": {
-  "text": "Mở danh sách kế, vòng về đầu, kèm Shift thì lùi",
-  "back": "Open the next list, round to the first, with Shift go back",
+  "text": "Mở thứ tự lễ kế, vòng về đầu, kèm Shift thì lùi",
+  "back": "Open the next order of service, round to the first, with Shift go back",
   "why": "Fragment"
  },
  "KEYS_PLAN_ROWS[7].1": {
-  "text": "Mở hộp lập danh sách cho buổi lễ khác",
-  "back": "Open the box that makes a list for another service",
+  "text": "Mở hộp lập thứ tự lễ cho buổi lễ khác",
+  "back": "Open the box that makes a order of service for another service",
   "why": "Fragment"
  },
  "KEYS_EDITING_ROWS[0].1": {
@@ -2636,9 +2636,9 @@
   "why": "Label is a section name"
  },
  "tour_place": {
-  "text": "{at} trên {total}",
-  "back": "{at} of {total}",
-  "why": "Two numbers"
+  "text": "Bước {at}/{total}",
+  "back": "Step {at}/{total}",
+  "why": "Not read as one above the other"
  },
  "stage_place": {
   "text": "Trang {index}/{count}",
@@ -2661,9 +2661,9 @@
   "why": "Says what is remembered"
  },
  "LEARN_ON_HINT": {
-  "text": "Khi kết quả khớp như nhau, bài hay chọn sẽ lên trước",
-  "back": "When results match equally, songs often picked come first",
-  "why": "Condition first"
+  "text": "Khi nhiều kết quả giống nhau, bài thường chọn hiện trước",
+  "back": "When many results are alike, songs often picked come first",
+  "why": "No calque"
  },
  "LEARN_FORGET": {
   "text": "Xóa lịch sử tìm kiếm",
@@ -2692,30 +2692,30 @@
  },
  "habit_chip": {
   "text": {
-   "other": "Đã chọn {picks} lần với “{typed}”"
+   "other": "Đã chọn {picks} lần khi gõ “{typed}”"
   },
-  "back": "Picked {picks} times for “{typed}”",
-  "why": "lần, never the letter x"
+  "back": "Picked {picks} times when typing “{typed}”",
+  "why": "Shows whose pick"
  },
  "habit_line": {
   "text": {
-   "other": "Đã chọn {picks} lần với “{typed}”, lần cuối ngày {when}"
+   "other": "Đã chọn {picks} lần khi gõ “{typed}”, gần nhất ngày {when}"
   },
-  "back": "Picked {picks} times for “{typed}”, last on {when}",
-  "why": "Day then month"
+  "back": "Picked {picks} times when typing “{typed}”, most recently on {when}",
+  "why": "Same as the chip"
  },
  "follows_line": {
   "text": {
-   "other": "Hát sau bài này {count} lần, lần cuối ngày {when}"
+   "other": "Ngay sau bài này {count} lần, gần nhất ngày {when}"
   },
-  "back": "Sung after this song {count} times, last on {when}",
-  "why": "Plain words"
+  "back": "Right after this song {count} times, most recently on {when}",
+  "why": "Not read as sung three times"
  },
  "weekday_line": {
   "text": {
-   "other": "Hát trong {count} trên {of} buổi gần đây"
+   "other": "Hát {count} trong {of} buổi gần đây"
   },
-  "back": "Sung in {count} of {of} recent services",
+  "back": "Sung {count} in {of} recent services",
   "why": "Does not say that day"
  },
  "recent_line": {
@@ -2856,9 +2856,9 @@
   "why": "One word"
  },
  "BIBLES_PICK_HINT": {
-  "text": "Chọn một bản dịch để xem thông tin bản quyền",
-  "back": "Pick a translation to see its copyright notice",
-  "why": "One sentence"
+  "text": "Chọn bản dịch để xem bản quyền",
+  "back": "Pick a translation to see its copyright",
+  "why": "One short prompt"
  },
  "BIBLES_SCOPE_WHOLE": {
   "text": "Cả Kinh Thánh",
@@ -3102,8 +3102,8 @@
   "why": "Reason after colon"
  },
  "MARKS_APPLY": {
-  "text": "Dùng các dấu này",
-  "back": "Use these marks",
+  "text": "Dùng dấu phần này",
+  "back": "Use these part marks",
   "why": "Says what is applied"
  },
  "MARKS_APPLY_HELP": {
@@ -3117,9 +3117,9 @@
   "why": "Nothing written"
  },
  "MARKS_THIS": {
-  "text": "Phần này",
-  "back": "This part",
-  "why": "The block the cursor is in"
+  "text": "Chèn dấu phần",
+  "back": "Insert a part mark",
+  "why": "Says what the buttons beside it do"
  },
  "MARKS_WHY_NAMED": {
   "text": "Theo tên phần bạn đã gõ trong lời",
@@ -3187,9 +3187,9 @@
   "why": "One noun"
  },
  "BACKDROPS_CANDLES": {
-  "text": "Nến",
-  "back": "Candles",
-  "why": "One noun"
+  "text": "Ngọn nến",
+  "back": "Candle",
+  "why": "Apart from Nền by more than a tone mark"
  },
  "BACKDROPS_CHURCH": {
   "text": "Nhà thờ",
@@ -3217,9 +3217,9 @@
   "why": "No dots"
  },
  "BACKDROPS_OFFLINE": {
-  "text": "Máy chưa có kết nối internet",
-  "back": "The computer has no internet connection",
-  "why": "No full stop"
+  "text": "Máy tính chưa có mạng",
+  "back": "The computer has no network",
+  "why": "Says the computer is offline"
  },
  "BACKDROPS_AUTHOR": {
   "text": "Tác giả",
@@ -3242,12 +3242,12 @@
   "why": "One word"
  },
  "BACKDROPS_PICK_HINT": {
-  "text": "Bấm vào một hình để xem ai làm ra và điều khoản dùng",
-  "back": "Press a picture to see who made it and the terms of use",
-  "why": "No full stop"
+  "text": "Bấm vào một hình để xem tác giả và giấy phép sử dụng",
+  "back": "Press a picture to see the author and licence of use",
+  "why": "One register"
  },
  "BACKDROPS_DIM": {
-  "text": "Hình sáng hoặc rối, nên làm tối ở Thiết kế",
+  "text": "Hình sáng hoặc rối, nên làm tối ở Hiển thị",
   "back": "The picture is bright or busy, darken it in Design",
   "why": "Names Design as the button does"
  },
@@ -3267,9 +3267,9 @@
   "why": "Reason after colon"
  },
  "WHY_OFFLINE": {
-  "text": "máy chưa có kết nối internet",
-  "back": "the computer has no internet connection",
-  "why": "Lower case clause after a colon"
+  "text": "máy tính chưa có mạng internet",
+  "back": "the computer has no internet network",
+  "why": "Lower case clause"
  },
  "WHY_SLOW": {
   "text": "chờ phản hồi quá lâu",
@@ -3354,9 +3354,9 @@
   "why": "Colour mood"
  },
  "LOOK_BLACK": {
-  "text": "Màn đen",
-  "back": "Black screen",
-  "why": "Same word as the black button"
+  "text": "Nền đen",
+  "back": "Black background",
+  "why": "Nền đen is the background, Màn đen is the F2 state"
  },
  "LOOK_FOREST": {
   "text": "Xanh rừng",
@@ -3414,8 +3414,8 @@
   "why": "Fragment"
  },
  "CMD_PLAN_DELETE_DETAIL": {
-  "text": "Bỏ danh sách này, có thể hoàn tác ngay sau đó",
-  "back": "Throw this list away, can be undone right after",
+  "text": "Bỏ thứ tự lễ này, có thể hoàn tác ngay sau đó",
+  "back": "Throw this order of service away, can be undone right after",
   "why": "Fragment"
  },
  "CMD_START_HERE": {
@@ -3449,8 +3449,8 @@
   "why": "Fragment"
  },
  "KEYS_MORE": {
-  "text": "để tìm việc không có phím, như sao chép danh sách hay thiết kế",
-  "back": "to find what has no key, such as copying a list or the design",
+  "text": "để làm những việc chưa có phím tắt, như sao chép thứ tự lễ hay đổi hiển thị",
+  "back": "to do what has no shortcut key, such as copying an order of service or changing the display",
   "why": "Starts after the key caps Ctrl K"
  },
  "SETTINGS_GENERAL": {
@@ -3659,13 +3659,13 @@
   "why": "Matches Hướng dẫn nhanh"
  },
  "ONBOARD_CARD_PLAN": {
-  "text": "Mở danh sách cho buổi lễ sắp tới",
-  "back": "Open the list for the next service",
+  "text": "Mở thứ tự lễ cho buổi lễ sắp tới",
+  "back": "Open the order of service for the next service",
   "why": "Plan word danh sách"
  },
  "ONBOARD_OPEN_PLAN": {
-  "text": "Mở danh sách",
-  "back": "Open the list",
+  "text": "Mở thứ tự lễ",
+  "back": "Open the order of service",
   "why": "Button"
  },
  "ONBOARD_CARD_SONG": {

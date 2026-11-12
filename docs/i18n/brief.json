@@ -4680,7 +4680,7 @@
    "verse",
    "search"
   ],
-  "notes": "Give the letters of YOUR language as the examples: for Indonesian, R goes to the chorus and B to the bridge. Say 'when switched off' the natural way. One or two short sentences."
+  "notes": "Give the letters of YOUR language as the examples: for Indonesian, R goes to the chorus and B to the bridge. The bridge key is B in every language, whatever your word for a bridge. The chorus key is the first letter of your word for the chorus when that is a plain Latin letter other than V, P, B, I, E and X; in every other language it is C. Say 'when switched off' the natural way. One or two short sentences."
  },
  {
   "key": "COUNTDOWN",
@@ -4893,7 +4893,7 @@
    "chorus",
    "bridge"
   ],
-  "notes": "Write the example with the language's own names for the parts, each number attached to its name without a space, and a star with a number for a part sung several times: in the shape Name1 Name*2 Name2 Name Name. The program reads these names. No full stop."
+  "notes": "Write the example with the language's own names for the parts, each number attached to its name without a space, and a star with a number for a part sung several times: in the shape Name1 Name*2 Name2 Name Name. The program reads these names. A name of two words cannot be typed here, because a space divides the parts: for such a part write its letter code (V1 for the first verse, C for the chorus, P for the part before the chorus, B for the bridge). No full stop."
  },
  {
   "key": "ORDER",
@@ -5171,7 +5171,7 @@
    "chorus",
    "song"
   ],
-  "notes": "The marker lines are program syntax and keep their exact characters; only the sample sung lines are text to write. Make up plain sample lines of about four words, not a real song."
+  "notes": "The first marker line is your own word for a verse, a space and the number 1, inside square brackets; the second is your own word for the chorus inside square brackets. The program reads your words for the parts, so write them exactly as you named the parts. The sample sung lines are yours to make up: plain lines of about four words, not a real song."
  },
  {
   "key": "SECOND_PLACEHOLDER",
@@ -8935,7 +8935,7 @@
    "verse",
    "bridge"
   ],
-  "notes": "Name each letter that YOUR language shows with its target. For Indonesian the caps are R and B: R goes to the chorus, B to the bridge. Fragment, no full stop."
+  "notes": "Name each letter that YOUR language shows with its target. For Indonesian the caps are R and B: R goes to the chorus, B to the bridge. The bridge key is B in every language, whatever your word for a bridge. The chorus key is the first letter of your word for the chorus when that is a plain Latin letter other than V, P, B, I, E and X; in every other language it is C. Fragment, no full stop."
  },
  {
   "key": "KEYS_SHOWING_ROWS[9].1",
@@ -10944,7 +10944,7 @@
    "section",
    "verse"
   ],
-  "notes": "Word order is the language's own; the two values are placed by name."
+  "notes": "Word order is the language's own; the two values are placed by name. The pattern serves every kind of part, a second chorus and a second bridge as well as a verse, so it must read right with each of your names for the parts."
  },
  {
   "key": "DESIGN_BACKGROUND",
@@ -12624,5 +12624,873 @@
    "ring"
   ],
   "notes": "Two short words: begin at this spot. It is about where a song begins, not about starting the service."
+ },
+ {
+  "key": "ONBOARD_SKIP",
+  "kind": "const",
+  "screen": "First-run window, shown once when Artosia starts for a new church and again from Settings: a card centred on the window, a tinted panel on its left (the Artosia mark, a large picture for the page, a row of seven dots showing which page this is) and on the right one question in large type, a grey line of help under it, the page's content, and the buttons at the bottom. A quiet text button in the top right corner of every page, with no fill.",
+  "moment": "The person does not want to answer the questions now.",
+  "role": "quiet button",
+  "does": "Closes the first-run window at once and keeps the answers already given; the rest is left as it was.",
+  "budget": 14,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "first_run"
+  ],
+  "notes": "Two or three short words, in a button about 110 points wide. Not a danger action: nothing is lost."
+ },
+ {
+  "key": "ONBOARD_BACK",
+  "kind": "const",
+  "screen": "First-run window, shown once when Artosia starts for a new church and again from Settings: a card centred on the window, a tinted panel on its left (the Artosia mark, a large picture for the page, a row of seven dots showing which page this is) and on the right one question in large type, a grey line of help under it, the page's content, and the buttons at the bottom. A plain button at the bottom left of the card, with a left arrow, on every page after the first.",
+  "moment": "The person wants to change an earlier answer.",
+  "role": "button",
+  "does": "Goes to the question before this one.",
+  "budget": 9,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "first_run"
+  ],
+  "notes": "One word. It is about pages of the first run, not slides; it must not be the word the main window uses for going one slide back."
+ },
+ {
+  "key": "ONBOARD_YES",
+  "kind": "const",
+  "screen": "First-run window, shown once when Artosia starts for a new church and again from Settings: a card centred on the window, a tinted panel on its left (the Artosia mark, a large picture for the page, a row of seven dots showing which page this is) and on the right one question in large type, a grey line of help under it, the page's content, and the buttons at the bottom. This is page 1 of 7, language. The one filled button at the bottom right; it also stands on page 2, country.",
+  "moment": "A language or a country is picked already, as the computer is set, and the person agrees.",
+  "role": "primary button",
+  "does": "Accepts what the page shows as the answer to its question and goes to the next page.",
+  "budget": 6,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "first_run",
+   "window_language"
+  ],
+  "notes": "One short word, an answer to the question above it, in a button about 140 points wide."
+ },
+ {
+  "key": "ONBOARD_NEXT",
+  "kind": "const",
+  "screen": "First-run window, shown once when Artosia starts for a new church and again from Settings: a card centred on the window, a tinted panel on its left (the Artosia mark, a large picture for the page, a row of seven dots showing which page this is) and on the right one question in large type, a grey line of help under it, the page's content, and the buttons at the bottom. This is page 3 of 7, which Bible. The one filled button at the bottom right; the same word stands on the songs page, on the screens page when there is no projector, and on the getting-ready page.",
+  "moment": "The page's pick is made and the person wants the next question.",
+  "role": "primary button",
+  "does": "Goes to the next page, and where the page asked for a download or an import, starts it in the background.",
+  "budget": 9,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "first_run"
+  ],
+  "notes": "One word, in a button about 140 points wide."
+ },
+ {
+  "key": "ONBOARD_SKIP_FOR_NOW",
+  "kind": "const",
+  "screen": "First-run window, shown once when Artosia starts for a new church and again from Settings: a card centred on the window, a tinted panel on its left (the Artosia mark, a large picture for the page, a row of seven dots showing which page this is) and on the right one question in large type, a grey line of help under it, the page's content, and the buttons at the bottom. This is page 3 of 7, which Bible. A quiet text button beside the filled one, also shown when the list of Bibles cannot be fetched.",
+  "moment": "The person does not want a Bible now, or has no internet.",
+  "role": "quiet button",
+  "does": "Goes to the next page without choosing a Bible; one can be added later.",
+  "budget": 18,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "first_run",
+   "bible_translation"
+  ],
+  "notes": "Short, in a button about 130 points wide."
+ },
+ {
+  "key": "ONBOARD_LANGUAGE_TITLE",
+  "kind": "const",
+  "screen": "First-run window, shown once when Artosia starts for a new church and again from Settings: a card centred on the window, a tinted panel on its left (the Artosia mark, a large picture for the page, a row of seven dots showing which page this is) and on the right one question in large type, a grey line of help under it, the page's content, and the buttons at the bottom. This is page 1 of 7, language. Under the title a list of rows, each a language written in its own letters, one of them ringed because the computer asks for it.",
+  "moment": "The window has just opened in the language the computer is set to.",
+  "role": "page title",
+  "does": "Asks whether the language the window is now written in is the one the person wants, so that a wrong guess is easy to correct.",
+  "budget": 40,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "first_run",
+   "window_language"
+  ],
+  "notes": "The page's title: a question in large type at the top of the right side, up to two lines about 400 points wide. A yes or no question, answered by the button Yes or by picking another row."
+ },
+ {
+  "key": "ONBOARD_COUNTRY_TITLE",
+  "kind": "const",
+  "screen": "First-run window, shown once when Artosia starts for a new church and again from Settings: a card centred on the window, a tinted panel on its left (the Artosia mark, a large picture for the page, a row of seven dots showing which page this is) and on the right one question in large type, a grey line of help under it, the page's content, and the buttons at the bottom. This is page 2 of 7, country. Under the title a grey line, a search box and a list of country names in the window's language, one ringed because the computer is set to it.",
+  "moment": "The person has agreed on the language.",
+  "role": "page title",
+  "does": "Asks whether the country or region shown is where the church is, so that the Bibles of its languages can come first.",
+  "budget": 50,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "first_run",
+   "country"
+  ],
+  "notes": "The page's title: a question in large type at the top of the right side, up to two lines about 400 points wide. A yes or no question. Country or region, because some places are not countries."
+ },
+ {
+  "key": "ONBOARD_COUNTRY_HINT",
+  "kind": "const",
+  "screen": "First-run window, shown once when Artosia starts for a new church and again from Settings: a card centred on the window, a tinted panel on its left (the Artosia mark, a large picture for the page, a row of seven dots showing which page this is) and on the right one question in large type, a grey line of help under it, the page's content, and the buttons at the bottom. This is page 2 of 7, country. A grey line of help under the title.",
+  "moment": "The person reads the question about the country and wonders why Artosia asks it.",
+  "role": "help line",
+  "does": "Says why the country is asked: the Bibles in the languages spoken there are listed before the others.",
+  "budget": 60,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "first_run",
+   "country",
+   "bible_translation"
+  ],
+  "notes": "One short sentence with no full stop, in smaller grey type about 400 points wide."
+ },
+ {
+  "key": "ONBOARD_COUNTRY_FILTER",
+  "kind": "const",
+  "screen": "First-run window, shown once when Artosia starts for a new church and again from Settings: a card centred on the window, a tinted panel on its left (the Artosia mark, a large picture for the page, a row of seven dots showing which page this is) and on the right one question in large type, a grey line of help under it, the page's content, and the buttons at the bottom. This is page 2 of 7, country. The empty text field above the list of countries, with a magnifying glass on its left.",
+  "moment": "The person wants to find a country quickly by typing.",
+  "role": "placeholder",
+  "does": "Invites the person to type a few letters of a country or region's name to narrow the list.",
+  "budget": 30,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "first_run",
+   "country"
+  ],
+  "notes": "A grey hint inside an empty box about 400 points wide, not a sentence."
+ },
+ {
+  "key": "ONBOARD_BIBLE_TITLE",
+  "kind": "const",
+  "screen": "First-run window, shown once when Artosia starts for a new church and again from Settings: a card centred on the window, a tinted panel on its left (the Artosia mark, a large picture for the page, a row of seven dots showing which page this is) and on the right one question in large type, a grey line of help under it, the page's content, and the buttons at the bottom. This is page 3 of 7, which Bible. Under the title a grey line, then a list of Bibles grouped under language headings, one picked, and under the list the picked Bible's own copyright notice.",
+  "moment": "The person has agreed on the country, and a list of free Bibles is on the page.",
+  "role": "page title",
+  "does": "Asks which Bible translation Artosia should put on the screen when a passage is shown.",
+  "budget": 44,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "first_run",
+   "bible_translation",
+   "passage"
+  ],
+  "notes": "The page's title: a question in large type at the top of the right side, up to two lines about 400 points wide."
+ },
+ {
+  "key": "ONBOARD_BIBLE_HINT",
+  "kind": "const",
+  "screen": "First-run window, shown once when Artosia starts for a new church and again from Settings: a card centred on the window, a tinted panel on its left (the Artosia mark, a large picture for the page, a row of seven dots showing which page this is) and on the right one question in large type, a grey line of help under it, the page's content, and the buttons at the bottom. This is page 3 of 7, which Bible. A grey line under the title.",
+  "moment": "The list shows the Bibles of every language, the picked country's first.",
+  "role": "help line",
+  "does": "Says the languages of the picked country come first in the list and that more Bibles can be added after the first run.",
+  "budget": 70,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "first_run",
+   "country",
+   "bible_translation"
+  ],
+  "notes": "Two short sentences with no full stop at the end, in smaller grey type about 400 points wide."
+ },
+ {
+  "key": "ONBOARD_SONGS_TITLE",
+  "kind": "const",
+  "screen": "First-run window, shown once when Artosia starts for a new church and again from Settings: a card centred on the window, a tinted panel on its left (the Artosia mark, a large picture for the page, a row of seven dots showing which page this is) and on the right one question in large type, a grey line of help under it, the page's content, and the buttons at the bottom. This is page 4 of 7, where the songs are. Under the title three tall rows, one picked: songs in the older program EasiSlides on this computer (only when it is found), songs in a folder, or no songs yet.",
+  "moment": "A Bible has been asked for, or skipped.",
+  "role": "page title",
+  "does": "Asks where the church keeps the songs it sings, so that Artosia can bring them in.",
+  "budget": 40,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "first_run",
+   "song",
+   "library"
+  ],
+  "notes": "The page's title: a question in large type at the top of the right side, up to two lines about 400 points wide."
+ },
+ {
+  "key": "ONBOARD_SONGS_EASI",
+  "kind": "const",
+  "screen": "First-run window, shown once when Artosia starts for a new church and again from Settings: a card centred on the window, a tinted panel on its left (the Artosia mark, a large picture for the page, a row of seven dots showing which page this is) and on the right one question in large type, a grey line of help under it, the page's content, and the buttons at the bottom. This is page 4 of 7, where the songs are. The first of three tall rows, with a round mark on its left; the line under its title says how many songs were found.",
+  "moment": "The older program EasiSlides has been found on this computer.",
+  "role": "row title",
+  "does": "Names the choice of bringing the church's songs over from the older program EasiSlides that is installed on this very computer.",
+  "budget": 40,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "first_run",
+   "song",
+   "import"
+  ],
+  "notes": "A row about 400 points wide, one line. EasiSlides is a name and stays as it is."
+ },
+ {
+  "key": "ONBOARD_SONGS_FOLDER",
+  "kind": "const",
+  "screen": "First-run window, shown once when Artosia starts for a new church and again from Settings: a card centred on the window, a tinted panel on its left (the Artosia mark, a large picture for the page, a row of seven dots showing which page this is) and on the right one question in large type, a grey line of help under it, the page's content, and the buttons at the bottom. This is page 4 of 7, where the songs are. A tall row with a round mark on its left, below the EasiSlides row when that is shown.",
+  "moment": "The songs are in a folder, not in the older program.",
+  "role": "row title",
+  "does": "Names the choice of bringing songs in from a folder the person points to.",
+  "budget": 24,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "first_run",
+   "song",
+   "import"
+  ],
+  "notes": "A row about 400 points wide, one line. Pressing it opens the system's folder chooser."
+ },
+ {
+  "key": "ONBOARD_SONGS_FOLDER_HINT",
+  "kind": "const",
+  "screen": "First-run window, shown once when Artosia starts for a new church and again from Settings: a card centred on the window, a tinted panel on its left (the Artosia mark, a large picture for the page, a row of seven dots showing which page this is) and on the right one question in large type, a grey line of help under it, the page's content, and the buttons at the bottom. This is page 4 of 7, where the songs are. The grey line under the title of the folder row, until a folder is chosen; then the folder's own path stands there.",
+  "moment": "No folder is chosen yet.",
+  "role": "row detail",
+  "does": "Says what kinds of files the folder may hold: the older program's own data, or song files in the open lyrics format.",
+  "budget": 40,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "first_run",
+   "song",
+   "import"
+  ],
+  "notes": "EasiSlides and OpenLyrics are names and stay as they are. About 380 points wide."
+ },
+ {
+  "key": "ONBOARD_SONGS_NONE",
+  "kind": "const",
+  "screen": "First-run window, shown once when Artosia starts for a new church and again from Settings: a card centred on the window, a tinted panel on its left (the Artosia mark, a large picture for the page, a row of seven dots showing which page this is) and on the right one question in large type, a grey line of help under it, the page's content, and the buttons at the bottom. This is page 4 of 7, where the songs are. The last of the tall rows, picked when nothing was found on this computer.",
+  "moment": "The church has no songs on a computer, or wants to start empty.",
+  "role": "row title",
+  "does": "Names the choice of having no songs to bring in now.",
+  "budget": 22,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "first_run",
+   "song"
+  ],
+  "notes": "A row about 400 points wide, one line. The answer is not final: songs can be added whenever."
+ },
+ {
+  "key": "ONBOARD_SONGS_NONE_HINT",
+  "kind": "const",
+  "screen": "First-run window, shown once when Artosia starts for a new church and again from Settings: a card centred on the window, a tinted panel on its left (the Artosia mark, a large picture for the page, a row of seven dots showing which page this is) and on the right one question in large type, a grey line of help under it, the page's content, and the buttons at the bottom. This is page 4 of 7, where the songs are. The grey line under the title of the last row.",
+  "moment": "The person considers starting with no songs.",
+  "role": "row detail",
+  "does": "Reassures that Artosia starts with an empty library and songs can be added at any time.",
+  "budget": 60,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "first_run",
+   "song",
+   "library"
+  ],
+  "notes": "One short phrase with no full stop, about 380 points wide."
+ },
+ {
+  "key": "ONBOARD_SCREENS_TITLE",
+  "kind": "const",
+  "screen": "First-run window, shown once when Artosia starts for a new church and again from Settings: a card centred on the window, a tinted panel on its left (the Artosia mark, a large picture for the page, a row of seven dots showing which page this is) and on the right one question in large type, a grey line of help under it, the page's content, and the buttons at the bottom. This is page 5 of 7, does the room see the test picture. Under the title a grey line and three plain rows (this window's screen, the screen with the test picture, its size); the test picture itself is on the other monitor, the one the congregation faces.",
+  "moment": "A test picture is on the monitor Artosia would use as the projector.",
+  "role": "page title",
+  "does": "Asks the person to look at the room's screen and say whether the test picture is on it.",
+  "budget": 44,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "first_run",
+   "projector",
+   "monitor"
+  ],
+  "notes": "The page's title: a question in large type at the top of the right side, up to two lines about 400 points wide. The test picture is a big number on the other screen."
+ },
+ {
+  "key": "ONBOARD_SCREENS_HINT",
+  "kind": "const",
+  "screen": "First-run window, shown once when Artosia starts for a new church and again from Settings: a card centred on the window, a tinted panel on its left (the Artosia mark, a large picture for the page, a row of seven dots showing which page this is) and on the right one question in large type, a grey line of help under it, the page's content, and the buttons at the bottom. This is page 5 of 7, does the room see the test picture. A grey line under the title.",
+  "moment": "The test picture has just been put on the other screen.",
+  "role": "help line",
+  "does": "Says the picture is already up on the monitor that Artosia would give to the congregation.",
+  "budget": 70,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "first_run",
+   "projector",
+   "monitor"
+  ],
+  "notes": "One short sentence with no full stop, smaller grey type about 400 points wide."
+ },
+ {
+  "key": "ONBOARD_ROW_WINDOW",
+  "kind": "const",
+  "screen": "First-run window, shown once when Artosia starts for a new church and again from Settings: a card centred on the window, a tinted panel on its left (the Artosia mark, a large picture for the page, a row of seven dots showing which page this is) and on the right one question in large type, a grey line of help under it, the page's content, and the buttons at the bottom. This is page 5 of 7, does the room see the test picture. The label at the left of the first of three plain rows; its value, a screen number, stands at the right.",
+  "moment": "The person checks which monitor holds this window.",
+  "role": "row label",
+  "does": "Names the row that tells which monitor Artosia's own window is on.",
+  "budget": 26,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "first_run",
+   "monitor"
+  ],
+  "notes": "Followed at the right of the row by a word and a number, such as Screen 1. One line about 200 points wide."
+ },
+ {
+  "key": "ONBOARD_ROW_PICTURE",
+  "kind": "const",
+  "screen": "First-run window, shown once when Artosia starts for a new church and again from Settings: a card centred on the window, a tinted panel on its left (the Artosia mark, a large picture for the page, a row of seven dots showing which page this is) and on the right one question in large type, a grey line of help under it, the page's content, and the buttons at the bottom. This is page 5 of 7, does the room see the test picture. The label at the left of the second plain row; its value, a screen number, stands at the right.",
+  "moment": "The person checks which monitor shows the test picture.",
+  "role": "row label",
+  "does": "Names the row that tells which monitor currently shows the picture used for checking.",
+  "budget": 30,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "first_run",
+   "monitor",
+   "projector"
+  ],
+  "notes": "Followed at the right of the row by a word and a number. One line about 200 points wide."
+ },
+ {
+  "key": "ONBOARD_ROW_SIZE",
+  "kind": "const",
+  "screen": "First-run window, shown once when Artosia starts for a new church and again from Settings: a card centred on the window, a tinted panel on its left (the Artosia mark, a large picture for the page, a row of seven dots showing which page this is) and on the right one question in large type, a grey line of help under it, the page's content, and the buttons at the bottom. This is page 5 of 7, does the room see the test picture. The label at the left of the third plain row; its value, such as 1920 by 1080, stands at the right.",
+  "moment": "The person checks how big that monitor's picture is.",
+  "role": "row label",
+  "does": "Names the row that gives the pixel size of the monitor that shows the test picture.",
+  "budget": 20,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "first_run",
+   "monitor"
+  ],
+  "notes": "One line about 200 points wide."
+ },
+ {
+  "key": "ONBOARD_WORKS",
+  "kind": "const",
+  "screen": "First-run window, shown once when Artosia starts for a new church and again from Settings: a card centred on the window, a tinted panel on its left (the Artosia mark, a large picture for the page, a row of seven dots showing which page this is) and on the right one question in large type, a grey line of help under it, the page's content, and the buttons at the bottom. This is page 5 of 7, does the room see the test picture. The one filled button at the bottom right.",
+  "moment": "The person sees the test picture on the room's screen.",
+  "role": "primary button",
+  "does": "Answers the page's question with yes: the room sees the picture, so that monitor stays the projector.",
+  "budget": 16,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "first_run",
+   "projector"
+  ],
+  "notes": "A button about 140 points wide, answering the question above it."
+ },
+ {
+  "key": "ONBOARD_OTHER_SCREEN",
+  "kind": "const",
+  "screen": "First-run window, shown once when Artosia starts for a new church and again from Settings: a card centred on the window, a tinted panel on its left (the Artosia mark, a large picture for the page, a row of seven dots showing which page this is) and on the right one question in large type, a grey line of help under it, the page's content, and the buttons at the bottom. This is page 5 of 7, does the room see the test picture. A quiet button beside the filled one.",
+  "moment": "The picture is on the wrong monitor, or on none the room sees.",
+  "role": "quiet button",
+  "does": "Answers no and moves the test picture to the next monitor.",
+  "budget": 30,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "first_run",
+   "projector",
+   "monitor"
+  ],
+  "notes": "Pairs with the button that says yes. About 200 points wide."
+ },
+ {
+  "key": "ONBOARD_NO_PROJECTOR",
+  "kind": "const",
+  "screen": "First-run window, shown once when Artosia starts for a new church and again from Settings: a card centred on the window, a tinted panel on its left (the Artosia mark, a large picture for the page, a row of seven dots showing which page this is) and on the right one question in large type, a grey line of help under it, the page's content, and the buttons at the bottom. This is page 5 of 7, shown instead of the test picture question when the computer has only one monitor; the filled button Next is at the bottom right.",
+  "moment": "Artosia found no second monitor or projector.",
+  "role": "page title",
+  "does": "States that nothing for the congregation has been plugged into this computer so far.",
+  "budget": 40,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "first_run",
+   "projector",
+   "monitor"
+  ],
+  "notes": "The page's title: a question in large type at the top of the right side, up to two lines about 400 points wide. A statement, not a question."
+ },
+ {
+  "key": "ONBOARD_NO_PROJECTOR_HINT",
+  "kind": "const",
+  "screen": "First-run window, shown once when Artosia starts for a new church and again from Settings: a card centred on the window, a tinted panel on its left (the Artosia mark, a large picture for the page, a row of seven dots showing which page this is) and on the right one question in large type, a grey line of help under it, the page's content, and the buttons at the bottom. A grey line under the title that says no projector is connected.",
+  "moment": "Artosia found only one monitor.",
+  "role": "help line",
+  "does": "Promises that when a projector or a second monitor is plugged in later, Artosia will use it for the congregation without being asked again.",
+  "budget": 70,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "first_run",
+   "projector",
+   "monitor"
+  ],
+  "notes": "One short sentence with no full stop, smaller grey type about 400 points wide."
+ },
+ {
+  "key": "ONBOARD_READY_TITLE",
+  "kind": "const",
+  "screen": "First-run window, shown once when Artosia starts for a new church and again from Settings: a card centred on the window, a tinted panel on its left (the Artosia mark, a large picture for the page, a row of seven dots showing which page this is) and on the right one question in large type, a grey line of help under it, the page's content, and the buttons at the bottom. This is page 6 of 7, getting ready. Under the title a grey line and a list of up to three rows, each with a round mark, a name and, at the right, how far it has come.",
+  "moment": "The Bible and the songs the person asked for are being fetched and brought in while the page is open.",
+  "role": "page title",
+  "does": "Says Artosia is preparing what was asked for.",
+  "budget": 36,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "first_run"
+  ],
+  "notes": "The page's title: a question in large type at the top of the right side, up to two lines about 400 points wide. A statement, not a question."
+ },
+ {
+  "key": "ONBOARD_READY_HINT",
+  "kind": "const",
+  "screen": "First-run window, shown once when Artosia starts for a new church and again from Settings: a card centred on the window, a tinted panel on its left (the Artosia mark, a large picture for the page, a row of seven dots showing which page this is) and on the right one question in large type, a grey line of help under it, the page's content, and the buttons at the bottom. This is page 6 of 7, getting ready. A grey line under the title.",
+  "moment": "A download or an import may still be running.",
+  "role": "help line",
+  "does": "Tells the person they need not wait here: they may move on whenever they like, and any unfinished work continues by itself.",
+  "budget": 80,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "first_run"
+  ],
+  "notes": "Two short sentences with no full stop at the end, smaller grey type about 400 points wide."
+ },
+ {
+  "key": "ONBOARD_JOB_LANGUAGE",
+  "kind": "const",
+  "screen": "First-run window, shown once when Artosia starts for a new church and again from Settings: a card centred on the window, a tinted panel on its left (the Artosia mark, a large picture for the page, a row of seven dots showing which page this is) and on the right one question in large type, a grey line of help under it, the page's content, and the buttons at the bottom. This is page 6 of 7, getting ready. The first row of the list, always done.",
+  "moment": "The language and the country were answered on the first two pages.",
+  "role": "row title",
+  "does": "Names the first job: the language of the window and the country, which are already saved.",
+  "budget": 28,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "first_run",
+   "window_language",
+   "country"
+  ],
+  "notes": "One line about 300 points wide."
+ },
+ {
+  "key": "ONBOARD_JOB_SONGS",
+  "kind": "const",
+  "screen": "First-run window, shown once when Artosia starts for a new church and again from Settings: a card centred on the window, a tinted panel on its left (the Artosia mark, a large picture for the page, a row of seven dots showing which page this is) and on the right one question in large type, a grey line of help under it, the page's content, and the buttons at the bottom. This is page 6 of 7, getting ready. A row of the list, after the Bible's row, shown only when songs are being brought in.",
+  "moment": "Songs are being brought over from the older program or a folder.",
+  "role": "row title",
+  "does": "Names the job of bringing the church's songs in.",
+  "budget": 14,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "first_run",
+   "song",
+   "import"
+  ],
+  "notes": "One word, about 300 points wide."
+ },
+ {
+  "key": "ONBOARD_STATE_DONE",
+  "kind": "const",
+  "screen": "First-run window, shown once when Artosia starts for a new church and again from Settings: a card centred on the window, a tinted panel on its left (the Artosia mark, a large picture for the page, a row of seven dots showing which page this is) and on the right one question in large type, a grey line of help under it, the page's content, and the buttons at the bottom. This is page 6 of 7, getting ready. At the right end of a row, in the same place as a percent or a count, with a ticked round mark on its left.",
+  "moment": "A job has finished.",
+  "role": "state",
+  "does": "Says the job has finished.",
+  "budget": 10,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "first_run"
+  ],
+  "notes": "One word."
+ },
+ {
+  "key": "ONBOARD_STATE_WAITING",
+  "kind": "const",
+  "screen": "First-run window, shown once when Artosia starts for a new church and again from Settings: a card centred on the window, a tinted panel on its left (the Artosia mark, a large picture for the page, a row of seven dots showing which page this is) and on the right one question in large type, a grey line of help under it, the page's content, and the buttons at the bottom. This is page 6 of 7, getting ready. At the right end of a row, where a percent would stand.",
+  "moment": "A job has been asked for and has not begun.",
+  "role": "state",
+  "does": "Says the job is waiting to begin.",
+  "budget": 12,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "first_run"
+  ],
+  "notes": "One word."
+ },
+ {
+  "key": "ONBOARD_STATE_FAILED",
+  "kind": "const",
+  "screen": "First-run window, shown once when Artosia starts for a new church and again from Settings: a card centred on the window, a tinted panel on its left (the Artosia mark, a large picture for the page, a row of seven dots showing which page this is) and on the right one question in large type, a grey line of help under it, the page's content, and the buttons at the bottom. This is page 6 of 7, getting ready. At the right end of a row, in the warning colour.",
+  "moment": "The Bible could not be downloaded.",
+  "role": "state",
+  "does": "Says the job did not work.",
+  "budget": 10,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "first_run"
+  ],
+  "notes": "One word. The reason is on the next line, written by the program, and this word comes before it."
+ },
+ {
+  "key": "ONBOARD_BIBLE_FAILED",
+  "kind": "const",
+  "screen": "First-run window, shown once when Artosia starts for a new church and again from Settings: a card centred on the window, a tinted panel on its left (the Artosia mark, a large picture for the page, a row of seven dots showing which page this is) and on the right one question in large type, a grey line of help under it, the page's content, and the buttons at the bottom. This is page 6 of 7, getting ready. A small grey paragraph under the Bible's row, below the reason it failed.",
+  "moment": "The Bible could not be downloaded and the person is reading the list.",
+  "role": "help line",
+  "does": "Says nothing is lost: the program carries on without that Bible, and tells where in Settings to add one later (the button named More Bibles).",
+  "budget": 90,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "first_run",
+   "bible_translation",
+   "settings"
+  ],
+  "notes": "Two short sentences. The button it names is called More Bibles in the Settings dialog; use that button's own name."
+ },
+ {
+  "key": "ONBOARD_DONE_TITLE",
+  "kind": "const",
+  "screen": "First-run window, shown once when Artosia starts for a new church and again from Settings: a card centred on the window, a tinted panel on its left (the Artosia mark, a large picture for the page, a row of seven dots showing which page this is) and on the right one question in large type, a grey line of help under it, the page's content, and the buttons at the bottom. This is page 7 of 7, done. Under the title a grey line and three cards side by side, each with a number, a sentence and a button.",
+  "moment": "Everything has been asked.",
+  "role": "page title",
+  "does": "Says Artosia is ready to be used.",
+  "budget": 30,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "first_run"
+  ],
+  "notes": "The page's title: a question in large type at the top of the right side, up to two lines about 400 points wide. A statement, not a question."
+ },
+ {
+  "key": "ONBOARD_DONE_HINT",
+  "kind": "const",
+  "screen": "First-run window, shown once when Artosia starts for a new church and again from Settings: a card centred on the window, a tinted panel on its left (the Artosia mark, a large picture for the page, a row of seven dots showing which page this is) and on the right one question in large type, a grey line of help under it, the page's content, and the buttons at the bottom. This is page 7 of 7, done. A grey line under the title.",
+  "moment": "Three things the person may do first are shown below.",
+  "role": "help line",
+  "does": "Invites the person to begin with one of the three things offered.",
+  "budget": 40,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "first_run"
+  ],
+  "notes": "One short phrase with no full stop, smaller grey type about 400 points wide."
+ },
+ {
+  "key": "ONBOARD_CARD_TOUR",
+  "kind": "const",
+  "screen": "First-run window, shown once when Artosia starts for a new church and again from Settings: a card centred on the window, a tinted panel on its left (the Artosia mark, a large picture for the page, a row of seven dots showing which page this is) and on the right one question in large type, a grey line of help under it, the page's content, and the buttons at the bottom. This is page 7 of 7, done. The sentence on the first of the three cards; its button below says Take the tour.",
+  "moment": "The person may want to learn the window.",
+  "role": "card text",
+  "does": "Offers a short guided walk through the window that has five stops.",
+  "budget": 50,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "first_run",
+   "tour"
+  ],
+  "notes": "A card about 220 points wide; the sentence may take three lines."
+ },
+ {
+  "key": "ONBOARD_CARD_PLAN",
+  "kind": "const",
+  "screen": "First-run window, shown once when Artosia starts for a new church and again from Settings: a card centred on the window, a tinted panel on its left (the Artosia mark, a large picture for the page, a row of seven dots showing which page this is) and on the right one question in large type, a grey line of help under it, the page's content, and the buttons at the bottom. This is page 7 of 7, done. The sentence on the second of the three cards; its button below says Open the plan.",
+  "moment": "The person may want to start on this week's service.",
+  "role": "card text",
+  "does": "Offers to open the plan, the list of what will be shown in the church's next service.",
+  "budget": 40,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "first_run",
+   "plan"
+  ],
+  "notes": "A card about 220 points wide; the sentence may take three lines."
+ },
+ {
+  "key": "ONBOARD_OPEN_PLAN",
+  "kind": "const",
+  "screen": "First-run window, shown once when Artosia starts for a new church and again from Settings: a card centred on the window, a tinted panel on its left (the Artosia mark, a large picture for the page, a row of seven dots showing which page this is) and on the right one question in large type, a grey line of help under it, the page's content, and the buttons at the bottom. This is page 7 of 7, done. The button on the second of the three cards.",
+  "moment": "The person chose to start with the plan.",
+  "role": "button",
+  "does": "Closes the first run and opens the plan.",
+  "budget": 18,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "first_run",
+   "plan"
+  ],
+  "notes": "A button about 160 points wide."
+ },
+ {
+  "key": "ONBOARD_CARD_SONG",
+  "kind": "const",
+  "screen": "First-run window, shown once when Artosia starts for a new church and again from Settings: a card centred on the window, a tinted panel on its left (the Artosia mark, a large picture for the page, a row of seven dots showing which page this is) and on the right one question in large type, a grey line of help under it, the page's content, and the buttons at the bottom. This is page 7 of 7, done. The sentence on the third of the three cards; its button below says New song.",
+  "moment": "The person may want to add a song by hand.",
+  "role": "card text",
+  "does": "Offers to start a new song by typing or pasting its lyrics.",
+  "budget": 40,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "first_run",
+   "song"
+  ],
+  "notes": "A card about 220 points wide; the sentence may take three lines."
+ },
+ {
+  "key": "CMD_FIRST_RUN",
+  "kind": "const",
+  "screen": "Two places: a button in the Settings dialog's About block, and a row in the search panel among the actions.",
+  "moment": "The person wants the first-run questions again, for example after changing computers or church.",
+  "role": "row title and button",
+  "does": "Names the action that opens the first-run questions again from their start.",
+  "budget": 30,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "first_run"
+  ],
+  "notes": "A button of about 190 points. A verb phrase, like the other actions in the search."
+ },
+ {
+  "key": "CMD_FIRST_RUN_DETAIL",
+  "kind": "const",
+  "screen": "The grey line under the action's name in the search panel.",
+  "moment": "The action is in the results.",
+  "role": "row detail",
+  "does": "Tells what the first-run questions cover and that they come one at a time.",
+  "budget": 70,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "first_run"
+  ],
+  "notes": "One short phrase with no full stop."
+ },
+ {
+  "key": "onboard_songs_found",
+  "kind": "sentence",
+  "screen": "First-run window, shown once when Artosia starts for a new church and again from Settings: a card centred on the window, a tinted panel on its left (the Artosia mark, a large picture for the page, a row of seven dots showing which page this is) and on the right one question in large type, a grey line of help under it, the page's content, and the buttons at the bottom. This is page 4 of 7, where the songs are. The grey line under the title of the EasiSlides row.",
+  "moment": "The older program was found and its songs were counted.",
+  "role": "row detail",
+  "does": "Says how many songs were found in the older program and that the older program itself is left untouched.",
+  "budget": 60,
+  "variables": [
+   {
+    "name": "songs",
+    "example": "961 songs",
+    "meaning": "Counted phrase: the number and the word for songs."
+   }
+  ],
+  "cases": [],
+  "counts": "songs: counted phrase with its own plural forms",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "first_run",
+   "song",
+   "import"
+  ],
+  "notes": "The number leads. EasiSlides is a name and stays as it is. About 380 points wide."
+ },
+ {
+  "key": "onboard_percent",
+  "kind": "sentence",
+  "screen": "First-run window, shown once when Artosia starts for a new church and again from Settings: a card centred on the window, a tinted panel on its left (the Artosia mark, a large picture for the page, a row of seven dots showing which page this is) and on the right one question in large type, a grey line of help under it, the page's content, and the buttons at the bottom. This is page 6 of 7, getting ready. At the right end of the Bible's row while it downloads, where the word Done will stand later.",
+  "moment": "The Bible is downloading and the server said how big it is.",
+  "role": "state",
+  "does": "Gives how much of the download has arrived, as a percentage.",
+  "budget": 6,
+  "variables": [
+   {
+    "name": "percent",
+    "example": "62",
+    "meaning": "A whole number from 0 to 100, with no percent sign."
+   }
+  ],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "first_run",
+   "bible_translation"
+  ],
+  "notes": "Short, in a column about 120 points wide. The sign for percent belongs in the text, placed as the language writes it."
+ },
+ {
+  "key": "onboard_progress",
+  "kind": "sentence",
+  "screen": "First-run window, shown once when Artosia starts for a new church and again from Settings: a card centred on the window, a tinted panel on its left (the Artosia mark, a large picture for the page, a row of seven dots showing which page this is) and on the right one question in large type, a grey line of help under it, the page's content, and the buttons at the bottom. This is page 6 of 7, getting ready. At the right end of the songs' row while they are brought in.",
+  "moment": "Songs are going into the library one batch after another.",
+  "role": "state",
+  "does": "Says how many songs of the whole number are in the library so far.",
+  "budget": 16,
+  "variables": [
+   {
+    "name": "done",
+    "example": "412",
+    "meaning": "Songs in so far."
+   },
+   {
+    "name": "of",
+    "example": "961",
+    "meaning": "All songs being brought in."
+   }
+  ],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "first_run",
+   "song",
+   "import"
+  ],
+  "notes": "Two numbers in a column about 120 points wide."
+ },
+ {
+  "key": "day_month",
+  "kind": "sentence",
+  "screen": "Settings dialog and search panel, wherever a past date is written beside what happened then, as in a line saying when a song was last sung.",
+  "moment": "A date from this year is written without its year.",
+  "role": "date",
+  "does": "Writes a day of the month and the name of the month as a date reads in the language, in the order and with the joining words the language uses.",
+  "budget": 20,
+  "variables": [
+   {
+    "name": "day",
+    "example": "9",
+    "meaning": "The day of the month, a number without a leading zero."
+   },
+   {
+    "name": "month",
+    "example": "November",
+    "meaning": "The month, already written out in the language."
+   }
+  ],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "search_memory"
+  ],
+  "notes": "Plain digits for the day. Some languages put the month first, some add a word or a mark after the day."
  }
 ]

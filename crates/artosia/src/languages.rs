@@ -36,7 +36,16 @@ pub static LANGUAGES: &[Language] = &[
     // Indonesian is a table like any language that comes after it, written from the briefs
     // by a writer who never saw the English (`docs/i18n/README.md`).
     Language { code: "id", name: crate::strings::LANGUAGE_INDONESIAN, table: Some(include_str!("../../../docs/i18n/id.json")), aliases: &["indonesia", "indonesian", "inggris", "english"], listed: true },
-    // A language joins here once a person who can judge it has reviewed it.
+    // Written from the briefs like Indonesian, each by its own writer, read back by a second
+    // reader on rendered screens, and open for native correction (owner's call, 2026-11-12).
+    Language { code: "zh-Hans", name: "\u{7b80}\u{4f53}\u{4e2d}\u{6587}", table: Some(include_str!("../../../docs/i18n/zh-Hans.json")), aliases: &["chinese", "mandarin", "simplified", "tionghoa", "cina", "\u{4e2d}\u{6587}"], listed: true },
+    Language { code: "zh-Hant", name: "\u{7e41}\u{9ad4}\u{4e2d}\u{6587}", table: Some(include_str!("../../../docs/i18n/zh-Hant.json")), aliases: &["chinese", "mandarin", "traditional", "tionghoa", "cina", "\u{4e2d}\u{6587}"], listed: true },
+    Language { code: "ko", name: "\u{d55c}\u{ad6d}\u{c5b4}", table: Some(include_str!("../../../docs/i18n/ko.json")), aliases: &["korean", "korea"], listed: true },
+    Language { code: "ja", name: "\u{65e5}\u{672c}\u{8a9e}", table: Some(include_str!("../../../docs/i18n/ja.json")), aliases: &["japanese", "jepang"], listed: true },
+    Language { code: "es", name: "Espa\u{f1}ol", table: Some(include_str!("../../../docs/i18n/es.json")), aliases: &["spanish", "spanyol", "espanol"], listed: true },
+    Language { code: "pt-BR", name: "Portugu\u{ea}s (Brasil)", table: Some(include_str!("../../../docs/i18n/pt-BR.json")), aliases: &["portuguese", "portugis", "portugues", "brazil"], listed: true },
+    Language { code: "fr", name: "Fran\u{e7}ais", table: Some(include_str!("../../../docs/i18n/fr.json")), aliases: &["french", "prancis", "francais"], listed: true },
+    Language { code: "vi", name: "Ti\u{1ebf}ng Vi\u{1ec7}t", table: Some(include_str!("../../../docs/i18n/vi.json")), aliases: &["vietnamese", "vietnam", "tieng viet"], listed: true },
     #[cfg(any(test, debug_assertions))]
     Language { code: "xx", name: "Pseudo", table: Some(include_str!("../testdata/pseudo.json")), aliases: &[], listed: false },
 ];
@@ -83,7 +92,8 @@ fn tables() -> &'static Vec<Table> {
 /// How many forms a count has in a language: the one small place for plural rules. A language
 /// not listed counts like English: "one" for 1 and "other" for the rest.
 pub fn plural_category(code: &str, count: usize) -> &'static str {
-    match code {
+    // The rule belongs to the language, whatever script or country its code names.
+    match code.split('-').next().unwrap_or(code) {
         // No plural: one form for every count.
         "id" | "ms" | "ja" | "ko" | "zh" | "vi" | "th" => "other",
         // Zero counts as singular.
@@ -166,7 +176,21 @@ pub fn sentence(lang: usize, key: &str, case: Option<&str>, count: Option<usize>
     Some(fill(template, &values))
 }
 
-/// One text, keyed as the brief keys it.
+/// Teaches the song reader every table's names for the kinds of section, once, so a marker
+/// written while the window spoke one language is read while it speaks another.
+pub fn teach_markers() {
+    static ONCE: std::sync::Once = std::sync::Once::new();
+    ONCE.call_once(|| {
+        for lang in 0..LANGUAGES.len() {
+            if !has_table(lang) {
+                continue;
+            }
+            let words = ["verse", "pre_chorus", "chorus", "bridge", "intro", "ending", "other"].map(|kind| text(lang, &format!("section.{kind}")).unwrap_or_default().to_string());
+            artosia_core::song::learn_marker_words(&words);
+        }
+    });
+}
+
 /// Whether a language is written in a table. English never is; a language without a table is
 /// written in `strings.rs`.
 pub fn has_table(lang: usize) -> bool {
@@ -273,7 +297,9 @@ mod tests {
         }
         assert_eq!((LANGUAGES[ENGLISH].code, LANGUAGES[INDONESIAN].code), ("en", "id"));
         let names: Vec<&str> = listed().map(|(_, language)| language.name).collect();
-        assert_eq!(names, ["English", "Bahasa Indonesia"]);
+        assert_eq!(names.len(), 10);
+        assert_eq!(names[..2], ["English", "Bahasa Indonesia"]);
+        assert_eq!(index_of("pt-BR").map(|at| LANGUAGES[at].name), Some("Portugu\u{ea}s (Brasil)"));
     }
 
     #[test]
@@ -292,6 +318,62 @@ mod tests {
         assert_eq!([plural_category("en", 1), plural_category("en", 0), plural_category("en", 2)], ["one", "other", "other"]);
         assert_eq!([plural_category("id", 1), plural_category("id", 2)], ["other", "other"]);
         assert_eq!([plural_category("fr", 0), plural_category("fr", 1), plural_category("fr", 2)], ["one", "one", "other"]);
+        assert_eq!([plural_category("pt-BR", 0), plural_category("pt-BR", 2)], ["one", "other"]);
+        assert_eq!([plural_category("zh-Hant", 1), plural_category("zh-Hans", 5)], ["other", "other"]);
+    }
+
+    /// The width a text takes, in Latin letters: a Chinese, Japanese or Korean character is two.
+    fn width(text: &str) -> usize {
+        text.chars().map(|c| if matches!(c as u32, 0x1100..=0x11FF | 0x2E80..=0x9FFF | 0xAC00..=0xD7AF | 0xF900..=0xFAFF | 0xFF00..=0xFF60) { 2 } else { 1 }).sum()
+    }
+
+    fn texts(entry: &Value) -> Vec<&str> {
+        match entry {
+            Value::String(text) => vec![text.as_str()],
+            Value::Object(forms) => forms.values().flat_map(texts).collect(),
+            _ => Vec::new(),
+        }
+    }
+
+    #[test]
+    fn every_table_answers_every_brief_inside_its_width_with_its_variables() {
+        let briefs: Value = serde_json::from_str(include_str!("../../../docs/i18n/brief.json")).unwrap_or_default();
+        let mut wrong = Vec::new();
+        for language in LANGUAGES.iter().filter(|language| language.listed) {
+            let Some(table) = language.table else { continue };
+            let table: Value = serde_json::from_str(table).unwrap_or_default();
+            let code = language.code;
+            for brief in briefs.as_array().into_iter().flatten() {
+                let key = brief["key"].as_str().unwrap_or_default();
+                let found = texts(&table[key]["text"]);
+                if found.is_empty() {
+                    wrong.push(format!("{code}: {key} has a brief and no text"));
+                    continue;
+                }
+                let budget = brief["budget"].as_u64().unwrap_or(u64::MAX) as usize;
+                let names: Vec<&str> = brief["variables"].as_array().into_iter().flatten().filter_map(|variable| variable["name"].as_str()).collect();
+                for text in &found {
+                    let longest = text.lines().map(width).max().unwrap_or(0);
+                    if !text.contains('{') && longest > budget.max(1) {
+                        wrong.push(format!("{code}: {key} is {longest} wide and its brief allows {budget}: {text}"));
+                    }
+                    if text.contains(['\u{2014}', '\u{2013}', '\u{b7}', '!', '\u{ff01}']) {
+                        wrong.push(format!("{code}: {key} carries a mark the interface never uses: {text}"));
+                    }
+                    for hole in text.split('{').skip(1).filter_map(|rest| rest.split('}').next()) {
+                        if hole != "count" && !names.contains(&hole) {
+                            wrong.push(format!("{code}: {key} asks for {{{hole}}}, which nothing fills: {text}"));
+                        }
+                    }
+                }
+                for name in &names {
+                    if !found.iter().any(|text| text.contains(&format!("{{{name}}}"))) {
+                        wrong.push(format!("{code}: {key} never uses {{{name}}}"));
+                    }
+                }
+            }
+        }
+        assert!(wrong.is_empty(), "{} texts need their writer:\n{}", wrong.len(), wrong.join("\n"));
     }
 
     #[test]

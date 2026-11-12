@@ -1,4 +1,4 @@
-"""Checks, by their rectangles, that the plan's drop-down is whole on every side.
+"""Checks, by their rectangles, that the plan's drop-down and the language drop-down of Settings are whole on every side.
 
     cargo build -p artosia
     python tools/check-overlays.py
@@ -66,4 +66,33 @@ for scene in ("plans-drop", "plans-drop-long", "plans-drop-many"):
                 wrong.append(f"the list {menu} leaves the window {window}")
             print(("FAIL " if wrong else "ok   ") + name + ("" if not wrong else ": " + "; ".join(wrong)))
             problems += len(wrong)
+
+# The language drop-down of Settings: its list starts under its box, ends where the box ends, and
+# stays inside the dialog and 8 points inside the window, in the window's smallest size too.
+LANGUAGE_KEYS = ("window", "settings-dialog", "settings-language-trigger", "settings-language-content")
+for size in ("1366x768", "1120x640"):
+    for flags in ([], ["--indonesian"], ["--language", "ja"]):
+        original, KEYS = KEYS, LANGUAGE_KEYS
+        found = rects("settings-language", size, flags)
+        KEYS = original
+        name = f"settings-language {size} {' '.join(flags) or 'english'}"
+        missing = [key for key in LANGUAGE_KEYS if key not in found]
+        if missing:
+            print(f"FAIL {name}: no {', '.join(missing)}")
+            problems += 1
+            continue
+        window, dialog, box, menu = (found[key] for key in LANGUAGE_KEYS)
+        right = lambda r: r[0] + r[2]
+        bottom = lambda r: r[1] + r[3]
+        wrong = []
+        if menu[1] < bottom(box) - 0.5 or menu[1] > bottom(box) + 8:
+            wrong.append(f"the list {menu} does not start under the box {box}")
+        if abs(right(menu) - right(box)) > 0.5 and abs(menu[0] - box[0]) > 0.5:
+            wrong.append(f"the list {menu} is aligned to neither end of the box {box}")
+        if menu[0] < dialog[0] or right(menu) > right(dialog) or bottom(menu) > bottom(dialog):
+            wrong.append(f"the list {menu} leaves the dialog {dialog}")
+        if right(menu) > right(window) - 8 or bottom(menu) > bottom(window) - 8 or menu[0] < 0:
+            wrong.append(f"the list {menu} leaves the window {window}")
+        print(("FAIL " if wrong else "ok   ") + name + ("" if not wrong else ": " + "; ".join(wrong)))
+        problems += len(wrong)
 sys.exit(1 if problems else 0)

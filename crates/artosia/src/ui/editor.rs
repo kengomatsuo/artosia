@@ -186,7 +186,7 @@ fn title_block(s: &App, k: &Kit, editor: &Editor) -> El {
         block = block.child(list);
     }
     if let Some((source, _)) = &editor.credit {
-        block = block.child(text(t::words_from(source)).font(type_::SMALL).color(theme::warn_ink()).wrap());
+        block = block.child(crate::ui::widgets::wrapped(t::words_from(source)).font(type_::SMALL).color(theme::warn_ink()).wrap());
     }
     block
 }
@@ -438,7 +438,7 @@ fn slides(s: &App, k: &Kit) -> El {
     let mut column = col().key("editor-slides").w_full().grow(1.0).min_h(0.0).padding(space::S4).gap(space::S3).scroll(ScrollSpec { stick_bottom: false }).scroll_edge_fade(crate::theme::size::FADE);
     let slides = deck.map(|deck| deck.slides).unwrap_or_default();
     if slides.is_empty() {
-        column = column.child(text(t::EDITOR_NO_SLIDES()).font(type_::SMALL).color(k.c.text_muted).wrap());
+        column = column.child(crate::ui::widgets::wrapped(t::EDITOR_NO_SLIDES()).font(type_::SMALL).color(k.c.text_muted).wrap());
     }
     let width = PREVIEW - 2.0 * space::S4;
     for (index, slide) in slides.iter().enumerate() {

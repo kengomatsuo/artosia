@@ -69,10 +69,11 @@ pub enum Command {
     BibleFile,
     Bibles,
     Tour,
+    FirstRun,
 }
 
 impl Command {
-    pub const ALL: [Command; 38] = [
+    pub const ALL: [Command; 39] = [
         Command::StartService,
         Command::Next,
         Command::Previous,
@@ -110,6 +111,7 @@ impl Command {
         Command::Import,
         Command::Keys,
         Command::Tour,
+        Command::FirstRun,
         Command::CheckUpdate,
     ];
 
@@ -135,6 +137,7 @@ impl Command {
             Command::NewAnnouncement => t::ANNOUNCEMENT_NEW(),
             Command::Keys => t::CMD_KEYS(),
             Command::Tour => t::CMD_TOUR(),
+            Command::FirstRun => t::CMD_FIRST_RUN(),
             Command::StartService => t::CMD_START(),
             Command::Next => t::TIP_NEXT(),
             Command::Previous => t::CMD_PREVIOUS(),
@@ -178,6 +181,7 @@ impl Command {
             Command::NewAnnouncement => t::CMD_NEW_ANNOUNCEMENT_DETAIL(),
             Command::Keys => t::CMD_KEYS_DETAIL(),
             Command::Tour => t::CMD_TOUR_DETAIL(),
+            Command::FirstRun => t::CMD_FIRST_RUN_DETAIL(),
             Command::StartService => t::CMD_START_DETAIL(),
             Command::Next => t::CMD_NEXT_DETAIL(),
             Command::Previous => t::CMD_PREVIOUS_DETAIL(),
@@ -225,6 +229,7 @@ impl Command {
             Command::NewPlan => &["new service", "reset plan", "rencana baru", "susunan baru", "ibadah baru"],
             Command::Keys => &["shortcuts", "help", "hotkeys", "pintasan", "tombol", "bantuan"],
             Command::Tour => &["tutorial", "help", "guide", "walkthrough", "intro", "onboarding", "panduan", "bantuan", "tur", "pengenalan", "cara pakai"],
+            Command::FirstRun => &["setup", "set up", "first run", "first start", "welcome", "onboarding", "again", "language", "country", "region"],
             Command::StartService => &["start live", "go live", "begin", "mulai", "mulai ibadah", "tayangkan"],
             Command::Next => &["forward", "lanjut", "berikutnya", "maju"],
             Command::Previous => &["back", "sebelumnya", "kembali", "mundur"],
@@ -248,7 +253,14 @@ impl Command {
 
     /// Whether the command can do anything now. One that cannot is left out of the results.
     fn usable(self, app: &App) -> bool {
+        self.usable_in(app, crate::store::packaged())
+    }
+
+    /// `usable` for a program that is, or is not, the Microsoft Store's: the Store updates it, so
+    /// it never offers to check for a new version itself.
+    fn usable_in(self, app: &App, packaged: bool) -> bool {
         match self {
+            Command::CheckUpdate => !packaged,
             Command::Import => app.easislides.is_some(),
             Command::StartService => app.plan.items.iter().any(|item| !item.entry.is_heading()),
             Command::Next | Command::Previous => app.live.is_some() || app.open.is_some(),
@@ -1001,6 +1013,7 @@ impl App {
             }
             Command::Keys => self.sheet = Sheet::Keys,
             Command::Tour => self.start_tour(),
+            Command::FirstRun => self.start_onboarding(),
             Command::StartService => self.start_service(),
             Command::Next => self.next(),
             Command::Previous => self.previous(),
@@ -1054,6 +1067,20 @@ mod tests {
         assert!(matches!(app.palette.hits.first(), Some(Hit::Command(Command::NewPlan))), "{:?}", app.palette.hits.first().map(|hit| std::mem::discriminant(hit)));
         search(&mut app, "copy plan");
         assert!(matches!(app.palette.hits.first(), Some(Hit::Command(Command::PlanDuplicate))));
+    }
+
+    /// The Store updates the program, so its edition offers no check for a new version, in the
+    /// search or in Settings; the other edition offers both (`store::packaged`).
+    #[test]
+    fn the_update_check_is_left_out_of_the_store_edition_only() {
+        let app = App::practice();
+        assert!(!Command::CheckUpdate.usable_in(&app, true));
+        assert!(Command::CheckUpdate.usable_in(&app, false));
+        // Every other command is offered in both editions.
+        for command in Command::ALL.into_iter().filter(|command| *command != Command::CheckUpdate) {
+            assert_eq!(command.usable_in(&app, true), command.usable_in(&app, false), "{command:?}");
+        }
+        assert!(Command::FirstRun.usable_in(&app, true));
     }
 
     fn search(app: &mut App, query: &str) {

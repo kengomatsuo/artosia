@@ -1,8 +1,8 @@
 {
  "SEARCH_PLACEHOLDER": {
-  "text": "Chant ou passage biblique",
-  "back": "Song or Bible passage",
-  "why": "Plain nouns, an invitation"
+  "text": "Chant ou verset",
+  "back": "Song or verse",
+  "why": "shortened: the box showed only about 19 characters"
  },
  "SEARCH_SONGS": {
   "text": "Titre ou une ligne des paroles",
@@ -22,7 +22,7 @@
  "SCOPE_ALL": {
   "text": "Tout",
   "back": "All",
-  "why": "one short word"
+  "why": "one word"
  },
  "SCOPE_SONGS": {
   "text": "Chants",
@@ -170,9 +170,9 @@
   "why": "short"
  },
  "CMD_PASTE_SONG_DETAIL": {
-  "text": "Copiez les paroles ailleurs, puis cliquez ici",
-  "back": "Copy the words elsewhere, then click here",
-  "why": "vous form"
+  "text": "Copiez les paroles d'une page, puis cliquez ici",
+  "back": "Copy the words from a page, then click here",
+  "why": "ailleurs was vague"
  },
  "CMD_ANNOUNCEMENTS": {
   "text": "Annonces",
@@ -230,9 +230,9 @@
   "why": "word volunteers say"
  },
  "CMD_REMOTE_DETAIL": {
-  "text": "Un téléphone sur le même Wi-Fi change les diapos",
-  "back": "A phone on the same Wi-Fi changes the slides",
-  "why": "full sentence"
+  "text": "Un téléphone sur ce Wi-Fi peut changer de diapo",
+  "back": "A phone on this Wi-Fi can change slides",
+  "why": "peut added"
  },
  "CMD_IMPORT_FOLDER": {
   "text": "Importer un dossier de chants",
@@ -265,9 +265,9 @@
   "why": "both ideas in the title"
  },
  "CMD_STREAM_DETAIL": {
-  "text": "L'image du projecteur, en ligne ou en fichier",
-  "back": "The projector's picture, online or as a file",
-  "why": "projecteur, not écran"
+  "text": "Diffuser ou enregistrer l'image du projecteur",
+  "back": "Broadcast or record the projector's picture",
+  "why": "says the two acts"
  },
  "BTN_STREAM": {
   "text": "Diffusion",
@@ -295,9 +295,9 @@
   "why": "clé as a code"
  },
  "STREAM_RECORD": {
-  "text": "Garder un enregistrement",
-  "back": "Keep a recording",
-  "why": "phrase the switch turns on"
+  "text": "Enregistrer la vidéo",
+  "back": "Record the video",
+  "why": "enregistrer kept for the video; audio clips are called extraits sonores"
  },
  "STREAM_RECORD_HINT": {
   "text": "Sur cet ordinateur, avec les données d'Artosia",
@@ -330,9 +330,9 @@
   "why": "state"
  },
  "STREAM_MISSING": {
-  "text": "La diffusion ne marche pas : cette installation ne l'inclut pas",
-  "back": "Broadcasting does not work: this installation does not include it",
-  "why": "no technical word"
+  "text": "La diffusion n'est pas disponible dans cette installation",
+  "back": "Broadcasting is not available in this installation",
+  "why": "not colloquial"
  },
  "STREAM_NOTHING": {
   "text": "Indiquez une adresse ou activez l'enregistrement",
@@ -371,8 +371,8 @@
   "why": "state beside a switch; activé/désactivé is the on/off pair"
  },
  "LISTEN_HINT": {
-  "text": "Elle propose seulement et ne projette jamais seule",
-  "back": "It only proposes and never projects by itself",
+  "text": "Elle propose, sans jamais projeter d'elle-même",
+  "back": "It proposes, never projecting by itself",
   "why": "reassurance kept firm"
  },
  "LISTEN_MICROPHONE": {
@@ -391,9 +391,9 @@
   "why": "plain"
  },
  "LISTEN_LANGUAGE": {
-  "text": "Langue entendue",
-  "back": "Language heard",
-  "why": "not the window language"
+  "text": "Langue chantée",
+  "back": "Sung language",
+  "why": "the voices in the room"
  },
  "LISTEN_INDONESIAN": {
   "text": "Indonésien",
@@ -421,29 +421,29 @@
   "why": "pairs with second tab"
  },
  "LISTEN_PART_RECORDINGS": {
-  "text": "Enregistrements",
-  "back": "Recordings",
-  "why": "plain noun for kept sound"
+  "text": "Extraits sonores",
+  "back": "Sound excerpts",
+  "why": "the audio kept is not called Enregistrements, which belongs to the stream"
  },
  "REC_SWITCH": {
-  "text": "Enregistrements activés",
-  "back": "Recordings on",
+  "text": "Extraits sonores activés",
+  "back": "Sound excerpts on",
   "why": "same noun as the tab"
  },
  "REC_HINT": {
-  "text": "Extraits sonores et suppositions restent sur cet ordinateur.",
-  "back": "Sound excerpts and guesses stay on this computer.",
-  "why": "exact: what and where"
+  "text": "Extraits et chants reconnus restent sur cet ordinateur.",
+  "back": "Excerpts and recognised songs stay on this computer.",
+  "why": "suppositions was not understood"
  },
  "REC_NONE": {
-  "text": "Rien de gardé",
-  "back": "Nothing kept",
-  "why": "short"
+  "text": "Aucun extrait",
+  "back": "No excerpt",
+  "why": "same noun"
  },
  "rec_kept": {
-  "text": "{size} gardés",
-  "back": "{size} kept",
-  "why": "size then one word"
+  "text": "{size} au total",
+  "back": "{size} in all",
+  "why": "size then words"
  },
  "REC_OPEN": {
   "text": "Ouvrir le dossier",
@@ -456,14 +456,14 @@
   "why": "pairs with Open"
  },
  "REC_SAVE": {
-  "text": "Tout en un fichier",
-  "back": "All in one file",
-  "why": "says the result is one file"
+  "text": "Exporter en un fichier",
+  "back": "Export into one file",
+  "why": "says what it does"
  },
  "REC_SAVING": {
-  "text": "Préparation",
-  "back": "Preparing",
-  "why": "ongoing"
+  "text": "Exportation",
+  "back": "Exporting",
+  "why": "ongoing form"
  },
  "REC_DELETE": {
   "text": "Tout supprimer",
@@ -471,9 +471,9 @@
   "why": "verb and everything"
  },
  "REC_DELETED": {
-  "text": "Enregistrements supprimés",
-  "back": "Recordings deleted",
-  "why": "past"
+  "text": "Extraits supprimés",
+  "back": "Excerpts deleted",
+  "why": "same noun"
  },
  "rec_saved": {
   "text": "Fichier {name} créé",
@@ -486,9 +486,9 @@
   "why": "same words as the second button"
  },
  "REC_ON": {
-  "text": "Son enregistré",
-  "back": "Sound recorded",
-  "why": "names sound, not a plan save"
+  "text": "Son conservé",
+  "back": "Sound kept",
+  "why": "names sound"
  },
  "LISTEN_TEMPO": {
   "text": "Tempo",
@@ -496,9 +496,9 @@
   "why": "musician's word"
  },
  "LISTEN_BPM": {
-  "text": "bpm",
-  "back": "bpm",
-  "why": "international unit musicians use"
+  "text": "BPM",
+  "back": "BPM",
+  "why": "the capital form is used in French too"
  },
  "LISTEN_TEMPO_HALF": {
   "text": "Moitié",
@@ -521,14 +521,14 @@
   "why": "no word Live"
  },
  "LISTEN_BEAT_BLINK_HINT": {
-  "text": "Simple décor, rien d'autre ne change",
-  "back": "Mere decoration, nothing else changes",
-  "why": "neutral"
+  "text": "Effet décoratif seulement",
+  "back": "Decorative effect only",
+  "why": "plain"
  },
  "CMD_UPDATE": {
-  "text": "Chercher une mise à jour",
-  "back": "Look for an update",
-  "why": "plain"
+  "text": "Rechercher une mise à jour",
+  "back": "Search for an update",
+  "why": "not a calque"
  },
  "CMD_UPDATE_DETAIL": {
   "text": "Artosia vérifie aussi à chaque démarrage",
@@ -581,9 +581,9 @@
   "why": "pair with previous"
  },
  "CMD_BLACK_DETAIL": {
-  "text": "Tout noir, un nouveau choix rétablit l'image",
-  "back": "All black, choosing again restores the picture",
-  "why": "plain"
+  "text": "Tout noir ; un second appui rétablit l'image",
+  "back": "All black; a second press restores the picture",
+  "why": "clearer"
  },
  "CMD_CLEAR_DETAIL": {
   "text": "Le texte disparaît, le fond reste visible",
@@ -631,9 +631,9 @@
   "why": "plain"
  },
  "CMD_LOOP": {
-  "text": "Faire tourner les annonces",
-  "back": "Cycle the announcements",
-  "why": "tourner fits cards in turn"
+  "text": "Lancer le défilement",
+  "back": "Start the scroll",
+  "why": "says the cards run one after another"
  },
  "CMD_LOOP_DETAIL": {
   "text": "Chaque annonce à son tour, jusqu'à l'arrêt",
@@ -686,14 +686,14 @@
   "why": "one word"
  },
  "OUTPUT_OFF": {
-  "text": "Projecteur désactivé",
+  "text": "Projecteur éteint",
   "back": "Projector off",
-  "why": "désactivé/activé pair"
+  "why": "allumé/éteint is the one pair for the projector"
  },
  "OUTPUT_PRACTICE": {
-  "text": "Entraînement : aucun vrai projecteur",
-  "back": "Practice: no real projector",
-  "why": "does not say off"
+  "text": "Mode entraînement : pas de projecteur réel",
+  "back": "Practice mode: no real projector",
+  "why": "plainer"
  },
  "OUTPUT_STARTING": {
   "text": "Démarrage du projecteur",
@@ -746,9 +746,9 @@
   "why": "warning first"
  },
  "PLAN_EMPTY": {
-  "text": "Programme vide",
-  "back": "Empty plan",
-  "why": "statement"
+  "text": "Vide : ajoutez un chant",
+  "back": "Empty: add a song",
+  "why": "hints at the next step"
  },
  "PLAN_ADD": {
   "text": "Ajouter au programme",
@@ -801,9 +801,9 @@
   "why": "church word"
  },
  "PLANS_TITLE": {
-  "text": "Programmes",
-  "back": "Plans",
-  "why": "plural of the plan word"
+  "text": "Cultes",
+  "back": "Services",
+  "why": "the list is of services, each with a programme"
  },
  "PLANS_TODAY": {
   "text": "Aujourd'hui",
@@ -811,9 +811,9 @@
   "why": "one word"
  },
  "PLANS_NO_DAY": {
-  "text": "Jour à choisir",
-  "back": "Day to choose",
-  "why": "invitation, not a fault"
+  "text": "Sans jour",
+  "back": "No day",
+  "why": "plain"
  },
  "PLAN_DUPLICATE": {
   "text": "Dupliquer le programme",
@@ -821,9 +821,9 @@
   "why": "everyday verb for a copy"
  },
  "PLAN_RENAME": {
-  "text": "Jour et heure",
-  "back": "Day and time",
-  "why": "names what changes"
+  "text": "Horaire du programme",
+  "back": "Schedule of the plan",
+  "why": "one title for the dialog"
  },
  "PLAN_DELETE": {
   "text": "Supprimer le programme",
@@ -866,14 +866,14 @@
   "why": "says it may stay empty"
  },
  "LOOK_FOR_USUAL": {
-  "text": "Apparence habituelle",
-  "back": "Usual look",
-  "why": "pair with the plan button"
+  "text": "Apparence par défaut",
+  "back": "Default look",
+  "why": "not a calque of usual"
  },
  "LOOK_FOR_PLAN": {
-  "text": "Seulement pour ce programme",
-  "back": "Only for this plan",
-  "why": "whole button text"
+  "text": "Pour ce programme seulement",
+  "back": "For this plan only",
+  "why": "natural order"
  },
  "PLAN_OWN_LOOK": {
   "text": "Apparence propre au programme",
@@ -886,9 +886,9 @@
   "why": "same plan word"
  },
  "look_own_dropped": {
-  "text": "{name} : apparence habituelle rétablie",
-  "back": "{name}: usual look restored",
-  "why": "name first, no elision issue"
+  "text": "{name} : apparence par défaut rétablie",
+  "back": "{name}: default look restored",
+  "why": "par défaut"
  },
  "plan_deleted": {
   "text": "Programme supprimé : {name}",
@@ -961,9 +961,9 @@
   "why": "tile and pane names"
  },
  "TOUR_SHOW_MORE": {
-  "text": "La salle le voit si le projecteur est activé",
+  "text": "La salle le voit si le projecteur est allumé",
   "back": "The room sees it if the projector is on",
-  "why": "activé"
+  "why": "same pair"
  },
  "TOUR_LIVE": {
   "text": "Le panneau Direct montre ce que la salle voit",
@@ -971,14 +971,14 @@
   "why": "panneau for a pane"
  },
  "TOUR_LIVE_MORE": {
-  "text": "Tuile rouge Direct (F6) active ou désactive l'image",
-  "back": "Red Live tile (F6): switches the picture on or off",
-  "why": "says tile, not the list"
+  "text": "Le bouton rouge Direct (F6) allume ou éteint l'image",
+  "back": "The red Live button (F6) switches the picture on or off",
+  "why": "bouton replaces tuile"
  },
  "TOUR_SEARCH": {
-  "text": "Une seule zone trouve tous les chants et passages",
-  "back": "One box finds all songs and passages",
-  "why": "plain"
+  "text": "Un seul champ trouve tous les chants et passages",
+  "back": "One field finds all songs and passages",
+  "why": "champ replaces zone"
  },
  "TOUR_SEARCH_MORE": {
   "text": "Ouvrez le résultat, puis Ajouter",
@@ -1011,9 +1011,9 @@
   "why": "plain"
  },
  "START_NO_SONGS": {
-  "text": "La bibliothèque ne contient aucun chant",
-  "back": "The library holds no song",
-  "why": "statement"
+  "text": "Aucun chant : importez ou écrivez-en un",
+  "back": "No song: import or write one",
+  "why": "hints at the next step"
  },
  "START_ANNOUNCEMENTS_DETAIL": {
   "text": "Avant le début du culte",
@@ -1046,9 +1046,9 @@
   "why": "statement"
  },
  "BTN_LOOP_START": {
-  "text": "Faire tourner",
-  "back": "Cycle",
-  "why": "fits cards taking turns"
+  "text": "Lancer le défilement",
+  "back": "Start the scroll",
+  "why": "same words as the command"
  },
  "BTN_LOOP_STOP": {
   "text": "Arrêter",
@@ -1126,9 +1126,9 @@
   "why": "short reason"
  },
  "SUGGEST_HERE": {
-  "text": "On en est à cette partie",
-  "back": "We are at this part",
-  "why": "short reason"
+  "text": "Partie en cours",
+  "back": "Part in progress",
+  "why": "clearer"
  },
  "SUGGEST_FOLLOWS": {
   "text": "Souvent chanté après ce chant",
@@ -1171,9 +1171,9 @@
   "why": "state; says the words are gone"
  },
  "STATE_OFF": {
-  "text": "Projecteur désactivé",
+  "text": "Projecteur éteint",
   "back": "Projector off",
-  "why": "off word of the pair"
+  "why": "same pair"
  },
  "TIP_SHOW": {
   "text": "Envoie l'aperçu dans le direct",
@@ -1191,9 +1191,9 @@
   "why": "tooltip"
  },
  "TIP_LIVE": {
-  "text": "Activer/désactiver le projecteur",
+  "text": "Allumer/éteindre le projecteur",
   "back": "Switch the projector on/off",
-  "why": "tooltip"
+  "why": "same pair"
  },
  "BTN_PREVIOUS_ITEM": {
   "text": "Élément précédent",
@@ -1206,29 +1206,29 @@
   "why": "pair"
  },
  "HELD_CTRL": {
-  "text": "Ctrl maintenue",
-  "back": "Ctrl held",
-  "why": "key name as printed"
+  "text": "Ctrl enfoncée",
+  "back": "Ctrl pressed down",
+  "why": "clearer than maintenue"
  },
  "HELD_SHIFT": {
-  "text": "Shift maintenue",
-  "back": "Shift held",
-  "why": "key name as printed"
+  "text": "Shift enfoncée",
+  "back": "Shift pressed down",
+  "why": "same"
  },
  "HINT_RING": {
-  "text": "Diapo à projeter",
-  "back": "Slide to project",
-  "why": "the picked slide, no coined phrase"
+  "text": "Choisir la diapo",
+  "back": "Pick the slide",
+  "why": "says what the arrows do"
  },
  "HINT_PICK": {
-  "text": "Diapo en direct",
-  "back": "Live slide",
-  "why": "plain"
+  "text": "Choisir dans le direct",
+  "back": "Pick in live",
+  "why": "says what the arrows do"
  },
  "HINT_LET_GO": {
-  "text": "Relâcher pour projeter",
+  "text": "Relâchez pour projeter",
   "back": "Release to project",
-  "why": "short"
+  "why": "imperative like the rest"
  },
  "HINT_CANCEL": {
   "text": "Annuler",
@@ -1241,9 +1241,9 @@
   "why": "one word"
  },
  "PLAN_ADD_PASSAGE": {
-  "text": "Passage de la Bible",
-  "back": "Passage of the Bible",
-  "why": "Bible word"
+  "text": "Bible",
+  "back": "Bible",
+  "why": "shortened: the menu cut the longer label"
  },
  "PLAN_ADD_HEADING": {
   "text": "Intertitre",
@@ -1276,9 +1276,9 @@
   "why": "two statements"
  },
  "LETTER_KEYS": {
-  "text": "Lettres pour aller aux parties",
-  "back": "Letters to go to the parts",
-  "why": "phrase beside a switch"
+  "text": "Lettres pour changer de partie",
+  "back": "Letters to change part",
+  "why": "clearer"
  },
  "LETTER_KEYS_HINT": {
   "text": "R va au refrain, B au pont. Désactivé, une lettre ouvre la recherche.",
@@ -1366,14 +1366,14 @@
   "why": "plain"
  },
  "BTN_TIDY": {
-  "text": "Nettoyer",
-  "back": "Clean up",
-  "why": "short"
+  "text": "Nettoyer texte",
+  "back": "Clean text",
+  "why": "says what is cleaned"
  },
  "TIDY_HELP": {
-  "text": "Titres de parties en repères, lignes d'accords retirées",
-  "back": "Part headings into markers, chord lines removed",
-  "why": "tooltip"
+  "text": "Titres de parties en marques, lignes d'accords retirées",
+  "back": "Part headings into marks, chord lines removed",
+  "why": "marques replaces repères"
  },
  "SUGGEST_LABEL": {
   "text": "Chants du même titre",
@@ -1409,9 +1409,9 @@
   "why": "checking advice kept"
  },
  "FIELD_SECOND": {
-  "text": "Paroles, seconde langue",
-  "back": "Words, second language",
-  "why": "phrase"
+  "text": "Traduction des paroles",
+  "back": "Translation of the words",
+  "why": "same word"
  },
  "LYRICS_PLACEHOLDER": {
   "text": "[Couplet 1]\nTu es bon\n\n[Refrain]\nGloire",
@@ -1419,8 +1419,8 @@
   "why": "own word for a verse, space, 1, in brackets"
  },
  "SECOND_PLACEHOLDER": {
-  "text": "Mêmes parties, même ordre, autre langue",
-  "back": "Same parts, same order, other language",
+  "text": "Mêmes parties et même ordre, traduits",
+  "back": "Same parts and same order, translated",
   "why": "no full stop"
  },
  "MARK_VERSE": {
@@ -1449,14 +1449,14 @@
   "why": "everyday word"
  },
  "BTN_ADD_SECOND": {
-  "text": "Ajouter une seconde langue",
-  "back": "Add a second language",
-  "why": "phrase"
+  "text": "Ajouter une traduction",
+  "back": "Add a translation",
+  "why": "clearer than seconde langue"
  },
  "BTN_SAVE": {
-  "text": "Garder",
-  "back": "Keep",
-  "why": "Enregistrer is 11 characters"
+  "text": "Valider",
+  "back": "Confirm",
+  "why": "Enregistrer is 11 characters, the button allows 10; Valider pairs with Annuler"
  },
  "BTN_CANCEL": {
   "text": "Annuler",
@@ -1479,9 +1479,9 @@
   "why": "one word"
  },
  "BTN_UNDO": {
-  "text": "Récupérer",
-  "back": "Get back",
-  "why": "Annuler already means cancel"
+  "text": "Annuler",
+  "back": "Undo",
+  "why": "the usual French word in a toast"
  },
  "BTN_OPEN": {
   "text": "Ouvrir",
@@ -1504,9 +1504,9 @@
   "why": "past"
  },
  "EDITOR_CLOSED": {
-  "text": "Éditeur fermé, modifications non gardées",
-  "back": "Editor closed, changes not kept",
-  "why": "undo is beside it"
+  "text": "Éditeur fermé, modifications non enregistrées",
+  "back": "Editor closed, changes not saved",
+  "why": "enregistrées"
  },
  "SONG_UNTITLED": {
   "text": "Chant sans titre",
@@ -1649,9 +1649,9 @@
   "why": "code as a name"
  },
  "SCREENS_OFF": {
-  "text": "En entraînement, le projecteur reste désactivé",
-  "back": "In practice, the projector stays off",
-  "why": "désactivé"
+  "text": "En mode entraînement, le projecteur reste éteint",
+  "back": "In practice mode, the projector stays off",
+  "why": "full clause"
  },
  "SCREENS_ONE": {
   "text": "Branchez un projecteur et il fonctionnera tout seul",
@@ -1694,24 +1694,24 @@
   "why": "photo editors' term"
  },
  "CORNER_TOP_LEFT": {
-  "text": "Coin haut gauche",
+  "text": "Coin supérieur gauche",
   "back": "Top left corner",
-  "why": "noun phrase"
+  "why": "not a calque"
  },
  "CORNER_TOP_RIGHT": {
-  "text": "Coin haut droit",
+  "text": "Coin supérieur droit",
   "back": "Top right corner",
-  "why": "noun phrase"
+  "why": "not a calque"
  },
  "CORNER_BOTTOM_RIGHT": {
-  "text": "Coin bas droit",
+  "text": "Coin inférieur droit",
   "back": "Bottom right corner",
-  "why": "noun phrase"
+  "why": "not a calque"
  },
  "CORNER_BOTTOM_LEFT": {
-  "text": "Coin bas gauche",
+  "text": "Coin inférieur gauche",
   "back": "Bottom left corner",
-  "why": "noun phrase"
+  "why": "not a calque"
  },
  "NUDGE_UP": {
   "text": "Haut",
@@ -1779,9 +1779,9 @@
   "why": "not the projector"
  },
  "LOOK_WINDOW_AUTO": {
-  "text": "Comme l'ordinateur",
-  "back": "Like the computer",
-  "why": "phrase"
+  "text": "Selon l'ordinateur",
+  "back": "According to the computer",
+  "why": "not a calque"
  },
  "LOOK_WINDOW_LIGHT": {
   "text": "Claire",
@@ -1884,9 +1884,9 @@
   "why": "same noun"
  },
  "SCREEN_STAGE": {
-  "text": "Scène",
-  "back": "Stage",
-  "why": "stage screen"
+  "text": "Écran scène",
+  "back": "Stage screen",
+  "why": "Scène alone was ambiguous"
  },
  "SCREEN_UNUSED": {
   "text": "Inutilisé",
@@ -1894,9 +1894,9 @@
   "why": "short"
  },
  "SCREENS_STAGE_WINDOW": {
-  "text": "Écran de scène dans une fenêtre",
-  "back": "Stage screen in a window",
-  "why": "phrase beside a switch"
+  "text": "Mettre l'écran de scène en fenêtre",
+  "back": "Put the stage screen in a window",
+  "why": "less stiff"
  },
  "SCREENS_IDENTIFY": {
   "text": "Identifier les écrans",
@@ -1930,9 +1930,9 @@
   "why": "same name as the dialog"
  },
  "REMOTE_SWITCH_DETAIL": {
-  "text": "Un téléphone sur le même Wi-Fi change les diapos",
-  "back": "A phone on the same Wi-Fi changes the slides",
-  "why": "same sentence as the search row"
+  "text": "Un téléphone sur ce Wi-Fi peut changer de diapo",
+  "back": "A phone on this Wi-Fi can change slides",
+  "why": "peut added"
  },
  "REMOTE_SCAN": {
   "text": "Scannez le code ou tapez l'adresse",
@@ -2052,14 +2052,14 @@
   "why": "short"
  },
  "ANNOUNCEMENT_FILL": {
-  "text": "D'où vient le texte",
-  "back": "Where the text comes from",
-  "why": "not automatic"
+  "text": "Source du texte",
+  "back": "Source of the text",
+  "why": "plain question turned into a label"
  },
  "FILL_NOTHING": {
-  "text": "À la main",
-  "back": "By hand",
-  "why": "answers the heading"
+  "text": "Manuel",
+  "back": "Manual",
+  "why": "answers Source du texte"
  },
  "FILL_WEEK": {
   "text": "Anniversaires (semaine)",
@@ -2250,9 +2250,9 @@
   "why": "book, chapter, verses"
  },
  "PASSAGE_NO_BIBLE": {
-  "text": "Aucune Bible installée : l'annonce restera vide",
-  "back": "No Bible installed: the announcement will stay empty",
-  "why": "one sentence"
+  "text": "Aucune Bible téléchargée : l'annonce restera vide",
+  "back": "No Bible downloaded: the announcement will stay empty",
+  "why": "téléchargée"
  },
  "PASSAGE_UNREADABLE": {
   "text": "Cette référence n'existe pas dans la Bible",
@@ -2398,9 +2398,9 @@
   "why": "s is the unit symbol"
  },
  "KEYS_TITLE": {
-  "text": "Clavier",
-  "back": "Keyboard",
-  "why": "phrase"
+  "text": "Raccourcis clavier",
+  "back": "Keyboard shortcuts",
+  "why": "one name for the keys sheet; the status bar link keeps Raccourcis for width"
  },
  "KEYS_SHOWING": {
   "text": "Projection",
@@ -2443,9 +2443,9 @@
   "why": "fragment"
  },
  "KEYS_SHOWING_ROWS[4].1": {
-  "text": "Choisir dans le direct, projeté au relâchement",
-  "back": "Choose in the live pane, projected on release",
-  "why": "fragment"
+  "text": "Choisir dans le direct, projeter en relâchant",
+  "back": "Pick in live, project on release",
+  "why": "clearer order"
  },
  "KEYS_SHOWING_ROWS[5].1": {
   "text": "Choisir une diapo de l'aperçu, puis Enter",
@@ -2478,14 +2478,14 @@
   "why": "fragment"
  },
  "KEYS_SHOWING_ROWS[11].1": {
-  "text": "Ramener l'élément d'avant, puis celui d'avant",
-  "back": "Bring back the item before, then the one before",
-  "why": "fragment"
+  "text": "Revenir à l'élément précédent, puis au précédent",
+  "back": "Go back to the previous item, then the one before",
+  "why": "clearer"
  },
  "KEYS_SHOWING_ROWS[12].1": {
-  "text": "Cacher le texte, le fond reste",
-  "back": "Hide the text, the background stays",
-  "why": "fragment"
+  "text": "Cacher le texte et garder le fond",
+  "back": "Hide the text and keep the background",
+  "why": "full clause"
  },
  "KEYS_SHOWING_ROWS[13].1": {
   "text": "Mettre le projecteur au noir",
@@ -2498,9 +2498,9 @@
   "why": "fragment"
  },
  "KEYS_SHOWING_ROWS[15].1": {
-  "text": "Mettre en aperçu ce qu'a reconnu l'écoute",
-  "back": "Put in preview what the listener recognised",
-  "why": "fragment"
+  "text": "Mettre en aperçu le chant reconnu par l'écoute",
+  "back": "Put the song recognised by the listener in preview",
+  "why": "no stiff relative"
  },
  "KEYS_SHOWING_ROWS[16].1": {
   "text": "Mettre les annonces dans l'aperçu",
@@ -2508,14 +2508,14 @@
   "why": "fragment"
  },
  "KEYS_SHOWING_ROWS[17].1": {
-  "text": "Activer ou désactiver le projecteur",
+  "text": "Allumer ou éteindre le projecteur",
   "back": "Switch the projector on or off",
-  "why": "activé/désactivé pair"
+  "why": "allumé/éteint pair"
  },
  "KEYS_FINDING_ROWS[0].1": {
-  "text": "Chercher chants, passages et actions",
-  "back": "Search songs, passages and actions",
-  "why": "fragment"
+  "text": "Chercher des chants, des passages, des commandes",
+  "back": "Search songs, passages, commands",
+  "why": "articles added"
  },
  "KEYS_FINDING_ROWS[1].1": {
   "text": "Ouvrir la recherche, tous les chants si vide",
@@ -2543,9 +2543,9 @@
   "why": "fragment"
  },
  "KEYS_FINDING_ROWS[6].1": {
-  "text": "Quitter la recherche d'un seul appui",
-  "back": "Leave search in one press",
-  "why": "fragment"
+  "text": "Fermer la recherche d'une seule touche",
+  "back": "Close search with one key",
+  "why": "no calque"
  },
  "KEYS_PLAN_ROWS[0].1": {
   "text": "Élément suivant en aperçu",
@@ -2573,9 +2573,9 @@
   "why": "fragment"
  },
  "KEYS_PLAN_ROWS[6].1": {
-  "text": "Programme suivant, avec Shift le précédent",
-  "back": "Next plan, with Shift the previous",
-  "why": "fragment"
+  "text": "Programme suivant (Shift : précédent)",
+  "back": "Next plan (Shift: previous)",
+  "why": "clearer"
  },
  "KEYS_PLAN_ROWS[7].1": {
   "text": "Créer un programme pour un autre culte",
@@ -2593,14 +2593,14 @@
   "why": "fragment"
  },
  "KEYS_EDITING_ROWS[2].1": {
-  "text": "Garder ce qui est écrit",
-  "back": "Keep what is written",
-  "why": "same verb as Save"
+  "text": "Enregistrer le chant",
+  "back": "Save the song",
+  "why": "the verb a native expects, fits in a description"
  },
  "KEYS_EDITING_ROWS[3].1": {
-  "text": "Insérer le repère d'une partie du chant",
-  "back": "Insert the marker of a part of the song",
-  "why": "fragment"
+  "text": "Insérer la marque d'une partie du chant",
+  "back": "Insert the mark of a part of the song",
+  "why": "marques"
  },
  "KEYS_EDITING_ROWS[4].1": {
   "text": "Remplir avec le chant proposé sous le titre",
@@ -2608,9 +2608,9 @@
   "why": "says what and from where"
  },
  "KEYS_EDITING_ROWS[5].1": {
-  "text": "Récupérer le dernier élément retiré",
-  "back": "Get back the last removed item",
-  "why": "same verb as Undo"
+  "text": "Annuler la dernière suppression",
+  "back": "Undo the last removal",
+  "why": "same word as the toast button"
  },
  "announcement_deleted": {
   "text": "Annonce supprimée : « {title} »",
@@ -2668,9 +2668,9 @@
   "why": "says what is remembered"
  },
  "LEARN_ON_HINT": {
-  "text": "À résultats égaux, les chants souvent choisis passent avant",
-  "back": "With equal results, songs often picked come first",
-  "why": "condition first"
+  "text": "À pertinence égale, les chants souvent choisis d'abord",
+  "back": "With equal relevance, songs often picked first",
+  "why": "clearer"
  },
  "LEARN_FORGET": {
   "text": "Effacer l'historique de recherche",
@@ -2683,9 +2683,9 @@
   "why": "no full stop"
  },
  "GROUP_WEEKDAY": {
-  "text": "Habituellement chantés ce jour",
-  "back": "Usually sung on this day",
-  "why": "speaks of today"
+  "text": "D'habitude chantés ce jour",
+  "back": "Usually sung this day",
+  "why": "no that-day wording under a heading about today"
  },
  "GROUP_RECENT": {
   "text": "Choisis ces derniers jours",
@@ -2699,11 +2699,11 @@
  },
  "habit_chip": {
   "text": {
-   "one": "{typed} : {picks} fois",
-   "other": "{typed} : {picks} fois"
+   "one": "Choisi {picks} fois pour « {typed} »",
+   "other": "Choisi {picks} fois pour « {typed} »"
   },
-  "back": "{typed}: N times",
-  "why": "fois, never x"
+  "back": "Picked N times for {typed}",
+  "why": "says what typed and what picked"
  },
  "habit_line": {
   "text": {
@@ -2715,11 +2715,11 @@
  },
  "follows_line": {
   "text": {
-   "one": "Après celui-ci {count} fois, la dernière le {when}",
-   "other": "Après celui-ci {count} fois, la dernière le {when}"
+   "one": "Chanté {count} fois après, dernière fois le {when}",
+   "other": "Chanté {count} fois après, dernière fois le {when}"
   },
-  "back": "After this one N times, the last on {when}",
-  "why": "plain words"
+  "back": "Sung N times after, last time on {when}",
+  "why": "has a clear subject"
  },
  "weekday_line": {
   "text": {
@@ -2778,9 +2778,9 @@
   "why": "ZIP in capitals"
  },
  "BIBLES_PRACTICE": {
-  "text": "Aucune Bible gardée en entraînement",
+  "text": "Aucune Bible conservée en entraînement",
   "back": "No Bible kept in practice mode",
-  "why": "no full stop"
+  "why": "conservée instead of gardée"
  },
  "BIBLES_FILE_UNSUPPORTED": {
   "text": "Ce fichier n'est pas une Bible lisible ici",
@@ -2838,9 +2838,9 @@
   "why": "one word"
  },
  "BIBLES_INSTALLED": {
-  "text": "Installée",
-  "back": "Installed",
-  "why": "agrees with traduction"
+  "text": "Téléchargée",
+  "back": "Downloaded",
+  "why": "same verb as the download button"
  },
  "BIBLES_DOWNLOAD": {
   "text": "Télécharger",
@@ -2863,19 +2863,19 @@
   "why": "state"
  },
  "BIBLES_COPYRIGHT": {
-  "text": "Droits",
-  "back": "Rights",
-  "why": "one word"
+  "text": "Licence",
+  "back": "Licence",
+  "why": "Droits d'auteur is the song's, Licence the Bible's"
  },
  "BIBLES_PICK_HINT": {
-  "text": "Choisissez une traduction pour voir ses droits",
-  "back": "Pick a translation to see its rights",
-  "why": "one sentence"
+  "text": "Choisissez une traduction pour voir sa licence",
+  "back": "Pick a translation to see its licence",
+  "why": "same word as the label"
  },
  "BIBLES_SCOPE_WHOLE": {
-  "text": "Bible entière",
-  "back": "Whole Bible",
-  "why": "short"
+  "text": "Bible complète",
+  "back": "Complete Bible",
+  "why": "complète is the usual word"
  },
  "BIBLES_SCOPE_PART": {
   "text": "Bible partielle",
@@ -2883,19 +2883,19 @@
   "why": "short"
  },
  "BIBLES_NO_COPYRIGHT": {
-  "text": "Le fichier n'indique pas les droits",
-  "back": "The file does not state the rights",
-  "why": "one sentence"
+  "text": "Le fichier n'indique pas la licence",
+  "back": "The file does not state the licence",
+  "why": "same word"
  },
  "BIBLES_NOTICE_LOADING": {
-  "text": "Récupération des droits",
-  "back": "Fetching the rights",
-  "why": "not a reading verb"
+  "text": "Chargement des droits d'utilisation",
+  "back": "Loading the terms of use",
+  "why": "not recovery"
  },
  "BIBLES_NOTICE_FAILED": {
-  "text": "Notice des droits illisible",
-  "back": "Rights notice unreadable",
-  "why": "no full stop"
+  "text": "Notice de licence illisible",
+  "back": "Licence notice unreadable",
+  "why": "same word"
  },
  "bibles_download_failed": {
   "text": "Téléchargement impossible : {why}",
@@ -3034,9 +3034,9 @@
   "why": "adds what the two words cannot"
  },
  "PLAN_STARTS_AT": {
-  "text": "Début du chant",
-  "back": "Start of the song",
-  "why": "heading, no colon"
+  "text": "Commencer le chant à",
+  "back": "Begin the song at",
+  "why": "heading above a pick list, no colon"
  },
  "PLAN_START_BEGINNING": {
   "text": "Au début du chant",
@@ -3119,14 +3119,14 @@
   "why": "same file word as the row above"
  },
  "LISTEN_MODEL_MISSING": {
-  "text": "Pour reconnaître les mots, il faut un fichier vocal de 57 MB",
+  "text": "Pour reconnaître les mots, il faut un fichier vocal de 57 Mo",
   "back": "To recognise words, a speech file of 57 MB is needed",
-  "why": "fichier vocal names the file; size kept"
+  "why": "French unit Mo"
  },
  "LISTEN_MODEL_BETTER": {
-  "text": "Fichier vocal plus précis disponible : 190 MB",
+  "text": "Fichier vocal plus précis disponible : 190 Mo",
   "back": "More precise speech file available: 190 MB",
-  "why": "disponible says it is a free choice"
+  "why": "French unit Mo"
  },
  "listen_model_failed": {
   "text": "Fichier vocal non reçu : {why}",
@@ -3134,14 +3134,14 @@
   "why": "clause after a colon"
  },
  "MARKS_APPLY": {
-  "text": "Mettre ces repères",
-  "back": "Put these markers",
+  "text": "Appliquer marques",
+  "back": "Apply marks",
   "why": "says what is applied"
  },
  "MARKS_APPLY_HELP": {
-  "text": "Écrit les repères dans les paroles, annulable",
-  "back": "Writes the markers into the words, can be undone",
-  "why": "no full stop"
+  "text": "Écrit les marques dans les paroles, annulable",
+  "back": "Writes the marks into the words, can be undone",
+  "why": "marques"
  },
  "MARKS_HIDE": {
   "text": "Fermer cette proposition",
@@ -3174,9 +3174,9 @@
   "why": "no full stop"
  },
  "BACKDROPS_TITLE": {
-  "text": "Fonds",
-  "back": "Backdrops",
-  "why": "plural of the backdrop word"
+  "text": "Fonds libres",
+  "back": "Free backdrops",
+  "why": "same noun as the Fond tab, with the word that says what the collection is"
  },
  "BACKDROPS_SEARCH": {
   "text": "Par exemple : mer, étoiles",
@@ -3249,9 +3249,9 @@
   "why": "no dots"
  },
  "BACKDROPS_OFFLINE": {
-  "text": "Pas de connexion internet",
-  "back": "No internet connection",
-  "why": "statement"
+  "text": "Pas de connexion, réessayez",
+  "back": "No connection, try again",
+  "why": "says what to do"
  },
  "BACKDROPS_AUTHOR": {
   "text": "Auteur",
@@ -3274,9 +3274,9 @@
   "why": "one word"
  },
  "BACKDROPS_PICK_HINT": {
-  "text": "Cliquez une vignette pour voir son auteur et sa licence",
-  "back": "Click a thumbnail to see its author and licence",
-  "why": "one sentence"
+  "text": "Cliquez sur une vignette : auteur et licence",
+  "back": "Click a thumbnail: author and licence",
+  "why": "missing sur added"
  },
  "BACKDROPS_DIM": {
   "text": "Claire ou chargée : assombrir dans Apparence",
@@ -3299,9 +3299,9 @@
   "why": "clause after colon"
  },
  "WHY_OFFLINE": {
-  "text": "pas de connexion internet",
-  "back": "no internet connection",
-  "why": "lower-case clause"
+  "text": "pas de connexion Internet",
+  "back": "no Internet connection",
+  "why": "Internet capitalised"
  },
  "WHY_SLOW": {
   "text": "temps d'attente dépassé",
@@ -3344,7 +3344,7 @@
   "why": "lower-case clause"
  },
  "LYRICS_OFFLINE": {
-  "text": "Site de paroles injoignable. Vérifiez la connexion internet",
+  "text": "Site de paroles injoignable. Vérifiez la connexion Internet",
   "back": "Lyrics site unreachable. Check the internet connection",
   "why": "no final full stop"
  },
@@ -3387,9 +3387,9 @@
   "why": "colour mood"
  },
  "LOOK_BLACK": {
-  "text": "Noir",
-  "back": "Black",
-  "why": "same word as the black button"
+  "text": "Fond noir",
+  "back": "Black background",
+  "why": "apart from the black screen tile"
  },
  "LOOK_FOREST": {
   "text": "Forêt",
@@ -3447,14 +3447,14 @@
   "why": "fragment"
  },
  "CMD_PLAN_DELETE_DETAIL": {
-  "text": "Le programme part, on peut le récupérer",
-  "back": "The plan goes, it can be got back",
-  "why": "fragment"
+  "text": "Supprimé, avec possibilité d'annuler",
+  "back": "Deleted, with the possibility to undo",
+  "why": "same word as the toast button"
  },
  "CMD_START_HERE": {
-  "text": "Commencer le chant ici",
-  "back": "Begin the song here",
-  "why": "about where a song begins"
+  "text": "Commencer ici",
+  "back": "Begin here",
+  "why": "same words as the button"
  },
  "CMD_EARLIER": {
   "text": "Revoir ce qui était projeté",

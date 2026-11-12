@@ -55,9 +55,9 @@
   "why": "roteiro is the plan"
  },
  "PLAN_CHIP": {
-  "text": "Já no roteiro",
+  "text": "Já está no roteiro",
   "back": "Already in the plan",
-  "why": "-"
+  "why": "same phrase as IN_PLAN"
  },
  "KIND_LOOK": {
   "text": "Aparência",
@@ -75,17 +75,17 @@
   "why": "exibir is the one verb for on-screen"
  },
  "MESSAGE_DETAIL": {
-  "text": "Exibe o texto como recado para todos",
+  "text": "Exibe o texto como mensagem para todos",
   "back": "Shows the text as a message to everyone",
-  "why": "recado is the notice to the room"
+  "why": "-"
  },
  "countdown_for": {
   "text": {
-   "one": "Contagem de {minutes} min",
-   "other": "Contagem de {minutes} min"
+   "one": "Contagem regressiva de {minutes} min",
+   "other": "Contagem regressiva de {minutes} min"
   },
   "back": "Countdown of {minutes} min",
-  "why": "min is the same for both forms"
+  "why": "contagem regressiva where it fits"
  },
  "BIBLE_LOADING": {
   "text": "Preparando a Bíblia",
@@ -185,9 +185,9 @@
   "why": "-"
  },
  "CMD_HEADING": {
-  "text": "Novo separador",
+  "text": "Nova divisória",
   "back": "New divider",
-  "why": "separador for divider"
+  "why": "-"
  },
  "CMD_HEADING_DETAIL": {
   "text": "Louvor e Pregação",
@@ -210,9 +210,9 @@
   "why": "same word as the top bar button"
  },
  "CMD_SETTINGS_DETAIL": {
-  "text": "Idioma, Bíblia, teclas de atalho e tutorial",
-  "back": "Language, Bible, shortcut keys and tutorial",
-  "why": "tutorial for tour"
+  "text": "Idioma, Bíblia, atalhos e tutorial",
+  "back": "Language, Bible, shortcuts and tutorial",
+  "why": "-"
  },
  "CMD_SCREENS": {
   "text": "Telas",
@@ -220,9 +220,9 @@
   "why": "-"
  },
  "CMD_SCREENS_DETAIL": {
-  "text": "Qual monitor é da igreja e qual é da banda",
-  "back": "Which monitor is the church's and which is the band's",
-  "why": "monitor for hardware"
+  "text": "Qual monitor é da igreja e qual é do palco",
+  "back": "Which monitor is the church's and which is the stage",
+  "why": "-"
  },
  "CMD_REMOTE": {
   "text": "Controle pelo celular",
@@ -330,8 +330,8 @@
   "why": "-"
  },
  "STREAM_MISSING": {
-  "text": "Esta instalação não inclui a parte que faz o streaming",
-  "back": "This installation does not include the part that does the streaming",
+  "text": "Esta instalação não inclui o recurso de streaming",
+  "back": "This installation does not include the streaming feature",
   "why": "-"
  },
  "STREAM_NOTHING": {
@@ -411,33 +411,33 @@
   "why": "-"
  },
  "LISTEN_HEARD": {
-  "text": "Palavras captadas",
-  "back": "Words caught",
+  "text": "Palavras ouvidas",
+  "back": "Words heard",
   "why": "-"
  },
  "LISTEN_PART_LISTENING": {
-  "text": "Escuta",
-  "back": "Listening",
+  "text": "Reconhecimento",
+  "back": "Recognition",
   "why": "-"
  },
  "LISTEN_PART_RECORDINGS": {
-  "text": "Áudios",
-  "back": "Audio files",
-  "why": "not gravação, which is the stream file"
- },
- "REC_SWITCH": {
-  "text": "Guardar áudios",
-  "back": "Keep audio files",
+  "text": "Gravações",
+  "back": "Recordings",
   "why": "-"
  },
+ "REC_SWITCH": {
+  "text": "Salvar gravações",
+  "back": "Save recordings",
+  "why": "Salvar is the one verb"
+ },
  "REC_HINT": {
-  "text": "Trechos curtos e palpites ficam só neste computador.",
-  "back": "Short pieces and guesses stay only on this computer.",
+  "text": "Trechos curtos e sugestões ficam só neste computador.",
+  "back": "Short pieces and suggestions stay only on this computer.",
   "why": "-"
  },
  "REC_NONE": {
-  "text": "Nada guardado",
-  "back": "Nothing kept",
+  "text": "Nada salvo",
+  "back": "Nothing saved",
   "why": "-"
  },
  "rec_kept": {
@@ -471,8 +471,8 @@
   "why": "-"
  },
  "REC_DELETED": {
-  "text": "Áudios apagados",
-  "back": "Audio files deleted",
+  "text": "Gravações apagadas",
+  "back": "Recordings deleted",
   "why": "-"
  },
  "rec_saved": {
@@ -481,14 +481,14 @@
   "why": "-"
  },
  "REC_FAILED": {
-  "text": "Não é possível guardar aqui. Use Mudar pasta.",
-  "back": "Cannot keep them here. Use Change folder.",
+  "text": "Não dá para salvar aqui. Escolha “Mudar pasta”.",
+  "back": "Cannot save here. Choose \"Change folder\".",
   "why": "-"
  },
  "REC_ON": {
-  "text": "Guardando áudio",
-  "back": "Keeping audio",
-  "why": "names sound, not storage"
+  "text": "Gravando o som",
+  "back": "Recording the sound",
+  "why": "-"
  },
  "LISTEN_TEMPO": {
   "text": "Andamento",
@@ -516,18 +516,18 @@
   "why": "-"
  },
  "LISTEN_BEAT_BLINK": {
-  "text": "Ponto vermelho pisca no ritmo",
-  "back": "Red dot blinks in the rhythm",
+  "text": "Piscar o ponto vermelho no ritmo",
+  "back": "Blink the red dot in the rhythm",
   "why": "-"
  },
  "LISTEN_BEAT_BLINK_HINT": {
-  "text": "Efeito leve, só enfeite",
-  "back": "Light effect, only decoration",
+  "text": "Só um efeito visual, nada mais muda",
+  "back": "Only a visual effect, nothing else changes",
   "why": "-"
  },
  "CMD_UPDATE": {
-  "text": "Verificar atualização",
-  "back": "Check for update",
+  "text": "Verificar atualizações",
+  "back": "Check for updates",
   "why": "-"
  },
  "CMD_UPDATE_DETAIL": {
@@ -546,13 +546,13 @@
   "why": "-"
  },
  "CMD_KEYS": {
-  "text": "Teclas de atalho",
-  "back": "Shortcut keys",
+  "text": "Atalhos",
+  "back": "Shortcuts",
   "why": "-"
  },
  "CMD_KEYS_DETAIL": {
-  "text": "Lista todas as teclas do programa",
-  "back": "Lists all the keys of the program",
+  "text": "Lista todos os atalhos do programa",
+  "back": "Lists all the shortcuts of the program",
   "why": "-"
  },
  "CMD_START": {
@@ -596,8 +596,8 @@
   "why": "-"
  },
  "CMD_STOP_COUNTDOWN": {
-  "text": "Parar a contagem",
-  "back": "Stop the countdown",
+  "text": "Parar contagem regressiva",
+  "back": "Stop countdown",
   "why": "-"
  },
  "CMD_STOP_COUNTDOWN_DETAIL": {
@@ -606,12 +606,12 @@
   "why": "-"
  },
  "CMD_HIDE_MESSAGE": {
-  "text": "Tirar o recado",
+  "text": "Tirar a mensagem",
   "back": "Take off the message",
   "why": "-"
  },
  "CMD_HIDE_MESSAGE_DETAIL": {
-  "text": "O recado some de todas as telas",
+  "text": "A mensagem some de todas as telas",
   "back": "The message leaves every screen",
   "why": "-"
  },
@@ -631,9 +631,9 @@
   "why": "-"
  },
  "CMD_LOOP": {
-  "text": "Passar avisos",
-  "back": "Run the announcements",
-  "why": "-"
+  "text": "Exibir em sequência",
+  "back": "Show in sequence",
+  "why": "says the cards are shown in turn"
  },
  "CMD_LOOP_DETAIL": {
   "text": "Cada aviso é exibido na vez, até você parar",
@@ -681,8 +681,8 @@
   "why": "-"
  },
  "HINT_KEYS": {
-  "text": "Teclas",
-  "back": "Keys",
+  "text": "Atalhos",
+  "back": "Shortcuts",
   "why": "-"
  },
  "OUTPUT_OFF": {
@@ -786,7 +786,7 @@
   "why": "-"
  },
  "PLAN_HEADING_NEW": {
-  "text": "Separador",
+  "text": "Divisória",
   "back": "Divider",
   "why": "-"
  },
@@ -811,8 +811,8 @@
   "why": "-"
  },
  "PLANS_NO_DAY": {
-  "text": "Sem dia ainda",
-  "back": "No day yet",
+  "text": "Sem dia definido",
+  "back": "No day set",
   "why": "-"
  },
  "PLAN_DUPLICATE": {
@@ -896,14 +896,14 @@
   "why": "-"
  },
  "added_to_plan": {
-  "text": "“{title}” entrou no roteiro",
-  "back": "\"{title}\" went into the plan",
-  "why": "-"
+  "text": "“{title}” foi incluída no roteiro",
+  "back": "\"{title}\" was included in the plan",
+  "why": "incluir, like the button"
  },
  "removed_from_plan": {
-  "text": "“{title}” saiu do roteiro",
-  "back": "\"{title}\" left the plan",
-  "why": "-"
+  "text": "“{title}” foi tirada do roteiro",
+  "back": "\"{title}\" was taken out of the plan",
+  "why": "tirar, like the menu item"
  },
  "START_TITLE": {
   "text": "O que vamos exibir?",
@@ -911,8 +911,8 @@
   "why": "-"
  },
  "START_HINT": {
-  "text": "ou digite qualquer letra",
-  "back": "or type any letter",
+  "text": "ou digite qualquer tecla",
+  "back": "or type any key",
   "why": "-"
  },
  "CMD_TOUR": {
@@ -946,9 +946,9 @@
   "why": "-"
  },
  "TOUR_PREVIEW": {
-  "text": "A Prévia mostra o slide que vem a seguir",
-  "back": "Preview shows the slide that comes next",
-  "why": "Prévia is the preview"
+  "text": "A Prévia mostra o próximo slide",
+  "back": "Preview shows the next slide",
+  "why": "-"
  },
  "TOUR_PREVIEW_MORE": {
   "text": "A igreja nunca vê o que está aqui",
@@ -956,8 +956,8 @@
   "why": "-"
  },
  "TOUR_SHOW": {
-  "text": "Exibir leva o que está na Prévia para o Ao vivo",
-  "back": "Show takes what is in Preview to Live",
+  "text": "Exibir envia o que está na Prévia ao painel Ao vivo",
+  "back": "Show sends what is in Preview to the Live panel",
   "why": "-"
  },
  "TOUR_SHOW_MORE": {
@@ -971,18 +971,18 @@
   "why": "-"
  },
  "TOUR_LIVE_MORE": {
-  "text": "Botão vermelho Ao vivo (F6) liga/desliga o projetor",
-  "back": "Red Live button (F6) switches the projector on/off",
-  "why": "-"
+  "text": "O botão vermelho (F6) liga e desliga o projetor",
+  "back": "The red button (F6) switches the projector on and off",
+  "why": "the red button, not the Live panel"
  },
  "TOUR_SEARCH": {
-  "text": "Uma caixa acha toda música e todo trecho da Bíblia",
-  "back": "One box finds every song and Bible passage",
+  "text": "Uma caixa encontra músicas e trechos da Bíblia",
+  "back": "One box finds songs and Bible passages",
   "why": "-"
  },
  "TOUR_SEARCH_MORE": {
-  "text": "Abra o resultado e use Incluir no roteiro",
-  "back": "Open the result and use Include in the plan",
+  "text": "Abra e escolha “Incluir no roteiro”",
+  "back": "Open and choose \"Include in the plan\"",
   "why": "-"
  },
  "START_SONGS": {
@@ -1046,13 +1046,13 @@
   "why": "-"
  },
  "BTN_LOOP_START": {
-  "text": "Passar avisos",
-  "back": "Run announcements",
-  "why": "passar for cards taking turns"
+  "text": "Exibir em sequência",
+  "back": "Show in sequence",
+  "why": "-"
  },
  "BTN_LOOP_STOP": {
-  "text": "Parar avisos",
-  "back": "Stop announcements",
+  "text": "Parar a sequência",
+  "back": "Stop the sequence",
   "why": "-"
  },
  "PANE_PREVIEW": {
@@ -1076,9 +1076,9 @@
   "why": "-"
  },
  "BTN_BLACK": {
-  "text": "Preto",
-  "back": "Black",
-  "why": "-"
+  "text": "Blackout",
+  "back": "Blackout",
+  "why": "blackout is the F2 state; Fundo preto is the colour"
  },
  "BTN_LOGO": {
   "text": "Logo",
@@ -1101,33 +1101,33 @@
   "why": "-"
  },
  "STATE_MESSAGE": {
-  "text": "Recado exibido",
-  "back": "Message shown",
-  "why": "-"
+  "text": "Mensagem na tela",
+  "back": "Message on the screen",
+  "why": "mensagem is the room message, aviso is the card"
  },
  "STATE_STAGE_MESSAGE": {
-  "text": "Recado na tela da banda",
-  "back": "Message on the band screen",
-  "why": "tela da banda for the stage screen"
+  "text": "Mensagem no palco",
+  "back": "Message on the stage",
+  "why": "palco for the stage screen"
  },
  "STAGE_MESSAGE_DETAIL": {
-  "text": "O texto é exibido só na tela da banda",
-  "back": "The text is shown only on the band screen",
+  "text": "O texto é exibido só na tela do palco",
+  "back": "The text is shown only on the stage screen",
   "why": "-"
  },
  "HEARD_NOTHING": {
-  "text": "Nada reconhecido ainda",
-  "back": "Nothing recognised yet",
+  "text": "Nada ouvido ainda",
+  "back": "Nothing heard yet",
   "why": "-"
  },
  "SUGGEST_HEARD": {
-  "text": "Palavras dessa música captadas",
-  "back": "Words of this song caught",
-  "why": "-"
+  "text": "Ouvimos palavras desta música",
+  "back": "We heard words of this song",
+  "why": "ouvido is the one word for what the microphone heard"
  },
  "SUGGEST_HERE": {
-  "text": "Cantando esta parte agora",
-  "back": "Singing this part now",
+  "text": "Estão cantando esta parte",
+  "back": "They are singing this part",
   "why": "-"
  },
  "SUGGEST_FOLLOWS": {
@@ -1136,8 +1136,8 @@
   "why": "-"
  },
  "SUGGEST_LOST": {
-  "text": "Cantam outra letra, diferente da exibida",
-  "back": "They sing another text, different from the one shown",
+  "text": "Estão cantando outra letra",
+  "back": "They are singing another text",
   "why": "-"
  },
  "SUGGEST_SEARCH": {
@@ -1146,9 +1146,9 @@
   "why": "-"
  },
  "state_countdown": {
-  "text": "Contagem {clock}",
-  "back": "Countdown {clock}",
-  "why": "-"
+  "text": "Faltam {clock}",
+  "back": "{clock} left",
+  "why": "says the time left"
  },
  "LIVE_NOTHING": {
   "text": "Nenhum slide no projetor",
@@ -1176,8 +1176,8 @@
   "why": "-"
  },
  "TIP_SHOW": {
-  "text": "Envia a Prévia para o Ao vivo",
-  "back": "Sends the Preview to Live",
+  "text": "Envia a Prévia ao painel Ao vivo",
+  "back": "Sends the Preview to the Live panel",
   "why": "-"
  },
  "TIP_PREV": {
@@ -1206,23 +1206,23 @@
   "why": "-"
  },
  "HELD_CTRL": {
-  "text": "Segurando Ctrl",
-  "back": "Holding Ctrl",
+  "text": "Ctrl apertado",
+  "back": "Ctrl pressed",
   "why": "-"
  },
  "HELD_SHIFT": {
-  "text": "Segurando Shift",
-  "back": "Holding Shift",
+  "text": "Shift apertado",
+  "back": "Shift pressed",
   "why": "-"
  },
  "HINT_RING": {
-  "text": "Marcar slide",
-  "back": "Mark a slide",
-  "why": "the ring is the marked slide"
+  "text": "Escolher na Prévia",
+  "back": "Pick in Preview",
+  "why": "the ring is the picked slide"
  },
  "HINT_PICK": {
-  "text": "Escolher slide",
-  "back": "Pick a slide",
+  "text": "Escolher no Ao vivo",
+  "back": "Pick in Live",
   "why": "-"
  },
  "HINT_LET_GO": {
@@ -1246,9 +1246,9 @@
   "why": "-"
  },
  "PLAN_ADD_HEADING": {
-  "text": "Separador",
+  "text": "Divisória",
   "back": "Divider",
-  "why": "-"
+  "why": "divisória for the divider"
  },
  "PLAN_DRAG": {
   "text": "Arraste para mudar de lugar",
@@ -1276,14 +1276,14 @@
   "why": "-"
  },
  "LETTER_KEYS": {
-  "text": "Letras pulam entre as partes",
-  "back": "Letters jump between the parts",
-  "why": "-"
+  "text": "Teclas de letra vão às partes",
+  "back": "Letter keys go to the parts",
+  "why": "teclas de letra, not letra"
  },
  "LETTER_KEYS_HINT": {
-  "text": "R vai ao refrão e B à ponte. Desligado, toda letra abre a busca.",
-  "back": "R goes to the chorus and B to the bridge. Switched off, every letter opens the search.",
-  "why": "R first letter of Refrão; B fixed"
+  "text": "R: refrão, B: ponte. Desligado, toda tecla de letra abre a busca",
+  "back": "R: chorus, B: bridge. Switched off, every letter key opens the search",
+  "why": "-"
  },
  "COUNTDOWN": {
   "text": "Contagem",
@@ -1326,9 +1326,9 @@
   "why": "tom is the musical key"
  },
  "FIELD_COPYRIGHT": {
-  "text": "Direitos",
-  "back": "Rights",
-  "why": "-"
+  "text": "Copyright",
+  "back": "Copyright",
+  "why": "Direitos autorais does not fit 16"
  },
  "FIELD_CCLI": {
   "text": "Número CCLI",
@@ -1366,8 +1366,8 @@
   "why": "-"
  },
  "BTN_TIDY": {
-  "text": "Arrumar letra",
-  "back": "Tidy lyrics",
+  "text": "Formatar letra",
+  "back": "Format lyrics",
   "why": "-"
  },
  "TIDY_HELP": {
@@ -1414,9 +1414,9 @@
   "why": "-"
  },
  "LYRICS_PLACEHOLDER": {
-  "text": "[Estrofe 1]\nLinha A\n\n[Refrão]\nLinha B",
-  "back": "[Verse 1] Line A / [Chorus] Line B",
-  "why": "marker names are my own part words; sample lines kept short for the width"
+  "text": "[Estrofe 1]\nTua graça me sustenta\n\n[Refrão]\nCantamos o teu nome",
+  "back": "[Verse 1] Your grace holds me up / [Chorus] We sing your name",
+  "why": "made-up song lines; width read per line"
  },
  "SECOND_PLACEHOLDER": {
   "text": "As mesmas partes, na mesma ordem",
@@ -1669,7 +1669,7 @@
   "why": "-"
  },
  "WALL_HINT": {
-  "text": "Escolha um canto e mova até a imagem ficar com bordas retas",
+  "text": "Escolha um canto e mova-o até a imagem ficar com as bordas retas",
   "back": "Pick a corner and move it until the picture has straight edges",
   "why": "-"
  },
@@ -1774,8 +1774,8 @@
   "why": "-"
  },
  "LOOK_WINDOW": {
-  "text": "Cor da janela",
-  "back": "Window colour",
+  "text": "Tema",
+  "back": "Theme",
   "why": "-"
  },
  "LOOK_WINDOW_AUTO": {
@@ -1884,9 +1884,9 @@
   "why": "-"
  },
  "SCREEN_STAGE": {
-  "text": "Banda",
-  "back": "Band",
-  "why": "tela da banda for the stage screen"
+  "text": "Palco",
+  "back": "Stage",
+  "why": "-"
  },
  "SCREEN_UNUSED": {
   "text": "Sem uso",
@@ -1894,8 +1894,8 @@
   "why": "-"
  },
  "SCREENS_STAGE_WINDOW": {
-  "text": "Tela da banda em uma janela",
-  "back": "Band screen in a window",
+  "text": "Tela do palco numa janela",
+  "back": "Stage screen in a window",
   "why": "-"
  },
  "SCREENS_IDENTIFY": {
@@ -1919,9 +1919,9 @@
  "screen_detail": {
   "text": {
    "normal_zoom": "{width} por {height} pixels",
-   "with_zoom": "{width} por {height} pixels, zoom {scale}"
+   "with_zoom": "{width} por {height} pixels, escala {scale}"
   },
-  "back": "{width} by {height} pixels, zoom {scale}",
+  "back": "{width} by {height} pixels, scale {scale}",
   "why": "-"
  },
  "REMOTE_SWITCH": {
@@ -1945,13 +1945,13 @@
   "why": "-"
  },
  "REMOTE_FIREWALL_ASKING": {
-  "text": "O sistema vai pedir uma permissão, só desta vez",
-  "back": "The system will ask for a permission, only this once",
+  "text": "O Windows vai pedir uma permissão, só desta vez",
+  "back": "Windows will ask for a permission, only this once",
   "why": "-"
  },
  "REMOTE_FIREWALL_REFUSED": {
-  "text": "O firewall barra os celulares. Desligue e ligue o controle para pedir a permissão",
-  "back": "The firewall blocks the phones. Switch the control off and on to ask for the permission",
+  "text": "O firewall bloqueia os celulares. Desligue e ligue o controle para pedir a permissão.",
+  "back": "The firewall blocks the phones. Switch the control off and on to ask for the permission.",
   "why": "-"
  },
  "phones": {
@@ -2057,18 +2057,18 @@
   "why": "-"
  },
  "FILL_NOTHING": {
-  "text": "Digitado",
-  "back": "Typed",
-  "why": "-"
+  "text": "Manual",
+  "back": "Manual",
+  "why": "says the text is typed by hand"
  },
  "FILL_WEEK": {
-  "text": "Aniversários da semana",
-  "back": "Birthdays of the week",
-  "why": "-"
+  "text": "Aniversariantes da semana",
+  "back": "Birthday people of the week",
+  "why": "aniversariantes for the people everywhere"
  },
  "FILL_MONTH": {
-  "text": "Aniversários do mês",
-  "back": "Birthdays of the month",
+  "text": "Aniversariantes do mês",
+  "back": "Birthday people of the month",
   "why": "-"
  },
  "ANNOUNCEMENT_PICTURE": {
@@ -2216,11 +2216,11 @@
  },
  "birthdays_on_file": {
   "text": {
-   "zero": "Nenhum aniversário guardado",
-   "one": "1 aniversário guardado",
-   "other": "{count} aniversários guardados"
+   "zero": "Nenhum aniversariante guardado",
+   "one": "{count} aniversariante guardado",
+   "other": "{count} aniversariantes guardados"
   },
-  "back": "{count} birthdays kept",
+  "back": "{count} birthday people kept",
   "why": "-"
  },
  "birthdays_imported": {
@@ -2250,8 +2250,8 @@
   "why": "-"
  },
  "PASSAGE_NO_BIBLE": {
-  "text": "Nenhuma versão da Bíblia instalada, o aviso fica vazio",
-  "back": "No Bible version installed, the announcement stays empty",
+  "text": "Nenhuma versão da Bíblia instalada; o aviso ficará vazio",
+  "back": "No Bible version installed; the announcement will stay empty",
   "why": "-"
  },
  "PASSAGE_UNREADABLE": {
@@ -2276,11 +2276,11 @@
  },
  "names_today": {
   "text": {
-   "zero": "Sem aniversários hoje",
-   "one": "1 aniversário hoje",
-   "other": "{count} aniversários hoje"
+   "zero": "Sem aniversariantes hoje",
+   "one": "{count} aniversariante hoje",
+   "other": "{count} aniversariantes hoje"
   },
-  "back": "{count} birthdays today",
+  "back": "{count} birthday people today",
   "why": "-"
  },
  "PRACTICE_NOTICES[0].0": {
@@ -2398,9 +2398,9 @@
   "why": "-"
  },
  "KEYS_TITLE": {
-  "text": "Teclado",
-  "back": "Keyboard",
-  "why": "-"
+  "text": "Atalhos",
+  "back": "Shortcuts",
+  "why": "one name: Atalhos"
  },
  "KEYS_SHOWING": {
   "text": "Durante o culto",
@@ -2443,19 +2443,19 @@
   "why": "fragment, present tense"
  },
  "KEYS_SHOWING_ROWS[4].1": {
-  "text": "Percorre a música ao vivo, soltar Shift exibe",
-  "back": "Moves through the live song, releasing Shift shows",
-  "why": "fragment, present tense"
+  "text": "Percorre a música; ao soltar Shift, exibe",
+  "back": "Moves through the song; on releasing Shift, shows",
+  "why": "-"
  },
  "KEYS_SHOWING_ROWS[5].1": {
-  "text": "Marca um slide na Prévia, Enter exibe",
-  "back": "Marks a slide in Preview, Enter shows",
-  "why": "fragment, present tense"
+  "text": "Escolhe um slide na Prévia, Enter exibe",
+  "back": "Picks a slide in Preview, Enter shows",
+  "why": "-"
  },
  "KEYS_SHOWING_ROWS[6].1": {
-  "text": "Exibe o slide marcado",
-  "back": "Shows the marked slide",
-  "why": "fragment, present tense"
+  "text": "Exibe o slide escolhido",
+  "back": "Shows the picked slide",
+  "why": "-"
  },
  "KEYS_SHOWING_ROWS[7].1": {
   "text": "Vai à parte da música com o número digitado",
@@ -2468,19 +2468,19 @@
   "why": "R and B only"
  },
  "KEYS_SHOWING_ROWS[9].1": {
-  "text": "Marca a parte com esse número na Prévia",
-  "back": "Marks the part with that number in Preview",
-  "why": "fragment, present tense"
+  "text": "Escolhe a parte com esse número na Prévia",
+  "back": "Picks the part with that number in Preview",
+  "why": "-"
  },
  "KEYS_SHOWING_ROWS[10].1": {
-  "text": "Traz a música exibida para escolher outra parte",
-  "back": "Brings the shown song to pick another part",
-  "why": "fragment, present tense"
+  "text": "Volta à música exibida para escolher outra parte",
+  "back": "Goes back to the shown song to pick another part",
+  "why": "-"
  },
  "KEYS_SHOWING_ROWS[11].1": {
-  "text": "Traz à Prévia o já exibido, repetir volta mais",
-  "back": "Brings the already shown item to Preview, repeating goes further back",
-  "why": "fragment, present tense"
+  "text": "Traz à Prévia o exibido antes; repita para mais",
+  "back": "Brings to Preview what was shown before; press again for more",
+  "why": "-"
  },
  "KEYS_SHOWING_ROWS[12].1": {
   "text": "Oculta o texto e mantém o fundo",
@@ -2498,9 +2498,9 @@
   "why": "fragment, present tense"
  },
  "KEYS_SHOWING_ROWS[15].1": {
-  "text": "Traz à Prévia o que o microfone reconheceu",
-  "back": "Brings to Preview what the microphone recognised",
-  "why": "fragment, present tense"
+  "text": "Traz à Prévia o que o microfone ouviu",
+  "back": "Brings to Preview what the microphone heard",
+  "why": "-"
  },
  "KEYS_SHOWING_ROWS[16].1": {
   "text": "Traz os avisos para a Prévia",
@@ -2513,9 +2513,9 @@
   "why": "fragment, present tense"
  },
  "KEYS_FINDING_ROWS[0].1": {
-  "text": "Abre a busca de músicas, Bíblia e ações",
-  "back": "Opens the search for songs, Bible and actions",
-  "why": "fragment, present tense"
+  "text": "Abre a busca de músicas, Bíblia e comandos",
+  "back": "Opens the search for songs, Bible and commands",
+  "why": "-"
  },
  "KEYS_FINDING_ROWS[1].1": {
   "text": "Abre a busca e lista todas as músicas",
@@ -2720,10 +2720,10 @@
  },
  "follows_line": {
   "text": {
-   "one": "Veio depois da atual {count} vez, a última em {when}",
-   "other": "Veio depois da atual {count} vezes, a última em {when}"
+   "one": "Depois desta {count} vez, a última em {when}",
+   "other": "Depois desta {count} vezes, a última em {when}"
   },
-  "back": "Came after the current one {count} time(s), the last on {when}",
+  "back": "After this one {count} time(s), the last on {when}",
   "why": "-"
  },
  "weekday_line": {
@@ -2736,10 +2736,10 @@
  },
  "recent_line": {
   "text": {
-   "one": "Escolhida {picks} vez, a última em {when}",
-   "other": "Escolhida {picks} vezes, a última em {when}"
+   "one": "Escolhida {picks} vez, última em {when}",
+   "other": "Escolhida {picks} vezes, última em {when}"
   },
-  "back": "Chosen {picks} time(s), the last on {when}",
+  "back": "Chosen {picks} time(s), last on {when}",
   "why": "-"
  },
  "starts_chip": {
@@ -2768,8 +2768,8 @@
   "why": "-"
  },
  "BIBLES_OWN_FILE": {
-  "text": "De um arquivo seu",
-  "back": "From a file of yours",
+  "text": "Do seu computador",
+  "back": "From your computer",
   "why": "-"
  },
  "BIBLES_CHOOSE_FILE": {
@@ -2828,13 +2828,13 @@
   "why": "-"
  },
  "BIBLES_LOADING": {
-  "text": "Buscando a lista de versões",
-  "back": "Fetching the list of versions",
+  "text": "Carregando a lista de versões",
+  "back": "Loading the list of versions",
   "why": "-"
  },
  "BIBLES_LOAD_FAILED": {
-  "text": "Falha ao carregar a lista de versões",
-  "back": "Failed to load the list of versions",
+  "text": "Não foi possível carregar a lista",
+  "back": "Could not load the list",
   "why": "-"
  },
  "BIBLES_RETRY": {
@@ -2868,13 +2868,13 @@
   "why": "-"
  },
  "BIBLES_COPYRIGHT": {
-  "text": "Direitos",
-  "back": "Rights",
-  "why": "-"
+  "text": "Copyright",
+  "back": "Copyright",
+  "why": "same name as the editor field"
  },
  "BIBLES_PICK_HINT": {
-  "text": "Escolha uma versão para ver quem tem os direitos",
-  "back": "Pick a version to see who holds the rights",
+  "text": "Escolha uma versão para ver o copyright",
+  "back": "Pick a version to see the copyright",
   "why": "-"
  },
  "BIBLES_SCOPE_WHOLE": {
@@ -2888,18 +2888,18 @@
   "why": "-"
  },
  "BIBLES_NO_COPYRIGHT": {
-  "text": "O arquivo não diz quem tem os direitos",
-  "back": "The file does not say who has the rights",
+  "text": "O arquivo não diz quem tem o copyright",
+  "back": "The file does not say who has the copyright",
   "why": "-"
  },
  "BIBLES_NOTICE_LOADING": {
-  "text": "Buscando a nota de direitos",
-  "back": "Fetching the rights note",
-  "why": "nota, because aviso is the announcement"
+  "text": "Carregando o copyright",
+  "back": "Loading the copyright",
+  "why": "-"
  },
  "BIBLES_NOTICE_FAILED": {
-  "text": "Não foi possível ler a nota de direitos",
-  "back": "Could not read the rights note",
+  "text": "Não foi possível ler o copyright",
+  "back": "Could not read the copyright",
   "why": "-"
  },
  "bibles_download_failed": {
@@ -2940,11 +2940,11 @@
  },
  "noun.birthdays": {
   "text": {
-   "zero": "nenhum aniversário",
-   "one": "{count} aniversário",
-   "other": "{count} aniversários"
+   "zero": "{count} aniversariantes",
+   "one": "{count} aniversariante",
+   "other": "{count} aniversariantes"
   },
-  "back": "{count} birthday(s)",
+  "back": "{count} birthday person/people",
   "why": "-"
  },
  "noun.files": {
@@ -3029,18 +3029,18 @@
   "why": "-"
  },
  "TIP_START_HERE": {
-  "text": "Começar a música no slide marcado",
-  "back": "Start the song at the marked slide",
+  "text": "Começar daqui: a música abre neste slide",
+  "back": "Start from here: the song opens at this slide",
   "why": "-"
  },
  "PLAN_STARTS_AT": {
-  "text": "Começar por",
-  "back": "Start with",
+  "text": "Começar daqui",
+  "back": "Start from here",
   "why": "-"
  },
  "PLAN_START_BEGINNING": {
-  "text": "No primeiro slide",
-  "back": "At the first slide",
+  "text": "Do primeiro slide",
+  "back": "From the first slide",
   "why": "-"
  },
  "LISTEN_NOT_CONNECTED": {
@@ -3134,13 +3134,13 @@
   "why": "-"
  },
  "MARKS_APPLY": {
-  "text": "Usar estas marcas",
-  "back": "Use these marks",
+  "text": "Aplicar partes",
+  "back": "Apply parts",
   "why": "-"
  },
  "MARKS_APPLY_HELP": {
-  "text": "Põe as marcas na letra, com desfazer",
-  "back": "Puts the marks in the lyrics, with undo",
+  "text": "Escreve as partes na letra, dá para desfazer",
+  "back": "Writes the parts in the lyrics, it can be undone",
   "why": "-"
  },
  "MARKS_HIDE": {
@@ -3149,8 +3149,8 @@
   "why": "-"
  },
  "MARKS_THIS": {
-  "text": "Esta parte",
-  "back": "This part",
+  "text": "Esta parte é:",
+  "back": "This part is:",
   "why": "-"
  },
  "MARKS_WHY_NAMED": {
@@ -3387,9 +3387,9 @@
   "why": "-"
  },
  "LOOK_BLACK": {
-  "text": "Preto",
-  "back": "Black",
-  "why": "same word as the black tile"
+  "text": "Fundo preto",
+  "back": "Black background",
+  "why": "-"
  },
  "LOOK_FOREST": {
   "text": "Floresta",
@@ -3452,8 +3452,8 @@
   "why": "-"
  },
  "CMD_START_HERE": {
-  "text": "Começar neste slide",
-  "back": "Start at this slide",
+  "text": "Começar daqui",
+  "back": "Start from here",
   "why": "-"
  },
  "CMD_EARLIER": {
@@ -3467,13 +3467,13 @@
   "why": "-"
  },
  "START_HERE_HOW": {
-  "text": "Abra a música na Prévia, marque o slide de início e escolha este comando de novo",
-  "back": "Open the song in Preview, mark the starting slide and pick this command again",
+  "text": "Abra a música na Prévia, escolha o slide de início e use este comando de novo",
+  "back": "Open the song in Preview, pick the starting slide and use this command again",
   "why": "-"
  },
  "CMD_START_HERE_DETAIL": {
-  "text": "A música abre no slide marcado, ideal para medley",
-  "back": "The song opens at the marked slide, ideal for a medley",
+  "text": "A música abre no slide escolhido, ideal para medley",
+  "back": "The song opens at the picked slide, ideal for a medley",
   "why": "-"
  },
  "CMD_NEW_ANNOUNCEMENT_DETAIL": {
@@ -3502,9 +3502,9 @@
   "why": "-"
  },
  "BTN_START_HERE": {
-  "text": "Começar aqui",
-  "back": "Start here",
-  "why": "-"
+  "text": "Começar daqui",
+  "back": "Start from here",
+  "why": "one phrase for starting from a part"
  },
  "ONBOARD_SKIP": {
   "text": "Pular agora",
@@ -3674,7 +3674,7 @@
  "ONBOARD_BIBLE_FAILED": {
   "text": "Nada se perde, o programa segue sem essa Bíblia. Depois, use Mais versões em Ajustes",
   "back": "Nothing is lost, the program goes on without that Bible. Later, use More versions in Adjustments",
-  "why": "names the Settings button More versions"
+  "why": "-"
  },
  "ONBOARD_DONE_TITLE": {
   "text": "O Artosia está pronto",

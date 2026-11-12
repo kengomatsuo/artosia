@@ -111,6 +111,12 @@ pub struct Settings {
     pub welcomed: bool,
     /// The first-start tour has been finished or skipped.
     pub toured: bool,
+    /// The first run was begun and not finished or skipped: it opens again at the next start.
+    #[serde(skip_serializing_if = "std::ops::Not::not")]
+    pub first_run_open: bool,
+    /// The country or region of the church as two capital letters, asked once by the first run;
+    /// empty for a church that was never asked. It only orders the Bibles on offer.
+    pub country: String,
     pub remote_on: bool,
     /// The screen the projector uses; None lets the output process choose.
     pub audience_screen: Option<usize>,
@@ -169,6 +175,8 @@ impl Default for Settings {
             plan: 0,
             welcomed: false,
             toured: false,
+            first_run_open: false,
+            country: String::new(),
             remote_on: false,
             audience_screen: None,
             stage_screen: None,
@@ -392,6 +400,16 @@ pub struct App {
     pub design_part: usize,
     /// The tour's stop, while the tour is open (`ui/tour.rs`).
     pub tour: Option<usize>,
+    /// The language drop-down of Settings is open.
+    pub language_open: bool,
+    /// The first run, while it is open (`onboard.rs`, `ui/onboard.rs`).
+    pub onboard: Option<crate::onboard::Onboard>,
+    /// This start is a new church's: the first run opens by itself.
+    pub first_run: bool,
+    /// The clock when Enter last pressed the first run's primary button, as `tour_entered_at` does.
+    pub onboard_entered_at: f64,
+    /// The first run's work that outlives one press.
+    pub onboard_work: crate::ui::onboard::Work,
     /// The tour has just opened and its Next button should take keyboard focus.
     pub tour_focus: bool,
     /// The clock when Enter last moved the tour. If Rune also presses the focused button for
@@ -578,7 +596,10 @@ impl App {
         }
         let songs = store.songs().unwrap_or_default();
         let index = SongIndex::build(&songs);
-        let settings: Settings = store.setting("settings").unwrap_or_default();
+        // A library that never saved settings is a new church's: the first run opens (`onboard.rs`).
+        let stored: Option<Settings> = store.setting("settings");
+        let first_run = crate::onboard::opens_at_start(folder.is_some(), stored.is_some(), stored.as_ref().is_some_and(|settings| settings.first_run_open), rune::is_headless());
+        let settings: Settings = stored.unwrap_or_default();
         let announcements = store.announcements().unwrap_or_default();
         let plans = store.plans().unwrap_or_default();
         let plan = plans
@@ -625,6 +646,11 @@ impl App {
             plan_new_song: false,
             design_part: 0,
             tour: None,
+            onboard: None,
+            language_open: false,
+            first_run,
+            onboard_entered_at: -1.0,
+            onboard_work: Default::default(),
             tour_entered_at: -1.0,
             tour_focus: false,
             notices: None,
@@ -711,6 +737,7 @@ impl App {
         app.stream_key.replace_text(app.settings.stream_key.clone());
         app.sync_camera_address();
         app.list_bibles();
+        app.desk.set_country(&app.settings.country);
         app.start_learning();
         if practice {
             app.seed_practice_plan();

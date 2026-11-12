@@ -24,7 +24,7 @@ pub fn download_url(file: &str) -> String {
 pub const HEADER_BYTES: u64 = 4096;
 
 /// ISO 639-3 codes of the languages of Indonesia that have a file here, so they sort with the
-/// other languages of Indonesia (`ebible::indonesia_rank`). Names are the file names' words.
+/// other languages of Indonesia (`ebible::ranking`). Names are the file names' words.
 fn language_code(language: &str) -> &'static str {
     match language {
         "Indonesian" => "ind",
@@ -166,7 +166,7 @@ mod tests {
                    ind,indmade,Bahasa Buatan,Indonesian,Alkitab Buatan,x,True,Made up,0,27,True\n";
         let mut list = parse_catalogue(csv);
         list.extend(parse_tree(TREE));
-        let groups = grouped(&list, "");
+        let groups = grouped(&list, "", &crate::ebible::ranking("ID"));
         assert_eq!(groups[0].language, "Indonesian");
         let ids: Vec<&str> = groups[0].items.iter().map(|at| list[*at].id.as_str()).collect();
         assert_eq!(ids, ["indmade", "Indonesian", "IndonesianAGS"]);

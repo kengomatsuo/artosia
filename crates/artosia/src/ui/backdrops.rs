@@ -146,7 +146,7 @@ fn tile(s: &App, k: &Kit, at: usize) -> El {
                     .gap(space::S1)
                     .center()
                     .child(icon(&icons::IMAGE, 16.0).color(k.c.text_muted).layer_opacity(if waiting { 0.5 } else { 1.0 }).a11y_hidden())
-                    .child(text(entry.title.clone()).font(type_::TINY).color(k.c.text_muted).align(rune::Align::Center).wrap().max_lines(2)),
+                    .child(crate::ui::widgets::wrapped(entry.title.clone()).font(type_::TINY).color(k.c.text_muted).align(rune::Align::Center).wrap().max_lines(2)),
             );
         }
     }
@@ -173,7 +173,7 @@ fn tile(s: &App, k: &Kit, at: usize) -> El {
 
 fn grid(s: &App, k: &Kit) -> El {
     if s.backdrops.shown.is_empty() {
-        return col().key("backdrops-empty").w_full().h(GRID).center().padding(space::S4).child(text(t::nothing_found(s.backdrops.query.text.trim())).font(type_::BODY).color(k.c.text_muted).wrap());
+        return col().key("backdrops-empty").w_full().h(GRID).center().padding(space::S4).child(crate::ui::widgets::wrapped(t::nothing_found(s.backdrops.query.text.trim())).font(type_::BODY).color(k.c.text_muted).wrap());
     }
     let rows = s.backdrops.shown.len().div_ceil(COLUMNS);
     let list = col()

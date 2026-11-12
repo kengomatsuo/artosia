@@ -25,7 +25,9 @@ pub fn set_language(code: &str) -> bool {
     #[cfg(test)]
     LANGUAGE.with(|language| language.set(at));
     // Markers written into lyrics from here on use this language's names for the sections.
+    languages::teach_markers();
     artosia_core::song::set_marker_words(marker_words());
+    artosia_core::song::set_marker_pattern(languages::text(language(), "section_numbered").map(str::to_string));
     true
 }
 
@@ -1734,6 +1736,82 @@ pub fn bibles_file_failed(why: &str) -> String {
         return format!("Alkitab tidak bisa ditambah: {why}");
     }
     format!("Could not add the Bible: {why}")
+}
+
+// The first run (`ui/onboard.rs`). English stands in both slots until the brief is written for each language.
+text!(ONBOARD_SKIP, "Skip setup", "Skip setup");
+text!(ONBOARD_BACK, "Back", "Back");
+text!(ONBOARD_YES, "Yes", "Yes");
+text!(ONBOARD_NEXT, "Next", "Next");
+text!(ONBOARD_SKIP_FOR_NOW, "Skip for now", "Skip for now");
+text!(ONBOARD_LANGUAGE_TITLE, "Is this the right language?", "Is this the right language?");
+text!(ONBOARD_COUNTRY_TITLE, "Is this the right country or region?", "Is this the right country or region?");
+text!(ONBOARD_COUNTRY_HINT, "Artosia offers Bibles in its languages first", "Artosia offers Bibles in its languages first");
+text!(ONBOARD_COUNTRY_FILTER, "Find a country or region", "Find a country or region");
+text!(ONBOARD_BIBLE_TITLE, "Which Bible should Artosia show?", "Which Bible should Artosia show?");
+text!(ONBOARD_BIBLE_HINT, "The languages of your country come first. You can add more later", "The languages of your country come first. You can add more later");
+text!(ONBOARD_SONGS_TITLE, "Where are your church's songs?", "Where are your church's songs?");
+text!(ONBOARD_SONGS_EASI, "In EasiSlides on this computer", "In EasiSlides on this computer");
+text!(ONBOARD_SONGS_FOLDER, "In a folder", "In a folder");
+text!(ONBOARD_SONGS_FOLDER_HINT, "EasiSlides or OpenLyrics files", "EasiSlides or OpenLyrics files");
+text!(ONBOARD_SONGS_NONE, "Nowhere yet", "Nowhere yet");
+text!(ONBOARD_SONGS_NONE_HINT, "Start with none and add them whenever you like", "Start with none and add them whenever you like");
+text!(ONBOARD_SCREENS_TITLE, "Does the room see the test picture?", "Does the room see the test picture?");
+text!(ONBOARD_SCREENS_HINT, "Artosia put it on the screen it will use as the projector", "Artosia put it on the screen it will use as the projector");
+text!(ONBOARD_ROW_WINDOW, "This window is on", "This window is on");
+text!(ONBOARD_ROW_PICTURE, "The test picture is on", "The test picture is on");
+text!(ONBOARD_ROW_SIZE, "Its size", "Its size");
+text!(ONBOARD_WORKS, "Yes, it works", "Yes, it works");
+text!(ONBOARD_OTHER_SCREEN, "No, try another screen", "No, try another screen");
+text!(ONBOARD_NO_PROJECTOR, "No projector is connected yet", "No projector is connected yet");
+text!(ONBOARD_NO_PROJECTOR_HINT, "Artosia will use one when it is plugged in", "Artosia will use one when it is plugged in");
+text!(ONBOARD_READY_TITLE, "Getting Artosia ready", "Getting Artosia ready");
+text!(ONBOARD_READY_HINT, "You can go on at any time. What is left carries on in the background", "You can go on at any time. What is left carries on in the background");
+text!(ONBOARD_JOB_LANGUAGE, "Language and country", "Language and country");
+text!(ONBOARD_JOB_SONGS, "Songs", "Songs");
+text!(ONBOARD_STATE_DONE, "Done", "Done");
+text!(ONBOARD_STATE_WAITING, "Waiting", "Waiting");
+text!(ONBOARD_STATE_FAILED, "Failed", "Failed");
+text!(ONBOARD_BIBLE_FAILED, "Artosia goes on without it. Add a Bible later in Settings, under More Bibles", "Artosia goes on without it. Add a Bible later in Settings, under More Bibles");
+text!(ONBOARD_DONE_TITLE, "Artosia is ready", "Artosia is ready");
+text!(ONBOARD_DONE_HINT, "Start with one of these", "Start with one of these");
+text!(ONBOARD_CARD_TOUR, "See how the window works in five stops", "See how the window works in five stops");
+text!(ONBOARD_CARD_PLAN, "Open this week's plan", "Open this week's plan");
+text!(ONBOARD_OPEN_PLAN, "Open the plan", "Open the plan");
+text!(ONBOARD_CARD_SONG, "Type or paste the words of a song", "Type or paste the words of a song");
+text!(CMD_FIRST_RUN, "Set up Artosia again", "Set up Artosia again");
+text!(CMD_FIRST_RUN_DETAIL, "Language, country, Bible, songs and screens, one question at a time", "Language, country, Bible, songs and screens, one question at a time");
+
+/// What the songs row says when EasiSlides was found: how many songs it holds.
+pub fn onboard_songs_found(count: usize) -> String {
+    if let Some(text) = say("onboard_songs_found", None, Some(count), &[("songs", counted("songs", count))]) {
+        return text;
+    }
+    format!("{} found. EasiSlides stays as it is", songs(count))
+}
+
+/// How far a download has come.
+pub fn onboard_percent(percent: u8) -> String {
+    if let Some(text) = say("onboard_percent", None, None, &[("percent", text_arg(percent))]) {
+        return text;
+    }
+    format!("{percent}%")
+}
+
+/// How many songs of how many are in.
+pub fn onboard_progress(done: usize, of: usize) -> String {
+    if let Some(text) = say("onboard_progress", None, None, &[("done", text_arg(done)), ("of", text_arg(of))]) {
+        return text;
+    }
+    format!("{done} of {of}")
+}
+
+/// A day of the month and the month's name as a date reads in the language: "9 November".
+pub fn day_month(day: u8, month: &str) -> String {
+    if let Some(text) = say("day_month", None, None, &[("day", text_arg(day)), ("month", text_arg(month))]) {
+        return text;
+    }
+    format!("{day} {month}")
 }
 
 #[cfg(test)]

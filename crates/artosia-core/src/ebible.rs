@@ -139,17 +139,27 @@ pub fn parse_catalogue(csv: &str) -> Vec<Translation> {
 }
 
 /// ISO 639-3 codes of the languages of Indonesia that eBible might list, Indonesian first.
-/// A church in Indonesia looks here before the alphabet. The code is the first three letters of
-/// eBible's language code (`zlmKSZI` is Malay).
+/// Hand ordered: Indonesia's own order is a church's, not the census's. The code is the first
+/// three letters of eBible's language code (`zlmKSZI` is Malay).
 const INDONESIA: [&str; 31] = [
     "ind", "zlm", "zsm", "msa", "mkn", "pmy", "abs", "jav", "jvn", "sun", "ban", "min", "bug", "mak", "bjn", "ace", "bbc", "btd", "btx", "bts", "mad", "ljp",
     "sas", "mqy", "nij", "kje", "bew", "mui", "kvr", "tet", "pse",
 ];
 
-/// Where a language ranks among the languages of Indonesia, None for any other language.
-pub fn indonesia_rank(language_code: &str) -> Option<usize> {
+/// The languages whose Bibles a church in `country` (two capital letters) sees first, as ISO 639-3
+/// codes, most wanted first: Indonesia keeps its hand-ordered list, any other country the
+/// languages Unicode CLDR gives it, most spoken first.
+pub fn ranking(country: &str) -> Vec<String> {
+    if country == "ID" {
+        return INDONESIA.iter().map(|code| (*code).to_string()).collect();
+    }
+    crate::countries::languages_of(country)
+}
+
+/// Where a language ranks in `ranking`, None for a language outside it.
+fn rank_of(language_code: &str, ranking: &[String]) -> Option<usize> {
     let code: String = language_code.chars().take(3).collect::<String>().to_lowercase();
-    INDONESIA.iter().position(|known| *known == code)
+    ranking.iter().position(|known| *known == code)
 }
 
 /// The translations of one language.
@@ -157,14 +167,16 @@ pub fn indonesia_rank(language_code: &str) -> Option<usize> {
 pub struct Group {
     pub language: String,
     pub local: String,
-    pub of_indonesia: bool,
+    /// Its language is one of the picked country's.
+    pub of_country: bool,
     /// Indexes into the list that was grouped.
     pub items: Vec<usize>,
 }
 
 /// Groups the translations that hold every word of `query` (in a language name, a title or an
-/// id), the languages of Indonesia first, then A to Z. Within a language: whole Bibles first.
-pub fn grouped(list: &[Translation], query: &str) -> Vec<Group> {
+/// id), the languages of `ranking` (`ranking(country)`) first in its order, then A to Z. Within a
+/// language: whole Bibles first.
+pub fn grouped(list: &[Translation], query: &str, ranking: &[String]) -> Vec<Group> {
     let words: Vec<String> = normalize(query).split_whitespace().map(str::to_string).collect();
     let mut groups: Vec<(Option<usize>, Group)> = Vec::new();
     for (at, item) in list.iter().enumerate() {
@@ -177,8 +189,8 @@ pub fn grouped(list: &[Translation], query: &str) -> Vec<Group> {
         match groups.iter_mut().find(|(_, group)| group.language == name) {
             Some((_, group)) => group.items.push(at),
             None => {
-                let rank = indonesia_rank(&item.language_code);
-                groups.push((rank, Group { language: name, local: item.language.clone(), of_indonesia: rank.is_some(), items: vec![at] }));
+                let rank = rank_of(&item.language_code, ranking);
+                groups.push((rank, Group { language: name, local: item.language.clone(), of_country: rank.is_some(), items: vec![at] }));
             }
         }
     }
@@ -229,24 +241,41 @@ mod tests {
     }
 
     #[test]
-    fn the_languages_of_indonesia_come_first() {
+    fn the_languages_of_the_picked_country_come_first() {
         let list = parse_catalogue(CSV);
-        let names: Vec<String> = grouped(&list, "").into_iter().map(|group| group.language).collect();
+        let indonesia = ranking("ID");
+        let names: Vec<String> = grouped(&list, "", &indonesia).into_iter().map(|group| group.language).collect();
         assert_eq!(names, ["Indonesian", "Malay", "Aaaish", "Zedish"]);
-        let groups = grouped(&list, "");
-        assert!(groups[0].of_indonesia && groups[1].of_indonesia && !groups[2].of_indonesia);
+        let groups = grouped(&list, "", &indonesia);
+        assert!(groups[0].of_country && groups[1].of_country && !groups[2].of_country);
         // A whole Bible leads its language, whatever the titles say.
         assert_eq!(list[groups[0].items[0]].id, "indwhole");
+        // Another country ranks its own languages: Malaysia lists Malay before Indonesian, and a
+        // country whose languages are not in the list leaves it A to Z.
+        let malaysia: Vec<String> = grouped(&list, "", &ranking("MY")).into_iter().map(|group| group.language).collect();
+        assert_eq!(malaysia[0], "Malay");
+        let none: Vec<String> = grouped(&list, "", &[]).into_iter().map(|group| group.language).collect();
+        assert_eq!(none, ["Aaaish", "Indonesian", "Malay", "Zedish"]);
+        assert!(grouped(&list, "", &[]).iter().all(|group| !group.of_country));
+    }
+
+    #[test]
+    fn indonesia_keeps_its_hand_ordered_list_and_others_take_the_census() {
+        let indonesia = ranking("ID");
+        assert_eq!(indonesia.len(), 31);
+        assert_eq!(&indonesia[..3], ["ind", "zlm", "zsm"], "hand order, not CLDR's, which has Javanese second");
+        assert_eq!(ranking("BR")[0], "por");
+        assert!(ranking("ZZ").is_empty());
     }
 
     #[test]
     fn a_search_reads_language_or_name() {
         let list = parse_catalogue(CSV);
-        assert_eq!(grouped(&list, "indonesian").len(), 1);
-        assert_eq!(grouped(&list, "BAHASA buatan").len(), 1);
-        assert_eq!(grouped(&list, "zed bible").len(), 1);
-        assert_eq!(grouped(&list, "xyz1").len(), 1);
-        assert!(grouped(&list, "nothing like it").is_empty());
+        assert_eq!(grouped(&list, "indonesian", &[]).len(), 1);
+        assert_eq!(grouped(&list, "BAHASA buatan", &[]).len(), 1);
+        assert_eq!(grouped(&list, "zed bible", &[]).len(), 1);
+        assert_eq!(grouped(&list, "xyz1", &[]).len(), 1);
+        assert!(grouped(&list, "nothing like it", &[]).is_empty());
     }
 
     #[test]
@@ -260,7 +289,7 @@ mod tests {
         let Ok(csv) = std::fs::read_to_string(path) else { return };
         let list = parse_catalogue(&csv);
         assert!(list.len() > 1000);
-        let groups = grouped(&list, "");
+        let groups = grouped(&list, "", &ranking("ID"));
         assert_eq!(groups[0].language, "Indonesian");
         assert!(list[groups[0].items[0]].id.starts_with("ind"));
     }

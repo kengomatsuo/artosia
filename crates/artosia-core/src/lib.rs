@@ -4,6 +4,7 @@ pub mod backdrops;
 pub mod bible;
 pub mod beblia;
 pub mod bible_file;
+pub mod countries;
 pub mod deck;
 pub mod ebible;
 pub mod import;

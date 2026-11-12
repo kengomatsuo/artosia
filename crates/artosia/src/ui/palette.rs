@@ -38,6 +38,7 @@ fn command_icon(command: Command) -> &'static rune::Icon {
         Command::NewAnnouncement => &icons::ANNOUNCE,
         Command::Keys => &icons::KEYBOARD,
         Command::Tour => &icons::PLAY,
+        Command::FirstRun => &icons::GLOBE,
         Command::StartService => &icons::PLAY,
         Command::Next => &icons::ARROW_RIGHT,
         Command::Previous => &icons::ARROW_LEFT,
@@ -299,13 +300,13 @@ fn actions(s: &App, k: &Kit, hit: &Hit) -> El {
 /// A song's words, with the matched line or the picked section marked.
 fn song_preview(s: &App, k: &Kit, song: usize, line: Option<&artosia_core::search::LineHit>, picked: Option<artosia_core::song::Tag>, notes: Vec<String>) -> Vec<El> {
     let found = &s.songs[song];
-    let mut out = vec![text(found.title.clone()).font(type_::HEADING).color(k.c.text_base).wrap()];
+    let mut out = vec![crate::ui::widgets::wrapped(found.title.clone()).font(type_::HEADING).color(k.c.text_base).wrap()];
     if !found.author.is_empty() {
         out.push(text(found.author.clone()).font(type_::SMALL).color(k.c.text_muted));
     }
     // Why the song is where it is, in words with the real counts.
     for note in notes {
-        out.push(text(note).font(type_::SMALL_STRONG).color(k.c.text_muted).wrap());
+        out.push(crate::ui::widgets::wrapped(note).font(type_::SMALL_STRONG).color(k.c.text_muted).wrap());
     }
     for (at, section) in found.sections().iter().enumerate() {
         let color = group_color(tag_group(section.tag));
@@ -316,7 +317,7 @@ fn song_preview(s: &App, k: &Kit, song: usize, line: Option<&artosia_core::searc
             let hit_line = matched.filter(|line| line.text == *content);
             lines = lines.child(match hit_line {
                 Some(line) => highlighted(content, &line.ranges, type_::BODY, k.c.text_base, theme::accent()).wrap(),
-                None => text(content.clone()).font(type_::BODY).color(if whole { k.c.text_base } else { k.c.text_muted }).wrap(),
+                None => crate::ui::widgets::wrapped(content.clone()).font(type_::BODY).color(if whole { k.c.text_base } else { k.c.text_muted }).wrap(),
             });
         }
         let mut block = col().key(format!("section-{at}")).gap(space::S1).child(row().child(tag_chip(&t::section_label(section.tag), color))).child(lines);
@@ -341,7 +342,7 @@ fn preview(s: &App, k: &Kit) -> El {
         Hit::Song { song, line, reason, .. } => body = body.children(song_preview(s, k, *song, line.as_ref(), None, s.song_notes(*song, reason.as_ref()))),
         Hit::Section { song, tag, .. } => body = body.children(song_preview(s, k, *song, None, Some(*tag), Vec::new())),
         Hit::Passage { reference, title, step, .. } => {
-            body = body.child(text(title.clone()).font(type_::HEADING).color(k.c.text_base).wrap());
+            body = body.child(crate::ui::widgets::wrapped(title.clone()).font(type_::HEADING).color(k.c.text_base).wrap());
             if let Some(bible) = s.bible() {
                 body = body.child(text(bible.name.clone()).font(type_::SMALL).color(k.c.text_muted));
                 let limit = if step.is_some() { 12 } else { 60 };
@@ -351,7 +352,7 @@ fn preview(s: &App, k: &Kit) -> El {
                             .key(format!("verse-{}-{}", verse.chapter, verse.verse))
                             .gap(space::S2)
                             .child(text(verse.verse.to_string()).font(type_::SMALL_STRONG).color(k.c.text_faint).w(22.0))
-                            .child(text(verse.text.to_string()).font(type_::BODY).color(k.c.text_base).wrap().grow(1.0)),
+                            .child(crate::ui::widgets::wrapped(verse.text.to_string()).font(type_::BODY).color(k.c.text_base).wrap().grow(1.0)),
                     );
                 }
             }
@@ -373,8 +374,8 @@ fn preview(s: &App, k: &Kit) -> El {
         other => {
             let (glyph, title, detail) = plain_row(k, other);
             body = body
-                .child(row().gap(space::S3).center_y().child(icon(glyph, 16.0).color(k.c.text_muted)).child(text(title).font(type_::HEADING).color(k.c.text_base).wrap().grow(1.0)))
-                .child(text(detail).font(type_::BODY).color(k.c.text_muted).wrap());
+                .child(row().gap(space::S3).center_y().child(icon(glyph, 16.0).color(k.c.text_muted)).child(crate::ui::widgets::wrapped(title).font(type_::HEADING).color(k.c.text_base).wrap().grow(1.0)))
+                .child(crate::ui::widgets::wrapped(detail).font(type_::BODY).color(k.c.text_muted).wrap());
         }
     }
     col()

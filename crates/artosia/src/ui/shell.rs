@@ -135,7 +135,7 @@ fn list_row(k: &Kit, key: &str, index: usize, number: Option<usize>, slide: &Sli
             }
         }
         // A verse is one long sentence: it wraps where a lyric line is cut.
-        SlideKind::Scripture => words = words.child(text(slide.text.clone()).font(type_::SMALL).color(ink).wrap().max_lines(4)),
+        SlideKind::Scripture => words = words.child(crate::ui::widgets::wrapped(slide.text.clone()).font(type_::SMALL).color(ink).wrap().max_lines(4)),
         SlideKind::Announcement => {
             words = words.child(text(slide.heading.clone()).font(type_::SMALL_STRONG).color(ink).truncate());
             for line in slide.text.lines().filter(|line| !line.trim().is_empty()).take(3) {

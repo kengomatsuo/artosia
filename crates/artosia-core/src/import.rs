@@ -51,6 +51,19 @@ pub fn easislides_song_files(folder: &Path) -> Vec<PathBuf> {
     files_with(&folder.join("Admin").join("Databases"), &["db"])
 }
 
+/// How many songs an EasiSlides data folder holds, counted without reading them, so the first
+/// run can say "961 songs found" at once. A database that cannot be read counts for none.
+pub fn easislides_song_count(folder: &Path) -> usize {
+    easislides_song_files(folder)
+        .iter()
+        .filter_map(|file| {
+            let db = rusqlite::Connection::open_with_flags(file, rusqlite::OpenFlags::SQLITE_OPEN_READ_ONLY).ok()?;
+            db.query_row("select count(*) from items where trim(coalesce(title1, '')) != ''", [], |row| row.get::<_, i64>(0)).ok()
+        })
+        .map(|count| usize::try_from(count).unwrap_or(0))
+        .sum()
+}
+
 /// The MyBible modules inside an EasiSlides data folder.
 pub fn easislides_bible_files(folder: &Path) -> Vec<PathBuf> {
     files_with(&folder.join("Admin").join("HolyBibles"), &["sqlite3"])
@@ -156,6 +169,26 @@ mod tests {
         let hits = bible.search("in the begining god created", 3);
         let first = &bible.all_verses()[hits[0].index];
         assert_eq!((first.book, first.chapter, first.verse), (1, 1, 1));
+    }
+
+    #[test]
+    fn the_songs_of_an_easislides_folder_are_counted_without_reading_them() {
+        let folder = std::env::temp_dir().join(format!("artosia-easi-count-{}", std::process::id()));
+        let _ = std::fs::remove_dir_all(&folder);
+        let databases = folder.join("Admin").join("Databases");
+        std::fs::create_dir_all(&databases).unwrap_or_else(|error| panic!("{error}"));
+        for (name, titles) in [("a.db", &["One", "Two", ""][..]), ("b.db", &["Three"][..])] {
+            let db = rusqlite::Connection::open(databases.join(name)).unwrap_or_else(|error| panic!("{error}"));
+            db.execute("create table items (title1 text)", []).unwrap_or_else(|error| panic!("{error}"));
+            for title in titles {
+                db.execute("insert into items (title1) values (?1)", [title]).unwrap_or_else(|error| panic!("{error}"));
+            }
+        }
+        std::fs::write(databases.join("broken.db"), b"not a database").unwrap_or_else(|error| panic!("{error}"));
+        // Three titled songs; the untitled row is skipped as the reader skips it, and the broken file counts none.
+        assert_eq!(easislides_song_count(&folder), 3);
+        assert_eq!(easislides_song_count(&folder.join("missing")), 0);
+        let _ = std::fs::remove_dir_all(&folder);
     }
 
     #[test]

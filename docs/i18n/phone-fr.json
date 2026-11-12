@@ -250,7 +250,7 @@
   "why": "one word"
  },
  "keys_text": {
-  "text": "Espace ou flèche bas : suivante. Flèche haut : précédente. / : recherche. C : refrain. V : couplet suivant. B : pont. 1 à 9 : partie. F1 : cacher le texte. F2 : écran noir. F3 : logo. F6 : activer ou désactiver le projecteur.",
+  "text": "Espace ou flèche bas : suivante. Flèche haut : précédente. / : recherche. C : refrain. V : couplet suivant. B : pont. 1 à 9 : partie. F1 : cacher le texte. F2 : écran noir. F3 : logo. F6 : allumer ou éteindre le projecteur.",
   "back": "Space or down arrow: next slide. Up arrow: previous slide. /: search. C: chorus. V: next verse. B: bridge. 1 to 9: part of the song. F1: hide the text. F2: black screen. F3: logo. F6: switch the projector on or off.",
   "why": "part keys C, V, B on the phone in every language"
  },
@@ -295,9 +295,9 @@
   "why": "same as the computer"
  },
  "projector_off": {
-  "text": "Projecteur désactivé",
+  "text": "Projecteur éteint",
   "back": "Projector off",
-  "why": "same off word as the window"
+  "why": "same pair"
  },
  "label.numbered": {
   "text": "{0} {1}",

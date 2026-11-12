@@ -210,7 +210,8 @@ fn slide_text(slide: &Slide, look: &Look, w: f32, h: f32, detail: Detail, under_
     let s = sizes(size, look);
     let align = if look.centered { Align::Center } else { Align::Start };
     let line = |content: &str, style: TextStyle, color: Color| -> El {
-        dressed(look, detail, h, box_w, color, |paint| text(content).font(style).color(paint).align(align).w(box_w).wrap())
+        // A Korean word is never cut in two where a line of a song wraps.
+        dressed(look, detail, h, box_w, color, |paint| text(artosia_core::text::keep_words(content).into_owned()).font(style).color(paint).align(align).w(box_w).wrap())
     };
     let mut block = col().key(key_of(slide)).absolute(mx, my).size(box_w, box_h).gap(s.gap).transition(Transition::opacity());
     block = match look.place {

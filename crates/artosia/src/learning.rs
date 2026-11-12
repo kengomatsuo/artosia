@@ -58,7 +58,7 @@ impl App {
     /// "9 November", in the window's language.
     pub fn day_month(&self, at: i64) -> String {
         let time = rune::LocalTime::at(at * 1000);
-        format!("{} {}", time.day, t::MONTHS()[(time.month.clamp(1, 12) - 1) as usize])
+        t::day_month(time.day as u8, t::MONTHS()[(time.month.clamp(1, 12) - 1) as usize])
     }
 
     /// A song or passage has just gone live as something new.

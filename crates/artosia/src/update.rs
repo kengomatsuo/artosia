@@ -21,12 +21,17 @@ pub const VERSION: &str = env!("CARGO_PKG_VERSION");
 const MARKER: &str = "just-updated";
 
 /// The folder the program runs from. None in a development build or a headless run, which
-/// must never rewrite themselves.
+/// must never rewrite themselves, and when packaged: the Store updates the program and its
+/// folder is read-only. With no folder nothing below downloads, swaps or runs the setup.
 pub fn install_dir() -> Option<PathBuf> {
-    if cfg!(debug_assertions) || rune::is_headless() {
+    updatable_dir(cfg!(debug_assertions) || rune::is_headless(), crate::store::packaged(), std::env::current_exe().ok())
+}
+
+fn updatable_dir(development: bool, packaged: bool, exe: Option<PathBuf>) -> Option<PathBuf> {
+    if development || packaged {
         return None;
     }
-    std::env::current_exe().ok()?.parent().map(PathBuf::from)
+    exe?.parent().map(PathBuf::from)
 }
 
 /// Where new versions are published.
@@ -90,6 +95,9 @@ fn refresh_installed_apps(folder: &std::path::Path) {
 /// Looks for a newer version on a worker and downloads it. `asked` is true when a person
 /// pressed the button, and then every outcome is reported, also "nothing new".
 pub fn check(inbox: Arc<Mutex<Vec<Arrived>>>, waker: Option<Waker>, asked: bool) {
+    if crate::store::packaged() {
+        return;
+    }
     std::thread::spawn(move || {
         let outcome = fetch();
         let quiet = matches!(&outcome, Err(error) if error.is_quiet()) || matches!(outcome, Ok(None));
@@ -111,4 +119,17 @@ fn fetch() -> Result<Option<String>, UpdateError> {
     let Some(release) = artosia_update::check(&feed, VERSION)? else { return Ok(None) };
     let staged = artosia_update::download(&release, &artosia_update::staging_dir(&folder), &|_, _| {})?;
     Ok(Some(staged.version))
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn a_packaged_program_has_nothing_to_update() {
+        let exe = Some(PathBuf::from("apps/x/artosia.exe"));
+        assert_eq!(updatable_dir(false, true, exe.clone()), None);
+        assert_eq!(updatable_dir(true, false, exe.clone()), None);
+        assert_eq!(updatable_dir(false, false, exe), Some(PathBuf::from("apps/x")));
+    }
 }

@@ -10,7 +10,7 @@
   "why": "Same word as the computer's label"
  },
  "pin_hint": {
-  "text": "Gõ mã PIN hiện trên máy tính, ở mục Điều khiển từ xa",
+  "text": "Gõ mã PIN hiện trên máy tính, ở mục Điện thoại điều khiển",
   "back": "Type the PIN shown on the computer, under Remote control",
   "why": "Says where the number comes from"
  },
@@ -40,9 +40,9 @@
   "why": "Same word as the computer"
  },
  "tab_plan": {
-  "text": "Các mục",
+  "text": "Thứ tự",
   "back": "The items",
-  "why": "Danh sách is 9 characters and the limit is 8; no short form exists, so the items word stays"
+  "why": "Thứ tự is the natural short form of thứ tự lễ, the plan"
  },
  "tab_search": {
   "text": "Tìm kiếm",
@@ -90,9 +90,9 @@
   "why": "trang is the slide classifier"
  },
  "clear_text": {
-  "text": "Không chữ",
+  "text": "Ẩn chữ",
   "back": "No text",
-  "why": "Same word as the computer's tile"
+  "why": "Same word as the window and the keys sheet"
  },
  "black": {
   "text": "Màn đen",
@@ -140,8 +140,8 @@
   "why": "One word"
  },
  "plan_empty": {
-  "text": "Danh sách còn trống",
-  "back": "The list is empty",
+  "text": "Thứ tự lễ còn trống",
+  "back": "The order of service is empty",
   "why": "No full stop"
  },
  "cancel": {
@@ -190,8 +190,8 @@
   "why": "Not visible"
  },
  "add_aria": {
-  "text": "Thêm {0} vào danh sách",
-  "back": "Add {0} to the list",
+  "text": "Thêm {0} vào thứ tự lễ",
+  "back": "Add {0} to the order of service",
   "why": "Not visible"
  },
  "message": {

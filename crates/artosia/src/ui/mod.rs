@@ -5,6 +5,7 @@ mod announcements;
 mod backdrops;
 mod bibles;
 mod editor;
+pub(crate) mod onboard;
 pub(crate) mod live;
 pub(crate) mod look;
 mod palette;
@@ -288,5 +289,6 @@ pub fn view(s: &App, cx: &mut Cx<App>) -> El {
     plans::view(s, k, &mut layer);
     layer.extend(toast(s, k));
     tour::view(s, cx, k, &mut layer);
+    onboard::view(s, cx, k, &mut layer);
     rune_kit::root(body, layer)
 }

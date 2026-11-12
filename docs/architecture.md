@@ -58,6 +58,9 @@ The stack survey and RAM measurements behind this choice are in [research.md](re
 | `crates/artosia-office` | Reading a church's PowerPoint and Word files | no | no |
 | `crates/artosia-update` | Self-update from a signed static folder, and the release tool | no | no |
 | `crates/artosia-setup` | `Artosia-setup.exe`: fetches the signed release into the user's own programs folder, adds shortcuts and the entry in Windows' installed apps, removes them again. Unsigned by the owner's choice (2026-11-12), and kept the same file across releases ([setup.md](setup.md)) | no | no |
+| `crates/artosia-locale` | Fits a computer's or a browser's language tag to one of a program's languages (`pick`, `pick_first`, `languages`, `region`); the setup uses it, and the phone page and the homepage repeat its rule in JavaScript and Python | no | no |
+
+The Microsoft Store edition is a package built by `tools/store-package.sh <version>` from the same programs; its account is [store.md](store.md).
 
 A bare `cargo build` builds everything but `artosia-video` (`default-members` in the root `Cargo.toml`), so a machine without GStreamer still builds and runs Artosia with colour and picture backgrounds.
 

@@ -252,7 +252,7 @@ fn form(s: &App, k: &Kit, form: &Notices, width: f32) -> El {
                         .w_full()
                         .gap(space::S2)
                         .center_y()
-                        .child(text(problem).font(type_::SMALL).color(k.c.text_muted).wrap().grow(1.0))
+                        .child(crate::ui::widgets::wrapped(problem).font(type_::SMALL).color(k.c.text_muted).wrap().grow(1.0))
                         .child(btn(t::BIBLES_MORE()).small().focusable().build(k, |s, _| s.open_bibles())),
                 );
             }

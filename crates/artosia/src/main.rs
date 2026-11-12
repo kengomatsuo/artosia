@@ -17,12 +17,14 @@ mod firewall;
 mod languages;
 mod learning;
 mod link;
+mod onboard;
 mod palette;
 mod plans;
 mod recordings;
 mod starts;
 mod speech_model;
 mod state;
+mod store;
 mod stream;
 mod strings;
 #[cfg(all(test, feature = "speech"))]
@@ -67,9 +69,12 @@ fn setup(s: &mut App, waker: Waker) {
     if s.settings.remote_on && s.folder.is_some() && !rune::is_headless() {
         s.resume_remote();
     }
-    // The first start on a library, and every practice run, begins with the tour. A headless
-    // run never does unless a scene asks for it.
-    if !rune::is_headless() && (!s.settings.toured || s.folder.is_none()) {
+    // A new church (a library with no settings file before this start) begins with the first
+    // run, whose last page offers the tour. The first start on a library that has settings, and
+    // every practice run, begins with the tour. A headless run never does unless a scene asks.
+    if s.first_run {
+        s.start_first_run();
+    } else if !rune::is_headless() && (!s.settings.toured || s.folder.is_none()) {
         s.start_tour();
     }
 }
@@ -90,6 +95,10 @@ fn on_key(s: &mut App, ev: &KeyEvent, tx: &mut Tx) -> bool {
     if s.tour.is_some() {
         s.tour_key(&ev.key);
         return true;
+    }
+    // So does the first run, which is open before the tour and never together with it.
+    if s.onboard.is_some() {
+        return s.onboard_key(ev, tx);
     }
     // A modifier on its own. Shift let go shows the slide picked while it was held. This is a
     // key event because Rune's `App::on_modifiers` is never called in a single-window app:
@@ -396,6 +405,11 @@ const SCENES: &[Scene] = &[
     }),
     ("look", |s| s.sheet = Sheet::Looks),
     ("settings", |s| s.sheet = Sheet::Settings),
+    // The language drop-down of Settings, open: its list must stay inside the dialog and the window.
+    ("settings-language", |s| {
+        s.sheet = Sheet::Settings;
+        s.language_open = true;
+    }),
     ("look-styled", |s| {
         s.sheet = Sheet::Looks;
         let styled = artosia_slides::look::Look { ink: [255, 214, 0], font: "Georgia".into(), outline: artosia_slides::look::Outline::Thick, ..s.look() };
@@ -446,6 +460,17 @@ const SCENES: &[Scene] = &[
     ("tour-show", |s| s.tour = Some(2)),
     ("tour-live", |s| s.tour = Some(3)),
     ("tour-search", |s| s.tour = Some(4)),
+    // The first run, with made-up answers (`ui/onboard.rs` `demo_onboard`).
+    ("onboard-language", |s| s.demo_onboard("language")),
+    ("onboard-country", |s| s.demo_onboard("country")),
+    ("onboard-bible", |s| s.demo_onboard("bible")),
+    ("onboard-bible-offline", |s| s.demo_onboard("bible-offline")),
+    ("onboard-songs", |s| s.demo_onboard("songs")),
+    ("onboard-screens", |s| s.demo_onboard("screens")),
+    ("onboard-one-screen", |s| s.demo_onboard("one-screen")),
+    ("onboard-ready", |s| s.demo_onboard("ready")),
+    ("onboard-ready-failed", |s| s.demo_onboard("ready-failed")),
+    ("onboard-done", |s| s.demo_onboard("done")),
     ("listen", |s| s.sheet = Sheet::Listen),
     ("listen-tempo", |s| {
         s.demo_listening = true;
@@ -735,6 +760,10 @@ fn claim_instance() -> Instance {
 }
 
 fn main() {
+    // Before the claim on the library and any window: a check that runs inside a package.
+    if store::report_if_asked() {
+        return;
+    }
     let instance = claim_instance();
     if matches!(instance, Instance::Second) {
         return;

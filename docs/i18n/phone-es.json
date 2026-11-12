@@ -10,7 +10,7 @@
   "why": "Same word as the computer's label."
  },
  "pin_hint": {
-  "text": "Escribe el PIN que muestra Artosia en el equipo",
+  "text": "Escribe el PIN que muestra Artosia en la computadora",
   "back": "Type the PIN that Artosia shows on the computer",
   "why": "Equipo reads in Spain and Latin America."
  },
@@ -30,7 +30,7 @@
   "why": "Two short statements."
  },
  "unreachable": {
-  "text": "No se encuentra el equipo",
+  "text": "No se encuentra la computadora",
   "back": "The computer cannot be found",
   "why": "No full stop."
  },
@@ -40,7 +40,7 @@
   "why": "Same Live word."
  },
  "tab_plan": {
-  "text": "Programa",
+  "text": "Culto",
   "back": "Plan",
   "why": "Same plan word; the two fit 15."
  },
@@ -105,7 +105,7 @@
   "why": "Same as the computer's tile."
  },
  "logo_needs": {
-  "text": "Primero elige un logo en el equipo",
+  "text": "Primero elige un logo en la computadora",
   "back": "First choose a logo on the computer",
   "why": "One sentence."
  },
@@ -140,8 +140,8 @@
   "why": "One word."
  },
  "plan_empty": {
-  "text": "El programa está vacío",
-  "back": "The plan is empty",
+  "text": "Aún no hay nada en el culto",
+  "back": "There is nothing in the plan yet",
   "why": "Same as the computer."
  },
  "cancel": {
@@ -150,7 +150,7 @@
   "why": "Light refusal."
  },
  "search_ph": {
-  "text": "Canto o pasaje bíblico",
+  "text": "Canción o pasaje bíblico",
   "back": "Song or Bible passage",
   "why": "Same as the computer."
  },
@@ -175,12 +175,12 @@
   "why": "Same as the computer's Show tile."
  },
  "add": {
-  "text": "Añadir",
+  "text": "Agregar",
   "back": "Add",
   "why": "Same verb as Añadir al programa."
  },
  "added": {
-  "text": "Añadido",
+  "text": "Agregado",
   "back": "Added",
   "why": "One word."
  },
@@ -190,13 +190,13 @@
   "why": "Not visible."
  },
  "add_aria": {
-  "text": "Al programa: «{0}»",
+  "text": "Al culto: «{0}»",
   "back": "To the plan: «{0}»",
   "why": "Not visible."
  },
  "message": {
-  "text": "Mensaje a la sala",
-  "back": "Message to the room",
+  "text": "Mensaje a todos",
+  "back": "Message to everyone",
   "why": "A phrase."
  },
  "message_ph": {
@@ -220,7 +220,7 @@
   "why": "Quotes the notice."
  },
  "countdown": {
-  "text": "Cuenta atrás",
+  "text": "Cuenta regresiva",
   "back": "Countdown",
   "why": "A noun, same as the computer."
  },
@@ -245,8 +245,8 @@
   "why": "One word."
  },
  "keys_title": {
-  "text": "Teclado",
-  "back": "Keyboard",
+  "text": "Atajos",
+  "back": "Shortcuts",
   "why": "One word."
  },
  "keys_text": {

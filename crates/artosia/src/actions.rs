@@ -955,8 +955,9 @@ impl App {
         let person = |name: &str, day: u8| Person { id: 0, name: name.into(), day: day.clamp(1, 28), month: today.month };
         self.people = vec![person("Sample Alpha", today.day), person("Sample Beta", today.day.saturating_add(2)), person("Sample Gamma", today.day.saturating_add(3))];
         let mut cards = vec![
-            Announcement { title: "Verse of the week".into(), fill: Fill::Passage, passage: "Psalm 23:1-3".into(), seconds: 12, ..Announcement::default() },
-            Announcement { title: "Birthdays".into(), fill: Fill::BirthdaysWeek, seconds: 12, ..Announcement::default() },
+            // The cards take their titles from the templates, so a render reads in the window's language.
+            Announcement { title: t::ANNOUNCEMENT_TEMPLATES()[3].0.into(), fill: Fill::Passage, passage: "Psalm 23:1-3".into(), seconds: 12, ..Announcement::default() },
+            Announcement { title: t::ANNOUNCEMENT_TEMPLATES()[5].0.into(), fill: Fill::BirthdaysWeek, seconds: 12, ..Announcement::default() },
         ];
         if kind == "birthdays" {
             cards.reverse();
@@ -1025,7 +1026,7 @@ impl App {
             (false, false) => format!("{}/{}", address.trim_end_matches('/'), key),
         };
         let record = self.settings.stream_record.then(|| {
-            let folder = rune::dirs::AppDirs::new("artosia").map(|dirs| dirs.data().join("recordings")).unwrap_or_else(std::env::temp_dir);
+            let folder = crate::data::folder().map(|folder| folder.join("recordings")).unwrap_or_else(std::env::temp_dir);
             let _ = std::fs::create_dir_all(&folder);
             let time = rune::LocalTime::at((self.now * 1000.0) as i64);
             folder.join(format!("service-{:04}-{:02}-{:02}-{:02}{:02}.mp4", time.year, time.month, time.day, time.hour, time.minute))
@@ -1776,6 +1777,7 @@ impl App {
         }
         changed |= self.poll_desk(tx);
         changed |= self.poll_backdrops();
+        changed |= self.poll_onboard(tx);
 
         let state = self.output_state();
         if self.sent.as_ref() != Some(&state) {

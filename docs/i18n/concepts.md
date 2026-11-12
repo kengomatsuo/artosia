@@ -152,6 +152,10 @@ A second reader of a finished language found one thing under two or three names,
 
 ## Other
 
+**`first_run`** The short setup a new church sees the first time Artosia starts: seven pages, each with one question that is already answered from what the computer knows (the language, the country, a Bible, where the songs are, whether the room sees a test picture), then a page that shows the Bible and the songs arriving, and a last page with three things to start with. It can be skipped from any page, and it can be opened again from Settings or the search.
+
+**`country`** The country or region the church is in. It is asked once, at the first run, only to put the Bibles in the languages spoken there ahead of the others; it changes nothing else. Some places are not countries, so the question says country or region.
+
 **`tour`** A five-stop walk-through of the window, shown at the first start and available again later. Each stop is a speech bubble pointing at a part of the window: the plan, Preview, Show, Live and the search.
 
 **`practice`** Practice mode: the program runs with a made-up library, saves nothing, and keeps the projector off. For learning without risk.

@@ -1,8 +1,8 @@
 {
  "SEARCH_PLACEHOLDER": {
-  "text": "Canto o pasaje bíblico",
+  "text": "Canción o pasaje bíblico",
   "back": "Song or Bible passage",
-  "why": "Noun hint, no verb; canto fits the 8-character tab."
+  "why": "Canción is what evangelical volunteers say."
  },
  "SEARCH_SONGS": {
   "text": "Título o una línea de la letra",
@@ -25,9 +25,9 @@
   "why": "One short word."
  },
  "SCOPE_SONGS": {
-  "text": "Cantos",
-  "back": "Songs",
-  "why": "Canto is the song word everywhere; canciones does not fit 8."
+  "text": "Música",
+  "back": "Music",
+  "why": "Canciones is 9 and does not fit 8; the only place the song word changes."
  },
  "SCOPE_BIBLE": {
   "text": "Biblia",
@@ -50,14 +50,14 @@
   "why": "Coro and estrofa are the section names."
  },
  "IN_PLAN": {
-  "text": "Ya está en el programa",
-  "back": "Already in the plan",
-  "why": "Programa is the plan of the service; state, not action."
+  "text": "Ya está en el culto",
+  "back": "Already in the service plan",
+  "why": "Culto is the plan of one service; the event itself is servicio."
  },
  "PLAN_CHIP": {
-  "text": "Ya en el programa",
+  "text": "Ya en el culto",
   "back": "Already in the plan",
-  "why": "Statement about the song."
+  "why": "Same plan word."
  },
  "KIND_LOOK": {
   "text": "Diseño",
@@ -81,11 +81,11 @@
  },
  "countdown_for": {
   "text": {
-   "one": "Cuenta atrás de {minutes} minuto",
-   "other": "Cuenta atrás de {minutes} minutos"
+   "one": "Cuenta regresiva de {minutes} minuto",
+   "other": "Cuenta regresiva de {minutes} minutos"
   },
   "back": "Countdown of {minutes} minute(s)",
-  "why": "Cuenta atrás reads in both Spain and Latin America; regresiva does not fit the stage label."
+  "why": "Regresiva reads in Latin America and Spain."
  },
  "BIBLE_LOADING": {
   "text": "Preparando la Biblia",
@@ -108,9 +108,9 @@
   "why": "Book first."
  },
  "SONGS_EMPTY": {
-  "text": "Aún no hay cantos",
+  "text": "Aún no hay canciones",
   "back": "There are no songs yet",
-  "why": "State only."
+  "why": "Canción."
  },
  "nothing_found": {
   "text": "No hay resultados para «{query}»",
@@ -118,17 +118,17 @@
   "why": "Spanish angle quotes."
  },
  "new_song_called": {
-  "text": "Nuevo canto «{title}»",
+  "text": "Nueva canción «{title}»",
   "back": "New song «{title}»",
-  "why": "Quoted title."
+  "why": "Canción."
  },
  "songs": {
   "text": {
-   "one": "{count} canto",
-   "other": "{count} cantos"
+   "one": "{count} canción",
+   "other": "{count} canciones"
   },
   "back": "{count} song(s)",
-  "why": "Counted noun."
+  "why": "Canción."
  },
  "slides": {
   "text": {
@@ -155,9 +155,9 @@
   "why": "Versículo is the Bible verse; estrofa is the song verse."
  },
  "CMD_NEW_SONG": {
-  "text": "Nuevo canto",
+  "text": "Nueva canción",
   "back": "New song",
-  "why": "Same as editor heading."
+  "why": "Canción."
  },
  "CMD_NEW_SONG_DETAIL": {
   "text": "Escribe la letra o pégala",
@@ -165,9 +165,9 @@
   "why": "Plain."
  },
  "CMD_PASTE_SONG": {
-  "text": "Canto desde el portapapeles",
+  "text": "Canción desde el portapapeles",
   "back": "Song from the clipboard",
-  "why": "Portapapeles is the clipboard."
+  "why": "Canción."
  },
  "CMD_PASTE_SONG_DETAIL": {
   "text": "Copia la letra antes y elige esta opción",
@@ -180,9 +180,9 @@
   "why": "One word for the announcements everywhere."
  },
  "CMD_ANNOUNCEMENTS_DETAIL": {
-  "text": "Rotan en el proyector mientras llega la gente",
-  "back": "They rotate on the projector while people arrive",
-  "why": "Rotar for cards taking turns."
+  "text": "Se alternan en el proyector mientras llega gente",
+  "back": "They alternate on the projector while people arrive",
+  "why": "Rotar read as turning an object."
  },
  "CMD_HEADING": {
   "text": "Nuevo encabezado",
@@ -215,14 +215,14 @@
   "why": "Plain list."
  },
  "CMD_SCREENS": {
-  "text": "Monitores",
-  "back": "Monitors",
-  "why": "Monitor is the hardware noun."
+  "text": "Pantallas",
+  "back": "Screens",
+  "why": "Pantalla is the one noun for the hardware, as volunteers say."
  },
  "CMD_SCREENS_DETAIL": {
-  "text": "Elige el monitor de la gente y el de la banda",
-  "back": "Pick the monitor for the people and the one for the band",
-  "why": "Plain."
+  "text": "Elige la pantalla de la gente y la de la banda",
+  "back": "Pick the screen for the people and the one for the band",
+  "why": "Pantalla."
  },
  "CMD_REMOTE": {
   "text": "Control remoto",
@@ -230,14 +230,14 @@
   "why": "What volunteers say."
  },
  "CMD_REMOTE_DETAIL": {
-  "text": "Teléfonos en el mismo Wi-Fi cambian diapositivas",
-  "back": "Phones on the same Wi-Fi change slides",
-  "why": "Fits 48 exactly."
+  "text": "Un teléfono en tu Wi-Fi puede pasar diapositivas",
+  "back": "A phone on your Wi-Fi can pass slides",
+  "why": "Modal verb; fits 48."
  },
  "CMD_IMPORT_FOLDER": {
-  "text": "Importar carpeta de cantos",
+  "text": "Importar carpeta de canciones",
   "back": "Import folder of songs",
-  "why": "Same as folder chooser title."
+  "why": "Canción."
  },
  "CMD_IMPORT_FOLDER_DETAIL": {
   "text": "Archivos OpenLyrics",
@@ -245,9 +245,9 @@
   "why": "Proper name."
  },
  "IMPORT_FOLDER_EMPTY": {
-  "text": "No hay cantos legibles en esa carpeta",
+  "text": "No hay canciones legibles en esa carpeta",
   "back": "No readable songs in that folder",
-  "why": "No full stop."
+  "why": "Canción."
  },
  "CMD_IMPORT": {
   "text": "Importar de EasiSlides",
@@ -255,14 +255,14 @@
   "why": "Proper name stays."
  },
  "CMD_IMPORT_DETAIL": {
-  "text": "Copia cantos y Biblias de EasiSlides",
+  "text": "Copia canciones y Biblias de EasiSlides",
   "back": "Copies songs and Bibles from EasiSlides",
-  "why": "Copia, not move."
+  "why": "Canción."
  },
  "CMD_STREAM": {
-  "text": "Emisión y grabación",
-  "back": "Broadcast and recording",
-  "why": "Emisión is the broadcast noun."
+  "text": "Streaming y grabación",
+  "back": "Streaming and recording",
+  "why": "Streaming fits 10 where transmisión (11) does not."
  },
  "CMD_STREAM_DETAIL": {
   "text": "La imagen del proyector, en vivo o en archivo",
@@ -270,9 +270,9 @@
   "why": "Projector, not monitor."
  },
  "BTN_STREAM": {
-  "text": "Emisión",
-  "back": "Broadcast",
-  "why": "Noun, fits 10."
+  "text": "Streaming",
+  "back": "Streaming",
+  "why": "One name everywhere."
  },
  "BTN_LISTEN": {
   "text": "Micrófono",
@@ -280,19 +280,19 @@
   "why": "Named by what the volunteer sees."
  },
  "STREAM_HINT": {
-  "text": "Se emite lo mismo que muestra el proyector, con el sonido de la sala.",
-  "back": "The same as the projector shows is broadcast, with the room's sound.",
-  "why": "Plain."
+  "text": "Se envía lo que muestra el proyector, con el audio de la sala.",
+  "back": "What the projector shows is sent, with the room's audio.",
+  "why": "Audio, not sonido."
  },
  "STREAM_ADDRESS": {
-  "text": "Dirección de emisión",
-  "back": "Broadcast address",
-  "why": "Noun phrase."
+  "text": "Dirección del streaming",
+  "back": "Streaming address",
+  "why": "Same name."
  },
  "STREAM_KEY": {
-  "text": "Clave de emisión",
-  "back": "Broadcast key",
-  "why": "Clave is a code, not a key cap."
+  "text": "Clave del streaming",
+  "back": "Streaming key",
+  "why": "Clave is a code."
  },
  "STREAM_RECORD": {
   "text": "Guardar una grabación",
@@ -300,14 +300,14 @@
   "why": "Reads as what the switch turns on."
  },
  "STREAM_RECORD_HINT": {
-  "text": "En este equipo, con los datos de Artosia",
+  "text": "En esta computadora, con los datos de Artosia",
   "back": "On this computer, with Artosia's data",
-  "why": "No full stop."
+  "why": "Computadora."
  },
  "BTN_STREAM_START": {
-  "text": "Iniciar emisión",
-  "back": "Start broadcast",
-  "why": "Names what starts."
+  "text": "Transmitir",
+  "back": "Stream",
+  "why": "Verb that names the streaming."
  },
  "BTN_STREAM_STOP": {
   "text": "Detener",
@@ -315,8 +315,8 @@
   "why": "Opposite of Iniciar."
  },
  "STREAM_STARTING": {
-  "text": "Iniciando la emisión",
-  "back": "Starting the broadcast",
+  "text": "Iniciando el streaming",
+  "back": "Starting the streaming",
   "why": "State."
  },
  "STREAM_RECONNECTING": {
@@ -325,14 +325,14 @@
   "why": "Nothing to do for the person."
  },
  "STREAM_STOPPING": {
-  "text": "Terminando la emisión",
-  "back": "Ending the broadcast",
+  "text": "Cerrando el streaming",
+  "back": "Closing the streaming",
   "why": "State."
  },
  "STREAM_MISSING": {
-  "text": "La emisión no funciona: esta instalación no incluye esa parte",
-  "back": "Broadcasting does not work: this installation lacks that part",
-  "why": "No bug or error word."
+  "text": "El streaming no funciona: esta instalación no incluye esa parte",
+  "back": "Streaming does not work: this installation lacks that part",
+  "why": "No bug word."
  },
  "STREAM_NOTHING": {
   "text": "Escribe una dirección o activa guardar grabación",
@@ -340,20 +340,20 @@
   "why": "Says what to do."
  },
  "stream_failed": {
-  "text": "No se pudo iniciar la emisión: {problem}",
-  "back": "The broadcast could not start: {problem}",
+  "text": "No se pudo iniciar el streaming: {problem}",
+  "back": "The streaming could not start: {problem}",
   "why": "Reason after a colon."
  },
  "stream_live": {
   "text": {
-   "none_lost": "Emitiendo: {time}",
+   "none_lost": "En streaming: {time}",
    "some_lost": {
-    "one": "Emitiendo: {time}, se perdió {dropped} imagen",
-    "other": "Emitiendo: {time}, se perdieron {dropped} imágenes"
+    "one": "En streaming: {time}, se perdió {dropped} imagen",
+    "other": "En streaming: {time}, se perdieron {dropped} imágenes"
    }
   },
-  "back": "Broadcasting: {time} / ...{dropped} picture(s) lost",
-  "why": "Emitiendo avoids the Live pane name."
+  "back": "Streaming: {time} / {dropped} picture(s) lost",
+  "why": "Avoids the Live pane name."
  },
  "CMD_LISTEN": {
   "text": "Micrófono",
@@ -361,9 +361,9 @@
   "why": "Same as the button."
  },
  "CMD_LISTEN_DETAIL": {
-  "text": "Propone el canto o versículo que reconoce",
-  "back": "Proposes the song or verse it recognises",
-  "why": "It only proposes."
+  "text": "Propone la canción o el versículo que reconoce",
+  "back": "Proposes the song or the verse it recognises",
+  "why": "Canción."
  },
  "LISTEN_SWITCH": {
   "text": "Escuchando",
@@ -386,9 +386,9 @@
   "why": "Usual system word."
  },
  "LISTEN_SYSTEM_AUDIO": {
-  "text": "Sonido del equipo",
-  "back": "Sound of the computer",
-  "why": "Plain."
+  "text": "Audio del sistema",
+  "back": "Sound of the system",
+  "why": "Audio, one word for sound."
  },
  "LISTEN_LANGUAGE": {
   "text": "Idioma hablado",
@@ -406,9 +406,9 @@
   "why": "Language name."
  },
  "LISTEN_LEVEL": {
-  "text": "Nivel de sonido",
-  "back": "Sound level",
-  "why": "Loudness meter."
+  "text": "Nivel de audio",
+  "back": "Audio level",
+  "why": "Audio."
  },
  "LISTEN_HEARD": {
   "text": "Lo que se oyó",
@@ -421,18 +421,18 @@
   "why": "Pairs with Grabaciones."
  },
  "LISTEN_PART_RECORDINGS": {
-  "text": "Grabaciones",
-  "back": "Recordings",
-  "why": "Plain noun for kept sound."
+  "text": "Audio guardado",
+  "back": "Kept audio",
+  "why": "Grabación is left to the streaming's video."
  },
  "REC_SWITCH": {
-  "text": "Guardar grabaciones",
-  "back": "Keep recordings",
+  "text": "Guardar audio",
+  "back": "Keep audio",
   "why": "Same noun as the tab."
  },
  "REC_HINT": {
-  "text": "Trozos de sonido y suposiciones. Todo queda en este equipo.",
-  "back": "Pieces of sound and guesses. Everything stays on this computer.",
+  "text": "Clips de audio y lo que creyó oír. Quedan en esta computadora.",
+  "back": "Audio clips and what it thought it heard. They stay on this computer.",
   "why": "Exact about what and where."
  },
  "REC_NONE": {
@@ -471,8 +471,8 @@
   "why": "Verb and everything."
  },
  "REC_DELETED": {
-  "text": "Grabaciones borradas",
-  "back": "Recordings deleted",
+  "text": "Audio borrado",
+  "back": "Audio deleted",
   "why": "Past tense."
  },
  "rec_saved": {
@@ -481,14 +481,14 @@
   "why": "Past tense."
  },
  "REC_FAILED": {
-  "text": "No se puede guardar ahí. Elige otra con Cambiar carpeta.",
-  "back": "It cannot be saved there. Pick another with Change folder.",
-  "why": "Uses the second button's words."
+  "text": "No se puede guardar. Usa Cambiar carpeta para elegir otra.",
+  "back": "It cannot be saved. Use Change folder to pick another.",
+  "why": "Uses the second button's words and a noun."
  },
  "REC_ON": {
-  "text": "Grabando sonido",
-  "back": "Recording sound",
-  "why": "Names sound."
+  "text": "Guardando audio",
+  "back": "Keeping audio",
+  "why": "Names audio."
  },
  "LISTEN_TEMPO": {
   "text": "Tempo",
@@ -526,9 +526,9 @@
   "why": "Neutral."
  },
  "CMD_UPDATE": {
-  "text": "Buscar actualización",
-  "back": "Look for an update",
-  "why": "Short action name."
+  "text": "Buscar actualizaciones",
+  "back": "Look for updates",
+  "why": "Plural."
  },
  "CMD_UPDATE_DETAIL": {
   "text": "También se comprueba solo al abrir",
@@ -556,9 +556,9 @@
   "why": "Plain."
  },
  "CMD_START": {
-  "text": "Iniciar el culto",
+  "text": "Iniciar el servicio",
   "back": "Start the service",
-  "why": "Culto is the service."
+  "why": "Servicio is the event; culto is the plan."
  },
  "CMD_START_DETAIL": {
   "text": "El primer elemento se muestra de inmediato",
@@ -596,9 +596,9 @@
   "why": "Logo is the emblem."
  },
  "CMD_STOP_COUNTDOWN": {
-  "text": "Quitar cuenta atrás",
+  "text": "Quitar cuenta regresiva",
   "back": "Remove countdown",
-  "why": "Quitar for taking off."
+  "why": "Regresiva."
  },
  "CMD_STOP_COUNTDOWN_DETAIL": {
   "text": "Desaparece del proyector",
@@ -611,19 +611,19 @@
   "why": "Same verb."
  },
  "CMD_HIDE_MESSAGE_DETAIL": {
-  "text": "Desaparece de todos los monitores",
-  "back": "It disappears from every monitor",
-  "why": "Plain."
+  "text": "Desaparece de todas las pantallas",
+  "back": "It disappears from every screen",
+  "why": "Pantalla."
  },
  "CMD_EDIT_SONG": {
-  "text": "Editar canto",
+  "text": "Editar canción",
   "back": "Edit song",
-  "why": "Plain."
+  "why": "Canción."
  },
  "CMD_EDIT_SONG_DETAIL": {
-  "text": "Corrige la letra del canto que ves",
+  "text": "Corrige la letra de la canción que ves",
   "back": "Correct the words of the song you see",
-  "why": "Plain."
+  "why": "Canción."
  },
  "CMD_UNDO_DETAIL": {
   "text": "Vuelve lo último que quitaste",
@@ -631,9 +631,9 @@
   "why": "Plain."
  },
  "CMD_LOOP": {
-  "text": "Rotar anuncios",
-  "back": "Rotate announcements",
-  "why": "Fits cards taking turns."
+  "text": "Pasar anuncios",
+  "back": "Pass announcements",
+  "why": "Pasar like slides passing; rotar read as turning an object."
  },
  "CMD_LOOP_DETAIL": {
   "text": "Se muestran uno tras otro hasta que lo detengas",
@@ -656,9 +656,9 @@
   "why": "Texto is the slide words."
  },
  "SETTINGS_SONGS": {
-  "text": "Cantos",
+  "text": "Canciones",
   "back": "Songs",
-  "why": "Same song word."
+  "why": "Canción."
  },
  "SETTINGS_ABOUT": {
   "text": "Acerca de",
@@ -671,14 +671,14 @@
   "why": "Unchanged."
  },
  "BTN_SCREENS": {
-  "text": "Monitores",
-  "back": "Monitors",
-  "why": "Hardware noun."
+  "text": "Pantallas",
+  "back": "Screens",
+  "why": "Pantalla."
  },
  "BTN_PHONE": {
-  "text": "Teléfono",
-  "back": "Phone",
-  "why": "Teléfono reads in both Americas and Spain."
+  "text": "Remoto",
+  "back": "Remote",
+  "why": "Short form of Control remoto, as the brief allows; Teléfono did not match the dialog."
  },
  "HINT_KEYS": {
   "text": "Atajos",
@@ -716,14 +716,14 @@
   "why": "Reason after colon."
  },
  "OUTPUT_NO_SCREEN": {
-  "text": "Sin segundo monitor",
-  "back": "No second monitor",
-  "why": "State."
+  "text": "Sin segunda pantalla",
+  "back": "No second screen",
+  "why": "Pantalla."
  },
  "OUTPUT_HERE": {
-  "text": "Proyector en este monitor",
-  "back": "Projector on this monitor",
-  "why": "State."
+  "text": "Proyector en esta pantalla",
+  "back": "Projector on this screen",
+  "why": "Pantalla."
  },
  "OUTPUT_STUCK": {
   "text": "El proyector no responde",
@@ -736,9 +736,9 @@
   "why": "Same on-off pair."
  },
  "output_on_screen": {
-  "text": "Proyector en el monitor {number}",
-  "back": "Projector on monitor {number}",
-  "why": "Number as shown."
+  "text": "Proyector en la pantalla {number}",
+  "back": "Projector on screen {number}",
+  "why": "Pantalla."
  },
  "library_in_memory": {
   "text": "No se abrió la biblioteca, así que no se guardará nada: {problem}",
@@ -746,19 +746,19 @@
   "why": "Warning first, reason after colon."
  },
  "PLAN_EMPTY": {
-  "text": "El programa está vacío",
-  "back": "The plan is empty",
-  "why": "State."
+  "text": "Aún no hay nada en el culto",
+  "back": "There is nothing in the plan yet",
+  "why": "Culto is the plan."
  },
  "PLAN_ADD": {
-  "text": "Añadir al programa",
+  "text": "Agregar al culto",
   "back": "Add to the plan",
-  "why": "Añadir, one verb for every add."
+  "why": "Agregar is the Latin American verb and fits 22."
  },
  "PLAN_NEW": {
-  "text": "Nuevo programa",
+  "text": "Nuevo culto",
   "back": "New plan",
-  "why": "Short."
+  "why": "One plan name."
  },
  "PLAN_ITEM_MENU": {
   "text": "Opciones",
@@ -801,9 +801,9 @@
   "why": "Covers reading and sermon."
  },
  "PLANS_TITLE": {
-  "text": "Programas",
+  "text": "Cultos",
   "back": "Plans",
-  "why": "Plural of the plan word."
+  "why": "Plural."
  },
  "PLANS_TODAY": {
   "text": "Hoy",
@@ -816,9 +816,9 @@
   "why": "Reads as something to fill in."
  },
  "PLAN_DUPLICATE": {
-  "text": "Copiar programa",
+  "text": "Copiar culto",
   "back": "Copy plan",
-  "why": "Copiar is the everyday verb."
+  "why": "Copiar."
  },
  "PLAN_RENAME": {
   "text": "Día y hora",
@@ -826,14 +826,14 @@
   "why": "Names what is changed."
  },
  "PLAN_DELETE": {
-  "text": "Eliminar programa",
+  "text": "Eliminar culto",
   "back": "Delete plan",
-  "why": "Eliminar reads as removal."
+  "why": "Eliminar."
  },
  "PLAN_NEW_DETAIL": {
-  "text": "Un programa para otro culto de la semana",
-  "back": "A plan for another service of the week",
-  "why": "Plain."
+  "text": "Un culto nuevo para otro servicio de la semana",
+  "back": "A new plan for another service of the week",
+  "why": "Culto plan, servicio event."
  },
  "PLAN_DAY": {
   "text": "Día",
@@ -866,14 +866,14 @@
   "why": "Says it may stay empty."
  },
  "LOOK_FOR_USUAL": {
-  "text": "Diseño habitual",
-  "back": "Usual design",
-  "why": "Pairs with the plan button."
+  "text": "Diseño general",
+  "back": "General design",
+  "why": "Habitual was a calque."
  },
  "LOOK_FOR_PLAN": {
-  "text": "Solo para este programa",
+  "text": "Solo para este culto",
   "back": "Only for this plan",
-  "why": "Whole text of the button."
+  "why": "Culto, not programa, which reads as the app."
  },
  "PLAN_OWN_LOOK": {
   "text": "Tiene un diseño propio",
@@ -881,7 +881,7 @@
   "why": "Statement."
  },
  "KIND_PLAN": {
-  "text": "Programa",
+  "text": "Culto",
   "back": "Plan",
   "why": "Same plan word."
  },
@@ -891,19 +891,19 @@
   "why": "Name first."
  },
  "plan_deleted": {
-  "text": "Programa «{name}» eliminado",
-  "back": "Plan «{name}» deleted",
-  "why": "Past tense."
+  "text": "Se eliminó el culto «{name}»",
+  "back": "The plan «{name}» was deleted",
+  "why": "Active voice."
  },
  "added_to_plan": {
-  "text": "«{title}» añadido al programa",
-  "back": "«{title}» added to the plan",
-  "why": "Añadido fits song or passage."
+  "text": "«{title}» se agregó al culto",
+  "back": "«{title}» was added to the plan",
+  "why": "Active voice."
  },
  "removed_from_plan": {
-  "text": "«{title}» quitado del programa",
-  "back": "«{title}» removed from the plan",
-  "why": "Past tense."
+  "text": "«{title}» se quitó del culto",
+  "back": "«{title}» was removed from the plan",
+  "why": "Active voice."
  },
  "START_TITLE": {
   "text": "¿Qué quieres mostrar?",
@@ -936,9 +936,9 @@
   "why": "One word."
  },
  "TOUR_PLAN": {
-  "text": "Aquí está el programa: lo que se muestra, en orden",
+  "text": "Aquí está el culto: lo que se muestra, en orden",
   "back": "Here is the plan: what is shown, in order",
-  "why": "One sentence."
+  "why": "Culto."
  },
  "TOUR_PLAN_MORE": {
   "text": "Arrastra una fila para moverla",
@@ -951,9 +951,9 @@
   "why": "Pane's own name."
  },
  "TOUR_PREVIEW_MORE": {
-  "text": "La gente de la sala nunca ve esto",
-  "back": "The people in the room never see this",
-  "why": "Reassurance."
+  "text": "La congregación nunca ve esto",
+  "back": "The congregation never sees this",
+  "why": "Congregación, not sala."
  },
  "TOUR_SHOW": {
   "text": "Mostrar pasa lo de Vista previa a En vivo",
@@ -961,14 +961,14 @@
   "why": "Same names as pane titles."
  },
  "TOUR_SHOW_MORE": {
-  "text": "La sala lo ve solo si el proyector está encendido",
-  "back": "The room sees it only if the projector is on",
-  "why": "One sentence."
+  "text": "La congregación lo ve si el proyector está encendido",
+  "back": "The congregation sees it if the projector is on",
+  "why": "Congregación."
  },
  "TOUR_LIVE": {
-  "text": "El panel En vivo es lo que ve la sala ahora",
-  "back": "The Live panel is what the room sees now",
-  "why": "Panel, not a list."
+  "text": "El panel En vivo es lo que ve la congregación ahora",
+  "back": "The Live panel is what the congregation sees now",
+  "why": "Congregación."
  },
  "TOUR_LIVE_MORE": {
   "text": "El botón rojo (F6) apaga y enciende el proyector",
@@ -976,24 +976,24 @@
   "why": "Makes plain it is the red button."
  },
  "TOUR_SEARCH": {
-  "text": "Esta caja encuentra cualquier canto o pasaje",
-  "back": "This box finds any song or passage",
-  "why": "One sentence."
+  "text": "Aquí buscas cualquier canción o pasaje",
+  "back": "Here you search any song or passage",
+  "why": "A box does not find."
  },
  "TOUR_SEARCH_MORE": {
-  "text": "Ábrelo y luego usa Añadir al programa",
-  "back": "Open it and then use Add to plan",
+  "text": "Ábrelo y luego usa Agregar al culto",
+  "back": "Open it and then use Add to the plan",
   "why": "Same label as the button."
  },
  "START_SONGS": {
-  "text": "Cantos",
+  "text": "Canciones",
   "back": "Songs",
-  "why": "Same as the switch option."
+  "why": "Canción."
  },
  "START_SONGS_DETAIL": {
-  "text": "Todos los cantos guardados",
-  "back": "All the saved songs",
-  "why": "No full stop."
+  "text": "Todas tus canciones",
+  "back": "All your songs",
+  "why": "Canción."
  },
  "START_BIBLE": {
   "text": "Biblia",
@@ -1011,14 +1011,14 @@
   "why": "At most 28."
  },
  "START_NO_SONGS": {
-  "text": "La biblioteca aún no tiene cantos",
+  "text": "La biblioteca aún no tiene canciones",
   "back": "The library has no songs yet",
-  "why": "No full stop."
+  "why": "Canción."
  },
  "START_ANNOUNCEMENTS_DETAIL": {
-  "text": "Se ven antes del culto",
+  "text": "Se ven antes del servicio",
   "back": "They show before the service",
-  "why": "At most 28."
+  "why": "Servicio."
  },
  "BTN_BRING_OVER": {
   "text": "Importar",
@@ -1026,9 +1026,9 @@
   "why": "Same as the dialog title."
  },
  "BTN_ADD_TO_PLAN": {
-  "text": "Añadir al programa",
+  "text": "Agregar al culto",
   "back": "Add to the plan",
-  "why": "Añadir fits 18; one label for button, hint and banner."
+  "why": "One label for button, hint and banner."
  },
  "BTN_EDIT": {
   "text": "Editar",
@@ -1036,9 +1036,9 @@
   "why": "One word."
  },
  "BTN_NEXT_VERSE": {
-  "text": "Añadir el versículo siguiente",
+  "text": "Agregar el versículo siguiente",
   "back": "Add the next verse",
-  "why": "Tooltip."
+  "why": "Agregar."
  },
  "DECK_EMPTY": {
   "text": "No hay diapositivas",
@@ -1046,13 +1046,13 @@
   "why": "No full stop."
  },
  "BTN_LOOP_START": {
-  "text": "Rotar anuncios",
-  "back": "Rotate announcements",
+  "text": "Pasar anuncios",
+  "back": "Pass announcements",
   "why": "Same as the search row."
  },
  "BTN_LOOP_STOP": {
-  "text": "Detener rotación",
-  "back": "Stop rotating",
+  "text": "Detener anuncios",
+  "back": "Stop announcements",
   "why": "Opposite of the start."
  },
  "PANE_PREVIEW": {
@@ -1106,14 +1106,14 @@
   "why": "State."
  },
  "STATE_STAGE_MESSAGE": {
-  "text": "Mensaje al escenario",
-  "back": "Message to the stage",
-  "why": "Pairs with the room pill."
+  "text": "Mensaje a la banda",
+  "back": "Message to the band",
+  "why": "Banda names the stage screen."
  },
  "STAGE_MESSAGE_DETAIL": {
-  "text": "Solo lo ve la banda en su monitor",
-  "back": "Only the band sees it on its monitor",
-  "why": "No full stop."
+  "text": "Solo lo ve la banda en su pantalla",
+  "back": "Only the band sees it on its screen",
+  "why": "Pantalla."
  },
  "HEARD_NOTHING": {
   "text": "Aún no se reconoce nada",
@@ -1136,9 +1136,9 @@
   "why": "Everyday words."
  },
  "SUGGEST_LOST": {
-  "text": "Cantan algo distinto de lo mostrado",
-  "back": "They sing something other than what is shown",
-  "why": "Full sentence with object."
+  "text": "Están cantando algo distinto de lo mostrado",
+  "back": "They are singing something other than what is shown",
+  "why": "Not impersonal."
  },
  "SUGGEST_SEARCH": {
   "text": "Buscar",
@@ -1146,7 +1146,7 @@
   "why": "One word."
  },
  "state_countdown": {
-  "text": "Cuenta atrás {clock}",
+  "text": "Cuenta regresiva {clock}",
   "back": "Countdown {clock}",
   "why": "Clock as minutes:seconds."
  },
@@ -1206,14 +1206,14 @@
   "why": "Pair."
  },
  "HELD_CTRL": {
-  "text": "Ctrl pulsada",
+  "text": "Ctrl presionada",
   "back": "Ctrl pressed",
-  "why": "Key name stays; tecla is feminine."
+  "why": "Presionada is Latin American; pulsada is Peninsular."
  },
  "HELD_SHIFT": {
-  "text": "Shift pulsada",
+  "text": "Shift presionada",
   "back": "Shift pressed",
-  "why": "Same form."
+  "why": "Same."
  },
  "HINT_RING": {
   "text": "Mover selección",
@@ -1236,9 +1236,9 @@
   "why": "Same as the button."
  },
  "PLAN_ADD_SONG": {
-  "text": "Canto",
+  "text": "Canción",
   "back": "Song",
-  "why": "One word."
+  "why": "Canción."
  },
  "PLAN_ADD_PASSAGE": {
   "text": "Pasaje de la Biblia",
@@ -1256,7 +1256,7 @@
   "why": "Tooltip."
  },
  "ADDING_TO_PLAN": {
-  "text": "Añadiendo al programa",
+  "text": "Agregando al culto",
   "back": "Adding to the plan",
   "why": "Same words as the button."
  },
@@ -1276,9 +1276,9 @@
   "why": "Two short statements."
  },
  "LETTER_KEYS": {
-  "text": "Saltar con letras en el canto",
-  "back": "Jump with letters in the song",
-  "why": "Reads beside a switch."
+  "text": "Saltar con teclas de letra",
+  "back": "Jump with letter keys",
+  "why": "Clearer."
  },
  "LETTER_KEYS_HINT": {
   "text": "C salta al coro y B al puente. Apagado, cada letra abre la búsqueda.",
@@ -1286,24 +1286,24 @@
   "why": "Letters of this language's part names."
  },
  "COUNTDOWN": {
-  "text": "Cuenta atrás",
+  "text": "Cuenta regresiva",
   "back": "Countdown",
-  "why": "A noun."
+  "why": "Latin American, understood in Spain."
  },
  "COUNTDOWN_LABEL": {
-  "text": "El culto empieza en",
+  "text": "El servicio empieza en",
   "back": "The service starts in",
-  "why": "Capital, drawn large."
+  "why": "Servicio."
  },
  "EDITOR_NEW": {
-  "text": "Nuevo canto",
+  "text": "Nueva canción",
   "back": "New song",
-  "why": "Heading."
+  "why": "Canción."
  },
  "EDITOR_EDIT": {
-  "text": "Editar canto",
+  "text": "Editar canción",
   "back": "Edit song",
-  "why": "Pair of the new heading."
+  "why": "Canción."
  },
  "EDITOR_NO_SLIDES": {
   "text": "Las diapositivas aparecen al escribir",
@@ -1326,9 +1326,9 @@
   "why": "Songbook term, not a single note."
  },
  "FIELD_COPYRIGHT": {
-  "text": "Derechos",
-  "back": "Rights",
-  "why": "Owner of the rights."
+  "text": "Copyright",
+  "back": "Copyright",
+  "why": "Unambiguous and fits 16; Derechos alone was not."
  },
  "FIELD_CCLI": {
   "text": "Número CCLI",
@@ -1376,9 +1376,9 @@
   "why": "Tooltip."
  },
  "SUGGEST_LABEL": {
-  "text": "Cantos con ese título",
+  "text": "Canciones con ese título",
   "back": "Songs with that title",
-  "why": "Not visible."
+  "why": "Canción."
  },
  "SUGGEST_LIBRARY": {
   "text": "Ya está en la biblioteca",
@@ -1449,9 +1449,9 @@
   "why": "Everyday musician word."
  },
  "BTN_ADD_SECOND": {
-  "text": "Añadir segundo idioma",
+  "text": "Agregar segundo idioma",
   "back": "Add second language",
-  "why": "A phrase."
+  "why": "Agregar."
  },
  "BTN_SAVE": {
   "text": "Guardar",
@@ -1499,9 +1499,9 @@
   "why": "Mostrar plus at once."
  },
  "SONG_SAVED": {
-  "text": "Canto guardado",
+  "text": "Canción guardada",
   "back": "Song saved",
-  "why": "No full stop."
+  "why": "Canción."
  },
  "EDITOR_CLOSED": {
   "text": "Editor cerrado, cambios descartados",
@@ -1509,9 +1509,9 @@
   "why": "Undo button beside it."
  },
  "SONG_UNTITLED": {
-  "text": "Canto sin título",
+  "text": "Canción sin título",
   "back": "Song without a title",
-  "why": "Short noun phrase."
+  "why": "Canción."
  },
  "PASTE_EMPTY": {
   "text": "No hay texto copiado",
@@ -1519,14 +1519,14 @@
   "why": "No full stop."
  },
  "could_not_save": {
-  "text": "No se pudo guardar el canto: {problem}",
+  "text": "No se pudo guardar la canción: {problem}",
   "back": "The song could not be saved: {problem}",
-  "why": "Reason after a colon."
+  "why": "Canción."
  },
  "song_deleted": {
-  "text": "Canto «{title}» eliminado",
+  "text": "Canción «{title}» eliminada",
   "back": "Song «{title}» deleted",
-  "why": "Past tense."
+  "why": "Canción."
  },
  "LOOK_SAMPLE": {
   "text": "Así se verá\nel texto",
@@ -1649,9 +1649,9 @@
   "why": "Reason after a colon."
  },
  "SCREENS_OFF": {
-  "text": "En práctica, el proyector siempre está apagado",
-  "back": "In practice, the projector is always off",
-  "why": "Same on-off pair, with its comma."
+  "text": "En modo práctica, el proyector sigue apagado",
+  "back": "In practice mode, the projector stays off",
+  "why": "Modo added; siempre does not fit."
  },
  "SCREENS_ONE": {
   "text": "Conecta un proyector y funcionará solo, sin más pasos",
@@ -1769,19 +1769,19 @@
   "why": "Phrase beside a switch."
  },
  "SCREENS_HERE_HINT": {
-  "text": "Para cerrarla, pulsa Esc sobre la ventana",
+  "text": "Para cerrarla, presiona Esc sobre la ventana",
   "back": "To close it, press Esc over the window",
-  "why": "Esc stays."
+  "why": "Presiona."
  },
  "LOOK_WINDOW": {
-  "text": "Color de la ventana",
-  "back": "Colour of the window",
-  "why": "Not the projector."
+  "text": "Tema de la ventana",
+  "back": "Theme of the window",
+  "why": "Tema covers light and dark."
  },
  "LOOK_WINDOW_AUTO": {
-  "text": "Igual que el equipo",
-  "back": "Same as the computer",
-  "why": "Follows the computer."
+  "text": "Igual que el sistema",
+  "back": "Same as the system",
+  "why": "Sistema, not equipo."
  },
  "LOOK_WINDOW_LIGHT": {
   "text": "Claro",
@@ -1884,9 +1884,9 @@
   "why": "Same noun."
  },
  "SCREEN_STAGE": {
-  "text": "Escenario",
-  "back": "Stage",
-  "why": "Name of the stage screen."
+  "text": "Banda",
+  "back": "Band",
+  "why": "Names who the screen is for; Escenario was unclear."
  },
  "SCREEN_UNUSED": {
   "text": "Sin uso",
@@ -1894,35 +1894,35 @@
   "why": "Short phrase."
  },
  "SCREENS_STAGE_WINDOW": {
-  "text": "Ver el escenario en una ventana",
-  "back": "See the stage in a window",
-  "why": "Phrase beside a switch."
+  "text": "Ver la pantalla de la banda en ventana",
+  "back": "See the band's screen in a window",
+  "why": "Banda."
  },
  "SCREENS_IDENTIFY": {
-  "text": "Identificar monitores",
-  "back": "Identify monitors",
-  "why": "Monitor is the hardware noun."
+  "text": "Identificar pantallas",
+  "back": "Identify screens",
+  "why": "Pantalla."
  },
  "screen_name": {
-  "text": "Monitor {number}",
-  "back": "Monitor {number}",
-  "why": "Figure."
+  "text": "Pantalla {number}",
+  "back": "Screen {number}",
+  "why": "Pantalla."
  },
  "screen_title": {
   "text": {
-   "with_this": "Monitor {number} (este)",
-   "without_this": "Monitor {number}"
+   "with_this": "Pantalla {number} (esta)",
+   "without_this": "Pantalla {number}"
   },
-  "back": "Monitor {number} (this one) / Monitor {number}",
-  "why": "Bold line."
+  "back": "Screen {number} (this one) / Screen {number}",
+  "why": "Pantalla."
  },
  "screen_detail": {
   "text": {
    "normal_zoom": "{width} x {height} px",
-   "with_zoom": "{width} x {height} px, zoom {scale}"
+   "with_zoom": "{width} x {height} px, escala {scale}"
   },
-  "back": "{width} x {height} px / with zoom",
-  "why": "Letter x between sizes."
+  "back": "{width} x {height} px / with scale",
+  "why": "Escala is the Windows word, not zoom."
  },
  "REMOTE_SWITCH": {
   "text": "Control remoto",
@@ -1930,9 +1930,9 @@
   "why": "Same as the dialog title."
  },
  "REMOTE_SWITCH_DETAIL": {
-  "text": "Teléfonos en el mismo Wi-Fi cambian diapositivas",
-  "back": "Phones on the same Wi-Fi change slides",
-  "why": "Same wording as the search row."
+  "text": "Un teléfono en tu Wi-Fi puede pasar diapositivas",
+  "back": "A phone on your Wi-Fi can pass slides",
+  "why": "Same as the row."
  },
  "REMOTE_SCAN": {
   "text": "Apunta la cámara al código o escribe la dirección",
@@ -1950,9 +1950,9 @@
   "why": "Names neither a button nor a password."
  },
  "REMOTE_FIREWALL_REFUSED": {
-  "text": "El firewall bloquea los teléfonos. Apaga y enciende el control remoto para dar permiso",
-  "back": "The firewall blocks the phones. Switch the remote off and on to give permission",
-  "why": "Problem then the way out; no blame."
+  "text": "El firewall bloquea los teléfonos. Apaga y enciende el control remoto: pedirá permiso",
+  "back": "The firewall blocks the phones. Switch the remote off and on so it asks permission",
+  "why": "Gives the permission an asker."
  },
  "phones": {
   "text": {
@@ -1969,14 +1969,14 @@
   "why": "Reason after a colon."
  },
  "IMPORT_FOUND": {
-  "text": "Se copiarán los cantos y las Biblias. EasiSlides no se modifica.",
+  "text": "Se copiarán las canciones y las Biblias. EasiSlides no se modifica.",
   "back": "Songs and Bibles will be copied. EasiSlides is not changed.",
-  "why": "Two short sentences."
+  "why": "Canción."
  },
  "IMPORT_NOT_FOUND": {
-  "text": "EasiSlides no está instalado en este equipo",
+  "text": "EasiSlides no está instalado en esta computadora",
   "back": "EasiSlides is not installed on this computer",
-  "why": "One sentence."
+  "why": "Computadora."
  },
  "import_done": {
   "text": {
@@ -1990,13 +1990,13 @@
   "text": {
    "nothing_changed": "Todo estaba ya en la biblioteca",
    "only_kept": "Sin cambios. Se dejaron {kept} que editaste aquí",
-   "changed_added": "Añadido: {added}",
+   "changed_added": "Agregado: {added}",
    "changed_updated": "Actualizado: {updated}",
-   "changed_both": "Añadido: {added}. Actualizado: {updated}",
+   "changed_both": "Agregado: {added}. Actualizado: {updated}",
    "changed_and_kept": "{changed}. Sin tocar: {kept}"
   },
   "back": "Cases of added, updated, left alone",
-  "why": "Label forms avoid number agreement."
+  "why": "Agregado."
  },
  "files_unreadable": {
   "text": {
@@ -2007,9 +2007,9 @@
   "why": "Counted noun."
  },
  "import_partial": {
-  "text": "Añadido: {songs}. Sin poder leer: {files}",
+  "text": "Agregado: {songs}. Sin poder leer: {files}",
   "back": "Added: {songs}. Could not read: {files}",
-  "why": "Two counted phrases."
+  "why": "Agregado."
  },
  "ANNOUNCEMENTS_EMPTY": {
   "text": "Aún no hay anuncios",
@@ -2042,9 +2042,9 @@
   "why": "Makes the numbers read as seconds."
  },
  "ANNOUNCEMENT_START_FROM": {
-  "text": "Partir de un modelo",
-  "back": "Start from a model",
-  "why": "A phrase."
+  "text": "Usar una plantilla",
+  "back": "Use a template",
+  "why": "Plantilla is the word."
  },
  "ANNOUNCEMENT_BRING_IN": {
   "text": "Desde archivo",
@@ -2052,9 +2052,9 @@
   "why": "Short phrase."
  },
  "ANNOUNCEMENT_FILL": {
-  "text": "De dónde sale el texto",
-  "back": "Where the text comes from",
-  "why": "Not automatic."
+  "text": "Origen del texto",
+  "back": "Origin of the text",
+  "why": "Form-label register."
  },
  "FILL_NOTHING": {
   "text": "A mano",
@@ -2250,9 +2250,9 @@
   "why": "Noun phrase."
  },
  "PASSAGE_NO_BIBLE": {
-  "text": "No hay versión de la Biblia: el anuncio quedará vacío",
-  "back": "There is no Bible version: the announcement will stay empty",
-  "why": "One sentence."
+  "text": "No hay ninguna Biblia instalada: el anuncio saldrá vacío",
+  "back": "No Bible is installed: the announcement will come out empty",
+  "why": "Clearer."
  },
  "PASSAGE_UNREADABLE": {
   "text": "La Biblia no tiene ese pasaje",
@@ -2289,9 +2289,9 @@
   "why": "Warm, plain."
  },
  "PRACTICE_NOTICES[0].1": {
-  "text": "Gracias por venir.\nEl culto comenzará pronto.",
+  "text": "Gracias por venir.\nEl servicio comenzará pronto.",
   "back": "Thank you for coming. / The service will begin soon.",
-  "why": "Two short sentences."
+  "why": "Servicio."
  },
  "PRACTICE_NOTICES[1].0": {
   "text": "Noche de jóvenes",
@@ -2319,9 +2319,9 @@
   "why": "One to three words."
  },
  "PRACTICE_NOTICES[3].1": {
-  "text": "Domingo\t09:00\tCulto principal\nDomingo\t17:30\tSegundo culto\nMiércoles\t19:00\tOración\nSábado\t16:00\tJóvenes",
+  "text": "Domingo\t09:00\tServicio principal\nDomingo\t17:30\tSegundo servicio\nMiércoles\t19:00\tOración\nSábado\t16:00\tJóvenes",
   "back": "Sunday 09:00 Main service / Sunday 17:30 Second service / Wednesday 19:00 Prayer / Saturday 16:00 Youth",
-  "why": "Three parts per line, tab-separated."
+  "why": "Servicio."
  },
  "ANNOUNCEMENT_TEMPLATES[0].0": {
   "text": "Bienvenida",
@@ -2398,14 +2398,14 @@
   "why": "Abbreviation of segundos."
  },
  "KEYS_TITLE": {
-  "text": "Teclado",
-  "back": "Keyboard",
-  "why": "A phrase."
+  "text": "Atajos de teclado",
+  "back": "Keyboard shortcuts",
+  "why": "One name for the sheet."
  },
  "KEYS_SHOWING": {
-  "text": "Durante el culto",
+  "text": "En el servicio",
   "back": "During the service",
-  "why": "Keys used while it runs."
+  "why": "Servicio."
  },
  "KEYS_FINDING": {
   "text": "Buscar",
@@ -2413,9 +2413,9 @@
   "why": "Heading."
  },
  "KEYS_PLAN": {
-  "text": "Programa",
+  "text": "Culto",
   "back": "Plan",
-  "why": "Same plan word."
+  "why": "Culto."
  },
  "KEYS_EDITING": {
   "text": "Editor",
@@ -2433,14 +2433,14 @@
   "why": "Fragment."
  },
  "KEYS_SHOWING_ROWS[2].1": {
-  "text": "Vuelve a la primera diapositiva del canto",
+  "text": "Vuelve a la primera diapositiva de la canción",
   "back": "Back to the song's first slide",
-  "why": "Fragment."
+  "why": "Canción."
  },
  "KEYS_SHOWING_ROWS[3].1": {
-  "text": "Salta a la última diapositiva del canto",
+  "text": "Salta a la última diapositiva de la canción",
   "back": "Jump to the song's last slide",
-  "why": "Fragment."
+  "why": "Canción."
  },
  "KEYS_SHOWING_ROWS[4].1": {
   "text": "Elige una diapositiva; al soltar, se muestra",
@@ -2473,14 +2473,14 @@
   "why": "Fragment."
  },
  "KEYS_SHOWING_ROWS[10].1": {
-  "text": "Lleva a Vista previa el canto en vivo",
+  "text": "Lleva la canción en vivo a Vista previa",
   "back": "Take the live song to Preview",
-  "why": "Fragment."
+  "why": "Canción."
  },
  "KEYS_SHOWING_ROWS[11].1": {
-  "text": "Trae lo mostrado antes; otra vez, lo anterior",
-  "back": "Bring back what was shown before; again, the one before",
-  "why": "Fragment."
+  "text": "Vuelve a lo mostrado antes; repite para ir atrás",
+  "back": "Go back to what was shown before; repeat to go further back",
+  "why": "Clear."
  },
  "KEYS_SHOWING_ROWS[12].1": {
   "text": "Oculta el texto y deja el fondo",
@@ -2498,9 +2498,9 @@
   "why": "Fragment."
  },
  "KEYS_SHOWING_ROWS[15].1": {
-  "text": "Trae a Vista previa lo que oyó el micrófono",
-  "back": "Bring to Preview what the microphone heard",
-  "why": "Fragment."
+  "text": "Pasa a Vista previa lo que oyó el micrófono",
+  "back": "Move to Preview what the microphone heard",
+  "why": "Pasa, not trae."
  },
  "KEYS_SHOWING_ROWS[16].1": {
   "text": "Lleva los anuncios a Vista previa",
@@ -2513,14 +2513,14 @@
   "why": "Same on-off pair."
  },
  "KEYS_FINDING_ROWS[0].1": {
-  "text": "Busca cantos, pasajes y acciones",
+  "text": "Busca canciones, pasajes y acciones",
   "back": "Search songs, passages and actions",
-  "why": "Fragment."
+  "why": "Canción."
  },
  "KEYS_FINDING_ROWS[1].1": {
-  "text": "Abre la búsqueda; sin texto, lista los cantos",
+  "text": "Abre la búsqueda; sin texto, lista las canciones",
   "back": "Opens the search; with no text it lists the songs",
-  "why": "Fragment."
+  "why": "Canción."
  },
  "KEYS_FINDING_ROWS[2].1": {
   "text": "Abre el resultado elegido",
@@ -2533,14 +2533,14 @@
   "why": "Fragment."
  },
  "KEYS_FINDING_ROWS[4].1": {
-  "text": "Añade el resultado tras el elemento en vivo",
+  "text": "Agrega el resultado tras el elemento en vivo",
   "back": "Adds the result after the live item",
-  "why": "Fragment."
+  "why": "Agrega."
  },
  "KEYS_FINDING_ROWS[5].1": {
-  "text": "Busca dentro del canto para ir a una parte",
+  "text": "Busca dentro de la canción para ir a una parte",
   "back": "Searches inside the song to go to a part",
-  "why": "Fragment."
+  "why": "Canción."
  },
  "KEYS_FINDING_ROWS[6].1": {
   "text": "Sale de la búsqueda y vuelve a la ventana",
@@ -2548,14 +2548,14 @@
   "why": "Fragment."
  },
  "KEYS_PLAN_ROWS[0].1": {
-  "text": "Trae a Vista previa el elemento siguiente",
-  "back": "Brings the next item to Preview",
-  "why": "Fragment."
+  "text": "Pasa a Vista previa el elemento siguiente",
+  "back": "Moves the next item to Preview",
+  "why": "Pasa."
  },
  "KEYS_PLAN_ROWS[1].1": {
-  "text": "Trae a Vista previa el elemento anterior",
-  "back": "Brings the previous item to Preview",
-  "why": "Fragment."
+  "text": "Pasa a Vista previa el elemento anterior",
+  "back": "Moves the previous item to Preview",
+  "why": "Pasa."
  },
  "KEYS_PLAN_ROWS[2].1": {
   "text": "Sube o baja el elemento de Vista previa",
@@ -2563,39 +2563,39 @@
   "why": "Fragment."
  },
  "KEYS_PLAN_ROWS[3].1": {
-  "text": "Marca con la selección dónde empieza el canto",
-  "back": "Marks with the selection where the song begins",
-  "why": "Fragment."
+  "text": "Empezar aquí: marca el inicio de la canción",
+  "back": "Start here: marks the start of the song",
+  "why": "Matches the button."
  },
  "KEYS_PLAN_ROWS[4].1": {
-  "text": "Quita el elemento de Vista previa del programa",
+  "text": "Quita el elemento de Vista previa del culto",
   "back": "Removes the Preview item from the plan",
-  "why": "Fragment."
+  "why": "Culto."
  },
  "KEYS_PLAN_ROWS[5].1": {
-  "text": "Añade al programa lo que hay en Vista previa",
+  "text": "Agrega al culto lo que hay en Vista previa",
   "back": "Adds to the plan what is in Preview",
-  "why": "Fragment."
+  "why": "Culto."
  },
  "KEYS_PLAN_ROWS[6].1": {
-  "text": "Siguiente programa; con Shift, el anterior",
+  "text": "Siguiente culto; con Shift, el anterior",
   "back": "Next plan; with Shift, the previous one",
-  "why": "Fragment."
+  "why": "Culto."
  },
  "KEYS_PLAN_ROWS[7].1": {
-  "text": "Crea un programa con día y hora",
+  "text": "Crea un culto con día y hora",
   "back": "Creates a plan with day and time",
-  "why": "Fragment."
+  "why": "Culto."
  },
  "KEYS_EDITING_ROWS[0].1": {
-  "text": "Empieza un canto nuevo",
+  "text": "Empieza una canción nueva",
   "back": "Starts a new song",
-  "why": "Fragment."
+  "why": "Canción."
  },
  "KEYS_EDITING_ROWS[1].1": {
-  "text": "Abre el canto de Vista previa para editarlo",
+  "text": "Abre la canción de Vista previa para editarla",
   "back": "Opens the Preview song for editing",
-  "why": "Fragment."
+  "why": "Canción."
  },
  "KEYS_EDITING_ROWS[2].1": {
   "text": "Guarda lo escrito",
@@ -2603,9 +2603,9 @@
   "why": "Fragment."
  },
  "KEYS_EDITING_ROWS[3].1": {
-  "text": "Inserta la marca de la parte del canto",
+  "text": "Inserta la marca de la parte de la canción",
   "back": "Inserts the marker of the song part",
-  "why": "Fragment."
+  "why": "Canción."
  },
  "KEYS_EDITING_ROWS[4].1": {
   "text": "Rellena el formulario con la sugerencia elegida",
@@ -2628,9 +2628,9 @@
   "why": "One word."
  },
  "STAGE_TIMER": {
-  "text": "Cuenta atrás",
-  "back": "Countdown",
-  "why": "Same word as the countdown elsewhere."
+  "text": "Cuenta",
+  "back": "Count",
+  "why": "Regresiva does not fit 14."
  },
  "STAGE_BLACK": {
   "text": "El proyector está en negro",
@@ -2668,14 +2668,14 @@
   "why": "One word."
  },
  "LEARN_ON": {
-  "text": "Recordar cantos elegidos",
-  "back": "Remember picked songs",
-  "why": "Says what is remembered."
+  "text": "Recordar canciones usadas",
+  "back": "Remember songs used",
+  "why": "Fits 26."
  },
  "LEARN_ON_HINT": {
-  "text": "Si coinciden igual, van primero los más elegidos",
-  "back": "If they match equally, the most picked come first",
-  "why": "Condition first."
+  "text": "Si coinciden por igual, aparecen primero los más usados",
+  "back": "If they match equally, the most used appear first",
+  "why": "Smoother."
  },
  "LEARN_FORGET": {
   "text": "Borrar el historial de búsqueda",
@@ -2688,14 +2688,14 @@
   "why": "No full stop."
  },
  "GROUP_WEEKDAY": {
-  "text": "Suelen cantarse este día",
-  "back": "Usually sung on this day",
-  "why": "A phrase."
+  "text": "Se cantan este día de la semana",
+  "back": "Sung on this day of the week",
+  "why": "Clearer."
  },
  "GROUP_RECENT": {
-  "text": "Elegidos hace poco",
+  "text": "Elegidas hace poco",
   "back": "Picked recently",
-  "why": "A phrase."
+  "why": "Agrees with canciones."
  },
  "group_follows": {
   "text": "Suelen cantarse después de «{title}»",
@@ -2712,35 +2712,35 @@
  },
  "habit_line": {
   "text": {
-   "one": "Elegido para «{typed}» {picks} vez, el {when}",
-   "other": "Elegido para «{typed}» {picks} veces, la última el {when}"
+   "one": "Elegida para «{typed}» {picks} vez, el {when}",
+   "other": "Elegida para «{typed}» {picks} veces, la última vez el {when}"
   },
   "back": "Picked for «{typed}» {picks} time(s), last on {when}",
-  "why": "Veces, not x."
+  "why": "With the date's de from the program."
  },
  "follows_line": {
   "text": {
-   "one": "Se cantó después {count} vez, la última el {when}",
-   "other": "Se cantó después {count} veces, la última el {when}"
+   "one": "Cantada después {count} vez, última: {when}",
+   "other": "Cantada después {count} veces, última: {when}"
   },
-  "back": "Sung after it {count} time(s), last on {when}",
-  "why": "Plain words."
+  "back": "Sung after it {count} time(s), last time on {when}",
+  "why": "Same."
  },
  "weekday_line": {
   "text": {
-   "one": "Cantado en {count} de {of} culto",
-   "other": "Cantado en {count} de {of} cultos"
+   "one": "Se cantó en {count} de {of} servicio",
+   "other": "Se cantó en {count} de {of} servicios"
   },
-  "back": "Sung in {count} of {of} service(s)",
-  "why": "Short enough."
+  "back": "It was sung in {count} of {of} service(s)",
+  "why": "Active, not a stiff participle."
  },
  "recent_line": {
   "text": {
-   "one": "Elegido {picks} vez, la última el {when}",
-   "other": "Elegido {picks} veces, la última el {when}"
+   "one": "Elegida {picks} vez, última: {when}",
+   "other": "Elegida {picks} veces, última: {when}"
   },
-  "back": "Picked {picks} time(s), last on {when}",
-  "why": "Veces, not x."
+  "back": "Picked {picks} time(s), last time on {when}",
+  "why": "Same."
  },
  "starts_chip": {
   "text": "Empieza en {section}",
@@ -2798,9 +2798,9 @@
   "why": "No full stop."
  },
  "CMD_BIBLE_FILE": {
-  "text": "Añadir Biblia desde archivo",
+  "text": "Agregar Biblia desde archivo",
   "back": "Add Bible from file",
-  "why": "Row title."
+  "why": "Agregar."
  },
  "CMD_BIBLE_FILE_DETAIL": {
   "text": "MyBible, USFX o un ZIP con archivos USFM",
@@ -2868,14 +2868,14 @@
   "why": "State."
  },
  "BIBLES_COPYRIGHT": {
-  "text": "Derechos",
-  "back": "Rights",
-  "why": "Same as the editor field."
+  "text": "Copyright",
+  "back": "Copyright",
+  "why": "Same word as the song field."
  },
  "BIBLES_PICK_HINT": {
-  "text": "Elige una versión para ver sus derechos",
-  "back": "Pick a version to see its rights",
-  "why": "One sentence."
+  "text": "Elige una versión para ver su copyright",
+  "back": "Pick a version to see its copyright",
+  "why": "Copyright."
  },
  "BIBLES_SCOPE_WHOLE": {
   "text": "Biblia completa",
@@ -2888,19 +2888,19 @@
   "why": "Short phrase."
  },
  "BIBLES_NO_COPYRIGHT": {
-  "text": "El archivo no indica sus derechos",
-  "back": "The file does not state its rights",
-  "why": "One sentence."
+  "text": "El archivo no indica su copyright",
+  "back": "The file does not state its copyright",
+  "why": "Copyright."
  },
  "BIBLES_NOTICE_LOADING": {
-  "text": "Descargando los derechos",
-  "back": "Downloading the rights",
+  "text": "Cargando la información de copyright",
+  "back": "Loading the copyright information",
   "why": "Not a reading-aloud verb."
  },
  "BIBLES_NOTICE_FAILED": {
-  "text": "No se pudieron leer los derechos",
-  "back": "The rights could not be read",
-  "why": "No full stop."
+  "text": "No se pudo leer el copyright del archivo",
+  "back": "The copyright of the file could not be read",
+  "why": "Copyright."
  },
  "bibles_download_failed": {
   "text": "No se pudo descargar la versión: {why}",
@@ -2909,16 +2909,16 @@
  },
  "bible_added": {
   "text": {
-   "one": "Versión {name} añadida: {verses} versículo",
-   "other": "Versión {name} añadida: {verses} versículos"
+   "one": "Versión {name} agregada: {verses} versículo",
+   "other": "Versión {name} agregada: {verses} versículos"
   },
   "back": "Version {name} added: {verses} verse(s)",
-  "why": "Count picks the plural."
+  "why": "Agregada."
  },
  "bibles_file_failed": {
-  "text": "No se pudo añadir la Biblia: {why}",
+  "text": "No se pudo agregar la Biblia: {why}",
   "back": "The Bible could not be added: {why}",
-  "why": "Reason after a colon."
+  "why": "Agregar."
  },
  "noun.announcements": {
   "text": {
@@ -2976,12 +2976,12 @@
  },
  "noun.songs": {
   "text": {
-   "zero": "ningún canto",
-   "one": "{count} canto",
-   "other": "{count} cantos"
+   "zero": "ninguna canción",
+   "one": "{count} canción",
+   "other": "{count} canciones"
   },
   "back": "no song / {count} song(s)",
-  "why": "Number first."
+  "why": "Canción."
  },
  "section.bridge": {
   "text": "Puente",
@@ -3034,9 +3034,9 @@
   "why": "Adds what the button's words cannot."
  },
  "PLAN_STARTS_AT": {
-  "text": "Empieza en",
-  "back": "Starts at",
-  "why": "Heading, no colon."
+  "text": "Inicio en",
+  "back": "Start at",
+  "why": "A noun phrase."
  },
  "PLAN_START_BEGINNING": {
   "text": "Desde el principio",
@@ -3054,9 +3054,9 @@
   "why": "No guessed cause."
  },
  "LISTEN_INPUT_STOPPED": {
-  "text": "No llega sonido. Revisa el cable del micrófono.",
-  "back": "No sound arrives. Check the microphone's cable.",
-  "why": "Calm."
+  "text": "No llega audio. Revisa el cable del micrófono.",
+  "back": "No audio arrives. Check the microphone's cable.",
+  "why": "Audio."
  },
  "LISTEN_BEAT_ONLY": {
   "text": "Esta copia sigue el ritmo, no las palabras.",
@@ -3064,9 +3064,9 @@
   "why": "Fact about the copy."
  },
  "LISTEN_TOO_SLOW": {
-  "text": "Este equipo es muy lento para reconocer palabras a tiempo.",
+  "text": "La computadora es muy lenta para entender palabras a tiempo.",
   "back": "This computer is too slow to recognise words in time.",
-  "why": "About the PC, not the person."
+  "why": "Computadora."
  },
  "MEDIA_CAMERA_NONE": {
   "text": "No hay cámara. Detrás del texto solo hay negro.",
@@ -3124,9 +3124,9 @@
   "why": "Size kept as 57 MB."
  },
  "LISTEN_MODEL_BETTER": {
-  "text": "Este equipo puede usar un archivo de voz mejor (190 MB)",
+  "text": "Esta computadora puede usar un archivo de voz mejor (190 MB)",
   "back": "This computer can use a better voice file (190 MB)",
-  "why": "Same noun with mejor."
+  "why": "Computadora."
  },
  "listen_model_failed": {
   "text": "No se pudo descargar el archivo de voz: {why}",
@@ -3134,9 +3134,9 @@
   "why": "Reason clause in lower case after a colon."
  },
  "MARKS_APPLY": {
-  "text": "Usar estas marcas",
-  "back": "Use these marks",
-  "why": "Says what is applied."
+  "text": "Usar estas partes",
+  "back": "Use these parts",
+  "why": "Partes is the section word."
  },
  "MARKS_APPLY_HELP": {
   "text": "Pone los nombres de parte en la letra; se deshace",
@@ -3274,9 +3274,9 @@
   "why": "One word."
  },
  "BACKDROPS_PICK_HINT": {
-  "text": "Pulsa una vista para ver quién la hizo y su licencia",
-  "back": "Press a preview to see who made it and its licence",
-  "why": "No full stop."
+  "text": "Haz clic en una imagen para ver autor y licencia",
+  "back": "Click an image to see author and licence",
+  "why": "Clic is understood everywhere; vista was a calque."
  },
  "BACKDROPS_DIM": {
   "text": "Muy clara o detallada: oscurécela en Diseño",
@@ -3284,9 +3284,9 @@
   "why": "Names Design."
  },
  "BACKDROPS_HERE": {
-  "text": "Ya está en este equipo",
+  "text": "Ya está guardado aquí",
   "back": "It is already on this computer",
-  "why": "Short fragment."
+  "why": "Computadora."
  },
  "BACKDROPS_IN_USE": {
   "text": "Es el fondo actual",
@@ -3299,9 +3299,9 @@
   "why": "Reason clause after a colon."
  },
  "WHY_OFFLINE": {
-  "text": "este equipo no tiene internet",
-  "back": "this computer has no internet",
-  "why": "Lower case clause after a colon."
+  "text": "sin conexión a internet",
+  "back": "no internet connection",
+  "why": "Same words as the offline toast."
  },
  "WHY_SLOW": {
   "text": "tardó demasiado en responder",
@@ -3334,9 +3334,9 @@
   "why": "Lower case clause."
  },
  "WHY_DISK": {
-  "text": "no se pudo guardar en el disco de este equipo",
-  "back": "it could not be saved on this computer's disk",
-  "why": "Lower case clause."
+  "text": "no se pudo guardar en el disco de la computadora",
+  "back": "it could not be saved on the computer's disk",
+  "why": "Computadora."
  },
  "why_status": {
   "text": "el sitio dio el error {code}",
@@ -3349,9 +3349,9 @@
   "why": "No final full stop."
  },
  "LYRICS_NOT_FOUND": {
-  "text": "El sitio no tiene la letra de ese canto",
+  "text": "El sitio no tiene la letra de esa canción",
   "back": "The site has no words for that song",
-  "why": "No final full stop."
+  "why": "Canción."
  },
  "LYRICS_BUSY": {
   "text": "El sitio tiene mucha demanda. Prueba de nuevo en un minuto",
@@ -3387,9 +3387,9 @@
   "why": "Colour mood."
  },
  "LOOK_BLACK": {
-  "text": "Negro",
-  "back": "Black",
-  "why": "Same word as the black tile."
+  "text": "Fondo negro",
+  "back": "Black background",
+  "why": "Apart from the Negro tile for the black screen."
  },
  "LOOK_FOREST": {
   "text": "Bosque",
@@ -3432,14 +3432,14 @@
   "why": "Does not repeat the heading."
  },
  "BTN_DELETE_SONG": {
-  "text": "Eliminar canto",
+  "text": "Borrar canción",
   "back": "Delete song",
-  "why": "Verb and noun."
+  "why": "Eliminar canción is 16 and does not fit 14."
  },
  "CMD_PLAN_DUPLICATE_DETAIL": {
-  "text": "Mismos cantos y lecturas, para otro culto",
+  "text": "Mismas canciones y lecturas, para otro servicio",
   "back": "The same songs and readings, for another service",
-  "why": "Fragment."
+  "why": "Servicio."
  },
  "CMD_PLAN_RENAME_DETAIL": {
   "text": "Cambia el día, la hora o el nombre",
@@ -3447,14 +3447,14 @@
   "why": "Fragment."
  },
  "CMD_PLAN_DELETE_DETAIL": {
-  "text": "Se descarta el programa; se puede deshacer",
+  "text": "Se descarta el culto; se puede deshacer",
   "back": "The plan is thrown away; it can be undone",
-  "why": "Songs stay."
+  "why": "Culto."
  },
  "CMD_START_HERE": {
-  "text": "Empezar canto aquí",
+  "text": "Empezar canción aquí",
   "back": "Start song here",
-  "why": "About where a song begins."
+  "why": "Canción."
  },
  "CMD_EARLIER": {
   "text": "Traer lo mostrado antes",
@@ -3467,14 +3467,14 @@
   "why": "Fragment."
  },
  "START_HERE_HOW": {
-  "text": "Trae el canto a Vista previa, selecciona la diapositiva de inicio y elige esto otra vez",
-  "back": "Bring the song to Preview, select the starting slide and choose this again",
-  "why": "Product words for Preview and the selected slide."
+  "text": "Pasa la canción a Vista previa, selecciona la diapositiva de inicio y elige esto otra vez",
+  "back": "Move the song to Preview, select the starting slide and choose this again",
+  "why": "Canción."
  },
  "CMD_START_HERE_DETAIL": {
-  "text": "El canto empieza en la diapositiva seleccionada (medley)",
-  "back": "The song starts at the selected slide (medley)",
-  "why": "Medley is known to musicians."
+  "text": "La canción empieza en la diapositiva seleccionada",
+  "back": "The song starts at the selected slide",
+  "why": "Fits 56."
  },
  "CMD_NEW_ANNOUNCEMENT_DETAIL": {
   "text": "Anuncio, versículo o lista de cumpleaños",
@@ -3482,9 +3482,9 @@
   "why": "Fragment."
  },
  "KEYS_MORE": {
-  "text": "escribe lo que quieras, por ejemplo copiar programa o Diseño",
-  "back": "type what you want, for example copy plan or Design",
-  "why": "Uses the plan and design words."
+  "text": "abre la búsqueda y escribe lo que quieras, por ejemplo copiar culto o Diseño",
+  "back": "opens the search and type what you want, for example copy plan or Design",
+  "why": "Completes the Ctrl K caps drawn before it."
  },
  "SETTINGS_GENERAL": {
   "text": "General",
@@ -3557,19 +3557,19 @@
   "why": "Versión is the translation word."
  },
  "ONBOARD_BIBLE_HINT": {
-  "text": "Primero van los idiomas del país. Podrás añadir más después",
+  "text": "Primero van los idiomas del país. Podrás agregar más después",
   "back": "The languages of the country come first. You can add more later",
-  "why": "No final full stop."
+  "why": "Agregar."
  },
  "ONBOARD_SONGS_TITLE": {
-  "text": "¿Dónde tienes tus cantos?",
+  "text": "¿Dónde tienes tus canciones?",
   "back": "Where do you keep your songs?",
-  "why": "Canto is the song word."
+  "why": "Canción."
  },
  "ONBOARD_SONGS_EASI": {
-  "text": "Traer de EasiSlides en este equipo",
+  "text": "Traer de EasiSlides en esta computadora",
   "back": "Bring over from EasiSlides on this computer",
-  "why": "EasiSlides stays."
+  "why": "Computadora."
  },
  "ONBOARD_SONGS_FOLDER": {
   "text": "Elegir una carpeta",
@@ -3582,14 +3582,14 @@
   "why": "Names stay."
  },
  "ONBOARD_SONGS_NONE": {
-  "text": "Aún no tengo cantos",
+  "text": "Aún no tengo canciones",
   "back": "I have no songs yet",
-  "why": "Not final."
+  "why": "Canción."
  },
  "ONBOARD_SONGS_NONE_HINT": {
-  "text": "La biblioteca empieza vacía; añade cantos cuando quieras",
+  "text": "La biblioteca empieza vacía; agrega canciones cuando quieras",
   "back": "The library starts empty; add songs whenever you like",
-  "why": "No full stop."
+  "why": "Agregar."
  },
  "ONBOARD_SCREENS_TITLE": {
   "text": "¿Ves el número grande en el proyector?",
@@ -3597,9 +3597,9 @@
   "why": "The test picture is a big number."
  },
  "ONBOARD_SCREENS_HINT": {
-  "text": "La imagen de prueba ya está en el monitor para la gente",
-  "back": "The test picture is already on the monitor for the people",
-  "why": "Monitor is the hardware noun."
+  "text": "La imagen de prueba ya está en la pantalla para la gente",
+  "back": "The test picture is already on the screen for the people",
+  "why": "Pantalla."
  },
  "ONBOARD_ROW_WINDOW": {
   "text": "Esta ventana",
@@ -3622,9 +3622,9 @@
   "why": "Answers the question."
  },
  "ONBOARD_OTHER_SCREEN": {
-  "text": "No, probar otro monitor",
-  "back": "No, try another monitor",
-  "why": "Pairs with the yes button."
+  "text": "No, probar otra pantalla",
+  "back": "No, try another screen",
+  "why": "Pantalla."
  },
  "ONBOARD_NO_PROJECTOR": {
   "text": "Aún no hay proyector conectado",
@@ -3652,9 +3652,9 @@
   "why": "First job."
  },
  "ONBOARD_JOB_SONGS": {
-  "text": "Cantos",
+  "text": "Canciones",
   "back": "Songs",
-  "why": "One word."
+  "why": "Canción."
  },
  "ONBOARD_STATE_DONE": {
   "text": "Listo",
@@ -3672,9 +3672,9 @@
   "why": "One word before the reason."
  },
  "ONBOARD_BIBLE_FAILED": {
-  "text": "No se pierde nada. Añade una Biblia después en Ajustes, con Más Biblias",
+  "text": "No se pierde nada. Agrega una Biblia después en Ajustes, con Más Biblias",
   "back": "Nothing is lost. Add a Bible later in Settings, with More Bibles",
-  "why": "Uses the button's own name."
+  "why": "Agregar."
  },
  "ONBOARD_DONE_TITLE": {
   "text": "Artosia está lista",
@@ -3692,19 +3692,19 @@
   "why": "Recorrido is the tour word."
  },
  "ONBOARD_CARD_PLAN": {
-  "text": "Abre el programa del próximo culto",
-  "back": "Open the plan of the next service",
-  "why": "Programa is the plan word."
+  "text": "Abre el culto de esta semana",
+  "back": "Open this week's plan",
+  "why": "Culto."
  },
  "ONBOARD_OPEN_PLAN": {
-  "text": "Abrir el programa",
+  "text": "Abrir el culto",
   "back": "Open the plan",
-  "why": "Same plan word."
+  "why": "Culto."
  },
  "ONBOARD_CARD_SONG": {
-  "text": "Escribe o pega la letra de un canto",
+  "text": "Escribe o pega la letra de una canción",
   "back": "Type or paste the words of a song",
-  "why": "Plain."
+  "why": "Canción."
  },
  "CMD_FIRST_RUN": {
   "text": "Repetir configuración inicial",
@@ -3712,9 +3712,9 @@
   "why": "Configuración inicial is the first run."
  },
  "CMD_FIRST_RUN_DETAIL": {
-  "text": "Idioma, país, Biblia y cantos, una pregunta a la vez",
+  "text": "Idioma, país, Biblia y canciones, una pregunta a la vez",
   "back": "Language, country, Bible and songs, one question at a time",
-  "why": "No full stop."
+  "why": "Canción."
  },
  "onboard_songs_found": {
   "text": "{songs} en EasiSlides, que queda sin tocar",
