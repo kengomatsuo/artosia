@@ -1,10 +1,13 @@
 #!/usr/bin/env bash
-# Builds the homepage and puts it on the gh-pages branch, which GitHub Pages
-# serves at artosia.matsuokengo.com.
+# Builds the homepage and deploys it to Cloudflare, which serves it at
+# artosia.matsuokengo.com.
 #   tools/publish-site.sh
 # The version and the two files' sizes are read from the newest release, so the page
-# never names a version nobody can download. The branch is replaced each time,
-# after the owner's own deploy.sh in kengomatsuo/kengomatsuo.
+# never names a version nobody can download.
+#
+# The site is a Cloudflare Worker that only serves files (site/deploy/wrangler.jsonc);
+# its custom domain made the DNS record and the certificate. wrangler is signed in on
+# the Mac, so the built folder goes there over WSL's SSH and is deployed from there.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
@@ -17,27 +20,15 @@ read -r tag setup zip < <(gh api "repos/$repo/releases/latest" --jq '[.tag_name,
 out=target/site
 python -I tools/build-site.py --version "${tag#v}" --setup-bytes "$setup" --zip-bytes "$zip" --out "$out"
 
-remote=$(git remote get-url origin)
-name=$(git config user.name)
-mail=$(git config user.email)
-cd "$out"
-git init -q
-git checkout -q -b gh-pages
-git add -A
-git -c user.name="$name" -c user.email="$mail" commit -q -m "Site for ${tag#v}"
-git push --force "$remote" gh-pages
-cd - > /dev/null
-rm -rf "$out/.git"
+here=$(wsl.exe -d Ubuntu -e wslpath -a "$(cygpath -m "$PWD")" | tr -d '\r\0')
+wsl.exe -d Ubuntu -e bash -lc "
+  set -e
+  ssh -o BatchMode=yes -o ConnectTimeout=10 mac 'mkdir -p ~/artosia-site/public' \
+    || { echo 'The Mac cannot be reached, so the site was built and not deployed.' >&2; exit 1; }
+  rsync -a --delete '$here/$out/' mac:artosia-site/public/
+  scp -q '$here/site/deploy/wrangler.jsonc' '$here/site/deploy/package.json' mac:artosia-site/
+  ssh -o BatchMode=yes mac 'export PATH=\$HOME/.bun/bin:/opt/homebrew/bin:\$PATH
+    cd ~/artosia-site && bun install --silent && bunx --no-install wrangler deploy' | tail -4
+" | tr -d '\0'
 
-echo "Site for ${tag#v} is on gh-pages."
-
-# HTTPS can be enforced only once the domain resolves and GitHub has issued its
-# certificate. Until then GitHub refuses ("The certificate does not exist yet"), and the
-# next publish asks again, so nobody has to remember it.
-if [ "$(gh api "repos/$repo/pages" --jq .https_enforced)" != "true" ]; then
-    if gh api -X PUT "repos/$repo/pages" -F https_enforced=true > /dev/null 2>&1; then
-        echo "HTTPS is now enforced."
-    else
-        echo "HTTPS is not enforced yet: GitHub has no certificate until the domain's DNS record exists."
-    fi
-fi
+echo "Site for ${tag#v} is at https://artosia.matsuokengo.com."

@@ -147,8 +147,6 @@ def main() -> None:
     shutil.copy(ROOT / "assets/brand/artosia.ico", out / "favicon.ico")
     shutil.copy(ROOT / "assets/brand/artosia-icon.svg", out / "img" / "icon.svg")
 
-    (out / "CNAME").write_text(DOMAIN + "\n", newline="\n")
-    (out / ".nojekyll").write_text("")
     (out / "robots.txt").write_text(
         f"User-agent: *\nAllow: /\n\nSitemap: {ORIGIN}/sitemap.xml\n", newline="\n"
     )

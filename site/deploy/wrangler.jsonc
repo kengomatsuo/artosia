@@ -1,0 +1,13 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  // The homepage, served by Cloudflare at artosia.matsuokengo.com (docs/site.md).
+  "name": "artosia-site",
+  "compatibility_date": "2026-11-12",
+  // No code: every request is answered from the built folder beside this file.
+  "assets": { "directory": "./public" },
+  // A custom domain makes its own DNS record and certificate.
+  "routes": [{ "pattern": "artosia.matsuokengo.com", "custom_domain": true }],
+  // The site has one address, so the workers.dev and preview addresses stay off.
+  "workers_dev": false,
+  "preview_urls": false
+}

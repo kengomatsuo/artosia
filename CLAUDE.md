@@ -58,7 +58,7 @@ tools/make-fixture.sh                         # needs ffmpeg on PATH or FFMPEG=<
 powershell -File tools/ram/measure-cpu.ps1 -Exe <exe> -ArgLine "<args>" -Label <name>
 tools/publish.sh <version> "<notes>"          # builds, signs and publishes a GitHub release
 tools/site-shots.sh                           # the homepage's pictures, rendered from the real programs
-tools/publish-site.sh                         # builds the homepage and replaces the gh-pages branch
+tools/publish-site.sh                         # builds the homepage and deploys it to Cloudflare through the Mac's wrangler
 ```
 
 With GStreamer's development files installed (variables in `crates/artosia-video/README.md`):

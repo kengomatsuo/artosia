@@ -14,16 +14,25 @@ knows what to do with it.
 | Look and motion | `site/style.css`, `site/script.js` |
 | Pictures | `site/img/`, made by `tools/site-shots.sh` |
 | The built site | `target/site/`, made by `tools/build-site.py` |
-| The served copy | branch `gh-pages` of `kengomatsuo/artosia`, replaced by `tools/publish-site.sh` |
+| How it is served | `site/deploy/wrangler.jsonc`, deployed by `tools/publish-site.sh` |
 
 ## How it is served
 
-GitHub Pages serves the `gh-pages` branch at the address in its `CNAME` file. The owner's
-other product pages (`cutling.`, `undirect.`) work the same way. The domain's DNS is at
-Cloudflare and needs one record: type CNAME, name `artosia`, target `kengomatsuo.github.io`,
-proxy off (DNS only), so GitHub can issue the certificate. Before the name resolves GitHub
-refuses to enforce HTTPS ("The certificate does not exist yet", tried 2026-11-12), so
-`tools/publish-site.sh` asks again at the end of every publish until it is on.
+A Cloudflare Worker named `artosia-site` serves the built folder and runs no code
+(`site/deploy/wrangler.jsonc`: `assets` only, after the house's other sites). Its custom
+domain made the DNS record and the certificate by itself, which is why no record was added
+by hand: wrangler's own sign-in may not write DNS records, and Cloudflare's page on custom
+domains says it "will create DNS records and issue certificates". Requests for static files
+are free and unlimited (both pages read 2026-11-12).
+
+wrangler is signed in on the Mac and not on this PC, so `tools/publish-site.sh` copies the
+built folder to the Mac over WSL's SSH and runs `wrangler deploy` there. When the Mac cannot
+be reached the script says so and the site keeps its last deploy; the page's own script
+still shows the newest version and sizes, read from GitHub when it is opened.
+
+GitHub Pages served the first copy for a day (2026-11-11) from a `gh-pages` branch, waiting
+for a DNS record at Cloudflare. It was switched off and the branch deleted on 2026-11-12,
+so one copy exists.
 
 `tools/publish.sh` ends by running `tools/publish-site.sh`, so each release rewrites the
 version and size on the page. The script reads both from the newest release, never from
