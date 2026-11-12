@@ -65,9 +65,6 @@ fn setup(s: &mut App, waker: Waker) {
         let options = s.output_options();
         s.link.start(waker, options);
     }
-    if s.folder.is_some() {
-        update::check(s.inbox.clone(), s.waker.clone(), false);
-    }
     if s.settings.remote_on && s.folder.is_some() && !rune::is_headless() {
         s.resume_remote();
     }

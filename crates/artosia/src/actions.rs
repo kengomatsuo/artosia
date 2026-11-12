@@ -1736,6 +1736,12 @@ impl App {
             // The window has been up for a few seconds: this version works and is kept.
             self.confirmed = true;
             crate::update::confirm();
+            // Only now is a newer version looked for. Confirming a version that was just swapped
+            // in empties the folder a download fills, so a check made at the start lost its
+            // download and the next version needed one more start (0.1.17 with 0.1.20 out).
+            if self.folder.is_some() {
+                crate::update::check(self.inbox.clone(), self.waker.clone(), false);
+            }
         }
         if self.want_paste {
             self.want_paste = false;
