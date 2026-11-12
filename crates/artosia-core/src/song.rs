@@ -70,7 +70,8 @@ impl Tag {
                 return None;
             }
             let numbered = matches!(self.kind, SectionKind::Verse | SectionKind::Other) || self.number > 1;
-            let text = if numbered { format!("{word}{}", self.number) } else { word };
+            // One word of the order has no space in it, whatever the pattern puts there.
+            let text = if numbered { numbered_name(&word, self.number).split_whitespace().collect() } else { word };
             (parse_tag(&text) == Some(*self)).then_some(text)
         });
         local.unwrap_or_else(|| self.short())
@@ -86,7 +87,7 @@ impl Tag {
                 return None;
             }
             let numbered = matches!(self.kind, SectionKind::Verse | SectionKind::Other) || self.number > 1;
-            let text = if numbered { format!("{word} {}", self.number) } else { word };
+            let text = if numbered { numbered_name(&word, self.number) } else { word };
             (parse_tag(&text) == Some(*self)).then(|| format!("[{text}]"))
         });
         if let Some(local) = local {
@@ -166,6 +167,25 @@ pub struct Song {
 thread_local! {
     /// What the window's language calls each kind of section, in the order of `SectionKind`.
     static MARKER_WORDS: std::cell::RefCell<Option<[String; 7]>> = const { std::cell::RefCell::new(None) };
+}
+
+thread_local! {
+    /// How the window's language joins a part's name to its number: `{name} {number}` where
+    /// none is given, `{number}{name}` where the number is said first.
+    static MARKER_PATTERN: std::cell::RefCell<Option<String>> = const { std::cell::RefCell::new(None) };
+}
+
+/// Sets the pattern a numbered marker is written with on this thread; None is the name, a
+/// space and the number.
+pub fn set_marker_pattern(pattern: Option<String>) {
+    MARKER_PATTERN.with(|slot| *slot.borrow_mut() = pattern.filter(|pattern| pattern.contains("{name}") && pattern.contains("{number}")));
+}
+
+fn numbered_name(word: &str, number: u8) -> String {
+    MARKER_PATTERN.with(|slot| match slot.borrow().as_deref() {
+        Some(pattern) => pattern.replace("{name}", word).replace("{number}", &number.to_string()),
+        None => format!("{word} {number}"),
+    })
 }
 
 /// Sets the words markers are written with on this thread, one for each `SectionKind` in its
@@ -684,6 +704,16 @@ mod tests {
         assert_eq!(Tag::new(SectionKind::Verse, 2).marker(), "[Estrofa 2]");
         assert_eq!(Tag::new(SectionKind::PreChorus, 1).marker(), "[Pre-coro]");
         assert_eq!(Tag::new(SectionKind::Chorus, 1).order_word(), "Coro");
+        // A language that says the number first writes it first, and it still reads back.
+        learn_marker_words(&["番", "プレサビ", "サビ", "ブリッジ", "イントロ", "アウトロ", "パート"].map(String::from));
+        set_marker_words(Some(["番", "プレサビ", "サビ", "ブリッジ", "イントロ", "アウトロ", "パート"].map(String::from)));
+        set_marker_pattern(Some("{number}{name}".to_string()));
+        assert_eq!(Tag::new(SectionKind::Verse, 1).marker(), "[1番]");
+        assert_eq!(Tag::new(SectionKind::Chorus, 2).marker(), "[2サビ]");
+        assert_eq!(Tag::new(SectionKind::Chorus, 1).marker(), "[サビ]");
+        assert_eq!(Tag::new(SectionKind::Verse, 2).order_word(), "2番");
+        assert_eq!(parse_tag("1番"), tag(SectionKind::Verse, 1));
+        set_marker_pattern(None);
         set_marker_words(None);
         assert_eq!(Tag::new(SectionKind::Verse, 2).marker(), "[2]");
         // Words the reader always knew keep their meaning.
