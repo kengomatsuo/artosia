@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Artosia
+GenericName=Worship presentation
+Comment=Songs, Bible verses and backgrounds on the projector
+Exec=artosia
+Icon=artosia
+Terminal=false
+Categories=AudioVideo;

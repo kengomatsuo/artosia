@@ -184,6 +184,12 @@ fn blob(path: &Path, tag: u8, len: usize) {
     .unwrap();
 }
 
+/// The name a file has on the host and in the staging folder: plain on Windows, with the
+/// platform in front elsewhere.
+fn hosted(path: &str) -> String {
+    manifest::remote_file_name(&manifest::this_platform(), path)
+}
+
 struct World {
     root: PathBuf,
     install: PathBuf,
@@ -397,7 +403,7 @@ fn update_lands_while_both_programs_run_and_old_files_go_after_restart() {
 #[test]
 fn a_tampered_file_is_refused_and_nothing_is_installed() {
     let w = World::new("tamper");
-    let target = w.out.join("artosia-output.exe");
+    let target = w.out.join(hosted("artosia-output.exe"));
     let mut bytes = fs::read(&target).unwrap();
     let mid = bytes.len() / 2;
     bytes[mid] ^= 0xff;
@@ -417,7 +423,7 @@ fn a_tampered_file_is_refused_and_nothing_is_installed() {
 fn a_tampered_staged_file_is_refused_at_apply() {
     let w = World::new("tamper-staged");
     w.download().unwrap();
-    let staged = w.stage().join("files").join("artosia.exe");
+    let staged = w.stage().join("files").join(hosted("artosia.exe"));
     let mut bytes = fs::read(&staged).unwrap();
     bytes[10] ^= 1;
     fs::write(&staged, bytes).unwrap();
@@ -467,11 +473,11 @@ fn a_cut_off_download_resumes_from_the_part_file() {
     let err = w.download().unwrap_err();
     assert!(matches!(err, UpdateError::Offline), "{err:?}");
     assert!(err.is_quiet());
-    let part = w.stage().join("files").join("artosia-output.exe.part");
+    let part = w.stage().join("files").join(format!("{}.part", hosted("artosia-output.exe")));
     let kept = fs::metadata(&part).unwrap().len();
     assert!(kept > 0, "the half file is kept");
     w.download().unwrap();
-    let ranges = w.server.requests_for("artosia-output.exe");
+    let ranges = w.server.requests_for(&hosted("artosia-output.exe"));
     assert!(
         ranges.iter().any(|r| r.is_some_and(|n| n >= kept)),
         "resumed from byte {kept}: {ranges:?}"

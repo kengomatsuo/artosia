@@ -532,6 +532,11 @@ fn from_rune(displays: &[rune::windows::Display]) -> Vec<displays::Disp> {
 }
 
 fn main() {
+    // The operator asks whether this program can start at all: off Windows it links the
+    // system's GStreamer, and without those libraries the loader ends it before this line.
+    if std::env::args().any(|arg| arg == "--probe") {
+        return;
+    }
     let headless = rune::is_headless();
     process_start();
     if headless {

@@ -146,11 +146,29 @@ fn output_program() -> Option<PathBuf> {
     // The projector program that plays video does not start at all on a computer without
     // GStreamer: Windows cannot load it ("gio-2.0-0.dll: cannot open", tried 2026-11-10). A
     // release carries a twin built without video, so such a computer still shows the words.
-    let plain = folder.join(name(true));
-    if gstreamer_bin().is_none() && plain.is_file() {
+    let (video, plain) = (folder.join(name(false)), folder.join(name(true)));
+    if plain.is_file() && !video_can_start(&video) {
         return Some(plain);
     }
-    Some(folder.join(name(false))).filter(|path| path.is_file())
+    Some(video).filter(|path| path.is_file())
+}
+
+/// Whether the projector program that plays video can start on this computer. On Windows it
+/// needs GStreamer's folder. Elsewhere it links the system's GStreamer, so the program itself
+/// is asked: started with `--probe` it ends at once, and without the libraries the system's
+/// loader ends it with an error before it runs.
+fn video_can_start(video: &std::path::Path) -> bool {
+    if cfg!(windows) {
+        return gstreamer_bin().is_some();
+    }
+    use std::process::Stdio;
+    std::process::Command::new(video)
+        .arg("--probe")
+        .stdin(Stdio::null())
+        .stdout(Stdio::null())
+        .stderr(Stdio::null())
+        .status()
+        .is_ok_and(|status| status.success())
 }
 
 fn spawn_output() -> Result<(), String> {
