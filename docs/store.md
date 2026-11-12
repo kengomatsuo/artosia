@@ -54,3 +54,30 @@ exits before any window or library; run it with `Invoke-CommandInDesktopPackage`
 ## Left for the other sessions
 
 Packaged, `update::check` returns at once and reports nothing. Settings and the command "Check for updates" must hide when `store::packaged()`; they are in `ui/**` and `palette.rs`.
+
+## The first submission (2026-11-12)
+
+The product is `9NTBWLQ5PBHN` in the owner's Partner Center, publisher matsuokengo; its
+identity is in `tools/store/identity.json`. What was done, in order:
+
+| Part of the submission | How it was filled |
+|---|---|
+| Pricing and availability | Free, every market, by hand |
+| Properties | Category Productivity, the privacy page `https://artosia.matsuokengo.com/privacy/`, website and support address, by hand |
+| Packages | `tools/store-package.sh 0.1.16` made `dist/0.1.16/Artosia-0.1.16-x64.msix` (72 MB); Partner Center validated it and warned only that `runFullTrust` needs approval |
+| Store listings | `tools/store/listing-csv.py` fills the template Partner Center exports with the ten languages of `tools/store/listing/`; the file is imported with Import listings. Screenshots come from `tools/store-shots.sh` and are uploaded on each listing's own page, six a language |
+| Submission options | The `runFullTrust` justification and the notes for the testers, both in `tools/store/submission.md` |
+| Age ratings | The owner's: the questionnaire takes the owner's e-mail address |
+
+The package was tried before it was uploaded: its loose folder was registered on this PC,
+the release's own `artosia.exe --edition` answered `edition=store`, version `1.1.16.0` and
+`Documents\Artosia`, and the package was removed again.
+
+Partner Center's page takes a package only through its own file picker or a drop. A session
+that cannot use the picker hands the file to the page's own uploader in parts no larger than
+9 MB, joined in the page and checked against the file's SHA-256 before the uploader gets it.
+
+Not done: the Windows App Certification Kit was not run, and nothing was installed from the
+Store itself, so the firewall rule and the read-only install folder are proven only by the
+loose registration.
+
