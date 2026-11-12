@@ -250,7 +250,7 @@
   "why": ""
  },
  "keys_text": {
-  "text": "Space와 아래 화살표는 다음, 위 화살표는 이전 슬라이드예요. 슬래시 키는 검색. C는 후렴, V는 다음 절, B는 브리지예요. 숫자 1부터 9는 그 번호 부분. F1은 글자 숨김, F2는 블랙, F3은 로고, F6은 프로젝터 켜기와 끄기예요.",
+  "text": "Space와 아래 화살표는 다음, 위 화살표는 이전 슬라이드예요. 슬래시 키는 검색. C는 후렴, V는 다음 벌스, B는 브리지예요. 숫자 1부터 9는 그 번호 부분. F1은 글자 숨김, F2는 블랙, F3은 로고, F6은 프로젝터 켜기와 끄기예요.",
   "back": "Space and the down arrow go to the next slide, the up arrow to the previous. The slash key is search. C is the chorus, V the next verse, B the bridge. The digits 1 to 9 are that numbered part. F1 hides the words, F2 is black, F3 the logo, F6 switches the projector on and off.",
   "why": ""
  },
@@ -265,9 +265,9 @@
   "why": ""
  },
  "label.verse": {
-  "text": "절",
+  "text": "벌스",
   "back": "Verse",
-  "why": ""
+  "why": "same word as the window"
  },
  "label.chorus": {
   "text": "후렴",
@@ -300,8 +300,8 @@
   "why": ""
  },
  "label.numbered": {
-  "text": "{1}{0}",
-  "back": "the part's name and its number, in the order the window uses",
-  "why": "carried from section_numbered so the phone and the window agree"
+  "text": "{0} {1}",
+  "back": "the part's name and its number",
+  "why": "same order as the window"
  }
 }

@@ -1281,9 +1281,9 @@
   "why": "-"
  },
  "LETTER_KEYS_HINT": {
-  "text": "R vai ao refrão e P à ponte. Desligado, toda letra abre a busca.",
-  "back": "R goes to the chorus and P to the bridge. Switched off, every letter opens the search.",
-  "why": "-"
+  "text": "R vai ao refrão e B à ponte. Desligado, toda letra abre a busca.",
+  "back": "R goes to the chorus and B to the bridge. Switched off, every letter opens the search.",
+  "why": "R first letter of Refrão; B fixed"
  },
  "COUNTDOWN": {
   "text": "Contagem",
@@ -1343,7 +1343,7 @@
  "FIELD_ORDER": {
   "text": "Ordem, ex.: Estrofe1 Refrão*2 Estrofe2 Refrão Ponte",
   "back": "Order, e.g.: Verse1 Chorus*2 Verse2 Chorus Bridge",
-  "why": "-"
+  "why": "one-word part names, no space"
  },
  "ORDER": {
   "text": "Ordem",
@@ -1414,9 +1414,9 @@
   "why": "-"
  },
  "LYRICS_PLACEHOLDER": {
-  "text": "[Estrofe1]\nLinha um\n\n[Refrão]\nLinha dois",
-  "back": "[Verse1] Line one / [Chorus] Line two",
-  "why": "marker syntax guessed"
+  "text": "[Estrofe 1]\nLinha A\n\n[Refrão]\nLinha B",
+  "back": "[Verse 1] Line A / [Chorus] Line B",
+  "why": "marker names are my own part words; sample lines kept short for the width"
  },
  "SECOND_PLACEHOLDER": {
   "text": "As mesmas partes, na mesma ordem",
@@ -2463,9 +2463,9 @@
   "why": "fragment, present tense"
  },
  "KEYS_SHOWING_ROWS[8].1": {
-  "text": "R pula ao próximo refrão e P à próxima ponte",
-  "back": "R jumps to the next chorus and P to the next bridge",
-  "why": "fragment, present tense"
+  "text": "R pula ao próximo refrão e B à próxima ponte",
+  "back": "R jumps to the next chorus and B to the next bridge",
+  "why": "R and B only"
  },
  "KEYS_SHOWING_ROWS[9].1": {
   "text": "Marca a parte com esse número na Prévia",
@@ -3021,7 +3021,7 @@
  "section_numbered": {
   "text": "{name} {number}",
   "back": "{name} {number}",
-  "why": "-"
+  "why": "reads right for Refrão 2 and Ponte 2"
  },
  "DESIGN_BACKGROUND": {
   "text": "Fundo",
@@ -3504,6 +3504,236 @@
  "BTN_START_HERE": {
   "text": "Começar aqui",
   "back": "Start here",
+  "why": "-"
+ },
+ "ONBOARD_SKIP": {
+  "text": "Pular agora",
+  "back": "Skip now",
+  "why": "-"
+ },
+ "ONBOARD_BACK": {
+  "text": "Voltar",
+  "back": "Back",
+  "why": "page word, not the slide word"
+ },
+ "ONBOARD_YES": {
+  "text": "Sim",
+  "back": "Yes",
+  "why": "-"
+ },
+ "ONBOARD_NEXT": {
+  "text": "Continuar",
+  "back": "Continue",
+  "why": "same as the tour"
+ },
+ "ONBOARD_SKIP_FOR_NOW": {
+  "text": "Agora não",
+  "back": "Not now",
+  "why": "-"
+ },
+ "ONBOARD_LANGUAGE_TITLE": {
+  "text": "Este é o idioma que você quer?",
+  "back": "Is this the language you want?",
+  "why": "-"
+ },
+ "ONBOARD_COUNTRY_TITLE": {
+  "text": "Sua igreja fica neste país ou região?",
+  "back": "Is your church in this country or region?",
+  "why": "-"
+ },
+ "ONBOARD_COUNTRY_HINT": {
+  "text": "Assim as Bíblias dos idiomas de lá vêm primeiro",
+  "back": "So the Bibles in the languages there come first",
+  "why": "-"
+ },
+ "ONBOARD_COUNTRY_FILTER": {
+  "text": "Digite parte do nome",
+  "back": "Type part of the name",
+  "why": "-"
+ },
+ "ONBOARD_BIBLE_TITLE": {
+  "text": "Qual Bíblia o Artosia deve exibir?",
+  "back": "Which Bible should Artosia show?",
+  "why": "-"
+ },
+ "ONBOARD_BIBLE_HINT": {
+  "text": "Primeiro os idiomas do país. Depois, dá para adicionar mais",
+  "back": "The languages of the country first. Later, more can be added",
+  "why": "-"
+ },
+ "ONBOARD_SONGS_TITLE": {
+  "text": "Onde estão as músicas da igreja?",
+  "back": "Where are the church songs?",
+  "why": "-"
+ },
+ "ONBOARD_SONGS_EASI": {
+  "text": "Músicas do EasiSlides neste computador",
+  "back": "Songs of EasiSlides on this computer",
+  "why": "-"
+ },
+ "ONBOARD_SONGS_FOLDER": {
+  "text": "Músicas de uma pasta",
+  "back": "Songs from a folder",
+  "why": "-"
+ },
+ "ONBOARD_SONGS_FOLDER_HINT": {
+  "text": "Dados do EasiSlides ou OpenLyrics",
+  "back": "EasiSlides data or OpenLyrics",
+  "why": "-"
+ },
+ "ONBOARD_SONGS_NONE": {
+  "text": "Ainda sem músicas",
+  "back": "No songs yet",
+  "why": "-"
+ },
+ "ONBOARD_SONGS_NONE_HINT": {
+  "text": "A biblioteca começa vazia, dá para adicionar depois",
+  "back": "The library starts empty, songs can be added later",
+  "why": "-"
+ },
+ "ONBOARD_SCREENS_TITLE": {
+  "text": "A igreja está vendo a imagem de teste?",
+  "back": "Is the church seeing the test picture?",
+  "why": "-"
+ },
+ "ONBOARD_SCREENS_HINT": {
+  "text": "A imagem já está no monitor que seria o projetor da igreja",
+  "back": "The picture is already on the monitor that would be the church projector",
+  "why": "-"
+ },
+ "ONBOARD_ROW_WINDOW": {
+  "text": "Monitor desta janela",
+  "back": "Monitor of this window",
+  "why": "-"
+ },
+ "ONBOARD_ROW_PICTURE": {
+  "text": "Monitor com a imagem de teste",
+  "back": "Monitor with the test picture",
+  "why": "-"
+ },
+ "ONBOARD_ROW_SIZE": {
+  "text": "Tamanho da imagem",
+  "back": "Size of the picture",
+  "why": "-"
+ },
+ "ONBOARD_WORKS": {
+  "text": "Sim, aparece",
+  "back": "Yes, it shows",
+  "why": "-"
+ },
+ "ONBOARD_OTHER_SCREEN": {
+  "text": "Não, tentar outro monitor",
+  "back": "No, try another monitor",
+  "why": "-"
+ },
+ "ONBOARD_NO_PROJECTOR": {
+  "text": "Nenhum projetor conectado ainda",
+  "back": "No projector connected yet",
+  "why": "-"
+ },
+ "ONBOARD_NO_PROJECTOR_HINT": {
+  "text": "Ao conectar um, o Artosia passa a usá-lo sozinho",
+  "back": "When you connect one, Artosia starts using it by itself",
+  "why": "-"
+ },
+ "ONBOARD_READY_TITLE": {
+  "text": "Preparando o que você pediu",
+  "back": "Preparing what you asked for",
+  "why": "-"
+ },
+ "ONBOARD_READY_HINT": {
+  "text": "Não precisa esperar aqui. O que faltar continua sozinho",
+  "back": "No need to wait here. What is left goes on by itself",
+  "why": "-"
+ },
+ "ONBOARD_JOB_LANGUAGE": {
+  "text": "Idioma e país",
+  "back": "Language and country",
+  "why": "-"
+ },
+ "ONBOARD_JOB_SONGS": {
+  "text": "Músicas",
+  "back": "Songs",
+  "why": "-"
+ },
+ "ONBOARD_STATE_DONE": {
+  "text": "Pronto",
+  "back": "Done",
+  "why": "-"
+ },
+ "ONBOARD_STATE_WAITING": {
+  "text": "Na fila",
+  "back": "Waiting",
+  "why": "-"
+ },
+ "ONBOARD_STATE_FAILED": {
+  "text": "Falhou",
+  "back": "Failed",
+  "why": "-"
+ },
+ "ONBOARD_BIBLE_FAILED": {
+  "text": "Nada se perde, o programa segue sem essa Bíblia. Depois, use Mais versões em Ajustes",
+  "back": "Nothing is lost, the program goes on without that Bible. Later, use More versions in Adjustments",
+  "why": "names the Settings button More versions"
+ },
+ "ONBOARD_DONE_TITLE": {
+  "text": "O Artosia está pronto",
+  "back": "Artosia is ready",
+  "why": "-"
+ },
+ "ONBOARD_DONE_HINT": {
+  "text": "Comece por uma destas três coisas",
+  "back": "Begin with one of these three things",
+  "why": "-"
+ },
+ "ONBOARD_CARD_TOUR": {
+  "text": "Faça o tutorial de cinco passos pela janela",
+  "back": "Do the five-step tutorial of the window",
+  "why": "-"
+ },
+ "ONBOARD_CARD_PLAN": {
+  "text": "Abra o roteiro do próximo culto",
+  "back": "Open the plan of the next service",
+  "why": "-"
+ },
+ "ONBOARD_OPEN_PLAN": {
+  "text": "Abrir o roteiro",
+  "back": "Open the plan",
+  "why": "-"
+ },
+ "ONBOARD_CARD_SONG": {
+  "text": "Digite ou cole a letra de uma música",
+  "back": "Type or paste the lyrics of a song",
+  "why": "-"
+ },
+ "CMD_FIRST_RUN": {
+  "text": "Refazer a configuração inicial",
+  "back": "Redo the initial setup",
+  "why": "configuração inicial is the first run"
+ },
+ "CMD_FIRST_RUN_DETAIL": {
+  "text": "Idioma, país, Bíblia, músicas e tela, uma pergunta por vez",
+  "back": "Language, country, Bible, songs and screen, one question at a time",
+  "why": "-"
+ },
+ "onboard_songs_found": {
+  "text": "Achado: {songs}. O EasiSlides fica como está",
+  "back": "Found: {songs}. EasiSlides stays as it is",
+  "why": "noun form, no agreement with the count"
+ },
+ "onboard_percent": {
+  "text": "{percent}%",
+  "back": "{percent}%",
+  "why": "-"
+ },
+ "onboard_progress": {
+  "text": "{done} de {of}",
+  "back": "{done} of {of}",
+  "why": "-"
+ },
+ "day_month": {
+  "text": "{day} de {month}",
+  "back": "{day} of {month}",
   "why": "-"
  }
 }

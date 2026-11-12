@@ -1414,9 +1414,9 @@
   "why": "A phrase."
  },
  "LYRICS_PLACEHOLDER": {
-  "text": "[Estrofa 1]\nTu luz nos guía\n\n[Coro]\nGloria a Dios",
-  "back": "[Verse 1] / Your light guides us / [Chorus] / Glory to God",
-  "why": "Marker syntax guessed; sample lines invented."
+  "text": "[Estrofa 1]\nTu paz guía\n\n[Coro]\nAleluya",
+  "back": "[Verse 1] / Your peace guides / [Chorus] / Hallelujah",
+  "why": "Markers are the section names; sample lines kept short to fit 40 in all."
  },
  "SECOND_PLACEHOLDER": {
   "text": "Escribe las mismas partes, en el mismo orden",
@@ -3505,5 +3505,235 @@
   "text": "Empezar aquí",
   "back": "Start here",
   "why": "Begin at this spot."
+ },
+ "ONBOARD_SKIP": {
+  "text": "Omitir todo",
+  "back": "Skip all",
+  "why": "Nothing is lost; answers given are kept."
+ },
+ "ONBOARD_BACK": {
+  "text": "Volver",
+  "back": "Back",
+  "why": "Same word as the tour's back; not Atrás, which moves a slide."
+ },
+ "ONBOARD_YES": {
+  "text": "Sí",
+  "back": "Yes",
+  "why": "Answers the question above."
+ },
+ "ONBOARD_NEXT": {
+  "text": "Siguiente",
+  "back": "Next",
+  "why": "Same word as the tour's next."
+ },
+ "ONBOARD_SKIP_FOR_NOW": {
+  "text": "Omitir por ahora",
+  "back": "Skip for now",
+  "why": "Short, quiet."
+ },
+ "ONBOARD_LANGUAGE_TITLE": {
+  "text": "¿Usamos este idioma?",
+  "back": "Do we use this language?",
+  "why": "Yes or no question."
+ },
+ "ONBOARD_COUNTRY_TITLE": {
+  "text": "¿Tu iglesia está en este país o región?",
+  "back": "Is your church in this country or region?",
+  "why": "Country or region, as some places are not countries."
+ },
+ "ONBOARD_COUNTRY_HINT": {
+  "text": "Así las Biblias de sus idiomas salen primero",
+  "back": "That way the Bibles of its languages come first",
+  "why": "No full stop."
+ },
+ "ONBOARD_COUNTRY_FILTER": {
+  "text": "Escribe un país o región",
+  "back": "Type a country or region",
+  "why": "Hint, not a sentence."
+ },
+ "ONBOARD_BIBLE_TITLE": {
+  "text": "¿Qué versión de la Biblia quieres usar?",
+  "back": "Which version of the Bible do you want to use?",
+  "why": "Versión is the translation word."
+ },
+ "ONBOARD_BIBLE_HINT": {
+  "text": "Primero van los idiomas del país. Podrás añadir más después",
+  "back": "The languages of the country come first. You can add more later",
+  "why": "No final full stop."
+ },
+ "ONBOARD_SONGS_TITLE": {
+  "text": "¿Dónde tienes tus cantos?",
+  "back": "Where do you keep your songs?",
+  "why": "Canto is the song word."
+ },
+ "ONBOARD_SONGS_EASI": {
+  "text": "Traer de EasiSlides en este equipo",
+  "back": "Bring over from EasiSlides on this computer",
+  "why": "EasiSlides stays."
+ },
+ "ONBOARD_SONGS_FOLDER": {
+  "text": "Elegir una carpeta",
+  "back": "Choose a folder",
+  "why": "Opens the folder chooser."
+ },
+ "ONBOARD_SONGS_FOLDER_HINT": {
+  "text": "Datos de EasiSlides o de OpenLyrics",
+  "back": "EasiSlides data or OpenLyrics",
+  "why": "Names stay."
+ },
+ "ONBOARD_SONGS_NONE": {
+  "text": "Aún no tengo cantos",
+  "back": "I have no songs yet",
+  "why": "Not final."
+ },
+ "ONBOARD_SONGS_NONE_HINT": {
+  "text": "La biblioteca empieza vacía; añade cantos cuando quieras",
+  "back": "The library starts empty; add songs whenever you like",
+  "why": "No full stop."
+ },
+ "ONBOARD_SCREENS_TITLE": {
+  "text": "¿Ves el número grande en el proyector?",
+  "back": "Do you see the big number on the projector?",
+  "why": "The test picture is a big number."
+ },
+ "ONBOARD_SCREENS_HINT": {
+  "text": "La imagen de prueba ya está en el monitor para la gente",
+  "back": "The test picture is already on the monitor for the people",
+  "why": "Monitor is the hardware noun."
+ },
+ "ONBOARD_ROW_WINDOW": {
+  "text": "Esta ventana",
+  "back": "This window",
+  "why": "Followed by Monitor and a number."
+ },
+ "ONBOARD_ROW_PICTURE": {
+  "text": "Imagen de prueba",
+  "back": "Test picture",
+  "why": "Followed by Monitor and a number."
+ },
+ "ONBOARD_ROW_SIZE": {
+  "text": "Tamaño",
+  "back": "Size",
+  "why": "One word."
+ },
+ "ONBOARD_WORKS": {
+  "text": "Sí, se ve",
+  "back": "Yes, I see it",
+  "why": "Answers the question."
+ },
+ "ONBOARD_OTHER_SCREEN": {
+  "text": "No, probar otro monitor",
+  "back": "No, try another monitor",
+  "why": "Pairs with the yes button."
+ },
+ "ONBOARD_NO_PROJECTOR": {
+  "text": "Aún no hay proyector conectado",
+  "back": "No projector is connected yet",
+  "why": "A statement."
+ },
+ "ONBOARD_NO_PROJECTOR_HINT": {
+  "text": "Al conectar uno, Artosia lo usará sin preguntar",
+  "back": "When you connect one, Artosia will use it without asking",
+  "why": "No full stop."
+ },
+ "ONBOARD_READY_TITLE": {
+  "text": "Artosia prepara lo que pediste",
+  "back": "Artosia is preparing what you asked for",
+  "why": "A statement."
+ },
+ "ONBOARD_READY_HINT": {
+  "text": "No hace falta esperar aquí. Lo que falte sigue solo",
+  "back": "No need to wait here. What is left goes on by itself",
+  "why": "No final full stop."
+ },
+ "ONBOARD_JOB_LANGUAGE": {
+  "text": "Idioma y país",
+  "back": "Language and country",
+  "why": "First job."
+ },
+ "ONBOARD_JOB_SONGS": {
+  "text": "Cantos",
+  "back": "Songs",
+  "why": "One word."
+ },
+ "ONBOARD_STATE_DONE": {
+  "text": "Listo",
+  "back": "Done",
+  "why": "One word."
+ },
+ "ONBOARD_STATE_WAITING": {
+  "text": "En espera",
+  "back": "Waiting",
+  "why": "Short."
+ },
+ "ONBOARD_STATE_FAILED": {
+  "text": "Falló",
+  "back": "Failed",
+  "why": "One word before the reason."
+ },
+ "ONBOARD_BIBLE_FAILED": {
+  "text": "No se pierde nada. Añade una Biblia después en Ajustes, con Más Biblias",
+  "back": "Nothing is lost. Add a Bible later in Settings, with More Bibles",
+  "why": "Uses the button's own name."
+ },
+ "ONBOARD_DONE_TITLE": {
+  "text": "Artosia está lista",
+  "back": "Artosia is ready",
+  "why": "A statement."
+ },
+ "ONBOARD_DONE_HINT": {
+  "text": "Empieza por una de estas tres cosas",
+  "back": "Start with one of these three things",
+  "why": "No full stop."
+ },
+ "ONBOARD_CARD_TOUR": {
+  "text": "Un recorrido de cinco paradas por la ventana",
+  "back": "A tour of five stops through the window",
+  "why": "Recorrido is the tour word."
+ },
+ "ONBOARD_CARD_PLAN": {
+  "text": "Abre el programa del próximo culto",
+  "back": "Open the plan of the next service",
+  "why": "Programa is the plan word."
+ },
+ "ONBOARD_OPEN_PLAN": {
+  "text": "Abrir el programa",
+  "back": "Open the plan",
+  "why": "Same plan word."
+ },
+ "ONBOARD_CARD_SONG": {
+  "text": "Escribe o pega la letra de un canto",
+  "back": "Type or paste the words of a song",
+  "why": "Plain."
+ },
+ "CMD_FIRST_RUN": {
+  "text": "Repetir configuración inicial",
+  "back": "Repeat the initial setup",
+  "why": "Configuración inicial is the first run."
+ },
+ "CMD_FIRST_RUN_DETAIL": {
+  "text": "Idioma, país, Biblia y cantos, una pregunta a la vez",
+  "back": "Language, country, Bible and songs, one question at a time",
+  "why": "No full stop."
+ },
+ "onboard_songs_found": {
+  "text": "{songs} en EasiSlides, que queda sin tocar",
+  "back": "{songs} in EasiSlides, which is left untouched",
+  "why": "Number leads."
+ },
+ "onboard_percent": {
+  "text": "{percent} %",
+  "back": "{percent} %",
+  "why": "Space before the sign, as Spanish writes it."
+ },
+ "onboard_progress": {
+  "text": "{done} de {of}",
+  "back": "{done} of {of}",
+  "why": "Two numbers."
+ },
+ "day_month": {
+  "text": "{day} de {month}",
+  "back": "{day} of {month}",
+  "why": "Spanish date order."
  }
 }

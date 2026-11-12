@@ -45,19 +45,19 @@
   "why": "段落指主歌、副歌等"
  },
  "SEARCH_SECTIONS": {
-  "text": "輸入段落，如 副歌、主歌 2，或一句歌詞",
-  "back": "Type a section, e.g. chorus, verse 2, or one line of words",
-  "why": "音樂人慣用主歌、副歌"
+  "text": "輸入段落，如 副歌、主歌2，或一句歌詞",
+  "back": "Type a section, e.g. chorus, verse2, or one line of words",
+  "why": "與段落標籤同寫法，數字不留空格"
  },
  "IN_PLAN": {
   "text": "已在流程中",
   "back": "Already in the plan",
-  "why": "流程指聚會流程；狀態不用動詞"
+  "why": "與標籤同一說法"
  },
  "PLAN_CHIP": {
-  "text": "已在流程",
+  "text": "已在流程中",
   "back": "Already in the plan",
-  "why": "陳述句，不是分類"
+  "why": "與狀態同一說法"
  },
  "KIND_LOOK": {
   "text": "外觀",
@@ -75,9 +75,9 @@
   "why": "投影是全程唯一的放給現場的動詞"
  },
  "MESSAGE_DETAIL": {
-  "text": "把這段文字投影成提示給現場的人看",
-  "back": "Puts these words on the projector as a notice for the people in the room",
-  "why": "提示指給現場的短訊息"
+  "text": "把這段文字投影成訊息給現場的人看",
+  "back": "Puts these words on the projector as a message for the people in the room",
+  "why": "提示改稱訊息，一個名稱"
  },
  "countdown_for": {
   "text": {
@@ -257,7 +257,7 @@
  "CMD_STREAM": {
   "text": "直播與錄影",
   "back": "Broadcast and recording",
-  "why": "標題含兩件事"
+  "why": "與頂列按鈕同名"
  },
  "CMD_STREAM_DETAIL": {
   "text": "把投影機的畫面傳到影音網站，或存成檔案",
@@ -265,9 +265,9 @@
   "why": "播的是投影機畫面"
  },
  "BTN_STREAM": {
-  "text": "直播",
-  "back": "Broadcast",
-  "why": "名詞，不是命令"
+  "text": "直播與錄影",
+  "back": "Broadcast and recording",
+  "why": "按鈕與對話框同一名稱"
  },
  "BTN_LISTEN": {
   "text": "麥克風辨識",
@@ -360,9 +360,9 @@
   "why": "只是建議"
  },
  "LISTEN_SWITCH": {
-  "text": "辨識開啟",
-  "back": "Recognition on",
-  "why": "讀成開關的狀態"
+  "text": "開啟辨識",
+  "back": "Turn recognition on",
+  "why": "讀者要求像控制項"
  },
  "LISTEN_HINT": {
   "text": "電腦只會提出建議，不會自己投影任何東西。",
@@ -385,9 +385,9 @@
   "why": "說明來源"
  },
  "LISTEN_LANGUAGE": {
-  "text": "現場語言",
-  "back": "Language in the room",
-  "why": "不是介面語言"
+  "text": "現場使用的語言",
+  "back": "Language used in the room",
+  "why": "說清是現場人聲不是介面"
  },
  "LISTEN_INDONESIAN": {
   "text": "印尼語",
@@ -420,9 +420,9 @@
   "why": "保存的聲音檔"
  },
  "REC_SWITCH": {
-  "text": "保存錄音檔",
+  "text": "儲存錄音檔",
   "back": "Keep recordings",
-  "why": "與分頁同名詞"
+  "why": "保存是大陸用法，其他處用儲存"
  },
  "REC_HINT": {
   "text": "只存聽到的短片段和辨識結果，都留在這台電腦的一個資料夾裡。",
@@ -430,9 +430,9 @@
   "why": "說明內容與位置"
  },
  "REC_NONE": {
-  "text": "還沒有存檔",
-  "back": "Nothing kept yet",
-  "why": "短"
+  "text": "目前沒有錄音檔",
+  "back": "No recordings at the moment",
+  "why": "存檔會讀成還沒儲存"
  },
  "rec_kept": {
   "text": "{size} 錄音檔",
@@ -450,14 +450,14 @@
   "why": "與開啟成對"
  },
  "REC_SAVE": {
-  "text": "打包成一個檔案",
-  "back": "Pack into one file",
-  "why": "強調一個檔案"
+  "text": "匯出成一個檔案",
+  "back": "Export into one file",
+  "why": "打包太技術"
  },
  "REC_SAVING": {
-  "text": "打包中",
-  "back": "Packing",
-  "why": "進行式"
+  "text": "匯出中",
+  "back": "Exporting",
+  "why": "與按鈕同動詞"
  },
  "REC_DELETE": {
   "text": "全部刪除",
@@ -475,9 +475,9 @@
   "why": "過去式"
  },
  "REC_FAILED": {
-  "text": "無法寫入這個位置。請用「更換資料夾」選別處。",
-  "back": "Cannot write to this place. Pick another one with \"Change folder\".",
-  "why": "用同一按鈕詞"
+  "text": "無法儲存到這裡。請按「更換資料夾」換個位置。",
+  "back": "Cannot save here. Press \"Change folder\" to pick another place.",
+  "why": "用按鈕同一個詞"
  },
  "REC_ON": {
   "text": "錄音存檔中",
@@ -515,9 +515,9 @@
   "why": "白話，不用 Live"
  },
  "LISTEN_BEAT_BLINK_HINT": {
-  "text": "效果很淡，只是裝飾",
-  "back": "The effect is faint, only decoration",
-  "why": "中性"
+  "text": "閃動效果很輕微，僅供裝飾",
+  "back": "The blinking is very slight, only decoration",
+  "why": "很淡改為輕微"
  },
  "CMD_UPDATE": {
   "text": "檢查更新",
@@ -600,14 +600,14 @@
   "why": "無句號"
  },
  "CMD_HIDE_MESSAGE": {
-  "text": "撤下提示",
-  "back": "Take down the notice",
-  "why": "撤下是收回的意思"
+  "text": "撤下訊息",
+  "back": "Take down the message",
+  "why": "訊息一個名稱"
  },
  "CMD_HIDE_MESSAGE_DETAIL": {
-  "text": "提示從所有螢幕消失",
-  "back": "The notice goes away from every screen",
-  "why": "無句號"
+  "text": "訊息從所有螢幕消失",
+  "back": "The message goes away from every screen",
+  "why": "訊息一個名稱"
  },
  "CMD_EDIT_SONG": {
   "text": "編輯詩歌",
@@ -670,9 +670,9 @@
   "why": "同上"
  },
  "BTN_PHONE": {
-  "text": "手機",
-  "back": "Phone",
-  "why": "名稱為裝置"
+  "text": "手機遙控",
+  "back": "Phone remote",
+  "why": "按鈕與對話框同一名稱"
  },
  "HINT_KEYS": {
   "text": "快捷鍵",
@@ -805,9 +805,9 @@
   "why": "單詞"
  },
  "PLANS_NO_DAY": {
-  "text": "尚未指定星期",
-  "back": "No day set yet",
-  "why": "像邀請不像錯誤"
+  "text": "未指定星期",
+  "back": "No day set",
+  "why": "較自然"
  },
  "PLAN_DUPLICATE": {
   "text": "複製流程",
@@ -935,9 +935,9 @@
   "why": "一句"
  },
  "TOUR_PLAN_MORE": {
-  "text": "用滑鼠拖曳一列就能換位置",
-  "back": "Drag a row with the mouse to change its place",
-  "why": "簡短"
+  "text": "拖曳項目即可調整順序",
+  "back": "Drag an item to change the order",
+  "why": "不說一列"
  },
  "TOUR_PREVIEW": {
   "text": "中間是預覽，放著接下來要投影的投影片",
@@ -950,9 +950,9 @@
   "why": "重要的安心"
  },
  "TOUR_SHOW": {
-  "text": "「投影」會把預覽的內容送到右邊的投影中",
-  "back": "\"Show\" sends what is in Preview to the Live pane on the right",
-  "why": "沿用窗格與按鈕名"
+  "text": "「投影」會把預覽的內容送到右邊的「現場」",
+  "back": "\"Show\" sends what is in Preview to \"Live\" on the right",
+  "why": "沿用窗格名稱"
  },
  "TOUR_SHOW_MORE": {
   "text": "投影機開著，現場的人才看得到",
@@ -960,24 +960,24 @@
   "why": "開與關一對"
  },
  "TOUR_LIVE": {
-  "text": "右邊是投影中，現場的人此刻看到的內容",
-  "back": "On the right is the Live pane, what the room sees right now",
-  "why": "窗格稱「投影中」"
+  "text": "右邊是「現場」，現場的人此刻看到的內容",
+  "back": "On the right is \"Live\", what the room sees right now",
+  "why": "窗格名稱加說明"
  },
  "TOUR_LIVE_MORE": {
-  "text": "下方紅色的「投影中」鈕可開關投影機（F6）",
-  "back": "The red Live tile below turns the projector on and off (F6)",
-  "why": "說明是紅色按鈕不是上方清單"
+  "text": "下方紅色的「現場」按鈕可開關投影機（F6）",
+  "back": "The red \"Live\" button below turns the projector on and off (F6)",
+  "why": "按鈕二字，說清是紅色按鈕不是上方清單"
  },
  "TOUR_SEARCH": {
-  "text": "在這一個框裡找所有詩歌和聖經經文",
-  "back": "Find every song and Bible passage in this one box",
-  "why": "一句"
+  "text": "在這裡搜尋詩歌和經文",
+  "back": "Search songs and passages here",
+  "why": "去掉重複的聖經經文"
  },
  "TOUR_SEARCH_MORE": {
-  "text": "先開啟，再按「新增到流程」",
-  "back": "Open it first, then press \"Add to plan\"",
-  "why": "同搜尋面板的按鈕"
+  "text": "先開啟結果，再按「新增到流程」",
+  "back": "Open the result first, then press \"Add to plan\"",
+  "why": "說清開啟什麼"
  },
  "START_SONGS": {
   "text": "詩歌",
@@ -1055,9 +1055,9 @@
   "why": "常說的預覽"
  },
  "LIVE": {
-  "text": "投影中",
-  "back": "On projector",
-  "why": "狀態詞，亮著就是現場看得到"
+  "text": "現場",
+  "back": "Live",
+  "why": "窗格與開關磚用不說狀態的詞，關閉時才不矛盾"
  },
  "BTN_NEXT": {
   "text": "下一張",
@@ -1095,14 +1095,14 @@
   "why": "狀態"
  },
  "STATE_MESSAGE": {
-  "text": "提示投影中",
-  "back": "Notice on projector",
-  "why": "狀態不是動作"
+  "text": "訊息投影中",
+  "back": "Message on projector",
+  "why": "讀者覺得提示不清楚"
  },
  "STATE_STAGE_MESSAGE": {
-  "text": "樂團提示顯示中",
-  "back": "Band notice showing",
-  "why": "樂團畫面不是現場，改用顯示"
+  "text": "樂團訊息顯示中",
+  "back": "Band message showing",
+  "why": "與訊息同名"
  },
  "STAGE_MESSAGE_DETAIL": {
   "text": "這段文字只會顯示在樂團畫面上",
@@ -1408,9 +1408,9 @@
   "why": "片語"
  },
  "LYRICS_PLACEHOLDER": {
-  "text": "[主歌1]\n讚美歸給主\n\n[副歌]\n歌頌祂的名",
-  "back": "[Verse1] / Praise to the Lord / [Chorus] / Sing His name",
-  "why": "標記為猜測寫法，見報告"
+  "text": "[主歌 1]\n讚美歸給主\n\n[副歌]\n歌頌祂的名",
+  "back": "[Verse 1] / Praise to the Lord / [Chorus] / Sing His name",
+  "why": "標記用段落名，主歌後空一格再 1"
  },
  "SECOND_PLACEHOLDER": {
   "text": "用第二語言，依相同順序寫同樣的段落",
@@ -1623,9 +1623,9 @@
   "why": "按鈕兼檔案視窗標題"
  },
  "LOOK_LICENCE": {
-  "text": "CCLI 授權編號",
-  "back": "CCLI licence number",
-  "why": "CCLI 不變"
+  "text": "教會的 CCLI 授權編號",
+  "back": "The church's CCLI licence number",
+  "why": "與歌曲編號分開"
  },
  "LOOK_LICENCE_HINT": {
   "text": "編號",
@@ -1668,9 +1668,9 @@
   "why": "指示"
  },
  "WALL_RESET": {
-  "text": "恢復預設",
-  "back": "Reset",
-  "why": "日常說法"
+  "text": "還原預設值",
+  "back": "Restore defaults",
+  "why": "補上受詞"
  },
  "WALL_BRIGHTNESS": {
   "text": "亮度",
@@ -1678,9 +1678,9 @@
   "why": "常用詞"
  },
  "WALL_CONTRAST": {
-  "text": "對比",
+  "text": "對比度",
   "back": "Contrast",
-  "why": "常用詞"
+  "why": "完整詞"
  },
  "WALL_COLOUR": {
   "text": "色彩飽和度",
@@ -1748,9 +1748,9 @@
   "why": "以網址連線"
  },
  "LOOK_CAMERA_FAR_USE": {
-  "text": "使用",
-  "back": "Use",
-  "why": "短動詞"
+  "text": "連線",
+  "back": "Connect",
+  "why": "說明按下會做什麼"
  },
  "LOOK_CAMERA_FAR_NOTE": {
   "text": "手機也能當攝影機，用相機程式以 RTSP 或 SRT 傳送畫面。",
@@ -1768,14 +1768,14 @@
   "why": "鍵名照鍵盤"
  },
  "LOOK_WINDOW": {
-  "text": "視窗色彩",
-  "back": "Window colour",
-  "why": "設定標題用語"
+  "text": "佈景主題",
+  "back": "Theme",
+  "why": "台灣軟體的淺色深色說法，避開外觀"
  },
  "LOOK_WINDOW_AUTO": {
-  "text": "跟隨電腦設定",
-  "back": "Follow the computer",
-  "why": "片語"
+  "text": "跟隨系統設定",
+  "back": "Follow the system setting",
+  "why": "系統設定是常用詞"
  },
  "LOOK_WINDOW_LIGHT": {
   "text": "淺色",
@@ -1944,9 +1944,9 @@
   "why": "不指定按鈕"
  },
  "REMOTE_FIREWALL_REFUSED": {
-  "text": "防火牆擋住了手機。關閉再開啟手機遙控，權限視窗就會再出現。",
-  "back": "The firewall is turning phones away. Switch the phone remote off and on and the permission window comes back.",
-  "why": "不怪使用者"
+  "text": "防火牆擋住了手機連線。先關閉再開啟手機遙控，Windows 就會再詢問一次權限。",
+  "back": "The firewall is blocking phone connections. Switch the phone remote off and on and Windows asks permission once more.",
+  "why": "權限視窗太模糊"
  },
  "phones": {
   "text": {
@@ -2461,14 +2461,14 @@
   "why": "片語"
  },
  "KEYS_SHOWING_ROWS[10].1": {
-  "text": "把投影中的詩歌帶進預覽，再選別的段落",
-  "back": "Bring the live song into Preview to pick another part",
-  "why": "片語"
+  "text": "把投影中的詩歌放到預覽，再選別的段落",
+  "back": "Put the live song in Preview to pick another part",
+  "why": "少用帶進"
  },
  "KEYS_SHOWING_ROWS[11].1": {
-  "text": "帶回先前投影的內容到預覽；再按退更前一個",
-  "back": "Bring back what was on the projector before into Preview; press again for the one before",
-  "why": "片語"
+  "text": "把先前投影的內容放回預覽；再按退更前一個",
+  "back": "Put back into Preview what was shown before; press again for the one before",
+  "why": "少用帶進"
  },
  "KEYS_SHOWING_ROWS[12].1": {
   "text": "隱藏文字，背景保留",
@@ -2486,14 +2486,14 @@
   "why": "片語"
  },
  "KEYS_SHOWING_ROWS[15].1": {
-  "text": "把辨識到的內容帶進預覽",
-  "back": "Bring what was recognised into Preview",
-  "why": "片語"
+  "text": "把辨識到的內容放到預覽",
+  "back": "Put what was recognised in Preview",
+  "why": "少用帶進"
  },
  "KEYS_SHOWING_ROWS[16].1": {
-  "text": "把公告帶進預覽",
-  "back": "Bring the announcements into Preview",
-  "why": "片語"
+  "text": "把公告放到預覽",
+  "back": "Put the announcements in Preview",
+  "why": "少用帶進"
  },
  "KEYS_SHOWING_ROWS[17].1": {
   "text": "開啟或關閉投影機",
@@ -2531,19 +2531,19 @@
   "why": "片語"
  },
  "KEYS_FINDING_ROWS[6].1": {
-  "text": "一鍵離開搜尋，回到主視窗",
-  "back": "Leave the search in one press, back to the main window",
-  "why": "片語"
+  "text": "關閉搜尋，直接回到主畫面",
+  "back": "Close the search and go straight back to the main window",
+  "why": "不說一鍵離開"
  },
  "KEYS_PLAN_ROWS[0].1": {
-  "text": "把下一項帶進預覽",
-  "back": "Bring the next item into Preview",
-  "why": "片語"
+  "text": "把下一項放到預覽",
+  "back": "Put the next item in Preview",
+  "why": "少用帶進"
  },
  "KEYS_PLAN_ROWS[1].1": {
-  "text": "把上一項帶進預覽",
-  "back": "Bring the previous item into Preview",
-  "why": "片語"
+  "text": "把上一項放到預覽",
+  "back": "Put the previous item in Preview",
+  "why": "少用帶進"
  },
  "KEYS_PLAN_ROWS[2].1": {
   "text": "把預覽中的項目前移或後移",
@@ -2551,9 +2551,9 @@
   "why": "片語"
  },
  "KEYS_PLAN_ROWS[3].1": {
-  "text": "設定這首的起點，串燒時從這段開始",
-  "back": "Set this song's start; in a medley it begins at this part",
-  "why": "串燒是敬拜團用語"
+  "text": "設為這首的起始段落，串燒時從這段開始",
+  "back": "Set as this song's starting part; in a medley it begins at this part",
+  "why": "說清是起始段落"
  },
  "KEYS_PLAN_ROWS[4].1": {
   "text": "把預覽中的項目移出流程",
@@ -2676,9 +2676,9 @@
   "why": "無句號"
  },
  "GROUP_WEEKDAY": {
-  "text": "這天常唱的詩歌",
-  "back": "Songs often sung on this day",
-  "why": "片語"
+  "text": "每週這天常唱的詩歌",
+  "back": "Songs often sung on this day each week",
+  "why": "這天太突兀"
  },
  "GROUP_RECENT": {
   "text": "最近選過的詩歌",
@@ -2713,10 +2713,10 @@
  },
  "weekday_line": {
   "text": {
-   "other": "這天聚會 {of} 次，唱了 {count} 次"
+   "other": "近 {of} 次這天的聚會，唱了 {count} 次"
   },
-  "back": "This day's services {of} times, sung {count} times",
-  "why": "不再說那天"
+  "back": "In the last {of} services on this day, sung {count} times",
+  "why": "句子更順"
  },
  "recent_line": {
   "text": {
@@ -2766,9 +2766,9 @@
   "why": "ZIP 大寫"
  },
  "BIBLES_PRACTICE": {
-  "text": "練習模式不會保存聖經",
+  "text": "練習模式不會儲存聖經",
   "back": "Practice mode does not keep Bibles",
-  "why": "無句號"
+  "why": "儲存一致"
  },
  "BIBLES_FILE_UNSUPPORTED": {
   "text": "這個檔案無法當作聖經讀取",
@@ -3419,9 +3419,9 @@
   "why": "無句號"
  },
  "CMD_START_HERE": {
-  "text": "設為詩歌起點",
-  "back": "Set as the song's start",
-  "why": "說起點不是開始聚會"
+  "text": "設為起始段落",
+  "back": "Set as starting part",
+  "why": "與快捷鍵說明同詞"
  },
  "CMD_EARLIER": {
   "text": "回到先前投影的內容",
@@ -3434,9 +3434,9 @@
   "why": "無句號"
  },
  "START_HERE_HOW": {
-  "text": "先把詩歌帶進預覽，把選取的投影片移到要開始的地方，再選一次這個指令",
-  "back": "First bring the song into Preview, move the picked slide to where it should begin, then pick this command once more",
-  "why": "沿用預覽與選取的投影片"
+  "text": "先把詩歌放到預覽，把選取的投影片移到要開始的地方，再選一次這個指令",
+  "back": "First put the song in Preview, move the picked slide to where it should begin, then pick this command once more",
+  "why": "少用帶進"
  },
  "CMD_START_HERE_DETAIL": {
   "text": "預覽中的詩歌會從選取的投影片開始，適合串燒",
@@ -3472,5 +3472,237 @@
   "text": "從此開始",
   "back": "Begin here",
   "why": "兩字"
+ },
+ "ONBOARD_SKIP": {
+  "text": "先跳過",
+  "back": "Skip for now",
+  "why": "不是危險動作"
+ },
+ "ONBOARD_BACK": {
+  "text": "上一頁",
+  "back": "Previous page",
+  "why": "頁不是投影片"
+ },
+ "ONBOARD_YES": {
+  "text": "是的",
+  "back": "Yes",
+  "why": "回答問題"
+ },
+ "ONBOARD_NEXT": {
+  "text": "下一頁",
+  "back": "Next page",
+  "why": "頁不是投影片"
+ },
+ "ONBOARD_SKIP_FOR_NOW": {
+  "text": "稍後再說",
+  "back": "Later",
+  "why": "輕巧"
+ },
+ "ONBOARD_LANGUAGE_TITLE": {
+  "text": "要用這個語言顯示視窗嗎？",
+  "back": "Show the window in this language?",
+  "why": "是非題"
+ },
+ "ONBOARD_COUNTRY_TITLE": {
+  "text": "教會在這個國家或地區嗎？",
+  "back": "Is the church in this country or region?",
+  "why": "有些地方不是國家"
+ },
+ "ONBOARD_COUNTRY_HINT": {
+  "text": "會把當地語言的聖經排在前面",
+  "back": "Bibles in the local languages are listed first",
+  "why": "說明為什麼問"
+ },
+ "ONBOARD_COUNTRY_FILTER": {
+  "text": "輸入國家或地區名稱",
+  "back": "Type a country or region name",
+  "why": "邀請輸入"
+ },
+ "ONBOARD_BIBLE_TITLE": {
+  "text": "要用哪一個聖經譯本？",
+  "back": "Which Bible translation should be used?",
+  "why": "譯本全程同詞"
+ },
+ "ONBOARD_BIBLE_HINT": {
+  "text": "所在地的語言排在前面。之後還可以新增其他聖經",
+  "back": "The local languages come first. More Bibles can be added later",
+  "why": "兩短句"
+ },
+ "ONBOARD_SONGS_TITLE": {
+  "text": "教會的詩歌存放在哪裡？",
+  "back": "Where does the church keep its songs?",
+  "why": "問句"
+ },
+ "ONBOARD_SONGS_EASI": {
+  "text": "從這台電腦的 EasiSlides 匯入",
+  "back": "Import from EasiSlides on this computer",
+  "why": "名稱不變"
+ },
+ "ONBOARD_SONGS_FOLDER": {
+  "text": "從資料夾匯入",
+  "back": "Import from a folder",
+  "why": "匯入同詞"
+ },
+ "ONBOARD_SONGS_FOLDER_HINT": {
+  "text": "EasiSlides 資料或 OpenLyrics 檔",
+  "back": "EasiSlides data or OpenLyrics files",
+  "why": "名稱不變"
+ },
+ "ONBOARD_SONGS_NONE": {
+  "text": "目前沒有詩歌可匯入",
+  "back": "No songs to import for now",
+  "why": "不是最終答案"
+ },
+ "ONBOARD_SONGS_NONE_HINT": {
+  "text": "Artosia 會從空的詩歌庫開始，之後隨時可以新增",
+  "back": "Artosia starts with an empty library and songs can be added any time",
+  "why": "安心"
+ },
+ "ONBOARD_SCREENS_TITLE": {
+  "text": "請看現場的螢幕，有看到測試畫面嗎？",
+  "back": "Look at the room's screen: do you see the test picture?",
+  "why": "是非題"
+ },
+ "ONBOARD_SCREENS_HINT": {
+  "text": "測試畫面已放在 Artosia 會給會眾用的螢幕上",
+  "back": "The test picture is already on the screen Artosia would give the congregation",
+  "why": "說明"
+ },
+ "ONBOARD_ROW_WINDOW": {
+  "text": "這個視窗在",
+  "back": "This window is on",
+  "why": "後接螢幕編號"
+ },
+ "ONBOARD_ROW_PICTURE": {
+  "text": "測試畫面在",
+  "back": "The test picture is on",
+  "why": "後接螢幕編號"
+ },
+ "ONBOARD_ROW_SIZE": {
+  "text": "畫面大小",
+  "back": "Picture size",
+  "why": "像素大小"
+ },
+ "ONBOARD_WORKS": {
+  "text": "有，看到了",
+  "back": "Yes, I see it",
+  "why": "回答問題"
+ },
+ "ONBOARD_OTHER_SCREEN": {
+  "text": "沒有，換下一個螢幕",
+  "back": "No, move to the next screen",
+  "why": "與是成對"
+ },
+ "ONBOARD_NO_PROJECTOR": {
+  "text": "這台電腦還沒有接上投影機",
+  "back": "No projector is connected to this computer yet",
+  "why": "陳述不是問句"
+ },
+ "ONBOARD_NO_PROJECTOR_HINT": {
+  "text": "之後接上投影機或第二個螢幕，Artosia 會自動用來給會眾看",
+  "back": "When a projector or second screen is plugged in later, Artosia uses it for the congregation by itself",
+  "why": "承諾不再詢問"
+ },
+ "ONBOARD_READY_TITLE": {
+  "text": "正在準備你需要的東西",
+  "back": "Getting what you asked for ready",
+  "why": "陳述"
+ },
+ "ONBOARD_READY_HINT": {
+  "text": "不用在這裡等，隨時可以繼續。沒做完的會自己繼續",
+  "back": "No need to wait here; carry on any time. Unfinished work continues by itself",
+  "why": "兩短句"
+ },
+ "ONBOARD_JOB_LANGUAGE": {
+  "text": "介面語言和國家或地區",
+  "back": "Window language and country or region",
+  "why": "已儲存"
+ },
+ "ONBOARD_JOB_SONGS": {
+  "text": "匯入詩歌",
+  "back": "Import songs",
+  "why": "短"
+ },
+ "ONBOARD_STATE_DONE": {
+  "text": "完成",
+  "back": "Done",
+  "why": "一詞"
+ },
+ "ONBOARD_STATE_WAITING": {
+  "text": "等待中",
+  "back": "Waiting",
+  "why": "一詞"
+ },
+ "ONBOARD_STATE_FAILED": {
+  "text": "失敗",
+  "back": "Failed",
+  "why": "一詞，原因接在後面"
+ },
+ "ONBOARD_BIBLE_FAILED": {
+  "text": "沒有遺失任何東西，程式會繼續運作。之後可在設定按「更多聖經譯本」新增。",
+  "back": "Nothing is lost and the program carries on. Later, add one in Settings with \"More Bible translations\".",
+  "why": "用按鈕本名"
+ },
+ "ONBOARD_DONE_TITLE": {
+  "text": "Artosia 準備好了",
+  "back": "Artosia is ready",
+  "why": "陳述"
+ },
+ "ONBOARD_DONE_HINT": {
+  "text": "可以先從這三件事開始",
+  "back": "You can begin with these three things",
+  "why": "無句號"
+ },
+ "ONBOARD_CARD_TOUR": {
+  "text": "用五個步驟認識這個視窗",
+  "back": "Get to know this window in five steps",
+  "why": "卡片短句"
+ },
+ "ONBOARD_CARD_PLAN": {
+  "text": "開啟流程，準備下一場聚會",
+  "back": "Open the plan and prepare the next service",
+  "why": "卡片短句"
+ },
+ "ONBOARD_OPEN_PLAN": {
+  "text": "開啟流程",
+  "back": "Open the plan",
+  "why": "按鈕"
+ },
+ "ONBOARD_CARD_SONG": {
+  "text": "輸入或貼上歌詞，新增一首詩歌",
+  "back": "Type or paste the words and add a song",
+  "why": "卡片短句"
+ },
+ "CMD_FIRST_RUN": {
+  "text": "重新進行首次設定",
+  "back": "Redo the first setup",
+  "why": "首次設定是第一次執行的簡單說法"
+ },
+ "CMD_FIRST_RUN_DETAIL": {
+  "text": "語言、地區、聖經、詩歌，一次問一個問題",
+  "back": "Language, region, Bible, songs, one question at a time",
+  "why": "無句號"
+ },
+ "onboard_songs_found": {
+  "text": {
+   "other": "找到 {songs}，EasiSlides 不會有任何改動"
+  },
+  "back": "Found {songs}; EasiSlides is not changed",
+  "why": "數量詞組由計數表來"
+ },
+ "onboard_percent": {
+  "text": "{percent}%",
+  "back": "{percent}%",
+  "why": "百分號照中文寫法放數字後"
+ },
+ "onboard_progress": {
+  "text": "{done} / {of}",
+  "back": "{done} / {of}",
+  "why": "兩個數字"
+ },
+ "day_month": {
+  "text": "{month}{day}日",
+  "back": "{month}{day}",
+  "why": "中文先月後日，月名已含月字"
  }
 }

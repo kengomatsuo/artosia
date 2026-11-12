@@ -250,9 +250,9 @@
   "why": "one word"
  },
  "keys_text": {
-  "text": "Espace ou flèche bas : diapo suivante. Flèche haut : diapo précédente. / : recherche. R : refrain. P : pont. 1 à 9 : partie du chant. F1 : cacher le texte. F2 : écran noir. F3 : logo. F6 : activer ou désactiver le projecteur.",
-  "back": "Space or down arrow: next slide. Up arrow: previous slide. /: search. R: chorus. P: bridge. 1 to 9: part of the song. F1: hide the text. F2: black screen. F3: logo. F6: switch the projector on or off.",
-  "why": "letters R and P as on the computer sheet; no V key since couplet does not start with V"
+  "text": "Espace ou flèche bas : suivante. Flèche haut : précédente. / : recherche. C : refrain. V : couplet suivant. B : pont. 1 à 9 : partie. F1 : cacher le texte. F2 : écran noir. F3 : logo. F6 : activer ou désactiver le projecteur.",
+  "back": "Space or down arrow: next slide. Up arrow: previous slide. /: search. C: chorus. V: next verse. B: bridge. 1 to 9: part of the song. F1: hide the text. F2: black screen. F3: logo. F6: switch the projector on or off.",
+  "why": "part keys C, V, B on the phone in every language"
  },
  "lost": {
   "text": "Connexion perdue",

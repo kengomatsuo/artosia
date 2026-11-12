@@ -40,7 +40,7 @@
   "why": "same as the button"
  },
  "HINT_SECTIONS": {
-  "text": "在歌中找段落",
+  "text": "在诗歌中找段落",
   "back": "Find a part in the song",
   "why": "段落 is the section word"
  },
@@ -255,14 +255,14 @@
   "why": "复制"
  },
  "CMD_STREAM": {
-  "text": "直播与录制",
-  "back": "Broadcast and recording",
-  "why": "both ideas"
+  "text": "直播",
+  "back": "Broadcast",
+  "why": "one name for the button, dialog and command"
  },
  "CMD_STREAM_DETAIL": {
-  "text": "把投影屏的画面发到视频网站，或存成文件",
-  "back": "Send the projector picture to a video site or save it as a file",
-  "why": "投影屏 is the projector noun"
+  "text": "把投影屏的画面发到视频网站，也可以存成文件",
+  "back": "Send the projector picture to a video site, or also save it as a file",
+  "why": "recording explained here"
  },
  "BTN_STREAM": {
   "text": "直播",
@@ -270,8 +270,8 @@
   "why": "one noun"
  },
  "BTN_LISTEN": {
-  "text": "听音",
-  "back": "Listening",
+  "text": "语音识别",
+  "back": "Speech recognition",
   "why": "names what it does"
  },
  "STREAM_HINT": {
@@ -352,8 +352,8 @@
   "why": "one form"
  },
  "CMD_LISTEN": {
-  "text": "听音",
-  "back": "Listening",
+  "text": "语音识别",
+  "back": "Speech recognition",
   "why": "same as the button"
  },
  "CMD_LISTEN_DETAIL": {
@@ -362,8 +362,8 @@
   "why": "only suggests"
  },
  "LISTEN_SWITCH": {
-  "text": "开启听音",
-  "back": "Listening on",
+  "text": "开启语音识别",
+  "back": "Speech recognition on",
   "why": "state beside a switch"
  },
  "LISTEN_HINT": {
@@ -412,8 +412,8 @@
   "why": "heading"
  },
  "LISTEN_PART_LISTENING": {
-  "text": "听音",
-  "back": "Listening",
+  "text": "语音识别",
+  "back": "Speech recognition",
   "why": "pairs with 录音"
  },
  "LISTEN_PART_RECORDINGS": {
@@ -427,9 +427,9 @@
   "why": "same noun as tab"
  },
  "REC_HINT": {
-  "text": "保存的是听到的短片段和程序的猜测，只放在这台电脑的硬盘上。",
-  "back": "What is kept is the short pieces heard and the program's guesses, only on this computer's disk.",
-  "why": "exact what and where"
+  "text": "保存的是听到的片段和识别结果，只放在这台电脑的硬盘上。",
+  "back": "What is kept is the pieces heard and the recognition results, only on this computer disk.",
+  "why": "plainer"
  },
  "REC_NONE": {
   "text": "还没有录音",
@@ -437,9 +437,9 @@
   "why": "statement"
  },
  "rec_kept": {
-  "text": "已存{size}",
-  "back": "{size} kept",
-  "why": "size and one word"
+  "text": "已占用 {size}",
+  "back": "{size} used",
+  "why": "unit with a space"
  },
  "REC_OPEN": {
   "text": "打开文件夹",
@@ -502,9 +502,9 @@
   "why": "of a kind with the others"
  },
  "LISTEN_TEMPO_AS_HEARD": {
-  "text": "原样",
-  "back": "As read",
-  "why": "plain reading"
+  "text": "正常",
+  "back": "Normal",
+  "why": "the plain reading"
  },
  "LISTEN_TEMPO_DOUBLE": {
   "text": "加倍",
@@ -617,7 +617,7 @@
   "why": "action"
  },
  "CMD_EDIT_SONG_DETAIL": {
-  "text": "可以修改正在看的这首歌的歌词",
+  "text": "可以修改正在看的这首诗歌的歌词",
   "back": "The words of the song being looked at can be corrected",
   "why": "plain"
  },
@@ -807,9 +807,9 @@
   "why": "one word"
  },
  "PLANS_NO_DAY": {
-  "text": "待设定星期",
-  "back": "Weekday to be set",
-  "why": "invites setting a day"
+  "text": "未设定日期",
+  "back": "Date not set",
+  "why": "plain, invites setting one"
  },
  "PLAN_DUPLICATE": {
   "text": "复制流程",
@@ -837,14 +837,14 @@
   "why": "one word"
  },
  "PLAN_HOUR": {
-  "text": "时",
+  "text": "小时",
   "back": "Hour",
-  "why": "clock hour"
+  "why": "clearer than one character"
  },
  "PLAN_MINUTE": {
-  "text": "分",
+  "text": "分钟",
   "back": "Minute",
-  "why": "one word"
+  "why": "clearer than one character"
  },
  "time_of_day": {
   "text": "{hour}:{minute}",
@@ -932,9 +932,9 @@
   "why": "one word"
  },
  "TOUR_PLAN": {
-  "text": "左边是流程，聚会要上屏的内容都按顺序排在这里",
-  "back": "On the left is the plan; everything to be shown in the service is lined up here in order",
-  "why": "plain"
+  "text": "左边是流程，所有要上屏的内容按顺序排列",
+  "back": "On the left is the plan; everything to be shown is in order",
+  "why": "shorter so it wraps at a phrase"
  },
  "TOUR_PLAN_MORE": {
   "text": "用鼠标拖动一行可以调整位置",
@@ -967,7 +967,7 @@
   "why": "pane called 上屏中"
  },
  "TOUR_LIVE_MORE": {
-  "text": "下方红色的“上屏中”按钮可开关投影屏，快捷键F6",
+  "text": "下方红色的“上屏中”按钮可开关投影屏，快捷键 F6",
   "back": "The red Live button below switches the projector on and off, key F6",
   "why": "says red button"
  },
@@ -1117,12 +1117,12 @@
   "why": "no full stop"
  },
  "SUGGEST_HEARD": {
-  "text": "刚听到这首歌的歌词",
+  "text": "刚听到这首诗歌的歌词",
   "back": "Just heard words of this song",
   "why": "short reason"
  },
  "SUGGEST_HERE": {
-  "text": "正唱到这首歌的这一段",
+  "text": "正唱到这首诗歌的这一段",
   "back": "The singing is at this part of the song",
   "why": "short reason"
  },
@@ -1162,9 +1162,9 @@
   "why": "pair of next"
  },
  "BTN_NO_TEXT": {
-  "text": "文字隐藏",
-  "back": "Text hidden",
-  "why": "state, not verb"
+  "text": "隐藏文字",
+  "back": "Hide text",
+  "why": "verb first"
  },
  "STATE_OFF": {
   "text": "投影屏已关闭，现场看不到",
@@ -1202,12 +1202,12 @@
   "why": "pair"
  },
  "HELD_CTRL": {
-  "text": "按住Ctrl",
+  "text": "按住 Ctrl",
   "back": "Holding Ctrl",
   "why": "key name as printed"
  },
  "HELD_SHIFT": {
-  "text": "按住Shift",
+  "text": "按住 Shift",
   "back": "Holding Shift",
   "why": "key name as printed"
  },
@@ -1272,14 +1272,14 @@
   "why": "two statements"
  },
  "LETTER_KEYS": {
-  "text": "字母键跳到歌曲段落",
-  "back": "Letter keys jump between parts",
-  "why": "reads beside a switch"
+  "text": "字母键跳到诗歌段落",
+  "back": "Letter keys jump between parts of the song",
+  "why": "one word for song"
  },
  "LETTER_KEYS_HINT": {
-  "text": "按字母键跳到对应段落，如C副歌、B桥段；关闭后任何字母都打开搜索",
-  "back": "A letter key jumps to its part, such as C chorus, B bridge; when off any letter opens search",
-  "why": "English letters worship teams use"
+  "text": "按 C 跳到副歌，按 B 跳到桥段。关闭后，按任意字母都会打开搜索。",
+  "back": "C jumps to the chorus, B to the bridge. When off, any letter opens the search.",
+  "why": "two sentences, keys spaced"
  },
  "COUNTDOWN": {
   "text": "倒计时",
@@ -1367,7 +1367,7 @@
   "why": "names object"
  },
  "TIDY_HELP": {
-  "text": "把“主歌1”这类标题行转为程序标记，并删除只有吉他和弦的行",
+  "text": "把“主歌 1”这类标题行转为程序标记，并删除只有吉他和弦的行",
   "back": "Heading lines such as \"verse 1\" become program markers; lines of only guitar chords are removed",
   "why": "tooltip"
  },
@@ -1410,9 +1410,9 @@
   "why": "phrase"
  },
  "LYRICS_PLACEHOLDER": {
-  "text": "[主歌1]\n这里写歌词\n\n[副歌]\n这里写歌词",
-  "back": "[verse1] sample line, blank, [chorus] sample line",
-  "why": "marker syntax guessed"
+  "text": "[主歌 1]\n这里写歌词\n\n[副歌]\n这里写歌词",
+  "back": "[verse 1] sample, blank line, [chorus] sample",
+  "why": "names exactly as the parts are named"
  },
  "SECOND_PLACEHOLDER": {
   "text": "用第二种语言按同样的顺序写出相同的段落",
@@ -1535,9 +1535,9 @@
   "why": "one word"
  },
  "LOOK_BACKGROUND": {
-  "text": "自选图片或视频",
+  "text": "自己的图片或视频",
   "back": "Your own picture or video",
-  "why": "does not repeat the heading"
+  "why": "自选 was odd"
  },
  "LOOK_CHOOSE_FILE": {
   "text": "选择图片或视频",
@@ -1625,14 +1625,14 @@
   "why": "button and title"
  },
  "LOOK_LICENCE": {
-  "text": "CCLI许可证号",
-  "back": "CCLI licence number",
-  "why": "CCLI stays"
+  "text": "CCLI编号",
+  "back": "CCLI number",
+  "why": "same name as the song editor"
  },
  "LOOK_LICENCE_HINT": {
-  "text": "数字",
+  "text": "编号",
   "back": "Number",
-  "why": "one word"
+  "why": "plain"
  },
  "BACKGROUND_UNKNOWN": {
   "text": "这个文件不是可用作背景的图片或视频",
@@ -1765,14 +1765,14 @@
   "why": "phrase beside a switch"
  },
  "SCREENS_HERE_HINT": {
-  "text": "鼠标指着画面窗口按Esc即可关闭",
+  "text": "鼠标指着画面窗口，按 Esc 即可关闭",
   "back": "Point at the picture window and press Esc to close it",
   "why": "key name as printed"
  },
  "LOOK_WINDOW": {
-  "text": "窗口明暗",
-  "back": "Window light or dark",
-  "why": "not the projector"
+  "text": "窗口主题",
+  "back": "Window theme",
+  "why": "主题 is what programs say"
  },
  "LOOK_WINDOW_AUTO": {
   "text": "跟随电脑",
@@ -2006,9 +2006,9 @@
   "why": "two counted phrases"
  },
  "ANNOUNCEMENTS_EMPTY": {
-  "text": "还没有公告卡片",
-  "back": "No announcement cards yet",
-  "why": "no full stop"
+  "text": "还没有公告",
+  "back": "No announcements yet",
+  "why": "same word"
  },
  "ANNOUNCEMENT_NEW": {
   "text": "新建公告",
@@ -2242,9 +2242,9 @@
   "why": "names book chapter verses"
  },
  "PASSAGE_NO_BIBLE": {
-  "text": "没有安装圣经译本，卡片会是空的",
-  "back": "No Bible translation installed, so the card stays empty",
-  "why": "one sentence"
+  "text": "没有安装圣经译本，这张卡片会是空白的",
+  "back": "No Bible translation is installed, so this card stays blank",
+  "why": "plainer"
  },
  "PASSAGE_UNREADABLE": {
   "text": "圣经里没有这个出处的经文",
@@ -2257,13 +2257,13 @@
   "why": "no full stop"
  },
  "birthdays_cover_week": {
-  "text": "涵盖{from_month}{from_day}日至{to_month}{to_day}日",
+  "text": "{from_month}{from_day}日至{to_month}{to_day}日",
   "back": "Covers {from_month} {from_day} to {to_month} {to_day}",
-  "why": "Chinese puts month before day"
+  "why": "plain span, month before day"
  },
  "birthdays_cover_month": {
-  "text": "涵盖整个{month}",
-  "back": "Covers the whole of {month}",
+  "text": "{month}全月",
+  "back": "The whole of {month}",
   "why": "plain"
  },
  "names_today": {
@@ -2376,11 +2376,11 @@
  },
  "announcements": {
   "text": {
-   "zero": "还没有公告卡片",
-   "other": "{count}张公告卡片"
+   "zero": "还没有公告",
+   "other": "{count}张公告"
   },
-  "back": "No announcement cards yet; {count} announcement cards",
-  "why": "zero is a full statement"
+  "back": "No announcements yet; {count} announcements",
+  "why": "cards counted as 公告, slides stay 幻灯片"
  },
  "seconds_short": {
   "text": "{seconds}秒",
@@ -2388,9 +2388,9 @@
   "why": "one character unit"
  },
  "KEYS_TITLE": {
-  "text": "快捷键设置",
-  "back": "Key settings",
-  "why": "phrase"
+  "text": "快捷键",
+  "back": "Keys",
+  "why": "same as the status bar button"
  },
  "KEYS_SHOWING": {
   "text": "上屏操作",
@@ -2433,12 +2433,12 @@
   "why": "fragment"
  },
  "KEYS_SHOWING_ROWS[4].1": {
-  "text": "在上屏的歌里选幻灯片，松开Shift后上屏",
+  "text": "在上屏的诗歌里选幻灯片，松开 Shift 后上屏",
   "back": "Pick a slide in the live song; it goes on the projector when Shift is let go",
   "why": "fragment"
  },
  "KEYS_SHOWING_ROWS[5].1": {
-  "text": "移动预览里选中的幻灯片，再按Enter上屏",
+  "text": "移动预览里选中的幻灯片，再按 Enter 上屏",
   "back": "Move the picked slide in Preview, then Enter shows it",
   "why": "ring said by meaning"
  },
@@ -2453,9 +2453,9 @@
   "why": "fragment"
  },
  "KEYS_SHOWING_ROWS[8].1": {
-  "text": "按C跳到副歌，按V跳到主歌，按B跳到桥段",
-  "back": "C jumps to the chorus, V to the verse, B to the bridge",
-  "why": "English letters Chinese worship teams use"
+  "text": "按 C 跳到副歌，按 V 跳到主歌，按 B 跳到桥段",
+  "back": "C to the chorus, V to the verse, B to the bridge",
+  "why": "chorus key is C, bridge B"
  },
  "KEYS_SHOWING_ROWS[9].1": {
   "text": "把预览里选中的幻灯片移到对应数字的段落",
@@ -2488,7 +2488,7 @@
   "why": "fragment"
  },
  "KEYS_SHOWING_ROWS[15].1": {
-  "text": "把听音识别到的内容放进预览",
+  "text": "把听到的内容放进预览",
   "back": "Bring what the listener recognised into Preview",
   "why": "fragment"
  },
@@ -2553,7 +2553,7 @@
   "why": "fragment"
  },
  "KEYS_PLAN_ROWS[3].1": {
-  "text": "把选中的幻灯片设为这首歌的起点，用于串烧",
+  "text": "把选中的幻灯片设为这首诗歌的起点，用于串烧",
   "back": "Make the picked slide the start of the song, for a medley",
   "why": "串烧 is a medley"
  },
@@ -2568,7 +2568,7 @@
   "why": "fragment"
  },
  "KEYS_PLAN_ROWS[6].1": {
-  "text": "下一个流程，到末尾回到第一个；加Shift是上一个",
+  "text": "下一个流程，到末尾回到第一个；加 Shift 是上一个",
   "back": "Next plan, round to the first; with Shift the previous",
   "why": "fragment"
  },
@@ -2763,7 +2763,7 @@
   "why": "button and title"
  },
  "BIBLES_FILE_HINT": {
-  "text": "支持MyBible、USFX，以及USFM文件的ZIP压缩包",
+  "text": "支持 MyBible、USFX，以及含 USFM 文件的 ZIP 压缩包",
   "back": "MyBible, USFX, and a ZIP bundle of USFM files",
   "why": "ZIP in capitals"
  },
@@ -2788,7 +2788,7 @@
   "why": "row title"
  },
  "CMD_BIBLE_FILE_DETAIL": {
-  "text": "支持MyBible、USFX，以及USFM文件的ZIP压缩包",
+  "text": "支持 MyBible、USFX，以及含 USFM 文件的 ZIP 压缩包",
   "back": "MyBible, USFX, and a ZIP bundle of USFM files",
   "why": "ZIP in capitals"
  },
@@ -2906,10 +2906,10 @@
  },
  "noun.announcements": {
   "text": {
-   "other": "{count}张公告卡片"
+   "other": "{count}张公告"
   },
-  "back": "{count} announcement cards",
-  "why": "number first"
+  "back": "{count} announcements",
+  "why": "same"
  },
  "noun.bibles": {
   "text": {
@@ -2989,9 +2989,9 @@
   "why": "never the Bible's 节"
  },
  "section_numbered": {
-  "text": "{name}{number}",
-  "back": "{name}{number}",
-  "why": "no space in Chinese"
+  "text": "{name} {number}",
+  "back": "{name} {number}",
+  "why": "space as in the lyrics marker"
  },
  "DESIGN_BACKGROUND": {
   "text": "背景",
@@ -3219,9 +3219,9 @@
   "why": "no dots"
  },
  "BACKDROPS_OFFLINE": {
-  "text": "电脑没有连上网络",
-  "back": "The computer is not connected to the internet",
-  "why": "no full stop"
+  "text": "这台电脑没有连上网络",
+  "back": "This computer is not connected to the network",
+  "why": "one wording"
  },
  "BACKDROPS_AUTHOR": {
   "text": "作者",
@@ -3269,9 +3269,9 @@
   "why": "reason after colon"
  },
  "WHY_OFFLINE": {
-  "text": "这台电脑现在没有连上互联网",
-  "back": "this computer has no internet connection right now",
-  "why": "clause after colon"
+  "text": "这台电脑没有连上网络",
+  "back": "this computer is not connected to the network",
+  "why": "same wording as the backdrop toast"
  },
  "WHY_SLOW": {
   "text": "等待回应的时间太长",
@@ -3319,7 +3319,7 @@
   "why": "no final full stop"
  },
  "LYRICS_NOT_FOUND": {
-  "text": "歌词网站没有这首歌的歌词",
+  "text": "歌词网站没有这首诗歌的歌词",
   "back": "The lyrics website has no words for this song",
   "why": "no full stop"
  },
@@ -3421,7 +3421,7 @@
   "why": "fragment"
  },
  "CMD_START_HERE": {
-  "text": "这首歌从这里开始",
+  "text": "这首诗歌从这里开始",
   "back": "This song starts here",
   "why": "about where a song begins"
  },
@@ -3436,12 +3436,12 @@
   "why": "fragment"
  },
  "START_HERE_HOW": {
-  "text": "先把歌曲放进预览，把选中的幻灯片移到歌曲要开始的位置，再选一次这个命令",
+  "text": "先把诗歌放进预览，把选中的幻灯片移到诗歌要开始的位置，再选一次这个命令",
   "back": "First bring the song into Preview, move the picked slide to where the song should start, then choose this command again",
   "why": "one sentence of instruction"
  },
  "CMD_START_HERE_DETAIL": {
-  "text": "预览里的歌会从选中的幻灯片开始，串烧时用得上",
+  "text": "预览里的诗歌会从选中的幻灯片开始，串烧时用得上",
   "back": "The song in Preview opens at the picked slide, useful for a medley",
   "why": "fragment"
  },
@@ -3451,9 +3451,9 @@
   "why": "fragment"
  },
  "KEYS_MORE": {
-  "text": "没有快捷键的操作，直接输入想做的事，如“复制流程”“样式”",
-  "back": "For things without a key, type what you want, such as \"Copy plan\" or \"Design\"",
-  "why": "Ctrl K drawn before"
+  "text": "没有快捷键的操作，直接输入想做的事，如“复制流程”、“样式”",
+  "back": "For things without a key, type what you want, such as \"Copy plan\", \"Design\"",
+  "why": "separator added"
  },
  "SETTINGS_GENERAL": {
   "text": "常规",
@@ -3461,9 +3461,9 @@
   "why": "usual word"
  },
  "search_bible": {
-  "text": "例如{passage}，或经文中的几个字",
+  "text": "例如 {passage}，或经文中的几个字",
   "back": "For example {passage}, or a few words of the verse",
-  "why": "example first"
+  "why": "spaced example"
  },
  "NOTICE_SAVED": {
   "text": "公告已保存",
@@ -3474,5 +3474,237 @@
   "text": "从这里开始",
   "back": "Start here",
   "why": "about a song's start"
+ },
+ "ONBOARD_SKIP": {
+  "text": "先跳过",
+  "back": "Skip for now",
+  "why": "nothing is lost"
+ },
+ "ONBOARD_BACK": {
+  "text": "上一页",
+  "back": "Previous page",
+  "why": "pages, not slides or tour steps"
+ },
+ "ONBOARD_YES": {
+  "text": "是的",
+  "back": "Yes",
+  "why": "answers the question"
+ },
+ "ONBOARD_NEXT": {
+  "text": "继续",
+  "back": "Continue",
+  "why": "one word"
+ },
+ "ONBOARD_SKIP_FOR_NOW": {
+  "text": "暂时不选",
+  "back": "Not now",
+  "why": "no Bible now"
+ },
+ "ONBOARD_LANGUAGE_TITLE": {
+  "text": "用这种语言显示窗口，可以吗？",
+  "back": "Is it all right to show the window in this language?",
+  "why": "yes or no question"
+ },
+ "ONBOARD_COUNTRY_TITLE": {
+  "text": "教会所在的国家或地区是这里吗？",
+  "back": "Is the church in this country or region?",
+  "why": "country or region"
+ },
+ "ONBOARD_COUNTRY_HINT": {
+  "text": "这样，这个地区常用语言的圣经会排在前面",
+  "back": "So Bibles in the languages used there come first",
+  "why": "no full stop"
+ },
+ "ONBOARD_COUNTRY_FILTER": {
+  "text": "输入国家或地区名称",
+  "back": "Type a country or region name",
+  "why": "invitation"
+ },
+ "ONBOARD_BIBLE_TITLE": {
+  "text": "投影圣经经文时，用哪个译本？",
+  "back": "Which translation for showing passages?",
+  "why": "译本"
+ },
+ "ONBOARD_BIBLE_HINT": {
+  "text": "所选地区的语言排在最前。以后还可以添加更多译本",
+  "back": "The picked region languages come first. More can be added later",
+  "why": "two short sentences"
+ },
+ "ONBOARD_SONGS_TITLE": {
+  "text": "教会的诗歌放在哪里？",
+  "back": "Where are the church songs?",
+  "why": "plain"
+ },
+ "ONBOARD_SONGS_EASI": {
+  "text": "从这台电脑上的EasiSlides导入",
+  "back": "Import from EasiSlides on this computer",
+  "why": "name stays"
+ },
+ "ONBOARD_SONGS_FOLDER": {
+  "text": "从文件夹导入",
+  "back": "Import from a folder",
+  "why": "plain"
+ },
+ "ONBOARD_SONGS_FOLDER_HINT": {
+  "text": "EasiSlides数据或OpenLyrics诗歌文件",
+  "back": "EasiSlides data or OpenLyrics song files",
+  "why": "names stay"
+ },
+ "ONBOARD_SONGS_NONE": {
+  "text": "暂时没有诗歌",
+  "back": "No songs for now",
+  "why": "not final"
+ },
+ "ONBOARD_SONGS_NONE_HINT": {
+  "text": "Artosia从空的诗歌库开始，随时可以添加诗歌",
+  "back": "Artosia starts with an empty library; songs can be added any time",
+  "why": "reassures"
+ },
+ "ONBOARD_SCREENS_TITLE": {
+  "text": "现场的屏幕上看到测试画面了吗？",
+  "back": "Do you see the test picture on the room screen?",
+  "why": "yes or no"
+ },
+ "ONBOARD_SCREENS_HINT": {
+  "text": "测试画面已显示在Artosia准备给会众用的显示器上",
+  "back": "The test picture is on the monitor Artosia would give the congregation",
+  "why": "no full stop"
+ },
+ "ONBOARD_ROW_WINDOW": {
+  "text": "本窗口所在的屏幕",
+  "back": "Screen of this window",
+  "why": "plain"
+ },
+ "ONBOARD_ROW_PICTURE": {
+  "text": "测试画面所在的屏幕",
+  "back": "Screen with the test picture",
+  "why": "plain"
+ },
+ "ONBOARD_ROW_SIZE": {
+  "text": "屏幕尺寸",
+  "back": "Screen size",
+  "why": "plain"
+ },
+ "ONBOARD_WORKS": {
+  "text": "看到了",
+  "back": "I see it",
+  "why": "answers the question"
+ },
+ "ONBOARD_OTHER_SCREEN": {
+  "text": "没看到，换一块屏幕",
+  "back": "I do not, try another screen",
+  "why": "pairs with yes"
+ },
+ "ONBOARD_NO_PROJECTOR": {
+  "text": "还没有给会众接上屏幕",
+  "back": "No screen for the congregation is connected yet",
+  "why": "a statement"
+ },
+ "ONBOARD_NO_PROJECTOR_HINT": {
+  "text": "以后接上投影机或第二块显示器，Artosia会自动用它给会众显示",
+  "back": "When a projector or second monitor is connected later, Artosia uses it for the congregation by itself",
+  "why": "no full stop"
+ },
+ "ONBOARD_READY_TITLE": {
+  "text": "Artosia正在准备你选的内容",
+  "back": "Artosia is preparing what you chose",
+  "why": "a statement"
+ },
+ "ONBOARD_READY_HINT": {
+  "text": "不用在这里等，随时可以继续。没做完的会自动做完",
+  "back": "No need to wait here, go on any time. Unfinished work carries on by itself",
+  "why": "two sentences"
+ },
+ "ONBOARD_JOB_LANGUAGE": {
+  "text": "语言和国家或地区",
+  "back": "Language and country or region",
+  "why": "plain"
+ },
+ "ONBOARD_JOB_SONGS": {
+  "text": "诗歌",
+  "back": "Songs",
+  "why": "one word"
+ },
+ "ONBOARD_STATE_DONE": {
+  "text": "完成",
+  "back": "Done",
+  "why": "one word"
+ },
+ "ONBOARD_STATE_WAITING": {
+  "text": "等待中",
+  "back": "Waiting",
+  "why": "one word"
+ },
+ "ONBOARD_STATE_FAILED": {
+  "text": "失败了",
+  "back": "Failed",
+  "why": "reason follows"
+ },
+ "ONBOARD_BIBLE_FAILED": {
+  "text": "不会有任何损失，程序会继续运行。以后可在设置里点“获取更多译本”添加",
+  "back": "Nothing is lost; the program carries on. Add one later in Settings with Get more translations",
+  "why": "uses the button own name"
+ },
+ "ONBOARD_DONE_TITLE": {
+  "text": "Artosia已准备好",
+  "back": "Artosia is ready",
+  "why": "a statement"
+ },
+ "ONBOARD_DONE_HINT": {
+  "text": "先从这三件事里选一件做",
+  "back": "Start with one of these three",
+  "why": "no full stop"
+ },
+ "ONBOARD_CARD_TOUR": {
+  "text": "用五个简短的步骤，认识这个窗口",
+  "back": "Get to know the window in five short steps",
+  "why": "plain"
+ },
+ "ONBOARD_CARD_PLAN": {
+  "text": "打开流程，开始准备下一场聚会",
+  "back": "Open the plan and get ready for the next service",
+  "why": "plain"
+ },
+ "ONBOARD_OPEN_PLAN": {
+  "text": "打开流程",
+  "back": "Open the plan",
+  "why": "plain"
+ },
+ "ONBOARD_CARD_SONG": {
+  "text": "输入或粘贴歌词，新建一首诗歌",
+  "back": "Type or paste the words and make a new song",
+  "why": "plain"
+ },
+ "CMD_FIRST_RUN": {
+  "text": "重新进行初次设置",
+  "back": "Do the first-time setup again",
+  "why": "初次设置 is the first run"
+ },
+ "CMD_FIRST_RUN_DETAIL": {
+  "text": "按顺序回答几个问题：语言、地区、圣经、诗歌和屏幕",
+  "back": "A few questions in turn: language, region, Bible, songs and screen",
+  "why": "plain"
+ },
+ "onboard_songs_found": {
+  "text": {
+   "other": "{songs}，EasiSlides本身不会被改动"
+  },
+  "back": "{songs}; EasiSlides itself is left untouched",
+  "why": "number leads"
+ },
+ "onboard_percent": {
+  "text": "{percent}%",
+  "back": "{percent}%",
+  "why": "sign after the number"
+ },
+ "onboard_progress": {
+  "text": "{done}/{of}",
+  "back": "{done}/{of}",
+  "why": "two numbers"
+ },
+ "day_month": {
+  "text": "{month}{day}日",
+  "back": "{month}{day}日",
+  "why": "month first then day"
  }
 }

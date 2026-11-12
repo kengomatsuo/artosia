@@ -1275,9 +1275,9 @@
   "why": "Reads by a switch"
  },
  "LETTER_KEYS_HINT": {
-  "text": "K nhảy tới Điệp khúc, N tới Đoạn nối. Khi tắt, phím chữ mở tìm kiếm.",
-  "back": "K jumps to Chorus, N to Bridge. When off, letter keys open the search.",
-  "why": "Letters from khúc and nối"
+  "text": "C tới Điệp khúc, B tới Đoạn nối. Khi tắt, phím chữ mở tìm kiếm.",
+  "back": "C to Chorus, B to Bridge. When off, letter keys open the search.",
+  "why": "Chorus key is C because Đ is not a plain Latin letter, bridge key is B"
  },
  "COUNTDOWN": {
   "text": "Đếm ngược",
@@ -1335,9 +1335,9 @@
   "why": "One word"
  },
  "FIELD_ORDER": {
-  "text": "Hoặc gõ: Lời1 Điệp khúc*2 Lời2 Điệp khúc Đoạn nối",
-  "back": "Or type: Verse1 Chorus*2 Verse2 Chorus Bridge",
-  "why": "Example in the section names"
+  "text": "Hoặc gõ: Lời1 C*2 Lời2 C B",
+  "back": "Or type: Verse1 C*2 Verse2 C B",
+  "why": "Two-word parts use their letter codes"
  },
  "ORDER": {
   "text": "Thứ tự hát",
@@ -1408,9 +1408,9 @@
   "why": "A phrase"
  },
  "LYRICS_PLACEHOLDER": {
-  "text": "[V1]\nLời hát ở đây\n\n[C]\nĐiệp khúc ở đây",
-  "back": "[V1] / words here / [C] / chorus here",
-  "why": "Markers kept as program syntax"
+  "text": "[Lời 1]\nDòng một\n\n[Điệp khúc]\nDòng hai",
+  "back": "[Verse 1] / line one / [Chorus] / line two",
+  "why": "Markers are my part names in brackets"
  },
  "SECOND_PLACEHOLDER": {
   "text": "Viết lại các phần theo cùng thứ tự",
@@ -2451,9 +2451,9 @@
   "why": "Fragment"
  },
  "KEYS_SHOWING_ROWS[8].1": {
-  "text": "K tới Điệp khúc, N tới Đoạn nối kế tiếp",
-  "back": "K to the next Chorus, N to the next Bridge",
-  "why": "Letters from khúc and nối"
+  "text": "C tới Điệp khúc, B tới Đoạn nối kế tiếp",
+  "back": "C to the next Chorus, B to the next Bridge",
+  "why": "Verse key not shown since Lời does not begin with V"
  },
  "KEYS_SHOWING_ROWS[9].1": {
   "text": "Chọn phần có số đó của bài trong Xem trước",
@@ -3472,5 +3472,237 @@
   "text": "Bắt đầu từ đây",
   "back": "Start from here",
   "why": "Begin at this spot"
+ },
+ "ONBOARD_SKIP": {
+  "text": "Bỏ qua",
+  "back": "Skip",
+  "why": "Nothing is lost"
+ },
+ "ONBOARD_BACK": {
+  "text": "Quay lại",
+  "back": "Go back",
+  "why": "Not the slide word"
+ },
+ "ONBOARD_YES": {
+  "text": "Đúng",
+  "back": "Right",
+  "why": "Answers the question above"
+ },
+ "ONBOARD_NEXT": {
+  "text": "Tiếp tục",
+  "back": "Continue",
+  "why": "Not the slide word Tiếp"
+ },
+ "ONBOARD_SKIP_FOR_NOW": {
+  "text": "Để sau",
+  "back": "Later",
+  "why": "Can be added later"
+ },
+ "ONBOARD_LANGUAGE_TITLE": {
+  "text": "Bạn dùng ngôn ngữ này, đúng không?",
+  "back": "You use this language, right?",
+  "why": "Yes or no question"
+ },
+ "ONBOARD_COUNTRY_TITLE": {
+  "text": "Nhà thờ ở quốc gia hoặc vùng này, đúng không?",
+  "back": "The church is in this country or region, right?",
+  "why": "Country or region"
+ },
+ "ONBOARD_COUNTRY_HINT": {
+  "text": "Kinh Thánh tiếng nói ở đó sẽ xếp lên trước",
+  "back": "Bibles in the languages spoken there come first",
+  "why": "No full stop"
+ },
+ "ONBOARD_COUNTRY_FILTER": {
+  "text": "Gõ vài chữ của tên quốc gia",
+  "back": "Type a few letters of the country name",
+  "why": "Invitation to type"
+ },
+ "ONBOARD_BIBLE_TITLE": {
+  "text": "Dùng bản Kinh Thánh nào để chiếu?",
+  "back": "Which Bible should be shown?",
+  "why": "Asks which translation"
+ },
+ "ONBOARD_BIBLE_HINT": {
+  "text": "Ngôn ngữ của nơi đó xếp trước. Có thể thêm bản khác sau",
+  "back": "The languages of that place come first. More can be added later",
+  "why": "Two short sentences"
+ },
+ "ONBOARD_SONGS_TITLE": {
+  "text": "Bài hát của nhà thờ đang ở đâu?",
+  "back": "Where are the church's songs?",
+  "why": "Question"
+ },
+ "ONBOARD_SONGS_EASI": {
+  "text": "Từ EasiSlides trên máy này",
+  "back": "From EasiSlides on this computer",
+  "why": "EasiSlides stays"
+ },
+ "ONBOARD_SONGS_FOLDER": {
+  "text": "Từ một thư mục",
+  "back": "From a folder",
+  "why": "One line"
+ },
+ "ONBOARD_SONGS_FOLDER_HINT": {
+  "text": "Dữ liệu EasiSlides hoặc tệp OpenLyrics",
+  "back": "EasiSlides data or OpenLyrics files",
+  "why": "Names stay"
+ },
+ "ONBOARD_SONGS_NONE": {
+  "text": "Chưa có bài hát nào",
+  "back": "No songs yet",
+  "why": "Not final"
+ },
+ "ONBOARD_SONGS_NONE_HINT": {
+  "text": "Bắt đầu với thư viện trống, thêm bài lúc nào cũng được",
+  "back": "Start with an empty library, add songs any time",
+  "why": "No full stop"
+ },
+ "ONBOARD_SCREENS_TITLE": {
+  "text": "Hội chúng có thấy hình thử không?",
+  "back": "Does the congregation see the test picture?",
+  "why": "Yes or no question"
+ },
+ "ONBOARD_SCREENS_HINT": {
+  "text": "Hình thử đã chiếu sẵn trên màn hình Artosia định dùng làm máy chiếu",
+  "back": "The test picture is already up on the screen Artosia would use as the projector",
+  "why": "chiếu verb"
+ },
+ "ONBOARD_ROW_WINDOW": {
+  "text": "Cửa sổ này nằm ở",
+  "back": "This window is on",
+  "why": "Followed by Màn hình and a number"
+ },
+ "ONBOARD_ROW_PICTURE": {
+  "text": "Hình thử đang ở",
+  "back": "The test picture is on",
+  "why": "Followed by Màn hình and a number"
+ },
+ "ONBOARD_ROW_SIZE": {
+  "text": "Kích cỡ",
+  "back": "Size",
+  "why": "One line"
+ },
+ "ONBOARD_WORKS": {
+  "text": "Có, thấy rồi",
+  "back": "Yes, I see it",
+  "why": "Answers the question"
+ },
+ "ONBOARD_OTHER_SCREEN": {
+  "text": "Không, thử màn hình khác",
+  "back": "No, try another screen",
+  "why": "Pairs with the yes button"
+ },
+ "ONBOARD_NO_PROJECTOR": {
+  "text": "Chưa cắm máy chiếu vào máy tính này",
+  "back": "No projector is plugged into this computer yet",
+  "why": "A statement"
+ },
+ "ONBOARD_NO_PROJECTOR_HINT": {
+  "text": "Cắm máy chiếu hoặc màn hình thứ hai sau, Artosia sẽ tự dùng",
+  "back": "Plug in a projector or second screen later and Artosia will use it by itself",
+  "why": "No full stop"
+ },
+ "ONBOARD_READY_TITLE": {
+  "text": "Artosia đang chuẩn bị mọi thứ",
+  "back": "Artosia is preparing everything",
+  "why": "A statement"
+ },
+ "ONBOARD_READY_HINT": {
+  "text": "Bạn không cần chờ ở đây. Việc chưa xong sẽ tự tiếp tục",
+  "back": "You need not wait here. Unfinished work carries on by itself",
+  "why": "Two short sentences"
+ },
+ "ONBOARD_JOB_LANGUAGE": {
+  "text": "Ngôn ngữ và quốc gia",
+  "back": "Language and country",
+  "why": "Already saved"
+ },
+ "ONBOARD_JOB_SONGS": {
+  "text": "Bài hát",
+  "back": "Songs",
+  "why": "One word"
+ },
+ "ONBOARD_STATE_DONE": {
+  "text": "Xong",
+  "back": "Done",
+  "why": "One word"
+ },
+ "ONBOARD_STATE_WAITING": {
+  "text": "Đang chờ",
+  "back": "Waiting",
+  "why": "Short"
+ },
+ "ONBOARD_STATE_FAILED": {
+  "text": "Lỗi",
+  "back": "Failed",
+  "why": "Comes before the reason"
+ },
+ "ONBOARD_BIBLE_FAILED": {
+  "text": "Không mất gì cả. Thêm Kinh Thánh sau bằng nút Thêm bản dịch trong Cài đặt",
+  "back": "Nothing is lost. Add a Bible later with the button Add translations in Settings",
+  "why": "Uses BIBLES_MORE's own words"
+ },
+ "ONBOARD_DONE_TITLE": {
+  "text": "Artosia đã sẵn sàng",
+  "back": "Artosia is ready",
+  "why": "A statement"
+ },
+ "ONBOARD_DONE_HINT": {
+  "text": "Hãy bắt đầu với một trong ba việc",
+  "back": "Begin with one of three things",
+  "why": "No full stop"
+ },
+ "ONBOARD_CARD_TOUR": {
+  "text": "Xem nhanh cửa sổ qua năm bước ngắn",
+  "back": "A quick look at the window in five short steps",
+  "why": "Matches Hướng dẫn nhanh"
+ },
+ "ONBOARD_CARD_PLAN": {
+  "text": "Mở danh sách cho buổi lễ sắp tới",
+  "back": "Open the list for the next service",
+  "why": "Plan word danh sách"
+ },
+ "ONBOARD_OPEN_PLAN": {
+  "text": "Mở danh sách",
+  "back": "Open the list",
+  "why": "Button"
+ },
+ "ONBOARD_CARD_SONG": {
+  "text": "Gõ hoặc dán lời để tạo bài hát mới",
+  "back": "Type or paste words to make a new song",
+  "why": "Plain"
+ },
+ "CMD_FIRST_RUN": {
+  "text": "Thiết lập lại từ đầu",
+  "back": "Set up again from the start",
+  "why": "First run is thiết lập ban đầu"
+ },
+ "CMD_FIRST_RUN_DETAIL": {
+  "text": "Ngôn ngữ, Kinh Thánh, bài hát, màn hình, từng câu hỏi một",
+  "back": "Language, Bible, songs, screens, one question at a time",
+  "why": "No full stop"
+ },
+ "onboard_songs_found": {
+  "text": {
+   "other": "Tìm thấy {songs}, EasiSlides vẫn giữ nguyên"
+  },
+  "back": "Found {songs}, EasiSlides left as it is",
+  "why": "Number leads"
+ },
+ "onboard_percent": {
+  "text": "{percent}%",
+  "back": "{percent}%",
+  "why": "Percent sign after the number"
+ },
+ "onboard_progress": {
+  "text": "{done} trên {of}",
+  "back": "{done} of {of}",
+  "why": "Two numbers"
+ },
+ "day_month": {
+  "text": "{day} {month}",
+  "back": "{day} {month}",
+  "why": "Month already reads tháng 11"
  }
 }

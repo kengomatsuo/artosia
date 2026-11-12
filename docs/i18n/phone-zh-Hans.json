@@ -90,7 +90,7 @@
   "why": "number and measure word"
  },
  "clear_text": {
-  "text": "文字隐藏",
+  "text": "隐藏文字",
   "back": "Text hidden",
   "why": "same word as the computer's tile"
  },
@@ -250,7 +250,7 @@
   "why": "one word"
  },
  "keys_text": {
-  "text": "按Space或向下箭头，前进一张幻灯片。按向上箭头，退回一张。按/键，打开搜索。按C跳到副歌，按V跳到下一个主歌，按B跳到桥段。按数字1到9，跳到对应的段落。按F1隐藏文字，按F2变黑屏，按F3显示标志，按F6开启或关闭投影屏。",
+  "text": "按 Space 或向下箭头，前进一张幻灯片。按向上箭头，退回一张。按 / 键，打开搜索。按 C 跳到副歌，按 V 跳到下一个主歌，按 B 跳到桥段。按数字 1 到 9，跳到对应的段落。按 F1 隐藏文字，按 F2 变黑屏，按 F3 显示标志，按 F6 开启或关闭投影屏。",
   "back": "Press Space or the down arrow to go forward one slide. The up arrow goes back one. The / key opens the search. C jumps to the chorus, V to the next verse, B to the bridge. The digits 1 to 9 jump to that part. F1 hides the words, F2 makes the screen black, F3 shows the emblem, F6 switches the projector on or off.",
   "why": "key names as printed"
  },
@@ -300,7 +300,7 @@
   "why": "same off word as the window"
  },
  "label.numbered": {
-  "text": "{0}{1}",
+  "text": "{0} {1}",
   "back": "the part's name and its number, in the order the window uses",
   "why": "carried from section_numbered so the phone and the window agree"
  }

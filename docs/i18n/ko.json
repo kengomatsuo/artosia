@@ -45,9 +45,9 @@
   "why": ""
  },
  "SEARCH_SECTIONS": {
-  "text": "후렴, 1절, 가사 한 줄 입력",
+  "text": "후렴, 벌스 1, 가사 한 줄 입력",
   "back": "Type chorus, verse 1, or a line of words",
-  "why": "후렴 and 1절 are what musicians say"
+  "why": ""
  },
  "IN_PLAN": {
   "text": "이미 예배 순서에 있음",
@@ -343,11 +343,11 @@
   "text": {
    "none_lost": "방송 중 {time}",
    "some_lost": {
-    "other": "방송 중 {time} · 놓친 화면 {dropped}개"
+    "other": "방송 중 {time}, 놓친 화면 {dropped}개"
    }
   },
   "back": "Broadcasting {time} / Broadcasting {time}, {dropped} pictures lost",
-  "why": ""
+  "why": "comma instead of a dot"
  },
  "CMD_LISTEN": {
   "text": "마이크",
@@ -1275,9 +1275,9 @@
   "why": ""
  },
  "LETTER_KEYS_HINT": {
-  "text": "ㅎ은 후렴, ㅂ은 브리지로 이동해요. 끄면 아무 글자나 검색을 열어요.",
-  "back": "ㅎ goes to the chorus, ㅂ to the bridge. When off, any letter opens search.",
-  "why": "Hangul jamo are the letters of the language"
+  "text": "C는 후렴, B는 브리지로 이동해요. 끄면 아무 글자나 검색을 열어요.",
+  "back": "C goes to the chorus, B to the bridge. When off, any letter opens search.",
+  "why": "chorus key is C because 후렴 does not start with a Latin letter"
  },
  "COUNTDOWN": {
   "text": "카운트다운",
@@ -1310,9 +1310,9 @@
   "why": ""
  },
  "FIELD_AUTHOR": {
-  "text": "작사·작곡",
-  "back": "Words and music by",
-  "why": "songbook wording"
+  "text": "작사/작곡",
+  "back": "Words/music by",
+  "why": "slash as songbooks write it"
  },
  "FIELD_KEY": {
   "text": "조(키)",
@@ -1335,8 +1335,8 @@
   "why": ""
  },
  "FIELD_ORDER": {
-  "text": "순서 입력 (예: 1절 후렴*2 2절 후렴 브리지 후렴)",
-  "back": "Type the order (for example: verse 1 chorus*2 verse 2 chorus bridge chorus)",
+  "text": "순서 입력 (예: 벌스1 후렴*2 벌스2 후렴 브리지 후렴)",
+  "back": "Type the order (for example: verse1 chorus*2 verse2 chorus bridge chorus)",
   "why": ""
  },
  "ORDER": {
@@ -1355,7 +1355,7 @@
   "why": ""
  },
  "ORDER_CHORUS_EACH": {
-  "text": "절마다 후렴 넣기",
+  "text": "벌스마다 후렴 넣기",
   "back": "Put the chorus after every verse",
   "why": ""
  },
@@ -1392,10 +1392,10 @@
  "suggest_web": {
   "text": {
    "without_artist": "{source}",
-   "with_artist": "{artist} · {source}"
+   "with_artist": "{artist}, {source}"
   },
-  "back": "{source} / {artist} · {source}",
-  "why": "names stay as they are, no particle"
+  "back": "{source} / {artist}, {source}",
+  "why": ""
  },
  "words_from": {
   "text": "가사 출처: {source}. 쓰기 전에 교회 가사와 꼭 비교하세요",
@@ -1408,9 +1408,9 @@
   "why": ""
  },
  "LYRICS_PLACEHOLDER": {
-  "text": "[1절]\n주님의 사랑 크시네\n\n[후렴]\n주님을 찬양해",
+  "text": "[벌스 1]\n주님의 사랑 크시네\n\n[후렴]\n주님을 찬양해",
   "back": "[Verse 1] / The Lord's love is great / [Chorus] / We praise the Lord",
-  "why": ""
+  "why": "marker names are the section names"
  },
  "SECOND_PLACEHOLDER": {
   "text": "같은 부분을 같은 순서로 다른 언어로 쓰세요",
@@ -1418,9 +1418,9 @@
   "why": ""
  },
  "MARK_VERSE": {
-  "text": "절",
+  "text": "벌스",
   "back": "Verse",
-  "why": "1절, 2절 in a song"
+  "why": ""
  },
  "MARK_CHORUS": {
   "text": "후렴",
@@ -1904,18 +1904,18 @@
  },
  "screen_title": {
   "text": {
-   "with_this": "모니터 {number} · 이 창",
+   "with_this": "모니터 {number}, 이 창",
    "without_this": "모니터 {number}"
   },
-  "back": "Monitor {number} · this window / Monitor {number}",
+  "back": "Monitor {number}, this window / Monitor {number}",
   "why": ""
  },
  "screen_detail": {
   "text": {
    "normal_zoom": "{width}×{height}",
-   "with_zoom": "{width}×{height} · 배율 {scale}"
+   "with_zoom": "{width}×{height}, 배율 {scale}"
   },
-  "back": "{width}×{height} / {width}×{height} · zoom {scale}",
+  "back": "{width}×{height} / {width}×{height}, zoom {scale}",
   "why": ""
  },
  "REMOTE_SWITCH": {
@@ -2089,7 +2089,7 @@
   "why": "목록 shows it is a list"
  },
  "CMD_IMPORT_BIRTHDAYS_DETAIL": {
-  "text": "이름과 날짜가 있는 표가 든 Word·PowerPoint 파일",
+  "text": "이름과 날짜 표가 든 Word나 PowerPoint 파일",
   "back": "A Word or PowerPoint file with a table of names and dates",
   "why": ""
  },
@@ -2328,7 +2328,7 @@
   "why": ""
  },
  "ANNOUNCEMENT_TEMPLATES[1].1": {
-  "text": "주일 오전 11시 · 오후 5시 · 수요일 저녁 7시",
+  "text": "주일 오전 11시, 오후 5시, 수요일 저녁 7시",
   "back": "Sunday 11 am, 5 pm, Wednesday 7 pm",
   "why": "made-up example"
  },
@@ -2453,8 +2453,8 @@
   "why": ""
  },
  "KEYS_SHOWING_ROWS[8].1": {
-  "text": "ㅎ은 후렴, ㅂ은 브리지로 이동",
-  "back": "ㅎ jumps to the chorus, ㅂ to the bridge",
+  "text": "C는 후렴, B는 브리지로 이동",
+  "back": "C jumps to the chorus, B to the bridge",
   "why": ""
  },
  "KEYS_SHOWING_ROWS[9].1": {
@@ -2588,7 +2588,7 @@
   "why": ""
  },
  "KEYS_EDITING_ROWS[3].1": {
-  "text": "절, 후렴, 프리코러스, 브리지, 마무리 표시 넣기",
+  "text": "벌스, 후렴, 프리코러스, 브리지, 마무리 표시 넣기",
   "back": "Insert a marker for verse, chorus, pre-chorus, bridge or ending",
   "why": ""
  },
@@ -2979,14 +2979,14 @@
   "why": ""
  },
  "section.verse": {
-  "text": "절",
+  "text": "벌스",
   "back": "Verse",
-  "why": "1절 for a song; the Bible verse is also 절 but always follows a chapter"
+  "why": "Hangul name that takes a number after it, so 벌스 1 and 후렴 2 read alike"
  },
  "section_numbered": {
-  "text": "{number}{name}",
-  "back": "{number}{name}",
-  "why": "number first, as in 1절"
+  "text": "{name} {number}",
+  "back": "{name} {number}",
+  "why": "name then number reads right for a verse, a chorus and a bridge"
  },
  "DESIGN_BACKGROUND": {
   "text": "배경",
@@ -3139,7 +3139,7 @@
   "why": ""
  },
  "MARKS_WHY_ORDER": {
-  "text": "앞 절에 이어지는 다음 절이에요",
+  "text": "앞 벌스에 이어지는 다음 벌스예요",
   "back": "The next verse following the earlier ones",
   "why": ""
  },
@@ -3473,6 +3473,238 @@
  "BTN_START_HERE": {
   "text": "여기서 시작",
   "back": "Start here",
+  "why": ""
+ },
+ "ONBOARD_SKIP": {
+  "text": "나중에 하기",
+  "back": "Do it later",
+  "why": ""
+ },
+ "ONBOARD_BACK": {
+  "text": "뒤로",
+  "back": "Back",
+  "why": ""
+ },
+ "ONBOARD_YES": {
+  "text": "네",
+  "back": "Yes",
+  "why": ""
+ },
+ "ONBOARD_NEXT": {
+  "text": "계속",
+  "back": "Continue",
+  "why": ""
+ },
+ "ONBOARD_SKIP_FOR_NOW": {
+  "text": "나중에 고르기",
+  "back": "Choose later",
+  "why": ""
+ },
+ "ONBOARD_LANGUAGE_TITLE": {
+  "text": "이 언어로 계속할까요?",
+  "back": "Continue in this language?",
+  "why": ""
+ },
+ "ONBOARD_COUNTRY_TITLE": {
+  "text": "교회가 있는 나라나 지역이 맞나요?",
+  "back": "Is this the country or region of the church?",
+  "why": ""
+ },
+ "ONBOARD_COUNTRY_HINT": {
+  "text": "그 지역에서 쓰는 언어의 성경을 먼저 보여 줘요",
+  "back": "Bibles in the languages spoken there are shown first",
+  "why": ""
+ },
+ "ONBOARD_COUNTRY_FILTER": {
+  "text": "나라나 지역 이름 입력",
+  "back": "Type a country or region name",
+  "why": ""
+ },
+ "ONBOARD_BIBLE_TITLE": {
+  "text": "슬라이드에 띄울 성경은 어느 번역본인가요?",
+  "back": "Which translation should go on the slides?",
+  "why": ""
+ },
+ "ONBOARD_BIBLE_HINT": {
+  "text": "고른 나라의 언어가 먼저 나와요. 성경은 나중에도 추가해요",
+  "back": "The picked country's languages come first. Bibles can be added later",
+  "why": ""
+ },
+ "ONBOARD_SONGS_TITLE": {
+  "text": "교회의 곡은 어디에 있나요?",
+  "back": "Where are the church's songs?",
+  "why": ""
+ },
+ "ONBOARD_SONGS_EASI": {
+  "text": "이 컴퓨터의 EasiSlides에서 가져오기",
+  "back": "Bring in from EasiSlides on this computer",
+  "why": ""
+ },
+ "ONBOARD_SONGS_FOLDER": {
+  "text": "폴더에서 가져오기",
+  "back": "Bring in from a folder",
+  "why": ""
+ },
+ "ONBOARD_SONGS_FOLDER_HINT": {
+  "text": "EasiSlides 데이터나 OpenLyrics 곡 파일",
+  "back": "EasiSlides data or OpenLyrics song files",
+  "why": ""
+ },
+ "ONBOARD_SONGS_NONE": {
+  "text": "지금은 없음",
+  "back": "None for now",
+  "why": ""
+ },
+ "ONBOARD_SONGS_NONE_HINT": {
+  "text": "빈 보관함으로 시작하고, 곡은 언제든 추가해요",
+  "back": "Starts with an empty library, songs can be added any time",
+  "why": ""
+ },
+ "ONBOARD_SCREENS_TITLE": {
+  "text": "프로젝터에 시험 화면이 보이나요?",
+  "back": "Do you see the test picture on the projector?",
+  "why": ""
+ },
+ "ONBOARD_SCREENS_HINT": {
+  "text": "프로젝터로 쓸 모니터에 이미 띄워 두었어요",
+  "back": "It is already up on the monitor to be used as the projector",
+  "why": ""
+ },
+ "ONBOARD_ROW_WINDOW": {
+  "text": "Artosia 창이 있는 모니터",
+  "back": "Monitor with the Artosia window",
+  "why": ""
+ },
+ "ONBOARD_ROW_PICTURE": {
+  "text": "시험 화면이 나온 모니터",
+  "back": "Monitor showing the test picture",
+  "why": ""
+ },
+ "ONBOARD_ROW_SIZE": {
+  "text": "시험 화면 크기",
+  "back": "Test picture size",
+  "why": ""
+ },
+ "ONBOARD_WORKS": {
+  "text": "네, 보여요",
+  "back": "Yes, I see it",
+  "why": ""
+ },
+ "ONBOARD_OTHER_SCREEN": {
+  "text": "아니요, 다른 모니터로",
+  "back": "No, try the other monitor",
+  "why": ""
+ },
+ "ONBOARD_NO_PROJECTOR": {
+  "text": "아직 프로젝터가 연결되지 않았어요",
+  "back": "No projector is connected yet",
+  "why": ""
+ },
+ "ONBOARD_NO_PROJECTOR_HINT": {
+  "text": "나중에 프로젝터나 모니터를 연결하면 알아서 써요",
+  "back": "If one is connected later, it is used by itself",
+  "why": ""
+ },
+ "ONBOARD_READY_TITLE": {
+  "text": "필요한 것을 준비하고 있어요",
+  "back": "Getting what you asked for ready",
+  "why": ""
+ },
+ "ONBOARD_READY_HINT": {
+  "text": "여기서 기다릴 필요는 없어요. 언제든 넘어가세요, 남은 일은 알아서 계속돼요",
+  "back": "No need to wait here. Move on any time, the rest carries on by itself",
+  "why": ""
+ },
+ "ONBOARD_JOB_LANGUAGE": {
+  "text": "언어와 나라",
+  "back": "Language and country",
+  "why": ""
+ },
+ "ONBOARD_JOB_SONGS": {
+  "text": "곡 가져오기",
+  "back": "Songs",
+  "why": ""
+ },
+ "ONBOARD_STATE_DONE": {
+  "text": "완료",
+  "back": "Done",
+  "why": ""
+ },
+ "ONBOARD_STATE_WAITING": {
+  "text": "대기 중",
+  "back": "Waiting",
+  "why": ""
+ },
+ "ONBOARD_STATE_FAILED": {
+  "text": "실패",
+  "back": "Failed",
+  "why": ""
+ },
+ "ONBOARD_BIBLE_FAILED": {
+  "text": "문제없어요. 그 성경 없이 계속해요. 나중에 설정의 ‘성경 더 받기’로 추가하세요",
+  "back": "No harm done. It carries on without that Bible. Add one later with More Bibles in Settings",
+  "why": ""
+ },
+ "ONBOARD_DONE_TITLE": {
+  "text": "준비됐어요",
+  "back": "Ready",
+  "why": ""
+ },
+ "ONBOARD_DONE_HINT": {
+  "text": "아래에서 하나를 골라 시작하세요",
+  "back": "Pick one below to begin",
+  "why": ""
+ },
+ "ONBOARD_CARD_TOUR": {
+  "text": "다섯 단계로 창을 차례로 안내받아요",
+  "back": "A guided walk through the window in five stops",
+  "why": ""
+ },
+ "ONBOARD_CARD_PLAN": {
+  "text": "다음 예배의 예배 순서를 열어요",
+  "back": "Open the plan for the next service",
+  "why": ""
+ },
+ "ONBOARD_OPEN_PLAN": {
+  "text": "예배 순서 열기",
+  "back": "Open the plan",
+  "why": ""
+ },
+ "ONBOARD_CARD_SONG": {
+  "text": "가사를 쓰거나 붙여넣어 새 곡을 시작해요",
+  "back": "Start a new song by typing or pasting its words",
+  "why": ""
+ },
+ "CMD_FIRST_RUN": {
+  "text": "처음 설정 다시 하기",
+  "back": "Do the first setup again",
+  "why": ""
+ },
+ "CMD_FIRST_RUN_DETAIL": {
+  "text": "언어, 나라, 성경, 곡, 프로젝터를 한 번에 하나씩 물어요",
+  "back": "Asks about language, country, Bible, songs and projector one at a time",
+  "why": ""
+ },
+ "onboard_songs_found": {
+  "text": {
+   "other": "{songs} 찾았어요, EasiSlides는 그대로예요"
+  },
+  "back": "Found {songs}, EasiSlides is left as it is",
+  "why": ""
+ },
+ "onboard_percent": {
+  "text": "{percent}%",
+  "back": "{percent}%",
+  "why": ""
+ },
+ "onboard_progress": {
+  "text": "{done} / {of}곡",
+  "back": "{done} / {of} songs",
+  "why": ""
+ },
+ "day_month": {
+  "text": "{month} {day}일",
+  "back": "{month} {day}",
   "why": ""
  }
 }

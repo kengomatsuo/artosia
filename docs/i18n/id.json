@@ -2141,9 +2141,9 @@
  "names_today": {
   "text": {
    "zero": "Tak ada yang ulang tahun",
-   "other": "{count} orang ulang tahun"
+   "other": "{count} yang ulang tahun"
   },
-  "back": "Nobody has a birthday / {count} people have a birthday",
+  "back": "Nobody has a birthday / {count} having a birthday",
   "why": "Count people, not names"
  },
  "ANNOUNCEMENT_TEMPLATES[0].0": {
@@ -3425,5 +3425,235 @@
   "text": "Rundown baru, pilih hari dan jamnya",
   "back": "A new rundown, choose its day and hour",
   "why": "Fragment; same words as the plan dialog"
+ },
+ "ONBOARD_SKIP": {
+  "text": "Lewati semua",
+  "back": "Skip everything",
+  "why": "Closes the window and keeps the answers given"
+ },
+ "ONBOARD_BACK": {
+  "text": "Kembali",
+  "back": "Back",
+  "why": "About pages, not slides; the same word as the tour's step back"
+ },
+ "ONBOARD_YES": {
+  "text": "Ya",
+  "back": "Yes",
+  "why": "Answers the question above it"
+ },
+ "ONBOARD_NEXT": {
+  "text": "Lanjut",
+  "back": "Continue",
+  "why": "Same word as the tour's step forward"
+ },
+ "ONBOARD_SKIP_FOR_NOW": {
+  "text": "Nanti saja",
+  "back": "Later",
+  "why": "Light, nothing is lost"
+ },
+ "ONBOARD_LANGUAGE_TITLE": {
+  "text": "Pakai bahasa ini di Artosia?",
+  "back": "Use this language in Artosia?",
+  "why": "A yes or no question"
+ },
+ "ONBOARD_COUNTRY_TITLE": {
+  "text": "Gerejamu ada di negara atau wilayah ini?",
+  "back": "Is your church in this country or region?",
+  "why": "Country or region, since some places are not countries"
+ },
+ "ONBOARD_COUNTRY_HINT": {
+  "text": "Alkitab dalam bahasa di sana dicantumkan lebih dulu",
+  "back": "Bibles in the languages there are listed first",
+  "why": "Says why the country is asked"
+ },
+ "ONBOARD_COUNTRY_FILTER": {
+  "text": "Ketik nama negara atau wilayah",
+  "back": "Type the name of a country or region",
+  "why": "Invitation to type"
+ },
+ "ONBOARD_BIBLE_TITLE": {
+  "text": "Pakai versi Alkitab yang mana?",
+  "back": "Which Bible version should be used?",
+  "why": "Uses the table's 'versi Alkitab'"
+ },
+ "ONBOARD_BIBLE_HINT": {
+  "text": "Bahasa negara tadi paling atas. Versi lain bisa ditambah nanti",
+  "back": "The language of that country is at the top. Other versions can be added later",
+  "why": "Two short sentences"
+ },
+ "ONBOARD_SONGS_TITLE": {
+  "text": "Lagu gerejamu disimpan di mana?",
+  "back": "Where are your church's songs kept?",
+  "why": "Question"
+ },
+ "ONBOARD_SONGS_EASI": {
+  "text": "Ambil dari EasiSlides di komputer ini",
+  "back": "Take from EasiSlides on this computer",
+  "why": "EasiSlides stays"
+ },
+ "ONBOARD_SONGS_FOLDER": {
+  "text": "Dari sebuah folder",
+  "back": "From a folder",
+  "why": "Short row title"
+ },
+ "ONBOARD_SONGS_FOLDER_HINT": {
+  "text": "Data EasiSlides atau berkas OpenLyrics",
+  "back": "EasiSlides data or OpenLyrics files",
+  "why": "Names stay"
+ },
+ "ONBOARD_SONGS_NONE": {
+  "text": "Belum ada lagu",
+  "back": "No songs yet",
+  "why": "Not final"
+ },
+ "ONBOARD_SONGS_NONE_HINT": {
+  "text": "Mulai dari koleksi kosong, lagu bisa ditambah kapan saja",
+  "back": "Start from an empty collection, songs can be added any time",
+  "why": "'koleksi' is the table's word for the library"
+ },
+ "ONBOARD_SCREENS_TITLE": {
+  "text": "Angka besar tayang di layar jemaat?",
+  "back": "Is the big number up on the congregation's screen?",
+  "why": "'tayang' is the one verb for being on the projector"
+ },
+ "ONBOARD_SCREENS_HINT": {
+  "text": "Gambar uji sudah tayang di monitor yang akan jadi proyektor",
+  "back": "The test picture is already up on the monitor that will be the projector",
+  "why": "'monitor' for the hardware"
+ },
+ "ONBOARD_ROW_WINDOW": {
+  "text": "Jendela ini ada di",
+  "back": "This window is on",
+  "why": "A monitor name follows at the right"
+ },
+ "ONBOARD_ROW_PICTURE": {
+  "text": "Gambar uji ada di",
+  "back": "The test picture is on",
+  "why": "A monitor name follows at the right"
+ },
+ "ONBOARD_ROW_SIZE": {
+  "text": "Ukuran monitor",
+  "back": "Size of the monitor",
+  "why": "Pixel size follows"
+ },
+ "ONBOARD_WORKS": {
+  "text": "Ya, sudah tayang",
+  "back": "Yes, it is up",
+  "why": "Answers the question as yes"
+ },
+ "ONBOARD_OTHER_SCREEN": {
+  "text": "Tidak, coba monitor lain",
+  "back": "No, try another monitor",
+  "why": "Pairs with the yes button"
+ },
+ "ONBOARD_NO_PROJECTOR": {
+  "text": "Belum ada proyektor yang tersambung",
+  "back": "No projector is connected yet",
+  "why": "A statement"
+ },
+ "ONBOARD_NO_PROJECTOR_HINT": {
+  "text": "Kalau nanti ada proyektor, Artosia langsung memakainya untuk jemaat",
+  "back": "If there is a projector later, Artosia uses it for the congregation at once",
+  "why": "Promise without a full stop"
+ },
+ "ONBOARD_READY_TITLE": {
+  "text": "Artosia menyiapkan yang kamu minta",
+  "back": "Artosia is preparing what you asked for",
+  "why": "A statement; kamu only where a pronoun is needed"
+ },
+ "ONBOARD_READY_HINT": {
+  "text": "Tidak perlu menunggu di sini. Pekerjaan yang belum selesai jalan sendiri",
+  "back": "No need to wait here. Unfinished work goes on by itself",
+  "why": "Two short sentences"
+ },
+ "ONBOARD_JOB_LANGUAGE": {
+  "text": "Bahasa dan negara",
+  "back": "Language and country",
+  "why": "Row title"
+ },
+ "ONBOARD_JOB_SONGS": {
+  "text": "Lagu",
+  "back": "Songs",
+  "why": "One word"
+ },
+ "ONBOARD_STATE_DONE": {
+  "text": "Selesai",
+  "back": "Done",
+  "why": "One word"
+ },
+ "ONBOARD_STATE_WAITING": {
+  "text": "Menunggu",
+  "back": "Waiting",
+  "why": "One word"
+ },
+ "ONBOARD_STATE_FAILED": {
+  "text": "Gagal",
+  "back": "Failed",
+  "why": "One word before the reason"
+ },
+ "ONBOARD_BIBLE_FAILED": {
+  "text": "Tidak ada yang hilang. Tambah nanti di Pengaturan lewat tombol Cari Alkitab lain.",
+  "back": "Nothing is lost. Add one later in Settings through the button Look for another Bible.",
+  "why": "Uses the button's own name, BIBLES_MORE"
+ },
+ "ONBOARD_DONE_TITLE": {
+  "text": "Artosia siap dipakai",
+  "back": "Artosia is ready to use",
+  "why": "A statement"
+ },
+ "ONBOARD_DONE_HINT": {
+  "text": "Mulai dengan salah satu ini",
+  "back": "Start with one of these",
+  "why": "Phrase"
+ },
+ "ONBOARD_CARD_TOUR": {
+  "text": "Panduan singkat jendela ini, lima langkah",
+  "back": "A short guide to this window, five steps",
+  "why": "'Panduan singkat' is the tour's name"
+ },
+ "ONBOARD_CARD_PLAN": {
+  "text": "Buka rundown untuk ibadah berikutnya",
+  "back": "Open the rundown for the next service",
+  "why": "Plan word"
+ },
+ "ONBOARD_OPEN_PLAN": {
+  "text": "Buka rundown",
+  "back": "Open the rundown",
+  "why": "Button"
+ },
+ "ONBOARD_CARD_SONG": {
+  "text": "Ketik atau tempel lirik lagu baru",
+  "back": "Type or paste the words of a new song",
+  "why": "Same verbs as the new-song detail"
+ },
+ "CMD_FIRST_RUN": {
+  "text": "Ulangi pengaturan awal",
+  "back": "Repeat the initial setup",
+  "why": "The first run is 'pengaturan awal'"
+ },
+ "CMD_FIRST_RUN_DETAIL": {
+  "text": "Bahasa, negara, Alkitab, lagu, dan monitor, satu per satu",
+  "back": "Language, country, Bible, songs, and monitor, one at a time",
+  "why": "What it covers and that it goes one by one"
+ },
+ "onboard_songs_found": {
+  "text": "{songs} ditemukan, EasiSlides tidak diubah",
+  "back": "{songs} found, EasiSlides is not changed",
+  "why": "The number leads"
+ },
+ "onboard_percent": {
+  "text": "{percent}%",
+  "back": "{percent}%",
+  "why": "Percent sign after the number as Indonesian writes it"
+ },
+ "onboard_progress": {
+  "text": "{done} dari {of}",
+  "back": "{done} of {of}",
+  "why": "Two numbers"
+ },
+ "day_month": {
+  "text": "{day} {month}",
+  "back": "{day} {month}",
+  "why": "Day then month name"
  }
 }

@@ -1281,8 +1281,8 @@
   "why": "phrase beside a switch"
  },
  "LETTER_KEYS_HINT": {
-  "text": "R va au refrain, P au pont. Désactivé, une lettre ouvre la recherche.",
-  "back": "R goes to the chorus, P to the bridge. Off, a letter opens search.",
+  "text": "R va au refrain, B au pont. Désactivé, une lettre ouvre la recherche.",
+  "back": "R goes to the chorus, B to the bridge. Off, a letter opens search.",
   "why": "letters of French names"
  },
  "COUNTDOWN": {
@@ -1414,9 +1414,9 @@
   "why": "phrase"
  },
  "LYRICS_PLACEHOLDER": {
-  "text": "[Couplet1]\nTu es bon\n\n[Refrain]\nGloire",
-  "back": "[Verse1] / You are good / [Chorus] / Glory",
-  "why": "marker syntax guessed from the order example"
+  "text": "[Couplet 1]\nTu es bon\n\n[Refrain]\nGloire",
+  "back": "[Verse 1] / You are good / [Chorus] / Glory",
+  "why": "own word for a verse, space, 1, in brackets"
  },
  "SECOND_PLACEHOLDER": {
   "text": "Mêmes parties, même ordre, autre langue",
@@ -2463,8 +2463,8 @@
   "why": "fragment"
  },
  "KEYS_SHOWING_ROWS[8].1": {
-  "text": "R mène au refrain suivant, P au pont suivant",
-  "back": "R leads to the next chorus, P to the next bridge",
+  "text": "R mène au refrain suivant, B au pont suivant",
+  "back": "R leads to the next chorus, B to the next bridge",
   "why": "letters of the French names"
  },
  "KEYS_SHOWING_ROWS[9].1": {
@@ -3505,5 +3505,238 @@
   "text": "Commencer ici",
   "back": "Begin here",
   "why": "about where a song begins"
+ },
+ "ONBOARD_SKIP": {
+  "text": "Passer",
+  "back": "Skip",
+  "why": "closes at once, answers kept"
+ },
+ "ONBOARD_BACK": {
+  "text": "Précédent",
+  "back": "Previous",
+  "why": "a page of the first run, not Retour which moves slides"
+ },
+ "ONBOARD_YES": {
+  "text": "Oui",
+  "back": "Yes",
+  "why": "answers the question above"
+ },
+ "ONBOARD_NEXT": {
+  "text": "Continuer",
+  "back": "Continue",
+  "why": "one word"
+ },
+ "ONBOARD_SKIP_FOR_NOW": {
+  "text": "Pas maintenant",
+  "back": "Not now",
+  "why": "no Bible now"
+ },
+ "ONBOARD_LANGUAGE_TITLE": {
+  "text": "Cette langue vous convient-elle ?",
+  "back": "Does this language suit you?",
+  "why": "yes or no question"
+ },
+ "ONBOARD_COUNTRY_TITLE": {
+  "text": "L'église est-elle dans ce pays ou cette région ?",
+  "back": "Is the church in this country or region?",
+  "why": "country or region"
+ },
+ "ONBOARD_COUNTRY_HINT": {
+  "text": "Les Bibles des langues de ce pays passent en premier",
+  "back": "The Bibles of this country's languages come first",
+  "why": "no full stop"
+ },
+ "ONBOARD_COUNTRY_FILTER": {
+  "text": "Taper un pays ou une région",
+  "back": "Type a country or region",
+  "why": "invitation"
+ },
+ "ONBOARD_BIBLE_TITLE": {
+  "text": "Quelle Bible projeter ?",
+  "back": "Which Bible to project?",
+  "why": "projeter"
+ },
+ "ONBOARD_BIBLE_HINT": {
+  "text": "Les langues du pays d'abord. Vous pourrez ajouter des Bibles ensuite",
+  "back": "The country's languages first. You can add Bibles afterwards",
+  "why": "two sentences"
+ },
+ "ONBOARD_SONGS_TITLE": {
+  "text": "Où sont vos chants ?",
+  "back": "Where are your songs?",
+  "why": "plain"
+ },
+ "ONBOARD_SONGS_EASI": {
+  "text": "Importer depuis EasiSlides",
+  "back": "Import from EasiSlides",
+  "why": "same words as the command"
+ },
+ "ONBOARD_SONGS_FOLDER": {
+  "text": "Importer un dossier",
+  "back": "Import a folder",
+  "why": "plain"
+ },
+ "ONBOARD_SONGS_FOLDER_HINT": {
+  "text": "Données EasiSlides ou OpenLyrics",
+  "back": "EasiSlides data or OpenLyrics",
+  "why": "names kept"
+ },
+ "ONBOARD_SONGS_NONE": {
+  "text": "Aucun chant",
+  "back": "No song",
+  "why": "not final"
+ },
+ "ONBOARD_SONGS_NONE_HINT": {
+  "text": "Bibliothèque vide, chants ajoutables à tout moment",
+  "back": "Empty library, songs can be added any time",
+  "why": "no full stop"
+ },
+ "ONBOARD_SCREENS_TITLE": {
+  "text": "La salle voit-elle ce grand chiffre ?",
+  "back": "Does the room see this big number?",
+  "why": "the test picture is a number"
+ },
+ "ONBOARD_SCREENS_HINT": {
+  "text": "Le chiffre est déjà sur l'écran prévu pour la salle",
+  "back": "The number is already on the screen meant for the room",
+  "why": "no full stop"
+ },
+ "ONBOARD_ROW_WINDOW": {
+  "text": "Écran de cette fenêtre",
+  "back": "Screen of this window",
+  "why": "écran is the hardware noun"
+ },
+ "ONBOARD_ROW_PICTURE": {
+  "text": "Écran de l'image de test",
+  "back": "Screen of the test picture",
+  "why": "plain"
+ },
+ "ONBOARD_ROW_SIZE": {
+  "text": "Taille de l'image",
+  "back": "Size of the picture",
+  "why": "plain"
+ },
+ "ONBOARD_WORKS": {
+  "text": "Oui, je le vois",
+  "back": "Yes, I see it",
+  "why": "answers the question"
+ },
+ "ONBOARD_OTHER_SCREEN": {
+  "text": "Non, essayer l'autre écran",
+  "back": "No, try the other screen",
+  "why": "pairs with yes"
+ },
+ "ONBOARD_NO_PROJECTOR": {
+  "text": "Aucun projecteur n'est branché",
+  "back": "No projector is plugged in",
+  "why": "statement"
+ },
+ "ONBOARD_NO_PROJECTOR_HINT": {
+  "text": "Dès qu'un projecteur est branché, Artosia l'utilise pour la salle",
+  "back": "As soon as a projector is plugged in, Artosia uses it for the room",
+  "why": "no full stop"
+ },
+ "ONBOARD_READY_TITLE": {
+  "text": "Artosia prépare ce qui est demandé",
+  "back": "Artosia prepares what was asked",
+  "why": "statement"
+ },
+ "ONBOARD_READY_HINT": {
+  "text": "Inutile d'attendre ici. Ce qui n'est pas fini continue tout seul",
+  "back": "No need to wait here. What is not finished goes on by itself",
+  "why": "two sentences"
+ },
+ "ONBOARD_JOB_LANGUAGE": {
+  "text": "Langue et pays",
+  "back": "Language and country",
+  "why": "plain"
+ },
+ "ONBOARD_JOB_SONGS": {
+  "text": "Chants",
+  "back": "Songs",
+  "why": "one word"
+ },
+ "ONBOARD_STATE_DONE": {
+  "text": "Terminé",
+  "back": "Done",
+  "why": "one word"
+ },
+ "ONBOARD_STATE_WAITING": {
+  "text": "En attente",
+  "back": "Waiting",
+  "why": "short"
+ },
+ "ONBOARD_STATE_FAILED": {
+  "text": "Échec",
+  "back": "Failed",
+  "why": "one word"
+ },
+ "ONBOARD_BIBLE_FAILED": {
+  "text": "Rien n'est perdu. Ajoutez une Bible plus tard avec Plus de Bibles dans les Réglages.",
+  "back": "Nothing is lost. Add a Bible later with More Bibles in Settings.",
+  "why": "button's own name"
+ },
+ "ONBOARD_DONE_TITLE": {
+  "text": "Artosia est prêt",
+  "back": "Artosia is ready",
+  "why": "statement"
+ },
+ "ONBOARD_DONE_HINT": {
+  "text": "Commencez par l'une de ces trois choses",
+  "back": "Begin with one of these three things",
+  "why": "no full stop"
+ },
+ "ONBOARD_CARD_TOUR": {
+  "text": "Cinq étapes pour découvrir la fenêtre",
+  "back": "Five steps to discover the window",
+  "why": "same as the tour row"
+ },
+ "ONBOARD_CARD_PLAN": {
+  "text": "Ouvrez le programme du prochain culte",
+  "back": "Open the plan of the next service",
+  "why": "plan word"
+ },
+ "ONBOARD_OPEN_PLAN": {
+  "text": "Voir le programme",
+  "back": "See the plan",
+  "why": "Ouvrir le programme is 19 characters"
+ },
+ "ONBOARD_CARD_SONG": {
+  "text": "Écrivez ou collez les paroles d'un chant",
+  "back": "Write or paste the words of a song",
+  "why": "plain"
+ },
+ "CMD_FIRST_RUN": {
+  "text": "Refaire le premier démarrage",
+  "back": "Redo the first start",
+  "why": "first run is premier démarrage"
+ },
+ "CMD_FIRST_RUN_DETAIL": {
+  "text": "Langue, pays, Bible et chants, une question à la fois",
+  "back": "Language, country, Bible and songs, one question at a time",
+  "why": "no full stop"
+ },
+ "onboard_songs_found": {
+  "text": {
+   "one": "{songs} dans EasiSlides, qui reste intact",
+   "other": "{songs} dans EasiSlides, qui reste intact"
+  },
+  "back": "{songs} in EasiSlides, which stays untouched",
+  "why": "number leads, no agreement"
+ },
+ "onboard_percent": {
+  "text": "{percent} %",
+  "back": "{percent} %",
+  "why": "space before the sign"
+ },
+ "onboard_progress": {
+  "text": "{done} sur {of}",
+  "back": "{done} of {of}",
+  "why": "two numbers"
+ },
+ "day_month": {
+  "text": "{day} {month}",
+  "back": "{day} {month}",
+  "why": "French order, no joining word"
  }
 }

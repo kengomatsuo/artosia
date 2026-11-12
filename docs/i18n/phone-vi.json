@@ -42,7 +42,7 @@
  "tab_plan": {
   "text": "Các mục",
   "back": "The items",
-  "why": "Danh sách is 9 characters and the limit is 8"
+  "why": "Danh sách is 9 characters and the limit is 8; no short form exists, so the items word stays"
  },
  "tab_search": {
   "text": "Tìm kiếm",
@@ -250,9 +250,9 @@
   "why": "Same as the computer"
  },
  "keys_text": {
-  "text": "Space hoặc mũi tên xuống: sang trang chiếu sau. Mũi tên lên: lùi một trang. Phím /: mở tìm kiếm. K: tới Điệp khúc. N: tới Đoạn nối. Số 1 đến 9: tới phần đó. F1: ẩn chữ. F2: màn đen. F3: chiếu logo. F6: bật hoặc tắt máy chiếu.",
-  "back": "Space or the down arrow: next slide. Up arrow: one slide back. The / key: open search. K: to Chorus. N: to Bridge. Digit keys 1 to 9: jump to that part. F1: hide the words. F2: black screen. F3: show the logo. F6: switch the projector on or off.",
-  "why": "Letters K and N as on the computer, the verse letter V left out"
+  "text": "Space hoặc mũi tên xuống: trang sau. Mũi tên lên: lùi một trang. Phím /: mở tìm kiếm. C: tới Điệp khúc. V: tới Lời sau. B: tới Đoạn nối. 1 đến 9: tới phần đó. F1: ẩn chữ. F2: màn đen. F3: chiếu logo. F6: bật hoặc tắt máy chiếu.",
+  "back": "Space or the down arrow: next slide. Up arrow: one slide back. The / key: open search. C: to Chorus. V: to the next Verse. B: to Bridge. Digits 1 to 9: to that part. F1: hide the words. F2: black screen. F3: show the logo. F6: switch the projector on or off.",
+  "why": "Part keys are C, V and B as the program fixes them"
  },
  "lost": {
   "text": "Mất kết nối với máy tính",

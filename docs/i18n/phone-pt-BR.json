@@ -250,9 +250,9 @@
   "why": "-"
  },
  "keys_text": {
-  "text": "Espaço ou seta para baixo: próximo slide. Seta para cima: slide anterior. /: busca. C: refrão. V: próxima estrofe. B: ponte. 1 a 9: parte da música. F1 oculta texto. F2: preto. F3 exibe o logo. F6 liga ou desliga o projetor.",
-  "back": "Space or down arrow: next slide. Up arrow: previous slide. /: search. C: chorus. V: next verse. B: bridge. 1 to 9: part of the song. F1 hides the text. F2 makes it black. F3 shows the logo. F6 switches the projector on or off.",
-  "why": "keys as the brief names them"
+  "text": "Espaço e seta para baixo avançam. Seta para cima volta. A tecla / abre a busca. C vai ao refrão, V à próxima estrofe, B à ponte. 1 a 9 vão à parte. F1 oculta o texto, F2 escurece, F3 exibe o logo, F6 liga ou desliga o projetor.",
+  "back": "Space and the down arrow go forward. The up arrow goes back. The / key opens the search. C goes to the chorus, V to the next verse, B to the bridge. From 1 to 9 goes to the part. F1 hides the text, F2 makes it black, F3 shows the logo, F6 switches on or off.",
+  "why": "whole short sentences naming exactly the brief's keys"
  },
  "lost": {
   "text": "Conexão perdida",

@@ -35,9 +35,9 @@
   "why": "無句號"
  },
  "tab_live": {
-  "text": "投影中",
-  "back": "On projector",
-  "why": "與電腦同詞"
+  "text": "現場",
+  "back": "Live",
+  "why": "與電腦的窗格同詞"
  },
  "tab_plan": {
   "text": "流程",
@@ -55,9 +55,9 @@
   "why": "不顯示"
  },
  "live": {
-  "text": "投影中",
-  "back": "On projector",
-  "why": "與電腦同詞"
+  "text": "現場",
+  "back": "Live",
+  "why": "與電腦的窗格同詞"
  },
  "next_btn": {
   "text": "下一張",
@@ -195,14 +195,14 @@
   "why": "不顯示"
  },
  "message": {
-  "text": "給現場的提示",
-  "back": "Notice for the room",
-  "why": "片語"
+  "text": "給現場的訊息",
+  "back": "Message for the room",
+  "why": "與電腦同詞，提示改稱訊息"
  },
  "message_ph": {
-  "text": "輸入提示內容",
-  "back": "Write the notice",
-  "why": "邀請輸入"
+  "text": "輸入訊息內容",
+  "back": "Write the message",
+  "why": "與電腦同詞"
  },
  "message_show": {
   "text": "投影",

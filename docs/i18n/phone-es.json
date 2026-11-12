@@ -250,9 +250,9 @@
   "why": "One word."
  },
  "keys_text": {
-  "text": "Espacio o flecha abajo avanzan. Flecha arriba retrocede. La / abre la búsqueda. C salta al coro y B al puente. De 1 a 9 salta a esa parte. F1 oculta el texto, F2 pone negro, F3 muestra el logo y F6 enciende o apaga el proyector.",
-  "back": "Space or down arrow go forward. Up arrow goes back. The / opens the search. C jumps to the chorus and B to the bridge. 1 to 9 jumps to that part. F1 hides the text, F2 makes it black, F3 shows the logo and F6 turns the projector on or off.",
-  "why": "V omitted: estrofa does not begin with V."
+  "text": "Espacio o flecha abajo avanzan. Flecha arriba retrocede. La / abre la búsqueda. C va al coro, V a la estrofa siguiente, B al puente. 1 a 9 va a esa parte. F1 oculta el texto, F2 negro, F3 el logo, F6 enciende o apaga el proyector.",
+  "back": "Space or down arrow go forward. Up arrow goes back. The / opens the search. C goes to the chorus, V to the next verse, B to the bridge. 1 to 9 goes to that part. F1 hides the text, F2 makes it black, F3 the logo, F6 turns the projector on or off.",
+  "why": "C, V and B as the phone page lists them."
  },
  "lost": {
   "text": "Conexión perdida",
