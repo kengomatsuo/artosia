@@ -13,6 +13,7 @@ mod actions;
 mod backdrops;
 mod bibles;
 mod data;
+mod firewall;
 mod languages;
 mod learning;
 mod link;
@@ -64,7 +65,7 @@ fn setup(s: &mut App, waker: Waker) {
         update::check(s.inbox.clone(), s.waker.clone(), false);
     }
     if s.settings.remote_on && s.folder.is_some() && !rune::is_headless() {
-        s.set_remote(true);
+        s.resume_remote();
     }
     // The first start on a library, and every practice run, begins with the tour. A headless
     // run never does unless a scene asks for it.
@@ -426,6 +427,15 @@ const SCENES: &[Scene] = &[
         s.sheet = Sheet::Screens;
     }),
     ("remote", |s| s.sheet = Sheet::Remote),
+    // The two states of the firewall step, drawn without a server: nothing here listens.
+    ("remote-firewall-asking", |s| {
+        s.firewall = firewall::Standing::Asking;
+        s.sheet = Sheet::Remote;
+    }),
+    ("remote-firewall-refused", |s| {
+        s.firewall = firewall::Standing::Refused;
+        s.sheet = Sheet::Remote;
+    }),
     ("announcements", |s| s.edit_announcements()),
     ("announcement-passage", |s| s.demo_notices("passage")),
     ("announcement-passage-no-bible", |s| s.demo_notices("passage-no-bible")),

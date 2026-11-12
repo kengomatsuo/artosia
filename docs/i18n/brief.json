@@ -7067,6 +7067,40 @@
   "notes": "The abbreviation PIN is fine to keep if people say it."
  },
  {
+  "key": "REMOTE_FIREWALL_ASKING",
+  "kind": "const",
+  "screen": "Phone remote dialog, a grey line under the switch row, above the address card.",
+  "moment": "The person has just switched the phone remote on, and the computer's own security box (a Windows window, which may ask for permission or for an administrator's password) is about to appear or is open.",
+  "role": "notice before a system box",
+  "does": "Prepares the person for one system window that asks permission, once, so that phones can reach the computer, without saying which button to press because a person who is not an administrator is asked for a password instead.",
+  "budget": 70,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "phone_remote"
+  ],
+  "notes": "One short sentence, no full stop. It must be true for a person who gets a password box and for one who gets a Yes button, so it names neither. It says permission is asked once. The system window comes from the operating system and carries the name of one of its own programs."
+ },
+ {
+  "key": "REMOTE_FIREWALL_REFUSED",
+  "kind": "const",
+  "screen": "Phone remote dialog, a line in the warning colour under the switch row, above the address card.",
+  "moment": "The system box was answered No, closed, or could not be shown, so the computer's firewall is still blocking phones, while the remote itself is running. Also the first thing seen when Artosia started with the remote already on and no permission given earlier.",
+  "role": "warning",
+  "does": "Warns that the computer's firewall is turning phones away, and says that switching the phone remote off and then on again brings the permission box back.",
+  "budget": 90,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "phone_remote"
+  ],
+  "notes": "Two short sentences. The first is the problem and the second the way out, which is a switch the person already knows, not a system setting. Do not blame the person."
+ },
+ {
   "key": "phones",
   "kind": "sentence",
   "screen": "Phone remote dialog, a line under the web address.",

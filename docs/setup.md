@@ -51,6 +51,8 @@ First start confirms the install: after `apply_on_start` the journal is in `Tria
 4. The registry key, last.
 5. The setup exe cannot delete itself while running, so a hidden `cmd /C ping -n 4 127.0.0.1 >nul & del /f /q "<exe>" & rmdir "<install>"` does it after exit (Velopack's method, `self_delete.rs`). `rmdir` has no `/s`, so a folder still holding data is never removed. Proved on this PC with the release build: the install folder was gone about six seconds after exit. rustup's delete-on-close copy was not tried.
 
+Uninstalling leaves the Windows Firewall rule `Artosia phone remote` behind, and `artosia-setup` is not changed to remove it: Artosia adds that rule the first time the phone remote is switched on (`crates/artosia/src/firewall.rs`), the rule names the full path of `artosia.exe`, and the setup keeps that path the same file across releases, so a later install finds the rule still valid. A person can delete it in Windows Defender Firewall, and switching Phone off and on adds it again.
+
 The tests uninstall with a byte-for-byte comparison of the data folder, with a file held open (uninstall stops, entry kept, second run finishes), and with a data folder inside the install folder.
 
 The install folder is not rune's state and log folder (`%LOCALAPPDATA%\artosia`): a test on the real places checks that neither is the other or inside the other, so an uninstall can never empty what the UI library writes.
@@ -141,4 +143,34 @@ reputation." So the setup is never rebuilt for a release that did not change it.
 `tools/publish.sh` fetches the last release's `Artosia-setup.exe` and uploads it again
 unchanged; it also builds a fresh one and says whether the bytes differ. `ARTOSIA_NEW_SETUP=1`
 ships the fresh one, and that file starts from no trust.
+
+## The download warning: what others ship (research, 2026-11-12)
+
+The owner downloaded the setup with Edge and was told it "isn't commonly downloaded". The
+signer of each program's newest Windows installer was read from the file itself (saved in
+`~/Shared/research/artosia-download-warning/`):
+
+| Program | Installer |
+|---|---|
+| OpenLP 3.1.7, Quelea 2024.0.1, ArtCraft 0.41.1 | Unsigned |
+| HandBrake 1.11.2 | Certum's open-source certificate, in one person's name |
+| FreeShow 1.6.7, Zed 1.28.1, Obsidian 1.15.0 | Microsoft's Artifact Signing (closed to Indonesia) |
+| OBS 33.0.1, VLC 3.0.24, Krita, RustDesk, LibreOffice, Audacity | A company's certificate |
+
+Microsoft's page on this warning says a signed file is still warned about "until reputation
+accumulates", that the prompt stops "once the file hash has sufficient download history",
+that this "can take several weeks and hundreds of clean installs", that there is no way to
+send a file in for review, and that only a Store-installed app is never warned about.
+
+ArtCraft is the case the owner pointed at: it stops warning although it is unsigned. Its
+setup of version 0.41.0 was downloaded 819,197 times and that of 0.41.1 15,684 times in five
+days (GitHub's own counts), which is the download history Microsoft's page describes. Its
+tracker still holds the open issue 962, "Windows Defender blocks install: Investigate how we
+can gain reputation / trust with Windows".
+
+What follows for Artosia: a person is warned at the first download only, because every later
+version arrives through the program's own updater and never through a browser. The warning
+on that first download lasts until the one setup file has been downloaded often enough,
+which is why the file is kept unchanged. The Microsoft Store is the channel with no warning;
+the owner wants a Store edition once the developer account exists (2026-11-12).
 

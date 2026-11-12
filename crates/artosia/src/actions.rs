@@ -13,8 +13,12 @@ use artosia_slides::look::{Background, Look};
 use rune::{TextEdit, Tx};
 
 use crate::link::OutputOptions;
+use crate::firewall::{self, Standing};
 use crate::state::{App, Arrived, Editor, HeardHit, Notices, OpenDeck, Sheet, Suggestion, TempoCount, Undo, entry_matches, section_starts, unix_now};
 use crate::strings as t;
+
+/// The phone remote's port, for the server and for its firewall rule.
+const REMOTE_PORT: u16 = 4780;
 
 /// Seconds between frames while something pulses on the beat: gentle enough for a slow PC.
 const BEAT_FRAME: f64 = 0.05;
@@ -1297,19 +1301,70 @@ impl App {
 
     // ---- Remote ----
 
+    /// The person's press of the Phone switch. Switched on, a missing firewall rule is asked
+    /// for first (`firewall.rs`) and the remote starts when that has answered.
     pub fn set_remote(&mut self, on: bool) {
         self.settings.remote_on = on;
         self.touch_settings();
         if !on {
+            self.remote_round += 1;
+            self.firewall = Standing::Idle;
             self.remote = None;
             return;
         }
-        if self.remote.is_some() {
+        if self.remote.is_some() || self.firewall.waiting() {
             return;
         }
         self.remote_pin = artosia_remote::new_pin();
+        self.remote_problem = None;
+        self.remote_round += 1;
+        if self.firewall_applies() {
+            self.firewall = Standing::Checking;
+            firewall::spawn(self.inbox.clone(), self.waker.clone(), self.remote_round, REMOTE_PORT, true);
+        } else {
+            self.start_remote();
+        }
+    }
+
+    /// The remote was left on: start it as it always was, and only look whether its firewall
+    /// rule is there. A Windows box nobody asked for while the room is being set up is worse
+    /// than a warning line in the Phone dialog.
+    pub fn resume_remote(&mut self) {
+        self.remote_pin = artosia_remote::new_pin();
+        self.start_remote();
+        if self.firewall_applies() {
+            self.remote_round += 1;
+            firewall::spawn(self.inbox.clone(), self.waker.clone(), self.remote_round, REMOTE_PORT, false);
+        }
+    }
+
+    /// Windows only, in a real window on a real library (so never practising or headless), and
+    /// the remote listens on the network.
+    fn firewall_applies(&self) -> bool {
+        firewall::applies(cfg!(windows) && !cfg!(test), self.folder.is_some() && !rune::is_headless(), false)
+    }
+
+    /// What the firewall step reported for a press of the switch.
+    fn firewall_answered(&mut self, round: u64, progress: firewall::Progress) {
+        if round != self.remote_round {
+            return;
+        }
+        match progress {
+            firewall::Progress::Asking => self.firewall = Standing::Asking,
+            firewall::Progress::Done(outcome) => {
+                let waiting = self.firewall.waiting();
+                self.firewall = if outcome == firewall::Outcome::Refused { Standing::Refused } else { Standing::Idle };
+                // The remote starts whether or not the rule was added.
+                if waiting && self.settings.remote_on && self.remote.is_none() {
+                    self.start_remote();
+                }
+            }
+        }
+    }
+
+    fn start_remote(&mut self) {
         let (tx, waker) = (self.remote_tx.clone(), self.waker.clone());
-        let started = RemoteServer::start(RemoteConfig { port: 4780, pin: self.remote_pin.clone(), local_only: false }, move |command| {
+        let started = RemoteServer::start(RemoteConfig { port: REMOTE_PORT, pin: self.remote_pin.clone(), local_only: false }, move |command| {
             let _ = tx.send(command);
             if let Some(wake) = &waker {
                 wake();
@@ -1637,6 +1692,7 @@ impl App {
                 Arrived::Model(result) => self.model_arrived(result),
                 Arrived::BetterModel(result) => self.better_arrived(result),
                 Arrived::RecordingsSaved(saved) => self.recordings_saved(saved),
+                Arrived::Firewall(round, progress) => self.firewall_answered(round, progress),
                 Arrived::Update(Ok(Some(version))) => self.say(t::update_ready(&version), None),
                 Arrived::Update(Ok(None)) => self.say(t::update_none(crate::update::VERSION), None),
                 Arrived::Update(Err(problem)) => self.say(problem, None),

@@ -342,6 +342,8 @@ pub enum Arrived {
     BetterModel(Result<(), String>),
     /// The recordings were packed into one file: its name, or that it could not be written.
     RecordingsSaved(Result<String, ()>),
+    /// The firewall step of one press of the Phone switch (the number of the press) and where it got to.
+    Firewall(u64, crate::firewall::Progress),
 }
 
 pub struct App {
@@ -493,6 +495,10 @@ pub struct App {
     pub remote: Option<RemoteServer>,
     pub remote_pin: String,
     pub remote_problem: Option<String>,
+    /// Where the firewall rule for the phone remote stands, and the press it answers: a late
+    /// answer for an earlier press is dropped.
+    pub firewall: crate::firewall::Standing,
+    pub remote_round: u64,
     /// What the phone last searched for, and what was found.
     pub remote_hits: (String, Vec<artosia_remote::RemoteHit>),
     pub remote_qr: Option<rune::Pixels>,
@@ -674,6 +680,8 @@ impl App {
             remote: None,
             remote_pin: String::new(),
             remote_problem: None,
+            firewall: Default::default(),
+            remote_round: 0,
             remote_hits: (String::new(), Vec::new()),
             remote_qr: None,
             identify: false,

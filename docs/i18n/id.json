@@ -1841,6 +1841,16 @@
   "back": "A phone on the same Wi-Fi can change the slides",
   "why": "Full sentence"
  },
+ "REMOTE_FIREWALL_ASKING": {
+  "text": "Windows akan minta izin sekali, agar ponsel bisa tersambung",
+  "back": "Windows will ask for permission once, so that phones can connect",
+  "why": "Names no button, since an administrator gets a password box; says once"
+ },
+ "REMOTE_FIREWALL_REFUSED": {
+  "text": "Firewall komputer menahan ponsel. Matikan lalu nyalakan Remote ponsel, izin ditanya lagi.",
+  "back": "The computer's firewall holds phones back. Switch the phone remote off and on, permission is asked again.",
+  "why": "Problem then the way out through a switch the person knows; no blame"
+ },
  "REMOTE_SCAN": {
   "text": "Scan kode ini dengan ponsel, atau ketik alamatnya",
   "back": "Scan this code with the phone, or type its address",

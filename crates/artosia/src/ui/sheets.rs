@@ -561,7 +561,8 @@ fn screens(s: &App, k: &Kit, layer: &mut Vec<El>) {
 }
 
 fn remote(s: &App, k: &Kit, layer: &mut Vec<El>) {
-    let on = s.remote.is_some();
+    // On while the firewall step is still answering: the remote starts after it.
+    let on = s.remote.is_some() || s.firewall != crate::firewall::Standing::Idle;
     let mut body = col().w_full().px(space::S4).pb(space::S4).gap(space::S3).child(
         row()
             .w_full()
@@ -573,7 +574,7 @@ fn remote(s: &App, k: &Kit, layer: &mut Vec<El>) {
                     .label(t::REMOTE_SWITCH())
                     .hide_label()
                     .on_toggle(|s: &mut App| {
-                        let on = s.remote.is_none();
+                        let on = !(s.remote.is_some() || s.firewall != crate::firewall::Standing::Idle);
                         s.set_remote(on);
                     })
                     .build(k)
@@ -581,6 +582,12 @@ fn remote(s: &App, k: &Kit, layer: &mut Vec<El>) {
                     .autofocus(),
             ),
     );
+    // What Windows is about to ask comes before its box; the warning replaces it when the answer was no.
+    match s.firewall {
+        crate::firewall::Standing::Asking => body = body.child(text(t::REMOTE_FIREWALL_ASKING()).font(type_::BODY).color(k.c.text_muted).wrap()),
+        crate::firewall::Standing::Refused => body = body.child(text(t::REMOTE_FIREWALL_REFUSED()).font(type_::BODY).color(theme::warn_ink()).wrap()),
+        _ => {}
+    }
     if let Some(problem) = &s.remote_problem {
         body = body.child(text(t::remote_failed(problem)).font(type_::BODY).color(theme::warn_ink()).wrap());
     }

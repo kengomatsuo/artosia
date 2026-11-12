@@ -86,8 +86,7 @@ must not: allowing a program through the firewall is a security decision.
 So `RemoteConfig` has `local_only`. With it the server listens on 127.0.0.1, which only this
 computer can reach. The tests and the example set it; the example listens on the network only
 with `--lan`, for trying a real phone, and says so in its first line. The operator leaves it
-off, so the first time Phone is switched on in a new copy of Artosia the owner will be asked
-once for `artosia.exe`, and Allow is the answer that lets a phone in.
+off. Since 2026-11-12 the operator does not leave the question to Windows: see the next section.
 
 Not confirmed from Microsoft's own pages: that a listener on 127.0.0.1 never raises the box.
 A search found only user reports saying so (a Stack Overflow thread, "avoid windows firewall
@@ -141,3 +140,25 @@ until those rules are deleted. Deleting them changes Windows' security settings 
 administrator, so it is the owner's to do and no session does it. The installed program sits
 in a folder of its own with no rule yet, so the blocks do not touch it.
 
+## The program's own firewall rule (2026-11-12, FW1)
+
+Windows saves a block when a person cancels its box, and for a person who is not an administrator
+whatever they press; a block beats an allow rule and is never asked again (Microsoft, "Windows
+Firewall rules"). So the first time Phone is switched on, `crates/artosia/src/firewall.rs` does
+what an installer would: it checks, without elevation, for a rule named `Artosia phone remote`
+for this program's own path and port 4780 (`netsh advfirewall firewall show rule ... verbose`,
+read by its values, never its translated labels). If it is missing, one elevated `cmd.exe`
+(the `runas` verb, hidden) deletes every rule for this path (the saved blocks) and adds one
+inbound allow rule: TCP, port 4780, every profile, remote address `localsubnet`. The work waits
+on a worker thread and the remote starts afterwards whether or not the rule was added. The
+Phone dialog says, before Windows' box, that Windows will ask for permission once (a standard
+user gets a password box and no Yes button, so the line names neither); if the rule is still
+missing afterwards it shows a warning line, and switching Phone off and on asks again.
+
+It never runs in practice, in a headless run, in a test, for a server that listens on this
+computer only, or off Windows, and it never asks at start: when Artosia starts with the phone
+remote saved as on, the remote starts as before, only the check runs and a missing rule shows
+the same warning line. The tests use an injected runner; the elevated command was never run on
+the development PC. Everything unconfirmed (the name the elevation box prints, the effect of the
+delete on single-profile blocks, a non-English Windows) is listed in
+`docs/plans/artosia/firewall.md` and `~/Shared/research/artosia-firewall/notes.md`.

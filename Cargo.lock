@@ -220,6 +220,7 @@ dependencies = [
  "serde",
  "serde_json",
  "ureq",
+ "windows",
  "winresource",
 ]
 
@@ -288,6 +289,7 @@ name = "artosia-setup"
 version = "0.1.0"
 dependencies = [
  "artosia-update",
+ "rune",
  "serde_json",
  "windows",
  "winresource",

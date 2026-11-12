@@ -998,6 +998,9 @@ text!(REMOTE_SWITCH, "Phone remote", "Remote HP");
 text!(REMOTE_SWITCH_DETAIL, "Let phones on this Wi-Fi change slides", "HP di Wi-Fi yang sama bisa ganti slide");
 text!(REMOTE_SCAN, "Scan the code, or open this address", "Pindai dengan kamera HP atau ketik alamatnya");
 text!(REMOTE_PIN, "PIN", "PIN");
+// The Indonesian argument of the next two is the English again, until a writer who never sees it fills `docs/i18n/id.json`.
+text!(REMOTE_FIREWALL_ASKING, "Windows will ask for permission once, so phones can connect", "Windows akan minta izin sekali, agar ponsel bisa tersambung");
+text!(REMOTE_FIREWALL_REFUSED, "Windows is not letting phones in. Switch Phone off and on to be asked again", "Firewall komputer menahan ponsel. Matikan lalu nyalakan Remote ponsel, izin ditanya lagi.");
 
 pub fn phones(count: usize) -> String {
     if let Some(text) = say("phones", None, Some(count), &[]) {
