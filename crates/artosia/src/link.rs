@@ -154,9 +154,10 @@ fn output_program() -> Option<PathBuf> {
 }
 
 /// Whether the projector program that plays video can start on this computer. On Windows it
-/// needs GStreamer's folder. Elsewhere it links the system's GStreamer, so the program itself
-/// is asked: started with `--probe` it ends at once, and without the libraries the system's
-/// loader ends it with an error before it runs.
+/// needs GStreamer's folder. Elsewhere it links a GStreamer outside itself, the system's on
+/// Linux and the app bundle's on a Mac, so the program itself is asked: started with
+/// `--probe` it ends at once, and without the libraries the system's loader ends it with an
+/// error before it runs.
 fn video_can_start(video: &std::path::Path) -> bool {
     if cfg!(windows) {
         return gstreamer_bin().is_some();

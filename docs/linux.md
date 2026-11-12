@@ -11,7 +11,7 @@ One file, `Artosia-linux-x86_64.tar.gz`, that unpacks to a folder `Artosia`:
 | `artosia` | The operator window. It starts the projector program from this same folder. |
 | `artosia-output` | The projector and stage windows, built with video. It links the distribution's GStreamer. |
 | `artosia-output-plain` | The same program built without video. The operator starts it when the one with video cannot start. |
-| `artosia-stream` | The streaming program. |
+| `artosia-stream` | The streaming program. It is packed and not offered: see "Not built". |
 | `share/applications/artosia.desktop`, `share/icons/hicolor` | The menu entry and the icons (`assets/brand/icons/linux`). |
 | `install.sh` | Writes the menu entry into `~/.local/share/applications` with this folder's full paths. Nothing needs an administrator. `--remove` takes it away. |
 | `README.txt` | How to start, which GStreamer packages video needs, how updates work, how to remove. |
@@ -86,11 +86,18 @@ Pictures are in `target/port/linux-windows/` on the release PC (not in the repos
 
 WSL shows a Linux window through a Windows process (`msrdc.exe`) that runs in session 0 on this PC, where nobody sees it and no screenshot reaches it; and the operator's connection to WSL's Wayland display was reset ("Connection reset by peer" in winit's Wayland event loop), which ended it. So the windows were opened on a virtual X11 screen (`Xvfb :99 -screen 0 1920x1080x24`, `WAYLAND_DISPLAY` unset) and pictured from inside Linux with ImageMagick's `import`; `xdotool` sent the keys. The projector did run on WSL's own display earlier in the day and played the video there too.
 
+## Not built
+
+- **Streaming.** The streaming program takes the projector's picture, the room's sound and the hardware
+  encoder from Windows' own parts of GStreamer (`d3d11screencapturesrc`, `wasapi2src`, `mfh264enc`),
+  so on Linux the Stream dialog says streaming is not available (`crates/artosia/src/stream.rs`
+  `available`). It needs a screen capture, a sound source and an encoder of Linux's own before it is offered.
+
 ## Not checked
 
 - A Linux desktop outside WSL: Wayland with a real compositor, a second screen for the projector, full-screen, the scale of a HiDPI screen.
 - Hardware decode through the `va` plugin on Intel or AMD graphics (only NVIDIA's decoder was there), and the software decoder (`avdec_h264`).
-- Cameras, the microphone and speech recognition at run time, streaming, the phone remote from a real phone, EasiSlides import.
+- Cameras, the microphone and speech recognition at run time, the phone remote from a real phone, EasiSlides import.
 - A computer without GStreamer: `artosia-output --probe` and the fall-back to `artosia-output-plain` were built and compiled, and never run on such a machine.
 - `install.sh` and the menu entry on a real desktop.
 - Package names on Fedora, Arch and others: the README gives Debian's and Ubuntu's and points at GStreamer's own page.
