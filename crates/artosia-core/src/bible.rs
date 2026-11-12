@@ -298,8 +298,12 @@ impl From<rusqlite::Error> for BibleError {
 
 /// One translation, held in memory.
 pub struct Bible {
-    /// Short code shown on slides and in pickers: "KJV".
+    /// The module's code, its file name in capitals: what settings and plans keep.
     pub code: String,
+    /// What a slide's caption calls it, the code people know: "TB". It is `code` unless the
+    /// module, or the repository file it came from, says another (`indonesian.sqlite3` is the
+    /// Terjemahan Baru).
+    pub short: String,
     pub name: String,
     pub language: String,
     books: Vec<BookInfo>,
@@ -385,7 +389,13 @@ impl Bible {
             }
         }
         let name = info("description");
-        Bible::from_parts(code, if name.is_empty() { None } else { Some(name) }, info("language"), names, verses)
+        let mut bible = Bible::from_parts(code, if name.is_empty() { None } else { Some(name) }, info("language"), names, verses)?;
+        // A module installed since 0.1.18 says its own short code.
+        let short = info("short_code");
+        if !short.trim().is_empty() {
+            bible.short = short.trim().to_string();
+        }
+        Ok(bible)
     }
 
     /// Builds a translation from verses already in canonical order.
@@ -420,7 +430,8 @@ impl Bible {
             }
         }
         let name = name.unwrap_or_else(|| code.clone());
-        Ok(Bible { code, name, language, books, verses, index: OnceLock::new() })
+        let short = crate::beblia::known_by_module(&code).map(|known| known.code.clone()).filter(|short| !short.is_empty()).unwrap_or_else(|| code.clone());
+        Ok(Bible { code, short, name, language, books, verses, index: OnceLock::new() })
     }
 
     pub fn books(&self) -> &[BookInfo] {

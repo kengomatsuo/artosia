@@ -205,6 +205,32 @@ How the list is built (`beblia.rs`, `crates/artosia/src/bibles.rs`):
 
 Limits: the files carry no book names, so a slide reads "John 3:16" in English even for an Indonesian Beblia Bible; typing "Yoh 3 16" works. A name table per language is the fix and was not built.
 
+## The name people know a Bible by (2026-11-12, owner-reported, board card NAMES1)
+
+The owner looked for the Terjemahan Baru and could not find it. Three things hid it:
+
+| What hid it | Where | What is true now |
+|---|---|---|
+| A row was named from its file name until it was picked, so `IndonesianBible.xml`, the Terjemahan Baru, was a row called "Indonesian" | the Bibles dialog and the first run | Every row shows the name its own file gives, with its short code beside it |
+| The first run's Bible page opened where the country page had been scrolled to, in the middle of the alphabet, with the Indonesian Bibles out of view | the first run, in a real window only | A page with no row to reveal starts at its top |
+| The first run's Bible page had no filter, and the dialog's filter did not take the keys when the dialog opened | both | Both have the filter, it takes what is typed at once, and it matches short codes and other names |
+
+**The names file.** `tools/make-beblia-names.py` lists the repository's root with the git-tree API, fetches the first 4,096 bytes of each `*Bible.xml` with a range request and writes `crates/artosia-core/assets/beblia-names.json`, one entry per file: `{"name": ..., "code": ...}`. The name is the `<bible>` tag's `translation` attribute, or `language`, or `name` when the file uses those (162 of the 1,048 files do). The code is the last part of the bible.com address the file gives as its `link` (`.../MAT.4.TB` gives `TB`), so it is the code YouVersion shows for that translation. Run on 2026-11-12: 1,048 files, 1,045 named, 809 with a code, 102 KB. Three files give no name (`EnglishLSBBible.xml`, `Karakalpak2022Bible.xml`, `MakondeShiBible.xml`) and keep the label made from their file name. The file holds names and codes only, no verse and no copyright line; the copyright line is still read from the file itself when a row is picked. `beblia::known(file)` and `beblia::known_by_module(code)` read it. A file added to the repository after a release shows its file-name label until it is picked; run the tool again before a release.
+
+**eBible's rows.** An eBible id is the language's three letters and then the translation's own (`indayt`), so `ebible::short_code` gives `AYT`, and the catalogue's `shortTitle` column is kept as another name.
+
+**What the filter matches** (`ebible::grouped`): every typed word must be found in the language's English name, its own name, the title, the short code, the other names (eBible's short title; for a file of the repository its file-name label and stem, so "Indonesian BIS" still finds what is now shown as the Alkitab dalam Bahasa Indonesia Masa Kini), the id, the description or the language code. A language's heading keeps its own name ("bahasa Indonesia") when the filter leaves only the repository's files under it.
+
+**On a row** the code is drawn in small strong type before the size or the extent (`ui::bibles::code_label`), and left out when the title already holds it ("Indonesian AGS (...)").
+
+**The first run's Bible page** uses the dialog's own filter model (`Desk::query`), cleared whenever the dialog or the first run opens. Typing picks the first Bible the filter shows, so "tb" and Enter is the whole answer; words that match nothing give back the Bible that was picked before the typing began, never one the page no longer shows; a cleared filter keeps a picked Bible in view. The field has the keys when the page opens, as on the country page.
+
+**On a slide** the caption under a verse is `Bible::short`: the module's own `short_code` row (written when a Bible is installed, from 0.1.18), else the names file's code for a module that came from the repository (`indonesian.sqlite3` is `TB` without being installed again), else the module's code. An eBible module installed before 0.1.18 keeps its id as caption (`INDAYT`) until it is downloaded again.
+
+**In the main search** an installed Bible is also found by its short code and its file's own name (`palette.rs`).
+
+**Checked** on 2026-11-12: `beblia::tests::a_bible_is_found_by_its_own_name_its_code_and_its_file_name`, `ebible::tests::a_short_code_and_a_second_title_are_read_and_found`, `palette::tests::an_installed_bible_is_found_by_its_short_code_and_its_own_name`, `ui::onboard::bible_filter_tests`; renders of both screens light, dark and Indonesian; and real keys on the live catalogue in a window on an empty scratch library: the page opened on the Indonesian group, "tb" picked the Terjemahan Baru, "terjemahan baru" and "bimk" found theirs, "qqqq" showed the empty state with the earlier pick kept, and "tb" and "ags" filtered the Bibles dialog opened from the search. No Bible was downloaded in the check, so the caption on a slide is covered by the tests only.
+
 ## Sources
 
 All read on 2026-11-11.

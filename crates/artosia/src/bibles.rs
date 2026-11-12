@@ -266,7 +266,7 @@ fn demo_list() -> Vec<Translation> {
         new_books: new,
         ..Translation::default()
     };
-    let file = |id: &str, language: &str, title: &str, size: u64| Translation {
+    let file = |id: &str, language: &str, title: &str, code: &str, size: u64| Translation {
         source: Source::Beblia,
         file: format!("{id}Bible.xml"),
         size,
@@ -275,6 +275,7 @@ fn demo_list() -> Vec<Translation> {
         language: language.into(),
         language_english: language.into(),
         title: title.into(),
+        code: code.into(),
         ..Translation::default()
     };
     vec![
@@ -286,9 +287,9 @@ fn demo_list() -> Vec<Translation> {
         item("demof", "ccc", "Ccc", "Czech", "Czech made up Bible", "Made up for a screenshot.", 39, 27),
         item("demog", "ccc", "Ccc", "Czech", "Czech second made up Bible", "Made up for a screenshot.", 0, 27),
         item("demoh", "ddd", "Ddd", "Danish", "Danish made up Bible", "Made up for a screenshot.", 39, 27),
-        file("DemoIndonesianOne", "Indonesian", "Indonesian Contoh", 5_400_000),
-        file("DemoIndonesianTwo", "Indonesian", "Indonesian Buatan", 1_450_000),
-        file("DemoBasqueOne", "Basque", "Basque Beblia made up", 3_900_000),
+        file("DemoIndonesianOne", "Indonesian", "Indonesian (Alkitab Terjemahan Contoh)", "TC", 5_400_000),
+        file("DemoIndonesianTwo", "Indonesian", "Indonesian ABC (Alkitab Buatan Contoh)", "ABC", 1_450_000),
+        file("DemoBasqueOne", "Basque", "Basque Beblia made up", "", 3_900_000),
     ]
 }
 
@@ -335,6 +336,13 @@ impl App {
 
     pub fn open_bibles(&mut self) {
         self.sheet = Sheet::Bibles;
+        // The first run's Bible page types into the same filter: the dialog opens on the whole list.
+        if !self.desk.query.text.is_empty() {
+            self.desk.query.replace_text("");
+            self.desk.rows_for = None;
+        }
+        // A person opens this to look for a Bible: the filter takes what is typed at once.
+        self.desk.query.focused = true;
         if matches!(self.desk.catalogue, Catalogue::Idle | Catalogue::Failed(_)) && !rune::is_headless() {
             self.start_catalogue();
         }
@@ -421,12 +429,12 @@ impl App {
         std::thread::spawn(move || {
             let result = match item.source {
                 Source::Ebible => get_with_progress(&ebible::download_url(&item.id), 64 * 1024 * 1024, &progress).and_then(|bytes| {
-                    let details = Details { code: item.id.clone(), name: item.title.clone(), language: item.language_english.clone(), copyright: item.copyright.clone() };
+                    let details = Details { code: item.id.clone(), name: item.title.clone(), language: item.language_english.clone(), copyright: item.copyright.clone(), short: item.code.clone() };
                     bible_file::install_bytes(&format!("{}_usfx.zip", item.id), &bytes, &target, &details).map_err(|error| error.to_string())
                 }),
                 // The name and the copyright line are the file's own: the details leave them empty.
                 Source::Beblia => get_with_progress(&beblia::download_url(&item.file), 64 * 1024 * 1024, &progress).and_then(|bytes| {
-                    let details = Details { code: item.id.clone(), language: item.language_english.clone(), ..Details::default() };
+                    let details = Details { code: item.id.clone(), language: item.language_english.clone(), short: item.code.clone(), ..Details::default() };
                     bible_file::install_bytes(&item.file, &bytes, &target, &details).map_err(|error| error.to_string())
                 }),
             };

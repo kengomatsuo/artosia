@@ -38,6 +38,11 @@ pub struct Translation {
     pub language: String,
     pub language_english: String,
     pub title: String,
+    /// The short code people call it by ("TB", "AYT"), when the source gives one; shown beside
+    /// the title and matched by the filter.
+    pub code: String,
+    /// Other names it is found by, for the filter only: a second title, the file's own label.
+    pub also: String,
     pub description: String,
     pub copyright: String,
     pub old_books: u16,
@@ -101,6 +106,17 @@ fn tidy(text: &str) -> String {
     text.split_whitespace().collect::<Vec<_>>().join(" ")
 }
 
+/// The short code inside an eBible id: the id is the language's three letters and then the
+/// translation's own letters (`indayt` is AYT). Empty when the id is the language alone.
+pub fn short_code(id: &str, language_code: &str) -> String {
+    let language: String = language_code.chars().take(3).collect();
+    let rest = match id.strip_prefix(language.as_str()) {
+        Some(rest) if language.len() == 3 => rest,
+        _ => return String::new(),
+    };
+    rest.chars().filter(|c| c.is_alphanumeric()).collect::<String>().to_uppercase()
+}
+
 /// The translations eBible says anyone may redistribute and download, in the file's order.
 /// A file without the columns this needs gives an empty list.
 pub fn parse_catalogue(csv: &str) -> Vec<Translation> {
@@ -111,6 +127,7 @@ pub fn parse_catalogue(csv: &str) -> Vec<Translation> {
     let get = |row: &[String], at: Option<usize>| at.and_then(|at| row.get(at)).map(|value| tidy(value)).unwrap_or_default();
     let (code, local, english) = (column("languageCode"), column("languageName"), column("languageNameInEnglish"));
     let (title, description, copyright) = (column("title"), column("description"), column("Copyright"));
+    let short_title = column("shortTitle");
     let (old, new, downloadable) = (column("OTbooks"), column("NTbooks"), column("downloadable"));
     let mut out = Vec::new();
     for row in rows {
@@ -123,11 +140,13 @@ pub fn parse_catalogue(csv: &str) -> Vec<Translation> {
         }
         let books = |at: Option<usize>| get(&row, at).parse::<u16>().unwrap_or(0);
         out.push(Translation {
-            id: translation_id,
+            id: translation_id.clone(),
             language_code: get(&row, code),
             language: get(&row, local),
             language_english: get(&row, english),
             title: get(&row, title),
+            code: short_code(&translation_id, &get(&row, code)),
+            also: get(&row, short_title),
             description: get(&row, description),
             copyright: get(&row, copyright),
             old_books: books(old),
@@ -173,14 +192,14 @@ pub struct Group {
     pub items: Vec<usize>,
 }
 
-/// Groups the translations that hold every word of `query` (in a language name, a title or an
-/// id), the languages of `ranking` (`ranking(country)`) first in its order, then A to Z. Within a
+/// Groups the translations that hold every word of `query` (in a language name, a title, a
+/// short code, another name or an id), the languages of `ranking` (`ranking(country)`) first in its order, then A to Z. Within a
 /// language: whole Bibles first.
 pub fn grouped(list: &[Translation], query: &str, ranking: &[String]) -> Vec<Group> {
     let words: Vec<String> = normalize(query).split_whitespace().map(str::to_string).collect();
     let mut groups: Vec<(Option<usize>, Group)> = Vec::new();
     for (at, item) in list.iter().enumerate() {
-        let hay = normalize(&format!("{} {} {} {} {} {}", item.language_english, item.language, item.title, item.id, item.description, item.language_code));
+        let hay = normalize(&format!("{} {} {} {} {} {} {} {}", item.language_english, item.language, item.title, item.code, item.also, item.id, item.description, item.language_code));
         if !words.iter().all(|word| hay.contains(word.as_str())) {
             continue;
         }
@@ -190,7 +209,15 @@ pub fn grouped(list: &[Translation], query: &str, ranking: &[String]) -> Vec<Gro
             Some((_, group)) => group.items.push(at),
             None => {
                 let rank = rank_of(&item.language_code, ranking);
-                groups.push((rank, Group { language: name, local: item.language.clone(), of_country: rank.is_some(), items: vec![at] }));
+                // A file of the repository names its language in English only: the heading takes
+                // the language's own name from another translation of it, shown or not, so it
+                // reads the same whatever the filter leaves under it.
+                let local = if item.language == name {
+                    list.iter().find(|other| other.language_english == name && other.language != name && !other.language.is_empty()).map_or_else(|| item.language.clone(), |other| other.language.clone())
+                } else {
+                    item.language.clone()
+                };
+                groups.push((rank, Group { language: name, local, of_country: rank.is_some(), items: vec![at] }));
             }
         }
     }
@@ -276,6 +303,19 @@ mod tests {
         assert_eq!(grouped(&list, "zed bible", &[]).len(), 1);
         assert_eq!(grouped(&list, "xyz1", &[]).len(), 1);
         assert!(grouped(&list, "nothing like it", &[]).is_empty());
+    }
+
+    /// An eBible id is the language's three letters and the translation's own: the rest is the
+    /// code people know, and a second title in the file is another name to find it by.
+    #[test]
+    fn a_short_code_and_a_second_title_are_read_and_found() {
+        assert_eq!((short_code("indayt", "ind"), short_code("ind", "ind"), short_code("eng-kjv2006", "eng"), short_code("xyz1", "abc")), ("AYT".to_string(), String::new(), "KJV2006".to_string(), String::new()));
+        let csv = "languageCode,translationId,languageName,languageNameInEnglish,title,shortTitle,description,Redistributable,Copyright,OTbooks,NTbooks,downloadable\n\
+                   ind,indzed,Bahasa Buatan,Indonesian,Alkitab Buatan,Made Up Short Name,x,True,Made up,39,27,True\n";
+        let list = parse_catalogue(csv);
+        assert_eq!((list[0].code.as_str(), list[0].also.as_str()), ("ZED", "Made Up Short Name"));
+        assert_eq!(grouped(&list, "zed", &[]).len(), 1);
+        assert_eq!(grouped(&list, "short name", &[]).len(), 1);
     }
 
     #[test]

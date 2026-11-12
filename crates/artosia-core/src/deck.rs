@@ -419,8 +419,8 @@ pub fn passage_deck(bible: &Bible, reference: &Reference, second: Option<&Bible>
         };
         let label = span_label(bible, &span);
         let codes = match second {
-            Some(other) => format!("{} / {}", bible.code, other.code),
-            None => bible.code.clone(),
+            Some(other) => format!("{} / {}", bible.short, other.short),
+            None => bible.short.clone(),
         };
         slides.push(Slide {
             kind: SlideKind::Scripture,

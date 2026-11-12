@@ -236,7 +236,10 @@ pub fn beblia_header(xml: &str) -> Option<(String, String)> {
                     let value = start.try_get_attribute(name).ok().flatten().and_then(|attribute| attribute.normalized_value(quick_xml::XmlVersion::Implicit1_0).ok().map(|value| value.into_owned()));
                     value.unwrap_or_default().split_whitespace().collect::<Vec<_>>().join(" ")
                 };
-                return Some((read("translation"), read("status")));
+                // Most files say `translation` and `status`; 162 of 1,048 say `language` or `name`
+                // for the first and some say `info` or `Copyright` for the second (read 2026-11-12).
+                let first = |names: &[&str]| names.iter().map(|name| read(name)).find(|value| !value.is_empty()).unwrap_or_default();
+                return Some((first(&["translation", "language", "name"]), first(&["status", "info", "Copyright"])));
             }
             Event::Eof => return None,
             _ => {}
@@ -446,6 +449,8 @@ pub struct Details {
     pub language: String,
     /// The copyright line, kept in the module so the Look dialog can show it.
     pub copyright: String,
+    /// The short code people call it by ("TB"), kept in the module for a slide's caption.
+    pub short: String,
 }
 
 #[derive(Clone, Debug, PartialEq)]
@@ -478,6 +483,9 @@ pub fn write_mybible(path: &Path, details: &Details, parsed: &Parsed) -> Result<
     let copyright = if details.copyright.is_empty() { &parsed.copyright } else { &details.copyright };
     for (key, value) in [("description", name.as_str()), ("language", language.as_str()), ("detailed_info", copyright.as_str())] {
         tx.execute("insert into info (name, value) values (?1, ?2)", [key, value])?;
+    }
+    if !details.short.trim().is_empty() {
+        tx.execute("insert into info (name, value) values ('short_code', ?1)", [details.short.trim()])?;
     }
     for (book, long, short) in &parsed.names {
         tx.execute("insert into books (book_number, short_name, long_name) values (?1, ?2, ?3)", rusqlite::params![mybible_number(*book), short, long])?;
@@ -770,6 +778,10 @@ mod tests {
         // The first kilobyte is enough to read what the file says about itself.
         assert_eq!(beblia_header(&BEBLIA[..300]), Some(("Made Up (Alkitab Buatan)".to_string(), "Made up status & line".to_string())));
         assert_eq!(beblia_header("<usfx></usfx>"), None);
+        // Some files of the repository name themselves in `language` or `name`, and give their
+        // copyright line in `info` or `Copyright`.
+        assert_eq!(beblia_header("<bible language=\"Made (Second Form)\" info=\"Made up info\">"), Some(("Made (Second Form)".to_string(), "Made up info".to_string())));
+        assert_eq!(beblia_header("<bible name=\"Made Third\" Copyright=\"Made up holder\">"), Some(("Made Third".to_string(), "Made up holder".to_string())));
         assert!(matches!(parse_beblia("<usfx></usfx>"), Err(ImportError::Unsupported)));
         assert!(matches!(parse_beblia("<bible translation=\"x\"></bible>"), Err(ImportError::Empty)));
     }

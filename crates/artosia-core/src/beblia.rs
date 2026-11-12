@@ -5,7 +5,11 @@
 //! is named `<Language><Edition>Bible.xml`: `IndonesianAGSBible.xml`, `Afrikaans1983Bible.xml`,
 //! `ChineseSimplifiedBible.xml`. The language is the first capitalised word and the rest is the
 //! edition. The file itself carries the translation's real name and its copyright line in its
-//! `<bible>` tag (`bible_file::beblia_header`), which is preferred once it is known.
+//! `<bible>` tag (`bible_file::beblia_header`). A file name says too little (`IndonesianBible.xml`
+//! is the Terjemahan Baru), so the names and short codes of the files read on the day of a
+//! release ship in `assets/beblia-names.json` (`tools/make-beblia-names.py`) and a row shows
+//! its file's own name from the first frame; a file newer than the release shows its file name
+//! until its header is read.
 //! Read 2026-11-11: 1,048 XML files, no licence file, a README that says "Use at your own
 //! discretion, no need to ask for permission, no warranty's" (docs/bibles.md).
 
@@ -22,6 +26,32 @@ pub fn download_url(file: &str) -> String {
 
 /// The first bytes of the file, enough to read the `<bible>` tag.
 pub const HEADER_BYTES: u64 = 4096;
+
+/// What a file says about itself, read when the release was made.
+#[derive(Clone, Debug, Default, PartialEq, Eq, serde::Deserialize)]
+pub struct Known {
+    /// The name the file gives its translation: "Indonesian (Alkitab Terjemahan Baru)".
+    pub name: String,
+    /// The short code people call it by, from the file's own link: "TB".
+    #[serde(default)]
+    pub code: String,
+}
+
+fn names() -> &'static std::collections::HashMap<String, Known> {
+    static NAMES: std::sync::OnceLock<std::collections::HashMap<String, Known>> = std::sync::OnceLock::new();
+    NAMES.get_or_init(|| serde_json::from_str(include_str!("../assets/beblia-names.json")).unwrap_or_default())
+}
+
+/// The name and code of a file of the repository, when the release knew the file.
+pub fn known(file: &str) -> Option<&'static Known> {
+    names().get(file)
+}
+
+/// The same for a Bible already downloaded, whose module is named by the file's stem in small
+/// letters (`indonesian.sqlite3` came from `IndonesianBible.xml`).
+pub fn known_by_module(code: &str) -> Option<&'static Known> {
+    names().iter().find(|(file, _)| file.trim_end_matches(".xml").trim_end_matches("Bible").eq_ignore_ascii_case(code)).map(|(_, known)| known)
+}
 
 /// ISO 639-3 codes of the languages of Indonesia that have a file here, so they sort with the
 /// other languages of Indonesia (`ebible::ranking`). Names are the file names' words.
@@ -99,6 +129,10 @@ pub fn parse_tree(json: &str) -> Vec<Translation> {
         .filter_map(|entry| {
             let (language, edition) = language_and_edition(&entry.path)?;
             let stem = entry.path.trim_end_matches(".xml").trim_end_matches("Bible").to_string();
+            // What the file name alone says, kept as another name so a person who knew the row
+            // by it still finds it.
+            let label = if edition.is_empty() { language.clone() } else { format!("{language} {edition}") };
+            let known = known(&entry.path);
             Some(Translation {
                 source: Source::Beblia,
                 // The id is the file's stem, which cannot meet an eBible id: those are lowercase.
@@ -106,7 +140,9 @@ pub fn parse_tree(json: &str) -> Vec<Translation> {
                 language_code: language_code(&language).to_string(),
                 language: language.clone(),
                 language_english: language.clone(),
-                title: if edition.is_empty() { language } else { format!("{language} {edition}") },
+                title: known.map_or_else(|| label.clone(), |known| known.name.clone()),
+                code: known.map(|known| known.code.clone()).filter(|code| !code.is_empty()).unwrap_or_else(|| edition.clone()),
+                also: format!("{label} {stem}"),
                 file: entry.path,
                 size: entry.size,
                 ..Translation::default()
@@ -147,11 +183,34 @@ mod tests {
         let list = parse_tree(TREE);
         let files: Vec<&str> = list.iter().map(|item| item.file.as_str()).collect();
         assert_eq!(files, ["IndonesianBible.xml", "IndonesianAGSBible.xml", "Afrikaans1983Bible.xml", "ChineseSimplifiedNewBible.xml", "AmharicDawroDFBEBible.xml"]);
-        assert_eq!(list[0].title, "Indonesian");
-        assert_eq!(list[1].title, "Indonesian AGS");
+        // A file the release read shows the name and the short code the file gives itself.
+        assert_eq!((list[0].title.as_str(), list[0].code.as_str()), ("Indonesian (Alkitab Terjemahan Baru)", "TB"));
+        assert_eq!((list[1].title.as_str(), list[1].code.as_str()), ("Indonesian AGS (Alkitab Gratis untuk Semua)", "AGS"));
         assert_eq!((list[1].id.as_str(), list[1].size, list[1].language_code.as_str()), ("IndonesianAGS", 1_400_000, "ind"));
+        // One that came after the release shows what its file name says.
+        let later = parse_tree(r#"{"tree":[{"path":"ZzzmadeNew2099Bible.xml","type":"blob","size":9}]}"#);
+        assert_eq!((later[0].title.as_str(), later[0].code.as_str()), ("Zzzmade New 2099", "New 2099"));
         assert!(list.iter().all(|item| item.source == Source::Beblia && item.scope() == 4));
         assert!(parse_tree("not json").is_empty());
+    }
+
+    /// The Terjemahan Baru's file is `IndonesianBible.xml`: a person finds it by the name it
+    /// gives itself, by the code people call it by, and by what its file name says.
+    #[test]
+    fn a_bible_is_found_by_its_own_name_its_code_and_its_file_name() {
+        use crate::ebible::grouped;
+        let list = parse_tree(TREE);
+        let found = |query: &str| -> Vec<&str> { grouped(&list, query, &[]).iter().flat_map(|group| group.items.iter().map(|at| list[*at].file.as_str())).collect() };
+        assert_eq!(found("terjemahan baru"), ["IndonesianBible.xml"]);
+        assert!(found("tb").contains(&"IndonesianBible.xml"));
+        assert_eq!(found("gratis"), ["IndonesianAGSBible.xml"]);
+        assert_eq!(found("ags"), ["IndonesianAGSBible.xml"]);
+        assert_eq!(found("dawro"), ["AmharicDawroDFBEBible.xml"]);
+        // A Bible already downloaded is known by its module's name.
+        assert_eq!(known_by_module("indonesian").map(|known| known.code.as_str()), Some("TB"));
+        assert_eq!(known_by_module("no such module"), None);
+        // The names file holds nearly every file of the repository.
+        assert!(names().len() > 1000, "{} names", names().len());
     }
 
     #[test]
@@ -171,5 +230,8 @@ mod tests {
         let ids: Vec<&str> = groups[0].items.iter().map(|at| list[*at].id.as_str()).collect();
         assert_eq!(ids, ["indmade", "Indonesian", "IndonesianAGS"]);
         assert_eq!(groups.len(), 4);
+        // A filter that leaves only the repository's files keeps the language's own name.
+        let narrowed = grouped(&list, "ags", &crate::ebible::ranking("ID"));
+        assert_eq!((narrowed[0].language.as_str(), narrowed[0].local.as_str()), ("Indonesian", "Bahasa Buatan"));
     }
 }

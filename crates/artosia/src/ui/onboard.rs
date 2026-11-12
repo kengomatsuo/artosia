@@ -60,7 +60,13 @@ pub struct Work {
     focus: Option<&'static str>,
     /// The screens last told to the machine, so a poll tells it again only on a change.
     screens: (usize, Option<usize>),
+    /// The Bible that was picked, and whether a person picked it, when typing into the Bible
+    /// page's filter began: a filter that matches nothing gives it back.
+    before_filter: Option<(Option<(String, String)>, bool)>,
 }
+
+/// What `Work::scroll` holds when a page's list is to be read from its top, no row revealed.
+const TOP: &str = "";
 
 /// Reads every song of a folder: EasiSlides' own data when it holds that, else OpenLyrics files.
 fn read_songs(folder: &Path) -> Read {
@@ -96,6 +102,11 @@ impl App {
 
     fn begin_onboarding(&mut self, fresh: bool) {
         self.sheet = Sheet::None;
+        // The Bible page shares the Bibles dialog's filter: it starts on the whole list.
+        if !self.desk.query.text.is_empty() {
+            self.desk.query.replace_text("");
+            self.desk.rows_for = None;
+        }
         self.close_palette();
         self.tour = None;
         let offered: Vec<String> = crate::languages::listed().map(|(_, language)| language.code.to_string()).collect();
@@ -132,10 +143,12 @@ impl App {
             Page::Language => ("onboard-list", Some(row_to_reveal(crate::languages::listed().map(|(_, language)| language.code), &onboard.language))),
             Page::Country => ("onboard-filter", Some(row_to_reveal(onboard.visible_countries().iter().map(|(code, _)| *code), &onboard.country))),
             // The Bible picked for the person is the list's first row, under its language's
-            // heading: only a Bible the person chose is brought into view.
-            Page::Bible => ("onboard-list", onboard.bible.as_ref().filter(|_| onboard.bible_chosen).map(|(id, _)| format!("bible-{id}"))),
+            // heading: only a Bible the person chose is brought into view. Every page's list is
+            // one element, so a page with no row to reveal asks for its top (`TOP`); without
+            // that the Bible page opened where the country page was scrolled to.
+            Page::Bible => ("onboard-filter", Some(onboard.bible.as_ref().filter(|_| onboard.bible_chosen).map(|(id, _)| format!("bible-{id}")).unwrap_or_default())),
             Page::Songs => ("onboard-list", None),
-            Page::Sing => ("onboard-filter", None),
+            Page::Sing => ("onboard-filter", Some(TOP.to_string())),
             Page::Screens | Page::Ready | Page::Done => ("onboard-primary", None),
         };
         self.onboard_work.focus = Some(focus);
@@ -356,6 +369,46 @@ impl App {
         }
     }
 
+    /// The Bible page's filter changed: the list is arranged for it, and a pick the filter no
+    /// longer shows gives way to the first Bible it does show.
+    fn onboard_bible_query_changed(&mut self) {
+        if self.desk.query.text.trim().is_empty() {
+            self.onboard_work.before_filter = None;
+        } else if self.onboard_work.before_filter.is_none() {
+            self.onboard_work.before_filter = self.onboard.as_ref().map(|onboard| (onboard.bible.clone(), onboard.bible_chosen));
+        }
+        self.desk.rows_for = None;
+        self.desk.arrange();
+        let shown: Vec<String> = self.desk.rows.iter().filter_map(|row| match row {
+            Row::Translation(at) => self.desk.translations().get(*at).map(|item| item.id.clone()),
+            Row::Language { .. } => None,
+        }).collect();
+        let picked = self.onboard.as_ref().and_then(|onboard| onboard.bible.as_ref()).map(|(id, _)| id.clone());
+        let kept = picked.as_ref().is_some_and(|id| shown.contains(id));
+        let chosen = self.onboard.as_ref().is_some_and(|onboard| onboard.bible_chosen);
+        if let Some(first) = shown.first()
+            && !kept
+        {
+            let first = first.clone();
+            self.onboard_pick_bible(&first);
+        }
+        // Nothing matches: the pick followed the letters typed so far and now stands on a Bible
+        // nobody can see, so the one from before the typing comes back.
+        if shown.is_empty()
+            && let Some((bible, chosen)) = self.onboard_work.before_filter.clone()
+            && let Some(onboard) = self.onboard.as_mut().filter(|onboard| !onboard.locked())
+        {
+            (onboard.bible, onboard.bible_chosen) = (bible, chosen);
+            self.onboard_sync_pick();
+        }
+        // A list the filter changed is read from its top, unless it still shows a Bible a
+        // person picked: that one stays in view.
+        self.onboard_work.scroll = Some(match picked {
+            Some(id) if kept && chosen => format!("bible-{id}"),
+            _ => TOP.to_string(),
+        });
+    }
+
     fn onboard_query_changed(&mut self) {
         if let Some(onboard) = self.onboard.as_mut() {
             onboard.query_changed();
@@ -421,6 +474,12 @@ impl App {
                 }
                 self.onboard_query_changed();
             }
+            // Typing anywhere on the Bible page filters it too.
+            Key::Text(typed) if !focused && self.onboard.as_ref().is_some_and(|onboard| onboard.page == Page::Bible) && typed.chars().all(|c| !c.is_control()) && typed != " " => {
+                self.desk.query.insert(typed);
+                self.desk.query.focused = true;
+                self.onboard_bible_query_changed();
+            }
             // On the languages page the space bar ticks the language the arrows rest on, and any other typing filters.
             Key::Text(typed) if !focused && self.onboard.as_ref().is_some_and(|onboard| onboard.page == Page::Sing) && typed.chars().all(|c| !c.is_control()) => {
                 if typed == " " {
@@ -466,6 +525,10 @@ impl App {
             match &self.desk.catalogue {
                 Catalogue::Ready(list) if !onboard.catalogue_ready => {
                     onboard.retarget(list);
+                    // The list arrived after the page opened: it is read from its top too.
+                    if onboard.page == Page::Bible && !onboard.bible_chosen {
+                        self.onboard_work.scroll = Some(TOP.to_string());
+                    }
                     changed = true;
                 }
                 Catalogue::Failed(why) if onboard.catalogue_failed.as_deref() != Some(why.as_str()) => {
@@ -499,8 +562,10 @@ impl App {
             if let Some(focus) = self.onboard_work.focus.take() {
                 tx.focus(focus, false);
             }
-            if let Some(key) = self.onboard_work.scroll.take() {
-                tx.scroll_into_view(key);
+            match self.onboard_work.scroll.take() {
+                Some(key) if key == TOP => tx.scroll_to_y("onboard-list", 0.0),
+                Some(key) => tx.scroll_into_view(key),
+                None => {}
             }
             if std::mem::take(&mut self.onboard_work.want_folder) {
                 let options = rune::FileDialogOptions { title: t::ONBOARD_SONGS_FOLDER().to_string(), ..Default::default() };
@@ -610,7 +675,7 @@ fn row_to_reveal<'a>(codes: impl Iterator<Item = &'a str>, picked: &str) -> Stri
 
 /// The scrolling box of a long list. It is one Tab stop; arrows move the pick inside it.
 fn list_box(k: &Kit, inside: El) -> El {
-    col().key("onboard-list").role("listbox").focusable(true).w_full().grow(1.0).min_h(0.0).scroll(ScrollSpec { stick_bottom: false }).scroll_edge_fade(theme::size::FADE).child(inside).scroll_bar(k)
+    col().key("onboard-list").role("listbox").focusable(true).w_full().grow(1.0).min_h(0.0).scroll(ScrollSpec { stick_bottom: false }).scroll_edge_fade(theme::size::FADE).scroll_margin(theme::size::FADE).child(inside).scroll_bar(k)
 }
 
 fn languages_page(o: &Onboard, k: &Kit) -> El {
@@ -739,6 +804,7 @@ fn bible_page(s: &App, o: &Onboard, k: &Kit) -> El {
             }
             return col().w_full().grow(1.0).min_h(0.0).child(lines);
         }
+        Catalogue::Ready(_) if s.desk.rows.is_empty() => col().key("onboard-bibles-none").w_full().h(BIBLE_ROW).center_y().px(space::S4).child(crate::ui::widgets::wrapped(t::nothing_found(s.desk.query.text.trim())).font(type_::BODY).color(k.c.text_muted).wrap()),
         Catalogue::Ready(_) => col().key("onboard-bibles").w_full().growth(GrowthSpec::default()).virtual_rows(
             s.desk.rows.len(),
             BIBLE_ROW,
@@ -753,7 +819,22 @@ fn bible_page(s: &App, o: &Onboard, k: &Kit) -> El {
     // The picked Bible's own copyright line shows before anything downloads (docs/bibles.md).
     let notice = s.desk.picked_translation().map(|item| copyright_line(s, item)).unwrap_or_default();
     let notice = col().w_full().h(56.0).gap(2.0).child(text(t::BIBLES_COPYRIGHT()).font(type_::SMALL_STRONG).color(k.c.text_muted)).child(text(notice).font(type_::SMALL).color(k.c.text_base).max_lines(2));
-    col().w_full().grow(1.0).min_h(0.0).gap(space::S3).child(list_box(k, inside)).child(notice)
+    // The same filter as the Bibles dialog: a language, a name or a short code such as TB.
+    let field = TextInput::new(&s.desk.query)
+        .width(None)
+        .height(38.0)
+        .label(t::BIBLES_SEARCH())
+        .placeholder(t::BIBLES_SEARCH())
+        .leading_icon(&rune_kit::glyphs::SEARCH)
+        .on_edit(|s: &mut App| &mut s.desk.query)
+        .on_change(|s: &mut App, _: &mut Tx| s.onboard_bible_query_changed())
+        .on_key(|s: &mut App, ev: &KeyEvent, tx: &mut Tx| match ev.key {
+            Key::Down | Key::Up | Key::PageDown | Key::PageUp | Key::Enter | Key::Escape => s.onboard_key(ev, tx),
+            _ => false,
+        })
+        .build(k)
+        .key("onboard-filter");
+    col().w_full().grow(1.0).min_h(0.0).gap(space::S3).child(field).child(list_box(k, inside)).child(notice)
 }
 
 fn bible_line(s: &App, k: &Kit, at: usize) -> El {
@@ -785,7 +866,11 @@ fn bible_line(s: &App, k: &Kit, at: usize) -> El {
             if on {
                 line = line.fill(theme::accent().alpha(0.12)).border(1.0, theme::accent());
             }
-            line = line.child(radio(k, on)).child(text(title).font(if on { type_::BODY_STRONG } else { type_::BODY }).color(k.c.text_base).truncate().grow(1.0).min_w(0.0)).child(muted(k, extent(item)));
+            line = line
+                .child(radio(k, on))
+                .child(text(title.clone()).font(if on { type_::BODY_STRONG } else { type_::BODY }).color(k.c.text_base).truncate().grow(1.0).min_w(0.0))
+                .child(crate::ui::bibles::code_label(k, item, &title))
+                .child(muted(k, extent(item)));
             if installed(s, &item.id) {
                 line = line.child(state_pill(t::BIBLES_INSTALLED(), k.c.layer_03, k.c.text_base));
             }
@@ -1075,6 +1160,60 @@ impl App {
             _ => String::new(),
         });
         self.onboard = Some(onboard);
+    }
+}
+
+#[cfg(test)]
+mod bible_filter_tests {
+    use super::*;
+
+    /// The first run's Bible page on the made-up list, with a Bible already picked for the person.
+    fn page() -> App {
+        let mut app = App::practice();
+        app.demo_onboard("bible");
+        app
+    }
+
+    fn typed(app: &mut App, words: &str) {
+        app.desk.query.replace_text(words);
+        app.onboard_bible_query_changed();
+    }
+
+    fn picked(app: &App) -> Option<String> {
+        app.onboard.as_ref().and_then(|onboard| onboard.bible.as_ref().map(|(id, _)| id.clone()))
+    }
+
+    /// A short code picks its Bible; words that match nothing give back the Bible from before
+    /// the typing, never one the page no longer shows.
+    #[test]
+    fn typing_a_code_picks_its_bible_and_nothing_found_gives_the_first_pick_back() {
+        let mut app = page();
+        let before = picked(&app);
+        assert!(before.is_some());
+        typed(&mut app, "tc");
+        assert_eq!(picked(&app).as_deref(), Some("DemoIndonesianOne"));
+        typed(&mut app, "tcqq");
+        assert!(app.desk.rows.is_empty());
+        assert_eq!(picked(&app), before);
+        // Cleared after a pick made through the filter: that pick stays.
+        typed(&mut app, "abc");
+        assert_eq!(picked(&app).as_deref(), Some("DemoIndonesianTwo"));
+        assert_eq!(app.onboard_work.scroll.as_deref(), Some(TOP));
+        typed(&mut app, "");
+        assert_eq!(picked(&app).as_deref(), Some("DemoIndonesianTwo"));
+        // The whole list is back, and the Bible picked through the filter is kept in view.
+        assert_eq!(app.onboard_work.scroll.as_deref(), Some("bible-DemoIndonesianTwo"));
+    }
+
+    /// The dialog and the first run share one filter: each opens on the whole list.
+    #[test]
+    fn the_bibles_dialog_opens_on_the_whole_list_with_its_filter_taking_the_keys() {
+        let mut app = page();
+        typed(&mut app, "tc");
+        app.onboard = None;
+        app.open_bibles();
+        assert!(app.desk.query.text.is_empty());
+        assert!(app.desk.query.focused);
     }
 }
 

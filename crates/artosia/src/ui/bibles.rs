@@ -105,7 +105,8 @@ fn line(s: &App, k: &Kit, at: usize) -> El {
                 .focusable(true).on_key(crate::ui::widgets::enter_key)
                 .cursor(rune::Cursor::Pointer)
                 .child(el().w(space::S2))
-                .child(text(title).font(if picked { type_::BODY_STRONG } else { type_::BODY }).color(k.c.text_base).truncate().grow(1.0))
+                .child(text(title.clone()).font(if picked { type_::BODY_STRONG } else { type_::BODY }).color(k.c.text_base).truncate().grow(1.0))
+                .child(code_label(k, item, &title))
                 .child(text(extent(item)).font(type_::SMALL).color(k.c.text_muted))
                 .child(el().w(64.0).child(text(source_name(item.source)).font(type_::SMALL).color(k.c.text_muted).truncate()));
             if installed(s, &item.id) {
@@ -198,6 +199,16 @@ fn own_file(k: &Kit) -> El {
             .child(btn(t::BIBLES_CHOOSE_FILE()).icon(&icons::FOLDER).focusable().build(k, |s, _| s.desk.want_file = true).key("bible-file"))
             .child(text(t::BIBLES_FILE_HINT()).font(type_::SMALL).color(k.c.text_muted).grow(1.0).truncate()),
     )
+}
+
+/// The short code people call a Bible by ("TB"), drawn beside its title unless the title says
+/// it already; nothing for a Bible without one.
+pub fn code_label(k: &Kit, item: &Translation, title: &str) -> El {
+    let code = item.code.trim();
+    if code.is_empty() || title.to_lowercase().contains(&code.to_lowercase()) {
+        return el();
+    }
+    text(code.to_string()).font(type_::SMALL_STRONG).color(k.c.text_muted)
 }
 
 pub fn view(s: &App, k: &Kit, layer: &mut Vec<El>) {
