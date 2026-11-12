@@ -113,11 +113,13 @@ A copy built to call itself 0.0.9 was started from a scratch folder on a scratch
 
 The same copy, then at 0.1.0, updated to 0.1.1 the same way: 77 files, the `gstreamer` folder among them, each matching the release's hash afterwards. From 0.1.1 to 0.1.2 it fetched only the three programs that changed and left the `gstreamer` folder alone; all 77 files matched again.
 
+The released 0.1.16, copied into a scratch folder and started minimised on a scratch library with the projector off (2026-11-12), staged 0.1.17 beside itself in 18 seconds, three files; its next start came back as 0.1.17 with the same arguments and left nothing in the `update` folder.
+
 Not tried: a start that fails after the swap on a real release (the rollback is covered by the local tests), and a computer that has never run Artosia, where SmartScreen may ask about the unsigned programs.
 
 ## What is still the owner's
 
 - **A backup of the signing key.** See above.
-- **Whether to buy a code-signing certificate.** Prices not checked: the [Azure Artifact Signing pricing page](https://azure.microsoft.com/en-us/pricing/details/artifact-signing/) rendered "$-" for both plans through the fetch tool, and the vendors' own pages for other certificates were not read. Velopack's page says the Azure service costs roughly US$10 a month; that is second-hand. A certificate is not needed for this crate to work.
+- **No certificate (owner's decision, 2026-11-12).** The direct download stays unsigned, and the Microsoft Store edition is the download Windows does not warn about ([docs/store.md](../../docs/store.md)).
 - **Install folder.** The app must be able to write to its own folder, so not `Program Files` unless it runs as administrator.
 - **Limit.** If the new exe cannot start at all (a missing DLL, before `main`), nothing can roll it back; a tiny separate launcher would be needed for that. Not built.

@@ -77,7 +77,16 @@ Partner Center's page takes a package only through its own file picker or a drop
 that cannot use the picker hands the file to the page's own uploader in parts no larger than
 9 MB, joined in the page and checked against the file's SHA-256 before the uploader gets it.
 
-Not done: the Windows App Certification Kit was not run, and nothing was installed from the
+The draft was brought to 0.1.17 the same day, before it was ever submitted: `tools/store-package.sh 0.1.17`
+made the package (version `1.1.17.0`, the black icon on its tiles), the packaged trial answered as above, and
+the page took it in nine parts. The page marks the older package to leave when a higher one of the same
+identity arrives, and it leaves on Save. Its progress line stayed on "Analyzing package" with Save greyed out
+long after the package was listed as accepted; opening the page again showed both packages and a live Save.
+`tools/store-shots.sh` was run again and the pictures compared by hash with the uploaded ones: only the first
+run's picture differed (its row of dots has an eighth), so that one picture was replaced in each of the ten
+listings through its own tile, caption kept. The notes for the testers now name the first run's eight questions.
+
+Not done: the Windows App Certification Kit was not run (it asks for an administrator, which a session never answers), and nothing was installed from the
 Store itself, so the firewall rule and the read-only install folder are proven only by the
 loose registration.
 
