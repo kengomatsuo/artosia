@@ -8,7 +8,7 @@
 //! What a person sees is the setup's own window (`window.rs`), run as a child of the same exe
 //! (`--show-window`) so that a window that cannot open (no usable graphics adapter, the UI library
 //! failing, an abort) leaves the parent to run the task dialogs (`dialog.rs`) instead and an old
-//! PC still installs. `--dialogs` goes straight to the dialogs, `--lang id` or `--lang en` picks
+//! PC still installs. `--dialogs` goes straight to the dialogs, `--lang <code>` (`id`, `ja`, `zh-Hant`) picks
 //! the language the way the Windows display language otherwise does, and `--window-fail` makes
 //! the window process give up at once, to prove that fallback.
 
@@ -38,7 +38,6 @@ mod launch {
     use artosia_setup::places::Places;
     use artosia_setup::strings::{Key, Language, Strings};
     use artosia_update::TrustedKeys;
-    use windows::Win32::Globalization::GetUserDefaultUILanguage;
 
     use crate::{dialog, window};
     use artosia_setup::flow::{Mode, run_front};
@@ -62,12 +61,10 @@ mod launch {
             Err(error) => return log(&format!("no folders: {error}"), BROKEN),
         };
         let Ok(self_exe) = std::env::current_exe() else { return log("no path for this exe", BROKEN) };
-        // SAFETY: a plain query with no arguments.
-        let language = match args.iter().position(|arg| arg == "--lang").and_then(|at| args.get(at + 1)).map(String::as_str) {
-            Some("id") => Language::Indonesian,
-            Some("en") => Language::English,
-            _ => Language::from_lang_id(unsafe { GetUserDefaultUILanguage() }),
-        };
+        // `--lang <code>` names a language; otherwise the first of Windows' display languages
+        // that the setup speaks.
+        let asked = args.iter().position(|arg| arg == "--lang").and_then(|at| args.get(at + 1));
+        let language = asked.and_then(|code| Language::named(code)).unwrap_or_else(Language::of_this_computer);
         let run = Run { places, strings: Strings::new(language), silent: has("--silent"), self_exe };
         if let Some(at) = args.iter().position(|arg| arg == "--refresh") {
             // Silent: the app runs this once after the first confirmed start of a new version.

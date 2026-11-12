@@ -145,6 +145,10 @@ svg.ic { width: 22px; height: 22px; flex: 0 0 auto; fill: none; stroke: currentC
 .field { width: 100%; height: 48px; border-radius: 12px; border: 0; background: var(--deep); padding: 0 14px; font-size: 1rem; }
 .field::placeholder { color: var(--faint); opacity: 1; }
 .field:focus { outline: 2px solid var(--blue); }
+.lang-pick { appearance: none; -webkit-appearance: none; color: var(--text); font: inherit; font-weight: 600; padding-right: 40px; }
+[data-lang-switch] { position: relative; }
+[data-lang-switch]::after { content: ""; position: absolute; right: 18px; top: 50%; width: 8px; height: 8px; margin-top: -7px; border: solid var(--muted); border-width: 0 2px 2px 0; transform: rotate(45deg); pointer-events: none; }
+.lang-pick option { color: #111; background: #fff; }
 #search-hint { padding: 0 16px 8px; }
 #hits { flex: 1 1 0; }
 .hit { display: flex; align-items: center; gap: 12px; min-height: 84px; padding: 10px 14px; background: var(--row); border-bottom: 1px solid var(--line); }
@@ -208,7 +212,7 @@ svg.ic { width: 22px; height: 22px; flex: 0 0 auto; fill: none; stroke: currentC
     <input id="pin" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="one-time-code" data-i-aria="pin"></div>
   <p id="pair-error" role="alert"></p>
   <button id="pair-btn" class="cta press" type="button" data-i="connect">Connect</button>
-  <div class="seg" data-lang-switch></div>
+  <div data-lang-switch></div>
 </main>
 
 <main id="remote" hidden>
@@ -285,7 +289,7 @@ svg.ic { width: 22px; height: 22px; flex: 0 0 auto; fill: none; stroke: currentC
       </section>
       <section class="group">
         <h2 data-i="language"></h2>
-        <div class="seg" data-lang-switch></div>
+        <div data-lang-switch></div>
       </section>
       <section class="group" id="keys-card">
         <h2 data-i="keys_title"></h2>
@@ -394,6 +398,24 @@ function addLanguage(code, name, table) {
   LANGS.push([code, name]);
   STR[code] = table;
   if (Array.isArray(table.labels)) LABELS[code] = table.labels.map(([pattern, to]) => [new RegExp(pattern, "i"), to]);
+  else if (table["label.verse"]) LABELS[code] = labelRules(table);
+}
+/* A table names the parts of a song in plain keys. A numbered part follows label.numbered,
+   where {0} is the name and {1} the number. */
+function labelRules(table) {
+  const part = (key, english) => table["label." + key] || english;
+  const numbered = (name) => (table["label.numbered"] || "{0} {1}").replace("{0}", name).replace("{1}", "$1");
+  return [
+    [/^Verse (\d+)$/i, numbered(part("verse", "Verse"))],
+    [/^Chorus$/i, part("chorus", "Chorus")],
+    [/^Chorus (\d+)$/i, numbered(part("chorus", "Chorus"))],
+    [/^Pre-?chorus$/i, part("pre_chorus", "Pre-chorus")],
+    [/^Pre-?chorus (\d+)$/i, numbered(part("pre_chorus", "Pre-chorus"))],
+    [/^Bridge$/i, part("bridge", "Bridge")],
+    [/^Bridge (\d+)$/i, numbered(part("bridge", "Bridge"))],
+    [/^Intro$/i, part("intro", "Intro")],
+    [/^(Ending|Outro)$/i, part("ending", "Ending")]
+  ];
 }
 /*EXTRA_LANGUAGES*/
 
@@ -436,13 +458,33 @@ function nice(label) {
   return label;
 }
 
+/* The listed language that fits a tag as a phone writes it ("zh-TW", "pt-PT"): the same code
+   first, Chinese by its script, then any language with the same first part. The rule of
+   crates/artosia-locale, kept the same here. */
+function fit(tag) {
+  const wanted = String(tag || "").replace(/_/g, "-").toLowerCase();
+  const codes = LANGS.map(([c]) => c);
+  const same = codes.find((c) => c.toLowerCase() === wanted);
+  if (same) return same;
+  const parts = wanted.split("-");
+  const first = parts[0] === "in" ? "id" : parts[0];
+  if (first === "zh") {
+    const names = (list) => parts.slice(1).some((p) => list.includes(p));
+    const script = !names(["hans"]) && names(["hant", "tw", "hk", "mo"]) ? "zh-hant" : "zh-hans";
+    const chinese = codes.find((c) => c.toLowerCase() === script);
+    if (chinese) return chinese;
+  }
+  return codes.find((c) => c.toLowerCase().split("-")[0] === first) || null;
+}
 function pickLang() {
   const saved = store(LANG_KEY, true);
-  const known = (code) => LANGS.some(([c]) => c === code);
-  if (known(saved)) return saved;
-  let base = ((navigator.languages && navigator.languages[0]) || navigator.language || "en").toLowerCase().split("-")[0];
-  if (base === "in") base = "id";
-  return known(base) ? base : "en";
+  if (LANGS.some(([c]) => c === saved)) return saved;
+  const asked = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || "en"];
+  for (const tag of asked) {
+    const code = fit(tag);
+    if (code) return code;
+  }
+  return "en";
 }
 
 function applyLang() {
@@ -450,16 +492,19 @@ function applyLang() {
   $$("[data-i]").forEach((el) => { el.textContent = t(el.dataset.i); });
   $$("[data-i-ph]").forEach((el) => { el.placeholder = t(el.dataset.iPh); });
   $$("[data-i-aria]").forEach((el) => { el.setAttribute("aria-label", t(el.dataset.iAria)); });
+  // Ten languages do not fit a row of buttons on a phone: one picker, each in its own name.
   $$("[data-lang-switch]").forEach((box) => {
     box.replaceChildren();
+    const pick = document.createElement("select");
+    pick.className = "field lang-pick"; pick.dataset.keep = "";
+    pick.setAttribute("aria-label", t("language"));
     for (const [code, name] of LANGS) {
-      const b = document.createElement("button");
-      b.type = "button"; b.className = "seg-btn press" + (lang === code ? " on" : "");
-      b.textContent = name; b.dataset.keep = "";
-      b.setAttribute("aria-pressed", String(lang === code));
-      b.addEventListener("click", () => setLang(code));
-      box.append(b);
+      const option = document.createElement("option");
+      option.value = code; option.textContent = name; option.lang = code; option.selected = lang === code;
+      pick.append(option);
     }
+    pick.addEventListener("change", () => setLang(pick.value));
+    box.append(pick);
   });
   resetRenderCache();
   paintScreens();

@@ -1,0 +1,3476 @@
+{
+ "SEARCH_PLACEHOLDER": {
+  "text": "曲名や聖書箇所を入力",
+  "back": "Type a song title or Bible passage",
+  "why": "No command verb, only an invitation"
+ },
+ "SEARCH_SONGS": {
+  "text": "曲名か歌詞の一行を入力",
+  "back": "Type a song title or one line of the words",
+  "why": "歌詞 is the usual word for song words"
+ },
+ "SEARCH_RESULTS": {
+  "text": "検索結果",
+  "back": "Search results",
+  "why": "Plain noun"
+ },
+ "SCOPE_LABEL": {
+  "text": "検索する範囲",
+  "back": "Range to search",
+  "why": "Noun phrase"
+ },
+ "SCOPE_ALL": {
+  "text": "すべて",
+  "back": "All",
+  "why": "Short"
+ },
+ "SCOPE_SONGS": {
+  "text": "曲",
+  "back": "Songs",
+  "why": "Same word as everywhere for song"
+ },
+ "SCOPE_BIBLE": {
+  "text": "聖書",
+  "back": "Bible",
+  "why": "Ordinary name"
+ },
+ "HINT_OPEN": {
+  "text": "開く",
+  "back": "Open",
+  "why": "Same as the Open button"
+ },
+ "HINT_SECTIONS": {
+  "text": "パートを探す",
+  "back": "Find a part",
+  "why": "パート is the section word"
+ },
+ "SEARCH_SECTIONS": {
+  "text": "サビ、バース2、歌詞の一行",
+  "back": "Chorus, verse 2, a line of the words",
+  "why": "Same section words as the editor"
+ },
+ "IN_PLAN": {
+  "text": "式次第に追加済み",
+  "back": "Already added to the plan",
+  "why": "Past-state, no click invite"
+ },
+ "PLAN_CHIP": {
+  "text": "式次第に追加済み",
+  "back": "Already added to the plan",
+  "why": "States a fact about the song"
+ },
+ "KIND_LOOK": {
+  "text": "デザイン",
+  "back": "Design",
+  "why": "Same as the Design button"
+ },
+ "KIND_BIBLE": {
+  "text": "聖書の訳",
+  "back": "Bible translation",
+  "why": "訳 is how churches name a version"
+ },
+ "COUNTDOWN_DETAIL": {
+  "text": "会場のプロジェクターに終了まで映ります",
+  "back": "Shown on the projector for the room until it ends",
+  "why": "映す is the one verb for showing to the room"
+ },
+ "MESSAGE_DETAIL": {
+  "text": "会場の人へのメッセージとして映します",
+  "back": "Shown as a message to the people in the room",
+  "why": "メッセージ for the typed notice"
+ },
+ "countdown_for": {
+  "text": {
+   "other": "{minutes}分のカウントダウン"
+  },
+  "back": "Countdown of {minutes} minutes",
+  "why": "分 needs no plural form"
+ },
+ "BIBLE_LOADING": {
+  "text": "聖書を準備しています",
+  "back": "Getting the Bible ready",
+  "why": "Progress, no ellipsis"
+ },
+ "OLD_TESTAMENT": {
+  "text": "旧約聖書",
+  "back": "Old Testament",
+  "why": "Church name"
+ },
+ "NEW_TESTAMENT": {
+  "text": "新約聖書",
+  "back": "New Testament",
+  "why": "Church name"
+ },
+ "pick_chapter": {
+  "text": "{book}の章を選択",
+  "back": "Pick a chapter of {book}",
+  "why": "Heading form"
+ },
+ "SONGS_EMPTY": {
+  "text": "曲がまだありません",
+  "back": "There are no songs yet",
+  "why": "Statement"
+ },
+ "nothing_found": {
+  "text": "「{query}」に合う結果はありません",
+  "back": "No results match \"{query}\"",
+  "why": "Japanese corner quotes"
+ },
+ "new_song_called": {
+  "text": "新しい曲「{title}」を作る",
+  "back": "Make a new song \"{title}\"",
+  "why": "Corner quotes"
+ },
+ "songs": {
+  "text": {
+   "other": "{count}曲"
+  },
+  "back": "{count} songs",
+  "why": "Counter 曲"
+ },
+ "slides": {
+  "text": {
+   "other": "{count}スライド"
+  },
+  "back": "{count} slides",
+  "why": "Bare noun fits the width"
+ },
+ "chapters": {
+  "text": {
+   "other": "{count}章"
+  },
+  "back": "{count} chapters",
+  "why": "Counter 章"
+ },
+ "verses": {
+  "text": {
+   "other": "{count}節"
+  },
+  "back": "{count} verses",
+  "why": "Counter 節 for Bible verses"
+ },
+ "CMD_NEW_SONG": {
+  "text": "新しい曲",
+  "back": "New song",
+  "why": "Also the editor heading"
+ },
+ "CMD_NEW_SONG_DETAIL": {
+  "text": "歌詞を入力、または貼り付け",
+  "back": "Type or paste the words",
+  "why": "Noun-style, no full stop"
+ },
+ "CMD_PASTE_SONG": {
+  "text": "コピーした歌詞を曲にする",
+  "back": "Make the copied words a song",
+  "why": "Plain action"
+ },
+ "CMD_PASTE_SONG_DETAIL": {
+  "text": "ウェブや文書の歌詞を先にコピーしてから選びます",
+  "back": "Copy the words from a web page or document first, then pick this",
+  "why": "Polite sentence"
+ },
+ "CMD_ANNOUNCEMENTS": {
+  "text": "お知らせ",
+  "back": "Announcements",
+  "why": "お知らせ for the whole set, カード for one"
+ },
+ "CMD_ANNOUNCEMENTS_DETAIL": {
+  "text": "集まる間に、お知らせが順番に映ります",
+  "back": "While people gather, the announcements show one after another",
+  "why": "映す again"
+ },
+ "CMD_HEADING": {
+  "text": "見出しを追加",
+  "back": "Add a heading",
+  "why": "見出し is the plain word for a divider"
+ },
+ "CMD_HEADING_DETAIL": {
+  "text": "賛美とみことば",
+  "back": "Praise and the Word",
+  "why": "Same as the fresh plan's dividers"
+ },
+ "CMD_LOOKS": {
+  "text": "デザイン",
+  "back": "Design",
+  "why": "Loan word everyone uses"
+ },
+ "CMD_LOOKS_DETAIL": {
+  "text": "背景、文字の見た目、教会のロゴ",
+  "back": "Background, look of the words, church logo",
+  "why": "ロゴ for the emblem"
+ },
+ "CMD_SETTINGS": {
+  "text": "設定",
+  "back": "Settings",
+  "why": "Standard"
+ },
+ "CMD_SETTINGS_DETAIL": {
+  "text": "表示言語・聖書の訳・キー一覧・ガイド",
+  "back": "Display language, Bible translations, key list, guide",
+  "why": "表示言語 for window language"
+ },
+ "CMD_SCREENS": {
+  "text": "モニター",
+  "back": "Monitors",
+  "why": "モニター is the hardware noun"
+ },
+ "CMD_SCREENS_DETAIL": {
+  "text": "会場用とステージ用のモニターを選びます",
+  "back": "Pick the monitor for the room and the one for the stage",
+  "why": "ステージ for the band"
+ },
+ "CMD_REMOTE": {
+  "text": "スマホリモコン",
+  "back": "Phone remote",
+  "why": "リモコン is what volunteers say"
+ },
+ "CMD_REMOTE_DETAIL": {
+  "text": "同じWi-Fiのスマホでスライドを操作できます",
+  "back": "Phones on the same Wi-Fi can control the slides",
+  "why": "Full sentence"
+ },
+ "CMD_IMPORT_FOLDER": {
+  "text": "フォルダから曲を取り込む",
+  "back": "Import songs from a folder",
+  "why": "取り込む is the import verb"
+ },
+ "CMD_IMPORT_FOLDER_DETAIL": {
+  "text": "OpenLyrics形式のファイル",
+  "back": "OpenLyrics-format files",
+  "why": "Proper name kept"
+ },
+ "IMPORT_FOLDER_EMPTY": {
+  "text": "このフォルダに読み込める曲がありません",
+  "back": "This folder holds no songs that can be read",
+  "why": "Toast, no full stop"
+ },
+ "CMD_IMPORT": {
+  "text": "EasiSlidesから取り込む",
+  "back": "Import from EasiSlides",
+  "why": "Not move"
+ },
+ "CMD_IMPORT_DETAIL": {
+  "text": "このパソコンにあるEasiSlidesの曲と聖書",
+  "back": "The songs and Bibles EasiSlides keeps on this computer",
+  "why": "パソコン for the computer"
+ },
+ "CMD_STREAM": {
+  "text": "配信と録画",
+  "back": "Broadcast and recording",
+  "why": "配信 is the stream noun"
+ },
+ "CMD_STREAM_DETAIL": {
+  "text": "プロジェクターの映像を配信か保存します",
+  "back": "Broadcast or save the projector's picture",
+  "why": "映像 for picture"
+ },
+ "BTN_STREAM": {
+  "text": "配信",
+  "back": "Broadcast",
+  "why": "One word"
+ },
+ "BTN_LISTEN": {
+  "text": "聴き取り",
+  "back": "Listening",
+  "why": "Verbal noun, not an order"
+ },
+ "STREAM_HINT": {
+  "text": "プロジェクターと同じ映像を、会場の音とともに配信します。",
+  "back": "Broadcasts the same picture as the projector, with the sound of the room.",
+  "why": "Sentence with full stop"
+ },
+ "STREAM_ADDRESS": {
+  "text": "配信先のアドレス",
+  "back": "Address to broadcast to",
+  "why": "Noun phrase"
+ },
+ "STREAM_KEY": {
+  "text": "配信キー",
+  "back": "Broadcast key",
+  "why": "Key as a code"
+ },
+ "STREAM_RECORD": {
+  "text": "配信を録画して保存",
+  "back": "Record and save the broadcast",
+  "why": "Reads as what the switch turns on"
+ },
+ "STREAM_RECORD_HINT": {
+  "text": "このパソコン内、Artosiaのデータと同じ場所",
+  "back": "On this computer, where Artosia keeps its data",
+  "why": "No full stop"
+ },
+ "BTN_STREAM_START": {
+  "text": "配信を開始",
+  "back": "Start broadcast",
+  "why": "Names what starts"
+ },
+ "BTN_STREAM_STOP": {
+  "text": "配信を終了",
+  "back": "End broadcast",
+  "why": "Opposite of 開始"
+ },
+ "STREAM_STARTING": {
+  "text": "配信を開始しています",
+  "back": "Starting the broadcast",
+  "why": "State"
+ },
+ "STREAM_RECONNECTING": {
+  "text": "接続が切れました。自動で再接続しています",
+  "back": "The connection dropped. Reconnecting by itself",
+  "why": "Two clauses"
+ },
+ "STREAM_STOPPING": {
+  "text": "配信を終了しています",
+  "back": "Ending the broadcast",
+  "why": "State"
+ },
+ "STREAM_MISSING": {
+  "text": "このArtosiaには配信の機能が入っていません",
+  "back": "This Artosia does not include the broadcast part",
+  "why": "No bug or error word"
+ },
+ "STREAM_NOTHING": {
+  "text": "配信先のアドレスを入れるか、録画をオンにしてください",
+  "back": "Enter an address or switch recording on",
+  "why": "Says what to do"
+ },
+ "stream_failed": {
+  "text": "配信を開始できませんでした：{problem}",
+  "back": "Could not start the broadcast: {problem}",
+  "why": "Reason after a colon"
+ },
+ "stream_live": {
+  "text": {
+   "none_lost": "配信中 {time}",
+   "some_lost": {
+    "other": "配信中 {time}、{dropped}コマ欠落"
+   }
+  },
+  "back": "Broadcasting {time} / Broadcasting {time}, {dropped} frames lost",
+  "why": "コマ counts frames"
+ },
+ "CMD_LISTEN": {
+  "text": "聴き取り",
+  "back": "Listening",
+  "why": "Same as the top-bar button"
+ },
+ "CMD_LISTEN_DETAIL": {
+  "text": "音から曲や聖句を見つけて候補に出します",
+  "back": "Finds a song or verse from the sound and offers it",
+  "why": "候補 for suggestion"
+ },
+ "LISTEN_SWITCH": {
+  "text": "会場の音を聴く",
+  "back": "Listen to the room",
+  "why": "Action beside a switch"
+ },
+ "LISTEN_HINT": {
+  "text": "提案するだけです。勝手に映すことはありません",
+  "back": "It only suggests. It never shows anything on its own",
+  "why": "Kept firm"
+ },
+ "LISTEN_MICROPHONE": {
+  "text": "マイク",
+  "back": "Microphone",
+  "why": "One word"
+ },
+ "LISTEN_DEFAULT": {
+  "text": "パソコンの標準マイク",
+  "back": "The computer's standard microphone",
+  "why": "標準 for main"
+ },
+ "LISTEN_SYSTEM_AUDIO": {
+  "text": "パソコンの再生音",
+  "back": "The computer's playback sound",
+  "why": "Phrase"
+ },
+ "LISTEN_LANGUAGE": {
+  "text": "会場の言語",
+  "back": "Language of the room",
+  "why": "Not the window language"
+ },
+ "LISTEN_INDONESIAN": {
+  "text": "インドネシア語",
+  "back": "Indonesian",
+  "why": "Language name"
+ },
+ "LISTEN_ENGLISH": {
+  "text": "英語",
+  "back": "English",
+  "why": "Language name"
+ },
+ "LISTEN_LEVEL": {
+  "text": "音の大きさ",
+  "back": "Loudness",
+  "why": "Meter heading"
+ },
+ "LISTEN_HEARD": {
+  "text": "聴き取った言葉",
+  "back": "Words caught",
+  "why": "Past sense"
+ },
+ "LISTEN_PART_LISTENING": {
+  "text": "聴き取り",
+  "back": "Listening",
+  "why": "Pairs with 録音"
+ },
+ "LISTEN_PART_RECORDINGS": {
+  "text": "録音",
+  "back": "Recordings",
+  "why": "Plain noun"
+ },
+ "REC_SWITCH": {
+  "text": "録音を残す",
+  "back": "Keep recordings",
+  "why": "Same noun as the tab"
+ },
+ "REC_HINT": {
+  "text": "聴いた短い音と推測の一覧を、このパソコン内に保存します。",
+  "back": "Saves the short sounds heard and the list of guesses on this computer.",
+  "why": "Says what and where"
+ },
+ "REC_NONE": {
+  "text": "まだありません",
+  "back": "None yet",
+  "why": "Short"
+ },
+ "rec_kept": {
+  "text": "{size}を保存",
+  "back": "{size} saved",
+  "why": "Size and one word"
+ },
+ "REC_OPEN": {
+  "text": "フォルダを開く",
+  "back": "Open folder",
+  "why": "Verb and object"
+ },
+ "REC_MOVE": {
+  "text": "保存先を変更",
+  "back": "Change save place",
+  "why": "Pairs with open"
+ },
+ "REC_SAVE": {
+  "text": "1つのファイルで保存",
+  "back": "Save as one file",
+  "why": "States one file"
+ },
+ "REC_SAVING": {
+  "text": "保存中",
+  "back": "Saving",
+  "why": "Ongoing"
+ },
+ "REC_DELETE": {
+  "text": "すべて削除",
+  "back": "Delete all",
+  "why": "Verb and word for all"
+ },
+ "REC_DELETED": {
+  "text": "録音をすべて削除しました",
+  "back": "All recordings were deleted",
+  "why": "Past tense"
+ },
+ "rec_saved": {
+  "text": "{name}を保存しました",
+  "back": "{name} was saved",
+  "why": "Past tense"
+ },
+ "REC_FAILED": {
+  "text": "ここには保存できません。「保存先を変更」で別の場所へ。",
+  "back": "It cannot be saved here. Use Change save place for another location.",
+  "why": "Uses the second button's words"
+ },
+ "REC_ON": {
+  "text": "録音中",
+  "back": "Recording",
+  "why": "Names sound being kept"
+ },
+ "LISTEN_TEMPO": {
+  "text": "テンポ",
+  "back": "Tempo",
+  "why": "Musician's word"
+ },
+ "LISTEN_BPM": {
+  "text": "BPM",
+  "back": "BPM",
+  "why": "International abbreviation"
+ },
+ "LISTEN_TEMPO_HALF": {
+  "text": "半分",
+  "back": "Half",
+  "why": "Musician's wording"
+ },
+ "LISTEN_TEMPO_AS_HEARD": {
+  "text": "そのまま",
+  "back": "As is",
+  "why": "Plain reading"
+ },
+ "LISTEN_TEMPO_DOUBLE": {
+  "text": "2倍",
+  "back": "Double",
+  "why": "Musician's wording"
+ },
+ "LISTEN_BEAT_BLINK": {
+  "text": "赤い点を曲のテンポに合わせて点滅",
+  "back": "Red dot blinks to the tempo of the music",
+  "why": "No Live word"
+ },
+ "LISTEN_BEAT_BLINK_HINT": {
+  "text": "ごくわずかな装飾で、他は変わりません",
+  "back": "A faint decoration, nothing else changes",
+  "why": "Neutral"
+ },
+ "CMD_UPDATE": {
+  "text": "更新を確認",
+  "back": "Check for updates",
+  "why": "確認 as in other programs"
+ },
+ "CMD_UPDATE_DETAIL": {
+  "text": "起動時にも自動で確認します",
+  "back": "Also checks by itself at every start",
+  "why": "Reassurance"
+ },
+ "update_ready": {
+  "text": "{version}版を取得しました。次回の起動で切り替わります",
+  "back": "Version {version} was downloaded. It takes over at the next start",
+  "why": "Two clauses"
+ },
+ "update_none": {
+  "text": "{version}は最新版です",
+  "back": "{version} is the newest version",
+  "why": "Number in the sentence"
+ },
+ "CMD_KEYS": {
+  "text": "キー一覧",
+  "back": "Key list",
+  "why": "Same as the sheet heading"
+ },
+ "CMD_KEYS_DETAIL": {
+  "text": "操作できるキーをすべて載せています",
+  "back": "Lists every key that works",
+  "why": "No full stop"
+ },
+ "CMD_START": {
+  "text": "礼拝を始める",
+  "back": "Start the service",
+  "why": "礼拝 is the church word for service"
+ },
+ "CMD_START_DETAIL": {
+  "text": "式次第の最初の項目をすぐに映します",
+  "back": "The first plan item is shown at once",
+  "why": "映す"
+ },
+ "CMD_PREVIOUS": {
+  "text": "前のスライド",
+  "back": "Previous slide",
+  "why": "Plain"
+ },
+ "CMD_PREVIOUS_DETAIL": {
+  "text": "映すスライドを1つ前に戻す",
+  "back": "Move the shown slide one back",
+  "why": "Pairs with next"
+ },
+ "CMD_NEXT_DETAIL": {
+  "text": "映すスライドを1つ先に進める",
+  "back": "Move the shown slide one forward",
+  "why": "Pairs with previous"
+ },
+ "CMD_BLACK_DETAIL": {
+  "text": "画面が真っ黒になります。もう一度選ぶと戻ります",
+  "back": "The screen goes fully black. Choosing again brings it back",
+  "why": "黒画面 state"
+ },
+ "CMD_CLEAR_DETAIL": {
+  "text": "文字だけ消え、背景の絵や動画は残ります",
+  "back": "Only the words vanish; the background picture or video stays",
+  "why": "文字 for slide words"
+ },
+ "CMD_LOGO_DETAIL": {
+  "text": "スライドの代わりに教会のロゴを映します",
+  "back": "Shows the church logo instead of the slide",
+  "why": "映す"
+ },
+ "CMD_STOP_COUNTDOWN": {
+  "text": "カウントダウンを終了",
+  "back": "End countdown",
+  "why": "Plain"
+ },
+ "CMD_STOP_COUNTDOWN_DETAIL": {
+  "text": "プロジェクターから消えます",
+  "back": "It disappears from the projector",
+  "why": "No full stop"
+ },
+ "CMD_HIDE_MESSAGE": {
+  "text": "メッセージを消す",
+  "back": "Remove the message",
+  "why": "Plain"
+ },
+ "CMD_HIDE_MESSAGE_DETAIL": {
+  "text": "どの画面からもメッセージが消えます",
+  "back": "The message goes from every screen",
+  "why": "No full stop"
+ },
+ "CMD_EDIT_SONG": {
+  "text": "曲を編集",
+  "back": "Edit song",
+  "why": "Plain"
+ },
+ "CMD_EDIT_SONG_DETAIL": {
+  "text": "見ている曲の歌詞を直せます",
+  "back": "The words of the song you are viewing can be corrected",
+  "why": "Plain"
+ },
+ "CMD_UNDO_DETAIL": {
+  "text": "最後に削除したものが元に戻ります",
+  "back": "The last thing removed comes back",
+  "why": "元に戻す is the undo word"
+ },
+ "CMD_LOOP": {
+  "text": "お知らせを順に映す",
+  "back": "Show announcements in turn",
+  "why": "Cards take turns"
+ },
+ "CMD_LOOP_DETAIL": {
+  "text": "お知らせを順番に映し、止めるまで続けます",
+  "back": "Shows each announcement in turn until you stop it",
+  "why": "Plain"
+ },
+ "BTN_LOOK": {
+  "text": "デザイン",
+  "back": "Design",
+  "why": "Loan word"
+ },
+ "BTN_SETTINGS": {
+  "text": "設定",
+  "back": "Settings",
+  "why": "Standard"
+ },
+ "DESIGN_TEXT": {
+  "text": "文字",
+  "back": "Text",
+  "why": "Everyday word for text on a screen"
+ },
+ "SETTINGS_SONGS": {
+  "text": "曲",
+  "back": "Songs",
+  "why": "Same word"
+ },
+ "SETTINGS_ABOUT": {
+  "text": "情報",
+  "back": "About",
+  "why": "As in other programs"
+ },
+ "about_version": {
+  "text": "Artosia {version}",
+  "back": "Artosia {version}",
+  "why": "No word needed"
+ },
+ "BTN_SCREENS": {
+  "text": "モニター",
+  "back": "Monitors",
+  "why": "Hardware noun"
+ },
+ "BTN_PHONE": {
+  "text": "スマホ",
+  "back": "Phone",
+  "why": "Names the device"
+ },
+ "HINT_KEYS": {
+  "text": "キー一覧",
+  "back": "Key list",
+  "why": "Same as the sheet"
+ },
+ "OUTPUT_OFF": {
+  "text": "プロジェクターはオフです",
+  "back": "The projector is off",
+  "why": "オン/オフ pair"
+ },
+ "OUTPUT_PRACTICE": {
+  "text": "練習モード、実際には映しません",
+  "back": "Practice mode, nothing is shown for real",
+  "why": "Does not say off"
+ },
+ "OUTPUT_STARTING": {
+  "text": "プロジェクターを起動中",
+  "back": "Starting the projector",
+  "why": "Progress"
+ },
+ "OUTPUT_MISSING": {
+  "text": "プロジェクター用のプログラムが同じフォルダにありません",
+  "back": "The projector program is not in the same folder",
+  "why": "Names the folder"
+ },
+ "OUTPUT_KEEPS_CLOSING": {
+  "text": "プロジェクターが起動してもすぐに終了してしまいます",
+  "back": "The projector starts but shuts down again at once",
+  "why": "Plain"
+ },
+ "output_failed": {
+  "text": "プロジェクターを起動できませんでした：{problem}",
+  "back": "Could not start the projector: {problem}",
+  "why": "Reason after a colon"
+ },
+ "OUTPUT_NO_SCREEN": {
+  "text": "2台目のモニターがありません",
+  "back": "There is no second monitor",
+  "why": "台 counts machines"
+ },
+ "OUTPUT_HERE": {
+  "text": "このモニターに映しています",
+  "back": "Showing on this monitor",
+  "why": "映す"
+ },
+ "OUTPUT_STUCK": {
+  "text": "プロジェクターが応答しません",
+  "back": "The projector is not responding",
+  "why": "Standard phrase"
+ },
+ "REMOTE_ON": {
+  "text": "スマホリモコン オン",
+  "back": "Phone remote on",
+  "why": "オン pair"
+ },
+ "output_on_screen": {
+  "text": "モニター{number}に映しています",
+  "back": "Showing on monitor {number}",
+  "why": "映す"
+ },
+ "library_in_memory": {
+  "text": "曲のファイルを開けず、今回の作業は終了時に失われます：{problem}",
+  "back": "The song file could not be opened; this session's work is lost on closing: {problem}",
+  "why": "Warning first, reason after"
+ },
+ "PLAN_EMPTY": {
+  "text": "項目がありません",
+  "back": "There are no items",
+  "why": "Statement"
+ },
+ "PLAN_ADD": {
+  "text": "項目を追加",
+  "back": "Add item",
+  "why": "Plain"
+ },
+ "PLAN_NEW": {
+  "text": "新しい式次第",
+  "back": "New plan",
+  "why": "式次第 for plan"
+ },
+ "PLAN_ITEM_MENU": {
+  "text": "その他",
+  "back": "More",
+  "why": "Hover help"
+ },
+ "PLAN_MOVE_UP": {
+  "text": "上へ移動",
+  "back": "Move up",
+  "why": "Pairs with down"
+ },
+ "PLAN_MOVE_DOWN": {
+  "text": "下へ移動",
+  "back": "Move down",
+  "why": "Pairs with up"
+ },
+ "PLAN_REMOVE": {
+  "text": "式次第から外す",
+  "back": "Take out of the plan",
+  "why": "外す, not 削除, since the song stays"
+ },
+ "PLAN_MISSING": {
+  "text": "削除済み",
+  "back": "Deleted",
+  "why": "One short word"
+ },
+ "PLAN_HEADING_NEW": {
+  "text": "見出し",
+  "back": "Heading",
+  "why": "Same word as the divider"
+ },
+ "PLAN_HEADING_WORSHIP": {
+  "text": "賛美",
+  "back": "Praise",
+  "why": "Churches say 賛美 for the singing time"
+ },
+ "PLAN_HEADING_WORD": {
+  "text": "みことば",
+  "back": "The Word",
+  "why": "みことば covers reading and preaching"
+ },
+ "PLANS_TITLE": {
+  "text": "式次第一覧",
+  "back": "List of plans",
+  "why": "One compact noun"
+ },
+ "PLANS_TODAY": {
+  "text": "今日",
+  "back": "Today",
+  "why": "One word"
+ },
+ "PLANS_NO_DAY": {
+  "text": "曜日なし",
+  "back": "No day",
+  "why": "Neutral, not a fault"
+ },
+ "PLAN_DUPLICATE": {
+  "text": "コピーを作る",
+  "back": "Make a copy",
+  "why": "Everyday word コピー"
+ },
+ "PLAN_RENAME": {
+  "text": "曜日と時刻を変更",
+  "back": "Change day and time",
+  "why": "Names what changes"
+ },
+ "PLAN_DELETE": {
+  "text": "式次第を削除",
+  "back": "Delete the plan",
+  "why": "Reads as removal"
+ },
+ "PLAN_NEW_DETAIL": {
+  "text": "別の礼拝のために式次第を作れます",
+  "back": "A plan can be made for another service",
+  "why": "礼拝 for service"
+ },
+ "PLAN_DAY": {
+  "text": "曜日",
+  "back": "Day",
+  "why": "One word"
+ },
+ "PLAN_HOUR": {
+  "text": "時",
+  "back": "Hour",
+  "why": "Clock hour"
+ },
+ "PLAN_MINUTE": {
+  "text": "分",
+  "back": "Minute",
+  "why": "Clock minute"
+ },
+ "time_of_day": {
+  "text": "{hour}:{minute}",
+  "back": "{hour}:{minute}",
+  "why": "24-hour clock with a colon"
+ },
+ "service_slot": {
+  "text": "{day} {time}",
+  "back": "{day} {time}",
+  "why": "Day then time, as on a board"
+ },
+ "PLAN_NAME_LABEL": {
+  "text": "名前（省略可）",
+  "back": "Name (optional)",
+  "why": "Shows it may stay empty"
+ },
+ "LOOK_FOR_USUAL": {
+  "text": "標準のデザイン",
+  "back": "Standard design",
+  "why": "Pairs with the plan's own"
+ },
+ "LOOK_FOR_PLAN": {
+  "text": "この式次第だけ",
+  "back": "Only this plan",
+  "why": "Short"
+ },
+ "PLAN_OWN_LOOK": {
+  "text": "この式次第専用のデザインです",
+  "back": "This plan has its own design",
+  "why": "Statement"
+ },
+ "KIND_PLAN": {
+  "text": "式次第",
+  "back": "Plan",
+  "why": "Same word everywhere"
+ },
+ "look_own_dropped": {
+  "text": "{name}は標準のデザインに戻ります",
+  "back": "{name} goes back to the standard design",
+  "why": "Name first"
+ },
+ "plan_deleted": {
+  "text": "{name}を削除しました",
+  "back": "{name} was deleted",
+  "why": "Past tense"
+ },
+ "added_to_plan": {
+  "text": "「{title}」を式次第に追加しました",
+  "back": "\"{title}\" was added to the plan",
+  "why": "Corner quotes"
+ },
+ "removed_from_plan": {
+  "text": "「{title}」を式次第から外しました",
+  "back": "\"{title}\" was taken out of the plan",
+  "why": "Past tense"
+ },
+ "START_TITLE": {
+  "text": "何を映しますか",
+  "back": "What shall we show?",
+  "why": "Friendly question"
+ },
+ "START_HINT": {
+  "text": "または文字を入力して検索",
+  "back": "or type letters to search",
+  "why": "Follows the key caps"
+ },
+ "CMD_TOUR": {
+  "text": "使い方ガイド",
+  "back": "How-to guide",
+  "why": "ガイド is the tour's name"
+ },
+ "CMD_TOUR_DETAIL": {
+  "text": "画面を5か所でかんたんに案内します",
+  "back": "Shows you around the window in five stops",
+  "why": "Plain"
+ },
+ "TOUR_SKIP": {
+  "text": "スキップ",
+  "back": "Skip",
+  "why": "Loan word on buttons"
+ },
+ "TOUR_DONE": {
+  "text": "完了",
+  "back": "Done",
+  "why": "One word"
+ },
+ "TOUR_PLAN": {
+  "text": "左の列は、礼拝で映すものを順番に並べた式次第です",
+  "back": "The left column is the plan: everything to show in the service, in order",
+  "why": "One sentence"
+ },
+ "TOUR_PLAN_MORE": {
+  "text": "行をドラッグで並べ替えられます",
+  "back": "Drag a row to change its place",
+  "why": "Short"
+ },
+ "TOUR_PREVIEW": {
+  "text": "真ん中のプレビューには、次に映すスライドが入ります",
+  "back": "The middle Preview holds the slides that come next",
+  "why": "Pane name as its title"
+ },
+ "TOUR_PREVIEW_MORE": {
+  "text": "ここは会場の人には見えません",
+  "back": "People in the room cannot see this",
+  "why": "Reassurance"
+ },
+ "TOUR_SHOW": {
+  "text": "「映す」で、プレビューの内容がライブに移ります",
+  "back": "Show moves the Preview contents into Live",
+  "why": "Tile name quoted"
+ },
+ "TOUR_SHOW_MORE": {
+  "text": "プロジェクターがオンのときだけ、会場に映ります",
+  "back": "The room sees it only while the projector is on",
+  "why": "オン/オフ pair"
+ },
+ "TOUR_LIVE": {
+  "text": "右のライブには、いま会場に映っているものが入ります",
+  "back": "The right Live pane holds what the room sees now",
+  "why": "Pane, not list"
+ },
+ "TOUR_LIVE_MORE": {
+  "text": "赤い「ライブ」タイル(F6)でプロジェクターをオン/オフ",
+  "back": "The red Live tile (F6) switches the projector on and off",
+  "why": "Says tile"
+ },
+ "TOUR_SEARCH": {
+  "text": "この検索欄で、曲も聖書箇所もすべて探せます",
+  "back": "This search box finds every song and Bible passage",
+  "why": "Plain"
+ },
+ "TOUR_SEARCH_MORE": {
+  "text": "見つけたら開いて「式次第に追加」を押す",
+  "back": "Open what you find, then press Add to plan",
+  "why": "Same label as the button"
+ },
+ "START_SONGS": {
+  "text": "曲",
+  "back": "Songs",
+  "why": "Same word"
+ },
+ "START_SONGS_DETAIL": {
+  "text": "すべての曲を見る",
+  "back": "Look through all songs",
+  "why": "No full stop"
+ },
+ "START_BIBLE": {
+  "text": "聖書",
+  "back": "Bible",
+  "why": "Same as the filter"
+ },
+ "START_BIBLE_DETAIL": {
+  "text": "書名を選び、節を選ぶ",
+  "back": "Pick a book, then a verse",
+  "why": "Short"
+ },
+ "START_NEW_DETAIL": {
+  "text": "歌詞を入力か貼り付け",
+  "back": "Type or paste the words",
+  "why": "Short"
+ },
+ "START_NO_SONGS": {
+  "text": "曲がまだありません",
+  "back": "There are no songs yet",
+  "why": "Statement"
+ },
+ "START_ANNOUNCEMENTS_DETAIL": {
+  "text": "礼拝前に映すお知らせ",
+  "back": "Announcements shown before the service",
+  "why": "Short"
+ },
+ "BTN_BRING_OVER": {
+  "text": "取り込む",
+  "back": "Import",
+  "why": "Same verb as import"
+ },
+ "BTN_ADD_TO_PLAN": {
+  "text": "式次第に追加",
+  "back": "Add to plan",
+  "why": "Short label"
+ },
+ "BTN_EDIT": {
+  "text": "編集",
+  "back": "Edit",
+  "why": "One word"
+ },
+ "BTN_NEXT_VERSE": {
+  "text": "次の節を追加",
+  "back": "Add the next verse",
+  "why": "Tooltip"
+ },
+ "DECK_EMPTY": {
+  "text": "スライドがありません",
+  "back": "There are no slides",
+  "why": "Statement"
+ },
+ "BTN_LOOP_START": {
+  "text": "順に映す",
+  "back": "Show in turn",
+  "why": "Fits cards taking turns"
+ },
+ "BTN_LOOP_STOP": {
+  "text": "止める",
+  "back": "Stop",
+  "why": "Opposite"
+ },
+ "PANE_PREVIEW": {
+  "text": "プレビュー",
+  "back": "Preview",
+  "why": "Loan word everyone knows"
+ },
+ "LIVE": {
+  "text": "ライブ",
+  "back": "Live",
+  "why": "Loan word"
+ },
+ "BTN_NEXT": {
+  "text": "次へ",
+  "back": "Next",
+  "why": "Also the tour's Next"
+ },
+ "BTN_CLEAR_TEXT": {
+  "text": "文字を消す",
+  "back": "Hide the text",
+  "why": "Action name"
+ },
+ "BTN_BLACK": {
+  "text": "黒画面",
+  "back": "Black screen",
+  "why": "State"
+ },
+ "BTN_LOGO": {
+  "text": "ロゴ",
+  "back": "Logo",
+  "why": "State of the emblem"
+ },
+ "LOGO_MISSING": {
+  "text": "ロゴが未選択です。デザインで選べます",
+  "back": "No logo chosen. Choose one in Design",
+  "why": "Names Design"
+ },
+ "STATE_BLACK": {
+  "text": "黒画面を映しています",
+  "back": "Showing a black screen",
+  "why": "映す"
+ },
+ "STATE_LOGO": {
+  "text": "ロゴを映しています",
+  "back": "Showing the logo",
+  "why": "映す"
+ },
+ "STATE_MESSAGE": {
+  "text": "メッセージあり",
+  "back": "Message up",
+  "why": "A state"
+ },
+ "STATE_STAGE_MESSAGE": {
+  "text": "ステージメッセージあり",
+  "back": "Stage message up",
+  "why": "Pair with the room pill"
+ },
+ "STAGE_MESSAGE_DETAIL": {
+  "text": "入力した文字は演奏者の画面にだけ映ります",
+  "back": "The typed words show only on the musicians' screen",
+  "why": "映す"
+ },
+ "HEARD_NOTHING": {
+  "text": "まだ何も聴き取れていません",
+  "back": "Nothing has been picked up yet",
+  "why": "No full stop"
+ },
+ "SUGGEST_HEARD": {
+  "text": "いま聴き取った歌詞から",
+  "back": "From the words just picked up",
+  "why": "Short reason"
+ },
+ "SUGGEST_HERE": {
+  "text": "いまこのパートを歌っています",
+  "back": "This part is being sung now",
+  "why": "Short reason"
+ },
+ "SUGGEST_FOLLOWS": {
+  "text": "この曲のあとによく歌う",
+  "back": "Often sung after this song",
+  "why": "Everyday words"
+ },
+ "SUGGEST_LOST": {
+  "text": "映している歌詞と違う歌を歌っているようです",
+  "back": "They seem to be singing something other than the words shown",
+  "why": "Full sentence"
+ },
+ "SUGGEST_SEARCH": {
+  "text": "探す",
+  "back": "Search",
+  "why": "One word"
+ },
+ "state_countdown": {
+  "text": "カウントダウン {clock}",
+  "back": "Countdown {clock}",
+  "why": "Clock as 4:32"
+ },
+ "LIVE_NOTHING": {
+  "text": "いまは何も映していません",
+  "back": "Nothing is being shown now",
+  "why": "Statement"
+ },
+ "BTN_SHOW": {
+  "text": "映す",
+  "back": "Show",
+  "why": "The product's one verb for the room"
+ },
+ "BTN_PREV": {
+  "text": "前へ",
+  "back": "Back",
+  "why": "Pair of 次へ"
+ },
+ "BTN_NO_TEXT": {
+  "text": "文字なし",
+  "back": "No text",
+  "why": "States that the words are gone"
+ },
+ "STATE_OFF": {
+  "text": "プロジェクターはオフ",
+  "back": "The projector is off",
+  "why": "State"
+ },
+ "TIP_SHOW": {
+  "text": "プレビューをライブへ映す",
+  "back": "Show Preview in Live",
+  "why": "Tooltip"
+ },
+ "TIP_PREV": {
+  "text": "1つ前のスライドへ",
+  "back": "To the previous slide",
+  "why": "Tooltip"
+ },
+ "TIP_NEXT": {
+  "text": "1つ先のスライドへ",
+  "back": "To the next slide",
+  "why": "Tooltip"
+ },
+ "TIP_LIVE": {
+  "text": "プロジェクターのオン/オフ",
+  "back": "Projector on/off",
+  "why": "Tooltip"
+ },
+ "BTN_PREVIOUS_ITEM": {
+  "text": "前の項目",
+  "back": "Previous item",
+  "why": "Pairs with next"
+ },
+ "BTN_NEXT_ITEM": {
+  "text": "次の項目",
+  "back": "Next item",
+  "why": "Pairs with previous"
+ },
+ "HELD_CTRL": {
+  "text": "Ctrl押し中",
+  "back": "Ctrl held",
+  "why": "Key name as printed"
+ },
+ "HELD_SHIFT": {
+  "text": "Shift押し中",
+  "back": "Shift held",
+  "why": "Key name as printed"
+ },
+ "HINT_RING": {
+  "text": "選択枠を動かす",
+  "back": "Move the pick frame",
+  "why": "Ring named by what it means"
+ },
+ "HINT_PICK": {
+  "text": "ライブのスライドを選ぶ",
+  "back": "Pick a slide in Live",
+  "why": "Short"
+ },
+ "HINT_LET_GO": {
+  "text": "離すと映します",
+  "back": "Release to show it",
+  "why": "映す"
+ },
+ "HINT_CANCEL": {
+  "text": "中止",
+  "back": "Cancel",
+  "why": "One word"
+ },
+ "PLAN_ADD_SONG": {
+  "text": "曲",
+  "back": "Song",
+  "why": "Same word"
+ },
+ "PLAN_ADD_PASSAGE": {
+  "text": "聖書",
+  "back": "Bible",
+  "why": "Same as the Bible tile"
+ },
+ "PLAN_ADD_HEADING": {
+  "text": "見出し",
+  "back": "Heading",
+  "why": "Same as divider"
+ },
+ "PLAN_DRAG": {
+  "text": "ドラッグで並べ替え",
+  "back": "Drag to reorder",
+  "why": "Tooltip"
+ },
+ "ADDING_TO_PLAN": {
+  "text": "式次第に追加",
+  "back": "Add to plan",
+  "why": "Same as the button"
+ },
+ "BTN_DONE": {
+  "text": "完了",
+  "back": "Done",
+  "why": "One word"
+ },
+ "BTN_EARLIER": {
+  "text": "映した履歴",
+  "back": "Shown before",
+  "why": "Complete as it stands"
+ },
+ "EARLIER_HINT": {
+  "text": "映したもの。選ぶとプレビューに出るだけ",
+  "back": "Already shown. Picking only puts it in Preview",
+  "why": "Two short statements"
+ },
+ "LETTER_KEYS": {
+  "text": "文字キーでパートに移動",
+  "back": "Letter keys jump to a part",
+  "why": "Reads beside a switch"
+ },
+ "LETTER_KEYS_HINT": {
+  "text": "Cでサビ、Bでブリッジへ。オフにすると、どの文字でも検索が開きます",
+  "back": "C goes to the chorus, B to the bridge. When off, any letter opens search",
+  "why": "C and B are guessed examples"
+ },
+ "COUNTDOWN": {
+  "text": "カウントダウン",
+  "back": "Countdown",
+  "why": "Loan word"
+ },
+ "COUNTDOWN_LABEL": {
+  "text": "開始まであと",
+  "back": "Until the start",
+  "why": "Drawn above the timer"
+ },
+ "EDITOR_NEW": {
+  "text": "新しい曲",
+  "back": "New song",
+  "why": "Same as the command"
+ },
+ "EDITOR_EDIT": {
+  "text": "曲を編集",
+  "back": "Edit song",
+  "why": "Pair"
+ },
+ "EDITOR_NO_SLIDES": {
+  "text": "歌詞を入力するとここにスライドが出ます",
+  "back": "Type the words and the slides appear here",
+  "why": "Plain statement"
+ },
+ "FIELD_TITLE": {
+  "text": "タイトル",
+  "back": "Title",
+  "why": "One word"
+ },
+ "FIELD_AUTHOR": {
+  "text": "作者",
+  "back": "Author",
+  "why": "Writer"
+ },
+ "FIELD_KEY": {
+  "text": "キー",
+  "back": "Key",
+  "why": "Musicians' word"
+ },
+ "FIELD_COPYRIGHT": {
+  "text": "著作権",
+  "back": "Copyright",
+  "why": "Rights owner"
+ },
+ "FIELD_CCLI": {
+  "text": "CCLI番号",
+  "back": "CCLI number",
+  "why": "CCLI stays"
+ },
+ "FIELD_LYRICS": {
+  "text": "歌詞",
+  "back": "Lyrics",
+  "why": "Word for song words"
+ },
+ "FIELD_ORDER": {
+  "text": "順番を入力。例 バース1 サビ*2 バース2 サビ ブリッジ",
+  "back": "Type the order. Example: verse1 chorus*2 verse2 chorus bridge",
+  "why": "Name then number, as the program reads"
+ },
+ "ORDER": {
+  "text": "順番",
+  "back": "Order",
+  "why": "One word"
+ },
+ "ORDER_AS_WRITTEN": {
+  "text": "歌詞の順に戻す",
+  "back": "Back to lyrics order",
+  "why": "Uses 歌詞"
+ },
+ "ORDER_EMPTY": {
+  "text": "歌詞をパートに分けると順番が出ます",
+  "back": "Divide the words into parts and the order appears",
+  "why": "No full stop"
+ },
+ "ORDER_CHORUS_EACH": {
+  "text": "各バースのあとにサビを入れる",
+  "back": "Put the chorus after each verse",
+  "why": "Plain"
+ },
+ "BTN_TIDY": {
+  "text": "歌詞を整える",
+  "back": "Tidy lyrics",
+  "why": "Names its object"
+ },
+ "TIDY_HELP": {
+  "text": "パート名の行を印に変え、コードだけの行を消します",
+  "back": "Part-name lines become markers; chord-only lines are removed",
+  "why": "Tooltip"
+ },
+ "SUGGEST_LABEL": {
+  "text": "同じタイトルの曲",
+  "back": "Songs with the same title",
+  "why": "Screen reader only"
+ },
+ "SUGGEST_LIBRARY": {
+  "text": "ライブラリにあります",
+  "back": "Already in the library",
+  "why": "No full stop"
+ },
+ "SUGGEST_FETCHING": {
+  "text": "ネットから歌詞を取得中",
+  "back": "Getting words from the internet",
+  "why": "Progress"
+ },
+ "LICENCE_NOTE": {
+  "text": "教会で歌詞を映すにはライセンスが必要です（多くはCCLI）",
+  "back": "Showing song words in church needs a licence (usually CCLI)",
+  "why": "ライセンス for licence"
+ },
+ "suggest_web": {
+  "text": {
+   "without_artist": "{source}の歌詞",
+   "with_artist": "{artist}（{source}の歌詞）"
+  },
+  "back": "Words from {source} / {artist} (words from {source})",
+  "why": "Source name stays"
+ },
+ "words_from": {
+  "text": "{source}から取得した歌詞です。教会の手元の版と必ず見比べてください",
+  "back": "Words fetched from {source}. Always compare with the church's own copy",
+  "why": "Checking advice kept"
+ },
+ "FIELD_SECOND": {
+  "text": "第2言語の歌詞",
+  "back": "Words in a second language",
+  "why": "Phrase"
+ },
+ "LYRICS_PLACEHOLDER": {
+  "text": "[1番]\nここに一行目\n\n[サビ]\nサビの一行目",
+  "back": "[Verse 1]\nFirst line here\n\n[Chorus]\nFirst line of the chorus",
+  "why": "Marker syntax guessed as square brackets"
+ },
+ "SECOND_PLACEHOLDER": {
+  "text": "同じパートを同じ順に、別の言語で入力",
+  "back": "Enter the same parts in the same order in another language",
+  "why": "No full stop"
+ },
+ "MARK_VERSE": {
+  "text": "バース",
+  "back": "Verse",
+  "why": "Loan word; number follows"
+ },
+ "MARK_CHORUS": {
+  "text": "サビ",
+  "back": "Chorus",
+  "why": "Everyday word"
+ },
+ "MARK_BRIDGE": {
+  "text": "ブリッジ",
+  "back": "Bridge",
+  "why": "Musicians' word"
+ },
+ "MARK_PRECHORUS": {
+  "text": "プレサビ",
+  "back": "Pre-chorus",
+  "why": "Short form"
+ },
+ "MARK_ENDING": {
+  "text": "アウトロ",
+  "back": "Outro",
+  "why": "Pairs with イントロ"
+ },
+ "BTN_ADD_SECOND": {
+  "text": "第2言語の歌詞を追加",
+  "back": "Add words in a second language",
+  "why": "Phrase"
+ },
+ "BTN_SAVE": {
+  "text": "保存",
+  "back": "Save",
+  "why": "One word"
+ },
+ "BTN_CANCEL": {
+  "text": "キャンセル",
+  "back": "Cancel",
+  "why": "Usual"
+ },
+ "BTN_DELETE": {
+  "text": "削除",
+  "back": "Delete",
+  "why": "Not 外す"
+ },
+ "BTN_DUPLICATE": {
+  "text": "コピーを作る",
+  "back": "Make a copy",
+  "why": "Everyday"
+ },
+ "BTN_CLOSE": {
+  "text": "閉じる",
+  "back": "Close",
+  "why": "One word"
+ },
+ "BTN_UNDO": {
+  "text": "元に戻す",
+  "back": "Undo",
+  "why": "Standard"
+ },
+ "BTN_OPEN": {
+  "text": "開く",
+  "back": "Open",
+  "why": "One word"
+ },
+ "BTN_CHOOSE": {
+  "text": "選ぶ",
+  "back": "Choose",
+  "why": "One word"
+ },
+ "BTN_SHOW_NOW": {
+  "text": "すぐ映す",
+  "back": "Show at once",
+  "why": "映す with 'at once'"
+ },
+ "SONG_SAVED": {
+  "text": "曲を保存しました",
+  "back": "The song was saved",
+  "why": "No full stop"
+ },
+ "EDITOR_CLOSED": {
+  "text": "編集を閉じました。変更は保存されていません",
+  "back": "Editing was closed. Changes were not saved",
+  "why": "Undo sits beside"
+ },
+ "SONG_UNTITLED": {
+  "text": "無題の曲",
+  "back": "Untitled song",
+  "why": "Short"
+ },
+ "PASTE_EMPTY": {
+  "text": "コピーした文字が見つかりません",
+  "back": "No copied text was found",
+  "why": "No full stop"
+ },
+ "could_not_save": {
+  "text": "曲を保存できませんでした：{problem}",
+  "back": "Could not save the song: {problem}",
+  "why": "Reason after a colon"
+ },
+ "song_deleted": {
+  "text": "「{title}」を削除しました",
+  "back": "\"{title}\" was deleted",
+  "why": "Past tense"
+ },
+ "LOOK_SAMPLE": {
+  "text": "文字の見本\nこう映ります",
+  "back": "Sample of the text\nIt shows like this",
+  "why": "Two lines, made up"
+ },
+ "LOOK_CUSTOM": {
+  "text": "オリジナル",
+  "back": "Original",
+  "why": "Own mix, not a ready sample"
+ },
+ "LOOK_BACKGROUND": {
+  "text": "写真や動画",
+  "back": "Photo or video",
+  "why": "Does not repeat the tab heading"
+ },
+ "LOOK_CHOOSE_FILE": {
+  "text": "ファイルを選ぶ",
+  "back": "Choose a file",
+  "why": "Button"
+ },
+ "LOOK_NO_FILE": {
+  "text": "未選択",
+  "back": "Not chosen",
+  "why": "State"
+ },
+ "LOOK_LINES": {
+  "text": "1スライドの行数",
+  "back": "Lines per slide",
+  "why": "Noun phrase"
+ },
+ "LOOK_LINES_ALL": {
+  "text": "すべて",
+  "back": "All",
+  "why": "No limit"
+ },
+ "LOOK_SIZE": {
+  "text": "文字の大きさ",
+  "back": "Size of the text",
+  "why": "Noun phrase"
+ },
+ "LOOK_SIZE_SMALL": {
+  "text": "小さめ",
+  "back": "Smaller",
+  "why": "One word"
+ },
+ "LOOK_SIZE_NORMAL": {
+  "text": "ふつう",
+  "back": "Usual",
+  "why": "One word"
+ },
+ "LOOK_SIZE_LARGE": {
+  "text": "大きめ",
+  "back": "Larger",
+  "why": "One word"
+ },
+ "LOOK_PLACE": {
+  "text": "文字の位置",
+  "back": "Position of the text",
+  "why": "Noun phrase"
+ },
+ "LOOK_PLACE_TOP": {
+  "text": "上",
+  "back": "Top",
+  "why": "One word"
+ },
+ "LOOK_PLACE_MIDDLE": {
+  "text": "中央",
+  "back": "Middle",
+  "why": "One word"
+ },
+ "LOOK_PLACE_BOTTOM": {
+  "text": "下",
+  "back": "Bottom",
+  "why": "One word"
+ },
+ "LOOK_BIBLE": {
+  "text": "聖書の訳",
+  "back": "Bible translation",
+  "why": "Pair with the second"
+ },
+ "LOOK_SECOND_BIBLE": {
+  "text": "2つ目の訳",
+  "back": "Second translation",
+  "why": "Phrase"
+ },
+ "LOOK_NONE": {
+  "text": "なし",
+  "back": "None",
+  "why": "One word"
+ },
+ "LOOK_LOGO": {
+  "text": "ロゴ",
+  "back": "Logo",
+  "why": "Same as the Logo tile"
+ },
+ "LOOK_CHOOSE_LOGO": {
+  "text": "画像を選ぶ",
+  "back": "Choose a picture",
+  "why": "Also used for card pictures"
+ },
+ "LOOK_LICENCE": {
+  "text": "CCLIライセンス番号",
+  "back": "CCLI licence number",
+  "why": "CCLI stays"
+ },
+ "LOOK_LICENCE_HINT": {
+  "text": "番号",
+  "back": "Number",
+  "why": "One word"
+ },
+ "BACKGROUND_UNKNOWN": {
+  "text": "背景に使えるのは画像か動画のファイルです",
+  "back": "Only picture or video files can be used as a background",
+  "why": "No full stop"
+ },
+ "bible_failed": {
+  "text": "聖書「{code}」を開けませんでした：{problem}",
+  "back": "Could not open Bible \"{code}\": {problem}",
+  "why": "Reason after a colon"
+ },
+ "SCREENS_OFF": {
+  "text": "練習モードでは、プロジェクターは常にオフです",
+  "back": "In practice mode the projector is always off",
+  "why": "オン/オフ pair"
+ },
+ "SCREENS_ONE": {
+  "text": "プロジェクターをつなぐと、そのまま使えます",
+  "back": "Connect a projector and it works as it is",
+  "why": "One sentence"
+ },
+ "SCREENS_SWITCH": {
+  "text": "プロジェクター",
+  "back": "Projector",
+  "why": "Same noun"
+ },
+ "WALL": {
+  "text": "映像の補正",
+  "back": "Correct the picture",
+  "why": "補正 says it corrects"
+ },
+ "WALL_HINT": {
+  "text": "図の四隅を1つ選び、壁の映像がまっすぐになるよう動かします",
+  "back": "Pick one corner of the figure and move it until the picture on the wall is straight",
+  "why": "Instruction"
+ },
+ "WALL_RESET": {
+  "text": "リセット",
+  "back": "Reset",
+  "why": "Everyday word"
+ },
+ "WALL_BRIGHTNESS": {
+  "text": "明るさ",
+  "back": "Brightness",
+  "why": "One word"
+ },
+ "WALL_CONTRAST": {
+  "text": "コントラスト",
+  "back": "Contrast",
+  "why": "Usual loan word"
+ },
+ "WALL_COLOUR": {
+  "text": "鮮やかさ",
+  "back": "Vividness",
+  "why": "Saturation, not bare 色"
+ },
+ "CORNER_TOP_LEFT": {
+  "text": "左上の角",
+  "back": "Top left corner",
+  "why": "Noun phrase"
+ },
+ "CORNER_TOP_RIGHT": {
+  "text": "右上の角",
+  "back": "Top right corner",
+  "why": "Noun phrase"
+ },
+ "CORNER_BOTTOM_RIGHT": {
+  "text": "右下の角",
+  "back": "Bottom right corner",
+  "why": "Noun phrase"
+ },
+ "CORNER_BOTTOM_LEFT": {
+  "text": "左下の角",
+  "back": "Bottom left corner",
+  "why": "Noun phrase"
+ },
+ "NUDGE_UP": {
+  "text": "上へ",
+  "back": "Up",
+  "why": "One word"
+ },
+ "NUDGE_DOWN": {
+  "text": "下へ",
+  "back": "Down",
+  "why": "One word"
+ },
+ "NUDGE_LEFT": {
+  "text": "左へ",
+  "back": "Left",
+  "why": "One word"
+ },
+ "NUDGE_RIGHT": {
+  "text": "右へ",
+  "back": "Right",
+  "why": "One word"
+ },
+ "LESS": {
+  "text": "減らす",
+  "back": "Less",
+  "why": "One word"
+ },
+ "MORE": {
+  "text": "増やす",
+  "back": "More",
+  "why": "Not the plan's その他"
+ },
+ "LOOK_CAMERA": {
+  "text": "カメラ",
+  "back": "Camera",
+  "why": "One word"
+ },
+ "LOOK_CAMERA_FAR": {
+  "text": "ネットワークカメラ",
+  "back": "Network camera",
+  "why": "No colon"
+ },
+ "LOOK_CAMERA_FAR_USE": {
+  "text": "使う",
+  "back": "Use",
+  "why": "One verb"
+ },
+ "LOOK_CAMERA_FAR_NOTE": {
+  "text": "スマホも使えます。RTSPかSRTで映像を送るカメラアプリが必要です。",
+  "back": "A phone works too. It needs a camera app that sends video by RTSP or SRT.",
+  "why": "RTSP and SRT kept"
+ },
+ "SCREENS_HERE": {
+  "text": "このモニターのウィンドウに映す",
+  "back": "Show in a window on this monitor",
+  "why": "Next to a switch"
+ },
+ "SCREENS_HERE_HINT": {
+  "text": "閉じるには、ウィンドウ上でEscを押します",
+  "back": "To close it, press Esc over the window",
+  "why": "Key as printed"
+ },
+ "LOOK_WINDOW": {
+  "text": "ウィンドウの色",
+  "back": "Window colour",
+  "why": "Not the projector"
+ },
+ "LOOK_WINDOW_AUTO": {
+  "text": "パソコンに合わせる",
+  "back": "Match the computer",
+  "why": "Phrase"
+ },
+ "LOOK_WINDOW_LIGHT": {
+  "text": "明るい",
+  "back": "Light",
+  "why": "One word"
+ },
+ "LOOK_WINDOW_DARK": {
+  "text": "暗い",
+  "back": "Dark",
+  "why": "One word"
+ },
+ "LOOK_TEXT_COLOUR": {
+  "text": "文字の色",
+  "back": "Text colour",
+  "why": "Noun phrase"
+ },
+ "LOOK_COLOUR_WHITE": {
+  "text": "白",
+  "back": "White",
+  "why": "Colour name"
+ },
+ "LOOK_COLOUR_WARM": {
+  "text": "オフホワイト",
+  "back": "Off-white",
+  "why": "Slightly cream"
+ },
+ "LOOK_COLOUR_YELLOW": {
+  "text": "黄色",
+  "back": "Yellow",
+  "why": "Colour name"
+ },
+ "LOOK_COLOUR_BLACK": {
+  "text": "黒",
+  "back": "Black",
+  "why": "Colour name"
+ },
+ "LOOK_COLOUR_HEX": {
+  "text": "色コード",
+  "back": "Colour code",
+  "why": "Not visible"
+ },
+ "LOOK_COLOUR_HEX_HINT": {
+  "text": "例えば #FFD700",
+  "back": "For example #FFD700",
+  "why": "'For example' in full"
+ },
+ "LOOK_FONT": {
+  "text": "フォント",
+  "back": "Font",
+  "why": "Usual word"
+ },
+ "LOOK_FONT_DEFAULT": {
+  "text": "標準のフォント",
+  "back": "Standard font",
+  "why": "Phrase"
+ },
+ "LOOK_FONT_SEARCH": {
+  "text": "フォント名を入力",
+  "back": "Type a font name",
+  "why": "Invitation"
+ },
+ "LOOK_FONT_NONE": {
+  "text": "該当するフォントなし",
+  "back": "No matching font",
+  "why": "No full stop"
+ },
+ "LOOK_OUTLINE": {
+  "text": "縁取り",
+  "back": "Outline",
+  "why": "Word for the line round letters"
+ },
+ "LOOK_OUTLINE_OFF": {
+  "text": "なし",
+  "back": "None",
+  "why": "One word"
+ },
+ "LOOK_OUTLINE_THIN": {
+  "text": "細い",
+  "back": "Thin",
+  "why": "One word"
+ },
+ "LOOK_OUTLINE_MEDIUM": {
+  "text": "ふつう",
+  "back": "Medium",
+  "why": "One word"
+ },
+ "LOOK_OUTLINE_THICK": {
+  "text": "太い",
+  "back": "Thick",
+  "why": "One word"
+ },
+ "LOOK_OUTLINE_COLOUR": {
+  "text": "縁取りの色",
+  "back": "Outline colour",
+  "why": "Noun phrase"
+ },
+ "SCREEN_PROJECTOR": {
+  "text": "会場用",
+  "back": "For the room",
+  "why": "プロジェクター is too wide for 12; pairs with ステージ用"
+ },
+ "SCREEN_STAGE": {
+  "text": "ステージ用",
+  "back": "For the stage",
+  "why": "Pair"
+ },
+ "SCREEN_UNUSED": {
+  "text": "使わない",
+  "back": "Not used",
+  "why": "Short phrase"
+ },
+ "SCREENS_STAGE_WINDOW": {
+  "text": "ステージ画面を別ウィンドウに映す",
+  "back": "Show the stage screen in a separate window",
+  "why": "Next to a switch"
+ },
+ "SCREENS_IDENTIFY": {
+  "text": "モニター番号を表示",
+  "back": "Show monitor numbers",
+  "why": "Button"
+ },
+ "screen_name": {
+  "text": "モニター{number}",
+  "back": "Monitor {number}",
+  "why": "Number as a figure"
+ },
+ "screen_title": {
+  "text": {
+   "with_this": "モニター{number}（この画面）",
+   "without_this": "モニター{number}"
+  },
+  "back": "Monitor {number} (this screen) / Monitor {number}",
+  "why": "Bold line"
+ },
+ "screen_detail": {
+  "text": {
+   "normal_zoom": "{width}×{height}",
+   "with_zoom": "{width}×{height}、拡大率{scale}"
+  },
+  "back": "{width}x{height} / {width}x{height}, zoom {scale}",
+  "why": "拡大率 for system zoom"
+ },
+ "REMOTE_SWITCH": {
+  "text": "スマホリモコン",
+  "back": "Phone remote",
+  "why": "Same as the dialog title"
+ },
+ "REMOTE_SWITCH_DETAIL": {
+  "text": "同じWi-Fiのスマホでスライドを操作できます",
+  "back": "Phones on the same Wi-Fi can control the slides",
+  "why": "Full sentence"
+ },
+ "REMOTE_SCAN": {
+  "text": "スマホでコードを読むかアドレスを入力",
+  "back": "Read the code with the phone or type the address",
+  "why": "Instruction"
+ },
+ "REMOTE_PIN": {
+  "text": "PIN",
+  "back": "PIN",
+  "why": "People say PIN"
+ },
+ "REMOTE_FIREWALL_ASKING": {
+  "text": "スマホがつながるよう、Windowsが1回だけ許可を求めます",
+  "back": "So phones can connect, Windows asks permission once",
+  "why": "Names no button"
+ },
+ "REMOTE_FIREWALL_REFUSED": {
+  "text": "スマホがファイアウォールで止められています。オフにしてからオンにすると許可の確認が出ます。",
+  "back": "The firewall is stopping phones. Switch off then on and the permission box returns.",
+  "why": "Problem, then the known switch"
+ },
+ "phones": {
+  "text": {
+   "zero": "つながっていません",
+   "other": "{count}台つながっています"
+  },
+  "back": "None connected / {count} phones connected",
+  "why": "台 counts devices"
+ },
+ "remote_failed": {
+  "text": "スマホリモコンを始められませんでした：{problem}",
+  "back": "Could not start the phone remote: {problem}",
+  "why": "Reason after a colon"
+ },
+ "IMPORT_FOUND": {
+  "text": "EasiSlidesの曲と聖書をすべてコピーします。元のプログラムはそのままです。",
+  "back": "All songs and Bibles of EasiSlides are copied. The old program stays as it is.",
+  "why": "Two short sentences"
+ },
+ "IMPORT_NOT_FOUND": {
+  "text": "このパソコンにEasiSlidesがありません",
+  "back": "EasiSlides is not on this computer",
+  "why": "One sentence"
+ },
+ "import_done": {
+  "text": {
+   "songs_only": "{songs}を取り込みました",
+   "songs_and_bibles": "{songs}と{bibles}を取り込みました"
+  },
+  "back": "{songs} imported / {songs} and {bibles} imported",
+  "why": "Counted phrases carry their nouns"
+ },
+ "import_summary": {
+  "text": {
+   "nothing_changed": "フォルダの曲はすべて取り込み済みです",
+   "only_kept": "{kept}は編集済みのため、そのままにしました",
+   "changed_added": "{added}を追加しました",
+   "changed_updated": "{updated}を更新しました",
+   "changed_both": "{added}を追加し、{updated}を更新しました",
+   "changed_and_kept": "{changed}。{kept}は編集済みのため、そのままにしました"
+  },
+  "back": "cases of an import summary",
+  "why": "Each case a whole sentence"
+ },
+ "files_unreadable": {
+  "text": {
+   "other": "{count}件のファイルを読めませんでした"
+  },
+  "back": "{count} files could not be read",
+  "why": "件 for files"
+ },
+ "import_partial": {
+  "text": "{songs}を追加しました。{files}は読めませんでした",
+  "back": "{songs} added. {files} could not be read",
+  "why": "Two counted phrases"
+ },
+ "ANNOUNCEMENTS_EMPTY": {
+  "text": "お知らせはまだありません",
+  "back": "There are no announcements yet",
+  "why": "No full stop"
+ },
+ "ANNOUNCEMENT_NEW": {
+  "text": "新しいお知らせ",
+  "back": "New announcement",
+  "why": "Wide button"
+ },
+ "ANNOUNCEMENT_BODY": {
+  "text": "本文",
+  "back": "Body",
+  "why": "Word for the text of a notice"
+ },
+ "ANNOUNCEMENT_TITLE_HINT": {
+  "text": "例えば、青年会",
+  "back": "For example: the youth group",
+  "why": "Starts with 'for example'"
+ },
+ "ANNOUNCEMENT_BODY_HINT": {
+  "text": "例えば、金曜の夜7時、ホールで",
+  "back": "For example: Friday at seven in the evening, in the hall",
+  "why": "Starts with 'for example'"
+ },
+ "ANNOUNCEMENT_SECONDS": {
+  "text": "1枚を映す秒数",
+  "back": "Seconds each card is shown",
+  "why": "Makes numbers read as seconds"
+ },
+ "ANNOUNCEMENT_START_FROM": {
+  "text": "ひな形から作る",
+  "back": "Make from a template",
+  "why": "Phrase"
+ },
+ "ANNOUNCEMENT_BRING_IN": {
+  "text": "ファイルから",
+  "back": "From a file",
+  "why": "Short phrase"
+ },
+ "ANNOUNCEMENT_FILL": {
+  "text": "文字の出どころ",
+  "back": "Where the text comes from",
+  "why": "Not 'automatic'"
+ },
+ "FILL_NOTHING": {
+  "text": "手入力",
+  "back": "By hand",
+  "why": "Answers the heading"
+ },
+ "FILL_WEEK": {
+  "text": "今週の誕生日",
+  "back": "This week's birthdays",
+  "why": "Phrase"
+ },
+ "FILL_MONTH": {
+  "text": "今月の誕生日",
+  "back": "This month's birthdays",
+  "why": "Phrase"
+ },
+ "ANNOUNCEMENT_PICTURE": {
+  "text": "画像",
+  "back": "Picture",
+  "why": "One word"
+ },
+ "BTN_REMOVE_PICTURE": {
+  "text": "消す",
+  "back": "Clear",
+  "why": "Not 外す, the plan's word"
+ },
+ "CMD_IMPORT_PPTX": {
+  "text": "PowerPointから取り込む",
+  "back": "Import from PowerPoint",
+  "why": "取り込む"
+ },
+ "CMD_IMPORT_PPTX_DETAIL": {
+  "text": "スライド1枚がカード1枚になります",
+  "back": "Each slide becomes one card",
+  "why": "No full stop"
+ },
+ "CMD_IMPORT_BIRTHDAYS": {
+  "text": "誕生日の一覧を取り込む",
+  "back": "Import a list of birthdays",
+  "why": "Says list"
+ },
+ "CMD_IMPORT_BIRTHDAYS_DETAIL": {
+  "text": "名前と日付の表を入れたWordかPowerPointの文書",
+  "back": "A Word or PowerPoint document with a table of names and dates",
+  "why": "No full stop"
+ },
+ "BIRTHDAYS_NONE_FOUND": {
+  "text": "名前と日付の組が見つかりません",
+  "back": "No name with a date was found",
+  "why": "No full stop"
+ },
+ "MONTHS[0]": {
+  "text": "1月",
+  "back": "January",
+  "why": "Month first in Japanese dates"
+ },
+ "MONTHS[1]": {
+  "text": "2月",
+  "back": "February",
+  "why": "Same"
+ },
+ "MONTHS[2]": {
+  "text": "3月",
+  "back": "March",
+  "why": "Same"
+ },
+ "MONTHS[3]": {
+  "text": "4月",
+  "back": "April",
+  "why": "Same"
+ },
+ "MONTHS[4]": {
+  "text": "5月",
+  "back": "May",
+  "why": "Same"
+ },
+ "MONTHS[5]": {
+  "text": "6月",
+  "back": "June",
+  "why": "Same"
+ },
+ "MONTHS[6]": {
+  "text": "7月",
+  "back": "July",
+  "why": "Same"
+ },
+ "MONTHS[7]": {
+  "text": "8月",
+  "back": "August",
+  "why": "Same"
+ },
+ "MONTHS[8]": {
+  "text": "9月",
+  "back": "September",
+  "why": "Same"
+ },
+ "MONTHS[9]": {
+  "text": "10月",
+  "back": "October",
+  "why": "Same"
+ },
+ "MONTHS[10]": {
+  "text": "11月",
+  "back": "November",
+  "why": "Same"
+ },
+ "MONTHS[11]": {
+  "text": "12月",
+  "back": "December",
+  "why": "Same"
+ },
+ "WEEKDAYS[0]": {
+  "text": "月曜日",
+  "back": "Monday",
+  "why": "Full name"
+ },
+ "WEEKDAYS[1]": {
+  "text": "火曜日",
+  "back": "Tuesday",
+  "why": "Full name"
+ },
+ "WEEKDAYS[2]": {
+  "text": "水曜日",
+  "back": "Wednesday",
+  "why": "Full name"
+ },
+ "WEEKDAYS[3]": {
+  "text": "木曜日",
+  "back": "Thursday",
+  "why": "Full name"
+ },
+ "WEEKDAYS[4]": {
+  "text": "金曜日",
+  "back": "Friday",
+  "why": "Full name"
+ },
+ "WEEKDAYS[5]": {
+  "text": "土曜日",
+  "back": "Saturday",
+  "why": "Full name"
+ },
+ "WEEKDAYS[6]": {
+  "text": "日曜日",
+  "back": "Sunday",
+  "why": "Full name"
+ },
+ "could_not_read": {
+  "text": "ファイルを開けませんでした：{problem}",
+  "back": "Could not open the file: {problem}",
+  "why": "Reason after a colon"
+ },
+ "pptx_imported": {
+  "text": {
+   "without_lost": "{added}を作りました",
+   "with_lost": "{added}を作りました（{lost}は取り込めませんでした）"
+  },
+  "back": "{added} made / {added} made ({lost} could not come across)",
+  "why": "Two counted phrases"
+ },
+ "birthdays_on_file": {
+  "text": {
+   "zero": "誕生日の一覧はまだありません",
+   "other": "{count}人分の誕生日"
+  },
+  "back": "No list of birthdays yet / birthdays of {count} people",
+  "why": "人分 counts people"
+ },
+ "birthdays_imported": {
+  "text": {
+   "none_skipped": {
+    "other": "{birthdays}を保存しました"
+   },
+   "some_skipped": "{birthdays}を保存しました（{rows}は読み飛ばしました）"
+  },
+  "back": "{birthdays} saved / {birthdays} saved ({rows} skipped)",
+  "why": "Counted phrases"
+ },
+ "ANNOUNCEMENT_PREVIEW": {
+  "text": "映り方の見本",
+  "back": "Sample of how it shows",
+  "why": "Phrase"
+ },
+ "FILL_PASSAGE": {
+  "text": "聖書",
+  "back": "Bible",
+  "why": "Same as the plan menu"
+ },
+ "ANNOUNCEMENT_PASSAGE": {
+  "text": "聖書箇所",
+  "back": "Bible passage",
+  "why": "Noun phrase"
+ },
+ "PASSAGE_NO_BIBLE": {
+  "text": "聖書の訳が入っていないため、カードは空になります",
+  "back": "No Bible translation is installed, so the card stays empty",
+  "why": "One sentence"
+ },
+ "PASSAGE_UNREADABLE": {
+  "text": "この訳にその聖書箇所はありません",
+  "back": "This translation has no such passage",
+  "why": "One sentence"
+ },
+ "NOTICE_NOTHING_TO_SHOW": {
+  "text": "今日は映せる内容がありません",
+  "back": "There is nothing to show today",
+  "why": "No full stop"
+ },
+ "birthdays_cover_week": {
+  "text": "{from_month}{from_day}日から{to_month}{to_day}日まで",
+  "back": "From {from_month} {from_day} to {to_month} {to_day}",
+  "why": "Month goes before day"
+ },
+ "birthdays_cover_month": {
+  "text": "{month}の誕生日すべて",
+  "back": "All birthdays of {month}",
+  "why": "Short"
+ },
+ "names_today": {
+  "text": {
+   "zero": "誕生日の人はいません",
+   "other": "{count}人が誕生日"
+  },
+  "back": "No one has a birthday / {count} people have a birthday",
+  "why": "Counts people"
+ },
+ "PRACTICE_NOTICES[0].0": {
+  "text": "ようこそ",
+  "back": "Welcome",
+  "why": "Warm and short"
+ },
+ "PRACTICE_NOTICES[0].1": {
+  "text": "ようこそおいでくださいました\nまもなく礼拝が始まります",
+  "back": "Welcome, we are glad you came\nThe service begins shortly",
+  "why": "Church speaking"
+ },
+ "PRACTICE_NOTICES[1].0": {
+  "text": "青年の集い",
+  "back": "Youth gathering",
+  "why": "Short title"
+ },
+ "PRACTICE_NOTICES[1].1": {
+  "text": "金曜の夜7時、ホールで\nお友だちとどうぞ",
+  "back": "Friday at 7 in the evening, in the hall\nCome with a friend",
+  "why": "Day by name"
+ },
+ "PRACTICE_NOTICES[2].0": {
+  "text": "祈り会",
+  "back": "Prayer meeting",
+  "why": "Short title"
+ },
+ "PRACTICE_NOTICES[2].1": {
+  "text": "水曜の朝6時から\nどなたでも歓迎です",
+  "back": "Wednesday from 6 in the morning\nEveryone is welcome",
+  "why": "Day by name"
+ },
+ "PRACTICE_NOTICES[3].0": {
+  "text": "今週の予定",
+  "back": "This week's schedule",
+  "why": "Short title"
+ },
+ "PRACTICE_NOTICES[3].1": {
+  "text": "日曜\t10:00\t主日礼拝\n日曜\t17:00\t夕礼拝\n水曜\t19:00\t祈り会\n土曜\t15:00\t青年会",
+  "back": "Sunday 10:00 main service / Sunday 17:00 evening service / Wednesday 19:00 prayer meeting / Saturday 15:00 youth gathering",
+  "why": "Real tabs between day, hour, name; 24-hour clock as in time_of_day"
+ },
+ "ANNOUNCEMENT_TEMPLATES[0].0": {
+  "text": "ようこそ",
+  "back": "Welcome",
+  "why": "Short, becomes the title"
+ },
+ "ANNOUNCEMENT_TEMPLATES[0].1": {
+  "text": "初めての方も、いつもの方も、ようこそ",
+  "back": "Welcome to those new and those who always come",
+  "why": "Warm"
+ },
+ "ANNOUNCEMENT_TEMPLATES[1].0": {
+  "text": "礼拝の時間",
+  "back": "Service times",
+  "why": "Short"
+ },
+ "ANNOUNCEMENT_TEMPLATES[1].1": {
+  "text": "日曜 10:00 ・ 水曜 19:00",
+  "back": "Sunday 10:00, Wednesday 19:00",
+  "why": "Made-up example"
+ },
+ "ANNOUNCEMENT_TEMPLATES[2].0": {
+  "text": "今後の予定",
+  "back": "Coming events",
+  "why": "Short"
+ },
+ "ANNOUNCEMENT_TEMPLATES[2].1": {
+  "text": "水曜 19:00 祈り会",
+  "back": "Wednesday 19:00 prayer meeting",
+  "why": "One weekday example"
+ },
+ "ANNOUNCEMENT_TEMPLATES[3].0": {
+  "text": "今週のみことば",
+  "back": "Verse of the week",
+  "why": "みことば for scripture"
+ },
+ "ANNOUNCEMENT_TEMPLATES[3].1": {
+  "text": "ここに聖句を入力してください",
+  "back": "Type the verse here",
+  "why": "Instruction to the editor"
+ },
+ "ANNOUNCEMENT_TEMPLATES[4].0": {
+  "text": "献金のご案内",
+  "back": "Giving",
+  "why": "Polite church wording"
+ },
+ "ANNOUNCEMENT_TEMPLATES[4].1": {
+  "text": "口座の名義と番号をここに入力",
+  "back": "Enter the account name and number here",
+  "why": "Reminder"
+ },
+ "ANNOUNCEMENT_TEMPLATES[5].0": {
+  "text": "今週の誕生日",
+  "back": "This week's birthdays",
+  "why": "Same as the fill option"
+ },
+ "ANNOUNCEMENT_TEMPLATES[5].1": {
+  "text": "お名前をここに入力してください",
+  "back": "Type the names here",
+  "why": "Instruction"
+ },
+ "announcements": {
+  "text": {
+   "zero": "お知らせはまだありません",
+   "other": "{count}件のお知らせ"
+  },
+  "back": "No announcements yet / {count} announcements",
+  "why": "件 counts items"
+ },
+ "seconds_short": {
+  "text": "{seconds}秒",
+  "back": "{seconds} s",
+  "why": "Shortest form"
+ },
+ "KEYS_TITLE": {
+  "text": "キーボード",
+  "back": "Keyboard",
+  "why": "Group heading"
+ },
+ "KEYS_SHOWING": {
+  "text": "進行",
+  "back": "Running",
+  "why": "Keys used while the service runs"
+ },
+ "KEYS_FINDING": {
+  "text": "探す",
+  "back": "Finding",
+  "why": "Search keys"
+ },
+ "KEYS_PLAN": {
+  "text": "式次第",
+  "back": "Plan",
+  "why": "Same word"
+ },
+ "KEYS_EDITING": {
+  "text": "曲の編集",
+  "back": "Song editing",
+  "why": "Heading"
+ },
+ "KEYS_SHOWING_ROWS[0].1": {
+  "text": "スライドを1つ先に進める",
+  "back": "Move the slide one forward",
+  "why": "Noun-style fragment"
+ },
+ "KEYS_SHOWING_ROWS[1].1": {
+  "text": "スライドを1つ前に戻す",
+  "back": "Move the slide one back",
+  "why": "Pair"
+ },
+ "KEYS_SHOWING_ROWS[2].1": {
+  "text": "曲の最初のスライドへ",
+  "back": "To the first slide of the song",
+  "why": "Fragment"
+ },
+ "KEYS_SHOWING_ROWS[3].1": {
+  "text": "曲の最後のスライドへ",
+  "back": "To the last slide of the song",
+  "why": "Fragment"
+ },
+ "KEYS_SHOWING_ROWS[4].1": {
+  "text": "ライブの曲で選び、離すと映す",
+  "back": "Pick in the live song, show it on release",
+  "why": "映す"
+ },
+ "KEYS_SHOWING_ROWS[5].1": {
+  "text": "プレビューの選択枠を動かし、Enterで映す",
+  "back": "Move the pick frame in Preview, Enter shows it",
+  "why": "Ring named by meaning"
+ },
+ "KEYS_SHOWING_ROWS[6].1": {
+  "text": "選択枠のスライドを映す",
+  "back": "Show the slide with the pick frame",
+  "why": "映す"
+ },
+ "KEYS_SHOWING_ROWS[7].1": {
+  "text": "その番号のパートへ移動",
+  "back": "Jump to the part with that number",
+  "why": "Fragment"
+ },
+ "KEYS_SHOWING_ROWS[8].1": {
+  "text": "C：次のサビ、V：次のバース、B：次のブリッジ",
+  "back": "C: next chorus, V: next verse, B: next bridge",
+  "why": "Letters assumed to be C, V and B"
+ },
+ "KEYS_SHOWING_ROWS[9].1": {
+  "text": "プレビューで、その番号のパートに選択枠を置く",
+  "back": "In Preview, put the frame on that numbered part",
+  "why": "Fragment"
+ },
+ "KEYS_SHOWING_ROWS[10].1": {
+  "text": "映している曲をプレビューに出す",
+  "back": "Bring the song being shown into Preview",
+  "why": "Fragment"
+ },
+ "KEYS_SHOWING_ROWS[11].1": {
+  "text": "前に映したものをプレビューへ、押すたびにさらに前",
+  "back": "Bring the earlier shown item into Preview, further back on each press",
+  "why": "Fragment"
+ },
+ "KEYS_SHOWING_ROWS[12].1": {
+  "text": "文字を消す（背景は残る）",
+  "back": "Hide the text (the background stays)",
+  "why": "Fragment"
+ },
+ "KEYS_SHOWING_ROWS[13].1": {
+  "text": "黒画面にする",
+  "back": "Make the screen black",
+  "why": "Fragment"
+ },
+ "KEYS_SHOWING_ROWS[14].1": {
+  "text": "ロゴを映す",
+  "back": "Show the logo",
+  "why": "映す"
+ },
+ "KEYS_SHOWING_ROWS[15].1": {
+  "text": "聴き取った曲をプレビューに出す",
+  "back": "Bring what was picked up into Preview",
+  "why": "Fragment"
+ },
+ "KEYS_SHOWING_ROWS[16].1": {
+  "text": "お知らせをプレビューに出す",
+  "back": "Bring the announcements into Preview",
+  "why": "Fragment"
+ },
+ "KEYS_SHOWING_ROWS[17].1": {
+  "text": "プロジェクターのオンとオフを切り替え",
+  "back": "Switch the projector on and off",
+  "why": "Fragment"
+ },
+ "KEYS_FINDING_ROWS[0].1": {
+  "text": "曲・聖書箇所・操作の検索を始める",
+  "back": "Start a search for songs, Bible passages and actions",
+  "why": "Fragment"
+ },
+ "KEYS_FINDING_ROWS[1].1": {
+  "text": "検索を開く（未入力なら全曲を一覧）",
+  "back": "Open search (with nothing typed, list all songs)",
+  "why": "Fragment"
+ },
+ "KEYS_FINDING_ROWS[2].1": {
+  "text": "選んだ結果を開く",
+  "back": "Open the picked result",
+  "why": "Fragment"
+ },
+ "KEYS_FINDING_ROWS[3].1": {
+  "text": "選んだ結果をプレビューを飛ばしてすぐ映す",
+  "back": "Show the picked result at once, skipping Preview",
+  "why": "映す"
+ },
+ "KEYS_FINDING_ROWS[4].1": {
+  "text": "選んだ結果を、ライブの次に式次第へ追加",
+  "back": "Add the picked result to the plan after the live item",
+  "why": "Fragment"
+ },
+ "KEYS_FINDING_ROWS[5].1": {
+  "text": "選んだ曲の中でパートを探す",
+  "back": "Find a part inside the chosen song",
+  "why": "Fragment"
+ },
+ "KEYS_FINDING_ROWS[6].1": {
+  "text": "検索を閉じて、1回でメイン画面へ戻る",
+  "back": "Close search and go back to the main window in one press",
+  "why": "Fragment"
+ },
+ "KEYS_PLAN_ROWS[0].1": {
+  "text": "次の項目をプレビューに出す",
+  "back": "Bring the next item into Preview",
+  "why": "Fragment"
+ },
+ "KEYS_PLAN_ROWS[1].1": {
+  "text": "前の項目をプレビューに出す",
+  "back": "Bring the previous item into Preview",
+  "why": "Fragment"
+ },
+ "KEYS_PLAN_ROWS[2].1": {
+  "text": "プレビューの項目を式次第で前後に動かす",
+  "back": "Move the Preview item earlier or later in the plan",
+  "why": "Fragment"
+ },
+ "KEYS_PLAN_ROWS[3].1": {
+  "text": "選択枠のスライドから曲を始める印をつける",
+  "back": "Mark the framed slide as where the song starts",
+  "why": "開始位置"
+ },
+ "KEYS_PLAN_ROWS[4].1": {
+  "text": "プレビューの項目を式次第から外す",
+  "back": "Take the Preview item out of the plan",
+  "why": "外す"
+ },
+ "KEYS_PLAN_ROWS[5].1": {
+  "text": "プレビューの項目を式次第に追加（検索でも同じ）",
+  "back": "Add the Preview item to the plan (same in search)",
+  "why": "Fragment"
+ },
+ "KEYS_PLAN_ROWS[6].1": {
+  "text": "次の式次第を開く（Shiftで前の式次第）",
+  "back": "Open the next plan (with Shift the previous one)",
+  "why": "Fragment"
+ },
+ "KEYS_PLAN_ROWS[7].1": {
+  "text": "別の礼拝用の式次第を新しく作る",
+  "back": "Make a new plan for another service",
+  "why": "Fragment"
+ },
+ "KEYS_EDITING_ROWS[0].1": {
+  "text": "新しい曲を作る",
+  "back": "Make a new song",
+  "why": "Fragment"
+ },
+ "KEYS_EDITING_ROWS[1].1": {
+  "text": "プレビューの曲を編集する",
+  "back": "Edit the song in Preview",
+  "why": "Fragment"
+ },
+ "KEYS_EDITING_ROWS[2].1": {
+  "text": "書いた内容を保存する",
+  "back": "Save what was written",
+  "why": "Fragment"
+ },
+ "KEYS_EDITING_ROWS[3].1": {
+  "text": "バース・サビ・プレサビ・ブリッジ・アウトロの印",
+  "back": "Markers for verse, chorus, pre-chorus, bridge, outro",
+  "why": "Fragment"
+ },
+ "KEYS_EDITING_ROWS[4].1": {
+  "text": "題名の下の候補を選び、全体を入力する",
+  "back": "Pick a suggestion under the title and fill in the whole song",
+  "why": "Fragment"
+ },
+ "KEYS_EDITING_ROWS[5].1": {
+  "text": "最後に削除したものを元に戻す",
+  "back": "Undo the last removal",
+  "why": "Fragment"
+ },
+ "announcement_deleted": {
+  "text": "「{title}」を削除しました",
+  "back": "\"{title}\" was deleted",
+  "why": "Past tense"
+ },
+ "STAGE_CLOCK": {
+  "text": "時刻",
+  "back": "Time",
+  "why": "One word"
+ },
+ "STAGE_TIMER": {
+  "text": "カウントダウン",
+  "back": "Countdown",
+  "why": "Same word as elsewhere"
+ },
+ "STAGE_BLACK": {
+  "text": "会場の画面は黒です",
+  "back": "The room's screen is black",
+  "why": "Says whose screen"
+ },
+ "STAGE_NOTHING": {
+  "text": "何も映していません",
+  "back": "Nothing is shown",
+  "why": "State"
+ },
+ "stage_next": {
+  "text": "次：{label}",
+  "back": "Next: {label}",
+  "why": "Label already localised"
+ },
+ "tour_place": {
+  "text": "{at}/{total}",
+  "back": "{at}/{total}",
+  "why": "Two numbers"
+ },
+ "stage_place": {
+  "text": "{index}/{count}",
+  "back": "{index}/{count}",
+  "why": "Two figures"
+ },
+ "LOOK_LANGUAGE": {
+  "text": "表示言語",
+  "back": "Display language",
+  "why": "Not the sung language"
+ },
+ "LEARN_SECTION": {
+  "text": "検索",
+  "back": "Search",
+  "why": "One word"
+ },
+ "LEARN_ON": {
+  "text": "選んだ曲を覚える",
+  "back": "Remember picked songs",
+  "why": "Says what is remembered"
+ },
+ "LEARN_ON_HINT": {
+  "text": "同じくらい合う結果では、よく選ぶ曲が先に出ます",
+  "back": "Among equally good matches, songs you pick often come first",
+  "why": "Condition first"
+ },
+ "LEARN_FORGET": {
+  "text": "検索の履歴を消す",
+  "back": "Clear the search history",
+  "why": "Verb first"
+ },
+ "LEARN_FORGOTTEN": {
+  "text": "検索の履歴を消しました",
+  "back": "The search history was cleared",
+  "why": "No full stop"
+ },
+ "GROUP_WEEKDAY": {
+  "text": "今日の曜日によく歌う曲",
+  "back": "Songs often sung on today's weekday",
+  "why": "Phrase"
+ },
+ "GROUP_RECENT": {
+  "text": "最近選んだ曲",
+  "back": "Songs picked lately",
+  "why": "Phrase"
+ },
+ "group_follows": {
+  "text": "{title}のあとによく歌う曲",
+  "back": "Songs often sung after {title}",
+  "why": "Same words as the suggestion reason"
+ },
+ "habit_chip": {
+  "text": {
+   "other": "「{typed}」で{picks}回"
+  },
+  "back": "{picks} times for \"{typed}\"",
+  "why": "回 is the word for times"
+ },
+ "habit_line": {
+  "text": {
+   "other": "「{typed}」で{picks}回選ばれ、最後は{when}"
+  },
+  "back": "Picked {picks} times for \"{typed}\", last on {when}",
+  "why": "{when} arrives as day then month; see report"
+ },
+ "follows_line": {
+  "text": {
+   "other": "あとに{count}回歌い、最後は{when}"
+  },
+  "back": "Sung after it {count} times, last on {when}",
+  "why": "Plain wording"
+ },
+ "weekday_line": {
+  "text": {
+   "other": "同じ曜日の礼拝{of}回のうち{count}回"
+  },
+  "back": "{count} of {of} services on the same weekday",
+  "why": "Short"
+ },
+ "recent_line": {
+  "text": {
+   "other": "{picks}回選択、最後は{when}"
+  },
+  "back": "Picked {picks} times, last on {when}",
+  "why": "Short"
+ },
+ "starts_chip": {
+  "text": "{section}から開始",
+  "back": "Starts at {section}",
+  "why": "Tight"
+ },
+ "starts_line": {
+  "text": "たいてい{section}から始めます（{of}回中{times}回）",
+  "back": "Usually starts at {section} ({times} of {of} times)",
+  "why": "Short"
+ },
+ "SCREEN_OWN": {
+  "text": "このウィンドウがあるモニター",
+  "back": "The monitor holding this window",
+  "why": "State"
+ },
+ "BIBLES_TITLE": {
+  "text": "聖書の追加",
+  "back": "Add Bibles",
+  "why": "Dialog title"
+ },
+ "BIBLES_MORE": {
+  "text": "ほかの訳を探す",
+  "back": "Find other translations",
+  "why": "Button"
+ },
+ "BIBLES_OWN_FILE": {
+  "text": "手持ちのファイル",
+  "back": "Your own file",
+  "why": "Phrase"
+ },
+ "BIBLES_CHOOSE_FILE": {
+  "text": "聖書ファイルを選ぶ",
+  "back": "Choose a Bible file",
+  "why": "Also the chooser title"
+ },
+ "BIBLES_FILE_HINT": {
+  "text": "MyBible、USFX、USFMファイルのZIP",
+  "back": "MyBible, USFX, a ZIP of USFM files",
+  "why": "ZIP in capitals"
+ },
+ "BIBLES_PRACTICE": {
+  "text": "練習モードでは聖書を保存しません",
+  "back": "Bibles are not kept in practice mode",
+  "why": "No full stop"
+ },
+ "BIBLES_FILE_UNSUPPORTED": {
+  "text": "このファイルは聖書として読めません",
+  "back": "This file cannot be read as a Bible",
+  "why": "No full stop"
+ },
+ "BIBLES_FILE_EMPTY": {
+  "text": "ファイルに節がありません",
+  "back": "The file has no verses",
+  "why": "No full stop"
+ },
+ "CMD_BIBLE_FILE": {
+  "text": "ファイルから聖書を追加",
+  "back": "Add a Bible from a file",
+  "why": "Row title"
+ },
+ "CMD_BIBLE_FILE_DETAIL": {
+  "text": "MyBible、USFX、USFMのZIP",
+  "back": "MyBible, USFX, ZIP of USFM",
+  "why": "ZIP in capitals"
+ },
+ "CMD_BIBLES": {
+  "text": "聖書の訳を探す",
+  "back": "Find Bible translations",
+  "why": "Row title"
+ },
+ "CMD_BIBLES_FIND_DETAIL": {
+  "text": "多くの言語の聖書を取得できます",
+  "back": "Bibles in many languages can be fetched",
+  "why": "No full stop"
+ },
+ "BIBLES_LIST": {
+  "text": "ダウンロードできる訳",
+  "back": "Translations to download",
+  "why": "Phrase"
+ },
+ "BIBLES_SEARCH": {
+  "text": "言語か訳の名前を入力",
+  "back": "Type a language or translation name",
+  "why": "Invitation"
+ },
+ "BIBLES_LOADING": {
+  "text": "一覧を取得しています",
+  "back": "Fetching the list",
+  "why": "Progress"
+ },
+ "BIBLES_LOAD_FAILED": {
+  "text": "訳の一覧を取得できませんでした",
+  "back": "Could not fetch the list of translations",
+  "why": "Natural order"
+ },
+ "BIBLES_RETRY": {
+  "text": "再試行",
+  "back": "Retry",
+  "why": "Short"
+ },
+ "BIBLES_INSTALLED": {
+  "text": "入手済み",
+  "back": "Got it",
+  "why": "State"
+ },
+ "BIBLES_DOWNLOAD": {
+  "text": "ダウンロード",
+  "back": "Download",
+  "why": "Usual loan word"
+ },
+ "BIBLES_DOWNLOADING": {
+  "text": "ダウンロード中",
+  "back": "Downloading",
+  "why": "Progress"
+ },
+ "BIBLES_USE": {
+  "text": "この訳を使う",
+  "back": "Use this translation",
+  "why": "Button"
+ },
+ "BIBLES_IN_USE": {
+  "text": "使用中",
+  "back": "In use",
+  "why": "State"
+ },
+ "BIBLES_COPYRIGHT": {
+  "text": "著作権",
+  "back": "Copyright",
+  "why": "One word"
+ },
+ "BIBLES_PICK_HINT": {
+  "text": "訳を選ぶと、著作権の表示が出ます",
+  "back": "Pick a translation and its rights notice appears",
+  "why": "One sentence"
+ },
+ "BIBLES_SCOPE_WHOLE": {
+  "text": "聖書全体",
+  "back": "Whole Bible",
+  "why": "Short"
+ },
+ "BIBLES_SCOPE_PART": {
+  "text": "一部の書のみ",
+  "back": "Some books only",
+  "why": "Short"
+ },
+ "BIBLES_NO_COPYRIGHT": {
+  "text": "ファイルに著作権の記載がありません",
+  "back": "The file states no copyright",
+  "why": "One sentence"
+ },
+ "BIBLES_NOTICE_LOADING": {
+  "text": "著作権の表示を取得しています",
+  "back": "Fetching the rights notice",
+  "why": "Not a reading-aloud verb"
+ },
+ "BIBLES_NOTICE_FAILED": {
+  "text": "著作権の表示を読めませんでした",
+  "back": "Could not read the rights notice",
+  "why": "No full stop"
+ },
+ "bibles_download_failed": {
+  "text": "ダウンロードできませんでした：{why}",
+  "back": "Could not download: {why}",
+  "why": "Reason after a colon"
+ },
+ "bible_added": {
+  "text": {
+   "other": "「{name}」を追加しました（{verses}節）"
+  },
+  "back": "\"{name}\" was added ({verses} verses)",
+  "why": "節 for verses"
+ },
+ "bibles_file_failed": {
+  "text": "聖書を追加できませんでした：{why}",
+  "back": "Could not add the Bible: {why}",
+  "why": "Reason after a colon"
+ },
+ "noun.announcements": {
+  "text": {
+   "other": "{count}件のお知らせ"
+  },
+  "back": "{count} announcements",
+  "why": "No plural in Japanese"
+ },
+ "noun.bibles": {
+  "text": {
+   "other": "{count}冊の聖書"
+  },
+  "back": "{count} Bibles",
+  "why": "冊 counts books"
+ },
+ "noun.birthdays": {
+  "text": {
+   "other": "{count}人分の誕生日"
+  },
+  "back": "birthdays of {count} people",
+  "why": "人分"
+ },
+ "noun.files": {
+  "text": {
+   "other": "{count}個のファイル"
+  },
+  "back": "{count} files",
+  "why": "個"
+ },
+ "noun.pictures": {
+  "text": {
+   "other": "{count}枚の画像"
+  },
+  "back": "{count} pictures",
+  "why": "枚 for flat things"
+ },
+ "noun.rows": {
+  "text": {
+   "other": "{count}行"
+  },
+  "back": "{count} rows",
+  "why": "行"
+ },
+ "noun.songs": {
+  "text": {
+   "other": "{count}曲"
+  },
+  "back": "{count} songs",
+  "why": "曲"
+ },
+ "section.bridge": {
+  "text": "ブリッジ",
+  "back": "Bridge",
+  "why": "Musicians' word"
+ },
+ "section.chorus": {
+  "text": "サビ",
+  "back": "Chorus",
+  "why": "Everyday word"
+ },
+ "section.ending": {
+  "text": "アウトロ",
+  "back": "Outro",
+  "why": "Pairs with intro"
+ },
+ "section.intro": {
+  "text": "イントロ",
+  "back": "Intro",
+  "why": "Musicians' word"
+ },
+ "section.other": {
+  "text": "その他",
+  "back": "Other",
+  "why": "General word"
+ },
+ "section.pre_chorus": {
+  "text": "プレサビ",
+  "back": "Pre-chorus",
+  "why": "Short form"
+ },
+ "section.verse": {
+  "text": "バース",
+  "back": "Verse",
+  "why": "A loan word so the number can follow and no Bible-verse reading arises"
+ },
+ "section_numbered": {
+  "text": "{name}{number}",
+  "back": "{name}{number}",
+  "why": "Name then number"
+ },
+ "DESIGN_BACKGROUND": {
+  "text": "背景",
+  "back": "Background",
+  "why": "One noun"
+ },
+ "TIP_START_HERE": {
+  "text": "順番が来ると、選択枠のスライドから始まる",
+  "back": "When its turn comes, it starts at the framed slide",
+  "why": "One sentence"
+ },
+ "PLAN_STARTS_AT": {
+  "text": "始める位置",
+  "back": "Where it starts",
+  "why": "Heading"
+ },
+ "PLAN_START_BEGINNING": {
+  "text": "最初のスライド",
+  "back": "First slide",
+  "why": "Plain"
+ },
+ "LISTEN_NOT_CONNECTED": {
+  "text": "このマイクはつながっていません。別のを選んでください。",
+  "back": "This microphone is not connected. Choose another.",
+  "why": "Problem then fix"
+ },
+ "LISTEN_WOULD_NOT_OPEN": {
+  "text": "このマイクは始められません。別のを選んでください。",
+  "back": "This microphone could not be started. Choose another.",
+  "why": "No guess at the cause"
+ },
+ "LISTEN_INPUT_STOPPED": {
+  "text": "音が届きません。マイクのケーブルを見てください。",
+  "back": "No sound arrives. Look at the microphone's cable.",
+  "why": "Calm"
+ },
+ "LISTEN_BEAT_ONLY": {
+  "text": "このArtosiaは拍子だけで、言葉は聴き取れません。",
+  "back": "This Artosia follows the beat only; it cannot pick up words.",
+  "why": "A fact about the copy"
+ },
+ "LISTEN_TOO_SLOW": {
+  "text": "このパソコンは遅く、言葉の聴き取りが間に合いません。",
+  "back": "This computer is slow; word recognition cannot keep up.",
+  "why": "About the PC"
+ },
+ "MEDIA_CAMERA_NONE": {
+  "text": "カメラがありません。つなぐまで背景は黒です。",
+  "back": "There is no camera. The background is black until one is connected.",
+  "why": "News first"
+ },
+ "media_camera_missing": {
+  "text": "カメラ「{name}」がありません。つなぐまで背景は黒です。",
+  "back": "Camera \"{name}\" is not there. The background is black until it is connected.",
+  "why": "Name early"
+ },
+ "MEDIA_CAMERA_BUSY": {
+  "text": "カメラが始まりません。他のアプリが使っているようです。",
+  "back": "The camera will not start. Another app seems to be using it.",
+  "why": "Two statements"
+ },
+ "MEDIA_CAMERA_STOPPED": {
+  "text": "カメラの映像が届きません。それまで背景は黒です。",
+  "back": "The camera picture is not arriving. The background is black meanwhile.",
+  "why": "Two statements"
+ },
+ "MEDIA_CAMERA_FAR": {
+  "text": "ネットワークカメラが応答しません。再接続を試しています。",
+  "back": "The network camera does not answer. Trying to reconnect.",
+  "why": "Same name as the Design row"
+ },
+ "media_video_missing": {
+  "text": "動画が見つかりません：{file}",
+  "back": "The video is missing: {file}",
+  "why": "News then name"
+ },
+ "media_video_failed": {
+  "text": "動画を再生できません：{file}",
+  "back": "The video cannot be played: {file}",
+  "why": "News then name"
+ },
+ "MEDIA_VIDEO_SOFTWARE": {
+  "text": "グラフィックで再生できず、CPUで再生中です。古いPCでは重くなります。",
+  "back": "Graphics could not play it, so the CPU does. An old PC gets slow.",
+  "why": "Calm"
+ },
+ "MEDIA_VIDEO_NONE": {
+  "text": "このArtosiaは動く背景（動画・カメラ）に対応していません。",
+  "back": "This Artosia does not support a moving background (video or camera).",
+  "why": "About the program"
+ },
+ "LISTEN_MODEL_DAMAGED": {
+  "text": "聴き取りファイルが壊れています。上で再取得を。",
+  "back": "The listening file is broken. Fetch it again with the button above.",
+  "why": "Same word for the file as the row above"
+ },
+ "LISTEN_MODEL_MISSING": {
+  "text": "聴き取りファイル（57 MB）が追加で必要です",
+  "back": "A listening file (57 MB) is needed in addition",
+  "why": "Size kept"
+ },
+ "LISTEN_MODEL_BETTER": {
+  "text": "より精度の高い聴き取りファイル（190 MB）が使えます",
+  "back": "A more accurate listening file (190 MB) can be used",
+  "why": "Same noun with 'better'"
+ },
+ "listen_model_failed": {
+  "text": "聴き取りファイルを取得できませんでした：{why}",
+  "back": "Could not fetch the listening file: {why}",
+  "why": "Reason after a colon"
+ },
+ "MARKS_APPLY": {
+  "text": "この印を使う",
+  "back": "Use these marks",
+  "why": "Says what is applied"
+ },
+ "MARKS_APPLY_HELP": {
+  "text": "提案したパートの印を歌詞に入れます（元に戻せます）",
+  "back": "Puts the proposed part marks into the lyrics (can be undone)",
+  "why": "No full stop"
+ },
+ "MARKS_HIDE": {
+  "text": "提案を閉じる",
+  "back": "Close the suggestion",
+  "why": "Screen reader too"
+ },
+ "MARKS_THIS": {
+  "text": "ここのパート",
+  "back": "This part",
+  "why": "The block under the cursor"
+ },
+ "MARKS_WHY_NAMED": {
+  "text": "歌詞に書かれたパート名から判断",
+  "back": "Judged from a part name written in the lyrics",
+  "why": "No full stop"
+ },
+ "MARKS_WHY_REPEAT": {
+  "text": "同じ歌詞が繰り返されるため",
+  "back": "Because the same words come back",
+  "why": "No full stop"
+ },
+ "MARKS_WHY_BRIDGE": {
+  "text": "短く、1回だけ、終盤に出るためブリッジ",
+  "back": "Bridge because it is short, comes once and comes late",
+  "why": "No full stop"
+ },
+ "MARKS_WHY_ORDER": {
+  "text": "前のバースの次に来るため",
+  "back": "Because it follows the earlier verses",
+  "why": "No full stop"
+ },
+ "BACKDROPS_TITLE": {
+  "text": "背景素材",
+  "back": "Background materials",
+  "why": "One collection name everywhere"
+ },
+ "BACKDROPS_SEARCH": {
+  "text": "例えば 海、ろうそく",
+  "back": "For example sea, candle",
+  "why": "'For example' in full"
+ },
+ "BACKDROPS_ALL": {
+  "text": "すべて",
+  "back": "All",
+  "why": "One word"
+ },
+ "BACKDROPS_SKY": {
+  "text": "空・雲",
+  "back": "Sky, clouds",
+  "why": "Plain noun"
+ },
+ "BACKDROPS_MOUNTAINS": {
+  "text": "山",
+  "back": "Mountains",
+  "why": "Plain noun"
+ },
+ "BACKDROPS_WATER": {
+  "text": "水辺",
+  "back": "Waterside",
+  "why": "Sea, lakes, rivers"
+ },
+ "BACKDROPS_NATURE": {
+  "text": "自然",
+  "back": "Nature",
+  "why": "Plain noun"
+ },
+ "BACKDROPS_LIGHT": {
+  "text": "光",
+  "back": "Light",
+  "why": "Plain noun"
+ },
+ "BACKDROPS_NIGHT": {
+  "text": "夜",
+  "back": "Night",
+  "why": "Plain noun"
+ },
+ "BACKDROPS_CANDLES": {
+  "text": "ろうそく",
+  "back": "Candles",
+  "why": "Plain noun"
+ },
+ "BACKDROPS_CHURCH": {
+  "text": "教会",
+  "back": "Church",
+  "why": "Plain noun"
+ },
+ "BACKDROPS_PEOPLE": {
+  "text": "人",
+  "back": "People",
+  "why": "Plain noun"
+ },
+ "BACKDROPS_TEXTURE": {
+  "text": "質感",
+  "back": "Texture",
+  "why": "Plain surfaces"
+ },
+ "BACKDROPS_USE": {
+  "text": "使う",
+  "back": "Use",
+  "why": "One verb"
+ },
+ "BACKDROPS_DOWNLOADING": {
+  "text": "ダウンロード中",
+  "back": "Downloading",
+  "why": "No dots"
+ },
+ "BACKDROPS_OFFLINE": {
+  "text": "ネットにつながっていません",
+  "back": "Not connected to the internet",
+  "why": "No full stop"
+ },
+ "BACKDROPS_AUTHOR": {
+  "text": "作者",
+  "back": "Author",
+  "why": "One word"
+ },
+ "BACKDROPS_LICENCE": {
+  "text": "利用条件",
+  "back": "Terms of use",
+  "why": "ライセンス is too wide for the label"
+ },
+ "BACKDROPS_PAGE": {
+  "text": "ページ",
+  "back": "Page",
+  "why": "Web page"
+ },
+ "BACKDROPS_SIZE": {
+  "text": "サイズ",
+  "back": "Size",
+  "why": "Usual loan word"
+ },
+ "BACKDROPS_PICK_HINT": {
+  "text": "画像を押すと、作者と利用条件が出ます",
+  "back": "Press a picture to see its author and terms",
+  "why": "One sentence"
+ },
+ "BACKDROPS_DIM": {
+  "text": "明るく細かい画像です。デザインで背景を暗く",
+  "back": "A bright, detailed picture. Darken the background in Design",
+  "why": "No full stop"
+ },
+ "BACKDROPS_HERE": {
+  "text": "保存済み、ネット不要",
+  "back": "Stored, no internet needed",
+  "why": "Fragment"
+ },
+ "BACKDROPS_IN_USE": {
+  "text": "いま背景に使用中",
+  "back": "In use as the background now",
+  "why": "Not 'stored'"
+ },
+ "backdrop_failed": {
+  "text": "背景素材を取得できませんでした：{why}",
+  "back": "Could not fetch the background material: {why}",
+  "why": "Reason after a colon"
+ },
+ "WHY_OFFLINE": {
+  "text": "ネットに接続されていません",
+  "back": "not connected to the internet",
+  "why": "Clause after a colon"
+ },
+ "WHY_SLOW": {
+  "text": "応答に時間がかかりすぎました",
+  "back": "the answer took too long",
+  "why": "Clause after a colon"
+ },
+ "WHY_BUSY": {
+  "text": "サイトが混雑中。1分ほど待って再試行",
+  "back": "the site is busy; wait about a minute and retry",
+  "why": "Clause after a colon"
+ },
+ "WHY_BROKEN": {
+  "text": "途中で接続が切れました",
+  "back": "the connection dropped partway",
+  "why": "Clause after a colon"
+ },
+ "WHY_UNREADABLE": {
+  "text": "内容を理解できませんでした",
+  "back": "the content could not be understood",
+  "why": "Clause after a colon"
+ },
+ "WHY_NOT_BIBLE": {
+  "text": "聖書のファイルではありません",
+  "back": "it is not a Bible file",
+  "why": "Clause after a colon"
+ },
+ "WHY_DAMAGED": {
+  "text": "ファイルが壊れているか不完全です",
+  "back": "the file is broken or incomplete",
+  "why": "Clause after a colon"
+ },
+ "WHY_DISK": {
+  "text": "このパソコンに書き込めませんでした",
+  "back": "it could not be written to this computer",
+  "why": "Clause after a colon"
+ },
+ "why_status": {
+  "text": "サイトがエラー{code}を返しました",
+  "back": "the site returned error {code}",
+  "why": "Clause after a colon"
+ },
+ "LYRICS_OFFLINE": {
+  "text": "歌詞サイトに接続できません。ネット接続を確認してください",
+  "back": "Cannot reach the lyrics site. Check the internet connection",
+  "why": "No final full stop"
+ },
+ "LYRICS_NOT_FOUND": {
+  "text": "歌詞サイトにその曲の歌詞がありません",
+  "back": "The lyrics site has no words for that song",
+  "why": "No final full stop"
+ },
+ "LYRICS_BUSY": {
+  "text": "歌詞サイトが混雑しています。1分ほど待ってもう一度",
+  "back": "The lyrics site is busy. Try again in about a minute",
+  "why": "No final full stop"
+ },
+ "LYRICS_UNREADABLE": {
+  "text": "歌詞サイトの返答をArtosiaが理解できませんでした",
+  "back": "Artosia could not understand the lyrics site's reply",
+  "why": "Name stays"
+ },
+ "lyrics_busy_for": {
+  "text": {
+   "other": "歌詞サイトが混雑しています。{seconds}秒ほど待ってもう一度"
+  },
+  "back": "The lyrics site is busy. Try again in about {seconds} seconds",
+  "why": "Seconds counter 秒"
+ },
+ "CMD_BACKDROPS_DETAIL": {
+  "text": "自由に使える写真や動画を、文字の後ろに",
+  "back": "Free photos and videos behind the words",
+  "why": "Fragment"
+ },
+ "LOOK_MIDNIGHT": {
+  "text": "真夜中",
+  "back": "Midnight",
+  "why": "Colour mood"
+ },
+ "LOOK_CLASSIC_BLUE": {
+  "text": "定番ブルー",
+  "back": "Classic blue",
+  "why": "Fits 14"
+ },
+ "LOOK_BLACK": {
+  "text": "黒",
+  "back": "Black",
+  "why": "Same word as the black screen button's stem"
+ },
+ "LOOK_FOREST": {
+  "text": "森",
+  "back": "Forest",
+  "why": "Colour mood"
+ },
+ "LOOK_EMBER": {
+  "text": "おき火",
+  "back": "Embers",
+  "why": "Glowing coals"
+ },
+ "LOOK_PAPER": {
+  "text": "紙",
+  "back": "Paper",
+  "why": "Colour mood"
+ },
+ "TOUR_BACK": {
+  "text": "戻る",
+  "back": "Back",
+  "why": "Not the slide word 前へ"
+ },
+ "TOUR_NEXT": {
+  "text": "進む",
+  "back": "Go on",
+  "why": "Not the slide word 次へ"
+ },
+ "KEYS_TO": {
+  "text": "〜",
+  "back": "to",
+  "why": "Range mark"
+ },
+ "KEYS_OR": {
+  "text": "か",
+  "back": "or",
+  "why": "Particle between caps"
+ },
+ "SETTINGS_ADD_BIBLE": {
+  "text": "訳を追加",
+  "back": "Add translation",
+  "why": "Does not repeat the heading"
+ },
+ "BTN_DELETE_SONG": {
+  "text": "曲を削除",
+  "back": "Delete song",
+  "why": "Verb and noun"
+ },
+ "CMD_PLAN_DUPLICATE_DETAIL": {
+  "text": "曲も聖書箇所も同じで、2つ目の礼拝用に",
+  "back": "Same songs and passages, for a second service",
+  "why": "Fragment"
+ },
+ "CMD_PLAN_RENAME_DETAIL": {
+  "text": "曜日、開始時刻、名前を変える",
+  "back": "Change day, start time, name",
+  "why": "Fragment"
+ },
+ "CMD_PLAN_DELETE_DETAIL": {
+  "text": "式次第を削除、曲は残る（元に戻せます）",
+  "back": "Delete the plan, songs stay (can be undone)",
+  "why": "Fragment"
+ },
+ "CMD_START_HERE": {
+  "text": "ここから曲を始める",
+  "back": "Start the song from here",
+  "why": "About where a song begins"
+ },
+ "CMD_EARLIER": {
+  "text": "前に映したものに戻る",
+  "back": "Go back to what was shown before",
+  "why": "Not the one-slide-back command"
+ },
+ "CMD_EARLIER_DETAIL": {
+  "text": "プレビューに出て、選択枠は中断した所に付く",
+  "back": "Appears in Preview, with the pick frame where it stopped",
+  "why": "Fragment"
+ },
+ "START_HERE_HOW": {
+  "text": "曲をプレビューに出し、始めたいスライドに選択枠を動かして、もう一度この操作を選んでください",
+  "back": "Bring the song into Preview, move the pick frame to the slide to begin at, then choose this again",
+  "why": "No full stop"
+ },
+ "CMD_START_HERE_DETAIL": {
+  "text": "選択枠のスライドから曲が始まる（メドレー用）",
+  "back": "The song begins at the framed slide (for medleys)",
+  "why": "メドレー known to musicians"
+ },
+ "CMD_NEW_ANNOUNCEMENT_DETAIL": {
+  "text": "お知らせ、今週のみことば、誕生日の一覧のカード",
+  "back": "Cards for a notice, the verse of the week, a list of birthdays",
+  "why": "Fragment"
+ },
+ "KEYS_MORE": {
+  "text": "ここにない操作は検索に入力すれば出てきます（例：式次第のコピー、デザイン）",
+  "back": "Anything not here: type it in search (for example copying a plan, design)",
+  "why": "Keys drawn before the text"
+ },
+ "SETTINGS_GENERAL": {
+  "text": "基本",
+  "back": "General",
+  "why": "Usual group heading"
+ },
+ "search_bible": {
+  "text": "{passage}、または節の中の言葉",
+  "back": "{passage}, or words from the verse",
+  "why": "Example first"
+ },
+ "NOTICE_SAVED": {
+  "text": "お知らせを保存しました",
+  "back": "The announcement was saved",
+  "why": "Pair of 曲を保存しました"
+ },
+ "BTN_START_HERE": {
+  "text": "ここから開始",
+  "back": "Begin here",
+  "why": "Where a song begins"
+ }
+}

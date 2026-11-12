@@ -4,6 +4,7 @@ members = [
     "crates/artosia",
     "crates/artosia-core",
     "crates/artosia-listen",
+    "crates/artosia-locale",
     "crates/artosia-lyrics",
     "crates/artosia-office",
     "crates/artosia-output",

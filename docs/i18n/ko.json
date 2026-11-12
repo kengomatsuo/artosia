@@ -1,0 +1,3478 @@
+{
+ "SEARCH_PLACEHOLDER": {
+  "text": "곡이나 성경 구절 입력",
+  "back": "Type a song or Bible passage",
+  "why": "입력 invites typing; 구절 is the usual word for a passage"
+ },
+ "SEARCH_SONGS": {
+  "text": "곡 제목이나 가사 한 줄 입력",
+  "back": "Type a song title or a line of words",
+  "why": "가사 is the common word for song words"
+ },
+ "SEARCH_RESULTS": {
+  "text": "검색 결과",
+  "back": "search results",
+  "why": ""
+ },
+ "SCOPE_LABEL": {
+  "text": "검색 범위",
+  "back": "search scope",
+  "why": ""
+ },
+ "SCOPE_ALL": {
+  "text": "전체",
+  "back": "All",
+  "why": ""
+ },
+ "SCOPE_SONGS": {
+  "text": "곡",
+  "back": "Songs",
+  "why": "곡 is the song word everywhere"
+ },
+ "SCOPE_BIBLE": {
+  "text": "성경",
+  "back": "Bible",
+  "why": ""
+ },
+ "HINT_OPEN": {
+  "text": "열기",
+  "back": "Open",
+  "why": "same as the Open button"
+ },
+ "HINT_SECTIONS": {
+  "text": "곡 안에서 찾기",
+  "back": "Find inside the song",
+  "why": ""
+ },
+ "SEARCH_SECTIONS": {
+  "text": "후렴, 1절, 가사 한 줄 입력",
+  "back": "Type chorus, verse 1, or a line of words",
+  "why": "후렴 and 1절 are what musicians say"
+ },
+ "IN_PLAN": {
+  "text": "이미 예배 순서에 있음",
+  "back": "Already in the service plan",
+  "why": "state, not action; 예배 순서 is the plan word"
+ },
+ "PLAN_CHIP": {
+  "text": "예배 순서에 있음",
+  "back": "In the service plan",
+  "why": ""
+ },
+ "KIND_LOOK": {
+  "text": "디자인",
+  "back": "Design",
+  "why": "same as the Design button"
+ },
+ "KIND_BIBLE": {
+  "text": "성경 번역본",
+  "back": "Bible translation",
+  "why": "번역본 is the usual word for a version"
+ },
+ "COUNTDOWN_DETAIL": {
+  "text": "끝날 때까지 프로젝터에 띄워요",
+  "back": "Stays on the projector until it ends",
+  "why": "띄우다 is the one verb for being on the projector"
+ },
+ "MESSAGE_DETAIL": {
+  "text": "입력한 글을 안내 문구로 띄워요",
+  "back": "Puts the typed words up as a notice",
+  "why": ""
+ },
+ "countdown_for": {
+  "text": {
+   "other": "{minutes}분 카운트다운"
+  },
+  "back": "{minutes}-minute countdown",
+  "why": "Korean has one form"
+ },
+ "BIBLE_LOADING": {
+  "text": "성경을 준비하는 중",
+  "back": "Getting the Bible ready",
+  "why": "progress state"
+ },
+ "OLD_TESTAMENT": {
+  "text": "구약",
+  "back": "Old Testament",
+  "why": ""
+ },
+ "NEW_TESTAMENT": {
+  "text": "신약",
+  "back": "New Testament",
+  "why": ""
+ },
+ "pick_chapter": {
+  "text": "{book}: 장 선택",
+  "back": "{book}: choose a chapter",
+  "why": "colon avoids any particle after the book name"
+ },
+ "SONGS_EMPTY": {
+  "text": "곡이 아직 없어요",
+  "back": "No songs yet",
+  "why": ""
+ },
+ "nothing_found": {
+  "text": "“{query}” 검색 결과 없음",
+  "back": "No results for “{query}”",
+  "why": "noun phrase avoids a particle after the typed text"
+ },
+ "new_song_called": {
+  "text": "“{title}” 새 곡 만들기",
+  "back": "Make a new song “{title}”",
+  "why": ""
+ },
+ "songs": {
+  "text": {
+   "other": "{count}곡"
+  },
+  "back": "{count} songs",
+  "why": "곡 is the counter for songs"
+ },
+ "slides": {
+  "text": {
+   "other": "슬라이드 {count}개"
+  },
+  "back": "{count} slides",
+  "why": "장 is kept for Bible chapters, so slides take 개"
+ },
+ "chapters": {
+  "text": {
+   "other": "{count}장"
+  },
+  "back": "{count} chapters",
+  "why": ""
+ },
+ "verses": {
+  "text": {
+   "other": "{count}절"
+  },
+  "back": "{count} verses",
+  "why": ""
+ },
+ "CMD_NEW_SONG": {
+  "text": "새 곡 만들기",
+  "back": "Make a new song",
+  "why": ""
+ },
+ "CMD_NEW_SONG_DETAIL": {
+  "text": "가사를 직접 쓰거나 붙여넣어요",
+  "back": "Write the words or paste them in",
+  "why": ""
+ },
+ "CMD_PASTE_SONG": {
+  "text": "복사한 가사로 곡 만들기",
+  "back": "Make a song from copied words",
+  "why": ""
+ },
+ "CMD_PASTE_SONG_DETAIL": {
+  "text": "어디서든 가사를 복사한 뒤 선택하세요",
+  "back": "Copy the words from anywhere, then choose this",
+  "why": ""
+ },
+ "CMD_ANNOUNCEMENTS": {
+  "text": "공지",
+  "back": "Announcements",
+  "why": "공지 is the announcements word everywhere"
+ },
+ "CMD_ANNOUNCEMENTS_DETAIL": {
+  "text": "예배 전 화면에 차례로 돌아가며 나오는 공지",
+  "back": "Notices that take turns on screen before the service",
+  "why": ""
+ },
+ "CMD_HEADING": {
+  "text": "구분 추가",
+  "back": "Add a divider",
+  "why": "구분 is the divider word"
+ },
+ "CMD_HEADING_DETAIL": {
+  "text": "찬양과 말씀",
+  "back": "Praise and the Word",
+  "why": "same words as the first dividers"
+ },
+ "CMD_LOOKS": {
+  "text": "디자인",
+  "back": "Design",
+  "why": ""
+ },
+ "CMD_LOOKS_DETAIL": {
+  "text": "배경, 글자, 로고를 바꿔요",
+  "back": "Change the background, the words and the emblem",
+  "why": "글자 is the words on a slide, 로고 the emblem"
+ },
+ "CMD_SETTINGS": {
+  "text": "설정",
+  "back": "Settings",
+  "why": ""
+ },
+ "CMD_SETTINGS_DETAIL": {
+  "text": "프로그램 언어, 성경, 단축키, 둘러보기",
+  "back": "Program language, Bible, keys, tour",
+  "why": ""
+ },
+ "CMD_SCREENS": {
+  "text": "모니터",
+  "back": "Monitors",
+  "why": "모니터 is the hardware noun"
+ },
+ "CMD_SCREENS_DETAIL": {
+  "text": "프로젝터용, 찬양팀용 모니터를 정해요",
+  "back": "Choose the monitor for the projector and for the band",
+  "why": ""
+ },
+ "CMD_REMOTE": {
+  "text": "휴대폰 리모컨",
+  "back": "Phone remote",
+  "why": "리모컨 is what volunteers say"
+ },
+ "CMD_REMOTE_DETAIL": {
+  "text": "같은 Wi-Fi의 휴대폰으로 슬라이드를 넘겨요",
+  "back": "A phone on the same Wi-Fi can change the slides",
+  "why": ""
+ },
+ "CMD_IMPORT_FOLDER": {
+  "text": "폴더에서 곡 가져오기",
+  "back": "Bring in songs from a folder",
+  "why": ""
+ },
+ "CMD_IMPORT_FOLDER_DETAIL": {
+  "text": "OpenLyrics 곡 파일",
+  "back": "OpenLyrics song files",
+  "why": ""
+ },
+ "IMPORT_FOLDER_EMPTY": {
+  "text": "폴더에 읽을 수 있는 곡 파일이 없어요",
+  "back": "The folder has no song files that can be read",
+  "why": ""
+ },
+ "CMD_IMPORT": {
+  "text": "EasiSlides에서 가져오기",
+  "back": "Bring in from EasiSlides",
+  "why": "가져오기 copies, does not move"
+ },
+ "CMD_IMPORT_DETAIL": {
+  "text": "이 컴퓨터에 있는 곡과 성경을 복사해 와요",
+  "back": "Copies the songs and Bibles on this computer",
+  "why": ""
+ },
+ "CMD_STREAM": {
+  "text": "방송과 녹화",
+  "back": "Broadcast and recording",
+  "why": "both ideas in the title"
+ },
+ "CMD_STREAM_DETAIL": {
+  "text": "프로젝터 화면을 영상 사이트로 보내거나 저장해요",
+  "back": "Send the projector picture to a video site or save it",
+  "why": ""
+ },
+ "BTN_STREAM": {
+  "text": "방송",
+  "back": "Broadcast",
+  "why": ""
+ },
+ "BTN_LISTEN": {
+  "text": "마이크",
+  "back": "Microphone",
+  "why": "named by the thing seen, the microphone"
+ },
+ "STREAM_HINT": {
+  "text": "프로젝터에 나오는 화면과 현장 소리를 그대로 방송해요.",
+  "back": "Broadcasts the picture on the projector and the room sound as they are.",
+  "why": ""
+ },
+ "STREAM_ADDRESS": {
+  "text": "방송 주소",
+  "back": "Broadcast address",
+  "why": ""
+ },
+ "STREAM_KEY": {
+  "text": "방송 키",
+  "back": "Broadcast key",
+  "why": ""
+ },
+ "STREAM_RECORD": {
+  "text": "방송하며 녹화하기",
+  "back": "Record while broadcasting",
+  "why": "녹화 is video, 녹음 is sound"
+ },
+ "STREAM_RECORD_HINT": {
+  "text": "이 컴퓨터의 Artosia 데이터 폴더에 저장돼요",
+  "back": "Saved in the Artosia data folder on this computer",
+  "why": ""
+ },
+ "BTN_STREAM_START": {
+  "text": "방송 시작",
+  "back": "Start broadcast",
+  "why": ""
+ },
+ "BTN_STREAM_STOP": {
+  "text": "방송 종료",
+  "back": "End broadcast",
+  "why": "pair 시작/종료"
+ },
+ "STREAM_STARTING": {
+  "text": "방송을 시작하는 중",
+  "back": "Starting the broadcast",
+  "why": ""
+ },
+ "STREAM_RECONNECTING": {
+  "text": "연결이 끊겼어요. 자동으로 다시 연결해요",
+  "back": "The connection dropped. Reconnecting by itself",
+  "why": ""
+ },
+ "STREAM_STOPPING": {
+  "text": "방송을 끝내는 중",
+  "back": "Ending the broadcast",
+  "why": ""
+ },
+ "STREAM_MISSING": {
+  "text": "이 설치본에는 방송 기능이 들어 있지 않아 방송할 수 없어요",
+  "back": "This installation lacks the broadcast part, so it cannot broadcast",
+  "why": ""
+ },
+ "STREAM_NOTHING": {
+  "text": "방송 주소를 입력하거나 녹화를 켜세요",
+  "back": "Fill in a broadcast address or switch recording on",
+  "why": ""
+ },
+ "stream_failed": {
+  "text": "방송을 시작하지 못했어요: {problem}",
+  "back": "Could not start the broadcast: {problem}",
+  "why": ""
+ },
+ "stream_live": {
+  "text": {
+   "none_lost": "방송 중 {time}",
+   "some_lost": {
+    "other": "방송 중 {time} · 놓친 화면 {dropped}개"
+   }
+  },
+  "back": "Broadcasting {time} / Broadcasting {time}, {dropped} pictures lost",
+  "why": ""
+ },
+ "CMD_LISTEN": {
+  "text": "마이크",
+  "back": "Microphone",
+  "why": "same name as the top bar button"
+ },
+ "CMD_LISTEN_DETAIL": {
+  "text": "소리에서 알아낸 곡이나 구절을 제안해요",
+  "back": "Suggests the song or passage it picks out of the sound",
+  "why": ""
+ },
+ "LISTEN_SWITCH": {
+  "text": "마이크 사용",
+  "back": "Use the microphone",
+  "why": ""
+ },
+ "LISTEN_HINT": {
+  "text": "제안만 하고 화면에는 아무것도 띄우지 않아요",
+  "back": "It only suggests and puts nothing on the screen",
+  "why": ""
+ },
+ "LISTEN_MICROPHONE": {
+  "text": "마이크",
+  "back": "Microphone",
+  "why": ""
+ },
+ "LISTEN_DEFAULT": {
+  "text": "기본 마이크",
+  "back": "Default microphone",
+  "why": ""
+ },
+ "LISTEN_SYSTEM_AUDIO": {
+  "text": "이 컴퓨터에서 나는 소리",
+  "back": "Sound from this computer",
+  "why": ""
+ },
+ "LISTEN_LANGUAGE": {
+  "text": "예배 언어",
+  "back": "Service language",
+  "why": "language of the voices in the room, not the window"
+ },
+ "LISTEN_INDONESIAN": {
+  "text": "인도네시아어",
+  "back": "Indonesian",
+  "why": ""
+ },
+ "LISTEN_ENGLISH": {
+  "text": "영어",
+  "back": "English",
+  "why": ""
+ },
+ "LISTEN_LEVEL": {
+  "text": "소리 크기",
+  "back": "Sound level",
+  "why": ""
+ },
+ "LISTEN_HEARD": {
+  "text": "들린 내용",
+  "back": "What was heard",
+  "why": ""
+ },
+ "LISTEN_PART_LISTENING": {
+  "text": "듣기",
+  "back": "Listening",
+  "why": ""
+ },
+ "LISTEN_PART_RECORDINGS": {
+  "text": "녹음",
+  "back": "Recordings",
+  "why": ""
+ },
+ "REC_SWITCH": {
+  "text": "녹음 보관",
+  "back": "Keep recordings",
+  "why": ""
+ },
+ "REC_HINT": {
+  "text": "들은 소리 조각과 추측 목록이 이 컴퓨터 폴더에만 저장돼요.",
+  "back": "The pieces of sound heard and the list of guesses are stored only in a folder on this computer.",
+  "why": ""
+ },
+ "REC_NONE": {
+  "text": "아직 없음",
+  "back": "None yet",
+  "why": ""
+ },
+ "rec_kept": {
+  "text": "{size} 저장됨",
+  "back": "{size} kept",
+  "why": ""
+ },
+ "REC_OPEN": {
+  "text": "폴더 열기",
+  "back": "Open folder",
+  "why": ""
+ },
+ "REC_MOVE": {
+  "text": "폴더 바꾸기",
+  "back": "Change folder",
+  "why": ""
+ },
+ "REC_SAVE": {
+  "text": "파일 하나로 저장",
+  "back": "Save as one file",
+  "why": ""
+ },
+ "REC_SAVING": {
+  "text": "저장 중",
+  "back": "Saving",
+  "why": ""
+ },
+ "REC_DELETE": {
+  "text": "모두 삭제",
+  "back": "Delete all",
+  "why": ""
+ },
+ "REC_DELETED": {
+  "text": "녹음을 모두 삭제했어요",
+  "back": "Deleted all recordings",
+  "why": ""
+ },
+ "rec_saved": {
+  "text": "{name} 파일로 저장했어요",
+  "back": "Saved as the file {name}",
+  "why": ""
+ },
+ "REC_FAILED": {
+  "text": "여기엔 저장할 수 없어요. 폴더 바꾸기로 다른 곳을 고르세요.",
+  "back": "Cannot save here. Pick another place with Change folder.",
+  "why": ""
+ },
+ "REC_ON": {
+  "text": "소리 녹음 중",
+  "back": "Recording sound",
+  "why": "names sound, not just storing"
+ },
+ "LISTEN_TEMPO": {
+  "text": "템포",
+  "back": "Tempo",
+  "why": "musicians say 템포"
+ },
+ "LISTEN_BPM": {
+  "text": "BPM",
+  "back": "bpm",
+  "why": "international abbreviation"
+ },
+ "LISTEN_TEMPO_HALF": {
+  "text": "절반",
+  "back": "Half",
+  "why": ""
+ },
+ "LISTEN_TEMPO_AS_HEARD": {
+  "text": "들린 그대로",
+  "back": "As heard",
+  "why": ""
+ },
+ "LISTEN_TEMPO_DOUBLE": {
+  "text": "두 배",
+  "back": "Double",
+  "why": ""
+ },
+ "LISTEN_BEAT_BLINK": {
+  "text": "박자에 맞춰 빨간 표시 깜빡임",
+  "back": "Red marker blinks with the beat",
+  "why": ""
+ },
+ "LISTEN_BEAT_BLINK_HINT": {
+  "text": "은은한 장식일 뿐 다른 건 안 바뀌어요",
+  "back": "Only a faint decoration, nothing else changes",
+  "why": ""
+ },
+ "CMD_UPDATE": {
+  "text": "업데이트 확인",
+  "back": "Check for updates",
+  "why": ""
+ },
+ "CMD_UPDATE_DETAIL": {
+  "text": "프로그램을 열 때마다 자동으로도 확인해요",
+  "back": "It also checks by itself every time the program opens",
+  "why": ""
+ },
+ "update_ready": {
+  "text": "{version} 버전을 받았어요. 다시 열면 적용돼요",
+  "back": "Version {version} downloaded. It applies when reopened",
+  "why": ""
+ },
+ "update_none": {
+  "text": "이미 최신 버전이에요 ({version})",
+  "back": "Already the newest version ({version})",
+  "why": ""
+ },
+ "CMD_KEYS": {
+  "text": "단축키",
+  "back": "Shortcuts",
+  "why": ""
+ },
+ "CMD_KEYS_DETAIL": {
+  "text": "프로그램이 반응하는 모든 키를 보여줘요",
+  "back": "Shows every key the program responds to",
+  "why": ""
+ },
+ "CMD_START": {
+  "text": "예배 시작",
+  "back": "Start the service",
+  "why": ""
+ },
+ "CMD_START_DETAIL": {
+  "text": "예배 순서의 첫 항목을 바로 띄워요",
+  "back": "Puts the first item of the plan up at once",
+  "why": ""
+ },
+ "CMD_PREVIOUS": {
+  "text": "이전 슬라이드",
+  "back": "Previous slide",
+  "why": ""
+ },
+ "CMD_PREVIOUS_DETAIL": {
+  "text": "프로젝터가 이전 슬라이드로 가요",
+  "back": "The projector goes to the previous slide",
+  "why": ""
+ },
+ "CMD_NEXT_DETAIL": {
+  "text": "프로젝터가 다음 슬라이드로 가요",
+  "back": "The projector goes to the next slide",
+  "why": "이전/다음 avoids the ambiguous 앞/뒤"
+ },
+ "CMD_BLACK_DETAIL": {
+  "text": "화면이 까매져요. 다시 고르면 돌아와요",
+  "back": "The screen goes black. Choose again to bring it back",
+  "why": ""
+ },
+ "CMD_CLEAR_DETAIL": {
+  "text": "글자만 사라지고 배경은 그대로 있어요",
+  "back": "Only the words go, the background stays",
+  "why": ""
+ },
+ "CMD_LOGO_DETAIL": {
+  "text": "슬라이드 대신 로고가 나와요",
+  "back": "The emblem appears in place of the slide",
+  "why": ""
+ },
+ "CMD_STOP_COUNTDOWN": {
+  "text": "카운트다운 끝내기",
+  "back": "End the countdown",
+  "why": ""
+ },
+ "CMD_STOP_COUNTDOWN_DETAIL": {
+  "text": "프로젝터에서 카운트다운이 사라져요",
+  "back": "The countdown leaves the projector",
+  "why": ""
+ },
+ "CMD_HIDE_MESSAGE": {
+  "text": "안내 문구 숨기기",
+  "back": "Hide the notice",
+  "why": "안내 문구 is the notice to the room"
+ },
+ "CMD_HIDE_MESSAGE_DETAIL": {
+  "text": "모든 화면에서 안내 문구가 사라져요",
+  "back": "The notice leaves every screen",
+  "why": ""
+ },
+ "CMD_EDIT_SONG": {
+  "text": "곡 편집",
+  "back": "Edit song",
+  "why": ""
+ },
+ "CMD_EDIT_SONG_DETAIL": {
+  "text": "보고 있는 곡의 가사를 고쳐요",
+  "back": "Correct the words of the song being viewed",
+  "why": ""
+ },
+ "CMD_UNDO_DETAIL": {
+  "text": "마지막으로 지운 것이 돌아와요",
+  "back": "The last thing removed comes back",
+  "why": ""
+ },
+ "CMD_LOOP": {
+  "text": "공지 돌리기",
+  "back": "Cycle announcements",
+  "why": ""
+ },
+ "CMD_LOOP_DETAIL": {
+  "text": "하나씩 차례로 나오고 멈출 때까지 이어져요",
+  "back": "They show one by one and go on until stopped",
+  "why": ""
+ },
+ "BTN_LOOK": {
+  "text": "디자인",
+  "back": "Design",
+  "why": ""
+ },
+ "BTN_SETTINGS": {
+  "text": "설정",
+  "back": "Settings",
+  "why": ""
+ },
+ "DESIGN_TEXT": {
+  "text": "글자",
+  "back": "Words",
+  "why": "글자 is the words on the slide"
+ },
+ "SETTINGS_SONGS": {
+  "text": "곡",
+  "back": "Songs",
+  "why": ""
+ },
+ "SETTINGS_ABOUT": {
+  "text": "정보",
+  "back": "About",
+  "why": ""
+ },
+ "about_version": {
+  "text": "Artosia {version}",
+  "back": "Artosia {version}",
+  "why": "unchanged"
+ },
+ "BTN_SCREENS": {
+  "text": "모니터",
+  "back": "Monitors",
+  "why": ""
+ },
+ "BTN_PHONE": {
+  "text": "휴대폰",
+  "back": "Phone",
+  "why": ""
+ },
+ "HINT_KEYS": {
+  "text": "단축키",
+  "back": "Shortcuts",
+  "why": ""
+ },
+ "OUTPUT_OFF": {
+  "text": "프로젝터 꺼짐",
+  "back": "Projector off",
+  "why": "켜짐/꺼짐 is the on/off pair"
+ },
+ "OUTPUT_PRACTICE": {
+  "text": "연습 모드: 프로젝터로 나가지 않아요",
+  "back": "Practice mode: nothing goes to the projector",
+  "why": ""
+ },
+ "OUTPUT_STARTING": {
+  "text": "프로젝터를 켜는 중",
+  "back": "Starting the projector",
+  "why": ""
+ },
+ "OUTPUT_MISSING": {
+  "text": "프로젝터 프로그램이 Artosia와 같은 폴더에 없어요",
+  "back": "The projector program is not in the same folder as Artosia",
+  "why": ""
+ },
+ "OUTPUT_KEEPS_CLOSING": {
+  "text": "프로젝터 프로그램이 켜지자마자 계속 꺼져요",
+  "back": "The projector program keeps shutting as soon as it starts",
+  "why": ""
+ },
+ "output_failed": {
+  "text": "프로젝터를 켜지 못했어요: {problem}",
+  "back": "Could not start the projector: {problem}",
+  "why": ""
+ },
+ "OUTPUT_NO_SCREEN": {
+  "text": "두 번째 모니터 없음",
+  "back": "No second monitor",
+  "why": ""
+ },
+ "OUTPUT_HERE": {
+  "text": "이 모니터에 프로젝터 화면을 띄우는 중",
+  "back": "Showing the projector picture on this monitor",
+  "why": ""
+ },
+ "OUTPUT_STUCK": {
+  "text": "프로젝터 프로그램이 응답하지 않아요",
+  "back": "The projector program is not responding",
+  "why": ""
+ },
+ "REMOTE_ON": {
+  "text": "휴대폰 리모컨 켜짐",
+  "back": "Phone remote on",
+  "why": ""
+ },
+ "output_on_screen": {
+  "text": "프로젝터: {number}번 모니터",
+  "back": "Projector: monitor {number}",
+  "why": ""
+ },
+ "library_in_memory": {
+  "text": "곡 보관함을 열지 못해서 닫으면 이번 작업이 사라져요: {problem}",
+  "back": "Could not open the song library, so this session's work is lost on closing: {problem}",
+  "why": ""
+ },
+ "PLAN_EMPTY": {
+  "text": "예배 순서가 비어 있어요",
+  "back": "The plan is empty",
+  "why": ""
+ },
+ "PLAN_ADD": {
+  "text": "항목 추가",
+  "back": "Add item",
+  "why": "항목 is the plan item"
+ },
+ "PLAN_NEW": {
+  "text": "새 예배 순서",
+  "back": "New plan",
+  "why": ""
+ },
+ "PLAN_ITEM_MENU": {
+  "text": "더 보기",
+  "back": "More",
+  "why": ""
+ },
+ "PLAN_MOVE_UP": {
+  "text": "위로 이동",
+  "back": "Move up",
+  "why": ""
+ },
+ "PLAN_MOVE_DOWN": {
+  "text": "아래로 이동",
+  "back": "Move down",
+  "why": "pair with 위로 이동"
+ },
+ "PLAN_REMOVE": {
+  "text": "예배 순서에서 빼기",
+  "back": "Take out of the plan",
+  "why": "빼기 only leaves the plan; 삭제 is for deleting a song"
+ },
+ "PLAN_MISSING": {
+  "text": "곡 없음",
+  "back": "Song gone",
+  "why": ""
+ },
+ "PLAN_HEADING_NEW": {
+  "text": "새 구분",
+  "back": "New divider",
+  "why": ""
+ },
+ "PLAN_HEADING_WORSHIP": {
+  "text": "찬양",
+  "back": "Praise",
+  "why": "church word for the singing time"
+ },
+ "PLAN_HEADING_WORD": {
+  "text": "말씀",
+  "back": "The Word",
+  "why": "church word for the reading and preaching time"
+ },
+ "PLANS_TITLE": {
+  "text": "예배 순서 목록",
+  "back": "List of plans",
+  "why": "Korean has no plural"
+ },
+ "PLANS_TODAY": {
+  "text": "오늘",
+  "back": "Today",
+  "why": ""
+ },
+ "PLANS_NO_DAY": {
+  "text": "요일 정하기",
+  "back": "Set a day",
+  "why": "reads as an invitation"
+ },
+ "PLAN_DUPLICATE": {
+  "text": "예배 순서 복사",
+  "back": "Copy the plan",
+  "why": "복사 is the everyday word"
+ },
+ "PLAN_RENAME": {
+  "text": "요일과 시간",
+  "back": "Day and time",
+  "why": "names what is changed"
+ },
+ "PLAN_DELETE": {
+  "text": "예배 순서 삭제",
+  "back": "Delete the plan",
+  "why": ""
+ },
+ "PLAN_NEW_DETAIL": {
+  "text": "다른 예배를 위한 순서를 새로 만들어요",
+  "back": "Start a new plan for another service",
+  "why": ""
+ },
+ "PLAN_DAY": {
+  "text": "요일",
+  "back": "Day",
+  "why": ""
+ },
+ "PLAN_HOUR": {
+  "text": "시",
+  "back": "Hour",
+  "why": "clock hour"
+ },
+ "PLAN_MINUTE": {
+  "text": "분",
+  "back": "Minute",
+  "why": ""
+ },
+ "time_of_day": {
+  "text": "{hour}:{minute}",
+  "back": "{hour}:{minute}",
+  "why": "24-hour clock with a colon"
+ },
+ "service_slot": {
+  "text": "{day} {time}",
+  "back": "{day} {time}",
+  "why": "day first, as on a board"
+ },
+ "PLAN_NAME_LABEL": {
+  "text": "이름 (비워도 돼요)",
+  "back": "Name (may be left empty)",
+  "why": ""
+ },
+ "LOOK_FOR_USUAL": {
+  "text": "기본 디자인",
+  "back": "Usual design",
+  "why": ""
+ },
+ "LOOK_FOR_PLAN": {
+  "text": "이 예배 순서에만 적용",
+  "back": "Applies only to this plan",
+  "why": ""
+ },
+ "PLAN_OWN_LOOK": {
+  "text": "이 예배 순서만의 디자인",
+  "back": "A design just for this plan",
+  "why": ""
+ },
+ "KIND_PLAN": {
+  "text": "예배 순서",
+  "back": "Plan",
+  "why": ""
+ },
+ "look_own_dropped": {
+  "text": "{name}: 기본 디자인으로 돌아갔어요",
+  "back": "{name}: back to the usual design",
+  "why": "name first with a colon avoids particles"
+ },
+ "plan_deleted": {
+  "text": "예배 순서를 삭제했어요: {name}",
+  "back": "Deleted the plan: {name}",
+  "why": "colon avoids a particle"
+ },
+ "added_to_plan": {
+  "text": "예배 순서에 추가했어요: “{title}”",
+  "back": "Added to the plan: “{title}”",
+  "why": ""
+ },
+ "removed_from_plan": {
+  "text": "예배 순서에서 뺐어요: “{title}”",
+  "back": "Took out of the plan: “{title}”",
+  "why": ""
+ },
+ "START_TITLE": {
+  "text": "무엇을 띄울까요?",
+  "back": "What shall we put up?",
+  "why": "a helper's question"
+ },
+ "START_HINT": {
+  "text": "또는 글자를 바로 입력",
+  "back": "or just type letters",
+  "why": "follows the key caps"
+ },
+ "CMD_TOUR": {
+  "text": "둘러보기",
+  "back": "Tour",
+  "why": ""
+ },
+ "CMD_TOUR_DETAIL": {
+  "text": "다섯 단계로 창을 차례로 안내해요",
+  "back": "Guides you through the window in five steps",
+  "why": ""
+ },
+ "TOUR_SKIP": {
+  "text": "건너뛰기",
+  "back": "Skip",
+  "why": ""
+ },
+ "TOUR_DONE": {
+  "text": "완료",
+  "back": "Done",
+  "why": ""
+ },
+ "TOUR_PLAN": {
+  "text": "왼쪽에는 예배에서 보여 줄 것이 순서대로 있어요",
+  "back": "On the left is what will be shown in the service, in order",
+  "why": ""
+ },
+ "TOUR_PLAN_MORE": {
+  "text": "줄을 끌어서 순서를 바꿔요",
+  "back": "Drag a row to change the order",
+  "why": ""
+ },
+ "TOUR_PREVIEW": {
+  "text": "가운데 미리보기에는 다음에 띄울 슬라이드가 있어요",
+  "back": "In the middle Preview is the slide to put up next",
+  "why": ""
+ },
+ "TOUR_PREVIEW_MORE": {
+  "text": "여기 내용은 모인 사람들에게 안 보여요",
+  "back": "What is here is not seen by the people gathered",
+  "why": ""
+ },
+ "TOUR_SHOW": {
+  "text": "띄우기를 누르면 미리보기의 슬라이드가 라이브로 가요",
+  "back": "Press Show and the slide in Preview goes to Live",
+  "why": ""
+ },
+ "TOUR_SHOW_MORE": {
+  "text": "프로젝터가 켜져 있어야 모인 사람들에게 보여요",
+  "back": "The people gathered see it only if the projector is on",
+  "why": ""
+ },
+ "TOUR_LIVE": {
+  "text": "오른쪽 라이브에는 지금 보이는 화면이 있어요",
+  "back": "On the right, Live holds what is on view now",
+  "why": ""
+ },
+ "TOUR_LIVE_MORE": {
+  "text": "아래 빨간 라이브 타일(F6)이 프로젝터를 켜고 꺼요",
+  "back": "The red Live tile below (F6) turns the projector on and off",
+  "why": ""
+ },
+ "TOUR_SEARCH": {
+  "text": "이 검색창 하나로 모든 곡과 성경 구절을 찾아요",
+  "back": "This one box finds every song and Bible passage",
+  "why": ""
+ },
+ "TOUR_SEARCH_MORE": {
+  "text": "먼저 열고 ‘예배 순서에 추가’를 눌러요",
+  "back": "First open it, then press Add to plan",
+  "why": "same label as the add button"
+ },
+ "START_SONGS": {
+  "text": "곡",
+  "back": "Songs",
+  "why": ""
+ },
+ "START_SONGS_DETAIL": {
+  "text": "보관함의 모든 곡 보기",
+  "back": "Look through every song in the library",
+  "why": ""
+ },
+ "START_BIBLE": {
+  "text": "성경",
+  "back": "Bible",
+  "why": ""
+ },
+ "START_BIBLE_DETAIL": {
+  "text": "책을 고른 뒤 절을 골라요",
+  "back": "Choose a book, then a verse",
+  "why": ""
+ },
+ "START_NEW_DETAIL": {
+  "text": "직접 쓰거나 붙여넣기",
+  "back": "Write it or paste it",
+  "why": ""
+ },
+ "START_NO_SONGS": {
+  "text": "곡 보관함이 비어 있어요",
+  "back": "The song library is empty",
+  "why": ""
+ },
+ "START_ANNOUNCEMENTS_DETAIL": {
+  "text": "예배 시작 전에 보여 줘요",
+  "back": "Shown before the service starts",
+  "why": ""
+ },
+ "BTN_BRING_OVER": {
+  "text": "가져오기",
+  "back": "Bring in",
+  "why": ""
+ },
+ "BTN_ADD_TO_PLAN": {
+  "text": "예배 순서에 추가",
+  "back": "Add to plan",
+  "why": ""
+ },
+ "BTN_EDIT": {
+  "text": "편집",
+  "back": "Edit",
+  "why": ""
+ },
+ "BTN_NEXT_VERSE": {
+  "text": "다음 절 추가",
+  "back": "Add the next verse",
+  "why": ""
+ },
+ "DECK_EMPTY": {
+  "text": "슬라이드가 없어요",
+  "back": "There are no slides",
+  "why": ""
+ },
+ "BTN_LOOP_START": {
+  "text": "돌리기 시작",
+  "back": "Start cycling",
+  "why": ""
+ },
+ "BTN_LOOP_STOP": {
+  "text": "돌리기 멈춤",
+  "back": "Stop cycling",
+  "why": ""
+ },
+ "PANE_PREVIEW": {
+  "text": "미리보기",
+  "back": "Preview",
+  "why": ""
+ },
+ "LIVE": {
+  "text": "라이브",
+  "back": "Live",
+  "why": "one word for the pane, the pill and the tile"
+ },
+ "BTN_NEXT": {
+  "text": "다음",
+  "back": "Next",
+  "why": ""
+ },
+ "BTN_CLEAR_TEXT": {
+  "text": "글자 숨기기",
+  "back": "Hide the words",
+  "why": ""
+ },
+ "BTN_BLACK": {
+  "text": "블랙",
+  "back": "Black",
+  "why": "what sound and projection volunteers say"
+ },
+ "BTN_LOGO": {
+  "text": "로고",
+  "back": "Logo",
+  "why": ""
+ },
+ "LOGO_MISSING": {
+  "text": "고른 로고가 없어요. 디자인에서 고르세요",
+  "back": "No logo chosen. Choose one in Design",
+  "why": ""
+ },
+ "STATE_BLACK": {
+  "text": "프로젝터가 블랙이에요",
+  "back": "The projector is black",
+  "why": ""
+ },
+ "STATE_LOGO": {
+  "text": "프로젝터에 로고 띄움",
+  "back": "Logo up on the projector",
+  "why": ""
+ },
+ "STATE_MESSAGE": {
+  "text": "안내 문구 띄움",
+  "back": "Notice up",
+  "why": ""
+ },
+ "STATE_STAGE_MESSAGE": {
+  "text": "찬양팀 화면에 안내 띄움",
+  "back": "Notice up on the band screen",
+  "why": ""
+ },
+ "STAGE_MESSAGE_DETAIL": {
+  "text": "입력한 글이 찬양팀 화면에만 나와요",
+  "back": "The typed words appear only on the band screen",
+  "why": ""
+ },
+ "HEARD_NOTHING": {
+  "text": "아직 들린 내용이 없어요",
+  "back": "Nothing heard yet",
+  "why": ""
+ },
+ "SUGGEST_HEARD": {
+  "text": "방금 들은 가사예요",
+  "back": "The words just heard",
+  "why": ""
+ },
+ "SUGGEST_HERE": {
+  "text": "지금 부르는 부분이에요",
+  "back": "The part being sung now",
+  "why": ""
+ },
+ "SUGGEST_FOLLOWS": {
+  "text": "보통 이 곡 다음에 불러요",
+  "back": "Usually sung after this song",
+  "why": ""
+ },
+ "SUGGEST_LOST": {
+  "text": "다른 곡이나 다른 가사를 부르는 것 같아요",
+  "back": "They seem to be singing another song or other words",
+  "why": ""
+ },
+ "SUGGEST_SEARCH": {
+  "text": "찾기",
+  "back": "Find",
+  "why": ""
+ },
+ "state_countdown": {
+  "text": "카운트다운 {clock}",
+  "back": "Countdown {clock}",
+  "why": ""
+ },
+ "LIVE_NOTHING": {
+  "text": "프로젝터에 아무것도 없어요",
+  "back": "There is nothing on the projector",
+  "why": ""
+ },
+ "BTN_SHOW": {
+  "text": "띄우기",
+  "back": "Show",
+  "why": "띄우다 is the one verb for putting something on the projector"
+ },
+ "BTN_PREV": {
+  "text": "이전",
+  "back": "Prev",
+  "why": ""
+ },
+ "BTN_NO_TEXT": {
+  "text": "글자 숨김",
+  "back": "Words hidden",
+  "why": "state name, lit while on"
+ },
+ "STATE_OFF": {
+  "text": "프로젝터가 꺼져 있어요",
+  "back": "The projector is off",
+  "why": ""
+ },
+ "TIP_SHOW": {
+  "text": "미리보기 내용을 라이브로 띄워요",
+  "back": "Puts what is in Preview up in Live",
+  "why": ""
+ },
+ "TIP_PREV": {
+  "text": "이전 슬라이드로 가요",
+  "back": "Goes to the previous slide",
+  "why": ""
+ },
+ "TIP_NEXT": {
+  "text": "다음 슬라이드로 가요",
+  "back": "Goes to the next slide",
+  "why": ""
+ },
+ "TIP_LIVE": {
+  "text": "프로젝터를 켜고 꺼요",
+  "back": "Turns the projector on and off",
+  "why": ""
+ },
+ "BTN_PREVIOUS_ITEM": {
+  "text": "이전 항목",
+  "back": "Previous item",
+  "why": ""
+ },
+ "BTN_NEXT_ITEM": {
+  "text": "다음 항목",
+  "back": "Next item",
+  "why": ""
+ },
+ "HELD_CTRL": {
+  "text": "Ctrl 누르는 중",
+  "back": "Holding Ctrl",
+  "why": ""
+ },
+ "HELD_SHIFT": {
+  "text": "Shift 누르는 중",
+  "back": "Holding Shift",
+  "why": ""
+ },
+ "HINT_RING": {
+  "text": "선택한 슬라이드 이동",
+  "back": "Move the picked slide",
+  "why": "the ring is named by its meaning"
+ },
+ "HINT_PICK": {
+  "text": "라이브 슬라이드 고르기",
+  "back": "Pick a Live slide",
+  "why": ""
+ },
+ "HINT_LET_GO": {
+  "text": "떼면 선택한 슬라이드 띄움",
+  "back": "Release to put the picked slide up",
+  "why": ""
+ },
+ "HINT_CANCEL": {
+  "text": "취소",
+  "back": "Cancel",
+  "why": ""
+ },
+ "PLAN_ADD_SONG": {
+  "text": "곡",
+  "back": "Song",
+  "why": ""
+ },
+ "PLAN_ADD_PASSAGE": {
+  "text": "성경",
+  "back": "Bible",
+  "why": ""
+ },
+ "PLAN_ADD_HEADING": {
+  "text": "구분",
+  "back": "Divider",
+  "why": ""
+ },
+ "PLAN_DRAG": {
+  "text": "끌어서 순서 바꾸기",
+  "back": "Drag to change the order",
+  "why": ""
+ },
+ "ADDING_TO_PLAN": {
+  "text": "예배 순서에 추가하는 중",
+  "back": "Adding to the plan",
+  "why": "same words as the add button"
+ },
+ "BTN_DONE": {
+  "text": "완료",
+  "back": "Done",
+  "why": ""
+ },
+ "BTN_EARLIER": {
+  "text": "이미 띄운 것",
+  "back": "Already put up",
+  "why": "complete as it stands"
+ },
+ "EARLIER_HINT": {
+  "text": "이미 띄운 항목. 고르면 미리보기로 가요",
+  "back": "Already put up. Picking one goes to Preview",
+  "why": ""
+ },
+ "LETTER_KEYS": {
+  "text": "글자 키로 부분 이동",
+  "back": "Jump between parts with letter keys",
+  "why": ""
+ },
+ "LETTER_KEYS_HINT": {
+  "text": "ㅎ은 후렴, ㅂ은 브리지로 이동해요. 끄면 아무 글자나 검색을 열어요.",
+  "back": "ㅎ goes to the chorus, ㅂ to the bridge. When off, any letter opens search.",
+  "why": "Hangul jamo are the letters of the language"
+ },
+ "COUNTDOWN": {
+  "text": "카운트다운",
+  "back": "Countdown",
+  "why": ""
+ },
+ "COUNTDOWN_LABEL": {
+  "text": "예배 시작까지",
+  "back": "Until the service starts",
+  "why": ""
+ },
+ "EDITOR_NEW": {
+  "text": "새 곡 만들기",
+  "back": "Make a new song",
+  "why": ""
+ },
+ "EDITOR_EDIT": {
+  "text": "곡 편집",
+  "back": "Edit song",
+  "why": ""
+ },
+ "EDITOR_NO_SLIDES": {
+  "text": "가사를 입력하면 슬라이드가 여기 나와요",
+  "back": "Slides appear here once you type the words",
+  "why": ""
+ },
+ "FIELD_TITLE": {
+  "text": "제목",
+  "back": "Title",
+  "why": ""
+ },
+ "FIELD_AUTHOR": {
+  "text": "작사·작곡",
+  "back": "Words and music by",
+  "why": "songbook wording"
+ },
+ "FIELD_KEY": {
+  "text": "조(키)",
+  "back": "Key",
+  "why": "조 is the musical key, 키 is what volunteers say"
+ },
+ "FIELD_COPYRIGHT": {
+  "text": "저작권",
+  "back": "Copyright",
+  "why": ""
+ },
+ "FIELD_CCLI": {
+  "text": "CCLI 곡 번호",
+  "back": "CCLI song number",
+  "why": ""
+ },
+ "FIELD_LYRICS": {
+  "text": "가사",
+  "back": "Words",
+  "why": ""
+ },
+ "FIELD_ORDER": {
+  "text": "순서 입력 (예: 1절 후렴*2 2절 후렴 브리지 후렴)",
+  "back": "Type the order (for example: verse 1 chorus*2 verse 2 chorus bridge chorus)",
+  "why": ""
+ },
+ "ORDER": {
+  "text": "부르는 순서",
+  "back": "Order sung",
+  "why": ""
+ },
+ "ORDER_AS_WRITTEN": {
+  "text": "가사 쓴 대로",
+  "back": "As the words are written",
+  "why": ""
+ },
+ "ORDER_EMPTY": {
+  "text": "가사를 부분으로 나누면 순서가 나타나요",
+  "back": "The order appears once the words are split into parts",
+  "why": ""
+ },
+ "ORDER_CHORUS_EACH": {
+  "text": "절마다 후렴 넣기",
+  "back": "Put the chorus after every verse",
+  "why": ""
+ },
+ "BTN_TIDY": {
+  "text": "가사 정리",
+  "back": "Tidy words",
+  "why": ""
+ },
+ "TIDY_HELP": {
+  "text": "부분 이름 줄은 표시로, 코드만 있는 줄은 삭제해요",
+  "back": "Lines naming a part become markers, chord-only lines are deleted",
+  "why": ""
+ },
+ "SUGGEST_LABEL": {
+  "text": "같은 제목의 곡",
+  "back": "Songs with the same title",
+  "why": ""
+ },
+ "SUGGEST_LIBRARY": {
+  "text": "보관함에 이미 있어요",
+  "back": "Already in the library",
+  "why": ""
+ },
+ "SUGGEST_FETCHING": {
+  "text": "가사 가져오는 중",
+  "back": "Fetching the words",
+  "why": ""
+ },
+ "LICENCE_NOTE": {
+  "text": "교회에서 가사를 띄우려면 보통 CCLI 라이선스가 필요해요",
+  "back": "To put song words up in church you usually need a CCLI licence",
+  "why": ""
+ },
+ "suggest_web": {
+  "text": {
+   "without_artist": "{source}",
+   "with_artist": "{artist} · {source}"
+  },
+  "back": "{source} / {artist} · {source}",
+  "why": "names stay as they are, no particle"
+ },
+ "words_from": {
+  "text": "가사 출처: {source}. 쓰기 전에 교회 가사와 꼭 비교하세요",
+  "back": "Words from: {source}. Compare with the church's own copy before using.",
+  "why": ""
+ },
+ "FIELD_SECOND": {
+  "text": "다른 언어 가사",
+  "back": "Words in another language",
+  "why": ""
+ },
+ "LYRICS_PLACEHOLDER": {
+  "text": "[1절]\n주님의 사랑 크시네\n\n[후렴]\n주님을 찬양해",
+  "back": "[Verse 1] / The Lord's love is great / [Chorus] / We praise the Lord",
+  "why": ""
+ },
+ "SECOND_PLACEHOLDER": {
+  "text": "같은 부분을 같은 순서로 다른 언어로 쓰세요",
+  "back": "Write the same parts in the same order in the other language",
+  "why": ""
+ },
+ "MARK_VERSE": {
+  "text": "절",
+  "back": "Verse",
+  "why": "1절, 2절 in a song"
+ },
+ "MARK_CHORUS": {
+  "text": "후렴",
+  "back": "Chorus",
+  "why": ""
+ },
+ "MARK_BRIDGE": {
+  "text": "브리지",
+  "back": "Bridge",
+  "why": ""
+ },
+ "MARK_PRECHORUS": {
+  "text": "프리코러스",
+  "back": "Pre-chorus",
+  "why": ""
+ },
+ "MARK_ENDING": {
+  "text": "마무리",
+  "back": "Ending",
+  "why": ""
+ },
+ "BTN_ADD_SECOND": {
+  "text": "다른 언어 가사 추가",
+  "back": "Add words in another language",
+  "why": ""
+ },
+ "BTN_SAVE": {
+  "text": "저장",
+  "back": "Save",
+  "why": ""
+ },
+ "BTN_CANCEL": {
+  "text": "취소",
+  "back": "Cancel",
+  "why": ""
+ },
+ "BTN_DELETE": {
+  "text": "삭제",
+  "back": "Delete",
+  "why": ""
+ },
+ "BTN_DUPLICATE": {
+  "text": "복사",
+  "back": "Copy",
+  "why": ""
+ },
+ "BTN_CLOSE": {
+  "text": "닫기",
+  "back": "Close",
+  "why": ""
+ },
+ "BTN_UNDO": {
+  "text": "되돌리기",
+  "back": "Undo",
+  "why": ""
+ },
+ "BTN_OPEN": {
+  "text": "열기",
+  "back": "Open",
+  "why": ""
+ },
+ "BTN_CHOOSE": {
+  "text": "선택",
+  "back": "Choose",
+  "why": ""
+ },
+ "BTN_SHOW_NOW": {
+  "text": "바로 띄우기",
+  "back": "Put up now",
+  "why": ""
+ },
+ "SONG_SAVED": {
+  "text": "곡을 저장했어요",
+  "back": "The song was saved",
+  "why": ""
+ },
+ "EDITOR_CLOSED": {
+  "text": "편집기를 닫았어요. 변경한 내용은 저장하지 않았어요",
+  "back": "The editor was closed. The changes were not saved.",
+  "why": ""
+ },
+ "SONG_UNTITLED": {
+  "text": "제목 없는 곡",
+  "back": "Song without a title",
+  "why": ""
+ },
+ "PASTE_EMPTY": {
+  "text": "복사한 글이 없어요",
+  "back": "No copied text",
+  "why": ""
+ },
+ "could_not_save": {
+  "text": "곡을 저장하지 못했어요: {problem}",
+  "back": "Could not save the song: {problem}",
+  "why": ""
+ },
+ "song_deleted": {
+  "text": "곡을 삭제했어요: “{title}”",
+  "back": "Deleted the song: “{title}”",
+  "why": ""
+ },
+ "LOOK_SAMPLE": {
+  "text": "주님을 찬양해요\n함께 노래해요",
+  "back": "We praise the Lord / Let us sing together",
+  "why": "made-up sample, not a real song"
+ },
+ "LOOK_CUSTOM": {
+  "text": "내 디자인",
+  "back": "My design",
+  "why": ""
+ },
+ "LOOK_BACKGROUND": {
+  "text": "이미지 또는 영상",
+  "back": "Image or video",
+  "why": "does not repeat the tab heading 배경"
+ },
+ "LOOK_CHOOSE_FILE": {
+  "text": "파일 선택",
+  "back": "Choose a file",
+  "why": ""
+ },
+ "LOOK_NO_FILE": {
+  "text": "고른 파일 없음",
+  "back": "No file chosen",
+  "why": ""
+ },
+ "LOOK_LINES": {
+  "text": "한 슬라이드의 줄 수",
+  "back": "Lines per slide",
+  "why": ""
+ },
+ "LOOK_LINES_ALL": {
+  "text": "전체",
+  "back": "All",
+  "why": ""
+ },
+ "LOOK_SIZE": {
+  "text": "글자 크기",
+  "back": "Letter size",
+  "why": ""
+ },
+ "LOOK_SIZE_SMALL": {
+  "text": "작게",
+  "back": "Small",
+  "why": ""
+ },
+ "LOOK_SIZE_NORMAL": {
+  "text": "보통",
+  "back": "Normal",
+  "why": ""
+ },
+ "LOOK_SIZE_LARGE": {
+  "text": "크게",
+  "back": "Large",
+  "why": ""
+ },
+ "LOOK_PLACE": {
+  "text": "글자 위치",
+  "back": "Place of the words",
+  "why": ""
+ },
+ "LOOK_PLACE_TOP": {
+  "text": "위",
+  "back": "Top",
+  "why": ""
+ },
+ "LOOK_PLACE_MIDDLE": {
+  "text": "가운데",
+  "back": "Middle",
+  "why": ""
+ },
+ "LOOK_PLACE_BOTTOM": {
+  "text": "아래",
+  "back": "Bottom",
+  "why": ""
+ },
+ "LOOK_BIBLE": {
+  "text": "성경",
+  "back": "Bible",
+  "why": ""
+ },
+ "LOOK_SECOND_BIBLE": {
+  "text": "두 번째 성경",
+  "back": "Second Bible",
+  "why": ""
+ },
+ "LOOK_NONE": {
+  "text": "없음",
+  "back": "None",
+  "why": ""
+ },
+ "LOOK_LOGO": {
+  "text": "로고",
+  "back": "Logo",
+  "why": "same as the Logo tile"
+ },
+ "LOOK_CHOOSE_LOGO": {
+  "text": "이미지 선택",
+  "back": "Choose an image",
+  "why": "이미지 is the one word for a picture file"
+ },
+ "LOOK_LICENCE": {
+  "text": "CCLI 라이선스",
+  "back": "CCLI licence",
+  "why": ""
+ },
+ "LOOK_LICENCE_HINT": {
+  "text": "번호",
+  "back": "Number",
+  "why": ""
+ },
+ "BACKGROUND_UNKNOWN": {
+  "text": "이미지나 지원되는 영상 파일이 아니에요",
+  "back": "Not an image or a supported video file",
+  "why": ""
+ },
+ "bible_failed": {
+  "text": "성경을 열지 못했어요 ({code}): {problem}",
+  "back": "Could not open the Bible ({code}): {problem}",
+  "why": ""
+ },
+ "SCREENS_OFF": {
+  "text": "연습 모드에서는 프로젝터가 항상 꺼져 있어요",
+  "back": "In practice mode the projector is always off",
+  "why": ""
+ },
+ "SCREENS_ONE": {
+  "text": "프로젝터를 연결하면 자동으로 작동해요",
+  "back": "Connect a projector and it works by itself",
+  "why": ""
+ },
+ "SCREENS_SWITCH": {
+  "text": "프로젝터",
+  "back": "Projector",
+  "why": ""
+ },
+ "WALL": {
+  "text": "프로젝터 화면 보정",
+  "back": "Correct the projected picture",
+  "why": "보정 says it adjusts the picture"
+ },
+ "WALL_HINT": {
+  "text": "모서리를 골라 움직여 화면 가장자리를 반듯하게 맞춰요",
+  "back": "Pick a corner and move it to make the picture's edges straight",
+  "why": ""
+ },
+ "WALL_RESET": {
+  "text": "초기화",
+  "back": "Reset",
+  "why": ""
+ },
+ "WALL_BRIGHTNESS": {
+  "text": "밝기",
+  "back": "Brightness",
+  "why": ""
+ },
+ "WALL_CONTRAST": {
+  "text": "대비",
+  "back": "Contrast",
+  "why": ""
+ },
+ "WALL_COLOUR": {
+  "text": "채도",
+  "back": "Saturation",
+  "why": ""
+ },
+ "CORNER_TOP_LEFT": {
+  "text": "왼쪽 위 모서리",
+  "back": "Upper left corner",
+  "why": ""
+ },
+ "CORNER_TOP_RIGHT": {
+  "text": "오른쪽 위 모서리",
+  "back": "Upper right corner",
+  "why": ""
+ },
+ "CORNER_BOTTOM_RIGHT": {
+  "text": "오른쪽 아래 모서리",
+  "back": "Lower right corner",
+  "why": ""
+ },
+ "CORNER_BOTTOM_LEFT": {
+  "text": "왼쪽 아래 모서리",
+  "back": "Lower left corner",
+  "why": ""
+ },
+ "NUDGE_UP": {
+  "text": "위로",
+  "back": "Up",
+  "why": ""
+ },
+ "NUDGE_DOWN": {
+  "text": "아래로",
+  "back": "Down",
+  "why": ""
+ },
+ "NUDGE_LEFT": {
+  "text": "왼쪽으로",
+  "back": "Left",
+  "why": ""
+ },
+ "NUDGE_RIGHT": {
+  "text": "오른쪽으로",
+  "back": "Right",
+  "why": ""
+ },
+ "LESS": {
+  "text": "줄이기",
+  "back": "Lower",
+  "why": ""
+ },
+ "MORE": {
+  "text": "늘리기",
+  "back": "Raise",
+  "why": "not 더 보기, which is the plan row menu"
+ },
+ "LOOK_CAMERA": {
+  "text": "카메라",
+  "back": "Camera",
+  "why": ""
+ },
+ "LOOK_CAMERA_FAR": {
+  "text": "네트워크 카메라",
+  "back": "Network camera",
+  "why": ""
+ },
+ "LOOK_CAMERA_FAR_USE": {
+  "text": "사용",
+  "back": "Use",
+  "why": ""
+ },
+ "LOOK_CAMERA_FAR_NOTE": {
+  "text": "휴대폰도 카메라 앱이 RTSP나 SRT로 화면을 보내면 쓸 수 있어요.",
+  "back": "A phone works too if its camera app sends the picture over RTSP or SRT.",
+  "why": ""
+ },
+ "SCREENS_HERE": {
+  "text": "이 모니터의 창에 프로젝터 화면 보기",
+  "back": "Show the projector picture in a window on this monitor",
+  "why": ""
+ },
+ "SCREENS_HERE_HINT": {
+  "text": "창 위에 포인터를 두고 Esc를 누르면 닫혀요",
+  "back": "Put the pointer over the window and press Esc to close it",
+  "why": ""
+ },
+ "LOOK_WINDOW": {
+  "text": "창 밝기",
+  "back": "Window brightness",
+  "why": ""
+ },
+ "LOOK_WINDOW_AUTO": {
+  "text": "컴퓨터 설정 따르기",
+  "back": "Follow the computer",
+  "why": ""
+ },
+ "LOOK_WINDOW_LIGHT": {
+  "text": "밝게",
+  "back": "Light",
+  "why": ""
+ },
+ "LOOK_WINDOW_DARK": {
+  "text": "어둡게",
+  "back": "Dark",
+  "why": ""
+ },
+ "LOOK_TEXT_COLOUR": {
+  "text": "글자 색",
+  "back": "Letter colour",
+  "why": ""
+ },
+ "LOOK_COLOUR_WHITE": {
+  "text": "흰색",
+  "back": "White",
+  "why": ""
+ },
+ "LOOK_COLOUR_WARM": {
+  "text": "아이보리",
+  "back": "Ivory",
+  "why": "a slightly yellowish white"
+ },
+ "LOOK_COLOUR_YELLOW": {
+  "text": "노란색",
+  "back": "Yellow",
+  "why": ""
+ },
+ "LOOK_COLOUR_BLACK": {
+  "text": "검은색",
+  "back": "Black",
+  "why": ""
+ },
+ "LOOK_COLOUR_HEX": {
+  "text": "색상 코드",
+  "back": "Colour code",
+  "why": ""
+ },
+ "LOOK_COLOUR_HEX_HINT": {
+  "text": "예를 들어 #FFD700",
+  "back": "For example #FFD700",
+  "why": ""
+ },
+ "LOOK_FONT": {
+  "text": "글꼴",
+  "back": "Typeface",
+  "why": ""
+ },
+ "LOOK_FONT_DEFAULT": {
+  "text": "기본 글꼴",
+  "back": "Default typeface",
+  "why": ""
+ },
+ "LOOK_FONT_SEARCH": {
+  "text": "글꼴 이름 입력",
+  "back": "Type a typeface name",
+  "why": ""
+ },
+ "LOOK_FONT_NONE": {
+  "text": "맞는 글꼴이 없어요",
+  "back": "No typeface matches",
+  "why": ""
+ },
+ "LOOK_OUTLINE": {
+  "text": "테두리",
+  "back": "Outline",
+  "why": ""
+ },
+ "LOOK_OUTLINE_OFF": {
+  "text": "없음",
+  "back": "Off",
+  "why": ""
+ },
+ "LOOK_OUTLINE_THIN": {
+  "text": "얇게",
+  "back": "Thin",
+  "why": ""
+ },
+ "LOOK_OUTLINE_MEDIUM": {
+  "text": "보통",
+  "back": "Middle",
+  "why": ""
+ },
+ "LOOK_OUTLINE_THICK": {
+  "text": "굵게",
+  "back": "Thick",
+  "why": ""
+ },
+ "LOOK_OUTLINE_COLOUR": {
+  "text": "테두리 색",
+  "back": "Outline colour",
+  "why": ""
+ },
+ "SCREEN_PROJECTOR": {
+  "text": "프로젝터",
+  "back": "Projector",
+  "why": ""
+ },
+ "SCREEN_STAGE": {
+  "text": "찬양팀",
+  "back": "Band",
+  "why": "찬양팀 is the band and singers"
+ },
+ "SCREEN_UNUSED": {
+  "text": "사용 안 함",
+  "back": "Not used",
+  "why": ""
+ },
+ "SCREENS_STAGE_WINDOW": {
+  "text": "찬양팀 화면을 별도 창으로 보기",
+  "back": "Show the band screen in a separate window",
+  "why": ""
+ },
+ "SCREENS_IDENTIFY": {
+  "text": "모니터 번호 보기",
+  "back": "Show monitor numbers",
+  "why": ""
+ },
+ "screen_name": {
+  "text": "모니터 {number}",
+  "back": "Monitor {number}",
+  "why": ""
+ },
+ "screen_title": {
+  "text": {
+   "with_this": "모니터 {number} · 이 창",
+   "without_this": "모니터 {number}"
+  },
+  "back": "Monitor {number} · this window / Monitor {number}",
+  "why": ""
+ },
+ "screen_detail": {
+  "text": {
+   "normal_zoom": "{width}×{height}",
+   "with_zoom": "{width}×{height} · 배율 {scale}"
+  },
+  "back": "{width}×{height} / {width}×{height} · zoom {scale}",
+  "why": ""
+ },
+ "REMOTE_SWITCH": {
+  "text": "휴대폰 리모컨",
+  "back": "Phone remote",
+  "why": "same as the dialog title"
+ },
+ "REMOTE_SWITCH_DETAIL": {
+  "text": "같은 Wi-Fi의 휴대폰으로 슬라이드를 넘길 수 있어요",
+  "back": "Phones on the same Wi-Fi can change the slides",
+  "why": ""
+ },
+ "REMOTE_SCAN": {
+  "text": "휴대폰 카메라로 코드를 찍거나 주소를 입력하세요",
+  "back": "Scan the code with the phone camera or type the address",
+  "why": ""
+ },
+ "REMOTE_PIN": {
+  "text": "PIN",
+  "back": "PIN",
+  "why": ""
+ },
+ "REMOTE_FIREWALL_ASKING": {
+  "text": "시스템 창이 한 번 허용을 물어요. 휴대폰 연결에 필요해요",
+  "back": "A system window asks permission once. It is needed for phones to connect",
+  "why": "names neither button"
+ },
+ "REMOTE_FIREWALL_REFUSED": {
+  "text": "방화벽이 휴대폰 연결을 막고 있어요. 휴대폰 리모컨을 껐다 켜면 허용 창이 다시 나와요.",
+  "back": "The firewall is blocking phones. Switching the phone remote off and on brings the permission window back.",
+  "why": ""
+ },
+ "phones": {
+  "text": {
+   "zero": "연결된 휴대폰이 없어요",
+   "other": "휴대폰 {count}대 연결됨"
+  },
+  "back": "No phone connected / {count} phones connected",
+  "why": ""
+ },
+ "remote_failed": {
+  "text": "휴대폰 리모컨을 시작하지 못했어요: {problem}",
+  "back": "Could not start the phone remote: {problem}",
+  "why": ""
+ },
+ "IMPORT_FOUND": {
+  "text": "EasiSlides의 곡과 성경을 모두 복사해 와요. 원본은 그대로예요.",
+  "back": "Copies all songs and Bibles from EasiSlides. The original stays as it is.",
+  "why": ""
+ },
+ "IMPORT_NOT_FOUND": {
+  "text": "이 컴퓨터에 EasiSlides가 없어요",
+  "back": "EasiSlides is not on this computer",
+  "why": ""
+ },
+ "import_done": {
+  "text": {
+   "songs_only": "{songs} 가져왔어요",
+   "songs_and_bibles": "{songs}, {bibles} 가져왔어요"
+  },
+  "back": "Brought in {songs} / Brought in {songs}, {bibles}",
+  "why": "counted phrases end in a fixed noun, so no particle trouble"
+ },
+ "import_summary": {
+  "text": {
+   "nothing_changed": "폴더의 곡이 이미 모두 있어요",
+   "only_kept": "새로 바뀐 곡은 없어요. 직접 고친 곡은 그대로 뒀어요: {kept}",
+   "changed_added": "{added} 추가했어요",
+   "changed_updated": "{updated} 업데이트했어요",
+   "changed_both": "{added} 추가, {updated} 업데이트했어요",
+   "changed_and_kept": "{changed}. 직접 고친 곡은 그대로 뒀어요: {kept}"
+  },
+  "back": "all songs already here / nothing new, edited ones left alone / added / updated / added and updated / changed, edited ones left alone",
+  "why": ""
+ },
+ "files_unreadable": {
+  "text": {
+   "other": "파일 {count}개를 열지 못했어요"
+  },
+  "back": "Could not open {count} files",
+  "why": ""
+ },
+ "import_partial": {
+  "text": "{songs} 추가했고, {files}는 열지 못했어요",
+  "back": "Added {songs}, could not open {files}",
+  "why": "noun.files always ends in 개, so 는 is right"
+ },
+ "ANNOUNCEMENTS_EMPTY": {
+  "text": "공지가 아직 없어요",
+  "back": "No announcements yet",
+  "why": ""
+ },
+ "ANNOUNCEMENT_NEW": {
+  "text": "새 공지",
+  "back": "New announcement",
+  "why": ""
+ },
+ "ANNOUNCEMENT_BODY": {
+  "text": "내용",
+  "back": "Text",
+  "why": ""
+ },
+ "ANNOUNCEMENT_TITLE_HINT": {
+  "text": "예: 청년 모임",
+  "back": "For example: Youth night",
+  "why": ""
+ },
+ "ANNOUNCEMENT_BODY_HINT": {
+  "text": "예: 금요일 저녁 7시, 친교실",
+  "back": "For example: Friday 7 in the evening, in the hall",
+  "why": ""
+ },
+ "ANNOUNCEMENT_SECONDS": {
+  "text": "보여 주는 시간(초)",
+  "back": "Time shown (seconds)",
+  "why": ""
+ },
+ "ANNOUNCEMENT_START_FROM": {
+  "text": "견본 카드로 시작",
+  "back": "Start from a sample card",
+  "why": ""
+ },
+ "ANNOUNCEMENT_BRING_IN": {
+  "text": "파일로 가져오기",
+  "back": "Bring in from a file",
+  "why": ""
+ },
+ "ANNOUNCEMENT_FILL": {
+  "text": "글이 나오는 곳",
+  "back": "Where the text comes from",
+  "why": ""
+ },
+ "FILL_NOTHING": {
+  "text": "직접 입력",
+  "back": "Type by hand",
+  "why": ""
+ },
+ "FILL_WEEK": {
+  "text": "이번 주 생일인 사람",
+  "back": "People with a birthday this week",
+  "why": ""
+ },
+ "FILL_MONTH": {
+  "text": "이번 달 생일인 사람",
+  "back": "People with a birthday this month",
+  "why": ""
+ },
+ "ANNOUNCEMENT_PICTURE": {
+  "text": "이미지",
+  "back": "Image",
+  "why": ""
+ },
+ "BTN_REMOVE_PICTURE": {
+  "text": "이미지 빼기",
+  "back": "Remove image",
+  "why": "not 삭제"
+ },
+ "CMD_IMPORT_PPTX": {
+  "text": "PowerPoint로 공지 만들기",
+  "back": "Make announcements from PowerPoint",
+  "why": ""
+ },
+ "CMD_IMPORT_PPTX_DETAIL": {
+  "text": "슬라이드 한 장이 공지 카드 하나가 돼요",
+  "back": "Each slide becomes one card",
+  "why": ""
+ },
+ "CMD_IMPORT_BIRTHDAYS": {
+  "text": "생일 목록 가져오기",
+  "back": "Bring in a list of birthdays",
+  "why": "목록 shows it is a list"
+ },
+ "CMD_IMPORT_BIRTHDAYS_DETAIL": {
+  "text": "이름과 날짜가 있는 표가 든 Word·PowerPoint 파일",
+  "back": "A Word or PowerPoint file with a table of names and dates",
+  "why": ""
+ },
+ "BIRTHDAYS_NONE_FOUND": {
+  "text": "파일에서 이름과 날짜를 찾지 못했어요",
+  "back": "Found no name with a date in the file",
+  "why": ""
+ },
+ "MONTHS[0]": {
+  "text": "1월",
+  "back": "January",
+  "why": "numbered months, as Korean writes them"
+ },
+ "MONTHS[1]": {
+  "text": "2월",
+  "back": "February",
+  "why": "numbered months, as Korean writes them"
+ },
+ "MONTHS[2]": {
+  "text": "3월",
+  "back": "March",
+  "why": "numbered months, as Korean writes them"
+ },
+ "MONTHS[3]": {
+  "text": "4월",
+  "back": "April",
+  "why": "numbered months, as Korean writes them"
+ },
+ "MONTHS[4]": {
+  "text": "5월",
+  "back": "May",
+  "why": "numbered months, as Korean writes them"
+ },
+ "MONTHS[5]": {
+  "text": "6월",
+  "back": "June",
+  "why": "numbered months, as Korean writes them"
+ },
+ "MONTHS[6]": {
+  "text": "7월",
+  "back": "July",
+  "why": "numbered months, as Korean writes them"
+ },
+ "MONTHS[7]": {
+  "text": "8월",
+  "back": "August",
+  "why": "numbered months, as Korean writes them"
+ },
+ "MONTHS[8]": {
+  "text": "9월",
+  "back": "September",
+  "why": "numbered months, as Korean writes them"
+ },
+ "MONTHS[9]": {
+  "text": "10월",
+  "back": "October",
+  "why": "numbered months, as Korean writes them"
+ },
+ "MONTHS[10]": {
+  "text": "11월",
+  "back": "November",
+  "why": "numbered months, as Korean writes them"
+ },
+ "MONTHS[11]": {
+  "text": "12월",
+  "back": "December",
+  "why": "numbered months, as Korean writes them"
+ },
+ "WEEKDAYS[0]": {
+  "text": "월요일",
+  "back": "Monday",
+  "why": "full day name"
+ },
+ "WEEKDAYS[1]": {
+  "text": "화요일",
+  "back": "Tuesday",
+  "why": "full day name"
+ },
+ "WEEKDAYS[2]": {
+  "text": "수요일",
+  "back": "Wednesday",
+  "why": "full day name"
+ },
+ "WEEKDAYS[3]": {
+  "text": "목요일",
+  "back": "Thursday",
+  "why": "full day name"
+ },
+ "WEEKDAYS[4]": {
+  "text": "금요일",
+  "back": "Friday",
+  "why": "full day name"
+ },
+ "WEEKDAYS[5]": {
+  "text": "토요일",
+  "back": "Saturday",
+  "why": "full day name"
+ },
+ "WEEKDAYS[6]": {
+  "text": "일요일",
+  "back": "Sunday",
+  "why": "full day name"
+ },
+ "could_not_read": {
+  "text": "파일을 열지 못했어요: {problem}",
+  "back": "Could not open the file: {problem}",
+  "why": ""
+ },
+ "pptx_imported": {
+  "text": {
+   "without_lost": "{added} 만들었어요",
+   "with_lost": "{added} 만들었어요. {lost}는 가져오지 못했어요"
+  },
+  "back": "Made {added} / Made {added}. Could not bring in {lost}",
+  "why": ""
+ },
+ "birthdays_on_file": {
+  "text": {
+   "zero": "저장된 생일 목록이 아직 없어요",
+   "other": "생일 {count}명 저장됨"
+  },
+  "back": "No birthday list stored yet / {count} birthdays stored",
+  "why": ""
+ },
+ "birthdays_imported": {
+  "text": {
+   "none_skipped": {
+    "other": "{birthdays} 저장했어요"
+   },
+   "some_skipped": "{birthdays} 저장했어요. {rows}은 건너뛰었어요"
+  },
+  "back": "Saved {birthdays} / Saved {birthdays}. Skipped {rows}",
+  "why": "noun.rows always ends in 행, so 은 is right"
+ },
+ "ANNOUNCEMENT_PREVIEW": {
+  "text": "프로젝터에 보이는 모습",
+  "back": "How it looks on the projector",
+  "why": ""
+ },
+ "FILL_PASSAGE": {
+  "text": "성경",
+  "back": "Bible",
+  "why": "same word as the plan menu item"
+ },
+ "ANNOUNCEMENT_PASSAGE": {
+  "text": "성경 구절",
+  "back": "Bible passage",
+  "why": ""
+ },
+ "PASSAGE_NO_BIBLE": {
+  "text": "설치된 성경이 없어서 카드가 비어 있어요",
+  "back": "No Bible is installed, so the card is empty",
+  "why": ""
+ },
+ "PASSAGE_UNREADABLE": {
+  "text": "성경에 이 구절이 없어요",
+  "back": "The Bible has no such verse",
+  "why": ""
+ },
+ "NOTICE_NOTHING_TO_SHOW": {
+  "text": "오늘은 띄울 내용이 없어요",
+  "back": "Nothing to put up today",
+  "why": ""
+ },
+ "birthdays_cover_week": {
+  "text": "{from_month} {from_day}일부터 {to_month} {to_day}일까지",
+  "back": "From {from_month} {from_day} to {to_month} {to_day}",
+  "why": ""
+ },
+ "birthdays_cover_month": {
+  "text": "{month} 전체",
+  "back": "All of {month}",
+  "why": ""
+ },
+ "names_today": {
+  "text": {
+   "zero": "오늘 생일인 사람 없음",
+   "other": "오늘 생일 {count}명"
+  },
+  "back": "Nobody has a birthday today / {count} birthdays today",
+  "why": ""
+ },
+ "PRACTICE_NOTICES[0].0": {
+  "text": "환영합니다",
+  "back": "Welcome",
+  "why": ""
+ },
+ "PRACTICE_NOTICES[0].1": {
+  "text": "오늘 오신 모든 분을 환영합니다\n곧 예배가 시작됩니다",
+  "back": "We welcome everyone who came today / The service begins soon",
+  "why": ""
+ },
+ "PRACTICE_NOTICES[1].0": {
+  "text": "청년부 저녁 모임",
+  "back": "Young adults evening",
+  "why": ""
+ },
+ "PRACTICE_NOTICES[1].1": {
+  "text": "금요일 저녁 7시 친교실\n친구와 함께 오세요",
+  "back": "Friday 7 in the evening, hall / Bring a friend",
+  "why": ""
+ },
+ "PRACTICE_NOTICES[2].0": {
+  "text": "기도 모임",
+  "back": "Prayer meeting",
+  "why": ""
+ },
+ "PRACTICE_NOTICES[2].1": {
+  "text": "화요일 새벽 5시\n누구나 함께하실 수 있습니다",
+  "back": "Tuesday 5 at dawn / Everyone may join",
+  "why": ""
+ },
+ "PRACTICE_NOTICES[3].0": {
+  "text": "이번 주 일정",
+  "back": "This week's schedule",
+  "why": ""
+ },
+ "PRACTICE_NOTICES[3].1": {
+  "text": "주일\t오전 11시\t주일 예배\n주일\t오후 5시\t저녁 예배\n수요일\t저녁 7시\t수요 기도회\n토요일\t오후 3시\t청년 모임",
+  "back": "Sunday / 11 am / Sunday service; Sunday / 5 pm / evening service; Wednesday / 7 pm / Wednesday prayer meeting; Saturday / 3 pm / young adults' meeting",
+  "why": "real tab characters between the parts"
+ },
+ "ANNOUNCEMENT_TEMPLATES[0].0": {
+  "text": "환영 인사",
+  "back": "Welcome",
+  "why": ""
+ },
+ "ANNOUNCEMENT_TEMPLATES[0].1": {
+  "text": "처음 오신 분도 늘 오시는 분도 환영합니다",
+  "back": "Newcomers and regulars alike are welcome",
+  "why": ""
+ },
+ "ANNOUNCEMENT_TEMPLATES[1].0": {
+  "text": "예배 시간 안내",
+  "back": "Service times",
+  "why": ""
+ },
+ "ANNOUNCEMENT_TEMPLATES[1].1": {
+  "text": "주일 오전 11시 · 오후 5시 · 수요일 저녁 7시",
+  "back": "Sunday 11 am, 5 pm, Wednesday 7 pm",
+  "why": "made-up example"
+ },
+ "ANNOUNCEMENT_TEMPLATES[2].0": {
+  "text": "다가오는 모임",
+  "back": "Coming gatherings",
+  "why": ""
+ },
+ "ANNOUNCEMENT_TEMPLATES[2].1": {
+  "text": "수요 기도회: 수요일 저녁 7시",
+  "back": "Wednesday prayer meeting: Wednesday 7 pm",
+  "why": ""
+ },
+ "ANNOUNCEMENT_TEMPLATES[3].0": {
+  "text": "이번 주 암송 구절",
+  "back": "This week's memory verse",
+  "why": ""
+ },
+ "ANNOUNCEMENT_TEMPLATES[3].1": {
+  "text": "여기에 암송 구절을 적으세요",
+  "back": "Write the memory verse here",
+  "why": ""
+ },
+ "ANNOUNCEMENT_TEMPLATES[4].0": {
+  "text": "헌금 안내",
+  "back": "Giving",
+  "why": ""
+ },
+ "ANNOUNCEMENT_TEMPLATES[4].1": {
+  "text": "은행 이름과 계좌번호를 적으세요",
+  "back": "Write the bank name and account number",
+  "why": ""
+ },
+ "ANNOUNCEMENT_TEMPLATES[5].0": {
+  "text": "이번 주 생일",
+  "back": "This week's birthdays",
+  "why": ""
+ },
+ "ANNOUNCEMENT_TEMPLATES[5].1": {
+  "text": "생일인 분들의 이름을 적으세요",
+  "back": "Write the names of those with birthdays",
+  "why": ""
+ },
+ "announcements": {
+  "text": {
+   "zero": "공지가 아직 없어요",
+   "other": "공지 {count}개"
+  },
+  "back": "No announcements yet / {count} announcements",
+  "why": ""
+ },
+ "seconds_short": {
+  "text": {
+   "other": "{seconds}초"
+  },
+  "back": "{seconds} s",
+  "why": ""
+ },
+ "KEYS_TITLE": {
+  "text": "키 설정",
+  "back": "Key settings",
+  "why": ""
+ },
+ "KEYS_SHOWING": {
+  "text": "진행",
+  "back": "Running",
+  "why": "keys used while the service runs"
+ },
+ "KEYS_FINDING": {
+  "text": "찾기와 추가",
+  "back": "Finding and adding",
+  "why": ""
+ },
+ "KEYS_PLAN": {
+  "text": "예배 순서",
+  "back": "Plan",
+  "why": ""
+ },
+ "KEYS_EDITING": {
+  "text": "곡 편집",
+  "back": "Song editing",
+  "why": ""
+ },
+ "KEYS_SHOWING_ROWS[0].1": {
+  "text": "프로젝터를 다음 슬라이드로",
+  "back": "Projector to the next slide",
+  "why": ""
+ },
+ "KEYS_SHOWING_ROWS[1].1": {
+  "text": "프로젝터를 이전 슬라이드로",
+  "back": "Projector to the previous slide",
+  "why": ""
+ },
+ "KEYS_SHOWING_ROWS[2].1": {
+  "text": "곡의 첫 슬라이드로 이동",
+  "back": "Jump to the first slide of the song",
+  "why": ""
+ },
+ "KEYS_SHOWING_ROWS[3].1": {
+  "text": "곡의 마지막 슬라이드로 이동",
+  "back": "Jump to the last slide of the song",
+  "why": ""
+ },
+ "KEYS_SHOWING_ROWS[4].1": {
+  "text": "라이브에서 슬라이드 선택, 떼면 띄움",
+  "back": "Pick a slide in Live, put it up on release",
+  "why": ""
+ },
+ "KEYS_SHOWING_ROWS[5].1": {
+  "text": "미리보기의 선택 슬라이드 이동, Enter로 띄움",
+  "back": "Move the picked slide in Preview, put it up with Enter",
+  "why": ""
+ },
+ "KEYS_SHOWING_ROWS[6].1": {
+  "text": "선택한 슬라이드를 프로젝터에 띄우기",
+  "back": "Put the picked slide on the projector",
+  "why": ""
+ },
+ "KEYS_SHOWING_ROWS[7].1": {
+  "text": "누른 번호의 부분으로 이동",
+  "back": "Jump to the part with the number pressed",
+  "why": ""
+ },
+ "KEYS_SHOWING_ROWS[8].1": {
+  "text": "ㅎ은 후렴, ㅂ은 브리지로 이동",
+  "back": "ㅎ jumps to the chorus, ㅂ to the bridge",
+  "why": ""
+ },
+ "KEYS_SHOWING_ROWS[9].1": {
+  "text": "미리보기에서 번호 부분 선택",
+  "back": "Pick the numbered part in Preview",
+  "why": ""
+ },
+ "KEYS_SHOWING_ROWS[10].1": {
+  "text": "지금 띄운 곡을 미리보기로 가져오기",
+  "back": "Bring the song now up into Preview",
+  "why": ""
+ },
+ "KEYS_SHOWING_ROWS[11].1": {
+  "text": "이미 띄운 것을 미리보기로, 누를수록 더 이전",
+  "back": "Bring back what was up before, further back with each press",
+  "why": ""
+ },
+ "KEYS_SHOWING_ROWS[12].1": {
+  "text": "글자 숨기기, 배경은 그대로",
+  "back": "Hide the words, the background stays",
+  "why": ""
+ },
+ "KEYS_SHOWING_ROWS[13].1": {
+  "text": "프로젝터를 블랙으로",
+  "back": "Projector to black",
+  "why": ""
+ },
+ "KEYS_SHOWING_ROWS[14].1": {
+  "text": "프로젝터에 로고 띄우기",
+  "back": "Put the logo on the projector",
+  "why": ""
+ },
+ "KEYS_SHOWING_ROWS[15].1": {
+  "text": "마이크가 알아낸 것을 미리보기로",
+  "back": "What the microphone picked out, into Preview",
+  "why": ""
+ },
+ "KEYS_SHOWING_ROWS[16].1": {
+  "text": "공지를 미리보기로 가져오기",
+  "back": "Bring the announcements into Preview",
+  "why": ""
+ },
+ "KEYS_SHOWING_ROWS[17].1": {
+  "text": "프로젝터 켜고 끄기",
+  "back": "Projector on and off",
+  "why": ""
+ },
+ "KEYS_FINDING_ROWS[0].1": {
+  "text": "곡, 성경 구절, 동작 검색",
+  "back": "Search songs, passages and actions",
+  "why": ""
+ },
+ "KEYS_FINDING_ROWS[1].1": {
+  "text": "검색 열기, 비워 두면 모든 곡 표시",
+  "back": "Open search, lists every song when empty",
+  "why": ""
+ },
+ "KEYS_FINDING_ROWS[2].1": {
+  "text": "고른 결과 열기",
+  "back": "Open the picked result",
+  "why": ""
+ },
+ "KEYS_FINDING_ROWS[3].1": {
+  "text": "고른 결과를 미리보기 없이 바로 띄우기",
+  "back": "Put the picked result up now, skipping Preview",
+  "why": ""
+ },
+ "KEYS_FINDING_ROWS[4].1": {
+  "text": "고른 결과를 라이브 항목 바로 뒤에 추가",
+  "back": "Add the picked result right after the live item",
+  "why": ""
+ },
+ "KEYS_FINDING_ROWS[5].1": {
+  "text": "고른 곡 안에서 부분 찾기",
+  "back": "Find a part inside the picked song",
+  "why": ""
+ },
+ "KEYS_FINDING_ROWS[6].1": {
+  "text": "검색을 닫고 한 번에 메인 창으로",
+  "back": "Leave search and go to the main window at once",
+  "why": ""
+ },
+ "KEYS_PLAN_ROWS[0].1": {
+  "text": "다음 항목을 미리보기로",
+  "back": "Next item into Preview",
+  "why": ""
+ },
+ "KEYS_PLAN_ROWS[1].1": {
+  "text": "이전 항목을 미리보기로",
+  "back": "Previous item into Preview",
+  "why": ""
+ },
+ "KEYS_PLAN_ROWS[2].1": {
+  "text": "미리보기 항목을 위나 아래로 옮기기",
+  "back": "Move the item in Preview up or down",
+  "why": ""
+ },
+ "KEYS_PLAN_ROWS[4].1": {
+  "text": "미리보기 항목을 예배 순서에서 빼기",
+  "back": "Take the item in Preview out of the plan",
+  "why": ""
+ },
+ "KEYS_PLAN_ROWS[5].1": {
+  "text": "미리보기 항목을 예배 순서에 추가",
+  "back": "Add the item in Preview to the plan",
+  "why": ""
+ },
+ "KEYS_PLAN_ROWS[6].1": {
+  "text": "다음 예배 순서 열기, Shift 누르면 이전",
+  "back": "Open the next plan, the previous with Shift",
+  "why": ""
+ },
+ "KEYS_PLAN_ROWS[7].1": {
+  "text": "다른 예배용 순서 만들기: 요일과 시간",
+  "back": "Make a plan for another service: day and time",
+  "why": ""
+ },
+ "KEYS_EDITING_ROWS[0].1": {
+  "text": "새 곡 만들기",
+  "back": "Make a new song",
+  "why": ""
+ },
+ "KEYS_EDITING_ROWS[1].1": {
+  "text": "미리보기의 곡 편집",
+  "back": "Edit the song in Preview",
+  "why": ""
+ },
+ "KEYS_EDITING_ROWS[2].1": {
+  "text": "저장",
+  "back": "Save",
+  "why": ""
+ },
+ "KEYS_EDITING_ROWS[3].1": {
+  "text": "절, 후렴, 프리코러스, 브리지, 마무리 표시 넣기",
+  "back": "Insert a marker for verse, chorus, pre-chorus, bridge or ending",
+  "why": ""
+ },
+ "KEYS_EDITING_ROWS[4].1": {
+  "text": "제목 아래 제안 중 곡을 골라 모두 채우기",
+  "back": "Pick a song from the suggestions under the title and fill everything",
+  "why": ""
+ },
+ "KEYS_EDITING_ROWS[5].1": {
+  "text": "방금 지운 것 되돌리기",
+  "back": "Bring back what was removed last",
+  "why": ""
+ },
+ "announcement_deleted": {
+  "text": "공지를 삭제했어요: {title}",
+  "back": "Deleted the announcement: {title}",
+  "why": ""
+ },
+ "STAGE_CLOCK": {
+  "text": "시계",
+  "back": "Clock",
+  "why": ""
+ },
+ "STAGE_TIMER": {
+  "text": "카운트다운",
+  "back": "Countdown",
+  "why": "same as the countdown elsewhere"
+ },
+ "STAGE_BLACK": {
+  "text": "프로젝터가 블랙이에요",
+  "back": "The projector is black",
+  "why": "프로젝터 is the congregation's screen"
+ },
+ "STAGE_NOTHING": {
+  "text": "화면에 아무것도 없음",
+  "back": "Nothing on the screen",
+  "why": ""
+ },
+ "stage_next": {
+  "text": "다음: {label}",
+  "back": "Next: {label}",
+  "why": ""
+ },
+ "tour_place": {
+  "text": "{at} / {total}",
+  "back": "{at} / {total}",
+  "why": ""
+ },
+ "stage_place": {
+  "text": "{index} / {count}",
+  "back": "{index} / {count}",
+  "why": ""
+ },
+ "LOOK_LANGUAGE": {
+  "text": "프로그램 언어",
+  "back": "Program language",
+  "why": "not the language sung in the room"
+ },
+ "LEARN_SECTION": {
+  "text": "검색",
+  "back": "Search",
+  "why": ""
+ },
+ "LEARN_ON": {
+  "text": "검색에서 고른 곡 기억",
+  "back": "Remember songs picked in search",
+  "why": ""
+ },
+ "LEARN_ON_HINT": {
+  "text": "비슷한 결과라면 자주 고른 곡이 먼저 나와요",
+  "back": "When results match equally, often-picked songs come first",
+  "why": ""
+ },
+ "LEARN_FORGET": {
+  "text": "검색 기록 지우기",
+  "back": "Clear the search history",
+  "why": ""
+ },
+ "LEARN_FORGOTTEN": {
+  "text": "검색 기록을 지웠어요",
+  "back": "Cleared the search history",
+  "why": ""
+ },
+ "GROUP_WEEKDAY": {
+  "text": "오늘 요일에 자주 부르는 곡",
+  "back": "Songs often sung on today's weekday",
+  "why": ""
+ },
+ "GROUP_RECENT": {
+  "text": "최근에 고른 곡",
+  "back": "Songs picked lately",
+  "why": ""
+ },
+ "group_follows": {
+  "text": "“{title}” 다음에 자주 부르는 곡",
+  "back": "Songs often sung after “{title}”",
+  "why": ""
+ },
+ "habit_chip": {
+  "text": {
+   "other": "“{typed}” 입력 후 {picks}번 선택"
+  },
+  "back": "Picked {picks} times after typing “{typed}”",
+  "why": "번 is the word for times"
+ },
+ "habit_line": {
+  "text": {
+   "other": "“{typed}” 입력 후 {picks}번 선택, 마지막은 {when}"
+  },
+  "back": "Picked {picks} times after typing “{typed}”, last on {when}",
+  "why": ""
+ },
+ "follows_line": {
+  "text": {
+   "other": "이 곡 다음에 {count}번 불렀고, 마지막은 {when}"
+  },
+  "back": "Sung after it {count} times, last on {when}",
+  "why": ""
+ },
+ "weekday_line": {
+  "text": {
+   "other": "같은 요일 예배 {of}번 중 {count}번 불렀어요"
+  },
+  "back": "Sung in {count} of {of} services on this weekday",
+  "why": ""
+ },
+ "recent_line": {
+  "text": {
+   "other": "{picks}번 선택, 마지막은 {when}"
+  },
+  "back": "Picked {picks} times, last on {when}",
+  "why": ""
+ },
+ "starts_chip": {
+  "text": "보통 {section}부터",
+  "back": "Usually from {section}",
+  "why": ""
+ },
+ "starts_line": {
+  "text": "보통 {section}부터 시작해요 ({of}번 중 {times}번)",
+  "back": "Usually starts at {section} ({times} of {of} times)",
+  "why": ""
+ },
+ "SCREEN_OWN": {
+  "text": "이 프로그램 창이 있는 모니터",
+  "back": "The monitor with this program's window",
+  "why": ""
+ },
+ "BIBLES_TITLE": {
+  "text": "성경 추가",
+  "back": "Add Bibles",
+  "why": ""
+ },
+ "BIBLES_MORE": {
+  "text": "성경 더 받기",
+  "back": "Get more Bibles",
+  "why": ""
+ },
+ "BIBLES_OWN_FILE": {
+  "text": "내 파일로 추가",
+  "back": "Add from my own file",
+  "why": ""
+ },
+ "BIBLES_CHOOSE_FILE": {
+  "text": "성경 파일 선택",
+  "back": "Choose a Bible file",
+  "why": ""
+ },
+ "BIBLES_FILE_HINT": {
+  "text": "MyBible, USFX, USFM 파일 묶음(ZIP)",
+  "back": "MyBible, USFX, a bundle of USFM files (ZIP)",
+  "why": ""
+ },
+ "BIBLES_PRACTICE": {
+  "text": "연습 모드에서는 성경을 저장하지 않아요",
+  "back": "Practice mode does not keep Bibles",
+  "why": ""
+ },
+ "BIBLES_FILE_UNSUPPORTED": {
+  "text": "성경으로 읽을 수 없는 파일이에요",
+  "back": "The file cannot be read as a Bible",
+  "why": ""
+ },
+ "BIBLES_FILE_EMPTY": {
+  "text": "파일에 구절이 없어요",
+  "back": "The file has no verses",
+  "why": ""
+ },
+ "CMD_BIBLE_FILE": {
+  "text": "파일에서 성경 추가",
+  "back": "Add a Bible from a file",
+  "why": ""
+ },
+ "CMD_BIBLE_FILE_DETAIL": {
+  "text": "MyBible, USFX, USFM 파일 묶음(ZIP)",
+  "back": "MyBible, USFX, a bundle of USFM files (ZIP)",
+  "why": ""
+ },
+ "CMD_BIBLES": {
+  "text": "성경 더 받기",
+  "back": "Get more Bibles",
+  "why": ""
+ },
+ "CMD_BIBLES_FIND_DETAIL": {
+  "text": "여러 언어의 성경을 받을 수 있어요",
+  "back": "Bibles in many languages can be fetched",
+  "why": ""
+ },
+ "BIBLES_LIST": {
+  "text": "받을 수 있는 성경",
+  "back": "Bibles that can be fetched",
+  "why": ""
+ },
+ "BIBLES_SEARCH": {
+  "text": "언어나 성경 이름 입력",
+  "back": "Type a language or a Bible's name",
+  "why": ""
+ },
+ "BIBLES_LOADING": {
+  "text": "목록 가져오는 중",
+  "back": "Fetching the list",
+  "why": ""
+ },
+ "BIBLES_LOAD_FAILED": {
+  "text": "목록을 가져오지 못했어요",
+  "back": "Could not fetch the list",
+  "why": ""
+ },
+ "BIBLES_RETRY": {
+  "text": "다시 시도",
+  "back": "Try again",
+  "why": ""
+ },
+ "BIBLES_INSTALLED": {
+  "text": "설치됨",
+  "back": "Installed",
+  "why": ""
+ },
+ "BIBLES_DOWNLOAD": {
+  "text": "받기",
+  "back": "Get",
+  "why": ""
+ },
+ "BIBLES_DOWNLOADING": {
+  "text": "받는 중",
+  "back": "Getting",
+  "why": ""
+ },
+ "BIBLES_USE": {
+  "text": "이 성경 사용",
+  "back": "Use this Bible",
+  "why": ""
+ },
+ "BIBLES_IN_USE": {
+  "text": "사용 중",
+  "back": "In use",
+  "why": ""
+ },
+ "BIBLES_COPYRIGHT": {
+  "text": "저작권",
+  "back": "Copyright",
+  "why": ""
+ },
+ "BIBLES_PICK_HINT": {
+  "text": "성경을 고르면 저작권 안내가 나와요",
+  "back": "Pick a Bible and its rights notice appears",
+  "why": ""
+ },
+ "BIBLES_SCOPE_WHOLE": {
+  "text": "성경 전체",
+  "back": "Whole Bible",
+  "why": ""
+ },
+ "BIBLES_SCOPE_PART": {
+  "text": "일부 책만",
+  "back": "Some books only",
+  "why": ""
+ },
+ "BIBLES_NO_COPYRIGHT": {
+  "text": "파일에 저작권 정보가 없어요",
+  "back": "The file gives no rights information",
+  "why": ""
+ },
+ "BIBLES_NOTICE_LOADING": {
+  "text": "저작권 안내 가져오는 중",
+  "back": "Fetching the rights notice",
+  "why": ""
+ },
+ "BIBLES_NOTICE_FAILED": {
+  "text": "파일 안의 안내를 읽지 못했어요",
+  "back": "Could not read the notice in the file",
+  "why": ""
+ },
+ "bibles_download_failed": {
+  "text": "성경을 받지 못했어요: {why}",
+  "back": "Could not get the Bible: {why}",
+  "why": ""
+ },
+ "bible_added": {
+  "text": {
+   "other": "성경을 추가했어요: {name}, {verses}절"
+  },
+  "back": "Added the Bible: {name}, {verses} verses",
+  "why": ""
+ },
+ "bibles_file_failed": {
+  "text": "성경을 추가하지 못했어요: {why}",
+  "back": "Could not add the Bible: {why}",
+  "why": ""
+ },
+ "noun.announcements": {
+  "text": {
+   "other": "공지 {count}개"
+  },
+  "back": "{count} announcements",
+  "why": ""
+ },
+ "noun.bibles": {
+  "text": {
+   "other": "번역본 {count}개"
+  },
+  "back": "{count} translations",
+  "why": ""
+ },
+ "noun.birthdays": {
+  "text": {
+   "other": "생일 {count}명"
+  },
+  "back": "{count} birthdays",
+  "why": ""
+ },
+ "noun.files": {
+  "text": {
+   "other": "파일 {count}개"
+  },
+  "back": "{count} files",
+  "why": ""
+ },
+ "noun.pictures": {
+  "text": {
+   "other": "이미지 {count}개"
+  },
+  "back": "{count} images",
+  "why": ""
+ },
+ "noun.rows": {
+  "text": {
+   "other": "{count}행"
+  },
+  "back": "{count} rows",
+  "why": ""
+ },
+ "noun.songs": {
+  "text": {
+   "other": "{count}곡"
+  },
+  "back": "{count} songs",
+  "why": ""
+ },
+ "section.bridge": {
+  "text": "브리지",
+  "back": "Bridge",
+  "why": "musicians' loan word"
+ },
+ "section.chorus": {
+  "text": "후렴",
+  "back": "Chorus",
+  "why": ""
+ },
+ "section.ending": {
+  "text": "마무리",
+  "back": "Ending",
+  "why": ""
+ },
+ "section.intro": {
+  "text": "전주",
+  "back": "Intro",
+  "why": "musicians' word for the opening"
+ },
+ "section.other": {
+  "text": "파트",
+  "back": "Part",
+  "why": ""
+ },
+ "section.pre_chorus": {
+  "text": "프리코러스",
+  "back": "Pre-chorus",
+  "why": ""
+ },
+ "section.verse": {
+  "text": "절",
+  "back": "Verse",
+  "why": "1절 for a song; the Bible verse is also 절 but always follows a chapter"
+ },
+ "section_numbered": {
+  "text": "{number}{name}",
+  "back": "{number}{name}",
+  "why": "number first, as in 1절"
+ },
+ "DESIGN_BACKGROUND": {
+  "text": "배경",
+  "back": "Background",
+  "why": ""
+ },
+ "KEYS_PLAN_ROWS[3].1": {
+  "text": "선택한 슬라이드에서 곡이 시작하도록 표시",
+  "back": "Mark the picked slide as where the song starts",
+  "why": ""
+ },
+ "TIP_START_HERE": {
+  "text": "차례에 여기서 시작, 다시 누르면 해제",
+  "back": "Starts here when its turn comes, press again to remove",
+  "why": ""
+ },
+ "PLAN_STARTS_AT": {
+  "text": "시작 위치",
+  "back": "Starts at",
+  "why": ""
+ },
+ "PLAN_START_BEGINNING": {
+  "text": "처음부터",
+  "back": "From the beginning",
+  "why": ""
+ },
+ "LISTEN_NOT_CONNECTED": {
+  "text": "고른 마이크 연결이 안 돼 있어요. 다른 마이크를 고르세요.",
+  "back": "The picked microphone is not connected. Pick another one.",
+  "why": ""
+ },
+ "LISTEN_WOULD_NOT_OPEN": {
+  "text": "고른 마이크를 켜지 못했어요. 다른 마이크를 고르세요.",
+  "back": "Could not start the picked microphone. Pick another one.",
+  "why": ""
+ },
+ "LISTEN_INPUT_STOPPED": {
+  "text": "마이크 소리가 끊겼어요. 케이블을 확인하세요.",
+  "back": "The microphone sound stopped. Check the cable.",
+  "why": ""
+ },
+ "LISTEN_BEAT_ONLY": {
+  "text": "이 버전은 박자만 따라가고 말은 알아듣지 못해요.",
+  "back": "This version follows the beat but cannot understand speech.",
+  "why": ""
+ },
+ "LISTEN_TOO_SLOW": {
+  "text": "PC가 느려 말을 제때 알아듣지 못해요. 크기와 템포는 작동해요.",
+  "back": "The PC is slow and cannot recognise speech in time. Level and tempo still work.",
+  "why": ""
+ },
+ "MEDIA_CAMERA_NONE": {
+  "text": "카메라가 없어요. 연결 전까지 배경은 검은색이에요.",
+  "back": "There is no camera. The background is black until one is connected.",
+  "why": ""
+ },
+ "media_camera_missing": {
+  "text": "{name} 카메라가 없어요. 연결할 때까지 배경은 검은색이에요.",
+  "back": "The camera {name} is missing. The background is black until it is connected.",
+  "why": ""
+ },
+ "MEDIA_CAMERA_BUSY": {
+  "text": "카메라가 시작되지 않아요. 다른 앱이 쓰고 있는 것 같아요.",
+  "back": "The camera does not start. Another app seems to be using it.",
+  "why": ""
+ },
+ "MEDIA_CAMERA_STOPPED": {
+  "text": "카메라 화면이 끊겼어요. 그동안 배경은 검은색이에요.",
+  "back": "The camera picture stopped. Meanwhile the background is black.",
+  "why": ""
+ },
+ "MEDIA_CAMERA_FAR": {
+  "text": "네트워크 카메라가 응답하지 않아요. 다시 시도하고 있어요.",
+  "back": "The network camera does not answer. Trying again.",
+  "why": "same name as the Design row"
+ },
+ "media_video_missing": {
+  "text": "영상 파일이 없어요: {file}",
+  "back": "The video file is missing: {file}",
+  "why": ""
+ },
+ "media_video_failed": {
+  "text": "영상 파일을 재생하지 못했어요: {file}",
+  "back": "Could not play the video file: {file}",
+  "why": ""
+ },
+ "MEDIA_VIDEO_SOFTWARE": {
+  "text": "그래픽 카드 대신 프로세서가 재생해요. 오래된 PC는 끊길 수 있어요.",
+  "back": "The processor plays it instead of the graphics card. An old PC may stutter.",
+  "why": ""
+ },
+ "MEDIA_VIDEO_NONE": {
+  "text": "이 Artosia는 움직이는 배경을 쓸 수 없는 버전이에요.",
+  "back": "This Artosia is a version that cannot use a moving background.",
+  "why": ""
+ },
+ "LISTEN_MODEL_DAMAGED": {
+  "text": "인식 파일이 손상됐어요. 위 버튼으로 다시 받으세요.",
+  "back": "The recognition file is damaged. Fetch it again with the button above.",
+  "why": "same word as the row above"
+ },
+ "LISTEN_MODEL_MISSING": {
+  "text": "말을 알아들으려면 인식 파일(57 MB)이 필요해요",
+  "back": "To understand speech it needs a recognition file (57 MB)",
+  "why": ""
+ },
+ "LISTEN_MODEL_BETTER": {
+  "text": "더 정확한 인식 파일(190 MB)을 쓸 수 있어요",
+  "back": "You can use a more accurate recognition file (190 MB)",
+  "why": ""
+ },
+ "listen_model_failed": {
+  "text": "인식 파일을 받지 못했어요: {why}",
+  "back": "Could not get the recognition file: {why}",
+  "why": ""
+ },
+ "MARKS_APPLY": {
+  "text": "이 표시 쓰기",
+  "back": "Use these marks",
+  "why": ""
+ },
+ "MARKS_APPLY_HELP": {
+  "text": "제안한 이름을 한 번에 넣고, 되돌릴 수 있어요",
+  "back": "Puts the proposed names into the words at once, and can be undone",
+  "why": ""
+ },
+ "MARKS_HIDE": {
+  "text": "제안 닫기",
+  "back": "Close the suggestion",
+  "why": ""
+ },
+ "MARKS_THIS": {
+  "text": "이 부분",
+  "back": "This part",
+  "why": ""
+ },
+ "MARKS_WHY_NAMED": {
+  "text": "가사에 이미 적은 부분 이름이 있어서예요",
+  "back": "Because a part name was already typed in the words",
+  "why": ""
+ },
+ "MARKS_WHY_REPEAT": {
+  "text": "같은 가사가 반복돼요",
+  "back": "The same words come again",
+  "why": ""
+ },
+ "MARKS_WHY_BRIDGE": {
+  "text": "짧고 한 번만, 곡 후반에 나와서 브리지예요",
+  "back": "Short, only once, late in the song, so a bridge",
+  "why": ""
+ },
+ "MARKS_WHY_ORDER": {
+  "text": "앞 절에 이어지는 다음 절이에요",
+  "back": "The next verse following the earlier ones",
+  "why": ""
+ },
+ "BACKDROPS_TITLE": {
+  "text": "배경 모음",
+  "back": "Backdrop collection",
+  "why": ""
+ },
+ "BACKDROPS_SEARCH": {
+  "text": "예를 들어 바다, 구름",
+  "back": "For example sea, clouds",
+  "why": ""
+ },
+ "BACKDROPS_ALL": {
+  "text": "전체",
+  "back": "All",
+  "why": ""
+ },
+ "BACKDROPS_SKY": {
+  "text": "하늘",
+  "back": "Sky",
+  "why": ""
+ },
+ "BACKDROPS_MOUNTAINS": {
+  "text": "산",
+  "back": "Mountains",
+  "why": ""
+ },
+ "BACKDROPS_WATER": {
+  "text": "물",
+  "back": "Water",
+  "why": ""
+ },
+ "BACKDROPS_NATURE": {
+  "text": "자연",
+  "back": "Nature",
+  "why": ""
+ },
+ "BACKDROPS_LIGHT": {
+  "text": "빛",
+  "back": "Light",
+  "why": ""
+ },
+ "BACKDROPS_NIGHT": {
+  "text": "밤",
+  "back": "Night",
+  "why": ""
+ },
+ "BACKDROPS_CANDLES": {
+  "text": "촛불",
+  "back": "Candles",
+  "why": ""
+ },
+ "BACKDROPS_CHURCH": {
+  "text": "교회",
+  "back": "Church",
+  "why": ""
+ },
+ "BACKDROPS_PEOPLE": {
+  "text": "사람",
+  "back": "People",
+  "why": ""
+ },
+ "BACKDROPS_TEXTURE": {
+  "text": "질감",
+  "back": "Texture",
+  "why": ""
+ },
+ "BACKDROPS_USE": {
+  "text": "사용",
+  "back": "Use",
+  "why": ""
+ },
+ "BACKDROPS_DOWNLOADING": {
+  "text": "받는 중",
+  "back": "Getting",
+  "why": ""
+ },
+ "BACKDROPS_OFFLINE": {
+  "text": "인터넷에 연결돼 있지 않아요",
+  "back": "Not connected to the internet",
+  "why": ""
+ },
+ "BACKDROPS_AUTHOR": {
+  "text": "만든 사람",
+  "back": "Made by",
+  "why": ""
+ },
+ "BACKDROPS_LICENCE": {
+  "text": "라이선스",
+  "back": "Licence",
+  "why": ""
+ },
+ "BACKDROPS_PAGE": {
+  "text": "주소",
+  "back": "Address",
+  "why": ""
+ },
+ "BACKDROPS_SIZE": {
+  "text": "크기",
+  "back": "Size",
+  "why": ""
+ },
+ "BACKDROPS_PICK_HINT": {
+  "text": "배경을 누르면 만든 사람과 사용 조건이 보여요",
+  "back": "Press a backdrop to see who made it and the terms of use",
+  "why": ""
+ },
+ "BACKDROPS_DIM": {
+  "text": "밝은 이미지: 디자인에서 배경을 어둡게 하세요",
+  "back": "Bright image: make the background darker in Design",
+  "why": ""
+ },
+ "BACKDROPS_HERE": {
+  "text": "저장됨, 인터넷 필요 없음",
+  "back": "Stored, no internet needed",
+  "why": ""
+ },
+ "BACKDROPS_IN_USE": {
+  "text": "지금 쓰는 배경",
+  "back": "The backdrop in use now",
+  "why": ""
+ },
+ "backdrop_failed": {
+  "text": "배경을 받지 못했어요: {why}",
+  "back": "Could not get the backdrop: {why}",
+  "why": ""
+ },
+ "WHY_OFFLINE": {
+  "text": "인터넷에 연결돼 있지 않아요",
+  "back": "this computer is not connected to the internet",
+  "why": ""
+ },
+ "WHY_SLOW": {
+  "text": "응답이 너무 늦어요",
+  "back": "the answer is too slow",
+  "why": ""
+ },
+ "WHY_BUSY": {
+  "text": "사이트가 바빠요. 1분쯤 뒤에 다시 해 보세요",
+  "back": "the site is busy, try again in about a minute",
+  "why": ""
+ },
+ "WHY_BROKEN": {
+  "text": "연결이 중간에 끊겼어요",
+  "back": "the connection dropped partway",
+  "why": ""
+ },
+ "WHY_UNREADABLE": {
+  "text": "내용을 이해하지 못했어요",
+  "back": "the program could not make sense of the content",
+  "why": ""
+ },
+ "WHY_NOT_BIBLE": {
+  "text": "성경 파일이 아니에요",
+  "back": "it is not a Bible file",
+  "why": ""
+ },
+ "WHY_DAMAGED": {
+  "text": "받은 파일이 깨졌어요",
+  "back": "the downloaded file is broken",
+  "why": ""
+ },
+ "WHY_DISK": {
+  "text": "저장 공간에 쓰지 못했어요",
+  "back": "could not write to the storage",
+  "why": ""
+ },
+ "why_status": {
+  "text": "사이트가 오류를 보냈어요 ({code})",
+  "back": "the site sent an error ({code})",
+  "why": "number in brackets avoids a particle"
+ },
+ "LYRICS_OFFLINE": {
+  "text": "가사 사이트에 연결할 수 없어요. 인터넷 연결을 확인하세요",
+  "back": "Cannot reach the lyrics site. Check the internet connection",
+  "why": ""
+ },
+ "LYRICS_NOT_FOUND": {
+  "text": "가사 사이트에 이 곡의 가사가 없어요",
+  "back": "The lyrics site has no words for this song",
+  "why": ""
+ },
+ "LYRICS_BUSY": {
+  "text": "가사 사이트가 바빠요. 1분쯤 뒤에 다시 해 보세요",
+  "back": "The lyrics site is busy. Try again in about a minute",
+  "why": ""
+ },
+ "LYRICS_UNREADABLE": {
+  "text": "가사 사이트의 답을 Artosia가 이해하지 못했어요",
+  "back": "Artosia could not understand the lyrics site's reply",
+  "why": ""
+ },
+ "lyrics_busy_for": {
+  "text": {
+   "other": "가사 사이트가 바빠요. {seconds}초 뒤에 다시 해 보세요"
+  },
+  "back": "The lyrics site is busy. Try again in {seconds} seconds",
+  "why": ""
+ },
+ "CMD_BACKDROPS_DETAIL": {
+  "text": "가사 뒤에 깔 수 있는 무료 사진과 반복 영상",
+  "back": "Free photos and looping videos to put behind the words",
+  "why": ""
+ },
+ "LOOK_MIDNIGHT": {
+  "text": "한밤",
+  "back": "Midnight",
+  "why": ""
+ },
+ "LOOK_CLASSIC_BLUE": {
+  "text": "클래식 블루",
+  "back": "Classic blue",
+  "why": ""
+ },
+ "LOOK_BLACK": {
+  "text": "블랙",
+  "back": "Black",
+  "why": "same word as the Black tile"
+ },
+ "LOOK_FOREST": {
+  "text": "숲",
+  "back": "Forest",
+  "why": ""
+ },
+ "LOOK_EMBER": {
+  "text": "불씨",
+  "back": "Embers",
+  "why": ""
+ },
+ "LOOK_PAPER": {
+  "text": "종이",
+  "back": "Paper",
+  "why": ""
+ },
+ "TOUR_BACK": {
+  "text": "뒤로",
+  "back": "Back",
+  "why": "kept apart from 이전/다음 of the slides"
+ },
+ "TOUR_NEXT": {
+  "text": "계속",
+  "back": "Continue",
+  "why": "kept apart from 다음"
+ },
+ "KEYS_TO": {
+  "text": "~",
+  "back": "to",
+  "why": "the range mark Korean uses"
+ },
+ "KEYS_OR": {
+  "text": "또는",
+  "back": "or",
+  "why": ""
+ },
+ "SETTINGS_ADD_BIBLE": {
+  "text": "더 추가하기",
+  "back": "Add more",
+  "why": "does not repeat the heading"
+ },
+ "BTN_DELETE_SONG": {
+  "text": "곡 삭제",
+  "back": "Delete song",
+  "why": ""
+ },
+ "CMD_PLAN_DUPLICATE_DETAIL": {
+  "text": "곡과 성경 구절이 같은 복사본, 두 번째 예배용",
+  "back": "A copy with the same songs and passages, for a second service",
+  "why": ""
+ },
+ "CMD_PLAN_RENAME_DETAIL": {
+  "text": "요일, 시작 시간, 이름 바꾸기",
+  "back": "Change the day, starting time or name",
+  "why": ""
+ },
+ "CMD_PLAN_DELETE_DETAIL": {
+  "text": "순서를 지워요. 알림에서 되돌릴 수 있어요",
+  "back": "Removes the plan. The notice can bring it back",
+  "why": ""
+ },
+ "CMD_START_HERE": {
+  "text": "여기서 곡 시작하기",
+  "back": "Start the song here",
+  "why": ""
+ },
+ "CMD_EARLIER": {
+  "text": "이미 띄운 것 다시 불러오기",
+  "back": "Bring back what was already put up",
+  "why": "not the go-back-one-slide command"
+ },
+ "CMD_EARLIER_DETAIL": {
+  "text": "띄웠던 항목이 미리보기로 와요, 멈춘 곳이 선택돼요",
+  "back": "The item comes into Preview, where it stopped is picked",
+  "why": ""
+ },
+ "START_HERE_HOW": {
+  "text": "곡을 미리보기에 열고 시작할 슬라이드를 선택한 뒤 이 명령을 다시 고르세요",
+  "back": "Open the song in Preview, pick the slide to start at, then choose this command again",
+  "why": ""
+ },
+ "CMD_START_HERE_DETAIL": {
+  "text": "미리보기의 곡이 선택한 슬라이드에서 시작해요, 메들리용",
+  "back": "The song in Preview starts at the picked slide, for medleys",
+  "why": ""
+ },
+ "CMD_NEW_ANNOUNCEMENT_DETAIL": {
+  "text": "입장 때 도는 공지, 성경 구절, 생일 목록",
+  "back": "A notice for the loop at arrival, a Bible verse, a list of birthdays",
+  "why": ""
+ },
+ "KEYS_MORE": {
+  "text": "목록에 없는 건 검색에 입력하세요: 예배 순서 복사, 디자인",
+  "back": "What is not listed, type in the search: copy the plan, design",
+  "why": ""
+ },
+ "SETTINGS_GENERAL": {
+  "text": "일반",
+  "back": "General",
+  "why": ""
+ },
+ "search_bible": {
+  "text": "{passage} 또는 구절 속 몇 단어 입력",
+  "back": "Type {passage} or a few words from the verse",
+  "why": ""
+ },
+ "NOTICE_SAVED": {
+  "text": "공지를 저장했어요",
+  "back": "The announcement was saved",
+  "why": ""
+ },
+ "BTN_START_HERE": {
+  "text": "여기서 시작",
+  "back": "Start here",
+  "why": ""
+ }
+}

@@ -352,7 +352,7 @@ fn choice() -> (Look, Screen) {
 
 fn init() -> State {
     let (look, screen) = choice();
-    let language = if flag("--lang").as_deref() == Some("id") { Language::Indonesian } else { Language::English };
+    let language = flag("--lang").and_then(|code| Language::named(&code)).unwrap_or(Language::ENGLISH);
     let failure = match flag("--fail").as_deref() {
         Some("damaged") => Key::FailedDamaged,
         Some("disk") => Key::FailedDisk,

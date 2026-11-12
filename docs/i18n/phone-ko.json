@@ -1,0 +1,307 @@
+{
+ "pair_title": {
+  "text": "휴대폰 리모컨",
+  "back": "Phone remote",
+  "why": "same name as the computer's dialog"
+ },
+ "pin": {
+  "text": "PIN",
+  "back": "PIN",
+  "why": "same as the computer's label"
+ },
+ "pin_hint": {
+  "text": "컴퓨터의 휴대폰 리모컨 창에 나온 번호를 입력하세요",
+  "back": "Type the number shown in the phone remote window on the computer",
+  "why": ""
+ },
+ "connect": {
+  "text": "연결",
+  "back": "Connect",
+  "why": ""
+ },
+ "wrong_pin": {
+  "text": "번호가 맞지 않아요",
+  "back": "The number is wrong",
+  "why": ""
+ },
+ "too_many": {
+  "text": "시도가 너무 많아요. 1분 뒤에 다시 해 보세요",
+  "back": "Too many tries. Try again in a minute",
+  "why": ""
+ },
+ "unreachable": {
+  "text": "컴퓨터에 연결할 수 없어요",
+  "back": "Cannot reach the computer",
+  "why": ""
+ },
+ "tab_live": {
+  "text": "라이브",
+  "back": "Live",
+  "why": ""
+ },
+ "tab_plan": {
+  "text": "순서",
+  "back": "Plan",
+  "why": "short form of 예배 순서 to fit the width"
+ },
+ "tab_search": {
+  "text": "곡과 성경 찾기",
+  "back": "Find songs and Bible passages",
+  "why": ""
+ },
+ "tab_more": {
+  "text": "그 밖의 기능",
+  "back": "Other functions",
+  "why": ""
+ },
+ "live": {
+  "text": "라이브",
+  "back": "Live",
+  "why": ""
+ },
+ "next_btn": {
+  "text": "다음",
+  "back": "Next",
+  "why": "same word as the computer's Next tile"
+ },
+ "back": {
+  "text": "이전",
+  "back": "Back",
+  "why": ""
+ },
+ "nothing_open": {
+  "text": "열린 항목 없음",
+  "back": "Nothing open",
+  "why": ""
+ },
+ "nothing_live": {
+  "text": "프로젝터에 아무것도 없어요",
+  "back": "There is nothing on the projector",
+  "why": ""
+ },
+ "n_of": {
+  "text": "{0} / {1}",
+  "back": "{0} / {1}",
+  "why": ""
+ },
+ "n_slides": {
+  "text": "슬라이드 {0}",
+  "back": "Slides {0}",
+  "why": ""
+ },
+ "clear_text": {
+  "text": "글자 숨김",
+  "back": "Words hidden",
+  "why": "same as the computer's tile"
+ },
+ "black": {
+  "text": "블랙",
+  "back": "Black",
+  "why": ""
+ },
+ "logo": {
+  "text": "로고",
+  "back": "Logo",
+  "why": ""
+ },
+ "logo_needs": {
+  "text": "먼저 컴퓨터에서 로고를 정해 주세요",
+  "back": "First set a logo on the computer",
+  "why": ""
+ },
+ "text_cleared": {
+  "text": "글자가 숨겨져 있어요",
+  "back": "The words are hidden",
+  "why": ""
+ },
+ "screen_black": {
+  "text": "프로젝터가 블랙이에요",
+  "back": "The projector is black",
+  "why": ""
+ },
+ "logo_showing": {
+  "text": "프로젝터에 로고 띄움",
+  "back": "Logo up on the projector",
+  "why": ""
+ },
+ "jump": {
+  "text": "부분으로 이동",
+  "back": "Jump to a part",
+  "why": ""
+ },
+ "plan_show": {
+  "text": "“{0}” 띄우기",
+  "back": "Put up “{0}”",
+  "why": ""
+ },
+ "plan_live": {
+  "text": "라이브",
+  "back": "Live",
+  "why": ""
+ },
+ "plan_empty": {
+  "text": "예배 순서가 비어 있어요",
+  "back": "The plan is empty",
+  "why": ""
+ },
+ "cancel": {
+  "text": "취소",
+  "back": "Cancel",
+  "why": "light and short"
+ },
+ "search_ph": {
+  "text": "곡이나 성경 구절 입력",
+  "back": "Type a song or Bible passage",
+  "why": ""
+ },
+ "search_hint": {
+  "text": "곡 제목, 가사 한 줄, 성경 구절(예: 요 3 16) 입력",
+  "back": "Type a song title, a line of words, or a Bible reference (e.g. John 3 16)",
+  "why": "reference written with spaces"
+ },
+ "searching": {
+  "text": "찾는 중",
+  "back": "Searching",
+  "why": ""
+ },
+ "no_results": {
+  "text": "결과가 없어요",
+  "back": "No results",
+  "why": ""
+ },
+ "show": {
+  "text": "띄우기",
+  "back": "Show",
+  "why": "same word as the computer's Show tile"
+ },
+ "add": {
+  "text": "추가",
+  "back": "Add",
+  "why": ""
+ },
+ "added": {
+  "text": "추가됨",
+  "back": "Added",
+  "why": ""
+ },
+ "show_aria": {
+  "text": "“{0}” 지금 띄우기",
+  "back": "Put up “{0}” now",
+  "why": ""
+ },
+ "add_aria": {
+  "text": "“{0}” 예배 순서에 추가",
+  "back": "Add “{0}” to the plan",
+  "why": ""
+ },
+ "message": {
+  "text": "안내 문구",
+  "back": "Notice",
+  "why": ""
+ },
+ "message_ph": {
+  "text": "안내할 내용 입력",
+  "back": "Type what to announce",
+  "why": ""
+ },
+ "message_show": {
+  "text": "띄우기",
+  "back": "Show",
+  "why": ""
+ },
+ "message_hide": {
+  "text": "숨기기",
+  "back": "Hide",
+  "why": ""
+ },
+ "message_showing": {
+  "text": "띄운 안내: “{0}”",
+  "back": "Notice up: “{0}”",
+  "why": ""
+ },
+ "countdown": {
+  "text": "카운트다운",
+  "back": "Countdown",
+  "why": ""
+ },
+ "minutes": {
+  "text": "분",
+  "back": "min",
+  "why": ""
+ },
+ "start": {
+  "text": "시작",
+  "back": "Start",
+  "why": ""
+ },
+ "stop": {
+  "text": "종료",
+  "back": "End",
+  "why": ""
+ },
+ "language": {
+  "text": "언어",
+  "back": "Language",
+  "why": ""
+ },
+ "keys_title": {
+  "text": "단축키",
+  "back": "Shortcuts",
+  "why": ""
+ },
+ "keys_text": {
+  "text": "Space와 아래 화살표는 다음, 위 화살표는 이전 슬라이드예요. 슬래시 키는 검색. C는 후렴, V는 다음 절, B는 브리지예요. 숫자 1부터 9는 그 번호 부분. F1은 글자 숨김, F2는 블랙, F3은 로고, F6은 프로젝터 켜기와 끄기예요.",
+  "back": "Space and the down arrow go to the next slide, the up arrow to the previous. The slash key is search. C is the chorus, V the next verse, B the bridge. The digits 1 to 9 are that numbered part. F1 hides the words, F2 is black, F3 the logo, F6 switches the projector on and off.",
+  "why": ""
+ },
+ "lost": {
+  "text": "컴퓨터와 연결이 끊겼어요",
+  "back": "The connection with the computer was lost",
+  "why": ""
+ },
+ "retrying": {
+  "text": "다시 연결하는 중",
+  "back": "Reconnecting",
+  "why": ""
+ },
+ "label.verse": {
+  "text": "절",
+  "back": "Verse",
+  "why": ""
+ },
+ "label.chorus": {
+  "text": "후렴",
+  "back": "Chorus",
+  "why": "same as the computer"
+ },
+ "label.pre_chorus": {
+  "text": "프리코러스",
+  "back": "Pre-chorus",
+  "why": ""
+ },
+ "label.bridge": {
+  "text": "브리지",
+  "back": "Bridge",
+  "why": ""
+ },
+ "label.intro": {
+  "text": "전주",
+  "back": "Intro",
+  "why": ""
+ },
+ "label.ending": {
+  "text": "마무리",
+  "back": "Ending",
+  "why": ""
+ },
+ "projector_off": {
+  "text": "프로젝터 꺼짐",
+  "back": "Projector off",
+  "why": ""
+ },
+ "label.numbered": {
+  "text": "{1}{0}",
+  "back": "the part's name and its number, in the order the window uses",
+  "why": "carried from section_numbered so the phone and the window agree"
+ }
+}

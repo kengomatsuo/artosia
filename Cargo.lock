@@ -210,6 +210,7 @@ version = "0.1.15"
 dependencies = [
  "artosia-core",
  "artosia-listen",
+ "artosia-locale",
  "artosia-lyrics",
  "artosia-office",
  "artosia-remote",
@@ -242,6 +243,13 @@ version = "0.0.1"
 dependencies = [
  "cpal",
  "whisper-rs",
+]
+
+[[package]]
+name = "artosia-locale"
+version = "0.1.0"
+dependencies = [
+ "windows",
 ]
 
 [[package]]
@@ -288,6 +296,7 @@ dependencies = [
 name = "artosia-setup"
 version = "0.1.0"
 dependencies = [
+ "artosia-locale",
  "artosia-update",
  "rune",
  "serde_json",

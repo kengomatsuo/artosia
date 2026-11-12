@@ -1,0 +1,307 @@
+{
+ "pair_title": {
+  "text": "Télécommande Artosia",
+  "back": "Artosia remote control",
+  "why": "names the program and the remote"
+ },
+ "pin": {
+  "text": "Code PIN",
+  "back": "PIN code",
+  "why": "same word as the computer label"
+ },
+ "pin_hint": {
+  "text": "Le code s'affiche sur l'ordinateur, dans Télécommande",
+  "back": "The code shows on the computer, in Remote control",
+  "why": "one short sentence"
+ },
+ "connect": {
+  "text": "Connecter",
+  "back": "Connect",
+  "why": "one word"
+ },
+ "wrong_pin": {
+  "text": "Code incorrect",
+  "back": "Wrong code",
+  "why": "no full stop"
+ },
+ "too_many": {
+  "text": "Trop d'essais. Attendez une minute.",
+  "back": "Too many tries. Wait a minute.",
+  "why": "two statements"
+ },
+ "unreachable": {
+  "text": "Ordinateur injoignable",
+  "back": "Computer unreachable",
+  "why": "no full stop"
+ },
+ "tab_live": {
+  "text": "Direct",
+  "back": "Live",
+  "why": "same word as the Live pane"
+ },
+ "tab_plan": {
+  "text": "Liste",
+  "back": "List",
+  "why": "programme is 9 characters, the segment allows 8"
+ },
+ "tab_search": {
+  "text": "Recherche",
+  "back": "Search",
+  "why": "screen reader only"
+ },
+ "tab_more": {
+  "text": "Autres outils",
+  "back": "Other tools",
+  "why": "screen reader only"
+ },
+ "live": {
+  "text": "Direct",
+  "back": "Live",
+  "why": "same word as the computer"
+ },
+ "next_btn": {
+  "text": "Suivant",
+  "back": "Next",
+  "why": "same word as the Next tile"
+ },
+ "back": {
+  "text": "Retour",
+  "back": "Back",
+  "why": "same word as the Back tile"
+ },
+ "nothing_open": {
+  "text": "Rien d'ouvert",
+  "back": "Nothing open",
+  "why": "no full stop"
+ },
+ "nothing_live": {
+  "text": "Rien n'est projeté",
+  "back": "Nothing is projected",
+  "why": "no full stop"
+ },
+ "n_of": {
+  "text": "{0} sur {1}",
+  "back": "{0} of {1}",
+  "why": "two numbers"
+ },
+ "n_slides": {
+  "text": "Diapos : {0}",
+  "back": "Slides: {0}",
+  "why": "reads right for any number"
+ },
+ "clear_text": {
+  "text": "Texte caché",
+  "back": "Text hidden",
+  "why": "same word as the computer tile"
+ },
+ "black": {
+  "text": "Noir",
+  "back": "Black",
+  "why": "same word as the computer tile"
+ },
+ "logo": {
+  "text": "Logo",
+  "back": "Logo",
+  "why": "same word as the computer tile"
+ },
+ "logo_needs": {
+  "text": "Choisissez d'abord un logo sur l'ordinateur",
+  "back": "First choose a logo on the computer",
+  "why": "one sentence"
+ },
+ "text_cleared": {
+  "text": "Texte caché",
+  "back": "Text hidden",
+  "why": "state"
+ },
+ "screen_black": {
+  "text": "Projecteur noir",
+  "back": "Projector black",
+  "why": "state"
+ },
+ "logo_showing": {
+  "text": "Logo projeté",
+  "back": "Logo projected",
+  "why": "projeter"
+ },
+ "jump": {
+  "text": "Aller à une partie",
+  "back": "Go to a part",
+  "why": "screen reader only"
+ },
+ "plan_show": {
+  "text": "Projeter {0}",
+  "back": "Project {0}",
+  "why": "the on-projector verb"
+ },
+ "plan_live": {
+  "text": "Direct",
+  "back": "Live",
+  "why": "one word"
+ },
+ "plan_empty": {
+  "text": "Programme vide",
+  "back": "Empty plan",
+  "why": "same as the computer"
+ },
+ "cancel": {
+  "text": "Annuler",
+  "back": "Cancel",
+  "why": "light refusal"
+ },
+ "search_ph": {
+  "text": "Chant ou verset",
+  "back": "Song or verse",
+  "why": "invitation"
+ },
+ "search_hint": {
+  "text": "Titre, ligne chantée ou référence, comme Jean 3 16",
+  "back": "Title, sung line or reference, like John 3 16",
+  "why": "example with spaces"
+ },
+ "searching": {
+  "text": "Recherche en cours",
+  "back": "Searching",
+  "why": "no full stop"
+ },
+ "no_results": {
+  "text": "Aucun résultat",
+  "back": "No result",
+  "why": "no full stop"
+ },
+ "show": {
+  "text": "Projeter",
+  "back": "Show",
+  "why": "same word as the Show tile"
+ },
+ "add": {
+  "text": "Ajouter",
+  "back": "Add",
+  "why": "one word"
+ },
+ "added": {
+  "text": "Ajouté",
+  "back": "Added",
+  "why": "one word"
+ },
+ "show_aria": {
+  "text": "Projeter aussitôt {0}",
+  "back": "Project at once {0}",
+  "why": "not visible"
+ },
+ "add_aria": {
+  "text": "Ajouter {0}",
+  "back": "Add {0}",
+  "why": "not visible, width"
+ },
+ "message": {
+  "text": "Message pour la salle",
+  "back": "Message for the room",
+  "why": "phrase"
+ },
+ "message_ph": {
+  "text": "Écrire un message",
+  "back": "Write a message",
+  "why": "invitation"
+ },
+ "message_show": {
+  "text": "Projeter",
+  "back": "Show",
+  "why": "one word"
+ },
+ "message_hide": {
+  "text": "Retirer",
+  "back": "Remove",
+  "why": "pair of the show button"
+ },
+ "message_showing": {
+  "text": "Projeté : « {0} »",
+  "back": "Projected: «{0}»",
+  "why": "quotes the notice"
+ },
+ "countdown": {
+  "text": "Décompte",
+  "back": "Countdown",
+  "why": "noun"
+ },
+ "minutes": {
+  "text": "minutes",
+  "back": "minutes",
+  "why": "one word"
+ },
+ "start": {
+  "text": "Lancer",
+  "back": "Start",
+  "why": "one word"
+ },
+ "stop": {
+  "text": "Arrêter",
+  "back": "Stop",
+  "why": "pair of start"
+ },
+ "language": {
+  "text": "Langue",
+  "back": "Language",
+  "why": "one word"
+ },
+ "keys_title": {
+  "text": "Raccourcis",
+  "back": "Shortcuts",
+  "why": "one word"
+ },
+ "keys_text": {
+  "text": "Espace ou flèche bas : diapo suivante. Flèche haut : diapo précédente. / : recherche. R : refrain. P : pont. 1 à 9 : partie du chant. F1 : cacher le texte. F2 : écran noir. F3 : logo. F6 : activer ou désactiver le projecteur.",
+  "back": "Space or down arrow: next slide. Up arrow: previous slide. /: search. R: chorus. P: bridge. 1 to 9: part of the song. F1: hide the text. F2: black screen. F3: logo. F6: switch the projector on or off.",
+  "why": "letters R and P as on the computer sheet; no V key since couplet does not start with V"
+ },
+ "lost": {
+  "text": "Connexion perdue",
+  "back": "Connection lost",
+  "why": "no full stop"
+ },
+ "retrying": {
+  "text": "Reconnexion en cours",
+  "back": "Reconnecting",
+  "why": "no full stop"
+ },
+ "label.verse": {
+  "text": "Couplet",
+  "back": "Verse",
+  "why": "same as the computer"
+ },
+ "label.chorus": {
+  "text": "Refrain",
+  "back": "Chorus",
+  "why": "same as the computer"
+ },
+ "label.pre_chorus": {
+  "text": "Pré-refrain",
+  "back": "Pre-chorus",
+  "why": "same as the computer"
+ },
+ "label.bridge": {
+  "text": "Pont",
+  "back": "Bridge",
+  "why": "same as the computer"
+ },
+ "label.intro": {
+  "text": "Intro",
+  "back": "Intro",
+  "why": "same as the computer"
+ },
+ "label.ending": {
+  "text": "Fin",
+  "back": "Ending",
+  "why": "same as the computer"
+ },
+ "projector_off": {
+  "text": "Projecteur désactivé",
+  "back": "Projector off",
+  "why": "same off word as the window"
+ },
+ "label.numbered": {
+  "text": "{0} {1}",
+  "back": "the part's name and its number, in the order the window uses",
+  "why": "carried from section_numbered so the phone and the window agree"
+ }
+}

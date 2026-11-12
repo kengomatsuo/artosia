@@ -1,0 +1,307 @@
+{
+ "pair_title": {
+  "text": "Điều khiển Artosia",
+  "back": "Remote control of Artosia",
+  "why": "Names the program as a remote control"
+ },
+ "pin": {
+  "text": "Mã PIN",
+  "back": "PIN code",
+  "why": "Same word as the computer's label"
+ },
+ "pin_hint": {
+  "text": "Gõ mã PIN hiện trên máy tính, ở mục Điều khiển từ xa",
+  "back": "Type the PIN shown on the computer, under Remote control",
+  "why": "Says where the number comes from"
+ },
+ "connect": {
+  "text": "Kết nối",
+  "back": "Connect",
+  "why": "One word"
+ },
+ "wrong_pin": {
+  "text": "Mã PIN chưa đúng",
+  "back": "The PIN is not right",
+  "why": "Gentle, no full stop"
+ },
+ "too_many": {
+  "text": "Thử quá nhiều lần. Hãy chờ một phút.",
+  "back": "Too many tries. Wait a minute.",
+  "why": "Two short statements"
+ },
+ "unreachable": {
+  "text": "Không tìm thấy máy tính",
+  "back": "Cannot find the computer",
+  "why": "No full stop"
+ },
+ "tab_live": {
+  "text": "Live",
+  "back": "Live",
+  "why": "Same word as the computer"
+ },
+ "tab_plan": {
+  "text": "Các mục",
+  "back": "The items",
+  "why": "Danh sách is 9 characters and the limit is 8"
+ },
+ "tab_search": {
+  "text": "Tìm kiếm",
+  "back": "Search",
+  "why": "Names what the button opens"
+ },
+ "tab_more": {
+  "text": "Công cụ khác",
+  "back": "Other tools",
+  "why": "Names what the button opens"
+ },
+ "live": {
+  "text": "Live",
+  "back": "Live",
+  "why": "Same word as the computer, drawn in three places"
+ },
+ "next_btn": {
+  "text": "Tiếp",
+  "back": "Next",
+  "why": "Same word as the computer's Next tile"
+ },
+ "back": {
+  "text": "Trước",
+  "back": "Back",
+  "why": "Pair of Tiếp"
+ },
+ "nothing_open": {
+  "text": "Chưa mở mục nào",
+  "back": "No item opened yet",
+  "why": "No full stop"
+ },
+ "nothing_live": {
+  "text": "Chưa chiếu gì cả",
+  "back": "Nothing shown yet",
+  "why": "No full stop"
+ },
+ "n_of": {
+  "text": "{0}/{1}",
+  "back": "{0}/{1}",
+  "why": "Two numbers"
+ },
+ "n_slides": {
+  "text": "{0} trang",
+  "back": "{0} slides",
+  "why": "trang is the slide classifier"
+ },
+ "clear_text": {
+  "text": "Không chữ",
+  "back": "No text",
+  "why": "Same word as the computer's tile"
+ },
+ "black": {
+  "text": "Màn đen",
+  "back": "Black screen",
+  "why": "Same word as the computer's tile"
+ },
+ "logo": {
+  "text": "Logo",
+  "back": "Logo",
+  "why": "Same word as the computer's tile"
+ },
+ "logo_needs": {
+  "text": "Hãy chọn logo trên máy tính trước",
+  "back": "First choose a logo on the computer",
+  "why": "One sentence"
+ },
+ "text_cleared": {
+  "text": "Đang ẩn chữ",
+  "back": "Words hidden",
+  "why": "A state"
+ },
+ "screen_black": {
+  "text": "Đang chiếu màn đen",
+  "back": "Showing black",
+  "why": "A state"
+ },
+ "logo_showing": {
+  "text": "Đang chiếu logo",
+  "back": "Showing the logo",
+  "why": "A state"
+ },
+ "jump": {
+  "text": "Nhảy tới phần",
+  "back": "Jump to a part",
+  "why": "Never visible"
+ },
+ "plan_show": {
+  "text": "Chiếu {0}",
+  "back": "Show {0}",
+  "why": "Carries the item's title"
+ },
+ "plan_live": {
+  "text": "Live",
+  "back": "Live",
+  "why": "One word"
+ },
+ "plan_empty": {
+  "text": "Danh sách còn trống",
+  "back": "The list is empty",
+  "why": "No full stop"
+ },
+ "cancel": {
+  "text": "Thôi",
+  "back": "Never mind",
+  "why": "A light refusal"
+ },
+ "search_ph": {
+  "text": "Tìm bài hát, Kinh Thánh",
+  "back": "Find songs, Bible",
+  "why": "Invitation"
+ },
+ "search_hint": {
+  "text": "Tên bài, một dòng lời hát hoặc câu như Thi Thiên 23 1",
+  "back": "A song name, one sung line or a verse such as Thi Thiên 23 1",
+  "why": "Reference with spaces as typed on a phone"
+ },
+ "searching": {
+  "text": "Đang tìm",
+  "back": "Searching",
+  "why": "No full stop"
+ },
+ "no_results": {
+  "text": "Không tìm thấy gì",
+  "back": "Nothing found",
+  "why": "No full stop"
+ },
+ "show": {
+  "text": "Chiếu",
+  "back": "Show",
+  "why": "Same word as the computer's Show tile"
+ },
+ "add": {
+  "text": "Thêm",
+  "back": "Add",
+  "why": "One word"
+ },
+ "added": {
+  "text": "Đã thêm",
+  "back": "Added",
+  "why": "One word"
+ },
+ "show_aria": {
+  "text": "Chiếu {0} ngay",
+  "back": "Show {0} now",
+  "why": "Not visible"
+ },
+ "add_aria": {
+  "text": "Thêm {0} vào danh sách",
+  "back": "Add {0} to the list",
+  "why": "Not visible"
+ },
+ "message": {
+  "text": "Lời nhắn cho mọi người",
+  "back": "Message for everyone",
+  "why": "A phrase"
+ },
+ "message_ph": {
+  "text": "Gõ lời nhắn",
+  "back": "Type a message",
+  "why": "Invitation"
+ },
+ "message_show": {
+  "text": "Chiếu",
+  "back": "Show",
+  "why": "One word"
+ },
+ "message_hide": {
+  "text": "Ẩn",
+  "back": "Hide",
+  "why": "Pair of the show button"
+ },
+ "message_showing": {
+  "text": "Đang chiếu: “{0}”",
+  "back": "Showing: “{0}”",
+  "why": "Notice quoted"
+ },
+ "countdown": {
+  "text": "Đếm ngược",
+  "back": "Countdown",
+  "why": "A noun"
+ },
+ "minutes": {
+  "text": "phút",
+  "back": "minutes",
+  "why": "One word"
+ },
+ "start": {
+  "text": "Bắt đầu",
+  "back": "Start",
+  "why": "One word"
+ },
+ "stop": {
+  "text": "Dừng",
+  "back": "Stop",
+  "why": "Pair of start"
+ },
+ "language": {
+  "text": "Ngôn ngữ",
+  "back": "Language",
+  "why": "One word"
+ },
+ "keys_title": {
+  "text": "Phím tắt",
+  "back": "Shortcut keys",
+  "why": "Same as the computer"
+ },
+ "keys_text": {
+  "text": "Space hoặc mũi tên xuống: sang trang chiếu sau. Mũi tên lên: lùi một trang. Phím /: mở tìm kiếm. K: tới Điệp khúc. N: tới Đoạn nối. Số 1 đến 9: tới phần đó. F1: ẩn chữ. F2: màn đen. F3: chiếu logo. F6: bật hoặc tắt máy chiếu.",
+  "back": "Space or the down arrow: next slide. Up arrow: one slide back. The / key: open search. K: to Chorus. N: to Bridge. Digit keys 1 to 9: jump to that part. F1: hide the words. F2: black screen. F3: show the logo. F6: switch the projector on or off.",
+  "why": "Letters K and N as on the computer, the verse letter V left out"
+ },
+ "lost": {
+  "text": "Mất kết nối với máy tính",
+  "back": "Lost the connection with the computer",
+  "why": "No full stop"
+ },
+ "retrying": {
+  "text": "Đang kết nối lại",
+  "back": "Reconnecting",
+  "why": "No full stop"
+ },
+ "label.verse": {
+  "text": "Lời",
+  "back": "Verse",
+  "why": "Same as the computer"
+ },
+ "label.chorus": {
+  "text": "Điệp khúc",
+  "back": "Chorus",
+  "why": "Same as the computer"
+ },
+ "label.pre_chorus": {
+  "text": "Tiền điệp",
+  "back": "Pre-chorus",
+  "why": "Same as the computer"
+ },
+ "label.bridge": {
+  "text": "Đoạn nối",
+  "back": "Bridge",
+  "why": "Same as the computer"
+ },
+ "label.intro": {
+  "text": "Dạo đầu",
+  "back": "Intro",
+  "why": "Same as the computer"
+ },
+ "label.ending": {
+  "text": "Đoạn kết",
+  "back": "Closing part",
+  "why": "Same as the computer"
+ },
+ "projector_off": {
+  "text": "Máy chiếu đang tắt",
+  "back": "The projector is off",
+  "why": "tắt is the off of the pair"
+ },
+ "label.numbered": {
+  "text": "{0} {1}",
+  "back": "the part's name and its number, in the order the window uses",
+  "why": "carried from section_numbered so the phone and the window agree"
+ }
+}

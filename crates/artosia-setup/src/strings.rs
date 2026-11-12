@@ -1,6 +1,6 @@
-//! Every text the setup shows, in one table. English is written here; Indonesian is
-//! `strings-id.json`, written from `strings-brief.json` by a writer who never sees the English,
-//! and any key it lacks falls back to English.
+//! Every text the setup shows, in one table. English is written here; every other language is
+//! `strings-<code>.json`, written from `strings-brief.json` by a writer who never sees the
+//! English, and any key a table lacks falls back to English.
 
 use std::collections::HashMap;
 
@@ -12,7 +12,7 @@ macro_rules! table {
         impl Key {
             pub const ALL: &[Key] = &[$(Key::$name),*];
 
-            /// The name a brief and the Indonesian table know the text by.
+            /// The name a brief and every table know the text by.
             pub fn name(self) -> &'static str {
                 match self { $(Key::$name => $key),* }
             }
@@ -61,36 +61,60 @@ table! {
     DoneBody "done_body" "Artosia is opening now.";
 }
 
+/// Every language beside English: its code and its table.
+const TABLES: &[(&str, &str)] = &[
+    ("id", include_str!("../strings-id.json")),
+    ("zh-Hans", include_str!("../strings-zh-Hans.json")),
+    ("zh-Hant", include_str!("../strings-zh-Hant.json")),
+    ("ko", include_str!("../strings-ko.json")),
+    ("ja", include_str!("../strings-ja.json")),
+    ("es", include_str!("../strings-es.json")),
+    ("pt-BR", include_str!("../strings-pt-BR.json")),
+    ("fr", include_str!("../strings-fr.json")),
+    ("vi", include_str!("../strings-vi.json")),
+];
+
+/// A language the setup speaks, by its code (`en`, `id`, `zh-Hant`).
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
-pub enum Language {
-    English,
-    Indonesian,
-}
+pub struct Language(&'static str);
 
 impl Language {
-    /// From a Windows language id (`GetUserDefaultUILanguage`): the low ten bits are the language.
-    pub fn from_lang_id(id: u16) -> Language {
-        const INDONESIAN: u16 = 0x21;
-        if id & 0x3ff == INDONESIAN { Language::Indonesian } else { Language::English }
+    pub const ENGLISH: Language = Language("en");
+
+    pub fn code(self) -> &'static str {
+        self.0
     }
-}
 
-const INDONESIAN_TABLE: &str = include_str!("../strings-id.json");
+    /// Every language, English first.
+    pub fn all() -> Vec<Language> {
+        std::iter::once(Language::ENGLISH).chain(TABLES.iter().map(|(code, _)| Language(code))).collect()
+    }
 
-/// The Indonesian table as written, key name to text. Empty until the writer's table lands.
-pub fn indonesian_table() -> HashMap<String, String> {
-    serde_json::from_str(INDONESIAN_TABLE).unwrap_or_default()
+    /// The language a code or a tag of the computer (`id-ID`, `zh-TW`) names, if the setup speaks it.
+    pub fn named(tag: &str) -> Option<Language> {
+        let codes: Vec<&'static str> = Language::all().iter().map(|language| language.0).collect();
+        artosia_locale::pick(tag, &codes).map(Language)
+    }
+
+    /// The first of this person's display languages the setup speaks; English when it speaks none.
+    pub fn of_this_computer() -> Language {
+        artosia_locale::languages().iter().find_map(|tag| Language::named(tag)).unwrap_or(Language::ENGLISH)
+    }
+
+    /// The table as written, key name to text. Empty for English.
+    pub fn table(self) -> HashMap<String, String> {
+        TABLES.iter().find(|(code, _)| *code == self.0).and_then(|(_, json)| serde_json::from_str(json).ok()).unwrap_or_default()
+    }
 }
 
 pub struct Strings {
     language: Language,
-    indonesian: HashMap<String, String>,
+    table: HashMap<String, String>,
 }
 
 impl Strings {
     pub fn new(language: Language) -> Strings {
-        let indonesian = if language == Language::Indonesian { indonesian_table() } else { HashMap::new() };
-        Strings { language, indonesian }
+        Strings { language, table: language.table() }
     }
 
     pub fn language(&self) -> Language {
@@ -98,7 +122,7 @@ impl Strings {
     }
 
     pub fn get(&self, key: Key) -> &str {
-        self.indonesian.get(key.name()).map_or(key.english(), String::as_str)
+        self.table.get(key.name()).map_or(key.english(), String::as_str)
     }
 
     /// A text with `{name}` holes filled.

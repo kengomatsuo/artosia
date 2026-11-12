@@ -3,7 +3,7 @@
 
 use artosia_setup::entry::{Value, uninstall_values};
 use artosia_setup::places::{Places, SETUP_EXE};
-use artosia_setup::strings::{Key, Language, Strings, indonesian_table};
+use artosia_setup::strings::{Key, Language, Strings};
 use std::collections::HashSet;
 use std::path::Path;
 
@@ -25,7 +25,8 @@ fn assert_house_style(key: &str, text: &str) {
         assert!(!text.contains(banned), "{key} has {banned:?}: {text}");
     }
     assert!(!text.chars().any(|c| matches!(c as u32, 0x1F000..=0x1FFFF | 0x2600..=0x27BF | 0xFE0F)), "{key} has an emoji: {text}");
-    assert!(text.chars().next().is_some_and(char::is_uppercase), "{key} starts in lower case: {text}");
+    // A script with no capitals (Chinese, Japanese, Korean) has no case to check.
+    assert!(text.chars().next().is_some_and(|c| !c.is_lowercase()), "{key} starts in lower case: {text}");
 }
 
 #[test]
@@ -89,40 +90,45 @@ fn every_key_has_a_brief_and_every_brief_a_key() {
 }
 
 #[test]
-fn indonesian_is_empty_or_complete_and_follows_the_same_rules() {
-    let table = indonesian_table();
+fn every_language_is_complete_and_follows_the_same_rules() {
     let keys: HashSet<&str> = Key::ALL.iter().map(|k| k.name()).collect();
-    for name in table.keys() {
-        assert!(keys.contains(name.as_str()), "strings-id.json has {name}, which is no key");
-    }
-    // Empty means "falls back to English"; once a writer fills it, it must be whole.
-    assert!(table.is_empty() || table.len() == keys.len(), "strings-id.json holds {} of {} keys", table.len(), keys.len());
-    for key in Key::ALL {
-        if let Some(text) = table.get(key.name()) {
-            assert_house_style(key.name(), text);
-            assert_eq!(placeholders(text), placeholders(key.english()), "{} keeps its holes", key.name());
+    assert_eq!(Language::all().len(), 10, "English and nine tables");
+    for language in Language::all().into_iter().skip(1) {
+        let (code, table) = (language.code(), language.table());
+        for name in table.keys() {
+            assert!(keys.contains(name.as_str()), "strings-{code}.json has {name}, which is no key");
+        }
+        assert_eq!(table.len(), keys.len(), "strings-{code}.json holds {} of {} keys", table.len(), keys.len());
+        for key in Key::ALL {
+            let text = &table[key.name()];
+            assert_house_style(&format!("{code} {}", key.name()), text);
+            assert_eq!(placeholders(text), placeholders(key.english()), "{code} {} keeps its holes", key.name());
         }
     }
 }
 
 #[test]
-fn a_missing_indonesian_text_falls_back_to_english_and_holes_are_filled() {
-    let id = Strings::new(Language::Indonesian);
-    let en = Strings::new(Language::English);
-    for key in Key::ALL {
-        assert!(!id.get(*key).is_empty());
-        assert!(!en.get(*key).is_empty());
+fn every_language_answers_every_key_and_holes_are_filled() {
+    for language in Language::all() {
+        let strings = Strings::new(language);
+        for key in Key::ALL {
+            assert!(!strings.get(*key).is_empty(), "{} {}", language.code(), key.name());
+        }
     }
+    let en = Strings::new(Language::ENGLISH);
     assert_eq!(en.fill(Key::StepDownloading, &[("done", "42"), ("total", "163")]), "Downloading, 42 of 163 MB");
 }
 
 #[test]
-fn the_windows_display_language_picks_the_table() {
-    assert_eq!(Language::from_lang_id(0x0421), Language::Indonesian);
-    assert_eq!(Language::from_lang_id(0x0021), Language::Indonesian);
-    assert_eq!(Language::from_lang_id(0x0409), Language::English);
-    assert_eq!(Language::from_lang_id(0x0c09), Language::English);
-    assert_eq!(Language::from_lang_id(0x0411), Language::English);
+fn a_display_language_of_windows_picks_the_table() {
+    let code = |tag: &str| Language::named(tag).map(Language::code);
+    assert_eq!(code("id-ID"), Some("id"));
+    assert_eq!(code("en-AU"), Some("en"));
+    assert_eq!(code("zh-TW"), Some("zh-Hant"));
+    assert_eq!(code("zh-CN"), Some("zh-Hans"));
+    assert_eq!(code("pt-PT"), Some("pt-BR"));
+    assert_eq!(code("ja-JP"), Some("ja"));
+    assert_eq!(code("de-DE"), None);
 }
 
 #[test]

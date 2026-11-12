@@ -1,0 +1,3478 @@
+{
+ "SEARCH_PLACEHOLDER": {
+  "text": "输入诗歌或经文",
+  "back": "Type a song or scripture",
+  "why": "诗歌 and 经文 are the church words"
+ },
+ "SEARCH_SONGS": {
+  "text": "输入诗歌名称或歌词中的一句",
+  "back": "Type a song's name or one line of its words",
+  "why": "plain 歌词"
+ },
+ "SEARCH_RESULTS": {
+  "text": "搜索结果",
+  "back": "Search results",
+  "why": "label"
+ },
+ "SCOPE_LABEL": {
+  "text": "搜索范围",
+  "back": "Search scope",
+  "why": "label"
+ },
+ "SCOPE_ALL": {
+  "text": "全部",
+  "back": "All",
+  "why": "one short word"
+ },
+ "SCOPE_SONGS": {
+  "text": "诗歌",
+  "back": "Songs",
+  "why": "same word as everywhere"
+ },
+ "SCOPE_BIBLE": {
+  "text": "圣经",
+  "back": "Bible",
+  "why": "ordinary name"
+ },
+ "HINT_OPEN": {
+  "text": "打开",
+  "back": "Open",
+  "why": "same as the button"
+ },
+ "HINT_SECTIONS": {
+  "text": "在歌中找段落",
+  "back": "Find a part in the song",
+  "why": "段落 is the section word"
+ },
+ "SEARCH_SECTIONS": {
+  "text": "段落名，如副歌、主歌2，或歌词中的一句",
+  "back": "Part name, such as chorus, verse 2, or a line of the words",
+  "why": "主歌 avoids Bible 节"
+ },
+ "IN_PLAN": {
+  "text": "已在流程中",
+  "back": "Already in the plan",
+  "why": "state, no verb to click"
+ },
+ "PLAN_CHIP": {
+  "text": "已在流程中",
+  "back": "Already in the plan",
+  "why": "statement about the song"
+ },
+ "KIND_LOOK": {
+  "text": "样式",
+  "back": "Design",
+  "why": "same as the Design button"
+ },
+ "KIND_BIBLE": {
+  "text": "圣经译本",
+  "back": "Bible translation",
+  "why": "译本 is one version"
+ },
+ "COUNTDOWN_DETAIL": {
+  "text": "倒计时会一直上屏，直到时间结束",
+  "back": "The countdown stays on the projector until the time is up",
+  "why": "上屏 is the one verb for being shown to the room"
+ },
+ "MESSAGE_DETAIL": {
+  "text": "这段文字会作为通知上屏，现场的人都看得到",
+  "back": "These words go on the projector as a notice that everyone in the room sees",
+  "why": "通知 for room notice"
+ },
+ "countdown_for": {
+  "text": {
+   "other": "{minutes}分钟倒计时"
+  },
+  "back": "{minutes}-minute countdown",
+  "why": "Chinese has one form"
+ },
+ "BIBLE_LOADING": {
+  "text": "正在准备圣经",
+  "back": "Getting the Bible ready",
+  "why": "progress, no ellipsis"
+ },
+ "OLD_TESTAMENT": {
+  "text": "旧约",
+  "back": "Old Testament",
+  "why": "church name"
+ },
+ "NEW_TESTAMENT": {
+  "text": "新约",
+  "back": "New Testament",
+  "why": "church name"
+ },
+ "pick_chapter": {
+  "text": "{book}：选择第几章",
+  "back": "{book}: pick which chapter",
+  "why": "book first"
+ },
+ "SONGS_EMPTY": {
+  "text": "诗歌库还是空的",
+  "back": "The song library is still empty",
+  "why": "statement"
+ },
+ "nothing_found": {
+  "text": "没有找到“{query}”",
+  "back": "Nothing found for \"{query}\"",
+  "why": "Chinese quotation marks"
+ },
+ "new_song_called": {
+  "text": "新建诗歌“{title}”",
+  "back": "New song \"{title}\"",
+  "why": "offers the title"
+ },
+ "songs": {
+  "text": {
+   "other": "{count}首诗歌"
+  },
+  "back": "{count} songs",
+  "why": "measure word 首"
+ },
+ "slides": {
+  "text": {
+   "other": "{count}张幻灯片"
+  },
+  "back": "{count} slides",
+  "why": "幻灯片 is the slide word"
+ },
+ "chapters": {
+  "text": {
+   "other": "{count}章"
+  },
+  "back": "{count} chapters",
+  "why": "章"
+ },
+ "verses": {
+  "text": {
+   "other": "{count}节"
+  },
+  "back": "{count} verses",
+  "why": "节 is the Bible verse"
+ },
+ "CMD_NEW_SONG": {
+  "text": "新建诗歌",
+  "back": "New song",
+  "why": "same as editor heading"
+ },
+ "CMD_NEW_SONG_DETAIL": {
+  "text": "自己输入歌词，或从别处粘贴",
+  "back": "Write the words yourself or paste them in",
+  "why": "plain"
+ },
+ "CMD_PASTE_SONG": {
+  "text": "粘贴为诗歌",
+  "back": "Paste as a song",
+  "why": "short action"
+ },
+ "CMD_PASTE_SONG_DETAIL": {
+  "text": "先从网页或文档复制歌词，再选这一项",
+  "back": "Copy the words from a web page or document first, then pick this",
+  "why": "plain"
+ },
+ "CMD_ANNOUNCEMENTS": {
+  "text": "公告",
+  "back": "Announcements",
+  "why": "公告 for the set, 卡片 for one notice"
+ },
+ "CMD_ANNOUNCEMENTS_DETAIL": {
+  "text": "人们入座时，公告轮流显示在屏幕上",
+  "back": "While people take their seats the announcements take turns on the screen",
+  "why": "轮流"
+ },
+ "CMD_HEADING": {
+  "text": "添加小标题",
+  "back": "Add a heading",
+  "why": "小标题 is the divider word"
+ },
+ "CMD_HEADING_DETAIL": {
+  "text": "如“敬拜”和“讲道”",
+  "back": "such as \"worship\" and \"preaching\"",
+  "why": "usual part names"
+ },
+ "CMD_LOOKS": {
+  "text": "样式",
+  "back": "Design",
+  "why": "样式 is the design word"
+ },
+ "CMD_LOOKS_DETAIL": {
+  "text": "背景画面、文字样式和教会标志",
+  "back": "The picture behind, the look of the words and the church emblem",
+  "why": "plain"
+ },
+ "CMD_SETTINGS": {
+  "text": "设置",
+  "back": "Settings",
+  "why": "usual word"
+ },
+ "CMD_SETTINGS_DETAIL": {
+  "text": "界面语言、圣经、快捷键和导览",
+  "back": "Window language, Bibles, keys and the tour",
+  "why": "plain"
+ },
+ "CMD_SCREENS": {
+  "text": "屏幕",
+  "back": "Screens",
+  "why": "same as top bar"
+ },
+ "CMD_SCREENS_DETAIL": {
+  "text": "选择哪块显示器给会众，哪块给乐队",
+  "back": "Pick which monitor faces the congregation and which the band",
+  "why": "显示器 is the hardware"
+ },
+ "CMD_REMOTE": {
+  "text": "手机遥控",
+  "back": "Phone remote",
+  "why": "遥控 is what people say"
+ },
+ "CMD_REMOTE_DETAIL": {
+  "text": "同一个Wi-Fi下的手机可以切换幻灯片",
+  "back": "Phones on the same Wi-Fi can change the slides",
+  "why": "full sentence"
+ },
+ "CMD_IMPORT_FOLDER": {
+  "text": "导入文件夹中的诗歌",
+  "back": "Import songs from a folder",
+  "why": "also folder chooser title"
+ },
+ "CMD_IMPORT_FOLDER_DETAIL": {
+  "text": "OpenLyrics格式的诗歌文件",
+  "back": "Song files in OpenLyrics format",
+  "why": "proper name stays"
+ },
+ "IMPORT_FOLDER_EMPTY": {
+  "text": "这个文件夹里没有可用的诗歌文件",
+  "back": "This folder has no usable song files",
+  "why": "no full stop"
+ },
+ "CMD_IMPORT": {
+  "text": "从EasiSlides导入",
+  "back": "Import from EasiSlides",
+  "why": "copy, not move"
+ },
+ "CMD_IMPORT_DETAIL": {
+  "text": "复制旧程序在这台电脑上的诗歌和圣经",
+  "back": "Copies the songs and Bibles the old program keeps on this computer",
+  "why": "复制"
+ },
+ "CMD_STREAM": {
+  "text": "直播与录制",
+  "back": "Broadcast and recording",
+  "why": "both ideas"
+ },
+ "CMD_STREAM_DETAIL": {
+  "text": "把投影屏的画面发到视频网站，或存成文件",
+  "back": "Send the projector picture to a video site or save it as a file",
+  "why": "投影屏 is the projector noun"
+ },
+ "BTN_STREAM": {
+  "text": "直播",
+  "back": "Broadcast",
+  "why": "one noun"
+ },
+ "BTN_LISTEN": {
+  "text": "听音",
+  "back": "Listening",
+  "why": "names what it does"
+ },
+ "STREAM_HINT": {
+  "text": "直播的画面就是投影屏上的画面，并带上现场的声音。",
+  "back": "The broadcast carries the very picture on the projector, with the sound of the room.",
+  "why": "plain"
+ },
+ "STREAM_ADDRESS": {
+  "text": "直播地址",
+  "back": "Broadcast address",
+  "why": "noun phrase"
+ },
+ "STREAM_KEY": {
+  "text": "直播密钥",
+  "back": "Broadcast key",
+  "why": "密钥 is a code"
+ },
+ "STREAM_RECORD": {
+  "text": "同时保存录像",
+  "back": "Also save a video",
+  "why": "reads as what the switch does"
+ },
+ "STREAM_RECORD_HINT": {
+  "text": "录像存在这台电脑上，和Artosia的数据放在一起",
+  "back": "The video is kept on this computer with Artosia's own data",
+  "why": "plain"
+ },
+ "BTN_STREAM_START": {
+  "text": "开始直播",
+  "back": "Start broadcast",
+  "why": "pairs with the stop"
+ },
+ "BTN_STREAM_STOP": {
+  "text": "结束直播",
+  "back": "End broadcast",
+  "why": "opposite"
+ },
+ "STREAM_STARTING": {
+  "text": "正在开始直播",
+  "back": "Starting the broadcast",
+  "why": "state"
+ },
+ "STREAM_RECONNECTING": {
+  "text": "连接中断，正在自动重新连接",
+  "back": "The connection broke, reconnecting by itself",
+  "why": "nothing to do"
+ },
+ "STREAM_STOPPING": {
+  "text": "正在结束直播",
+  "back": "Ending the broadcast",
+  "why": "state"
+ },
+ "STREAM_MISSING": {
+  "text": "这份安装里没有直播功能，所以无法直播",
+  "back": "This installation has no broadcast part, so broadcasting is not possible",
+  "why": "no bug or error"
+ },
+ "STREAM_NOTHING": {
+  "text": "请填写直播地址，或打开“同时保存录像”",
+  "back": "Fill in the broadcast address or switch on \"Also save a video\"",
+  "why": "says what to do"
+ },
+ "stream_failed": {
+  "text": "无法开始直播：{problem}",
+  "back": "Could not start the broadcast: {problem}",
+  "why": "reason after colon"
+ },
+ "stream_live": {
+  "text": {
+   "none_lost": {
+    "other": "直播中 {time}"
+   },
+   "some_lost": {
+    "other": "直播中 {time}，已丢失{dropped}帧画面"
+   }
+  },
+  "back": "Live {time}; with losses: also {dropped} frames lost",
+  "why": "one form"
+ },
+ "CMD_LISTEN": {
+  "text": "听音",
+  "back": "Listening",
+  "why": "same as the button"
+ },
+ "CMD_LISTEN_DETAIL": {
+  "text": "电脑根据声音，推荐它认出的诗歌或经文",
+  "back": "The computer suggests the song or verse it recognises from the sound",
+  "why": "only suggests"
+ },
+ "LISTEN_SWITCH": {
+  "text": "开启听音",
+  "back": "Listening on",
+  "why": "state beside a switch"
+ },
+ "LISTEN_HINT": {
+  "text": "电脑只提出建议，绝不会自己上屏。",
+  "back": "The computer only suggests; it never puts anything on the projector by itself.",
+  "why": "reassurance kept firm"
+ },
+ "LISTEN_MICROPHONE": {
+  "text": "麦克风",
+  "back": "Microphone",
+  "why": "one word"
+ },
+ "LISTEN_DEFAULT": {
+  "text": "系统默认麦克风",
+  "back": "System default microphone",
+  "why": "plain"
+ },
+ "LISTEN_SYSTEM_AUDIO": {
+  "text": "电脑正在播放的声音",
+  "back": "The sound this computer is playing",
+  "why": "plain"
+ },
+ "LISTEN_LANGUAGE": {
+  "text": "现场语言",
+  "back": "Room language",
+  "why": "not window language"
+ },
+ "LISTEN_INDONESIAN": {
+  "text": "印尼语",
+  "back": "Indonesian",
+  "why": "language name in Chinese"
+ },
+ "LISTEN_ENGLISH": {
+  "text": "英语",
+  "back": "English",
+  "why": "language name in Chinese"
+ },
+ "LISTEN_LEVEL": {
+  "text": "音量",
+  "back": "Volume level",
+  "why": "meter"
+ },
+ "LISTEN_HEARD": {
+  "text": "听到的内容",
+  "back": "What was heard",
+  "why": "heading"
+ },
+ "LISTEN_PART_LISTENING": {
+  "text": "听音",
+  "back": "Listening",
+  "why": "pairs with 录音"
+ },
+ "LISTEN_PART_RECORDINGS": {
+  "text": "录音",
+  "back": "Recordings",
+  "why": "plain noun for kept sound"
+ },
+ "REC_SWITCH": {
+  "text": "保存录音",
+  "back": "Keep recordings",
+  "why": "same noun as tab"
+ },
+ "REC_HINT": {
+  "text": "保存的是听到的短片段和程序的猜测，只放在这台电脑的硬盘上。",
+  "back": "What is kept is the short pieces heard and the program's guesses, only on this computer's disk.",
+  "why": "exact what and where"
+ },
+ "REC_NONE": {
+  "text": "还没有录音",
+  "back": "No recordings yet",
+  "why": "statement"
+ },
+ "rec_kept": {
+  "text": "已存{size}",
+  "back": "{size} kept",
+  "why": "size and one word"
+ },
+ "REC_OPEN": {
+  "text": "打开文件夹",
+  "back": "Open folder",
+  "why": "verb and object"
+ },
+ "REC_MOVE": {
+  "text": "更改文件夹",
+  "back": "Change folder",
+  "why": "pairs with open"
+ },
+ "REC_SAVE": {
+  "text": "打包成一个文件",
+  "back": "Pack into one file",
+  "why": "says one file"
+ },
+ "REC_SAVING": {
+  "text": "打包中",
+  "back": "Packing",
+  "why": "ongoing form"
+ },
+ "REC_DELETE": {
+  "text": "全部删除",
+  "back": "Delete all",
+  "why": "verb and all"
+ },
+ "REC_DELETED": {
+  "text": "已删除全部录音",
+  "back": "All recordings deleted",
+  "why": "past tense"
+ },
+ "rec_saved": {
+  "text": "已保存文件{name}",
+  "back": "Saved the file {name}",
+  "why": "past tense"
+ },
+ "REC_FAILED": {
+  "text": "无法写入这个位置。请用“更改文件夹”另选一个。",
+  "back": "Cannot write to this place. Pick another with \"Change folder\".",
+  "why": "same words as button"
+ },
+ "REC_ON": {
+  "text": "正在录音",
+  "back": "Recording",
+  "why": "names sound"
+ },
+ "LISTEN_TEMPO": {
+  "text": "速度",
+  "back": "Tempo",
+  "why": "musician's word"
+ },
+ "LISTEN_BPM": {
+  "text": "BPM",
+  "back": "BPM",
+  "why": "international unit musicians use"
+ },
+ "LISTEN_TEMPO_HALF": {
+  "text": "减半",
+  "back": "Half",
+  "why": "of a kind with the others"
+ },
+ "LISTEN_TEMPO_AS_HEARD": {
+  "text": "原样",
+  "back": "As read",
+  "why": "plain reading"
+ },
+ "LISTEN_TEMPO_DOUBLE": {
+  "text": "加倍",
+  "back": "Double",
+  "why": "of a kind"
+ },
+ "LISTEN_BEAT_BLINK": {
+  "text": "红点随音乐节拍闪动",
+  "back": "The red dot blinks with the music's beat",
+  "why": "no word for Live"
+ },
+ "LISTEN_BEAT_BLINK_HINT": {
+  "text": "效果很淡，只是装饰，不影响其他",
+  "back": "The effect is faint, only decoration, changes nothing else",
+  "why": "neutral"
+ },
+ "CMD_UPDATE": {
+  "text": "检查更新",
+  "back": "Check for updates",
+  "why": "action name"
+ },
+ "CMD_UPDATE_DETAIL": {
+  "text": "每次打开程序时也会自动检查",
+  "back": "It also checks by itself each time the program opens",
+  "why": "reassures"
+ },
+ "update_ready": {
+  "text": "新版本{version}已下载，下次打开程序时生效",
+  "back": "Version {version} is downloaded and takes over next time the program opens",
+  "why": "two clauses"
+ },
+ "update_none": {
+  "text": "当前版本{version}已是最新",
+  "back": "The current version {version} is the newest",
+  "why": "plain"
+ },
+ "CMD_KEYS": {
+  "text": "快捷键",
+  "back": "Keys",
+  "why": "same as sheet heading"
+ },
+ "CMD_KEYS_DETAIL": {
+  "text": "列出程序响应的所有按键",
+  "back": "Lists every key the program reacts to",
+  "why": "plain"
+ },
+ "CMD_START": {
+  "text": "开始聚会",
+  "back": "Start the service",
+  "why": "聚会 is neutral across churches"
+ },
+ "CMD_START_DETAIL": {
+  "text": "流程的第一项马上上屏",
+  "back": "The first plan item goes on the projector at once",
+  "why": "上屏"
+ },
+ "CMD_PREVIOUS": {
+  "text": "上一张",
+  "back": "Previous",
+  "why": "slide counter word 张"
+ },
+ "CMD_PREVIOUS_DETAIL": {
+  "text": "投影屏退回一张幻灯片",
+  "back": "The projector goes back one slide",
+  "why": "plain"
+ },
+ "CMD_NEXT_DETAIL": {
+  "text": "投影屏前进一张幻灯片",
+  "back": "The projector goes forward one slide",
+  "why": "pairs"
+ },
+ "CMD_BLACK_DETAIL": {
+  "text": "投影屏全黑，再选一次就恢复画面",
+  "back": "The projector goes fully black; choose again to bring the picture back",
+  "why": "plain"
+ },
+ "CMD_CLEAR_DETAIL": {
+  "text": "文字消失，背景图片或视频仍留在屏幕上",
+  "back": "The words go away; the background picture or video stays on the screen",
+  "why": "plain"
+ },
+ "CMD_LOGO_DETAIL": {
+  "text": "用教会标志代替当前幻灯片",
+  "back": "The church emblem replaces the slide",
+  "why": "标志 is the emblem"
+ },
+ "CMD_STOP_COUNTDOWN": {
+  "text": "结束倒计时",
+  "back": "End countdown",
+  "why": "action"
+ },
+ "CMD_STOP_COUNTDOWN_DETAIL": {
+  "text": "倒计时从投影屏上撤下",
+  "back": "The countdown is taken off the projector",
+  "why": "plain"
+ },
+ "CMD_HIDE_MESSAGE": {
+  "text": "隐藏通知",
+  "back": "Hide notice",
+  "why": "action"
+ },
+ "CMD_HIDE_MESSAGE_DETAIL": {
+  "text": "通知从所有屏幕上消失",
+  "back": "The notice goes from every screen",
+  "why": "plain"
+ },
+ "CMD_EDIT_SONG": {
+  "text": "编辑诗歌",
+  "back": "Edit song",
+  "why": "action"
+ },
+ "CMD_EDIT_SONG_DETAIL": {
+  "text": "可以修改正在看的这首歌的歌词",
+  "back": "The words of the song being looked at can be corrected",
+  "why": "plain"
+ },
+ "CMD_UNDO_DETAIL": {
+  "text": "刚删除的内容会恢复",
+  "back": "What was just removed comes back",
+  "why": "plain"
+ },
+ "CMD_LOOP": {
+  "text": "轮播公告",
+  "back": "Rotate the announcements",
+  "why": "轮播 fits cards taking turns"
+ },
+ "CMD_LOOP_DETAIL": {
+  "text": "公告依次显示，直到你停止",
+  "back": "Each announcement shows in turn until you stop it",
+  "why": "plain"
+ },
+ "BTN_LOOK": {
+  "text": "样式",
+  "back": "Design",
+  "why": "one word"
+ },
+ "BTN_SETTINGS": {
+  "text": "设置",
+  "back": "Settings",
+  "why": "one word"
+ },
+ "DESIGN_TEXT": {
+  "text": "文字",
+  "back": "Text",
+  "why": "words on the slide"
+ },
+ "SETTINGS_SONGS": {
+  "text": "诗歌",
+  "back": "Songs",
+  "why": "same word"
+ },
+ "SETTINGS_ABOUT": {
+  "text": "关于",
+  "back": "About",
+  "why": "usual"
+ },
+ "about_version": {
+  "text": "Artosia {version}",
+  "back": "Artosia {version}",
+  "why": "unchanged"
+ },
+ "BTN_SCREENS": {
+  "text": "屏幕",
+  "back": "Screens",
+  "why": "one word"
+ },
+ "BTN_PHONE": {
+  "text": "手机",
+  "back": "Phone",
+  "why": "names the device"
+ },
+ "HINT_KEYS": {
+  "text": "快捷键",
+  "back": "Keys",
+  "why": "one word"
+ },
+ "OUTPUT_OFF": {
+  "text": "投影屏已关闭",
+  "back": "The projector is switched off",
+  "why": "开/关 pair"
+ },
+ "OUTPUT_PRACTICE": {
+  "text": "练习模式：不会发送到真实投影屏",
+  "back": "Practice mode: nothing goes to a real projector",
+  "why": "does not say off"
+ },
+ "OUTPUT_STARTING": {
+  "text": "正在启动投影屏",
+  "back": "Starting the projector",
+  "why": "progress"
+ },
+ "OUTPUT_MISSING": {
+  "text": "程序所在文件夹里找不到投影屏程序",
+  "back": "The projector program is not in the folder of the main program",
+  "why": "names folder"
+ },
+ "OUTPUT_KEEPS_CLOSING": {
+  "text": "投影屏程序一启动就反复关闭",
+  "back": "The projector program shuts again as soon as it starts, over and over",
+  "why": "plain"
+ },
+ "output_failed": {
+  "text": "投影屏无法启动：{problem}",
+  "back": "The projector could not start: {problem}",
+  "why": "reason after colon"
+ },
+ "OUTPUT_NO_SCREEN": {
+  "text": "还没有连接第二块显示器",
+  "back": "No second monitor is connected yet",
+  "why": "显示器 is hardware"
+ },
+ "OUTPUT_HERE": {
+  "text": "投影屏显示在本机屏幕上",
+  "back": "The projector picture is shown on this screen",
+  "why": "plain"
+ },
+ "OUTPUT_STUCK": {
+  "text": "投影屏程序没有响应",
+  "back": "The projector program is not responding",
+  "why": "plain"
+ },
+ "REMOTE_ON": {
+  "text": "手机遥控已开启",
+  "back": "The phone remote is on",
+  "why": "开/关"
+ },
+ "output_on_screen": {
+  "text": "投影屏在显示器{number}上",
+  "back": "The projector is on monitor {number}",
+  "why": "plain"
+ },
+ "library_in_memory": {
+  "text": "无法打开诗歌库，本次所做的更改关闭后会丢失：{problem}",
+  "back": "Could not open the song library; this session's changes are lost on closing: {problem}",
+  "why": "warning first"
+ },
+ "PLAN_EMPTY": {
+  "text": "流程里还没有内容",
+  "back": "Nothing in the plan yet",
+  "why": "statement"
+ },
+ "PLAN_ADD": {
+  "text": "添加",
+  "back": "Add",
+  "why": "short"
+ },
+ "PLAN_NEW": {
+  "text": "新建流程",
+  "back": "New plan",
+  "why": "流程 is the plan word"
+ },
+ "PLAN_ITEM_MENU": {
+  "text": "更多",
+  "back": "More",
+  "why": "one word"
+ },
+ "PLAN_MOVE_UP": {
+  "text": "上移",
+  "back": "Move up",
+  "why": "pairs with 下移"
+ },
+ "PLAN_MOVE_DOWN": {
+  "text": "下移",
+  "back": "Move down",
+  "why": "pairs with 上移"
+ },
+ "PLAN_REMOVE": {
+  "text": "移出流程",
+  "back": "Take out of the plan",
+  "why": "does not say delete"
+ },
+ "PLAN_MISSING": {
+  "text": "已删除",
+  "back": "Deleted",
+  "why": "one word tag"
+ },
+ "PLAN_HEADING_NEW": {
+  "text": "小标题",
+  "back": "Heading",
+  "why": "same divider word"
+ },
+ "PLAN_HEADING_WORSHIP": {
+  "text": "敬拜",
+  "back": "Worship",
+  "why": "churches say 敬拜 for the singing time"
+ },
+ "PLAN_HEADING_WORD": {
+  "text": "讲道",
+  "back": "Preaching",
+  "why": "usual word"
+ },
+ "PLANS_TITLE": {
+  "text": "所有流程",
+  "back": "All plans",
+  "why": "plural of 流程"
+ },
+ "PLANS_TODAY": {
+  "text": "今天",
+  "back": "Today",
+  "why": "one word"
+ },
+ "PLANS_NO_DAY": {
+  "text": "待设定星期",
+  "back": "Weekday to be set",
+  "why": "invites setting a day"
+ },
+ "PLAN_DUPLICATE": {
+  "text": "复制流程",
+  "back": "Copy plan",
+  "why": "everyday verb 复制"
+ },
+ "PLAN_RENAME": {
+  "text": "修改日期和时间",
+  "back": "Change day and time",
+  "why": "names what changes"
+ },
+ "PLAN_DELETE": {
+  "text": "删除流程",
+  "back": "Delete plan",
+  "why": "reads as removal"
+ },
+ "PLAN_NEW_DETAIL": {
+  "text": "可以为一周里的另一场聚会新建流程",
+  "back": "A plan can be made for another service of the week",
+  "why": "聚会 for service"
+ },
+ "PLAN_DAY": {
+  "text": "星期",
+  "back": "Weekday",
+  "why": "one word"
+ },
+ "PLAN_HOUR": {
+  "text": "时",
+  "back": "Hour",
+  "why": "clock hour"
+ },
+ "PLAN_MINUTE": {
+  "text": "分",
+  "back": "Minute",
+  "why": "one word"
+ },
+ "time_of_day": {
+  "text": "{hour}:{minute}",
+  "back": "{hour}:{minute}",
+  "why": "24-hour clock with colon"
+ },
+ "service_slot": {
+  "text": "{day} {time}",
+  "back": "{day} {time}",
+  "why": "day then time as on a board"
+ },
+ "PLAN_NAME_LABEL": {
+  "text": "名称（可不填）",
+  "back": "Name (may be left empty)",
+  "why": "says it is optional"
+ },
+ "LOOK_FOR_USUAL": {
+  "text": "通用样式",
+  "back": "Usual design",
+  "why": "pairs with plan button"
+ },
+ "LOOK_FOR_PLAN": {
+  "text": "仅用于此流程",
+  "back": "Only for this plan",
+  "why": "whole text"
+ },
+ "PLAN_OWN_LOOK": {
+  "text": "这个流程有自己的样式",
+  "back": "This plan has a design of its own",
+  "why": "statement"
+ },
+ "KIND_PLAN": {
+  "text": "流程",
+  "back": "Plan",
+  "why": "same word"
+ },
+ "look_own_dropped": {
+  "text": "“{name}”改回使用通用样式",
+  "back": "\"{name}\" goes back to the usual design",
+  "why": "name first"
+ },
+ "plan_deleted": {
+  "text": "已删除流程“{name}”",
+  "back": "Deleted the plan \"{name}\"",
+  "why": "past tense"
+ },
+ "added_to_plan": {
+  "text": "已把“{title}”添加到流程",
+  "back": "Added \"{title}\" to the plan",
+  "why": "quotation marks"
+ },
+ "removed_from_plan": {
+  "text": "已把“{title}”移出流程",
+  "back": "Took \"{title}\" out of the plan",
+  "why": "past tense"
+ },
+ "START_TITLE": {
+  "text": "想上屏什么内容？",
+  "back": "What do you want to put on the screen?",
+  "why": "friendly question"
+ },
+ "START_HINT": {
+  "text": "搜索，直接打字也行",
+  "back": "to search; typing also works",
+  "why": "completes the key caps line"
+ },
+ "CMD_TOUR": {
+  "text": "新手导览",
+  "back": "Beginner's tour",
+  "why": "one tour name"
+ },
+ "CMD_TOUR_DETAIL": {
+  "text": "在这个窗口里走五个简短的步骤",
+  "back": "Five brief steps in this window",
+  "why": "plain"
+ },
+ "TOUR_SKIP": {
+  "text": "跳过",
+  "back": "Skip",
+  "why": "one word"
+ },
+ "TOUR_DONE": {
+  "text": "完成",
+  "back": "Done",
+  "why": "one word"
+ },
+ "TOUR_PLAN": {
+  "text": "左边是流程，聚会要上屏的内容都按顺序排在这里",
+  "back": "On the left is the plan; everything to be shown in the service is lined up here in order",
+  "why": "plain"
+ },
+ "TOUR_PLAN_MORE": {
+  "text": "用鼠标拖动一行可以调整位置",
+  "back": "Drag a row with the mouse to change its place",
+  "why": "plain"
+ },
+ "TOUR_PREVIEW": {
+  "text": "中间是预览，放着接下来要上屏的幻灯片",
+  "back": "In the middle is Preview, holding the slide that comes next",
+  "why": "same name as pane"
+ },
+ "TOUR_PREVIEW_MORE": {
+  "text": "预览里的内容，现场的人看不到",
+  "back": "People in the room never see what is in Preview",
+  "why": "reassurance"
+ },
+ "TOUR_SHOW": {
+  "text": "点“上屏”，把预览里的内容送到右边",
+  "back": "Press Show to move what is in Preview to the right-hand pane",
+  "why": "same names as tile and panes"
+ },
+ "TOUR_SHOW_MORE": {
+  "text": "投影屏开启时，现场才看得到",
+  "back": "The room sees it only while the projector is on",
+  "why": "开启 for on"
+ },
+ "TOUR_LIVE": {
+  "text": "右边是“上屏中”，现场的人此刻看到的就是它",
+  "back": "On the right is Live, which is what the room sees now",
+  "why": "pane called 上屏中"
+ },
+ "TOUR_LIVE_MORE": {
+  "text": "下方红色的“上屏中”按钮可开关投影屏，快捷键F6",
+  "back": "The red Live button below switches the projector on and off, key F6",
+  "why": "says red button"
+ },
+ "TOUR_SEARCH": {
+  "text": "一个搜索框就能找到所有诗歌和经文",
+  "back": "One box finds every song and every Bible passage",
+  "why": "plain"
+ },
+ "TOUR_SEARCH_MORE": {
+  "text": "先打开，再点“添加到流程”",
+  "back": "Open it first, then press \"Add to plan\"",
+  "why": "same label"
+ },
+ "START_SONGS": {
+  "text": "诗歌",
+  "back": "Songs",
+  "why": "same word"
+ },
+ "START_SONGS_DETAIL": {
+  "text": "浏览诗歌库里的所有诗歌",
+  "back": "Look through every song in the library",
+  "why": "plain"
+ },
+ "START_BIBLE": {
+  "text": "圣经",
+  "back": "Bible",
+  "why": "same word"
+ },
+ "START_BIBLE_DETAIL": {
+  "text": "先选书卷，再选经节",
+  "back": "Pick a book, then a verse",
+  "why": "书卷 is the church word"
+ },
+ "START_NEW_DETAIL": {
+  "text": "输入或粘贴歌词",
+  "back": "Type or paste the words",
+  "why": "plain"
+ },
+ "START_NO_SONGS": {
+  "text": "诗歌库还是空的",
+  "back": "The song library is still empty",
+  "why": "statement"
+ },
+ "START_ANNOUNCEMENTS_DETAIL": {
+  "text": "聚会开始前显示的通知",
+  "back": "Notices shown before the service starts",
+  "why": "plain"
+ },
+ "BTN_BRING_OVER": {
+  "text": "开始导入",
+  "back": "Start import",
+  "why": "import"
+ },
+ "BTN_ADD_TO_PLAN": {
+  "text": "添加到流程",
+  "back": "Add to plan",
+  "why": "same everywhere"
+ },
+ "BTN_EDIT": {
+  "text": "编辑",
+  "back": "Edit",
+  "why": "one word"
+ },
+ "BTN_NEXT_VERSE": {
+  "text": "再加下一节经文",
+  "back": "Add the next verse",
+  "why": "plain"
+ },
+ "DECK_EMPTY": {
+  "text": "这里没有幻灯片",
+  "back": "No slides here",
+  "why": "statement"
+ },
+ "BTN_LOOP_START": {
+  "text": "开始轮播",
+  "back": "Start rotating",
+  "why": "轮播 fits cards in turn"
+ },
+ "BTN_LOOP_STOP": {
+  "text": "停止轮播",
+  "back": "Stop rotating",
+  "why": "opposite"
+ },
+ "PANE_PREVIEW": {
+  "text": "预览",
+  "back": "Preview",
+  "why": "one word"
+ },
+ "LIVE": {
+  "text": "上屏中",
+  "back": "Live",
+  "why": "state: on the projector"
+ },
+ "BTN_NEXT": {
+  "text": "下一张",
+  "back": "Next",
+  "why": "same on phone"
+ },
+ "BTN_CLEAR_TEXT": {
+  "text": "隐藏文字",
+  "back": "Hide the text",
+  "why": "action"
+ },
+ "BTN_BLACK": {
+  "text": "黑屏",
+  "back": "Black",
+  "why": "state"
+ },
+ "BTN_LOGO": {
+  "text": "标志",
+  "back": "Emblem",
+  "why": "state"
+ },
+ "LOGO_MISSING": {
+  "text": "还没选标志图片，请到“样式”里选择",
+  "back": "No emblem picture chosen yet; choose one in Design",
+  "why": "names Design"
+ },
+ "STATE_BLACK": {
+  "text": "投影屏正显示黑屏",
+  "back": "The projector shows black",
+  "why": "state"
+ },
+ "STATE_LOGO": {
+  "text": "标志正在上屏",
+  "back": "The emblem is on the projector",
+  "why": "上屏"
+ },
+ "STATE_MESSAGE": {
+  "text": "通知上屏中",
+  "back": "Notice is up",
+  "why": "state"
+ },
+ "STATE_STAGE_MESSAGE": {
+  "text": "舞台通知上屏中",
+  "back": "Stage notice is up",
+  "why": "pair"
+ },
+ "STAGE_MESSAGE_DETAIL": {
+  "text": "这段文字只会出现在乐队的舞台屏上",
+  "back": "The words appear only on the band's stage screen",
+  "why": "plain"
+ },
+ "HEARD_NOTHING": {
+  "text": "还没有识别到诗歌或经文",
+  "back": "No song or verse recognised yet",
+  "why": "no full stop"
+ },
+ "SUGGEST_HEARD": {
+  "text": "刚听到这首歌的歌词",
+  "back": "Just heard words of this song",
+  "why": "short reason"
+ },
+ "SUGGEST_HERE": {
+  "text": "正唱到这首歌的这一段",
+  "back": "The singing is at this part of the song",
+  "why": "short reason"
+ },
+ "SUGGEST_FOLLOWS": {
+  "text": "通常接在这首之后唱",
+  "back": "Usually sung after this one",
+  "why": "everyday words"
+ },
+ "SUGGEST_LOST": {
+  "text": "大家唱的好像和屏幕上的不一样",
+  "back": "What everyone sings seems different from the screen",
+  "why": "full sentence"
+ },
+ "SUGGEST_SEARCH": {
+  "text": "搜索",
+  "back": "Search",
+  "why": "one word"
+ },
+ "state_countdown": {
+  "text": "倒计时 {clock}",
+  "back": "Countdown {clock}",
+  "why": "state"
+ },
+ "LIVE_NOTHING": {
+  "text": "投影屏上什么都没有",
+  "back": "Nothing on the projector",
+  "why": "statement"
+ },
+ "BTN_SHOW": {
+  "text": "上屏",
+  "back": "Show",
+  "why": "the one verb for being shown"
+ },
+ "BTN_PREV": {
+  "text": "上一张",
+  "back": "Previous",
+  "why": "pair of next"
+ },
+ "BTN_NO_TEXT": {
+  "text": "文字隐藏",
+  "back": "Text hidden",
+  "why": "state, not verb"
+ },
+ "STATE_OFF": {
+  "text": "投影屏已关闭，现场看不到",
+  "back": "Projector is off; the room sees nothing",
+  "why": "state"
+ },
+ "TIP_SHOW": {
+  "text": "把预览中的内容上屏",
+  "back": "Put what is in Preview on the projector",
+  "why": "tooltip"
+ },
+ "TIP_PREV": {
+  "text": "退回一张幻灯片",
+  "back": "Go back one slide",
+  "why": "tooltip"
+ },
+ "TIP_NEXT": {
+  "text": "前进一张幻灯片",
+  "back": "Go forward one slide",
+  "why": "tooltip"
+ },
+ "TIP_LIVE": {
+  "text": "开启或关闭投影屏",
+  "back": "Switch the projector on or off",
+  "why": "开启/关闭 pair"
+ },
+ "BTN_PREVIOUS_ITEM": {
+  "text": "上一项",
+  "back": "Previous item",
+  "why": "item not slide"
+ },
+ "BTN_NEXT_ITEM": {
+  "text": "下一项",
+  "back": "Next item",
+  "why": "pair"
+ },
+ "HELD_CTRL": {
+  "text": "按住Ctrl",
+  "back": "Holding Ctrl",
+  "why": "key name as printed"
+ },
+ "HELD_SHIFT": {
+  "text": "按住Shift",
+  "back": "Holding Shift",
+  "why": "key name as printed"
+ },
+ "HINT_RING": {
+  "text": "在预览中选幻灯片",
+  "back": "Pick a slide in Preview",
+  "why": "ring said by meaning"
+ },
+ "HINT_PICK": {
+  "text": "选择上屏的幻灯片",
+  "back": "Choose a slide of the live song",
+  "why": "plain"
+ },
+ "HINT_LET_GO": {
+  "text": "松开后上屏",
+  "back": "Let go and it goes on the projector",
+  "why": "上屏"
+ },
+ "HINT_CANCEL": {
+  "text": "取消",
+  "back": "Cancel",
+  "why": "one word"
+ },
+ "PLAN_ADD_SONG": {
+  "text": "诗歌",
+  "back": "Song",
+  "why": "one word"
+ },
+ "PLAN_ADD_PASSAGE": {
+  "text": "圣经",
+  "back": "Bible",
+  "why": "same as Bible tile"
+ },
+ "PLAN_ADD_HEADING": {
+  "text": "小标题",
+  "back": "Heading",
+  "why": "same divider word"
+ },
+ "PLAN_DRAG": {
+  "text": "拖动可调整顺序",
+  "back": "Drag to change the order",
+  "why": "tooltip"
+ },
+ "ADDING_TO_PLAN": {
+  "text": "添加到流程",
+  "back": "Add to plan",
+  "why": "same words as the button"
+ },
+ "BTN_DONE": {
+  "text": "完成",
+  "back": "Done",
+  "why": "one word"
+ },
+ "BTN_EARLIER": {
+  "text": "上屏记录",
+  "back": "Shown earlier",
+  "why": "names what was shown before"
+ },
+ "EARLIER_HINT": {
+  "text": "这些已上屏过，选一项只会放进预览",
+  "back": "These were already shown; picking one only brings it to Preview",
+  "why": "two statements"
+ },
+ "LETTER_KEYS": {
+  "text": "字母键跳到歌曲段落",
+  "back": "Letter keys jump between parts",
+  "why": "reads beside a switch"
+ },
+ "LETTER_KEYS_HINT": {
+  "text": "按字母键跳到对应段落，如C副歌、B桥段；关闭后任何字母都打开搜索",
+  "back": "A letter key jumps to its part, such as C chorus, B bridge; when off any letter opens search",
+  "why": "English letters worship teams use"
+ },
+ "COUNTDOWN": {
+  "text": "倒计时",
+  "back": "Countdown",
+  "why": "noun"
+ },
+ "COUNTDOWN_LABEL": {
+  "text": "距离聚会开始还有",
+  "back": "Until the service begins",
+  "why": "drawn on the projector"
+ },
+ "EDITOR_NEW": {
+  "text": "新建诗歌",
+  "back": "New song",
+  "why": "pair with edit"
+ },
+ "EDITOR_EDIT": {
+  "text": "编辑诗歌",
+  "back": "Edit song",
+  "why": "pair"
+ },
+ "EDITOR_NO_SLIDES": {
+  "text": "输入歌词后，幻灯片会显示在这里",
+  "back": "Slides will appear here once you type the words",
+  "why": "plain"
+ },
+ "FIELD_TITLE": {
+  "text": "标题",
+  "back": "Title",
+  "why": "one word"
+ },
+ "FIELD_AUTHOR": {
+  "text": "作者",
+  "back": "Author",
+  "why": "one word"
+ },
+ "FIELD_KEY": {
+  "text": "调性",
+  "back": "Key",
+  "why": "musical key"
+ },
+ "FIELD_COPYRIGHT": {
+  "text": "版权",
+  "back": "Copyright",
+  "why": "one word"
+ },
+ "FIELD_CCLI": {
+  "text": "CCLI编号",
+  "back": "CCLI number",
+  "why": "CCLI stays"
+ },
+ "FIELD_LYRICS": {
+  "text": "歌词",
+  "back": "Lyrics",
+  "why": "plain"
+ },
+ "FIELD_ORDER": {
+  "text": "可直接输入，如 主歌1 副歌*2 主歌2 副歌 桥段",
+  "back": "May be typed, as in verse1 chorus*2 verse2 chorus bridge",
+  "why": "names glued to numbers"
+ },
+ "ORDER": {
+  "text": "演唱顺序",
+  "back": "Order sung",
+  "why": "plain"
+ },
+ "ORDER_AS_WRITTEN": {
+  "text": "按歌词顺序",
+  "back": "As in the lyrics",
+  "why": "uses 歌词"
+ },
+ "ORDER_EMPTY": {
+  "text": "歌词分成段落后，这里会显示演唱顺序",
+  "back": "The order shows here once the words are divided into parts",
+  "why": "plain"
+ },
+ "ORDER_CHORUS_EACH": {
+  "text": "每段主歌后接副歌",
+  "back": "Chorus after every verse",
+  "why": "plain"
+ },
+ "BTN_TIDY": {
+  "text": "整理歌词",
+  "back": "Tidy lyrics",
+  "why": "names object"
+ },
+ "TIDY_HELP": {
+  "text": "把“主歌1”这类标题行转为程序标记，并删除只有吉他和弦的行",
+  "back": "Heading lines such as \"verse 1\" become program markers; lines of only guitar chords are removed",
+  "why": "tooltip"
+ },
+ "SUGGEST_LABEL": {
+  "text": "同名诗歌",
+  "back": "Songs of the same title",
+  "why": "screen reader label"
+ },
+ "SUGGEST_LIBRARY": {
+  "text": "诗歌库里已有这首",
+  "back": "Already in the library",
+  "why": "no full stop"
+ },
+ "SUGGEST_FETCHING": {
+  "text": "正在从网上获取歌词",
+  "back": "Fetching the words from the internet",
+  "why": "progress"
+ },
+ "LICENCE_NOTE": {
+  "text": "在教会显示歌词需要版权许可，常见的是CCLI。",
+  "back": "Showing song words in church needs a licence, the usual one being CCLI.",
+  "why": "one sentence"
+ },
+ "suggest_web": {
+  "text": {
+   "without_artist": "来自{source}",
+   "with_artist": "{artist}，来自{source}"
+  },
+  "back": "from {source}; {artist}, from {source}",
+  "why": "source stays"
+ },
+ "words_from": {
+  "text": "歌词来自{source}。使用前请与教会自己的版本核对。",
+  "back": "The words come from {source}. Check them against the church's own copy before use.",
+  "why": "checking advice kept"
+ },
+ "FIELD_SECOND": {
+  "text": "第二语言歌词",
+  "back": "Second-language words",
+  "why": "phrase"
+ },
+ "LYRICS_PLACEHOLDER": {
+  "text": "[主歌1]\n这里写歌词\n\n[副歌]\n这里写歌词",
+  "back": "[verse1] sample line, blank, [chorus] sample line",
+  "why": "marker syntax guessed"
+ },
+ "SECOND_PLACEHOLDER": {
+  "text": "用第二种语言按同样的顺序写出相同的段落",
+  "back": "Write the same parts in the same order in the second language",
+  "why": "no full stop"
+ },
+ "MARK_VERSE": {
+  "text": "主歌",
+  "back": "Verse",
+  "why": "same as section name"
+ },
+ "MARK_CHORUS": {
+  "text": "副歌",
+  "back": "Chorus",
+  "why": "same"
+ },
+ "MARK_BRIDGE": {
+  "text": "桥段",
+  "back": "Bridge",
+  "why": "same"
+ },
+ "MARK_PRECHORUS": {
+  "text": "导歌",
+  "back": "Pre-chorus",
+  "why": "same"
+ },
+ "MARK_ENDING": {
+  "text": "结尾",
+  "back": "Ending",
+  "why": "everyday word"
+ },
+ "BTN_ADD_SECOND": {
+  "text": "添加第二语言",
+  "back": "Add second language",
+  "why": "phrase"
+ },
+ "BTN_SAVE": {
+  "text": "保存",
+  "back": "Save",
+  "why": "one word"
+ },
+ "BTN_CANCEL": {
+  "text": "取消",
+  "back": "Cancel",
+  "why": "one word"
+ },
+ "BTN_DELETE": {
+  "text": "删除",
+  "back": "Delete",
+  "why": "library delete"
+ },
+ "BTN_DUPLICATE": {
+  "text": "复制",
+  "back": "Copy",
+  "why": "everyday verb"
+ },
+ "BTN_CLOSE": {
+  "text": "关闭",
+  "back": "Close",
+  "why": "one word"
+ },
+ "BTN_UNDO": {
+  "text": "撤销",
+  "back": "Undo",
+  "why": "one word"
+ },
+ "BTN_OPEN": {
+  "text": "打开",
+  "back": "Open",
+  "why": "one word"
+ },
+ "BTN_CHOOSE": {
+  "text": "选择",
+  "back": "Choose",
+  "why": "one word"
+ },
+ "BTN_SHOW_NOW": {
+  "text": "立即上屏",
+  "back": "Show now",
+  "why": "verb plus at once"
+ },
+ "SONG_SAVED": {
+  "text": "诗歌已保存",
+  "back": "Song saved",
+  "why": "no full stop"
+ },
+ "EDITOR_CLOSED": {
+  "text": "编辑器已关闭，改动没有保存",
+  "back": "Editor closed; changes not kept",
+  "why": "plain"
+ },
+ "SONG_UNTITLED": {
+  "text": "未命名诗歌",
+  "back": "Untitled song",
+  "why": "stand-in name"
+ },
+ "PASTE_EMPTY": {
+  "text": "剪贴板里没有文字",
+  "back": "No text in the clipboard",
+  "why": "no full stop"
+ },
+ "could_not_save": {
+  "text": "无法保存诗歌：{problem}",
+  "back": "Could not save the song: {problem}",
+  "why": "reason after colon"
+ },
+ "song_deleted": {
+  "text": "已删除诗歌“{title}”",
+  "back": "Deleted the song \"{title}\"",
+  "why": "past tense"
+ },
+ "LOOK_SAMPLE": {
+  "text": "这是示例文字\n看看效果如何",
+  "back": "This is sample text\\nsee how it looks",
+  "why": "made-up, two lines"
+ },
+ "LOOK_CUSTOM": {
+  "text": "自定义",
+  "back": "Custom",
+  "why": "one word"
+ },
+ "LOOK_BACKGROUND": {
+  "text": "自选图片或视频",
+  "back": "Your own picture or video",
+  "why": "does not repeat the heading"
+ },
+ "LOOK_CHOOSE_FILE": {
+  "text": "选择图片或视频",
+  "back": "Choose picture or video",
+  "why": "button"
+ },
+ "LOOK_NO_FILE": {
+  "text": "还没选文件",
+  "back": "No file chosen yet",
+  "why": "state"
+ },
+ "LOOK_LINES": {
+  "text": "每张幻灯片行数",
+  "back": "Lines per slide",
+  "why": "noun phrase"
+ },
+ "LOOK_LINES_ALL": {
+  "text": "全部",
+  "back": "All",
+  "why": "one word"
+ },
+ "LOOK_SIZE": {
+  "text": "文字大小",
+  "back": "Size of the words",
+  "why": "noun phrase"
+ },
+ "LOOK_SIZE_SMALL": {
+  "text": "小",
+  "back": "Small",
+  "why": "one char"
+ },
+ "LOOK_SIZE_NORMAL": {
+  "text": "标准",
+  "back": "Standard",
+  "why": "usual size"
+ },
+ "LOOK_SIZE_LARGE": {
+  "text": "大",
+  "back": "Large",
+  "why": "one char"
+ },
+ "LOOK_PLACE": {
+  "text": "文字位置",
+  "back": "Position of the words",
+  "why": "noun phrase"
+ },
+ "LOOK_PLACE_TOP": {
+  "text": "靠上",
+  "back": "Top",
+  "why": "one word"
+ },
+ "LOOK_PLACE_MIDDLE": {
+  "text": "居中",
+  "back": "Middle",
+  "why": "one word"
+ },
+ "LOOK_PLACE_BOTTOM": {
+  "text": "靠下",
+  "back": "Bottom",
+  "why": "one word"
+ },
+ "LOOK_BIBLE": {
+  "text": "译本",
+  "back": "Translation",
+  "why": "pairs with second"
+ },
+ "LOOK_SECOND_BIBLE": {
+  "text": "第二译本",
+  "back": "Second translation",
+  "why": "phrase"
+ },
+ "LOOK_NONE": {
+  "text": "无",
+  "back": "None",
+  "why": "one word"
+ },
+ "LOOK_LOGO": {
+  "text": "标志",
+  "back": "Emblem",
+  "why": "same as Logo tile"
+ },
+ "LOOK_CHOOSE_LOGO": {
+  "text": "选择标志图片",
+  "back": "Choose emblem picture",
+  "why": "button and title"
+ },
+ "LOOK_LICENCE": {
+  "text": "CCLI许可证号",
+  "back": "CCLI licence number",
+  "why": "CCLI stays"
+ },
+ "LOOK_LICENCE_HINT": {
+  "text": "数字",
+  "back": "Number",
+  "why": "one word"
+ },
+ "BACKGROUND_UNKNOWN": {
+  "text": "这个文件不是可用作背景的图片或视频",
+  "back": "This file is not a picture or video usable as a background",
+  "why": "no full stop"
+ },
+ "bible_failed": {
+  "text": "圣经译本{code}无法打开：{problem}",
+  "back": "Bible translation {code} could not be opened: {problem}",
+  "why": "reason after colon"
+ },
+ "SCREENS_OFF": {
+  "text": "练习模式下，投影屏始终是关闭的",
+  "back": "In practice mode the projector is always off",
+  "why": "开/关 pair"
+ },
+ "SCREENS_ONE": {
+  "text": "再接一块显示器后会自动启用，无需其他操作",
+  "back": "Once another monitor is connected it works by itself, nothing more to do",
+  "why": "one sentence"
+ },
+ "SCREENS_SWITCH": {
+  "text": "投影屏",
+  "back": "Projector",
+  "why": "same noun"
+ },
+ "WALL": {
+  "text": "投影画面校正",
+  "back": "Projected picture correction",
+  "why": "says it corrects"
+ },
+ "WALL_HINT": {
+  "text": "选一个角，移动它，直到墙上的画面四边笔直",
+  "back": "Pick a corner and move it until the picture on the wall has straight edges",
+  "why": "instruction"
+ },
+ "WALL_RESET": {
+  "text": "恢复原状",
+  "back": "Put it back",
+  "why": "everyday word"
+ },
+ "WALL_BRIGHTNESS": {
+  "text": "亮度",
+  "back": "Brightness",
+  "why": "one word"
+ },
+ "WALL_CONTRAST": {
+  "text": "对比度",
+  "back": "Contrast",
+  "why": "one word"
+ },
+ "WALL_COLOUR": {
+  "text": "饱和度",
+  "back": "Colour strength",
+  "why": "saturation term"
+ },
+ "CORNER_TOP_LEFT": {
+  "text": "左上角",
+  "back": "Top left corner",
+  "why": "noun phrase"
+ },
+ "CORNER_TOP_RIGHT": {
+  "text": "右上角",
+  "back": "Top right corner",
+  "why": "noun phrase"
+ },
+ "CORNER_BOTTOM_RIGHT": {
+  "text": "右下角",
+  "back": "Bottom right corner",
+  "why": "noun phrase"
+ },
+ "CORNER_BOTTOM_LEFT": {
+  "text": "左下角",
+  "back": "Bottom left corner",
+  "why": "noun phrase"
+ },
+ "NUDGE_UP": {
+  "text": "向上",
+  "back": "Up",
+  "why": "one word"
+ },
+ "NUDGE_DOWN": {
+  "text": "向下",
+  "back": "Down",
+  "why": "one word"
+ },
+ "NUDGE_LEFT": {
+  "text": "向左",
+  "back": "Left",
+  "why": "one word"
+ },
+ "NUDGE_RIGHT": {
+  "text": "向右",
+  "back": "Right",
+  "why": "one word"
+ },
+ "LESS": {
+  "text": "减少",
+  "back": "Less",
+  "why": "one word"
+ },
+ "MORE": {
+  "text": "增加",
+  "back": "More",
+  "why": "not the three-dot word"
+ },
+ "LOOK_CAMERA": {
+  "text": "摄像头",
+  "back": "Camera",
+  "why": "one word"
+ },
+ "LOOK_CAMERA_FAR": {
+  "text": "网络摄像头",
+  "back": "Network camera",
+  "why": "two words at most"
+ },
+ "LOOK_CAMERA_FAR_USE": {
+  "text": "使用",
+  "back": "Use",
+  "why": "short verb"
+ },
+ "LOOK_CAMERA_FAR_NOTE": {
+  "text": "手机也行：用手机上的摄像头应用，以RTSP或SRT发送画面。",
+  "back": "A phone works too: a camera app on the phone sends the picture over RTSP or SRT.",
+  "why": "RTSP and SRT stay"
+ },
+ "SCREENS_HERE": {
+  "text": "在本机屏幕的窗口里显示投影屏",
+  "back": "Show the projector in a window on this screen",
+  "why": "phrase beside a switch"
+ },
+ "SCREENS_HERE_HINT": {
+  "text": "鼠标指着画面窗口按Esc即可关闭",
+  "back": "Point at the picture window and press Esc to close it",
+  "why": "key name as printed"
+ },
+ "LOOK_WINDOW": {
+  "text": "窗口明暗",
+  "back": "Window light or dark",
+  "why": "not the projector"
+ },
+ "LOOK_WINDOW_AUTO": {
+  "text": "跟随电脑",
+  "back": "Follow the computer",
+  "why": "phrase"
+ },
+ "LOOK_WINDOW_LIGHT": {
+  "text": "浅色",
+  "back": "Light",
+  "why": "one word"
+ },
+ "LOOK_WINDOW_DARK": {
+  "text": "深色",
+  "back": "Dark",
+  "why": "one word"
+ },
+ "LOOK_TEXT_COLOUR": {
+  "text": "文字颜色",
+  "back": "Colour of the words",
+  "why": "noun phrase"
+ },
+ "LOOK_COLOUR_WHITE": {
+  "text": "纯白",
+  "back": "Pure white",
+  "why": "colour name"
+ },
+ "LOOK_COLOUR_WARM": {
+  "text": "米白",
+  "back": "Cream white",
+  "why": "slightly yellowish white"
+ },
+ "LOOK_COLOUR_YELLOW": {
+  "text": "黄色",
+  "back": "Yellow",
+  "why": "colour name"
+ },
+ "LOOK_COLOUR_BLACK": {
+  "text": "黑色",
+  "back": "Black",
+  "why": "colour name"
+ },
+ "LOOK_COLOUR_HEX": {
+  "text": "颜色代码",
+  "back": "Colour code",
+  "why": "not visible"
+ },
+ "LOOK_COLOUR_HEX_HINT": {
+  "text": "例如#FFD84D",
+  "back": "For example #FFD84D",
+  "why": "例如 written in full"
+ },
+ "LOOK_FONT": {
+  "text": "字体",
+  "back": "Font",
+  "why": "usual word"
+ },
+ "LOOK_FONT_DEFAULT": {
+  "text": "程序默认字体",
+  "back": "The program's default font",
+  "why": "phrase"
+ },
+ "LOOK_FONT_SEARCH": {
+  "text": "输入字体名称",
+  "back": "Type a font name",
+  "why": "invitation"
+ },
+ "LOOK_FONT_NONE": {
+  "text": "没有匹配的字体",
+  "back": "No matching font",
+  "why": "no full stop"
+ },
+ "LOOK_OUTLINE": {
+  "text": "描边",
+  "back": "Outline",
+  "why": "word for line round letters"
+ },
+ "LOOK_OUTLINE_OFF": {
+  "text": "无",
+  "back": "None",
+  "why": "one word"
+ },
+ "LOOK_OUTLINE_THIN": {
+  "text": "细",
+  "back": "Thin",
+  "why": "one char"
+ },
+ "LOOK_OUTLINE_MEDIUM": {
+  "text": "中",
+  "back": "Middle",
+  "why": "one char"
+ },
+ "LOOK_OUTLINE_THICK": {
+  "text": "粗",
+  "back": "Thick",
+  "why": "one char"
+ },
+ "LOOK_OUTLINE_COLOUR": {
+  "text": "描边颜色",
+  "back": "Outline colour",
+  "why": "noun phrase"
+ },
+ "SCREEN_PROJECTOR": {
+  "text": "投影屏",
+  "back": "Projector",
+  "why": "same noun"
+ },
+ "SCREEN_STAGE": {
+  "text": "舞台屏",
+  "back": "Stage screen",
+  "why": "same noun"
+ },
+ "SCREEN_UNUSED": {
+  "text": "不使用",
+  "back": "Not used",
+  "why": "short phrase"
+ },
+ "SCREENS_STAGE_WINDOW": {
+  "text": "在窗口里显示舞台屏",
+  "back": "Show the stage screen in a window",
+  "why": "phrase beside a switch"
+ },
+ "SCREENS_IDENTIFY": {
+  "text": "显示各屏幕编号",
+  "back": "Show each screen's number",
+  "why": "plain"
+ },
+ "screen_name": {
+  "text": "显示器{number}",
+  "back": "Monitor {number}",
+  "why": "monitor is the hardware noun"
+ },
+ "screen_title": {
+  "text": {
+   "with_this": "显示器{number}（本窗口所在）",
+   "without_this": "显示器{number}"
+  },
+  "back": "Monitor {number} (this window is here); Monitor {number}",
+  "why": "plain"
+ },
+ "screen_detail": {
+  "text": {
+   "normal_zoom": "{width}×{height}",
+   "with_zoom": "{width}×{height}，缩放{scale}"
+  },
+  "back": "{width}×{height}; {width}×{height}, zoom {scale}",
+  "why": "plain"
+ },
+ "REMOTE_SWITCH": {
+  "text": "手机遥控",
+  "back": "Phone remote",
+  "why": "same as dialog title"
+ },
+ "REMOTE_SWITCH_DETAIL": {
+  "text": "同一个Wi-Fi下的手机可以切换幻灯片",
+  "back": "Phones on the same Wi-Fi can change the slides",
+  "why": "full sentence"
+ },
+ "REMOTE_SCAN": {
+  "text": "用手机扫描二维码，或输入下面的网址",
+  "back": "Scan the square code with the phone, or type the address below",
+  "why": "instruction"
+ },
+ "REMOTE_PIN": {
+  "text": "PIN码",
+  "back": "PIN code",
+  "why": "PIN kept"
+ },
+ "REMOTE_FIREWALL_ASKING": {
+  "text": "系统会弹出一个窗口，请求一次权限，好让手机连上这台电脑",
+  "back": "A system window will ask permission once so phones can reach this computer",
+  "why": "names no button"
+ },
+ "REMOTE_FIREWALL_REFUSED": {
+  "text": "电脑的防火墙正在拒绝手机连接。把手机遥控关掉再打开，会重新弹出权限窗口。",
+  "back": "The computer's firewall is turning phones away. Switch the phone remote off and on again and the permission window comes back.",
+  "why": "not blaming"
+ },
+ "phones": {
+  "text": {
+   "zero": "没有手机连接",
+   "other": "已连接{count}部手机"
+  },
+  "back": "No phone connected; {count} phones connected",
+  "why": "zero is its own statement"
+ },
+ "remote_failed": {
+  "text": "手机遥控无法启动：{problem}",
+  "back": "The phone remote could not start: {problem}",
+  "why": "reason after colon"
+ },
+ "IMPORT_FOUND": {
+  "text": "旧程序里的诗歌和圣经都会复制过来，旧程序保持不变。",
+  "back": "The songs and Bibles in the old program are copied here; the old program stays as it is.",
+  "why": "two sentences"
+ },
+ "IMPORT_NOT_FOUND": {
+  "text": "这台电脑上没有安装旧程序",
+  "back": "The old program is not installed on this computer",
+  "why": "one sentence"
+ },
+ "import_done": {
+  "text": {
+   "songs_only": "已添加{songs}",
+   "songs_and_bibles": "已添加{songs}和{bibles}"
+  },
+  "back": "Added {songs}; Added {songs} and {bibles}",
+  "why": "counted phrases"
+ },
+ "import_summary": {
+  "text": {
+   "nothing_changed": "文件夹里的诗歌都已经在诗歌库中",
+   "only_kept": "没有新增或更新，{kept}保留了你的修改",
+   "changed_added": "已添加{added}",
+   "changed_updated": "已更新{updated}",
+   "changed_both": "已添加{added}，更新{updated}",
+   "changed_and_kept": "{changed}。另有{kept}保留了你的修改"
+  },
+  "back": "Everything already here; nothing new, {kept} kept as you edited; Added; Updated; Added and updated; changed sentence plus {kept} kept",
+  "why": "whole sentences"
+ },
+ "files_unreadable": {
+  "text": {
+   "other": "{count}个文件无法读取"
+  },
+  "back": "{count} files could not be read",
+  "why": "one form"
+ },
+ "import_partial": {
+  "text": "已添加{songs}，{files}无法打开",
+  "back": "Added {songs}; {files} could not be opened",
+  "why": "two counted phrases"
+ },
+ "ANNOUNCEMENTS_EMPTY": {
+  "text": "还没有公告卡片",
+  "back": "No announcement cards yet",
+  "why": "no full stop"
+ },
+ "ANNOUNCEMENT_NEW": {
+  "text": "新建公告",
+  "back": "New announcement",
+  "why": "wide button"
+ },
+ "ANNOUNCEMENT_BODY": {
+  "text": "内容",
+  "back": "Details",
+  "why": "the text of a notice"
+ },
+ "ANNOUNCEMENT_TITLE_HINT": {
+  "text": "例如：青年之夜",
+  "back": "For example: Youth night",
+  "why": "starts with 例如"
+ },
+ "ANNOUNCEMENT_BODY_HINT": {
+  "text": "例如：周五晚上七点，在礼堂",
+  "back": "For example: Friday seven in the evening, in the hall",
+  "why": "starts with 例如"
+ },
+ "ANNOUNCEMENT_SECONDS": {
+  "text": "每张停留秒数",
+  "back": "Seconds each stays",
+  "why": "makes numbers read as seconds"
+ },
+ "ANNOUNCEMENT_START_FROM": {
+  "text": "从现成模板开始",
+  "back": "Start from a ready-made one",
+  "why": "phrase"
+ },
+ "ANNOUNCEMENT_BRING_IN": {
+  "text": "从文件导入",
+  "back": "Bring in from a file",
+  "why": "short phrase"
+ },
+ "ANNOUNCEMENT_FILL": {
+  "text": "文字来源",
+  "back": "Where the words come from",
+  "why": "plain"
+ },
+ "FILL_NOTHING": {
+  "text": "手动",
+  "back": "By hand",
+  "why": "answers the heading"
+ },
+ "FILL_WEEK": {
+  "text": "本周生日",
+  "back": "This week's birthdays",
+  "why": "phrase"
+ },
+ "FILL_MONTH": {
+  "text": "本月生日",
+  "back": "This month's birthdays",
+  "why": "phrase"
+ },
+ "ANNOUNCEMENT_PICTURE": {
+  "text": "图片",
+  "back": "Picture",
+  "why": "one word"
+ },
+ "BTN_REMOVE_PICTURE": {
+  "text": "去掉图片",
+  "back": "Take off picture",
+  "why": "not the plan-item word"
+ },
+ "CMD_IMPORT_PPTX": {
+  "text": "从PowerPoint导入公告",
+  "back": "Import announcements from PowerPoint",
+  "why": "PowerPoint stays"
+ },
+ "CMD_IMPORT_PPTX_DETAIL": {
+  "text": "文件里的每一页幻灯片变成一张卡片",
+  "back": "Every slide of the file becomes one card",
+  "why": "no full stop"
+ },
+ "CMD_IMPORT_BIRTHDAYS": {
+  "text": "导入生日名单",
+  "back": "Import a birthday list",
+  "why": "名单 means list"
+ },
+ "CMD_IMPORT_BIRTHDAYS_DETAIL": {
+  "text": "用Word或PowerPoint做的姓名和日期对照表",
+  "back": "A table of names and dates made in Word or PowerPoint",
+  "why": "no full stop"
+ },
+ "BIRTHDAYS_NONE_FOUND": {
+  "text": "文件里没有找到带日期的姓名",
+  "back": "No name with a date was found in the file",
+  "why": "no full stop"
+ },
+ "MONTHS[0]": {
+  "text": "1月",
+  "back": "January",
+  "why": "number plus 月; see report"
+ },
+ "MONTHS[1]": {
+  "text": "2月",
+  "back": "February",
+  "why": "number plus 月"
+ },
+ "MONTHS[2]": {
+  "text": "3月",
+  "back": "March",
+  "why": "number plus 月"
+ },
+ "MONTHS[3]": {
+  "text": "4月",
+  "back": "April",
+  "why": "number plus 月"
+ },
+ "MONTHS[4]": {
+  "text": "5月",
+  "back": "May",
+  "why": "number plus 月"
+ },
+ "MONTHS[5]": {
+  "text": "6月",
+  "back": "June",
+  "why": "number plus 月"
+ },
+ "MONTHS[6]": {
+  "text": "7月",
+  "back": "July",
+  "why": "number plus 月"
+ },
+ "MONTHS[7]": {
+  "text": "8月",
+  "back": "August",
+  "why": "number plus 月"
+ },
+ "MONTHS[8]": {
+  "text": "9月",
+  "back": "September",
+  "why": "number plus 月"
+ },
+ "MONTHS[9]": {
+  "text": "10月",
+  "back": "October",
+  "why": "number plus 月"
+ },
+ "MONTHS[10]": {
+  "text": "11月",
+  "back": "November",
+  "why": "number plus 月"
+ },
+ "MONTHS[11]": {
+  "text": "12月",
+  "back": "December",
+  "why": "number plus 月"
+ },
+ "WEEKDAYS[0]": {
+  "text": "星期一",
+  "back": "Monday",
+  "why": "full name"
+ },
+ "WEEKDAYS[1]": {
+  "text": "星期二",
+  "back": "Tuesday",
+  "why": "full name"
+ },
+ "WEEKDAYS[2]": {
+  "text": "星期三",
+  "back": "Wednesday",
+  "why": "full name"
+ },
+ "WEEKDAYS[3]": {
+  "text": "星期四",
+  "back": "Thursday",
+  "why": "full name"
+ },
+ "WEEKDAYS[4]": {
+  "text": "星期五",
+  "back": "Friday",
+  "why": "full name"
+ },
+ "WEEKDAYS[5]": {
+  "text": "星期六",
+  "back": "Saturday",
+  "why": "full name"
+ },
+ "WEEKDAYS[6]": {
+  "text": "星期日",
+  "back": "Sunday",
+  "why": "星期 is used in all the listed countries"
+ },
+ "could_not_read": {
+  "text": "无法打开这个文件：{problem}",
+  "back": "Could not open this file: {problem}",
+  "why": "reason after colon"
+ },
+ "pptx_imported": {
+  "text": {
+   "without_lost": "已生成{added}",
+   "with_lost": "已生成{added}，{lost}没能导入"
+  },
+  "back": "Made {added}; Made {added}, {lost} did not come across",
+  "why": "two counted phrases"
+ },
+ "birthdays_on_file": {
+  "text": {
+   "zero": "还没有保存生日名单",
+   "other": "已保存{count}个生日"
+  },
+  "back": "No birthday list saved yet; {count} birthdays saved",
+  "why": "zero is its own statement"
+ },
+ "birthdays_imported": {
+  "text": {
+   "none_skipped": {
+    "other": "已保存{birthdays}"
+   },
+   "some_skipped": "已保存{birthdays}，跳过{rows}"
+  },
+  "back": "Saved {birthdays}; Saved {birthdays}, skipped {rows}",
+  "why": "two counted phrases"
+ },
+ "ANNOUNCEMENT_PREVIEW": {
+  "text": "上屏效果",
+  "back": "How it looks on the projector",
+  "why": "phrase"
+ },
+ "FILL_PASSAGE": {
+  "text": "经文",
+  "back": "Scripture",
+  "why": "same as plan menu passage word"
+ },
+ "ANNOUNCEMENT_PASSAGE": {
+  "text": "经文出处",
+  "back": "Scripture reference",
+  "why": "names book chapter verses"
+ },
+ "PASSAGE_NO_BIBLE": {
+  "text": "没有安装圣经译本，卡片会是空的",
+  "back": "No Bible translation installed, so the card stays empty",
+  "why": "one sentence"
+ },
+ "PASSAGE_UNREADABLE": {
+  "text": "圣经里没有这个出处的经文",
+  "back": "The Bible has no verse at this reference",
+  "why": "one sentence"
+ },
+ "NOTICE_NOTHING_TO_SHOW": {
+  "text": "这张卡片今天没有内容可上屏",
+  "back": "This card has nothing to put on the projector today",
+  "why": "no full stop"
+ },
+ "birthdays_cover_week": {
+  "text": "涵盖{from_month}{from_day}日至{to_month}{to_day}日",
+  "back": "Covers {from_month} {from_day} to {to_month} {to_day}",
+  "why": "Chinese puts month before day"
+ },
+ "birthdays_cover_month": {
+  "text": "涵盖整个{month}",
+  "back": "Covers the whole of {month}",
+  "why": "plain"
+ },
+ "names_today": {
+  "text": {
+   "zero": "今天没有人过生日",
+   "other": "今天有{count}人过生日"
+  },
+  "back": "Nobody has a birthday today; {count} people have a birthday today",
+  "why": "people with a birthday"
+ },
+ "PRACTICE_NOTICES[0].0": {
+  "text": "欢迎光临",
+  "back": "Welcome",
+  "why": "church greeting"
+ },
+ "PRACTICE_NOTICES[0].1": {
+  "text": "欢迎你来到这里。\n聚会即将开始。",
+  "back": "Welcome, you are here.\\nThe service is about to begin.",
+  "why": "warm and plain"
+ },
+ "PRACTICE_NOTICES[1].0": {
+  "text": "青年之夜",
+  "back": "Youth night",
+  "why": "1 to 3 words"
+ },
+ "PRACTICE_NOTICES[1].1": {
+  "text": "每周五 19:00，在礼堂\n欢迎带朋友一起来",
+  "back": "Every Friday 19:00, in the hall\\nBring a friend along",
+  "why": "hour as 24-hour"
+ },
+ "PRACTICE_NOTICES[2].0": {
+  "text": "祷告会",
+  "back": "Prayer meeting",
+  "why": "usual church word"
+ },
+ "PRACTICE_NOTICES[2].1": {
+  "text": "每周二 06:00\n欢迎大家一起来祷告",
+  "back": "Every Tuesday 06:00\\nEveryone is welcome to pray together",
+  "why": "early morning"
+ },
+ "PRACTICE_NOTICES[3].0": {
+  "text": "本周聚会",
+  "back": "This week's gatherings",
+  "why": "1 to 3 words"
+ },
+ "PRACTICE_NOTICES[3].1": {
+  "text": "星期日\t09:00\t主日崇拜\n星期日\t17:00\t晚间崇拜\n星期三\t19:30\t祷告会\n星期六\t15:00\t青年团契",
+  "back": "Sunday 09:00 Sunday service; Sunday 17:00 evening service; Wednesday 19:30 prayer meeting; Saturday 15:00 youth fellowship",
+  "why": "real tabs between parts"
+ },
+ "ANNOUNCEMENT_TEMPLATES[0].0": {
+  "text": "欢迎",
+  "back": "Welcome",
+  "why": "short card title"
+ },
+ "ANNOUNCEMENT_TEMPLATES[0].1": {
+  "text": "欢迎新朋友和各位弟兄姊妹",
+  "back": "Welcome to new friends and all brothers and sisters",
+  "why": "church register"
+ },
+ "ANNOUNCEMENT_TEMPLATES[1].0": {
+  "text": "聚会时间",
+  "back": "Service times",
+  "why": "short card title"
+ },
+ "ANNOUNCEMENT_TEMPLATES[1].1": {
+  "text": "星期日 09:00，星期三 19:30",
+  "back": "Sunday 09:00, Wednesday 19:30",
+  "why": "made-up example"
+ },
+ "ANNOUNCEMENT_TEMPLATES[2].0": {
+  "text": "本周活动",
+  "back": "This week's events",
+  "why": "short card title"
+ },
+ "ANNOUNCEMENT_TEMPLATES[2].1": {
+  "text": "星期五 19:00 青年之夜，在礼堂",
+  "back": "Friday 19:00 youth night, in the hall",
+  "why": "made-up example"
+ },
+ "ANNOUNCEMENT_TEMPLATES[3].0": {
+  "text": "本周背诵经文",
+  "back": "This week's memory verse",
+  "why": "short card title"
+ },
+ "ANNOUNCEMENT_TEMPLATES[3].1": {
+  "text": "请在这里写上本周要背的经文",
+  "back": "Write this week's verse here",
+  "why": "instruction to the editor"
+ },
+ "ANNOUNCEMENT_TEMPLATES[4].0": {
+  "text": "奉献",
+  "back": "Giving",
+  "why": "usual church word"
+ },
+ "ANNOUNCEMENT_TEMPLATES[4].1": {
+  "text": "请填写银行账户的名称和账号",
+  "back": "Write the bank account's name and number",
+  "why": "reminder"
+ },
+ "ANNOUNCEMENT_TEMPLATES[5].0": {
+  "text": "本周生日",
+  "back": "This week's birthdays",
+  "why": "short card title"
+ },
+ "ANNOUNCEMENT_TEMPLATES[5].1": {
+  "text": "请写上本周过生日的人的名字",
+  "back": "Write the names of those with a birthday this week",
+  "why": "instruction"
+ },
+ "announcements": {
+  "text": {
+   "zero": "还没有公告卡片",
+   "other": "{count}张公告卡片"
+  },
+  "back": "No announcement cards yet; {count} announcement cards",
+  "why": "zero is a full statement"
+ },
+ "seconds_short": {
+  "text": "{seconds}秒",
+  "back": "{seconds} s",
+  "why": "one character unit"
+ },
+ "KEYS_TITLE": {
+  "text": "快捷键设置",
+  "back": "Key settings",
+  "why": "phrase"
+ },
+ "KEYS_SHOWING": {
+  "text": "上屏操作",
+  "back": "Showing",
+  "why": "keys used while running"
+ },
+ "KEYS_FINDING": {
+  "text": "查找与添加",
+  "back": "Finding and adding",
+  "why": "heading"
+ },
+ "KEYS_PLAN": {
+  "text": "流程",
+  "back": "Plan",
+  "why": "heading"
+ },
+ "KEYS_EDITING": {
+  "text": "编辑诗歌",
+  "back": "Editing songs",
+  "why": "heading"
+ },
+ "KEYS_SHOWING_ROWS[0].1": {
+  "text": "投影屏前进一张幻灯片",
+  "back": "The projector goes forward one slide",
+  "why": "fragment"
+ },
+ "KEYS_SHOWING_ROWS[1].1": {
+  "text": "投影屏退回一张幻灯片",
+  "back": "The projector goes back one slide",
+  "why": "fragment"
+ },
+ "KEYS_SHOWING_ROWS[2].1": {
+  "text": "跳回当前上屏诗歌的第一张",
+  "back": "Jump back to the first slide of the song on the projector",
+  "why": "fragment"
+ },
+ "KEYS_SHOWING_ROWS[3].1": {
+  "text": "跳到当前上屏诗歌的最后一张",
+  "back": "Jump to the last slide of the song on the projector",
+  "why": "fragment"
+ },
+ "KEYS_SHOWING_ROWS[4].1": {
+  "text": "在上屏的歌里选幻灯片，松开Shift后上屏",
+  "back": "Pick a slide in the live song; it goes on the projector when Shift is let go",
+  "why": "fragment"
+ },
+ "KEYS_SHOWING_ROWS[5].1": {
+  "text": "移动预览里选中的幻灯片，再按Enter上屏",
+  "back": "Move the picked slide in Preview, then Enter shows it",
+  "why": "ring said by meaning"
+ },
+ "KEYS_SHOWING_ROWS[6].1": {
+  "text": "把选中的幻灯片上屏",
+  "back": "Put the picked slide on the projector",
+  "why": "fragment"
+ },
+ "KEYS_SHOWING_ROWS[7].1": {
+  "text": "跳到上屏诗歌里对应数字的段落",
+  "back": "Jump to the part of the live song with that number",
+  "why": "fragment"
+ },
+ "KEYS_SHOWING_ROWS[8].1": {
+  "text": "按C跳到副歌，按V跳到主歌，按B跳到桥段",
+  "back": "C jumps to the chorus, V to the verse, B to the bridge",
+  "why": "English letters Chinese worship teams use"
+ },
+ "KEYS_SHOWING_ROWS[9].1": {
+  "text": "把预览里选中的幻灯片移到对应数字的段落",
+  "back": "Move the picked slide in Preview to the part with that number",
+  "why": "fragment"
+ },
+ "KEYS_SHOWING_ROWS[10].1": {
+  "text": "把上屏的诗歌放回预览，以便换一段",
+  "back": "Bring the song on the projector back into Preview to pick another part",
+  "why": "fragment"
+ },
+ "KEYS_SHOWING_ROWS[11].1": {
+  "text": "把之前上屏的内容放回预览，再按一次更早一项",
+  "back": "Bring back what was shown before; again for the one before that",
+  "why": "fragment"
+ },
+ "KEYS_SHOWING_ROWS[12].1": {
+  "text": "隐藏文字，保留背景",
+  "back": "Hide the words, keep the background",
+  "why": "fragment"
+ },
+ "KEYS_SHOWING_ROWS[13].1": {
+  "text": "投影屏变黑",
+  "back": "Turn the projector black",
+  "why": "fragment"
+ },
+ "KEYS_SHOWING_ROWS[14].1": {
+  "text": "投影屏显示教会标志",
+  "back": "Put the church emblem on the projector",
+  "why": "fragment"
+ },
+ "KEYS_SHOWING_ROWS[15].1": {
+  "text": "把听音识别到的内容放进预览",
+  "back": "Bring what the listener recognised into Preview",
+  "why": "fragment"
+ },
+ "KEYS_SHOWING_ROWS[16].1": {
+  "text": "把公告卡片放进预览",
+  "back": "Bring the announcement cards into Preview",
+  "why": "fragment"
+ },
+ "KEYS_SHOWING_ROWS[17].1": {
+  "text": "开启或关闭投影屏",
+  "back": "Switch the projector on or off",
+  "why": "开启/关闭 pair"
+ },
+ "KEYS_FINDING_ROWS[0].1": {
+  "text": "开始搜索诗歌、经文和操作",
+  "back": "Start a search for songs, passages and actions",
+  "why": "fragment"
+ },
+ "KEYS_FINDING_ROWS[1].1": {
+  "text": "打开搜索；没输入时列出所有诗歌",
+  "back": "Open the search; with nothing typed it lists every song",
+  "why": "fragment"
+ },
+ "KEYS_FINDING_ROWS[2].1": {
+  "text": "打开选中的结果",
+  "back": "Open the picked result",
+  "why": "fragment"
+ },
+ "KEYS_FINDING_ROWS[3].1": {
+  "text": "把选中的结果直接上屏，跳过预览",
+  "back": "Put the picked result straight on the projector, skipping Preview",
+  "why": "fragment"
+ },
+ "KEYS_FINDING_ROWS[4].1": {
+  "text": "把选中的结果添加到流程，放在上屏项目之后",
+  "back": "Add the picked result to the plan right after the live item",
+  "why": "fragment"
+ },
+ "KEYS_FINDING_ROWS[5].1": {
+  "text": "在选中的诗歌里找段落",
+  "back": "Look within the chosen song for a part",
+  "why": "fragment"
+ },
+ "KEYS_FINDING_ROWS[6].1": {
+  "text": "一次退出搜索，回到主窗口",
+  "back": "Leave the search for the main window in one press",
+  "why": "fragment"
+ },
+ "KEYS_PLAN_ROWS[0].1": {
+  "text": "把下一项放进预览",
+  "back": "Bring the next item into Preview",
+  "why": "fragment"
+ },
+ "KEYS_PLAN_ROWS[1].1": {
+  "text": "把上一项放进预览",
+  "back": "Bring the previous item into Preview",
+  "why": "fragment"
+ },
+ "KEYS_PLAN_ROWS[2].1": {
+  "text": "把预览中的项目在流程里上移或下移",
+  "back": "Move the item in Preview earlier or later in the plan",
+  "why": "fragment"
+ },
+ "KEYS_PLAN_ROWS[3].1": {
+  "text": "把选中的幻灯片设为这首歌的起点，用于串烧",
+  "back": "Make the picked slide the start of the song, for a medley",
+  "why": "串烧 is a medley"
+ },
+ "KEYS_PLAN_ROWS[4].1": {
+  "text": "把预览中的项目移出流程",
+  "back": "Take the item in Preview out of the plan",
+  "why": "fragment"
+ },
+ "KEYS_PLAN_ROWS[5].1": {
+  "text": "把预览中的内容添加到流程，搜索里同样适用",
+  "back": "Add what Preview holds to the plan; same in the search",
+  "why": "fragment"
+ },
+ "KEYS_PLAN_ROWS[6].1": {
+  "text": "下一个流程，到末尾回到第一个；加Shift是上一个",
+  "back": "Next plan, round to the first; with Shift the previous",
+  "why": "fragment"
+ },
+ "KEYS_PLAN_ROWS[7].1": {
+  "text": "打开新建流程的窗口，选择星期和时间",
+  "back": "Open the dialog for a new plan, choose day and time",
+  "why": "fragment"
+ },
+ "KEYS_EDITING_ROWS[0].1": {
+  "text": "新建诗歌",
+  "back": "New song",
+  "why": "fragment"
+ },
+ "KEYS_EDITING_ROWS[1].1": {
+  "text": "编辑预览中的诗歌",
+  "back": "Edit the song in Preview",
+  "why": "fragment"
+ },
+ "KEYS_EDITING_ROWS[2].1": {
+  "text": "保存已写的内容",
+  "back": "Keep what was written",
+  "why": "fragment"
+ },
+ "KEYS_EDITING_ROWS[3].1": {
+  "text": "插入主歌、副歌、导歌、桥段或结尾的标记",
+  "back": "Insert the marker for a verse, chorus, lead-in, bridge or ending",
+  "why": "fragment"
+ },
+ "KEYS_EDITING_ROWS[4].1": {
+  "text": "采用标题下方建议的诗歌，填满整个表单",
+  "back": "Use the song suggested under the title and fill the whole form",
+  "why": "fragment"
+ },
+ "KEYS_EDITING_ROWS[5].1": {
+  "text": "恢复刚删除的内容",
+  "back": "Bring back what was removed last",
+  "why": "fragment"
+ },
+ "announcement_deleted": {
+  "text": "已删除公告“{title}”",
+  "back": "Deleted the announcement \"{title}\"",
+  "why": "past tense"
+ },
+ "STAGE_CLOCK": {
+  "text": "时间",
+  "back": "Time",
+  "why": "one word"
+ },
+ "STAGE_TIMER": {
+  "text": "倒计时",
+  "back": "Countdown",
+  "why": "same as elsewhere"
+ },
+ "STAGE_BLACK": {
+  "text": "会众屏幕为黑屏",
+  "back": "The congregation's screen is black",
+  "why": "says whose screen"
+ },
+ "STAGE_NOTHING": {
+  "text": "屏幕上没有内容",
+  "back": "Nothing on the screen",
+  "why": "state"
+ },
+ "stage_next": {
+  "text": "下一张：{label}",
+  "back": "Next: {label}",
+  "why": "label is a section name"
+ },
+ "tour_place": {
+  "text": "{at}/{total}",
+  "back": "{at}/{total}",
+  "why": "two figures"
+ },
+ "stage_place": {
+  "text": "第{index}张，共{count}张",
+  "back": "Slide {index} of {count}",
+  "why": "two figures"
+ },
+ "LOOK_LANGUAGE": {
+  "text": "语言",
+  "back": "Language",
+  "why": "window language"
+ },
+ "LEARN_SECTION": {
+  "text": "搜索",
+  "back": "Search",
+  "why": "one word"
+ },
+ "LEARN_ON": {
+  "text": "记住搜索中选过的诗歌",
+  "back": "Remember songs picked in the search",
+  "why": "says what is remembered"
+ },
+ "LEARN_ON_HINT": {
+  "text": "搜索结果匹配度相同时，常选的诗歌排在前面",
+  "back": "When results match equally well, songs picked often come first",
+  "why": "condition first"
+ },
+ "LEARN_FORGET": {
+  "text": "清除搜索记录",
+  "back": "Clear the search history",
+  "why": "verb first"
+ },
+ "LEARN_FORGOTTEN": {
+  "text": "搜索记录已清除",
+  "back": "The search history was cleared",
+  "why": "no full stop"
+ },
+ "GROUP_WEEKDAY": {
+  "text": "今天常唱的诗歌",
+  "back": "Songs often sung today",
+  "why": "today's weekday"
+ },
+ "GROUP_RECENT": {
+  "text": "最近选过的诗歌",
+  "back": "Songs picked recently",
+  "why": "phrase"
+ },
+ "group_follows": {
+  "text": "常接在“{title}”之后唱的诗歌",
+  "back": "Songs often sung after \"{title}\"",
+  "why": "same words as the reason"
+ },
+ "habit_chip": {
+  "text": {
+   "other": "输入“{typed}”选过{picks}次"
+  },
+  "back": "Picked {picks} times after \"{typed}\"",
+  "why": "count only, no x"
+ },
+ "habit_line": {
+  "text": {
+   "other": "输入“{typed}”时选过{picks}次，最近一次是{when}"
+  },
+  "back": "When \"{typed}\" was typed, it was picked {picks} times, last on {when}",
+  "why": "date order see report"
+ },
+ "follows_line": {
+  "text": {
+   "other": "接在它后面唱过{count}次，最近一次是{when}"
+  },
+  "back": "Sung after it {count} times, last on {when}",
+  "why": "date order see report"
+ },
+ "weekday_line": {
+  "text": {
+   "other": "在{of}次同类聚会中唱了{count}次"
+  },
+  "back": "Sung in {count} of {of} such services",
+  "why": "short"
+ },
+ "recent_line": {
+  "text": {
+   "other": "选过{picks}次，最近一次是{when}"
+  },
+  "back": "Picked {picks} times, last on {when}",
+  "why": "date order see report"
+ },
+ "starts_chip": {
+  "text": "常从{section}开始",
+  "back": "Usually starts at {section}",
+  "why": "tight"
+ },
+ "starts_line": {
+  "text": "通常从{section}开始，{of}次中有{times}次",
+  "back": "Usually starts at {section}, {times} of {of} times",
+  "why": "plain"
+ },
+ "SCREEN_OWN": {
+  "text": "本程序的窗口在这块显示器上",
+  "back": "The program's own window is on this monitor",
+  "why": "state"
+ },
+ "BIBLES_TITLE": {
+  "text": "添加圣经译本",
+  "back": "Add Bible translations",
+  "why": "dialog name"
+ },
+ "BIBLES_MORE": {
+  "text": "获取更多译本",
+  "back": "Get more translations",
+  "why": "button"
+ },
+ "BIBLES_OWN_FILE": {
+  "text": "使用自己的文件",
+  "back": "Use your own file",
+  "why": "phrase"
+ },
+ "BIBLES_CHOOSE_FILE": {
+  "text": "选择圣经文件",
+  "back": "Choose a Bible file",
+  "why": "button and title"
+ },
+ "BIBLES_FILE_HINT": {
+  "text": "支持MyBible、USFX，以及USFM文件的ZIP压缩包",
+  "back": "MyBible, USFX, and a ZIP bundle of USFM files",
+  "why": "ZIP in capitals"
+ },
+ "BIBLES_PRACTICE": {
+  "text": "练习模式下不保存圣经",
+  "back": "No Bibles are kept in practice mode",
+  "why": "no full stop"
+ },
+ "BIBLES_FILE_UNSUPPORTED": {
+  "text": "无法把这个文件识别为圣经",
+  "back": "This file cannot be understood as a Bible",
+  "why": "no full stop"
+ },
+ "BIBLES_FILE_EMPTY": {
+  "text": "这个文件里没有经文",
+  "back": "This file has no verses",
+  "why": "no full stop"
+ },
+ "CMD_BIBLE_FILE": {
+  "text": "从文件添加圣经",
+  "back": "Add a Bible from a file",
+  "why": "row title"
+ },
+ "CMD_BIBLE_FILE_DETAIL": {
+  "text": "支持MyBible、USFX，以及USFM文件的ZIP压缩包",
+  "back": "MyBible, USFX, and a ZIP bundle of USFM files",
+  "why": "ZIP in capitals"
+ },
+ "CMD_BIBLES": {
+  "text": "获取更多圣经译本",
+  "back": "Get more Bible translations",
+  "why": "row title"
+ },
+ "CMD_BIBLES_FIND_DETAIL": {
+  "text": "可下载多种语言的圣经",
+  "back": "Bibles in many languages can be downloaded",
+  "why": "no full stop"
+ },
+ "BIBLES_LIST": {
+  "text": "可下载的译本",
+  "back": "Translations to download",
+  "why": "phrase"
+ },
+ "BIBLES_SEARCH": {
+  "text": "输入语言或译本名称",
+  "back": "Type a language or translation name",
+  "why": "invitation"
+ },
+ "BIBLES_LOADING": {
+  "text": "正在获取译本列表",
+  "back": "Fetching the list of translations",
+  "why": "progress"
+ },
+ "BIBLES_LOAD_FAILED": {
+  "text": "无法获取译本列表",
+  "back": "Could not fetch the list of translations",
+  "why": "natural order"
+ },
+ "BIBLES_RETRY": {
+  "text": "重试",
+  "back": "Try again",
+  "why": "short"
+ },
+ "BIBLES_INSTALLED": {
+  "text": "已安装",
+  "back": "Installed",
+  "why": "state"
+ },
+ "BIBLES_DOWNLOAD": {
+  "text": "下载",
+  "back": "Download",
+  "why": "one word"
+ },
+ "BIBLES_DOWNLOADING": {
+  "text": "下载中",
+  "back": "Downloading",
+  "why": "progress"
+ },
+ "BIBLES_USE": {
+  "text": "用于显示经文",
+  "back": "Use for showing passages",
+  "why": "button"
+ },
+ "BIBLES_IN_USE": {
+  "text": "正在使用",
+  "back": "In use",
+  "why": "state"
+ },
+ "BIBLES_COPYRIGHT": {
+  "text": "版权",
+  "back": "Copyright",
+  "why": "one word"
+ },
+ "BIBLES_PICK_HINT": {
+  "text": "选一个译本，这里就会显示它的版权说明",
+  "back": "Pick a translation and its rights notice shows here",
+  "why": "one sentence"
+ },
+ "BIBLES_SCOPE_WHOLE": {
+  "text": "全本圣经",
+  "back": "Whole Bible",
+  "why": "short phrase"
+ },
+ "BIBLES_SCOPE_PART": {
+  "text": "部分书卷",
+  "back": "Some books",
+  "why": "short phrase"
+ },
+ "BIBLES_NO_COPYRIGHT": {
+  "text": "文件里没有说明版权归谁",
+  "back": "The file does not say who owns the rights",
+  "why": "one sentence"
+ },
+ "BIBLES_NOTICE_LOADING": {
+  "text": "正在获取版权说明",
+  "back": "Fetching the rights notice",
+  "why": "获取 not a reading-aloud verb"
+ },
+ "BIBLES_NOTICE_FAILED": {
+  "text": "无法读取文件里的版权说明",
+  "back": "The notice inside the file could not be read",
+  "why": "no full stop"
+ },
+ "bibles_download_failed": {
+  "text": "无法下载译本：{why}",
+  "back": "Could not download the translation: {why}",
+  "why": "reason after colon"
+ },
+ "bible_added": {
+  "text": {
+   "other": "已添加译本{name}，共{verses}节"
+  },
+  "back": "Added the translation {name}, {verses} verses",
+  "why": "count plural form"
+ },
+ "bibles_file_failed": {
+  "text": "无法添加圣经：{why}",
+  "back": "Could not add the Bible: {why}",
+  "why": "reason after colon"
+ },
+ "noun.announcements": {
+  "text": {
+   "other": "{count}张公告卡片"
+  },
+  "back": "{count} announcement cards",
+  "why": "number first"
+ },
+ "noun.bibles": {
+  "text": {
+   "other": "{count}部圣经译本"
+  },
+  "back": "{count} Bible translations",
+  "why": "number first"
+ },
+ "noun.birthdays": {
+  "text": {
+   "other": "{count}个生日"
+  },
+  "back": "{count} birthdays",
+  "why": "number first"
+ },
+ "noun.files": {
+  "text": {
+   "other": "{count}个文件"
+  },
+  "back": "{count} files",
+  "why": "number first"
+ },
+ "noun.pictures": {
+  "text": {
+   "other": "{count}张图片"
+  },
+  "back": "{count} pictures",
+  "why": "number first"
+ },
+ "noun.rows": {
+  "text": {
+   "other": "{count}行"
+  },
+  "back": "{count} rows",
+  "why": "number first"
+ },
+ "noun.songs": {
+  "text": {
+   "other": "{count}首诗歌"
+  },
+  "back": "{count} songs",
+  "why": "number first"
+ },
+ "section.bridge": {
+  "text": "桥段",
+  "back": "Bridge",
+  "why": "musicians' word"
+ },
+ "section.chorus": {
+  "text": "副歌",
+  "back": "Chorus",
+  "why": "same as editor and phone"
+ },
+ "section.ending": {
+  "text": "结尾",
+  "back": "Ending",
+  "why": "everyday word"
+ },
+ "section.intro": {
+  "text": "前奏",
+  "back": "Intro",
+  "why": "musicians' word"
+ },
+ "section.other": {
+  "text": "其他",
+  "back": "Other",
+  "why": "general word"
+ },
+ "section.pre_chorus": {
+  "text": "导歌",
+  "back": "Pre-chorus",
+  "why": "church musicians' word"
+ },
+ "section.verse": {
+  "text": "主歌",
+  "back": "Verse",
+  "why": "never the Bible's 节"
+ },
+ "section_numbered": {
+  "text": "{name}{number}",
+  "back": "{name}{number}",
+  "why": "no space in Chinese"
+ },
+ "DESIGN_BACKGROUND": {
+  "text": "背景",
+  "back": "Background",
+  "why": "one noun"
+ },
+ "TIP_START_HERE": {
+  "text": "轮到时从选中的幻灯片开始，再按一次取消",
+  "back": "Starts from the picked slide when its turn comes; press again to cancel",
+  "why": "one sentence"
+ },
+ "PLAN_STARTS_AT": {
+  "text": "从哪一段开始",
+  "back": "Starts at which part",
+  "why": "heading"
+ },
+ "PLAN_START_BEGINNING": {
+  "text": "从头开始",
+  "back": "From the beginning",
+  "why": "short"
+ },
+ "LISTEN_NOT_CONNECTED": {
+  "text": "选择的麦克风没有接上。请从上面的列表另选一个。",
+  "back": "The chosen microphone is not plugged in. Pick another from the list above.",
+  "why": "what is wrong then what to do"
+ },
+ "LISTEN_WOULD_NOT_OPEN": {
+  "text": "选择的麦克风无法启动。请从上面的列表另选一个。",
+  "back": "The chosen microphone could not start. Pick another from the list above.",
+  "why": "no cause guessed"
+ },
+ "LISTEN_INPUT_STOPPED": {
+  "text": "麦克风不再传来声音。请检查它的连接线。",
+  "back": "The microphone no longer sends sound. Check its cable.",
+  "why": "calm"
+ },
+ "LISTEN_BEAT_ONLY": {
+  "text": "这个版本只能跟随音乐节拍，听不懂歌词。",
+  "back": "This copy can follow the beat but cannot understand words.",
+  "why": "fact about the copy"
+ },
+ "LISTEN_TOO_SLOW": {
+  "text": "这台电脑太慢，来不及识别歌词。音量条和速度仍可使用。",
+  "back": "This computer is too slow to recognise words in time. The volume bar and tempo still work.",
+  "why": "about the PC"
+ },
+ "MEDIA_CAMERA_NONE": {
+  "text": "这台电脑没有摄像头。接上之前，文字后面只有黑色。",
+  "back": "This computer has no camera. Until one is plugged in there is only black behind the words.",
+  "why": "news first"
+ },
+ "media_camera_missing": {
+  "text": "找不到摄像头“{name}”。接上之前，文字后面只有黑色。",
+  "back": "Camera \"{name}\" cannot be found. Until it is plugged in there is only black behind the words.",
+  "why": "name early"
+ },
+ "MEDIA_CAMERA_BUSY": {
+  "text": "摄像头无法启动，可能被这台电脑上的其他程序占用了。",
+  "back": "The camera will not start; another program on this computer probably holds it.",
+  "why": "two statements"
+ },
+ "MEDIA_CAMERA_STOPPED": {
+  "text": "摄像头的画面中断了，现在文字后面只有黑色。",
+  "back": "The camera's picture stopped; for now only black is behind the words.",
+  "why": "two statements"
+ },
+ "MEDIA_CAMERA_FAR": {
+  "text": "网络摄像头没有回应，程序正在重试。",
+  "back": "The network camera does not answer; the program is trying again.",
+  "why": "same words as Design row"
+ },
+ "media_video_missing": {
+  "text": "找不到视频文件 {file}",
+  "back": "Cannot find the video file {file}",
+  "why": "news first"
+ },
+ "media_video_failed": {
+  "text": "无法播放视频文件 {file}",
+  "back": "Cannot play the video file {file}",
+  "why": "news first"
+ },
+ "MEDIA_VIDEO_SOFTWARE": {
+  "text": "显卡无法播放这个视频，改由处理器播放。画面照常显示，旧电脑可能会卡顿。",
+  "back": "The graphics card cannot play this video, so the processor does. It still shows; an old computer may stutter.",
+  "why": "calm"
+ },
+ "MEDIA_VIDEO_NONE": {
+  "text": "这个版本的Artosia无法显示视频或摄像头背景。",
+  "back": "This copy of Artosia cannot show a video or camera background.",
+  "why": "about the program"
+ },
+ "LISTEN_MODEL_DAMAGED": {
+  "text": "语音识别文件已损坏。请用上面的按钮重新下载。",
+  "back": "The speech recognition file is broken. Fetch it again with the button above.",
+  "why": "same word as the row above"
+ },
+ "LISTEN_MODEL_MISSING": {
+  "text": "识别歌词前，还需下载一个语音识别文件（57 MB）",
+  "back": "Before recognising words, one more speech recognition file (57 MB) is needed",
+  "why": "size kept"
+ },
+ "LISTEN_MODEL_BETTER": {
+  "text": "这台电脑可以用更好的语音识别文件（190 MB）",
+  "back": "This computer can use the better speech recognition file (190 MB)",
+  "why": "same thing with 更好"
+ },
+ "listen_model_failed": {
+  "text": "语音识别文件没有下载成功：{why}",
+  "back": "The speech recognition file did not arrive: {why}",
+  "why": "reason after colon"
+ },
+ "MARKS_APPLY": {
+  "text": "采用这些标记",
+  "back": "Use these marks",
+  "why": "says what is applied"
+ },
+ "MARKS_APPLY_HELP": {
+  "text": "把建议的段落名写进歌词，作为一次可撤销的修改",
+  "back": "Writes the proposed part names into the lyrics as one change that can be undone",
+  "why": "no full stop"
+ },
+ "MARKS_HIDE": {
+  "text": "关闭建议",
+  "back": "Close the suggestions",
+  "why": "nothing written"
+ },
+ "MARKS_THIS": {
+  "text": "这一段",
+  "back": "This part",
+  "why": "names the block of lines"
+ },
+ "MARKS_WHY_NAMED": {
+  "text": "段落类型来自你在歌词里已写的段落名",
+  "back": "The kind comes from a part name you already typed in the lyrics",
+  "why": "plain"
+ },
+ "MARKS_WHY_REPEAT": {
+  "text": "这一段的歌词重复出现，像副歌",
+  "back": "This part comes back with the same words, like a chorus",
+  "why": "plain"
+ },
+ "MARKS_WHY_BRIDGE": {
+  "text": "这一段很短，只出现一次，位置靠后，像桥段",
+  "back": "This part is short, comes once and late, like a bridge",
+  "why": "plain"
+ },
+ "MARKS_WHY_ORDER": {
+  "text": "按顺序接在前面的主歌之后",
+  "back": "It follows the earlier verses in order",
+  "why": "plain"
+ },
+ "BACKDROPS_TITLE": {
+  "text": "背景库",
+  "back": "Backdrop library",
+  "why": "same pattern as 诗歌库"
+ },
+ "BACKDROPS_SEARCH": {
+  "text": "输入主题，例如大海、蜡烛",
+  "back": "Type a subject, for example sea, candle",
+  "why": "例如 in full"
+ },
+ "BACKDROPS_ALL": {
+  "text": "全部",
+  "back": "All",
+  "why": "one word"
+ },
+ "BACKDROPS_SKY": {
+  "text": "天空",
+  "back": "Sky",
+  "why": "one noun"
+ },
+ "BACKDROPS_MOUNTAINS": {
+  "text": "山景",
+  "back": "Mountains",
+  "why": "one noun"
+ },
+ "BACKDROPS_WATER": {
+  "text": "水景",
+  "back": "Water",
+  "why": "one noun"
+ },
+ "BACKDROPS_NATURE": {
+  "text": "自然",
+  "back": "Nature",
+  "why": "one noun"
+ },
+ "BACKDROPS_LIGHT": {
+  "text": "光影",
+  "back": "Light",
+  "why": "one noun"
+ },
+ "BACKDROPS_NIGHT": {
+  "text": "夜晚",
+  "back": "Night",
+  "why": "one noun"
+ },
+ "BACKDROPS_CANDLES": {
+  "text": "蜡烛",
+  "back": "Candles",
+  "why": "one noun"
+ },
+ "BACKDROPS_CHURCH": {
+  "text": "教堂",
+  "back": "Church",
+  "why": "one noun"
+ },
+ "BACKDROPS_PEOPLE": {
+  "text": "人物",
+  "back": "People",
+  "why": "one noun"
+ },
+ "BACKDROPS_TEXTURE": {
+  "text": "纹理",
+  "back": "Texture",
+  "why": "one noun"
+ },
+ "BACKDROPS_USE": {
+  "text": "使用",
+  "back": "Use",
+  "why": "one verb"
+ },
+ "BACKDROPS_DOWNLOADING": {
+  "text": "下载中",
+  "back": "Downloading",
+  "why": "no dots"
+ },
+ "BACKDROPS_OFFLINE": {
+  "text": "电脑没有连上网络",
+  "back": "The computer is not connected to the internet",
+  "why": "no full stop"
+ },
+ "BACKDROPS_AUTHOR": {
+  "text": "作者",
+  "back": "Author",
+  "why": "one word"
+ },
+ "BACKDROPS_LICENCE": {
+  "text": "许可",
+  "back": "Terms",
+  "why": "one word"
+ },
+ "BACKDROPS_PAGE": {
+  "text": "网页",
+  "back": "Page",
+  "why": "one word"
+ },
+ "BACKDROPS_SIZE": {
+  "text": "尺寸",
+  "back": "Size",
+  "why": "one word"
+ },
+ "BACKDROPS_PICK_HINT": {
+  "text": "点一张预览，查看作者和使用条款",
+  "back": "Press a preview to see who made it and its terms",
+  "why": "no full stop"
+ },
+ "BACKDROPS_DIM": {
+  "text": "画面较亮或细节多，请在“样式”里调暗背景",
+  "back": "The picture is bright or detailed; darken the background in Design",
+  "why": "names Design"
+ },
+ "BACKDROPS_HERE": {
+  "text": "已保存在本机，无需联网",
+  "back": "Stored here, needs no internet",
+  "why": "fragment"
+ },
+ "BACKDROPS_IN_USE": {
+  "text": "正在用作背景",
+  "back": "In use as the background",
+  "why": "not fetched or stored"
+ },
+ "backdrop_failed": {
+  "text": "背景没有下载成功：{why}",
+  "back": "The backdrop did not arrive: {why}",
+  "why": "reason after colon"
+ },
+ "WHY_OFFLINE": {
+  "text": "这台电脑现在没有连上互联网",
+  "back": "this computer has no internet connection right now",
+  "why": "clause after colon"
+ },
+ "WHY_SLOW": {
+  "text": "等待回应的时间太长",
+  "back": "the wait for an answer took too long",
+  "why": "clause after colon"
+ },
+ "WHY_BUSY": {
+  "text": "网站现在请求太多，请过一分钟再试",
+  "back": "the website is too busy now; try again in about a minute",
+  "why": "clause after colon"
+ },
+ "WHY_BROKEN": {
+  "text": "下载中途网络断开了",
+  "back": "the connection was lost partway through",
+  "why": "clause after colon"
+ },
+ "WHY_UNREADABLE": {
+  "text": "程序无法理解这个文件或回应",
+  "back": "the program could not make sense of the file or answer",
+  "why": "clause after colon"
+ },
+ "WHY_NOT_BIBLE": {
+  "text": "这个文件里没有圣经",
+  "back": "the file does not hold a Bible",
+  "why": "clause after colon"
+ },
+ "WHY_DAMAGED": {
+  "text": "下载的文件损坏或不完整",
+  "back": "the downloaded file is broken or incomplete",
+  "why": "clause after colon"
+ },
+ "WHY_DISK": {
+  "text": "写入这台电脑的存储失败",
+  "back": "writing to this computer's storage failed",
+  "why": "clause after colon"
+ },
+ "why_status": {
+  "text": "网站返回了错误{code}",
+  "back": "the website replied with error {code}",
+  "why": "number for helpers"
+ },
+ "LYRICS_OFFLINE": {
+  "text": "连不上歌词网站。请检查网络连接",
+  "back": "The lyrics website cannot be reached. Check the internet connection",
+  "why": "no final full stop"
+ },
+ "LYRICS_NOT_FOUND": {
+  "text": "歌词网站没有这首歌的歌词",
+  "back": "The lyrics website has no words for this song",
+  "why": "no full stop"
+ },
+ "LYRICS_BUSY": {
+  "text": "歌词网站访问的人太多，请过一分钟再试",
+  "back": "The lyrics website is too busy; try again in about a minute",
+  "why": "no full stop"
+ },
+ "LYRICS_UNREADABLE": {
+  "text": "Artosia看不懂歌词网站的回应",
+  "back": "Artosia cannot make sense of the lyrics website's reply",
+  "why": "Artosia stays"
+ },
+ "lyrics_busy_for": {
+  "text": {
+   "other": "歌词网站访问的人太多，请{seconds}秒后再试"
+  },
+  "back": "The lyrics website is too busy; try again in {seconds} seconds",
+  "why": "plain"
+ },
+ "CMD_BACKDROPS_DETAIL": {
+  "text": "可免费使用的照片和循环视频，可作文字背景",
+  "back": "Free photos and looping videos that can go behind the words",
+  "why": "fragment"
+ },
+ "LOOK_MIDNIGHT": {
+  "text": "午夜蓝",
+  "back": "Midnight blue",
+  "why": "colour mood"
+ },
+ "LOOK_CLASSIC_BLUE": {
+  "text": "经典蓝",
+  "back": "Classic blue",
+  "why": "colour mood"
+ },
+ "LOOK_BLACK": {
+  "text": "黑色",
+  "back": "Black",
+  "why": "colour name, 黑屏 is the tile"
+ },
+ "LOOK_FOREST": {
+  "text": "森林绿",
+  "back": "Forest green",
+  "why": "colour mood"
+ },
+ "LOOK_EMBER": {
+  "text": "炭火红",
+  "back": "Ember red",
+  "why": "colour mood"
+ },
+ "LOOK_PAPER": {
+  "text": "暖纸色",
+  "back": "Warm paper",
+  "why": "colour mood"
+ },
+ "TOUR_BACK": {
+  "text": "上一步",
+  "back": "Previous step",
+  "why": "step not slide"
+ },
+ "TOUR_NEXT": {
+  "text": "下一步",
+  "back": "Next step",
+  "why": "step not slide"
+ },
+ "KEYS_TO": {
+  "text": "至",
+  "back": "to",
+  "why": "range word"
+ },
+ "KEYS_OR": {
+  "text": "或",
+  "back": "or",
+  "why": "between two keys"
+ },
+ "SETTINGS_ADD_BIBLE": {
+  "text": "添加更多译本",
+  "back": "Add more translations",
+  "why": "does not repeat heading"
+ },
+ "BTN_DELETE_SONG": {
+  "text": "删除诗歌",
+  "back": "Delete song",
+  "why": "verb and object"
+ },
+ "CMD_PLAN_DUPLICATE_DETAIL": {
+  "text": "新流程含有相同的诗歌和读经，可用于第二场聚会",
+  "back": "The new plan holds the same songs and readings, ready for a second service",
+  "why": "fragment"
+ },
+ "CMD_PLAN_RENAME_DETAIL": {
+  "text": "修改这个流程的星期、开始时间和名称",
+  "back": "Change this plan's weekday, starting hour and name",
+  "why": "fragment"
+ },
+ "CMD_PLAN_DELETE_DETAIL": {
+  "text": "删除当前流程，之后的提示可以撤销",
+  "back": "Deletes the open plan; the toast after can bring it back",
+  "why": "fragment"
+ },
+ "CMD_START_HERE": {
+  "text": "这首歌从这里开始",
+  "back": "This song starts here",
+  "why": "about where a song begins"
+ },
+ "CMD_EARLIER": {
+  "text": "回到刚才上屏的内容",
+  "back": "Back to what was on the projector",
+  "why": "not slide back"
+ },
+ "CMD_EARLIER_DETAIL": {
+  "text": "放进预览，并选中它上次停下的那张幻灯片",
+  "back": "Goes into Preview with the slide where it stopped picked",
+  "why": "fragment"
+ },
+ "START_HERE_HOW": {
+  "text": "先把歌曲放进预览，把选中的幻灯片移到歌曲要开始的位置，再选一次这个命令",
+  "back": "First bring the song into Preview, move the picked slide to where the song should start, then choose this command again",
+  "why": "one sentence of instruction"
+ },
+ "CMD_START_HERE_DETAIL": {
+  "text": "预览里的歌会从选中的幻灯片开始，串烧时用得上",
+  "back": "The song in Preview opens at the picked slide, useful for a medley",
+  "why": "fragment"
+ },
+ "CMD_NEW_ANNOUNCEMENT_DETAIL": {
+  "text": "可以是入座时轮播的通知、一节经文或生日名单",
+  "back": "A card can be a notice for the loop while people sit, a Bible verse or a birthday list",
+  "why": "fragment"
+ },
+ "KEYS_MORE": {
+  "text": "没有快捷键的操作，直接输入想做的事，如“复制流程”“样式”",
+  "back": "For things without a key, type what you want, such as \"Copy plan\" or \"Design\"",
+  "why": "Ctrl K drawn before"
+ },
+ "SETTINGS_GENERAL": {
+  "text": "常规",
+  "back": "General",
+  "why": "usual word"
+ },
+ "search_bible": {
+  "text": "例如{passage}，或经文中的几个字",
+  "back": "For example {passage}, or a few words of the verse",
+  "why": "example first"
+ },
+ "NOTICE_SAVED": {
+  "text": "公告已保存",
+  "back": "Announcement saved",
+  "why": "pair of the song toast"
+ },
+ "BTN_START_HERE": {
+  "text": "从这里开始",
+  "back": "Start here",
+  "why": "about a song's start"
+ }
+}

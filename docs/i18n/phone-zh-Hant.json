@@ -1,0 +1,307 @@
+{
+ "pair_title": {
+  "text": "Artosia 遙控器",
+  "back": "Artosia remote control",
+  "why": "遙控器是常說的詞"
+ },
+ "pin": {
+  "text": "PIN 碼",
+  "back": "PIN",
+  "why": "與電腦上的標籤同詞"
+ },
+ "pin_hint": {
+  "text": "輸入電腦上手機遙控視窗顯示的數字",
+  "back": "Type the number shown in the phone remote window on the computer",
+  "why": "指出數字從哪來"
+ },
+ "connect": {
+  "text": "連線",
+  "back": "Connect",
+  "why": "一詞"
+ },
+ "wrong_pin": {
+  "text": "PIN 碼不正確",
+  "back": "The PIN is not correct",
+  "why": "無句號"
+ },
+ "too_many": {
+  "text": "嘗試太多次，請等一分鐘",
+  "back": "Too many tries, please wait a minute",
+  "why": "兩個短語"
+ },
+ "unreachable": {
+  "text": "連不上電腦",
+  "back": "Cannot reach the computer",
+  "why": "無句號"
+ },
+ "tab_live": {
+  "text": "投影中",
+  "back": "On projector",
+  "why": "與電腦同詞"
+ },
+ "tab_plan": {
+  "text": "流程",
+  "back": "Plan",
+  "why": "全程同詞"
+ },
+ "tab_search": {
+  "text": "搜尋",
+  "back": "Search",
+  "why": "不顯示"
+ },
+ "tab_more": {
+  "text": "更多功能",
+  "back": "More tools",
+  "why": "不顯示"
+ },
+ "live": {
+  "text": "投影中",
+  "back": "On projector",
+  "why": "與電腦同詞"
+ },
+ "next_btn": {
+  "text": "下一張",
+  "back": "Next",
+  "why": "與電腦的下一張同詞"
+ },
+ "back": {
+  "text": "上一張",
+  "back": "Back",
+  "why": "與上一張成對"
+ },
+ "nothing_open": {
+  "text": "尚未開啟任何項目",
+  "back": "Nothing opened yet",
+  "why": "無句號"
+ },
+ "nothing_live": {
+  "text": "投影機目前沒有內容",
+  "back": "The projector has nothing at the moment",
+  "why": "無句號"
+ },
+ "n_of": {
+  "text": "{0} / {1}",
+  "back": "{0} / {1}",
+  "why": "兩個數字"
+ },
+ "n_slides": {
+  "text": "{0} 張投影片",
+  "back": "{0} slides",
+  "why": "量詞張"
+ },
+ "clear_text": {
+  "text": "文字隱藏",
+  "back": "Words hidden",
+  "why": "與電腦的磚同詞"
+ },
+ "black": {
+  "text": "全黑",
+  "back": "All black",
+  "why": "與電腦的磚同詞"
+ },
+ "logo": {
+  "text": "標誌",
+  "back": "Emblem",
+  "why": "與電腦的磚同詞"
+ },
+ "logo_needs": {
+  "text": "請先在電腦上設定標誌圖片",
+  "back": "Set an emblem picture on the computer first",
+  "why": "一句"
+ },
+ "text_cleared": {
+  "text": "文字已隱藏",
+  "back": "Words hidden",
+  "why": "狀態"
+ },
+ "screen_black": {
+  "text": "畫面全黑",
+  "back": "The screen is black",
+  "why": "狀態"
+ },
+ "logo_showing": {
+  "text": "標誌投影中",
+  "back": "Emblem is on the projector",
+  "why": "狀態"
+ },
+ "jump": {
+  "text": "跳到段落",
+  "back": "Jump to a part",
+  "why": "不顯示"
+ },
+ "plan_show": {
+  "text": "投影「{0}」",
+  "back": "Show \"{0}\"",
+  "why": "不顯示"
+ },
+ "plan_live": {
+  "text": "投影中",
+  "back": "On projector",
+  "why": "與電腦同詞"
+ },
+ "plan_empty": {
+  "text": "流程裡還沒有項目",
+  "back": "Nothing in the plan yet",
+  "why": "無句號"
+ },
+ "cancel": {
+  "text": "取消",
+  "back": "Cancel",
+  "why": "輕的拒絕"
+ },
+ "search_ph": {
+  "text": "搜尋詩歌或經文",
+  "back": "Search songs or Bible passages",
+  "why": "邀請輸入"
+ },
+ "search_hint": {
+  "text": "輸入詩歌名稱、一句歌詞或經文，例如 詩篇 23 1",
+  "back": "Type a song name, one line of words or a Bible reference, for example Psalms 23 1",
+  "why": "數字之間留空格"
+ },
+ "searching": {
+  "text": "搜尋中",
+  "back": "Searching",
+  "why": "無句號"
+ },
+ "no_results": {
+  "text": "找不到結果",
+  "back": "Nothing found",
+  "why": "無句號"
+ },
+ "show": {
+  "text": "投影",
+  "back": "Show",
+  "why": "與電腦的投影磚同詞"
+ },
+ "add": {
+  "text": "新增",
+  "back": "Add",
+  "why": "一詞"
+ },
+ "added": {
+  "text": "已新增",
+  "back": "Added",
+  "why": "一詞"
+ },
+ "show_aria": {
+  "text": "立即投影「{0}」",
+  "back": "Show \"{0}\" now",
+  "why": "不顯示"
+ },
+ "add_aria": {
+  "text": "把「{0}」新增到流程",
+  "back": "Add \"{0}\" to the plan",
+  "why": "不顯示"
+ },
+ "message": {
+  "text": "給現場的提示",
+  "back": "Notice for the room",
+  "why": "片語"
+ },
+ "message_ph": {
+  "text": "輸入提示內容",
+  "back": "Write the notice",
+  "why": "邀請輸入"
+ },
+ "message_show": {
+  "text": "投影",
+  "back": "Show",
+  "why": "與投影同詞"
+ },
+ "message_hide": {
+  "text": "撤下",
+  "back": "Take down",
+  "why": "與投影成對"
+ },
+ "message_showing": {
+  "text": "正在投影「{0}」",
+  "back": "Showing \"{0}\"",
+  "why": "引用提示文字"
+ },
+ "countdown": {
+  "text": "倒數",
+  "back": "Countdown",
+  "why": "名詞"
+ },
+ "minutes": {
+  "text": "分鐘",
+  "back": "minutes",
+  "why": "單位"
+ },
+ "start": {
+  "text": "開始",
+  "back": "Start",
+  "why": "一詞"
+ },
+ "stop": {
+  "text": "停止",
+  "back": "Stop",
+  "why": "與開始成對"
+ },
+ "language": {
+  "text": "語言",
+  "back": "Language",
+  "why": "一詞"
+ },
+ "keys_title": {
+  "text": "快捷鍵",
+  "back": "Shortcut keys",
+  "why": "全程同詞"
+ },
+ "keys_text": {
+  "text": "Space 和 ↓ 前進一張，↑ 後退一張。/ 開啟搜尋。C 跳到副歌，V 跳到下一段主歌，B 跳到橋段。1 到 9 跳到該段。F1 隱藏文字，F2 全黑，F3 投影標誌，F6 開關投影機。",
+  "back": "Space and ↓ go forward a slide, ↑ back a slide. / opens the search. C jumps to the chorus, V to the next verse, B to the bridge. 1 to 9 jump to that part. F1 hides the words, F2 goes all black, F3 shows the emblem, F6 switches the projector on or off.",
+  "why": "鍵名照鍵盤，每個鍵都列出"
+ },
+ "lost": {
+  "text": "與電腦的連線中斷",
+  "back": "The connection with the computer is lost",
+  "why": "無句號"
+ },
+ "retrying": {
+  "text": "正在重新連線",
+  "back": "Reconnecting",
+  "why": "無句號"
+ },
+ "label.verse": {
+  "text": "主歌",
+  "back": "Verse",
+  "why": "與電腦的段落名同詞"
+ },
+ "label.chorus": {
+  "text": "副歌",
+  "back": "Chorus",
+  "why": "與電腦的段落名同詞"
+ },
+ "label.pre_chorus": {
+  "text": "預副歌",
+  "back": "Pre-chorus",
+  "why": "與電腦的段落名同詞"
+ },
+ "label.bridge": {
+  "text": "橋段",
+  "back": "Bridge",
+  "why": "與電腦的段落名同詞"
+ },
+ "label.intro": {
+  "text": "前奏",
+  "back": "Intro",
+  "why": "與電腦的段落名同詞"
+ },
+ "label.ending": {
+  "text": "結尾",
+  "back": "Ending",
+  "why": "與電腦的段落名同詞"
+ },
+ "projector_off": {
+  "text": "投影機已關閉",
+  "back": "The projector is off",
+  "why": "與電腦同詞"
+ },
+ "label.numbered": {
+  "text": "{0}{1}",
+  "back": "the part's name and its number, in the order the window uses",
+  "why": "carried from section_numbered so the phone and the window agree"
+ }
+}

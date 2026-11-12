@@ -1,0 +1,307 @@
+{
+ "pair_title": {
+  "text": "Controle pelo celular",
+  "back": "Control by phone",
+  "why": "-"
+ },
+ "pin": {
+  "text": "PIN",
+  "back": "PIN",
+  "why": "-"
+ },
+ "pin_hint": {
+  "text": "Digite o PIN mostrado no computador",
+  "back": "Type the PIN shown on the computer",
+  "why": "-"
+ },
+ "connect": {
+  "text": "Conectar",
+  "back": "Connect",
+  "why": "-"
+ },
+ "wrong_pin": {
+  "text": "PIN incorreto",
+  "back": "Wrong PIN",
+  "why": "-"
+ },
+ "too_many": {
+  "text": "Muitas tentativas. Espere um minuto.",
+  "back": "Too many attempts. Wait a minute.",
+  "why": "-"
+ },
+ "unreachable": {
+  "text": "Computador fora de alcance",
+  "back": "Computer out of reach",
+  "why": "-"
+ },
+ "tab_live": {
+  "text": "Ao vivo",
+  "back": "Live",
+  "why": "-"
+ },
+ "tab_plan": {
+  "text": "Roteiro",
+  "back": "Plan",
+  "why": "-"
+ },
+ "tab_search": {
+  "text": "Buscar músicas e Bíblia",
+  "back": "Search songs and Bible",
+  "why": "-"
+ },
+ "tab_more": {
+  "text": "Mais opções",
+  "back": "More options",
+  "why": "-"
+ },
+ "live": {
+  "text": "Ao vivo",
+  "back": "Live",
+  "why": "-"
+ },
+ "next_btn": {
+  "text": "Próximo",
+  "back": "Next",
+  "why": "-"
+ },
+ "back": {
+  "text": "Anterior",
+  "back": "Previous",
+  "why": "-"
+ },
+ "nothing_open": {
+  "text": "Nada aberto",
+  "back": "Nothing open",
+  "why": "-"
+ },
+ "nothing_live": {
+  "text": "Nada no projetor agora",
+  "back": "Nothing on the projector now",
+  "why": "-"
+ },
+ "n_of": {
+  "text": "{0} de {1}",
+  "back": "{0} of {1}",
+  "why": "-"
+ },
+ "n_slides": {
+  "text": "{0} slides",
+  "back": "{0} slides",
+  "why": "-"
+ },
+ "clear_text": {
+  "text": "Sem texto",
+  "back": "No text",
+  "why": "-"
+ },
+ "black": {
+  "text": "Preto",
+  "back": "Black",
+  "why": "-"
+ },
+ "logo": {
+  "text": "Logo",
+  "back": "Logo",
+  "why": "-"
+ },
+ "logo_needs": {
+  "text": "Escolha o logo no computador antes",
+  "back": "Choose the logo on the computer first",
+  "why": "-"
+ },
+ "text_cleared": {
+  "text": "Texto oculto",
+  "back": "Text hidden",
+  "why": "-"
+ },
+ "screen_black": {
+  "text": "Projetor preto",
+  "back": "Projector black",
+  "why": "-"
+ },
+ "logo_showing": {
+  "text": "Logo exibido",
+  "back": "Logo shown",
+  "why": "-"
+ },
+ "jump": {
+  "text": "Ir para a parte",
+  "back": "Go to the part",
+  "why": "-"
+ },
+ "plan_show": {
+  "text": "Exibir {0}",
+  "back": "Show {0}",
+  "why": "-"
+ },
+ "plan_live": {
+  "text": "Ao vivo",
+  "back": "Live",
+  "why": "-"
+ },
+ "plan_empty": {
+  "text": "Roteiro vazio",
+  "back": "Empty plan",
+  "why": "-"
+ },
+ "cancel": {
+  "text": "Cancelar",
+  "back": "Cancel",
+  "why": "-"
+ },
+ "search_ph": {
+  "text": "Música ou versículo",
+  "back": "Song or verse",
+  "why": "-"
+ },
+ "search_hint": {
+  "text": "Nome, uma linha da letra ou referência, como João 3 16",
+  "back": "Name, a line of the lyrics or a reference, such as John 3 16",
+  "why": "-"
+ },
+ "searching": {
+  "text": "Buscando",
+  "back": "Searching",
+  "why": "-"
+ },
+ "no_results": {
+  "text": "Nada encontrado",
+  "back": "Nothing found",
+  "why": "-"
+ },
+ "show": {
+  "text": "Exibir",
+  "back": "Show",
+  "why": "-"
+ },
+ "add": {
+  "text": "Incluir",
+  "back": "Include",
+  "why": "-"
+ },
+ "added": {
+  "text": "Incluído",
+  "back": "Included",
+  "why": "-"
+ },
+ "show_aria": {
+  "text": "Exibir {0} agora",
+  "back": "Show {0} now",
+  "why": "-"
+ },
+ "add_aria": {
+  "text": "Incluir {0} no roteiro",
+  "back": "Include {0} in the plan",
+  "why": "-"
+ },
+ "message": {
+  "text": "Recado para a igreja",
+  "back": "Message for the church",
+  "why": "-"
+ },
+ "message_ph": {
+  "text": "Escreva o recado",
+  "back": "Write the message",
+  "why": "-"
+ },
+ "message_show": {
+  "text": "Exibir",
+  "back": "Show",
+  "why": "-"
+ },
+ "message_hide": {
+  "text": "Tirar",
+  "back": "Take off",
+  "why": "-"
+ },
+ "message_showing": {
+  "text": "Recado exibido: “{0}”",
+  "back": "Message shown: \"{0}\"",
+  "why": "-"
+ },
+ "countdown": {
+  "text": "Contagem",
+  "back": "Countdown",
+  "why": "-"
+ },
+ "minutes": {
+  "text": "minutos",
+  "back": "minutes",
+  "why": "-"
+ },
+ "start": {
+  "text": "Iniciar",
+  "back": "Start",
+  "why": "-"
+ },
+ "stop": {
+  "text": "Parar",
+  "back": "Stop",
+  "why": "-"
+ },
+ "language": {
+  "text": "Idioma",
+  "back": "Language",
+  "why": "-"
+ },
+ "keys_title": {
+  "text": "Teclas",
+  "back": "Keys",
+  "why": "-"
+ },
+ "keys_text": {
+  "text": "Espaço ou seta para baixo: próximo slide. Seta para cima: slide anterior. /: busca. C: refrão. V: próxima estrofe. B: ponte. 1 a 9: parte da música. F1 oculta texto. F2: preto. F3 exibe o logo. F6 liga ou desliga o projetor.",
+  "back": "Space or down arrow: next slide. Up arrow: previous slide. /: search. C: chorus. V: next verse. B: bridge. 1 to 9: part of the song. F1 hides the text. F2 makes it black. F3 shows the logo. F6 switches the projector on or off.",
+  "why": "keys as the brief names them"
+ },
+ "lost": {
+  "text": "Conexão perdida",
+  "back": "Connection lost",
+  "why": "-"
+ },
+ "retrying": {
+  "text": "Reconectando",
+  "back": "Reconnecting",
+  "why": "-"
+ },
+ "label.verse": {
+  "text": "Estrofe",
+  "back": "Verse",
+  "why": "-"
+ },
+ "label.chorus": {
+  "text": "Refrão",
+  "back": "Chorus",
+  "why": "-"
+ },
+ "label.pre_chorus": {
+  "text": "Pré-refrão",
+  "back": "Pre-chorus",
+  "why": "-"
+ },
+ "label.bridge": {
+  "text": "Ponte",
+  "back": "Bridge",
+  "why": "-"
+ },
+ "label.intro": {
+  "text": "Introdução",
+  "back": "Introduction",
+  "why": "-"
+ },
+ "label.ending": {
+  "text": "Final",
+  "back": "Ending",
+  "why": "-"
+ },
+ "projector_off": {
+  "text": "Projetor desligado",
+  "back": "Projector off",
+  "why": "-"
+ },
+ "label.numbered": {
+  "text": "{0} {1}",
+  "back": "the part's name and its number, in the order the window uses",
+  "why": "carried from section_numbered so the phone and the window agree"
+ }
+}

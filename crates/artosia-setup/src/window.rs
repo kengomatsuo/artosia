@@ -227,7 +227,7 @@ fn init_unused() -> Ui {
     // `App::init` builds the real state; this is only the `AppSpec` field Rune insists on.
     Ui::new(Config {
         mode: Mode::Install,
-        language: Language::English,
+        language: Language::ENGLISH,
         places: Places::under(std::path::Path::new(".")),
         self_exe: PathBuf::new(),
         feed: String::new(),
@@ -238,7 +238,7 @@ fn init_unused() -> Ui {
 
 fn setup(s: &mut Ui, waker: Waker) {
     let cache = ImageCache::new(waker.clone());
-    s.art = Some(Art::load(&cache));
+    s.art = Some(Art::load(&cache, s.config.language));
     s.cache = Some(cache);
     s.waker = Some(waker);
 }
@@ -463,24 +463,20 @@ struct Art {
     mark_crumb: Image,
     lockup: Image,
     lockup_crumb: Image,
-    /// The real Artosia window, the part of it the progress screen shows: light and dark, English and Indonesian.
-    previews: [Image; 4],
+    /// The real Artosia window in the setup's language, the part of it the progress screen
+    /// shows: light, then dark.
+    previews: [Image; 2],
 }
 
 impl Art {
-    fn load(cache: &ImageCache) -> Art {
+    fn load(cache: &ImageCache, language: Language) -> Art {
         let svg = |bytes: &'static [u8]| cache.svg(bytes, 640.0, 2.0);
         let art = Art {
             mark: svg(brand!("artosia-mark.svg")),
             mark_crumb: svg(brand!("artosia-mark-on-dark.svg")),
             lockup: svg(brand!("artosia-lockup-horizontal.svg")),
             lockup_crumb: svg(brand!("artosia-lockup-horizontal-on-dark.svg")),
-            previews: [
-                cache.load(preview!("preview-en-light.png")),
-                cache.load(preview!("preview-en-dark.png")),
-                cache.load(preview!("preview-id-light.png")),
-                cache.load(preview!("preview-id-dark.png")),
-            ],
+            previews: preview_bytes(language).map(|bytes| cache.load(bytes)),
         };
         // A headless frame is drawn once, so every picture is decoded before it.
         for image in [&art.mark, &art.mark_crumb, &art.lockup, &art.lockup_crumb].into_iter().chain(art.previews.iter()) {
@@ -489,8 +485,17 @@ impl Art {
         art
     }
 
-    fn preview(&self, language: Language, dark: bool) -> &Image {
-        &self.previews[usize::from(language == Language::Indonesian) * 2 + usize::from(dark)]
+    fn preview(&self, dark: bool) -> &Image {
+        &self.previews[usize::from(dark)]
+    }
+}
+
+/// The two pictures of a language, light then dark. `assets/make-previews.ps1` writes them from
+/// the homepage's renders; a language with no render of its own shows the English window.
+fn preview_bytes(language: Language) -> [&'static [u8]; 2] {
+    match language.code() {
+        "id" => [preview!("preview-id-light.png"), preview!("preview-id-dark.png")],
+        _ => [preview!("preview-en-light.png"), preview!("preview-en-dark.png")],
     }
 }
 
@@ -665,7 +670,7 @@ fn view(s: &Ui, cx: &mut Cx<Ui>) -> El {
         }
         Screen::Installing | Screen::Removing => {
             let removing = model.screen == Screen::Removing;
-            let preview = a.preview(s.config.language, dark);
+            let preview = a.preview(dark);
             let (heading, line) = if removing { (Key::RemovingHeading, Key::WaitRemoveBody) } else { (Key::InstallHeading, Key::WaitBody) };
             let words = col()
                 .absolute(36.0, 214.0)

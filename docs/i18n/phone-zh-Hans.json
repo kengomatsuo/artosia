@@ -1,0 +1,307 @@
+{
+ "pair_title": {
+  "text": "Artosia手机遥控",
+  "back": "Artosia phone remote",
+  "why": "names the program as a remote"
+ },
+ "pin": {
+  "text": "PIN码",
+  "back": "PIN code",
+  "why": "same word as the computer's label"
+ },
+ "pin_hint": {
+  "text": "输入电脑上“手机遥控”窗口里显示的数字",
+  "back": "Type the number shown in the computer's \"Phone remote\" window",
+  "why": "says where the number comes from"
+ },
+ "connect": {
+  "text": "连接",
+  "back": "Connect",
+  "why": "one word"
+ },
+ "wrong_pin": {
+  "text": "PIN码不对",
+  "back": "The PIN code is wrong",
+  "why": "no full stop"
+ },
+ "too_many": {
+  "text": "尝试次数太多，请等一分钟",
+  "back": "Too many tries, wait one minute",
+  "why": "two statements"
+ },
+ "unreachable": {
+  "text": "连不上电脑",
+  "back": "Cannot reach the computer",
+  "why": "no full stop"
+ },
+ "tab_live": {
+  "text": "上屏中",
+  "back": "Live",
+  "why": "same as the computer's pane"
+ },
+ "tab_plan": {
+  "text": "流程",
+  "back": "Plan",
+  "why": "same plan word"
+ },
+ "tab_search": {
+  "text": "搜索诗歌和经文",
+  "back": "Search songs and Bible passages",
+  "why": "names what it opens"
+ },
+ "tab_more": {
+  "text": "更多功能",
+  "back": "More tools",
+  "why": "names what it opens"
+ },
+ "live": {
+  "text": "上屏中",
+  "back": "Live",
+  "why": "one word in three places"
+ },
+ "next_btn": {
+  "text": "下一张",
+  "back": "Next",
+  "why": "same as the Next tile"
+ },
+ "back": {
+  "text": "上一张",
+  "back": "Back",
+  "why": "pair of next"
+ },
+ "nothing_open": {
+  "text": "电脑上还没有打开内容",
+  "back": "Nothing opened on the computer yet",
+  "why": "no full stop"
+ },
+ "nothing_live": {
+  "text": "投影屏上什么都没有",
+  "back": "Nothing on the projector",
+  "why": "no full stop"
+ },
+ "n_of": {
+  "text": "{0}/{1}",
+  "back": "{0}/{1}",
+  "why": "two numbers"
+ },
+ "n_slides": {
+  "text": "{0}张",
+  "back": "{0} slides",
+  "why": "number and measure word"
+ },
+ "clear_text": {
+  "text": "文字隐藏",
+  "back": "Text hidden",
+  "why": "same word as the computer's tile"
+ },
+ "black": {
+  "text": "黑屏",
+  "back": "Black",
+  "why": "same word as the computer's tile"
+ },
+ "logo": {
+  "text": "标志",
+  "back": "Emblem",
+  "why": "same word as the computer's tile"
+ },
+ "logo_needs": {
+  "text": "请先在电脑上设置标志图片",
+  "back": "Set an emblem picture on the computer first",
+  "why": "one sentence"
+ },
+ "text_cleared": {
+  "text": "文字已隐藏",
+  "back": "The text is hidden",
+  "why": "state"
+ },
+ "screen_black": {
+  "text": "投影屏黑屏中",
+  "back": "The projector is black",
+  "why": "state"
+ },
+ "logo_showing": {
+  "text": "标志已上屏",
+  "back": "The emblem is on the projector",
+  "why": "state"
+ },
+ "jump": {
+  "text": "跳到段落",
+  "back": "Jump to a part",
+  "why": "screen reader label"
+ },
+ "plan_show": {
+  "text": "把“{0}”上屏",
+  "back": "Put \"{0}\" on the projector",
+  "why": "carries the title"
+ },
+ "plan_live": {
+  "text": "上屏中",
+  "back": "Live",
+  "why": "one word"
+ },
+ "plan_empty": {
+  "text": "流程里还没有内容",
+  "back": "Nothing in the plan yet",
+  "why": "no full stop"
+ },
+ "cancel": {
+  "text": "取消",
+  "back": "Cancel",
+  "why": "light refusal"
+ },
+ "search_ph": {
+  "text": "输入诗歌或经文",
+  "back": "Type a song or scripture",
+  "why": "invitation"
+ },
+ "search_hint": {
+  "text": "输入诗歌名、歌词中的一句或经文，如 诗篇 23 1",
+  "back": "Type a song name, a sung line or a reference, such as Psalms 23 1",
+  "why": "example with spaces"
+ },
+ "searching": {
+  "text": "正在搜索",
+  "back": "Searching",
+  "why": "state"
+ },
+ "no_results": {
+  "text": "没有找到结果",
+  "back": "Nothing found",
+  "why": "no full stop"
+ },
+ "show": {
+  "text": "上屏",
+  "back": "Show",
+  "why": "same as the computer's Show tile"
+ },
+ "add": {
+  "text": "添加",
+  "back": "Add",
+  "why": "one word"
+ },
+ "added": {
+  "text": "已添加",
+  "back": "Added",
+  "why": "one word"
+ },
+ "show_aria": {
+  "text": "把“{0}”上屏",
+  "back": "Put \"{0}\" on the projector",
+  "why": "not visible"
+ },
+ "add_aria": {
+  "text": "把“{0}”添加到流程",
+  "back": "Add \"{0}\" to the plan",
+  "why": "not visible"
+ },
+ "message": {
+  "text": "现场通知",
+  "back": "Notice to the room",
+  "why": "phrase"
+ },
+ "message_ph": {
+  "text": "输入通知内容",
+  "back": "Type the notice",
+  "why": "invitation"
+ },
+ "message_show": {
+  "text": "上屏",
+  "back": "Show",
+  "why": "same verb"
+ },
+ "message_hide": {
+  "text": "隐藏",
+  "back": "Hide",
+  "why": "pair"
+ },
+ "message_showing": {
+  "text": "通知已上屏：“{0}”",
+  "back": "The notice is up: \"{0}\"",
+  "why": "quotes the notice"
+ },
+ "countdown": {
+  "text": "倒计时",
+  "back": "Countdown",
+  "why": "noun"
+ },
+ "minutes": {
+  "text": "分钟",
+  "back": "minutes",
+  "why": "one word"
+ },
+ "start": {
+  "text": "开始",
+  "back": "Start",
+  "why": "one word"
+ },
+ "stop": {
+  "text": "停止",
+  "back": "Stop",
+  "why": "pair of start"
+ },
+ "language": {
+  "text": "语言",
+  "back": "Language",
+  "why": "one word"
+ },
+ "keys_title": {
+  "text": "快捷键",
+  "back": "Keys",
+  "why": "one word"
+ },
+ "keys_text": {
+  "text": "按Space或向下箭头，前进一张幻灯片。按向上箭头，退回一张。按/键，打开搜索。按C跳到副歌，按V跳到下一个主歌，按B跳到桥段。按数字1到9，跳到对应的段落。按F1隐藏文字，按F2变黑屏，按F3显示标志，按F6开启或关闭投影屏。",
+  "back": "Press Space or the down arrow to go forward one slide. The up arrow goes back one. The / key opens the search. C jumps to the chorus, V to the next verse, B to the bridge. The digits 1 to 9 jump to that part. F1 hides the words, F2 makes the screen black, F3 shows the emblem, F6 switches the projector on or off.",
+  "why": "key names as printed"
+ },
+ "lost": {
+  "text": "与电脑的连接中断了",
+  "back": "The connection with the computer was lost",
+  "why": "no full stop"
+ },
+ "retrying": {
+  "text": "正在重新连接",
+  "back": "Reconnecting",
+  "why": "no full stop"
+ },
+ "label.verse": {
+  "text": "主歌",
+  "back": "Verse",
+  "why": "same as the computer"
+ },
+ "label.chorus": {
+  "text": "副歌",
+  "back": "Chorus",
+  "why": "same as the computer"
+ },
+ "label.pre_chorus": {
+  "text": "导歌",
+  "back": "Pre-chorus",
+  "why": "same as the computer"
+ },
+ "label.bridge": {
+  "text": "桥段",
+  "back": "Bridge",
+  "why": "same as the computer"
+ },
+ "label.intro": {
+  "text": "前奏",
+  "back": "Intro",
+  "why": "same as the computer"
+ },
+ "label.ending": {
+  "text": "结尾",
+  "back": "Ending",
+  "why": "same as the computer"
+ },
+ "projector_off": {
+  "text": "投影屏已关闭",
+  "back": "The projector is switched off",
+  "why": "same off word as the window"
+ },
+ "label.numbered": {
+  "text": "{0}{1}",
+  "back": "the part's name and its number, in the order the window uses",
+  "why": "carried from section_numbered so the phone and the window agree"
+ }
+}

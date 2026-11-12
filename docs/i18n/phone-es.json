@@ -1,0 +1,307 @@
+{
+ "pair_title": {
+  "text": "Control remoto",
+  "back": "Remote control",
+  "why": "Artosia control remoto does not fit 24; the name is the feature name."
+ },
+ "pin": {
+  "text": "PIN",
+  "back": "PIN",
+  "why": "Same word as the computer's label."
+ },
+ "pin_hint": {
+  "text": "Escribe el PIN que muestra Artosia en el equipo",
+  "back": "Type the PIN that Artosia shows on the computer",
+  "why": "Equipo reads in Spain and Latin America."
+ },
+ "connect": {
+  "text": "Conectar",
+  "back": "Connect",
+  "why": "One word."
+ },
+ "wrong_pin": {
+  "text": "PIN incorrecto",
+  "back": "Wrong PIN",
+  "why": "No full stop."
+ },
+ "too_many": {
+  "text": "Demasiados intentos. Espera un minuto",
+  "back": "Too many attempts. Wait a minute",
+  "why": "Two short statements."
+ },
+ "unreachable": {
+  "text": "No se encuentra el equipo",
+  "back": "The computer cannot be found",
+  "why": "No full stop."
+ },
+ "tab_live": {
+  "text": "En vivo",
+  "back": "Live",
+  "why": "Same Live word."
+ },
+ "tab_plan": {
+  "text": "Programa",
+  "back": "Plan",
+  "why": "Same plan word; the two fit 15."
+ },
+ "tab_search": {
+  "text": "Buscar",
+  "back": "Search",
+  "why": "Never visible."
+ },
+ "tab_more": {
+  "text": "Más opciones",
+  "back": "More options",
+  "why": "Never visible."
+ },
+ "live": {
+  "text": "En vivo",
+  "back": "Live",
+  "why": "Same everywhere."
+ },
+ "next_btn": {
+  "text": "Adelante",
+  "back": "Forward",
+  "why": "Same as the computer's Next tile."
+ },
+ "back": {
+  "text": "Atrás",
+  "back": "Back",
+  "why": "Same as the computer's Prev tile."
+ },
+ "nothing_open": {
+  "text": "Nada abierto",
+  "back": "Nothing open",
+  "why": "No full stop."
+ },
+ "nothing_live": {
+  "text": "No hay nada en el proyector",
+  "back": "There is nothing on the projector",
+  "why": "No full stop."
+ },
+ "n_of": {
+  "text": "{0} de {1}",
+  "back": "{0} of {1}",
+  "why": "Two numbers."
+ },
+ "n_slides": {
+  "text": "Diapos: {0}",
+  "back": "Slides: {0}",
+  "why": "Label form fits one slide or many."
+ },
+ "clear_text": {
+  "text": "Sin texto",
+  "back": "No text",
+  "why": "Same as the computer's tile."
+ },
+ "black": {
+  "text": "Negro",
+  "back": "Black",
+  "why": "Same as the computer's tile."
+ },
+ "logo": {
+  "text": "Logo",
+  "back": "Logo",
+  "why": "Same as the computer's tile."
+ },
+ "logo_needs": {
+  "text": "Primero elige un logo en el equipo",
+  "back": "First choose a logo on the computer",
+  "why": "One sentence."
+ },
+ "text_cleared": {
+  "text": "Texto oculto",
+  "back": "Text hidden",
+  "why": "State."
+ },
+ "screen_black": {
+  "text": "Proyector en negro",
+  "back": "Projector on black",
+  "why": "State."
+ },
+ "logo_showing": {
+  "text": "Mostrando el logo",
+  "back": "Showing the logo",
+  "why": "Mostrar verb."
+ },
+ "jump": {
+  "text": "Saltar a una parte",
+  "back": "Jump to a part",
+  "why": "Never visible."
+ },
+ "plan_show": {
+  "text": "Mostrar «{0}»",
+  "back": "Show «{0}»",
+  "why": "Carries the title."
+ },
+ "plan_live": {
+  "text": "En vivo",
+  "back": "Live",
+  "why": "One word."
+ },
+ "plan_empty": {
+  "text": "El programa está vacío",
+  "back": "The plan is empty",
+  "why": "Same as the computer."
+ },
+ "cancel": {
+  "text": "Cancelar",
+  "back": "Cancel",
+  "why": "Light refusal."
+ },
+ "search_ph": {
+  "text": "Canto o pasaje bíblico",
+  "back": "Song or Bible passage",
+  "why": "Same as the computer."
+ },
+ "search_hint": {
+  "text": "Título, una línea de la letra o un pasaje: Juan 3 16",
+  "back": "Title, a line of the words or a passage: John 3 16",
+  "why": "Reference with spaces as typed on a phone."
+ },
+ "searching": {
+  "text": "Buscando",
+  "back": "Searching",
+  "why": "No full stop."
+ },
+ "no_results": {
+  "text": "Sin resultados",
+  "back": "No results",
+  "why": "No full stop."
+ },
+ "show": {
+  "text": "Mostrar",
+  "back": "Show",
+  "why": "Same as the computer's Show tile."
+ },
+ "add": {
+  "text": "Añadir",
+  "back": "Add",
+  "why": "Same verb as Añadir al programa."
+ },
+ "added": {
+  "text": "Añadido",
+  "back": "Added",
+  "why": "One word."
+ },
+ "show_aria": {
+  "text": "Mostrar «{0}» ahora",
+  "back": "Show «{0}» now",
+  "why": "Not visible."
+ },
+ "add_aria": {
+  "text": "Al programa: «{0}»",
+  "back": "To the plan: «{0}»",
+  "why": "Not visible."
+ },
+ "message": {
+  "text": "Mensaje a la sala",
+  "back": "Message to the room",
+  "why": "A phrase."
+ },
+ "message_ph": {
+  "text": "Escribe el mensaje",
+  "back": "Write the message",
+  "why": "Invitation."
+ },
+ "message_show": {
+  "text": "Mostrar",
+  "back": "Show",
+  "why": "Same verb."
+ },
+ "message_hide": {
+  "text": "Quitar",
+  "back": "Remove",
+  "why": "Pair of the show button."
+ },
+ "message_showing": {
+  "text": "Mostrando: «{0}»",
+  "back": "Showing: «{0}»",
+  "why": "Quotes the notice."
+ },
+ "countdown": {
+  "text": "Cuenta atrás",
+  "back": "Countdown",
+  "why": "A noun, same as the computer."
+ },
+ "minutes": {
+  "text": "minutos",
+  "back": "minutes",
+  "why": "One word."
+ },
+ "start": {
+  "text": "Iniciar",
+  "back": "Start",
+  "why": "One word."
+ },
+ "stop": {
+  "text": "Detener",
+  "back": "Stop",
+  "why": "Pair of the start button."
+ },
+ "language": {
+  "text": "Idioma",
+  "back": "Language",
+  "why": "One word."
+ },
+ "keys_title": {
+  "text": "Teclado",
+  "back": "Keyboard",
+  "why": "One word."
+ },
+ "keys_text": {
+  "text": "Espacio o flecha abajo avanzan. Flecha arriba retrocede. La / abre la búsqueda. C salta al coro y B al puente. De 1 a 9 salta a esa parte. F1 oculta el texto, F2 pone negro, F3 muestra el logo y F6 enciende o apaga el proyector.",
+  "back": "Space or down arrow go forward. Up arrow goes back. The / opens the search. C jumps to the chorus and B to the bridge. 1 to 9 jumps to that part. F1 hides the text, F2 makes it black, F3 shows the logo and F6 turns the projector on or off.",
+  "why": "V omitted: estrofa does not begin with V."
+ },
+ "lost": {
+  "text": "Conexión perdida",
+  "back": "Connection lost",
+  "why": "No full stop."
+ },
+ "retrying": {
+  "text": "Reconectando",
+  "back": "Reconnecting",
+  "why": "No full stop."
+ },
+ "label.verse": {
+  "text": "Estrofa",
+  "back": "Verse",
+  "why": "Same as the computer's section name."
+ },
+ "label.chorus": {
+  "text": "Coro",
+  "back": "Chorus",
+  "why": "Same as the computer."
+ },
+ "label.pre_chorus": {
+  "text": "Pre-coro",
+  "back": "Pre-chorus",
+  "why": "Same as the computer."
+ },
+ "label.bridge": {
+  "text": "Puente",
+  "back": "Bridge",
+  "why": "Same as the computer."
+ },
+ "label.intro": {
+  "text": "Intro",
+  "back": "Intro",
+  "why": "Same as the computer."
+ },
+ "label.ending": {
+  "text": "Final",
+  "back": "Ending",
+  "why": "Same as the computer."
+ },
+ "projector_off": {
+  "text": "Proyector apagado",
+  "back": "Projector off",
+  "why": "Same on-off pair."
+ },
+ "label.numbered": {
+  "text": "{0} {1}",
+  "back": "the part's name and its number, in the order the window uses",
+  "why": "carried from section_numbered so the phone and the window agree"
+ }
+}
