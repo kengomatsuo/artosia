@@ -243,9 +243,9 @@ pub fn keycaps(k: &Kit, spec: &str, on: Option<Color>) -> El {
 /// keyboard does, and a Mac's differ. Its shortcut key is Command (⌘): Rune reports that key
 /// as the primary modifier wherever a shortcut here says Ctrl. With Tab it is Control (⌃),
 /// because Command and Tab switches programs in macOS and never reaches Artosia. The rest are
-/// the marks Apple's menus draw and its keyboards outside the United States print: Option ⌥,
-/// Shift ⇧, Return ↩, Delete ⌫ (a Windows keyboard's Backspace) and Forward Delete ⌦ (its
-/// Delete), so the two delete keys are not one word.
+/// the marks of Apple's own list of keys (support.apple.com/en-us/102650, read 2026-11-13):
+/// Option ⌥, Shift ⇧, Return ⏎ and Delete ⌫, which is a Windows keyboard's Backspace. That
+/// keyboard's Delete is Fn and Delete on a Mac, where a laptop has no key of its own for it.
 pub fn printed_key(name: &str, with_tab: bool, mac: bool) -> &str {
     if !mac {
         return name;
@@ -255,9 +255,9 @@ pub fn printed_key(name: &str, with_tab: bool, mac: bool) -> &str {
         "Ctrl" => "⌘",
         "Alt" => "⌥",
         "Shift" => "⇧",
-        "Enter" => "↩",
+        "Enter" => "⏎",
         "Backspace" => "⌫",
-        "Delete" => "⌦",
+        "Delete" => "Fn ⌫",
         other => other,
     }
 }
@@ -491,10 +491,10 @@ mod key_tests {
         assert_eq!(caps("Ctrl Shift N", true), ["⌘", "⇧", "N"]);
         assert_eq!(caps("Ctrl Tab", true), ["⌃", "Tab"]);
         assert_eq!(caps("Shift Tab", true), ["⇧", "Tab"]);
-        assert_eq!(caps("Ctrl Enter", true), ["⌘", "↩"]);
+        assert_eq!(caps("Ctrl Enter", true), ["⌘", "⏎"]);
         assert_eq!(caps("Alt Up Down", true), ["⌥", "Up", "Down"]);
         assert_eq!(caps("Backspace", true), ["⌫"]);
-        assert_eq!(caps("Delete", true), ["⌦"]);
+        assert_eq!(caps("Delete", true), ["Fn ⌫"]);
         // Every other keyboard prints what the table says.
         assert_eq!(caps("Ctrl Shift N", false), ["Ctrl", "Shift", "N"]);
         assert_eq!(caps("Ctrl Tab", false), ["Ctrl", "Tab"]);
