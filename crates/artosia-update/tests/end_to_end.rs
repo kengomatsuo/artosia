@@ -747,3 +747,105 @@ fn the_release_tool_makes_a_folder_the_app_accepts() {
     assert!(viaenv.status.success());
     let _ = fs::remove_dir_all(&root);
 }
+
+// ---- a Mac app ----
+
+/// A Mac app as the updater meets it: the install folder is `Artosia.app/Contents`, the
+/// program is in `MacOS`, and the signature's own list is one of the release's files.
+struct MacApp {
+    root: PathBuf,
+    install: PathBuf,
+    built: PathBuf,
+    keys: TrustedKeys,
+    server: Server,
+}
+
+impl MacApp {
+    fn new(name: &str) -> MacApp {
+        let root = std::env::temp_dir().join(format!("artosia-update-test-{name}-{}", std::process::id()));
+        let _ = fs::remove_dir_all(&root);
+        let install = root.join("apps").join("Artosia.app").join("Contents");
+        let built = root.join("built").join("Artosia.app").join("Contents");
+        for (dir, tag, n) in [(&install, "v1", 1u8), (&built, "v2", 2u8)] {
+            make_exe(&dir.join("MacOS/artosia"), &format!("{tag}-operator"), 50_000);
+            blob(&dir.join("Resources/gstreamer/lib/libgst.dylib"), n, 40_000);
+            blob(&dir.join("_CodeSignature/CodeResources"), n, 2_000);
+            blob(&dir.join("Info.plist"), 9, 500);
+        }
+        let out = root.join("out");
+        let spec = ReleaseSpec { dir: &built, version: "2.0.0", notes: "", platform: None, date: Some("2026-11-13"), out: &out };
+        build_release(&spec, &SEED).unwrap();
+        let keys = TrustedKeys::from_keys(vec![manifest::public_key_of(&SEED).unwrap()]);
+        let server = Server::start(out);
+        MacApp { root, install, built, keys, server }
+    }
+
+    /// Every file under a folder, by its path from there and its bytes.
+    fn files(dir: &Path) -> Vec<(String, Vec<u8>)> {
+        fn walk(root: &Path, dir: &Path, found: &mut Vec<(String, Vec<u8>)>) {
+            for entry in fs::read_dir(dir).unwrap().flatten() {
+                let path = entry.path();
+                if path.is_dir() {
+                    walk(root, &path, found);
+                } else {
+                    let name = path.strip_prefix(root).unwrap().to_string_lossy().replace('\\', "/");
+                    found.push((name, fs::read(&path).unwrap()));
+                }
+            }
+        }
+        let mut found = Vec::new();
+        walk(dir, dir, &mut found);
+        found.sort();
+        found
+    }
+
+    fn stage(&self) -> PathBuf {
+        staging_dir(&self.install)
+    }
+
+    fn download_and_apply(&self) -> Applied {
+        let release = check_with(&self.server.url(), "1.0.0", &self.keys).unwrap().expect("a newer release");
+        download_with(&release, &self.stage(), &self.keys, &|_, _| {}).unwrap();
+        apply_on_start_with(&self.install, &self.keys).unwrap()
+    }
+}
+
+impl Drop for MacApp {
+    fn drop(&mut self) {
+        let _ = fs::remove_dir_all(&self.root);
+    }
+}
+
+#[test]
+fn a_mac_app_holds_a_releases_files_and_nothing_else_through_an_update() {
+    let app = MacApp::new("macapp");
+    let before = MacApp::files(&app.install);
+    assert_eq!(app.stage(), app.root.join("apps").join(".Artosia-update"), "the work folder is beside the app");
+
+    let release = check_with(&app.server.url(), "1.0.0", &app.keys).unwrap().expect("a newer release");
+    download_with(&release, &app.stage(), &app.keys, &|_, _| {}).unwrap();
+    assert_eq!(MacApp::files(&app.install), before, "a download puts nothing inside the app");
+
+    let applied = apply_on_start_with(&app.install, &app.keys).unwrap();
+    assert!(matches!(applied, Applied::Updated { ref version, .. } if version == "2.0.0"));
+    // Before the new version has even started, the app is the new release, file for file.
+    assert_eq!(MacApp::files(&app.install), MacApp::files(&app.built));
+    let old = app.stage().join("aside").join("MacOS").join("artosia.artosia-old");
+    assert!(old.is_file(), "the old program waits outside the app");
+
+    confirm_started(&app.install).unwrap();
+    assert!(!old.exists(), "and goes once the new version has started");
+    assert_eq!(MacApp::files(&app.install), MacApp::files(&app.built));
+}
+
+#[test]
+fn a_mac_app_rolled_back_is_the_old_release_again_with_nothing_added() {
+    let app = MacApp::new("macapp-back");
+    let before = MacApp::files(&app.install);
+    assert!(matches!(app.download_and_apply(), Applied::Updated { .. }));
+    assert_ne!(MacApp::files(&app.install), before);
+
+    let undone = roll_back(&app.install).unwrap();
+    assert!(matches!(undone, Applied::RolledBack { reason: RollbackReason::Requested, .. }));
+    assert_eq!(MacApp::files(&app.install), before);
+}

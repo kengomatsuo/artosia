@@ -31,7 +31,19 @@ fn updatable_dir(development: bool, packaged: bool, exe: Option<PathBuf>) -> Opt
     if development || packaged {
         return None;
     }
-    exe?.parent().map(PathBuf::from)
+    let folder = exe?.parent()?.to_path_buf();
+    // A Mac app keeps its programs in `Contents/MacOS`, and a release is every file of
+    // `Contents`: the signature's own list and the bundled GStreamer are part of it.
+    Some(match folder.parent() {
+        Some(contents) if folder.ends_with("Contents/MacOS") => contents.to_path_buf(),
+        _ => folder,
+    })
+}
+
+/// Where the mark of a start that swapped new files in is left: beside the program, or, for a
+/// Mac app, outside it, because a file added to a signed app breaks its seal.
+fn marker() -> Option<PathBuf> {
+    install_dir().map(|folder| artosia_update::own_files_dir(&folder).join(MARKER))
 }
 
 /// Where new versions are published.
@@ -48,7 +60,9 @@ pub fn apply_before_window() -> bool {
         Ok(Applied::Nothing) | Err(_) => return false,
     };
     let Some(program) = relaunch else { return false };
-    let _ = std::fs::write(folder.join(MARKER), VERSION);
+    if let Some(marker) = marker() {
+        let _ = std::fs::write(marker, VERSION);
+    }
     artosia_update::relaunch(&program).is_ok()
 }
 
@@ -58,7 +72,7 @@ static FIRST_START_OF_NEW_VERSION: AtomicBool = AtomicBool::new(false);
 /// Whether this start is the first one on new files. The projector left running by the old
 /// version must then be replaced too.
 pub fn just_updated() -> bool {
-    let Some(marker) = install_dir().map(|folder| folder.join(MARKER)) else { return false };
+    let Some(marker) = marker() else { return false };
     let first = marker.is_file() && std::fs::remove_file(marker).is_ok();
     if first {
         FIRST_START_OF_NEW_VERSION.store(true, Ordering::SeqCst);
@@ -117,7 +131,13 @@ pub fn check(inbox: Arc<Mutex<Vec<Arrived>>>, waker: Option<Waker>, asked: bool)
 fn fetch() -> Result<Option<String>, UpdateError> {
     let (Some(folder), Some(feed)) = (install_dir(), feed()) else { return Err(UpdateError::NotSetUp) };
     let Some(release) = artosia_update::check(&feed, VERSION)? else { return Ok(None) };
-    let staged = artosia_update::download(&release, &artosia_update::staging_dir(&folder), &|_, _| {})?;
+    let stage = artosia_update::staging_dir(&folder);
+    // A Mac app opened from its disk image, or from Downloads before it was moved, runs from
+    // a place nothing can be written to. Such a copy cannot update itself, and says nothing.
+    if cfg!(target_os = "macos") && std::fs::create_dir_all(&stage).is_err() {
+        return Err(UpdateError::NotSetUp);
+    }
+    let staged = artosia_update::download(&release, &stage, &|_, _| {})?;
     Ok(Some(staged.version))
 }
 
@@ -131,5 +151,18 @@ mod tests {
         assert_eq!(updatable_dir(false, true, exe.clone()), None);
         assert_eq!(updatable_dir(true, false, exe.clone()), None);
         assert_eq!(updatable_dir(false, false, exe), Some(PathBuf::from("apps/x")));
+    }
+
+    #[test]
+    fn a_mac_app_is_updated_as_its_whole_contents_folder() {
+        let exe = Some(PathBuf::from("/Applications/Artosia.app/Contents/MacOS/artosia"));
+        let contents = PathBuf::from("/Applications/Artosia.app/Contents");
+        assert_eq!(updatable_dir(false, false, exe), Some(contents.clone()));
+        // Its mark and its downloads wait beside the app, never inside it.
+        assert_eq!(artosia_update::own_files_dir(&contents), PathBuf::from("/Applications/.Artosia-update"));
+        assert_eq!(artosia_update::own_files_dir(&PathBuf::from("apps/x")), PathBuf::from("apps/x"));
+        // A program that merely sits in a folder named MacOS is where it is.
+        let loose = Some(PathBuf::from("tools/MacOS/artosia"));
+        assert_eq!(updatable_dir(false, false, loose), Some(PathBuf::from("tools/MacOS")));
     }
 }

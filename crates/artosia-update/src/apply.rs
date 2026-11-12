@@ -22,9 +22,70 @@ const NEW: &str = ".artosia-new";
 const MAX_UNCONFIRMED_STARTS: u32 = 2;
 
 /// Where downloads and the journal live: a folder inside the install folder, so renames stay
-/// on one volume.
+/// on one volume. A Mac app is the exception: its signature seals every file inside it, and
+/// one file more makes `codesign` say "a sealed resource is missing or invalid" (measured on
+/// macOS 27, 2026-11-13). Its folder is a hidden one beside the app, on the same volume, so
+/// the app holds a release's files and nothing else.
 pub fn staging_dir(install_dir: &Path) -> PathBuf {
-    install_dir.join("update")
+    match mac_app(install_dir) {
+        Some(app) => {
+            let name = app.file_stem().unwrap_or_default().to_string_lossy();
+            app.with_file_name(format!(".{name}-update"))
+        }
+        None => install_dir.join("update"),
+    }
+}
+
+/// Where a small file about this copy goes that belongs to no release, such as the operator's
+/// mark that it has just been updated: the install folder, or a Mac app's staging folder.
+pub fn own_files_dir(install_dir: &Path) -> PathBuf {
+    if mac_app(install_dir).is_some() { staging_dir(install_dir) } else { install_dir.to_path_buf() }
+}
+
+/// The app an install folder belongs to when it is the `Contents` of a Mac app.
+fn mac_app(install_dir: &Path) -> Option<&Path> {
+    let app = install_dir.parent()?;
+    (install_dir.file_name()? == "Contents" && app.extension()? == "app").then_some(app)
+}
+
+/// Where a file waits under another name (`lib/data.bin.artosia-old`) until the update is kept
+/// or undone: beside itself, or in the staging folder when the install folder is a Mac app.
+fn aside(install_dir: &Path, name: &str) -> PathBuf {
+    match mac_app(install_dir) {
+        Some(_) => staging_dir(install_dir).join("aside").join(name),
+        None => install_dir.join(name),
+    }
+}
+
+/// Moves a file to its waiting place, making the folders on the way.
+fn set_aside(from: &Path, to: &Path) -> io::Result<()> {
+    if let Some(parent) = to.parent() {
+        fs::create_dir_all(parent)?;
+    }
+    rename_patiently(from, to)
+}
+
+/// Renames, and on Windows tries again for a little over a second when another program has
+/// the file open. A virus scanner reading a program that was just written or started holds it
+/// for a moment ("The process cannot access the file because it is being used by another
+/// process", met in this crate's own tests on 2026-11-13), and rustup's `utils::rename` waits
+/// out the same thing. A file that stays held fails as before.
+fn rename_patiently(from: &Path, to: &Path) -> io::Result<()> {
+    const SHARING_VIOLATION: i32 = 32;
+    let mut wait = 20;
+    loop {
+        match fs::rename(from, to) {
+            Err(e)
+                if cfg!(windows)
+                    && wait <= 640
+                    && (e.raw_os_error() == Some(SHARING_VIOLATION) || e.kind() == io::ErrorKind::PermissionDenied) =>
+            {
+                std::thread::sleep(std::time::Duration::from_millis(wait));
+                wait *= 2;
+            }
+            done => return done,
+        }
+    }
 }
 
 #[derive(Clone, Debug, PartialEq, Eq)]
@@ -76,10 +137,6 @@ struct State {
     leftovers: Vec<String>,
 }
 
-fn with_suffix(path: &Path, suffix: &str) -> PathBuf {
-    PathBuf::from(format!("{}{suffix}", path.display()))
-}
-
 pub(crate) fn replace_file(from: &Path, to: &Path) -> io::Result<()> {
     fs::rename(from, to)
 }
@@ -121,11 +178,13 @@ fn drop_staged(stage: &Path) {
 }
 
 /// The path of the running program inside the install folder, taken before any file moves
-/// (Windows reports a renamed running exe under its new name).
+/// (Windows reports a renamed running exe under its new name). The program is in the folder
+/// itself, or below it: a Mac app keeps its programs in `Contents/MacOS`.
 fn relaunch_path(install_dir: &Path) -> Option<PathBuf> {
     let exe = std::env::current_exe().ok()?;
-    let same_dir = fs::canonicalize(exe.parent()?).ok()? == fs::canonicalize(install_dir).ok()?;
-    same_dir.then(|| exe.file_name().map(|n| install_dir.join(n)))?
+    let folder = fs::canonicalize(exe.parent()?).ok()?;
+    let below = folder.strip_prefix(fs::canonicalize(install_dir).ok()?).ok()?.to_path_buf();
+    Some(install_dir.join(below).join(exe.file_name()?))
 }
 
 /// Starts `path` with this process's own arguments and returns at once; the caller then exits.
@@ -227,7 +286,7 @@ fn apply_staged(
     // Leftovers from an earlier update must not be mistaken for this one's originals.
     for e in &entries {
         for suffix in [OLD, NEW] {
-            let stale = with_suffix(&install_dir.join(&e.path), suffix);
+            let stale = aside(install_dir, &format!("{}{suffix}", e.path));
             match fs::remove_file(&stale) {
                 Ok(()) => {}
                 Err(err) if err.kind() == io::ErrorKind::NotFound => {}
@@ -278,9 +337,9 @@ fn swap_one(install_dir: &Path, f: &FileEntry, staged: &Path) -> io::Result<()> 
         fs::set_permissions(staged, fs::Permissions::from_mode(0o755))?;
     }
     if dest.exists() {
-        fs::rename(&dest, with_suffix(&dest, OLD))?;
+        set_aside(&dest, &aside(install_dir, &format!("{}{OLD}", f.path)))?;
     }
-    fs::rename(staged, &dest)
+    rename_patiently(staged, &dest)
 }
 
 /// Puts every journaled file back as it was. Returns the new files it could not delete.
@@ -288,20 +347,19 @@ fn restore(install_dir: &Path, entries: &[Entry]) -> Result<Vec<String>, UpdateE
     let mut leftovers = Vec::new();
     for e in entries.iter().rev() {
         let dest = install_dir.join(&e.path);
-        let old = with_suffix(&dest, OLD);
+        let old = aside(install_dir, &format!("{}{OLD}", e.path));
+        let new = aside(install_dir, &format!("{}{NEW}", e.path));
         let fail = |err: io::Error| UpdateError::RestoreFailed(format!("{}: {err}", e.path));
         if old.exists() {
             if dest.exists() {
                 // The new file may be a running exe, so move it aside rather than delete it.
-                let aside = with_suffix(&dest, NEW);
-                let _ = fs::remove_file(&aside);
-                fs::rename(&dest, &aside).map_err(fail)?;
+                let _ = fs::remove_file(&new);
+                set_aside(&dest, &new).map_err(fail)?;
                 leftovers.push(format!("{}{NEW}", e.path));
             }
-            fs::rename(&old, &dest).map_err(fail)?;
+            rename_patiently(&old, &dest).map_err(fail)?;
         } else if !e.had_old && dest.exists() && fs::remove_file(&dest).is_err() {
-            let aside = with_suffix(&dest, NEW);
-            fs::rename(&dest, &aside).map_err(fail)?;
+            set_aside(&dest, &new).map_err(fail)?;
             leftovers.push(format!("{}{NEW}", e.path));
         }
     }
@@ -312,7 +370,7 @@ fn restore(install_dir: &Path, entries: &[Entry]) -> Result<Vec<String>, UpdateE
 fn remove_leftovers(install_dir: &Path, list: &[String]) -> Vec<String> {
     list.iter()
         .filter(|p| {
-            let path = install_dir.join(p);
+            let path = aside(install_dir, p);
             path.exists() && fs::remove_file(&path).is_err()
         })
         .cloned()
