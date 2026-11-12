@@ -51,20 +51,20 @@ pub(crate) fn transport(s: &App, k: &Kit, size: Option<Foot>) -> El {
             row()
                 .w_full()
                 .gap(space::S2)
-                .child(tile(t::BTN_NO_TEXT()).icon(&icons::NO_TEXT).on(text_off.0, text_off.1, text_off.2).keys("F1").height(high).narrow(narrow).help(t::BTN_CLEAR_TEXT()).build(k, |s, tx| {
+                .child(tile(t::BTN_NO_TEXT()).icon(&icons::NO_TEXT).on(text_off.0, text_off.1, text_off.2).keys(crate::ui::widgets::switch_key("F1", cfg!(target_os = "macos"))).height(high).narrow(narrow).help(t::BTN_CLEAR_TEXT()).build(k, |s, tx| {
                     s.toggle_text();
                     tx.blur();
                 }))
-                .child(tile(t::BTN_BLACK()).icon(&icons::BLACK_SCREEN).on(black.0, black.1, black.2).keys("F2").height(high).narrow(narrow).help(t::STATE_BLACK()).build(k, |s, tx| {
+                .child(tile(t::BTN_BLACK()).icon(&icons::BLACK_SCREEN).on(black.0, black.1, black.2).keys(crate::ui::widgets::switch_key("F2", cfg!(target_os = "macos"))).height(high).narrow(narrow).help(t::STATE_BLACK()).build(k, |s, tx| {
                     s.toggle_black();
                     tx.blur();
                 }))
-                .child(tile(t::BTN_LOGO()).icon(&icons::BADGE).on(logo.0, logo.1, logo.2).keys("F3").height(high).narrow(narrow).disabled(!has_logo).help(if has_logo { t::STATE_LOGO() } else { t::LOGO_MISSING() }).build(k, |s, tx| {
+                .child(tile(t::BTN_LOGO()).icon(&icons::BADGE).on(logo.0, logo.1, logo.2).keys(crate::ui::widgets::switch_key("F3", cfg!(target_os = "macos"))).height(high).narrow(narrow).disabled(!has_logo).help(if has_logo { t::STATE_LOGO() } else { t::LOGO_MISSING() }).build(k, |s, tx| {
                     s.toggle_logo();
                     tx.blur();
                 }))
                 // Lit red while the room sees the Live list; off, the projector shows none of it.
-                .child(tile(t::LIVE()).icon(if s.on_air() { &icons::ON_AIR } else { &icons::OFF_AIR }).on(s.on_air(), theme::live(), theme::on_live()).keys("F6").height(high).narrow(narrow).help(t::TIP_LIVE()).build(k, |s, tx| {
+                .child(tile(t::LIVE()).icon(if s.on_air() { &icons::ON_AIR } else { &icons::OFF_AIR }).on(s.on_air(), theme::live(), theme::on_live()).keys(crate::ui::widgets::switch_key("F6", cfg!(target_os = "macos"))).height(high).narrow(narrow).help(t::TIP_LIVE()).build(k, |s, tx| {
                     s.toggle_live();
                     tx.blur();
                 })),

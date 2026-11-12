@@ -40,6 +40,21 @@ Nothing to make it compile: the first `cargo build` on macOS ended with no error
 6. **The sentences macOS shows when it asks for the camera, the microphone or the local network** are in `tools/macos/Info.plist` in English and in `tools/macos/strings/<code>.json` for the nine other languages, each written from `brief.json` by its own writer; `tools/macos/info-strings.py` puts them into the app as `<code>.lproj/InfoPlist.strings`.
 7. **The package and the release step**: `tools/package-macos.sh`, `tools/macos/`, and a step in `tools/publish.sh`.
 
+## The Mac's keys for the four switches
+
+No text, Black, Logo and Live are on F1, F2, F3 and F6. By default the top row of an Apple keyboard controls other things, and a function key needs Fn held or the setting "Use F1, F2, etc. keys as standard function keys" (support.apple.com/en-us/102439, read 2026-11-13). The owner's direction (2026-11-13): use the keys that are usual on a Mac. Each program's own shortcut page, read that day:
+
+| Program | Its keys for these switches on a Mac | And on Windows |
+|---|---|---|
+| Proclaim (support.proclaim.logos.com, "Keyboard Shortcuts") | Blank ⌘B, Logo ⌘L, No Text ⌘T | F10, F11, F8 |
+| ProPresenter 7 (support.renewedvision.com, "Keyboard Shortcuts in ProPresenter") | Clear All F1 to Clear Announcements F7, as on Windows; output screens on and off ⌘1 | The same F keys; Control 1 |
+| FreeShow (freeshow.app/docs/shortcuts) | Clear keys F1 to F4, as on Windows; output screen on and off ⌘O | The same; Control O |
+| PowerPoint for Mac (support.microsoft.com) | Black: B or the full stop | The same |
+| Keynote (support.apple.com/guide/keynote) | Black: B | |
+| OpenLP (`openlp/core/common/settings.py`) | Blank: the full stop | The same |
+
+So a Mac gets Command keys beside the F keys, which still work there: **⌘T No text, ⌘B Black, ⌘L Logo** as Proclaim has them for the same three switches, and **⌘O Live** as FreeShow switches its output (ProPresenter's ⌘1 is taken here: Command and a digit puts Preview's ring on a section). The tiles print the Mac's key and the keys sheet prints both (`ui/widgets.rs` `switch_key`, `main.rs` `mac_switch`). Windows and Linux keep the F keys alone, as Proclaim does on Windows. Checked on the Mac by a scripted headless run: Command B lights Black, Command O switches Live off, Command T lights No text. A real keyboard was not pressed.
+
 ## Updates
 
 A Mac app's signature seals every file inside it. Measured on macOS 27 with a small faceless test app, ad-hoc signed and not quarantined (`target/port/mac-8-bundle-facts.sh` in the working tree of 2026-11-13):
@@ -107,7 +122,7 @@ On a MacBook with Apple silicon, macOS 27.0.1, 16 GB, busy with other work throu
 ## Not built
 
 - **Streaming.** As on Linux: the streaming program needs a screen capture, a sound source and an encoder of the Mac's own before the Stream dialog offers it, and the app does not carry the program.
-- **F1 to F6 on a Mac.** By default the top row of an Apple keyboard controls other things, and a function key needs Fn held or the setting "Use F1, F2, etc. keys as standard function keys" (support.apple.com/en-us/102439, read 2026-11-13). No text, Black, Logo and Live are on those keys, and nothing in the window says so yet.
+- **A Mac key for F4 and F5** (what the listener heard, and the announcements, into Preview). No program read has a key for either, so they stay F keys, which need Fn held on a Mac as it comes.
 
 ## Not checked
 

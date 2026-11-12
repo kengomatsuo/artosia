@@ -89,6 +89,18 @@ fn poll(s: &mut App, clock: f64, tx: &mut Tx) -> bool {
 
 /// The keys of the window. A focused text field has already had its turn by the time a key
 /// gets here, except when nothing has focus, which is the usual state while showing.
+/// What Command and a letter switches on a Mac, where the F keys of the same switches need Fn
+/// held: T the text, B black, L the logo, O the projector (`docs/macos.md` has the sources).
+fn mac_switch(letter: char) -> Option<fn(&mut App)> {
+    Some(match letter {
+        't' => App::toggle_text,
+        'b' => App::toggle_black,
+        'l' => App::toggle_logo,
+        'o' => App::toggle_live,
+        _ => return None,
+    })
+}
+
 fn on_key(s: &mut App, ev: &KeyEvent, tx: &mut Tx) -> bool {
     // The tour takes every key, so none of them reaches the projector.
     if s.tour.is_some() {
@@ -179,6 +191,13 @@ fn on_key(s: &mut App, ev: &KeyEvent, tx: &mut Tx) -> bool {
         }
         Key::Function(6) => {
             s.toggle_live();
+            return true;
+        }
+        // A Mac's own keys for the Live pane's switches (`ui::widgets::switch_key` prints them).
+        Key::Command(letter) if cfg!(target_os = "macos") && mac_switch(*letter).is_some() => {
+            if let Some(switch) = mac_switch(*letter) {
+                switch(s);
+            }
             return true;
         }
         // Ctrl and a digit put the Preview ring on that section.

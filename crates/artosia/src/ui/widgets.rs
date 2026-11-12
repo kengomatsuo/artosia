@@ -262,6 +262,26 @@ pub fn printed_key(name: &str, with_tab: bool, mac: bool) -> &str {
     }
 }
 
+/// The key of one of the Live pane's four switches as this computer has it. They are F keys,
+/// and the top row of a Mac's keyboard does other things unless Fn is held
+/// (support.apple.com/en-us/102439). Presentation programs give a Mac Command keys for the
+/// same switches: Proclaim has Blank on Command B, Logo on Command L and No Text on Command T
+/// where its Windows keys are F10, F11 and F8, and FreeShow switches the output with Command
+/// O (each program's own shortcut page, read 2026-11-13). A Mac's tile prints that key, and
+/// the F key works there as well.
+pub fn switch_key(function_key: &str, mac: bool) -> &str {
+    if !mac {
+        return function_key;
+    }
+    match function_key {
+        "F1" => "Ctrl T",
+        "F2" => "Ctrl B",
+        "F3" => "Ctrl L",
+        "F6" => "Ctrl O",
+        other => other,
+    }
+}
+
 /// A short line that names a held key ("Ctrl held"), in this keyboard's own marks.
 pub fn held_key_words(line: &str) -> String {
     if cfg!(target_os = "macos") { line.replace("Ctrl", "⌘").replace("Shift", "⇧") } else { line.to_string() }
@@ -495,6 +515,11 @@ mod key_tests {
         assert_eq!(caps("Alt Up Down", true), ["⌥", "Up", "Down"]);
         assert_eq!(caps("Backspace", true), ["⌫"]);
         assert_eq!(caps("Delete", true), ["Fn ⌫"]);
+        // The four switches of the Live pane have Command keys on a Mac, and F keys elsewhere.
+        assert_eq!(caps(super::switch_key("F2", true), true), ["⌘", "B"]);
+        assert_eq!(caps(super::switch_key("F6", true), true), ["⌘", "O"]);
+        assert_eq!(super::switch_key("F4", true), "F4");
+        assert_eq!(super::switch_key("F2", false), "F2");
         // Every other keyboard prints what the table says.
         assert_eq!(caps("Ctrl Shift N", false), ["Ctrl", "Shift", "N"]);
         assert_eq!(caps("Ctrl Tab", false), ["Ctrl", "Tab"]);

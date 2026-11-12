@@ -659,6 +659,10 @@ fn key_group(k: &Kit, heading: &'static str, keys: &[(&'static str, &'static str
         // The row about section letters shows this language's own letters.
         let own = t::section_keys();
         let keys: &str = if *keys == "C V B" { own.as_str() } else { keys };
+        // A Mac has a Command key for each of the Live pane's switches; the F key works too.
+        let on_a_mac = crate::ui::widgets::switch_key(keys, cfg!(target_os = "macos"));
+        let both = format!("{on_a_mac} or {keys}");
+        let keys: &str = if on_a_mac == keys { keys } else { both.as_str() };
         group = group.child(row().w_full().h(24.0).gap(space::S3).center_y().child(el().w(132.0).child(row().child(keycap(k, keys, false)))).child(text(*does).font(type_::BODY).color(k.c.text_base).truncate().grow(1.0)));
     }
     group
