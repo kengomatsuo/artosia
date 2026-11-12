@@ -49,7 +49,7 @@ summary {
   --pad-x: clamp(1.25rem, 5vw, 2.5rem);
   --glow-border: #e0e0e0;
   --glow-highlight: #b6b6b6;
-  --mark: #6a3913;
+  --mark: #000000;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -64,7 +64,7 @@ summary {
     --accent: #00a068;
     --glow-border: #3d3d3d;
     --glow-highlight: #a6a6a6;
-    --mark: #f0e7d6;
+    --mark: #ffffff;
   }
 }
 

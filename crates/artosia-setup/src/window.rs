@@ -386,40 +386,42 @@ impl Pal {
     }
 }
 
-const CRUST: &str = "#6a3913";
-const INK: &str = "#251e16";
-const CRUMB: &str = "#f0e7d6";
+/// The setup wears the brand as it is since 2026-11-12: a black mark on white, a white mark on
+/// dark, and no colour of its own (`docs/brand.md`). The filled button is ink on the page
+/// colour, as the operator window's primary button is.
+const INK: &str = "#111111";
+const PAPER: &str = "#f4f4f4";
 
 pub fn palette(dark: bool) -> Pal {
     if dark {
         Pal {
-            page: "#1b1611",
-            ink: CRUMB,
-            muted: "#c8bda9",
-            line: "#3d352b",
-            track: "#3a3127",
-            accent: CRUMB,
+            page: "#16181d",
+            ink: PAPER,
+            muted: "#b9bcc4",
+            line: "#33363d",
+            track: "#2c2f36",
+            accent: PAPER,
             on_accent: INK,
-            second: "#2a241d",
-            second_line: "#7a6f5e",
-            panel_a: "#2a1a0d",
-            panel_b: "#5a3414",
-            on_panel: CRUMB,
+            second: "#1f2228",
+            second_line: "#70747d",
+            panel_a: "#0b0c0f",
+            panel_b: "#26292f",
+            on_panel: PAPER,
         }
     } else {
         Pal {
             page: "#ffffff",
             ink: INK,
-            muted: "#5a5044",
-            line: "#d9d0c0",
-            track: "#e6dccb",
-            accent: CRUST,
+            muted: "#5c5c5c",
+            line: "#dcdcdc",
+            track: "#e4e4e4",
+            accent: INK,
             on_accent: "#ffffff",
             second: "#ffffff",
-            second_line: "#9a8f7c",
-            panel_a: "#3e220b",
-            panel_b: "#7a4a1f",
-            on_panel: CRUMB,
+            second_line: "#8c8c8c",
+            panel_a: "#111111",
+            panel_b: "#2e2e2e",
+            on_panel: "#ffffff",
         }
     }
 }
