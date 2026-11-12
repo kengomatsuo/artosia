@@ -210,7 +210,11 @@ impl Default for Settings {
 /// A translation Artosia can load.
 #[derive(Clone, Debug, PartialEq)]
 pub struct BibleFile {
+    /// The module's code, its file name in capitals: what settings and plans keep.
     pub code: String,
+    /// What people call it, drawn in the picker and under a verse: "TB". The code when nothing
+    /// says another (`App::list_bibles`).
+    pub short: String,
     pub name: String,
     /// None for the translation packed into the program.
     pub path: Option<PathBuf>,
@@ -803,8 +807,13 @@ impl App {
         if rune::is_headless() {
             let code = app.settings.bible.clone();
             let file = app.bible_files.iter().find(|file| file.code == code).cloned();
-            let loaded = match file.and_then(|file| file.path) {
-                Some(path) => Bible::open(&path).ok(),
+            let loaded = match file.as_ref().and_then(|file| file.path.as_ref()) {
+                Some(path) => Bible::open(path).ok().map(|mut bible| {
+                    if let Some(file) = &file {
+                        bible.short = file.short.clone();
+                    }
+                    bible
+                }),
                 None => artosia_core::import::bundled_bible().ok(),
             };
             if let Some(bible) = loaded {
@@ -845,13 +854,31 @@ impl App {
 
     /// Lists the translations on disk beside the one packed in.
     pub fn list_bibles(&mut self) {
-        let mut files = vec![BibleFile { code: "KJV".into(), name: "King James Version".into(), path: None }];
+        let mut files = vec![BibleFile { code: "KJV".into(), short: "KJV".into(), name: "King James Version".into(), path: None }];
         if let Some(folder) = &self.folder {
+            // eBible's saved list is read once, and only for a module that does not say its own code.
+            let mut saved: Option<Vec<(String, String)>> = None;
             for path in artosia_core::import::bible_files(&folder.join("bibles")) {
                 if let Ok((code, name, _)) = artosia_core::bible::describe(&path)
-                    && !files.iter().any(|file| file.code == code) {
-                        files.push(BibleFile { code, name, path: Some(path) });
+                    && !files.iter().any(|file| file.code == code)
+                {
+                    let mut short = artosia_core::bible::short_code(&path);
+                    if short.is_empty() {
+                        let saved = saved.get_or_insert_with(|| crate::bibles::saved_short_codes(folder));
+                        short = saved.iter().find(|(module, _)| *module == code).map(|(_, short)| short.clone()).unwrap_or_default();
                     }
+                    if short.is_empty() {
+                        short = code.clone();
+                    }
+                    files.push(BibleFile { code, short, name, path: Some(path) });
+                }
+            }
+        }
+        // Two Bibles that would be called the same are told apart by their own codes.
+        let shorts: Vec<String> = files.iter().map(|file| file.short.to_uppercase()).collect();
+        for (at, file) in files.iter_mut().enumerate() {
+            if shorts.iter().enumerate().any(|(other, short)| other != at && *short == shorts[at]) {
+                file.short = file.code.clone();
             }
         }
         self.bible_files = files;
@@ -873,7 +900,11 @@ impl App {
         let (inbox, waker) = (self.inbox.clone(), self.waker.clone());
         std::thread::spawn(move || {
             let result = match &file.path {
-                Some(path) => Bible::open(path),
+                // The caption under a verse calls it what the picker does.
+                Some(path) => Bible::open(path).map(|mut bible| {
+                    bible.short = file.short.clone();
+                    bible
+                }),
                 None => artosia_core::import::bundled_bible(),
             };
             let result = result.map_err(|error| error.to_string());

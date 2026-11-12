@@ -724,9 +724,8 @@ impl App {
             for file in &self.bible_files {
                 // An installed Bible is also found by the code people call it by and by the name
                 // its file gave it: the module `indonesian` is the Terjemahan Baru, TB.
-                let known = artosia_core::beblia::known_by_module(&file.code);
-                let (short, own) = known.map(|known| (known.code.as_str(), known.name.as_str())).unwrap_or_default();
-                let names: Vec<&str> = [file.code.as_str(), short, own, "bible", "translation", "version", "alkitab", "terjemahan", "versi"].into_iter().filter(|name| !name.is_empty()).collect();
+                let own = artosia_core::beblia::known_by_module(&file.code).map(|known| known.name.as_str()).unwrap_or_default();
+                let names: Vec<&str> = [file.code.as_str(), file.short.as_str(), own, "bible", "translation", "version", "alkitab", "terjemahan", "versi"].into_iter().filter(|name| !name.is_empty()).collect();
                 let doc = Doc::new(format!("bible:{}", file.code), "bible", file.name.clone()).aliases(&names);
                 out.push((doc, Hit::Bible { code: file.code.clone(), name: file.name.clone() }));
             }
@@ -1126,7 +1125,10 @@ mod tests {
     fn an_installed_bible_is_found_by_its_short_code_and_its_own_name() {
         use crate::state::BibleFile;
         let mut app = app();
-        app.bible_files = vec![BibleFile { code: "MADEUP".into(), name: "Made up".into(), path: None }, BibleFile { code: "INDONESIAN".into(), name: "Indonesian".into(), path: None }];
+        app.bible_files = vec![
+            BibleFile { code: "MADEUP".into(), short: "MADEUP".into(), name: "Made up".into(), path: None },
+            BibleFile { code: "INDONESIAN".into(), short: "TB".into(), name: "Indonesian".into(), path: None },
+        ];
         for typed in ["tb", "terjemahan baru", "indonesian"] {
             search(&mut app, typed);
             let found = app.palette.hits.iter().any(|hit| matches!(hit, Hit::Bible { code, .. } if code == "INDONESIAN"));

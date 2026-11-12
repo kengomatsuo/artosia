@@ -225,11 +225,20 @@ The owner looked for the Terjemahan Baru and could not find it. Three things hid
 
 **The first run's Bible page** uses the dialog's own filter model (`Desk::query`), cleared whenever the dialog or the first run opens. Typing picks the first Bible the filter shows, so "tb" and Enter is the whole answer; words that match nothing give back the Bible that was picked before the typing began, never one the page no longer shows; a cleared filter keeps a picked Bible in view. The field has the keys when the page opens, as on the country page.
 
-**On a slide** the caption under a verse is `Bible::short`: the module's own `short_code` row (written when a Bible is installed, from 0.1.18), else the names file's code for a module that came from the repository (`indonesian.sqlite3` is `TB` without being installed again), else the module's code. An eBible module installed before 0.1.18 keeps its id as caption (`INDAYT`) until it is downloaded again.
+**An installed Bible** is called by one short code wherever it is named: the choices of Bible and Second Bible in Settings, the caption under a verse (`Bible::short`) and the main search. `App::list_bibles` decides it once per module, as `BibleFile::short`, in this order:
 
-**In the main search** an installed Bible is also found by its short code and its file's own name (`palette.rs`).
+| # | Where the code comes from | Example |
+|---|---|---|
+| 1 | The module's own `short_code` row, written when a Bible is installed from 0.1.18 on | any Bible downloaded since |
+| 2 | The names file, for a module that came from the repository before 0.1.18 (`bible::short_code`) | `indonesian.sqlite3` is `TB` |
+| 3 | eBible's list as the library last saved it, for an eBible module from before 0.1.18 (`bibles::saved_short_codes`) | `indayt.sqlite3` is `AYT` |
+| 4 | The module's code, its file name in capitals | a church's own file |
 
-**Checked** on 2026-11-12: `beblia::tests::a_bible_is_found_by_its_own_name_its_code_and_its_file_name`, `ebible::tests::a_short_code_and_a_second_title_are_read_and_found`, `palette::tests::an_installed_bible_is_found_by_its_short_code_and_its_own_name`, `ui::onboard::bible_filter_tests`; renders of both screens light, dark and Indonesian; and real keys on the live catalogue in a window on an empty scratch library: the page opened on the Indonesian group, "tb" picked the Terjemahan Baru, "terjemahan baru" and "bimk" found theirs, "qqqq" showed the empty state with the earlier pick kept, and "tb" and "ags" filtered the Bibles dialog opened from the search. No Bible was downloaded in the check, so the caption on a slide is covered by the tests only.
+Two installed Bibles that would be called the same (eBible's and the repository's AGS) each keep their module's code, so the choices stay apart. Settings and plans keep the module's code as before, so nothing saved changes. Before this, Settings offered the Terjemahan Baru as a choice called INDONESIAN and a slide's caption said the same.
+
+**In the main search** an installed Bible is found by that short code, by its module's code and by its file's own name (`palette.rs`).
+
+**Checked** on 2026-11-12: `beblia::tests::a_bible_is_found_by_its_own_name_its_code_and_its_file_name`, `ebible::tests::a_short_code_and_a_second_title_are_read_and_found`, `palette::tests::an_installed_bible_is_found_by_its_short_code_and_its_own_name`, `bibles::tests::an_installed_bible_is_called_by_its_short_code` (made-up modules of each of the four kinds), `ui::onboard::bible_filter_tests`; renders of both screens light, dark and Indonesian and of Settings with several Bibles (scene `settings-bibles`); and real keys on the live catalogue in a window on an empty scratch library: the page opened on the Indonesian group, "tb" picked the Terjemahan Baru, "terjemahan baru" and "bimk" found theirs, "qqqq" showed the empty state with the earlier pick kept, and "tb" and "ags" filtered the Bibles dialog opened from the search. No Bible was downloaded in the check, so the caption on a slide is covered by the tests only.
 
 ## Sources
 

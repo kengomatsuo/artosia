@@ -237,6 +237,14 @@ fn load_beblia(cache: Option<PathBuf>) -> Result<Vec<Translation>, String> {
     cached_bytes(&cache, beblia::TREE_URL, 4 * 1024 * 1024, &|bytes| !parse(bytes).is_empty()).map(|bytes| parse(&bytes))
 }
 
+/// The short codes of eBible's translations as this library last saved its list, each with the
+/// code its module would have: what an eBible Bible installed before 0.1.18 is called, since
+/// its module does not say. Empty when the list was never saved.
+pub fn saved_short_codes(folder: &Path) -> Vec<(String, String)> {
+    let Ok(bytes) = std::fs::read(folder.join(CATALOGUE_FILE)) else { return Vec::new() };
+    ebible::parse_catalogue(&String::from_utf8_lossy(&bytes)).into_iter().filter(|item| !item.code.is_empty()).map(|item| (bible_file::file_code(&item.id).to_uppercase(), item.code)).collect()
+}
+
 /// Both sources in one list. When one of them cannot be reached the other still shows, and the
 /// dialog fails only when neither can.
 fn load_catalogue(folder: Option<PathBuf>) -> Result<Vec<Translation>, String> {
@@ -586,6 +594,42 @@ mod tests {
         // A file written a moment ago is fresh, so the network is never asked.
         let list = load_ebible(Some(cache)).unwrap_or_else(|e| panic!("{e}"));
         assert_eq!(list.len(), 2);
+        let _ = std::fs::remove_dir_all(&folder);
+    }
+
+    /// What an installed Bible is called: its module's own short code, else the code of the
+    /// repository file it came from, else eBible's saved list, else its own code; two that
+    /// would be called the same keep their own codes.
+    #[test]
+    fn an_installed_bible_is_called_by_its_short_code() {
+        let folder = std::env::temp_dir().join(format!("artosia-desk-short-{}", std::process::id()));
+        let _ = std::fs::remove_dir_all(&folder);
+        let bibles = folder.join("bibles");
+        std::fs::create_dir_all(&bibles).unwrap_or_else(|e| panic!("{e}"));
+        let xml = r#"<bible translation="Made up for a test"><testament name="New"><book number="43"><chapter number="3"><verse number="16">Made up words for a test.</verse></chapter></book></testament></bible>"#;
+        let install = |code: &str, short: &str| {
+            let details = Details { code: code.into(), short: short.into(), ..Details::default() };
+            bible_file::install_bytes("MadeBible.xml", xml.as_bytes(), &bibles, &details).unwrap_or_else(|e| panic!("{e}"));
+        };
+        // The repository's file of the Terjemahan Baru and an eBible translation, as installed before 0.1.18.
+        install("Indonesian", "");
+        install("indmade", "");
+        install("zedone", "ZED");
+        install("zedtwo", "ZED");
+        install("ownfile", "");
+        std::fs::write(folder.join(CATALOGUE_FILE), CSV).unwrap_or_else(|e| panic!("{e}"));
+        let mut app = App::practice();
+        app.folder = Some(folder.clone());
+        app.list_bibles();
+        let short = |code: &str| app.bible_files.iter().find(|file| file.code == code).map(|file| file.short.clone()).unwrap_or_default();
+        assert_eq!(short("KJV"), "KJV");
+        assert_eq!(short("INDONESIAN"), "TB");
+        assert_eq!(short("INDMADE"), "MADE");
+        assert_eq!((short("ZEDONE"), short("ZEDTWO")), ("ZEDONE".to_string(), "ZEDTWO".to_string()));
+        assert_eq!(short("OWNFILE"), "OWNFILE");
+        // The caption under a verse says the same.
+        let path = app.bible_files.iter().find(|file| file.code == "INDONESIAN").and_then(|file| file.path.clone()).unwrap_or_else(|| panic!("no file"));
+        assert_eq!(artosia_core::bible::Bible::open(&path).unwrap_or_else(|e| panic!("{e}")).short, "TB");
         let _ = std::fs::remove_dir_all(&folder);
     }
 

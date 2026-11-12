@@ -352,14 +352,18 @@ fn settings(s: &App, k: &Kit, layer: &mut Vec<El>, tall: f32) {
 
 /// The translations as a row of choices; the second picker starts with "None".
 fn bible_picker(s: &App, k: &Kit, second: bool) -> El {
-    let mut labels: Vec<String> = Vec::new();
+    // A choice reads as people call the Bible ("TB"); what is kept is the module's code.
+    let (mut labels, mut codes): (Vec<String>, Vec<String>) = (Vec::new(), Vec::new());
     if second {
         labels.push(t::LOOK_NONE().to_string());
+        codes.push(String::new());
     }
-    labels.extend(s.bible_files.iter().map(|file| file.code.clone()));
+    for file in &s.bible_files {
+        labels.push(file.short.clone());
+        codes.push(file.code.clone());
+    }
     let current = if second { &s.settings.second_bible } else { &s.settings.bible };
-    let at = labels.iter().position(|label| label == current).or(if second { Some(0) } else { None });
-    let codes = labels.clone();
+    let at = codes.iter().position(|code| code == current).or(if second { Some(0) } else { None });
     SegmentedControl::new(&labels, at)
         .label(if second { t::LOOK_SECOND_BIBLE() } else { t::LOOK_BIBLE() })
         .fit()

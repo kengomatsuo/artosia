@@ -470,6 +470,15 @@ const SCENES: &[Scene] = &[
     }),
     ("look", |s| s.sheet = Sheet::Looks),
     ("settings", |s| s.sheet = Sheet::Settings),
+    // Settings with several Bibles installed: each choice reads as people call that Bible,
+    // never as its file is named. The names are made up.
+    ("settings-bibles", |s| {
+        let file = |code: &str, short: &str, name: &str| crate::state::BibleFile { code: code.into(), short: short.into(), name: name.into(), path: None };
+        s.bible_files = vec![file("KJV", "KJV", "King James Version"), file("DEMOINDONESIANONE", "TC", "Alkitab Terjemahan Contoh"), file("DEMOA", "ACL", "Alkitab Contoh Lengkap")];
+        s.settings.bible = "DEMOINDONESIANONE".into();
+        s.settings.second_bible = "KJV".into();
+        s.sheet = Sheet::Settings;
+    }),
     // The language drop-down of Settings, open: its list must stay inside the dialog and the window.
     ("settings-language", |s| {
         s.sheet = Sheet::Settings;

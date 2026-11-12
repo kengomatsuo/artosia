@@ -353,6 +353,21 @@ pub fn describe(path: &Path) -> Result<(String, String, String), BibleError> {
     Ok((code.clone(), if name.is_empty() { code } else { name }, info("language")))
 }
 
+/// The code people call an installed module by: the module's own `short_code` row (kept since
+/// 0.1.18), else the code of the repository file it came from. Empty when neither says.
+pub fn short_code(path: &Path) -> String {
+    let own = rusqlite::Connection::open_with_flags(path, rusqlite::OpenFlags::SQLITE_OPEN_READ_ONLY)
+        .ok()
+        .and_then(|db| db.query_row("select value from info where name = 'short_code'", [], |row| row.get::<_, String>(0)).ok())
+        .map(|code| code.trim().to_string())
+        .unwrap_or_default();
+    if !own.is_empty() {
+        return own;
+    }
+    let stem = path.file_stem().map(|stem| stem.to_string_lossy().into_owned()).unwrap_or_default();
+    crate::beblia::known_by_module(&stem).map(|known| known.code.clone()).unwrap_or_default()
+}
+
 impl Bible {
     /// Reads a MyBible module. `code` falls back to the file stem in capitals.
     pub fn open(path: &Path) -> Result<Bible, BibleError> {
