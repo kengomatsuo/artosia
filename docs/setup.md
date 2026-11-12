@@ -9,7 +9,7 @@ A small per-user setup for Windows. It carries no program files: it fetches the 
 1. If `artosia.exe` is already in the install folder, nothing is downloaded: the shortcuts and the uninstall entry are written again, then Artosia starts.
 2. Otherwise it asks the feed for the newest release (`artosia_update::check(feed, "0.0.0")`), downloads into `<install>\update` with a progress bar (`download`, which resumes a cut-off download and skips files already there), swaps the files in (`apply_on_start`), keeps a copy of itself as `<install>\Artosia-setup.exe`, writes `Artosia.lnk` in the Start menu and on the desktop, writes the uninstall entry last, starts `artosia.exe` and exits.
 
-Flags: `--silent` (no window and no dialog), `--no-start`, `--uninstall`, `--dialogs` (the task dialogs instead of the window), `--lang id` or `--lang en` (the language, instead of the Windows display language). Two are for tests: `--show-window` is the window process itself (the default run starts it as a child, see "The window and its fallback"; Rune's own `--snap`, `--scene` and `--theme` work with it and render a screen with no window and no work done) and `--window-fail` makes that process give up at once. The feed is `artosia_update::RELEASES` unless `ARTOSIA_UPDATE_FEED` says otherwise; the app reads the same constant (`artosia_update::feed_address`).
+Flags: `--silent` (no window and no dialog), `--no-start`, `--uninstall`, `--dialogs` (the task dialogs instead of the window), `--lang <code>` (one of the ten languages, instead of the Windows display language; see "Languages"). Two are for tests: `--show-window` is the window process itself (the default run starts it as a child, see "The window and its fallback"; Rune's own `--snap`, `--scene` and `--theme` work with it and render a screen with no window and no work done) and `--window-fail` makes that process give up at once. The feed is `artosia_update::RELEASES` unless `ARTOSIA_UPDATE_FEED` says otherwise; the app reads the same constant (`artosia_update::feed_address`).
 
 ## Where things go
 
@@ -83,9 +83,13 @@ If Artosia is already installed the window is the same: S01 with Install. Pressi
 
 A plain run is a parent that starts the same exe with `--show-window` and waits. The child draws the window and ends with one of the codes the flows use (0, 1, 2, 5). Any other end (70, the exit the UI library's failure to start gives, a crash, an abort, which is what a broken graphics driver gives with `panic = "abort"`) makes the parent run the task-dialog flow instead (`src/dialog.rs`: progress, failure, confirmation, close-first), so an old PC still installs. `--dialogs` goes straight there; `--silent` never shows a window or a dialog. The decision is `flow::run_front` with its tests; a forced run (`--window-fail`) showed the dialog on screen and installed in a test root. The manifest keeps asking for common controls 6, because the dialogs need it. Rune draws with the GPU the computer has, or Windows' own software one when it has none, so the fallback is for a broken driver or a library failure more than for an old PC.
 
-The exe carries `assets/brand/artosia.ico` as its icon resource (id 1, by `build.rs`), so the file in Downloads shows it; the window sets the taskbar mark from `artosia-icon-256.png`. Strings: `src/strings.rs` (English), `strings-id.json` (Indonesian), briefs in `strings-brief.json`; the Windows display language picks (`GetUserDefaultUILanguage`, primary language Indonesian = 0x21). The window's own strings (the tagline, the four lines, Install, the two wait lines, the done screen) have no Indonesian yet: they show in English until a writer has written them from their briefs, and `indonesian_is_empty_or_complete_and_follows_the_same_rules` fails until then. The product picture on S02 is one of four embedded renders (light and dark, English and Indonesian), made from `site/img` by `assets/make-previews.ps1`, cropped to the part the window shows (about 66 KB each).
+The exe carries `assets/brand/artosia.ico` as its icon resource (id 1, by `build.rs`), so the file in Downloads shows it; the window sets the taskbar mark from `artosia-icon-256.png`. Strings: see "Languages". The product picture on S02 is one of four embedded renders (light and dark, English and Indonesian), made from `site/img` by `assets/make-previews.ps1`, cropped to the part the window shows (about 66 KB each).
 
 A render for a check, with no window and no work (it never touches a real folder): `Artosia-setup.exe --show-window --snap out.png --scene S02 --theme light`; scenes are S01 to S06, `S02-setting-up`, `removing` and `remove-failed`, and `--lang id` and `--fail damaged` show the Indonesian words and the longest failure sentence.
+
+## Languages
+
+The setup speaks the ten languages of the program ([i18n/README.md](i18n/README.md)). English is `src/strings.rs`; every other language is `strings-<code>.json`, written from `strings-brief.json` by a writer who never saw another language, and listed in `TABLES` of `src/strings.rs`. `crates/artosia-setup/tests/units.rs` holds every table to each brief's width and variables. `Language::of_this_computer` takes the first of Windows' display languages that the setup speaks, through `crates/artosia-locale` (the one rule that also serves the phone page and the homepage's redirect); the display languages come from `GetUserPreferredUILanguages`. `--lang <code>` overrides it. The country comes from `GetUserDefaultGeoName`, looked up at run time because Windows has it only from 10 version 1709. The product picture on S02 is rendered for English and Indonesian only.
 
 ## The traps from the research
 
@@ -104,7 +108,7 @@ Nothing release-specific is built into the setup: no Artosia version, build date
 
 The bytes of `Artosia-setup.exe` depend on these inputs and no others:
 
-- `crates/artosia-setup/**` (source, `build.rs`, `setup.manifest`, `strings-id.json`, `assets/brand/artosia.ico`);
+- `crates/artosia-setup/**` (source, `build.rs`, `setup.manifest`, `strings-<code>.json`, `assets/brand/artosia.ico`);
 - `crates/artosia-update/**` and the crates it pulls in (`Cargo.lock`), including the public key in `update-public-key.txt` compiled into the updater;
 - `rust-toolchain.toml` (the compiler);
 - the `[profile.setup]` and `[profile.release.package.artosia-setup]` sections of the root `Cargo.toml`;
@@ -140,7 +144,7 @@ All four are MIT (rustup MIT or Apache-2.0); this project is GPL-3.0-or-later. S
 - A real install on the real folders, the real desktop and the real Start menu: every run used a test root. The first real run is the owner's.
 - A OneDrive-redirected Desktop, a profile with non-ASCII characters in the real `%LOCALAPPDATA%` (the roots in tests are non-ASCII, the real folders are not).
 - Microsoft Defender SmartScreen and antivirus reactions to the downloaded file (mark of the web); no firewall prompt appeared on the loopback runs.
-- Indonesian display language in a real window: the window's own strings have no Indonesian yet; the old ones were rendered (`--lang id`, longest sentences), not run.
+- Any language but English in a real window on a computer set to it: the tables were rendered (`--lang <code>`) and tested, not run.
 - Starting `artosia.exe` after install (forbidden here; the first start is simulated by its two updater calls).
 - High-DPI scaling in a real window: only this PC's 125 percent was seen (875 by 550 pixels); 100, 150 and 200 percent are renders.
 - A PC with no usable graphics adapter or a broken driver: the fallback was forced (`--window-fail`), not met.
@@ -200,11 +204,13 @@ What follows for Artosia: a person is warned at the first download only, because
 version arrives through the program's own updater and never through a browser. The warning
 on that first download lasts until the one setup file has been downloaded often enough,
 which is why the file is kept unchanged. The Microsoft Store is the channel with no warning;
-the owner wants a Store edition once the developer account exists (2026-11-12).
+the owner wants a Store edition, which now exists as a package, not yet submitted ([store.md](store.md)).
 
-## Signing (owner's choice, 2026-11-12)
+## Signing (dropped by the owner, 2026-11-12)
 
-After seeing the download warning the owner chose Certum's open-source certificate: issued
+The owner dropped signing the same day: no certificate is bought for a free program. The direct download stays unsigned for good, and the Microsoft Store edition is the download with no warning ([store.md](store.md)). The signing step in `tools/publish.sh` stays and does nothing unless `ARTOSIA_SIGN_SHA1` is set. Because the setup now speaks ten languages its own code changed, so the next release ships a new setup file (`ARTOSIA_NEW_SETUP=1`). The rest of this section is the record of what was researched.
+
+After seeing the download warning the owner first chose Certum's open-source certificate: issued
 to the person, shown by Windows as "Open Source Developer" with the owner's name, valid for
 any of the owner's open-source programs and revoked if used on paid software (Certum's own
 pages, saved in `~/Shared/research/artosia-code-signing/`). Buying it and the identity check
@@ -224,6 +230,6 @@ and says several files in one call ask for the PIN once. HandBrake signs the sam
 with Certum's time stamp server unless `ARTOSIA_TIMESTAMP_URL` names another: Artosia's four programs before the feed is hashed, then a
 freshly built setup, each checked with `signtool verify /pa`. With a certificate the trust
 sits in the publisher, so the setup no longer has to be the same file in every release.
-Until the certificate is on this PC the variable is unset and a release is unsigned.
-Not known yet: whether a SimplySign login lasts through a whole release run.
+The variable is unset and a release is unsigned.
+Not known: whether a SimplySign login lasts through a whole release run.
 

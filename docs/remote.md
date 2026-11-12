@@ -58,10 +58,14 @@ of the plan and the Live state button. Yellow is hidden or a warning: the state 
 the screen is black, the logo shows or the projector is off, the lit Clear text, Black and Logo buttons, the Hide button
 while a message shows, the countdown pill, the lost-connection banner and the PIN error. A chosen state is a fill.
 
-Every string is in `STR`. Indonesian keeps the table of the first redraw; the two keys that are new, `pin_hint` and
-`cancel`, say English until a writer who has the briefs in `docs/i18n/brief-phone.json` writes them. Three keys of the
-first redraw were dropped with the cards they labelled (`next`, `next_item`, `plan_pick`), and `pin` is now only the name
-a screen reader gives the four cells.
+Every string is in `STR`. The page speaks the ten languages ([i18n/README.md](i18n/README.md)), each a table
+`docs/i18n/phone-<code>.json` written from `docs/i18n/brief-phone.json`. A phone table has the shape of an operator
+table and is flattened when the page is served (`flat` in `crates/artosia-remote/src/languages.rs`). The languages are
+listed in one picker, a native select, where a row of buttons stood. The names of a song's parts are built from the
+table's own keys (`label.verse` and its neighbours, `label.numbered`) by `labelRules` in `page.html`. The page picks its
+first language from the phone's own list with `fit`, the JavaScript copy of the rule in `crates/artosia-locale`. Three
+keys of the first redraw were dropped with the cards they labelled (`next`, `next_item`, `plan_pick`), and `pin` is now
+only the name a screen reader gives the four cells.
 
 Checked on the example server on this computer, dark, at 390x844 and 320x640 in English, and for fit also at 360, 375
 and 414 wide in English and in Indonesian. A script pressed every control: Back, Next, a section button, a thumbnail,

@@ -10,6 +10,8 @@ The rule behind all of it: **a writer never sees the source string and is never 
 - `brief-phone.json`: the same for the phone page (`STR` in `crates/artosia-remote/src/page.html`) and its section labels.
 - `concepts.md`: the things the product is made of, described in plain English and never named in any language.
 - `id.json`: the Indonesian table, in the shape every table has. It is rewritten from the briefs in the next round; until then it is the table the program ships.
+- `<code>.json`: the operator table of each further language (`zh-Hans`, `zh-Hant`, `ko`, `ja`, `es`, `pt-BR`, `fr`, `vi`), in the shape of `id.json`.
+- `phone-<code>.json`: the phone page's table of each language. The setup's tables are `crates/artosia-setup/strings-<code>.json` and the homepage's `site/strings/<code>.json`, each with its own brief.
 - `../../tools/check-brief.py`: the check that every key the code reads has an entry.
 
 ## Kinds of entry
@@ -54,17 +56,29 @@ Changing a text means changing its brief first and rewriting that key in every l
 
 ## How languages are carried
 
-The language is a code (`en`, `id`) in the settings, chosen in Settings, in the search, `--language <code>` or `--indonesian`. A settings file from before the code (`"indonesian": true`) still loads and means `id`.
+Ten languages are listed: English, Indonesian, Simplified Chinese (`zh-Hans`), Traditional Chinese (`zh-Hant`), Korean, Japanese, Spanish, Brazilian Portuguese (`pt-BR`), French and Vietnamese. The operator window, the phone page, the setup and the homepage speak all ten.
+
+The language is a code (`en`, `id`, `zh-Hans` and so on) in the settings, chosen in Settings, in the search, `--language <code>` or `--indonesian`. A settings file from before the code (`"indonesian": true`) still loads and means `id`.
 
 - English and Indonesian are written in `strings.rs` today, as `text!(NAME, "English", "Indonesian")` and sentence functions with an `if indonesian()` branch. Indonesian moves to a table, `docs/i18n/id.json`, when the new table exists; a separate change swaps `strings.rs` over.
 - Any other language is a table, `docs/i18n/<code>.json`: a key to `{"text": ...}`. `text` is a string with named placeholders (`{count}`), or plural forms (`zero`, `one`, `other`), or named cases (`some_lost`) that are each a string or plural forms. Arrays use the key `KEYS_SHOWING_ROWS[4].1`; section names are `section.verse`, `section.chorus` and so on with `section_numbered`; a counted noun inside a sentence is `noun.songs` with its own forms. The cases each sentence reads are the `cases` of its brief entry.
 - Some sentence functions do not call `say(...)` yet (the habit, start-section and Bible-download sentences, `birthdays_cover_week`, `birthdays_cover_month`, `names_today`). Their brief entries name the variables the function will pass; the change that swaps the tables adds the `say` calls with exactly those names.
 - A key the table lacks is English. The plural rule of each language is `plural_category` in `crates/artosia/src/languages.rs`.
 - `languages.rs` holds the one list, `LANGUAGES`: code, the language's own name, its table, the words that find it in the search.
-- The phone page has its own tables, `docs/i18n/phone-<code>.json`, with the keys of `STR.en` and optional `labels` (pairs of pattern and replacement for section names). They are listed in `EXTRA_LANGUAGES` in `crates/artosia-remote/src/languages.rs`. A code the page does not know shows English.
+- The phone page has its own tables, `docs/i18n/phone-<code>.json`, listed in `EXTRA_LANGUAGES` in `crates/artosia-remote/src/languages.rs`. A phone table has the shape of an operator table (the keys of `STR.en`, and `label.verse`, `label.numbered` and their neighbours for the names of a song's parts); the server flattens it when it serves the page (`flat`). A code the page does not know shows English.
+- The setup lists its tables in `crates/artosia-setup/src/strings.rs` and the homepage in `LANGUAGES` of `tools/build-site.py`.
+- One rule fits a computer's or a browser's language tag to a language: `crates/artosia-locale` (`pick`, `pick_first`, `languages`, `region`). The same code wins; Chinese goes by script (a tag that says Hant, or names Taiwan, Hong Kong or Macau, is Traditional); then the same first part. The setup uses it, the phone page repeats it in JavaScript (`fit` in `page.html`) and the homepage's first page repeats it in its redirect (`REDIRECT` in `tools/build-site.py`).
+- The song reader learns every language's section names at start (`languages::teach_markers`), so `[Estrofa 2]` is read whatever language the window speaks. A marker is written in the window's words only when it reads back as the same section.
 - `crates/artosia/testdata/strings-en.txt` and `strings-id.txt` hold what every text printed before the rework; regenerate with `ARTOSIA_WRITE_SNAPSHOT=1 cargo test -p artosia strings_snapshot`.
 - `crates/artosia/testdata/pseudo.json` is a test-only language (`xx`, selectable with `--language xx` in a debug build, never listed).
 
-## No real language ships unreviewed
+## Writers compose every language, native speakers correct after (owner, 2026-11-12)
 
-A language ships only when a person who can judge it has reviewed it. Until then it stays out of `LANGUAGES`. Add the line to `LANGUAGES` (and the phone table to `EXTRA_LANGUAGES`) after step 7.
+A language is listed once its writer has composed it from the briefs and the tests pass; a second reader checks rendered screens, and the texts are then opened for native speakers to correct. This replaces the earlier rule that a language waits for a human reviewer before it is listed. Each of the eight newest was written by its own writer who never saw another language.
+
+## Adding a further language
+
+1. Write the four tables from their briefs, one writer, no other language in view: `docs/i18n/<code>.json`, `docs/i18n/phone-<code>.json`, `crates/artosia-setup/strings-<code>.json`, `site/strings/<code>.json`.
+2. List them: a line in `LANGUAGES` (`crates/artosia/src/languages.rs`), in `EXTRA_LANGUAGES` (`crates/artosia-remote/src/languages.rs`), in the setup's strings and in `LANGUAGES` of `tools/build-site.py`; add its plural rule to `plural_category`.
+3. Run the tests that hold every table to the briefs' widths and variables: `cargo test -p artosia languages`, `cargo test -p artosia-remote`, `cargo test -p artosia-setup`.
+4. Render the screens in it (steps 4 and 5 of "A round"; `tools/site-shots.sh` for the homepage) and give them to a second reader.
