@@ -491,10 +491,18 @@ impl Art {
 }
 
 /// The two pictures of a language, light then dark. `assets/make-previews.ps1` writes them from
-/// the homepage's renders; a language with no render of its own shows the English window.
+/// the homepage's renders, one pair for each language.
 fn preview_bytes(language: Language) -> [&'static [u8]; 2] {
     match language.code() {
         "id" => [preview!("preview-id-light.png"), preview!("preview-id-dark.png")],
+        "zh-Hans" => [preview!("preview-zh-Hans-light.png"), preview!("preview-zh-Hans-dark.png")],
+        "zh-Hant" => [preview!("preview-zh-Hant-light.png"), preview!("preview-zh-Hant-dark.png")],
+        "ko" => [preview!("preview-ko-light.png"), preview!("preview-ko-dark.png")],
+        "ja" => [preview!("preview-ja-light.png"), preview!("preview-ja-dark.png")],
+        "es" => [preview!("preview-es-light.png"), preview!("preview-es-dark.png")],
+        "pt-BR" => [preview!("preview-pt-BR-light.png"), preview!("preview-pt-BR-dark.png")],
+        "fr" => [preview!("preview-fr-light.png"), preview!("preview-fr-dark.png")],
+        "vi" => [preview!("preview-vi-light.png"), preview!("preview-vi-dark.png")],
         _ => [preview!("preview-en-light.png"), preview!("preview-en-dark.png")],
     }
 }
