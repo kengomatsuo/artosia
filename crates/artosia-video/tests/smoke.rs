@@ -32,6 +32,30 @@ fn missing_file_is_a_clean_error() {
     assert!(err.to_string().contains("not found"));
 }
 
+/// The projector's background as the output process runs it, with no window at all: the video
+/// is decoded, comes round to its start twice, and names the decoder that did the work.
+/// `cargo test -p artosia-video a_video_loops -- --nocapture` prints that name, which is how
+/// a system's hardware decoding is checked where no window may be opened.
+#[test]
+fn a_video_loops_twice_with_no_window_and_names_its_decoder() {
+    use std::time::{Duration, Instant};
+    if !fixture().is_file() {
+        return;
+    }
+    let options = artosia_video::VideoOptions { discard_frames: true, ..Default::default() };
+    let video = artosia_video::VideoLoop::start(&fixture(), rune::NativeSurface::new(), options).expect("the video starts");
+    let began = Instant::now();
+    while video.loops() < 2 {
+        assert!(video.error().is_none(), "{:?}", video.error());
+        assert!(began.elapsed() < Duration::from_secs(120), "after two minutes: {} loops, {} frames", video.loops(), video.frames());
+        std::thread::sleep(Duration::from_millis(250));
+    }
+    let decoder = video.decoder().unwrap_or_default();
+    println!("decoder {decoder}, fallback {:?}, {} frames and {} loops in {:.1} s", video.fallback(), video.frames(), video.loops(), began.elapsed().as_secs_f64());
+    assert!(!decoder.is_empty(), "no decoder was named");
+    assert!(video.frames() > 100, "{} frames", video.frames());
+}
+
 /// A camera on the network: a made-up moving picture sent over SRT from this computer to
 /// itself, and opened by its address. Skipped where GStreamer has no parts to send one.
 #[test]
