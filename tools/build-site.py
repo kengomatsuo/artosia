@@ -1,13 +1,17 @@
 """Builds the homepage into target/site: one template, one page per language.
 
-    python -I tools/build-site.py [--version V] [--setup-bytes N] [--zip-bytes N] [--langs en,id] [--out target/site]
+    python -I tools/build-site.py [--version V] [--setup-bytes N] [--zip-bytes N]
+        [--linux-bytes N] [--mac-bytes N] [--langs en,id] [--out target/site]
 
 The version comes from --version, or from crates/artosia/Cargo.toml. The sizes
-of the setup and of the zip come from --setup-bytes and --zip-bytes, or from
-the files in dist/<version>/ when that was built here. tools/publish-site.sh
-passes all three from the newest release.
+of the setup, the zip and the Linux package come from --setup-bytes, --zip-bytes
+and --linux-bytes, or from the files in dist/<version>/ when that was built here.
+The Mac row, its link and the Mac words of the hero exist only when --mac-bytes
+is given or dist/<version>/Artosia-macos-aarch64.dmg is here: a system shows only
+when its download exists. tools/publish-site.sh passes the sizes from the newest release.
 A placeholder with no string, a string no placeholder uses, and a language
-missing a key each stop the build.
+missing a key each stop the build; both variants (with and without the Mac)
+are checked on every build.
 """
 
 import argparse
@@ -26,6 +30,9 @@ ORIGIN = f"https://{DOMAIN}"
 LATEST = "https://github.com/kengomatsuo/artosia/releases/latest/download"
 DOWNLOAD = f"{LATEST}/Artosia-setup.exe"
 ZIP = f"{LATEST}/Artosia-windows.zip"
+# The setup is in every release. Another system's file is in a release only when its build
+# worked, so its link names the release the page was built for and cannot go stale.
+RELEASE = "https://github.com/kengomatsuo/artosia/releases/download"
 # Every language the page is written in, English first, each under its own name. The program
 # speaks the same ten (`crates/artosia/src/languages.rs`).
 LANGUAGES = [
@@ -57,6 +64,8 @@ REDIRECT = (
     "if(p)location.replace(p+\"/\")}catch(e){}</script>"
 )
 PLACE = re.compile(r"\{\{([a-z0-9_:/.\-]+)\}\}")
+# <!--if mac-->...<!--/if--> stays only when the Mac download exists, <!--if nomac--> only when not.
+VARIANT = re.compile(r"<!--if (mac|nomac)-->(.*?)<!--/if-->", re.S)
 
 
 def version() -> str:
@@ -101,16 +110,33 @@ def page(lang: str, strings: dict, numbers: dict, langs: list[str]) -> str:
         "canonical": address(lang),
         "download": DOWNLOAD,
         "zip": ZIP,
+        "linux": f"{RELEASE}/v{numbers['version']}/Artosia-linux-x86_64.tar.gz",
+        "mac": f"{RELEASE}/v{numbers['version']}/Artosia-macos-aarch64.dmg",
         "version": numbers["version"],
         "language_redirect": REDIRECT % json.dumps([code for code in langs if code != "en"]) if first else "",
     }
-    used = set()
+    template = (SITE / "page.html").read_text(encoding="utf-8")
+    # Both variants are checked, so the build with the Mac and the one without it can never drift.
+    asked = {m.group(1) for m in PLACE.finditer(template)}
+    asked = {k[5:] if k.startswith("json:") else k for k in asked}
+    asked = {k for k in asked if k not in fixed and not k.startswith("wh:")}
+    missing = sorted(asked - set(strings))
+    if missing:
+        sys.exit(f"page.html asks for {', '.join(missing)}, which {lang}.json does not have")
+    unused = sorted(set(strings) - asked)
+    if unused:
+        sys.exit(f"{lang}.json has strings the page never shows: {', '.join(unused)}")
+    template = VARIANT.sub(lambda m: m.group(2) if (m.group(1) == "mac") == ("mac_mb" in numbers) else "", template)
 
     def words(key: str) -> str:
-        used.add(key)
         text = html.escape(strings[key], quote=True)
         text = text.replace("{version}", f'<span data-version>{numbers["version"]}</span>')
         text = text.replace("{zipsize}", f'<span data-zip-size>{numbers["zip_mb"]}</span>')
+        text = text.replace("{linuxsize}", f'<span data-linux-size>{numbers["linux_mb"]}</span>')
+        text = text.replace("{macsize}", f'<span data-mac-size>{numbers.get("mac_mb", "")}</span>')
+        # A sentence with links is one template; the writer places each link around its own word.
+        for system in ("windows", "linux", "mac"):
+            text = text.replace("{%s}" % system, f'<a href="#{system}">').replace("{/%s}" % system, "</a>")
         return text.replace("{size}", f'<span data-size>{numbers["mb"]}</span>')
 
     def fill(match: re.Match) -> str:
@@ -121,17 +147,10 @@ def page(lang: str, strings: dict, numbers: dict, langs: list[str]) -> str:
             w, h = png_size(SITE / key[3:])
             return f'width="{w}" height="{h}"'
         if key.startswith("json:"):
-            used.add(key[5:])
             return json.dumps(strings[key[5:]], ensure_ascii=False)[1:-1]
-        if key not in strings:
-            sys.exit(f"page.html asks for {{{{{key}}}}}, which {lang}.json does not have")
         return words(key)
 
-    out = PLACE.sub(fill, (SITE / "page.html").read_text(encoding="utf-8"))
-    unused = sorted(set(strings) - used)
-    if unused:
-        sys.exit(f"{lang}.json has strings the page never shows: {', '.join(unused)}")
-    return out
+    return PLACE.sub(fill, template)
 
 
 def privacy() -> str:
@@ -158,17 +177,21 @@ def main() -> None:
     args.add_argument("--version")
     args.add_argument("--setup-bytes", type=int)
     args.add_argument("--zip-bytes", type=int)
+    args.add_argument("--linux-bytes", type=int)
+    args.add_argument("--mac-bytes", type=int)
     args.add_argument("--langs", default=",".join(code for code, _ in LANGUAGES))
     args.add_argument("--out", default=str(ROOT / "target/site"))
     args = args.parse_args()
 
     v = args.version or version()
-    def size_of(given: int | None, name: str, flag: str) -> int:
+    def size_of(given: int | None, name: str, flag: str, required: bool = True) -> int | None:
         if given is not None:
             return given
         built = ROOT / "dist" / v / name
         if not built.exists():
-            sys.exit(f"pass {flag}: {built} is not here")
+            if required:
+                sys.exit(f"pass {flag}: {built} is not here")
+            return None
         return built.stat().st_size
 
     def megabytes(n: int) -> int:
@@ -178,7 +201,11 @@ def main() -> None:
         "version": v,
         "mb": megabytes(size_of(args.setup_bytes, "Artosia-setup.exe", "--setup-bytes")),
         "zip_mb": megabytes(size_of(args.zip_bytes, "Artosia-windows.zip", "--zip-bytes")),
+        "linux_mb": megabytes(size_of(args.linux_bytes, "Artosia-linux-x86_64.tar.gz", "--linux-bytes")),
     }
+    mac = size_of(args.mac_bytes, "Artosia-macos-aarch64.dmg", "--mac-bytes", required=False)
+    if mac is not None:
+        numbers["mac_mb"] = megabytes(mac)
 
     langs = args.langs.split(",")
     unknown = [lang for lang in langs if lang not in dict(LANGUAGES)]
@@ -225,7 +252,8 @@ def main() -> None:
     )
     print(
         f"built {out}: {', '.join(langs)}, version {v}, "
-        f"setup {numbers['mb']} MB, zip {numbers['zip_mb']} MB"
+        f"setup {numbers['mb']} MB, zip {numbers['zip_mb']} MB, linux {numbers['linux_mb']} MB, "
+        f"mac {str(numbers['mac_mb']) + ' MB' if 'mac_mb' in numbers else 'none'}"
     )
 
 

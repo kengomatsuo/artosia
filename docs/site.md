@@ -40,10 +40,51 @@ version and size on the page. The script reads both from the newest release, nev
 `Cargo.toml`, so the page cannot name a version nobody can download. The page's own script
 then checks the newest release when it is opened and keeps the answer for an hour.
 
-The download button points at
-`https://github.com/kengomatsuo/artosia/releases/latest/download/Artosia-setup.exe`,
-which always answers with the newest release's setup ([setup.md](setup.md)). The zip of the
-same release is the second way, for a computer with no internet, under the three steps.
+## The download area
+
+The area is named "Get Artosia" and shows your system first (direction A of the 2026-11-12
+mock). One row per system that has a file: Windows, Linux and, once it exists, the Mac. A system
+shows only when its download exists: no row, no link and no word for it otherwise.
+
+- The visitor's own row comes first and holds the filled button; the hero's button, its file line
+  and its "Also for ..." line follow it, and so does the top bar's Download button (class `dl-own`),
+  which would otherwise hand a Windows file to a Linux visitor. `script.js` reads `navigator.userAgentData.platform`, then
+  `navigator.platform`, and Android counts as neither Linux nor Mac. A Mac visitor to a page with no
+  Mac row sees Windows first. Without JavaScript Windows is the filled one and every row stays reachable.
+- `?os=linux` and `?os=mac` override the guess. It is how the page is checked: open
+  `target/site-en/index.html` and `target/site-en-mac/index.html` from a local server with each value.
+- The Windows button points at `https://github.com/kengomatsuo/artosia/releases/latest/download/Artosia-setup.exe`,
+  which always answers with the newest release's setup ([setup.md](setup.md)). The zip of the same
+  release is the second way, in the Windows row, for a computer with no internet. The Linux link is
+  `Artosia-linux-x86_64.tar.gz` (every release from 0.1.22, [linux.md](linux.md)); the Mac link is
+  `Artosia-macos-aarch64.dmg` (Apple silicon, not released yet, so the page has no Mac row today).
+  Both name the release the page was built for (`releases/download/v<version>/`), never `latest`:
+  a release whose Linux build failed carries Windows only (`tools/publish.sh`), and `latest` would
+  then answer 404. `tools/publish-site.sh` refuses to build from a release with no Linux package,
+  so the page keeps its last deploy and its links keep working.
+- The Mac row carries the numbered Open Anyway steps, because macOS refuses a program from a
+  developer who pays for no Apple programme.
+- A sentence with links is one string per variant (`also_linux`, `also_linux_mac`, and so on),
+  with the links written as `{linux}...{/linux}` around the writer's own word, never fragments joined.
+- The search result's grey line (`meta_description`, and `meta_description_mac` once the Mac file
+  exists) names the systems; the title names Windows alone, the edition a church runs. The line may
+  run to 170 characters: Google's page on snippets says a description has no length limit and is cut
+  to fit the device (developers.google.com/search/docs/appearance/snippet, read 2026-11-13), and at
+  155 three languages clipped their grammar to fit.
+- `python -I tools/check-site-strings.py` holds every language against the brief: the same keys,
+  the tokens and link markers kept, the visible text within its `max` (a link's markers are not
+  counted), and none of the marks the house bans.
+- The page's own script also refreshes the Linux size, and the Mac size when the release has it, with the
+  version and the Windows sizes, kept for an hour.
+
+## The build's arguments
+
+`python -I tools/build-site.py --version V --setup-bytes N --zip-bytes N --linux-bytes N
+[--mac-bytes N] [--langs en] [--out DIR]`. Without `--mac-bytes` (and without
+`dist/<version>/Artosia-macos-aarch64.dmg`) the Mac row and its link are left out and the hero names Linux
+alone; with it they are built and the hero names both. Both variants are checked on every build: a key of
+either variant that a language lacks stops the build. `tools/publish-site.sh` reads the three sizes (and the
+Mac's when the release holds it) from the newest release and passes them.
 
 ## Languages
 
@@ -97,3 +138,9 @@ the page asks for a string nobody wrote, or when a string is never shown.
 
 The warning stands: no honest clip of the program exists yet, and the stepped window does
 that job. The page has not been opened on a real phone.
+
+## References
+
+The mock the download area was ported from is in `target/site-mock/a/site/`, its pictures in
+`~/Shared/inspo/artosia-site-downloads/mocks/` (`a-hero-1440.png`, `a-hero-390.png`, `a-get-1440.png`).
+The inspector's last result for the area (2026-11-12): 0 FAIL, 1 WARN (no video) with and without the Mac row.

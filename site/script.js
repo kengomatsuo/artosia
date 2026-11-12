@@ -182,12 +182,14 @@ async function release() {
   const versions = document.querySelectorAll("[data-version]");
   const sizes = document.querySelectorAll("[data-size]");
   const zipSizes = document.querySelectorAll("[data-zip-size]");
+  const linuxSizes = document.querySelectorAll("[data-linux-size]");
+  const macSizes = document.querySelectorAll("[data-mac-size]");
   if (!versions.length) return;
   const HOUR = 3600e3;
   let found = null;
   try {
     const kept = JSON.parse(localStorage.getItem("release") || "null");
-    if (kept && kept.zip && Date.now() - kept.at < HOUR) found = kept;
+    if (kept && kept.zip && kept.linux !== undefined && Date.now() - kept.at < HOUR) found = kept;
   } catch {}
   if (!found) {
     try {
@@ -199,6 +201,8 @@ async function release() {
       const file = (name) => (latest.assets || []).find((a) => a.name === name);
       const setup = file("Artosia-setup.exe");
       const zip = file("Artosia-windows.zip");
+      const linux = file("Artosia-linux-x86_64.tar.gz");
+      const mac = file("Artosia-macos-aarch64.dmg");
       if (!setup || !zip || !latest.tag_name) return;
       const megabytes = (bytes) => Math.max(1, Math.round(bytes / 1048576));
       found = {
@@ -206,6 +210,8 @@ async function release() {
         version: latest.tag_name.replace(/^v/, ""),
         mb: megabytes(setup.size),
         zip: megabytes(zip.size),
+        linux: linux ? megabytes(linux.size) : 0,
+        mac: mac ? megabytes(mac.size) : 0,
       };
       try {
         localStorage.setItem("release", JSON.stringify(found));
@@ -217,4 +223,41 @@ async function release() {
   versions.forEach((el) => (el.textContent = found.version));
   sizes.forEach((el) => (el.textContent = found.mb));
   zipSizes.forEach((el) => (el.textContent = found.zip));
+  // A release without the file keeps the number the page was built with.
+  if (found.linux) linuxSizes.forEach((el) => (el.textContent = found.linux));
+  if (found.mac) macSizes.forEach((el) => (el.textContent = found.mac));
 }
+
+// The visitor's own system comes first, with the filled button, and the hero offers its file.
+// Without this script Windows stays first and every system stays reachable. ?os=linux or
+// ?os=mac overrides the guess, which is how the page is checked.
+function system() {
+  const rows = [...document.querySelectorAll(".os-row")];
+  const raw = (
+    new URLSearchParams(location.search).get("os") ||
+    (navigator.userAgentData && navigator.userAgentData.platform) ||
+    navigator.platform ||
+    ""
+  ).toLowerCase();
+  const android = /android/i.test(navigator.userAgent);
+  const guess = /^mac/.test(raw) ? "mac" : /linux/.test(raw) && !android ? "linux" : "windows";
+  // A system with no file on the page (the Mac, while it has none) is shown as Windows.
+  const mine = rows.some((row) => row.dataset.os === guess) ? guess : "windows";
+  document.documentElement.dataset.os = mine;
+  rows.forEach((row) => {
+    const own = row.dataset.os === mine;
+    row.classList.toggle("is-mine", own);
+    const link = row.querySelector(".dl");
+    link.classList.toggle("hero-btn", own);
+    link.classList.toggle("hero-btn--primary", own);
+  });
+  const row = document.querySelector(`.os-row[data-os="${mine}"]`);
+  const hero = document.querySelector(".dl-hero");
+  hero.textContent = row.querySelector(".dl").textContent;
+  // Every button that only says Download gives the visitor's own file.
+  document.querySelectorAll(".dl-own, .dl-hero").forEach((link) => (link.href = row.querySelector(".dl").href));
+  document.querySelector("#hero .release-note").innerHTML = row.querySelector(".os-file").innerHTML;
+  document.querySelectorAll(".also-line").forEach((line) => (line.hidden = line.dataset.for !== mine));
+}
+
+system();

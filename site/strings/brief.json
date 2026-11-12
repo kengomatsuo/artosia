@@ -1,5 +1,5 @@
 {
-  "_page": "The public homepage of Artosia at artosia.matsuokengo.com. Artosia is a free program for a church's media desk: it puts the words of songs, Bible verses and announcements on the projector during a service. It runs on a Windows computer. The reader is a church volunteer of any age who was sent the link and wants to know what this is and how to get it. Register: informal and warm, addressing the reader the way a friendly program does in your language (kamu in Indonesian) where a pronoun is needed. Plain, modest, concrete: say what the thing is and does, then stop. No exclamation marks, no em-dash, no en-dash, no middle dot, no emoji. Sentence case. Program names (Artosia, EasiSlides, OpenLyrics, PowerPoint, Windows, Wi-Fi, GPL-3.0-or-later, artosia.exe) stay as written. Names of things inside the program must be the words the program itself uses in your language, the ones you chose for its window (Design, Screens, Announcements, Search, Prev and Next, the plan, Preview and Live).",
+  "_page": "The public homepage of Artosia at artosia.matsuokengo.com. Artosia is a free program for a church's media desk: it puts the words of songs, Bible verses and announcements on the projector during a service. It runs on Windows and Linux computers, and on Macs with Apple silicon once that edition is released; the page shows a system only when its download exists. The reader is a church volunteer of any age who was sent the link and wants to know what this is and how to get it. Register: informal and warm, addressing the reader the way a friendly program does in your language (kamu in Indonesian) where a pronoun is needed. Plain, modest, concrete: say what the thing is and does, then stop. No exclamation marks, no em-dash, no en-dash, no middle dot, no emoji. Sentence case. Program names (Artosia, EasiSlides, OpenLyrics, PowerPoint, Windows, Linux, Mac, macOS, GStreamer, Wi-Fi, GPL-3.0-or-later, artosia.exe) stay as written. Names of things inside the program must be the words the program itself uses in your language, the ones you chose for its window (Design, Screens, Announcements, Search, Prev and Next, the plan, Preview and Live).",
   "meta_title": {
     "where": "the browser tab and the search engine result's blue line",
     "does": "names the program, then says in a few words what kind of program it is (free, for worship services, shows words on a projector, for Windows). Starts with 'Artosia:'",
@@ -7,8 +7,13 @@
   },
   "meta_description": {
     "where": "the grey text under a search engine result",
-    "does": "one or two sentences: Artosia puts song words, Bible verses and announcements on a church's projector; it is free, for Windows, and the program itself speaks your language (name it) and nine others",
-    "max": 155
+    "does": "one or two sentences: Artosia puts song words, Bible verses and announcements on a church's projector; it is free, for Windows and Linux, and the program itself speaks your language (name it) and nine others. Whole, natural grammar comes before shortness: a search engine cuts a long line at its end, so say what it is and the systems before the languages",
+    "max": 170
+  },
+  "meta_description_mac": {
+    "where": "the grey text under a search engine result, on the page that has a Mac download",
+    "does": "the line above again with the Mac added: Artosia puts song words, Bible verses and announcements on a church's projector; it is free, for Windows, Linux and Mac, and the program itself speaks your language (name it) and nine others. Whole, natural grammar comes before shortness: a search engine cuts a long line at its end, so say what it is and the systems before the languages",
+    "max": 170
   },
   "nav_what": {
     "where": "top bar link that jumps to the part of the page listing what the program does",
@@ -16,8 +21,8 @@
     "max": 16
   },
   "nav_start": {
-    "where": "top bar link that jumps to the three steps for getting started",
-    "does": "names that part, one word if possible",
+    "where": "top bar link that jumps to the part where each system's download is",
+    "does": "names that part by the act of getting the program, one or two words",
     "max": 10
   },
   "nav_language": {
@@ -37,23 +42,13 @@
   },
   "hero_lead": {
     "where": "one sentence under the headline, grey",
-    "does": "says what Artosia is: free software that puts songs, Bible verses and announcements on a church's projector, run from the Windows computer at the media desk (where the multimedia volunteer sits)",
+    "does": "what Artosia is, in one plain sentence: free software, run from the media team's computer, that shows songs, scripture and announcements to a congregation through a projector; it names no operating system",
     "max": 150
-  },
-  "download_button": {
-    "where": "the main black button; pressing it downloads the program",
-    "does": "says the act and that it is for Windows",
-    "max": 24
   },
   "source_button": {
     "where": "quiet outline button beside the main one; opens the page where the program's source code is public",
     "does": "names what it opens: the source code",
     "max": 14
-  },
-  "release_note": {
-    "where": "small grey line under the download button",
-    "does": "three facts separated by commas: the version, written as the word for version followed by the token {version}; the size of the file the button downloads, written as the token {size} followed by MB; and that it is for Windows 10 and 11. Keep both tokens exactly",
-    "max": 50
   },
   "stage_prev": {
     "where": "button under a picture of the program; steps the picture back one slide. It mirrors the program's own key for the previous slide",
@@ -201,39 +196,9 @@
     "max": 120
   },
   "start_title": {
-    "where": "heading of the part with three numbered steps to get the program running",
-    "does": "getting started takes three steps",
+    "where": "heading of the download part, above one row per system",
+    "does": "the part where you obtain the program, as a short phrase with the program's name",
     "max": 30
-  },
-  "step_download_title": {
-    "where": "step 1, bold word after the number",
-    "does": "the act: download. Same word as nav_download",
-    "max": 12
-  },
-  "step_download_text": {
-    "where": "one short line under step 1",
-    "does": "what the button gives you: a small setup file (the program that installs Artosia) of {size} MB. Keep the token exactly",
-    "max": 50
-  },
-  "step_open_title": {
-    "where": "step 2, bold words after the number",
-    "does": "the act: open the downloaded file, whose name Artosia-setup.exe is written exactly",
-    "max": 26
-  },
-  "step_open_text": {
-    "where": "one sentence under step 2",
-    "does": "the first time, Windows may show a warning that it does not know the publisher; the reason is that the program files do not carry a paid code signature",
-    "max": 130
-  },
-  "step_ready_title": {
-    "where": "step 3, bold words after the number",
-    "does": "what happens last, with nothing for the person to do: Artosia opens by itself",
-    "max": 22
-  },
-  "step_ready_text": {
-    "where": "one or two short sentences under step 3",
-    "does": "what the setup file does by itself: it fetches the program from the internet, puts a shortcut on the desktop and in the Start menu (use the words an Indonesian Windows shows for those two places), and opens Artosia. It needs an internet connection for this",
-    "max": 150
   },
   "zip_note": {
     "where": "one sentence under the second download button, for the less common case; a link follows it",
@@ -256,8 +221,13 @@
     "max": 16
   },
   "fact_runs_text": {
-    "where": "the fact under that label",
-    "does": "three short facts: it is built for Windows 10 and 11, 64-bit; so far it has only been tried on Windows 11; versions for Mac and Linux are planned and have not been tested",
+    "where": "the fact under that label, on the page that has no Mac download yet",
+    "does": "the systems it runs on, as three short facts: Windows versions 10 and 11 only, in their 64-bit form; Linux for ordinary 64-bit computers; the Mac edition does not exist yet",
+    "max": 120
+  },
+  "fact_runs_text_mac": {
+    "where": "the fact under that label, on the page that has a Mac download",
+    "does": "the systems it runs on, as one short list: Windows versions 10 and 11 only, in their 64-bit form; Linux for ordinary 64-bit computers; Macs with an Apple silicon chip (the Mac chip family, not Intel)",
     "max": 120
   },
   "fact_needs_term": {
@@ -349,5 +319,153 @@
     "where": "small footer link to the privacy page, beside the licence link",
     "does": "one word: privacy",
     "max": 14
+  },
+  "version_line": {
+    "where": "small grey line under the download heading, above the rows",
+    "does": "names the program version that every row below downloads: the word for version, then the token {version}. Keep the token exactly",
+    "max": 20,
+    "examples": {
+      "{version}": "0.1.22"
+    }
+  },
+  "os_windows": {
+    "where": "heading of the Windows row",
+    "does": "the operating system's own name as people write it in your language",
+    "max": 12
+  },
+  "os_linux": {
+    "where": "heading of the Linux row",
+    "does": "the operating system's own name as people write it in your language",
+    "max": 12
+  },
+  "os_mac": {
+    "where": "heading of the Mac row",
+    "does": "what people call Apple's computers in your language, as short as it can be",
+    "max": 12
+  },
+  "dl_windows": {
+    "where": "the filled black button of the Windows row, and the main hero button when the visitor uses Windows; pressing it downloads the setup",
+    "does": "the act of downloading, and that it is for Windows",
+    "max": 24
+  },
+  "dl_linux": {
+    "where": "the link of the Linux row; it becomes the filled black button, also shown as the hero button, when the visitor uses Linux; pressing it downloads a package",
+    "does": "the act of downloading, and that it is for Linux",
+    "max": 24
+  },
+  "dl_mac": {
+    "where": "the link of the Mac row; it becomes the filled black button, also shown as the hero button, when the visitor uses a Mac; pressing it downloads a disk image",
+    "does": "the act of downloading, and that it is for Mac",
+    "max": 24
+  },
+  "win_file": {
+    "where": "small grey line under the Windows heading, repeated under the hero button when the visitor uses Windows",
+    "does": "three facts separated by commas: the name of the file the button downloads, written exactly as Artosia-setup.exe; its size as the token {size} followed by MB; and the Windows versions it supports, 10 and 11. Keep the token exactly",
+    "max": 55,
+    "examples": {
+      "{size}": "16"
+    }
+  },
+  "win_do": {
+    "where": "one or two short sentences in the Windows row, above its button",
+    "does": "what to do with the file: open it; and that the first time Windows may warn that it does not know the publisher",
+    "max": 110
+  },
+  "linux_file": {
+    "where": "small grey line under the Linux heading, repeated under the hero button when the visitor uses Linux",
+    "does": "two facts separated by a comma: the name of the file the link downloads, written exactly as Artosia-linux-x86_64.tar.gz; its size as the token {linuxsize} followed by MB. Keep the token exactly",
+    "max": 50,
+    "examples": {
+      "{linuxsize}": "49"
+    }
+  },
+  "linux_do": {
+    "where": "two short sentences in the Linux row, above its link",
+    "does": "how to start: unpack the downloaded archive into the user's home folder and run the program called artosia (written exactly so); then a warning that playing video needs the GStreamer library to be installed on the computer",
+    "max": 130
+  },
+  "mac_file": {
+    "where": "small grey line under the Mac heading, repeated under the hero button when the visitor uses a Mac",
+    "does": "three facts separated by commas: the name of the file the link downloads, written exactly as Artosia-macos-aarch64.dmg; its size as the token {macsize} followed by MB; and that it is for Apple silicon Macs. Keep the token exactly",
+    "max": 60,
+    "examples": {
+      "{macsize}": "58"
+    }
+  },
+  "mac_do": {
+    "where": "sentence in the Mac row, above three numbered steps, ending the way your language introduces a list",
+    "does": "warns that on first opening macOS will refuse to start the program, and that the steps below are done once",
+    "max": 70
+  },
+  "mac_step_1": {
+    "where": "first of three numbered steps in the Mac row",
+    "does": "the reader tries to start Artosia, which macOS then refuses",
+    "max": 40
+  },
+  "mac_step_2": {
+    "where": "second numbered step in the Mac row",
+    "does": "go to the Mac's settings app, into its privacy and security section; use the words a Mac in your language shows for System Settings and for Privacy & Security",
+    "max": 60
+  },
+  "mac_step_3": {
+    "where": "third numbered step in the Mac row",
+    "does": "press the button the Mac shows there that lets Artosia open anyway; use the exact label a Mac in your language shows for Open Anyway",
+    "max": 50
+  },
+  "mac_why": {
+    "where": "small grey sentence under the Mac steps",
+    "does": "the reason for the refusal: the author has not joined Apple's paid membership for developers, so the system has no way to verify the program",
+    "max": 110
+  },
+  "also_linux": {
+    "where": "grey line under the hero buttons when the visitor uses Windows and the page has no Mac download",
+    "does": "tells the reader the program also exists for Linux, with the word for Linux as a link to that row; the link is a pair of markers named after the system, the second closed with a slash, wrapped around the word. Keep both markers exactly. The markers are not counted in the length: only the words a reader sees are",
+    "max": 40,
+    "examples": {
+      "{linux}": "opens the link around the system name",
+      "{/linux}": "closes that link"
+    }
+  },
+  "also_windows": {
+    "where": "grey line under the hero buttons when the visitor uses Linux and the page has no Mac download",
+    "does": "tells the reader the program also exists for Windows, with the word for Windows as a link to that row; the link is a pair of markers named after the system, the second closed with a slash, wrapped around the word. Keep both markers exactly. The markers are not counted in the length: only the words a reader sees are",
+    "max": 40,
+    "examples": {
+      "{windows}": "opens the link around the system name",
+      "{/windows}": "closes that link"
+    }
+  },
+  "also_linux_mac": {
+    "where": "grey line under the hero buttons when the visitor uses Windows and the page has Linux and Mac downloads",
+    "does": "tells the reader the program also exists for two more systems, Linux and Mac, in that order, each system's word a link to its row; each link is a pair of markers named after the system, the second closed with a slash, wrapped around the word. Keep all four markers exactly; they may move to fit the grammar, for instance past a particle. The markers are not counted in the length: only the words a reader sees are",
+    "max": 55,
+    "examples": {
+      "{linux}": "opens the link around the system name",
+      "{/linux}": "closes that link",
+      "{mac}": "opens the link around the system name",
+      "{/mac}": "closes that link"
+    }
+  },
+  "also_windows_mac": {
+    "where": "grey line under the hero buttons when the visitor uses Linux and the page has a Mac download",
+    "does": "tells the reader the program also exists for two more systems, Windows and Mac, in that order, each system's word a link to its row; each link is a pair of markers named after the system, the second closed with a slash, wrapped around the word. Keep all four markers exactly; they may move to fit the grammar, for instance past a particle. The markers are not counted in the length: only the words a reader sees are",
+    "max": 55,
+    "examples": {
+      "{windows}": "opens the link around the system name",
+      "{/windows}": "closes that link",
+      "{mac}": "opens the link around the system name",
+      "{/mac}": "closes that link"
+    }
+  },
+  "also_windows_linux": {
+    "where": "grey line under the hero buttons when the visitor uses a Mac",
+    "does": "tells the reader the program also exists for two more systems, Windows and Linux, in that order, each system's word a link to its row; each link is a pair of markers named after the system, the second closed with a slash, wrapped around the word. Keep all four markers exactly; they may move to fit the grammar, for instance past a particle. The markers are not counted in the length: only the words a reader sees are",
+    "max": 55,
+    "examples": {
+      "{windows}": "opens the link around the system name",
+      "{/windows}": "closes that link",
+      "{linux}": "opens the link around the system name",
+      "{/linux}": "closes that link"
+    }
   }
 }
