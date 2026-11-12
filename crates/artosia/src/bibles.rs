@@ -627,7 +627,16 @@ mod tests {
         assert_eq!(short("INDMADE"), "MADE");
         assert_eq!((short("ZEDONE"), short("ZEDTWO")), ("ZEDONE".to_string(), "ZEDTWO".to_string()));
         assert_eq!(short("OWNFILE"), "OWNFILE");
-        // The caption under a verse says the same.
+        // The caption under a verse says the same, for a Bible loaded as `want_bible` loads it.
+        let caption = |code: &str| {
+            let file = app.bible_files.iter().find(|file| file.code == code).cloned().unwrap_or_else(|| panic!("no {code}"));
+            let mut bible = artosia_core::bible::Bible::open(&file.path.clone().unwrap_or_default()).unwrap_or_else(|e| panic!("{e}"));
+            bible.short = file.short.clone();
+            let reference = artosia_core::bible::Reference { book: 43, chapter: 3, verse: 16, end_chapter: 3, end_verse: 16 };
+            artosia_core::deck::passage_deck(&bible, &reference, None, 1).slides[0].caption.clone()
+        };
+        assert!(caption("INDONESIAN").ends_with(" TB"), "{}", caption("INDONESIAN"));
+        assert!(caption("INDMADE").ends_with(" MADE"), "{}", caption("INDMADE"));
         let path = app.bible_files.iter().find(|file| file.code == "INDONESIAN").and_then(|file| file.path.clone()).unwrap_or_else(|| panic!("no file"));
         assert_eq!(artosia_core::bible::Bible::open(&path).unwrap_or_else(|e| panic!("{e}")).short, "TB");
         let _ = std::fs::remove_dir_all(&folder);
