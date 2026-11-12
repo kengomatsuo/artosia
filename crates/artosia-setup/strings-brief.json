@@ -1,7 +1,7 @@
 [
  {
   "key": "title",
-  "dialog": "The title bar of every setup dialog (the plain Windows task dialog; there is no other window).",
+  "dialog": "The title of the setup's window: its name in the taskbar and for screen readers. The window has no visible title bar; the name is not drawn on it.",
   "moment": "Always visible while any of the setup's dialogs is open.",
   "role": "window title",
   "does": "Names the program that is talking: the little installer for the church's presentation program, so the person knows which program asked.",
@@ -11,7 +11,7 @@
  },
  {
   "key": "install_heading",
-  "dialog": "The progress dialog while installing. This is the large blue line at the top of the dialog, above a line about the current step and a moving bar.",
+  "dialog": "The progress dialog while installing. This is the large bold line on the left of the window, under the status line and the bar.",
   "moment": "The person has just opened the downloaded setup file. Nothing else has been asked of them.",
   "role": "dialog heading",
   "does": "Says that the program is being put on this computer right now.",
@@ -84,7 +84,7 @@
  },
  {
   "key": "failed_heading",
-  "dialog": "The dialog shown when installing failed: the large heading, with a red round error icon on its left, above one paragraph and two buttons.",
+  "dialog": "The dialog shown when installing failed: the large heading, with a yellow round mark with a cross above it, over one paragraph and two buttons.",
   "moment": "Installing stopped before it finished. The person is probably in a hurry to get the program onto a computer at church.",
   "role": "dialog heading",
   "does": "Says plainly that the program did not get installed.",
@@ -214,7 +214,7 @@
  },
  {
   "key": "remove_failed_heading",
-  "dialog": "The dialog shown when removing failed: the large heading with a red error icon, a paragraph and two buttons (try again, close).",
+  "dialog": "The dialog shown when removing failed: the large heading with a yellow round mark with a cross above it, a paragraph and two buttons (try again, close).",
   "moment": "Some of the program's files could not be deleted, so the entry in the installed apps list was kept and the person can run removal again.",
   "role": "dialog heading",
   "does": "Says that the removal did not finish completely.",
@@ -231,5 +231,115 @@
   "budget": 110,
   "variables": [],
   "notes": "Two short sentences."
+ },
+ {
+  "key": "start_tagline",
+  "dialog": "The first screen of the setup's window, on the right, in large bold type under the name Artosia and its mark.",
+  "moment": "The person has just opened the downloaded setup file. The screen offers one filled button, Install, and nothing else to decide.",
+  "role": "headline text",
+  "does": "Says in a few words what the program is for: it puts the words of songs on the projector of a church. Everything else the person needs is on the screen.",
+  "budget": 40,
+  "variables": [],
+  "notes": "The product name does not appear in it. Not a command and not a question; no full stop."
+ },
+ {
+  "key": "start_body",
+  "dialog": "The first screen of the setup's window, one small line under the headline, above the Install button.",
+  "moment": "The person is about to press Install and wonders what it will do to the computer.",
+  "role": "reassurance line",
+  "does": "Tells the person that the program is put on for them only and that no administrator, no special password or permission from the computer's owner, is needed.",
+  "budget": 70,
+  "variables": [],
+  "notes": "One sentence with a full stop. Plain and calm; the person may be an older church volunteer."
+ },
+ {
+  "key": "install",
+  "dialog": "The one filled button on the first screen of the setup's window, at the bottom right.",
+  "moment": "The person has read the screen and is ready to put the program on the computer.",
+  "role": "button label",
+  "does": "Starts the installation when pressed. The button alone makes the first screen a one-step decision.",
+  "budget": 14,
+  "variables": [],
+  "notes": "A single imperative word or two; the same one the person would press on any computer."
+ },
+ {
+  "key": "feature_songs",
+  "dialog": "The first of four short lines in the coloured panel on the left of the first screen, beside a small line icon of a musical note.",
+  "moment": "The person looks over what the program is while deciding to install it.",
+  "role": "feature line",
+  "does": "Says that a song is found by typing any line of it, not only its title.",
+  "budget": 40,
+  "variables": [],
+  "notes": "A short noun phrase, no full stop. Two lines of 190 points at most."
+ },
+ {
+  "key": "feature_bible",
+  "dialog": "The second of four short lines in the coloured panel on the left of the first screen, beside a small line icon of an open book.",
+  "moment": "The person looks over what the program is while deciding to install it.",
+  "role": "feature line",
+  "does": "Says that Bible passages are found either by their reference, such as a book and chapter, or by remembered words from the verse.",
+  "budget": 45,
+  "variables": [],
+  "notes": "A short noun phrase, no full stop. May wrap to two lines."
+ },
+ {
+  "key": "feature_phone",
+  "dialog": "The third of four short lines in the coloured panel on the left of the first screen, beside a small line icon of a mobile phone.",
+  "moment": "The person looks over what the program is while deciding to install it.",
+  "role": "feature line",
+  "does": "Says that the slides can be moved forward and back from a phone, away from the computer at the media desk.",
+  "budget": 35,
+  "variables": [],
+  "notes": "A short noun phrase, no full stop."
+ },
+ {
+  "key": "feature_projector",
+  "dialog": "The fourth of four short lines in the coloured panel on the left of the first screen, beside a small line icon of a screen.",
+  "moment": "The person looks over what the program is while deciding to install it.",
+  "role": "feature line",
+  "does": "Says that the words on the wall stay up even if the window where the operator works stops, because the projector part is a separate program.",
+  "budget": 40,
+  "variables": [],
+  "notes": "A short noun phrase, no full stop. May wrap to two lines."
+ },
+ {
+  "key": "wait_body",
+  "dialog": "The progress screen of the setup's window, on the left under the heading, below the bar.",
+  "moment": "The files are arriving or being put in place; this takes from half a minute to several minutes.",
+  "role": "reassurance",
+  "does": "Asks the person to leave the window as it is, and promises that the program begins by itself once everything is done.",
+  "budget": 65,
+  "variables": [],
+  "notes": "Two short sentences, each with a full stop. No instruction to wait in front of the computer."
+ },
+ {
+  "key": "wait_remove_body",
+  "dialog": "The progress screen of the setup's window while removing, on the left under the heading.",
+  "moment": "The program's files and shortcuts are being deleted; this takes a few seconds.",
+  "role": "reassurance",
+  "does": "Asks the person to leave the window as it is until the removal has ended and the window goes away.",
+  "budget": 55,
+  "variables": [],
+  "notes": "One sentence with a full stop."
+ },
+ {
+  "key": "done_heading",
+  "dialog": "The last screen of a successful install, centred, in large bold type under a round tick.",
+  "moment": "The files are in place and the setup has just started the program.",
+  "role": "heading line",
+  "does": "States that the program is now on the computer and ready.",
+  "budget": 30,
+  "variables": [],
+  "notes": "A present-tense statement, no full stop."
+ },
+ {
+  "key": "done_body",
+  "dialog": "The last screen of a successful install, centred, one small line under the heading. The window closes by itself about a second and a half later.",
+  "moment": "The program's own window is just appearing on the screen.",
+  "role": "status line",
+  "does": "Says that the program is starting right now, so the person need not look for it or press anything.",
+  "budget": 40,
+  "variables": [],
+  "notes": "One short sentence with a full stop."
  }
 ]

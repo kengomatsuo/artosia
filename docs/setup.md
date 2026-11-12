@@ -1,15 +1,15 @@
 # Artosia-setup.exe
 
-A small per-user setup for Windows. It carries no program files: it fetches the signed release with `artosia-update`, so it is a download of about 1.7 MB and the same file works for every release. Plan and sources: [plans/artosia/setup.md](plans/artosia/setup.md). Code: `crates/artosia-setup`.
+A small per-user setup for Windows. It carries no program files: it fetches the signed release with `artosia-update`, so it is a download of about 15 MB (its own window and pictures are in it) and the same file works for every release. Plan and sources: [plans/artosia/setup.md](plans/artosia/setup.md). Code: `crates/artosia-setup`.
 
 ## What it does
 
-`Artosia-setup.exe` with no argument installs:
+`Artosia-setup.exe` with no argument opens its window on the start screen and installs after Install is pressed (see "What a person sees"):
 
 1. If `artosia.exe` is already in the install folder, nothing is downloaded: the shortcuts and the uninstall entry are written again, then Artosia starts.
 2. Otherwise it asks the feed for the newest release (`artosia_update::check(feed, "0.0.0")`), downloads into `<install>\update` with a progress bar (`download`, which resumes a cut-off download and skips files already there), swaps the files in (`apply_on_start`), keeps a copy of itself as `<install>\Artosia-setup.exe`, writes `Artosia.lnk` in the Start menu and on the desktop, writes the uninstall entry last, starts `artosia.exe` and exits.
 
-Flags: `--silent` (no dialog), `--no-start`, `--uninstall`. The feed is `artosia_update::RELEASES` unless `ARTOSIA_UPDATE_FEED` says otherwise; the app reads the same constant (`artosia_update::feed_address`).
+Flags: `--silent` (no window and no dialog), `--no-start`, `--uninstall`, `--dialogs` (the task dialogs instead of the window), `--lang id` or `--lang en` (the language, instead of the Windows display language). Two are for tests: `--show-window` is the window process itself (the default run starts it as a child, see "The window and its fallback"; Rune's own `--snap`, `--scene` and `--theme` work with it and render a screen with no window and no work done) and `--window-fail` makes that process give up at once. The feed is `artosia_update::RELEASES` unless `ARTOSIA_UPDATE_FEED` says otherwise; the app reads the same constant (`artosia_update::feed_address`).
 
 ## Where things go
 
@@ -45,8 +45,8 @@ First start confirms the install: after `apply_on_start` the journal is in `Tria
 
 `--uninstall` (or the entry in Settings > Installed apps):
 
-1. A confirmation with focus on Cancel.
-2. If any exe in the install folder is running (it cannot be opened for writing: sharing violation), a dialog asks the person to close Artosia and its projector window and waits, checking each second. Nothing is ever killed. `--silent` with a program running exits with code 5.
+1. The question (S05) with focus on Cancel.
+2. If any exe in the install folder is running (it cannot be opened for writing: sharing violation), S06 asks the person to close Artosia and its projector window and waits, checking each second. Nothing is ever killed. `--silent` with a program running exits with code 5.
 3. Both shortcuts, then every file under the install folder except the running setup exe and anything that is, holds or sits inside a data folder (`%APPDATA%\artosia`, `ARTOSIA_DATA`). A refused delete is tried again four times 200 ms apart (antivirus holds a file just after scanning it; Velopack #1129). If any file stays, the entry stays and the person can run it again.
 4. The registry key, last.
 5. The setup exe cannot delete itself while running, so a hidden `cmd /C ping -n 4 127.0.0.1 >nul & del /f /q "<exe>" & rmdir "<install>"` does it after exit (Velopack's method, `self_delete.rs`). `rmdir` has no `/s`, so a folder still holding data is never removed. Proved on this PC with the release build: the install folder was gone about six seconds after exit. rustup's delete-on-close copy was not tried.
@@ -59,9 +59,33 @@ The install folder is not rune's state and log folder (`%LOCALAPPDATA%\artosia`)
 
 ## What a person sees
 
-Only the task dialog (`TaskDialogIndirect`), no window of ours: progress (bar, Cancel), failure (Try again, Close), confirmation (Remove, Cancel), close-first (Cancel). The exe carries `assets/brand/artosia.ico` as its icon resource (id 1, by `build.rs`), so the file in Downloads shows it. Every dialog's title bar and taskbar button get it (`WM_SETICON` on creation), and the progress, confirmation and close-first dialogs use it as their main icon (`TDF_USE_HICON_MAIN`). A failure dialog keeps the system's error icon as its main icon, because there the icon says what the dialog is. The manifest (`crates/artosia-setup/setup.manifest`) asks for common controls 6 (without it `TaskDialogIndirect` is not found when the file starts), per-monitor DPI, long paths and UTF-8. Strings: `src/strings.rs` (English), `strings-id.json` (Indonesian, empty: falls back to English), briefs in `strings-brief.json`; the Windows display language picks (`GetUserDefaultUILanguage`, primary language Indonesian = 0x21). A test holds both tables, the briefs and the house rules (no dash, middle dot, emoji or exclamation mark; sentence case) together; it passes with an empty Indonesian table and fails once a table is partial.
+The setup's own window, drawn with Rune (the UI library the operator uses): 700 by 440 points, no title bar, centred in the work area of the main screen, movable by dragging any part of it that is not a button, with its own close cross, the window title "Artosia setup" for screen readers, and Artosia's mark on the taskbar. Light or dark follows the Windows setting. The size is in points: at 100, 125, 150 and 200 percent Windows scaling it is 700 by 440, 875 by 550, 1050 by 660 and 1400 by 880 pixels (renders at those scales are the proof; in a real window only this PC's 125 percent was seen, at 875 by 550).
 
-Cancel while downloading closes the dialog and exits; downloaded parts stay in `<install>\update` and the next run resumes them (the updater has no cancel call, so the worker is simply left to the process exit). Cancel is greyed out once the swap starts.
+Where it came from: the owner chose it on 2026-11-12 from four directions drawn from real installers (`~/Shared/inspo/artosia-installer/`: `README.md`, `directions.md`, `contact-sheet.png`, `renders/`; `crates/artosia-setup/examples/looks.rs` still draws all four). The chosen one, "Split panel and one button", copies Opera's web installer.
+
+| screen | what it shows | source |
+|---|---|---|
+| S01 Start | a brown panel with four short lines and line icons on the left; on the right the mark and name, "Song words on the projector", one sentence, one filled Install button at the foot | copied from Opera (`products/e-browsers-tools/24-opera-gfg-install.png`); Opera's legal line and Options link are left out because the setup has neither |
+| S02 Progress | the name, the step the updater is on (looking for the version, "Downloading, 27 of 161 MB" with the percent beside it, setting up), one thin bar, "Installing Artosia" with a sentence, the real Artosia window cut off at the lower right, a quiet Cancel | copied from Opera (`25-opera-gfg-extracting.png`); Cancel is added, because Opera shows none and the window needs a way to stop; it stays on screen but dim once the files are being swapped in |
+| S03 Failure | a yellow disc with a cross, "Artosia was not installed", what happened in words, Close and Try again | restyled (Mobbin `s03-glassdoor-didnt-upload-try-again.webp`); Opera has no failure screen |
+| S04 Done | a tick, "Artosia is installed", "Artosia is opening now."; Artosia starts and the window closes by itself 1.6 seconds later | restyled (Mobbin `s04-air-launching-app.webp`) |
+| S05 Remove | "Remove Artosia?", what goes and what stays, Cancel (focused) and Remove | restyled (Mobbin `s05-babbel-this-will-this-will-not.webp`) |
+| S06 Close first | a ring with the mark, "Close Artosia first", the sentence, Cancel; the window looks each second and goes on by itself | restyled (Mobbin `s02-base-processing-do-not-close.webp`) |
+| removing (not in the direction) | S02's layout with "Removing Artosia" and a sliding bar, no Cancel; a failed removal is S03's layout with the removal's own words | made for this window |
+
+The screens, and which follows which, are a pure machine, `src/flow.rs`, held by `tests/flow.rs`; the drawing is `src/window.rs`, a port of the `opera` function of the example (checked by rendering both: S01, S03, S04, S05 and S06 are pixel for pixel the same in light and dark; S02 differs only where it shows live figures, 16 percent where the example wrote 17 by hand, and in how the cropped product picture was resampled). No red anywhere: red means "on the projector" in this product, and yellow marks a failure. Colours are the brand's (Crust, Ink, Crumb) with warm neutrals, every text and button pair held at 4.5 to 1 by a test.
+
+Keys: Enter presses the filled button, or the button that has focus; Escape cancels or closes; Tab and Shift Tab move a visible focus ring; Alt+F4 closes. Cancel while downloading closes the window and exits; downloaded parts stay in `<install>\update` and the next run resumes them (the updater has no cancel call, so the worker is simply left to the process exit). Once the swap has started, Cancel, Escape and the cross do nothing, and a window closed some other way (Alt+F4) lets the work finish before the process ends. Removing has no Cancel at all.
+
+If Artosia is already installed the window is the same: S01 with Install. Pressing it shows S02 for the instant it takes to write the shortcuts and the entry (the first step line, nothing is downloaded), then S04, and Artosia starts, as before.
+
+### The window and its fallback
+
+A plain run is a parent that starts the same exe with `--show-window` and waits. The child draws the window and ends with one of the codes the flows use (0, 1, 2, 5). Any other end (70, the exit the UI library's failure to start gives, a crash, an abort, which is what a broken graphics driver gives with `panic = "abort"`) makes the parent run the task-dialog flow instead (`src/dialog.rs`: progress, failure, confirmation, close-first), so an old PC still installs. `--dialogs` goes straight there; `--silent` never shows a window or a dialog. The decision is `flow::run_front` with its tests; a forced run (`--window-fail`) showed the dialog on screen and installed in a test root. The manifest keeps asking for common controls 6, because the dialogs need it. Rune draws with the GPU the computer has, or Windows' own software one when it has none, so the fallback is for a broken driver or a library failure more than for an old PC.
+
+The exe carries `assets/brand/artosia.ico` as its icon resource (id 1, by `build.rs`), so the file in Downloads shows it; the window sets the taskbar mark from `artosia-icon-256.png`. Strings: `src/strings.rs` (English), `strings-id.json` (Indonesian), briefs in `strings-brief.json`; the Windows display language picks (`GetUserDefaultUILanguage`, primary language Indonesian = 0x21). The window's own strings (the tagline, the four lines, Install, the two wait lines, the done screen) have no Indonesian yet: they show in English until a writer has written them from their briefs, and `indonesian_is_empty_or_complete_and_follows_the_same_rules` fails until then. The product picture on S02 is one of four embedded renders (light and dark, English and Indonesian), made from `site/img` by `assets/make-previews.ps1`, cropped to the part the window shows (about 66 KB each).
+
+A render for a check, with no window and no work (it never touches a real folder): `Artosia-setup.exe --show-window --snap out.png --scene S02 --theme light`; scenes are S01 to S06, `S02-setting-up`, `removing` and `remove-failed`, and `--lang id` and `--fail damaged` show the Indonesian words and the longest failure sentence.
 
 ## The traps from the research
 
@@ -90,14 +114,16 @@ A release that changed none of them can reuse the previous `Artosia-setup.exe`. 
 
 ## Size
 
-`cargo build --profile setup -p artosia-setup` is the build to ship. Measured on this PC (toolchain 1.99.1):
+`cargo build --profile setup -p artosia-setup` is the build to ship. Measured on this PC (toolchain 1.99.1), with the window:
 
 | build | bytes |
 |---|---|
-| `--release` (with the package override below) | 2,894,848 |
-| `--profile setup` (everything built for size, lto, abort) | 1,681,920 |
+| `--release` (with the package override below) | @RELEASE@ |
+| `--profile setup` (everything built for size, lto, abort) | 15,435,264 |
 
-Cargo allows a per-package override of `opt-level`, `codegen-units`, `strip`, `debug`, `debug-assertions`, `overflow-checks`, `incremental` and `split-debuginfo`, and refuses `lto`, `panic` and `rpath` there ("may not be specified in a `package` profile", checked by trial). Those three belong to the whole link, and a `[profile.release]` change would hit every other program, so the size build is its own profile, `setup`, which inherits `release`. The package override in `[profile.release.package.artosia-setup]` only shrinks the setup's own few hundred lines; the dependencies (ureq, rustls, ring, windows) stay at opt-level 3 there, which is why the `setup` profile is the real saving.
+Before the window (task dialogs only) the same two builds were 2,894,848 and 1,681,920 bytes. Rune and the graphics stack it brings (wgpu, winit, parley with its word dictionaries, resvg, accesskit, the embedded Inter font) are almost all of the difference; the pictures in the window are about 0.4 MB of it. `rune.workspace = true` takes Rune's default features, which on Windows are accessibility, the embedded font and SVG, all of which the window uses.
+
+Cargo allows a per-package override of `opt-level`, `codegen-units`, `strip`, `debug`, `debug-assertions`, `overflow-checks`, `incremental` and `split-debuginfo`, and refuses `lto`, `panic` and `rpath` there ("may not be specified in a `package` profile", checked by trial). Those three belong to the whole link, and a `[profile.release]` change would hit every other program, so the size build is its own profile, `setup`, which inherits `release`. The package override in `[profile.release.package.artosia-setup]` only shrinks the setup's own few hundred lines; the dependencies stay at opt-level 3 there, which is why the `setup` profile is the real saving. Rune is now a normal dependency of the crate, so both profiles build it; nothing in the root `Cargo.toml` changed for it, and the `setup` profile's `panic = "abort"` is what makes the child-process fallback necessary (a panic cannot be caught).
 
 ## Copied from whom
 
@@ -114,11 +140,13 @@ All four are MIT (rustup MIT or Apache-2.0); this project is GPL-3.0-or-later. S
 - A real install on the real folders, the real desktop and the real Start menu: every run used a test root. The first real run is the owner's.
 - A OneDrive-redirected Desktop, a profile with non-ASCII characters in the real `%LOCALAPPDATA%` (the roots in tests are non-ASCII, the real folders are not).
 - Microsoft Defender SmartScreen and antivirus reactions to the downloaded file (mark of the web); no firewall prompt appeared on the loopback runs.
-- Indonesian display language (no Indonesian text exists yet), a display language other than English.
+- Indonesian display language in a real window: the window's own strings have no Indonesian yet; the old ones were rendered (`--lang id`, longest sentences), not run.
 - Starting `artosia.exe` after install (forbidden here; the first start is simulated by its two updater calls).
-- High-DPI scaling (the manifest asks for per-monitor DPI; only 100 % was looked at).
+- High-DPI scaling in a real window: only this PC's 125 percent was seen (875 by 550 pixels); 100, 150 and 200 percent are renders.
+- A PC with no usable graphics adapter or a broken driver: the fallback was forced (`--window-fail`), not met.
+- More than one screen: the window centres on the main screen's work area.
 - The updater's own cancel: there is none, see above.
-- Timing of the dialog's timer path: five ticks a second, each a few string builds and up to three window messages to its own thread; not measured, it has no per-frame work.
+- Timing: the dialogs' timer path (five ticks a second) was not measured. The window's progress path was: a report from the updater costs about 21 nanoseconds (one key, one compare), and a whole download wakes the window about 260 times; a frame of the progress screen took 8.7 ms on the CPU in the setup build, headless.
 
 ## Why it is unsigned (owner, 2026-11-12)
 

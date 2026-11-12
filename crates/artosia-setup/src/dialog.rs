@@ -151,15 +151,7 @@ pub fn progress<T: Send + 'static>(
         })
     };
 
-    let text_of = |step: Step| match step {
-        Step::Checking => strings.get(Key::StepChecking).to_string(),
-        Step::Downloading { done, total } => {
-            let megabytes = |bytes: u64| (bytes / 1_048_576).to_string();
-            strings.fill(Key::StepDownloading, &[("done", &megabytes(done)), ("total", &megabytes(total))])
-        }
-        Step::SettingUp => strings.get(Key::StepSettingUp).to_string(),
-        Step::Removing => strings.get(Key::StepRemoving).to_string(),
-    };
+    let text_of = |step: Step| step.text(strings);
     let shown = RefCell::new(text_of(first));
     // None before the first tick; Some(true) while the bar fills, Some(false) while it slides.
     let filling = Cell::new(None::<bool>);

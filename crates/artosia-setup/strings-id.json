@@ -21,5 +21,16 @@
   "close_first_heading": "Tolong tutup Artosia dulu",
   "close_first_body": "Tutup jendela utama dan jendela proyektor. Setelah itu penghapusan lanjut sendiri.",
   "remove_failed_heading": "Artosia belum terhapus sepenuhnya",
-  "remove_failed_body": "Beberapa berkas tidak bisa dihapus. Tutup Artosia dan jendela folder yang membukanya, lalu coba lagi."
+  "remove_failed_body": "Beberapa berkas tidak bisa dihapus. Tutup Artosia dan jendela folder yang membukanya, lalu coba lagi.",
+  "start_tagline": "Lirik lagu tayang di proyektor gereja",
+  "start_body": "Dipasang untuk kamu saja, tanpa perlu administrator atau kata sandi.",
+  "install": "Pasang",
+  "feature_songs": "Pencarian lagu dari baris mana pun",
+  "feature_bible": "Pencarian ayat lewat rujukan atau kata",
+  "feature_phone": "Slide diganti dari ponsel",
+  "feature_projector": "Lirik tetap tayang walau operator macet",
+  "wait_body": "Biarkan jendela ini. Artosia terbuka sendiri setelah selesai.",
+  "wait_remove_body": "Biarkan jendela ini sampai penghapusan selesai.",
+  "done_heading": "Artosia terpasang dan siap",
+  "done_body": "Artosia sedang dibuka sendiri."
 }

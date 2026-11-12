@@ -3,6 +3,7 @@
 //! the same file serves every release. See docs/setup.md.
 
 pub mod entry;
+pub mod flow;
 pub mod places;
 pub mod strings;
 

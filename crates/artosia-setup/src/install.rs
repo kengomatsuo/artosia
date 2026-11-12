@@ -19,7 +19,7 @@ use artosia_update::{Applied, TrustedKeys, UpdateError, apply_on_start_with, che
 use crate::entry;
 use crate::places::Places;
 use crate::shortcut;
-use crate::strings::Key;
+use crate::strings::{Key, Strings};
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum Step {
@@ -27,6 +27,29 @@ pub enum Step {
     Downloading { done: u64, total: u64 },
     SettingUp,
     Removing,
+}
+
+impl Step {
+    /// How far a download is, in whole percent; None when there is no size to say it by.
+    pub fn percent(self) -> Option<u8> {
+        match self {
+            Step::Downloading { done, total } if total > 0 => Some((done.min(total) * 100 / total) as u8),
+            _ => None,
+        }
+    }
+
+    /// The status line for this step, in the person's language.
+    pub fn text(self, strings: &Strings) -> String {
+        match self {
+            Step::Checking => strings.get(Key::StepChecking).to_string(),
+            Step::Downloading { done, total } => {
+                let megabytes = |bytes: u64| (bytes / 1_048_576).to_string();
+                strings.fill(Key::StepDownloading, &[("done", &megabytes(done)), ("total", &megabytes(total))])
+            }
+            Step::SettingUp => strings.get(Key::StepSettingUp).to_string(),
+            Step::Removing => strings.get(Key::StepRemoving).to_string(),
+        }
+    }
 }
 
 /// What went wrong, in the few kinds the person can act on.

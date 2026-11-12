@@ -25,3 +25,7 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+## What the window links in (SETUPUI1)
+
+The setup's window (`src/window.rs`) is drawn by Rune, https://github.com/anomalyco/rune (MIT, Copyright (c) Anomaly), which carries its own dependencies (wgpu, winit, parley, resvg, and others, each under its own permissive licence in its crate). Rune embeds the Inter typeface 4.1 (SIL Open Font License 1.1). The wordmark in the pictures is Vollkorn by Friedrich Althausen as outlines (SIL Open Font License 1.1, see `docs/brand.md`). The window's layout follows the shapes of Opera's web installer, written again; nothing of Opera's was copied.

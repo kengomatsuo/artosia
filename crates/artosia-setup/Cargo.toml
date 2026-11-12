@@ -13,12 +13,11 @@ path = "src/main.rs"
 artosia-update = { path = "../artosia-update" }
 serde_json = "1"
 
-# Only the example `looks` (the four window directions, SETUPUI1) draws with Rune. A dev-dependency
-# is never built into Artosia-setup.exe.
-[dev-dependencies]
-rune.workspace = true
-
 [target.'cfg(windows)'.dependencies]
+# The setup's own window (src/window.rs, SETUPUI1) and the example `looks`, which draws all four
+# directions it was chosen from. Default features: on Windows they are accessibility, the embedded
+# font and SVG, all of which the window uses.
+rune.workspace = true
 windows = { version = "0.62", features = [
     "Win32_Foundation",
     "Win32_Security",

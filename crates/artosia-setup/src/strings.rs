@@ -48,6 +48,17 @@ table! {
     CloseFirstBody "close_first_body" "Artosia is open. Close it, with its projector window, and removing goes on by itself.";
     RemoveFailedHeading "remove_failed_heading" "Artosia was not fully removed";
     RemoveFailedBody "remove_failed_body" "Some files could not be deleted. Close Artosia and any folder open on it, then try again.";
+    StartTagline "start_tagline" "Song words on the projector";
+    StartBody "start_body" "Artosia installs for you alone and needs no administrator.";
+    Install "install" "Install";
+    FeatureSongs "feature_songs" "Songs found by any line";
+    FeatureBible "feature_bible" "Bible verses by reference or by words";
+    FeaturePhone "feature_phone" "A remote on your phone";
+    FeatureProjector "feature_projector" "A projector that keeps running";
+    WaitBody "wait_body" "Keep this window open. Artosia starts when it is ready.";
+    WaitRemoveBody "wait_remove_body" "Keep this window open until Artosia is removed.";
+    DoneHeading "done_heading" "Artosia is installed";
+    DoneBody "done_body" "Artosia is opening now.";
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]

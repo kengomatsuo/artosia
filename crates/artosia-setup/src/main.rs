@@ -1,8 +1,16 @@
 //! Artosia-setup.exe. No arguments installs; `--uninstall` removes; `--refresh [version]` rewrites
-//! the installed-apps entry silently and does nothing when there is none. `--silent` shows no
-//! dialog, and `--no-start` does not start Artosia afterwards. Under a test root (`ARTOSIA_SETUP_ROOT`)
-//! Artosia is never started. A failure's technical cause goes to `Artosia-setup.log` in the
-//! temporary folder, because a window-less program has nowhere else to say it.
+//! the installed-apps entry silently and does nothing when there is none. `--silent` shows
+//! nothing, and `--no-start` does not start Artosia afterwards. Under a test root
+//! (`ARTOSIA_SETUP_ROOT`) Artosia is never started. A failure's technical cause goes to
+//! `Artosia-setup.log` in the temporary folder, because a program with no console has nowhere
+//! else to say it.
+//!
+//! What a person sees is the setup's own window (`window.rs`), run as a child of the same exe
+//! (`--show-window`) so that a window that cannot open (no usable graphics adapter, the UI library
+//! failing, an abort) leaves the parent to run the task dialogs (`dialog.rs`) instead and an old
+//! PC still installs. `--dialogs` goes straight to the dialogs, `--lang id` or `--lang en` picks
+//! the language the way the Windows display language otherwise does, and `--window-fail` makes
+//! the window process give up at once, to prove that fallback.
 
 #![cfg_attr(windows, windows_subsystem = "windows")]
 
@@ -14,14 +22,16 @@ fn main() {
 
 #[cfg(windows)]
 mod dialog;
+#[cfg(windows)]
+mod window;
 
 #[cfg(windows)]
 fn main() {
-    std::process::exit(flow::run());
+    std::process::exit(launch::run());
 }
 
 #[cfg(windows)]
-mod flow {
+mod launch {
     use std::path::{Path, PathBuf};
 
     use artosia_setup::install::{self, Failed, Step};
@@ -30,7 +40,8 @@ mod flow {
     use artosia_update::TrustedKeys;
     use windows::Win32::Globalization::GetUserDefaultUILanguage;
 
-    use crate::dialog;
+    use crate::{dialog, window};
+    use artosia_setup::flow::{Mode, run_front};
 
     const FAILED: i32 = 1;
     const BROKEN: i32 = 2;
@@ -52,7 +63,11 @@ mod flow {
         };
         let Ok(self_exe) = std::env::current_exe() else { return log("no path for this exe", BROKEN) };
         // SAFETY: a plain query with no arguments.
-        let language = Language::from_lang_id(unsafe { GetUserDefaultUILanguage() });
+        let language = match args.iter().position(|arg| arg == "--lang").and_then(|at| args.get(at + 1)).map(String::as_str) {
+            Some("id") => Language::Indonesian,
+            Some("en") => Language::English,
+            _ => Language::from_lang_id(unsafe { GetUserDefaultUILanguage() }),
+        };
         let run = Run { places, strings: Strings::new(language), silent: has("--silent"), self_exe };
         if let Some(at) = args.iter().position(|arg| arg == "--refresh") {
             // Silent: the app runs this once after the first confirmed start of a new version.
@@ -62,27 +77,74 @@ mod flow {
                 Err(failed) => log(&failed.detail, FAILED),
             };
         }
-        if has("--uninstall") {
-            return match uninstall(&run) {
-                Ok(code) => code,
+        let uninstalling = has("--uninstall");
+        // The window process itself, or a headless render of it (`--snap`): no fallback from here.
+        if has("--show-window") || rune::is_headless() {
+            return in_window(&run, uninstalling, has("--no-start"), &args);
+        }
+        let dialogs = |run: &Run| {
+            if uninstalling {
+                return match uninstall(run) {
+                    Ok(code) => code,
+                    Err(error) => log(&format!("dialog: {error}"), BROKEN),
+                };
+            }
+            match install(run) {
+                Ok(Ok(())) if !has("--no-start") && !run.places.test_root => start(&run.places.app_exe()),
+                Ok(Ok(())) => 0,
+                Ok(Err(code)) => code,
                 Err(error) => log(&format!("dialog: {error}"), BROKEN),
-            };
+            }
+        };
+        if run.silent || has("--dialogs") {
+            return dialogs(&run);
         }
-        match install(&run) {
-            Ok(Ok(())) if !has("--no-start") && !run.places.test_root => start(&run.places.app_exe()),
-            Ok(Ok(())) => 0,
-            Ok(Err(code)) => code,
-            Err(error) => log(&format!("dialog: {error}"), BROKEN),
+        // The window first, as a child of this exe; its end tells whether it ever worked.
+        run_front(
+            || std::process::Command::new(&run.self_exe).args(&args).arg("--show-window").status().ok().and_then(|status| status.code()),
+            || dialogs(&run),
+        )
+    }
+
+    /// The window's own run. 70 (the "software" exit of sysexits) when the window could not start.
+    fn in_window(run: &Run, uninstalling: bool, no_start: bool, args: &[String]) -> i32 {
+        const WINDOW_FAILED: i32 = 70;
+        if args.iter().any(|arg| arg == "--window-fail") {
+            return log("the window was forced to fail", WINDOW_FAILED);
         }
+        let shown_failure = match args.iter().position(|arg| arg == "--fail").and_then(|at| args.get(at + 1)).map(String::as_str) {
+            Some("damaged") => artosia_setup::install::Kind::Damaged,
+            Some("disk") => artosia_setup::install::Kind::Disk,
+            _ => artosia_setup::install::Kind::Network,
+        };
+        // A headless render (`--snap`) only draws; whatever it is made to do goes to a folder of its own, never the real ones.
+        let headless = rune::is_headless();
+        let config = window::Config {
+            mode: if uninstalling { Mode::Uninstall } else { Mode::Install },
+            language: run.strings.language(),
+            places: if headless { Places::under(&std::env::temp_dir().join("artosia-setup-headless")) } else { run.places.clone() },
+            self_exe: run.self_exe.clone(),
+            feed: artosia_update::feed_address(None).unwrap_or_default(),
+            start: !no_start && !run.places.test_root && !headless,
+            shown_failure,
+        };
+        match window::run(config) {
+            Ok(code) => code,
+            Err(error) => log(&format!("window: {error}"), WINDOW_FAILED),
+        }
+    }
+
+    pub fn log_cause(text: &str) {
+        let _ = std::fs::write(std::env::temp_dir().join("Artosia-setup.log"), text);
     }
 
     /// Records a cause for whoever helps, and returns the exit code.
     fn log(text: &str, code: i32) -> i32 {
-        let _ = std::fs::write(std::env::temp_dir().join("Artosia-setup.log"), text);
+        log_cause(text);
         code
     }
 
-    fn start(app: &Path) -> i32 {
+    pub fn start(app: &Path) -> i32 {
         let started = std::process::Command::new(app).current_dir(app.parent().unwrap_or(Path::new("."))).spawn();
         if started.is_ok() { 0 } else { log("could not start Artosia", FAILED) }
     }
