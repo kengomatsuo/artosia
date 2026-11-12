@@ -6,6 +6,11 @@
 # Before running: set the version in crates/artosia/Cargo.toml, commit, and be signed in to
 # the GitHub CLI (gh auth status). The private signing key is read from the file named by
 # ARTOSIA_KEY_FILE, or ~/.artosia-keys/update-signing.key; it is never printed.
+#
+# With a code-signing certificate on this PC, set ARTOSIA_SIGN_SHA1 to its thumbprint and
+# ARTOSIA_TIMESTAMP_URL to the issuer's RFC 3161 time stamp server: Artosia's own programs
+# and the setup are then signed, so Windows names the publisher. Without them the release
+# is unsigned, as every release before the certificate was.
 # The release is uploaded as a draft and published last, so no copy sees half of it.
 set -euo pipefail
 
@@ -34,6 +39,25 @@ else
     echo "This release is built WITHOUT speech recognition."
 fi
 
+# Signs the given files with the certificate named by ARTOSIA_SIGN_SHA1 and checks each
+# signature; does nothing when no certificate is named. One call for all files, so a card
+# asks for its PIN once (SignTool: Microsoft's page, read 2026-11-12).
+sign() {
+    [ -n "${ARTOSIA_SIGN_SHA1:-}" ] || return 0
+    [ -n "${ARTOSIA_TIMESTAMP_URL:-}" ] || { echo "ARTOSIA_SIGN_SHA1 is set without ARTOSIA_TIMESTAMP_URL"; exit 1; }
+    local tool
+    tool=$(ls "/c/Program Files (x86)/Windows Kits/10/bin/"*/x64/signtool.exe 2>/dev/null | sort -V | tail -1)
+    [ -n "$tool" ] || { echo "No signtool.exe: install the Windows SDK's signing tools"; exit 1; }
+    "$tool" sign //sha1 "$ARTOSIA_SIGN_SHA1" //fd SHA256 //tr "$ARTOSIA_TIMESTAMP_URL" //td SHA256 \
+        //d "Artosia" //du "https://artosia.matsuokengo.com" "$@"
+    "$tool" verify //pa "$@"
+}
+if [ -n "${ARTOSIA_SIGN_SHA1:-}" ]; then
+    echo "This release is SIGNED."
+else
+    echo "This release is UNSIGNED: no certificate is named."
+fi
+
 # The programs, and a second projector built without video for a computer with no GStreamer.
 cargo build --release -p artosia -p artosia-output -p artosia-stream --features "$features"
 cargo build --release -p artosia-output --target-dir target/plain
@@ -47,6 +71,9 @@ cp target/release/artosia.exe target/release/artosia-output.exe target/release/a
 cp target/plain/release/artosia-output.exe "$programs/artosia-output-plain.exe"
 # The part of GStreamer the programs need, so video plays on a computer that has none installed.
 python tools/gstreamer-subset.py --copy "$programs/gstreamer"
+# Our own programs are signed before the feed is built, because the feed records each
+# file's hash. GStreamer's files keep whatever signature they came with.
+sign "$programs/artosia.exe" "$programs/artosia-output.exe" "$programs/artosia-stream.exe" "$programs/artosia-output-plain.exe"
 
 target/release-tool/release/artosia-release.exe build --dir "$programs" --version "$version" --out "$feed" --notes "$notes" --key-file "$key"
 
@@ -61,7 +88,12 @@ powershell -NoProfile -Command "Compress-Archive -Path '$programs/*' -Destinatio
 setup="dist/$version/Artosia-setup.exe"
 cargo build --profile setup -p artosia-setup
 built="target/setup/Artosia-setup.exe"
-if [ "${ARTOSIA_NEW_SETUP:-0}" != "1" ] && gh release download --pattern Artosia-setup.exe --dir "dist/$version" 2>/dev/null; then
+if [ -n "${ARTOSIA_SIGN_SHA1:-}" ]; then
+    # A signed setup carries its trust in the certificate, so each release ships a fresh one.
+    cp "$built" "$setup"
+    sign "$setup"
+    echo "This release carries a newly built, signed setup."
+elif [ "${ARTOSIA_NEW_SETUP:-0}" != "1" ] && gh release download --pattern Artosia-setup.exe --dir "dist/$version" 2>/dev/null; then
     if cmp -s "$setup" "$built"; then
         echo "The setup is the last release's file, and a new build gives the same bytes."
     else

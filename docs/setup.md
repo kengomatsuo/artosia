@@ -202,3 +202,17 @@ on that first download lasts until the one setup file has been downloaded often 
 which is why the file is kept unchanged. The Microsoft Store is the channel with no warning;
 the owner wants a Store edition once the developer account exists (2026-11-12).
 
+## Signing (owner's choice, 2026-11-12)
+
+After seeing the download warning the owner chose Certum's open-source certificate: issued
+to the person, shown by Windows as "Open Source Developer" with the owner's name, valid for
+any of the owner's open-source programs and revoked if used on paid software (Certum's own
+pages, saved in `~/Shared/research/artosia-code-signing/`). Buying it and the identity check
+are the owner's.
+
+`tools/publish.sh` signs when `ARTOSIA_SIGN_SHA1` (the certificate's thumbprint) and
+`ARTOSIA_TIMESTAMP_URL` are set: Artosia's four programs before the feed is hashed, then a
+freshly built setup, each checked with `signtool verify /pa`. With a certificate the trust
+sits in the publisher, so the setup no longer has to be the same file in every release.
+Until the certificate is on this PC the variables are unset and a release is unsigned.
+
