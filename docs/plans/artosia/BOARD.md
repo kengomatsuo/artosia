@@ -3,13 +3,13 @@
 ## Backlog
 - **SMART1** The setup's download is warned about in Edge ("isn't commonly downloaded"); research what removes it, then do it · source: owner 2026-11-12 · research in: no route removes the warning on day one; ArtCraft is unsigned and stops warning through 819,197 downloads of one file; owner disputes and wants ArtCraft's result; the setup stays unsigned and unchanged, Store edition is STORE1
 - **STORE1** A Microsoft Store edition of Artosia, the one channel with no download warning, once the owner has opened the free developer account · source: owner 2026-11-12
-- **SIGN2** Sign the direct download outside the Store, so Windows shows a publisher name · source: owner 2026-11-12
-- **ONBOARD1** First-run onboarding in the app: country, language, Bible to download and what else a new church needs; research, then build to completion · source: owner 2026-11-12
 - **LANG1** The interface in more languages than English and Indonesian · source: owner 2026-11-12
 
 ## Ready
 
 ## Doing (limit 1 per session)
+- **ONBOARD1** First-run onboarding in the app: country, language, Bible to download and what else a new church needs; research, then build to completion · source: owner 2026-11-12 · plan: design-research folder ~/Shared/inspo/artosia-onboarding: first runs of worship and Bible programs, Mobbin, their code, and an inventory of what Artosia's first start does today; directions as real renders for the owner; then build · done when: a new copy of Artosia walks a church through language, country, Bible, songs and screens, in every interface language, and a release carries it · verify: headless renders of every onboarding screen in both themes and languages; a real run on a scratch library; cargo test -p artosia · claim: main 2026-11-12T04:48:14Z
+- **SIGN2** Sign the direct download outside the Store, so Windows shows a publisher name · source: owner 2026-11-12 · plan: owner chose Certum's open-source certificate (2026-11-12); tools/publish.sh signs every Artosia exe and the setup with signtool when a certificate thumbprint is set, before the update feed is hashed; the owner buys the certificate and proves identity · done when: a release's setup and programs carry a signature naming the owner, checked with signtool verify · verify: signtool verify /pa on the released files; the feed's hashes match the signed files · claim: main 2026-11-12T04:54:03Z
 
 ## Needs review
 - **SITE1** A homepage at artosia.matsuokengo.com in the matsuokengo.com look, with the one file to download · source: owner 2026-11-11 · plan: web/ static page ported from the brand's saved code, real renders as pictures, published to gh-pages with CNAME · done when: the page serves from GitHub Pages with the custom domain set and the download button fetches the zip · verify: site-design lint.mjs and inspect.mjs 0 FAIL at 1440, 768, 390; curl of the Pages URL returns 200 · DNS record for artosia.matsuokengo.com is the owner's to add at Cloudflare; not opened on a real phone · commit: 86edc0c · check: site-design lint 0 fail; inspect 0 fail at 1440, 768, 390 in both languages; GitHub's server answers 200 for /, /id/ and a picture under the custom name
