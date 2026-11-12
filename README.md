@@ -34,6 +34,8 @@ Video and camera backgrounds and streaming run on the part of [GStreamer](https:
 
 On Linux (x86_64), take [Artosia-linux-x86_64.tar.gz](https://github.com/kengomatsuo/artosia/releases/latest/download/Artosia-linux-x86_64.tar.gz), unpack it in your home folder and open `artosia`. Video needs your distribution's GStreamer; the README inside names the packages, and `./install.sh` adds Artosia to the applications menu. It updates itself as the Windows edition does. [docs/linux.md](docs/linux.md) says how it is built and what was checked.
 
+On a Mac with Apple silicon, take [Artosia-macos-aarch64.dmg](https://github.com/kengomatsuo/artosia/releases/latest/download/Artosia-macos-aarch64.dmg), open it and drag Artosia onto Applications. The first time, macOS refuses to open it, because Artosia pays for no Apple developer programme: open System Settings, then Privacy & Security, and press Open Anyway. It carries its own part of GStreamer and updates itself. [docs/macos.md](docs/macos.md) says how it is built and what was checked.
+
 ## Building
 
 Rust comes from `rust-toolchain.toml`.
@@ -50,7 +52,7 @@ cargo test
 
 [docs/features.md](docs/features.md) says what is built and what was never tried on real hardware. [docs/architecture.md](docs/architecture.md) holds the decisions, [docs/operator.md](docs/operator.md) how the window works.
 
-Windows is the edition a church runs. Linux is built with every release and was checked in WSL only, never on a Linux desktop ([docs/linux.md](docs/linux.md)). A Mac edition is planned and has not been built.
+Windows is the edition a church runs. Linux is built with every release and was checked in WSL only, never on a Linux desktop ([docs/linux.md](docs/linux.md)). The Mac edition is built with every release too, and was built and tested on one Mac over SSH: nobody has yet looked at its window ([docs/macos.md](docs/macos.md)).
 
 ## Licence
 

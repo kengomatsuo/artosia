@@ -134,9 +134,9 @@ find "$feed" -type f -print0 | xargs -0 -n 12 gh release upload "v$version" --cl
 # The Linux edition: built in this PC's WSL from the commit just pushed, its update list signed
 # there with the same key, and uploaded beside the Windows files (docs/linux.md). Without WSL,
 # or when that build fails, the release carries Windows only and says so.
+in_wsl() { wsl.exe -d Ubuntu -e wslpath -a "$(cygpath -m "$1")" | tr -d '\r\000'; }
 linux="dist/$version/linux"
 if command -v wsl.exe >/dev/null 2>&1 && wsl.exe -d Ubuntu -e true >/dev/null 2>&1; then
-    in_wsl() { wsl.exe -d Ubuntu -e wslpath -a "$(cygpath -m "$1")" | tr -d '\r\000'; }
     printf '%s' "$notes" > "dist/$version/notes.txt"
     # Built on the Linux file system, where a file keeps its mode (on the Windows drive every
     # file reads as executable, and the README went into 0.1.22's package that way), then copied here.
@@ -155,6 +155,38 @@ if command -v wsl.exe >/dev/null 2>&1 && wsl.exe -d Ubuntu -e true >/dev/null 2>
     fi
 else
     echo "No WSL on this PC: this release carries Windows only."
+fi
+
+# The Mac edition: built on the Mac this PC reaches through WSL's ssh, from the commit just
+# pushed (docs/macos.md). The app's files come back here and its update list is made and signed
+# in WSL, so the signing key never leaves this PC. When the Mac cannot be reached, or its build
+# fails, the release carries no Mac files, says so, and the homepage shows no Mac row.
+mac="dist/$version/macos"
+if command -v wsl.exe >/dev/null 2>&1 && wsl.exe -d Ubuntu -e ssh -o BatchMode=yes -o ConnectTimeout=10 mac true >/dev/null 2>&1; then
+    printf '%s' "$notes" > "dist/$version/notes.txt"
+    if MSYS_NO_PATHCONV=1 wsl.exe -d Ubuntu -e bash -lc "set -e
+        ssh -o BatchMode=yes -o ServerAliveInterval=30 mac 'export PATH=\$HOME/.cargo/bin:\$HOME/.bun/bin:/opt/homebrew/bin:\$PATH; cd ~/Repositories/artosia && { git diff --quiet HEAD || { echo The clone on the Mac has changes that are not committed: a release is built from what is committed; exit 1; }; } && git pull --no-rebase -q && nice -n 19 bash tools/package-macos.sh $version --out dist/$version/macos'
+        cd ~/artosia && git pull --no-rebase -q
+        rm -rf 'dist/$version/macos' && mkdir -p 'dist/$version/macos'
+        rsync -a 'mac:Repositories/artosia/dist/$version/macos/Artosia.app/Contents/' 'dist/$version/macos/Contents/'
+        scp -q 'mac:Repositories/artosia/dist/$version/macos/Artosia-macos-aarch64.dmg' 'dist/$version/macos/'
+        cargo build --release -q -p artosia-update --bin artosia-release
+        target/release/artosia-release build --dir 'dist/$version/macos/Contents' --version '$version' --platform macos-aarch64 --out 'dist/$version/macos/feed' --notes-file '$(in_wsl "$PWD")/dist/$version/notes.txt' --key-file '$(in_wsl "$key")'
+        mkdir -p '$(in_wsl "$PWD")/$mac' && cp -r 'dist/$version/macos/Artosia-macos-aarch64.dmg' 'dist/$version/macos/feed' '$(in_wsl "$PWD")/$mac/'"; then
+        gh release upload "v$version" "$mac/Artosia-macos-aarch64.dmg" --clobber
+        find "$mac/feed" -type f -print0 | xargs -0 -n 12 gh release upload "v$version" --clobber
+        mac_megabytes=$(( ($(stat -c %s "$mac/Artosia-macos-aarch64.dmg") + 524288) / 1048576 ))
+        {
+            echo
+            echo "**Mac (Apple silicon):** [Artosia-macos-aarch64.dmg]($files/Artosia-macos-aarch64.dmg) ($mac_megabytes MB). Drag Artosia to Applications. The first time, macOS refuses to open it: open System Settings, Privacy & Security, and press Open Anyway."
+        } >> "$body"
+        gh release edit "v$version" --notes-file "$body"
+        echo "This release carries the Mac edition."
+    else
+        echo "The Mac edition did NOT build: this release carries no Mac files."
+    fi
+else
+    echo "The Mac cannot be reached: this release carries no Mac files."
 fi
 
 gh release edit "v$version" --draft=false --latest
