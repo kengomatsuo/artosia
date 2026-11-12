@@ -72,26 +72,24 @@ pub fn just_updated() -> bool {
 pub fn confirm() {
     if let Some(folder) = install_dir() {
         let _ = artosia_update::confirm_started(&folder);
-        if FIRST_START_OF_NEW_VERSION.swap(false, Ordering::SeqCst) {
-            refresh_installed_apps(&folder);
-        }
+        let refreshing = if FIRST_START_OF_NEW_VERSION.swap(false, Ordering::SeqCst) { refresh_installed_apps(&folder) } else { None };
         // The shortcuts show this version's icon: Windows keeps drawing the one it first saw.
-        crate::shortcut_icon::refresh(&folder);
+        crate::shortcut_icon::refresh(&folder, refreshing);
     }
 }
 
-/// Runs the kept setup copy's `--refresh`, one process and no wait. A copy unzipped by hand has
-/// no kept setup, and then nothing happens.
-fn refresh_installed_apps(folder: &std::path::Path) {
+/// Runs the kept setup copy's `--refresh`, one process that nothing here waits for. A copy
+/// unzipped by hand has no kept setup, and then nothing happens.
+fn refresh_installed_apps(folder: &std::path::Path) -> Option<std::process::Child> {
     let setup = folder.join(artosia_update::SETUP_FILE);
     if !setup.is_file() {
-        return;
+        return None;
     }
     let mut command = std::process::Command::new(setup);
     command.arg("--refresh").arg(VERSION).current_dir(folder);
     #[cfg(windows)]
     std::os::windows::process::CommandExt::creation_flags(&mut command, 0x0800_0000);
-    let _ = command.spawn();
+    command.spawn().ok()
 }
 
 /// Looks for a newer version on a worker and downloads it. `asked` is true when a person
