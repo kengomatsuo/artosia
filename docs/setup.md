@@ -210,9 +210,20 @@ any of the owner's open-source programs and revoked if used on paid software (Ce
 pages, saved in `~/Shared/research/artosia-code-signing/`). Buying it and the identity check
 are the owner's.
 
-`tools/publish.sh` signs when `ARTOSIA_SIGN_SHA1` (the certificate's thumbprint) and
-`ARTOSIA_TIMESTAMP_URL` are set: Artosia's four programs before the feed is hashed, then a
+Certum sells it three ways (its shop, read 2026-11-12): in the cloud for EUR 49
+("Open Source Code Signing in the Cloud": no card, a phone app gives the login codes, 5000
+signatures a month), as a set with a card and reader for EUR 69, or as the certificate
+alone for EUR 25 for someone who has a card. The cloud one needs nothing posted. On this PC
+it needs SimplySign Desktop, and the phone needs the SimplySign app; after signing in, the
+certificate is used by its thumbprint. Certum's manual gives the command
+`signtool sign /sha1 <thumbprint> /tr http://time.certum.pl /td sha256 /fd sha256 <files>`
+and says several files in one call ask for the PIN once. HandBrake signs the same way
+(`win/CS/build.xml`). Saved in `~/Shared/research/artosia-code-signing/signing/`.
+
+`tools/publish.sh` signs when `ARTOSIA_SIGN_SHA1` (the certificate's thumbprint) is set,
+with Certum's time stamp server unless `ARTOSIA_TIMESTAMP_URL` names another: Artosia's four programs before the feed is hashed, then a
 freshly built setup, each checked with `signtool verify /pa`. With a certificate the trust
 sits in the publisher, so the setup no longer has to be the same file in every release.
-Until the certificate is on this PC the variables are unset and a release is unsigned.
+Until the certificate is on this PC the variable is unset and a release is unsigned.
+Not known yet: whether a SimplySign login lasts through a whole release run.
 

@@ -7,10 +7,11 @@
 # the GitHub CLI (gh auth status). The private signing key is read from the file named by
 # ARTOSIA_KEY_FILE, or ~/.artosia-keys/update-signing.key; it is never printed.
 #
-# With a code-signing certificate on this PC, set ARTOSIA_SIGN_SHA1 to its thumbprint and
-# ARTOSIA_TIMESTAMP_URL to the issuer's RFC 3161 time stamp server: Artosia's own programs
-# and the setup are then signed, so Windows names the publisher. Without them the release
-# is unsigned, as every release before the certificate was.
+# With a code-signing certificate on this PC, set ARTOSIA_SIGN_SHA1 to its thumbprint:
+# Artosia's own programs and the setup are then signed, so Windows names the publisher.
+# The time stamp comes from Certum's server, as its manual gives it, unless
+# ARTOSIA_TIMESTAMP_URL names another. Without the thumbprint the release is unsigned,
+# as every release before the certificate was.
 # The release is uploaded as a draft and published last, so no copy sees half of it.
 set -euo pipefail
 
@@ -44,11 +45,10 @@ fi
 # asks for its PIN once (SignTool: Microsoft's page, read 2026-11-12).
 sign() {
     [ -n "${ARTOSIA_SIGN_SHA1:-}" ] || return 0
-    [ -n "${ARTOSIA_TIMESTAMP_URL:-}" ] || { echo "ARTOSIA_SIGN_SHA1 is set without ARTOSIA_TIMESTAMP_URL"; exit 1; }
     local tool
     tool=$(ls "/c/Program Files (x86)/Windows Kits/10/bin/"*/x64/signtool.exe 2>/dev/null | sort -V | tail -1)
     [ -n "$tool" ] || { echo "No signtool.exe: install the Windows SDK's signing tools"; exit 1; }
-    "$tool" sign //sha1 "$ARTOSIA_SIGN_SHA1" //fd SHA256 //tr "$ARTOSIA_TIMESTAMP_URL" //td SHA256 \
+    "$tool" sign //sha1 "$ARTOSIA_SIGN_SHA1" //fd SHA256 //tr "${ARTOSIA_TIMESTAMP_URL:-http://time.certum.pl}" //td SHA256 \
         //d "Artosia" //du "https://artosia.matsuokengo.com" "$@"
     "$tool" verify //pa "$@"
 }
