@@ -29,6 +29,12 @@ LANGUAGES = [
     ("vi", "vi"),
 ]
 CAPTIONS = ["caption_window", "caption_search", "caption_design", "caption_screens", "caption_notices", "caption_first_run"]
+# A caption belongs to the picture in the same place. Where a listing's pictures were uploaded
+# in another order than the captions' (one upload had to be repeated on 2026-11-12), the order
+# they sit in on its page is written here.
+UPLOADED = {
+    "zh-hans": ["caption_window", "caption_search", "caption_design", "caption_screens", "caption_first_run", "caption_notices"],
+}
 SHARED = {
     "CopyrightTrademarkInformation": "Copyright (C) 2026 Kenneth Johannes Fang. GPL-3.0-or-later",
     "AdditionalLicenseTerms": (
@@ -39,7 +45,7 @@ SHARED = {
 }
 
 
-def fields(listing: dict) -> dict:
+def fields(listing: dict, order: list[str] | None = None) -> dict:
     out = {
         "Title": "Artosia",
         "Description": listing["description"],
@@ -53,7 +59,7 @@ def fields(listing: dict) -> dict:
         sys.exit(f"more than seven search terms: {terms}")
     for n, term in enumerate(terms, 1):
         out[f"SearchTerm{n}"] = term
-    for n, key in enumerate(CAPTIONS, 1):
+    for n, key in enumerate(order or CAPTIONS, 1):
         out[f"DesktopScreenshotCaption{n}"] = listing[key]
     return out
 
@@ -64,17 +70,25 @@ def main() -> None:
     head, body = rows[0], rows[1:]
     if [cell.strip() for cell in head[:3]] != ["Field", "ID", "Type (Type)"]:
         sys.exit(f"not a listing template: {head[:4]}")
-    listings = {store: fields(json.loads((HERE / "listing" / f"{code}.json").read_text(encoding="utf-8"))) for code, store in LANGUAGES}
+    listings = {store: fields(json.loads((HERE / "listing" / f"{code}.json").read_text(encoding="utf-8")), UPLOADED.get(store)) for code, store in LANGUAGES}
     known = {row[0] for row in body}
     for store, listing in listings.items():
         missing = sorted(set(listing) - known)
         if missing:
             sys.exit(f"{store}: the template has no row for {missing}")
+    # What the template already holds for a language stays (the addresses of uploaded
+    # pictures: a caption is only kept beside its picture's address), and Artosia's own
+    # texts go over it.
+    column = {code.strip().lower(): at for at, code in enumerate(head)}
+    def kept(row: list[str], code: str) -> str:
+        at = column.get(code)
+        return row[at] if at is not None and at < len(row) else ""
     with out.open("w", encoding="utf-8-sig", newline="") as file:
         writer = csv.writer(file)
         writer.writerow(head[:3] + ["default"] + [store for _, store in LANGUAGES])
-        for field, number, kind, *_ in body:
-            writer.writerow([field, number, kind, SHARED.get(field, "")] + [listings[store].get(field, "") for _, store in LANGUAGES])
+        for row in body:
+            field, number, kind = row[:3]
+            writer.writerow([field, number, kind, SHARED.get(field, kept(row, "default"))] + [listings[store].get(field, kept(row, store)) for _, store in LANGUAGES])
     print(f"{out}: {len(body)} rows, {len(LANGUAGES)} languages")
 
 
