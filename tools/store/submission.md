@@ -38,24 +38,23 @@ Artosia is a classic Win32 desktop application packaged with MSIX. It needs full
 - Accepting Microsoft's agreements.
 - The age-rating questionnaire (it takes the owner's e-mail address).
 
-## Age rating (IARC questionnaire, answered 2026-11-12)
+## Age rating (IARC questionnaire, 2026-11-12)
 
-The King James Version ships inside the program, and the questionnaire's own help says its first part describes "content ... included as part of the app package". The answers describe that text and nothing else:
+The King James Version ships inside the program, and a Bible's text refers to violence, to sex and to wine. The questionnaire is answered the way the Microsoft Store's Bible apps answer it: scripture is not rating-relevant content.
 
 | Question | Answer |
 |---|---|
 | App type | All other app types |
-| Ratings-relevant content in the package | Yes |
-| Violence | Yes: against humans, referred to only, realistic setting, no blood, no war setting, nobody can be injured by the user, no dark overtones |
-| Fear, gambling, crude humour | No |
-| Sexuality | Yes: references to sexual activity without descriptive detail; sexual violence referred to only |
-| Language | No: the text holds no profanity or swearing |
-| Controlled substance | Yes: alcohol, reference, rarely |
+| Ratings-relevant content in the package | No |
 | Users exchange content | No: nothing passes between users inside the program; a stream goes through another service |
-| Online content | Yes: the Bibles offered for download and the backdrop pictures. Violence and sexual material can be referred to in text, never shown, and are not what the program is for; no offensive language, no drugs |
+| Online content | Yes: the Bibles offered for download and the backdrop pictures. No violent or sexual material, no offensive language, no drugs |
 | Age-restricted products, location, purchases, rewards, browser, news or education | No |
 | Ratings board or physical media | No |
 
-The ratings it produces: ESRB Teen, PEGI 12, IARC 12+, Microsoft 12+, Brazil 14, Chile 14, Germany USK 16, Russia 18+. The largest Bible app, YouVersion, carries the same on Google Play, which uses the same questionnaire: Teen in the United States, USK 16 in Germany, 14 in Brazil (its Play pages, read 2026-11-12). A Bible app that answers "no content" is rated for everyone there, and the questionnaire asks for accurate answers.
+The ratings it produces: ESRB Everyone, PEGI 3, USK Everyone, IARC 3+, Microsoft 3+, Brazil, Chile and Russia all ages, with no content label.
 
-Saving the ratings takes a tick on "I hereby agree to the IARC Terms of Use and I agree that I am the age of majority in my jurisdiction". That tick is the owner's: the terms promise accurate answers, that the person is 18 or of age, that a ratings board may revise a rating, and they release and indemnify IARC (`https://web.iarcservices.com/terms`, read 2026-11-12). The answers are stored before the tick, so the page opens on the preview with the box and Save.
+Why this answer. The Store's own search was read on 2026-11-12, 22 queries in 7 markets (`~/Shared/research/artosia-store/ratings/`, `notes.md`): of 53 Bible apps, 26 of 27 are Everyone in the United States, 24 of 24 are PEGI 3, 18 of 19 are USK 0, 22 of 23 are free for all ages in Brazil and 17 of 18 in Russia. Olive Tree, the Watchtower Society's JW Library and the Latter-day Saints' Gospel Library are among them, and so are the two worship presentation programs found, Church Presenter and Praisenter. ESRB's own database rates a Windows title "The Bible" Everyone with no label.
+
+A first pass answered literally (references to violence, to sex without detail, to sexual violence and to alcohol) and gave Teen, PEGI 12 with "Sexual Innuendo", USK 16 and Russia 18+: the ratings a lyrics finder for any song carries on the Store, and no Bible app. The owner asked why a worship program would carry those labels, and the research above answered it.
+
+Saving the ratings takes a tick on "I hereby agree to the IARC Terms of Use and I agree that I am the age of majority in my jurisdiction". That tick is the owner's: the terms promise accurate answers, that the person is 18 or of age, that a ratings board may revise a rating, and they release and indemnify IARC (`https://web.iarcservices.com/terms`, read 2026-11-12). The answers are stored before the tick, so the page opens on the preview with the box and Save. A changed answer needs the tick again.
