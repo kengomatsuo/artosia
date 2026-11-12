@@ -62,6 +62,11 @@ shows only when its download exists: no row, no link and no word for it otherwis
   a release whose Linux build failed carries Windows only (`tools/publish.sh`), and `latest` would
   then answer 404. `tools/publish-site.sh` refuses to build from a release with no Linux package,
   so the page keeps its last deploy and its links keep working.
+- Each download button and link carries its system's mark before the words (`{{icon:windows}}`, `{{icon:apple}}`, `{{icon:linux}}` in
+  `page.html`; the build puts the SVG of `site/img/os/` in, drawn in the words' colour), as Audacity's download page does; a mark
+  alone, as FreeShow and VLC have it, was left because it cannot be read aloud. The three are Font Awesome Free 6.7.2 (CC BY 4.0;
+  each file keeps the licence comment its licence asks for, `site/img/os/credits.json`), and each mark is its owner's trademark,
+  used to name the system a file is for.
 - The Mac row carries the numbered Open Anyway steps, because macOS refuses a program from a
   developer who pays for no Apple programme.
 - A sentence with links is one string per variant (`also_linux`, `also_linux_mac`, and so on),

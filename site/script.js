@@ -253,7 +253,7 @@ function system() {
   });
   const row = document.querySelector(`.os-row[data-os="${mine}"]`);
   const hero = document.querySelector(".dl-hero");
-  hero.textContent = row.querySelector(".dl").textContent;
+  hero.innerHTML = row.querySelector(".dl").innerHTML;
   // Every button that only says Download gives the visitor's own file.
   document.querySelectorAll(".dl-own, .dl-hero").forEach((link) => (link.href = row.querySelector(".dl").href));
   document.querySelector("#hero .release-note").innerHTML = row.querySelector(".os-file").innerHTML;

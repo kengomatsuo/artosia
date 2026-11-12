@@ -119,7 +119,7 @@ def page(lang: str, strings: dict, numbers: dict, langs: list[str]) -> str:
     # Both variants are checked, so the build with the Mac and the one without it can never drift.
     asked = {m.group(1) for m in PLACE.finditer(template)}
     asked = {k[5:] if k.startswith("json:") else k for k in asked}
-    asked = {k for k in asked if k not in fixed and not k.startswith("wh:")}
+    asked = {k for k in asked if k not in fixed and not k.startswith(("wh:", "icon:"))}
     missing = sorted(asked - set(strings))
     if missing:
         sys.exit(f"page.html asks for {', '.join(missing)}, which {lang}.json does not have")
@@ -146,6 +146,11 @@ def page(lang: str, strings: dict, numbers: dict, langs: list[str]) -> str:
         if key.startswith("wh:"):
             w, h = png_size(SITE / key[3:])
             return f'width="{w}" height="{h}"'
+        if key.startswith("icon:"):
+            # A system's mark, drawn in the colour of the words beside it. The file keeps its
+            # licence comment, which is the attribution its licence asks for.
+            mark = (SITE / "img" / "os" / f"{key[5:]}.svg").read_text(encoding="utf-8").strip()
+            return mark.replace("<svg ", '<svg class="os-icon" aria-hidden="true" focusable="false" ', 1)
         if key.startswith("json:"):
             return json.dumps(strings[key[5:]], ensure_ascii=False)[1:-1]
         return words(key)
