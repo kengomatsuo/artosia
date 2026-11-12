@@ -52,4 +52,4 @@ Macs and Linux are planned and untested. Only Windows has been built.
 
 ## Licence
 
-GPL-3.0-or-later. See [LICENSE](LICENSE).
+Copyright (C) 2026 Kenneth Johannes Fang ([matsuokengo.com](https://matsuokengo.com)), who writes and maintains Artosia. GPL-3.0-or-later. See [LICENSE](LICENSE).
