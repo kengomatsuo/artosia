@@ -336,6 +336,8 @@ Rendering found what the briefs could not: three toggle buttons, a three-way cho
 
 Releases are GitHub Releases, made by `tools/publish.sh`; an installed copy needs no setting to find them. Full account: `crates/artosia-update/README.md`.
 
+What a person meets (2026-11-12, the owner's question): one check in the background at each start, the changed files fetched beside the program, and a single toast once they are there ("Version 0.1.19 is ready. It installs when Artosia next starts.", scene `toast-update`). No screen before the window, no dialog, nothing when there is no newer version or no internet. The swap happens at the next start, before the window opens, so a service is never interrupted. The Store edition has no updater of its own: the Microsoft Store installs its updates. After a start on new files the shortcuts are pointed at the new icon ([setup.md](setup.md), "The icon after an update").
+
 Artosia looks for a newer version at each start and downloads it beside the program; the files are swapped the next time it starts (`artosia-update`, `update.rs`). Every file is checked against a signature made with the release key, whose public half is built into the program. A development build and a headless run never update themselves. "Check for a new version" in the search reports what it found either way.
 
 ## What to show next

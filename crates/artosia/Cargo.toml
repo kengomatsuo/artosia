@@ -25,9 +25,10 @@ serde = { version = "1.0.229", features = ["derive"] }
 serde_json = "1.0.154"
 ureq = "3.5"
 
-# Windows only: the elevated command that adds the phone remote's firewall rule (`firewall.rs`).
+# Windows only: the elevated command that adds the phone remote's firewall rule (`firewall.rs`),
+# and the shell link whose picture follows a new icon (`shortcut_icon.rs`).
 [target.'cfg(windows)'.dependencies]
-windows = { version = "0.62", features = ["Win32_Foundation", "Win32_System_Com", "Win32_System_Registry", "Win32_Storage_Packaging_Appx", "Win32_System_Threading", "Win32_UI_Shell", "Win32_UI_WindowsAndMessaging"] }
+windows = { version = "0.62", features = ["Win32_Foundation", "Win32_System_Com", "Win32_System_Registry", "Win32_Storage_FileSystem", "Win32_Storage_Packaging_Appx", "Win32_System_Threading", "Win32_UI_Shell", "Win32_UI_WindowsAndMessaging"] }
 
 # Windows only: puts Artosia's mark on the program file.
 [build-dependencies]

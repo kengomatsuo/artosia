@@ -23,6 +23,7 @@ mod plans;
 mod recordings;
 mod starts;
 mod song_languages;
+mod shortcut_icon;
 mod speech_model;
 mod state;
 mod store;
@@ -800,6 +801,8 @@ const SCENES: &[Scene] = &[
             s.remove_plan_item(id);
         }
     }),
+    // The only notice of a new version: a toast after it was fetched in the background.
+    ("toast-update", |s| s.say(crate::strings::update_ready("0.1.19"), None)),
 ];
 
 /// The port one Artosia holds so a second start finds it. The output process has the next one down.

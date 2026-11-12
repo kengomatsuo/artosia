@@ -75,6 +75,8 @@ pub fn confirm() {
         if FIRST_START_OF_NEW_VERSION.swap(false, Ordering::SeqCst) {
             refresh_installed_apps(&folder);
         }
+        // The shortcuts show this version's icon: Windows keeps drawing the one it first saw.
+        crate::shortcut_icon::refresh(&folder);
     }
 }
 

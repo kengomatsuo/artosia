@@ -19,6 +19,7 @@ Flags: `--silent` (no window and no dialog), `--no-start`, `--uninstall`, `--dia
 | setup copy | `%LOCALAPPDATA%\Programs\Artosia\Artosia-setup.exe`, not part of any release |
 | Start menu | `FOLDERID_Programs\Artosia.lnk` (the folder is created if missing) |
 | desktop | `FOLDERID_Desktop\Artosia.lnk` (follows OneDrive) |
+| icon file | `%LOCALAPPDATA%\Programs\Artosia\artosia-<16 hex digits>.ico`, written by `artosia.exe` and named after the icon's own bytes; the two shortcuts name it once Artosia has started ("The icon after an update") |
 | uninstall entry | `HKCU\Software\Microsoft\Windows\CurrentVersion\Uninstall\Artosia`: strings `DisplayName`, `DisplayVersion`, `Publisher`, `DisplayIcon`, `InstallLocation`, `UninstallString` (`"<setup>" --uninstall`), `QuietUninstallString` (same plus `--silent`); DWORDs `NoModify` 1, `NoRepair` 1, `EstimatedSize` in KB |
 | the church's data | `%APPDATA%\artosia` (library, bibles, recordings, settings), or `ARTOSIA_DATA`. Never touched |
 | failure cause | `%TEMP%\Artosia-setup.log` (one line, overwritten) |
@@ -40,6 +41,34 @@ One owner for the registry code: the setup. `Artosia-setup.exe --refresh [versio
 `apply.rs` swaps only paths a manifest lists (`swaps` come from `m.files`); `drop_unlisted` prunes only the staging `files` folder; `restore` only touches journaled paths. An unlisted `Artosia-setup.exe` in the install folder is therefore left alone by every update and every rollback, and the uninstall entry keeps working after many updates. It is a file of the install folder, not of a release. A test asserts the newest real manifest does not list that name; a release must never add it.
 
 First start confirms the install: after `apply_on_start` the journal is in `Trial` with 0 starts. The app's own `apply_on_start` counts the start and `confirm_started` clears the journal. The end-to-end test runs exactly those two calls and checks `update/state.json` is gone. (Three starts without a confirm roll the files back, which on a fresh install would delete the program; the app confirms on every start, so only a program that cannot open a window at all is rolled back.)
+
+## The icon after an update (2026-11-12, owner-reported, board card LOGO2)
+
+The owner asked whether the logo had changed at all: the icon had been black since 0.1.17, and the Artosia installed on the owner's PC still showed the old ochre one. That copy was 0.1.14 with 0.1.17 waiting in its `update` folder for the next start. A test then showed the icon would have stayed old after the update too.
+
+**What Windows does**, seen in a real Explorer window on Windows 11 build 26200 (`tools/check-shortcut-icon.ps1`). A scratch folder held a copy of the installed 0.1.14, a shortcut to it written as the setup writes it (`artosia.exe,0` as its icon), and the released 0.1.18 swapped in the way the updater swaps (the old file renamed aside, the new one renamed into its place):
+
+| What was tried after the swap | The shortcut drew |
+|---|---|
+| nothing, and eight seconds of waiting | the old icon |
+| `SHChangeNotify(SHCNE_UPDATEITEM)` for the program, then for the shortcut | the old icon |
+| `SHChangeNotify(SHCNE_ASSOCCHANGED)`, which Microsoft's page says makes the Shell "invalidate the icon and thumbnail cache" | the old icon |
+| `SHUpdateImage` with the image index from `SHGetFileInfo`, Microsoft's call for "an image in the system image list has changed" | the old icon |
+| the window refreshed, a new window, the shortcut written again, a second shortcut to the same program | the old icon |
+| a shortcut naming its icon another way: `artosia.exe,-1` (by resource id) or a separate `.ico` file | the new icon at once |
+| the first shortcut written again in place naming the `.ico` file, then `SHCNE_UPDATEITEM` for it | the new icon at once |
+
+So Windows keys what it draws by the icon's file name and index and keeps it when the file under that name changes; a name it has not seen is read fresh.
+
+**What Artosia does** (`crates/artosia/src/shortcut_icon.rs`). After every start that went well (`update::confirm`), on a worker, an installed copy (one with the kept `Artosia-setup.exe` beside it; never a development build, a headless run or the Store edition) writes its icon into the install folder as `artosia-<FNV-1a of the bytes, 16 hex digits>.ico` unless that file is already there, then looks at the Start menu shortcut, the desktop shortcut and every shortcut pinned to the taskbar (`%APPDATA%\Microsoft\Internet Explorer\Quick Launch\User Pinned\TaskBar`). A shortcut that starts this very `artosia.exe` and names another picture is saved again naming the icon file, and Explorer is told that one shortcut changed. A shortcut that starts something else is never written. When everything is already right a start reads up to a few shortcut files and writes nothing.
+
+A new icon gives a new file name, so the next icon change needs no code. An icon file of an earlier version is left in the folder, because a shortcut a person copied elsewhere may still name it; uninstall empties the folder.
+
+**Why the program does it and the setup does not.** The setup copy kept in the install folder is never replaced by an update, and the downloaded setup stays the same file across releases, so code in the setup would reach nobody who is already installed. The setup still writes `artosia.exe,0`; the first start of Artosia gives the shortcut the file. The name of the shortcut is held to the setup's by a test that reads `places.rs`.
+
+**Copied from whom.** Chromium keeps a shortcut's icon in a file of its own and, when that file changes, calls `SHCNE_ASSOCCHANGED` and, on Windows 11, `SHCNE_UPDATEITEM` for the pinned shortcuts (`chrome/browser/profiles/profile_shortcut_manager_win.cc`); its taskbar pins folder is `base::DIR_TASKBAR_PINS` (`base/base_paths_win.cc`). Both read at commit `b4dfc1acc7f1936393841ca5dcfc4ecdb9a32b47` and saved in `~/Shared/research/artosia-icon-refresh/code`. Artosia takes the separate file and the pins folder and gives the file a new name per icon, since reusing a name did not refresh here. Microsoft's pages for `SHChangeNotify` and `SHUpdateImageW` were fetched on 2026-11-12. No code was copied.
+
+**Checked** on 2026-11-12: `shortcut_icon::tests` (the name follows the bytes; the file is placed once; a real shortcut to this program is repointed once, one to another program and a missing one are left alone); and `tools/check-shortcut-icon.ps1`, which drove the real code against a shortcut in an Explorer window: old icon, old icon after the swap, new icon after the code ran. **Not checked:** a shortcut pinned to the taskbar (none on the test PC), the picture in the Start menu's list and in Windows' list of installed apps (`DisplayIcon` still names `artosia.exe`), and a real update of an installed copy from start to finish.
 
 ## How uninstall works
 

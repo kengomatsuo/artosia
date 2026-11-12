@@ -62,6 +62,7 @@ Black has no hue, so it cannot be taken for the app's red (hue 25) or yellow (hu
 
 All in `assets/brand/`. Each PNG is the SVG named beside it, scaled by a plain SVG renderer.
 
+- A shortcut on a PC that already had Artosia goes on showing the icon it first drew, so the program also keeps `artosia.ico` in its install folder under a name made from its bytes and points its shortcuts there ([setup.md](setup.md), "The icon after an update"). A new icon needs nothing more than a new `artosia.ico`.
 - `artosia.ico`: frames 16, 20, 24, 30, 32, 36, 40, 48, 60, 64, 72, 80, 96, 256, transparent, each rendered at its exact size from `artosia-icon.svg`, or from `artosia-icon-small.svg` under 24 px (32-bit frames with alpha below 256, PNG at 256). `crates/artosia/build.rs` embeds it.
 - `artosia-icon-{16,24,32,48,64,128,256,512}.png`: the same rule. `crates/artosia/src/main.rs` loads the 256 as the window icon.
 - `artosia-icon.svg`: the app icon master, a black plate with the white mark. `artosia-icon-small.svg`: the same plate with the 700-unit mark, for sizes under 24 px.
