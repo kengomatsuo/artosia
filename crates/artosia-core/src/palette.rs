@@ -155,7 +155,8 @@ pub fn search_ranked(docs: &[Doc], query: &str, preferred: &dyn Fn(&Doc) -> bool
 /// ("countdown", 5). For commands that take one number.
 pub fn trailing_number(query: &str) -> Option<(String, u32)> {
     let trimmed = query.trim();
-    let split = trimmed.rfind(|c: char| !c.is_ascii_digit()).map(|at| at + 1).unwrap_or(0);
+    // The byte after the last character that is no digit; that character may be several bytes.
+    let split = trimmed.char_indices().rev().find(|(_, c)| !c.is_ascii_digit()).map(|(at, c)| at + c.len_utf8()).unwrap_or(0);
     let (head, digits) = trimmed.split_at(split);
     let number = digits.parse().ok()?;
     let head = head.trim();
@@ -174,6 +175,15 @@ mod tests {
             Doc::new("announcement:2", "announcement", "Blackboard sale").aliases(&["show announcement", "tampilkan pengumuman"]),
             Doc::new("look:Forest", "look", "Forest").aliases(&["look", "tampilan"]),
         ]
+    }
+
+    #[test]
+    fn a_trailing_number_is_read_after_words_in_any_script() {
+        assert_eq!(trailing_number("countdown 5"), Some(("countdown".to_string(), 5)));
+        assert_eq!(trailing_number("倒数 5"), Some(("倒数".to_string(), 5)));
+        assert_eq!(trailing_number("中文"), None);
+        assert_eq!(trailing_number("café"), None);
+        assert_eq!(trailing_number("12"), None);
     }
 
     fn keys(query: &str) -> Vec<String> {

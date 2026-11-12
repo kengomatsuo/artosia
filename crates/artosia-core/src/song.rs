@@ -176,7 +176,39 @@ pub fn set_marker_words(words: Option<[String; 7]>) {
     MARKER_WORDS.with(|slot| *slot.borrow_mut() = words);
 }
 
+/// The words each language of the window uses for the kinds of section, learned once at start
+/// so that a marker written under one language reads under every other.
+static LEARNED: std::sync::RwLock<Vec<(String, SectionKind)>> = std::sync::RwLock::new(Vec::new());
+
+const KINDS: [SectionKind; 7] = [SectionKind::Verse, SectionKind::PreChorus, SectionKind::Chorus, SectionKind::Bridge, SectionKind::Intro, SectionKind::Ending, SectionKind::Other];
+
+/// A section's name as the reader compares it: lower case with no space, hyphen or full stop,
+/// so "Pre-coro", "pre coro" and "Precoro" are one word.
+fn plain(word: &str) -> String {
+    word.to_lowercase().chars().filter(|c| !c.is_whitespace() && *c != '-' && *c != '.').collect()
+}
+
+/// Teaches the reader one language's seven words, in the order of `SectionKind`. A word that
+/// already means a kind keeps its first meaning.
+pub fn learn_marker_words(words: &[String; 7]) {
+    let mut learned = LEARNED.write().unwrap_or_else(|poisoned| poisoned.into_inner());
+    for (word, kind) in words.iter().zip(KINDS) {
+        let word = plain(word);
+        if !word.is_empty() && built_in_kind(&word).is_none() && !learned.iter().any(|(known, _)| *known == word) {
+            learned.push((word, kind));
+        }
+    }
+}
+
+fn learned_kind(word: &str) -> Option<SectionKind> {
+    LEARNED.read().unwrap_or_else(|poisoned| poisoned.into_inner()).iter().find(|(known, _)| known == word).map(|(_, kind)| *kind)
+}
+
 fn kind_from_word(word: &str) -> Option<SectionKind> {
+    built_in_kind(word).or_else(|| learned_kind(word))
+}
+
+fn built_in_kind(word: &str) -> Option<SectionKind> {
     Some(match word {
         "verse" | "v" | "vers" | "stanza" | "bait" | "ayat" => SectionKind::Verse,
         "chorus" | "c" | "refrain" | "ref" | "reff" | "koor" | "chor" => SectionKind::Chorus,
@@ -198,18 +230,26 @@ pub fn parse_tag(text: &str) -> Option<Tag> {
         .filter(|c| *c != '-' && *c != '.')
         .collect::<String>()
         .to_lowercase();
-    let mut parts = cleaned.split_whitespace();
-    let first = parts.next()?;
-    let second = parts.next();
-    if parts.next().is_some() {
-        return None;
+    let parts: Vec<&str> = cleaned.split_whitespace().collect();
+    let (last, before) = parts.split_last()?;
+    if let Ok(number) = last.parse::<u8>()
+        && before.is_empty()
+    {
+        return Some(Tag::new(SectionKind::Verse, number.max(1)));
     }
-    if let Ok(number) = first.parse::<u8>() {
-        return second.is_none().then_some(Tag::new(SectionKind::Verse, number.max(1)));
-    }
+    // A name may be several words ("pre chorus"); a number after it is its own last word.
+    let second = (!before.is_empty() && last.parse::<u8>().is_ok()).then_some(*last);
+    let name: String = if second.is_some() { before.concat() } else { parts.concat() };
     // "chorus2" and "v1" carry their number without a space.
-    let split = first.find(|c: char| c.is_ascii_digit()).unwrap_or(first.len());
-    let (word, digits) = first.split_at(split);
+    let split = name.find(|c: char| c.is_ascii_digit()).unwrap_or(name.len());
+    let (word, digits) = name.split_at(split);
+    if word.is_empty() {
+        // A language that says the number first writes "1절"; only a learned word may follow a
+        // number, so a singer's note such as "2x" stays a lyric.
+        let after = name.trim_start_matches(|c: char| c.is_ascii_digit());
+        let number = name[..name.len() - after.len()].parse::<u8>().ok()?;
+        return (second.is_none()).then(|| learned_kind(after)).flatten().map(|kind| Tag::new(kind, number.max(1)));
+    }
     let kind = kind_from_word(word)?;
     let number = match (digits.is_empty(), second) {
         (false, None) => digits.parse::<u8>().ok()?,
@@ -236,7 +276,12 @@ pub fn heading(line: &str) -> Option<Tag> {
         word,
         "verse" | "chorus" | "refrain" | "bridge" | "intro" | "outro" | "ending" | "pre-chorus" | "prechorus" | "tag" | "reff" | "bait" | "koor" | "jembatan" | "pembuka" | "penutup"
     );
-    if full && line.len() <= 16 { parse_tag(line) } else { None }
+    // A learned name counts as a bare heading too, when it is more than one letter.
+    let learned = || {
+        let name = plain(lower.trim_end_matches(|c: char| c.is_ascii_digit() || c.is_whitespace()));
+        name.chars().count() > 1 && learned_kind(&name).is_some()
+    };
+    if line.chars().count() <= 16 && (full || learned()) { parse_tag(line) } else { None }
 }
 
 /// Splits marker text into sections. Blank lines inside a marked section are dropped.
@@ -609,5 +654,42 @@ mod tests {
         assert_eq!(song.sections().len(), 2);
         let untitled = song_from_paste("First light\nSecond line\n\nThird");
         assert_eq!(untitled.title, "First light");
+    }
+
+    #[test]
+    fn a_learned_language_s_section_names_are_read_and_written_back() {
+        let words = ["Estrofa", "Pre-coro", "Coro", "Puente", "Intro", "Final", "Parte"].map(String::from);
+        learn_marker_words(&words);
+        learn_marker_words(&["主歌", "导歌", "副歌", "桥段", "前奏", "结尾", "其他"].map(String::from));
+        learn_marker_words(&["Lời", "Tiền điệp", "Điệp khúc", "Đoạn nối", "Dạo đầu", "Đoạn kết", "Phần khác"].map(String::from));
+        learn_marker_words(&["절", "프리코러스", "후렴", "브리지", "전주", "마무리", "파트"].map(String::from));
+        let tag = |kind, number| Some(Tag::new(kind, number));
+        assert_eq!(parse_tag("Estrofa 2"), tag(SectionKind::Verse, 2));
+        assert_eq!(parse_tag("pre coro"), tag(SectionKind::PreChorus, 1));
+        assert_eq!(parse_tag("Coro"), tag(SectionKind::Chorus, 1));
+        assert_eq!(parse_tag("主歌1"), tag(SectionKind::Verse, 1));
+        assert_eq!(parse_tag("副歌 2"), tag(SectionKind::Chorus, 2));
+        assert_eq!(parse_tag("Điệp khúc 2"), tag(SectionKind::Chorus, 2));
+        assert_eq!(parse_tag("Đoạn nối"), tag(SectionKind::Bridge, 1));
+        assert_eq!(parse_tag("2절"), tag(SectionKind::Verse, 2));
+        assert_eq!(parse_tag("절 3"), tag(SectionKind::Verse, 3));
+        // What is no section name stays a lyric: a repeat note, a sung line in brackets.
+        assert_eq!(parse_tag("2x"), None);
+        assert_eq!(parse_tag("oh oh oh"), None);
+        assert_eq!(heading("Coro:"), tag(SectionKind::Chorus, 1));
+        assert_eq!(heading("[Final]"), tag(SectionKind::Ending, 1));
+        assert_eq!(heading("절"), None, "one letter alone is a lyric");
+        // The window's own words are written when they read back as the same section.
+        set_marker_words(Some(words));
+        assert_eq!(Tag::new(SectionKind::Verse, 2).marker(), "[Estrofa 2]");
+        assert_eq!(Tag::new(SectionKind::PreChorus, 1).marker(), "[Pre-coro]");
+        assert_eq!(Tag::new(SectionKind::Chorus, 1).order_word(), "Coro");
+        set_marker_words(None);
+        assert_eq!(Tag::new(SectionKind::Verse, 2).marker(), "[2]");
+        // Words the reader always knew keep their meaning.
+        assert_eq!(parse_tag("chorus 2"), tag(SectionKind::Chorus, 2));
+        assert_eq!(parse_tag("v1"), tag(SectionKind::Verse, 1));
+        assert_eq!(parse_tag("pre-chorus"), tag(SectionKind::PreChorus, 1));
+        assert_eq!(parse_tag("verse 3 extra"), None);
     }
 }
