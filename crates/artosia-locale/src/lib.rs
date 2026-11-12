@@ -108,24 +108,79 @@ mod system {
     }
 }
 
+/// What the variables of a Unix shell say. `LANGUAGE` is a list divided by colons; the others
+/// name one locale (`id_ID.UTF-8`).
 #[cfg(not(windows))]
-mod system {
-    /// `LANGUAGE` is a list divided by colons; the others name one locale (`id_ID.UTF-8`).
-    pub fn languages() -> Vec<String> {
-        let mut found = Vec::new();
-        for name in ["LANGUAGE", "LC_ALL", "LC_MESSAGES", "LANG"] {
-            for tag in std::env::var(name).unwrap_or_default().split(':') {
-                let tag = tag.split('.').next().unwrap_or_default().replace('_', "-");
-                if !tag.is_empty() && tag != "C" && tag != "POSIX" && !found.contains(&tag) {
-                    found.push(tag);
-                }
+fn shell_languages() -> Vec<String> {
+    let mut found = Vec::new();
+    for name in ["LANGUAGE", "LC_ALL", "LC_MESSAGES", "LANG"] {
+        for tag in std::env::var(name).unwrap_or_default().split(':') {
+            let tag = tag.split('.').next().unwrap_or_default().replace('_', "-");
+            if !tag.is_empty() && tag != "C" && tag != "POSIX" && !found.contains(&tag) {
+                found.push(tag);
             }
         }
-        found
+    }
+    found
+}
+
+/// The tags in what `defaults read -g AppleLanguages` prints: a list in round brackets, one
+/// tag a line, in quotes when it holds a hyphen (`"id-ID",`) and bare when it does not (`en,`).
+#[cfg(any(target_os = "macos", test))]
+fn apple_languages(printed: &str) -> Vec<String> {
+    printed
+        .lines()
+        .map(|line| line.trim().trim_end_matches(',').trim_matches('"'))
+        .filter(|tag| !tag.is_empty() && !matches!(*tag, "(" | ")"))
+        .map(str::to_string)
+        .collect()
+}
+
+/// The country in what `defaults read -g AppleLocale` prints. `en_GB@rg=idzzzz` is a Mac whose
+/// formats are British and whose region is Indonesia: `rg` holds the region the person chose,
+/// its two letters filled out with z, and it is the country to offer. Without it the locale's
+/// own country stands.
+#[cfg(any(target_os = "macos", test))]
+fn apple_region(printed: &str) -> Option<String> {
+    let printed = printed.trim();
+    let (locale, keywords) = printed.split_once('@').unwrap_or((printed, ""));
+    keywords
+        .split(';')
+        .find_map(|pair| pair.strip_prefix("rg="))
+        .and_then(|value| value.get(..2))
+        .filter(|code| code.chars().all(|c| c.is_ascii_alphabetic()))
+        .map(str::to_ascii_uppercase)
+        .or_else(|| region_of(locale))
+}
+
+#[cfg(all(not(windows), not(target_os = "macos")))]
+mod system {
+    pub fn languages() -> Vec<String> {
+        super::shell_languages()
     }
 
     pub fn region() -> Option<String> {
         None
+    }
+}
+
+/// macOS keeps the person's languages and region in its global preferences, and hands a
+/// program opened from the Finder none of the shell's variables (measured on macOS 27,
+/// 2026-11-13: `launchctl getenv LANG` is empty). `defaults` is part of every macOS.
+#[cfg(target_os = "macos")]
+mod system {
+    fn preference(key: &str) -> Option<String> {
+        let read = std::process::Command::new("/usr/bin/defaults").args(["read", "-g", key]).output().ok()?;
+        read.status.success().then(|| String::from_utf8_lossy(&read.stdout).into_owned())
+    }
+
+    pub fn languages() -> Vec<String> {
+        let set = preference("AppleLanguages").map(|printed| super::apple_languages(&printed)).unwrap_or_default();
+        if set.is_empty() { super::shell_languages() } else { set }
+    }
+
+    pub fn region() -> Option<String> {
+        preference("AppleLocale").and_then(|printed| super::apple_region(&printed))
     }
 }
 
@@ -181,8 +236,23 @@ mod tests {
     }
 
     #[test]
+    fn a_mac_names_its_languages_and_the_region_the_person_chose() {
+        // As macOS 27 printed them on 2026-11-13.
+        let printed = "(\n    \"en-GB\",\n    \"id-ID\",\n    \"ja-ID\"\n)\n";
+        assert_eq!(apple_languages(printed), ["en-GB", "id-ID", "ja-ID"]);
+        assert_eq!(apple_languages("(\n    en,\n    \"zh-Hant-TW\"\n)\n"), ["en", "zh-Hant-TW"]);
+        assert_eq!(apple_languages("(\n)\n"), Vec::<String>::new());
+        assert_eq!(apple_region("en_GB@rg=idzzzz\n"), Some("ID".to_string()));
+        assert_eq!(apple_region("id_ID\n"), Some("ID".to_string()));
+        assert_eq!(apple_region("en_US@calendar=buddhist;rg=thzzzz"), Some("TH".to_string()));
+        assert_eq!(apple_region("en"), None);
+    }
+
+    #[test]
     fn this_computer_answers_without_failing() {
         // What it answers depends on the computer; that it answers in the right shape does not.
+        // `cargo test -p artosia-locale -- --nocapture` shows the answer of the machine at hand.
+        println!("this computer: languages {:?}, region {:?}", languages(), region());
         for tag in languages() {
             assert!(!tag.is_empty() && !tag.contains('\0'), "{tag:?}");
         }
