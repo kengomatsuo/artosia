@@ -138,6 +138,15 @@ impl Section {
     }
 }
 
+/// One further language of a song.
+#[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
+pub struct Translation {
+    /// A BCP 47 tag; empty when unknown. A transliteration carries the script it is written in
+    /// (`ja-Latn`) and is kept apart from every language's words.
+    pub lang: String,
+    pub text: String,
+}
+
 #[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
 pub struct Song {
     pub id: i64,
@@ -148,10 +157,15 @@ pub struct Song {
     pub ccli: String,
     pub key: String,
     pub number: u32,
-    /// Lyrics with section markers.
+    /// Lyrics with section markers, in the song's first language.
     pub lyrics: String,
-    /// The same sections in a second language, with the same markers; empty when there is none.
-    pub second: String,
+    /// The first language's code, a BCP 47 tag such as `id` or `zh-Hans`; empty when unknown.
+    #[serde(default)]
+    pub lang: String,
+    /// Further languages, each the same sections with the same markers. They hold only what
+    /// was typed, pasted or imported: nothing here is ever generated.
+    #[serde(default)]
+    pub translations: Vec<Translation>,
     /// Play order as short tags separated by spaces or commas ("V1 C V2 C B C"); empty plays
     /// the sections as written.
     pub order: String,
@@ -454,6 +468,30 @@ impl Song {
         parse_lyrics(&self.lyrics)
     }
 
+    /// Every language's words, the first language first, as (code, marker text).
+    pub fn texts(&self) -> impl Iterator<Item = (&str, &str)> {
+        std::iter::once((self.lang.as_str(), self.lyrics.as_str())).chain(self.translations.iter().map(|t| (t.lang.as_str(), t.text.as_str())))
+    }
+
+    /// The first further language's words, which the editor's one extra box shows; empty when
+    /// the song has none.
+    pub fn second_text(&self) -> &str {
+        self.translations.first().map_or("", |t| t.text.as_str())
+    }
+
+    /// Sets the first further language's words, keeping its code and every language after it;
+    /// empty words remove it.
+    pub fn set_second(&mut self, text: String) {
+        match (self.translations.first_mut(), text.trim().is_empty()) {
+            (Some(_), true) => {
+                self.translations.remove(0);
+            }
+            (Some(first), false) => first.text = text,
+            (None, false) => self.translations.push(Translation { lang: String::new(), text }),
+            (None, true) => {}
+        }
+    }
+
     /// Sections in the order they are sung: the written order, or `order` when it names
     /// sections that exist. Tags the song lacks are skipped.
     pub fn arranged(&self) -> Vec<Section> {
@@ -650,6 +688,19 @@ mod tests {
         let slides = split_lines(&lines, 4);
         assert_eq!(slides.iter().map(Vec::len).collect::<Vec<_>>(), [3, 3]);
         assert_eq!(split_lines(&lines, 0).len(), 1);
+    }
+
+    #[test]
+    fn the_editor_s_second_box_keeps_the_codes_and_the_languages_after_it() {
+        let mut song = Song { lang: "id".into(), ..Song::default() };
+        song.set_second("[1]\nsatu\n".into());
+        assert_eq!(song.translations, [Translation { lang: String::new(), text: "[1]\nsatu\n".into() }]);
+        song.translations[0].lang = "en".into();
+        song.translations.push(Translation { lang: "zh-Hans".into(), text: "x".into() });
+        song.set_second("[1]\nedited\n".into());
+        assert_eq!((song.second_text(), song.translations[0].lang.as_str(), song.translations.len()), ("[1]\nedited\n", "en", 2));
+        song.set_second("  ".into());
+        assert_eq!((song.translations.len(), song.translations[0].lang.as_str()), (1, "zh-Hans"));
     }
 
     #[test]

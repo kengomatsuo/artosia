@@ -371,6 +371,11 @@ type Scene = (&'static str, fn(&mut Screen));
 const SCENES: &[Scene] = &[
     ("lyrics", |_| shared().set_state(demo::lyrics())),
     ("lyrics-two-languages", |_| shared().set_state(demo::two_languages())),
+    ("languages-two", |_| shared().set_state(demo::languages(&["id", "en"], "Midnight", false))),
+    ("languages-three", |_| shared().set_state(demo::languages(&["id", "en", "zh-Hans"], "Midnight", false))),
+    ("languages-three-light", |_| shared().set_state(demo::languages(&["id", "en", "zh-Hans"], "Paper", false))),
+    ("languages-split", |_| shared().set_state(demo::languages(&["id", "en", "zh-Hans"], "Midnight", true))),
+    ("languages-one", |_| shared().set_state(demo::languages(&["id"], "Midnight", false))),
     ("scripture", |_| shared().set_state(demo::scripture())),
     ("announcement", |_| shared().set_state(demo::announcement())),
     ("countdown", |_| shared().set_state(demo::countdown(unix_now()))),

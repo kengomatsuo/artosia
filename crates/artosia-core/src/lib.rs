@@ -14,6 +14,7 @@ pub mod openlyrics;
 pub mod pack;
 pub mod palette;
 pub mod plan;
+pub mod practice;
 pub mod search;
 pub mod song;
 pub mod store;

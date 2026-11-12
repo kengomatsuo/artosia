@@ -3,8 +3,9 @@
 //! A `<verse name="v1" lang="id">` is a section and each `<lines>` in it is one slide, so the
 //! writer's slide breaks survive. Verses that repeat a name in another `lang` are the same
 //! section in another language: the first language is the song's words, and every further
-//! language is stacked, slide by slide, into its second text, so no lyric is lost. Chords,
-//! comments and formatting tags are dropped.
+//! language is a translation of its own under its `lang` tag. A verse with a `translit`
+//! attribute is a transliteration and is kept under its own tag (`ja-Latn`), never merged into
+//! another language's words. Chords, comments and formatting tags are dropped.
 
 use std::path::Path;
 
@@ -12,13 +13,32 @@ use quick_xml::Reader;
 use quick_xml::escape::resolve_predefined_entity;
 use quick_xml::events::Event;
 
-use crate::song::{Song, parse_tag};
+use crate::song::{Song, Translation, parse_tag};
 
 struct Verse {
     name: String,
     lang: String,
+    /// The script a transliteration is written in; empty for the language's own words.
+    translit: String,
     /// One entry per `<lines>`: the lines of a slide.
     slides: Vec<Vec<String>>,
+}
+
+impl Verse {
+    /// The language tag this verse's words go under: `ja`, or `ja-Latn` for a transliteration.
+    fn tag(&self) -> String {
+        match (self.lang.is_empty(), self.translit.is_empty()) {
+            (_, true) => self.lang.clone(),
+            (true, false) => script(&self.translit),
+            (false, false) => format!("{}-{}", self.lang, script(&self.translit)),
+        }
+    }
+}
+
+/// A script as a tag writes it: `latn` becomes `Latn`.
+fn script(value: &str) -> String {
+    let mut chars = value.chars();
+    chars.next().map(|first| first.to_uppercase().chain(chars.flat_map(char::to_lowercase)).collect()).unwrap_or_default()
 }
 
 fn attribute(start: &quick_xml::events::BytesStart<'_>, name: &str) -> String {
@@ -68,7 +88,7 @@ pub fn read(xml: &str) -> Option<Song> {
             Event::Start(start) => {
                 let name = start.local_name().as_ref().to_string();
                 match name.as_str() {
-                    "verse" => verses.push(Verse { name: attribute(&start, "name"), lang: attribute(&start, "lang"), slides: Vec::new() }),
+                    "verse" => verses.push(Verse { name: attribute(&start, "name"), lang: attribute(&start, "lang"), translit: attribute(&start, "translit"), slides: Vec::new() }),
                     "lines" => {
                         lines.clear();
                         text.clear();
@@ -131,28 +151,19 @@ pub fn read(xml: &str) -> Option<Song> {
         }
     }
     verses.retain(|verse| !verse.slides.is_empty());
-    let first_lang = verses.first()?.lang.clone();
-    let of = |lang: &str| -> Vec<&Verse> { verses.iter().filter(|verse| verse.lang == lang).collect() };
-    song.lyrics = marker_text(&of(&first_lang));
-    // Every other language, in the order the file introduces them, shares the second text.
-    let mut stacked: Vec<Verse> = Vec::new();
-    for verse in verses.iter().filter(|verse| verse.lang != first_lang) {
-        let at = match stacked.iter().position(|other| other.name == verse.name) {
-            Some(at) => at,
-            None => {
-                stacked.push(Verse { name: verse.name.clone(), lang: String::new(), slides: Vec::new() });
-                stacked.len() - 1
-            }
-        };
-        let slides = &mut stacked[at].slides;
-        if slides.len() < verse.slides.len() {
-            slides.resize(verse.slides.len(), Vec::new());
-        }
-        for (slide, lines) in slides.iter_mut().zip(&verse.slides) {
-            slide.extend(lines.iter().cloned());
+    // A language's words are the verses sharing a tag; a transliteration is its own entry under
+    // its own tag, never merged into the words of the language it writes out.
+    let first = verses.iter().find(|verse| verse.translit.is_empty()).or(verses.first())?.tag();
+    let mut tags: Vec<String> = Vec::new();
+    for verse in &verses {
+        if !tags.contains(&verse.tag()) {
+            tags.push(verse.tag());
         }
     }
-    song.second = marker_text(&stacked.iter().collect::<Vec<_>>());
+    let text_of = |tag: &str| marker_text(&verses.iter().filter(|verse| verse.tag() == tag).collect::<Vec<_>>());
+    song.lyrics = text_of(&first);
+    song.lang = first.clone();
+    song.translations = tags.iter().filter(|tag| **tag != first).map(|tag| Translation { lang: tag.clone(), text: text_of(tag) }).filter(|t| !t.text.is_empty()).collect();
     if song.lyrics.is_empty() {
         return None;
     }
@@ -229,6 +240,7 @@ pub fn read_folder(folder: &Path) -> (Vec<Song>, usize) {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::deck::Languages;
 
     const SAMPLE: &str = r#"<?xml version='1.0' encoding='UTF-8'?>
 <song xmlns="http://openlyrics.info/namespace/2009/song" version="0.9">
@@ -255,43 +267,49 @@ mod tests {
         assert_eq!(song.author, "A. Writer");
         assert_eq!(song.order, "v1 c v1 c");
         assert_eq!(song.lyrics, "[1]\nTerang pagi di lembah\nKami bangun & bernyanyi\n\nS'gala puji bagi-Mu\n[chorus]\nNyanyikanlah\nbersama\n");
-        assert_eq!(song.second, "[1]\nFirst light in the valley\nWe wake and sing\n\nAll praise to you\n");
+        assert_eq!((song.lang.as_str(), song.translations.len()), ("id", 1));
+        assert_eq!(song.translations[0].lang, "en");
+        assert_eq!(song.translations[0].text, "[1]\nFirst light in the valley\nWe wake and sing\n\nAll praise to you\n");
     }
 
     #[test]
     fn each_lines_element_is_a_slide_and_the_second_language_follows() {
         let song = read(SAMPLE).unwrap_or_default();
-        let deck = crate::deck::song_deck(&song, 4, "");
+        let both = Languages { shown: vec!["id".into(), "en".into()], solo: None };
+        let deck = crate::deck::song_deck_in(&song, 4, "", &both, &|_| true);
         let texts: Vec<&str> = deck.slides.iter().map(|slide| slide.text.as_str()).collect();
         assert_eq!(texts.len(), 6);
         assert_eq!(texts[1], "S'gala puji bagi-Mu");
-        assert_eq!(deck.slides[1].second, "All praise to you");
+        assert_eq!(deck.slides[1].more[0].text, "All praise to you");
         assert_eq!(deck.slides[2].label, "Chorus");
     }
 
     #[test]
-    fn a_third_language_is_stacked_under_the_second() {
+    fn every_language_is_kept_under_its_own_tag() {
         let xml = r#"<song><lyrics>
             <verse name="v1" lang="id"><lines>Satu</lines><lines>Dua</lines></verse>
             <verse name="v1" lang="en"><lines>One</lines><lines>Two</lines></verse>
             <verse name="v1" lang="jv"><lines>Siji</lines><lines>Loro</lines></verse>
         </lyrics></song>"#;
         let song = read(xml).unwrap_or_default();
-        assert_eq!(song.lyrics, "[1]
-Satu
+        assert_eq!(song.lyrics, "[1]\nSatu\n\nDua\n");
+        let tags: Vec<(&str, &str)> = song.translations.iter().map(|t| (t.lang.as_str(), t.text.as_str())).collect();
+        assert_eq!(tags, [("en", "[1]\nOne\n\nTwo\n"), ("jv", "[1]\nSiji\n\nLoro\n")]);
+    }
 
-Dua
-");
-        assert_eq!(song.second, "[1]
-One
-Siji
-
-Two
-Loro
-");
-        let deck = crate::deck::song_deck(&song, 4, "");
-        assert_eq!(deck.slides[1].second, "Two
-Loro");
+    #[test]
+    fn a_transliteration_is_its_own_entry_and_never_merged() {
+        let xml = r#"<song><lyrics>
+            <verse name="v1" lang="ja"><lines>ひとつ</lines></verse>
+            <verse name="v1" lang="ja" translit="latn"><lines>hitotsu</lines></verse>
+            <verse name="v1" lang="en"><lines>One</lines></verse>
+        </lyrics></song>"#;
+        let song = read(xml).unwrap_or_default();
+        assert_eq!((song.lang.as_str(), song.lyrics.as_str()), ("ja", "[1]\nひとつ\n"));
+        let tags: Vec<(&str, &str)> = song.translations.iter().map(|t| (t.lang.as_str(), t.text.as_str())).collect();
+        assert_eq!(tags, [("ja-Latn", "[1]\nhitotsu\n"), ("en", "[1]\nOne\n")]);
+        // The words of "ja" hold nothing of the transliteration.
+        assert!(!song.lyrics.contains("hitotsu"));
     }
 
     #[test]

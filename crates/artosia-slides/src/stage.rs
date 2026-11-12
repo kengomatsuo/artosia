@@ -6,6 +6,8 @@ use rune::{Align, Color, El, LocalTime, TextStyle, col, el, oklch, row, spacer, 
 
 use crate::audience::clock_text;
 use crate::frame::OutputState;
+use crate::look::voice_ink;
+use crate::voices::{self, Face};
 
 /// The colour of a section group: verse, chorus, bridge, pre-chorus, intro or ending, other.
 /// Red is left for "live" and yellow for messages.
@@ -64,22 +66,32 @@ pub fn stage(state: &OutputState, w: f32, h: f32, now: f64) -> El {
             let strips = if info.message.trim().is_empty() { 0.0 } else { px(100.0) } + if info.chips.is_empty() { 0.0 } else { px(104.0) };
             let next_room = if info.next.is_some() { px(250.0) } else if info.next_title.is_empty() { 0.0 } else { px(90.0) };
             let room = (h - strips - 2.0 * pad - px(70.0) - next_room).max(px(120.0));
-            let mut size = px(104.0);
-            for _ in 0..24 {
-                let style = TextStyle::new(size, 700.0).lh((size * 1.2).round());
-                if rune::text::measure(&slide.text, &[], style, Some(main_w)).1 <= room || size <= px(34.0) {
-                    break;
+            if !slide.more.is_empty() {
+                // Several languages: the blocks of the projector, in its order and colours, on
+                // the stage's white (muted while the room does not see the words).
+                let (items, face) = (voices::of(slide), Face { family: rune::Family::Sans, weight: 700.0, height: 1.2 });
+                let texts: Vec<&str> = items.iter().map(|(_, words)| *words).collect();
+                let size = voices::fit(&texts, face, main_w, room, voices::gap(h), px(104.0), px(voices::HARD_FLOOR));
+                let ink_of = |place: usize| if hidden { muted } else { voice_ink([255, 255, 255], place) };
+                main = main.child(voices::column(&items, main_w, room, voices::gap(h), &ink_of, &|content, color| text(content.to_string()).font(face.at(size)).color(color).w(main_w).wrap()));
+            } else {
+                let mut size = px(104.0);
+                for _ in 0..24 {
+                    let style = TextStyle::new(size, 700.0).lh((size * 1.2).round());
+                    if rune::text::measure(&slide.text, &[], style, Some(main_w)).1 <= room || size <= px(34.0) {
+                        break;
+                    }
+                    size = (size * 0.94).floor();
                 }
-                size = (size * 0.94).floor();
+                main = main.child(
+                    text(slide.text.clone())
+                        .key("stage-text")
+                        .font(TextStyle::new(size, 700.0).lh((size * 1.2).round()))
+                        .color(if hidden { muted } else { ink })
+                        .w(main_w)
+                        .wrap(),
+                );
             }
-            main = main.child(
-                text(slide.text.clone())
-                    .key("stage-text")
-                    .font(TextStyle::new(size, 700.0).lh((size * 1.2).round()))
-                    .color(if hidden { muted } else { ink })
-                    .w(main_w)
-                    .wrap(),
-            );
         }
         None => {
             let words = if state.black { info.words.black.clone() } else { info.words.nothing.clone() };

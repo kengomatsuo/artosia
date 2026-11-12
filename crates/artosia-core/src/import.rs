@@ -8,7 +8,7 @@ use std::io::Read;
 use std::path::{Path, PathBuf};
 
 use crate::bible::{Bible, BibleError, Verse};
-use crate::song::{Song, parse_lyrics, write_lyrics};
+use crate::song::{Song, Translation, parse_lyrics, write_lyrics};
 
 /// The EasiSlides data folder on this computer, if EasiSlides was ever set up here.
 pub fn easislides_folder() -> Option<PathBuf> {
@@ -92,12 +92,14 @@ pub fn read_easislides_songs(path: &Path) -> Result<Vec<Song>, rusqlite::Error> 
             alt_title: row.get::<_, String>(1)?.trim().to_string(),
             number: u32::try_from(row.get::<_, i64>(2)?).unwrap_or(0),
             lyrics: first,
-            second,
+            // EasiSlides' second region is the second language; it names neither language.
+            translations: if second.is_empty() { Vec::new() } else { vec![Translation { lang: String::new(), text: second }] },
             order: row.get::<_, String>(4)?.trim().to_string(),
             author: row.get::<_, String>(5)?.trim().to_string(),
             copyright: row.get::<_, String>(6)?.trim().to_string(),
             key: row.get::<_, String>(7)?.trim().to_string(),
             ccli: row.get::<_, String>(8)?.trim().to_string(),
+            lang: String::new(),
             // EasiSlides keys a song by title and author; it has no id that outlives a rename.
             source: String::new(),
             edited: false,
@@ -196,5 +198,23 @@ mod tests {
         let (first, second) = split_regions("[1]\r\nline one\r\n[region 2]\r\n[1]\r\nbaris satu\r\n");
         assert_eq!(first, "[1]\nline one\n");
         assert_eq!(second, "[1]\nbaris satu\n");
+    }
+
+    #[test]
+    fn an_easislides_song_keeps_its_second_region_as_a_further_language() {
+        let folder = std::env::temp_dir().join(format!("artosia-easi-two-{}", std::process::id()));
+        let _ = std::fs::remove_dir_all(&folder);
+        std::fs::create_dir_all(&folder).unwrap_or_else(|error| panic!("{error}"));
+        let file = folder.join("songs.db");
+        let db = rusqlite::Connection::open(&file).unwrap_or_else(|error| panic!("{error}"));
+        db.execute("create table items (title1 text, title2 text, songnumber integer, contents text, sequence text, author text, copyright text, songkey text, cclisongnumber text)", [])
+            .unwrap_or_else(|error| panic!("{error}"));
+        db.execute("insert into items values ('Made up', '', 1, '[1]\r\nline one\r\n[region 2]\r\n[1]\r\nbaris satu\r\n', '', '', '', '', '')", [])
+            .unwrap_or_else(|error| panic!("{error}"));
+        drop(db);
+        let songs = read_easislides_songs(&file).unwrap_or_default();
+        let _ = std::fs::remove_dir_all(&folder);
+        assert_eq!(songs[0].lyrics, "[1]\nline one\n");
+        assert_eq!(songs[0].translations, [Translation { lang: String::new(), text: "[1]\nbaris satu\n".into() }]);
     }
 }

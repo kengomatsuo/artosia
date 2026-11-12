@@ -41,6 +41,7 @@ pub fn sample_slide() -> artosia_core::deck::Slide {
         second: String::new(),
         caption: String::new(),
         image: String::new(),
+        ..Default::default()
     }
 }
 

@@ -158,6 +158,8 @@ pub fn practice_songs() -> Vec<Song> {
             "",
             "[1]\nKasih setia-Mu baru tiap pagi\nBesar kesetiaan-Mu ya Tuhan\nDi lembah dan di puncak gunung\nEngkau tetap menyertai\n[chorus]\nKu bersyukur, ku bersyukur\nAtas kasih-Mu yang tak berkesudahan\n",
         ),
+        // One song in three languages, Indonesian first, so the practice mode shows them together.
+        artosia_core::practice::three_languages(),
     ]
 }
 

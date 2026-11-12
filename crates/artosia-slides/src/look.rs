@@ -121,6 +121,11 @@ impl Look {
         rgb(self.ink)
     }
 
+    /// The colour of the language at `slot` of the list (see [`voice_ink`]).
+    pub fn voice_ink(&self, slot: usize) -> Color {
+        voice_ink(self.ink, slot)
+    }
+
     /// This look with `preset`'s background. The size, lines, place, font and outline are the
     /// person's own choices and stay. So does a text colour the person chose, as long as it can
     /// be read on the new background (4.5 to 1, the house rule for text); a colour that only
@@ -177,6 +182,23 @@ pub fn presets() -> Vec<Look> {
         Look::base("Ember", Background::Gradient([74, 24, 32], [20, 6, 12]), [255, 244, 232]),
         Look { weight: 600.0, ..Look::base("Paper", Background::Solid([246, 242, 232]), [28, 26, 24]) },
     ]
+}
+
+/// The hues the second, third and further languages of a slide are written in, in order: a
+/// yellow, a blue, a green, a coral, a violet, an orange (oklch hue angles).
+const VOICE_HUES: [f32; 6] = [95.0, 250.0, 150.0, 20.0, 310.0, 60.0];
+
+/// The text colour of the language at `slot` in the list of languages, for text whose own
+/// colour is `ink`. The first language is the ink itself. The others are derived from it: a
+/// tint of one hue each, light where the ink is light (a dark ground, a photo) and deep where
+/// the ink is dark (a light ground), so they read wherever the ink does.
+pub fn voice_ink(ink: [u8; 3], slot: usize) -> Color {
+    if slot == 0 {
+        return rgb(ink);
+    }
+    let hue = VOICE_HUES[(slot - 1) % VOICE_HUES.len()];
+    // 0.179 is the luminance at which white and black text read equally well.
+    if luminance(ink) > 0.179 { rune::oklch(0.9, 0.11, hue) } else { rune::oklch(0.4, 0.12, hue) }
 }
 
 /// How bright a colour is to the eye, from 0 to 1 (WCAG's relative luminance).
@@ -261,6 +283,37 @@ mod tests {
         let chosen = mine.with_preset(presets().swap_remove(1));
         assert_eq!((chosen.font.as_str(), chosen.outline, chosen.outline_ink), ("Georgia", Outline::Thick, [255, 255, 255]));
         assert_eq!((chosen.name.as_str(), chosen.ink), ("Classic blue", [255, 255, 255]));
+    }
+
+    /// Contrast of a colour (linear, as Rune holds it) against a plain ground.
+    fn contrast(ink: Color, ground: [u8; 3]) -> f32 {
+        let (a, b) = (ink.luminance(), luminance(ground));
+        (a.max(b) + 0.05) / (a.min(b) + 0.05)
+    }
+
+    #[test]
+    fn the_first_language_is_the_ink_and_the_others_read_on_every_look() {
+        for look in presets() {
+            assert_eq!(look.voice_ink(0), look.ink_color());
+            let grounds = match &look.background {
+                Background::Solid(color) => vec![*color],
+                Background::Gradient(top, bottom) => vec![*top, *bottom],
+                _ => vec![],
+            };
+            for slot in 1..=8 {
+                for ground in &grounds {
+                    let ratio = contrast(look.voice_ink(slot), *ground);
+                    assert!(ratio >= 4.5, "{} slot {slot} reads {ratio:.1} to 1 on {ground:?}", look.name);
+                }
+            }
+        }
+        // Over a photo the dim darkens it and the ink is light: the tints are the light ones.
+        let photo = Look { background: Background::Image("x.jpg".into()), dim: 0.35, ..Look::default() };
+        assert!(photo.voice_ink(1).luminance() > 0.5);
+        // The colours differ from one another and from the ink.
+        let dark = Look::default();
+        let all: Vec<Color> = (0..4).map(|slot| dark.voice_ink(slot)).collect();
+        assert!(all.iter().enumerate().all(|(at, one)| all.iter().skip(at + 1).all(|other| one != other)));
     }
 
     #[test]

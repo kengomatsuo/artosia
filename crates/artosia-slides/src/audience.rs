@@ -11,6 +11,7 @@ use rune::{Align, Color, El, NativeSurface, Pixels, SurfaceFit, TextStyle, Trans
 use crate::frame::{Countdown, OutputState};
 use crate::fonts;
 use crate::look::{Background, Look, Outline, Place, rgb};
+use crate::voices;
 
 /// Pictures and video a screen draws; the caller loads them.
 #[derive(Clone, Copy, Default)]
@@ -45,6 +46,10 @@ pub fn clock_text(seconds: f64) -> String {
 fn key_of(slide: &Slide) -> String {
     let mut hasher = std::collections::hash_map::DefaultHasher::new();
     (&slide.label, &slide.heading, &slide.text, &slide.second, &slide.image).hash(&mut hasher);
+    // Another language, or the other half of a split slide, is another slide to fade to.
+    if !slide.more.is_empty() || slide.part.is_some() {
+        (&slide.more, slide.part).hash(&mut hasher);
+    }
     format!("slide-{:x}", hasher.finish())
 }
 
@@ -193,7 +198,8 @@ fn slide_text(slide: &Slide, look: &Look, w: f32, h: f32, detail: Detail, under_
     let u = h / 1080.0;
     let ink = look.ink_color();
     let (mx, mut my) = ((w * 0.07).round(), (h * 0.085).round());
-    let caption_room = if slide.caption.is_empty() { 0.0 } else { (64.0 * u).round() };
+    // The foot holds the credit and, on a split slide, its place (1/2).
+    let caption_room = if slide.caption.is_empty() && slide.part.is_none() { 0.0 } else { (64.0 * u).round() };
     let (box_w, mut box_h) = (w - 2.0 * mx, h - 2.0 * my - caption_room);
     if under_picture {
         // The words take what the picture leaves.
@@ -206,7 +212,12 @@ fn slide_text(slide: &Slide, look: &Look, w: f32, h: f32, detail: Detail, under_
         SlideKind::Scripture => 78.0,
         SlideKind::Announcement => 66.0,
     };
-    let size = fit(slide, look, box_w, box_h, (base * u * look.size).round(), (26.0 * u).round().max(4.0));
+    let (base_size, floor) = ((base * u * look.size).round(), (26.0 * u).round().max(4.0));
+    // Several languages are blocks of one size; one language keeps the fit it always had.
+    let items = voices::of(slide);
+    let texts: Vec<&str> = items.iter().map(|(_, words)| *words).collect();
+    let multi = !slide.more.is_empty();
+    let size = if multi { voices::fit(&texts, voices::face(look), box_w, box_h, voices::gap(h), base_size, floor) } else { fit(slide, look, box_w, box_h, base_size, floor) };
     let s = sizes(size, look);
     let align = if look.centered { Align::Center } else { Align::Start };
     let line = |content: &str, style: TextStyle, color: Color| -> El {
@@ -222,7 +233,10 @@ fn slide_text(slide: &Slide, look: &Look, w: f32, h: f32, detail: Detail, under_
     if !slide.heading.is_empty() {
         block = block.child(line(&slide.heading, s.heading, ink).key("heading"));
     }
-    if let Some(rows) = table_of(&slide.text) {
+    if multi {
+        let style = voices::face(look).at(size);
+        block = block.child(voices::column(&items, box_w, box_h, voices::gap(h), &|place| look.voice_ink(place), &|content, color| line(content, style, color)));
+    } else if let Some(rows) = table_of(&slide.text) {
         let (widths, gap) = column_widths(&rows, s.main);
         let wide = widths.iter().sum::<f32>() + gap * widths.len().saturating_sub(1) as f32;
         let cell = |content: &str, width: f32| -> El { dressed(look, detail, h, width, ink, |paint| text(content).font(s.main).color(paint).w(width).truncate()) };
@@ -255,6 +269,20 @@ fn slide_text(slide: &Slide, look: &Look, w: f32, h: f32, detail: Detail, under_
                 .font(style)
                 .color(ink.alpha(0.7))
                 .align(Align::Center)
+                .w(box_w)
+                .truncate()
+                .absolute(mx, h - my - (38.0 * u).round())
+                .transition(Transition::opacity()),
+        );
+    }
+    if let Some((at, of)) = slide.part {
+        let style = TextStyle::new((30.0 * u).round().max(3.0), 500.0).family(fonts::family(&look.font));
+        layer = layer.child(
+            text(format!("{at}/{of}"))
+                .key(format!("{}-part", key_of(slide)))
+                .font(style)
+                .color(ink.alpha(0.7))
+                .align(Align::End)
                 .w(box_w)
                 .truncate()
                 .absolute(mx, h - my - (38.0 * u).round())

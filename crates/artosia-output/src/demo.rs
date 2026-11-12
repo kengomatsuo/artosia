@@ -1,22 +1,15 @@
 //! Sample screens for headless snapshots: `--scene <name> --snap out.png`.
 
 use artosia_core::deck::{Slide, SlideKind};
+use artosia_core::deck::Languages;
+use artosia_core::practice;
 use artosia_core::song::{SectionKind, Tag};
 use artosia_slides::frame::{Countdown, OutputState, StageChip, StageInfo};
 use artosia_slides::look::{Background, Look, Outline, presets};
+use artosia_slides::voices;
 
 fn slide(kind: SlideKind, label: &str, tag: Option<Tag>, text: &str) -> Slide {
-    Slide {
-        kind,
-        label: label.to_string(),
-        short: tag.map(|tag| tag.short()).unwrap_or_default(),
-        tag,
-        heading: String::new(),
-        text: text.to_string(),
-        second: String::new(),
-        caption: String::new(),
-        image: String::new(),
-    }
+    Slide { kind, label: label.to_string(), short: tag.map(|tag| tag.short()).unwrap_or_default(), tag, text: text.to_string(), ..Slide::default() }
 }
 
 fn chorus() -> Slide {
@@ -45,6 +38,45 @@ fn stage_info() -> StageInfo {
         message: String::new(),
         words: Default::default(),
     }
+}
+
+/// The made-up song in `codes`, on the chorus slide, over a preset look, for the projector and
+/// the band's screen. `split` shows the worst case: both verses of the song as one section of
+/// eight lines in each language, which the deck builder must cut in two.
+pub fn languages(codes: &[&str], look_name: &str, split: bool) -> OutputState {
+    let mut song = practice::three_languages();
+    if split {
+        // One section holding verse 1 and verse 2 in every language, so no slide break helps.
+        let merged = |text: &str| {
+            let verses: Vec<&str> = text.split("[chorus]
+").collect();
+            let second = verses[1].split("[2]
+").nth(1).unwrap_or_default();
+            format!("[1]
+{}{second}", verses[0].trim_start_matches("[1]
+"))
+        };
+        song.lyrics = merged(&song.lyrics);
+        for translation in &mut song.translations {
+            translation.text = merged(&translation.text);
+        }
+        song.order = String::new();
+    }
+    let look = look(look_name);
+    let shown = Languages { shown: codes.iter().map(|code| code.to_string()).collect(), solo: None };
+    let max_lines = if split { 0 } else { look.max_lines };
+    let deck = voices::song_deck(&song, max_lines, "", &shown, &look);
+    let at = deck.slides.iter().position(|slide| slide.label == "Chorus" || split).unwrap_or(0);
+    let chip = |text: &str, group: usize, active: bool| StageChip { text: text.to_string(), group, active };
+    let stage = StageInfo {
+        title: song.title.clone(),
+        next: deck.slides.get(at + 1).cloned(),
+        index: at,
+        count: deck.slides.len(),
+        chips: vec![chip("V1", 0, false), chip("C", 1, true), chip("V2", 0, false), chip("C", 1, false)],
+        ..StageInfo::default()
+    };
+    OutputState { slide: deck.slides.get(at).cloned(), look, stage, ..OutputState::default() }
 }
 
 fn look(name: &str) -> Look {

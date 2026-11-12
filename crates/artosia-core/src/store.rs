@@ -8,7 +8,7 @@ use serde::de::DeserializeOwned;
 
 use crate::deck::{Announcement, Fill, Person};
 use crate::plan::Plan;
-use crate::song::Song;
+use crate::song::{Song, Translation};
 
 pub struct Store {
     db: Connection,
@@ -44,6 +44,16 @@ impl From<serde_json::Error> for StoreError {
 }
 
 type Result<T> = std::result::Result<T, StoreError>;
+
+/// The further languages as the JSON a row keeps; `[]` for none, so an empty column always
+/// means a row from before languages existed.
+fn texts_json(translations: &[Translation]) -> Result<String> {
+    Ok(serde_json::to_string(translations)?)
+}
+
+fn translations_of(json: &str) -> Vec<Translation> {
+    serde_json::from_str(json).unwrap_or_default()
+}
 
 /// What an import did.
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
@@ -147,6 +157,8 @@ impl Store {
         let added = [
             ("songs", "source", "text not null default ''"),
             ("songs", "edited", "integer not null default 0"),
+            ("songs", "lang", "text not null default ''"),
+            ("songs", "texts", "text not null default ''"),
             ("announcements", "image", "text not null default ''"),
             ("announcements", "fill", "text not null default ''"),
             ("announcements", "passage", "text not null default ''"),
@@ -157,6 +169,17 @@ impl Store {
                 db.execute_batch(&format!("alter table {table} add column {column} {definition}"))?;
             }
         }
+        // A library written by 0.1.16 holds one extra language in `second`; it becomes the first
+        // of `texts`. A row with `texts` still empty has not been moved (a saved row writes at
+        // least `[]`), and `second` stays in place, unread, so nothing is ever lost.
+        let old: Vec<(i64, String)> = {
+            let mut statement = db.prepare("select id, second from songs where texts = '' and second != ''")?;
+            statement.query_map([], |row| Ok((row.get(0)?, row.get(1)?)))?.collect::<rusqlite::Result<_>>()?
+        };
+        for (id, second) in old {
+            let moved = vec![Translation { lang: String::new(), text: second }];
+            db.execute("update songs set texts = ?1 where id = ?2", params![serde_json::to_string(&moved)?, id])?;
+        }
         Ok(Store { db })
     }
 
@@ -166,7 +189,7 @@ impl Store {
 
     pub fn songs(&self) -> Result<Vec<Song>> {
         let mut statement = self.db.prepare(
-            "select id, title, alt_title, author, copyright, ccli, song_key, number, lyrics, second, play_order, source, edited
+            "select id, title, alt_title, author, copyright, ccli, song_key, number, lyrics, play_order, source, edited, lang, texts
              from songs order by title collate nocase",
         )?;
         let rows = statement.query_map([], |row| {
@@ -180,10 +203,11 @@ impl Store {
                 key: row.get(6)?,
                 number: row.get(7)?,
                 lyrics: row.get(8)?,
-                second: row.get(9)?,
-                order: row.get(10)?,
-                source: row.get(11)?,
-                edited: row.get(12)?,
+                order: row.get(9)?,
+                source: row.get(10)?,
+                edited: row.get(11)?,
+                lang: row.get(12)?,
+                translations: translations_of(&row.get::<_, String>(13)?),
             })
         })?;
         Ok(rows.collect::<rusqlite::Result<Vec<_>>>()?)
@@ -191,24 +215,25 @@ impl Store {
 
     /// Inserts a song with id 0, otherwise updates it; the song's id is set either way.
     pub fn save_song(&self, song: &mut Song) -> Result<()> {
+        let texts = texts_json(&song.translations)?;
         let values = params![
             song.title, song.alt_title, song.author, song.copyright, song.ccli, song.key, song.number, song.lyrics,
-            song.second, song.order, song.source, song.edited
+            texts, song.order, song.source, song.edited, song.lang
         ];
         if song.id == 0 {
             self.db.execute(
-                "insert into songs (title, alt_title, author, copyright, ccli, song_key, number, lyrics, second, play_order, source, edited)
-                 values (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12)",
+                "insert into songs (title, alt_title, author, copyright, ccli, song_key, number, lyrics, texts, play_order, source, edited, lang)
+                 values (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13)",
                 values,
             )?;
             song.id = self.db.last_insert_rowid();
         } else {
             self.db.execute(
                 "update songs set title = ?1, alt_title = ?2, author = ?3, copyright = ?4, ccli = ?5, song_key = ?6,
-                 number = ?7, lyrics = ?8, second = ?9, play_order = ?10, edited = ?11 where id = ?12",
+                 number = ?7, lyrics = ?8, texts = ?9, play_order = ?10, edited = ?11, lang = ?12 where id = ?13",
                 params![
                     song.title, song.alt_title, song.author, song.copyright, song.ccli, song.key, song.number,
-                    song.lyrics, song.second, song.order, song.edited, song.id
+                    song.lyrics, texts, song.order, song.edited, song.lang, song.id
                 ],
             )?;
         }
@@ -225,28 +250,33 @@ impl Store {
         let transaction = self.db.transaction()?;
         let mut done = Imported::default();
         {
-            let mut by_source = transaction.prepare("select id, edited, title, alt_title, lyrics, second, play_order from songs where source = ?1")?;
+            let mut by_source = transaction.prepare("select id, edited, title, alt_title, lyrics, texts, play_order, lang from songs where source = ?1")?;
             let mut replace = transaction.prepare(
                 "update songs set title = ?1, alt_title = ?2, author = ?3, copyright = ?4, ccli = ?5, song_key = ?6,
-                 number = ?7, lyrics = ?8, second = ?9, play_order = ?10 where id = ?11",
+                 number = ?7, lyrics = ?8, texts = ?9, play_order = ?10, lang = ?11 where id = ?12",
             )?;
             let mut exists = transaction.prepare("select id, lyrics from songs where title = ?1 collate nocase and author = ?2 collate nocase")?;
             let opening = |lyrics: &str| -> String { crate::text::normalize(lyrics).chars().take(60).collect() };
             let mut insert = transaction.prepare(
-                "insert into songs (title, alt_title, author, copyright, ccli, song_key, number, lyrics, second, play_order, source)
-                 values (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11)",
+                "insert into songs (title, alt_title, author, copyright, ccli, song_key, number, lyrics, texts, play_order, source, lang)
+                 values (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12)",
             )?;
             for song in songs.iter_mut() {
                 if !song.source.is_empty() {
-                    type Known = (i64, bool, String, String, String, String, String);
+                    type Known = (i64, bool, String, String, String, String, String, String);
                     let known: Option<Known> = by_source
                         .query_row([&song.source], |row| {
-                            Ok((row.get(0)?, row.get(1)?, row.get(2)?, row.get(3)?, row.get(4)?, row.get(5)?, row.get(6)?))
+                            Ok((row.get(0)?, row.get(1)?, row.get(2)?, row.get(3)?, row.get(4)?, row.get(5)?, row.get(6)?, row.get(7)?))
                         })
                         .optional()?;
-                    if let Some((id, edited, title, alt_title, lyrics, second, order)) = known {
+                    if let Some((id, edited, title, alt_title, lyrics, texts, order, lang)) = known {
                         song.id = id;
-                        let same = title == song.title && alt_title == song.alt_title && lyrics == song.lyrics && second == song.second && order == song.order;
+                        let same = title == song.title
+                            && alt_title == song.alt_title
+                            && lyrics == song.lyrics
+                            && translations_of(&texts) == song.translations
+                            && lang == song.lang
+                            && order == song.order;
                         if same {
                             // Nothing changed in the library: not an update, and no edit to protect.
                         } else if edited {
@@ -254,7 +284,7 @@ impl Store {
                         } else {
                             done.updated += replace.execute(params![
                                 song.title, song.alt_title, song.author, song.copyright, song.ccli, song.key, song.number,
-                                song.lyrics, song.second, song.order, id
+                                song.lyrics, texts_json(&song.translations)?, song.order, song.lang, id
                             ])?;
                         }
                         continue;
@@ -270,7 +300,7 @@ impl Store {
                 }
                 insert.execute(params![
                     song.title, song.alt_title, song.author, song.copyright, song.ccli, song.key, song.number,
-                    song.lyrics, song.second, song.order, song.source
+                    song.lyrics, texts_json(&song.translations)?, song.order, song.source, song.lang
                 ])?;
                 song.id = transaction.last_insert_rowid();
                 done.added += 1;
@@ -283,11 +313,11 @@ impl Store {
     /// Puts a deleted song back under its old id, so plans that name it still find it.
     pub fn restore_song(&self, song: &Song) -> Result<()> {
         self.db.execute(
-            "insert or replace into songs (id, title, alt_title, author, copyright, ccli, song_key, number, lyrics, second, play_order, source, edited)
-             values (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13)",
+            "insert or replace into songs (id, title, alt_title, author, copyright, ccli, song_key, number, lyrics, texts, play_order, source, edited, lang)
+             values (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13, ?14)",
             params![
                 song.id, song.title, song.alt_title, song.author, song.copyright, song.ccli, song.key, song.number,
-                song.lyrics, song.second, song.order, song.source, song.edited
+                song.lyrics, texts_json(&song.translations)?, song.order, song.source, song.edited, song.lang
             ],
         )?;
         Ok(())
@@ -415,6 +445,7 @@ impl Store {
 mod tests {
     use super::*;
     use crate::plan::PlanEntry;
+    use crate::song::Translation;
 
     fn store() -> Store {
         Store::in_memory().unwrap_or_else(|error| panic!("{error}"))
@@ -479,6 +510,67 @@ Other words
         let songs = store.songs().unwrap_or_default();
         assert_eq!(songs[0].lyrics, "[1]\nOur church's words\n");
         assert!(songs[0].edited);
+    }
+
+    /// The schema 0.1.16 wrote, with a song that has a second language in `second`.
+    const LIBRARY_0_1_16: &str = "
+        create table songs (id integer primary key, title text not null, alt_title text not null default '',
+            author text not null default '', copyright text not null default '', ccli text not null default '',
+            song_key text not null default '', number integer not null default 0, lyrics text not null default '',
+            second text not null default '', play_order text not null default '', source text not null default '',
+            edited integer not null default 0);
+        insert into songs (title, lyrics, second, source) values ('Two tongues', '[1]\nfirst words\n', '[1]\nsecond words\n', 'old-1');
+        insert into songs (title, lyrics) values ('One tongue', '[1]\nonly words\n');";
+
+    #[test]
+    fn a_library_from_0_1_16_opens_with_its_second_text_as_a_second_language() {
+        let path = std::env::temp_dir().join(format!("artosia-store-old-{}.db", std::process::id()));
+        let _ = std::fs::remove_file(&path);
+        rusqlite::Connection::open(&path).and_then(|db| db.execute_batch(LIBRARY_0_1_16)).expect("an old library is written");
+        let songs = Store::open(&path).unwrap_or_else(|error| panic!("{error}")).songs().unwrap_or_default();
+        let two = songs.iter().find(|song| song.title == "Two tongues").expect("the song is still there");
+        assert_eq!(two.lyrics, "[1]\nfirst words\n");
+        assert_eq!(two.translations, [Translation { lang: String::new(), text: "[1]\nsecond words\n".into() }]);
+        assert_eq!(two.texts().count(), 2);
+        let one = songs.iter().find(|song| song.title == "One tongue").expect("the song is still there");
+        assert!(one.translations.is_empty());
+        // Opened a second time nothing moves again, and a saved change to the languages stays.
+        let store = Store::open(&path).unwrap_or_else(|error| panic!("{error}"));
+        let mut again = store.songs().unwrap_or_default().into_iter().find(|song| song.title == "Two tongues").expect("there");
+        again.lang = "id".into();
+        again.translations[0].lang = "en".into();
+        again.translations.push(Translation { lang: "zh-Hans".into(), text: "[1]\nthird words\n".into() });
+        assert!(store.save_song(&mut again).is_ok());
+        drop(store);
+        let back = Store::open(&path).unwrap_or_else(|error| panic!("{error}")).songs().unwrap_or_default();
+        let back = back.iter().find(|song| song.title == "Two tongues").expect("there");
+        assert_eq!((back.lang.as_str(), back.translations.len(), back.translations[1].lang.as_str()), ("id", 2, "zh-Hans"));
+        let _ = std::fs::remove_file(&path);
+    }
+
+    #[test]
+    fn an_import_updates_the_languages_of_a_song_and_leaves_an_edited_song_alone() {
+        let mut store = store();
+        let song = |english: &str| Song {
+            source: "s0003".into(),
+            title: "Hymn".into(),
+            lyrics: "[1]\nKata\n".into(),
+            lang: "id".into(),
+            translations: vec![Translation { lang: "en".into(), text: english.into() }],
+            ..Song::default()
+        };
+        assert_eq!(store.import_songs(&mut [song("[1]\nWords\n")]).unwrap_or_default().added, 1);
+        // Only a further language changed in the library: that is an update.
+        assert_eq!(store.import_songs(&mut [song("[1]\nBetter words\n")]).unwrap_or_default(), Imported { added: 0, updated: 1, kept: 0 });
+        assert_eq!(store.songs().unwrap_or_default()[0].translations[0].text, "[1]\nBetter words\n");
+        // Edited here, it is kept whatever the library says about any of its languages.
+        let mut mine = store.songs().unwrap_or_default().remove(0);
+        mine.translations.push(Translation { lang: "zh-Hans".into(), text: "[1]\nOurs\n".into() });
+        mine.edited = true;
+        assert!(store.save_song(&mut mine).is_ok());
+        assert_eq!(store.import_songs(&mut [song("[1]\nCorrected\n")]).unwrap_or_default(), Imported { added: 0, updated: 0, kept: 1 });
+        let kept = store.songs().unwrap_or_default().remove(0);
+        assert_eq!((kept.translations.len(), kept.translations[0].text.as_str()), (2, "[1]\nBetter words\n"));
     }
 
     #[test]

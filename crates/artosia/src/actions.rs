@@ -213,8 +213,8 @@ impl App {
             key: TextEdit::new(song.key.clone()),
             order: TextEdit::new(song.order.clone()),
             lyrics: TextEdit::new(song.lyrics.clone()),
-            second: TextEdit::new(song.second.clone()),
-            show_second: !song.second.trim().is_empty(),
+            second: TextEdit::new(song.second_text().to_string()),
+            show_second: !song.second_text().trim().is_empty(),
             ..Editor::default()
         };
         if song.title.is_empty() {
@@ -388,7 +388,7 @@ impl App {
     pub fn editor_song(&self) -> Option<Song> {
         let editor = self.editor.as_ref()?;
         let existing = self.song_position(editor.id).map(|at| self.songs[at].clone()).unwrap_or_default();
-        Some(Song {
+        let mut song = Song {
             id: editor.id,
             title: editor.title.text.trim().to_string(),
             author: editor.author.text.trim().to_string(),
@@ -397,9 +397,11 @@ impl App {
             key: editor.key.text.trim().to_string(),
             order: editor.order.text.trim().to_string(),
             lyrics: editor.lyrics.text.replace("\r\n", "\n"),
-            second: if editor.show_second { editor.second.text.replace("\r\n", "\n") } else { String::new() },
             ..existing
-        })
+        };
+        // The one extra box edits the first further language; its code and any language after it stay.
+        song.set_second(if editor.show_second { editor.second.text.replace("\r\n", "\n") } else { String::new() });
+        Some(song)
     }
 
     pub fn save_editor(&mut self) {

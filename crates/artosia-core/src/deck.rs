@@ -25,13 +25,36 @@ pub struct Slide {
     /// The heading drawn above the text on announcement slides.
     pub heading: String,
     pub text: String,
-    /// The same lines in a second language or translation; empty when there is none.
+    /// The same lines in a second translation of a Bible passage, drawn small under the text;
+    /// empty when there is none. A song's further languages are in `more`.
     pub second: String,
     /// Small print under the text: the reference and translation, or the song credit.
     pub caption: String,
     /// A picture shown with the words, or alone when there are none, as a path; empty for none.
     #[serde(default)]
     pub image: String,
+    /// The language code of `text` on a song's slide; empty when unknown or not a song.
+    #[serde(default)]
+    pub lang: String,
+    /// Where `text`'s language stands in the list of languages the slide was built for, which
+    /// picks its colour so a language keeps its colour from song to song.
+    #[serde(default)]
+    pub slot: u8,
+    /// The song's further languages on this slide, in the order of the list, each the same
+    /// lines as `text` in step by line.
+    #[serde(default)]
+    pub more: Vec<Voice>,
+    /// Which piece of a slide that had to be split to stay readable this is, (1, 2) for "1/2".
+    #[serde(default)]
+    pub part: Option<(u16, u16)>,
+}
+
+/// One further language on a slide.
+#[derive(Clone, Debug, Default, PartialEq, Eq, Hash, Serialize, Deserialize)]
+pub struct Voice {
+    pub lang: String,
+    pub slot: u8,
+    pub text: String,
 }
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
@@ -219,32 +242,125 @@ pub fn song_credit(song: &Song, licence: &str) -> String {
     parts.join(", ")
 }
 
-/// A song's slides in sung order; sections longer than `max_lines` are split evenly.
+/// Which of a song's languages its slides draw: a list of codes whose order is the order on
+/// the slide, and a code that narrows the slide to one language without changing the list.
+#[derive(Clone, Debug, Default, PartialEq, Eq)]
+pub struct Languages {
+    pub shown: Vec<String>,
+    pub solo: Option<String>,
+}
+
+impl Languages {
+    /// The song's languages to draw, as (place in the list, index into `Song::texts`), in the
+    /// order of the list. A listed language the song lacks is left out; when none is left, the
+    /// first language alone is drawn, so a slide is never empty for want of a match. A solo code
+    /// the song lacks changes nothing.
+    pub fn pick(&self, song: &Song) -> Vec<(u8, usize)> {
+        let texts: Vec<(&str, &str)> = song.texts().collect();
+        let find = |code: &str| texts.iter().position(|(have, text)| !code.is_empty() && have.eq_ignore_ascii_case(code) && !text.trim().is_empty());
+        let mut picked: Vec<(u8, usize)> = Vec::new();
+        for (slot, code) in self.shown.iter().enumerate() {
+            if let Some(at) = find(code).filter(|at| picked.iter().all(|(_, have)| have != at)) {
+                picked.push((u8::try_from(slot).unwrap_or(u8::MAX), at));
+            }
+        }
+        if let Some(only) = self.solo.as_deref().and_then(find).and_then(|at| picked.iter().find(|(_, have)| *have == at)) {
+            return vec![*only];
+        }
+        if picked.is_empty() { vec![(0, 0)] } else { picked }
+    }
+}
+
+/// Cuts one slide's lines, a list of lines for each language, into the fewest pieces in which
+/// every piece fits (`fits` is given each language's lines of the piece). Every language is cut
+/// at the same place in its lines, in proportion when the languages differ in length, so the
+/// languages stay in step. A piece holds nothing of a language that has run out of lines. When
+/// nothing fits even one line to a piece, the slide is left whole: more slides would not help.
+pub fn split_in_step(lines: &[Vec<String>], fits: &dyn Fn(&[&[String]]) -> bool) -> Vec<Vec<Vec<String>>> {
+    let longest = lines.iter().map(Vec::len).max().unwrap_or(0).max(1);
+    for pieces in 1..=longest {
+        // The longest language is cut as `split_lines` cuts: even pieces, the first ones longer.
+        let (base, extra) = (longest / pieces, longest % pieces);
+        let mut cuts = vec![0usize];
+        for piece in 0..pieces {
+            cuts.push(cuts[piece] + base + usize::from(piece < extra));
+        }
+        let cut = |language: &Vec<String>, at: usize| (cuts[at] * language.len() + longest / 2) / longest;
+        let cut_up: Vec<Vec<Vec<String>>> = (0..pieces)
+            .map(|piece| lines.iter().map(|language| language[cut(language, piece)..cut(language, piece + 1)].to_vec()).collect())
+            .collect();
+        let fit = cut_up.iter().all(|piece| {
+            let present: Vec<&[String]> = piece.iter().map(Vec::as_slice).filter(|language| !language.is_empty()).collect();
+            fits(&present)
+        });
+        if fit {
+            return cut_up;
+        }
+    }
+    vec![lines.to_vec()]
+}
+
+/// A song's slides in sung order; sections longer than `max_lines` are split evenly. Only the
+/// first language is drawn.
 pub fn song_deck(song: &Song, max_lines: usize, licence: &str) -> Deck {
-    let second = crate::song::parse_lyrics(&song.second);
+    song_deck_in(song, max_lines, licence, &Languages::default(), &|_| true)
+}
+
+/// A song's slides in the languages `languages` picks. With one language the slides are
+/// `song_deck`'s. With several, each section's lines are dealt into slides by the first picked
+/// language that has the section, the others follow in step by line, and a slide whose blocks
+/// `fits` rejects is split into the fewest slides that it accepts, each marked with its place
+/// in `part`.
+pub fn song_deck_in(song: &Song, max_lines: usize, licence: &str, languages: &Languages, fits: &dyn Fn(&[&[String]]) -> bool) -> Deck {
+    let picked = languages.pick(song);
+    let texts: Vec<(&str, &str)> = song.texts().collect();
+    let parsed: Vec<Vec<crate::song::Section>> = picked.iter().map(|&(_, at)| crate::song::parse_lyrics(texts[at].1)).collect();
     let credit = song_credit(song, licence);
     let mut slides = Vec::new();
     for section in song.arranged() {
-        let pieces = section.slides(max_lines);
-        // The second language keeps its own slide breaks when it has as many as the first;
-        // otherwise its lines are dealt evenly across the first language's slides.
-        let other_pieces: Vec<Vec<String>> = match second.iter().find(|s| s.tag == section.tag) {
-            Some(other) if other.slides(max_lines).len() == pieces.len() => other.slides(max_lines),
-            Some(other) => crate::song::split_lines(&other.lines, other.lines.len().div_ceil(pieces.len()).max(1)),
-            None => Vec::new(),
-        };
+        let have: Vec<(usize, &crate::song::Section)> =
+            parsed.iter().enumerate().filter_map(|(k, sections)| sections.iter().find(|other| other.tag == section.tag).map(|other| (k, other))).collect();
+        let Some(&(lead_voice, reference)) = have.first() else { continue };
+        let pieces = reference.slides(max_lines);
+        // Another language keeps its own slide breaks when it has as many as the reference;
+        // otherwise its lines are dealt evenly across the reference's slides.
+        let others: Vec<(usize, Vec<Vec<String>>)> = have[1..]
+            .iter()
+            .map(|&(k, other)| {
+                let own = other.slides(max_lines);
+                let dealt = if own.len() == pieces.len() { own } else { crate::song::split_lines(&other.lines, other.lines.len().div_ceil(pieces.len()).max(1)) };
+                (k, dealt)
+            })
+            .collect();
         for (i, lines) in pieces.iter().enumerate() {
-            slides.push(Slide {
-                kind: SlideKind::Lyrics,
-                label: section.tag.label(),
-                short: section.tag.short(),
-                tag: Some(section.tag),
-                heading: String::new(),
-                text: lines.join("\n"),
-                second: other_pieces.get(i).map(|lines| lines.join("\n")).unwrap_or_default(),
-                caption: if slides.is_empty() { credit.clone() } else { String::new() },
-                image: String::new(),
-            });
+            let mut voices: Vec<(usize, Vec<String>)> = vec![(lead_voice, lines.clone())];
+            voices.extend(others.iter().filter_map(|(k, dealt)| dealt.get(i).map(|lines| (*k, lines.clone()))));
+            let parts = if voices.len() > 1 {
+                let aligned: Vec<Vec<String>> = voices.iter().map(|(_, lines)| lines.clone()).collect();
+                split_in_step(&aligned, fits)
+            } else {
+                vec![vec![lines.clone()]]
+            };
+            let count = parts.len();
+            for (at, part) in parts.into_iter().enumerate() {
+                let mut shown = voices.iter().zip(part).filter(|(_, lines)| !lines.is_empty());
+                let Some(((first, _), first_lines)) = shown.next() else { continue };
+                let voice = |k: usize, lines: &[String]| Voice { lang: texts[picked[k].1].0.to_string(), slot: picked[k].0, text: lines.join("\n") };
+                let lead = voice(*first, &first_lines);
+                slides.push(Slide {
+                    kind: SlideKind::Lyrics,
+                    label: section.tag.label(),
+                    short: section.tag.short(),
+                    tag: Some(section.tag),
+                    text: lead.text,
+                    lang: lead.lang,
+                    slot: lead.slot,
+                    more: shown.map(|((k, _), lines)| voice(*k, &lines)).collect(),
+                    caption: if slides.is_empty() { credit.clone() } else { String::new() },
+                    part: (count > 1).then(|| (at as u16 + 1, count as u16)),
+                    ..Slide::default()
+                });
+            }
         }
     }
     Deck { title: song.title.clone(), subtitle: song.author.clone(), source: DeckSource::Song(song.id), slides }
@@ -282,7 +398,7 @@ pub fn passage_deck(bible: &Bible, reference: &Reference, second: Option<&Bible>
             text: join(bible, &span),
             second: second.map(|other| join(other, &span)).unwrap_or_default(),
             caption: format!("{label} {codes}"),
-            image: String::new(),
+            ..Slide::default()
         });
     }
     Deck {
@@ -370,6 +486,7 @@ pub fn announcement_slide(announcement: &Announcement) -> Slide {
         second: String::new(),
         caption: String::new(),
         image: announcement.image.clone(),
+        ..Slide::default()
     }
 }
 
@@ -389,6 +506,7 @@ pub fn tag_group(tag: Tag) -> usize {
 mod tests {
     use super::*;
     use crate::bible::Verse;
+    use crate::song::Translation;
 
     #[test]
     fn a_song_deck_follows_the_order_and_splits_long_sections() {
@@ -486,12 +604,127 @@ mod tests {
         assert_eq!(birthday_days(Fill::Passage, &today), None);
     }
 
+    fn three_languages() -> Song {
+        Song {
+            lyrics: "[1]\none\ntwo\n[chorus]\nthree\nfour\n".into(),
+            lang: "id".into(),
+            translations: vec![
+                Translation { lang: "en".into(), text: "[chorus]\nthree-en\nfour-en\n[1]\none-en\ntwo-en\n".into() },
+                Translation { lang: "zh-Hans".into(), text: "[1]\none-zh\ntwo-zh\n[chorus]\nthree-zh\nfour-zh\n".into() },
+            ],
+            ..Song::default()
+        }
+    }
+
+    fn languages(codes: &[&str]) -> Languages {
+        Languages { shown: codes.iter().map(|code| code.to_string()).collect(), solo: None }
+    }
+
+    /// The same capacity test the real screen makes, by line count: `room` lines in all.
+    fn room(lines: usize) -> impl Fn(&[&[String]]) -> bool {
+        move |blocks: &[&[String]]| blocks.iter().map(|block| block.len()).sum::<usize>() <= lines
+    }
+
     #[test]
     fn a_second_language_follows_its_section() {
-        let song = Song { lyrics: "[1]\none\ntwo\n[chorus]\nthree\n".into(), second: "[chorus]\ntiga\n[1]\nsatu\ndua\n".into(), ..Song::default() };
-        let deck = song_deck(&song, 4, "");
-        assert_eq!(deck.slides[0].second, "satu\ndua");
-        assert_eq!(deck.slides[1].second, "tiga");
+        let song = three_languages();
+        let deck = song_deck_in(&song, 4, "", &languages(&["id", "en"]), &room(99));
+        assert_eq!(deck.slides[0].text, "one\ntwo");
+        assert_eq!(deck.slides[0].more, [Voice { lang: "en".into(), slot: 1, text: "one-en\ntwo-en".into() }]);
+        assert_eq!(deck.slides[1].more[0].text, "three-en\nfour-en");
+        assert_eq!(deck.slides.len(), 2);
+    }
+
+    #[test]
+    fn the_list_sets_the_order_and_what_the_song_lacks_is_left_out() {
+        let song = three_languages();
+        // The list's order is the slide's order; the first one listed leads the slide.
+        let deck = song_deck_in(&song, 4, "", &languages(&["zh-Hans", "id"]), &room(99));
+        assert_eq!((deck.slides[0].lang.as_str(), deck.slides[0].slot, deck.slides[0].text.as_str()), ("zh-Hans", 0, "one-zh\ntwo-zh"));
+        assert_eq!((deck.slides[0].more[0].lang.as_str(), deck.slides[0].more[0].slot), ("id", 1));
+        // A language the song does not have shows the others, and keeps the others' places in the list.
+        let deck = song_deck_in(&song, 4, "", &languages(&["fr", "en", "zh-Hans"]), &room(99));
+        assert_eq!((deck.slides[0].lang.as_str(), deck.slides[0].slot, deck.slides[0].more[0].slot), ("en", 1, 2));
+        // A song's languages that are not listed are not drawn.
+        assert!(deck.slides.iter().all(|slide| slide.more.len() == 1 && slide.lang != "id"));
+        // Nothing listed matches: the first language alone, never an empty slide.
+        let deck = song_deck_in(&song, 4, "", &languages(&["fr", "de"]), &room(99));
+        assert_eq!((deck.slides[0].text.as_str(), deck.slides[0].more.len()), ("one\ntwo", 0));
+    }
+
+    #[test]
+    fn an_empty_list_is_the_first_language_alone_exactly_as_before() {
+        let song = three_languages();
+        let alone = song_deck_in(&song, 4, "", &Languages::default(), &|_| false);
+        let plain = song_deck(&Song { translations: Vec::new(), lang: String::new(), ..song.clone() }, 4, "");
+        assert_eq!(alone.slides.len(), plain.slides.len());
+        for (a, b) in alone.slides.iter().zip(&plain.slides) {
+            assert_eq!((&a.label, &a.text, &a.second, &a.caption, a.more.len(), a.part), (&b.label, &b.text, &b.second, &b.caption, 0, None));
+        }
+    }
+
+    #[test]
+    fn a_solo_code_narrows_the_slide_without_changing_the_list() {
+        let song = three_languages();
+        let mut shown = languages(&["id", "en", "zh-Hans"]);
+        shown.solo = Some("en".into());
+        let deck = song_deck_in(&song, 4, "", &shown, &room(99));
+        assert!(deck.slides.iter().all(|slide| slide.more.is_empty() && slide.lang == "en"));
+        assert_eq!(deck.slides[0].text, "one-en\ntwo-en");
+        assert_eq!(shown.shown.len(), 3, "the list itself is untouched");
+        // A solo language the song lacks narrows nothing.
+        shown.solo = Some("fr".into());
+        assert_eq!(song_deck_in(&song, 4, "", &shown, &room(99)).slides[0].more.len(), 2);
+    }
+
+    #[test]
+    fn a_slide_that_does_not_fit_splits_at_the_same_line_in_every_language() {
+        let song = Song {
+            lyrics: "[1]\na1\na2\na3\na4\n".into(),
+            lang: "id".into(),
+            translations: vec![Translation { lang: "en".into(), text: "[1]\nb1\nb2\nb3\nb4\n".into() }],
+            ..Song::default()
+        };
+        // Eight lines do not fit a room for four: two slides of two lines in each language.
+        let deck = song_deck_in(&song, 4, "", &languages(&["id", "en"]), &room(4));
+        let shown: Vec<_> = deck.slides.iter().map(|s| (s.text.as_str(), s.more[0].text.as_str(), s.part)).collect();
+        assert_eq!(shown, [("a1\na2", "b1\nb2", Some((1, 2))), ("a3\na4", "b3\nb4", Some((2, 2)))]);
+        // It fits: one slide and no marker. One language alone is never split by this rule.
+        assert_eq!(song_deck_in(&song, 4, "", &languages(&["id", "en"]), &room(8)).slides[0].part, None);
+        let alone = song_deck_in(&song, 4, "", &languages(&["id"]), &room(1));
+        assert_eq!((alone.slides.len(), alone.slides[0].part), (1, None));
+    }
+
+    #[test]
+    fn splitting_picks_the_fewest_slides_and_keeps_languages_of_unequal_length_in_step() {
+        let lines = |n: usize, tag: &str| (1..=n).map(|i| format!("{tag}{i}")).collect::<Vec<String>>();
+        // Counts 6 and 3 with room for five lines: two pieces, 3+2 and 3+1 lines in proportion.
+        let pieces = split_in_step(&[lines(6, "a"), lines(3, "b")], &room(5));
+        assert_eq!(pieces.iter().map(|piece| piece.iter().map(Vec::len).collect::<Vec<_>>()).collect::<Vec<_>>(), [[3, 2], [3, 1]]);
+        // Every piece of a language together is the language, once, in order.
+        let joined: Vec<String> = pieces.iter().flat_map(|piece| piece[1].clone()).collect();
+        assert_eq!(joined, lines(3, "b"));
+        // A room for everything gives one piece; a room for two lines gives pieces of one line each.
+        assert_eq!(split_in_step(&[lines(6, "a"), lines(3, "b")], &room(99)).len(), 1);
+        assert_eq!(split_in_step(&[lines(4, "a"), lines(4, "b")], &room(2)).len(), 4);
+        // Nothing fits even one line: the slide stays whole.
+        assert_eq!(split_in_step(&[lines(4, "a"), lines(4, "b")], &room(1)).len(), 1);
+    }
+
+    #[test]
+    fn a_language_lacking_a_section_leaves_it_out_of_that_slide() {
+        let song = Song {
+            lyrics: "[1]\none\n[chorus]\nthree\n".into(),
+            lang: "id".into(),
+            translations: vec![Translation { lang: "en".into(), text: "[chorus]\nthree-en\n".into() }],
+            ..Song::default()
+        };
+        let deck = song_deck_in(&song, 4, "", &languages(&["id", "en"]), &room(99));
+        assert_eq!((deck.slides[0].more.len(), deck.slides[1].more.len()), (0, 1));
+        // The first language is not listed: the slides follow the first language's sections, and
+        // a section the listed language lacks has no slide.
+        let deck = song_deck_in(&song, 4, "", &languages(&["en"]), &room(99));
+        assert_eq!(deck.slides.iter().map(|slide| slide.text.as_str()).collect::<Vec<_>>(), ["three-en"]);
     }
 
     #[test]

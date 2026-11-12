@@ -227,6 +227,9 @@ pub struct LineHit {
     pub tag: Tag,
     pub text: String,
     pub ranges: Vec<Range<usize>>,
+    /// The language code of the line, empty when the song never named it; the song's first
+    /// language when the line is one of its written lyrics.
+    pub lang: String,
 }
 
 #[derive(Clone, Debug, PartialEq)]
@@ -258,6 +261,8 @@ struct Entry {
     section: Option<u16>,
     tag: Tag,
     text: Box<str>,
+    /// Which of the song's languages the line is in: 0 is the first.
+    lang: u8,
 }
 
 /// What a song's place in the results rests on. The derived order IS the cascade, after the
@@ -298,6 +303,8 @@ pub struct SongIndex {
     entries: Vec<Entry>,
     numbers: Vec<u32>,
     songs: usize,
+    /// Each song's language codes, the first language first.
+    codes: Vec<Vec<String>>,
 }
 
 impl SongIndex {
@@ -310,20 +317,35 @@ impl SongIndex {
             } else {
                 format!("{} {}", song.title, song.alt_title)
             };
-            entries.push(Entry { song: i as u32, section: None, tag: verse, text: title.into_boxed_str() });
-            for (at, section) in song.sections().iter().enumerate() {
-                for line in &section.lines {
-                    entries.push(Entry {
-                        song: i as u32,
-                        section: Some(at as u16),
-                        tag: section.tag,
-                        text: line.clone().into_boxed_str(),
-                    });
+            entries.push(Entry { song: i as u32, section: None, tag: verse, text: title.into_boxed_str(), lang: 0 });
+            let written = song.sections();
+            // Every language's lines are searched; a translation's section is the written
+            // section with the same tag, so a hit opens the right place whichever language matched.
+            for (language, (_, words)) in song.texts().enumerate() {
+                let translated;
+                let sections = if language == 0 {
+                    &written
+                } else {
+                    translated = crate::song::parse_lyrics(words);
+                    &translated
+                };
+                for (at, section) in sections.iter().enumerate() {
+                    let place = if language == 0 { at } else { written.iter().position(|first| first.tag == section.tag).unwrap_or(0) };
+                    for line in &section.lines {
+                        entries.push(Entry {
+                            song: i as u32,
+                            section: Some(place as u16),
+                            tag: section.tag,
+                            text: line.clone().into_boxed_str(),
+                            lang: u8::try_from(language).unwrap_or(u8::MAX),
+                        });
+                    }
                 }
             }
         }
         let index = TextIndex::build(entries.iter().map(|entry| &*entry.text));
-        SongIndex { index, entries, numbers: songs.iter().map(|song| song.number).collect(), songs: songs.len() }
+        let codes = songs.iter().map(|song| song.texts().map(|(code, _)| code.to_string()).collect()).collect();
+        SongIndex { index, entries, numbers: songs.iter().map(|song| song.number).collect(), songs: songs.len(), codes }
     }
 
     pub fn len(&self) -> usize {
@@ -457,6 +479,7 @@ impl SongIndex {
                         tag: entry.tag,
                         text: entry.text.to_string(),
                         ranges: highlight_ranges(&entry.text, &tokens),
+                        lang: self.codes[entry.song as usize].get(usize::from(entry.lang)).cloned().unwrap_or_default(),
                     }
                 });
                 let title_ranges = if hit.title_matched { highlight_ranges(&self.entries[self.title_entry(hit.song) as usize].text, &tokens) } else { Vec::new() };
@@ -498,6 +521,33 @@ mod tests {
             song(3, "Hill of Morning Stars", "[1]\nNight is over, stars are fading\n"),
             song(47, "Quiet Harbour", "[1]\nStill waters hold the evening\n[bridge]\nAnchor deep, anchor sure\n"),
         ]
+    }
+
+    #[test]
+    fn a_line_in_any_language_of_a_song_finds_it_and_the_hit_shows_that_line() {
+        let mut songs = library();
+        songs.push(Song {
+            number: 9,
+            title: "Morning of Thanks".into(),
+            lyrics: "[1]\nPagi datang kami di sini\n[chorus]\nKami bersyukur\n".into(),
+            lang: "id".into(),
+            translations: vec![
+                crate::song::Translation { lang: "en".into(), text: "[1]\nThe morning is here\n[chorus]\nWe thank you gladly\n".into() },
+                crate::song::Translation { lang: "zh-Hans".into(), text: "[chorus]\nwo men gan xie\n".into() },
+            ],
+            ..Song::default()
+        });
+        let index = SongIndex::build(&songs);
+        let hit = index.search("thank gladly", 1).remove(0);
+        assert_eq!(hit.song, 4);
+        let line = hit.line.expect("the matching line is shown");
+        assert_eq!((line.text.as_str(), line.lang.as_str(), line.tag), ("We thank you gladly", "en", Tag::new(crate::song::SectionKind::Chorus, 1)));
+        // The line opens at the written section with the same tag, whichever language matched.
+        assert_eq!(line.section, 1);
+        let third = index.search("gan xie", 1).remove(0);
+        assert_eq!((third.song, third.line.map(|line| line.lang)), (4, Some("zh-Hans".into())));
+        // The first language still answers as before.
+        assert_eq!(index.search("bersyukur", 1).remove(0).line.map(|line| line.lang), Some("id".into()));
     }
 
     #[test]
