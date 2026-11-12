@@ -111,9 +111,18 @@ own files and none from another cause.
 | The remote's example (`serve.exe`) | 2 | It listened on the network until 2026-11-11 |
 | Copies of `artosia.exe` | 4 | One each in `target/debug`, `target/try`, `target/app` and `target/mine`, started on a library with the phone remote on |
 
-Windows asks when a program opens a socket that other computers can reach, and it keeps its
-answer per program file. So the fixes are about never opening such a socket outside the one
-real use, and never making new program files that do:
+What Microsoft says (learn.microsoft.com, "Windows Firewall rules", read 2026-11-12): a
+program that issues a listen call with no rule for it makes a dialog ask "the first time the
+app is launched or tries to communicate in the network"; a rule names "the full path to the
+application"; when the person answers No or cancels, "block rules are created", two as a
+rule, one for TCP and one for UDP; and "once the rules are added, they must be deleted to
+generate the prompt again". A person who is not an administrator gets block rules whatever
+they press. The page does not say whether binding a UDP socket alone counts as listening, and
+the log does not say which socket raised each question, so the UDP socket below is a
+possible cause that was removed, not a proven one.
+
+So the fixes are about never opening a socket other computers can reach outside the one real
+use, and never making new program files that do:
 
 - A test or an example starts the server with `local_only`, which listens on this computer
   only (2026-11-11).
@@ -128,5 +137,7 @@ real use, and never making new program files that do:
 
 Every one of the 13 questions was answered with a block, which Windows keeps: the copies in
 `target/try`, `target/debug`, `target/app` and `target/mine` cannot be reached by a phone
-until those rules are removed in Windows' firewall settings, which is the owner's to do.
+until those rules are deleted. Deleting them changes Windows' security settings and needs an
+administrator, so it is the owner's to do and no session does it. The installed program sits
+in a folder of its own with no rule yet, so the blocks do not touch it.
 
