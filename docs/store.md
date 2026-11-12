@@ -86,6 +86,8 @@ long after the package was listed as accepted; opening the page again showed bot
 run's picture differed (its row of dots has an eighth), so that one picture was replaced in each of the ten
 listings through its own tile, caption kept. The notes for the testers now name the first run's eight questions.
 
+Submitted for certification on 2026-11-12, after the owner ticked the rating board's terms: Partner Center shows "In certification" (Submission, Pre-processing, Certification, Publishing) and says the step usually takes a few hours and at most three business days, and that the product publishes as soon as it passes. Its Store address will be `https://apps.microsoft.com/detail/9NTBWLQ5PBHN`.
+
 Not done: the Windows App Certification Kit was not run (it asks for an administrator, which a session never answers), and nothing was installed from the
 Store itself, so the firewall rule and the read-only install folder are proven only by the
 loose registration.
