@@ -36,6 +36,22 @@ pub fn staging_dir(install_dir: &Path) -> PathBuf {
     }
 }
 
+/// The install folder a staging folder belongs to, the other way round from `staging_dir`: the
+/// folder it is in, or, for the hidden folder beside a Mac app, that app's `Contents`. A
+/// download asks it which files are installed already, so only the changed ones are fetched;
+/// asked of the app's own folder, a Mac fetched all of a release every time.
+pub(crate) fn install_dir_of(stage: &Path) -> PathBuf {
+    let parent = stage.parent().unwrap_or(stage);
+    let name = stage.file_name().unwrap_or_default().to_string_lossy();
+    if let Some(app) = name.strip_prefix('.').and_then(|rest| rest.strip_suffix("-update")) {
+        let contents = parent.join(format!("{app}.app")).join("Contents");
+        if contents.is_dir() {
+            return contents;
+        }
+    }
+    parent.to_path_buf()
+}
+
 /// Where a small file about this copy goes that belongs to no release, such as the operator's
 /// mark that it has just been updated: the install folder, or a Mac app's staging folder.
 pub fn own_files_dir(install_dir: &Path) -> PathBuf {

@@ -825,6 +825,12 @@ fn a_mac_app_holds_a_releases_files_and_nothing_else_through_an_update() {
     let release = check_with(&app.server.url(), "1.0.0", &app.keys).unwrap().expect("a newer release");
     download_with(&release, &app.stage(), &app.keys, &|_, _| {}).unwrap();
     assert_eq!(MacApp::files(&app.install), before, "a download puts nothing inside the app");
+    // Only what changed is fetched: the plist is the same in both releases and stays where it is.
+    let mut fetched: Vec<String> = fs::read_dir(app.stage().join("files")).unwrap().flatten().map(|e| e.file_name().to_string_lossy().into_owned()).collect();
+    fetched.sort();
+    let mut changed = vec![hosted("MacOS/artosia"), hosted("Resources/gstreamer/lib/libgst.dylib"), hosted("_CodeSignature/CodeResources")];
+    changed.sort();
+    assert_eq!(fetched, changed);
 
     let applied = apply_on_start_with(&app.install, &app.keys).unwrap();
     assert!(matches!(applied, Applied::Updated { ref version, .. } if version == "2.0.0"));

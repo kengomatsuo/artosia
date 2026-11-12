@@ -138,7 +138,8 @@ pub fn download_with(
     let _ = fs::remove_file(into.join(MANIFEST_NAME));
     drop_unlisted(&files_dir, &m);
 
-    let install_dir = into.parent().unwrap_or(into);
+    let install_dir = crate::apply::install_dir_of(into);
+    let install_dir = install_dir.as_path();
     let todo: Vec<&FileEntry> = m
         .files
         .iter()
