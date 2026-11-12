@@ -63,8 +63,7 @@ fn main() -> std::io::Result<()> {
         }
     })?;
     println!("port {}  pin {pin}{}", server.port(), if lan { "" } else { "  (this computer only; pass --lan for a phone)" });
-    let urls = if lan { server.urls() } else { vec![format!("http://127.0.0.1:{}/", server.port())] };
-    for u in urls {
+    for u in server.urls() {
         println!("{u}?pin={pin}");
     }
     let deck = slides();

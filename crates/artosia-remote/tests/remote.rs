@@ -231,6 +231,14 @@ fn urls_use_the_port() {
     }
 }
 
+/// A test or an example must never make Windows Firewall ask: the server listens on this
+/// computer only, so its one address is this computer's and the network is never looked at.
+#[test]
+fn a_local_server_has_only_this_computers_address() {
+    let (srv, _) = start();
+    assert_eq!(srv.urls(), vec![format!("http://127.0.0.1:{}/", srv.port())]);
+}
+
 fn rich() -> RemoteState {
     RemoteState {
         item_title: "Sample".into(),

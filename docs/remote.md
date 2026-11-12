@@ -97,3 +97,36 @@ popup with sockets on localhost", and others). On this PC the remote's sixteen t
 The box's own window is a proxy of zero size owned by a process named PickerHost; the box that
 is drawn belongs to the system. Measuring that window says nothing is there. A picture of the
 screen is the only check.
+
+## Why Windows Firewall kept asking (2026-11-12)
+
+The owner saw a Windows box with a shield for almost every action. Windows' own log
+(`Microsoft-Windows-Windows Firewall With Advanced Security/Firewall`, events 2004 and 2097)
+named the programs: 13 questions between 2026-11-10 and 2026-11-11, every one from Artosia's
+own files and none from another cause.
+
+| Program asked about | Times | Why it was a new program each time |
+|---|---|---|
+| The remote's test (`remote-<hash>.exe`) | 8 | Cargo names the test file by a hash, and it changed with the build; three were in agents' own build folders |
+| The remote's example (`serve.exe`) | 2 | It listened on the network until 2026-11-11 |
+| Copies of `artosia.exe` | 4 | One each in `target/debug`, `target/try`, `target/app` and `target/mine`, started on a library with the phone remote on |
+
+Windows asks when a program opens a socket that other computers can reach, and it keeps its
+answer per program file. So the fixes are about never opening such a socket outside the one
+real use, and never making new program files that do:
+
+- A test or an example starts the server with `local_only`, which listens on this computer
+  only (2026-11-11).
+- `RemoteServer::urls` of such a server returns this computer's address and never calls
+  `net::lan_ips`, whose first step binds a socket on every network to learn which adapter
+  leads out. The remote's own test called it. The test
+  `a_local_server_has_only_this_computers_address` holds this (2026-11-12).
+- The installed program is one file in one folder, and its self-update keeps the folder, so
+  a church is asked once: when the phone remote is first switched on. Allow must be chosen
+  there, or no phone can reach it.
+- A trial copy is never started from a new folder on a library whose phone remote is on.
+
+Every one of the 13 questions was answered with a block, which Windows keeps: the copies in
+`target/try`, `target/debug`, `target/app` and `target/mine` cannot be reached by a phone
+until those rules are removed in Windows' firewall settings, which is the owner's to do.
+

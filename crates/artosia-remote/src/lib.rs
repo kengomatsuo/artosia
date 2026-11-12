@@ -118,6 +118,7 @@ pub struct RemoteConfig {
 pub struct RemoteServer {
     shared: Arc<Shared>,
     port: u16,
+    local_only: bool,
     accept: Option<JoinHandle<()>>,
 }
 
@@ -125,7 +126,8 @@ impl RemoteServer {
     /// `on_command` runs on a connection thread, not the caller's: several phones can call it
     /// at the same moment, so it must be quick and thread safe (send into a channel, say).
     pub fn start(config: RemoteConfig, on_command: impl Fn(RemoteCommand) + Send + Sync + 'static) -> io::Result<RemoteServer> {
-        let listener = TcpListener::bind((if config.local_only { Ipv4Addr::LOCALHOST } else { Ipv4Addr::UNSPECIFIED }, config.port))?;
+        let local_only = config.local_only;
+        let listener = TcpListener::bind((if local_only { Ipv4Addr::LOCALHOST } else { Ipv4Addr::UNSPECIFIED }, config.port))?;
         let port = listener.local_addr()?.port();
         let shared = Arc::new(Shared {
             pin: config.pin,
@@ -144,7 +146,7 @@ impl RemoteServer {
         });
         let s = shared.clone();
         let accept = std::thread::Builder::new().name("remote-accept".into()).spawn(move || accept_loop(listener, s))?;
-        Ok(RemoteServer { shared, port, accept: Some(accept) })
+        Ok(RemoteServer { shared, port, local_only, accept: Some(accept) })
     }
 
     /// Cheap; does nothing when `state` equals the current one.
@@ -164,8 +166,12 @@ impl RemoteServer {
     }
 
     /// One URL per usable IPv4 interface, best guess first. May be empty with no network.
+    /// A server that listens on this computer only has one address, this computer's, and
+    /// never looks at the network: finding the network's address opens a socket on every
+    /// network, and Windows Firewall asks about a program that does.
     pub fn urls(&self) -> Vec<String> {
-        net::lan_ips().into_iter().map(|ip| format!("http://{ip}:{}/", self.port)).collect()
+        let ips = if self.local_only { vec![Ipv4Addr::LOCALHOST] } else { net::lan_ips() };
+        ips.into_iter().map(|ip| format!("http://{ip}:{}/", self.port)).collect()
     }
 
     /// Phones that talked to the server in the last 45 seconds.
