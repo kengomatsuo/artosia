@@ -1,0 +1,5 @@
+{
+  "NSCameraUsageDescription": "Artosia chiếu hình từ camera phía sau lời trên màn chiếu khi bạn chọn camera trong Hiển thị.",
+  "NSMicrophoneUsageDescription": "Artosia nghe âm thanh trong phòng để theo nhịp nhạc và gợi ý bài đang hát khi bạn bật Micro.",
+  "NSLocalNetworkUsageDescription": "Artosia kết nối với camera trong mạng của bạn khi bạn nhập địa chỉ, và cho điện thoại cùng Wi-Fi chuyển slide."
+}

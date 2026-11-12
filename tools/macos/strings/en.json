@@ -1,0 +1,5 @@
+{
+  "NSCameraUsageDescription": "Artosia shows a camera behind the words on the projector when you choose one in Design.",
+  "NSMicrophoneUsageDescription": "Artosia listens to the room to follow the tempo and suggest the song being sung, when you switch Listen on.",
+  "NSLocalNetworkUsageDescription": "Artosia reaches a camera on your network when you give its address, and lets a phone on the same Wi-Fi move the slides."
+}

@@ -1,0 +1,5 @@
+{
+  "NSCameraUsageDescription": "디자인에서 카메라를 고르면 Artosia가 그 카메라 화면을 프로젝터의 글 뒤에 보여 줘요.",
+  "NSMicrophoneUsageDescription": "마이크를 켜면 Artosia가 주변 소리를 들어 음악의 빠르기를 따라가고 부르는 찬양을 찾아 줘요.",
+  "NSLocalNetworkUsageDescription": "주소를 알려 주면 Artosia가 네트워크의 카메라에 연결하고, 같은 Wi-Fi의 휴대폰으로 슬라이드를 넘길 수 있게 해요."
+}

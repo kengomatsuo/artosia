@@ -1,0 +1,18 @@
+{
+  "_page": "Three sentences that macOS itself shows in its permission dialogs for Artosia. Artosia is a free program for a church's media desk: it puts the words of songs, Bible verses and announcements on the projector during a service. The reader is a church volunteer of any age who has just done something in Artosia that needs the permission; macOS prints the sentence in small type under its own question (for example: Artosia would like to access the camera). Register: plain and warm, addressing the reader the way a friendly program does in your language (kamu in Indonesian) where a pronoun is needed. Each is one sentence that says what Artosia does with the thing and when, and nothing more: no please, no reassurance, no instruction. No exclamation marks, no em-dash, no en-dash, no middle dot, no emoji. Sentence case. Names stay as written: Artosia, Wi-Fi. Where an entry names a part of Artosia, use the name your language's Artosia gives it, which the entry says where to find.",
+  "NSCameraUsageDescription": {
+    "where": "the dialog in which macOS asks whether Artosia may use the camera; it appears the first time a person picks a camera as the moving picture behind the words",
+    "does": "says that Artosia shows the camera's picture behind the words on the projector, when the person chooses a camera in Design. Design is the name of a dialog in Artosia: write it as the value of BTN_LOOK in your language's table of the program",
+    "max": 110
+  },
+  "NSMicrophoneUsageDescription": {
+    "where": "the dialog in which macOS asks whether Artosia may use the microphone; it appears the first time a person switches listening on",
+    "does": "says that Artosia listens to the room to follow the tempo of the music and to suggest the song being sung, when the person switches Listen on. Listen is the name of a dialog in Artosia: write it as the value of BTN_LISTEN in your language's table of the program",
+    "max": 130
+  },
+  "NSLocalNetworkUsageDescription": {
+    "where": "the dialog in which macOS asks whether Artosia may find and connect to devices on the local network; it appears when a camera on the network is opened by its address, or a phone is used to move the slides",
+    "does": "says that Artosia connects to a camera on the person's network when they give its address, and lets a phone on the same Wi-Fi move the slides. Say it as a program in your language says it connects to a device, not word for word",
+    "max": 140
+  }
+}

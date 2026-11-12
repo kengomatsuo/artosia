@@ -1,0 +1,5 @@
+{
+  "NSCameraUsageDescription": "当你在“样式”中选择摄像头时，Artosia 会把摄像头的画面显示在投影的文字后面。",
+  "NSMicrophoneUsageDescription": "当你打开“语音识别”时，Artosia 会聆听现场的声音，以跟随音乐的节奏，并推荐正在演唱的歌曲。",
+  "NSLocalNetworkUsageDescription": "当你输入摄像头的地址时，Artosia 会连接你网络中的摄像头，也让同一 Wi-Fi 下的手机翻动幻灯片。"
+}

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleName</key>
+	<string>Artosia</string>
+	<key>CFBundleDisplayName</key>
+	<string>Artosia</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.matsuokengo.artosia</string>
+	<key>CFBundleExecutable</key>
+	<string>artosia</string>
+	<key>CFBundleIconFile</key>
+	<string>artosia</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleShortVersionString</key>
+	<string>{version}</string>
+	<key>CFBundleVersion</key>
+	<string>{version}</string>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>en</string>
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>en</string>
+		<string>id</string>
+		<string>zh-Hans</string>
+		<string>zh-Hant</string>
+		<string>ko</string>
+		<string>ja</string>
+		<string>es</string>
+		<string>pt-BR</string>
+		<string>fr</string>
+		<string>vi</string>
+	</array>
+	<key>LSMinimumSystemVersion</key>
+	<string>11.0</string>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.productivity</string>
+	<key>NSHighResolutionCapable</key>
+	<true/>
+	<key>NSHumanReadableCopyright</key>
+	<string>Copyright (C) 2026 Kenneth Johannes Fang. GPL-3.0-or-later.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Artosia shows a camera behind the words on the projector when you choose one in Design.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Artosia listens to the room to follow the tempo and suggest the song being sung, when you switch Listen on.</string>
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>Artosia reaches a camera on your network when you give its address, and lets a phone on the same Wi-Fi move the slides.</string>
+</dict>
+</plist>

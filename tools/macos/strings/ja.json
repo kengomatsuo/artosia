@@ -1,0 +1,5 @@
+{
+  "NSCameraUsageDescription": "「デザイン」でカメラを選ぶと、Artosiaはカメラの映像を投影画面の文字の後ろに映します。",
+  "NSMicrophoneUsageDescription": "「曲の認識」をオンにすると、Artosiaは会場の音を聞いて、曲のテンポを追い、歌っている曲を提案します。",
+  "NSLocalNetworkUsageDescription": "アドレスを入力すると、Artosiaはネットワーク上のカメラに接続し、同じWi-Fiにあるスマートフォンでスライドを送れるようにします。"
+}

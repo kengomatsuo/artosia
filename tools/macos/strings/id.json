@@ -1,0 +1,5 @@
+{
+  "NSCameraUsageDescription": "Artosia menampilkan gambar kamera di belakang teks pada proyektor saat kamu memilih kamera di Tema.",
+  "NSMicrophoneUsageDescription": "Artosia mendengarkan ruangan untuk mengikuti tempo musik dan menyarankan lagu yang dinyanyikan saat kamu menyalakan Mikrofon.",
+  "NSLocalNetworkUsageDescription": "Artosia terhubung ke kamera di jaringanmu saat kamu mengisi alamatnya, dan membiarkan ponsel di Wi-Fi yang sama mengganti slide."
+}

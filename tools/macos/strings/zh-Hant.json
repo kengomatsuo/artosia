@@ -1,0 +1,5 @@
+{
+  "NSCameraUsageDescription": "當你在「外觀」選擇攝影機時，Artosia 會把攝影機的畫面顯示在投影的歌詞後面。",
+  "NSMicrophoneUsageDescription": "當你開啟「麥克風辨識」時，Artosia 會聆聽現場聲音，跟上音樂的速度，並推測正在唱的詩歌。",
+  "NSLocalNetworkUsageDescription": "Artosia 會在你輸入位址時連上網路上的攝影機，也讓同一個 Wi-Fi 的手機切換投影片。"
+}

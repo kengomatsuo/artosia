@@ -1,0 +1,5 @@
+{
+  "NSCameraUsageDescription": "Artosia muestra la imagen de la cámara detrás de la letra en el proyector cuando eliges una cámara en Diseño.",
+  "NSMicrophoneUsageDescription": "Artosia escucha la sala para seguir el tempo de la música y sugerir la canción que cantan, cuando activas Micrófono.",
+  "NSLocalNetworkUsageDescription": "Artosia se conecta a una cámara de tu red cuando indicas su dirección, y deja que un teléfono en la misma red Wi-Fi pase las diapositivas."
+}

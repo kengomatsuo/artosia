@@ -1,0 +1,5 @@
+{
+  "NSCameraUsageDescription": "Artosia montre l’image de la caméra derrière les paroles quand tu choisis une caméra dans Apparence.",
+  "NSMicrophoneUsageDescription": "Artosia écoute la salle pour suivre le tempo de la musique et proposer le chant en cours quand tu actives Écoute.",
+  "NSLocalNetworkUsageDescription": "Artosia joint une caméra de ton réseau quand tu donnes son adresse, et laisse un téléphone sur le même Wi-Fi changer les diapositives."
+}
