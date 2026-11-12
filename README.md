@@ -22,7 +22,7 @@ Artosia puts song words, Bible verses and announcements on a church's projector.
 
 ## Getting it
 
-The homepage, in English and Indonesian: [artosia.matsuokengo.com](https://artosia.matsuokengo.com).
+The homepage, in ten languages: [artosia.matsuokengo.com](https://artosia.matsuokengo.com).
 
 1. Download [Artosia-setup.exe](https://github.com/kengomatsuo/artosia/releases/latest/download/Artosia-setup.exe).
 2. Open it. Windows may warn about an unknown publisher the first time: the programs are not code-signed.
@@ -31,6 +31,8 @@ The homepage, in English and Indonesian: [artosia.matsuokengo.com](https://artos
 For a computer with no internet, take [Artosia-windows.zip](https://github.com/kengomatsuo/artosia/releases/latest/download/Artosia-windows.zip), unzip it into a folder you can write to, such as Documents, and start `artosia.exe`. Program Files will not do, because Artosia updates its own files. [docs/setup.md](docs/setup.md) says what the setup does and how to remove Artosia.
 
 Video and camera backgrounds and streaming run on the part of [GStreamer](https://gstreamer.freedesktop.org/) that comes in the `gstreamer` folder, so nothing else has to be installed. Its licences are in `gstreamer/licenses.zip`.
+
+On Linux (x86_64), take [Artosia-linux-x86_64.tar.gz](https://github.com/kengomatsuo/artosia/releases/latest/download/Artosia-linux-x86_64.tar.gz), unpack it in your home folder and open `artosia`. Video needs your distribution's GStreamer; the README inside names the packages, and `./install.sh` adds Artosia to the applications menu. It updates itself as the Windows edition does. [docs/linux.md](docs/linux.md) says how it is built and what was checked.
 
 ## Building
 
@@ -48,7 +50,7 @@ cargo test
 
 [docs/features.md](docs/features.md) says what is built and what was never tried on real hardware. [docs/architecture.md](docs/architecture.md) holds the decisions, [docs/operator.md](docs/operator.md) how the window works.
 
-Macs and Linux are planned and untested. Only Windows has been built.
+Windows is the edition a church runs. Linux is built with every release and was checked in WSL only, never on a Linux desktop ([docs/linux.md](docs/linux.md)). A Mac edition is planned and has not been built.
 
 ## Licence
 
