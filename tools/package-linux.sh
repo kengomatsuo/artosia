@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Builds the Linux edition on a Linux machine (the WSL of the release PC):
 #
-#   tools/package-linux.sh <version> [--out <folder>] [--key-file <file> --notes <text>]
+#   tools/package-linux.sh <version> [--out <folder>] [--key-file <file> (--notes <text> | --notes-file <file>)]
 #
 # It writes into <folder> (default dist/<version>/linux):
 #   Artosia/                         the folder a person unpacks: the programs, a menu entry,
@@ -23,6 +23,7 @@ while [ $# -gt 0 ]; do
         --out) out="$2"; shift 2 ;;
         --key-file) key="$2"; shift 2 ;;
         --notes) notes="$2"; shift 2 ;;
+        --notes-file) notes="$(cat "$2")"; shift 2 ;;
         *) echo "unknown argument: $1" >&2; exit 64 ;;
     esac
 done

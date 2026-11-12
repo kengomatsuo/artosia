@@ -131,6 +131,30 @@ git push origin HEAD "v$version"
 gh release create "v$version" "$setup" "$zip" --draft --title "Artosia $version" --notes-file "$body"
 # About eighty files: a few at a time, so one slow upload does not fail the whole release.
 find "$feed" -type f -print0 | xargs -0 -n 12 gh release upload "v$version" --clobber
+# The Linux edition: built in this PC's WSL from the commit just pushed, its update list signed
+# there with the same key, and uploaded beside the Windows files (docs/linux.md). Without WSL,
+# or when that build fails, the release carries Windows only and says so.
+linux="dist/$version/linux"
+if command -v wsl.exe >/dev/null 2>&1 && wsl.exe -d Ubuntu -e true >/dev/null 2>&1; then
+    in_wsl() { wsl.exe -d Ubuntu -e wslpath -a "$(cygpath -m "$1")" | tr -d '\r\000'; }
+    printf '%s' "$notes" > "dist/$version/notes.txt"
+    if MSYS_NO_PATHCONV=1 wsl.exe -d Ubuntu -e bash -lc "cd ~/artosia && git pull --no-rebase -q && tools/package-linux.sh '$version' --out '$(in_wsl "$PWD")/$linux' --key-file '$(in_wsl "$key")' --notes-file '$(in_wsl "$PWD")/dist/$version/notes.txt'"; then
+        gh release upload "v$version" "$linux/Artosia-linux-x86_64.tar.gz" --clobber
+        find "$linux/feed" -type f -print0 | xargs -0 -n 12 gh release upload "v$version" --clobber
+        linux_megabytes=$(( ($(stat -c %s "$linux/Artosia-linux-x86_64.tar.gz") + 524288) / 1048576 ))
+        {
+            echo
+            echo "**Linux:** [Artosia-linux-x86_64.tar.gz]($files/Artosia-linux-x86_64.tar.gz) ($linux_megabytes MB). Unpack it in your home folder and open \`artosia\`; its README names the GStreamer packages video needs."
+        } >> "$body"
+        gh release edit "v$version" --notes-file "$body"
+        echo "This release carries the Linux edition."
+    else
+        echo "The Linux edition did NOT build: this release carries Windows only."
+    fi
+else
+    echo "No WSL on this PC: this release carries Windows only."
+fi
+
 gh release edit "v$version" --draft=false --latest
 echo "Published v$version."
 # The homepage names the newest version and its size.

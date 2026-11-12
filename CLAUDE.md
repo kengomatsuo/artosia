@@ -32,7 +32,7 @@ It is authoritative; update it (and this file's headlines) whenever a decision c
 - `tools/` — `snap.sh`, `ram/measure.ps1`, `ram/measure-cpu.ps1`, `grab-window.ps1`, `make-fixture.sh`, `make-bible-asset.py`, `store-package.sh`
 - `site/` — the homepage at artosia.matsuokengo.com, one template in ten languages ([docs/site.md](docs/site.md))
 - `fixtures/` — generated media and the church's own library, gitignored
-- `docs/` — full accounts behind every rule: [operator.md](docs/operator.md) (the window and its rules), [output.md](docs/output.md) (the output process and its measured cost), [features.md](docs/features.md) (the owner's features and where each stands), [research.md](docs/research.md) (the stack survey), [store.md](docs/store.md) (the Microsoft Store edition)
+- `docs/` — full accounts behind every rule: [operator.md](docs/operator.md) (the window and its rules), [output.md](docs/output.md) (the output process and its measured cost), [features.md](docs/features.md) (the owner's features and where each stands), [research.md](docs/research.md) (the stack survey), [store.md](docs/store.md) (the Microsoft Store edition), [linux.md](docs/linux.md) (the Linux edition)
 - `.claude/rules/` — subsystem conventions, path-scoped
 
 ## Hard rules
@@ -59,6 +59,7 @@ tools/make-fixture.sh                         # needs ffmpeg on PATH or FFMPEG=<
 powershell -File tools/ram/measure-cpu.ps1 -Exe <exe> -ArgLine "<args>" -Label <name>
 tools/publish.sh <version> "<notes>"          # builds and publishes a GitHub release (signs only if ARTOSIA_SIGN_SHA1 is set)
 tools/store-package.sh <version>              # builds the Microsoft Store package
+tools/package-linux.sh <version>              # on Linux: builds the Linux edition; publish.sh runs it in WSL
 tools/site-shots.sh                           # the homepage's pictures, rendered from the real programs
 tools/publish-site.sh                         # builds the homepage and deploys it to Cloudflare through the Mac's wrangler
 ```
