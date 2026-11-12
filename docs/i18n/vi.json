@@ -425,8 +425,8 @@
   "why": "Same noun as the tab"
  },
  "REC_HINT": {
-  "text": "Đoạn âm ngắn và chữ máy nhận ra, lưu trong một thư mục trên máy",
-  "back": "Short sound pieces and the words the machine recognised, in one folder on this computer",
+  "text": "Đoạn âm ngắn và chữ máy nhận ra, lưu trong thư mục trên máy",
+  "back": "Short sound pieces and the words the machine recognised, in a folder on this computer",
   "why": "Not a guess of the recording"
  },
  "REC_NONE": {
@@ -1944,8 +1944,8 @@
   "why": "Names no button"
  },
  "REMOTE_FIREWALL_REFUSED": {
-  "text": "Tường lửa đang chặn điện thoại. Hãy tắt rồi bật lại điện thoại điều khiển để hỏi quyền lại.",
-  "back": "The firewall is blocking phones. Switch the remote off and on again to ask permission again.",
+  "text": "Tường lửa đang chặn điện thoại. Hãy tắt rồi bật lại điện thoại điều khiển để hỏi lại.",
+  "back": "The firewall is blocking phones. Switch the phone remote off and on again to be asked again.",
   "why": "Problem then a known switch"
  },
  "phones": {

@@ -205,7 +205,7 @@ pub struct Onboard {
     /// The translation picked on the Bible page, by id, and its title for the getting-ready page.
     pub bible: Option<(String, String)>,
     /// A person picked it; Artosia's own default no longer moves it.
-    bible_chosen: bool,
+    pub(crate) bible_chosen: bool,
     pub songs: Songs,
     pub easislides: Option<usize>,
     pub bible_job: BibleJob,

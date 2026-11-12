@@ -131,7 +131,9 @@ impl App {
         let (focus, scroll) = match onboard.page {
             Page::Language => ("onboard-list", Some(row_to_reveal(crate::languages::listed().map(|(_, language)| language.code), &onboard.language))),
             Page::Country => ("onboard-filter", Some(row_to_reveal(onboard.visible_countries().iter().map(|(code, _)| *code), &onboard.country))),
-            Page::Bible => ("onboard-list", onboard.bible.as_ref().map(|(id, _)| format!("bible-{id}"))),
+            // The Bible picked for the person is the list's first row, under its language's
+            // heading: only a Bible the person chose is brought into view.
+            Page::Bible => ("onboard-list", onboard.bible.as_ref().filter(|_| onboard.bible_chosen).map(|(id, _)| format!("bible-{id}"))),
             Page::Songs => ("onboard-list", None),
             Page::Screens | Page::Ready | Page::Done => ("onboard-primary", None),
         };
