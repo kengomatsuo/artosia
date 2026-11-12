@@ -57,7 +57,7 @@ shows only when its download exists: no row, no link and no word for it otherwis
   which always answers with the newest release's setup ([setup.md](setup.md)). The zip of the same
   release is the second way, in the Windows row, for a computer with no internet. The Linux link is
   `Artosia-linux-x86_64.tar.gz` (every release from 0.1.22, [linux.md](linux.md)); the Mac link is
-  `Artosia-macos-aarch64.dmg` (Apple silicon, not released yet, so the page has no Mac row today).
+  `Artosia-macos-aarch64.dmg` (Apple silicon, every release from 0.1.23, [macos.md](macos.md)).
   Both name the release the page was built for (`releases/download/v<version>/`), never `latest`:
   a release whose Linux build failed carries Windows only (`tools/publish.sh`), and `latest` would
   then answer 404. `tools/publish-site.sh` refuses to build from a release with no Linux package,
