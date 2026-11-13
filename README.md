@@ -34,7 +34,7 @@ Video and camera backgrounds and streaming run on the part of [GStreamer](https:
 
 On Linux (x86_64), take [Artosia-linux-x86_64.tar.gz](https://github.com/kengomatsuo/artosia/releases/latest/download/Artosia-linux-x86_64.tar.gz), unpack it in your home folder and open `artosia`. Video and streaming need your distribution's GStreamer; the README inside names the packages, and `./install.sh` adds Artosia to the applications menu. It updates itself as the Windows edition does. [docs/linux.md](docs/linux.md) says how it is built and what was checked.
 
-On a Mac with Apple silicon, take [Artosia-macos-aarch64.dmg](https://github.com/kengomatsuo/artosia/releases/latest/download/Artosia-macos-aarch64.dmg), open it and drag Artosia onto Applications. The first time, macOS refuses to open it, because Artosia pays for no Apple developer programme: open System Settings, then Privacy & Security, and press Open Anyway. It carries its own part of GStreamer and updates itself. [docs/macos.md](docs/macos.md) says how it is built and what was checked.
+On a Mac with Apple silicon, take [Artosia-macos-aarch64.dmg](https://github.com/kengomatsuo/artosia/releases/latest/download/Artosia-macos-aarch64.dmg), open it and drag Artosia onto Applications. It is signed with a Developer ID and notarized by Apple, so it opens like any other program. It carries its own part of GStreamer and updates itself. [docs/macos.md](docs/macos.md) says how it is built and what was checked.
 
 ## Building
 

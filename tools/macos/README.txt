@@ -3,15 +3,8 @@ Artosia for Mac (Apple silicon)
 1. Drag Artosia onto the Applications folder beside it.
 2. Open Artosia from Applications.
 
-The first time, macOS refuses to open it. Do this once:
-
-1. Try to open Artosia. A box says "Artosia.app" Not Opened. Press Done,
-   not Move to Bin.
-2. Open System Settings, then Privacy & Security.
-3. Scroll down and press Open Anyway beside Artosia, then Open.
-
-Why: Artosia is free and pays for no Apple developer programme, so macOS
-cannot check who made it. After that one time it opens like any other program.
+Artosia is signed with its developer's Apple Developer ID and checked by Apple
+(notarized), so it opens like any other program.
 
 Artosia updates itself: it fetches the newest release, checks its signature and
 swaps it in at the next start. Keep it in Applications, or in a folder of your

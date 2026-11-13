@@ -4,17 +4,20 @@
 #   tools/package-macos.sh <version> [--out <folder>] [--key-file <file> (--notes <text> | --notes-file <file>)]
 #
 # It writes into <folder> (default dist/<version>/macos):
-#   Artosia.app                      the app: the operator, the projector program and the part
-#                                    of GStreamer they need, signed ad hoc
+#   Artosia.app                      the app: the operator, the projector and streaming programs
+#                                    and the part of GStreamer they need, signed with the
+#                                    Developer ID of this Mac's keychain and notarized by Apple
 #   Artosia-macos-aarch64.dmg        the download: the app, a shortcut to Applications and a
-#                                    note on the first open
+#                                    note, notarized too
 #   feed/                            with --key-file: the signed update list of this platform
 #                                    and its files, to upload beside the Windows ones
 #
 # GStreamer is the official packages unpacked into a folder of our own (docs/macos.md), named
-# by ARTOSIA_GSTREAMER_ROOT or found at ~/artosia-gst/root. Nothing asks for a password and
-# nothing is paid for: the app is signed ad hoc, so macOS refuses its first open until the
-# person presses Open Anyway (the README in the disk image says how).
+# by ARTOSIA_GSTREAMER_ROOT or found at ~/artosia-gst/root. The signing is tools/macos/sign.sh,
+# after Cutling's `deploy.sh dist`; it needs the login keychain, which a shell that came in
+# over SSH cannot use, so tools/macos/in-login-session.sh hands it to a Terminal of the person
+# signed in. A Mac with no Developer ID in its keychain (or ARTOSIA_MAC_ADHOC=1) signs ad hoc:
+# that app runs, and macOS refuses its first open until the person presses Open Anyway.
 set -euo pipefail
 
 version="${1:?Give the version, such as 0.1.23}"
@@ -85,23 +88,27 @@ sed "s/{version}/$version/g" tools/macos/Info.plist > "$contents/Info.plist"
 python3 tools/macos/info-strings.py "$contents/Resources"
 python3 tools/gstreamer-subset.py --thin arm64 --copy "$contents/Resources/gstreamer"
 
-# Signed inside out: every library, plugin and helper, the projector program, then the app,
-# whose signature seals all of them. A file changed after this line breaks the seal.
-find "$contents/Resources/gstreamer" -type f \( -name '*.dylib' -o -name 'gst-plugin-scanner' \) -print0 | xargs -0 -n 20 codesign --force --sign - 2>/dev/null
-codesign --force --sign - "$contents/MacOS/artosia-output"
-codesign --force --sign - "$contents/MacOS/artosia-stream"
-codesign --force --sign - "$app"
-codesign --verify --deep --strict "$app"
-echo "App: $app ($(du -sh "$app" | awk '{print $1}'), $(find "$app" -type f | wc -l | tr -d ' ') files, signature verified)"
-
 image="$out/Artosia-$platform.dmg"
-stage="$out/dmg"
-mkdir -p "$stage"
-cp -R "$app" "$stage/"
-ln -s /Applications "$stage/Applications"
-install -m 644 tools/macos/README.txt "$stage/Read me first.txt"
-hdiutil create -volname "Artosia" -srcfolder "$stage" -ov -format UDZO -quiet "$image"
-rm -rf "$stage"
+if [ "${ARTOSIA_MAC_ADHOC:-}" != 1 ] && security find-identity -v -p codesigning 2>/dev/null | grep -q "Developer ID Application"; then
+    bash tools/macos/in-login-session.sh tools/macos/sign.sh "$app" "$image"
+    echo "App: $app ($(du -sh "$app" | awk '{print $1}'), $(find "$app" -type f | wc -l | tr -d ' ') files, signed with the Developer ID and notarized)"
+else
+    # Signed inside out: every library, plugin and helper, the two programs, then the app,
+    # whose signature seals all of them. A file changed after this line breaks the seal.
+    find "$contents/Resources/gstreamer" -type f \( -name '*.dylib' -o -name 'gst-plugin-scanner' \) -print0 | xargs -0 -n 20 codesign --force --sign - 2>/dev/null
+    codesign --force --sign - "$contents/MacOS/artosia-output"
+    codesign --force --sign - "$contents/MacOS/artosia-stream"
+    codesign --force --sign - "$app"
+    codesign --verify --deep --strict "$app"
+    echo "App: $app ($(du -sh "$app" | awk '{print $1}'), $(find "$app" -type f | wc -l | tr -d ' ') files, signed ad hoc: macOS will refuse its first open)"
+    stage="$out/dmg"
+    mkdir -p "$stage"
+    cp -R "$app" "$stage/"
+    ln -s /Applications "$stage/Applications"
+    install -m 644 tools/macos/README.txt "$stage/Read me first.txt"
+    hdiutil create -volname "Artosia" -srcfolder "$stage" -ov -format UDZO -quiet "$image"
+    rm -rf "$stage"
+fi
 echo "Package: $image ($(( ($(stat -f %z "$image") + 524288) / 1048576 )) MB)"
 
 if [ -n "$key" ]; then

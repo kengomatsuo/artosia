@@ -1,6 +1,6 @@
 # Artosia on a Mac
 
-The Mac edition is one app in a disk image, for Macs with Apple silicon: `Artosia-macos-aarch64.dmg`. It costs nothing to make and nothing is paid to Apple, so macOS refuses its first open until the person presses Open Anyway. It was built and checked on one Mac over SSH. No picture of its window could be taken there, so its real window was driven and read through macOS's accessibility interface: read "Not checked" before trusting it.
+The Mac edition is one app in a disk image, for Macs with Apple silicon: `Artosia-macos-aarch64.dmg`. Since 0.1.28 it is signed with the owner's Developer ID and notarized by Apple, so it opens like any other downloaded program; from 0.1.23 to 0.1.27 it was signed ad hoc and macOS refused its first open ("Signing" below says why that was a mistake). It was built and checked on one Mac over SSH. No picture of its window could be taken there, so its real window was driven and read through macOS's accessibility interface: read "Not checked" before trusting it.
 
 ## What a person gets
 
@@ -18,7 +18,7 @@ The image is 55 MB and the app 123 MB in 85 files. The library (songs, Bibles, s
 |---|---|---|
 | One `.app` with GStreamer inside | Taken | A Mac has no GStreamer, and Homebrew's must not be mixed with the official one (GStreamer's page on building for macOS). The official runtime ran from a folder of our own with Apple's hardware decoder (`vtdec`), so a trimmed copy travels in the app. |
 | GStreamer under `Contents/Resources/gstreamer`, laid out as its framework is (`lib`, `lib/gstreamer-1.0`, `libexec/gstreamer-1.0`) | Taken | Every library and plugin finds the others by the run paths it was built with (`@loader_path/..`, `@loader_path/../lib`), so no library's name is rewritten. The projector program gets one run path more: `@executable_path/../Resources/gstreamer/lib`. Measured on macOS 27: `codesign --verify --deep --strict` accepts code in folders below `Resources`. |
-| Ad-hoc signature, no notarization | Taken | Apple silicon runs no unsigned code, and an ad-hoc signature is enough for that. Notarization needs a Developer ID, which needs the paid programme ($99 a year); the owner pays for none. The cost is the first open: refused, then System Settings, Privacy & Security, Open Anyway. |
+| Developer ID signature and notarization | Taken since 0.1.28 | The owner is in Apple's developer programme and the Mac's keychain holds the identity; Cutling ships the same way. See "Signing". Until 0.1.27 the app was signed ad hoc, which is enough for Apple silicon to run it and costs the first open: refused, then System Settings, Privacy & Security, Open Anyway. |
 | A `.dmg` made by `hdiutil` | Taken | It is on every Mac, and it is what Zed, Lapce, Alacritty and FreeShow ship. |
 | Artosia's own updater, file by file | Taken | See "Updates" below: measured, an app keeps starting while its files are swapped and verifies again as the new release. Zed and Lapce replace the whole app; ours downloads only what changed, and GStreamer's 60 MB does not change between releases. |
 | A second projector program without video | Left | Windows and Linux carry one for a computer with no GStreamer. The Mac app has its own, so the program with video always starts. |
@@ -124,6 +124,33 @@ On a MacBook with Apple silicon, macOS 27.0.1, 16 GB, busy with other work throu
 | The real window | The published 0.1.24, opened through LaunchServices on the practice library. macOS told this session it may not take pictures of windows (`CGPreflightScreenCaptureAccess` is false) and may press keys in other programs (`AXIsProcessTrusted` is true), so keys were posted to Artosia's own process and the window's words read through accessibility (`target/port/mac-35-real3.sh`). The window is 1470 by 841 points; the tour opens first and its Skip button closes it; Tab brings a song into Preview and Return shows it; Command B, Command O and Command T each put Black, Off and No text on the Live pane and take it off again; Command L does nothing while no logo picture is chosen; Command M starts the plan's song at the ringed section and does not minimize the window, though macOS's Window menu lists Minimize on the same key; Command K opens the search and Command / the keys sheet. |
 | The first open of a downloaded copy | The published image was given the mark a browser gives a download (`com.apple.quarantine`), which the app copied out of it kept. Opening it starts nothing; a box from macOS (CoreServicesUIAgent) is titled "“Artosia.app” Not Opened", says "Apple could not verify “Artosia.app” is free of malware that may harm your Mac or compromise your privacy." and has two buttons, Done and Move to Bin. It was closed with Done. The step after it, Open Anyway in Privacy & Security, is a security setting and was left to the owner. |
 | Permission sentences | `plutil -p` reads each language's `InfoPlist.strings`; the dialogs themselves were not seen. |
+
+## Signing (2026-11-13)
+
+From 0.1.23 to 0.1.27 the app was signed ad hoc because the account of this edition said the owner pays for no Apple programme. That was written without looking: the Mac's keychain holds a Developer ID Application identity and a notary profile, and Cutling, the owner's own app, has shipped signed and notarized from the same Mac all along (`deploy.sh dist` in its repository). The owner said so on 2026-11-13.
+
+`tools/macos/sign.sh` does for Artosia what Cutling's script does for an Xcode app:
+
+| Step | How | Why |
+|---|---|---|
+| Sign | `codesign --options runtime --timestamp --sign "Developer ID Application"`, inside out: every library and plugin, the plugin scanner, `artosia-output`, `artosia-stream`, then the app | Apple notarizes only a Developer ID signature with the hardened runtime and a secure timestamp ("Resolving common notarization issues"). |
+| Entitlements | The operator: microphone and camera. `artosia-output`: camera and `com.apple.security.cs.allow-jit`. `artosia-stream`: microphone and `allow-jit` (`tools/macos/entitlements/`) | Under the hardened runtime a program opens a microphone or a camera only with the entitlement. GStreamer compiles its conversions as it runs (ORC); without `allow-jit` it logs "Failed to create write and exec mmap regions. This is probably because the Hardened Runtime is enabled without the com.apple.security.cs.allow-jit entitlement" and runs its slower code, and with it nothing is logged. Every library is signed by the same team, so library validation stays on. |
+| Notarize the app | `ditto -c -k --keepParent` to a ZIP, `xcrun notarytool submit --keychain-profile cutling-notary --wait`, `xcrun stapler staple Artosia.app` | The notary service takes a ZIP or a disk image, and a ticket can be stapled to an app, never to a ZIP ("Customizing the notarization workflow"). The stapled app is what the update list is made from, so a copy that updates itself holds its ticket too. |
+| Notarize the image | The image is made from the stapled app, signed, submitted the same way and stapled | A Mac with no network then opens both. |
+
+The profile `cutling-notary` is the owner's one notary credential on this Mac, made for Cutling with `notarytool store-credentials`; it names the Apple account, not an app.
+
+**The keychain is closed to a shell that came in over SSH**: `codesign` ends with `errSecInternalComponent` and `notarytool` with `keychainLocked`, and opening it takes the Mac's password, which nobody but its owner types. So `tools/macos/in-login-session.sh` writes the call into a `.command` file and opens it with Terminal, where the person signed in at the Mac has the keychain open, and waits for it. A release therefore opens one Terminal window on the Mac, and needs somebody signed in there.
+
+Rehearsed on 2026-11-13 on a copy of the 0.1.26 app, published nowhere:
+
+| What | Result |
+|---|---|
+| The signature | Authority "Developer ID Application", hardened runtime, `codesign --verify --deep --strict` passes. |
+| Apple's notary service | "Accepted" for the app and for the disk image (61.2 MB). |
+| Gatekeeper | `spctl --assess --type execute`: "accepted, source=Notarized Developer ID". |
+| The signed programs | `artosia-stream --probe` and `artosia-output --probe` end with 0 in an empty environment, and the operator renders. |
+| GStreamer under the hardened runtime | Its launcher, signed the same way, converted, scaled and encoded a picture, encoded sound and decoded a video in software through the app's signed libraries. Without `allow-jit` ORC logged the refusal above and the chains still ran; with it nothing was logged. 300 frames of 1920x1080 converted and scaled took 6 s without and 5 s with. |
 
 ## Streaming (2026-11-13)
 

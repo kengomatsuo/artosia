@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!-- The projector program shows a camera as the background. -->
+	<!-- GStreamer compiles its picture and sound conversions as it runs (ORC). Under the hardened runtime that is refused without this, and it falls back to slower code (measured 2026-11-13). -->
+	<key>com.apple.security.device.camera</key>
+	<true/>
+	<key>com.apple.security.cs.allow-jit</key>
+	<true/>
+</dict>
+</plist>
