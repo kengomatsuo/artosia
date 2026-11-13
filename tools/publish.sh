@@ -134,9 +134,23 @@ find "$feed" -type f -print0 | xargs -0 -n 12 gh release upload "v$version" --cl
 # The Linux edition: built in this PC's WSL from the commit just pushed, its update list signed
 # there with the same key, and uploaded beside the Windows files (docs/linux.md). Without WSL,
 # or when that build fails, the release carries Windows only and says so.
-in_wsl() { wsl.exe -d Ubuntu -e wslpath -a "$(cygpath -m "$1")" | tr -d '\r\000'; }
+# A Windows path as WSL names it, worked out here. Asking WSL for it (`wslpath`) is one more call
+# that can go unanswered while WSL is busy: 0.1.27 went out without its Mac files that way.
+in_wsl() {
+    local path; path="$(cygpath -m "$1")"
+    printf '/mnt/%s%s' "$(printf '%s' "${path%%:*}" | tr 'A-Z' 'a-z')" "${path#*:}"
+}
+# Whether WSL answers, asked up to six times: a busy WSL lets a call time out now and then.
+wsl_answers() {
+    local try
+    for try in 1 2 3 4 5 6; do
+        wsl.exe -d Ubuntu -e "$@" >/dev/null 2>&1 && return 0
+        sleep 10
+    done
+    return 1
+}
 linux="dist/$version/linux"
-if command -v wsl.exe >/dev/null 2>&1 && wsl.exe -d Ubuntu -e true >/dev/null 2>&1; then
+if command -v wsl.exe >/dev/null 2>&1 && wsl_answers true; then
     printf '%s' "$notes" > "dist/$version/notes.txt"
     # Built on the Linux file system, where a file keeps its mode (on the Windows drive every
     # file reads as executable, and the README went into 0.1.22's package that way), then copied here.
@@ -162,7 +176,7 @@ fi
 # in WSL, so the signing key never leaves this PC. When the Mac cannot be reached, or its build
 # fails, the release carries no Mac files, says so, and the homepage shows no Mac row.
 mac="dist/$version/macos"
-if command -v wsl.exe >/dev/null 2>&1 && wsl.exe -d Ubuntu -e ssh -o BatchMode=yes -o ConnectTimeout=10 mac true >/dev/null 2>&1; then
+if command -v wsl.exe >/dev/null 2>&1 && wsl_answers ssh -o BatchMode=yes -o ConnectTimeout=10 mac true; then
     printf '%s' "$notes" > "dist/$version/notes.txt"
     if MSYS_NO_PATHCONV=1 wsl.exe -d Ubuntu -e bash -lc "set -e
         ssh -o BatchMode=yes -o ServerAliveInterval=30 mac 'export PATH=\$HOME/.cargo/bin:\$HOME/.bun/bin:/opt/homebrew/bin:\$PATH; cd ~/Repositories/artosia && { git diff --quiet HEAD || { echo The clone on the Mac has changes that are not committed: a release is built from what is committed; exit 1; }; } && git pull --no-rebase -q && nice -n 19 bash tools/package-macos.sh $version --out dist/$version/macos'
@@ -178,7 +192,7 @@ if command -v wsl.exe >/dev/null 2>&1 && wsl.exe -d Ubuntu -e ssh -o BatchMode=y
         mac_megabytes=$(( ($(stat -c %s "$mac/Artosia-macos-aarch64.dmg") + 524288) / 1048576 ))
         {
             echo
-            echo "**Mac (Apple silicon):** [Artosia-macos-aarch64.dmg]($files/Artosia-macos-aarch64.dmg) ($mac_megabytes MB). Drag Artosia to Applications. The first time, macOS refuses to open it: open System Settings, Privacy & Security, and press Open Anyway."
+            echo "**Mac (Apple silicon):** [Artosia-macos-aarch64.dmg]($files/Artosia-macos-aarch64.dmg) ($mac_megabytes MB). Drag Artosia to Applications. It is signed with a Developer ID and notarized by Apple."
         } >> "$body"
         gh release edit "v$version" --notes-file "$body"
         echo "This release carries the Mac edition."
