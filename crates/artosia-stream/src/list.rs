@@ -18,7 +18,42 @@ pub struct AudioDevice {
     pub loopback: bool,
 }
 
+/// The audio inputs GStreamer's device monitor sees. Needs `gst::init` first. Off Windows the
+/// monitor is asked for every sound source, and each device's own element says which name
+/// opens it (`pulsesrc` has a name there, `osxaudiosrc` a number).
+#[cfg(not(windows))]
+pub fn audio_devices() -> Vec<AudioDevice> {
+    let monitor = gst::DeviceMonitor::new();
+    let _ = monitor.add_filter(Some("Audio/Source"), None);
+    monitor
+        .devices()
+        .into_iter()
+        .filter_map(|d| {
+            let element = d.create_element(None).ok()?;
+            let device = element.property_value("device");
+            let id = device
+                .get::<Option<String>>()
+                .ok()
+                .flatten()
+                .or_else(|| device.get::<i32>().ok().map(|n| n.to_string()))
+                .or_else(|| device.get::<u32>().ok().map(|n| n.to_string()))?;
+            let props = d.properties();
+            let text = |name: &str| props.as_ref().and_then(|p| p.get::<String>(name).ok());
+            let flag = |name: &str| props.as_ref().and_then(|p| p.get::<bool>(name).ok()).unwrap_or(false);
+            Some(AudioDevice {
+                name: d.display_name().to_string(),
+                actual_name: text("device.description").unwrap_or_default(),
+                id,
+                is_default: flag("is-default"),
+                // PulseAudio calls an input that carries what an output plays a monitor.
+                loopback: text("device.class").as_deref() == Some("monitor"),
+            })
+        })
+        .collect()
+}
+
 /// The audio inputs GStreamer's device monitor sees. Needs `gst::init` first.
+#[cfg(windows)]
 pub fn audio_devices() -> Vec<AudioDevice> {
     // Ask the WASAPI provider alone: a DeviceMonitor loads every provider on the PC, which
     // took five seconds here.
@@ -97,6 +132,9 @@ pub fn resolve_audio(choice: &Audio, devices: &[AudioDevice]) -> (AudioSource, O
                 },
                 None,
             ),
+            // A Linux sound server may flag no input as the default (WSL's does not) and still
+            // have one, which its source opens when no device is named.
+            None if !cfg!(windows) && devices.iter().any(|d| !d.loopback) => (AudioSource::SystemDefault, None),
             None => (
                 AudioSource::Silence,
                 Some("No audio input was found. The stream will be silent.".to_string()),
@@ -171,6 +209,22 @@ mod tests {
                 loopback: false
             }
         );
+    }
+
+    #[test]
+    fn with_no_input_flagged_the_systems_own_default_is_opened_off_windows() {
+        let unflagged = vec![dev("RDP Source", "RDP Source", false, false), dev("Monitor of RDP Sink", "Monitor of RDP Sink", false, true)];
+        let (src, note) = resolve_audio(&Audio::Default, &unflagged);
+        if cfg!(windows) {
+            assert_eq!(src, AudioSource::Silence);
+            assert!(note.is_some());
+        } else {
+            assert_eq!(src, AudioSource::SystemDefault);
+            assert!(note.is_none());
+        }
+        // What plays out of the speakers is never taken for the microphone.
+        let (src, _) = resolve_audio(&Audio::Default, &unflagged[1..]);
+        assert_eq!(src, AudioSource::Silence);
     }
 
     #[test]

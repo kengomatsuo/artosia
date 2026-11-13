@@ -156,18 +156,18 @@ fn output_program() -> Option<PathBuf> {
     // GStreamer: Windows cannot load it ("gio-2.0-0.dll: cannot open", tried 2026-11-10). A
     // release carries a twin built without video, so such a computer still shows the words.
     let (video, plain) = (folder.join(name(false)), folder.join(name(true)));
-    if plain.is_file() && !video_can_start(&video) {
+    if plain.is_file() && !can_start(&video) {
         return Some(plain);
     }
     Some(video).filter(|path| path.is_file())
 }
 
-/// Whether the projector program that plays video can start on this computer. On Windows it
-/// needs GStreamer's folder. Elsewhere it links a GStreamer outside itself, the system's on
-/// Linux and the app bundle's on a Mac, so the program itself is asked: started with
-/// `--probe` it ends at once, and without the libraries the system's loader ends it with an
-/// error before it runs.
-fn video_can_start(video: &std::path::Path) -> bool {
+/// Whether a program built on GStreamer (the projector that plays video, the streaming
+/// program) can start on this computer. On Windows it needs GStreamer's folder. Elsewhere it
+/// links a GStreamer outside itself, the system's on Linux and the app bundle's on a Mac, so
+/// the program itself is asked: started with `--probe` it ends at once, and without the
+/// libraries the system's loader ends it with an error before it runs.
+pub fn can_start(video: &std::path::Path) -> bool {
     if cfg!(windows) {
         return gstreamer_bin().is_some();
     }

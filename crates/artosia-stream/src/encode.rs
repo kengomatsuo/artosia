@@ -1,7 +1,7 @@
 //! The encoder pipeline: one video branch and one audio branch, joined by the hub.
 //!
 //! ```text
-//! appsrc (NV12 frames) -> encoder -> h264parse -> appsink  \
+//! appsrc (raw frames) -> encoder -> h264parse -> appsink  \
 //!                                                            -> Hub -> one pipeline per destination
 //! wasapi2src | silence -> audioconvert -> audioresample -> AAC -> aacparse -> appsink /
 //! ```
@@ -20,11 +20,14 @@ use std::time::{Duration, Instant};
 /// Where the sound comes from once a device name has been looked up.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum AudioSource {
-    /// A WASAPI input, by endpoint id.
+    /// One input, by the name its system opens it with (a WASAPI endpoint id on Windows).
     Device {
         id: String,
         loopback: bool,
     },
+    /// The input the system's own sound settings chose. Linux and a Mac only: their sources
+    /// open it when no device is named.
+    SystemDefault,
     Silence,
 }
 
@@ -40,6 +43,33 @@ fn make(factory: &str) -> Result<gst::Element, String> {
     gst::ElementFactory::make(factory)
         .build()
         .map_err(|_| format!("GStreamer's {factory} is not installed."))
+}
+
+/// The element that reads one sound input: WASAPI on Windows, PulseAudio (or PipeWire's
+/// PulseAudio service) on Linux, Core Audio on a Mac.
+fn device_source(id: Option<&str>, loopback: bool) -> Result<gst::Element, String> {
+    if cfg!(windows) {
+        let s = make("wasapi2src")?;
+        if let Some(id) = id {
+            s.set_property("device", id);
+        }
+        s.set_property("low-latency", true);
+        if loopback {
+            s.set_property("loopback", true);
+        }
+        // 1.28: a device that goes away gives silence and a warning, not an error.
+        if s.find_property("continue-on-error").is_some() {
+            s.set_property("continue-on-error", true);
+        }
+        return Ok(s);
+    }
+    // A Linux input that plays back what the computer plays is a source of its own (a
+    // "monitor"), so nothing is set for it; a Mac has no such input without extra software.
+    let s = make(if cfg!(target_os = "macos") { "osxaudiosrc" } else { "pulsesrc" })?;
+    if let Some(id) = id {
+        s.set_property_from_str("device", id);
+    }
+    Ok(s)
 }
 
 /// The AAC encoder to use: the first of these that is installed.
@@ -118,19 +148,8 @@ impl Encode {
 
         // Audio.
         let asrc = match audio {
-            AudioSource::Device { id, loopback } => {
-                let s = make("wasapi2src")?;
-                s.set_property("device", id.as_str());
-                s.set_property("low-latency", true);
-                if *loopback {
-                    s.set_property("loopback", true);
-                }
-                // 1.28: a device that goes away gives silence and a warning, not an error.
-                if s.find_property("continue-on-error").is_some() {
-                    s.set_property("continue-on-error", true);
-                }
-                s
-            }
+            AudioSource::Device { id, loopback } => device_source(Some(id), *loopback)?,
+            AudioSource::SystemDefault => device_source(None, false)?,
             AudioSource::Silence => {
                 let s = make("audiotestsrc")?;
                 s.set_property_from_str("wave", "silence");

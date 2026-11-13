@@ -22,7 +22,7 @@ The image is 55 MB and the app 123 MB in 85 files. The library (songs, Bibles, s
 | A `.dmg` made by `hdiutil` | Taken | It is on every Mac, and it is what Zed, Lapce, Alacritty and FreeShow ship. |
 | Artosia's own updater, file by file | Taken | See "Updates" below: measured, an app keeps starting while its files are swapped and verifies again as the new release. Zed and Lapce replace the whole app; ours downloads only what changed, and GStreamer's 60 MB does not change between releases. |
 | A second projector program without video | Left | Windows and Linux carry one for a computer with no GStreamer. The Mac app has its own, so the program with video always starts. |
-| The streaming program | Left | It takes the picture, the sound and the encoder from Windows' own parts of GStreamer; see "Not built". |
+| The streaming program | Taken since 2026-11-13 | `Contents/MacOS/artosia-stream`, with the plugins it needs added to the app's GStreamer; see "Streaming". |
 | Intel Macs | Left | One architecture halves the app, and the owner has no Intel Mac to try one on. The GStreamer packages hold both, so `--thin x86_64` and a second build would make one. |
 | Homebrew cask | Left | The official tap takes no app that fails Gatekeeper. |
 
@@ -125,14 +125,33 @@ On a MacBook with Apple silicon, macOS 27.0.1, 16 GB, busy with other work throu
 | The first open of a downloaded copy | The published image was given the mark a browser gives a download (`com.apple.quarantine`), which the app copied out of it kept. Opening it starts nothing; a box from macOS (CoreServicesUIAgent) is titled "“Artosia.app” Not Opened", says "Apple could not verify “Artosia.app” is free of malware that may harm your Mac or compromise your privacy." and has two buttons, Done and Move to Bin. It was closed with Done. The step after it, Open Anyway in Privacy & Security, is a security setting and was left to the owner. |
 | Permission sentences | `plutil -p` reads each language's `InfoPlist.strings`; the dialogs themselves were not seen. |
 
-## Not built
+## Streaming (2026-11-13)
 
-- **Streaming.** As on Linux: the streaming program needs a screen capture, a sound source and an encoder of the Mac's own before the Stream dialog offers it, and the app does not carry the program.
+The same program as on Windows and Linux ([linux.md](linux.md) has the whole account), with a Mac's own parts, each read from the app's GStreamer with `gst-inspect-1.0`:
+
+| Part | On a Mac | Why |
+|---|---|---|
+| The picture | `avfvideosrc` with `capture-screen`: the whole screen the projector's window is on (`win.rs` `screen_of_window`) | GStreamer has no Mac source for one window, and the projector fills its screen. Its `device-index` goes into `[NSScreen screens]` (`avfvideosrc.m`), which lists the main screen first as Core Graphics does, so the numbers agree for one or two screens. |
+| The permission | Core Graphics is asked at the start of a stream (`CGPreflightScreenCaptureAccess`, then `CGRequestScreenCaptureAccess`, both macOS 10.15) | macOS shows its own box naming Artosia the first time and lists it under Screen & System Audio Recording. Until the person allows it macOS gives black frames and no window's title, so the Stream dialog shows a sentence that says where to allow it and to start Artosia again. |
+| The windows and screens | `CGWindowListCopyWindowInfo` and the active displays, through the `core-graphics` crate the window library already brings | A window goes by its own title once the permission is given, and by its program's name before. |
+| The sound | `osxaudiosrc`, the input macOS flags as the default | A Mac has no input that carries what the computer plays without extra software. |
+| The encoder | `vtenc_h264` (VideoToolbox), then `x264enc` | Hardware first. |
+
+Checked over SSH, never on the screen: recording it would have taken the owner's own screen.
+
+| What | Result |
+|---|---|
+| The package | 127 MB in 94 files, image 59.9 MB (1.4 MB more than 0.1.24), seal verified. `artosia-stream` has the app's run path and `--probe` ends with 0 in an empty environment. 34 plugins against 27: `osxaudio`, `x264`, `flv`, `rtmp2`, `mpegtsmux`, `videotestsrc`, `audiotestsrc` are new. |
+| The program from the app | With the app's plugins alone it lists 1 screen, 33 windows and 3 sound inputs, one flagged as the default. |
+| The encoding chain | From the app's own libraries and plugins alone, a test picture and a test tone through `vtenc_h264`, `avenc_aac` and `mp4mux` give 5.4 s of H.264 1280x720 with AAC; from the unpacked GStreamer `x264enc` gives the same, and `mpegtsmux` with `srtsink` reaches a listener on 127.0.0.1. |
+| The operator | Rendered from the packaged app, the Stream dialog offers the address, the key, the recording and Start. |
+| Tests | `cargo test -p artosia-stream`: 33 pass. |
 
 ## Not checked
 
 - **A picture of the window.** macOS refuses this session a picture of any window (screen recording is a permission the owner gives), so how the real window looks, the pointer, a second screen for the projector, full screen and the Dock icon are unseen. What the window says and does was read through accessibility, above.
 - **Open Anyway.** The box of the first open was read; pressing Open Anyway in Privacy & Security is the owner's, so that the app then opens, and whether an update of an app opened that way asks again, are not known. The steps on the homepage and in the note are Apple's page (support.apple.com/en-us/102445).
+- **A stream of the real screen.** The capture itself was never started on the Mac: it needs the owner's yes in macOS's own box, and it would record the owner's screen. So the box's words, the picture `avfvideosrc` gives, the frame rate, a second screen and three or more screens are not known. The parts before and after the capture were each run.
 - A physical keyboard: the keys were posted to the program, which is how macOS delivers them, but nobody pressed one.
 - A video on a real projector window, cameras, the microphone, the phone remote, EasiSlides import.
 - macOS older than 27, an Intel Mac, a Mac of a standard user who cannot write to Applications.

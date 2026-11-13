@@ -49,7 +49,7 @@ The alternative that costs more is a GStreamer tee inside the projector. It woul
 
 **The last frame is held when the window disappears.** Black would be a flash on air. When the capture ends, the stored frame is copied (`copy_deep`) so it no longer depends on the dead pipeline's buffer pool. Without that copy, QSV encoded 10 frames a second and dropped the rest during the outage (measured). With it, the rate stayed at 30.
 
-**Encoders, in this order for `--encoder auto`:** Quick Sync (`qsvh264enc`), Media Foundation (`mfh264enc`), NVENC (`nvh264enc`), then `x264enc`. Hardware first because the target is an old PC with a weak CPU and an Intel GPU, and Quick Sync is on every Intel chip with graphics. Each is tried on 20 test frames through the same GPU path before the stream starts (about 3 seconds), and the first that works is used. All run constant bitrate, no B-frames, no lookahead, a keyframe every 2 seconds (what YouTube asks for). `x264enc` uses `tune=zerolatency`, a one-second VBV buffer, and `--x264-preset superfast` by default. The settings per encoder are in `src/encoder.rs`. A property one driver lacks is skipped.
+**Encoders, in this order for `--encoder auto`:** on Windows Quick Sync (`qsvh264enc`), Media Foundation (`mfh264enc`), NVENC (`nvh264enc`), then `x264enc`; on Linux VA-API (`vah264enc`), NVENC, `x264enc`, then `openh264enc`; on a Mac VideoToolbox (`vtenc_h264`), then `x264enc`. Hardware first because the target is an old PC with a weak CPU and an Intel GPU, and Quick Sync is on every Intel chip with graphics. Each is tried on 20 test frames through the same GPU path before the stream starts (about 3 seconds), and the first that works is used. All run constant bitrate, no B-frames, no lookahead, a keyframe every 2 seconds (what YouTube asks for). `x264enc` uses `tune=zerolatency`, a one-second VBV buffer, and `--x264-preset superfast` by default. The settings per encoder are in `src/encoder.rs`. A property one driver lacks is skipped.
 
 An encoder that fails after the stream has started ends the stream with a problem line (exit code 4). The program does not switch to the next encoder mid-stream.
 
@@ -70,14 +70,14 @@ artosia-stream [--window "Artosia projector" [--window-pid N] | --monitor N]
                (--rtmp <url-with-key> | --srt <uri> | --record <file.mp4>)...
                [--width 1280] [--height 720] [--fps 30]
                [--video-kbps 2500] [--audio-kbps 128]
-               [--encoder auto|qsv|mf|nvenc|x264] [--x264-preset superfast]
+               [--encoder auto|qsv|mf|nvenc|x264|va|vt|openh264] [--x264-preset superfast]
                [--stop-on-eof] [--stop-file <path>]
 artosia-stream --list
 ```
 
 - `--window` matches the title exactly, then by part, ignoring case. `--window-pid` limits the match to one process (two copies of the projector can run).
 - `--monitor N` is the `index` that `--list` gives.
-- No `--audio` and no `--no-audio` means the Windows default input.
+- No `--audio` and no `--no-audio` means the system's default input.
 - Width and height must be even. Destinations may be repeated and mixed.
 - A bad argument prints one `problem` line, the usage text to stderr, and exits with code 2.
 
@@ -160,6 +160,19 @@ Not proven:
 - Other GPUs than this laptop's: `qsvh264enc` runs here on the Intel adapter and the capture on the default adapter, and a PC with two GPUs may choose differently. QSV also dropped frames (175 of 255) in one run while other programs used the GPU; a later run with the same build held 30 fps. Re-measure on the target.
 - GStreamer 1.28's `continue-on-error` for an input that is unplugged during the stream.
 
+## Linux and the Mac (2026-11-13)
+
+Everything above was measured on Windows. The same program runs on Linux and on a Mac with each system's own source, sound and encoder; `--probe` ends at once with 0, which is how the operator learns the program can start.
+
+| | Windows | Linux | Mac |
+|---|---|---|---|
+| Picture | `d3d11screencapturesrc`, converted on the GPU | `ximagesrc` under X11; under Wayland the desktop's portal and `pipewiresrc` | `avfvideosrc capture-screen`, the screen the window is on |
+| Sound | `wasapi2src` | `pulsesrc` | `osxaudiosrc` |
+| Windows and monitors | Win32 by hand | `x11rb` | Core Graphics |
+| Stop from outside | console events | `SIGINT`, `SIGTERM` | `SIGINT`, `SIGTERM` |
+
+What was measured on each, and what was not: [docs/linux.md](../../docs/linux.md) and [docs/macos.md](../../docs/macos.md), under "Streaming".
+
 ## Source layout
 
-`args` (command line), `backoff`, `redact`, `status` (pure, with the unit tests), `win` (window and monitor lists, Ctrl+C, by hand-declared Win32 calls), `list` (`--list`, audio choice), `capture`, `encoder`, `encode` (encoder pipeline and the bridge tick), `hub`, `dest`, `report`, `run`.
+`args` (command line), `backoff`, `redact`, `status` (pure, with the unit tests), `win` (window and monitor lists and Ctrl+C on each system), `portal` (a Wayland desktop's shared screen), `list` (`--list`, audio choice), `capture`, `encoder`, `encode` (encoder pipeline and the bridge tick), `hub`, `dest`, `report`, `run`.

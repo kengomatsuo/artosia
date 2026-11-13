@@ -24,7 +24,7 @@ It is authoritative; update it (and this file's headlines) whenever a decision c
 - `crates/artosia` — the operator window; `crates/artosia-output` — the projector and stage windows, a separate process
 - `crates/artosia-slides` — what the screens draw, shared with previews; `crates/artosia-core` — songs, Bibles, search, plan, importers (no UI)
 - `crates/artosia-remote` — the phone remote; `crates/artosia-video` — looping video and cameras; `crates/artosia-warp` — corner pin and colour
-- `crates/artosia-stream` — the streaming program (needs GStreamer, like `artosia-video`); `crates/artosia-listen` — microphone and speech; `crates/artosia-lyrics` — lyrics from the web
+- `crates/artosia-stream` — the streaming program on all three systems (needs GStreamer, like `artosia-video`); `crates/artosia-listen` — microphone and speech; `crates/artosia-lyrics` — lyrics from the web
 - `crates/artosia-office` — reads a church's PowerPoint and Word files; `crates/artosia-update` — self-update and the release tool
 - `crates/artosia-setup` — `Artosia-setup.exe`, the small download that installs Artosia; kept the same file across releases ([docs/setup.md](docs/setup.md))
 - `crates/artosia-locale` — fits a language tag to one of the ten languages

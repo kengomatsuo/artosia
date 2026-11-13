@@ -11,7 +11,7 @@ One file, `Artosia-linux-x86_64.tar.gz`, that unpacks to a folder `Artosia`:
 | `artosia` | The operator window. It starts the projector program from this same folder. |
 | `artosia-output` | The projector and stage windows, built with video. It links the distribution's GStreamer. |
 | `artosia-output-plain` | The same program built without video. The operator starts it when the one with video cannot start. |
-| `artosia-stream` | The streaming program. It is packed and not offered: see "Not built". |
+| `artosia-stream` | The streaming program: the projector's picture and the room's sound to a streaming service or a file. See "Streaming". |
 | `share/applications/artosia.desktop`, `share/icons/hicolor` | The menu entry and the icons (`assets/brand/icons/linux`). |
 | `install.sh` | Writes the menu entry into `~/.local/share/applications` with this folder's full paths. Nothing needs an administrator. `--remove` takes it away. |
 | `README.txt` | How to start, which GStreamer packages video needs, how updates work, how to remove. |
@@ -32,7 +32,7 @@ The library and the settings live apart from the folder, in `~/.local/share/arto
 Nothing to make it compile: every Windows-only path was already behind `cfg(windows)` (`firewall.rs`, `store.rs`, `shortcut_icon.rs`, `artosia-locale`, the whole `artosia-setup` crate), and `artosia-locale` already read `LANGUAGE`, `LC_ALL`, `LC_MESSAGES` and `LANG` off Windows. The first `cargo build` on Linux ended with no error. Three things were added:
 
 1. **One signed list per system on a release** (`crates/artosia-update/src/manifest.rs`). Windows, published first, keeps `manifest.json`, `manifest.json.sig` and plain file names, because every installed copy and the setup ask for those. Another system's list and files carry its name: `manifest-linux-x86_64.json`, `manifest-linux-x86_64.json.sig`, `linux-x86_64__artosia`. A copy asks for its own system's list. Full account: `crates/artosia-update/README.md`.
-2. **The operator asks the projector program whether it can start** (`link.rs` `video_can_start`, `artosia-output --probe`). On Windows the program with video needs GStreamer's folder. On Linux it links the system's GStreamer, and without those libraries the system's loader ends it before it runs; so the operator starts it once with `--probe`, which returns at once, and falls back to `artosia-output-plain` when that fails.
+2. **The operator asks the projector program whether it can start** (`link.rs` `can_start`, `artosia-output --probe`). On Windows the program with video needs GStreamer's folder. On Linux it links the system's GStreamer, and without those libraries the system's loader ends it before it runs; so the operator starts it once with `--probe`, which returns at once, and falls back to `artosia-output-plain` when that fails.
 3. **The package and the release step**: `tools/package-linux.sh`, `tools/linux/`, and a step in `tools/publish.sh`.
 
 ## Preparing a machine to build it
@@ -86,15 +86,37 @@ Pictures are in `target/port/linux-windows/` on the release PC (not in the repos
 
 WSL shows a Linux window through a Windows process (`msrdc.exe`) that runs in session 0 on this PC, where nobody sees it and no screenshot reaches it; and the operator's connection to WSL's Wayland display was reset ("Connection reset by peer" in winit's Wayland event loop), which ended it. So the windows were opened on a virtual X11 screen (`Xvfb :99 -screen 0 1920x1080x24`, `WAYLAND_DISPLAY` unset) and pictured from inside Linux with ImageMagick's `import`; `xdotool` sent the keys. The projector did run on WSL's own display earlier in the day and played the video there too.
 
-## Not built
+## Streaming (2026-11-13)
 
-- **Streaming.** The streaming program takes the projector's picture, the room's sound and the hardware
-  encoder from Windows' own parts of GStreamer (`d3d11screencapturesrc`, `wasapi2src`, `mfh264enc`),
-  so on Linux the Stream dialog says streaming is not available (`crates/artosia/src/stream.rs`
-  `available`). It needs a screen capture, a sound source and an encoder of Linux's own before it is offered.
+The streaming program was Windows' own: it took the picture, the sound and the encoder from Windows' parts of GStreamer. Each system now has its own parts behind the same program, and the Stream dialog offers streaming wherever the program starts (`crates/artosia/src/stream.rs` `available` asks it with `--probe`, as the projector program is asked).
+
+| Part | On Linux | Why |
+|---|---|---|
+| The windows and monitors | X11 through `x11rb` (`win.rs`), asked on a thread of its own with two seconds to answer | The crate is already in the build for the window library. WSL's own X display takes a connection and never answers, which held the program and its stopping until the question got a time limit. |
+| The picture under X11 | `ximagesrc` on the projector window's id, or on a monitor's corners | It is GStreamer's own X11 source. |
+| The picture under Wayland | The desktop's portal (`org.freedesktop.portal.ScreenCast` through the `ashpd` crate, `portal.rs`) and `pipewiresrc` | Under Wayland no program may look at another's window. winit takes Wayland whenever `WAYLAND_DISPLAY` is set (its `platform_impl/linux/mod.rs`), so the projector is a Wayland window there and X11 cannot see it; a developer of OBS's portal capture writes that X11 capture under Wayland reaches Xwayland programs only. The portal's page says a start "will typically result the portal presenting a dialog", so the desktop asks the person which screen to share. The token it hands back is kept in `$XDG_STATE_HOME/artosia/screen-share-token` and offered the next time, so a desktop that honours it does not ask again. |
+| The sound | `pulsesrc`, on PulseAudio or PipeWire's PulseAudio service | An input the sound server flags as the default is taken; where it flags none (WSL's does not), the source is opened with no device named, which is the server's own default. |
+| The encoder | `vah264enc`, then `nvh264enc`, then `x264enc`, then `openh264enc`: the first that encodes 20 test frames | Hardware first, as on Windows. OpenH264 takes I420 frames only, so the frame's layout follows the encoder (`encoder.rs` `frame_format`). |
+| Ctrl+C and a kill | `SIGINT` and `SIGTERM` finish the files, as Windows' console events do | A recording cut off without its end cannot be played. |
+
+Measured in the release PC's WSL (Ubuntu 26.04, GStreamer 1.28.2, an RTX 4060), every stream to a file or to a listener on 127.0.0.1:
+
+| What | Result |
+|---|---|
+| The real projector window, a video looping under lyrics, on a virtual X11 screen, to a file | 14.6 s of H.264 1280x720 at 30 a second with an AAC track, no frame dropped, encoder `nvh264enc`; a frame taken from the file shows the lyrics over the video. |
+| The same with `--encoder openh264` and `--encoder nvenc`, and the whole first monitor | Each a file that plays. |
+| SRT and RTMP | 10.7 s arrived at a GStreamer SRT listener and 10.8 s at ffmpeg's RTMP listener, both H.264 and AAC. |
+| What the computer plays (the monitor input) with a tone playing | The recording's sound reads -13.5 dB; a recording with no sound reads -91 dB. |
+| The stop file, and a kill | Stopped within a second each time, and the file plays. |
+| Wayland: a sway desktop with no screen, PipeWire and the portal with its wlroots back end set to share the one output | The program asked the portal, went live, and a frame from the file is the desktop's picture; the token was kept; a second start went live the same way; with WSL's unanswering X display beside it the program waited three seconds and went to the portal. |
+| The operator | Rendered without a window, the Stream dialog offers the address, the key, the recording and Start; with the program taken away it says this copy came without it. |
+| Tests | `cargo test -p artosia-stream`: 33 pass on Linux, on the Mac and on Windows. |
+
+Streaming needs these packages on Debian and Ubuntu, each found with `dpkg -S` on the plugin's file: `gstreamer1.0-plugins-base`, `-good` (`ximagesrc`, `pulsesrc`, `flvmux`, `mp4mux`), `-bad` (`rtmp2sink`, `srtsink`, `mpegtsmux`, `nvh264enc`, `vah264enc`, `openh264enc`, `voaacenc`) and `gstreamer1.0-libav`; `gstreamer1.0-pipewire` under Wayland; `gstreamer1.0-plugins-ugly` adds `x264enc`.
 
 ## Not checked
 
+- Streaming from a real desktop: GNOME's and KDE's own sharing dialog, the projector's own window through the portal (on the test desktop, which draws in software only, the projector's window presented no frame, so the shared picture was a wallpaper), a real microphone (WSL lists one that cannot be opened), `vah264enc` on Intel or AMD graphics, `x264enc`, a real service, and Start pressed in the operator's dialog.
 - A Linux desktop outside WSL: Wayland with a real compositor, a second screen for the projector, full-screen, the scale of a HiDPI screen.
 - Hardware decode through the `va` plugin on Intel or AMD graphics (only NVIDIA's decoder was there), and the software decoder (`avdec_h264`).
 - Cameras, the microphone and speech recognition at run time, the phone remote from a real phone, EasiSlides import.

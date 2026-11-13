@@ -39,6 +39,11 @@ ON_A_MAC = {
     "d3d11": ("applemedia", "hardware decoding through VideoToolbox (vtdec), and cameras (avfvideosrc)"),
     "d3d12": None,
     "mediafoundation": None,
+    "wasapi2": ("osxaudio", "the room's sound from a microphone"),
+    # A Mac's hardware encoder (vtenc_h264) and its screen capture are in applemedia.
+    "nvcodec": None,
+    "qsv": None,
+    "amfcodec": None,
 }
 
 # Libraries a plugin opens by name while it runs, which its list of imports does not show.

@@ -58,7 +58,7 @@ if command -v cmake >/dev/null 2>&1 && [ -f "$libclang/libclang.dylib" ]; then
 else
     echo "This build is WITHOUT speech recognition (CMake or Xcode's libclang is missing)."
 fi
-cargo build --release -p artosia -p artosia-output --features "$features"
+cargo build --release -p artosia -p artosia-output -p artosia-stream --features "$features"
 
 app="$out/Artosia.app"
 contents="$app/Contents"
@@ -68,24 +68,28 @@ mkdir -p "$contents/MacOS" "$contents/Resources"
 # ("Quit artosia" stood in the menu of 0.1.24, read from the real window on 2026-11-13).
 install -m 755 target/release/artosia "$contents/MacOS/Artosia"
 install -m 755 target/release/artosia-output "$contents/MacOS/artosia-output"
-strip "$contents/MacOS/Artosia" "$contents/MacOS/artosia-output" 2>/dev/null
-# The projector program loads GStreamer from the app's own copy, laid out as GStreamer's
-# framework is, so every library in it finds the others by the run paths it was built with.
-# The build's own run path, the unpacked folder on this Mac, is taken out: it means nothing on
-# another computer.
-install_name_tool -add_rpath "@executable_path/../Resources/gstreamer/lib" "$contents/MacOS/artosia-output"
-while otool -l "$contents/MacOS/artosia-output" | grep -q "path $gst/lib "; do
-    install_name_tool -delete_rpath "$gst/lib" "$contents/MacOS/artosia-output"
+install -m 755 target/release/artosia-stream "$contents/MacOS/artosia-stream"
+strip "$contents/MacOS/Artosia" "$contents/MacOS/artosia-output" "$contents/MacOS/artosia-stream" 2>/dev/null
+# The projector and streaming programs load GStreamer from the app's own copy, laid out as
+# GStreamer's framework is, so every library in it finds the others by the run paths it was
+# built with. The build's own run path, the unpacked folder on this Mac, is taken out: it
+# means nothing on another computer.
+for program in artosia-output artosia-stream; do
+    install_name_tool -add_rpath "@executable_path/../Resources/gstreamer/lib" "$contents/MacOS/$program"
+    while otool -l "$contents/MacOS/$program" | grep -q "path $gst/lib "; do
+        install_name_tool -delete_rpath "$gst/lib" "$contents/MacOS/$program"
+    done
 done
 install -m 644 assets/brand/icons/artosia.icns "$contents/Resources/artosia.icns"
 sed "s/{version}/$version/g" tools/macos/Info.plist > "$contents/Info.plist"
 python3 tools/macos/info-strings.py "$contents/Resources"
-python3 tools/gstreamer-subset.py --video-only --thin arm64 --copy "$contents/Resources/gstreamer"
+python3 tools/gstreamer-subset.py --thin arm64 --copy "$contents/Resources/gstreamer"
 
 # Signed inside out: every library, plugin and helper, the projector program, then the app,
 # whose signature seals all of them. A file changed after this line breaks the seal.
 find "$contents/Resources/gstreamer" -type f \( -name '*.dylib' -o -name 'gst-plugin-scanner' \) -print0 | xargs -0 -n 20 codesign --force --sign - 2>/dev/null
 codesign --force --sign - "$contents/MacOS/artosia-output"
+codesign --force --sign - "$contents/MacOS/artosia-stream"
 codesign --force --sign - "$app"
 codesign --verify --deep --strict "$app"
 echo "App: $app ($(du -sh "$app" | awk '{print $1}'), $(find "$app" -type f | wc -l | tr -d ' ') files, signature verified)"

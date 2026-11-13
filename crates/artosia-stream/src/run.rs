@@ -57,10 +57,13 @@ pub fn run(args: Args) -> i32 {
 
     // The encoder: the first one that can encode a test picture.
     let Some((kind, skipped)) = choose_encoder(&args) else {
-        reporter.problem(
-            "No video encoder works on this PC. Try --encoder x264.",
-            None,
-        );
+        // A Linux has no encoder of its own: it is a part of GStreamer the distribution packs.
+        let words = if cfg!(target_os = "linux") {
+            "No video encoder works on this computer. Install GStreamer's x264 or OpenH264 plugin."
+        } else {
+            "No video encoder works on this PC. Try --encoder x264."
+        };
+        reporter.problem(words, None);
         return 3;
     };
     // The sound, with a fall back to silence that is said out loud.
@@ -91,6 +94,14 @@ pub fn run(args: Args) -> i32 {
             return 3;
         }
     };
+
+    // A Mac gives black frames, and no window's title, until the person allows the recording.
+    if !win::screen_allowed() {
+        reporter.problem(
+            "macOS has not allowed Artosia to record the screen. Allow it in System Settings, Privacy & Security, Screen & System Audio Recording, then start Artosia again.",
+            None,
+        );
+    }
 
     let stop_capture = Arc::new(AtomicBool::new(false));
     let abort = Arc::new(AtomicBool::new(false));
@@ -338,24 +349,40 @@ pub fn probe(kind: Kind, args: &Args) -> Result<(), String> {
         )
         .build()
         .map_err(|e| e.to_string())?;
-    let upload = make("d3d11upload")?;
-    let convert = make("d3d11convert")?;
-    let nv12 = gst::ElementFactory::make("capsfilter")
-        .property(
-            "caps",
-            gst::Caps::builder("video/x-raw")
-                .features(["memory:D3D11Memory"])
-                .field("format", "NV12")
-                .build(),
-        )
-        .build()
-        .map_err(|e| e.to_string())?;
     let enc = encoder::make(kind, args)?;
     let sink = make("fakesink")?;
     sink.set_property("sync", false);
-    let mut chain = vec![src, raw, upload, convert, nv12];
-    if !kind.takes_gpu_frames() {
-        chain.push(make("d3d11download")?);
+    let mut chain = vec![src, raw];
+    // The same way to the encoder's layout as the real picture takes: on the GPU on Windows,
+    // in memory elsewhere.
+    if cfg!(windows) {
+        chain.push(make("d3d11upload")?);
+        chain.push(make("d3d11convert")?);
+        chain.push(
+            gst::ElementFactory::make("capsfilter")
+                .property(
+                    "caps",
+                    gst::Caps::builder("video/x-raw")
+                        .features(["memory:D3D11Memory"])
+                        .field("format", "NV12")
+                        .build(),
+                )
+                .build()
+                .map_err(|e| e.to_string())?,
+        );
+        if !kind.takes_gpu_frames() {
+            chain.push(make("d3d11download")?);
+            #[cfg(windows)]
+            chain.extend(crate::capture::to_frame_format(kind)?);
+        }
+    } else {
+        chain.push(make("videoconvert")?);
+        chain.push(
+            gst::ElementFactory::make("capsfilter")
+                .property("caps", gst::Caps::builder("video/x-raw").field("format", kind.frame_format()).build())
+                .build()
+                .map_err(|e| e.to_string())?,
+        );
     }
     chain.push(enc);
     chain.push(sink);
@@ -383,6 +410,24 @@ pub fn probe(kind: Kind, args: &Args) -> Result<(), String> {
     result
 }
 
+/// Whether the desktop shares its screens itself, so a window X11 cannot see is asked of it:
+/// a Linux desktop under Wayland.
+fn shares_screens() -> bool {
+    #[cfg(target_os = "linux")]
+    return crate::portal::wayland();
+    #[cfg(not(target_os = "linux"))]
+    false
+}
+
+/// The screen the desktop shares: nothing while its dialog is open, then the stream or why
+/// there is none.
+fn shared_screen() -> Option<Result<Target, String>> {
+    #[cfg(target_os = "linux")]
+    return crate::portal::shared().map(|answer| answer.clone().map(|(remote, node)| Target::Shared { remote, node }));
+    #[cfg(not(target_os = "linux"))]
+    None
+}
+
 /// Keeps a capture running: finds the window, starts the capture, and starts again when the
 /// window goes away and comes back.
 fn capture_loop(
@@ -394,16 +439,44 @@ fn capture_loop(
     reporter: Arc<Reporter>,
 ) {
     let mut announced_waiting = false;
+    let mut announced_refusal = false;
     while !stop.load(Ordering::SeqCst) {
         let target = match &args.source {
             Source::Window(title) => {
                 let windows = win::windows();
                 win::pick_window(&windows, title, args.window_pid).map(|w| Target::Window(w.handle))
             }
+            // X11 knows nothing of a Wayland desktop's screens.
+            Source::Monitor(_) if shares_screens() => None,
             Source::Monitor(n) => win::monitors()
                 .into_iter()
                 .find(|m| m.index == *n)
                 .map(|m| Target::Monitor(m.handle)),
+        };
+        let target = match target {
+            Some(target) => Some(target),
+            None if shares_screens() => match shared_screen() {
+                Some(Ok(target)) => Some(target),
+                Some(Err(why)) => {
+                    if !announced_refusal {
+                        announced_refusal = true;
+                        reporter.problem("The desktop did not share a screen. Stop the stream and start it again to choose one.", Some(&why));
+                    }
+                    picture.store(PICTURE_WAITING, Ordering::SeqCst);
+                    sleep_unless(&stop, Duration::from_secs(1));
+                    continue;
+                }
+                None => {
+                    if !announced_waiting {
+                        announced_waiting = true;
+                        reporter.info("This desktop asks before a screen is shared. Choose the projector's screen in its dialog.");
+                    }
+                    picture.store(PICTURE_WAITING, Ordering::SeqCst);
+                    sleep_unless(&stop, Duration::from_millis(300));
+                    continue;
+                }
+            },
+            None => None,
         };
         let Some(target) = target else {
             picture.store(PICTURE_WAITING, Ordering::SeqCst);

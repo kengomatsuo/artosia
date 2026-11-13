@@ -62,11 +62,14 @@ fn program() -> Option<PathBuf> {
 
 /// Whether this copy of Artosia came with the streaming program.
 pub fn available() -> bool {
-    // The streaming program is built on GStreamer and does not start without it. It takes the
-    // picture, the sound and the hardware encoder from Windows' own parts of GStreamer
-    // (`d3d11screencapturesrc`, `wasapi2src`, `mfh264enc`), so the Linux and Mac editions
-    // cannot stream yet and the Stream dialog says so instead of offering a start that fails.
-    cfg!(windows) && program().is_some() && crate::link::gstreamer_bin().is_some()
+    // The streaming program is built on GStreamer and does not start without it. On Windows
+    // that is GStreamer's folder. Elsewhere the program is asked once (`--probe`), as the
+    // projector program is, and the answer kept: the Stream dialog asks on every frame.
+    if cfg!(windows) {
+        return program().is_some() && crate::link::gstreamer_bin().is_some();
+    }
+    static CAN: std::sync::OnceLock<bool> = std::sync::OnceLock::new();
+    *CAN.get_or_init(|| program().is_some_and(|program| crate::link::can_start(&program)))
 }
 
 impl Stream {

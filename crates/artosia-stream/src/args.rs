@@ -39,6 +39,11 @@ pub enum EncoderChoice {
     MediaFoundation,
     Nvenc,
     X264,
+    /// Linux' VA-API.
+    Va,
+    /// A Mac's VideoToolbox.
+    VideoToolbox,
+    OpenH264,
 }
 
 impl EncoderChoice {
@@ -49,6 +54,9 @@ impl EncoderChoice {
             "mf" => Some(Self::MediaFoundation),
             "nvenc" => Some(Self::Nvenc),
             "x264" => Some(Self::X264),
+            "va" => Some(Self::Va),
+            "vt" => Some(Self::VideoToolbox),
+            "openh264" => Some(Self::OpenH264),
             _ => None,
         }
     }
@@ -108,7 +116,7 @@ Usage:
                  (--rtmp <url-with-key> | --srt <uri> | --record <file.mp4>)...
                  [--width 1280] [--height 720] [--fps 30]
                  [--video-kbps 2500] [--audio-kbps 128]
-                 [--encoder auto|qsv|mf|nvenc|x264] [--x264-preset superfast]
+                 [--encoder auto|qsv|mf|nvenc|x264|va|vt|openh264] [--x264-preset superfast]
                  [--stop-on-eof] [--stop-file <path>]
   artosia-stream --list
 
@@ -235,7 +243,7 @@ where
             "--encoder" => {
                 let v = value("--encoder")?;
                 args.encoder = EncoderChoice::parse(&v).ok_or_else(|| {
-                    format!("--encoder must be auto, qsv, mf, nvenc or x264, not \"{v}\".")
+                    format!("--encoder must be auto, qsv, mf, nvenc, x264, va, vt or openh264, not \"{v}\".")
                 })?;
             }
             "--x264-preset" => {

@@ -3,6 +3,8 @@
 //! `args`, `backoff`, `redact` and `status` are plain Rust and carry the unit tests. The rest
 //! drives GStreamer: `capture` takes the picture, `encode` and `encoder` make H.264 and AAC,
 //! `hub` shares the result, `dest` sends it to one destination, `run` ties them together.
+//! `win` asks each system for its windows and monitors, and `portal` asks a Wayland desktop
+//! to share a screen.
 
 #![cfg_attr(test, allow(clippy::unwrap_used, clippy::expect_used))]
 
@@ -14,6 +16,8 @@ pub mod encode;
 pub mod encoder;
 pub mod hub;
 pub mod list;
+#[cfg(target_os = "linux")]
+pub mod portal;
 pub mod redact;
 pub mod report;
 pub mod run;

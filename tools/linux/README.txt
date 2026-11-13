@@ -19,6 +19,9 @@ Debian and Ubuntu:
     sudo apt-get install gstreamer1.0-plugins-base gstreamer1.0-plugins-good \
         gstreamer1.0-plugins-bad gstreamer1.0-libav
 
+Streaming on a Wayland desktop (GNOME, KDE) also needs gstreamer1.0-pipewire. The desktop
+asks which screen to share when a stream starts: choose the projector's.
+
 Other distributions: GStreamer lists its packages at
 https://gstreamer.freedesktop.org/documentation/installing/on-linux.html
 Artosia needs the base, good and bad plugin sets and a decoder for H.264 video.
