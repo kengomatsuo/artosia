@@ -60,6 +60,8 @@ pub struct Work {
     /// The row to bring into view and the control to focus, once the page is on screen.
     scroll: Option<String>,
     focus: Option<&'static str>,
+    /// The page changed: its row comes into view at once, never by a glide across the new list.
+    turned: bool,
     /// The screens last told to the machine, so a poll tells it again only on a change.
     screens: (usize, Option<usize>),
     /// The Bible that was picked, and whether a person picked it, when typing into the Bible
@@ -158,6 +160,29 @@ impl App {
         };
         self.onboard_work.focus = Some(focus);
         self.onboard_work.scroll = scroll;
+        self.onboard_work.turned = true;
+    }
+
+    /// Hands the window what a change left to do: the control that takes the keys and the row
+    /// to bring into view. A press and a key call it in their own commit, so a new page is
+    /// drawn once, already at its row; the poll calls it for a change that had no window to
+    /// tell. A changed page lands at once: its rows are other rows under the same keys, and
+    /// faded in over the ones leaving they showed two lists at once (2026-11-13, owner-reported).
+    pub(crate) fn onboard_land(&mut self, tx: &mut Tx) {
+        if self.onboard.is_none() {
+            return;
+        }
+        if std::mem::take(&mut self.onboard_work.turned) {
+            tx.instant();
+        }
+        if let Some(focus) = self.onboard_work.focus.take() {
+            tx.focus(focus, false);
+        }
+        match self.onboard_work.scroll.take() {
+            Some(key) if key == TOP => tx.scroll_to_y("onboard-list", 0.0),
+            Some(key) => tx.scroll_into_view(key),
+            None => {}
+        }
     }
 
     fn onboard_perform(&mut self, effects: Vec<Effect>) {
@@ -461,7 +486,9 @@ impl App {
             Key::Enter => {
                 // Rune may press a focused button for the same Enter: the press that follows is the same step.
                 self.onboard_entered_at = self.clock;
-                if let Some(action) = self.onboard.as_ref().map(|onboard| onboard.buttons().primary) {
+                if self.onboard.as_mut().is_some_and(Onboard::enter_takes_typed) {
+                    self.onboard_sing_query_changed();
+                } else if let Some(action) = self.onboard.as_ref().map(|onboard| onboard.buttons().primary) {
                     self.onboard_press(action);
                 }
             }
@@ -503,6 +530,7 @@ impl App {
             }
             _ => {}
         }
+        self.onboard_land(tx);
         true
     }
 
@@ -569,15 +597,8 @@ impl App {
                 changed = true;
             }
         }
+        self.onboard_land(tx);
         if self.onboard.is_some() {
-            if let Some(focus) = self.onboard_work.focus.take() {
-                tx.focus(focus, false);
-            }
-            match self.onboard_work.scroll.take() {
-                Some(key) if key == TOP => tx.scroll_to_y("onboard-list", 0.0),
-                Some(key) => tx.scroll_into_view(key),
-                None => {}
-            }
             if std::mem::take(&mut self.onboard_work.want_folder) {
                 let options = rune::FileDialogOptions { title: t::ONBOARD_SONGS_FOLDER().to_string(), ..Default::default() };
                 tx.open_folder(options, |s: &mut App, result, _| match result {
@@ -728,11 +749,15 @@ fn countries_page(o: &Onboard, k: &Kit) -> El {
         .build(k)
         .key("onboard-filter");
     let visible = o.visible_countries();
+    // The list and the line that stands in for it are two elements with two keys. Without keys
+    // the line took the list's place and its path, and Rune, still holding the list's rows
+    // under that path, looked for a row's key on the line's text and stopped the program
+    // (`runtime/commit/measure.rs` at the pinned rev; found 2026-11-13 by typing "zzzz").
     let inside = if visible.is_empty() {
-        col().w_full().h(ROW).center_y().px(space::S4).child(crate::ui::widgets::wrapped(t::nothing_found(o.query.text.trim())).font(type_::BODY).color(k.c.text_muted).wrap())
+        col().key("onboard-country-none").w_full().h(ROW).center_y().px(space::S4).child(crate::ui::widgets::wrapped(t::nothing_found(o.query.text.trim())).font(type_::BODY).color(k.c.text_muted).wrap())
     } else {
         let count = visible.len();
-        col().w_full().growth(GrowthSpec::default()).virtual_rows(
+        col().key("onboard-country-rows").w_full().growth(GrowthSpec::default()).virtual_rows(
             count,
             ROW + 2.0,
             |s: &App, at| match s.onboard.as_ref().and_then(|onboard| onboard.visible_countries().get(at).map(|(code, _)| *code)) {
@@ -777,10 +802,11 @@ fn sing_page(o: &Onboard, k: &Kit) -> El {
         .build(k)
         .key("onboard-filter");
     let visible = o.visible_languages();
+    // Keyed apart, as the countries are, and for the same reason.
     let inside = if visible.is_empty() {
-        col().w_full().h(ROW).center_y().px(space::S4).child(crate::ui::widgets::wrapped(t::nothing_found(o.sing_query.text.trim())).font(type_::BODY).color(k.c.text_muted).wrap())
+        col().key("onboard-sing-none").w_full().h(ROW).center_y().px(space::S4).child(crate::ui::widgets::wrapped(t::nothing_found(o.sing_query.text.trim())).font(type_::BODY).color(k.c.text_muted).wrap())
     } else {
-        col().w_full().growth(GrowthSpec::default()).virtual_rows(
+        col().key("onboard-sing-rows").w_full().growth(GrowthSpec::default()).virtual_rows(
             visible.len(),
             ROW + 2.0,
             |s: &App, at| match s.onboard.as_ref().and_then(|onboard| onboard.visible_languages().get(at).map(|(code, _)| code.clone())) {
@@ -1018,7 +1044,10 @@ fn done_page(k: &Kit) -> El {
         let button = btn(action_label(action)).focusable();
         let button = if primary { button.primary() } else { button };
         let key = format!("onboard-card-{n}");
-        let press = move |s: &mut App, _: &mut Tx| if primary { s.onboard_press_primary() } else { s.onboard_press(action) };
+        let press = move |s: &mut App, tx: &mut Tx| {
+            if primary { s.onboard_press_primary() } else { s.onboard_press(action) }
+            s.onboard_land(tx);
+        };
         let button = button.build(k, press);
         col()
             .key(key)
@@ -1075,22 +1104,31 @@ pub(crate) fn view(s: &App, cx: &mut Cx<App>, k: &Kit, layer: &mut Vec<El>) {
         Page::Ready => ready_page(o, k),
         Page::Done => done_page(k),
     };
-    let mut words = col().w_full().gap(space::S2).child(crate::ui::widgets::wrapped(title.to_string()).font(rune::TextStyle::new(30.0, 600.0).lh(38.0)).color(k.c.text_base).wrap());
+    let mut words = col().w_full().gap(space::S2).child(crate::ui::widgets::wrapped(artosia_core::text::last_words_together(title)).font(rune::TextStyle::new(30.0, 600.0).lh(38.0)).color(k.c.text_base).wrap());
     if let Some(hint) = hint {
         words = words.child(crate::ui::widgets::wrapped(hint.to_string()).font(rune::TextStyle::new(15.0, 400.0).lh(22.0)).color(k.c.text_muted).wrap());
     }
     // Back at the left, then the quiet buttons, then the one filled one, always at the right.
     let mut foot = row().w_full().gap(space::S3).center_y();
     if o.page != Page::Language {
-        foot = foot.child(btn(t::ONBOARD_BACK()).icon(&icons::ARROW_LEFT).focusable().build(k, |s, _| s.onboard_back()).key("onboard-back"));
+        foot = foot.child(btn(t::ONBOARD_BACK()).icon(&icons::ARROW_LEFT).focusable().build(k, |s, tx| {
+            s.onboard_back();
+            s.onboard_land(tx);
+        }).key("onboard-back"));
     }
     foot = foot.child(spacer());
     if o.page != Page::Done {
         for action in &buttons.others {
             let action = *action;
-            foot = foot.child(btn(action_label(action)).ghost().focusable().build(k, move |s, _| s.onboard_press(action)).key("onboard-other"));
+            foot = foot.child(btn(action_label(action)).ghost().focusable().build(k, move |s, tx| {
+                s.onboard_press(action);
+                s.onboard_land(tx);
+            }).key("onboard-other"));
         }
-        let primary = btn(action_label(buttons.primary)).primary().focusable().disabled(!buttons.primary_enabled).grow().build(k, |s, _| s.onboard_press_primary()).key("onboard-primary");
+        let primary = btn(action_label(buttons.primary)).primary().focusable().disabled(!buttons.primary_enabled).grow().build(k, |s, tx| {
+            s.onboard_press_primary();
+            s.onboard_land(tx);
+        }).key("onboard-primary");
         foot = foot.child(row().min_w(140.0).child(primary));
     }
     let panel = col()
@@ -1115,9 +1153,14 @@ pub(crate) fn view(s: &App, cx: &mut Cx<App>, k: &Kit, layer: &mut Vec<El>) {
         .border(1.0, k.c.border_base)
         .clip_rounded(12.0)
         .child(panel)
-        .child(col().grow(1.0).min_w(0.0).h_full().padding(pad).gap(space::S5).child(words).child(col().w_full().grow(1.0).min_h(0.0).child(content)).child(foot))
+        // Whatever changes inside a page lands at once: every page's list sits under the same
+        // keys, so rows that arrive while others leave would be drawn over each other.
+        .child(col().key("onboard-page").instant_changes().grow(1.0).min_w(0.0).h_full().padding(pad).gap(space::S5).child(words).child(col().w_full().grow(1.0).min_h(0.0).child(content)).child(foot))
         // Skip setup is quiet and at the top right of every page: it keeps what was answered and closes.
-        .child(row().pin(None, Some(space::S4), Some(space::S4), None).child(btn(t::ONBOARD_SKIP()).ghost().focusable().build(k, |s, _| s.onboard_skip()).key("onboard-skip")))
+        .child(row().pin(None, Some(space::S4), Some(space::S4), None).child(btn(t::ONBOARD_SKIP()).ghost().focusable().build(k, |s, tx| {
+            s.onboard_skip();
+            s.onboard_land(tx);
+        }).key("onboard-skip")))
         .modal(false, |s: &mut App| s.onboard_back());
     layer.push(el().key("onboard-backdrop").absolute(0.0, 0.0).w_full().h_full().fill(k.c.bg_base).a11y_hidden());
     layer.push(col().key("onboard-centre").absolute(0.0, 0.0).w_full().h_full().center().child(card));

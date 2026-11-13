@@ -133,10 +133,12 @@ pub fn picker(s: &App, k: &Kit, layer: &mut Vec<El>) {
         .build(k)
         .key("language-filter");
     let visible = pick.visible();
+    // Keyed apart: an unkeyed line in an unkeyed list's place stops the program (see the first
+    // run's countries page).
     let inside = if visible.is_empty() {
-        col().w_full().h(ROW).center_y().px(space::S3).child(wrapped(t::nothing_found(pick.filter.text.trim())).font(type_::BODY).color(k.c.text_muted).wrap())
+        col().key("pick-language-none").w_full().h(ROW).center_y().px(space::S3).child(wrapped(t::nothing_found(pick.filter.text.trim())).font(type_::BODY).color(k.c.text_muted).wrap())
     } else {
-        col().w_full().growth(GrowthSpec::default()).virtual_rows(
+        col().key("pick-language-rows").w_full().growth(GrowthSpec::default()).virtual_rows(
             visible.len(),
             ROW,
             |s: &App, at| match s.language_pick.as_ref().and_then(|pick| pick.visible().get(at).map(|(code, _)| *code)) {

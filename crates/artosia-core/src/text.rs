@@ -122,6 +122,16 @@ pub fn keep_words(text: &str) -> std::borrow::Cow<'_, str> {
     std::borrow::Cow::Owned(out)
 }
 
+/// A title for a box that wraps, with its last two words joined by a no-break space, so the
+/// last line never holds one short word alone ("... does your church sing / in?"). A title of
+/// one or two words, and writing with no spaces between words, comes back as it is.
+pub fn last_words_together(text: &str) -> String {
+    match text.trim_end().rsplit_once(' ') {
+        Some((before, last)) if before.contains(' ') => format!("{before}\u{a0}{last}"),
+        _ => text.to_string(),
+    }
+}
+
 pub fn normalize(text: &str) -> String {
     let mut out = String::with_capacity(text.len());
     for word in words(text) {
@@ -280,6 +290,14 @@ mod tests {
     }
 
     use super::*;
+
+    #[test]
+    fn a_title_keeps_its_last_two_words_on_one_line() {
+        assert_eq!(last_words_together("Which languages does your church sing in?"), "Which languages does your church sing\u{a0}in?");
+        assert_eq!(last_words_together("Almost ready"), "Almost ready", "two words wrap as they like");
+        assert_eq!(last_words_together("Ready"), "Ready");
+        assert_eq!(last_words_together("\u{6559}\u{4f1a}\u{7528}\u{54ea}\u{4e9b}\u{8bed}\u{8a00}\u{5531}\u{8bd7}"), "\u{6559}\u{4f1a}\u{7528}\u{54ea}\u{4e9b}\u{8bed}\u{8a00}\u{5531}\u{8bd7}", "no spaces, nothing to join");
+    }
 
     #[test]
     fn words_fold_case_accents_and_apostrophes() {

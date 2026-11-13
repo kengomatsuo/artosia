@@ -542,3 +542,31 @@ mod key_tests {
         assert_eq!(caps("Ctrl Tab", false), ["Ctrl", "Tab"]);
     }
 }
+
+#[cfg(test)]
+mod list_tests {
+    /// A virtual list keeps its rows under its path. With no key, an element drawn in its place
+    /// (a "nothing found" line) takes that path, and Rune asks that element's children for row
+    /// keys and stops the program (`runtime/commit/measure.rs` at the pinned rev). Typing
+    /// "zzzz" into the first run's country filter did it (2026-11-13).
+    #[test]
+    fn every_virtual_list_has_its_own_key() {
+        let needle = [".virtual", "_rows("].concat();
+        let folder = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("src").join("ui");
+        let mut seen = 0;
+        for entry in std::fs::read_dir(folder).expect("the ui folder") {
+            let path = entry.expect("a file").path();
+            let text = std::fs::read_to_string(&path).expect("its text");
+            let lines: Vec<&str> = text.lines().collect();
+            for (at, line) in lines.iter().enumerate() {
+                if !line.contains(&needle) {
+                    continue;
+                }
+                seen += 1;
+                let from = at.saturating_sub(3);
+                assert!(lines[from..=at].iter().any(|line| line.contains(".key(")), "{}:{} draws a virtual list with no key", path.display(), at + 1);
+            }
+        }
+        assert!(seen >= 7, "found only {seen} virtual lists");
+    }
+}

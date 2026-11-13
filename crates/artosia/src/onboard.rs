@@ -492,8 +492,42 @@ impl Onboard {
         artosia_core::languages::tick(&mut self.sing, code);
     }
 
+    /// Empties the Sing page's filter and leaves the keys where they were.
+    fn clear_sing_query(&mut self) {
+        let focused = self.sing_query.focused;
+        self.sing_query = TextEdit::new("");
+        self.sing_query.focused = focused;
+    }
+
+    /// Enter on the Sing page with something typed: the language the arrows rest on is ticked,
+    /// never unticked, and the filter is emptied, as a list picked from by typing does
+    /// (react-select's Enter). With nothing typed Enter is the page's button, and this is false.
+    pub fn enter_takes_typed(&mut self) -> bool {
+        if self.page != Page::Sing || self.sing_query.text.trim().is_empty() {
+            return false;
+        }
+        let shown = self.visible_languages().iter().any(|(code, _)| *code == self.sing_cursor);
+        if shown && !self.sing.contains(&self.sing_cursor) {
+            let code = self.sing_cursor.clone();
+            self.tick_language(&code);
+        }
+        self.clear_sing_query();
+        true
+    }
+
     /// The filter on the Sing page changed: the cursor stays on a language the filter shows.
+    /// A space typed into an empty filter is the space bar ticking the language the arrows rest
+    /// on: the field holds the keys on this page, no language's name starts with a space, and
+    /// react-select reads the key the same way.
     pub fn sing_query_changed(&mut self) {
+        if !self.sing_query.text.is_empty() && self.sing_query.text.trim().is_empty() {
+            self.clear_sing_query();
+            if !self.sing_cursor.is_empty() {
+                let code = self.sing_cursor.clone();
+                self.tick_language(&code);
+            }
+            return;
+        }
         let visible = self.visible_languages();
         if !visible.is_empty() && !visible.iter().any(|(code, _)| *code == self.sing_cursor) {
             self.sing_cursor = visible[0].0.clone();
@@ -1136,6 +1170,42 @@ mod tests {
         assert_eq!(onboard.sing_cursor, rows[0].0);
         onboard.step(5, &[]);
         assert_eq!(onboard.sing_cursor, rows[rows.len() - 1].0, "held at the end of what the filter shows");
+    }
+
+    #[test]
+    fn the_space_bar_ticks_with_nothing_typed_and_enter_takes_what_was_typed() {
+        let mut onboard = at(Page::Sing, None);
+        let rows = onboard.visible_languages();
+        let second = rows[1].0.clone();
+        assert!(!onboard.sing.contains(&second));
+        onboard.step(1, &[]);
+        // The field holds the keys, so the space bar arrives as a space typed into it.
+        onboard.sing_query.insert(" ");
+        onboard.sing_query_changed();
+        assert!(onboard.sing.contains(&second), "ticked");
+        assert!(onboard.sing_query.text.is_empty(), "and the space is not kept");
+        onboard.sing_query.insert(" ");
+        onboard.sing_query_changed();
+        assert!(!onboard.sing.contains(&second), "the space bar again unticks");
+        // With nothing typed Enter is the button's.
+        assert!(!onboard.enter_takes_typed());
+        // Typed: Enter ticks the language the arrows rest on and empties the filter.
+        onboard.sing_query.insert("jaw");
+        onboard.sing_query_changed();
+        let found = onboard.sing_cursor.clone();
+        assert!(onboard.enter_takes_typed());
+        assert!(onboard.sing.contains(&found));
+        assert!(onboard.sing_query.text.is_empty());
+        assert_eq!(onboard.page, Page::Sing);
+        // A ticked one stays ticked when it is found again.
+        onboard.sing_query.insert("jaw");
+        onboard.sing_query_changed();
+        assert!(onboard.enter_takes_typed());
+        assert!(onboard.sing.contains(&found));
+        // A space inside a name is a letter like any other.
+        onboard.sing_query.insert("jamaican c");
+        onboard.sing_query_changed();
+        assert_eq!(onboard.sing_query.text, "jamaican c");
     }
 
     #[test]
