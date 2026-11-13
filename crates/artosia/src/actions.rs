@@ -634,11 +634,20 @@ impl App {
         }
     }
 
-    /// Adds every OpenLyrics song in a folder, skipping songs the library already has.
-    pub fn import_openlyrics(&mut self, folder: &std::path::Path) {
-        let (mut songs, failed) = artosia_core::openlyrics::read_folder(folder);
+    /// Adds every OpenLyrics song in a folder or in a zip file, skipping songs the library already has.
+    pub fn import_openlyrics(&mut self, picked: &std::path::Path) {
+        let zip = picked.is_file();
+        let nothing = if zip { t::IMPORT_ZIP_EMPTY() } else { t::IMPORT_FOLDER_EMPTY() };
+        let Ok(folder) = artosia_core::import::as_folder(picked) else {
+            self.say(nothing, None);
+            return;
+        };
+        let (mut songs, failed) = artosia_core::openlyrics::read_folder(&folder);
+        if zip {
+            let _ = std::fs::remove_dir_all(&folder);
+        }
         if songs.is_empty() && failed == 0 {
-            self.say(t::IMPORT_FOLDER_EMPTY(), None);
+            self.say(nothing, None);
             return;
         }
         let done = self.store.import_songs(&mut songs).unwrap_or_default();
@@ -1779,6 +1788,15 @@ impl App {
             let options = rune::FileDialogOptions { title: t::CMD_IMPORT_FOLDER().to_string(), ..Default::default() };
             tx.open_folder(options, |s: &mut App, result, _| match result {
                 Ok(Some(folder)) => s.import_openlyrics(&folder),
+                Ok(None) => {}
+                Err(error) => s.say(error.to_string(), None),
+            });
+        }
+        if self.want_zip {
+            self.want_zip = false;
+            let options = rune::FileDialogOptions { title: t::CMD_IMPORT_ZIP().to_string(), ..Default::default() }.filter("Zip", &["zip"]);
+            tx.open_file(options, |s: &mut App, result, _| match result {
+                Ok(Some(zip)) => s.import_openlyrics(&zip),
                 Ok(None) => {}
                 Err(error) => s.say(error.to_string(), None),
             });

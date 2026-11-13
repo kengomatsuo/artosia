@@ -26,7 +26,7 @@ fn command_icon(command: Command) -> &'static rune::Icon {
         Command::Settings => &icons::SLIDERS,
         Command::Backdrops => crate::ui::backdrops::mark(),
         Command::Screens | Command::Black | Command::Logo => &icons::SCREEN,
-        Command::Import | Command::ImportFolder | Command::ImportPptx | Command::ImportBirthdays | Command::BibleFile => &icons::IMPORT,
+        Command::Import | Command::ImportFolder | Command::ImportZip | Command::ImportPptx | Command::ImportBirthdays | Command::BibleFile => &icons::IMPORT,
         Command::Bibles => &icons::BOOK,
         Command::Remote => &icons::PHONE,
         Command::Heading | Command::NewPlan => &icons::HEADING,

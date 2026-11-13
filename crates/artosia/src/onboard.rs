@@ -50,14 +50,17 @@ pub enum Songs {
     Easislides,
     /// A folder a person chose: EasiSlides' data or OpenLyrics files.
     Folder(PathBuf),
+    /// A zip file a person chose, as it was downloaded or sent: the same files, packed.
+    Zip(PathBuf),
     Nowhere,
 }
 
-/// One of the three rows of the songs page.
+/// One of the rows of the songs page.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum SongRow {
     Easislides,
     Folder,
+    Zip,
     Nowhere,
 }
 
@@ -156,9 +159,12 @@ pub enum Effect {
     /// Download and install this translation in the background, then use it.
     Download(String),
     ImportEasislides,
+    /// Read the songs of this folder, or of this zip file.
     ImportFolder(PathBuf),
     /// Open the folder picker.
     ChooseFolder,
+    /// Open the file picker, for a zip.
+    ChooseZip,
     /// Put the test picture on this screen (the numbers the Screens dialog's Identify draws).
     ShowTestPicture(usize),
     HideTestPicture,
@@ -332,12 +338,13 @@ impl Onboard {
             rows.push(SongRow::Easislides);
         }
         rows.push(SongRow::Folder);
+        rows.push(SongRow::Zip);
         rows.push(SongRow::Nowhere);
         rows
     }
 
     pub fn song_row_picked(&self, row: SongRow) -> bool {
-        matches!((&self.songs, row), (Songs::Easislides, SongRow::Easislides) | (Songs::Folder(_), SongRow::Folder) | (Songs::Nowhere, SongRow::Nowhere))
+        matches!((&self.songs, row), (Songs::Easislides, SongRow::Easislides) | (Songs::Folder(_), SongRow::Folder) | (Songs::Zip(_), SongRow::Zip) | (Songs::Nowhere, SongRow::Nowhere))
     }
 
     /// Whether the page's own pick can still change: a Bible or an import that was started stays as asked.
@@ -469,6 +476,7 @@ impl Onboard {
             SongRow::Easislides => {}
             SongRow::Nowhere => self.songs = Songs::Nowhere,
             SongRow::Folder => return vec![Effect::ChooseFolder],
+            SongRow::Zip => return vec![Effect::ChooseZip],
         }
         Vec::new()
     }
@@ -477,6 +485,13 @@ impl Onboard {
     pub fn folder_chosen(&mut self, folder: Option<PathBuf>) {
         if let (Some(folder), false) = (folder, self.locked()) {
             self.songs = Songs::Folder(folder);
+        }
+    }
+
+    /// The file picker answered with a zip. A cancelled picker leaves the pick as it was.
+    pub fn zip_chosen(&mut self, zip: Option<PathBuf>) {
+        if let (Some(zip), false) = (zip, self.locked()) {
+            self.songs = Songs::Zip(zip);
         }
     }
 
@@ -515,13 +530,18 @@ impl Onboard {
                 Vec::new()
             }
             Page::Songs => {
+                // The folder and zip rows open a picker, so an arrow steps over them and rests on
+                // the next row that needs none; with none that way it stays.
                 let rows = self.song_rows();
-                let at = rows.iter().position(|row| self.song_row_picked(*row)).unwrap_or(0);
-                let to = (at as i64 + i64::from(delta)).clamp(0, rows.len() as i64 - 1) as usize;
-                // The folder row opens a picker: arrows rest on the rows that need none.
-                match rows[to] {
-                    SongRow::Folder => Vec::new(),
-                    row => self.pick_songs(row),
+                let at = rows.iter().position(|row| self.song_row_picked(*row)).unwrap_or(0) as i64;
+                let way = i64::from(delta.signum());
+                let mut to = at + way;
+                while way != 0 && (0..rows.len() as i64).contains(&to) && matches!(rows[to as usize], SongRow::Folder | SongRow::Zip) {
+                    to += way;
+                }
+                match rows.get(to as usize) {
+                    Some(row) if way != 0 && to >= 0 => self.pick_songs(*row),
+                    _ => Vec::new(),
                 }
             }
             _ => Vec::new(),
@@ -570,9 +590,9 @@ impl Onboard {
                             self.songs_job = SongsJob::Reading;
                             effects.push(Effect::ImportEasislides);
                         }
-                        Songs::Folder(folder) => {
+                        Songs::Folder(picked) | Songs::Zip(picked) => {
                             self.songs_job = SongsJob::Reading;
-                            effects.push(Effect::ImportFolder(folder.clone()));
+                            effects.push(Effect::ImportFolder(picked.clone()));
                         }
                         Songs::Nowhere => {}
                     }
@@ -953,11 +973,11 @@ mod tests {
     #[test]
     fn easislides_found_is_picked_with_its_count_and_not_found_is_not_a_row() {
         let found = at(Page::Songs, Some(961));
-        assert_eq!(found.song_rows(), [SongRow::Easislides, SongRow::Folder, SongRow::Nowhere]);
+        assert_eq!(found.song_rows(), [SongRow::Easislides, SongRow::Folder, SongRow::Zip, SongRow::Nowhere]);
         assert_eq!(found.songs, Songs::Easislides);
         assert_eq!(found.easislides, Some(961));
         let none = at(Page::Songs, None);
-        assert_eq!(none.song_rows(), [SongRow::Folder, SongRow::Nowhere]);
+        assert_eq!(none.song_rows(), [SongRow::Folder, SongRow::Zip, SongRow::Nowhere]);
         assert_eq!(none.songs, Songs::Nowhere);
         let mut none = none;
         assert!(none.pick_songs(SongRow::Easislides).is_empty());
@@ -993,12 +1013,19 @@ mod tests {
     #[test]
     fn arrows_on_the_songs_page_rest_on_the_rows_that_need_no_picker() {
         let mut onboard = at(Page::Songs, Some(3));
-        assert!(onboard.step(1, &[]).is_empty());
-        assert_eq!(onboard.songs, Songs::Easislides, "the next row opens a picker, so an arrow stays");
-        onboard.step(2, &[]);
-        assert_eq!(onboard.songs, Songs::Nowhere);
+        onboard.step(1, &[]);
+        assert_eq!(onboard.songs, Songs::Nowhere, "the folder and zip rows open a picker, so an arrow steps over them");
+        onboard.step(1, &[]);
+        assert_eq!(onboard.songs, Songs::Nowhere, "the last row stays");
         onboard.step(-1, &[]);
-        assert_eq!(onboard.songs, Songs::Nowhere, "Folder is skipped");
+        assert_eq!(onboard.songs, Songs::Easislides, "and back over them");
+        // From a picked zip the arrows still reach the rows on both sides.
+        assert_eq!(onboard.pick_songs(SongRow::Zip), [Effect::ChooseZip]);
+        onboard.zip_chosen(None);
+        assert_eq!(onboard.songs, Songs::Easislides, "a cancelled picker changes nothing");
+        onboard.zip_chosen(Some(PathBuf::from("songs.zip")));
+        assert!(onboard.song_row_picked(SongRow::Zip));
+        assert_eq!(onboard.press(Action::Next), [Effect::ImportFolder(PathBuf::from("songs.zip"))]);
     }
 
     #[test]

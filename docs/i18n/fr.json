@@ -244,10 +244,25 @@
   "back": "Files in OpenLyrics format",
   "why": "proper name kept"
  },
+ "CMD_IMPORT_ZIP": {
+  "text": "Importer un zip de chants",
+  "back": "Import a zip of songs",
+  "why": "Reuses the screen's words"
+ },
+ "CMD_IMPORT_ZIP_DETAIL": {
+  "text": "Pris tel quel, rien à décompresser",
+  "back": "Taken as is, nothing to unzip",
+  "why": "Short and plain"
+ },
  "IMPORT_FOLDER_EMPTY": {
   "text": "Aucun fichier de chant lisible dans ce dossier",
   "back": "No readable song file in this folder",
   "why": "one sentence"
+ },
+ "IMPORT_ZIP_EMPTY": {
+  "text": "Aucun chant dans ce zip",
+  "back": "No song in this zip",
+  "why": "Echoes the folder toast"
  },
  "CMD_IMPORT": {
   "text": "Importer depuis EasiSlides",
@@ -3565,6 +3580,16 @@
   "text": "Données EasiSlides ou OpenLyrics",
   "back": "EasiSlides data or OpenLyrics",
   "why": "names kept"
+ },
+ "ONBOARD_SONGS_ZIP": {
+  "text": "Importer un zip",
+  "back": "Import a zip",
+  "why": "Pairs with the folder row"
+ },
+ "ONBOARD_SONGS_ZIP_HINT": {
+  "text": "Pris tel quel, rien à décompresser",
+  "back": "Taken as is, nothing to unzip",
+  "why": "Same wording as the detail line"
  },
  "ONBOARD_SONGS_NONE": {
   "text": "Aucun chant",

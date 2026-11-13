@@ -244,10 +244,25 @@
   "back": "OpenLyrics files",
   "why": "Proper name."
  },
+ "CMD_IMPORT_ZIP": {
+  "text": "Importar canciones de un zip",
+  "back": "Import songs from a zip",
+  "why": "Reuses the existing verbs and nouns"
+ },
+ "CMD_IMPORT_ZIP_DETAIL": {
+  "text": "Se usa tal como llegó, sin descomprimir",
+  "back": "It is used just as it arrived, without unpacking",
+  "why": "Impersonal and short"
+ },
  "IMPORT_FOLDER_EMPTY": {
   "text": "No hay canciones legibles en esa carpeta",
   "back": "No readable songs in that folder",
   "why": "Canción."
+ },
+ "IMPORT_ZIP_EMPTY": {
+  "text": "No hay canciones legibles en ese zip",
+  "back": "There are no readable songs in that zip",
+  "why": "Follows the folder toast"
  },
  "CMD_IMPORT": {
   "text": "Importar de EasiSlides",
@@ -3565,6 +3580,16 @@
   "text": "Datos de EasiSlides o de OpenLyrics",
   "back": "EasiSlides data or OpenLyrics",
   "why": "Names stay."
+ },
+ "ONBOARD_SONGS_ZIP": {
+  "text": "Canciones de un zip",
+  "back": "Songs from a zip",
+  "why": "Fits the one-line row"
+ },
+ "ONBOARD_SONGS_ZIP_HINT": {
+  "text": "Tal como se descargó, sin descomprimir",
+  "back": "Just as it was downloaded, without unpacking",
+  "why": "Matches the detail line"
  },
  "ONBOARD_SONGS_NONE": {
   "text": "Aún no tengo canciones",

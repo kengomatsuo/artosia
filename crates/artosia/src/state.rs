@@ -557,6 +557,8 @@ pub struct App {
     pub want_paste: bool,
     /// A handler asked for a folder of songs to import; the next frame opens the dialog.
     pub want_folder: bool,
+    /// The search asked for the file picker, for a zip of songs.
+    pub want_zip: bool,
     /// A handler asked for a PowerPoint, a birthday list or an announcement picture to choose.
     pub want_pptx: bool,
     pub want_birthdays: bool,
@@ -753,6 +755,7 @@ impl App {
             identify: false,
             want_paste: false,
             want_folder: false,
+            want_zip: false,
             want_pptx: false,
             want_birthdays: false,
             want_notice_image: false,

@@ -46,6 +46,53 @@ fn files_with(folder: &Path, extensions: &[&str]) -> Vec<PathBuf> {
     found
 }
 
+/// The most a packed song file may unpack to. A church's whole library is a few megabytes; the
+/// limit is there for a file that is something else.
+const UNPACKED_LIMIT: u64 = 2 * 1024 * 1024 * 1024;
+
+/// What a person picked as the place their songs are, as a folder to read: a folder as it is,
+/// a zip unpacked into a scratch folder of the system's temporary files, and any other file as
+/// the folder that holds it. A downloaded library arrives as one zip, and a folder chooser
+/// shows no zip, so a person who had just downloaded theirs saw an empty Downloads folder.
+pub fn as_folder(picked: &Path) -> std::io::Result<PathBuf> {
+    if picked.is_dir() {
+        return Ok(picked.to_path_buf());
+    }
+    if !picked.extension().and_then(|e| e.to_str()).is_some_and(|e| e.eq_ignore_ascii_case("zip")) {
+        return picked.parent().map(Path::to_path_buf).ok_or_else(|| std::io::Error::other("no folder"));
+    }
+    let other = |error: zip::result::ZipError| std::io::Error::other(error.to_string());
+    let mut archive = zip::ZipArchive::new(std::io::BufReader::new(std::fs::File::open(picked)?)).map_err(other)?;
+    let name = picked.file_stem().map(|stem| stem.to_string_lossy().into_owned()).unwrap_or_default();
+    let into = std::env::temp_dir().join(format!("artosia-unpacked-{}-{name}", std::process::id()));
+    let _ = std::fs::remove_dir_all(&into);
+    std::fs::create_dir_all(&into)?;
+    let mut total = 0u64;
+    for index in 0..archive.len() {
+        let mut entry = archive.by_index(index).map_err(other)?;
+        // A name that climbs out of the folder is left out, as are a Mac's own side files.
+        let Some(inside) = entry.enclosed_name() else { continue };
+        if inside.components().any(|part| part.as_os_str() == "__MACOSX") {
+            continue;
+        }
+        let to = into.join(inside);
+        if entry.is_dir() {
+            std::fs::create_dir_all(&to)?;
+            continue;
+        }
+        total += entry.size();
+        if total > UNPACKED_LIMIT {
+            let _ = std::fs::remove_dir_all(&into);
+            return Err(std::io::Error::other("too large"));
+        }
+        if let Some(parent) = to.parent() {
+            std::fs::create_dir_all(parent)?;
+        }
+        std::io::copy(&mut entry, &mut std::fs::File::create(&to)?)?;
+    }
+    Ok(into)
+}
+
 /// How many folders deep a picked folder is searched for its library.
 const DEPTH: usize = 3;
 
@@ -186,6 +233,35 @@ pub fn bundled_bible() -> Result<Bible, BibleError> {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn a_zip_is_read_as_the_folder_it_packs() {
+        use std::io::Write;
+        let scratch = std::env::temp_dir().join(format!("artosia-zip-test-{}", std::process::id()));
+        let _ = std::fs::remove_dir_all(&scratch);
+        std::fs::create_dir_all(&scratch).unwrap_or_else(|error| panic!("{error}"));
+        let packed = scratch.join("Songs of ours.zip");
+        let mut writer = zip::ZipWriter::new(std::fs::File::create(&packed).unwrap_or_else(|error| panic!("{error}")));
+        let options = zip::write::SimpleFileOptions::default().compression_method(zip::CompressionMethod::Deflated);
+        for (name, body) in [("songs/one.xml", "<song/>"), ("songs/two.xml", "<song/>"), ("__MACOSX/songs/._one.xml", "x"), ("../outside.xml", "x")] {
+            writer.start_file(name, options).unwrap_or_else(|error| panic!("{error}"));
+            writer.write_all(body.as_bytes()).unwrap_or_else(|error| panic!("{error}"));
+        }
+        writer.finish().unwrap_or_else(|error| panic!("{error}"));
+
+        let folder = as_folder(&packed).unwrap_or_else(|error| panic!("{error}"));
+        assert!(has_files(&folder.join("songs"), &["xml"]));
+        assert_eq!(files_with(&folder.join("songs"), &["xml"]).len(), 2);
+        assert!(!folder.join("__MACOSX").exists(), "a Mac's side files stay out");
+        assert!(!folder.parent().is_some_and(|above| above.join("outside.xml").exists()), "nothing is written outside the folder");
+        // A folder is itself, a single song file is the folder that holds it, and a file that is no zip fails.
+        assert_eq!(as_folder(&scratch).ok(), Some(scratch.clone()));
+        assert_eq!(as_folder(&folder.join("songs").join("one.xml")).ok(), Some(folder.join("songs")));
+        std::fs::write(scratch.join("not really.zip"), b"no zip at all").unwrap_or_else(|error| panic!("{error}"));
+        assert!(as_folder(&scratch.join("not really.zip")).is_err());
+        let _ = std::fs::remove_dir_all(&folder);
+        let _ = std::fs::remove_dir_all(&scratch);
+    }
 
     #[test]
     fn the_bundled_bible_is_whole() {

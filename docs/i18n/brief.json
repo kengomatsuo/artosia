@@ -846,6 +846,42 @@
   "notes": "OpenLyrics is a proper name and stays as it is. No full stop."
  },
  {
+  "key": "CMD_IMPORT_ZIP",
+  "kind": "const",
+  "screen": "Search panel, results list: a row for an action the program can do (not a song). Icon at the left, bold title, and a lighter line under it that says what the action does. The row shows when the typed words match the action or when the field is empty.",
+  "moment": "The person downloaded their church's songs, or was sent them, as one packed file (a zip) and wants them in the library.",
+  "role": "row title and file-chooser title",
+  "does": "Names the action of bringing in every song packed inside one zip file. It is also the title of the operating system's file chooser.",
+  "budget": 30,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "import",
+   "song"
+  ],
+  "notes": "zip is the everyday name of that kind of file and stays as it is."
+ },
+ {
+  "key": "CMD_IMPORT_ZIP_DETAIL",
+  "kind": "const",
+  "screen": "Search panel, results list: a row for an action the program can do (not a song). Icon at the left, bold title, and a lighter line under it that says what the action does. The row shows when the typed words match the action or when the field is empty.",
+  "moment": "Under the zip import row.",
+  "role": "detail line",
+  "does": "Says the packed file is taken exactly as it arrived on the computer, and that nothing has to be unpacked first.",
+  "budget": 40,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "import",
+   "song"
+  ],
+  "notes": "No full stop."
+ },
+ {
   "key": "IMPORT_FOLDER_EMPTY",
   "kind": "const",
   "screen": "Main window, a toast near the bottom after the folder was picked.",
@@ -863,6 +899,25 @@
    "notice"
   ],
   "notes": "One sentence. No full stop on a toast."
+ },
+ {
+  "key": "IMPORT_ZIP_EMPTY",
+  "kind": "const",
+  "screen": "Main window, a toast near the bottom after the folder was picked.",
+  "moment": "The person chose a zip file, and nothing in it could be read as a song or the file could not be opened.",
+  "role": "toast",
+  "does": "Tells the person the chosen zip file held no songs.",
+  "budget": 50,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "import",
+   "song",
+   "notice"
+  ],
+  "notes": "One sentence. No full stop on a toast. zip is the everyday name of that kind of file and stays as it is."
  },
  {
   "key": "CMD_IMPORT",
@@ -12844,6 +12899,44 @@
    "import"
   ],
   "notes": "EasiSlides and OpenLyrics are names and stay as they are. About 380 points wide."
+ },
+ {
+  "key": "ONBOARD_SONGS_ZIP",
+  "kind": "const",
+  "screen": "First-run window, shown once when Artosia starts for a new church and again from Settings: a card centred on the window, a tinted panel on its left (the Artosia mark, a large picture for the page, a row of seven dots showing which page this is) and on the right one question in large type, a grey line of help under it, the page's content, and the buttons at the bottom. This is page 4 of 7, where the songs are. A tall row with a round mark on its left, below the folder row.",
+  "moment": "The songs arrived as one packed file, downloaded or sent by someone, and it is still packed.",
+  "role": "row title",
+  "does": "Names the choice of bringing songs in from one packed file, a zip file, that the person points to.",
+  "budget": 24,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "first_run",
+   "song",
+   "import"
+  ],
+  "notes": "A row about 400 points wide, one line. Pressing it opens the system's file chooser, which shows zip files. zip stays as it is."
+ },
+ {
+  "key": "ONBOARD_SONGS_ZIP_HINT",
+  "kind": "const",
+  "screen": "First-run window, shown once when Artosia starts for a new church and again from Settings: a card centred on the window, a tinted panel on its left (the Artosia mark, a large picture for the page, a row of seven dots showing which page this is) and on the right one question in large type, a grey line of help under it, the page's content, and the buttons at the bottom. This is page 4 of 7, where the songs are. The grey line under the title of the zip row, until a file is chosen; then the file's own path stands there.",
+  "moment": "No file is chosen yet.",
+  "role": "row detail",
+  "does": "Tells the person the downloaded file is picked just as it is, with nothing to unpack first.",
+  "budget": 40,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "first_run",
+   "song",
+   "import"
+  ],
+  "notes": "About 380 points wide."
  },
  {
   "key": "ONBOARD_SONGS_NONE",

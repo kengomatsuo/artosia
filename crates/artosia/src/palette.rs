@@ -40,6 +40,7 @@ pub enum Command {
     Screens,
     Import,
     ImportFolder,
+    ImportZip,
     Remote,
     Heading,
     NewPlan,
@@ -77,7 +78,7 @@ pub enum Command {
 }
 
 impl Command {
-    pub const ALL: [Command; 41] = [
+    pub const ALL: [Command; 42] = [
         Command::StartService,
         Command::Next,
         Command::Previous,
@@ -112,6 +113,7 @@ impl Command {
         Command::Bibles,
         Command::BibleFile,
         Command::ImportFolder,
+        Command::ImportZip,
         Command::ImportPptx,
         Command::ImportBirthdays,
         Command::Import,
@@ -132,6 +134,7 @@ impl Command {
             Command::Screens => t::CMD_SCREENS(),
             Command::Import => t::CMD_IMPORT(),
             Command::ImportFolder => t::CMD_IMPORT_FOLDER(),
+            Command::ImportZip => t::CMD_IMPORT_ZIP(),
             Command::Remote => t::CMD_REMOTE(),
             Command::Heading => t::CMD_HEADING(),
             Command::NewPlan => t::PLAN_NEW(),
@@ -178,6 +181,7 @@ impl Command {
             Command::Screens => t::CMD_SCREENS_DETAIL(),
             Command::Import => t::CMD_IMPORT_DETAIL(),
             Command::ImportFolder => t::CMD_IMPORT_FOLDER_DETAIL(),
+            Command::ImportZip => t::CMD_IMPORT_ZIP_DETAIL(),
             Command::Remote => t::CMD_REMOTE_DETAIL(),
             Command::Heading => t::CMD_HEADING_DETAIL(),
             Command::NewPlan => t::PLAN_NEW_DETAIL(),
@@ -229,6 +233,7 @@ impl Command {
             Command::Screens => &["projector", "monitor", "display", "stage", "layar", "proyektor"],
             Command::Import => &["easislides", "impor", "pindahkan"],
             Command::ImportFolder => &["openlyrics", "impor lagu", "folder lagu"],
+            Command::ImportZip => &["zip", "openlyrics", "impor lagu", "unduhan", "download"],
             Command::Remote => &["mobile", "qr", "hp", "ponsel", "telepon", "remote hp"],
             Command::Heading => &["divider", "section", "judul bagian", "pembatas"],
             Command::PlanDuplicate => &["copy plan", "duplicate plan", "clone", "same songs", "copy service", "salin rundown", "gandakan", "duplikat", "sama dengan"],
@@ -1025,6 +1030,7 @@ impl App {
             Command::Screens => self.sheet = Sheet::Screens,
             Command::Import => self.sheet = Sheet::Import,
             Command::ImportFolder => self.want_folder = true,
+            Command::ImportZip => self.want_zip = true,
             Command::Remote => self.sheet = Sheet::Remote,
             Command::Heading => self.add_heading(),
             Command::NewPlan => self.new_plan(),

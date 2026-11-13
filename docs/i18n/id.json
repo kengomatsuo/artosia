@@ -229,10 +229,25 @@
   "back": "Song files in OpenLyrics format",
   "why": "Proper name stays"
  },
+ "CMD_IMPORT_ZIP": {
+  "text": "Impor lagu dari berkas zip",
+  "back": "Import songs from a zip file",
+  "why": "Follows 'Impor folder lagu'; 'berkas' is the screen's word for file"
+ },
+ "CMD_IMPORT_ZIP_DETAIL": {
+  "text": "Pilih apa adanya, tak perlu dibuka dulu",
+  "back": "Pick it as it is, no need to open it first",
+  "why": "'dibuka' is plain; 'diekstrak' would be jargon"
+ },
  "IMPORT_FOLDER_EMPTY": {
   "text": "Tidak ada berkas lagu di folder itu",
   "back": "There are no song files in that folder",
   "why": "Toast without full stop"
+ },
+ "IMPORT_ZIP_EMPTY": {
+  "text": "Tidak ada lagu di berkas zip itu",
+  "back": "There are no songs in that zip file",
+  "why": "Echoes the folder toast"
  },
  "CMD_IMPORT": {
   "text": "Impor dari EasiSlides",
@@ -3485,6 +3500,16 @@
   "text": "Data EasiSlides atau berkas OpenLyrics",
   "back": "EasiSlides data or OpenLyrics files",
   "why": "Names stay"
+ },
+ "ONBOARD_SONGS_ZIP": {
+  "text": "Dari sebuah berkas zip",
+  "back": "From a zip file",
+  "why": "Matches the sibling row 'Dari sebuah folder'"
+ },
+ "ONBOARD_SONGS_ZIP_HINT": {
+  "text": "Pilih berkas apa adanya, tanpa dibuka",
+  "back": "Pick the file as it is, without opening it",
+  "why": "'apa adanya' is the familiar way to say just as it is"
  },
  "ONBOARD_SONGS_NONE": {
   "text": "Belum ada lagu",

@@ -239,10 +239,25 @@
   "back": "Files in the OpenLyrics format",
   "why": "Proper name kept"
  },
+ "CMD_IMPORT_ZIP": {
+  "text": "Lấy bài hát từ tệp zip",
+  "back": "Get songs from a zip file",
+  "why": "Matches the folder command"
+ },
+ "CMD_IMPORT_ZIP_DETAIL": {
+  "text": "Dùng tệp như đã tải về, khỏi giải nén",
+  "back": "Use the file as downloaded, no need to unpack",
+  "why": "Matches the hint's wording"
+ },
  "IMPORT_FOLDER_EMPTY": {
   "text": "Thư mục này không có tệp bài hát nào",
   "back": "This folder has no song files",
   "why": "One sentence"
+ },
+ "IMPORT_ZIP_EMPTY": {
+  "text": "Tệp zip này không có bài hát nào",
+  "back": "This zip file has no songs",
+  "why": "Echoes the folder toast"
  },
  "CMD_IMPORT": {
   "text": "Lấy từ EasiSlides",
@@ -3532,6 +3547,16 @@
   "text": "Dữ liệu EasiSlides hoặc tệp OpenLyrics",
   "back": "EasiSlides data or OpenLyrics files",
   "why": "Names stay"
+ },
+ "ONBOARD_SONGS_ZIP": {
+  "text": "Từ một tệp zip",
+  "back": "From a zip file",
+  "why": "Parallels the folder row"
+ },
+ "ONBOARD_SONGS_ZIP_HINT": {
+  "text": "Chọn tệp như đã tải, khỏi giải nén",
+  "back": "Pick the file as downloaded, no need to unpack",
+  "why": "Short and familiar"
  },
  "ONBOARD_SONGS_NONE": {
   "text": "Chưa có bài hát nào",

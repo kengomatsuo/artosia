@@ -239,10 +239,25 @@
   "back": "OpenLyrics-format files",
   "why": "Proper name kept"
  },
+ "CMD_IMPORT_ZIP": {
+  "text": "ZIPファイルから曲を取り込む",
+  "back": "Bring in songs from a ZIP file",
+  "why": "Same pattern as the folder command"
+ },
+ "CMD_IMPORT_ZIP_DETAIL": {
+  "text": "解凍せず届いたまま選べます",
+  "back": "Pick it as it arrived, without unpacking",
+  "why": "One short line"
+ },
  "IMPORT_FOLDER_EMPTY": {
   "text": "このフォルダに読み込める曲がありません",
   "back": "This folder holds no songs that can be read",
   "why": "Toast, no full stop"
+ },
+ "IMPORT_ZIP_EMPTY": {
+  "text": "このZIPに読み込める曲がありません",
+  "back": "There are no songs in this ZIP that can be read",
+  "why": "Mirrors the folder toast"
  },
  "CMD_IMPORT": {
   "text": "EasiSlidesから取り込む",
@@ -3532,6 +3547,16 @@
   "text": "EasiSlidesかOpenLyricsのファイル",
   "back": "EasiSlides data or OpenLyrics song files",
   "why": "Names stay"
+ },
+ "ONBOARD_SONGS_ZIP": {
+  "text": "ZIPファイルから",
+  "back": "From a ZIP file",
+  "why": "Parallels the folder row"
+ },
+ "ONBOARD_SONGS_ZIP_HINT": {
+  "text": "ダウンロードしたまま選べます",
+  "back": "Pick it just as you downloaded it",
+  "why": "Plain and short"
  },
  "ONBOARD_SONGS_NONE": {
   "text": "今は曲なし",

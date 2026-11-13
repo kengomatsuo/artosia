@@ -239,10 +239,25 @@
   "back": "Song files in OpenLyrics format",
   "why": "proper name stays"
  },
+ "CMD_IMPORT_ZIP": {
+  "text": "导入zip文件中的诗歌",
+  "back": "Import the songs in a zip file",
+  "why": "Follows the existing import wording"
+ },
+ "CMD_IMPORT_ZIP_DETAIL": {
+  "text": "直接选下载的zip文件，不用先解压",
+  "back": "Just pick the zip file you downloaded, no need to unpack it first",
+  "why": "Short and familiar"
+ },
  "IMPORT_FOLDER_EMPTY": {
   "text": "这个文件夹里没有可用的诗歌文件",
   "back": "This folder has no usable song files",
   "why": "no full stop"
+ },
+ "IMPORT_ZIP_EMPTY": {
+  "text": "这个zip文件里没有可用的诗歌文件",
+  "back": "There are no usable song files in this zip file",
+  "why": "Reuses the folder toast's wording"
  },
  "CMD_IMPORT": {
   "text": "从EasiSlides导入",
@@ -3534,6 +3549,16 @@
   "text": "EasiSlides数据或OpenLyrics诗歌文件",
   "back": "EasiSlides data or OpenLyrics song files",
   "why": "names stay"
+ },
+ "ONBOARD_SONGS_ZIP": {
+  "text": "从zip文件导入",
+  "back": "Import from a zip file",
+  "why": "Pairs with the folder row"
+ },
+ "ONBOARD_SONGS_ZIP_HINT": {
+  "text": "选下载好的文件，不用先解压",
+  "back": "Pick the file you downloaded, no need to unpack it first",
+  "why": "The title already says zip"
  },
  "ONBOARD_SONGS_NONE": {
   "text": "暂时没有诗歌",

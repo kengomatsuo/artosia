@@ -268,6 +268,9 @@ text!(CMD_REMOTE_DETAIL, "Change slides from a phone on the same Wi-Fi", "HP di 
 text!(CMD_IMPORT_FOLDER, "Import songs from a folder", "Impor lagu dari folder");
 text!(CMD_IMPORT_FOLDER_DETAIL, "A folder of OpenLyrics song files", "Berkas OpenLyrics");
 text!(IMPORT_FOLDER_EMPTY, "That folder has no OpenLyrics songs", "Tidak ada berkas OpenLyrics di folder itu");
+text!(CMD_IMPORT_ZIP, "Import songs from a zip file", "Import songs from a zip file");
+text!(CMD_IMPORT_ZIP_DETAIL, "A downloaded file of songs, as it is", "A downloaded file of songs, as it is");
+text!(IMPORT_ZIP_EMPTY, "That zip file has no songs in it", "That zip file has no songs in it");
 text!(CMD_IMPORT, "Bring over EasiSlides", "Impor dari EasiSlides");
 text!(CMD_IMPORT_DETAIL, "Songs and Bibles from EasiSlides on this computer", "Lagu dan Alkitab di komputer ini");
 text!(CMD_STREAM, "Stream and record", "Siaran dan rekaman");
@@ -1813,6 +1816,8 @@ text!(ONBOARD_SONGS_TITLE, "Where are your church's songs?", "Where are your chu
 text!(ONBOARD_SONGS_EASI, "In EasiSlides on this computer", "In EasiSlides on this computer");
 text!(ONBOARD_SONGS_FOLDER, "In a folder", "In a folder");
 text!(ONBOARD_SONGS_FOLDER_HINT, "EasiSlides or OpenLyrics files", "EasiSlides or OpenLyrics files");
+text!(ONBOARD_SONGS_ZIP, "In a zip file", "In a zip file");
+text!(ONBOARD_SONGS_ZIP_HINT, "One downloaded file, picked as it is", "One downloaded file, picked as it is");
 text!(ONBOARD_SONGS_NONE, "Nowhere yet", "Nowhere yet");
 text!(ONBOARD_SONGS_NONE_HINT, "Start with none and add them whenever you like", "Start with none and add them whenever you like");
 text!(ONBOARD_SCREENS_TITLE, "Does the room see the test picture?", "Does the room see the test picture?");

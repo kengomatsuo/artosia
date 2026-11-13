@@ -263,6 +263,18 @@ mod tests {
   </lyrics>
 </song>"#;
 
+    /// A real zip of songs, named by `ARTOSIA_SONG_ZIP`, reads as its songs. It does nothing
+    /// without the variable: a church's own songs never enter the repository.
+    #[test]
+    fn a_real_zip_named_by_the_environment_reads() {
+        let Some(zip) = std::env::var_os("ARTOSIA_SONG_ZIP") else { return };
+        let folder = crate::import::as_folder(Path::new(&zip)).unwrap_or_else(|error| panic!("{error}"));
+        let (songs, failed) = read_folder(&folder);
+        let _ = std::fs::remove_dir_all(&folder);
+        println!("{} songs read, {failed} files failed", songs.len());
+        assert!(!songs.is_empty());
+    }
+
     #[test]
     fn songs_are_found_in_the_folder_extract_all_doubles() {
         // Extract All of artosia-lagu.zip makes artosia-lagu/artosia-lagu/songs.

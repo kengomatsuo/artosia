@@ -239,10 +239,25 @@
   "back": "OpenLyrics song files",
   "why": ""
  },
+ "CMD_IMPORT_ZIP": {
+  "text": "zip 파일에서 곡 가져오기",
+  "back": "Import songs from a zip file",
+  "why": "Same pattern as the folder command"
+ },
+ "CMD_IMPORT_ZIP_DETAIL": {
+  "text": "풀지 않고 받은 그대로 가져와요",
+  "back": "Bring it in as received, without unpacking",
+  "why": "Casual polite ending"
+ },
  "IMPORT_FOLDER_EMPTY": {
   "text": "폴더에 읽을 수 있는 곡 파일이 없어요",
   "back": "The folder has no song files that can be read",
   "why": ""
+ },
+ "IMPORT_ZIP_EMPTY": {
+  "text": "이 zip 파일에 곡이 없어요",
+  "back": "There are no songs in this zip file",
+  "why": "Uses the folder message's ending"
  },
  "CMD_IMPORT": {
   "text": "EasiSlides에서 가져오기",
@@ -3534,6 +3549,16 @@
   "text": "EasiSlides 데이터나 OpenLyrics 곡 파일",
   "back": "EasiSlides data or OpenLyrics song files",
   "why": ""
+ },
+ "ONBOARD_SONGS_ZIP": {
+  "text": "zip 파일에서 가져오기",
+  "back": "Import from a zip file",
+  "why": "Parallels the folder row"
+ },
+ "ONBOARD_SONGS_ZIP_HINT": {
+  "text": "풀지 않고 받은 그대로 골라요",
+  "back": "Pick it as received, without unpacking",
+  "why": "Matches the detail line"
  },
  "ONBOARD_SONGS_NONE": {
   "text": "지금은 없음",

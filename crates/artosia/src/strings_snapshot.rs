@@ -76,6 +76,9 @@ pub fn dump() -> String {
     line(out, "CMD_IMPORT_FOLDER", CMD_IMPORT_FOLDER());
     line(out, "CMD_IMPORT_FOLDER_DETAIL", CMD_IMPORT_FOLDER_DETAIL());
     line(out, "IMPORT_FOLDER_EMPTY", IMPORT_FOLDER_EMPTY());
+    line(out, "CMD_IMPORT_ZIP", CMD_IMPORT_ZIP());
+    line(out, "CMD_IMPORT_ZIP_DETAIL", CMD_IMPORT_ZIP_DETAIL());
+    line(out, "IMPORT_ZIP_EMPTY", IMPORT_ZIP_EMPTY());
     line(out, "CMD_IMPORT", CMD_IMPORT());
     line(out, "CMD_IMPORT_DETAIL", CMD_IMPORT_DETAIL());
     line(out, "CMD_STREAM", CMD_STREAM());

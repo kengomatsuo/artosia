@@ -55,6 +55,8 @@ pub struct Work {
     bible: Option<String>,
     /// The folder picker was asked for.
     want_folder: bool,
+    /// The file picker for a zip of songs is asked for.
+    want_zip: bool,
     /// The row to bring into view and the control to focus, once the page is on screen.
     scroll: Option<String>,
     focus: Option<&'static str>,
@@ -68,8 +70,11 @@ pub struct Work {
 /// What `Work::scroll` holds when a page's list is to be read from its top, no row revealed.
 const TOP: &str = "";
 
-/// Reads every song of a folder: EasiSlides' own data when it holds that, else OpenLyrics files.
-fn read_songs(folder: &Path) -> Read {
+/// Reads every song of a folder or of a zip file: EasiSlides' own data when it holds that, else
+/// OpenLyrics files. A zip that cannot be opened reads as nothing, which the page then says.
+fn read_songs(picked: &Path) -> Read {
+    let Ok(unpacked) = artosia_core::import::as_folder(picked) else { return Read { songs: Vec::new(), failed: 0 } };
+    let folder = unpacked.as_path();
     if !artosia_core::import::easislides_song_files(folder).is_empty() {
         let mut songs = Vec::new();
         let mut failed = 0;
@@ -188,6 +193,7 @@ impl App {
                 }
                 Effect::ImportFolder(folder) => self.onboard_read(folder),
                 Effect::ChooseFolder => self.onboard_work.want_folder = true,
+                Effect::ChooseZip => self.onboard_work.want_zip = true,
                 Effect::ShowTestPicture(screen) => {
                     // The numbers the Screens dialog's Identify button draws, on the screen the projector would take.
                     let mut options = self.output_options();
@@ -583,6 +589,17 @@ impl App {
                     Err(error) => s.say(error.to_string(), None),
                 });
             }
+            if std::mem::take(&mut self.onboard_work.want_zip) {
+                let options = rune::FileDialogOptions { title: t::ONBOARD_SONGS_ZIP().to_string(), ..Default::default() }.filter("Zip", &["zip"]);
+                tx.open_file(options, |s: &mut App, result, _| match result {
+                    Ok(Some(zip)) => s.onboard_do(|onboard| {
+                        onboard.zip_chosen(Some(zip));
+                        Vec::new()
+                    }),
+                    Ok(None) => {}
+                    Err(error) => s.say(error.to_string(), None),
+                });
+            }
         }
         changed
     }
@@ -917,6 +934,11 @@ fn songs_page(o: &Onboard, k: &Kit) -> El {
         _ => t::ONBOARD_SONGS_FOLDER_HINT().to_string(),
     };
     rows = rows.child(card(SongRow::Folder, "onboard-songs-folder", t::ONBOARD_SONGS_FOLDER(), folder_hint));
+    let zip_hint = match &o.songs {
+        Songs::Zip(path) => path.display().to_string(),
+        _ => t::ONBOARD_SONGS_ZIP_HINT().to_string(),
+    };
+    rows = rows.child(card(SongRow::Zip, "onboard-songs-zip", t::ONBOARD_SONGS_ZIP(), zip_hint));
     rows = rows.child(card(SongRow::Nowhere, "onboard-songs-nowhere", t::ONBOARD_SONGS_NONE(), t::ONBOARD_SONGS_NONE_HINT().to_string()));
     if o.locked() { rows.layer_opacity(0.6) } else { rows }
 }
