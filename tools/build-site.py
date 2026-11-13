@@ -1,7 +1,8 @@
 """Builds the homepage into target/site: one template, one page per language.
 
     python -I tools/build-site.py [--version V] [--setup-bytes N] [--zip-bytes N]
-        [--linux-bytes N] [--mac-bytes N] [--langs en,id] [--out target/site]
+        [--linux-bytes N] [--mac-bytes N] [--linux-version V] [--mac-version V]
+        [--langs en,id] [--out target/site]
 
 The version comes from --version, or from crates/artosia/Cargo.toml. The sizes
 of the setup, the zip and the Linux package come from --setup-bytes, --zip-bytes
@@ -110,8 +111,8 @@ def page(lang: str, strings: dict, numbers: dict, langs: list[str]) -> str:
         "canonical": address(lang),
         "download": DOWNLOAD,
         "zip": ZIP,
-        "linux": f"{RELEASE}/v{numbers['version']}/Artosia-linux-x86_64.tar.gz",
-        "mac": f"{RELEASE}/v{numbers['version']}/Artosia-macos-aarch64.dmg",
+        "linux": f"{RELEASE}/v{numbers['linux_version']}/Artosia-linux-x86_64.tar.gz",
+        "mac": f"{RELEASE}/v{numbers['mac_version']}/Artosia-macos-aarch64.dmg",
         "version": numbers["version"],
         "language_redirect": REDIRECT % json.dumps([code for code in langs if code != "en"]) if first else "",
     }
@@ -184,6 +185,10 @@ def main() -> None:
     args.add_argument("--zip-bytes", type=int)
     args.add_argument("--linux-bytes", type=int)
     args.add_argument("--mac-bytes", type=int)
+    # The release each of these two files is taken from, when it is older than --version: a
+    # release goes out without a system's file when that system's machine could not be reached.
+    args.add_argument("--linux-version")
+    args.add_argument("--mac-version")
     args.add_argument("--langs", default=",".join(code for code, _ in LANGUAGES))
     args.add_argument("--out", default=str(ROOT / "target/site"))
     args = args.parse_args()
@@ -204,6 +209,8 @@ def main() -> None:
 
     numbers = {
         "version": v,
+        "linux_version": args.linux_version or v,
+        "mac_version": args.mac_version or v,
         "mb": megabytes(size_of(args.setup_bytes, "Artosia-setup.exe", "--setup-bytes")),
         "zip_mb": megabytes(size_of(args.zip_bytes, "Artosia-windows.zip", "--zip-bytes")),
         "linux_mb": megabytes(size_of(args.linux_bytes, "Artosia-linux-x86_64.tar.gz", "--linux-bytes")),
