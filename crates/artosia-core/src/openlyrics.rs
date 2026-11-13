@@ -193,11 +193,15 @@ fn index_rows(folder: &Path) -> std::collections::HashMap<String, (String, Vec<S
     out
 }
 
-/// Every OpenLyrics song in a folder (or its `songs` subfolder), with the count of files
-/// that could not be read. Empty placeholders are skipped.
+/// Every OpenLyrics song in a folder, its `songs` subfolder, or the nearest folder inside it
+/// that holds XML files, with the count of files that could not be read. Empty placeholders are skipped.
 pub fn read_folder(folder: &Path) -> (Vec<Song>, usize) {
     let inner = folder.join("songs");
-    let folder = if inner.is_dir() { inner } else { folder.to_path_buf() };
+    let folder = if crate::import::has_files(&inner, &["xml"]) {
+        inner
+    } else {
+        crate::import::find_within(folder, |dir| crate::import::has_files(dir, &["xml"])).unwrap_or_else(|| folder.to_path_buf())
+    };
     let extras = index_rows(&folder);
     let mut files: Vec<std::path::PathBuf> = std::fs::read_dir(&folder)
         .into_iter()
@@ -258,6 +262,21 @@ mod tests {
     <verse name="v1" lang="en"><lines>First light in the valley<br/>We wake and sing</lines><lines>All praise to you</lines></verse>
   </lyrics>
 </song>"#;
+
+    #[test]
+    fn songs_are_found_in_the_folder_extract_all_doubles() {
+        // Extract All of artosia-lagu.zip makes artosia-lagu/artosia-lagu/songs.
+        let picked = std::env::temp_dir().join(format!("artosia-nested-{}", std::process::id()));
+        let _ = std::fs::remove_dir_all(&picked);
+        let songs = picked.join("artosia-lagu").join("songs");
+        std::fs::create_dir_all(&songs).unwrap_or_else(|error| panic!("{error}"));
+        std::fs::write(songs.join("s0001-made-up.xml"), SAMPLE).unwrap_or_else(|error| panic!("{error}"));
+        let (found, failed) = read_folder(&picked);
+        let (deeper, _) = read_folder(&picked.join("artosia-lagu"));
+        let (empty, _) = read_folder(&std::env::temp_dir().join("artosia-nested-none"));
+        let _ = std::fs::remove_dir_all(&picked);
+        assert_eq!((found.len(), failed, deeper.len(), empty.len()), (1, 0, 1, 0));
+    }
 
     #[test]
     fn verses_slides_and_titles_are_read() {

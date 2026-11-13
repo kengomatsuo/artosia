@@ -46,9 +46,41 @@ fn files_with(folder: &Path, extensions: &[&str]) -> Vec<PathBuf> {
     found
 }
 
-/// The song databases inside an EasiSlides data folder.
+/// How many folders deep a picked folder is searched for its library.
+const DEPTH: usize = 3;
+
+/// The picked folder, or the nearest folder inside it, that `holds` accepts. Windows' Extract
+/// All puts a zip's own folder inside one of the same name, so a person picks the outer one.
+pub fn find_within(folder: &Path, holds: impl Fn(&Path) -> bool) -> Option<PathBuf> {
+    let mut level = vec![folder.to_path_buf()];
+    for depth in 0..=DEPTH {
+        if let Some(found) = level.iter().find(|dir| holds(dir)) {
+            return Some(found.clone());
+        }
+        if depth == DEPTH {
+            break;
+        }
+        let mut next: Vec<PathBuf> = level
+            .iter()
+            .flat_map(|dir| std::fs::read_dir(dir).into_iter().flatten().flatten())
+            .map(|entry| entry.path())
+            .filter(|path| path.is_dir() && !path.file_name().and_then(|n| n.to_str()).is_some_and(|n| n.starts_with('.')))
+            .collect();
+        next.sort();
+        level = next;
+    }
+    None
+}
+
+/// Whether a folder directly holds files of one of these kinds.
+pub fn has_files(folder: &Path, extensions: &[&str]) -> bool {
+    !files_with(folder, extensions).is_empty()
+}
+
+/// The song databases inside an EasiSlides data folder, or one a few folders inside it.
 pub fn easislides_song_files(folder: &Path) -> Vec<PathBuf> {
-    files_with(&folder.join("Admin").join("Databases"), &["db"])
+    let databases = |dir: &Path| dir.join("Admin").join("Databases");
+    find_within(folder, |dir| has_files(&databases(dir), &["db"])).map(|dir| files_with(&databases(&dir), &["db"])).unwrap_or_default()
 }
 
 /// How many songs an EasiSlides data folder holds, counted without reading them, so the first

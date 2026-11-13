@@ -512,7 +512,12 @@ impl App {
             self.onboard_work.pending = read.songs;
             self.onboard_work.pending.reverse();
             if let Some(onboard) = self.onboard.as_mut() {
-                onboard.songs_read(self.onboard_work.total);
+                // Nothing to take in: no batch would ever end the job.
+                if self.onboard_work.total == 0 {
+                    onboard.songs_done(self.onboard_work.summary);
+                } else {
+                    onboard.songs_read(self.onboard_work.total);
+                }
             }
             changed = true;
         }
@@ -966,6 +971,9 @@ fn ready_page(o: &Onboard, k: &Kit) -> El {
                 BibleJob::Idle | BibleJob::Waiting | BibleJob::Skipped => job_line(k, title, None, t::ONBOARD_STATE_WAITING().to_string(), Mark::Open),
             },
             JobRow::Songs(job) => match job {
+                SongsJob::Done(summary) if summary == Summary::default() => {
+                    job_line(k, t::ONBOARD_JOB_SONGS().to_string(), Some(t::IMPORT_FOLDER_EMPTY().to_string()), t::ONBOARD_STATE_FAILED().to_string(), Mark::Failed)
+                }
                 SongsJob::Done(summary) => {
                     let said = t::import_summary(summary.added, summary.updated, summary.kept);
                     let said = if summary.failed > 0 { format!("{said}. {}", t::files_unreadable(summary.failed)) } else { said };
@@ -1392,5 +1400,16 @@ mod tests {
         let read = read_songs(&folder);
         assert_eq!((read.songs.len(), read.failed), (0, 0));
         let _ = std::fs::remove_dir_all(&folder);
+    }
+
+    #[test]
+    fn a_folder_with_no_songs_ends_the_job_instead_of_waiting() {
+        let mut app = open();
+        if let Ok(mut slot) = app.onboard_work.read.lock() {
+            *slot = Some(Read { songs: Vec::new(), failed: 0 });
+        }
+        let mut tx = rune::Tx::default();
+        app.poll_onboard(&mut tx);
+        assert_eq!(app.onboard.as_ref().map(|onboard| onboard.songs_job.clone()), Some(SongsJob::Done(Summary::default())));
     }
 }
