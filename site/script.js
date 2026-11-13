@@ -240,16 +240,22 @@ function system() {
     ""
   ).toLowerCase();
   const android = /android/i.test(navigator.userAgent);
+  // A phone or a tablet runs none of the three, so no row is its own there: the three buttons
+  // look alike and keep their order. An iPad says it is a Mac and has a touch screen.
+  const handheld =
+    !new URLSearchParams(location.search).get("os") &&
+    (android || /iphone|ipad|ipod/i.test(navigator.userAgent) || (/^mac/.test(raw) && navigator.maxTouchPoints > 1));
   const guess = /^mac/.test(raw) ? "mac" : /linux/.test(raw) && !android ? "linux" : "windows";
   // A system with no file on the page (the Mac, while it has none) is shown as Windows.
-  const mine = rows.some((row) => row.dataset.os === guess) ? guess : "windows";
+  const mine = !handheld && rows.some((row) => row.dataset.os === guess) ? guess : "windows";
   document.documentElement.dataset.os = mine;
   rows.forEach((row) => {
-    const own = row.dataset.os === mine;
+    const own = !handheld && row.dataset.os === mine;
     row.classList.toggle("is-mine", own);
+    // One button for every system, the same size; the visitor's own is the filled one.
     const link = row.querySelector(".dl");
-    link.classList.toggle("hero-btn", own);
     link.classList.toggle("hero-btn--primary", own);
+    link.classList.toggle("hero-btn--quiet", !own);
   });
   const row = document.querySelector(`.os-row[data-os="${mine}"]`);
   const hero = document.querySelector(".dl-hero");
