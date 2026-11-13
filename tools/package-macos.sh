@@ -64,8 +64,11 @@ app="$out/Artosia.app"
 contents="$app/Contents"
 rm -rf "$out"
 mkdir -p "$contents/MacOS" "$contents/Resources"
-install -m 755 target/release/artosia target/release/artosia-output "$contents/MacOS/"
-strip "$contents/MacOS/artosia" "$contents/MacOS/artosia-output" 2>/dev/null
+# The operator's file is named as the app is: macOS words its menu from the program's name
+# ("Quit artosia" stood in the menu of 0.1.24, read from the real window on 2026-11-13).
+install -m 755 target/release/artosia "$contents/MacOS/Artosia"
+install -m 755 target/release/artosia-output "$contents/MacOS/artosia-output"
+strip "$contents/MacOS/Artosia" "$contents/MacOS/artosia-output" 2>/dev/null
 # The projector program loads GStreamer from the app's own copy, laid out as GStreamer's
 # framework is, so every library in it finds the others by the run paths it was built with.
 # The build's own run path, the unpacked folder on this Mac, is taken out: it means nothing on

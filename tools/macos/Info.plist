@@ -9,7 +9,7 @@
 	<key>CFBundleIdentifier</key>
 	<string>com.matsuokengo.artosia</string>
 	<key>CFBundleExecutable</key>
-	<string>artosia</string>
+	<string>Artosia</string>
 	<key>CFBundleIconFile</key>
 	<string>artosia</string>
 	<key>CFBundlePackageType</key>

@@ -218,6 +218,7 @@ pub fn keycaps(k: &Kit, spec: &str, on: Option<Color>) -> El {
         Some(ink) => (ink.alpha(0.14), ink.alpha(0.85)),
         None => (k.c.layer_03, k.c.text_muted),
     };
+    let spec = &on_this_keyboard(spec, cfg!(target_os = "macos"));
     let with_tab = spec.split([' ', ',']).any(|token| token == "Tab");
     let mut out = row().gap(3.0).center_y().a11y_hidden();
     for token in spec.split([' ', ',']).filter(|token| !token.is_empty()) {
@@ -237,6 +238,17 @@ pub fn keycaps(k: &Kit, spec: &str, on: Option<Color>) -> El {
         });
     }
     out
+}
+
+/// The keys of a spec as this keyboard needs them pressed. The top row of a Mac's keyboard
+/// does other things by default, and a function key needs Fn held with it
+/// (support.apple.com/en-us/102439, read 2026-11-13), so there F4 is drawn as Fn and F4.
+pub fn on_this_keyboard(spec: &str, mac: bool) -> String {
+    if !mac {
+        return spec.to_string();
+    }
+    let function_key = |token: &str| token.strip_prefix('F').is_some_and(|n| !n.is_empty() && n.chars().all(|c| c.is_ascii_digit()));
+    spec.split(' ').map(|token| if function_key(token) { format!("Fn {token}") } else { token.to_string() }).collect::<Vec<_>>().join(" ")
 }
 
 /// A key's name as this computer's keyboard prints it. The table names keys as a Windows
@@ -520,6 +532,11 @@ mod key_tests {
         assert_eq!(caps(super::switch_key("F6", true), true), ["⌘", "O"]);
         assert_eq!(super::switch_key("F4", true), "F4");
         assert_eq!(super::switch_key("F2", false), "F2");
+        // A Mac's function keys need Fn held, so the keys sheet says so.
+        assert_eq!(super::on_this_keyboard("F4", true), "Fn F4");
+        assert_eq!(super::on_this_keyboard("Ctrl O or F6", true), "Ctrl O or Fn F6");
+        assert_eq!(super::on_this_keyboard("F4", false), "F4");
+        assert_eq!(super::on_this_keyboard("Shift Tab", true), "Shift Tab");
         // Every other keyboard prints what the table says.
         assert_eq!(caps("Ctrl Shift N", false), ["Ctrl", "Shift", "N"]);
         assert_eq!(caps("Ctrl Tab", false), ["Ctrl", "Tab"]);

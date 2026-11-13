@@ -5,7 +5,8 @@ Artosia for Mac (Apple silicon)
 
 The first time, macOS refuses to open it. Do this once:
 
-1. Try to open Artosia.
+1. Try to open Artosia. A box says "Artosia.app" Not Opened. Press Done,
+   not Move to Bin.
 2. Open System Settings, then Privacy & Security.
 3. Scroll down and press Open Anyway beside Artosia, then Open.
 

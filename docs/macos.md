@@ -1,12 +1,12 @@
 # Artosia on a Mac
 
-The Mac edition is one app in a disk image, for Macs with Apple silicon: `Artosia-macos-aarch64.dmg`. It costs nothing to make and nothing is paid to Apple, so macOS refuses its first open until the person presses Open Anyway. It was built and checked on one Mac over SSH, with no window opened on that Mac's screen for anyone to look at: read "Not checked" before trusting it.
+The Mac edition is one app in a disk image, for Macs with Apple silicon: `Artosia-macos-aarch64.dmg`. It costs nothing to make and nothing is paid to Apple, so macOS refuses its first open until the person presses Open Anyway. It was built and checked on one Mac over SSH. No picture of its window could be taken there, so its real window was driven and read through macOS's accessibility interface: read "Not checked" before trusting it.
 
 ## What a person gets
 
 | In the disk image | What it is |
 |---|---|
-| `Artosia.app` | The operator (`Contents/MacOS/artosia`), the projector program built with video (`Contents/MacOS/artosia-output`) and the part of GStreamer they need (`Contents/Resources/gstreamer`, 63 MB). |
+| `Artosia.app` | The operator (`Contents/MacOS/Artosia`, named as the app is, because macOS words its menu from the program's name), the projector program built with video (`Contents/MacOS/artosia-output`) and the part of GStreamer they need (`Contents/Resources/gstreamer`, 63 MB). |
 | `Applications` | A shortcut to the Applications folder, to drag the app onto. |
 | `Read me first.txt` | The first open, where the library is kept, how updates work, how to remove. |
 
@@ -53,7 +53,11 @@ No text, Black, Logo and Live are on F1, F2, F3 and F6. By default the top row o
 | Keynote (support.apple.com/guide/keynote) | Black: B | |
 | OpenLP (`openlp/core/common/settings.py`) | Blank: the full stop | The same |
 
-So a Mac gets Command keys beside the F keys, which still work there: **⌘T No text, ⌘B Black, ⌘L Logo** as Proclaim has them for the same three switches, and **⌘O Live** as FreeShow switches its output (ProPresenter's ⌘1 is taken here: Command and a digit puts Preview's ring on a section). The tiles print the Mac's key and the keys sheet prints both (`ui/widgets.rs` `switch_key`, `main.rs` `mac_switch`). Windows and Linux keep the F keys alone, as Proclaim does on Windows. Checked on the Mac by a scripted headless run: Command B lights Black, Command O switches Live off, Command T lights No text. A real keyboard was not pressed.
+So a Mac gets Command keys beside the F keys, which still work there: **⌘T No text, ⌘B Black, ⌘L Logo** as Proclaim has them for the same three switches, and **⌘O Live** as FreeShow switches its output (ProPresenter's ⌘1 is taken here: Command and a digit puts Preview's ring on a section). The tiles print the Mac's key and the keys sheet prints both (`ui/widgets.rs` `switch_key`, `main.rs` `mac_switch`). Windows and Linux keep the F keys alone, as Proclaim does on Windows. Checked on the Mac by a scripted headless run: Command B lights Black, Command O switches Live off, Command T lights No text. In the real window the same keys were pressed through accessibility ("Checked", below).
+
+F4 and F5 (what the listener heard, and the announcements, into Preview) have no usual key on a Mac: no program read has such a switch. They stay F keys, and on a Mac every F key is drawn with Fn before it (`ui/widgets.rs` `on_this_keyboard`), because that is how a Mac's top row gives a function key as it comes; the keys sheet reads "⌘ T or Fn F1" and "Fn F4".
+
+The menu macOS draws for the app takes its words from the program's name, and 0.1.24's read "Quit artosia". The operator's file in the app is therefore named `Artosia` (`tools/package-macos.sh`), and the menu of a package built that way reads About Artosia, Hide Artosia and Quit Artosia. On a volume that tells capitals apart, a copy updated from 0.1.24 keeps the old file beside the new one, and the start right after that update runs the old program once more.
 
 ## Updates
 
@@ -117,16 +121,18 @@ On a MacBook with Apple silicon, macOS 27.0.1, 16 GB, busy with other work throu
 | The update list made on the release PC | The app's `Contents` brought to WSL by rsync gives the same list as the one made on the Mac: 76 files with the same hashes, sizes and executable marks. |
 | Speech recognition | `cargo build --release -p artosia --features speech` builds with Homebrew's CMake and Xcode's libclang, links only the system's frameworks, and the listening crate's tests pass (36; five that need a model are ignored). The package script builds with it when both tools are there. Hearing a real room was not tried. |
 | The published 0.1.23 | `cargo run -p artosia-update --example published` on the Mac, on Linux and on Windows reads the live feed as an installed copy does: each is offered 0.1.23 with a good signature. The published image, fetched on the Mac with `curl` (so with no quarantine mark), is 58,460,176 bytes and holds the app, the Applications shortcut and the note; the app is 0.1.23, its seal verifies, and with the unpacked GStreamer moved away its projector program answers `--probe` and the operator renders. The homepage shows the Mac row and a browser that answers as a Mac is offered the image, whose link answers 200. |
+| The real window | The published 0.1.24, opened through LaunchServices on the practice library. macOS told this session it may not take pictures of windows (`CGPreflightScreenCaptureAccess` is false) and may press keys in other programs (`AXIsProcessTrusted` is true), so keys were posted to Artosia's own process and the window's words read through accessibility (`target/port/mac-35-real3.sh`). The window is 1470 by 841 points; the tour opens first and its Skip button closes it; Tab brings a song into Preview and Return shows it; Command B, Command O and Command T each put Black, Off and No text on the Live pane and take it off again; Command L does nothing while no logo picture is chosen; Command M starts the plan's song at the ringed section and does not minimize the window, though macOS's Window menu lists Minimize on the same key; Command K opens the search and Command / the keys sheet. |
+| The first open of a downloaded copy | The published image was given the mark a browser gives a download (`com.apple.quarantine`), which the app copied out of it kept. Opening it starts nothing; a box from macOS (CoreServicesUIAgent) is titled "“Artosia.app” Not Opened", says "Apple could not verify “Artosia.app” is free of malware that may harm your Mac or compromise your privacy." and has two buttons, Done and Move to Bin. It was closed with Done. The step after it, Open Anyway in Privacy & Security, is a security setting and was left to the owner. |
 | Permission sentences | `plutil -p` reads each language's `InfoPlist.strings`; the dialogs themselves were not seen. |
 
 ## Not built
 
 - **Streaming.** As on Linux: the streaming program needs a screen capture, a sound source and an encoder of the Mac's own before the Stream dialog offers it, and the app does not carry the program.
-- **A Mac key for F4 and F5** (what the listener heard, and the announcements, into Preview). No program read has a key for either, so they stay F keys, which need Fn held on a Mac as it comes.
 
 ## Not checked
 
-- **A window.** No picture of a real window could be taken: a screenshot over SSH needs a screen-recording permission that is the owner's to give, and a window opened there lands on the owner's screen. Keys, the pointer, a second screen for the projector, full screen, the Dock icon and the menu bar are all unseen.
-- **The first open of a downloaded copy.** A browser marks the image as quarantined and Gatekeeper then refuses the app; the steps on the homepage and in the README are Apple's own page (support.apple.com/en-us/102445), not a picture of this app on this Mac. Whether an update of an app opened that way asks again is not known.
+- **A picture of the window.** macOS refuses this session a picture of any window (screen recording is a permission the owner gives), so how the real window looks, the pointer, a second screen for the projector, full screen and the Dock icon are unseen. What the window says and does was read through accessibility, above.
+- **Open Anyway.** The box of the first open was read; pressing Open Anyway in Privacy & Security is the owner's, so that the app then opens, and whether an update of an app opened that way asks again, are not known. The steps on the homepage and in the note are Apple's page (support.apple.com/en-us/102445).
+- A physical keyboard: the keys were posted to the program, which is how macOS delivers them, but nobody pressed one.
 - A video on a real projector window, cameras, the microphone, the phone remote, EasiSlides import.
 - macOS older than 27, an Intel Mac, a Mac of a standard user who cannot write to Applications.
