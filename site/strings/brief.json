@@ -393,29 +393,9 @@
     }
   },
   "mac_do": {
-    "where": "sentence in the Mac row, above three numbered steps, ending the way your language introduces a list",
-    "does": "warns that on first opening macOS will refuse to start the program, and that the steps below are done once",
-    "max": 70
-  },
-  "mac_step_1": {
-    "where": "first of three numbered steps in the Mac row",
-    "does": "the reader tries to start Artosia, which macOS then refuses",
-    "max": 40
-  },
-  "mac_step_2": {
-    "where": "second numbered step in the Mac row",
-    "does": "go to the Mac's settings app, into its privacy and security section; use the words a Mac in your language shows for System Settings and for Privacy & Security",
-    "max": 60
-  },
-  "mac_step_3": {
-    "where": "third numbered step in the Mac row",
-    "does": "press the button the Mac shows there that lets Artosia open anyway; use the exact label a Mac in your language shows for Open Anyway",
-    "max": 50
-  },
-  "mac_why": {
-    "where": "small grey sentence under the Mac steps",
-    "does": "the reason for the refusal: the author has not joined Apple's paid membership for developers, so the system has no way to verify the program",
-    "max": 110
+    "where": "two short sentences in the Mac row, above its link",
+    "does": "how to install: open the downloaded disk image and drag Artosia onto the Applications folder shown beside it (the folder named as macOS names it in your language); after that Artosia is opened from Applications like any other program",
+    "max": 140
   },
   "also_linux": {
     "where": "grey line under the hero buttons when the visitor uses Windows and the page has no Mac download",

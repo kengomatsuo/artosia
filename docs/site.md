@@ -67,8 +67,9 @@ shows only when its download exists: no row, no link and no word for it otherwis
   alone, as FreeShow and VLC have it, was left because it cannot be read aloud. The three are Font Awesome Free 6.7.2 (CC BY 4.0;
   each file keeps the licence comment its licence asks for, `site/img/os/credits.json`), and each mark is its owner's trademark,
   used to name the system a file is for.
-- The Mac row carries the numbered Open Anyway steps, because macOS refuses a program from a
-  developer who pays for no Apple programme.
+- The Mac row says how to install and nothing more since 2026-11-13: the app is signed with a
+  Developer ID and notarized, so macOS opens it without a step of its own. Until then the row
+  carried three numbered Open Anyway steps.
 - A sentence with links is one string per variant (`also_linux`, `also_linux_mac`, and so on),
   with the links written as `{linux}...{/linux}` around the writer's own word, never fragments joined.
 - The search result's grey line (`meta_description`, and `meta_description_mac` once the Mac file
