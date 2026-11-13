@@ -7,6 +7,7 @@
 #  4. An X11 display that never answers beside it (WSL's own): Wayland, after two seconds.
 set -u
 cd ~/artosia || exit 1
+bin="${BIN:-$HOME/artosia/target/debug}"; echo "programs from: $bin"
 out=~/artosia-check/projector-wayland; rm -rf "$out"; mkdir -p "$out"
 export XDG_RUNTIME_DIR=/run/user/$(id -u)
 started=()
@@ -31,7 +32,7 @@ found = []; walk(json.load(sys.stdin), found); print(found)
 "; }
 try() { # try <name> <environment...>
     local name="$1"; shift
-    env -u DISPLAY -u WAYLAND_DISPLAY "$@" ARTOSIA_TRACE=1 target/debug/artosia-output --demo-video "$HOME/artosia/fixtures/bg30.mp4" --here --port 47939 > "$out/$name.log" 2>&1 &
+    env -u DISPLAY -u WAYLAND_DISPLAY "$@" ARTOSIA_TRACE=1 "$bin/artosia-output" --demo-video "$HOME/artosia/fixtures/bg30.mp4" --here --port 47939 > "$out/$name.log" 2>&1 &
     local pid=$!; started+=($pid)
     sleep 14
     echo "$name: on sway $(in_sway); on the X11 screen $(DISPLAY=:91 xdotool search --name "Artosia projector" 2>/dev/null | wc -l) window; $(grep "frames projector" "$out/$name.log" | tail -1 | grep -o "totals [0-9]* presents"); $(grep -E "windows: through|places windows itself|window shown|covers" "$out/$name.log" | head -2 | sed 's/^\[[^]]*\] //' | tr '\n' '|' | cut -c1-200)"

@@ -95,7 +95,7 @@ Two changes, in 0.1.27:
 1. **Where no position is told, the window is shown at once** (`displays.rs` `tells_positions`, `placer.rs`). It opens where the desktop puts it.
 2. **On a Wayland desktop the output program takes the desktop's X11 server, Xwayland, when it answers within two seconds** (`main.rs` `prefer_x11`, which clears `WAYLAND_DISPLAY` for its own process before the window library reads it; winit takes Wayland whenever it is set). Under Wayland a program cannot put a window on a chosen screen, keep it above others or read where it is; an X11 program can ask for all three, and mutter allows an X11 program its own position by default (`src/x11/window-x11.c`, `allow_position_change = TRUE`). The streaming program then takes the window's picture straight from X11 and the desktop asks nothing. `ARTOSIA_WAYLAND=1` keeps the windows on Wayland. The operator's own window stays on Wayland.
 
-Measured on a sway desktop with no screen in WSL (`tools/linux/wayland-rig.sh`), sway asked what it shows:
+Measured on a sway desktop with no screen in WSL (`tools/linux/wayland-rig.sh`), sway asked what it shows; the rows from "Wayland alone" down were run on the build and again on the published 0.1.27 package, with the same results:
 
 | Case | Result |
 |---|---|
