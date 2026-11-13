@@ -1,0 +1,128 @@
+{
+  "format": 1,
+  "version": "0.1.22",
+  "platform": "linux-x86_64",
+  "notes": "A test release",
+  "released": "2026-11-12",
+  "files": [
+    {
+      "path": "README.txt",
+      "name": "linux-x86_64__README.txt",
+      "size": 1347,
+      "sha256": "6146ac579c3d4f3db1f959c74975c21a2001e67f2e7887712a98157024e6a11f",
+      "exec": false
+    },
+    {
+      "path": "artosia",
+      "name": "linux-x86_64__artosia",
+      "size": 48613040,
+      "sha256": "f439b2340f53e86b721fbfcfd4cf128851081e060a6f03420208310d02824bb6",
+      "exec": true
+    },
+    {
+      "path": "artosia-output",
+      "name": "linux-x86_64__artosia-output",
+      "size": 34199816,
+      "sha256": "f4e08088e1535301d21a00c7c46191b3d8e63ba1bbd2655c1fc361ec037e8dfa",
+      "exec": true
+    },
+    {
+      "path": "artosia-output-plain",
+      "name": "linux-x86_64__artosia-output-plain",
+      "size": 33852808,
+      "sha256": "3e53673a8cab51e11471ca3f3aed99440db967688b076fb3db062ff78cccc4d7",
+      "exec": true
+    },
+    {
+      "path": "artosia-stream",
+      "name": "linux-x86_64__artosia-stream",
+      "size": 803248,
+      "sha256": "b746f049715798327fca31b022e781eed186d52b19efb0594c2c0cfb0afae808",
+      "exec": true
+    },
+    {
+      "path": "install.sh",
+      "name": "linux-x86_64__install.sh",
+      "size": 1036,
+      "sha256": "5b4a84bfa92d604e9a759f947ba106a51b46546b6ea76934002bab0910838ad3",
+      "exec": true
+    },
+    {
+      "path": "share/applications/artosia.desktop",
+      "name": "linux-x86_64__share__applications__artosia.desktop",
+      "size": 204,
+      "sha256": "53155a00510b7e37f94a86d55d60449eb6eabed7ba2647b55a3cb9d2fabc2dd7",
+      "exec": false
+    },
+    {
+      "path": "share/icons/hicolor/128x128/apps/artosia.png",
+      "name": "linux-x86_64__share__icons__hicolor__128x128__apps__artosia.png",
+      "size": 2004,
+      "sha256": "8f0710891a1f70e134da82f755623e24d4f0d7d7935cab35d914866d72eff3d3",
+      "exec": false
+    },
+    {
+      "path": "share/icons/hicolor/16x16/apps/artosia.png",
+      "name": "linux-x86_64__share__icons__hicolor__16x16__apps__artosia.png",
+      "size": 365,
+      "sha256": "2e89d021c07f7bb3cfd577e3cae8c47371f0c88d881c345b1c4fcc334560493b",
+      "exec": false
+    },
+    {
+      "path": "share/icons/hicolor/22x22/apps/artosia.png",
+      "name": "linux-x86_64__share__icons__hicolor__22x22__apps__artosia.png",
+      "size": 423,
+      "sha256": "66a47a9fda95572642d6378116c1420a303e06f8d6f1d3efefbfafb62fe449dd",
+      "exec": false
+    },
+    {
+      "path": "share/icons/hicolor/24x24/apps/artosia.png",
+      "name": "linux-x86_64__share__icons__hicolor__24x24__apps__artosia.png",
+      "size": 472,
+      "sha256": "f5412244f4d119ca9b1bd763854fd07bbf69ad99a890c9a97335eb4fd1af58a4",
+      "exec": false
+    },
+    {
+      "path": "share/icons/hicolor/256x256/apps/artosia.png",
+      "name": "linux-x86_64__share__icons__hicolor__256x256__apps__artosia.png",
+      "size": 4025,
+      "sha256": "7ba85f91bd9c08107130a42e56759706a870f64f9bcfdd96a6e63e5b2e1b177f",
+      "exec": false
+    },
+    {
+      "path": "share/icons/hicolor/32x32/apps/artosia.png",
+      "name": "linux-x86_64__share__icons__hicolor__32x32__apps__artosia.png",
+      "size": 521,
+      "sha256": "1eebeadec31ff85fb260a66a8eafc5a8ca614d6d3c45f9a31ef669c3df114e4d",
+      "exec": false
+    },
+    {
+      "path": "share/icons/hicolor/48x48/apps/artosia.png",
+      "name": "linux-x86_64__share__icons__hicolor__48x48__apps__artosia.png",
+      "size": 818,
+      "sha256": "a6828990f4931a2412bc0867b1a52c53822487df0b133305e39e1dbafbab29a3",
+      "exec": false
+    },
+    {
+      "path": "share/icons/hicolor/512x512/apps/artosia.png",
+      "name": "linux-x86_64__share__icons__hicolor__512x512__apps__artosia.png",
+      "size": 8286,
+      "sha256": "ee3ceda852e00b459e3f23463b5493eec2551b5cb4467f85b9ede61cc715aa33",
+      "exec": false
+    },
+    {
+      "path": "share/icons/hicolor/64x64/apps/artosia.png",
+      "name": "linux-x86_64__share__icons__hicolor__64x64__apps__artosia.png",
+      "size": 1034,
+      "sha256": "bbd18cb1493a77c4fe82ee047583549c21bd9c4b0bc1d8fd61d0b46ec17753f7",
+      "exec": false
+    },
+    {
+      "path": "share/icons/hicolor/scalable/apps/artosia.svg",
+      "name": "linux-x86_64__share__icons__hicolor__scalable__apps__artosia.svg",
+      "size": 401,
+      "sha256": "e2206ba56e9aa5ee7370d6a5a5a27345a49302588afa4723e8e8eac60af34221",
+      "exec": false
+    }
+  ]
+}

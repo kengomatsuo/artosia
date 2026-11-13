@@ -1,5 +1,1 @@
-# Trusted release keys, one 64-digit hex Ed25519 public key per line.
-# Make one with: artosia-release keygen <private-key-file outside the repo> <this file's line>
-# An all-zero line means "no key yet": updates stay off until a real key is added.
-# The line below is the key of the releases at github.com/kengomatsuo/artosia (2026-11-10).
-e6049e225975d7c806d1ad3612a7f7df2e6b7cd123d0e95dafa0db8e0e7e8b11
+6980f7ec75355e867b12c301be93332d7279f4fa857e3dbd2ff47c67cbb91ffc
