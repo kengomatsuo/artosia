@@ -19,17 +19,30 @@ pub struct AudioDevice {
 }
 
 /// The audio inputs GStreamer's device monitor sees. Needs `gst::init` first. Off Windows the
-/// monitor is asked for every sound source, and each device's own element says which name
-/// opens it (`pulsesrc` has a name there, `osxaudiosrc` a number).
+/// monitor is asked for every sound source, and only the ones this program's own source opens
+/// are kept (`encode.rs` `device_source`: `pulsesrc`, `osxaudiosrc`). A Linux desktop on
+/// PipeWire lists each microphone twice, once more through `pipewiresrc`, which has no
+/// `device` to read: asking it for one ended the program (found on PipeWire 1.6, 2026-11-13).
 #[cfg(not(windows))]
 pub fn audio_devices() -> Vec<AudioDevice> {
+    let ours = if cfg!(target_os = "macos") { "osxaudiosrc" } else { "pulsesrc" };
     let monitor = gst::DeviceMonitor::new();
     let _ = monitor.add_filter(Some("Audio/Source"), None);
-    monitor
-        .devices()
-        .into_iter()
+    let devices = monitor.devices();
+    let said = |d: &gst::Device, name: &str| d.properties().and_then(|p| p.get::<String>(name).ok());
+    let flagged = |d: &gst::Device| d.properties().and_then(|p| p.get::<bool>("is-default").ok()).unwrap_or(false);
+    // PipeWire's own list flags the default input where PulseAudio's list of the same server
+    // flags none, and both call an input by the same name.
+    let defaults: Vec<String> = devices.iter().filter(|d| flagged(d)).filter_map(|d| said(d, "node.name")).collect();
+    devices
+        .iter()
         .filter_map(|d| {
             let element = d.create_element(None).ok()?;
+            if element.factory().is_none_or(|factory| factory.name() != ours) {
+                return None;
+            }
+            element.find_property("device")?;
+            // The name that opens it: `pulsesrc` has a name there, `osxaudiosrc` a number.
             let device = element.property_value("device");
             let id = device
                 .get::<Option<String>>()
@@ -37,16 +50,13 @@ pub fn audio_devices() -> Vec<AudioDevice> {
                 .flatten()
                 .or_else(|| device.get::<i32>().ok().map(|n| n.to_string()))
                 .or_else(|| device.get::<u32>().ok().map(|n| n.to_string()))?;
-            let props = d.properties();
-            let text = |name: &str| props.as_ref().and_then(|p| p.get::<String>(name).ok());
-            let flag = |name: &str| props.as_ref().and_then(|p| p.get::<bool>(name).ok()).unwrap_or(false);
             Some(AudioDevice {
                 name: d.display_name().to_string(),
-                actual_name: text("device.description").unwrap_or_default(),
+                actual_name: said(d, "device.description").unwrap_or_default(),
+                is_default: flagged(d) || defaults.contains(&id),
                 id,
-                is_default: flag("is-default"),
                 // PulseAudio calls an input that carries what an output plays a monitor.
-                loopback: text("device.class").as_deref() == Some("monitor"),
+                loopback: said(d, "device.class").as_deref() == Some("monitor"),
             })
         })
         .collect()
