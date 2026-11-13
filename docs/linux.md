@@ -110,13 +110,15 @@ Measured in the release PC's WSL (Ubuntu 26.04, GStreamer 1.28.2, an RTX 4060), 
 | The stop file, and a kill | Stopped within a second each time, and the file plays. |
 | Wayland: a sway desktop with no screen, PipeWire and the portal with its wlroots back end set to share the one output | The program asked the portal, went live, and a frame from the file is the desktop's picture; the token was kept; a second start went live the same way; with WSL's unanswering X display beside it the program waited three seconds and went to the portal. |
 | The operator | Rendered without a window, the Stream dialog offers the address, the key, the recording and Start; with the program taken away it says this copy came without it. |
+| Start pressed in the published 0.1.25 | The downloaded package's operator in a real window on a virtual X11 screen, its own projector program beside it: the recording switch and Start were clicked, the dialog read "On air for 0:09", the streaming program ran with `--window "Artosia projector" --stop-file … --record …`, Stop ended it, and the recording is 15.8 s of H.264 with AAC. |
+| The published 0.1.25 | The live feed offers it to a 0.1.24 on Linux, on Windows and on a Mac with a good signature. |
 | Tests | `cargo test -p artosia-stream`: 33 pass on Linux, on the Mac and on Windows. |
 
 Streaming needs these packages on Debian and Ubuntu, each found with `dpkg -S` on the plugin's file: `gstreamer1.0-plugins-base`, `-good` (`ximagesrc`, `pulsesrc`, `flvmux`, `mp4mux`), `-bad` (`rtmp2sink`, `srtsink`, `mpegtsmux`, `nvh264enc`, `vah264enc`, `openh264enc`, `voaacenc`) and `gstreamer1.0-libav`; `gstreamer1.0-pipewire` under Wayland; `gstreamer1.0-plugins-ugly` adds `x264enc`.
 
 ## Not checked
 
-- Streaming from a real desktop: GNOME's and KDE's own sharing dialog, the projector's own window through the portal (on the test desktop, which draws in software only, the projector's window presented no frame, so the shared picture was a wallpaper), a real microphone (WSL lists one that cannot be opened), `vah264enc` on Intel or AMD graphics, `x264enc`, a real service, and Start pressed in the operator's dialog.
+- Streaming from a real desktop: GNOME's and KDE's own sharing dialog, the projector's own window through the portal (on the test desktop, which draws in software only, the projector's window presented no frame, so the shared picture was a wallpaper), a real microphone (WSL lists one that cannot be opened), `vah264enc` on Intel or AMD graphics, `x264enc`, and a real service.
 - A Linux desktop outside WSL: Wayland with a real compositor, a second screen for the projector, full-screen, the scale of a HiDPI screen.
 - Hardware decode through the `va` plugin on Intel or AMD graphics (only NVIDIA's decoder was there), and the software decoder (`avdec_h264`).
 - Cameras, the microphone and speech recognition at run time, the phone remote from a real phone, EasiSlides import.

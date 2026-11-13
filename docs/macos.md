@@ -145,6 +145,7 @@ Checked over SSH, never on the screen: recording it would have taken the owner's
 | The program from the app | With the app's plugins alone it lists 1 screen, 33 windows and 3 sound inputs, one flagged as the default. |
 | The encoding chain | From the app's own libraries and plugins alone, a test picture and a test tone through `vtenc_h264`, `avenc_aac` and `mp4mux` give 5.4 s of H.264 1280x720 with AAC; from the unpacked GStreamer `x264enc` gives the same, and `mpegtsmux` with `srtsink` reaches a listener on 127.0.0.1. |
 | The operator | Rendered from the packaged app, the Stream dialog offers the address, the key, the recording and Start. |
+| An installed 0.1.24 updating | The published 0.1.24 app, copied to a scratch folder, fetched 13 files from the live feed and came up as 0.1.25 at its next start: the published app file for file, seal verified, the operator's file now named `Artosia` (the disk ignores case, and the name still changed), the streaming program beside it and answering `--probe`. |
 | Tests | `cargo test -p artosia-stream`: 33 pass. |
 
 ## Not checked
