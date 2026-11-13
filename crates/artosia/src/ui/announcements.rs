@@ -15,6 +15,8 @@ const LIST: f32 = 330.0;
 const PREVIEW: f32 = 340.0;
 /// The place of "Verse of the week" among `ANNOUNCEMENT_TEMPLATES`, in every language.
 const PASSAGE_TEMPLATE: usize = 3;
+/// The place of "Birthdays" among them: a card that reads the birthday list.
+const BIRTHDAY_TEMPLATE: usize = 5;
 /// How long an announcement may stay up, in seconds.
 const SECONDS: [u32; 6] = [5, 8, 10, 15, 20, 30];
 
@@ -136,6 +138,8 @@ fn list(s: &App, k: &Kit, form: &Notices) -> El {
         // The verse of the week reads its words from the Bible; the others are words to replace.
         templates = if at == PASSAGE_TEMPLATE {
             templates.child(btn(title).small().focusable().build(k, move |s, _| s.new_passage_notice(title)))
+        } else if at == BIRTHDAY_TEMPLATE {
+            templates.child(btn(title).small().focusable().build(k, move |s, _| s.new_birthday_notice(title)))
         } else {
             templates.child(btn(title).small().focusable().build(k, move |s, _| s.new_notice(title, body)))
         };
@@ -318,13 +322,19 @@ fn holds(s: &App, k: &Kit, draft: Option<&artosia_core::deck::Announcement>) -> 
     let ((from_month, from_day), (to_month, to_day)) = birthday_days(draft.fill, &today)?;
     let covers = if draft.fill == Fill::BirthdaysMonth { t::birthdays_cover_month(from_month) } else { t::birthdays_cover_week((from_month, from_day), (to_month, to_day)) };
     let names = birthdays(&s.people, draft.fill, &today).len();
-    Some(
-        col()
-            .key("notice-holds")
-            .w_full()
-            .child(text(covers).font(type_::SMALL).color(k.c.text_muted))
-            .child(text(t::names_today(names)).font(type_::SMALL).color(k.c.text_muted)),
-    )
+    let mut holds = col().key("notice-holds").w_full().gap(space::S2).child(col().w_full().child(text(covers).font(type_::SMALL).color(k.c.text_muted)).child(text(t::names_today(names)).font(type_::SMALL).color(k.c.text_muted)));
+    // With no list on file the card can hold nobody, so the list is asked for here.
+    if s.people.is_empty() {
+        holds = holds.child(
+            row()
+                .w_full()
+                .gap(space::S2)
+                .center_y()
+                .child(text(t::birthdays_on_file(0)).font(type_::BODY).color(k.c.text_base).grow(1.0))
+                .child(btn(t::CMD_IMPORT_BIRTHDAYS()).icon(&icons::IMPORT).small().focusable().build(k, |s, _| s.want_birthdays = true)),
+        );
+    }
+    Some(holds)
 }
 
 pub fn view(s: &App, k: &Kit, width: f32) -> El {

@@ -785,6 +785,20 @@ impl App {
         self.notices = Some(form);
     }
 
+    /// Starts a birthday card: it fills itself from the birthday list each week, so there is
+    /// nothing to type. The Birthdays button used to make a plain card that asked for the names
+    /// to be typed, with the list unread beside it (2026-11-13, owner-reported).
+    pub fn new_birthday_notice(&mut self, title: &str) {
+        self.save_notice();
+        let mut form = App::notices_for(None);
+        form.title = TextEdit::new(title);
+        form.fill = Fill::BirthdaysWeek;
+        form.seconds = 12;
+        form.title.focused = false;
+        self.notices = Some(form);
+        self.save_notice();
+    }
+
     /// Starts a new announcement, blank or from a ready-made one.
     pub fn new_notice(&mut self, title: &str, body: &str) {
         self.save_notice();
@@ -2038,6 +2052,19 @@ mod notice_tests {
         assert!(deck.slides[0].text.contains("Sample Alpha"));
         app.show_notice_now(id);
         assert_eq!(app.live.as_ref().map(|live| live.deck.slides.len()), Some(deck.slides.len()));
+    }
+
+    #[test]
+    fn the_birthdays_button_makes_a_card_that_reads_the_list() {
+        let mut app = App::practice();
+        app.demo_notices("birthdays");
+        let before = app.announcements.len();
+        app.new_birthday_notice("Birthdays");
+        assert_eq!(app.announcements.len(), before + 1, "kept without a press of Save");
+        let card = app.announcements.last().cloned().unwrap_or_default();
+        assert_eq!((card.fill, card.body.as_str()), (Fill::BirthdaysWeek, ""), "no words to replace");
+        let deck = app.card_deck(card.id).unwrap_or_else(|| panic!("no names in the made-up week"));
+        assert!(deck.slides[0].text.contains("Sample Alpha"));
     }
 }
 
