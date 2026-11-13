@@ -445,6 +445,40 @@ impl Store {
 
 #[cfg(test)]
 mod tests {
+    /// What the first run's import costs the window, measured on a real library named by
+    /// `ARTOSIA_SONG_ZIP` (it does nothing without the variable): the songs go in forty at a
+    /// time, one batch a frame, on a library kept on disk, and the search is then built once.
+    #[test]
+    fn a_real_library_goes_in_forty_at_a_time() {
+        let Some(zip) = std::env::var_os("ARTOSIA_SONG_ZIP") else { return };
+        let folder = crate::import::as_folder(Path::new(&zip)).unwrap_or_else(|error| panic!("{error}"));
+        let (mut songs, _) = crate::openlyrics::read_folder(&folder);
+        let _ = std::fs::remove_dir_all(&folder);
+        let path = std::env::temp_dir().join(format!("artosia-store-batches-{}.db", std::process::id()));
+        let _ = std::fs::remove_file(&path);
+        let mut store = Store::open(&path).unwrap_or_else(|error| panic!("{error}"));
+        let mut took: Vec<f64> = Vec::new();
+        for batch in songs.chunks_mut(40) {
+            let start = std::time::Instant::now();
+            store.import_songs(batch).unwrap_or_else(|error| panic!("{error}"));
+            took.push(start.elapsed().as_secs_f64() * 1000.0);
+        }
+        took.sort_by(f64::total_cmp);
+        let start = std::time::Instant::now();
+        let all = store.songs().unwrap_or_default();
+        let read = start.elapsed().as_secs_f64() * 1000.0;
+        let start = std::time::Instant::now();
+        let index = crate::search::SongIndex::build(&all);
+        let built = start.elapsed().as_secs_f64() * 1000.0;
+        std::hint::black_box(index);
+        drop(store);
+        let _ = std::fs::remove_file(&path);
+        println!(
+            "{} songs in {} batches: median {:.1} ms, slowest {:.1} ms, all {:.0} ms; read back {:.0} ms; search built {:.0} ms",
+            all.len(), took.len(), took[took.len() / 2], took[took.len() - 1], took.iter().sum::<f64>(), read, built
+        );
+    }
+
     use super::*;
     use crate::plan::PlanEntry;
     use crate::song::Translation;

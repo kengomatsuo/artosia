@@ -205,7 +205,32 @@ pub struct Facts {
     pub has_songs: bool,
 }
 
+/// A list kept for the question it answered. A page asks for its list for every row it draws,
+/// on every frame; worked out afresh each time, the 512 languages took 1.8 ms a time on a fast
+/// PC and about forty times that a frame, which was the lag the owner met (2026-11-13).
+struct Kept<K, V>(std::cell::RefCell<Option<(K, std::rc::Rc<V>)>>);
+
+impl<K: PartialEq, V> Kept<K, V> {
+    fn new() -> Self {
+        Kept(std::cell::RefCell::new(None))
+    }
+
+    fn get(&self, key: K, make: impl FnOnce() -> V) -> std::rc::Rc<V> {
+        let mut held = self.0.borrow_mut();
+        match held.as_ref() {
+            Some((have, list)) if *have == key => list.clone(),
+            _ => {
+                let list = std::rc::Rc::new(make());
+                *held = Some((key, list.clone()));
+                list
+            }
+        }
+    }
+}
+
 pub struct Onboard {
+    countries_kept: Kept<(String, String), Vec<(&'static str, &'static str)>>,
+    languages_kept: Kept<(String, String, String), Vec<(String, String)>>,
     pub page: Page,
     pub offered: Vec<String>,
     pub language: String,
@@ -288,6 +313,8 @@ impl Onboard {
             sing_cursor: sing.first().cloned().unwrap_or_default(),
             sing,
             sing_query: TextEdit::new(""),
+            countries_kept: Kept::new(),
+            languages_kept: Kept::new(),
             sing_chosen: false,
             bible: None,
             bible_chosen: false,
@@ -311,24 +338,31 @@ impl Onboard {
     // ---- What a page shows ----
 
     /// The countries the filter leaves, by name in the window's language.
-    pub fn visible_countries(&self) -> Vec<(&'static str, &'static str)> {
-        let words: Vec<String> = normalize(&self.query.text).split_whitespace().map(str::to_string).collect();
-        countries::names(&self.language).into_iter().filter(|(_, name)| {
-            let hay = normalize(name);
-            words.iter().all(|word| hay.contains(word.as_str()))
-        }).collect()
+    pub fn visible_countries(&self) -> std::rc::Rc<Vec<(&'static str, &'static str)>> {
+        self.countries_kept.get((self.language.clone(), self.query.text.clone()), || {
+            let words: Vec<String> = normalize(&self.query.text).split_whitespace().map(str::to_string).collect();
+            countries::names(&self.language)
+                .into_iter()
+                .filter(|(_, name)| {
+                    let hay = normalize(name);
+                    words.iter().all(|word| hay.contains(word.as_str()))
+                })
+                .collect()
+        })
     }
 
     /// The languages the Sing page lists: the country's first, then every other by name, narrowed by what is typed.
-    pub fn visible_languages(&self) -> Vec<(String, String)> {
-        let words: Vec<String> = normalize(&self.sing_query.text).split_whitespace().map(str::to_string).collect();
-        artosia_core::languages::ordered(&self.language, &self.country, &[], &[])
-            .into_iter()
-            .filter(|(code, name)| {
-                let hay = normalize(name);
-                words.iter().all(|word| hay.contains(word.as_str()) || code.to_lowercase().contains(word.as_str()))
-            })
-            .collect()
+    pub fn visible_languages(&self) -> std::rc::Rc<Vec<(String, String)>> {
+        self.languages_kept.get((self.language.clone(), self.country.clone(), self.sing_query.text.clone()), || {
+            let words: Vec<String> = normalize(&self.sing_query.text).split_whitespace().map(str::to_string).collect();
+            artosia_core::languages::ordered(&self.language, &self.country, &[], &[])
+                .into_iter()
+                .filter(|(code, name)| {
+                    let hay = normalize(name);
+                    words.iter().all(|word| hay.contains(word.as_str()) || code.to_lowercase().contains(word.as_str()))
+                })
+                .collect()
+        })
     }
 
     /// The rows of the songs page, in order: EasiSlides only where it was found.
@@ -522,7 +556,7 @@ impl Onboard {
                 Vec::new()
             }
             Page::Sing => {
-                let ids: Vec<String> = self.visible_languages().into_iter().map(|(code, _)| code).collect();
+                let ids: Vec<String> = self.visible_languages().iter().map(|(code, _)| code.clone()).collect();
                 let current = (!self.sing_cursor.is_empty()).then_some(self.sing_cursor.as_str());
                 if let Some(code) = stepped(&ids, current, delta) {
                     self.sing_cursor = code;
@@ -1008,6 +1042,32 @@ mod tests {
         let mut nowhere = at(Page::Songs, None);
         assert!(nowhere.press(Action::Next).is_empty(), "nowhere yet starts nothing and has no row");
         assert!(nowhere.jobs().iter().all(|row| !matches!(row, JobRow::Songs(_))));
+    }
+
+    /// The Sing page asks for its list for every row it draws, on every frame. Built afresh
+    /// each time it cost a frame's whole budget many times over, which was the lag the owner
+    /// met on that page (2026-11-13).
+    #[test]
+    fn the_sing_pages_list_is_cheap_to_ask_for() {
+        let mut onboard = at(Page::Sing, None);
+        let first = onboard.visible_languages();
+        let start = std::time::Instant::now();
+        for _ in 0..40 {
+            std::hint::black_box(onboard.visible_languages());
+        }
+        let frame = start.elapsed().as_secs_f64() * 1000.0;
+        println!("the list, asked forty times as one frame does: {frame:.3} ms; {} languages", first.len());
+        assert!(std::rc::Rc::ptr_eq(&first, &onboard.visible_languages()), "the same list is handed out until the question changes");
+        assert!(frame < 2.0, "a frame's worth of asking takes {frame:.2} ms");
+        // A new question is a new list: what is typed, the window's language, the country.
+        onboard.sing_query.insert("jaw");
+        assert!(onboard.visible_languages().len() < first.len());
+        onboard.country = "BR".to_string();
+        onboard.sing_query = TextEdit::new("");
+        assert!(!std::rc::Rc::ptr_eq(&first, &onboard.visible_languages()));
+        // The countries page keeps its list the same way.
+        let countries = onboard.visible_countries();
+        assert!(std::rc::Rc::ptr_eq(&countries, &onboard.visible_countries()));
     }
 
     #[test]
