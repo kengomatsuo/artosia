@@ -317,6 +317,14 @@ mod sys {
     pub fn hide_from_taskbar(_hwnd: isize) {}
 }
 
+/// Whether the display server tells a program where its windows are and lets it move them.
+/// Wayland does neither, by design: its window protocol has no position for a window, so
+/// Rune's `WindowHandle::placement` is `None` there for good and `set_position` does nothing.
+pub fn tells_positions() -> bool {
+    let wayland = ["WAYLAND_DISPLAY", "WAYLAND_SOCKET"].iter().any(|name| std::env::var_os(name).is_some_and(|value| !value.is_empty()));
+    !(cfg!(target_os = "linux") && wayland)
+}
+
 /// Takes a window off the taskbar where the system has one; nothing elsewhere.
 pub fn hide_from_taskbar(handle: &rune::WindowHandle) {
     let hwnd = handle

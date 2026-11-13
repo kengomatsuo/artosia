@@ -86,6 +86,26 @@ Pictures are in `target/port/linux-windows/` on the release PC (not in the repos
 
 WSL shows a Linux window through a Windows process (`msrdc.exe`) that runs in session 0 on this PC, where nobody sees it and no screenshot reaches it; and the operator's connection to WSL's Wayland display was reset ("Connection reset by peer" in winit's Wayland event loop), which ended it. So the windows were opened on a virtual X11 screen (`Xvfb :99 -screen 0 1920x1080x24`, `WAYLAND_DISPLAY` unset) and pictured from inside Linux with ImageMagick's `import`; `xdotool` sent the keys. The projector did run on WSL's own display earlier in the day and played the video there too.
 
+## The projector under Wayland (2026-11-13)
+
+From 0.1.22 to 0.1.26 the projector and stage windows never appeared on a Wayland desktop, which is what GNOME, KDE and sway run. Every window of the output program starts hidden and is shown once it is fitted to its screen (`placer.rs` `settle`), and the fitting waited for the window's position. Wayland tells a program no position, by design, so Rune's `WindowHandle::placement` is `None` there for good and the window stayed hidden. Nobody saw it: WSL's own display cannot be pictured, and the video's own log kept counting. It was found when the sway test desktop built for streaming showed a black picture.
+
+Two changes, in 0.1.27:
+
+1. **Where no position is told, the window is shown at once** (`displays.rs` `tells_positions`, `placer.rs`). It opens where the desktop puts it.
+2. **On a Wayland desktop the output program takes the desktop's X11 server, Xwayland, when it answers within two seconds** (`main.rs` `prefer_x11`, which clears `WAYLAND_DISPLAY` for its own process before the window library reads it; winit takes Wayland whenever it is set). Under Wayland a program cannot put a window on a chosen screen, keep it above others or read where it is; an X11 program can ask for all three, and mutter allows an X11 program its own position by default (`src/x11/window-x11.c`, `allow_position_change = TRUE`). The streaming program then takes the window's picture straight from X11 and the desktop asks nothing. `ARTOSIA_WAYLAND=1` keeps the windows on Wayland. The operator's own window stays on Wayland.
+
+Measured on a sway desktop with no screen in WSL (`tools/linux/wayland-rig.sh`), sway asked what it shows:
+
+| Case | Result |
+|---|---|
+| Before the change | The operator's window and a plain GStreamer window appear; the projector's does not, with Vulkan or OpenGL: 0 frames presented. |
+| Wayland alone | `Artosia projector` appears as a Wayland window, 1920x1080, 194 frames presented in 14 s. |
+| An X11 server that answers beside it (`Xvfb`) | The window goes to the X11 screen. |
+| The same with `ARTOSIA_WAYLAND=1` | It stays on Wayland. |
+| sway with its own Xwayland (run in a mount namespace, because sway refuses WSL's `/tmp/.X11-unix`) | The projector is an `xwayland` window of 1920x1080 and the streaming program records it straight from X11: 10.3 s of H.264, and a frame from the file shows the lyrics over the video. |
+| WSL's own X display, which never answers, beside a Wayland desktop | The projector stops drawing after its video starts. The published 0.1.26 does the same, so it is older than this change and WSL's own; a real desktop refuses a missing X server at once. |
+
 ## Streaming (2026-11-13)
 
 The streaming program was Windows' own: it took the picture, the sound and the encoder from Windows' parts of GStreamer. Each system now has its own parts behind the same program, and the Stream dialog offers streaming wherever the program starts (`crates/artosia/src/stream.rs` `available` asks it with `--probe`, as the projector program is asked).
@@ -94,7 +114,7 @@ The streaming program was Windows' own: it took the picture, the sound and the e
 |---|---|---|
 | The windows and monitors | X11 through `x11rb` (`win.rs`), asked on a thread of its own with two seconds to answer | The crate is already in the build for the window library. WSL's own X display takes a connection and never answers, which held the program and its stopping until the question got a time limit. |
 | The picture under X11 | `ximagesrc` on the projector window's id, or on a monitor's corners | It is GStreamer's own X11 source. |
-| The picture under Wayland | The desktop's portal (`org.freedesktop.portal.ScreenCast` through the `ashpd` crate, `portal.rs`) and `pipewiresrc` | Under Wayland no program may look at another's window. winit takes Wayland whenever `WAYLAND_DISPLAY` is set (its `platform_impl/linux/mod.rs`), so the projector is a Wayland window there and X11 cannot see it; a developer of OBS's portal capture writes that X11 capture under Wayland reaches Xwayland programs only. The portal's page says a start "will typically result the portal presenting a dialog", so the desktop asks the person which screen to share. The token it hands back is kept in `$XDG_STATE_HOME/artosia/screen-share-token` and offered the next time, so a desktop that honours it does not ask again. |
+| The picture under Wayland | The desktop's portal (`org.freedesktop.portal.ScreenCast` through the `ashpd` crate, `portal.rs`) and `pipewiresrc` | Under Wayland no program may look at another's window. winit takes Wayland whenever `WAYLAND_DISPLAY` is set (its `platform_impl/linux/mod.rs`), so the projector is a Wayland window there and X11 cannot see it; a developer of OBS's portal capture writes that X11 capture under Wayland reaches Xwayland programs only. The portal's page says a start "will typically result the portal presenting a dialog", so the desktop asks the person which screen to share. The token it hands back is kept in `$XDG_STATE_HOME/artosia/screen-share-token` and offered the next time, so a desktop that honours it does not ask again. Since 0.1.27 the projector goes through Xwayland where the desktop has one, so its window is found by X11 and the portal is only what is left for a desktop without Xwayland. |
 | The sound | `pulsesrc`, on PulseAudio or PipeWire's PulseAudio service | An input the sound server flags as the default is taken; where it flags none (WSL's does not), the source is opened with no device named, which is the server's own default. |
 | The encoder | `vah264enc`, then `nvh264enc`, then `x264enc`, then `openh264enc`: the first that encodes 20 test frames | Hardware first, as on Windows. OpenH264 takes I420 frames only, so the frame's layout follows the encoder (`encoder.rs` `frame_format`). |
 | Ctrl+C and a kill | `SIGINT` and `SIGTERM` finish the files, as Windows' console events do | A recording cut off without its end cannot be played. |
@@ -120,6 +140,7 @@ Streaming needs these packages on Debian and Ubuntu, each found with `dpkg -S` o
 ## Not checked
 
 - Streaming from a real desktop: GNOME's and KDE's own sharing dialog (both portal back ends name `org.freedesktop.impl.portal.ScreenCast` in their sources, `xdg-desktop-portal-gnome`'s `data/meson.build` and `xdg-desktop-portal-kde`'s `data/kde.portal`, read 2026-11-13; neither desktop was run), the projector's own window through the portal (on the test desktop, which draws in software only, the projector's window presented no frame, so the shared picture was a wallpaper), a physical microphone (WSL has none that opens; the one recorded was made on a sound server of our own), `vah264enc` on Intel or AMD graphics, `x264enc`, and a real service.
+- GNOME and KDE themselves: that mutter and KWin put the projector's X11 window on the second screen as an Xorg desktop does was read in mutter's source and not seen, and neither desktop was run.
 - A Linux desktop outside WSL: Wayland with a real compositor, a second screen for the projector, full-screen, the scale of a HiDPI screen.
 - Hardware decode through the `va` plugin on Intel or AMD graphics (only NVIDIA's decoder was there), and the software decoder (`avdec_h264`).
 - Cameras, the microphone and speech recognition at run time, the phone remote from a real phone, EasiSlides import.

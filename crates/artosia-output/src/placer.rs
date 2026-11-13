@@ -47,6 +47,14 @@ impl Live {
             return;
         }
         let Some(handle) = &self.handle else { return };
+        if !displays::tells_positions() {
+            // Nothing to fit and nowhere to put it: the window is shown where the desktop opens
+            // it. Waiting for a position here kept the projector hidden for good under Wayland.
+            handle.show();
+            self.settled = true;
+            trace(|| format!("{}: this desktop places windows itself, shown after {} ms", name(role), self.opened.elapsed().as_millis()));
+            return;
+        }
         let Some(at) = handle.placement() else { return };
         // Off the taskbar while the window is still hidden, then shown.
         let Spot::Screen { disp, .. } = &self.spot else {

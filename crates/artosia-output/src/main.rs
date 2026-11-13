@@ -531,6 +531,36 @@ fn from_rune(displays: &[rune::windows::Display]) -> Vec<displays::Disp> {
         .collect()
 }
 
+/// On a Wayland desktop the projector and stage windows go through the desktop's X11 server
+/// (Xwayland) when it answers. Wayland lets no program place a window, so the projector could
+/// not be put on its screen, kept above other windows or fitted to the screen there; an X11
+/// program may ask for all three (mutter's `window-x11.c` allows a program's own position by
+/// default), and the streaming program can then take the window's picture without the desktop
+/// asking. The window library takes Wayland whenever these variables are set, so they are
+/// cleared for this process. `ARTOSIA_WAYLAND=1` keeps the windows on Wayland.
+#[cfg(target_os = "linux")]
+fn prefer_x11() {
+    let set = |name: &str| std::env::var_os(name).is_some_and(|value| !value.is_empty());
+    if !(set("WAYLAND_DISPLAY") || set("WAYLAND_SOCKET")) || !set("DISPLAY") || set("ARTOSIA_WAYLAND") {
+        return;
+    }
+    // Asked on a thread with two seconds to answer: WSL's X display takes a connection and
+    // never answers (the streaming program's `win.rs` asks the same way).
+    let (answer, wait) = std::sync::mpsc::channel();
+    std::thread::spawn(move || {
+        let _ = answer.send(x11rb::connect(None).is_ok());
+    });
+    if wait.recv_timeout(std::time::Duration::from_secs(2)) == Ok(true) {
+        // SAFETY: among the first lines of `main`; the one other thread has sent its answer and
+        // reads no variable after that.
+        unsafe {
+            std::env::remove_var("WAYLAND_DISPLAY");
+            std::env::remove_var("WAYLAND_SOCKET");
+        }
+        trace(|| "windows: through the desktop's X11 server".to_string());
+    }
+}
+
 fn main() {
     // The operator asks whether this program can start at all: off Windows it links the
     // system's GStreamer, and without those libraries the loader ends it before this line.
@@ -538,6 +568,10 @@ fn main() {
         return;
     }
     let headless = rune::is_headless();
+    #[cfg(target_os = "linux")]
+    if !headless {
+        prefer_x11();
+    }
     process_start();
     if headless {
         // A headless run has no operator, so every window starts on a sample slide.
