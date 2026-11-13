@@ -2,6 +2,7 @@
 
 ## Backlog
 - **SMART1** The setup's download is warned about in Edge ("isn't commonly downloaded"); research what removes it, then do it · source: owner 2026-11-12 · research in: no route removes the warning on day one; ArtCraft is unsigned and stops warning through 819,197 downloads of one file; owner disputes and wants ArtCraft's result; the setup stays unsigned and unchanged, Store edition is STORE1
+- **STREAM2** Streaming works in the Linux and Mac editions: the projector's picture, the room's sound and an encoder of each system · source: follows PORT1, owner 2026-11-12: Go build the mac and linux
 
 ## Ready
 
