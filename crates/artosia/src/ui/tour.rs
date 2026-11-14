@@ -9,7 +9,7 @@
 use rune::{Align, Cx, El, Key, Side, Tx, col, el, row, spacer, text};
 use rune_kit::Kit;
 
-use crate::guide::window::Window;
+use crate::guide::window::{Action, Window};
 use crate::guide::{Goal, Lesson, Runner, Show, Step};
 use crate::palette::Command;
 use crate::state::{App, Sheet};
@@ -52,14 +52,14 @@ pub const STOP_COUNT: usize = STOPS.len();
 
 /// The tour as the guide's first lesson: each stop explains the part its key names. The guide's
 /// runner decides where the ring goes, so a later lesson of goal steps draws through this view.
-const BASICS_STEPS: [Step<Command>; STOP_COUNT] = [
+const BASICS_STEPS: [Step<Action>; STOP_COUNT] = [
     Step { id: "plan", goal: Goal::Point("plan"), needs: None, done: None, restore: None },
     Step { id: "preview", goal: Goal::Point("slide-list"), needs: None, done: None, restore: None },
     Step { id: "show", goal: Goal::Point("preview-controls"), needs: None, done: None, restore: None },
     Step { id: "live", goal: Goal::Point("transport"), needs: None, done: None, restore: None },
     Step { id: "search", goal: Goal::Point("search-button"), needs: None, done: None, restore: None },
 ];
-pub(crate) const BASICS: Lesson<Command> = Lesson { id: "basics", steps: &BASICS_STEPS };
+pub(crate) const BASICS: Lesson<Action> = Lesson { id: "basics", steps: &BASICS_STEPS };
 
 impl App {
     /// Opens the tour at its first stop, over whatever the window shows.
@@ -123,7 +123,7 @@ impl App {
 
 impl App {
     /// Starts a lesson at its first step, over whatever the window shows.
-    pub fn start_lesson(&mut self, lesson: Lesson<Command>) {
+    pub fn start_lesson(&mut self, lesson: Lesson<Action>) {
         self.close_palette();
         self.lesson = Some((lesson, 0));
     }
@@ -132,9 +132,13 @@ impl App {
         self.lesson = None;
     }
 
-    /// The centred bubble's button: the search, with the step's command already typed.
-    fn lesson_search(&mut self, command: Command) {
-        self.open_palette(crate::palette::Scope::All, command.label());
+    /// The centred bubble's button: the search, with the step's command already typed, or the
+    /// tab itself when the step asks for a tab.
+    fn lesson_search(&mut self, action: Action) {
+        match action {
+            Action::Run(command) => self.open_palette(crate::palette::Scope::All, command.label()),
+            Action::Tab(tab) => self.open_tab(tab),
+        }
     }
 }
 
@@ -168,7 +172,7 @@ fn lesson_view(s: &App, cx: &mut Cx<App>, k: &Kit, layer: &mut Vec<El>) {
         }
         Show::Search { step } => {
             let command = match lesson.steps[step].goal {
-                crate::guide::Goal::Run(command) => Some(command),
+                crate::guide::Goal::Run(action) => Some(action),
                 _ => None,
             };
             layer.push(el().key("lesson-dim").absolute(0.0, 0.0).w_full().h_full().fill(dim).a11y_hidden().on_press_tx(|_: &mut App, _: &mut Tx| {}));
@@ -179,7 +183,7 @@ fn lesson_view(s: &App, cx: &mut Cx<App>, k: &Kit, layer: &mut Vec<El>) {
 
 /// The step's bubble: where it is in the lesson, its words, Skip, and the search when the control
 /// is not on screen. No Next: the step ends on the person's own press.
-fn bubble(k: &Kit, id: &str, step: usize, total: usize, search: Option<Command>) -> El {
+fn bubble(k: &Kit, id: &str, step: usize, total: usize, search: Option<Action>) -> El {
     let (main, more) = crate::guide::lessons::words(id);
     let mut buttons = row().w_full().gap(space::S2).center_y().child(row().w(BUTTON).child(btn(t::TOUR_SKIP()).icon(&icons::CLOSE).ghost().grow().focusable().build(k, |s, _| s.end_lesson()))).child(spacer());
     if let Some(command) = search {

@@ -1,18 +1,33 @@
 //! The real window as the guide's `World`: controls from this frame's anchors with the last
 //! layout's rectangles, and states read from `App`.
 
-use super::{Anchor, World, anchors};
+use super::{Anchor, Place, World, anchors};
 use crate::palette::Command;
 use crate::state::{App, Sheet, Tab};
+
+/// What a lesson step asks the person to do: run a command, or go to a tab of the window.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum Action {
+    Run(Command),
+    Tab(Tab),
+}
 
 pub struct Window<'a> {
     pub app: &'a App,
     pub layout: &'a dyn Fn(&str) -> Option<[f32; 4]>,
 }
 
-impl World<Command> for Window<'_> {
-    fn anchors(&self, command: Command) -> Vec<Anchor> {
-        anchors::for_command(command, self.layout)
+impl World<Action> for Window<'_> {
+    fn anchors(&self, action: Action) -> Vec<Anchor> {
+        match action {
+            Action::Run(command) => anchors::for_command(command, self.layout),
+            // A tab's pill is keyed by the tab bar itself, and the bar is always on screen.
+            Action::Tab(tab) => {
+                let key = crate::ui::tabs::key(tab);
+                let visible = (self.layout)(key).is_some_and(|[_, _, w, h]| w > 0.0 && h > 0.0);
+                vec![Anchor { key: key.to_string(), place: Place::Bar, visible, enabled: true, presses: 1 }]
+            }
+        }
     }
 
     fn holds(&self, state: &str) -> bool {
@@ -21,7 +36,7 @@ impl World<Command> for Window<'_> {
 
     /// Buttons call their own code rather than a command, so a step finishes on a state, never
     /// on "the command ran"; every lesson step names its `done` state.
-    fn ran(&self, _command: Command) -> bool {
+    fn ran(&self, _action: Action) -> bool {
         false
     }
 

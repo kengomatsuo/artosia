@@ -148,10 +148,10 @@ pub(crate) fn topbar(s: &App, k: &Kit, insets: rune::ChromeInsets, wide: bool) -
         // a person looks for them. What the projector draws is the Design tab.
         .child(btn(t::BTN_SCREENS()).icon(&icons::SCREEN).ghost().anchor(crate::palette::Command::Screens, crate::guide::Place::Bar).build(k, |s, _| s.sheet = Sheet::Screens))
         .child(btn(t::BTN_PHONE()).icon(&icons::PHONE).ghost().anchor(crate::palette::Command::Remote, crate::guide::Place::Bar).build(k, |s, _| s.sheet = Sheet::Remote))
-        .child(btn(t::BTN_STREAM()).icon(&icons::STREAM).ghost().active(s.stream.is_some()).build(k, |s, _| s.open_stream()))
-        .child(btn(t::BTN_LISTEN()).icon(&icons::MIC).ghost().build(k, |s, _| s.open_listen()))
+        .child(btn(t::BTN_STREAM()).icon(&icons::STREAM).ghost().active(s.stream.is_some()).anchor(crate::palette::Command::Stream, crate::guide::Place::Bar).build(k, |s, _| s.open_stream()))
+        .child(btn(t::BTN_LISTEN()).icon(&icons::MIC).ghost().anchor(crate::palette::Command::Listen, crate::guide::Place::Bar).build(k, |s, _| s.open_listen()))
         .child(el().w(1.0).h(20.0).fill(k.c.border_base).a11y_hidden())
-        .child(btn(t::BTN_SETTINGS()).icon(&icons::SLIDERS).ghost().build(k, |s, tx| {
+        .child(btn(t::BTN_SETTINGS()).icon(&icons::SLIDERS).ghost().anchor(crate::palette::Command::Settings, crate::guide::Place::Bar).build(k, |s, tx| {
             s.sheet = Sheet::Settings;
             tx.focus(SETTINGS_FIRST, false);
         }))
