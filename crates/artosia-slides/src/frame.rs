@@ -90,6 +90,38 @@ impl Warp {
     }
 }
 
+/// What a rundown item plays.
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
+pub enum MediaKind {
+    #[default]
+    Video,
+    Audio,
+}
+
+/// What happens when an item reaches its end.
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
+pub enum MediaEnd {
+    /// The item goes black (a video) or silent and waits.
+    #[default]
+    Stop,
+    /// It plays again from the start, for as long as it is on.
+    Loop,
+    /// The output says `MediaEnded` and the operator shows the next plan item.
+    Next,
+}
+
+/// A video or sound the rundown plays. A new `id` is a new showing, so the same file shown again
+/// starts over (OBS restarts a media source on show).
+#[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
+pub struct MediaItem {
+    pub id: u64,
+    pub path: String,
+    pub kind: MediaKind,
+    pub end: MediaEnd,
+    /// 0 to 100; above 100 plays as 100.
+    pub volume: u8,
+}
+
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct OutputState {
     pub slide: Option<Slide>,
@@ -105,6 +137,12 @@ pub struct OutputState {
     pub stage: StageInfo,
     #[serde(default)]
     pub warp: Warp,
+    /// The item in front, over the background and under the words.
+    #[serde(default)]
+    pub media: Option<MediaItem>,
+    /// A scene's music, under everything.
+    #[serde(default)]
+    pub music: Option<MediaItem>,
 }
 
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
@@ -174,6 +212,10 @@ pub enum FromOutput {
     Preview { width: u32, height: u32, rgb: String },
     /// The moving background stopped or changed; the operator drops the picture.
     PreviewEnd,
+    /// A `Stop` or `Next` item reached its end.
+    MediaEnded { id: u64 },
+    /// Where the item in front is, at most twice a second while it plays.
+    MediaPlaying { id: u64, position_ms: u64 },
 }
 
 #[cfg(test)]
@@ -188,6 +230,27 @@ mod tests {
         let line = encode(&ToOutput::State(Box::new(state)));
         let Some(ToOutput::State(back)) = decode::<ToOutput>(&line) else { panic!("the line decodes") };
         assert_eq!(back.look, look);
+    }
+
+    #[test]
+    fn a_state_from_before_media_decodes_with_none() {
+        let mut value = serde_json::to_value(OutputState::default()).unwrap();
+        let fields = value.as_object_mut().unwrap();
+        fields.remove("media");
+        fields.remove("music");
+        let back: OutputState = serde_json::from_value(value).unwrap();
+        assert_eq!((back.media, back.music), (None, None));
+    }
+
+    #[test]
+    fn an_item_survives_the_line() {
+        let item = MediaItem { id: 7, path: "a.mp4".into(), kind: MediaKind::Audio, end: MediaEnd::Next, volume: 40 };
+        let state = OutputState { media: Some(item.clone()), music: Some(item.clone()), ..OutputState::default() };
+        let line = encode(&ToOutput::State(Box::new(state)));
+        let Some(ToOutput::State(back)) = decode::<ToOutput>(&line) else { panic!("the line decodes") };
+        assert_eq!((back.media, back.music), (Some(item.clone()), Some(item)));
+        let ended = encode(&FromOutput::MediaEnded { id: 7 });
+        assert_eq!(decode::<FromOutput>(&ended), Some(FromOutput::MediaEnded { id: 7 }));
     }
 }
 

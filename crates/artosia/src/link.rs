@@ -239,7 +239,8 @@ fn serve(stream: TcpStream, rx: &Receiver<ToOutput>, last: &mut Last, options: &
                         }
                 }
                 Some(FromOutput::PreviewEnd) if reader_live.drop_picture() => reader_waker(),
-                Some(FromOutput::PreviewEnd) | None => {}
+                // The operator side of the rundown (OVRUN1) will act on these two.
+                Some(FromOutput::PreviewEnd | FromOutput::MediaEnded { .. } | FromOutput::MediaPlaying { .. }) | None => {}
             }
         }
         // The projector is gone, and with it the picture.

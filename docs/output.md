@@ -120,3 +120,11 @@ The projector goes full-screen and always on top. On the screen that holds Artos
 
 "The first screen" is the one Windows calls primary, where Artosia's window opens. A volunteer who drags Artosia's window to another screen and wants the projector on the primary one is not served; the output would need to be told which screen the operator window is on.
 
+## Rundown items: a video or sound in front, music under (2026-11-14, OVRUN1 playback side)
+
+`OutputState.media` is the item in front and `OutputState.music` a scene's music (`MediaItem { id, path, kind: Video | Audio, end: Stop | Loop | Next, volume 0..=100 }`). Both default to none, so an older operator still works. The same `id` again changes only the level; a new `id` starts the item over. `items.rs` plays them on its own worker, a video on its own `NativeSurface` that `audience_over` draws between the background and the words (black behind it, so an item that ended with Stop shows black, never the background; Next keeps its last frame). The output sends `MediaPlaying { id, position_ms }` twice a second and `MediaEnded { id }` when a Stop or Next item ends. Music drops to a third while a video item with sound plays and returns over half a second (`media.rs`). A missing or broken file sends `MediaError` (a video: the kinds `video-missing` and `video-failed`; a sound: a sentence, until the operator words an audio kind); a build without video sends `video-none`.
+
+Demo: `artosia-output --here --demo-item <file> [--demo-audio] [--demo-end stop|loop|next] [--demo-volume N] [--demo-video <bg>] [--demo-music <file>]` with `ARTOSIA_TRACE=1` logs `item 1 pos=<ms> loops=<n>`.
+
+Measured (release, Windows 11, Intel Iris Xe, `tools/ram/measure.ps1`, 40 s, both runs proven looping): background loop alone 293 MB working set, 283 MB private for `artosia-output`; the same with a looping 1080p video item with sound over it 358 MB working set, 375 MB private (+65 MB, +92 MB), redraws 125/s against 109/s, no skipped presents. The item costs a second decoder; stopping the background while an opaque item covers it is not built.
+

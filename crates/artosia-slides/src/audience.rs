@@ -325,6 +325,12 @@ fn message(message: &str, w: f32, h: f32) -> El {
 
 /// The whole audience screen at `w` by `h` points. `now` is seconds since the Unix epoch.
 pub fn audience(state: &OutputState, w: f32, h: f32, media: Media, detail: Detail, now: f64) -> El {
+    audience_over(state, w, h, media, None, detail, now)
+}
+
+/// The same screen with a rundown item's video between the background and the words. The item
+/// layer is black, so an item that has ended shows black and never the background behind it.
+pub fn audience_over(state: &OutputState, w: f32, h: f32, media: Media, item: Option<&NativeSurface>, detail: Detail, now: f64) -> El {
     let look = &state.look;
     let mut root = el().key("audience").size(w, h).fill(Color::BLACK).role("img");
     if state.black {
@@ -333,6 +339,9 @@ pub fn audience(state: &OutputState, w: f32, h: f32, media: Media, detail: Detai
     root = root.child(background(look, w, h, media));
     if look.is_media() && look.dim > 0.0 {
         root = root.child(el().key("dim").absolute(0.0, 0.0).size(w, h).fill(Color::BLACK.alpha(look.dim.clamp(0.0, 1.0))).a11y_hidden());
+    }
+    if let Some(item) = item {
+        root = root.child(el().key("item").absolute(0.0, 0.0).size(w, h).fill(Color::BLACK).native_surface(item, SurfaceFit::Fit).a11y_hidden());
     }
     let logo = media.logo.filter(|_| state.logo_on);
     if let Some(logo) = logo {

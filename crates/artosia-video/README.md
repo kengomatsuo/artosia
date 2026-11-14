@@ -35,6 +35,10 @@ target\release\examples\loop.exe [file] [--seconds N] [--software]
 
 It prints `pos=<s> loops=<n> decoder=<factory>` once a second. Default file: `fixtures/bg30.mp4`.
 
+## Sound and items
+
+`VideoOptions { muted: false, volume, looping }` plays a video with its sound; `looping: false` ends at the end of the file (`VideoLoop::ended()`, last frame stays) instead of seeking back. `VideoLoop::start_audio(path, options)` plays a sound file alone (playbin3, `flags=audio`), and `set_volume` changes the level while it plays. The output process's `items.rs` uses these for the rundown's video, audio and music items.
+
 ## Camera
 
 `CameraLoop::open_address(address, &surface)` opens a camera on the network by its address (`rtsp://`, `srt://`, `http://`), with no device monitor; `Cameras::open` calls it for a name that `is_address`. `Cameras::start()` (about 2 s, about 50 MB for as long as it lives) watches GStreamer's device monitor; `Cameras::open(name, &surface)` starts the camera called `name` (empty: the first) and blocks until a picture arrives, up to 6 s. `CameraLoop::{since_frame, error, frames, name}` say whether it still works; dropping it stops the camera. `VideoError::NoCamera` is a missing one. `ARTOSIA_HIDE_CAMERAS_FILE` names a file of camera names to hide, for tests.
@@ -74,4 +78,4 @@ same method before trimming a bundle.
 - Rotation tags and HDR are ignored; colour is mapped to Rune's BT.601/709, video/full range.
 - Odd frame sizes are rejected by Rune (`NV12 requires even dimensions`) and reported in `error()`.
 - Two loops with different `prefer_hardware` values at once share the same process-wide ranks.
-- Audio (`muted: false`) uses playbin3's default audio sink; untested.
+- Audio (`muted: false`, `start_audio`) uses playbin3's default audio sink; played on Windows with the 440 Hz and 220 Hz fixtures (`tools/make-fixture.sh`), not checked on macOS or Linux.

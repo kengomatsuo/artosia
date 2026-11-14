@@ -27,7 +27,15 @@ pub enum Want {
     Camera(String),
 }
 
-static WANT: OnceLock<Mutex<Sender<Want>>> = OnceLock::new();
+/// What the worker is told: the background wanted, or whether a video item hides it.
+enum Msg {
+    Want(Want),
+    Cover(bool),
+}
+
+static WANT: OnceLock<Mutex<Sender<Msg>>> = OnceLock::new();
+
+
 static CAMERAS: OnceLock<Arc<Cameras>> = OnceLock::new();
 
 /// A stalled picture older than this stops being shown.
@@ -90,7 +98,15 @@ fn start_previews() {
 /// Asks for a file or camera behind the text, or for none.
 pub fn want(wanted: Want) {
     if let Some(tx) = WANT.get().and_then(|tx| tx.lock().ok()) {
-        let _ = tx.send(wanted);
+        let _ = tx.send(Msg::Want(wanted));
+    }
+}
+
+/// A video item now covers the whole frame (true) or no longer does (false), so the background
+/// under it need not decode.
+pub fn cover(on: bool) {
+    if let Some(tx) = WANT.get().and_then(|tx| tx.lock().ok()) {
+        let _ = tx.send(Msg::Cover(on));
     }
 }
 
@@ -126,9 +142,38 @@ struct Worker {
     /// The last notice sent, so the same one is not repeated.
     told: String,
     last_trace: Instant,
+    /// A video item hides the background.
+    covered: bool,
 }
 
 impl Worker {
+    /// Tears the file under a video item down, so it costs nothing while it cannot be seen. A
+    /// pause kept the decoder's memory (measured: 7 MB saved against 69 MB for a teardown), and
+    /// the surface keeps the last picture, so the restart (about 110 ms) shows no gap.
+    fn hold(&mut self) {
+        if self.covered && matches!(self.playing, Some(Playing::File { .. })) {
+            trace(|| "background torn down under the item".to_string());
+            self.playing = None;
+        }
+    }
+
+    fn set_cover(&mut self, on: bool) {
+        if self.covered == on {
+            return;
+        }
+        self.covered = on;
+        if on {
+            self.hold();
+            return;
+        }
+        let began = Instant::now();
+        if self.playing.is_none() && matches!(self.wanted, Want::File(_)) {
+            self.try_start(false);
+        }
+        shared().touch();
+        trace(|| format!("background back after {} ms", began.elapsed().as_millis()));
+    }
+
     fn tell(&mut self, message: String) {
         if self.told != message {
             trace(|| format!("media notice: {}", if message.is_empty() { "cleared" } else { &message }));
@@ -277,7 +322,7 @@ impl Worker {
 /// The camera names for the operator come from the system every two seconds (`cameras.rs`),
 /// because GStreamer's device monitor costs about 50 MB for as long as it runs.
 pub fn start() {
-    let (tx, rx) = channel::<Want>();
+    let (tx, rx) = channel::<Msg>();
     start_previews();
     if WANT.set(Mutex::new(tx)).is_err() {
         return;
@@ -296,17 +341,28 @@ pub fn start() {
         });
     }
     std::thread::spawn(move || {
-        let mut worker = Worker { wanted: Want::Nothing, playing: None, retry_at: None, told: String::new(), last_trace: Instant::now() };
+        let mut worker = Worker { wanted: Want::Nothing, playing: None, retry_at: None, told: String::new(), last_trace: Instant::now(), covered: false };
         loop {
             match rx.recv_timeout(Duration::from_millis(500)) {
-                Ok(mut wanted) => {
-                    while let Ok(newer) = rx.try_recv() {
-                        wanted = newer;
+                Ok(first) => {
+                    let (mut wanted, mut cover) = (None, None);
+                    for msg in std::iter::once(first).chain(rx.try_iter()) {
+                        match msg {
+                            Msg::Want(newer) => wanted = Some(newer),
+                            Msg::Cover(on) => cover = Some(on),
+                        }
+                    }
+                    if let Some(on) = cover.filter(|on| *on) {
+                        worker.set_cover(on);
                     }
                     // The same background again (every slide sends the whole state) changes nothing.
-                    if wanted != worker.wanted {
+                    if let Some(wanted) = wanted.filter(|wanted| *wanted != worker.wanted) {
                         worker.switch_to(wanted);
                         worker.try_start(false);
+                        worker.hold();
+                    }
+                    if let Some(false) = cover {
+                        worker.set_cover(false);
                     }
                 }
                 Err(RecvTimeoutError::Timeout) => {}
@@ -315,6 +371,7 @@ pub fn start() {
             worker.check();
             if worker.playing.is_none() && worker.wanted != Want::Nothing && worker.retry_at.is_some_and(|at| Instant::now() >= at) {
                 worker.try_start(false);
+                worker.hold();
             }
             worker.report();
         }

@@ -13,6 +13,9 @@
 mod cameras;
 mod demo;
 mod displays;
+#[cfg(feature = "video")]
+mod items;
+mod media;
 mod placer;
 #[cfg(feature = "video")]
 mod video;
@@ -22,8 +25,8 @@ use std::net::{Ipv4Addr, TcpListener, TcpStream};
 use std::sync::atomic::{AtomicBool, AtomicU64, Ordering};
 use std::sync::{Arc, Mutex, OnceLock};
 
-use artosia_slides::audience::{Detail, Media, audience};
-use artosia_slides::frame::{DisplayInfo, FromOutput, OutputState, PORT, ToOutput, decode, encode, trace};
+use artosia_slides::audience::{Detail, Media, audience_over};
+use artosia_slides::frame::{DisplayInfo, FromOutput, MediaEnd, MediaItem, MediaKind, OutputState, PORT, ToOutput, decode, encode, trace};
 use artosia_core::deck::NoticeKind;
 use artosia_slides::look::{Background, NoticeStyle};
 use artosia_slides::stage::stage;
@@ -50,6 +53,10 @@ struct Shared {
     cameras: Mutex<Vec<String>>,
     client: Mutex<Option<TcpStream>>,
     surface: NativeSurface,
+    /// The frames of the rundown's video item, drawn over the background.
+    item_surface: NativeSurface,
+    /// The item layer is drawn: a video item is playing or has ended on black.
+    item_live: AtomicBool,
     /// The video surface holds frames of the current background.
     video_live: AtomicBool,
     /// The video is held back while a window opens (see `placer.rs`).
@@ -79,6 +86,8 @@ fn shared() -> &'static Arc<Shared> {
             cameras: Mutex::new(Vec::new()),
             client: Mutex::new(None),
             surface: NativeSurface::new(),
+            item_surface: NativeSurface::new(),
+            item_live: AtomicBool::new(false),
             video_live: AtomicBool::new(false),
             quiet: AtomicBool::new(false),
             hide_request: AtomicBool::new(false),
@@ -163,6 +172,7 @@ fn setup(s: &mut Screen, waker: Waker) {
     }
     if s.role == Role::Audience {
         shared.surface.set_waker(waker.clone());
+        shared.item_surface.set_waker(waker.clone());
         warp().add_waker(waker.clone());
         s.images = Some(ImageCache::new(waker));
     }
@@ -262,9 +272,10 @@ fn view(s: &Screen, cx: &mut Cx<Screen>) -> El {
                 logo: s.logo.as_ref().map(|(_, image)| image.pixels()),
                 slide: s.slide_picture.as_ref().map(|(_, image)| image.pixels()),
             };
+            let item = (shared.item_live.load(Ordering::Acquire) && !shared.quiet.load(Ordering::Acquire) && state.media.as_ref().is_some_and(|item| item.kind == MediaKind::Video)).then_some(&shared.item_surface);
             match demo::sheet(w, h).or_else(|| demo::direct().then(|| demo::through_notice(&state, w, h))) {
                 Some(sheet) => root.child(sheet),
-                None => root.child(audience(&state, w, h, media, Detail::Output, s.now).absolute(0.0, 0.0)),
+                None => root.child(audience_over(&state, w, h, media, item, Detail::Output, s.now).absolute(0.0, 0.0)),
             }
         }
         Role::Stage => root.child(stage(&state, w, h, s.now).absolute(0.0, 0.0)),
@@ -313,6 +324,12 @@ fn apply(message: ToOutput) {
                 Background::Camera(name) => video::Want::Camera(name.clone()),
                 _ => video::Want::Nothing,
             });
+            #[cfg(feature = "video")]
+            items::want(state.media.clone(), state.music.clone());
+            #[cfg(not(feature = "video"))]
+            if state.media.is_some() || state.music.is_some() {
+                shared.tell(&FromOutput::MediaError("video-none".to_string()));
+            }
             #[cfg(not(feature = "video"))]
             if state.look.is_moving() {
                 // A kind, worded by the operator in its own language (`why.rs` `media_problem`).
@@ -614,8 +631,37 @@ fn main() {
     #[cfg(feature = "video")]
     if !headless {
         video::start();
+        items::start();
     }
-    if let Some(path) = flag_value("--demo-video") {
+    if let Some(path) = flag_value("--demo-item") {
+        // A rundown item on sample lyrics, with its end, level and a sound under it from flags.
+        let end = match flag_value("--demo-end").as_deref() {
+            Some("loop") => MediaEnd::Loop,
+            Some("next") => MediaEnd::Next,
+            _ => MediaEnd::Stop,
+        };
+        let kind = if has_flag("--demo-audio") { MediaKind::Audio } else { MediaKind::Video };
+        let volume = flag_value("--demo-volume").and_then(|v| v.parse().ok()).unwrap_or(100);
+        let item = |id, path: String, kind, end, volume| MediaItem { id, path, kind, end, volume };
+        let mut state = demo::lyrics();
+        state.media = Some(item(1, path, kind, end, volume));
+        state.music = flag_value("--demo-music").map(|path| item(2, path, MediaKind::Audio, MediaEnd::Loop, flag_value("--demo-music-volume").and_then(|v| v.parse().ok()).unwrap_or(60)));
+        if let Some(path) = flag_value("--demo-video") {
+            state.look.background = Background::Video(path);
+        }
+        // `--demo-clear-after N` sends the same slide without the item after N seconds.
+        if let Some(secs) = flag_value("--demo-clear-after").and_then(|secs| secs.parse::<u64>().ok()) {
+            let mut cleared = state.clone();
+            cleared.media = None;
+            cleared.music = None;
+            std::thread::spawn(move || {
+                std::thread::sleep(std::time::Duration::from_secs(secs));
+                apply(ToOutput::State(Box::new(cleared)));
+            });
+        }
+        apply(ToOutput::State(Box::new(state)));
+    }
+    if let Some(path) = flag_value("--demo-video").filter(|_| !has_flag("--demo-item")) {
         let mut state = demo::lyrics();
         state.look.background = Background::Video(path);
         state.look.shadow = !has_flag("--demo-no-shadow");

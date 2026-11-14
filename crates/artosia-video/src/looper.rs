@@ -32,17 +32,24 @@ pub struct VideoOptions {
     /// Decode and download every frame but never push it to the surface. A diagnostic that
     /// separates the decoder's cost from the draw's.
     pub discard_frames: bool,
+    /// Sound level when not muted, 0.0 to 1.0 (default 1.0).
+    pub volume: f64,
+    /// Play again from the start at the end (default true). Off, the end is reported by
+    /// [`VideoLoop::ended`] and the last frame stays on the surface.
+    pub looping: bool,
 }
 
 impl Default for VideoOptions {
     fn default() -> Self {
-        Self { muted: true, prefer_hardware: true, only_decoder: None, discard_frames: false }
+        Self { muted: true, prefer_hardware: true, only_decoder: None, discard_frames: false, volume: 1.0, looping: true }
     }
 }
 
 /// What a running pipeline reports to its owner.
 pub(crate) struct Shared {
     pub(crate) loops: AtomicU64,
+    /// A non-looping item reached its end.
+    pub(crate) ended: AtomicBool,
     pub(crate) stop: AtomicBool,
     pub(crate) error: Mutex<Option<String>>,
     /// Frames pushed so far.
@@ -54,7 +61,7 @@ pub(crate) struct Shared {
 
 impl Default for Shared {
     fn default() -> Self {
-        Self { loops: AtomicU64::new(0), stop: AtomicBool::new(false), error: Mutex::new(None), frames: AtomicU64::new(0), started: Instant::now(), last_frame: AtomicU64::new(0) }
+        Self { loops: AtomicU64::new(0), ended: AtomicBool::new(false), stop: AtomicBool::new(false), error: Mutex::new(None), frames: AtomicU64::new(0), started: Instant::now(), last_frame: AtomicU64::new(0) }
     }
 }
 
@@ -177,8 +184,13 @@ pub(crate) fn preroll(pipeline: &gst::Element) -> Result<(), VideoError> {
     }
 }
 
-fn segment_seek(pipeline: &gst::Element, flush: bool) -> Result<(), gst::glib::BoolError> {
-    let mut flags = gst::SeekFlags::SEGMENT;
+/// A seek to the start. `SEGMENT` makes the pipeline post `SEGMENT_DONE` instead of ending, which
+/// is what a seamless loop needs; without it the end is a plain end of stream.
+fn segment_seek(pipeline: &gst::Element, flush: bool, segment: bool) -> Result<(), gst::glib::BoolError> {
+    let mut flags = gst::SeekFlags::empty();
+    if segment {
+        flags |= gst::SeekFlags::SEGMENT;
+    }
     if flush {
         flags |= gst::SeekFlags::FLUSH;
     }
@@ -195,7 +207,7 @@ impl VideoLoop {
         let uri = file_uri(path)?;
         if !options.prefer_hardware {
             hardware::prefer_hardware(false);
-            return Self::build(&uri, &surface, options);
+            return Self::build(&uri, Some(&surface), options);
         }
         // On Windows the Direct3D 11 decoder comes first: measured on this PC it uses about
         // 60 MB less than the Direct3D 12 one for the same CPU, and it runs on older drivers.
@@ -204,11 +216,11 @@ impl VideoLoop {
         if let Some(prefix) = family {
             hardware::keep_only(prefix);
         }
-        match Self::build(&uri, &surface, options) {
+        match Self::build(&uri, Some(&surface), options) {
             Ok(video) => Ok(video),
             Err(first @ (VideoError::Pipeline(_) | VideoError::Timeout)) => {
                 hardware::prefer_hardware(false);
-                let second = Self::build(&uri, &surface, options);
+                let second = Self::build(&uri, Some(&surface), options);
                 // Only this file needed software; the next one tries the hardware again.
                 hardware::prefer_hardware(true);
                 match second {
@@ -223,17 +235,34 @@ impl VideoLoop {
         }
     }
 
-    fn build(uri: &str, surface: &NativeSurface, options: VideoOptions) -> Result<VideoLoop, VideoError> {
+    /// A sound file played on its own (playbin3 with video off); `options.muted`, `prefer_hardware`
+    /// and the frame options mean nothing here. Blocks until the pipeline is ready.
+    pub fn start_audio(path: &Path, options: VideoOptions) -> Result<VideoLoop, VideoError> {
+        crate::init()?;
+        let uri = file_uri(path)?;
+        Self::build(&uri, None, options)
+    }
+
+    /// `surface` None plays the sound only.
+    fn build(uri: &str, surface: Option<&NativeSurface>, options: VideoOptions) -> Result<VideoLoop, VideoError> {
         let shared = Arc::new(Shared::default());
-        let sink = make_sink(surface, &shared, true, options.discard_frames);
 
         let playbin = playbin3(uri)?;
-        playbin.set_property_from_str("flags", if options.muted { "video" } else { "video+audio" });
-        playbin.set_property("mute", options.muted);
-        playbin.set_property("video-sink", &sink);
+        let flags = match (surface.is_some(), options.muted) {
+            (false, _) => "audio",
+            (true, true) => "video",
+            (true, false) => "video+audio",
+        };
+        playbin.set_property_from_str("flags", flags);
+        let muted = options.muted && surface.is_some();
+        playbin.set_property("mute", muted);
+        playbin.set_property("volume", options.volume.clamp(0.0, 1.0));
+        if let Some(surface) = surface {
+            playbin.set_property("video-sink", make_sink(surface, &shared, true, options.discard_frames));
+        }
 
         preroll(&playbin)?;
-        let started = segment_seek(&playbin, true).and_then(|()| {
+        let started = segment_seek(&playbin, true, options.looping).and_then(|()| {
             playbin.set_state(gst::State::Playing).map(|_| ()).map_err(|e| gst::glib::bool_error!("{e}"))
         });
         if let Err(e) = started {
@@ -248,7 +277,7 @@ impl VideoLoop {
             let (pipeline, shared) = (playbin.clone(), shared.clone());
             std::thread::Builder::new()
                 .name("artosia-video-bus".into())
-                .spawn(move || watch_bus(&bus, &pipeline, &shared))
+                .spawn(move || watch_bus(&bus, &pipeline, &shared, options.looping))
                 .map_err(|e| VideoError::Pipeline(e.to_string()))?
         };
         Ok(VideoLoop { pipeline: playbin, shared, decoder: Mutex::new(None), bus_thread: Some(bus_thread), fallback: None })
@@ -275,6 +304,16 @@ impl VideoLoop {
         self.pipeline.query_position::<gst::ClockTime>().map(|t| Duration::from_nanos(t.nseconds()))
     }
 
+    /// Whether a non-looping file has played to its end.
+    pub fn ended(&self) -> bool {
+        self.shared.ended.load(Ordering::Relaxed)
+    }
+
+    /// Changes the sound level while it plays, 0.0 to 1.0.
+    pub fn set_volume(&self, volume: f64) {
+        self.pipeline.set_property("volume", volume.clamp(0.0, 1.0));
+    }
+
     /// Times playback wrapped back to the start.
     pub fn loops(&self) -> u64 {
         self.shared.loops.load(Ordering::Relaxed)
@@ -295,15 +334,16 @@ impl VideoLoop {
     }
 }
 
-fn watch_bus(bus: &gst::Bus, pipeline: &gst::Element, shared: &Shared) {
+fn watch_bus(bus: &gst::Bus, pipeline: &gst::Element, shared: &Shared, looping: bool) {
     use gst::MessageView as M;
     while !shared.stop.load(Ordering::Relaxed) {
         let Some(msg) = bus.timed_pop(gst::ClockTime::from_mseconds(100)) else { continue };
         match msg.view() {
+            M::Eos(_) if !looping => shared.ended.store(true, Ordering::Relaxed),
             M::SegmentDone(_) | M::Eos(_) => {
                 let eos = matches!(msg.view(), M::Eos(_));
                 shared.loops.fetch_add(1, Ordering::Relaxed);
-                if let Err(e) = segment_seek(pipeline, eos) {
+                if let Err(e) = segment_seek(pipeline, eos, true) {
                     shared.set_error(format!("loop seek failed: {e}"));
                 }
             }
