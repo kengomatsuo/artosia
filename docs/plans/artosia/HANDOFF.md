@@ -12,16 +12,21 @@
 | WSL | Off limits (owner); scripts carry no WSL call; Linux builds paused | [rule: memory no-wsl.md] [card: NOWSL1] |
 | Mac | Reached over Tailscale SSH at 100.120.153.35 (`Host mac` in `C:\Users\kenne\.ssh\config`); Tailscale's check mode wants the owner's Tailscale sign-in, then 12 hours free | [read: ssh mac printed "Tailscale SSH requires an additional check"] |
 | PowerPoint import | Works (6 of 6 Warta slides); redraws text only; picture-only card now named | [commit c2f10e6] [card: PPTX1] |
-| Announcement styles | Hairline, Ledger, Band drawn for five kinds (`crates/artosia-slides/src/notice.rs`), demo scenes only | [commit 88013b9] |
 | UI overhaul | All in Review: tabs c7ff4e7, colour picker e63fb2c, calendar 30ff5d9, members b300540, offerings 9435328, templates 7318e0d, rundown items ebeb24c with playback 1671469 and thumbnails 24a39ee, PowerPoint 8bd3111 with export f059ebe | [card: UIOVER1] [rule: .claude/rules/operator.md, last lines] |
 | Song browser | In Review: page reader 35ad9cd (repeat directions dropped d3018b0), browse layer d2df40f, dialog 9c494ab | [card: WEBSONGS1] |
 | Song editor | In Review: part cards over the marker text, kinds picked, order strip (`parts.rs`, `ui/editor.rs`) | [card: LYRICSEDIT1] [commit 42363ad] |
 | Search | In Review: songs and verses are two sections; the one that holds what was typed leads | [card: SEARCHINTENT1] [commit 3413516] |
 | Tour | In Review: runs on the practice library, then every feature's lesson in turn | [card: TOURROOM1] [card: TOURFULL1] [commit a1b3b96] |
 | Guide | In Review: fifteen lessons and the tour, help on every feature, what's new, all texts in ten languages; a lesson keeps its progress and rings scrolled controls | [card: GUIDE1] [card: HELPNEAR1] [commit 825682f] [rule: docs/plans/artosia/guide.md "Where it stands"] |
+| Calendar, round 2 | In Review, released in 0.1.33: repeats every n weeks or months, one date cancelled or moved (stored as an override of that date), drag and drop | [card: CALREPEAT1] [card: CALEXCEPT1] [card: CALDRAG1] [commit 8350452] |
+| Card windows | In Review, in 0.1.33: schedule and birthdays read this or next week, month or quarter, or custom days, with a highlighted part inside the shown range | [card: SCHEDRANGE1] [card: BDAYRANGE1] [commit 7451f4c] |
+| Announcement styles, round 2 | In Review, in 0.1.33: seven styles in `crates/artosia-slides/src/warta/`, 28 bundled fonts, wrap before shrink, continuation slides at the 40 px floor | [card: WARTADESIGN1] [commit 13043bb] |
+| Phone editing | In Review, in 0.1.33: edit level per phone with its own PIN, text and lists, a stale save refused with both texts | [card: PHONEEDIT1] [commit 13043bb] |
+| On-slide editing | In Review, NOT released: click a box, Enter types in place, fit shrinks then continues; one save path (`App::apply_card`) for the console and the phone | [card: NOTICEEDIT1] [commit ab94bc9] |
 
 ## Last checks
 
+- `cargo test -p artosia -p artosia-core -p artosia-slides -p artosia-remote`: 344 (5 ignored), 239 (+2), 42, 26 and 12 passed [read: run before ab94bc9]
 - `bun ~/.claude/scripts/limit.ts 1200 cargo test -q -p artosia -p artosia-lyrics`: 303 and 42 passed (1 ignored) [read: run before 9c494ab]
 - `cargo test -p artosia-core -p artosia-slides -p artosia-office`: 215 (+2), 22 and 51 passed [read: runs before ebeb24c and 8bd3111]
 - `python -I tools/check-brief.py`: 5 problems, all `GUIDE_SCREENS_OPEN*` from the guide session's commit 7859a8f [read: last run]
@@ -30,8 +35,8 @@
 
 ## Next actions, in order
 
-1. Release the overhaul: `bash tools/publish.sh <next version> "<notes>"` [rule: CLAUDE.md Commands]; it was not released in this session.
-2. Unverified, to check on a real run: a scene whose background is a video, a media item whose file fails, a Stop item's end in the operator thumbnail [read: OVRUN1 builder report]; the LibreOffice export route (no LibreOffice on this PC) [read: OVPPTX1 office report]; Letras pages live (it refuses programs) [commit 35ad9cd].
+1. Release on-slide editing with the next version: `bash tools/publish.sh <next version> "<notes>"` from the clean clone [commit ab94bc9 is after the v0.1.33 tag].
+2. Unverified, to check on a real run: typing on a real phone's keyboard into a card (checked only through the remote's test client) [card: PHONEEDIT1]; a scene whose background is a video, a media item whose file fails, a Stop item's end in the operator thumbnail [read: OVRUN1 builder report]; the LibreOffice export route (no LibreOffice on this PC) [read: OVPPTX1 office report]; Letras pages live (it refuses programs) [commit 35ad9cd].
 3. When the owner has signed in to Tailscale: `bash tools/publish.sh 0.1.31 --finish` adds the Mac edition [commit 211d426], then `bash tools/publish-site.sh`.
 
 ## Owner decisions in force
