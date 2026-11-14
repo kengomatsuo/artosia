@@ -49,6 +49,8 @@ const CREDITS: &[&str] = &[
 ];
 /// Starts of a line about how to play, not about what is sung.
 const META: &[&str] = &["capo", "kunci dasar", "kunci:", "nada dasar", "tempo", "bpm", "tuning", "key:"];
+/// Starts of a line that tells the band to repeat a part ("Back to Reff"): a direction, never sung.
+const REPEATS: &[&str] = &["back to", "kembali ke", "balik ke", "ulangi", "ulang reff", "repeat", "(repeat", "go to", "ke reff"];
 
 /// Sorts one line of text. `trusted` is a container a site's selector chose: prose and
 /// captions there are dropped instead of ending the song.
@@ -75,6 +77,7 @@ pub(crate) fn classify(raw: &str, trusted: bool, out: &mut Vec<Line>) {
         || is_tab(line)
         || is_chord_line(raw)
         || starts(META)
+        || starts(REPEATS)
         || is_reference(line)
         || !line.chars().any(char::is_alphabetic)
     {
@@ -378,6 +381,15 @@ mod tests {
         let mut out = Vec::new();
         text.lines().for_each(|l| classify(l, trusted, &mut out));
         out
+    }
+
+    #[test]
+    fn a_repeat_direction_is_dropped_and_never_sung() {
+        for line in ["Back to Reff", "Back to *, Reff", "Kembali ke Reff", "Ulangi reff 2x", "(Repeat chorus)"] {
+            assert_eq!(kinds(line, true), vec![Line::Drop], "{line}");
+        }
+        // A sung line that merely holds the words stays sung.
+        assert!(matches!(kinds("Bawa aku kembali ke rumah-Mu", true)[..], [Line::Sung(_)]));
     }
 
     #[test]
