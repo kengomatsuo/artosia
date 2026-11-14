@@ -88,10 +88,19 @@ pub enum NoticeStyle {
     Simple,
     /// Simple on a near-black ground.
     SimpleDark,
+    /// A flush-left grid where the date numeral is the biggest thing, set in one dark column, with rows on hairlines and one red accent.
+    SwissNumerals,
+    /// One serif in roman and italic on warm paper, italic date numerals and a colour wash from the bottom edge.
+    SerifItalic,
+    /// A departure board: a black header band, mono figures, condensed words and an inverted row for the highlight.
+    CivicBoard,
+    /// One sans in two weights on a tinted ground, a hairline under the title and a solid pill under whatever is special.
+    QuietTint,
 }
 
 impl NoticeStyle {
-    pub const ALL: [NoticeStyle; 9] = [NoticeStyle::Simple, NoticeStyle::SimpleDark, NoticeStyle::Hairline, NoticeStyle::Ledger, NoticeStyle::Band, NoticeStyle::Greige, NoticeStyle::Pill, NoticeStyle::Neon, NoticeStyle::Split];
+    /// Every style, as the gallery lists them: the default first, then the other plain families, then the posters and the look's own.
+    pub const ALL: &[NoticeStyle] = &[NoticeStyle::SerifItalic, NoticeStyle::SwissNumerals, NoticeStyle::QuietTint, NoticeStyle::CivicBoard, NoticeStyle::Greige, NoticeStyle::Pill, NoticeStyle::Neon, NoticeStyle::Split, NoticeStyle::Simple, NoticeStyle::SimpleDark, NoticeStyle::Hairline, NoticeStyle::Ledger, NoticeStyle::Band];
 
     /// The word stored in the library.
     pub fn code(self) -> &'static str {
@@ -105,17 +114,21 @@ impl NoticeStyle {
             NoticeStyle::Split => "split",
             NoticeStyle::Simple => "simple",
             NoticeStyle::SimpleDark => "simpledark",
+            NoticeStyle::SwissNumerals => "swiss",
+            NoticeStyle::SerifItalic => "serif",
+            NoticeStyle::CivicBoard => "civic",
+            NoticeStyle::QuietTint => "quiet",
         }
     }
 
     /// Whether the style brings its own ground, fonts and palette and ignores the look's.
     pub fn is_poster(self) -> bool {
-        matches!(self, NoticeStyle::Greige | NoticeStyle::Pill | NoticeStyle::Neon | NoticeStyle::Split | NoticeStyle::Simple | NoticeStyle::SimpleDark)
+        matches!(self, NoticeStyle::Greige | NoticeStyle::Pill | NoticeStyle::Neon | NoticeStyle::Split | NoticeStyle::Simple | NoticeStyle::SimpleDark | NoticeStyle::SwissNumerals | NoticeStyle::SerifItalic | NoticeStyle::CivicBoard | NoticeStyle::QuietTint)
     }
 
     /// None for a card that chose no style and follows the look.
     pub fn from_code(code: &str) -> Option<NoticeStyle> {
-        NoticeStyle::ALL.into_iter().find(|style| style.code() == code)
+        NoticeStyle::ALL.iter().copied().find(|style| style.code() == code)
     }
 }
 
@@ -377,6 +390,13 @@ pub struct Announcement {
     /// The days a schedule or birthday card reads, and the part of them that stands out.
     #[serde(default)]
     pub window: Window,
+}
+
+impl Announcement {
+    /// A card nobody chose a style for: Serif italic. Cards read from the library keep the style they were saved with.
+    pub fn new() -> Announcement {
+        Announcement { style: Some(NoticeStyle::SerifItalic), ..Announcement::default() }
+    }
 }
 
 /// Someone whose birthday the church keeps. The year, when known, is for the Members window's age

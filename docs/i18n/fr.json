@@ -6209,5 +6209,25 @@
   },
   "back": "Colours {n}",
   "why": "Plural because a choice is a set of colours"
+ },
+ "STYLE_SERIF_ITALIC": {
+  "text": "Italique serif",
+  "back": "Serif italic",
+  "why": "names the letter or layout look, apart from the other style names in this table"
+ },
+ "STYLE_SWISS_NUMERALS": {
+  "text": "Grands chiffres",
+  "back": "Large figures",
+  "why": "names the letter or layout look, apart from the other style names in this table"
+ },
+ "STYLE_QUIET_TINT": {
+  "text": "Teinte douce",
+  "back": "Soft tint",
+  "why": "names the letter or layout look, apart from the other style names in this table"
+ },
+ "STYLE_CIVIC_BOARD": {
+  "text": "Tableau horaire",
+  "back": "Timetable board",
+  "why": "names the letter or layout look, apart from the other style names in this table"
  }
 }

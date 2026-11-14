@@ -6162,5 +6162,25 @@
   },
   "back": "Colour set {n}",
   "why": "Bộ màu is a group of colours, numbered by place"
+ },
+ "STYLE_SERIF_ITALIC": {
+  "text": "Serif nghiêng",
+  "back": "Slanted serif",
+  "why": "names the letter or layout look, apart from the other style names in this table"
+ },
+ "STYLE_SWISS_NUMERALS": {
+  "text": "Số lớn",
+  "back": "Big numbers",
+  "why": "names the letter or layout look, apart from the other style names in this table"
+ },
+ "STYLE_QUIET_TINT": {
+  "text": "Nền dịu",
+  "back": "Gentle ground",
+  "why": "names the letter or layout look, apart from the other style names in this table"
+ },
+ "STYLE_CIVIC_BOARD": {
+  "text": "Bảng giờ",
+  "back": "Time board",
+  "why": "names the letter or layout look, apart from the other style names in this table"
  }
 }

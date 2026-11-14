@@ -77,7 +77,7 @@ fn main() {
         ("l-year-end", Window { range: Range::Custom(Date { year: 2026, month: 12, day: 20 }, Date { year: 2027, month: 1, day: 10 }), highlight: None }, people(9, Date { year: 2026, month: 12, day: 20 }, 22, false)),
         ("m-thirty-one", Window { range: Range::Month(0), highlight: Some(week) }, people(31, nov(1), 30, false)),
     ];
-    let styles: [(&str, Option<NoticeStyle>, &str); 10] = [
+    let styles: &[(&str, Option<NoticeStyle>, &str)] = &[
         ("1-look-midnight", None, "Midnight"),
         ("2-look-paper", None, "Paper"),
         ("3-ledger", Some(NoticeStyle::Ledger), "Midnight"),
@@ -88,12 +88,16 @@ fn main() {
         ("8-split", Some(NoticeStyle::Split), "Midnight"),
         ("9-simple", Some(NoticeStyle::Simple), "Midnight"),
         ("a-simpledark", Some(NoticeStyle::SimpleDark), "Midnight"),
+        ("f-swiss", Some(NoticeStyle::SwissNumerals), "Midnight"),
+        ("b-serif", Some(NoticeStyle::SerifItalic), "Midnight"),
+        ("d-civic", Some(NoticeStyle::CivicBoard), "Midnight"),
+        ("e-quiet", Some(NoticeStyle::QuietTint), "Midnight"),
     ];
     let account = Account::default();
     let giving = Giving { funds: &[], gifts: &[], account: &account };
     let mut written = 0;
     for (case, window, folk) in &cases {
-        for (code, style, look_name) in styles {
+        for &(code, style, look_name) in styles {
             let card = Announcement { id: 1, title: title.to_string(), fill: Fill::Birthdays, style, window: *window, seconds: 12, ..Announcement::default() };
             let look = presets().into_iter().find(|look| look.name == look_name).unwrap_or_default();
             let pages = announcement_pages(std::slice::from_ref(&card), folk, &[], &giving, &today, None, 2);

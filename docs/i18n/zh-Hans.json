@@ -6151,5 +6151,25 @@
   },
   "back": "Colour scheme {n}",
   "why": "配色 is a group of colours, numbered by place"
+ },
+ "STYLE_SERIF_ITALIC": {
+  "text": "斜体衬线",
+  "back": "Slanted serif",
+  "why": "names the letter or layout look, apart from the other style names in this table"
+ },
+ "STYLE_SWISS_NUMERALS": {
+  "text": "大数字",
+  "back": "Big numbers",
+  "why": "names the letter or layout look, apart from the other style names in this table"
+ },
+ "STYLE_QUIET_TINT": {
+  "text": "柔和底色",
+  "back": "Soft ground colour",
+  "why": "names the letter or layout look, apart from the other style names in this table"
+ },
+ "STYLE_CIVIC_BOARD": {
+  "text": "发车时刻板",
+  "back": "Departure time board",
+  "why": "names the letter or layout look, apart from the other style names in this table"
  }
 }

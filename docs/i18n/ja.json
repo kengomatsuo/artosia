@@ -6149,5 +6149,25 @@
   },
   "back": "Colour scheme {n}",
   "why": "配色 is a combination of colours, told apart by place"
+ },
+ "STYLE_SERIF_ITALIC": {
+  "text": "セリフ斜体",
+  "back": "Serif slanted",
+  "why": "names the letter or layout look, apart from the other style names in this table"
+ },
+ "STYLE_SWISS_NUMERALS": {
+  "text": "大きな数字",
+  "back": "Big numbers",
+  "why": "names the letter or layout look, apart from the other style names in this table"
+ },
+ "STYLE_QUIET_TINT": {
+  "text": "やさしい色",
+  "back": "Gentle colour",
+  "why": "names the letter or layout look, apart from the other style names in this table"
+ },
+ "STYLE_CIVIC_BOARD": {
+  "text": "発車案内板",
+  "back": "Departure information board",
+  "why": "names the letter or layout look, apart from the other style names in this table"
  }
 }

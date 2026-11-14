@@ -6151,5 +6151,25 @@
   },
   "back": "Colour combination {n}",
   "why": "색 조합 is a bundle of colours, told apart by number"
+ },
+ "STYLE_SERIF_ITALIC": {
+  "text": "세리프 기울임",
+  "back": "Serif slanting",
+  "why": "names the letter or layout look, apart from the other style names in this table"
+ },
+ "STYLE_SWISS_NUMERALS": {
+  "text": "큰 숫자",
+  "back": "Big numbers",
+  "why": "names the letter or layout look, apart from the other style names in this table"
+ },
+ "STYLE_QUIET_TINT": {
+  "text": "연한 배경",
+  "back": "Pale background",
+  "why": "names the letter or layout look, apart from the other style names in this table"
+ },
+ "STYLE_CIVIC_BOARD": {
+  "text": "출발 안내판",
+  "back": "Departure information board",
+  "why": "names the letter or layout look, apart from the other style names in this table"
  }
 }

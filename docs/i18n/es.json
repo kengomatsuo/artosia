@@ -6187,5 +6187,25 @@
   },
   "back": "Colours {n}",
   "why": "Plural because it is a set of colours"
+ },
+ "STYLE_SERIF_ITALIC": {
+  "text": "Serif cursiva",
+  "back": "Italic serif",
+  "why": "names the letter or layout look, apart from the other style names in this table"
+ },
+ "STYLE_SWISS_NUMERALS": {
+  "text": "Cifras grandes",
+  "back": "Large figures",
+  "why": "names the letter or layout look, apart from the other style names in this table"
+ },
+ "STYLE_QUIET_TINT": {
+  "text": "Tono suave",
+  "back": "Soft tone",
+  "why": "names the letter or layout look, apart from the other style names in this table"
+ },
+ "STYLE_CIVIC_BOARD": {
+  "text": "Panel de salidas",
+  "back": "Departures panel",
+  "why": "names the letter or layout look, apart from the other style names in this table"
  }
 }

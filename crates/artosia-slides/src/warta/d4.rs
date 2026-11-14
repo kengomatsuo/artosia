@@ -3,7 +3,7 @@
 use artosia_core::deck::NoticeKind;
 
 use super::largest_step;
-use super::data::{self as w, Data, Have};
+use super::data::{Data, Have};
 use super::fit;
 use super::{Fits, H, fit_cells, grown_size, put_lines, Pic, Pos, R, Sheet, Split, Tx, W, largest, largest_name_size, name_in, paragraph, paragraphs, verse, VerseBox};
 

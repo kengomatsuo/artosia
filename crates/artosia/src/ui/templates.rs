@@ -70,6 +70,10 @@ pub fn style_name(style: NoticeStyle) -> &'static str {
         NoticeStyle::Split => t::STYLE_SPLIT(),
         NoticeStyle::Simple => t::STYLE_SIMPLE(),
         NoticeStyle::SimpleDark => t::STYLE_SIMPLE_DARK(),
+        NoticeStyle::SwissNumerals => t::STYLE_SWISS_NUMERALS(),
+        NoticeStyle::SerifItalic => t::STYLE_SERIF_ITALIC(),
+        NoticeStyle::CivicBoard => t::STYLE_CIVIC_BOARD(),
+        NoticeStyle::QuietTint => t::STYLE_QUIET_TINT(),
     }
 }
 
@@ -155,7 +159,7 @@ fn rail(s: &App, k: &Kit) -> El {
     }
     let mut styles = col().key("templates-styles").role("toolbar").label(t::TPL_STYLE()).w_full().gap(2.0).focus_group().focus_follows();
     styles = styles.child(rail_row(k, "tpl-style-all".into(), t::STYLE_ALL(), None, window.style.is_none(), |s| s.templates_filter(s.templates.kind, None)));
-    for style in NoticeStyle::ALL {
+    for &style in NoticeStyle::ALL {
         styles = styles.child(rail_row(k, format!("tpl-style-{}", style.code()), style_name(style), None, window.style == Some(style), move |s| s.templates_filter(s.templates.kind, Some(style))));
     }
     col().key("templates-rail").w(RAIL).h_full().fill(sf.side).padding(space::S3).gap(2.0).child(row().w_full().child(spacer()).child(crate::ui::tour::help_mark(s, k, crate::guide::lessons::Feature::Templates))).child(kinds).child(el().h(space::S4)).child(section_label(k, t::TPL_STYLE())).child(el().h(2.0)).child(styles)

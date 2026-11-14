@@ -676,7 +676,7 @@ impl App {
                 body_face: item.body_face,
                 slide: Default::default(),
             },
-            None => Notices { seconds: 10, ..Notices::default() },
+            None => Notices { seconds: 10, style: Announcement::new().style, ..Notices::default() },
         };
         form.title.focused = true;
         form
@@ -1034,7 +1034,7 @@ impl App {
             if draft.title.trim().is_empty() && draft.body.trim().is_empty() && image.is_empty() {
                 continue;
             }
-            let mut item = Announcement { id: 0, title: draft.title, body: draft.body, seconds: 10, image, fill: Fill::Nothing, passage: String::new(), ..Announcement::default() };
+            let mut item = Announcement { id: 0, title: draft.title, body: draft.body, seconds: 10, image, fill: Fill::Nothing, passage: String::new(), ..Announcement::new() };
             if self.store.save_announcement(&mut item).is_ok() {
                 added += 1;
             }

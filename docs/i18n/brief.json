@@ -18353,6 +18353,76 @@
   "notes": "The dark partner of the plain layout."
  },
  {
+  "key": "STYLE_SWISS_NUMERALS",
+  "kind": "const",
+  "screen": "Announcements window and Templates tab, in the switch of slide layouts and in the list of layouts on the left of the Templates tab.",
+  "moment": "The person picks one of the slide layouts.",
+  "role": "choice label",
+  "does": "Names the layout that sets each day's number very large in a dark column, like a printed timetable poster.",
+  "budget": 16,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template"
+  ],
+  "notes": ""
+ },
+ {
+  "key": "STYLE_SERIF_ITALIC",
+  "kind": "const",
+  "screen": "Announcements window and Templates tab, in the switch of slide layouts and in the list of layouts on the left of the Templates tab.",
+  "moment": "The person picks one of the slide layouts.",
+  "role": "choice label",
+  "does": "Names the warm paper layout whose dates and amounts are set in a slanted book letter.",
+  "budget": 14,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template",
+   "announcement"
+  ],
+  "notes": "The layout a new card starts with; the name says the letter, not the colour."
+ },
+ {
+  "key": "STYLE_CIVIC_BOARD",
+  "kind": "const",
+  "screen": "Announcements window and Templates tab, in the switch of slide layouts and in the list of layouts on the left of the Templates tab.",
+  "moment": "The person picks one of the slide layouts.",
+  "role": "choice label",
+  "does": "Names the layout drawn like a transit departure board: a dark header band, mono figures and an inverted row for what is special.",
+  "budget": 16,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template",
+   "announcement"
+  ],
+  "notes": "Civic is the board in a station or town hall, not politics."
+ },
+ {
+  "key": "STYLE_QUIET_TINT",
+  "kind": "const",
+  "screen": "Announcements window and Templates tab, in the switch of slide layouts and in the list of layouts on the left of the Templates tab.",
+  "moment": "The person picks one of the slide layouts.",
+  "role": "choice label",
+  "does": "Names the layout set in one calm sans on a softly tinted ground, where a solid rounded pill marks whatever is special.",
+  "budget": 16,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template"
+  ],
+  "notes": ""
+ },
+ {
   "key": "ANNOUNCEMENT_QRIS",
   "kind": "const",
   "screen": "Announcements editor of a transfer card, label at the left of a small button that chooses a picture, under the card's own picture.",

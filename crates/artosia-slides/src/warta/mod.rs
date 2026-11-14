@@ -16,6 +16,10 @@ mod d2;
 mod d3;
 mod d4;
 mod d5;
+mod d6;
+mod d7;
+mod d8;
+mod d9;
 mod data;
 
 use std::collections::HashMap;
@@ -49,12 +53,16 @@ pub struct Pics<'a> {
 }
 
 /// The layout families, each one file of tokens in `assets/warta/directions`.
-const FAMILIES: [(&str, &str); 5] = [
+const FAMILIES: &[(&str, &str)] = &[
     ("d1", include_str!("../../assets/warta/directions/d1.json")),
     ("d2", include_str!("../../assets/warta/directions/d2.json")),
     ("d3", include_str!("../../assets/warta/directions/d3.json")),
     ("d4", include_str!("../../assets/warta/directions/d4.json")),
     ("d5", include_str!("../../assets/warta/directions/d5.json")),
+    ("d9", include_str!("../../assets/warta/directions/d9.json")),
+    ("d6", include_str!("../../assets/warta/directions/d6.json")),
+    ("d7", include_str!("../../assets/warta/directions/d7.json")),
+    ("d8", include_str!("../../assets/warta/directions/d8.json")),
 ];
 
 /// The shared tokens, each family under `families`, and every family with each colourway's
@@ -64,7 +72,7 @@ fn tokens() -> &'static Value {
     ALL.get_or_init(|| {
         let mut all: Value = serde_json::from_str(include_str!("../../assets/warta/shared.json")).unwrap_or(Value::Null);
         let (mut families, mut directions) = (serde_json::Map::new(), serde_json::Map::new());
-        for (family, source) in FAMILIES {
+        for &(family, source) in FAMILIES {
             let base: Value = serde_json::from_str(source).unwrap_or(Value::Null);
             for colourway in base["colourways"].as_array().into_iter().flatten() {
                 let mut direction = base.clone();
@@ -85,6 +93,10 @@ fn family_of(style: NoticeStyle) -> &'static str {
         NoticeStyle::Pill => "d2",
         NoticeStyle::Neon => "d3",
         NoticeStyle::Simple | NoticeStyle::SimpleDark => "d5",
+        NoticeStyle::CivicBoard => "d9",
+        NoticeStyle::SerifItalic => "d6",
+        NoticeStyle::SwissNumerals => "d7",
+        NoticeStyle::QuietTint => "d8",
         _ => "d4",
     }
 }
@@ -938,6 +950,10 @@ fn build(slide: &Slide, style: NoticeStyle, have: data::Have, body: Option<f32>,
         NoticeStyle::Pill => d2::draw(&mut sheet, &data, have)?,
         NoticeStyle::Neon => d3::draw(&mut sheet, &data, have)?,
         NoticeStyle::Simple | NoticeStyle::SimpleDark => d5::draw(&mut sheet, &data, have)?,
+        NoticeStyle::CivicBoard => d9::draw(&mut sheet, &data, have)?,
+        NoticeStyle::SerifItalic => d6::draw(&mut sheet, &data, have)?,
+        NoticeStyle::SwissNumerals => d7::draw(&mut sheet, &data, have)?,
+        NoticeStyle::QuietTint => d8::draw(&mut sheet, &data, have)?,
         _ => d4::draw(&mut sheet, &data, have)?,
     }
     foot(&mut sheet, slide, style);
@@ -952,14 +968,26 @@ fn build(slide: &Slide, style: NoticeStyle, have: data::Have, body: Option<f32>,
 fn foot(sheet: &mut Sheet, slide: &Slide, style: NoticeStyle) {
     let Some((at, of)) = slide.part else { return };
     let note = if slide.caption.is_empty() { format!("{at}/{of}") } else { format!("{at}/{of}  {}", slide.caption) };
+    if style == NoticeStyle::CivicBoard {
+        return d9::foot(sheet, slide, &note);
+    }
+    if style == NoticeStyle::SwissNumerals {
+        return d7::foot(sheet, &note);
+    }
+    if style == NoticeStyle::QuietTint {
+        return d8::foot(sheet, &note);
+    }
     let (colour, x) = match style {
         NoticeStyle::Greige => ("mute", sheet.g("mx")),
         NoticeStyle::Pill => ("pill", sheet.g("mx")),
         NoticeStyle::Neon => ("white", sheet.g("mx")),
         NoticeStyle::Simple | NoticeStyle::SimpleDark => ("mute", sheet.g("mx")),
+        NoticeStyle::SerifItalic => ("ink", sheet.g("mx")),
         _ => ("blue", sheet.g("mx")),
     };
-    sheet.text("kicker", &note, Tx::l(x, 1040.0).cy().fill(colour));
+    // A family with its own foot role sets the part's place in it.
+    let role = if sheet.d["type"]["foot"].is_object() { "foot" } else { "kicker" };
+    sheet.text(role, &note, Tx::l(x, 1040.0).cy().fill(colour));
 }
 
 /// Whether a layout holds this slide, and the least it has to give up when it does not.
@@ -1039,7 +1067,7 @@ mod tests {
 
     #[test]
     fn the_tokens_of_all_four_directions_are_there_with_their_faces() {
-        for style in [NoticeStyle::Greige, NoticeStyle::Pill, NoticeStyle::Neon, NoticeStyle::Split, NoticeStyle::Simple, NoticeStyle::SimpleDark] {
+        for style in [NoticeStyle::Greige, NoticeStyle::Pill, NoticeStyle::Neon, NoticeStyle::Split, NoticeStyle::Simple, NoticeStyle::SimpleDark, NoticeStyle::SwissNumerals] {
             let d = dir_of(style, "");
             assert!(d["palette"].is_object() && d["grid"]["mx"].is_number(), "{style:?}");
             for font in d["fonts"].as_object().into_iter().flatten().map(|(_, spec)| spec) {

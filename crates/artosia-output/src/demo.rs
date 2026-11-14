@@ -259,6 +259,10 @@ pub fn sheet(w: f32, h: f32) -> Option<El> {
         NoticeStyle::Split => "Split",
         NoticeStyle::Simple => "Simple",
         NoticeStyle::SimpleDark => "SimpleDark",
+        NoticeStyle::SwissNumerals => "SwissNumerals",
+        NoticeStyle::SerifItalic => "SerifItalic",
+        NoticeStyle::CivicBoard => "CivicBoard",
+        NoticeStyle::QuietTint => "QuietTint",
     };
     let u = h / 1200.0;
     let (tile_w, gap) = ((w * 0.30).round(), (w * 0.025).round());

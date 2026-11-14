@@ -280,7 +280,7 @@ impl App {
                 lost += 1;
                 continue;
             }
-            let mut card = Announcement { seconds: 10, image: kept.to_string_lossy().to_string(), fill: Fill::Nothing, ..Announcement::default() };
+            let mut card = Announcement { seconds: 10, image: kept.to_string_lossy().to_string(), fill: Fill::Nothing, ..Announcement::new() };
             if self.store.save_announcement(&mut card).is_ok() {
                 added += 1;
             }

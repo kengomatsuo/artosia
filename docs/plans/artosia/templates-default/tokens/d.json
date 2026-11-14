@@ -1,0 +1,405 @@
+{
+ "id": "d",
+ "name": "Civic Board",
+ "language": "A departure-board look: a black header band carries the title in mono caps, figures are mono (tabular by nature), words are a condensed grotesque, rows sit on hairlines and the highlight is an inverted row",
+ "colourways": [
+  {
+   "id": "light",
+   "name": "Beige",
+   "palette": {
+    "paper": "#E4E1D6",
+    "ink": "#121211",
+    "mute": "#4E4C44",
+    "rule": "#AFAB9D",
+    "band": "#121211",
+    "band_ink": "#E4E1D6",
+    "band_mute": "#B8B4A6",
+    "band_accent": "#F2C200",
+    "card": "#FFFFFF"
+   }
+  },
+  {
+   "id": "dark",
+   "name": "Hitam",
+   "palette": {
+    "paper": "#11110F",
+    "ink": "#E9E6DA",
+    "mute": "#A19E92",
+    "rule": "#3A3935",
+    "band": "#E9E6DA",
+    "band_ink": "#11110F",
+    "band_mute": "#55524A",
+    "band_accent": "#6B4F00",
+    "card": "#FFFFFF"
+   }
+  },
+  {
+   "id": "tinted",
+   "name": "Biru",
+   "palette": {
+    "paper": "#C9D3DC",
+    "ink": "#0D1319",
+    "mute": "#3A4652",
+    "rule": "#9AA8B5",
+    "band": "#0D1319",
+    "band_ink": "#C9D3DC",
+    "band_mute": "#8FA0B0",
+    "band_accent": "#F2C200",
+    "card": "#FFFFFF"
+   }
+  }
+ ],
+ "swatch": [
+  "paper",
+  "band_accent"
+ ],
+ "pairs": [
+  [
+   "ink",
+   "paper",
+   "text"
+  ],
+  [
+   "mute",
+   "paper",
+   "text"
+  ],
+  [
+   "band_ink",
+   "band",
+   "text"
+  ],
+  [
+   "band_mute",
+   "band",
+   "text"
+  ],
+  [
+   "band_accent",
+   "band",
+   "text"
+  ],
+  [
+   "band",
+   "paper",
+   "mark"
+  ]
+ ],
+ "fonts": {
+  "mono": {
+   "family": "IBM Plex Mono",
+   "weight": 500,
+   "italic": false,
+   "file": "IBMPlexMono-500.ttf"
+  },
+  "mono_b": {
+   "family": "IBM Plex Mono",
+   "weight": 700,
+   "italic": false,
+   "file": "IBMPlexMono-700.ttf"
+  },
+  "cond": {
+   "family": "IBM Plex Sans Condensed",
+   "weight": 500,
+   "italic": false,
+   "file": "IBMPlexSansCondensed-500.ttf"
+  },
+  "cond_b": {
+   "family": "IBM Plex Sans Condensed",
+   "weight": 700,
+   "italic": false,
+   "file": "IBMPlexSansCondensed-700.ttf"
+  }
+ },
+ "features": {
+  "data": "Plex Mono digits are 600/1000 em wide in every cut and Plex Sans Condensed digits 540/1000, so amounts and times align with no feature (verified)"
+ },
+ "type": {
+  "kicker": {
+   "font": "mono",
+   "size": 32,
+   "ls": 0.08,
+   "caps": true,
+   "color": "band_mute"
+  },
+  "title": {
+   "font": "mono_b",
+   "size": 80,
+   "ls": 0.0,
+   "caps": true,
+   "color": "band_ink"
+  },
+  "subtitle": {
+   "font": "mono",
+   "size": 40,
+   "ls": 0.0,
+   "color": "band_accent"
+  },
+  "ribbon": {
+   "font": "mono_b",
+   "size": 40,
+   "ls": 0.0,
+   "color": "band_accent"
+  },
+  "day_name": {
+   "font": "mono_b",
+   "size": 40,
+   "ls": 0.04,
+   "caps": true,
+   "color": "ink"
+  },
+  "date_small": {
+   "font": "mono",
+   "size": 40,
+   "color": "mute"
+  },
+  "time": {
+   "font": "mono_b",
+   "size": 48,
+   "color": "ink"
+  },
+  "time_hl": {
+   "font": "mono_b",
+   "size": 48,
+   "color": "band_accent"
+  },
+  "event": {
+   "font": "cond",
+   "size": 56,
+   "color": "ink"
+  },
+  "event_hl": {
+   "font": "cond_b",
+   "size": 56,
+   "color": "band_ink"
+  },
+  "tag": {
+   "font": "mono_b",
+   "size": 32,
+   "ls": 0.08,
+   "caps": true,
+   "color": "band_accent"
+  },
+  "name": {
+   "font": "cond",
+   "size": 44,
+   "color": "ink"
+  },
+  "name_hl": {
+   "font": "cond_b",
+   "size": 44,
+   "color": "band_ink"
+  },
+  "bday_day": {
+   "font": "mono_b",
+   "size": 40,
+   "color": "mute"
+  },
+  "bday_day_hl": {
+   "font": "mono_b",
+   "size": 40,
+   "color": "band_accent"
+  },
+  "bday_mon": {
+   "font": "mono",
+   "size": 32,
+   "ls": 0.0,
+   "caps": true,
+   "color": "mute"
+  },
+  "bday_mon_hl": {
+   "font": "mono",
+   "size": 32,
+   "ls": 0.0,
+   "caps": true,
+   "color": "band_accent"
+  },
+  "fund": {
+   "font": "cond",
+   "size": 50,
+   "color": "ink"
+  },
+  "amount": {
+   "font": "mono_b",
+   "size": 44,
+   "color": "ink"
+  },
+  "rp": {
+   "font": "mono",
+   "size": 32,
+   "color": "mute"
+  },
+  "total_label": {
+   "font": "mono_b",
+   "size": 32,
+   "ls": 0.08,
+   "caps": true,
+   "color": "band_mute"
+  },
+  "total": {
+   "font": "mono_b",
+   "size": 104,
+   "ls": -0.02,
+   "color": "band_accent"
+  },
+  "total_rp": {
+   "font": "mono",
+   "size": 48,
+   "color": "band_ink"
+  },
+  "bank": {
+   "font": "mono_b",
+   "size": 40,
+   "ls": 0.06,
+   "caps": true,
+   "color": "mute"
+  },
+  "number": {
+   "font": "mono_b",
+   "size": 176,
+   "ls": -0.02,
+   "color": "ink"
+  },
+  "atas": {
+   "font": "mono",
+   "size": 36,
+   "color": "mute"
+  },
+  "holder": {
+   "font": "cond_b",
+   "size": 60,
+   "color": "ink"
+  },
+  "note": {
+   "font": "cond",
+   "size": 44,
+   "color": "mute"
+  },
+  "caption": {
+   "font": "mono",
+   "size": 32,
+   "ls": 0.06,
+   "caps": true,
+   "color": "mute"
+  },
+  "ref": {
+   "font": "mono_b",
+   "size": 56,
+   "ls": 0.0,
+   "caps": true,
+   "color": "ink"
+  },
+  "verse": {
+   "font": "cond",
+   "size": 64,
+   "color": "ink"
+  },
+  "verse_n": {
+   "font": "mono_b",
+   "size": 64,
+   "color": "ink"
+  },
+  "n_title": {
+   "font": "mono_b",
+   "size": 112,
+   "ls": -0.02,
+   "caps": true,
+   "color": "ink"
+  },
+  "n_body": {
+   "font": "cond",
+   "size": 52,
+   "color": "ink"
+  },
+  "foot": {
+   "font": "mono_b",
+   "size": 32,
+   "ls": 0.04,
+   "color": "band_ink"
+  }
+ },
+ "grid": {
+  "mx": 96,
+  "x2": 1824,
+  "band_h": 200,
+  "kicker_y": 72,
+  "title_base": 168,
+  "body_top": 252,
+  "body_bottom": 1008,
+  "band_pad": 24,
+  "hair": 1.5
+ },
+ "s01": {
+  "day_x": 96,
+  "date_x": 96,
+  "time_x": 340,
+  "event_x": 560,
+  "tag_room": 220,
+  "size_max": 56,
+  "size_floor": 40,
+  "ratio": 1.38,
+  "group_gap": 20,
+  "group_min": 0
+ },
+ "s02": {
+  "cols": [
+   [
+    8,
+    1
+   ],
+   [
+    20,
+    2
+   ],
+   [
+    30,
+    3
+   ]
+  ],
+  "col_gap": 32,
+  "name_gap": 14,
+  "day_gap": 8,
+  "size_max": 48,
+  "size_floor": 40,
+  "ratio": 1.4,
+  "band_over": 12
+ },
+ "s03": {
+  "size_max": 52,
+  "size_floor": 40,
+  "ratio": 1.45,
+  "total_h": 180,
+  "total_gap": 24,
+  "rp_gap": 12
+ },
+ "s04": {
+  "card": 480,
+  "card_pad": 24,
+  "col_gap": 96,
+  "number_max": 176,
+  "number_floor": 96,
+  "holder_floor": 40,
+  "stack_top": 290
+ },
+ "s05": {
+  "text_w": 1560,
+  "size_max": 68,
+  "size_floor": 44,
+  "lh": 1.36,
+  "sup_scale": 0.55,
+  "sup_rise": 0.34,
+  "ref_y": 330,
+  "top": 400,
+  "bottom": 984
+ },
+ "s06": {
+  "photo_w": 600,
+  "photo_h": 640,
+  "photo_gap": 96,
+  "title_max": 112,
+  "title_floor": 72,
+  "title_lh": 1.04,
+  "line_gap": 28
+ },
+ "idea": "A departure board: black header band, mono figures, condensed words, and an inverted row for the highlight."
+}

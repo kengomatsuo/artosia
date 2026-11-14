@@ -1,0 +1,649 @@
+{
+ "note": "Every name, number and account is made up. The verse is sample text built to test 60 words, not a Bible quotation. Mock strings carry no middot and no dash (docs/design-questions.md section 8); the range word 'sampai' stands where Words::range writes an en dash.",
+ "church": "Gereja Bethel Kasih Nusantara",
+ "words": {
+  "warta": "Warta jemaat",
+  "special": "Khusus",
+  "offerings": "Kas jemaat",
+  "birthdays": "Ulang tahun",
+  "total": "Jumlah",
+  "total_gifts": "Jumlah persembahan",
+  "verse": "Ayat Pekan Ini",
+  "notice": "Pengumuman",
+  "account": "Rekening gereja",
+  "holder": "atas nama",
+  "scan": "Pindai dengan QRIS",
+  "wib": "Semua jam WIB"
+ },
+ "s01": {
+  "title": "Jadwal Pekan Ini",
+  "week_short": "15 sampai 21 November 2026",
+  "rows": [
+   {
+    "day": "Minggu",
+    "dow": "Min",
+    "date": 15,
+    "month": "November",
+    "time": "07.00",
+    "event": "Ibadah Raya I",
+    "special": false
+   },
+   {
+    "day": "Minggu",
+    "dow": "Min",
+    "date": 15,
+    "month": "November",
+    "time": "09.30",
+    "event": "Ibadah Raya II dan Sekolah Minggu",
+    "special": false
+   },
+   {
+    "day": "Rabu",
+    "dow": "Rab",
+    "date": 18,
+    "month": "November",
+    "time": "18.30",
+    "event": "Persekutuan Doa dan Pemahaman Alkitab",
+    "special": false
+   },
+   {
+    "day": "Rabu",
+    "dow": "Rab",
+    "date": 18,
+    "month": "November",
+    "time": "20.00",
+    "event": "Latihan Paduan Suara dan Tim Pemusik",
+    "special": false
+   },
+   {
+    "day": "Jumat",
+    "dow": "Jum",
+    "date": 20,
+    "month": "November",
+    "time": "17.30",
+    "event": "Pelayanan Kunjungan Kasih ke Rumah Sakit",
+    "special": false
+   },
+   {
+    "day": "Jumat",
+    "dow": "Jum",
+    "date": 20,
+    "month": "November",
+    "time": "19.00",
+    "event": "Ibadah Doa Puasa Bersama Seluruh Jemaat",
+    "special": true
+   },
+   {
+    "day": "Sabtu",
+    "dow": "Sab",
+    "date": 21,
+    "month": "November",
+    "time": "09.00",
+    "event": "Rapat Majelis dan Pengurus Komisi Anak",
+    "special": false
+   },
+   {
+    "day": "Sabtu",
+    "dow": "Sab",
+    "date": 21,
+    "month": "November",
+    "time": "16.00",
+    "event": "Bakti Sosial dan Pembagian Sembako Jemaat",
+    "special": false
+   }
+  ]
+ },
+ "s02": {
+  "title": "Ulang Tahun",
+  "month": "November",
+  "spans": false,
+  "week_label": "8 sampai 14 November",
+  "names": [
+   {
+    "day": 1,
+    "month": "Nov",
+    "name": "Ibu Ruth Simanjuntak",
+    "hl": false
+   },
+   {
+    "day": 1,
+    "month": "Nov",
+    "name": "Bpk. Daniel Hutagalung",
+    "hl": false
+   },
+   {
+    "day": 2,
+    "month": "Nov",
+    "name": "Sdri. Elisabet Putri",
+    "hl": false
+   },
+   {
+    "day": 3,
+    "month": "Nov",
+    "name": "Adk. Jonathan Wijaya",
+    "hl": false
+   },
+   {
+    "day": 4,
+    "month": "Nov",
+    "name": "Bpk. Markus Tarigan",
+    "hl": false
+   },
+   {
+    "day": 5,
+    "month": "Nov",
+    "name": "Ny. Yuliana Sri Rahayu",
+    "hl": false
+   },
+   {
+    "day": 6,
+    "month": "Nov",
+    "name": "Sdr. Gabriel Manurung",
+    "hl": false
+   },
+   {
+    "day": 7,
+    "month": "Nov",
+    "name": "Ibu Lidia Pangemanan",
+    "hl": false
+   },
+   {
+    "day": 8,
+    "month": "Nov",
+    "name": "Bpk. Paulus Setiabudi Wibowo",
+    "hl": true
+   },
+   {
+    "day": 9,
+    "month": "Nov",
+    "name": "Adk. Keren Sembiring",
+    "hl": true
+   },
+   {
+    "day": 9,
+    "month": "Nov",
+    "name": "Ny. Debora Anastasia Lie",
+    "hl": true
+   },
+   {
+    "day": 10,
+    "month": "Nov",
+    "name": "Bpk. Timotius Sinaga",
+    "hl": true
+   },
+   {
+    "day": 11,
+    "month": "Nov",
+    "name": "Sdri. Ruth Natalia Panjaitan",
+    "hl": true
+   },
+   {
+    "day": 12,
+    "month": "Nov",
+    "name": "Ibu Hana Kristiani",
+    "hl": true
+   },
+   {
+    "day": 14,
+    "month": "Nov",
+    "name": "Bpk. Yosafat Mandagi",
+    "hl": true
+   },
+   {
+    "day": 15,
+    "month": "Nov",
+    "name": "Sdr. Andreas Prasetyo Nugroho",
+    "hl": false
+   },
+   {
+    "day": 16,
+    "month": "Nov",
+    "name": "Adk. Grace Marpaung",
+    "hl": false
+   },
+   {
+    "day": 17,
+    "month": "Nov",
+    "name": "Ny. Magdalena Tumbelaka",
+    "hl": false
+   },
+   {
+    "day": 18,
+    "month": "Nov",
+    "name": "Bpk. Benyamin Sihombing",
+    "hl": false
+   },
+   {
+    "day": 19,
+    "month": "Nov",
+    "name": "Ibu Susi Handayani",
+    "hl": false
+   },
+   {
+    "day": 20,
+    "month": "Nov",
+    "name": "Sdri. Priska Wulandari Ong",
+    "hl": false
+   },
+   {
+    "day": 21,
+    "month": "Nov",
+    "name": "Adk. Samuel Gunawan",
+    "hl": false
+   },
+   {
+    "day": 22,
+    "month": "Nov",
+    "name": "Bpk. Rudi Hartono Silalahi",
+    "hl": false
+   },
+   {
+    "day": 23,
+    "month": "Nov",
+    "name": "Ny. Veronika Dewi Tan",
+    "hl": false
+   },
+   {
+    "day": 24,
+    "month": "Nov",
+    "name": "Ibu Natalia Simbolon",
+    "hl": false
+   },
+   {
+    "day": 25,
+    "month": "Nov",
+    "name": "Sdr. Joshua Immanuel Purba",
+    "hl": false
+   },
+   {
+    "day": 26,
+    "month": "Nov",
+    "name": "Bpk. Hizkia Sutanto",
+    "hl": false
+   },
+   {
+    "day": 27,
+    "month": "Nov",
+    "name": "Adk. Abigail Siahaan",
+    "hl": false
+   },
+   {
+    "day": 29,
+    "month": "Nov",
+    "name": "Ny. Rosalinda Marbun",
+    "hl": false
+   },
+   {
+    "day": 30,
+    "month": "Nov",
+    "name": "Bpk. Thomas Agustinus Lim",
+    "hl": false
+   }
+  ]
+ },
+ "s03": {
+  "title": "Persembahan",
+  "date_long": "Minggu, 15 November 2026",
+  "funds": [
+   {
+    "label": "Persembahan Syukur Ibadah Raya",
+    "rupiah": 234567890123
+   },
+   {
+    "label": "Persepuluhan Jemaat",
+    "rupiah": 45678901234
+   },
+   {
+    "label": "Pembangunan Gedung Gereja dan Pastori Tahap Dua",
+    "rupiah": 1234567890
+   },
+   {
+    "label": "Diakonia dan Pelayanan Kasih Jemaat",
+    "rupiah": 96300000
+   },
+   {
+    "label": "Sekolah Minggu dan Remaja",
+    "rupiah": 12500000
+   },
+   {
+    "label": "Misi dan Penginjilan",
+    "rupiah": 8450000
+   }
+  ]
+ },
+ "s04": {
+  "title": "Transfer Persembahan",
+  "bank": "Bank Central Asia",
+  "number": "831-2745-906",
+  "holder": "Yayasan Gereja Bethel Kasih Nusantara",
+  "note": [
+   "Tulis kode angka di akhir nomor: 5 untuk Minggu, 7 untuk Syukur, 10 untuk Natal.",
+   "Konfirmasi ke bendahara lewat WhatsApp 0812 3456 7890."
+  ]
+ },
+ "s05": {
+  "reference": "Yesaya 43:1-3",
+  "date_long": "Minggu, 15 November 2026",
+  "verses": [
+   [
+    1,
+    "Beginilah firman TUHAN yang menciptakan engkau, hai Yakub: Janganlah takut, sebab Aku telah menebus engkau, Aku telah memanggil engkau dengan namamu, engkau ini kepunyaan-Ku."
+   ],
+   [
+    2,
+    "Apabila engkau menyeberang melalui air, Aku akan menyertai engkau; apabila engkau berjalan melalui api, engkau tidak akan hangus, dan nyala api tidak akan menghanguskan engkau."
+   ],
+   [
+    3,
+    "Sebab Aku ini TUHAN, Allahmu, Yang Mahakudus, Allah Israel, dan Juruselamatmu."
+   ]
+  ],
+  "words_total": 60
+ },
+ "s06": {
+  "title": "Retret Keluarga Jemaat",
+  "date_long": "Sabtu, 12 Desember 2026",
+  "paragraphs": [
+   "Sabtu 12 dan Minggu 13 Desember 2026 di Wisma Bukit Doa, Cipanas.",
+   "Pendaftaran di meja informasi sampai 6 Desember."
+  ]
+ },
+ "stress": {
+  "event_77": "Persekutuan Doa dan Pemahaman Alkitab Komisi Pemuda dan Remaja Wilayah Timur",
+  "name_44": "Bpk. Yohanes Krisostomus Pasaribu Simanjuntak",
+  "names_long": {
+   "2": "Sdri. Elisabet Kurniawan Putri",
+   "10": "Ny. Debora Anastasia Nainggolan",
+   "29": "Bpk. Thomas Agustinus Sitompul"
+  },
+  "rupiah_14": 98765432109876
+ },
+ "s02x": {
+  "title": "Ulang Tahun",
+  "month": "Oktober dan November",
+  "spans": true,
+  "week_label": "30 Okt sampai 5 Nov",
+  "caption": "12 Okt sampai 4 Nov",
+  "names": [
+   {
+    "day": 12,
+    "month": "Okt",
+    "name": "Ibu Ruth Simanjuntak",
+    "hl": false
+   },
+   {
+    "day": 14,
+    "month": "Okt",
+    "name": "Bpk. Daniel Hutagalung",
+    "hl": false
+   },
+   {
+    "day": 16,
+    "month": "Okt",
+    "name": "Sdri. Elisabet Putri",
+    "hl": false
+   },
+   {
+    "day": 18,
+    "month": "Okt",
+    "name": "Adk. Jonathan Wijaya",
+    "hl": false
+   },
+   {
+    "day": 20,
+    "month": "Okt",
+    "name": "Bpk. Markus Tarigan",
+    "hl": false
+   },
+   {
+    "day": 22,
+    "month": "Okt",
+    "name": "Ny. Yuliana Sri Rahayu",
+    "hl": false
+   },
+   {
+    "day": 24,
+    "month": "Okt",
+    "name": "Sdr. Gabriel Manurung",
+    "hl": false
+   },
+   {
+    "day": 28,
+    "month": "Okt",
+    "name": "Ibu Lidia Pangemanan",
+    "hl": false
+   },
+   {
+    "day": 30,
+    "month": "Okt",
+    "name": "Bpk. Paulus Setiabudi Wibowo",
+    "hl": true
+   },
+   {
+    "day": 30,
+    "month": "Okt",
+    "name": "Adk. Keren Sembiring",
+    "hl": true
+   },
+   {
+    "day": 31,
+    "month": "Okt",
+    "name": "Ny. Debora Anastasia Lie",
+    "hl": true
+   },
+   {
+    "day": 1,
+    "month": "Nov",
+    "name": "Bpk. Timotius Sinaga",
+    "hl": true
+   },
+   {
+    "day": 2,
+    "month": "Nov",
+    "name": "Sdri. Ruth Natalia Panjaitan",
+    "hl": true
+   },
+   {
+    "day": 4,
+    "month": "Nov",
+    "name": "Ibu Hana Kristiani",
+    "hl": true
+   },
+   {
+    "day": 4,
+    "month": "Nov",
+    "name": "Bpk. Yosafat Mandagi",
+    "hl": true
+   }
+  ],
+  "part": "1/2"
+ },
+ "s02full": {
+  "title": "Ulang Tahun",
+  "month": "Oktober dan November",
+  "spans": true,
+  "week_label": "30 Okt sampai 5 Nov",
+  "names": [
+   {
+    "day": 12,
+    "month": "Okt",
+    "name": "Ibu Ruth Simanjuntak",
+    "hl": false
+   },
+   {
+    "day": 14,
+    "month": "Okt",
+    "name": "Bpk. Daniel Hutagalung",
+    "hl": false
+   },
+   {
+    "day": 16,
+    "month": "Okt",
+    "name": "Sdri. Elisabet Putri",
+    "hl": false
+   },
+   {
+    "day": 18,
+    "month": "Okt",
+    "name": "Adk. Jonathan Wijaya",
+    "hl": false
+   },
+   {
+    "day": 20,
+    "month": "Okt",
+    "name": "Bpk. Markus Tarigan",
+    "hl": false
+   },
+   {
+    "day": 22,
+    "month": "Okt",
+    "name": "Ny. Yuliana Sri Rahayu",
+    "hl": false
+   },
+   {
+    "day": 24,
+    "month": "Okt",
+    "name": "Sdr. Gabriel Manurung",
+    "hl": false
+   },
+   {
+    "day": 28,
+    "month": "Okt",
+    "name": "Ibu Lidia Pangemanan",
+    "hl": false
+   },
+   {
+    "day": 30,
+    "month": "Okt",
+    "name": "Bpk. Paulus Setiabudi Wibowo",
+    "hl": true
+   },
+   {
+    "day": 30,
+    "month": "Okt",
+    "name": "Adk. Keren Sembiring",
+    "hl": true
+   },
+   {
+    "day": 31,
+    "month": "Okt",
+    "name": "Ny. Debora Anastasia Lie",
+    "hl": true
+   },
+   {
+    "day": 1,
+    "month": "Nov",
+    "name": "Bpk. Timotius Sinaga",
+    "hl": true
+   },
+   {
+    "day": 2,
+    "month": "Nov",
+    "name": "Sdri. Ruth Natalia Panjaitan",
+    "hl": true
+   },
+   {
+    "day": 4,
+    "month": "Nov",
+    "name": "Ibu Hana Kristiani",
+    "hl": true
+   },
+   {
+    "day": 4,
+    "month": "Nov",
+    "name": "Bpk. Yosafat Mandagi",
+    "hl": true
+   },
+   {
+    "day": 7,
+    "month": "Nov",
+    "name": "Sdr. Andreas Prasetyo Nugroho",
+    "hl": false
+   },
+   {
+    "day": 8,
+    "month": "Nov",
+    "name": "Adk. Grace Marpaung",
+    "hl": false
+   },
+   {
+    "day": 9,
+    "month": "Nov",
+    "name": "Ny. Magdalena Tumbelaka",
+    "hl": false
+   },
+   {
+    "day": 10,
+    "month": "Nov",
+    "name": "Bpk. Benyamin Sihombing",
+    "hl": false
+   },
+   {
+    "day": 11,
+    "month": "Nov",
+    "name": "Ibu Susi Handayani",
+    "hl": false
+   },
+   {
+    "day": 13,
+    "month": "Nov",
+    "name": "Sdri. Priska Wulandari Ong",
+    "hl": false
+   },
+   {
+    "day": 14,
+    "month": "Nov",
+    "name": "Adk. Samuel Gunawan",
+    "hl": false
+   },
+   {
+    "day": 16,
+    "month": "Nov",
+    "name": "Bpk. Rudi Hartono Silalahi",
+    "hl": false
+   },
+   {
+    "day": 17,
+    "month": "Nov",
+    "name": "Ny. Veronika Dewi Tan",
+    "hl": false
+   },
+   {
+    "day": 19,
+    "month": "Nov",
+    "name": "Ibu Natalia Simbolon",
+    "hl": false
+   },
+   {
+    "day": 21,
+    "month": "Nov",
+    "name": "Sdr. Joshua Immanuel Purba",
+    "hl": false
+   },
+   {
+    "day": 22,
+    "month": "Nov",
+    "name": "Bpk. Hizkia Sutanto",
+    "hl": false
+   },
+   {
+    "day": 24,
+    "month": "Nov",
+    "name": "Adk. Abigail Siahaan",
+    "hl": false
+   },
+   {
+    "day": 26,
+    "month": "Nov",
+    "name": "Ny. Rosalinda Marbun",
+    "hl": false
+   },
+   {
+    "day": 28,
+    "month": "Nov",
+    "name": "Bpk. Thomas Agustinus Lim",
+    "hl": false
+   }
+  ]
+ }
+}

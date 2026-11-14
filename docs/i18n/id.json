@@ -6111,5 +6111,25 @@
   },
   "back": "Colour choice {n}",
   "why": "Pilihan names a set; numbered by place"
+ },
+ "STYLE_SERIF_ITALIC": {
+  "text": "Serif miring",
+  "back": "Slanted serif",
+  "why": "names the letter or layout look, apart from the other style names in this table"
+ },
+ "STYLE_SWISS_NUMERALS": {
+  "text": "Angka besar",
+  "back": "Big numbers",
+  "why": "names the letter or layout look, apart from the other style names in this table"
+ },
+ "STYLE_QUIET_TINT": {
+  "text": "Warna lembut",
+  "back": "Soft colour",
+  "why": "names the letter or layout look, apart from the other style names in this table"
+ },
+ "STYLE_CIVIC_BOARD": {
+  "text": "Papan jadwal",
+  "back": "Schedule board",
+  "why": "names the letter or layout look, apart from the other style names in this table"
  }
 }

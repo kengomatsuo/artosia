@@ -2,7 +2,7 @@
 
 use artosia_core::deck::NoticeKind;
 
-use super::data::{self as w, Data, Have};
+use super::data::{Data, Have};
 use super::fit;
 use super::{Fits, H, Pic, Pos, R, Sheet, Split, Tx, VerseBox, W, fit_cells, grown_size, largest, largest_name_size, largest_step, name_in, paragraph, paragraphs, put_lines, verse};
 

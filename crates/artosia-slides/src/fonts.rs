@@ -44,7 +44,7 @@ pub fn installed() -> &'static [String] {
 
 /// The static cuts of the poster styles' open-licence families (`assets/warta/licences`), embedded
 /// so a face costs memory only when a style draws with it; Rune takes fonts at start.
-const FACES: [(&str, &[u8]); 28] = [
+const FACES: &[(&str, &[u8])] = &[
     ("Archivo-800.ttf", include_bytes!("../assets/warta/fonts/Archivo-800.ttf")),
     ("Archivo-900.ttf", include_bytes!("../assets/warta/fonts/Archivo-900.ttf")),
     ("ArchivoCondensed-800.ttf", include_bytes!("../assets/warta/fonts/ArchivoCondensed-800.ttf")),
@@ -59,9 +59,16 @@ const FACES: [(&str, &[u8]); 28] = [
     ("BodoniModaDisplay-600i.ttf", include_bytes!("../assets/warta/fonts/BodoniModaDisplay-600i.ttf")),
     ("BodoniModaText-500.ttf", include_bytes!("../assets/warta/fonts/BodoniModaText-500.ttf")),
     ("BodoniModaText-700.ttf", include_bytes!("../assets/warta/fonts/BodoniModaText-700.ttf")),
+    ("Figtree-500.ttf", include_bytes!("../assets/warta/fonts/Figtree-500.ttf")),
+    ("Figtree-700.ttf", include_bytes!("../assets/warta/fonts/Figtree-700.ttf")),
+    ("HankenGrotesk-300.ttf",include_bytes!("../assets/warta/fonts/HankenGrotesk-300.ttf")),
+    ("HankenGrotesk-500.ttf", include_bytes!("../assets/warta/fonts/HankenGrotesk-500.ttf")),
+    ("HankenGrotesk-700.ttf", include_bytes!("../assets/warta/fonts/HankenGrotesk-700.ttf")),
     ("IBMPlexSansCondensed-500.ttf", include_bytes!("../assets/warta/fonts/IBMPlexSansCondensed-500.ttf")),
     ("IBMPlexSansCondensed-600.ttf", include_bytes!("../assets/warta/fonts/IBMPlexSansCondensed-600.ttf")),
     ("IBMPlexSansCondensed-700.ttf", include_bytes!("../assets/warta/fonts/IBMPlexSansCondensed-700.ttf")),
+    ("IBMPlexMono-500.ttf", include_bytes!("../assets/warta/fonts/IBMPlexMono-500.ttf")),
+    ("IBMPlexMono-700.ttf", include_bytes!("../assets/warta/fonts/IBMPlexMono-700.ttf")),
     ("InstrumentSans-500.ttf", include_bytes!("../assets/warta/fonts/InstrumentSans-500.ttf")),
     ("InstrumentSans-600.ttf", include_bytes!("../assets/warta/fonts/InstrumentSans-600.ttf")),
     ("InstrumentSans-700.ttf", include_bytes!("../assets/warta/fonts/InstrumentSans-700.ttf")),
@@ -70,7 +77,13 @@ const FACES: [(&str, &[u8]); 28] = [
     ("PlusJakartaSans-600.ttf", include_bytes!("../assets/warta/fonts/PlusJakartaSans-600.ttf")),
     ("PlusJakartaSans-700.ttf", include_bytes!("../assets/warta/fonts/PlusJakartaSans-700.ttf")),
     ("PlusJakartaSans-800.ttf", include_bytes!("../assets/warta/fonts/PlusJakartaSans-800.ttf")),
+    ("SourceSerif4Display-400.ttf", include_bytes!("../assets/warta/fonts/SourceSerif4Display-400.ttf")),
+    ("SourceSerif4Display-400i.ttf", include_bytes!("../assets/warta/fonts/SourceSerif4Display-400i.ttf")),
+    ("SourceSerif4Display-600.ttf", include_bytes!("../assets/warta/fonts/SourceSerif4Display-600.ttf")),
+    ("SourceSerif4Oldstyle-400i.ttf", include_bytes!("../assets/warta/fonts/SourceSerif4Oldstyle-400i.ttf")),
     ("SourceSerif4Text-400.ttf", include_bytes!("../assets/warta/fonts/SourceSerif4Text-400.ttf")),
+    ("SourceSerif4Text-400i.ttf", include_bytes!("../assets/warta/fonts/SourceSerif4Text-400i.ttf")),
+    ("SourceSerif4Text-600.ttf", include_bytes!("../assets/warta/fonts/SourceSerif4Text-600.ttf")),
     ("SpaceGrotesk-500.ttf", include_bytes!("../assets/warta/fonts/SpaceGrotesk-500.ttf")),
     ("SpaceGrotesk-700.ttf", include_bytes!("../assets/warta/fonts/SpaceGrotesk-700.ttf")),
 ];
