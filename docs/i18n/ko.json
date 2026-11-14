@@ -5140,5 +5140,80 @@
   "text": "붙여넣은 페이지",
   "back": "The pasted page",
   "why": "names the row"
+ },
+ "GUIDE_HELP": {
+  "text": "도움말",
+  "back": "Help",
+  "why": "Standard word for help"
+ },
+ "GUIDE_SHOW_ME": {
+  "text": "따라 해 보기",
+  "back": "Try following along",
+  "why": "Friendly guided walk-through"
+ },
+ "HELP_CALENDAR": {
+  "text": "정기 예배와 행사를 한 번만 적어 두세요. 공지의 일정 카드가 여기서 저절로 채워져요.",
+  "back": "Write down the regular services and events just once. The announcement's schedule card fills itself from here.",
+  "why": "Polite -요 register"
+ },
+ "HELP_PEOPLE": {
+  "text": "교인 이름과 생일을 모아 둔 곳이에요. 생일 공지가 이 목록을 읽어요.",
+  "back": "This is where the members' names and birthdays are gathered. The birthday announcement reads this list.",
+  "why": "교인 matches the tab name"
+ },
+ "HELP_GIVING": {
+  "text": "헌금 내역과 금액을 적어 두는 곳이에요. 공지에 들어갈 합계는 저절로 더해져요.",
+  "back": "This is where offering records and amounts are written. The total that goes in the announcement adds itself.",
+  "why": "헌금 matches the tab name"
+ },
+ "HELP_TEMPLATES": {
+  "text": "일정, 교인, 헌금 정보로 저절로 채워지는 공지 템플릿이 여러 스타일로 들어 있어요.",
+  "back": "Announcement templates in several styles that fill themselves from schedule, member and offering information.",
+  "why": "Three tab names and 템플릿"
+ },
+ "GUIDE_CAL_NEW": {
+  "text": "표시된 버튼을 눌러 일정을 추가해요",
+  "back": "Press the marked button to add an event",
+  "why": "Same pattern as GUIDE_SCREENS_OPEN"
+ },
+ "GUIDE_CAL_NEW_MORE": {
+  "text": "요일과 시간을 고르세요. 매주 예배는 한 번만 넣으면 돼요.",
+  "back": "Pick the days and time. A weekly service only needs to be put in once.",
+  "why": "Two facts, polite"
+ },
+ "GUIDE_PEOPLE_ADD": {
+  "text": "표시된 버튼을 눌러 교인을 추가해요",
+  "back": "Press the marked button to add a member",
+  "why": "Same pattern"
+ },
+ "GUIDE_PEOPLE_ADD_MORE": {
+  "text": "이름을 적고 생일을 고르세요",
+  "back": "Write the name and pick the birthday",
+  "why": "Two actions"
+ },
+ "GUIDE_GIVING_ADD": {
+  "text": "표시된 버튼을 눌러 헌금을 추가해요",
+  "back": "Press the marked button to add an offering",
+  "why": "Same pattern"
+ },
+ "GUIDE_GIVING_ADD_MORE": {
+  "text": "금액을 적으면 합계는 저절로 나와요",
+  "back": "Write the amount and the total comes out by itself",
+  "why": "Action then result"
+ },
+ "GUIDE_TPL_USE": {
+  "text": "마음에 드는 템플릿에서 새 공지를 눌러요",
+  "back": "On a template you like, press New announcement",
+  "why": "Names the button as the table does for TPL_USE"
+ },
+ "GUIDE_TPL_USE_MORE": {
+  "text": "저절로 채워지는 공지가 돼요",
+  "back": "It becomes an announcement that fills itself",
+  "why": "One sentence"
+ },
+ "guide_open_tab": {
+  "text": "{tab} 탭을 열어요",
+  "back": "Open the {tab} tab",
+  "why": "Short polite command"
  }
 }

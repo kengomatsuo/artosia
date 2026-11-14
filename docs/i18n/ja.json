@@ -5138,5 +5138,80 @@
   "text": "貼り付けたページ",
   "back": "The pasted page",
   "why": "names the row"
+ },
+ "GUIDE_HELP": {
+  "text": "ヘルプ",
+  "back": "Help",
+  "why": "Standard katakana word"
+ },
+ "GUIDE_SHOW_ME": {
+  "text": "やり方を見る",
+  "back": "See how it is done",
+  "why": "Offers a demonstration"
+ },
+ "HELP_CALENDAR": {
+  "text": "毎週の礼拝や行事を一度だけ入力します。お知らせのスケジュールは、ここから自動で作られます。",
+  "back": "Enter the weekly services and events just once. The schedule announcement is made automatically from here.",
+  "why": "です/ます register"
+ },
+ "HELP_PEOPLE": {
+  "text": "教会員の名前と誕生日を入れておきます。誕生日のお知らせは、この一覧から作られます。",
+  "back": "Put in the members' names and birthdays. The birthday announcement is made from this list.",
+  "why": "教会員 matches the tab name"
+ },
+ "HELP_GIVING": {
+  "text": "献金の項目と金額を入れておきます。お知らせの合計は自動で計算されます。",
+  "back": "Put in the offering items and amounts. The total for the announcement is calculated automatically.",
+  "why": "献金 matches the tab name"
+ },
+ "HELP_TEMPLATES": {
+  "text": "カレンダー、教会員、献金の内容が自動で入る、いろいろな形のお知らせのひな形です。",
+  "back": "Announcement templates in various forms, filled automatically from the calendar, members and offerings.",
+  "why": "ひな形 and tab names reused"
+ },
+ "GUIDE_CAL_NEW": {
+  "text": "枠のボタンを押して、予定を追加",
+  "back": "Press the framed button and add an event",
+  "why": "Same pattern as GUIDE_SCREENS_OPEN"
+ },
+ "GUIDE_CAL_NEW_MORE": {
+  "text": "日にちと時間を選びます。毎週の礼拝は一度の入力で済みます。",
+  "back": "Choose the days and time. A weekly service needs only one entry.",
+  "why": "One flow, two facts"
+ },
+ "GUIDE_PEOPLE_ADD": {
+  "text": "枠のボタンを押して、教会員を追加",
+  "back": "Press the framed button and add a member",
+  "why": "Same pattern"
+ },
+ "GUIDE_PEOPLE_ADD_MORE": {
+  "text": "名前を入れて、誕生日を選びます",
+  "back": "Enter the name and choose the birthday",
+  "why": "Two actions"
+ },
+ "GUIDE_GIVING_ADD": {
+  "text": "枠のボタンを押して、献金を追加",
+  "back": "Press the framed button and add an offering",
+  "why": "Same pattern"
+ },
+ "GUIDE_GIVING_ADD_MORE": {
+  "text": "金額を入れると、合計は自動で出ます",
+  "back": "Enter the amount and the total comes out automatically",
+  "why": "Action then result"
+ },
+ "GUIDE_TPL_USE": {
+  "text": "ひな形の「新しいお知らせ」を押す",
+  "back": "Press 'New announcement' on a template",
+  "why": "Names the button as the table does for TPL_USE"
+ },
+ "GUIDE_TPL_USE_MORE": {
+  "text": "自動で内容が入るお知らせになります",
+  "back": "It becomes an announcement whose content fills in automatically",
+  "why": "One sentence"
+ },
+ "guide_open_tab": {
+  "text": "「{tab}」タブを開く",
+  "back": "Open the '{tab}' tab",
+  "why": "Brackets keep the tab name clear"
  }
 }

@@ -5171,5 +5171,80 @@
   "text": "Página colada",
   "back": "Pasted page",
   "why": "Says it is the pasted address."
+ },
+ "GUIDE_HELP": {
+  "text": "Ajuda",
+  "back": "Help",
+  "why": "One word"
+ },
+ "GUIDE_SHOW_ME": {
+  "text": "Me mostre como",
+  "back": "Show me how",
+  "why": "Spoken Brazilian form"
+ },
+ "HELP_CALENDAR": {
+  "text": "O Calendário guarda os cultos e eventos da igreja, uma vez só. O aviso da agenda se preenche sozinho.",
+  "back": "The Calendar keeps the church's services and events, once only. The schedule notice fills itself in.",
+  "why": "Table word aviso"
+ },
+ "HELP_PEOPLE": {
+  "text": "Guarda os nomes e aniversários dos membros. O aviso de aniversariantes lê esta lista.",
+  "back": "Keeps the members' names and birthdays. The birthday-people notice reads this list.",
+  "why": "Membros as the tab word"
+ },
+ "HELP_GIVING": {
+  "text": "Guarda as ofertas com seus valores. O total é somado sozinho para o aviso.",
+  "back": "Keeps the offerings with their amounts. The total is added by itself for the notice.",
+  "why": "Ofertas as the tab word"
+ },
+ "HELP_TEMPLATES": {
+  "text": "Avisos prontos em vários estilos, que se preenchem sozinhos com calendário, membros e ofertas.",
+  "back": "Ready notices in several styles, which fill themselves with calendar, members and offerings.",
+  "why": "Tab words"
+ },
+ "GUIDE_CAL_NEW": {
+  "text": "Clique no botão destacado e adicione um evento",
+  "back": "Click the highlighted button and add an event",
+  "why": "Same pattern as GUIDE_SCREENS_OPEN"
+ },
+ "GUIDE_CAL_NEW_MORE": {
+  "text": "Você escolhe os dias e a hora. Culto semanal se cadastra uma vez só.",
+  "back": "You choose the days and the time. A weekly service is registered just once.",
+  "why": "Plain"
+ },
+ "GUIDE_PEOPLE_ADD": {
+  "text": "Clique no botão destacado e adicione uma pessoa",
+  "back": "Click the highlighted button and add a person",
+  "why": "Matches PEOPLE_ADD"
+ },
+ "GUIDE_PEOPLE_ADD_MORE": {
+  "text": "Digite o nome e escolha o aniversário.",
+  "back": "Type the name and choose the birthday.",
+  "why": "Plain"
+ },
+ "GUIDE_GIVING_ADD": {
+  "text": "Clique no botão destacado e adicione uma oferta",
+  "back": "Click the highlighted button and add an offering",
+  "why": "Matches GIVING_ADD"
+ },
+ "GUIDE_GIVING_ADD_MORE": {
+  "text": "Digite o valor. O total é somado sozinho.",
+  "back": "Type the amount. The total is added by itself.",
+  "why": "Short"
+ },
+ "GUIDE_TPL_USE": {
+  "text": "Clique em Usar modelo no que você preferir",
+  "back": "Click Use template on the one you prefer",
+  "why": "Names TPL_USE exactly"
+ },
+ "GUIDE_TPL_USE_MORE": {
+  "text": "O modelo vira um aviso que se preenche sozinho.",
+  "back": "The template becomes a notice that fills itself in.",
+  "why": "One sentence"
+ },
+ "guide_open_tab": {
+  "text": "Abra a aba {tab}",
+  "back": "Open the {tab} tab",
+  "why": "Aba is the Brazilian word"
  }
 }

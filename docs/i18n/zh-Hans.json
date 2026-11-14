@@ -5140,5 +5140,80 @@
   "text": "粘贴的网页地址",
   "back": "The pasted web page address",
   "why": "names what the row is"
+ },
+ "GUIDE_HELP": {
+  "text": "帮助",
+  "back": "Help",
+  "why": "Standard word"
+ },
+ "GUIDE_SHOW_ME": {
+  "text": "带我走一遍",
+  "back": "Take me through it once",
+  "why": "Spoken offer of a walk-through"
+ },
+ "HELP_CALENDAR": {
+  "text": "教会固定的聚会和活动只需录入一次，公告里的日程会自动填好。",
+  "back": "The church's regular gatherings and events only need entering once; the schedule in the announcement fills itself.",
+  "why": "日历 and 公告 reused"
+ },
+ "HELP_PEOPLE": {
+  "text": "会友的姓名和生日都放在这里，生日公告会从这份名单里取。",
+  "back": "The members' names and birthdays are all kept here; the birthday announcement takes from this list.",
+  "why": "会友 matches the tab"
+ },
+ "HELP_GIVING": {
+  "text": "记录奉献和金额，公告里的合计会自动算好。",
+  "back": "Record offerings and amounts; the total in the announcement is worked out automatically.",
+  "why": "奉献 matches the tab"
+ },
+ "HELP_TEMPLATES": {
+  "text": "多种样式的现成公告，内容从日历、会友和奉献里自动填入。",
+  "back": "Ready-made announcements in many styles, with content filled in automatically from the calendar, members and offerings.",
+  "why": "Tab names"
+ },
+ "GUIDE_CAL_NEW": {
+  "text": "按下带框的按钮，添加活动",
+  "back": "Press the framed button and add an event",
+  "why": "Same pattern as GUIDE_SCREENS_OPEN"
+ },
+ "GUIDE_CAL_NEW_MORE": {
+  "text": "选好日期和时间。每周的聚会只录入一次。",
+  "back": "Pick the dates and time. A weekly gathering is entered only once.",
+  "why": "Two facts"
+ },
+ "GUIDE_PEOPLE_ADD": {
+  "text": "按下带框的按钮，添加会友",
+  "back": "Press the framed button and add a member",
+  "why": "Same pattern"
+ },
+ "GUIDE_PEOPLE_ADD_MORE": {
+  "text": "填姓名，选生日",
+  "back": "Fill in the name, choose the birthday",
+  "why": "Shortest natural form"
+ },
+ "GUIDE_GIVING_ADD": {
+  "text": "按下带框的按钮，添加一笔奉献",
+  "back": "Press the framed button and add an offering",
+  "why": "一笔 is the natural measure"
+ },
+ "GUIDE_GIVING_ADD_MORE": {
+  "text": "填金额，合计自动算出",
+  "back": "Fill in the amount; the total is worked out automatically",
+  "why": "Action then result"
+ },
+ "GUIDE_TPL_USE": {
+  "text": "在喜欢的模板上按下“新建公告”",
+  "back": "On a template you like, press 'New announcement'",
+  "why": "Names the button as the table does for TPL_USE"
+ },
+ "GUIDE_TPL_USE_MORE": {
+  "text": "它会变成自动填内容的公告",
+  "back": "It becomes an announcement that fills in content automatically",
+  "why": "One sentence"
+ },
+ "guide_open_tab": {
+  "text": "打开“{tab}”标签页",
+  "back": "Open the '{tab}' tab page",
+  "why": "Quotes keep the tab name clear"
  }
 }

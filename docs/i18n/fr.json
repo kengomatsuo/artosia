@@ -5184,5 +5184,80 @@
   "text": "Page de l'adresse collée",
   "back": "Page of the pasted address",
   "why": "Grey second line"
+ },
+ "GUIDE_HELP": {
+  "text": "Aide",
+  "back": "Help",
+  "why": "One word"
+ },
+ "GUIDE_SHOW_ME": {
+  "text": "Montre-moi",
+  "back": "Show me",
+  "why": "Tu register as in the table"
+ },
+ "HELP_CALENDAR": {
+  "text": "Les cultes et événements de l'église, saisis une seule fois. L'annonce du programme se remplit seule.",
+  "back": "The church's services and events, entered one single time. The schedule announcement fills itself.",
+  "why": "Fits 110; annonce as in the table"
+ },
+ "HELP_PEOPLE": {
+  "text": "Les noms et anniversaires des membres. L'annonce des anniversaires lit cette liste.",
+  "back": "The members' names and birthdays. The birthdays announcement reads this list.",
+  "why": "Membres as the tab word"
+ },
+ "HELP_GIVING": {
+  "text": "Les offrandes avec leurs montants. Le total s'additionne seul pour l'annonce.",
+  "back": "The offerings with their amounts. The total adds itself up for the announcement.",
+  "why": "Offrandes as the tab word"
+ },
+ "HELP_TEMPLATES": {
+  "text": "Des annonces prêtes, en plusieurs styles, qui se remplissent avec les données de l'église.",
+  "back": "Ready announcements, in several styles, which fill themselves with the church's data.",
+  "why": "Budget forces dropping the window list"
+ },
+ "GUIDE_CAL_NEW": {
+  "text": "Clique sur le bouton entouré pour un événement",
+  "back": "Click the circled button for an event",
+  "why": "Same pattern as GUIDE_SCREENS_OPEN"
+ },
+ "GUIDE_CAL_NEW_MORE": {
+  "text": "Tu choisis les jours et l'heure. Un culte hebdomadaire se saisit une fois.",
+  "back": "You choose the days and the time. A weekly service is entered once.",
+  "why": "Tu register"
+ },
+ "GUIDE_PEOPLE_ADD": {
+  "text": "Clique sur le bouton entouré pour un membre",
+  "back": "Click the circled button for a member",
+  "why": "Matches PEOPLE_ADD"
+ },
+ "GUIDE_PEOPLE_ADD_MORE": {
+  "text": "Tu saisis le nom et choisis la date de naissance.",
+  "back": "You enter the name and choose the birth date.",
+  "why": "Plain"
+ },
+ "GUIDE_GIVING_ADD": {
+  "text": "Clique sur le bouton entouré pour une offrande",
+  "back": "Click the circled button for an offering",
+  "why": "Matches GIVING_ADD"
+ },
+ "GUIDE_GIVING_ADD_MORE": {
+  "text": "Tu saisis le montant. Le total s'additionne seul.",
+  "back": "You enter the amount. The total adds itself up.",
+  "why": "Short"
+ },
+ "GUIDE_TPL_USE": {
+  "text": "Sur un modèle, clique sur Ajouter une annonce",
+  "back": "On a template, click Add an announcement",
+  "why": "Names the table's TPL_USE label"
+ },
+ "GUIDE_TPL_USE_MORE": {
+  "text": "Le modèle devient une annonce qui se remplit seule.",
+  "back": "The template becomes an announcement that fills itself.",
+  "why": "One sentence"
+ },
+ "guide_open_tab": {
+  "text": "Ouvre l'onglet {tab}",
+  "back": "Open the {tab} tab",
+  "why": "Tu imperative; onglet"
  }
 }

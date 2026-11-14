@@ -5088,5 +5088,80 @@
   "text": "Alamat halaman yang ditempel",
   "back": "The page address that was pasted",
   "why": "Grey second line"
+ },
+ "GUIDE_HELP": {
+  "text": "Bantuan",
+  "back": "Help",
+  "why": "One plain word"
+ },
+ "GUIDE_SHOW_ME": {
+  "text": "Tunjukkan caranya",
+  "back": "Show the way of it",
+  "why": "Short offer to demonstrate"
+ },
+ "HELP_CALENDAR": {
+  "text": "Kalender berisi ibadah dan acara gereja, cukup diisi sekali. Slide pengumuman jadwal terisi sendiri.",
+  "back": "The calendar holds the church's services and events, only needs filling once. The schedule announcement slide fills itself.",
+  "why": "Table words Kalender, pengumuman"
+ },
+ "HELP_PEOPLE": {
+  "text": "Daftar nama dan tanggal lahir jemaat. Slide pengumuman ulang tahun membacanya dari sini.",
+  "back": "List of the congregation's names and birth dates. The birthday announcement slide reads it from here.",
+  "why": "Jemaat as the tab word"
+ },
+ "HELP_GIVING": {
+  "text": "Catatan persembahan beserta jumlahnya. Totalnya dihitung sendiri untuk slide pengumuman.",
+  "back": "Record of offerings with their amounts. The total is worked out by itself for the announcement slide.",
+  "why": "Persembahan as the tab word"
+ },
+ "HELP_TEMPLATES": {
+  "text": "Slide pengumuman siap pakai dalam beberapa gaya, terisi sendiri dari kalender, jemaat dan persembahan.",
+  "back": "Ready-to-use announcement slides in several styles, filling themselves from calendar, congregation and offerings.",
+  "why": "Names the three windows by their tab words"
+ },
+ "GUIDE_CAL_NEW": {
+  "text": "Tekan tombol berlingkar untuk tambah acara",
+  "back": "Press the ringed button to add an event",
+  "why": "Same verb and phrase as GUIDE_SCREENS_OPEN"
+ },
+ "GUIDE_CAL_NEW_MORE": {
+  "text": "Kamu pilih hari dan jamnya. Ibadah mingguan cukup dicatat sekali.",
+  "back": "You pick the days and time. A weekly service only needs noting once.",
+  "why": "Kamu, familiar register"
+ },
+ "GUIDE_PEOPLE_ADD": {
+  "text": "Tekan tombol berlingkar untuk tambah jemaat",
+  "back": "Press the ringed button to add a congregation member",
+  "why": "Matches PEOPLE_ADD"
+ },
+ "GUIDE_PEOPLE_ADD_MORE": {
+  "text": "Ketik namanya, lalu pilih tanggal lahir.",
+  "back": "Type the name, then pick the birth date.",
+  "why": "Plain two steps"
+ },
+ "GUIDE_GIVING_ADD": {
+  "text": "Tekan tombol berlingkar untuk catat persembahan",
+  "back": "Press the ringed button to note an offering",
+  "why": "Catat as in GIVING_ADD"
+ },
+ "GUIDE_GIVING_ADD_MORE": {
+  "text": "Ketik jumlahnya. Total dihitung sendiri.",
+  "back": "Type the amount. The total is counted by itself.",
+  "why": "Short"
+ },
+ "GUIDE_TPL_USE": {
+  "text": "Tekan Tambah pengumuman di templat pilihanmu",
+  "back": "Press Add an announcement on the template of your choice",
+  "why": "Names the button by the table's TPL_USE label"
+ },
+ "GUIDE_TPL_USE_MORE": {
+  "text": "Templat jadi pengumuman yang terisi sendiri.",
+  "back": "The template becomes an announcement that fills itself.",
+  "why": "One sentence"
+ },
+ "guide_open_tab": {
+  "text": "Buka tab {tab}",
+  "back": "Open the {tab} tab",
+  "why": "Buka as in Buka pencarian"
  }
 }

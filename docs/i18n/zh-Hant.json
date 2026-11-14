@@ -5138,5 +5138,80 @@
   "text": "貼上的網頁位址",
   "back": "The pasted web page address",
   "why": "names the row"
+ },
+ "GUIDE_HELP": {
+  "text": "說明",
+  "back": "Help",
+  "why": "Taiwan's usual word"
+ },
+ "GUIDE_SHOW_ME": {
+  "text": "帶我操作一遍",
+  "back": "Walk me through operating it once",
+  "why": "Spoken offer"
+ },
+ "HELP_CALENDAR": {
+  "text": "教會固定的聚會和活動只要輸入一次，公告裡的行程會自動填好。",
+  "back": "The church's regular gatherings and events only need entering once; the itinerary in the announcement fills itself.",
+  "why": "行事曆 and 公告 reused"
+ },
+ "HELP_PEOPLE": {
+  "text": "會友的姓名和生日都放在這裡，生日公告會讀這份名單。",
+  "back": "The members' names and birthdays are all kept here; the birthday announcement reads this list.",
+  "why": "會友 matches the tab"
+ },
+ "HELP_GIVING": {
+  "text": "記錄奉獻和金額，公告裡的總額會自動加好。",
+  "back": "Record offerings and amounts; the total in the announcement is added up automatically.",
+  "why": "奉獻 matches the tab"
+ },
+ "HELP_TEMPLATES": {
+  "text": "多種樣式的現成公告，內容會從行事曆、會友和奉獻自動帶入。",
+  "back": "Ready-made announcements in many styles, with content brought in automatically from the calendar, members and offerings.",
+  "why": "Tab names"
+ },
+ "GUIDE_CAL_NEW": {
+  "text": "按下框起來的按鈕，新增活動",
+  "back": "Press the boxed button and add an event",
+  "why": "Same pattern as GUIDE_SCREENS_OPEN"
+ },
+ "GUIDE_CAL_NEW_MORE": {
+  "text": "選好日期和時間。每週的聚會只要輸入一次。",
+  "back": "Pick the dates and time. A weekly gathering only needs entering once.",
+  "why": "Two facts"
+ },
+ "GUIDE_PEOPLE_ADD": {
+  "text": "按下框起來的按鈕，新增會友",
+  "back": "Press the boxed button and add a member",
+  "why": "Same pattern"
+ },
+ "GUIDE_PEOPLE_ADD_MORE": {
+  "text": "輸入姓名，選好生日",
+  "back": "Enter the name, pick the birthday",
+  "why": "Short, natural"
+ },
+ "GUIDE_GIVING_ADD": {
+  "text": "按下框起來的按鈕，新增一筆奉獻",
+  "back": "Press the boxed button and add an offering",
+  "why": "一筆 is the natural measure"
+ },
+ "GUIDE_GIVING_ADD_MORE": {
+  "text": "輸入金額，總額自動加好",
+  "back": "Enter the amount; the total is added up automatically",
+  "why": "Action then result"
+ },
+ "GUIDE_TPL_USE": {
+  "text": "在喜歡的範本上按下「新增公告」",
+  "back": "On a template you like, press 'New announcement'",
+  "why": "Names the button as the table does for TPL_USE"
+ },
+ "GUIDE_TPL_USE_MORE": {
+  "text": "它會變成自動填內容的公告",
+  "back": "It becomes an announcement that fills in content automatically",
+  "why": "One sentence"
+ },
+ "guide_open_tab": {
+  "text": "開啟「{tab}」分頁",
+  "back": "Open the '{tab}' tab",
+  "why": "Taiwan says 分頁"
  }
 }

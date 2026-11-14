@@ -5139,5 +5139,80 @@
   "text": "Trang từ địa chỉ đã dán",
   "back": "The page from the address pasted",
   "why": "Grey second line"
+ },
+ "GUIDE_HELP": {
+  "text": "Trợ giúp",
+  "back": "Help",
+  "why": "Standard UI word"
+ },
+ "GUIDE_SHOW_ME": {
+  "text": "Chỉ cách làm",
+  "back": "Show how to do it",
+  "why": "Short offer"
+ },
+ "HELP_CALENDAR": {
+  "text": "Lịch lưu các buổi nhóm và sự kiện của hội thánh, chỉ cần nhập một lần. Thông báo lịch tự điền theo.",
+  "back": "The calendar stores the church's meetings and events, only needs entering once. The schedule announcement fills itself along.",
+  "why": "Lịch and thông báo from the table"
+ },
+ "HELP_PEOPLE": {
+  "text": "Danh sách tên và ngày sinh của tín hữu. Thông báo sinh nhật đọc từ danh sách này.",
+  "back": "List of believers' names and birth dates. The birthday announcement reads from this list.",
+  "why": "Tín hữu as the tab word"
+ },
+ "HELP_GIVING": {
+  "text": "Ghi các khoản dâng kèm số tiền. Tổng tự cộng cho thông báo.",
+  "back": "Record the giving items with their amount. The total adds itself for the announcement.",
+  "why": "Khoản dâng as in GIVING_ADD"
+ },
+ "HELP_TEMPLATES": {
+  "text": "Thông báo làm sẵn nhiều kiểu, tự điền từ lịch, tín hữu và dâng hiến của hội thánh.",
+  "back": "Ready-made announcements in many styles, filling themselves from the church's calendar, believers and giving.",
+  "why": "Tab words"
+ },
+ "GUIDE_CAL_NEW": {
+  "text": "Bấm nút được khoanh để thêm sự kiện",
+  "back": "Press the circled button to add an event",
+  "why": "Same wording as GUIDE_SCREENS_OPEN"
+ },
+ "GUIDE_CAL_NEW_MORE": {
+  "text": "Bạn chọn ngày và giờ. Buổi nhóm hằng tuần chỉ nhập một lần.",
+  "back": "You choose the day and time. A weekly meeting is entered only once.",
+  "why": "Bạn, familiar register"
+ },
+ "GUIDE_PEOPLE_ADD": {
+  "text": "Bấm nút được khoanh để thêm tín hữu",
+  "back": "Press the circled button to add a believer",
+  "why": "Matches PEOPLE_ADD"
+ },
+ "GUIDE_PEOPLE_ADD_MORE": {
+  "text": "Gõ tên rồi chọn ngày sinh.",
+  "back": "Type the name then pick the birth date.",
+  "why": "Plain"
+ },
+ "GUIDE_GIVING_ADD": {
+  "text": "Bấm nút được khoanh để thêm khoản dâng",
+  "back": "Press the circled button to add a giving item",
+  "why": "Matches GIVING_ADD"
+ },
+ "GUIDE_GIVING_ADD_MORE": {
+  "text": "Gõ số tiền. Tổng tự cộng.",
+  "back": "Type the amount. The total adds itself.",
+  "why": "Short"
+ },
+ "GUIDE_TPL_USE": {
+  "text": "Bấm Thêm thông báo ở mẫu bạn thích",
+  "back": "Press Add an announcement on the template you like",
+  "why": "Names the table's TPL_USE label"
+ },
+ "GUIDE_TPL_USE_MORE": {
+  "text": "Mẫu thành thông báo tự điền.",
+  "back": "The template becomes a self-filling announcement.",
+  "why": "One short sentence"
+ },
+ "guide_open_tab": {
+  "text": "Mở tab {tab}",
+  "back": "Open the {tab} tab",
+  "why": "Mở as in Mở tìm kiếm"
  }
 }

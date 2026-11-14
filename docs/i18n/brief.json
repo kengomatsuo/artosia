@@ -18793,5 +18793,271 @@
   "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
   "concepts": [],
   "notes": "The news first, then the file's name. No full stop after the name."
+ },
+ {
+  "key": "GUIDE_HELP",
+  "kind": "const",
+  "screen": "A small round mark with a question mark, at the right end of a window's toolbar (the Calendar, People, Offerings and Templates windows). It has no visible word; this text is what a screen reader says and the tooltip.",
+  "moment": "The person wonders what this window is for or how to use it.",
+  "role": "icon button name",
+  "does": "Names the button that opens help about this window.",
+  "budget": 16,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [],
+  "notes": "One word if the language allows."
+ },
+ {
+  "key": "GUIDE_SHOW_ME",
+  "kind": "const",
+  "screen": "The help card that opens under a window's help mark: the window's name, one or two sentences on what it is for, and two buttons, Close and this filled one.",
+  "moment": "The person read what the window is for and wants to be walked through using it.",
+  "role": "primary button",
+  "does": "Starts a short guided walk that rings the buttons to press, one at a time.",
+  "budget": 20,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "guide"
+  ],
+  "notes": "Short; the way a program offers to demonstrate."
+ },
+ {
+  "key": "HELP_CALENDAR",
+  "kind": "const",
+  "screen": "The help card of the Calendar window, under the window's name; also the grey line of the guide's first step that opens the Calendar tab.",
+  "moment": "The person asked what the Calendar window is for.",
+  "role": "explanation",
+  "does": "Says the Calendar holds the church's regular services and events, entered once, and that the schedule announcement slide fills itself from it.",
+  "budget": 110,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "calendar",
+   "announcement"
+  ],
+  "notes": "One or two short sentences."
+ },
+ {
+  "key": "HELP_PEOPLE",
+  "kind": "const",
+  "screen": "The help card of the People window (the congregation's list), under the window's name; also the grey line of the guide's first step that opens that tab.",
+  "moment": "The person asked what the People window is for.",
+  "role": "explanation",
+  "does": "Says it holds the congregation's names and birthdays and that the birthday announcement slide reads this list.",
+  "budget": 110,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "people",
+   "birthday",
+   "announcement"
+  ],
+  "notes": "One or two short sentences."
+ },
+ {
+  "key": "HELP_GIVING",
+  "kind": "const",
+  "screen": "The help card of the Offerings window, under the window's name; also the grey line of the guide's first step that opens that tab.",
+  "moment": "The person asked what the Offerings window is for.",
+  "role": "explanation",
+  "does": "Says it holds gifts and offerings with their amounts, and that the total adds itself up for the announcement slide.",
+  "budget": 110,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "offering",
+   "announcement"
+  ],
+  "notes": "One or two short sentences."
+ },
+ {
+  "key": "HELP_TEMPLATES",
+  "kind": "const",
+  "screen": "The help card of the Templates window, under the window's name; also the grey line of the guide's first step that opens that tab.",
+  "moment": "The person asked what the Templates window is for.",
+  "role": "explanation",
+  "does": "Says it holds ready announcement slides in several styles that fill themselves from the church's own data (calendar, people, offerings).",
+  "budget": 110,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "template",
+   "announcement"
+  ],
+  "notes": "One or two short sentences."
+ },
+ {
+  "key": "GUIDE_CAL_NEW",
+  "kind": "const",
+  "screen": "A guide bubble beside a button ringed in colour, the rest of the window dimmed. The ringed button is the Calendar window's button that adds a new event.",
+  "moment": "The guide waits for the person to press the ringed button themselves.",
+  "role": "headline of a guide step",
+  "does": "Tells the person to press the ringed button to add an event.",
+  "budget": 48,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "calendar"
+  ],
+  "notes": "Use the same verb and the same word for 'ringed button' as the other guide steps of the program if its table has them (GUIDE_SCREENS_OPEN)."
+ },
+ {
+  "key": "GUIDE_CAL_NEW_MORE",
+  "kind": "const",
+  "screen": "The grey line under the headline of the step that asks to press the add-event button.",
+  "moment": "The person reads what comes next.",
+  "role": "explanation line of a guide step",
+  "does": "Says they will pick the event's days and time, and that a weekly service is entered only once.",
+  "budget": 80,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "calendar"
+  ],
+  "notes": "One sentence."
+ },
+ {
+  "key": "GUIDE_PEOPLE_ADD",
+  "kind": "const",
+  "screen": "A guide bubble beside the People window's ringed button that adds a person to the list.",
+  "moment": "The guide waits for the person to press it themselves.",
+  "role": "headline of a guide step",
+  "does": "Tells the person to press the ringed button to add a person.",
+  "budget": 48,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "people"
+  ],
+  "notes": "Same pattern as the other guide steps."
+ },
+ {
+  "key": "GUIDE_PEOPLE_ADD_MORE",
+  "kind": "const",
+  "screen": "The grey line under the headline of the step that asks to press the add-person button.",
+  "moment": "The person reads what comes next.",
+  "role": "explanation line of a guide step",
+  "does": "Says they will type the name and pick the birthday.",
+  "budget": 60,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "people",
+   "birthday"
+  ],
+  "notes": "One sentence."
+ },
+ {
+  "key": "GUIDE_GIVING_ADD",
+  "kind": "const",
+  "screen": "A guide bubble beside the Offerings window's ringed button that adds a gift.",
+  "moment": "The guide waits for the person to press it themselves.",
+  "role": "headline of a guide step",
+  "does": "Tells the person to press the ringed button to add a gift.",
+  "budget": 48,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "offering"
+  ],
+  "notes": "Same pattern as the other guide steps."
+ },
+ {
+  "key": "GUIDE_GIVING_ADD_MORE",
+  "kind": "const",
+  "screen": "The grey line under the headline of the step that asks to press the add-gift button.",
+  "moment": "The person reads what comes next.",
+  "role": "explanation line of a guide step",
+  "does": "Says they will type the amount and that the total adds itself up.",
+  "budget": 60,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "offering"
+  ],
+  "notes": "One sentence."
+ },
+ {
+  "key": "GUIDE_TPL_USE",
+  "kind": "const",
+  "screen": "A guide bubble beside a ringed Use button on one of the template tiles in the Templates window.",
+  "moment": "The guide waits for the person to press Use on a template.",
+  "role": "headline of a guide step",
+  "does": "Tells the person to press Use on a template they like.",
+  "budget": 48,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "template"
+  ],
+  "notes": "Name the Use button with the word the program's table uses for it (TPL_USE) if present."
+ },
+ {
+  "key": "GUIDE_TPL_USE_MORE",
+  "kind": "const",
+  "screen": "The grey line under the headline of the step that asks to press Use on a template.",
+  "moment": "The person reads what happens next.",
+  "role": "explanation line of a guide step",
+  "does": "Says the template becomes an announcement that fills itself.",
+  "budget": 60,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "template",
+   "announcement"
+  ],
+  "notes": "One sentence."
+ },
+ {
+  "key": "guide_open_tab",
+  "kind": "sentence",
+  "screen": "A guide bubble beside a window tab ringed in colour in the tab bar under the title bar.",
+  "moment": "The guide waits for the person to press that tab.",
+  "role": "headline of a guide step",
+  "does": "Tells the person to open the tab named by the variable.",
+  "budget": 40,
+  "variables": [
+   {
+    "name": "tab",
+    "example": "Kalender",
+    "meaning": "The tab's name exactly as the tab bar shows it."
+   }
+  ],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "tab"
+  ],
+  "notes": "Keep the token {tab} exactly."
  }
 ]

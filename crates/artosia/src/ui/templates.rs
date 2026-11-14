@@ -142,7 +142,7 @@ fn rail(s: &App, k: &Kit) -> El {
     for style in NoticeStyle::ALL {
         styles = styles.child(rail_row(k, format!("tpl-style-{}", style.code()), style_name(style), None, window.style == Some(style), move |s| s.templates_filter(s.templates.kind, Some(style))));
     }
-    col().key("templates-rail").w(RAIL).h_full().fill(sf.side).padding(space::S3).gap(2.0).child(kinds).child(el().h(space::S4)).child(section_label(k, t::TPL_STYLE())).child(el().h(2.0)).child(styles)
+    col().key("templates-rail").w(RAIL).h_full().fill(sf.side).padding(space::S3).gap(2.0).child(row().w_full().child(spacer()).child(crate::ui::tour::help_mark(s, k, crate::guide::lessons::Feature::Templates))).child(kinds).child(el().h(space::S4)).child(section_label(k, t::TPL_STYLE())).child(el().h(2.0)).child(styles)
 }
 
 fn tile(s: &App, k: &Kit, template: Template, style: NoticeStyle) -> El {

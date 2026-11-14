@@ -5171,5 +5171,80 @@
   "text": "Página que pegaste",
   "back": "Page you pasted",
   "why": "Says it is the pasted address."
+ },
+ "GUIDE_HELP": {
+  "text": "Ayuda",
+  "back": "Help",
+  "why": "One word"
+ },
+ "GUIDE_SHOW_ME": {
+  "text": "Muéstrame cómo",
+  "back": "Show me how",
+  "why": "Tú register"
+ },
+ "HELP_CALENDAR": {
+  "text": "Aquí van los cultos y eventos de la iglesia, una sola vez. El anuncio del horario se llena solo.",
+  "back": "Here go the church's services and events, one single time. The schedule announcement fills itself.",
+  "why": "Table word anuncio"
+ },
+ "HELP_PEOPLE": {
+  "text": "Guarda los nombres y cumpleaños de la iglesia. El anuncio de cumpleaños lee esta lista.",
+  "back": "Keeps the church's names and birthdays. The birthday announcement reads this list.",
+  "why": "Plain verb"
+ },
+ "HELP_GIVING": {
+  "text": "Guarda las ofrendas con su monto. El total se suma solo para el anuncio.",
+  "back": "Keeps the offerings with their amount. The total adds itself for the announcement.",
+  "why": "Ofrendas as in the table"
+ },
+ "HELP_TEMPLATES": {
+  "text": "Anuncios listos en varios estilos, que se llenan solos con el calendario, los miembros y las ofrendas.",
+  "back": "Ready announcements in several styles, which fill themselves from the calendar, the members and the offerings.",
+  "why": "Tab words"
+ },
+ "GUIDE_CAL_NEW": {
+  "text": "Pulsa el botón marcado para agregar un evento",
+  "back": "Press the marked button to add an event",
+  "why": "Same wording as GUIDE_SCREENS_OPEN"
+ },
+ "GUIDE_CAL_NEW_MORE": {
+  "text": "Elegirás los días y la hora. Un culto semanal se anota una sola vez.",
+  "back": "You will choose the days and the time. A weekly service is noted just once.",
+  "why": "Plain"
+ },
+ "GUIDE_PEOPLE_ADD": {
+  "text": "Pulsa el botón marcado para agregar una persona",
+  "back": "Press the marked button to add a person",
+  "why": "Matches PEOPLE_ADD"
+ },
+ "GUIDE_PEOPLE_ADD_MORE": {
+  "text": "Escribirás el nombre y elegirás el cumpleaños.",
+  "back": "You will write the name and choose the birthday.",
+  "why": "Plain"
+ },
+ "GUIDE_GIVING_ADD": {
+  "text": "Pulsa el botón marcado para agregar una ofrenda",
+  "back": "Press the marked button to add an offering",
+  "why": "Matches GIVING_ADD"
+ },
+ "GUIDE_GIVING_ADD_MORE": {
+  "text": "Escribirás el monto. El total se suma solo.",
+  "back": "You will write the amount. The total adds itself.",
+  "why": "Short"
+ },
+ "GUIDE_TPL_USE": {
+  "text": "Pulsa Usar plantilla en la que más te guste",
+  "back": "Press Use template on the one you like most",
+  "why": "Names TPL_USE exactly"
+ },
+ "GUIDE_TPL_USE_MORE": {
+  "text": "La plantilla pasa a ser un anuncio que se llena solo.",
+  "back": "The template becomes an announcement that fills itself.",
+  "why": "One sentence"
+ },
+ "guide_open_tab": {
+  "text": "Abre la pestaña {tab}",
+  "back": "Open the {tab} tab",
+  "why": "Tú imperative"
  }
 }
