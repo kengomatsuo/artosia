@@ -9,6 +9,9 @@
 use rune::{Align, Cx, El, Key, Side, col, el, row, spacer, text};
 use rune_kit::Kit;
 
+use crate::guide::window::Window;
+use crate::guide::{Goal, Lesson, Runner, Show, Step};
+use crate::palette::Command;
 use crate::state::{App, Sheet};
 use crate::strings as t;
 use crate::theme::{self, icons, space, type_};
@@ -46,6 +49,17 @@ const STOPS: [Stop; 5] = [
 
 /// How many stops there are.
 pub const STOP_COUNT: usize = STOPS.len();
+
+/// The tour as the guide's first lesson: each stop explains the part its key names. The guide's
+/// runner decides where the ring goes, so a later lesson of goal steps draws through this view.
+const BASICS_STEPS: [Step<Command>; STOP_COUNT] = [
+    Step { id: "plan", goal: Goal::Point("plan"), needs: None, done: None, restore: None },
+    Step { id: "preview", goal: Goal::Point("slide-list"), needs: None, done: None, restore: None },
+    Step { id: "show", goal: Goal::Point("preview-controls"), needs: None, done: None, restore: None },
+    Step { id: "live", goal: Goal::Point("transport"), needs: None, done: None, restore: None },
+    Step { id: "search", goal: Goal::Point("search-button"), needs: None, done: None, restore: None },
+];
+pub(crate) const BASICS: Lesson<Command> = Lesson { id: "basics", steps: &BASICS_STEPS };
 
 impl App {
     /// Opens the tour at its first stop, over whatever the window shows.
@@ -113,8 +127,16 @@ pub(crate) fn view(s: &App, cx: &mut Cx<App>, k: &Kit, layer: &mut Vec<El>) {
     let stop = &STOPS[at.min(STOP_COUNT - 1)];
     let dim = rune::Color::BLACK.alpha(0.38);
     let card = card(k, at, stop);
-    match cx.layout(stop.target) {
-        Some([x, y, w, h]) => {
+    let shown = {
+        let layout = |key: &str| cx.layout(key);
+        Runner::starting_at(BASICS, at).advance(&Window { app: s, layout: &layout })
+    };
+    let target = match shown {
+        Show::At { key, .. } => cx.layout(&key).map(|rect| (key, rect)),
+        Show::Search { .. } | Show::Finished => None,
+    };
+    match target {
+        Some((key, [x, y, w, h])) => {
             let (x0, y0) = ((x - PAD).max(0.0), (y - PAD).max(0.0));
             let (x1, y1) = (x + w + PAD, y + h + PAD);
             let strip = || el().fill(dim).a11y_hidden();
@@ -124,7 +146,7 @@ pub(crate) fn view(s: &App, cx: &mut Cx<App>, k: &Kit, layer: &mut Vec<El>) {
             layer.push(strip().key("tour-dim-left").pin(Some(0.0), Some(y0), None, None).w(x0).h(y1 - y0));
             layer.push(strip().key("tour-dim-right").pin(Some(x1), Some(y0), Some(0.0), None).h(y1 - y0));
             layer.push(el().key("tour-ring").absolute(x0, y0).size(x1 - x0, y1 - y0).radius(k.radius.lg).border(3.0, theme::accent()).a11y_hidden());
-            layer.push(card.anchored(stop.target, stop.side, stop.align, space::S3));
+            layer.push(card.anchored(&key, stop.side, stop.align, space::S3));
         }
         // The part is not on screen (an editor has the Preview pane): dim all of it and centre the card.
         None => {
@@ -170,6 +192,13 @@ fn card(k: &Kit, at: usize, stop: &Stop) -> El {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn the_lesson_points_where_the_stops_point() {
+        for (stop, step) in STOPS.iter().zip(BASICS.steps) {
+            assert_eq!(step.goal, Goal::Point(stop.target));
+        }
+    }
 
     #[test]
     fn moves_forward_and_back_and_ends() {

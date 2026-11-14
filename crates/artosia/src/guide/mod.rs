@@ -19,6 +19,9 @@ pub enum Goal<C> {
     Run(C),
     /// Reach a state no single command names (a song open, a slide live); `World::holds` decides.
     Reach(&'static str),
+    /// Explain a part of the window, keyed by this element; the person goes on with Next, so
+    /// the step is done when the caller moves past it (`Runner::starting_at`).
+    Point(&'static str),
 }
 
 /// One step of a lesson.
@@ -51,6 +54,8 @@ pub trait World<C> {
     fn holds(&self, state: &str) -> bool;
     /// Whether `command` ran since the step was shown.
     fn ran(&self, command: C) -> bool;
+    /// Whether the element with this key is drawn with an area now.
+    fn shown(&self, key: &str) -> bool;
 }
 
 /// What the window draws for the current step.
@@ -74,6 +79,11 @@ pub struct Runner<C: 'static> {
 impl<C: Copy + PartialEq + 'static> Runner<C> {
     pub fn new(lesson: Lesson<C>) -> Self {
         Runner { lesson, at: 0 }
+    }
+
+    /// A runner already at step `at`, for a lesson whose earlier steps the person went past.
+    pub fn starting_at(lesson: Lesson<C>, at: usize) -> Self {
+        Runner { lesson, at }
     }
 
     pub fn step(&self) -> usize {
@@ -105,6 +115,8 @@ impl<C: Copy + PartialEq + 'static> Runner<C> {
                     None => Show::Search { step: self.at },
                 },
                 Goal::Reach(_) => Show::Search { step: self.at },
+                Goal::Point(key) if world.shown(key) => Show::At { step: self.at, key: key.to_string() },
+                Goal::Point(_) => Show::Search { step: self.at },
             };
         }
     }
@@ -119,6 +131,7 @@ fn is_done<C: Copy>(step: &Step<C>, world: &impl World<C>) -> bool {
         (Some(state), _) => world.holds(state),
         (None, Goal::Run(command)) => world.ran(command),
         (None, Goal::Reach(state)) => world.holds(state),
+        (None, Goal::Point(_)) => false,
     }
 }
 
@@ -150,6 +163,9 @@ mod tests {
         }
         fn ran(&self, command: Cmd) -> bool {
             self.ran.borrow().contains(&command)
+        }
+        fn shown(&self, key: &str) -> bool {
+            self.anchors.iter().any(|(_, a)| a.key == key && a.visible) || key == "plan"
         }
     }
 
@@ -200,6 +216,19 @@ mod tests {
         assert_eq!(runner.advance(&world), Show::At { step: 0, key: "tab-calendar".to_string() });
         world.states.borrow_mut().extend(["calendar-open", "event-added"]);
         assert_eq!(runner.advance(&world), Show::Finished);
+    }
+
+    #[test]
+    fn an_explanation_points_at_its_part_or_centres_when_the_part_is_gone() {
+        const POINTS: &[Step<Cmd>] = &[
+            Step { id: "plan", goal: Goal::Point("plan"), needs: None, done: None, restore: None },
+            Step { id: "gone", goal: Goal::Point("not-drawn"), needs: None, done: None, restore: None },
+        ];
+        let lesson = Lesson { id: "points", steps: POINTS };
+        let world = Table::default();
+        assert_eq!(Runner::starting_at(lesson, 0).advance(&world), Show::At { step: 0, key: "plan".to_string() });
+        assert_eq!(Runner::starting_at(lesson, 1).advance(&world), Show::Search { step: 1 });
+        assert_eq!(Runner::starting_at(lesson, 2).advance(&world), Show::Finished);
     }
 
     #[test]

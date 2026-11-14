@@ -24,6 +24,10 @@ impl World<Command> for Window<'_> {
     fn ran(&self, _command: Command) -> bool {
         false
     }
+
+    fn shown(&self, key: &str) -> bool {
+        (self.layout)(key).is_some_and(|[_, _, w, h]| w > 0.0 && h > 0.0)
+    }
 }
 
 /// The states lessons name. A name nobody knows is never true, and a test lists the names every
