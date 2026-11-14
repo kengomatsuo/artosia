@@ -46,6 +46,7 @@ mod suggest;
 mod theme;
 mod ui;
 mod update;
+mod web_songs;
 mod why;
 
 use artosia_core::song::Song;
@@ -145,6 +146,11 @@ fn on_key(s: &mut App, ev: &KeyEvent, tx: &mut Tx) -> bool {
     match &ev.key {
         Key::Command('k') => {
             s.open_palette(Scope::All, "");
+            return true;
+        }
+        // The Songs from the internet dialog prints Ctrl Enter on Import, wherever its focus is.
+        Key::Enter if (ev.mods.ctrl || ev.mods.cmd) && s.web.is_some() => {
+            s.web_import();
             return true;
         }
         // The next and the previous window, as the next sheet of Excel and the next tab of
@@ -283,7 +289,7 @@ fn on_key(s: &mut App, ev: &KeyEvent, tx: &mut Tx) -> bool {
         return false;
     }
     // The projector's keys act where Preview and Live are in view, and nowhere else.
-    if focused || editing || s.sheet != Sheet::None || s.tab != Tab::Plan {
+    if focused || editing || s.web.is_some() || s.sheet != Sheet::None || s.tab != Tab::Plan {
         return false;
     }
     // The arrows are EasiSlides': Up and Down are the slide before and after, Left the first
@@ -706,6 +712,10 @@ const SCENES: &[Scene] = &[
         s.scene_clears(crate::run::Layer::Video, true);
     }),
     // OVPPTX1: the import dialog with both ways, a money table whose total differs, and no renderer.
+    // WEBDLG1: the Songs from the internet dialog with made-up results and words, a pasted page, and LRCLIB failing.
+    ("web-songs", |s| s.demo_web_songs("results")),
+    ("web-songs-pasted", |s| s.demo_web_songs("pasted")),
+    ("web-songs-offline", |s| s.demo_web_songs("offline")),
     ("pptx-import", |s| {
         s.open_tab(Tab::Notices);
         s.demo_pptx("made");

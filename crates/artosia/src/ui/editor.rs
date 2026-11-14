@@ -449,6 +449,9 @@ pub fn view(s: &App, k: &Kit, _width: f32, layer: &mut Vec<El>) -> El {
         .center_y()
         .child(text(if existing { t::EDITOR_EDIT() } else { t::EDITOR_NEW() }).font(type_::HEADING).color(k.c.text_base))
         .child(spacer());
+    if !existing {
+        header = header.child(btn(t::CMD_WEB_SONGS()).icon(&icons::GLOBE).ghost().focusable().build(k, |s, _| s.open_web_songs()));
+    }
     if existing {
         header = header.child(btn(t::BTN_DELETE_SONG()).icon(&icons::TRASH).ghost().focusable().build(k, move |s, tx: &mut Tx| {
             s.delete_song(id);

@@ -23,6 +23,7 @@ LEFT_OUT = {
     "KEY_SEARCH": "a key as the keyboard prints it",
     "KEY_ENTER": "a key as the keyboard prints it",
     "KEY_SHOW_NOW": "keys as the keyboard prints them",
+    "KEY_IMPORT": "keys as the keyboard prints them",
     "KEY_ADD": "keys as the keyboard prints them",
     "KEY_SAVE": "keys as the keyboard prints them",
     "KEY_START_HERE": "keys as the keyboard prints them",

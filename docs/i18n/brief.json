@@ -5246,6 +5246,258 @@
   "notes": "One sentence."
  },
  {
+  "key": "CMD_WEB_SONGS",
+  "kind": "const",
+  "screen": "Three places: a row in the search panel, an item in the menu under the plan's Add button, a tile on the start screen, a small button in the new-song editor's top row, and the title of the dialog itself. Songs from the internet dialog, opened over the main window: a field at the top left with the results of the search under it (each a song title with where it comes from), the picked song's words on the right as the program will show them (each part with a coloured name chip), a line under it saying where the words came from, a reminder about licences, and at the bottom a button that opens the person's own browser, Cancel and a primary Import button with its key.",
+  "moment": "The person wants a song whose words the church does not have yet.",
+  "role": "button and dialog title",
+  "does": "Names the place where a song's words are looked for on the web and brought in.",
+  "budget": 26,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "song",
+   "lyrics_service",
+   "search"
+  ],
+  "notes": "Fits a tile about 200 points wide and a menu row. A noun phrase, not a command."
+ },
+ {
+  "key": "CMD_WEB_SONGS_DETAIL",
+  "kind": "const",
+  "screen": "Search panel, results list: a row for an action; this is its second line.",
+  "moment": "Under the row that opens the web song dialog.",
+  "role": "detail line",
+  "does": "Says the dialog finds words from a name, a hymn book number or the address of a page.",
+  "budget": 55,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "song",
+   "lyrics_service"
+  ],
+  "notes": "No full stop."
+ },
+ {
+  "key": "START_WEB_DETAIL",
+  "kind": "const",
+  "screen": "Start screen, a tile with an icon, a title and one grey line under it.",
+  "moment": "Under the web song tile's title.",
+  "role": "tile detail",
+  "does": "Says words can be looked up by name or by a page the person has found.",
+  "budget": 30,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "song",
+   "lyrics_service"
+  ],
+  "notes": "One short line, about 200 points wide, no full stop."
+ },
+ {
+  "key": "WEB_FIELD",
+  "kind": "const",
+  "screen": "Songs from the internet dialog, opened over the main window: a field at the top left with the results of the search under it (each a song title with where it comes from), the picked song's words on the right as the program will show them (each part with a coloured name chip), a line under it saying where the words came from, a reminder about licences, and at the bottom a button that opens the person's own browser, Cancel and a primary Import button with its key.",
+  "moment": "The field is empty and has the caret.",
+  "role": "placeholder",
+  "does": "Tells what can be typed or pasted: a song name, a hymn number such as the hymn book's abbreviation and a number, or a web page address.",
+  "budget": 56,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "search",
+   "song"
+  ],
+  "notes": "Hint inside an empty box about 340 points wide. Keep the sample KJ 4 as it is: KJ is the abbreviation of a hymn book."
+ },
+ {
+  "key": "WEB_TYPE_HINT",
+  "kind": "const",
+  "screen": "Songs from the internet dialog, opened over the main window: a field at the top left with the results of the search under it (each a song title with where it comes from), the picked song's words on the right as the program will show them (each part with a coloured name chip), a line under it saying where the words came from, a reminder about licences, and at the bottom a button that opens the person's own browser, Cancel and a primary Import button with its key.",
+  "moment": "Nothing has been typed yet and the list of results is empty.",
+  "role": "empty state",
+  "does": "Invites the person to give a name or a number, or to drop in the web address of a page that holds the words.",
+  "budget": 70,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "search",
+   "song"
+  ],
+  "notes": "Centred in an empty box, wraps over two or three lines."
+ },
+ {
+  "key": "WEB_SEARCHING",
+  "kind": "const",
+  "screen": "Songs from the internet dialog, opened over the main window: a field at the top left with the results of the search under it (each a song title with where it comes from), the picked song's words on the right as the program will show them (each part with a coloured name chip), a line under it saying where the words came from, a reminder about licences, and at the bottom a button that opens the person's own browser, Cancel and a primary Import button with its key.",
+  "moment": "Words were typed and the answer has not come yet.",
+  "role": "status",
+  "does": "Tells the person the search is under way.",
+  "budget": 14,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "search"
+  ],
+  "notes": "One word or two, centred in the empty list. No full stop."
+ },
+ {
+  "key": "WEB_NOTHING",
+  "kind": "const",
+  "screen": "Songs from the internet dialog, opened over the main window: a field at the top left with the results of the search under it (each a song title with where it comes from), the picked song's words on the right as the program will show them (each part with a coloured name chip), a line under it saying where the words came from, a reminder about licences, and at the bottom a button that opens the person's own browser, Cancel and a primary Import button with its key.",
+  "moment": "The search ended and found no song.",
+  "role": "empty state",
+  "does": "Says nothing matched, suggests other words, or looking in the person's own browser and pasting the address of a page back into the field.",
+  "budget": 100,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "search",
+   "song"
+  ],
+  "notes": "Centred, wraps over three lines."
+ },
+ {
+  "key": "WEB_PICK_HINT",
+  "kind": "const",
+  "screen": "Songs from the internet dialog, opened over the main window: a field at the top left with the results of the search under it (each a song title with where it comes from), the picked song's words on the right as the program will show them (each part with a coloured name chip), a line under it saying where the words came from, a reminder about licences, and at the bottom a button that opens the person's own browser, Cancel and a primary Import button with its key.",
+  "moment": "Results are listed but none is picked, so the right side is empty.",
+  "role": "empty state",
+  "does": "Asks the person to choose a result so its words show here the way the program will show them.",
+  "budget": 70,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "song",
+   "preview"
+  ],
+  "notes": "Centred in the empty right side, wraps."
+ },
+ {
+  "key": "WEB_INDEX_LOADING",
+  "kind": "const",
+  "screen": "Songs from the internet dialog, opened over the main window: a field at the top left with the results of the search under it (each a song title with where it comes from), the picked song's words on the right as the program will show them (each part with a coloured name chip), a line under it saying where the words came from, a reminder about licences, and at the bottom a button that opens the person's own browser, Cancel and a primary Import button with its key.",
+  "moment": "The first time the dialog opens, or once a week, the program reads a long list of song titles from one website in the background.",
+  "role": "status",
+  "does": "Says the list of one website's songs is being read and that until it is done only the other source is searched.",
+  "budget": 85,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "song",
+   "lyrics_service"
+  ],
+  "notes": "Grey, quiet, under the results, wraps to two lines. Gema SABDA and LRCLIB are names of websites and stay as they are."
+ },
+ {
+  "key": "WEB_INDEX_FAILED",
+  "kind": "const",
+  "screen": "Songs from the internet dialog, opened over the main window: a field at the top left with the results of the search under it (each a song title with where it comes from), the picked song's words on the right as the program will show them (each part with a coloured name chip), a line under it saying where the words came from, a reminder about licences, and at the bottom a button that opens the person's own browser, Cancel and a primary Import button with its key.",
+  "moment": "The list of a website's songs could not be read, for example with no internet.",
+  "role": "status",
+  "does": "Says the website's list failed to load, so only the other source is searched.",
+  "budget": 70,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "song",
+   "lyrics_service"
+  ],
+  "notes": "Grey, under the results, wraps to two lines. Gema SABDA and LRCLIB are names of websites and stay as they are."
+ },
+ {
+  "key": "WEB_BROWSER",
+  "kind": "const",
+  "screen": "Songs from the internet dialog, opened over the main window: a field at the top left with the results of the search under it (each a song title with where it comes from), the picked song's words on the right as the program will show them (each part with a coloured name chip), a line under it saying where the words came from, a reminder about licences, and at the bottom a button that opens the person's own browser, Cancel and a primary Import button with its key.",
+  "moment": "The person cannot find the song in the list and wants to look on the web themselves.",
+  "role": "button",
+  "does": "Names the action of opening the person's own web browser on a search for the typed words.",
+  "budget": 28,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "search",
+   "lyrics_service"
+  ],
+  "notes": "A button with a globe icon, about 200 points wide."
+ },
+ {
+  "key": "WEB_BROWSER_HELP",
+  "kind": "const",
+  "screen": "Songs from the internet dialog, opened over the main window: a field at the top left with the results of the search under it (each a song title with where it comes from), the picked song's words on the right as the program will show them (each part with a coloured name chip), a line under it saying where the words came from, a reminder about licences, and at the bottom a button that opens the person's own browser, Cancel and a primary Import button with its key.",
+  "moment": "The person rests the pointer on the button that opens their browser.",
+  "role": "tooltip",
+  "does": "Explains that the browser opens on a search for the typed words plus the word for lyrics in Indonesian, and that the person pastes the page address they pick back into the field.",
+  "budget": 120,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "search",
+   "lyrics_service"
+  ],
+  "notes": "Keep the word lirik as it is: it is the Indonesian word for lyrics used in the search. Google is a name."
+ },
+ {
+  "key": "WEB_LICENCE",
+  "kind": "const",
+  "screen": "Songs from the internet dialog, opened over the main window: a field at the top left with the results of the search under it (each a song title with where it comes from), the picked song's words on the right as the program will show them (each part with a coloured name chip), a line under it saying where the words came from, a reminder about licences, and at the bottom a button that opens the person's own browser, Cancel and a primary Import button with its key.",
+  "moment": "Always shown under the preview of the words.",
+  "role": "reminder",
+  "does": "Says that words found on the internet, from any source, still belong to whoever wrote them, and that showing them on the screen takes permission, usually the licence a church holds through CCLI.",
+  "budget": 110,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "licence",
+   "song"
+  ],
+  "notes": "Grey, wraps to two lines about 540 points wide. CCLI is a name and stays."
+ },
+ {
+  "key": "WEB_PASTED",
+  "kind": "const",
+  "screen": "Songs from the internet dialog, opened over the main window: a field at the top left with the results of the search under it (each a song title with where it comes from), the picked song's words on the right as the program will show them (each part with a coloured name chip), a line under it saying where the words came from, a reminder about licences, and at the bottom a button that opens the person's own browser, Cancel and a primary Import button with its key.",
+  "moment": "The person pasted a web page address and it is listed as a result.",
+  "role": "second line of a result",
+  "does": "Says this result is the page whose address the person pasted, not a song found by name.",
+  "budget": 30,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "search",
+   "song"
+  ],
+  "notes": "Grey second line under the address, one line, no full stop."
+ },
+ {
   "key": "suggest_web",
   "kind": "sentence",
   "screen": "Song editor: it takes the place of the Preview pane. Heading and Delete, Cancel and Save buttons across the top; below them the fields Title, Author, Key, Copyright and CCLI song number; then the big box for the words with a row of small buttons above it; under it the order of the song; and a column of slide thumbnails at the right. Grey second line of a row in the drop-down under the title field.",

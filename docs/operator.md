@@ -625,3 +625,11 @@ stays), and Redraw keeps today's text import. A redraw proposes a birthday table
 Members and a money table's gifts for Offerings, and says in yellow when a table's printed total
 differs from the sum of its rows; nothing is written before Import. Cancel stops the export and the
 PowerPoint it started, never one the person had open (`artosia-office/src/export.rs`, `pptx_import.rs`).
+
+### Songs from the internet (WEBDLG1, built 2026-11-14)
+
+One field takes a title, a KJ number or a pasted page address. Gema SABDA's titles (kept as a
+titles-only file in the library, read again after seven days) come before LRCLIB's, and every pick is
+parsed into Artosia's own preview of sections before a person sees it; the page itself is never drawn.
+Import, a primary button with Ctrl Enter printed, is the only thing that saves a song. Search in my
+browser opens the person's own browser, because no search engine can be read by a program from here.

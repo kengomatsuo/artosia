@@ -5068,5 +5068,75 @@
    "gifts": "Also recorded {gifts} gifts."
   },
   "why": "另外 follows the card-count sentence"
+ },
+ "CMD_WEB_SONGS": {
+  "text": "網路上的詩歌",
+  "back": "Songs on the web",
+  "why": "網路 as the table says; 詩歌 is the song word"
+ },
+ "CMD_WEB_SONGS_DETAIL": {
+  "text": "用名稱、編號或網頁位址找歌詞",
+  "back": "Find the words with a name, number or web page address",
+  "why": "編號 covers the hymn book number"
+ },
+ "START_WEB_DETAIL": {
+  "text": "用名稱或網頁位址找歌詞",
+  "back": "Find the words with a name or web page address",
+  "why": "shorter than the menu line"
+ },
+ "WEB_FIELD": {
+  "text": "輸入詩歌名稱、編號（如 KJ 4）或網頁位址",
+  "back": "Type a song name, a number (such as KJ 4) or a web page address",
+  "why": "KJ 4 kept"
+ },
+ "WEB_TYPE_HINT": {
+  "text": "輸入名稱或編號，也可以貼上有歌詞的網頁位址",
+  "back": "Type a name or number, or paste the address of a web page that has the words",
+  "why": "貼上 is the table's paste word"
+ },
+ "WEB_SEARCHING": {
+  "text": "正在搜尋",
+  "back": "Searching",
+  "why": "short status"
+ },
+ "WEB_NOTHING": {
+  "text": "找不到。換個詞試試，或用瀏覽器自己找，再把網頁位址貼回來",
+  "back": "Not found. Try another word, or look yourself in the browser and paste the page address back",
+  "why": "no full stop at the end"
+ },
+ "WEB_PICK_HINT": {
+  "text": "選一首，歌詞會依投影的樣子顯示在這裡",
+  "back": "Pick one and its words show here the way they will be projected",
+  "why": "投影 is the table's word for showing on the screen"
+ },
+ "WEB_INDEX_LOADING": {
+  "text": "正在讀取 Gema SABDA 的詩歌目錄，讀完前只搜尋 LRCLIB",
+  "back": "Reading the song list of Gema SABDA; until it is done only LRCLIB is searched",
+  "why": "site names stay"
+ },
+ "WEB_INDEX_FAILED": {
+  "text": "讀不到 Gema SABDA 的目錄，目前只搜尋 LRCLIB",
+  "back": "Cannot read the list of Gema SABDA, for now only LRCLIB is searched",
+  "why": "fact then consequence"
+ },
+ "WEB_BROWSER": {
+  "text": "用瀏覽器搜尋",
+  "back": "Search in the browser",
+  "why": "the person's own browser"
+ },
+ "WEB_BROWSER_HELP": {
+  "text": "瀏覽器會用 Google 搜尋輸入的字詞加 lirik（印尼語的歌詞）。找到頁面後，把網頁位址貼回輸入框",
+  "back": "The browser searches Google for the typed words plus lirik (Indonesian for lyrics). After finding a page, paste its address back into the field",
+  "why": "lirik and Google stay"
+ },
+ "WEB_LICENCE": {
+  "text": "網路上的歌詞仍屬於作者。在教會投影需要授權，通常是教會持有的 CCLI 授權",
+  "back": "Words on the web still belong to their author. Showing them in church needs a licence, usually the CCLI one the church holds",
+  "why": "授權 as the table's licence note"
+ },
+ "WEB_PASTED": {
+  "text": "貼上的網頁位址",
+  "back": "The pasted web page address",
+  "why": "names the row"
  }
 }

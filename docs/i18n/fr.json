@@ -5114,5 +5114,75 @@
    "gifts": "Offerings added: {gifts}."
   },
   "why": "Label and number avoids plural agreement"
+ },
+ "CMD_WEB_SONGS": {
+  "text": "Paroles sur Internet",
+  "back": "Words on the Internet",
+  "why": "Internet capitalised as in the table"
+ },
+ "CMD_WEB_SONGS_DETAIL": {
+  "text": "Paroles par titre, numéro de recueil ou adresse de page",
+  "back": "Words by title, hymn book number or page address",
+  "why": "recueil for hymn book"
+ },
+ "START_WEB_DETAIL": {
+  "text": "Par titre ou adresse de page",
+  "back": "By title or page address",
+  "why": "Fits the tile"
+ },
+ "WEB_FIELD": {
+  "text": "Titre, numéro comme KJ 4, ou adresse d'une page web",
+  "back": "Title, a number like KJ 4, or a web page address",
+  "why": "Noun phrases"
+ },
+ "WEB_TYPE_HINT": {
+  "text": "Tapez un titre ou un numéro, ou collez l'adresse d'une page de paroles",
+  "back": "Type a title or a number, or paste the address of a page of words",
+  "why": "vous form as in the table"
+ },
+ "WEB_SEARCHING": {
+  "text": "Recherche",
+  "back": "Searching",
+  "why": "One word"
+ },
+ "WEB_NOTHING": {
+  "text": "Aucun résultat. Essayez d'autres mots, ou cherchez dans le navigateur puis collez l'adresse",
+  "back": "No results. Try other words, or search in the browser then paste the address",
+  "why": "Short"
+ },
+ "WEB_PICK_HINT": {
+  "text": "Choisissez un résultat pour voir les paroles comme à l'écran",
+  "back": "Choose a result to see the words as on the screen",
+  "why": "paroles as in the table"
+ },
+ "WEB_INDEX_LOADING": {
+  "text": "Lecture de la liste de Gema SABDA en cours, seul LRCLIB est cherché pour l'instant",
+  "back": "Reading the Gema SABDA list under way, only LRCLIB is searched for now",
+  "why": "Progress"
+ },
+ "WEB_INDEX_FAILED": {
+  "text": "La liste de Gema SABDA n'a pas pu être lue, seul LRCLIB est cherché",
+  "back": "The Gema SABDA list could not be read, only LRCLIB is searched",
+  "why": "States what happened"
+ },
+ "WEB_BROWSER": {
+  "text": "Chercher dans le navigateur",
+  "back": "Search in the browser",
+  "why": "Short action"
+ },
+ "WEB_BROWSER_HELP": {
+  "text": "Ouvre le navigateur sur Google avec vos mots et lirik. Collez l'adresse de la page choisie dans le champ",
+  "back": "Opens the browser on Google with your words and lirik. Paste the address of the chosen page into the field",
+  "why": "lirik kept"
+ },
+ "WEB_LICENCE": {
+  "text": "Ces paroles restent à leur auteur. Les projeter demande une autorisation, souvent celle de CCLI",
+  "back": "These words stay their author's. Projecting them needs permission, often CCLI's",
+  "why": "projeter as in LICENCE_NOTE"
+ },
+ "WEB_PASTED": {
+  "text": "Page de l'adresse collée",
+  "back": "Page of the pasted address",
+  "why": "Grey second line"
  }
 }

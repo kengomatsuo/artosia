@@ -423,6 +423,12 @@ pub enum Arrived {
     Firewall(u64, crate::firewall::Progress),
     /// The slides of a PowerPoint were drawn as pictures, or why not (the number of the dialog's export).
     Pptx(u64, crate::pptx_import::Made),
+    /// The Gema index: what is kept or was read, and whether the reading is over (WEBDLG1).
+    WebIndex { index: Option<artosia_lyrics::GemaIndex>, done: bool },
+    /// The results of the Songs from the internet dialog for the words asked, by call number.
+    WebFound(u64, String, artosia_lyrics::Browse),
+    /// The parsed words of the pick at an address, by call number.
+    WebWords(u64, String, Result<artosia_lyrics::Fetched, String>),
 }
 
 pub struct App {
@@ -634,6 +640,9 @@ pub struct App {
     /// The PowerPoint import dialog, and the function that draws its slides.
     pub pptx: Option<crate::pptx_import::PptxImport>,
     pub pptx_exporter: crate::pptx_import::Exporter,
+    /// The Songs from the internet dialog and the Gema index it searches.
+    pub web: Option<crate::web_songs::WebSongs>,
+    pub gema: crate::web_songs::Gema,
     /// UIOVER1 mocks: a direction (a, b or c) and a page (1 to 7) drawn instead of the window, for `--scene mock-*` only.
     pub mock: Option<(char, u8)>,
     pub want_birthdays: bool,
@@ -850,6 +859,8 @@ impl App {
             want_pptx: false,
             pptx: None,
             pptx_exporter: artosia_office::slides_as_pictures,
+            web: None,
+            gema: crate::web_songs::Gema::default(),
             mock: None,
             want_birthdays: false,
             want_notice_image: false,
@@ -1100,7 +1111,7 @@ impl App {
     /// Something with a field of its own has just opened: a dialog, the box that names a plan,
     /// an editor. Whoever closes the search then must not drop the keyboard focus.
     pub fn wants_focus(&self) -> bool {
-        self.sheet != Sheet::None || self.run.form.is_some() || self.switcher.editing.is_some() || self.editor.is_some() || self.notices.is_some()
+        self.sheet != Sheet::None || self.web.is_some() || self.run.form.is_some() || self.switcher.editing.is_some() || self.editor.is_some() || self.notices.is_some()
     }
 
     /// Today's date, for announcements that fill themselves with this week's birthdays.

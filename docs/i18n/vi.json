@@ -5069,5 +5069,75 @@
    "gifts": "Added {gifts} items to the offering section."
   },
   "why": "Starts with a capital, ends with a full stop"
+ },
+ "CMD_WEB_SONGS": {
+  "text": "Bài hát trên mạng",
+  "back": "Songs on the internet",
+  "why": "mạng as in the table"
+ },
+ "CMD_WEB_SONGS_DETAIL": {
+  "text": "Tìm lời theo tên, số thánh ca hoặc địa chỉ trang",
+  "back": "Find words by name, hymn number or page address",
+  "why": "lời as in the table"
+ },
+ "START_WEB_DETAIL": {
+  "text": "Tìm theo tên hoặc địa chỉ",
+  "back": "Find by name or address",
+  "why": "Fits the tile"
+ },
+ "WEB_FIELD": {
+  "text": "Tên bài hát, số như KJ 4 hoặc địa chỉ trang web",
+  "back": "Song name, a number like KJ 4 or a web page address",
+  "why": "Noun phrases"
+ },
+ "WEB_TYPE_HINT": {
+  "text": "Gõ tên hoặc số bài hát, hoặc dán địa chỉ trang có lời",
+  "back": "Type a song name or number, or paste the address of a page with the words",
+  "why": "gõ/dán as in the table"
+ },
+ "WEB_SEARCHING": {
+  "text": "Đang tìm",
+  "back": "Searching",
+  "why": "Short progress"
+ },
+ "WEB_NOTHING": {
+  "text": "Không có kết quả. Thử từ khác, hoặc tìm trong trình duyệt rồi dán địa chỉ trang vào ô",
+  "back": "No results. Try other words, or search in the browser then paste the page address into the box",
+  "why": "trình duyệt for browser"
+ },
+ "WEB_PICK_HINT": {
+  "text": "Chọn một kết quả để xem lời như khi chiếu",
+  "back": "Choose a result to see the words as when shown",
+  "why": "chiếu is the table's verb"
+ },
+ "WEB_INDEX_LOADING": {
+  "text": "Đang đọc danh sách bài hát của Gema SABDA, tạm thời chỉ tìm trên LRCLIB",
+  "back": "Reading Gema SABDA's song list, for now only searching LRCLIB",
+  "why": "Progress"
+ },
+ "WEB_INDEX_FAILED": {
+  "text": "Không đọc được danh sách của Gema SABDA, nên chỉ tìm trên LRCLIB",
+  "back": "Could not read Gema SABDA's list, so only searching LRCLIB",
+  "why": "States what happened"
+ },
+ "WEB_BROWSER": {
+  "text": "Tìm trong trình duyệt",
+  "back": "Search in the browser",
+  "why": "Short action"
+ },
+ "WEB_BROWSER_HELP": {
+  "text": "Mở trình duyệt tìm từ vừa gõ kèm lirik trên Google. Dán địa chỉ trang đã chọn vào ô",
+  "back": "Opens the browser to search the typed words plus lirik on Google. Paste the address of the chosen page into the box",
+  "why": "lirik kept"
+ },
+ "WEB_LICENCE": {
+  "text": "Lời bài hát trên mạng vẫn thuộc về người viết. Chiếu lên màn hình cần giấy phép, thường là CCLI",
+  "back": "Song words on the internet still belong to the writer. Showing on the screen needs a permit, usually CCLI",
+  "why": "giấy phép and chiếu as in LICENCE_NOTE"
+ },
+ "WEB_PASTED": {
+  "text": "Trang từ địa chỉ đã dán",
+  "back": "The page from the address pasted",
+  "why": "Grey second line"
  }
 }

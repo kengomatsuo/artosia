@@ -76,6 +76,8 @@ pub enum Command {
     LoopAnnouncements,
     ImportPptx,
     ImportBirthdays,
+    /// Songs from the internet: the dialog that finds a song's words on the web (WEBDLG1).
+    WebSongs,
     CheckUpdate,
     Listen,
     Stream,
@@ -90,7 +92,7 @@ pub enum Command {
 }
 
 impl Command {
-    pub const ALL: [Command; 48] = [
+    pub const ALL: [Command; 49] = [
         Command::StartService,
         Command::Next,
         Command::Previous,
@@ -134,6 +136,7 @@ impl Command {
         Command::ImportZip,
         Command::ImportPptx,
         Command::ImportBirthdays,
+        Command::WebSongs,
         Command::Import,
         Command::Keys,
         Command::Tour,
@@ -186,6 +189,7 @@ impl Command {
             Command::LoopAnnouncements => t::CMD_LOOP(),
             Command::ImportPptx => t::CMD_IMPORT_PPTX(),
             Command::ImportBirthdays => t::CMD_IMPORT_BIRTHDAYS(),
+            Command::WebSongs => t::CMD_WEB_SONGS(),
             Command::CheckUpdate => t::CMD_UPDATE(),
             Command::Listen => t::CMD_LISTEN(),
             Command::Stream => t::CMD_STREAM(),
@@ -240,6 +244,7 @@ impl Command {
             Command::LoopAnnouncements => t::CMD_LOOP_DETAIL(),
             Command::ImportPptx => t::CMD_IMPORT_PPTX_DETAIL(),
             Command::ImportBirthdays => t::CMD_IMPORT_BIRTHDAYS_DETAIL(),
+            Command::WebSongs => t::CMD_WEB_SONGS_DETAIL(),
             Command::CheckUpdate => t::CMD_UPDATE_DETAIL(),
             Command::Listen => t::CMD_LISTEN_DETAIL(),
             Command::Stream => t::CMD_STREAM_DETAIL(),
@@ -295,6 +300,7 @@ impl Command {
             Command::EditSong => &["edit", "fix lyrics", "ubah lagu", "sunting lagu", "perbaiki lirik"],
             Command::Undo => &["revert", "batalkan", "urungkan"],
             Command::LoopAnnouncements => &["auto advance", "slideshow", "putar pengumuman", "ulang pengumuman", "otomatis"],
+            Command::WebSongs => &["songs from the internet", "internet", "web", "online", "find lyrics", "lyrics online", "kj", "kidung jemaat", "gema", "lrclib", "lagu dari internet", "lirik", "cari lirik", "cari lagu", "unduh lagu"],
             Command::ImportPptx => &["powerpoint", "ppt", "pptx", "slides", "warta", "impor powerpoint"],
             Command::ImportBirthdays => &["birthdays", "birthday", "ulang tahun", "ultah", "hut", "import members", "impor jemaat", "excel", "csv"],
             Command::CheckUpdate => &["update", "upgrade", "new version", "version", "perbarui", "pembaruan", "versi baru"],
@@ -1122,6 +1128,7 @@ impl App {
             }
             Command::ImportPptx => self.want_pptx = true,
             Command::ImportBirthdays => self.want_birthdays = true,
+            Command::WebSongs => self.open_web_songs(),
             Command::CheckUpdate => crate::update::check(self.inbox.clone(), self.waker.clone(), true),
             Command::Listen => self.open_listen(),
             Command::Stream => self.open_stream(),

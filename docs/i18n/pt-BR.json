@@ -5101,5 +5101,75 @@
   },
   "back": "Members added: {members}. Offerings added: {gifts} / Members added: {members} / Offerings added: {gifts}",
   "why": "Label form avoids number agreement."
+ },
+ "CMD_WEB_SONGS": {
+  "text": "Músicas da internet",
+  "back": "Songs from the internet",
+  "why": "Música as in the table."
+ },
+ "CMD_WEB_SONGS_DETAIL": {
+  "text": "Letras por nome, número do hinário ou endereço web",
+  "back": "Words by name, hymn book number or web address",
+  "why": "Letra is the word for song words."
+ },
+ "START_WEB_DETAIL": {
+  "text": "Por nome ou por uma página",
+  "back": "By name or by a page",
+  "why": "Short line under the tile."
+ },
+ "WEB_FIELD": {
+  "text": "Nome, número (KJ 4) ou endereço de uma página",
+  "back": "Name, number (KJ 4) or address of a page",
+  "why": "Sample kept."
+ },
+ "WEB_TYPE_HINT": {
+  "text": "Digite um nome ou número, ou cole o endereço da página com a letra",
+  "back": "Type a name or number, or paste the address of the page with the words",
+  "why": "Imperative as the table."
+ },
+ "WEB_SEARCHING": {
+  "text": "Buscando",
+  "back": "Searching",
+  "why": "Busca is the search word."
+ },
+ "WEB_NOTHING": {
+  "text": "Nada encontrado. Tente outras palavras ou busque no navegador e cole aqui o endereço da página",
+  "back": "Nothing found. Try other words or search in the browser and paste the page address here",
+  "why": "Same opening as the table's nothing found."
+ },
+ "WEB_PICK_HINT": {
+  "text": "Escolha um resultado para ver a letra como ela será exibida",
+  "back": "Choose a result to see the words as they will be shown",
+  "why": "Exibir is the on-screen verb."
+ },
+ "WEB_INDEX_LOADING": {
+  "text": "Lendo a lista do Gema SABDA. Até acabar, só o LRCLIB é consultado",
+  "back": "Reading the list of Gema SABDA. Until it is done, only LRCLIB is consulted",
+  "why": "Site names kept."
+ },
+ "WEB_INDEX_FAILED": {
+  "text": "Não foi possível ler a lista do Gema SABDA. Só o LRCLIB é consultado",
+  "back": "It was not possible to read the list of Gema SABDA. Only LRCLIB is consulted",
+  "why": "Plain error naming what happened."
+ },
+ "WEB_BROWSER": {
+  "text": "Buscar no navegador",
+  "back": "Search in the browser",
+  "why": "Busca is the search word."
+ },
+ "WEB_BROWSER_HELP": {
+  "text": "Abre o Google com o que você digitou mais “lirik”. Cole aqui o endereço da página escolhida",
+  "back": "Opens Google with what you typed plus “lirik”. Paste here the address of the chosen page",
+  "why": "lirik and Google kept."
+ },
+ "WEB_LICENCE": {
+  "text": "Toda letra continua sendo de quem a escreveu. Exibi-la na tela exige permissão, em geral a licença da CCLI",
+  "back": "Every set of words still belongs to whoever wrote it. Showing it on screen requires permission, in general the CCLI licence",
+  "why": "Quem escreveu says it plainly; same licença da CCLI."
+ },
+ "WEB_PASTED": {
+  "text": "Página colada",
+  "back": "Pasted page",
+  "why": "Says it is the pasted address."
  }
 }

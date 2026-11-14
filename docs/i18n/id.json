@@ -5018,5 +5018,75 @@
    "gifts": "The offerings record grew by {gifts}."
   },
   "why": "Starts with a capital, ends with a full stop"
+ },
+ "CMD_WEB_SONGS": {
+  "text": "Lagu dari internet",
+  "back": "Songs from the internet",
+  "why": "lagu and internet as the table says"
+ },
+ "CMD_WEB_SONGS_DETAIL": {
+  "text": "Lirik dari judul, nomor buku, atau alamat halaman",
+  "back": "Words from a title, a book number, or a page address",
+  "why": "lirik as in the table"
+ },
+ "START_WEB_DETAIL": {
+  "text": "Cari dari judul atau halaman",
+  "back": "Look from a title or a page",
+  "why": "Fits the narrow tile"
+ },
+ "WEB_FIELD": {
+  "text": "Judul lagu, nomor seperti KJ 4, atau alamat halaman web",
+  "back": "Song title, a number like KJ 4, or a web page address",
+  "why": "Hint as noun phrases"
+ },
+ "WEB_TYPE_HINT": {
+  "text": "Ketik judul atau nomor lagu, atau tempel alamat halaman berisi lirik",
+  "back": "Type a song title or number, or paste the address of a page holding the words",
+  "why": "ketik/tempel as in the new-song row"
+ },
+ "WEB_SEARCHING": {
+  "text": "Mencari",
+  "back": "Searching",
+  "why": "One word"
+ },
+ "WEB_NOTHING": {
+  "text": "Tidak ada yang cocok. Coba kata lain, atau cari di peramban lalu tempel alamat halamannya ke kolom",
+  "back": "Nothing matches. Try other words, or search in the browser then paste the page's address into the field",
+  "why": "peramban is the common word for browser"
+ },
+ "WEB_PICK_HINT": {
+  "text": "Pilih satu hasil untuk melihat lirik seperti yang akan tayang",
+  "back": "Choose one result to see the words as they will go up",
+  "why": "tayang is the table's verb"
+ },
+ "WEB_INDEX_LOADING": {
+  "text": "Daftar lagu Gema SABDA sedang dibaca. Sementara itu hanya LRCLIB yang dicari",
+  "back": "The Gema SABDA song list is being read. Meanwhile only LRCLIB is searched",
+  "why": "Progress statement"
+ },
+ "WEB_INDEX_FAILED": {
+  "text": "Daftar lagu Gema SABDA gagal dibaca, jadi hanya LRCLIB yang dicari",
+  "back": "The Gema SABDA song list failed to be read, so only LRCLIB is searched",
+  "why": "States what happened"
+ },
+ "WEB_BROWSER": {
+  "text": "Cari di peramban",
+  "back": "Search in the browser",
+  "why": "Short action"
+ },
+ "WEB_BROWSER_HELP": {
+  "text": "Membuka peramban untuk mencari kata yang diketik plus lirik di Google. Tempel alamat halaman pilihan ke kolom",
+  "back": "Opens the browser to search the typed words plus lirik on Google. Paste the address of the page you pick into the field",
+  "why": "lirik kept"
+ },
+ "WEB_LICENCE": {
+  "text": "Lirik di internet tetap milik penulisnya. Menayangkannya perlu izin, biasanya lisensi CCLI",
+  "back": "Words on the internet still belong to their writer. Showing them needs permission, usually the CCLI licence",
+  "why": "lisensi and menayangkan as in LICENCE_NOTE"
+ },
+ "WEB_PASTED": {
+  "text": "Alamat halaman yang ditempel",
+  "back": "The page address that was pasted",
+  "why": "Grey second line"
  }
 }

@@ -5101,5 +5101,75 @@
   },
   "back": "Members added: {members}. Offerings added: {gifts} / Members added: {members} / Offerings added: {gifts}",
   "why": "Label form avoids number agreement."
+ },
+ "CMD_WEB_SONGS": {
+  "text": "Canciones de internet",
+  "back": "Songs from the internet",
+  "why": "Canción and internet as in the table; a noun phrase."
+ },
+ "CMD_WEB_SONGS_DETAIL": {
+  "text": "Letras por nombre, número de himnario o dirección web",
+  "back": "Words by name, hymn book number or web address",
+  "why": "Letra is the word for song words."
+ },
+ "START_WEB_DETAIL": {
+  "text": "Por nombre o por página web",
+  "back": "By name or by web page",
+  "why": "Short line under the tile."
+ },
+ "WEB_FIELD": {
+  "text": "Nombre, número (KJ 4) o dirección de una página web",
+  "back": "Name, number (KJ 4) or address of a web page",
+  "why": "Sample kept."
+ },
+ "WEB_TYPE_HINT": {
+  "text": "Escribe un nombre o número, o pega la dirección de la página",
+  "back": "Type a name or number, or paste the address of the page",
+  "why": "Tú form as the table."
+ },
+ "WEB_SEARCHING": {
+  "text": "Buscando",
+  "back": "Searching",
+  "why": "One word."
+ },
+ "WEB_NOTHING": {
+  "text": "Sin resultados. Prueba otras palabras o busca en tu navegador y pega aquí la dirección de la página",
+  "back": "No results. Try other words or search in your browser and paste the page address here",
+  "why": "Navegador is the person's own browser."
+ },
+ "WEB_PICK_HINT": {
+  "text": "Elige un resultado para ver la letra como se mostrará",
+  "back": "Choose a result to see the words as they will be shown",
+  "why": "Mostrar is the on-screen verb."
+ },
+ "WEB_INDEX_LOADING": {
+  "text": "Leyendo la lista de Gema SABDA. Mientras tanto solo se busca en LRCLIB",
+  "back": "Reading the list of Gema SABDA. Meanwhile only LRCLIB is searched",
+  "why": "Site names kept."
+ },
+ "WEB_INDEX_FAILED": {
+  "text": "No se pudo leer la lista de Gema SABDA. Solo se busca en LRCLIB",
+  "back": "The list of Gema SABDA could not be read. Only LRCLIB is searched",
+  "why": "Same as the table's no se pudo."
+ },
+ "WEB_BROWSER": {
+  "text": "Buscar en el navegador",
+  "back": "Search in the browser",
+  "why": "Action named."
+ },
+ "WEB_BROWSER_HELP": {
+  "text": "Abre Google en tu navegador con lo escrito y «lirik». Pega aquí la dirección de la página que elijas",
+  "back": "Opens Google in your browser with what was typed and «lirik». Paste here the address of the page you pick",
+  "why": "lirik and Google kept."
+ },
+ "WEB_LICENCE": {
+  "text": "Toda letra sigue siendo de su autor. Mostrarla en pantalla requiere permiso, casi siempre la licencia CCLI",
+  "back": "Every set of words still belongs to its author. Showing it on screen needs permission, almost always the CCLI licence",
+  "why": "Autor says who wrote it; same licencia CCLI."
+ },
+ "WEB_PASTED": {
+  "text": "Página que pegaste",
+  "back": "Page you pasted",
+  "why": "Says it is the pasted address."
  }
 }

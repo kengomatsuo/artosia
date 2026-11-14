@@ -441,6 +441,10 @@ pub(crate) fn add_bar(s: &App, k: &Kit, layer: &mut Vec<El>) -> El {
             s.edit_new_song(artosia_core::song::Song::default());
             s.plan_new_song = true;
         }))
+        .item(MenuItem::new(t::CMD_WEB_SONGS()).icon(&icons::GLOBE).on_select(|s: &mut App| {
+            s.add_menu = false;
+            s.open_web_songs();
+        }))
         .item(MenuItem::new(t::PLAN_ADD_PASSAGE()).icon(&icons::BOOK).on_select(|s: &mut App| s.open_palette_adding(Scope::Bible)))
         .item(MenuItem::new(t::CMD_ANNOUNCEMENTS()).icon(&icons::ANNOUNCE).on_select(|s: &mut App| {
             s.add_announcements_to_plan();

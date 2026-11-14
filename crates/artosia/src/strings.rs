@@ -767,6 +767,21 @@ text!(SUGGEST_LABEL, "Songs with this title", "Lagu dengan judul sama");
 text!(SUGGEST_LIBRARY, "Already in your library", "Sudah di pustaka");
 text!(SUGGEST_FETCHING, "Getting the words", "Mengambil dari internet");
 text!(LICENCE_NOTE, "Projecting lyrics needs a licence such as CCLI.", "Lirik di layar perlu lisensi, misalnya CCLI");
+text!(CMD_WEB_SONGS, "Songs from the internet", "Songs from the internet");
+text!(CMD_WEB_SONGS_DETAIL, "Find the words by title, hymn number or page address", "Find the words by title, hymn number or page address");
+text!(WEB_FIELD, "Title, KJ 4 or a page address", "Title, KJ 4 or a page address");
+text!(WEB_TYPE_HINT, "Type a title or a hymn number, or paste the address of a lyrics page", "Type a title or a hymn number, or paste the address of a lyrics page");
+text!(WEB_SEARCHING, "Searching", "Searching");
+text!(WEB_NOTHING, "No song found. Try other words, or search in your browser and paste the page address here", "No song found. Try other words, or search in your browser and paste the page address here");
+text!(WEB_PICK_HINT, "Choose a song to see its words as Artosia will show them", "Choose a song to see its words as Artosia will show them");
+text!(WEB_INDEX_LOADING, "Reading Gema SABDA's list of songs. Until then only LRCLIB is searched", "Reading Gema SABDA's list of songs. Until then only LRCLIB is searched");
+text!(WEB_INDEX_FAILED, "Gema SABDA's list could not be read. Only LRCLIB is searched", "Gema SABDA's list could not be read. Only LRCLIB is searched");
+text!(START_WEB_DETAIL, "Find the words by title or page", "Find the words by title or page");
+text!(KEY_IMPORT, "Ctrl Enter", "Ctrl Enter");
+text!(WEB_BROWSER, "Search in my browser", "Search in my browser");
+text!(WEB_BROWSER_HELP, "Opens your browser on a Google search for these words and lirik. Paste the address of the page you choose back here", "Opens your browser on a Google search for these words and lirik. Paste the address of the page you choose back here");
+text!(WEB_LICENCE, "Song words found online still belong to their writers. Your church needs a licence, such as CCLI, to project them.", "Song words found online still belong to their writers. Your church needs a licence, such as CCLI, to project them.");
+text!(WEB_PASTED, "The page you pasted", "The page you pasted");
 
 pub fn suggest_web(artist: &str, source: &str) -> String {
     if let Some(text) = say("suggest_web", Some(if artist.is_empty() { "without_artist" } else { "with_artist" }), None, &[("artist", text_arg(artist)), ("source", text_arg(source))]) {

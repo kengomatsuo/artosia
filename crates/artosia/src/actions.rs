@@ -1699,6 +1699,7 @@ impl App {
         self.meter_shown.store(self.listener.is_some() && (self.sheet == Sheet::Listen || self.settings.beat_blink), std::sync::atomic::Ordering::Relaxed);
         changed |= self.take_tempo(clock);
         changed |= self.watch_pptx(&mut wake);
+        self.pump_web(&mut wake);
         self.note_recordings();
         self.purge_recordings();
         if self.beat_moving() {
@@ -1755,6 +1756,9 @@ impl App {
                 }
                 Arrived::Heard(_) => {}
                 Arrived::Pptx(round, made) => self.pptx_arrived(round, made),
+                Arrived::WebIndex { index, done } => self.web_index_arrived(index, done),
+                Arrived::WebFound(round, query, browse) => self.web_found_arrived(round, query, browse),
+                Arrived::WebWords(round, url, fetched) => self.web_words_arrived(round, url, fetched),
                 Arrived::Model(result) => self.model_arrived(result),
                 Arrived::BetterModel(result) => self.better_arrived(result),
                 Arrived::RecordingsSaved(saved) => self.recordings_saved(saved),

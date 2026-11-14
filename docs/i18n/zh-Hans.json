@@ -5070,5 +5070,75 @@
    "gifts": "Also recorded {gifts} gifts."
   },
   "why": "另外 follows the card-count sentence; 加入 for people, 记入 for gifts"
+ },
+ "CMD_WEB_SONGS": {
+  "text": "网上的诗歌",
+  "back": "Songs on the web",
+  "why": "网上 is plain; 诗歌 is the table's song word; a noun phrase"
+ },
+ "CMD_WEB_SONGS_DETAIL": {
+  "text": "按名称、编号或网页地址找歌词",
+  "back": "Find the words by name, number or web page address",
+  "why": "编号 covers the hymn book number"
+ },
+ "START_WEB_DETAIL": {
+  "text": "按名称或网页地址找歌词",
+  "back": "Find the words by name or web page address",
+  "why": "same wording as the menu line, shorter"
+ },
+ "WEB_FIELD": {
+  "text": "输入诗歌名、编号（如 KJ 4）或网页地址",
+  "back": "Type a song name, a number (such as KJ 4) or a web page address",
+  "why": "KJ 4 kept as the sample"
+ },
+ "WEB_TYPE_HINT": {
+  "text": "输入名称或编号，也可以粘贴有歌词的网页地址",
+  "back": "Type a name or number, or paste the address of a web page that has the words",
+  "why": "粘贴 is the table's paste word"
+ },
+ "WEB_SEARCHING": {
+  "text": "正在搜索",
+  "back": "Searching",
+  "why": "one short status"
+ },
+ "WEB_NOTHING": {
+  "text": "没有找到。换个词试试，或用浏览器自己找，再把网页地址粘贴回来",
+  "back": "Nothing found. Try other words, or look yourself in the browser and paste the page address back",
+  "why": "three plain steps, no full stop at the end"
+ },
+ "WEB_PICK_HINT": {
+  "text": "选一首，歌词会按上屏的样子显示在这里",
+  "back": "Pick one and its words show here the way they go on the screen",
+  "why": "上屏 is the table's word for putting on screen"
+ },
+ "WEB_INDEX_LOADING": {
+  "text": "正在读取 Gema SABDA 的诗歌目录，读完前只搜索 LRCLIB",
+  "back": "Reading the song list of Gema SABDA; until it is done only LRCLIB is searched",
+  "why": "目录 for a list of titles; site names stay"
+ },
+ "WEB_INDEX_FAILED": {
+  "text": "读不到 Gema SABDA 的目录，现在只搜索 LRCLIB",
+  "back": "Cannot read the list of Gema SABDA, now only LRCLIB is searched",
+  "why": "fact then consequence"
+ },
+ "WEB_BROWSER": {
+  "text": "用浏览器搜索",
+  "back": "Search in the browser",
+  "why": "the person's own browser; short verb phrase"
+ },
+ "WEB_BROWSER_HELP": {
+  "text": "浏览器会搜索输入的词加上 lirik（印尼语的歌词）。在 Google 找到网页后，把网页地址粘贴回输入框",
+  "back": "The browser searches the typed words plus lirik (Indonesian for lyrics). After finding a page on Google, paste its address back into the field",
+  "why": "lirik and Google stay"
+ },
+ "WEB_LICENCE": {
+  "text": "网上的歌词仍归作者所有。在教会上屏需要许可，通常是教会持有的 CCLI 许可",
+  "back": "Words on the web still belong to their author. Showing them in church needs permission, usually the CCLI one the church holds",
+  "why": "许可 as in the table's licence note"
+ },
+ "WEB_PASTED": {
+  "text": "粘贴的网页地址",
+  "back": "The pasted web page address",
+  "why": "names what the row is"
  }
 }

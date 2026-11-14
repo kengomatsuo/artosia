@@ -5070,5 +5070,75 @@
    "gifts": "Also added {gifts} gifts."
   },
   "why": "도 marks the addition to the card count"
+ },
+ "CMD_WEB_SONGS": {
+  "text": "인터넷 곡 찾기",
+  "back": "Finding songs on the internet",
+  "why": "곡 is the table's song word; noun phrase"
+ },
+ "CMD_WEB_SONGS_DETAIL": {
+  "text": "제목, 찬송가 번호, 웹 페이지 주소로 찾아요",
+  "back": "Look by title, hymn number or web page address",
+  "why": "찬송가 for the hymn book; 해요 ending as the table"
+ },
+ "START_WEB_DETAIL": {
+  "text": "제목이나 웹 페이지로 찾기",
+  "back": "Look by title or web page",
+  "why": "short tile line"
+ },
+ "WEB_FIELD": {
+  "text": "제목, 번호(예: KJ 4), 웹 주소 입력",
+  "back": "Title, number (e.g. KJ 4), web address to type",
+  "why": "KJ 4 kept"
+ },
+ "WEB_TYPE_HINT": {
+  "text": "제목이나 번호를 입력하거나, 가사가 있는 웹 주소를 붙여넣어도 돼요",
+  "back": "Type a title or number, or paste the address of a web page that has the words",
+  "why": "붙여넣기 as the table's paste word"
+ },
+ "WEB_SEARCHING": {
+  "text": "찾는 중",
+  "back": "Searching",
+  "why": "short status"
+ },
+ "WEB_NOTHING": {
+  "text": "찾지 못했어요. 다른 말로 찾거나, 브라우저에서 직접 찾아 페이지 주소를 붙여넣어 보세요",
+  "back": "Not found. Search other words, or look yourself in the browser and paste the page address",
+  "why": "해요 register"
+ },
+ "WEB_PICK_HINT": {
+  "text": "하나를 고르면 띄워질 모습 그대로 가사가 여기에 보여요",
+  "back": "Pick one and its words show here just as they will be put up",
+  "why": "띄우다 is the table's word for showing"
+ },
+ "WEB_INDEX_LOADING": {
+  "text": "Gema SABDA의 곡 목록을 읽는 중이에요. 끝날 때까지 LRCLIB만 검색해요",
+  "back": "Reading the song list of Gema SABDA. Until it ends only LRCLIB is searched",
+  "why": "site names stay"
+ },
+ "WEB_INDEX_FAILED": {
+  "text": "Gema SABDA 목록을 못 읽었어요. LRCLIB만 검색해요",
+  "back": "Could not read the list of Gema SABDA. Only LRCLIB is searched",
+  "why": "fact then consequence"
+ },
+ "WEB_BROWSER": {
+  "text": "브라우저에서 찾기",
+  "back": "Look in the browser",
+  "why": "the person's own browser"
+ },
+ "WEB_BROWSER_HELP": {
+  "text": "입력한 말에 lirik(인도네시아어로 가사)을 붙여 Google에서 검색해요. 고른 페이지 주소는 입력란에 붙여넣으세요",
+  "back": "It searches Google for the typed words plus lirik (Indonesian for lyrics). Paste the address of the page you pick into the field",
+  "why": "lirik and Google stay"
+ },
+ "WEB_LICENCE": {
+  "text": "인터넷에 있는 가사도 지은 사람의 것이에요. 띄우려면 허락이 필요하고, 보통 교회가 가진 CCLI 라이선스예요",
+  "back": "Words on the internet also belong to the person who wrote them. Putting them up needs permission, usually the CCLI licence the church holds",
+  "why": "라이선스 as the table's licence note"
+ },
+ "WEB_PASTED": {
+  "text": "붙여넣은 페이지",
+  "back": "The pasted page",
+  "why": "names the row"
  }
 }

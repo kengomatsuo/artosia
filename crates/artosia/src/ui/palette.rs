@@ -42,7 +42,7 @@ fn command_icon(command: Command) -> &'static rune::Icon {
         Command::NewAnnouncement => &icons::ANNOUNCE,
         Command::Keys => &icons::KEYBOARD,
         Command::Tour => &icons::PLAY,
-        Command::FirstRun | Command::Languages | Command::AllLanguages => &icons::GLOBE,
+        Command::FirstRun | Command::Languages | Command::AllLanguages | Command::WebSongs => &icons::GLOBE,
         Command::StartService => &icons::PLAY,
         Command::Next => &icons::ARROW_RIGHT,
         Command::Previous => &icons::ARROW_LEFT,

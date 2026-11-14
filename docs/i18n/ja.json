@@ -5068,5 +5068,75 @@
    "gifts": "Also added {gifts} gifts."
   },
   "why": "も marks the addition to the card count"
+ },
+ "CMD_WEB_SONGS": {
+  "text": "インターネットの曲",
+  "back": "Songs on the internet",
+  "why": "インターネット is the table's word; 曲 is the song word"
+ },
+ "CMD_WEB_SONGS_DETAIL": {
+  "text": "曲名、賛美歌の番号、ページのアドレスで探す",
+  "back": "Look by song title, hymn number or page address",
+  "why": "賛美歌 for the hymn book; short"
+ },
+ "START_WEB_DETAIL": {
+  "text": "曲名や見つけたページで探す",
+  "back": "Look by title or a page you found",
+  "why": "short tile line"
+ },
+ "WEB_FIELD": {
+  "text": "曲名、番号（KJ 4など）、ページのアドレス",
+  "back": "Song title, number (such as KJ 4), page address",
+  "why": "a list of what may be typed; KJ 4 kept"
+ },
+ "WEB_TYPE_HINT": {
+  "text": "曲名か番号を入力、または歌詞のあるページのアドレスを貼り付け",
+  "back": "Type a title or number, or paste the address of a page that has the words",
+  "why": "貼り付け as the table's paste word"
+ },
+ "WEB_SEARCHING": {
+  "text": "検索中",
+  "back": "Searching",
+  "why": "short status"
+ },
+ "WEB_NOTHING": {
+  "text": "見つかりません。別の言葉で試すか、ブラウザで探してページのアドレスを貼り付けてください",
+  "back": "Not found. Try other words, or look in the browser and paste the page address",
+  "why": "ください as the table's polite ending"
+ },
+ "WEB_PICK_HINT": {
+  "text": "一つ選ぶと、映る形で歌詞がここに表示されます",
+  "back": "Pick one and its words show here in the form they will be shown",
+  "why": "映す is the table's word for showing"
+ },
+ "WEB_INDEX_LOADING": {
+  "text": "Gema SABDAの曲の一覧を読み込み中です。終わるまではLRCLIBだけを検索します",
+  "back": "Reading the song list of Gema SABDA. Until it ends only LRCLIB is searched",
+  "why": "site names stay"
+ },
+ "WEB_INDEX_FAILED": {
+  "text": "Gema SABDAの一覧を読み込めません。LRCLIBだけを検索します",
+  "back": "Cannot load the list of Gema SABDA. Only LRCLIB is searched",
+  "why": "fact then consequence"
+ },
+ "WEB_BROWSER": {
+  "text": "ブラウザで探す",
+  "back": "Look in the browser",
+  "why": "the person's own browser"
+ },
+ "WEB_BROWSER_HELP": {
+  "text": "入力した言葉にlirik（インドネシア語で歌詞）を足してGoogleで検索します。選んだページのアドレスは入力欄へ",
+  "back": "Adds lirik (Indonesian for lyrics) to the typed words and searches Google. The address of the page picked goes into the field",
+  "why": "lirik and Google stay"
+ },
+ "WEB_LICENCE": {
+  "text": "ネットの歌詞も作者のものです。映すには許可が必要で、多くは教会が持つCCLIのライセンスです",
+  "back": "Words on the net also belong to their author. Showing them needs permission, mostly the CCLI licence the church holds",
+  "why": "ライセンス as the table's licence note"
+ },
+ "WEB_PASTED": {
+  "text": "貼り付けたページ",
+  "back": "The pasted page",
+  "why": "names the row"
  }
 }
