@@ -26,7 +26,7 @@ impl LookEdit {
 }
 
 /// The text colours offered as squares: the label, then the colour.
-fn text_colours() -> [(&'static str, [u8; 3]); 4] {
+pub(super) fn text_colours() -> [(&'static str, [u8; 3]); 4] {
     [(t::LOOK_COLOUR_WHITE(), [255, 255, 255]), (t::LOOK_COLOUR_WARM(), [255, 244, 222]), (t::LOOK_COLOUR_YELLOW(), [255, 214, 0]), (t::LOOK_COLOUR_BLACK(), [0, 0, 0])]
 }
 

@@ -5,12 +5,12 @@
 
 use std::hash::{Hash, Hasher};
 
-use artosia_core::deck::{NoticeKind, Slide, SlideKind};
+use artosia_core::deck::{Slide, SlideKind};
 use rune::{Align, Color, El, NativeSurface, Pixels, SurfaceFit, TextStyle, Transition, col, el, row, text};
 
 use crate::frame::{Countdown, OutputState};
 use crate::fonts;
-use crate::look::{Background, Look, NoticeStyle, Outline, Place, rgb};
+use crate::look::{Background, Look, Outline, Place, rgb};
 use crate::notice;
 use crate::voices;
 
@@ -355,7 +355,7 @@ pub fn audience_over(state: &OutputState, w: f32, h: f32, media: Media, item: Op
         );
     } else {
         match state.slide.as_ref().filter(|_| !state.text_hidden && !state.logo_on) {
-            Some(slide) if slide.notice != NoticeKind::Plain || look.notice_style != NoticeStyle::Hairline => {
+            Some(slide) if notice::draws_notice(slide, look) => {
                 root = root.child(notice::notice(slide, look, w, h).key(format!("{}-notice", key_of(slide))).transition(Transition::opacity()));
             }
             Some(slide) => {

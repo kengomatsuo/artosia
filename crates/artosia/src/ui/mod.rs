@@ -21,6 +21,7 @@ mod giving;
 pub(crate) mod plan;
 mod plans;
 mod sheets;
+mod templates;
 pub use sheets::SETTINGS_FIRST;
 mod shell;
 pub(crate) mod slides;
@@ -274,9 +275,7 @@ fn window(s: &App, cx: &mut Cx<App>, k: &Kit, layer: &mut Vec<El>) -> El {
         Tab::Calendar => calendar::view(s, cx, k, layer),
         Tab::People => people::view(s, cx, k, layer),
         Tab::Giving => giving::view(s, cx, k, layer),
-        tab => col().key("window-body").w_full().grow(1.0).min_h(0.0).fill(theme::surf().work).center().gap(space::S2)
-            .child(icon(tabs::glyph(tab), 32.0).color(k.c.text_faint).a11y_hidden())
-            .child(text(tabs::name(tab)).font(type_::HEADING).color(k.c.text_muted)),
+        Tab::Templates => templates::view(s, k),
     }
 }
 

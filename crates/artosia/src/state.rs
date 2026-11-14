@@ -392,6 +392,14 @@ pub struct Notices {
     pub fill: Fill,
     /// The reference of a passage card, as typed.
     pub passage: TextEdit,
+    /// The structure the card is drawn in; None follows the look.
+    pub style: Option<artosia_core::deck::NoticeStyle>,
+    /// The title's colour; None takes the style's own.
+    pub title_colour: Option<[u8; 3]>,
+    /// The calendars a schedule card reads; empty reads all.
+    pub calendars: Vec<i64>,
+    /// A schedule card reads the month, not the next seven days.
+    pub month: bool,
 }
 
 /// Results a worker thread hands back to the window.
@@ -444,6 +452,8 @@ pub struct App {
     pub gifts: Vec<Gift>,
     pub account: Account,
     pub giving: crate::giving::Window,
+    /// The Templates tab: the rail's choices and the tile picked (`templates.rs`).
+    pub templates: crate::templates::Window,
     pub plan: Plan,
     pub settings: Settings,
 
@@ -730,6 +740,7 @@ impl App {
             gifts: Vec::new(),
             account: Account::default(),
             giving: Default::default(),
+            templates: Default::default(),
             plan,
             settings,
             open: None,

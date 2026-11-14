@@ -62,17 +62,7 @@ impl Outline {
     }
 }
 
-/// How an announcement slide is built: its structure, not only its colours.
-#[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
-pub enum NoticeStyle {
-    /// Dark scrim over the background, a rule under a small label, a heavy title, bare rows.
-    #[default]
-    Hairline,
-    /// A side tab, and the rows on an opaque ruled table over the background.
-    Ledger,
-    /// A flat band for the title over a flat charcoal body.
-    Band,
-}
+pub use artosia_core::deck::NoticeStyle;
 
 fn black() -> [u8; 3] {
     [0, 0, 0]

@@ -7,7 +7,7 @@ use serde::Serialize;
 use serde::de::DeserializeOwned;
 
 use crate::calendar::{Calendar, Date, Event, Repeat};
-use crate::deck::{Announcement, Fill, Person};
+use crate::deck::{Announcement, Fill, NoticeStyle, Person};
 use crate::giving::{Account, Fund, Gift, Method};
 use crate::plan::Plan;
 use crate::song::{Song, Translation};
@@ -49,6 +49,12 @@ type Result<T> = std::result::Result<T, StoreError>;
 
 /// The further languages as the JSON a row keeps; `[]` for none, so an empty column always
 /// means a row from before languages existed.
+/// A title colour kept as six hex digits; anything else is no colour.
+fn colour_of_code(code: &str) -> Option<[u8; 3]> {
+    let byte = |at: usize| code.get(at..at + 2).and_then(|pair| u8::from_str_radix(pair, 16).ok());
+    (code.len() == 6).then(|| Some([byte(0)?, byte(2)?, byte(4)?])).flatten()
+}
+
 fn texts_json(translations: &[Translation]) -> Result<String> {
     Ok(serde_json::to_string(translations)?)
 }
@@ -200,6 +206,10 @@ impl Store {
             ("announcements", "image", "text not null default ''"),
             ("announcements", "fill", "text not null default ''"),
             ("announcements", "passage", "text not null default ''"),
+            ("announcements", "style", "text not null default ''"),
+            ("announcements", "title_colour", "text not null default ''"),
+            ("announcements", "calendars", "text not null default ''"),
+            ("announcements", "month", "integer not null default 0"),
         ];
         for (table, column, definition) in added {
             let present = db.prepare(&format!("select 1 from pragma_table_info('{table}') where name = ?1"))?.exists([column])?;
@@ -399,26 +409,41 @@ impl Store {
     }
 
     pub fn announcements(&self) -> Result<Vec<Announcement>> {
-        let mut statement = self.db.prepare("select id, title, body, seconds, image, fill, passage from announcements order by position, id")?;
+        let mut statement = self.db.prepare("select id, title, body, seconds, image, fill, passage, style, title_colour, calendars, month from announcements order by position, id")?;
         let rows = statement.query_map([], |row| {
-            let fill: String = row.get(5)?;
-            Ok(Announcement { id: row.get(0)?, title: row.get(1)?, body: row.get(2)?, seconds: row.get(3)?, image: row.get(4)?, fill: Fill::from_code(&fill), passage: row.get(6)? })
+            let (fill, style, colour, calendars): (String, String, String, String) = (row.get(5)?, row.get(7)?, row.get(8)?, row.get(9)?);
+            Ok(Announcement {
+                id: row.get(0)?,
+                title: row.get(1)?,
+                body: row.get(2)?,
+                seconds: row.get(3)?,
+                image: row.get(4)?,
+                fill: Fill::from_code(&fill),
+                passage: row.get(6)?,
+                style: NoticeStyle::from_code(&style),
+                title_colour: colour_of_code(&colour),
+                calendars: calendars.split(',').filter_map(|id| id.parse().ok()).collect(),
+                month: row.get::<_, i64>(10)? != 0,
+            })
         })?;
         Ok(rows.collect::<rusqlite::Result<Vec<_>>>()?)
     }
 
     pub fn save_announcement(&self, announcement: &mut Announcement) -> Result<()> {
+        let style = announcement.style.map_or("", NoticeStyle::code);
+        let colour = announcement.title_colour.map_or(String::new(), |[r, g, b]| format!("{r:02x}{g:02x}{b:02x}"));
+        let calendars = announcement.calendars.iter().map(i64::to_string).collect::<Vec<_>>().join(",");
         if announcement.id == 0 {
             self.db.execute(
-                "insert into announcements (position, title, body, seconds, image, fill, passage)
-                 values ((select coalesce(max(position), 0) + 1 from announcements), ?1, ?2, ?3, ?4, ?5, ?6)",
-                params![announcement.title, announcement.body, announcement.seconds, announcement.image, announcement.fill.code(), announcement.passage],
+                "insert into announcements (position, title, body, seconds, image, fill, passage, style, title_colour, calendars, month)
+                 values ((select coalesce(max(position), 0) + 1 from announcements), ?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10)",
+                params![announcement.title, announcement.body, announcement.seconds, announcement.image, announcement.fill.code(), announcement.passage, style, colour, calendars, announcement.month],
             )?;
             announcement.id = self.db.last_insert_rowid();
         } else {
             self.db.execute(
-                "update announcements set title = ?1, body = ?2, seconds = ?3, image = ?4, fill = ?5, passage = ?6 where id = ?7",
-                params![announcement.title, announcement.body, announcement.seconds, announcement.image, announcement.fill.code(), announcement.passage, announcement.id],
+                "update announcements set title = ?1, body = ?2, seconds = ?3, image = ?4, fill = ?5, passage = ?6, style = ?7, title_colour = ?8, calendars = ?9, month = ?10 where id = ?11",
+                params![announcement.title, announcement.body, announcement.seconds, announcement.image, announcement.fill.code(), announcement.passage, style, colour, calendars, announcement.month, announcement.id],
             )?;
         }
         Ok(())
@@ -966,6 +991,19 @@ Other words
         let mut item = Announcement { title: "Birthdays".into(), image: "cake.png".into(), fill: Fill::BirthdaysWeek, seconds: 12, ..Announcement::default() };
         assert!(store.save_announcement(&mut item).is_ok());
         assert_eq!(store.announcements().unwrap_or_default(), [item]);
+    }
+
+    #[test]
+    fn a_card_keeps_its_style_title_colour_calendars_and_window() {
+        let store = Store::in_memory().unwrap_or_else(|_| unreachable!());
+        let mut item = Announcement { title: "Week".into(), fill: Fill::ScheduleWeek, style: Some(NoticeStyle::Band), title_colour: Some([1, 171, 255]), calendars: vec![3, 7], month: true, ..Announcement::default() };
+        assert!(store.save_announcement(&mut item).is_ok());
+        assert_eq!(store.announcements().unwrap_or_default(), [item.clone()]);
+        // A card saved with none of them reads back as the look it always had.
+        let mut old = Announcement { title: "Old".into(), ..Announcement::default() };
+        assert!(store.save_announcement(&mut old).is_ok());
+        let kept = store.announcements().unwrap_or_default();
+        assert_eq!((kept[1].style, kept[1].title_colour, kept[1].calendars.len(), kept[1].month), (None, None, 0, false));
     }
 
     #[test]

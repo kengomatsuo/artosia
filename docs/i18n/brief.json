@@ -7818,24 +7818,6 @@
   "notes": "It must not say automatic, because the first choice is typing by hand. Plain speech: where the text comes from, the way a volunteer would ask it; nothing bookish."
  },
  {
-  "key": "FILL_NOTHING",
-  "kind": "const",
-  "screen": "Announcements editor: it takes the place of the Preview pane. Top row: heading, an add-to-plan button, a loop button and Close. Left half: a New announcement button, the numbered list of cards (title and seconds each), an Import block and a row of ready-made starting points. Right half: a preview picture, then Title, Details, Seconds on screen, Fill in by itself and Picture. First option of the fill switch, wide.",
-  "moment": "The person keeps the card manual.",
-  "role": "switch option",
-  "does": "Means the card is not filled by the program: the typed words are used.",
-  "budget": 10,
-  "variables": [],
-  "cases": [],
-  "counts": "",
-  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
-  "concepts": [
-   "card",
-   "announcement"
-  ],
-  "notes": "A single short word that answers the heading above; the card keeps what the person typed."
- },
- {
   "key": "FILL_WEEK",
   "kind": "const",
   "screen": "Announcements editor: it takes the place of the Preview pane. Top row: heading, an add-to-plan button, a loop button and Close. Left half: a New announcement button, the numbered list of cards (title and seconds each), an Import block and a row of ready-made starting points. Right half: a preview picture, then Title, Details, Seconds on screen, Fill in by itself and Picture. First option of the second fill row.",
@@ -17046,5 +17028,750 @@
    "fund"
   ],
   "notes": "Past tense; says both the fund and its gifts are gone."
+ },
+ {
+  "key": "TPL_SCHEDULE",
+  "kind": "const",
+  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of three styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
+  "moment": "The person picks the kind of card that lists the church's services.",
+  "role": "template name",
+  "does": "Names the ready slide that lists the coming services taken from the calendar.",
+  "budget": 30,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template",
+   "announcement",
+   "church_calendar"
+  ],
+  "notes": "A noun phrase that fits a row 250 points wide and a tile caption."
+ },
+ {
+  "key": "TPL_BIRTHDAYS",
+  "kind": "const",
+  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of three styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
+  "moment": "The person picks the kind of card that wishes people a happy birthday.",
+  "role": "template name",
+  "does": "Names the ready slide that lists whose birthday is near, taken from the members.",
+  "budget": 30,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template",
+   "announcement",
+   "member"
+  ],
+  "notes": "A noun phrase, one or two words."
+ },
+ {
+  "key": "TPL_OFFERINGS",
+  "kind": "const",
+  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of three styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
+  "moment": "The person picks the kind of card that shows what was given.",
+  "role": "template name",
+  "does": "Names the ready slide that shows each fund's sum and the total of the last service.",
+  "budget": 30,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template",
+   "announcement",
+   "offering"
+  ],
+  "notes": "A noun phrase, one or two words."
+ },
+ {
+  "key": "TPL_TRANSFER",
+  "kind": "const",
+  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of three styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
+  "moment": "The person picks the kind of card that tells where to send a gift by bank.",
+  "role": "template name",
+  "does": "Names the ready slide that shows the church's bank, number and holder for sending a gift.",
+  "budget": 30,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template",
+   "announcement",
+   "offering",
+   "transfer_account"
+  ],
+  "notes": "Distinct from the offering slide: this one is for bank transfers."
+ },
+ {
+  "key": "TPL_PASSAGE",
+  "kind": "const",
+  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of three styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
+  "moment": "The person picks the kind of card that shows a verse.",
+  "role": "template name",
+  "does": "Names the ready slide that shows one Bible passage chosen for the week.",
+  "budget": 30,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template",
+   "announcement",
+   "passage"
+  ],
+  "notes": "Same words as the ready-made title for a verse card."
+ },
+ {
+  "key": "TPL_PLAIN",
+  "kind": "const",
+  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of three styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
+  "moment": "The person picks the kind of card whose words they type themselves.",
+  "role": "template name",
+  "does": "Names the ready slide that holds only the words a person writes, with nothing read from a window.",
+  "budget": 30,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template",
+   "announcement"
+  ],
+  "notes": "Not a style: it means ordinary typed text."
+ },
+ {
+  "key": "TPL_READS_CALENDAR",
+  "kind": "const",
+  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of three styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
+  "moment": "The person looks at a template to see where its words come from.",
+  "role": "caption",
+  "does": "Says the template draws its lines from the church's events.",
+  "budget": 40,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template",
+   "announcement",
+   "church_calendar"
+  ],
+  "notes": "Under the template name, in grey, one line."
+ },
+ {
+  "key": "TPL_READS_MEMBERS",
+  "kind": "const",
+  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of three styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
+  "moment": "The person looks at a template to see where its words come from.",
+  "role": "caption",
+  "does": "Says the template draws its lines from the list of members and their birthdays.",
+  "budget": 40,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template",
+   "announcement",
+   "member"
+  ],
+  "notes": "Under the template name, in grey, one line."
+ },
+ {
+  "key": "TPL_READS_OFFERINGS",
+  "kind": "const",
+  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of three styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
+  "moment": "The person looks at a template to see where its words come from.",
+  "role": "caption",
+  "does": "Says the template draws its lines from the gifts and the bank details kept in the offerings window.",
+  "budget": 40,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template",
+   "announcement",
+   "offering"
+  ],
+  "notes": "Under the template name, in grey, one line."
+ },
+ {
+  "key": "TPL_READS_BIBLE",
+  "kind": "const",
+  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of three styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
+  "moment": "The person looks at a template to see where its words come from.",
+  "role": "caption",
+  "does": "Says the template draws its words from an installed Bible.",
+  "budget": 40,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template",
+   "announcement",
+   "bible_translation"
+  ],
+  "notes": "Under the template name, in grey, one line."
+ },
+ {
+  "key": "TPL_READS_NOTHING",
+  "kind": "const",
+  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of three styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
+  "moment": "The person looks at a template to see where its words come from.",
+  "role": "caption",
+  "does": "Says the template takes nothing from any window and shows what is typed in it.",
+  "budget": 44,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template",
+   "announcement"
+  ],
+  "notes": "Under the template name, in grey, one line."
+ },
+ {
+  "key": "TPL_HEADING",
+  "kind": "const",
+  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of three styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
+  "moment": "The person wants to change what kind of card this is.",
+  "role": "section heading",
+  "does": "Labels the list of ready slide kinds a card can be.",
+  "budget": 18,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template",
+   "announcement"
+  ],
+  "notes": "One word."
+ },
+ {
+  "key": "TPL_STYLE",
+  "kind": "const",
+  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of three styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture. Also the heading over the style choices on the rail of the Templates window.",
+  "moment": "The person chooses how the slide is built and drawn.",
+  "role": "section heading",
+  "does": "Labels the choice among the three ways a slide can be laid out.",
+  "budget": 18,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template",
+   "announcement"
+  ],
+  "notes": "One word; the three ways are named in the next entries."
+ },
+ {
+  "key": "TPL_SEE_ALL",
+  "kind": "const",
+  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of three styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
+  "moment": "The person wants to compare every ready slide before choosing.",
+  "role": "button",
+  "does": "Opens the window that shows every kind of announcement in each style.",
+  "budget": 30,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template",
+   "announcement",
+   "program_window"
+  ],
+  "notes": "A button under the style choices."
+ },
+ {
+  "key": "STYLE_HAIRLINE",
+  "kind": "const",
+  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of three styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
+  "moment": "The person picks one of three slide layouts.",
+  "role": "choice label",
+  "does": "Names the layout with a thin rule under a small label, a heavy title and plain rows.",
+  "budget": 14,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template",
+   "announcement"
+  ],
+  "notes": "The names of the three layouts are design terms; a transliteration or a short plain word is fine, but the three must stay distinct."
+ },
+ {
+  "key": "STYLE_LEDGER",
+  "kind": "const",
+  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of three styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
+  "moment": "The person picks one of three slide layouts.",
+  "role": "choice label",
+  "does": "Names the layout with a side tab and the rows set in a ruled table like an account book.",
+  "budget": 14,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template",
+   "announcement"
+  ],
+  "notes": "Evokes a book of accounts."
+ },
+ {
+  "key": "STYLE_BAND",
+  "kind": "const",
+  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of three styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
+  "moment": "The person picks one of three slide layouts.",
+  "role": "choice label",
+  "does": "Names the layout with a flat coloured strip behind the title.",
+  "budget": 14,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template",
+   "announcement"
+  ],
+  "notes": "Evokes a ribbon across the top."
+ },
+ {
+  "key": "NOTICE_CALENDARS",
+  "kind": "const",
+  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of three styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
+  "moment": "The person chooses which of the church's calendars a schedule card lists.",
+  "role": "section heading",
+  "does": "Labels the chips of the calendars whose events the card may list.",
+  "budget": 24,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template",
+   "announcement",
+   "church_calendar"
+  ],
+  "notes": "Chips follow it, one per calendar."
+ },
+ {
+  "key": "NOTICE_WINDOW",
+  "kind": "const",
+  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of three styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
+  "moment": "The person chooses how far ahead a card looks.",
+  "role": "section heading",
+  "does": "Labels the choice between the next seven days and the whole month.",
+  "budget": 14,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template",
+   "announcement"
+  ],
+  "notes": "One word, over a two-way switch."
+ },
+ {
+  "key": "NOTICE_WEEK",
+  "kind": "const",
+  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of three styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
+  "moment": "The person chooses how far ahead a card looks.",
+  "role": "choice label",
+  "does": "Chooses the days from today to a week later.",
+  "budget": 16,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template",
+   "announcement"
+  ],
+  "notes": "Left half of a two-way switch."
+ },
+ {
+  "key": "NOTICE_MONTH",
+  "kind": "const",
+  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of three styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
+  "moment": "The person chooses how far ahead a card looks.",
+  "role": "choice label",
+  "does": "Chooses the whole of the current month.",
+  "budget": 16,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template",
+   "announcement"
+  ],
+  "notes": "Right half of a two-way switch."
+ },
+ {
+  "key": "NOTICE_TITLE_COLOUR",
+  "kind": "const",
+  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of three styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
+  "moment": "The person picks the colour of the card's title.",
+  "role": "row label",
+  "does": "Names the row of colours that tints the heading of the slide.",
+  "budget": 20,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template",
+   "announcement",
+   "design"
+  ],
+  "notes": "Row label, followed by colour squares and a More button."
+ },
+ {
+  "key": "NOTICE_READ_ACCOUNT",
+  "kind": "const",
+  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of three styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
+  "moment": "The person looks at the pill beside the slide of a transfer card.",
+  "role": "status",
+  "does": "Says the card shows the bank details kept in the offerings window.",
+  "budget": 40,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template",
+   "announcement",
+   "transfer_account"
+  ],
+  "notes": "A pill over the slide, one line."
+ },
+ {
+  "key": "NOTICE_READ_BIBLE",
+  "kind": "const",
+  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of three styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
+  "moment": "The person looks at the pill beside the slide of a verse card.",
+  "role": "status",
+  "does": "Says the card shows words from the installed Bible.",
+  "budget": 36,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template",
+   "announcement",
+   "bible_translation"
+  ],
+  "notes": "A pill over the slide, one line."
+ },
+ {
+  "key": "NOTICE_EMPTY_CALENDAR",
+  "kind": "const",
+  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of three styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture. Also where a tile's slide would be in the Templates window.",
+  "moment": "The calendar has no events in the window the card reads.",
+  "role": "empty state",
+  "does": "Tells that nothing falls in the chosen days and points to the calendar to add events.",
+  "budget": 70,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template",
+   "announcement",
+   "church_calendar",
+   "event"
+  ],
+  "notes": "Said in the slide's place, in two short sentences."
+ },
+ {
+  "key": "NOTICE_EMPTY_MEMBERS",
+  "kind": "const",
+  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of three styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture. Also where a tile's slide would be in the Templates window.",
+  "moment": "No member has a birthday in the window the card reads.",
+  "role": "empty state",
+  "does": "Tells that no one's birthday falls in the chosen days.",
+  "budget": 50,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template",
+   "announcement",
+   "member"
+  ],
+  "notes": "Said in the slide's place, one sentence."
+ },
+ {
+  "key": "TPL_GALLERY",
+  "kind": "const",
+  "screen": "Templates window, the sixth tab. A rail on the left lists the kinds of announcement and the three styles; the middle shows live slides of this church's own data in tiles, each with a name and a line under it; at the foot a switch says where to apply a style.",
+  "moment": "The person arrives to choose a ready announcement slide.",
+  "role": "window heading",
+  "does": "Titles the window that shows every kind of announcement drawn in each style.",
+  "budget": 30,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template",
+   "announcement",
+   "program_window"
+  ],
+  "notes": "Heading in large type."
+ },
+ {
+  "key": "TPL_GALLERY_NOTE",
+  "kind": "const",
+  "screen": "Templates window, the sixth tab. A rail on the left lists the kinds of announcement and the three styles; the middle shows live slides of this church's own data in tiles, each with a name and a line under it; at the foot a switch says where to apply a style.",
+  "moment": "The person wonders whether the tiles are only examples.",
+  "role": "caption",
+  "does": "Tells that every tile shows the congregation's real information instead of invented samples.",
+  "budget": 60,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template",
+   "announcement"
+  ],
+  "notes": "Grey line beside the heading."
+ },
+ {
+  "key": "TPL_ALL",
+  "kind": "const",
+  "screen": "Templates window, the sixth tab. A rail on the left lists the kinds of announcement and the three styles; the middle shows live slides of this church's own data in tiles, each with a name and a line under it; at the foot a switch says where to apply a style.",
+  "moment": "The person wants to see every kind of announcement.",
+  "role": "rail choice",
+  "does": "Shows tiles of every kind instead of one.",
+  "budget": 24,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template",
+   "announcement"
+  ],
+  "notes": "First row of the rail, with a folder icon."
+ },
+ {
+  "key": "STYLE_ALL",
+  "kind": "const",
+  "screen": "Templates window, the sixth tab. A rail on the left lists the kinds of announcement and the three styles; the middle shows live slides of this church's own data in tiles, each with a name and a line under it; at the foot a switch says where to apply a style.",
+  "moment": "The person wants to see every layout.",
+  "role": "rail choice",
+  "does": "Shows tiles of every layout instead of one.",
+  "budget": 12,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template",
+   "announcement"
+  ],
+  "notes": "One word, the first choice under the style heading."
+ },
+ {
+  "key": "TPL_USE",
+  "kind": "const",
+  "screen": "Templates window, the sixth tab. A rail on the left lists the kinds of announcement and the three styles; the middle shows live slides of this church's own data in tiles, each with a name and a line under it; at the foot a switch says where to apply a style.",
+  "moment": "The person has picked a tile and wants a card like it.",
+  "role": "button",
+  "does": "Adds a new announcement of this kind and layout, then opens it for editing.",
+  "budget": 24,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template",
+   "announcement"
+  ],
+  "notes": "Button on the picked tile, with a plus icon."
+ },
+ {
+  "key": "TPL_APPLY",
+  "kind": "const",
+  "screen": "Templates window, the sixth tab. A rail on the left lists the kinds of announcement and the three styles; the middle shows live slides of this church's own data in tiles, each with a name and a line under it; at the foot a switch says where to apply a style.",
+  "moment": "The person wants the layout of the picked tile on slides already made.",
+  "role": "label",
+  "does": "Introduces the three places a layout can be put to work.",
+  "budget": 24,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template",
+   "announcement"
+  ],
+  "notes": "Label beside a three-way switch, so it ends where the switch begins."
+ },
+ {
+  "key": "TPL_APPLY_SLIDE",
+  "kind": "const",
+  "screen": "Templates window, the sixth tab. A rail on the left lists the kinds of announcement and the three styles; the middle shows live slides of this church's own data in tiles, each with a name and a line under it; at the foot a switch says where to apply a style.",
+  "moment": "The person applies a layout.",
+  "role": "choice label",
+  "does": "Chooses only the announcement that was open last.",
+  "budget": 20,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template",
+   "announcement"
+  ],
+  "notes": "First part of the switch."
+ },
+ {
+  "key": "TPL_APPLY_ALL",
+  "kind": "const",
+  "screen": "Templates window, the sixth tab. A rail on the left lists the kinds of announcement and the three styles; the middle shows live slides of this church's own data in tiles, each with a name and a line under it; at the foot a switch says where to apply a style.",
+  "moment": "The person applies a layout.",
+  "role": "choice label",
+  "does": "Chooses every announcement that exists.",
+  "budget": 24,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template",
+   "announcement"
+  ],
+  "notes": "Second part of the switch."
+ },
+ {
+  "key": "TPL_APPLY_PLAN",
+  "kind": "const",
+  "screen": "Templates window, the sixth tab. A rail on the left lists the kinds of announcement and the three styles; the middle shows live slides of this church's own data in tiles, each with a name and a line under it; at the foot a switch says where to apply a style.",
+  "moment": "The person applies a layout.",
+  "role": "choice label",
+  "does": "Chooses the whole service plan that is open, so its cards follow it unless they chose their own.",
+  "budget": 20,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template",
+   "announcement",
+   "plan"
+  ],
+  "notes": "Third part of the switch."
+ },
+ {
+  "key": "TPL_APPLIED_PLAN",
+  "kind": "const",
+  "screen": "Templates window, the sixth tab. A rail on the left lists the kinds of announcement and the three styles; the middle shows live slides of this church's own data in tiles, each with a name and a line under it; at the foot a switch says where to apply a style.",
+  "moment": "The person pressed apply to the plan.",
+  "role": "toast",
+  "does": "Confirms the open plan now draws its announcements in the picked layout.",
+  "budget": 40,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template",
+   "announcement",
+   "plan"
+  ],
+  "notes": "A short past-tense confirmation."
+ },
+ {
+  "key": "read_calendar",
+  "kind": "sentence",
+  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of three styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
+  "moment": "The pill beside the slide of a schedule card.",
+  "role": "status",
+  "does": "Says the card shows the events the calendar holds in its window, with how many.",
+  "budget": 44,
+  "variables": [],
+  "cases": [],
+  "counts": "count = number of events; forms for zero, one and many.",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template",
+   "announcement",
+   "church_calendar",
+   "event"
+  ],
+  "notes": "Starts the same way as the other lines that say where a card reads from; the zero case is a full statement."
+ },
+ {
+  "key": "read_members",
+  "kind": "sentence",
+  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of three styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
+  "moment": "The pill beside the slide of a birthday card.",
+  "role": "status",
+  "does": "Says the card shows the members whose birthday falls in its window, with how many names.",
+  "budget": 44,
+  "variables": [],
+  "cases": [],
+  "counts": "count = number of names; forms for zero, one and many.",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template",
+   "announcement",
+   "member"
+  ],
+  "notes": "Starts the same way as the other lines that say where a card reads from; the zero case is a full statement."
+ },
+ {
+  "key": "read_gifts",
+  "kind": "sentence",
+  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of three styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
+  "moment": "The pill beside the slide of an offering card.",
+  "role": "status",
+  "does": "Says the card shows the gifts of the newest day in the offerings window, with how many.",
+  "budget": 44,
+  "variables": [],
+  "cases": [],
+  "counts": "count = number of gifts; forms for zero, one and many.",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template",
+   "announcement",
+   "offering"
+  ],
+  "notes": "Starts the same way as the other lines that say where a card reads from; the zero case is a full statement."
+ },
+ {
+  "key": "style_applied",
+  "kind": "sentence",
+  "screen": "Templates window, the sixth tab. A rail on the left lists the kinds of announcement and the three styles; the middle shows live slides of this church's own data in tiles, each with a name and a line under it; at the foot a switch says where to apply a style.",
+  "moment": "A layout was just put on announcements.",
+  "role": "toast",
+  "does": "Confirms on how many announcements the picked layout was set, or that there was none to change.",
+  "budget": 48,
+  "variables": [],
+  "cases": [],
+  "counts": "count = number of announcements; forms for zero, one and many.",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template",
+   "announcement"
+  ],
+  "notes": "Past tense; the zero case says nothing was changed."
  }
 ]

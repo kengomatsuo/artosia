@@ -2056,11 +2056,6 @@
   "back": "Source of the text",
   "why": "plain question turned into a label"
  },
- "FILL_NOTHING": {
-  "text": "Manuel",
-  "back": "Manual",
-  "why": "answers Source du texte"
- },
  "FILL_WEEK": {
   "text": "Anniversaires (semaine)",
   "back": "Birthdays (week)",
@@ -4688,5 +4683,221 @@
   "text": "Fonds supprimé : {name}, avec ses offrandes",
   "back": "Fund deleted: {name}, with its offerings",
   "why": "Names both fund and gifts"
+ },
+ "TPL_SCHEDULE": {
+  "text": "Horaires",
+  "back": "Times",
+  "why": "Table's name for the schedule card"
+ },
+ "TPL_BIRTHDAYS": {
+  "text": "Anniversaires",
+  "back": "Birthdays",
+  "why": "Table's word"
+ },
+ "TPL_OFFERINGS": {
+  "text": "Offrandes",
+  "back": "Offerings",
+  "why": "Tab name"
+ },
+ "TPL_TRANSFER": {
+  "text": "Offrande par virement",
+  "back": "Offering by bank transfer",
+  "why": "Kept apart from Offrandes"
+ },
+ "TPL_PASSAGE": {
+  "text": "Verset de la semaine",
+  "back": "Verse of the week",
+  "why": "Same as the table's ready-made verse title"
+ },
+ "TPL_PLAIN": {
+  "text": "Texte libre",
+  "back": "Free text",
+  "why": "Ordinary typed text, not a style"
+ },
+ "TPL_READS_CALENDAR": {
+  "text": "Tiré du calendrier",
+  "back": "Taken from the calendar",
+  "why": "Same opening in every caption"
+ },
+ "TPL_READS_MEMBERS": {
+  "text": "Tiré de la liste des membres",
+  "back": "Taken from the list of members",
+  "why": "Table's word membres"
+ },
+ "TPL_READS_OFFERINGS": {
+  "text": "Tiré de la fenêtre Offrandes",
+  "back": "Taken from the Offerings window",
+  "why": "fenêtre is the window word"
+ },
+ "TPL_READS_BIBLE": {
+  "text": "Tiré de la Bible téléchargée",
+  "back": "Taken from the downloaded Bible",
+  "why": "Table says Bible téléchargée"
+ },
+ "TPL_READS_NOTHING": {
+  "text": "Affiche seulement le texte saisi",
+  "back": "Shows only the typed text",
+  "why": "Nothing is read from a window"
+ },
+ "TPL_HEADING": {
+  "text": "Type",
+  "back": "Type",
+  "why": "One word"
+ },
+ "TPL_STYLE": {
+  "text": "Style",
+  "back": "Style",
+  "why": "One word, three layouts"
+ },
+ "TPL_SEE_ALL": {
+  "text": "Voir tous les modèles",
+  "back": "See all templates",
+  "why": "Modèles is the tab name"
+ },
+ "STYLE_HAIRLINE": {
+  "text": "Filet",
+  "back": "Thin rule",
+  "why": "Printer's word for the thin rule"
+ },
+ "STYLE_LEDGER": {
+  "text": "Registre",
+  "back": "Register",
+  "why": "Account book"
+ },
+ "STYLE_BAND": {
+  "text": "Bandeau",
+  "back": "Banner",
+  "why": "Strip across the top"
+ },
+ "NOTICE_CALENDARS": {
+  "text": "Calendriers utilisés",
+  "back": "Calendars in use",
+  "why": "Table says Calendriers"
+ },
+ "NOTICE_WINDOW": {
+  "text": "Période",
+  "back": "Period",
+  "why": "Table's word for a span of dates"
+ },
+ "NOTICE_WEEK": {
+  "text": "7 jours à venir",
+  "back": "Next 7 days",
+  "why": "From today to a week later"
+ },
+ "NOTICE_MONTH": {
+  "text": "Ce mois-ci",
+  "back": "This month",
+  "why": "Table says Ce mois-ci"
+ },
+ "NOTICE_TITLE_COLOUR": {
+  "text": "Couleur du titre",
+  "back": "Title colour",
+  "why": "Plain"
+ },
+ "NOTICE_READ_ACCOUNT": {
+  "text": "Tiré du compte de virement",
+  "back": "Taken from the transfer account",
+  "why": "Table's word for the account"
+ },
+ "NOTICE_READ_BIBLE": {
+  "text": "Tiré de la Bible téléchargée",
+  "back": "Taken from the downloaded Bible",
+  "why": "Same opening"
+ },
+ "NOTICE_EMPTY_CALENDAR": {
+  "text": "Aucun événement sur cette période. Ajoutez-en dans Calendrier.",
+  "back": "No event in this period. Add some in Calendar.",
+  "why": "The state, then the way out"
+ },
+ "NOTICE_EMPTY_MEMBERS": {
+  "text": "Aucun anniversaire sur cette période",
+  "back": "No birthday in this period",
+  "why": "One sentence"
+ },
+ "TPL_GALLERY": {
+  "text": "Modèles d'annonces",
+  "back": "Announcement templates",
+  "why": "Tab name plus the card name"
+ },
+ "TPL_GALLERY_NOTE": {
+  "text": "Chaque diapo montre les vraies données de l'église",
+  "back": "Every slide shows the church's real data",
+  "why": "diapo is the slide word"
+ },
+ "TPL_ALL": {
+  "text": "Tous les types",
+  "back": "All types",
+  "why": "Pairs with Type"
+ },
+ "STYLE_ALL": {
+  "text": "Tous",
+  "back": "All",
+  "why": "One word"
+ },
+ "TPL_USE": {
+  "text": "Ajouter une annonce",
+  "back": "Add an announcement",
+  "why": "Verb first"
+ },
+ "TPL_APPLY": {
+  "text": "Appliquer le style à",
+  "back": "Apply the style to",
+  "why": "Ends where the switch begins"
+ },
+ "TPL_APPLY_SLIDE": {
+  "text": "La dernière ouverte",
+  "back": "The one opened last",
+  "why": "Reads after the label"
+ },
+ "TPL_APPLY_ALL": {
+  "text": "Toutes les annonces",
+  "back": "All announcements",
+  "why": "Reads after the label"
+ },
+ "TPL_APPLY_PLAN": {
+  "text": "Tout le programme",
+  "back": "The whole programme",
+  "why": "Table's word for plan"
+ },
+ "TPL_APPLIED_PLAN": {
+  "text": "Style appliqué au programme",
+  "back": "Style applied to the programme",
+  "why": "Past tense"
+ },
+ "read_calendar": {
+  "text": {
+   "zero": "Tiré du calendrier, aucun événement",
+   "one": "Tiré du calendrier, {count} événement",
+   "other": "Tiré du calendrier, {count} événements"
+  },
+  "back": "Taken from the calendar, no events / ..., {count} event / ..., {count} events",
+  "why": "Same opening"
+ },
+ "read_members": {
+  "text": {
+   "zero": "Tiré de la liste, aucun nom",
+   "one": "Tiré de la liste, {count} nom",
+   "other": "Tiré de la liste, {count} noms"
+  },
+  "back": "Taken from the list, no names / ..., {count} name / ..., {count} names",
+  "why": "Same opening"
+ },
+ "read_gifts": {
+  "text": {
+   "zero": "Tiré des offrandes, aucune ligne",
+   "one": "Tiré des offrandes, {count} ligne",
+   "other": "Tiré des offrandes, {count} lignes"
+  },
+  "back": "Taken from the offerings, no rows / ..., {count} row / ..., {count} rows",
+  "why": "ligne as in the table"
+ },
+ "style_applied": {
+  "text": {
+   "zero": "Aucune annonce modifiée",
+   "one": "Style appliqué à {count} annonce",
+   "other": "Style appliqué à {count} annonces"
+  },
+  "back": "No announcement changed / Style applied to {count} announcement / Style applied to {count} announcements",
+  "why": "Zero says nothing changed"
  }
 }

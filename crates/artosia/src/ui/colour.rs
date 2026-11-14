@@ -8,6 +8,7 @@
 //! disclosure, so nothing is typed first.
 
 use artosia_slides::look::{Background, Look, hex_of, parse_hex, rgb};
+use artosia_slides::notice::title_default;
 use rune::{Color, Cursor, Drag, El, Key, Phase, TextEdit, Tx, col, el, icon, row, text};
 use rune_kit::{Kit, TextInput};
 
@@ -29,6 +30,8 @@ pub enum ColourFor {
     Calendar(i64),
     /// An offering fund's chips, by the fund's id.
     Fund(i64),
+    /// The title of the announcement being edited; its style's own colour until one is picked.
+    NoticeTitle,
 }
 
 impl ColourFor {
@@ -38,6 +41,7 @@ impl ColourFor {
             ColourFor::Outline => "outline",
             ColourFor::Calendar(_) => "calendar",
             ColourFor::Fund(_) => "fund",
+            ColourFor::NoticeTitle => "notice-title",
         }
     }
 }
@@ -74,6 +78,7 @@ pub fn current(s: &App, target: ColourFor) -> [u8; 3] {
         ColourFor::Outline => look.outline_ink,
         ColourFor::Calendar(id) => s.calendar_of(id).map_or([128, 128, 128], |calendar| calendar.colour),
         ColourFor::Fund(id) => s.fund_of(id).map_or([128, 128, 128], |fund| fund.colour),
+        ColourFor::NoticeTitle => s.notices.as_ref().map_or([255, 255, 255], |form| form.title_colour.unwrap_or_else(|| title_default(form.style.unwrap_or(look.notice_style)))),
     }
 }
 
@@ -95,6 +100,14 @@ fn apply(s: &mut App, target: ColourFor, colour: [u8; 3]) {
             if let Some(fund) = s.funds.iter_mut().find(|fund| fund.id == id) {
                 fund.colour = colour;
                 s.giving.dirty = true;
+            }
+            return;
+        }
+        ColourFor::NoticeTitle => {
+            // The style's own colour is kept as no colour, so a later style change brings its own.
+            let own = title_default(s.notices.as_ref().and_then(|form| form.style).unwrap_or(look.notice_style));
+            if let Some(form) = s.notices.as_mut() {
+                form.title_colour = (colour != own).then_some(colour);
             }
             return;
         }
@@ -145,6 +158,9 @@ impl App {
         if !keep {
             apply(self, target, self.colour.before);
             return;
+        }
+        if target == ColourFor::NoticeTitle {
+            self.save_notice();
         }
         let colour = current(self, target);
         let recent = &mut self.settings.recent_colours;

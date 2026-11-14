@@ -2048,11 +2048,6 @@
   "back": "What to show",
   "why": "Round 23, rewritten from the reader marks"
  },
- "FILL_NOTHING": {
-  "text": "手入力",
-  "back": "By hand",
-  "why": "Answers the heading"
- },
  "FILL_WEEK": {
   "text": "今週の誕生日",
   "back": "This week's birthdays",
@@ -4650,5 +4645,217 @@
   "text": "用途「{name}」と、その献金を削除しました",
   "back": "Deleted the use \"{name}\" and its offerings too",
   "why": "says both fund and gifts are gone"
+ },
+ "TPL_SCHEDULE": {
+  "text": "今後の予定",
+  "back": "Coming schedule",
+  "why": "table word reused; composed in the language"
+ },
+ "TPL_BIRTHDAYS": {
+  "text": "誕生日",
+  "back": "Birthdays",
+  "why": "table word reused; composed in the language"
+ },
+ "TPL_OFFERINGS": {
+  "text": "献金の合計",
+  "back": "Giving total",
+  "why": "table word reused; composed in the language"
+ },
+ "TPL_TRANSFER": {
+  "text": "振込のご案内",
+  "back": "Notice for bank transfer",
+  "why": "table word reused; composed in the language"
+ },
+ "TPL_PASSAGE": {
+  "text": "今週の聖句",
+  "back": "This week's verse",
+  "why": "table word reused; composed in the language"
+ },
+ "TPL_PLAIN": {
+  "text": "自由入力",
+  "back": "Free typing",
+  "why": "table word reused; composed in the language"
+ },
+ "TPL_READS_CALENDAR": {
+  "text": "カレンダーの予定から作ります",
+  "back": "Made from the events of the calendar",
+  "why": "table word reused; composed in the language"
+ },
+ "TPL_READS_MEMBERS": {
+  "text": "教会員の誕生日から作ります",
+  "back": "Made from the birthdays of the members",
+  "why": "table word reused; composed in the language"
+ },
+ "TPL_READS_OFFERINGS": {
+  "text": "献金の記録と振込先口座から作ります",
+  "back": "Made from the gift records and the transfer account",
+  "why": "table word reused; composed in the language"
+ },
+ "TPL_READS_BIBLE": {
+  "text": "登録済みの聖書から読みます",
+  "back": "Reads from the installed Bible",
+  "why": "table word reused; composed in the language"
+ },
+ "TPL_READS_NOTHING": {
+  "text": "何も読まず、入力した文字だけ表示",
+  "back": "Reads nothing, shows only the typed text",
+  "why": "table word reused; composed in the language"
+ },
+ "TPL_HEADING": {
+  "text": "種類",
+  "back": "Kind",
+  "why": "table word reused; composed in the language"
+ },
+ "TPL_STYLE": {
+  "text": "レイアウト",
+  "back": "Layout",
+  "why": "table word reused; composed in the language"
+ },
+ "TPL_SEE_ALL": {
+  "text": "ひな形をすべて見る",
+  "back": "See all templates",
+  "why": "table word reused; composed in the language"
+ },
+ "STYLE_HAIRLINE": {
+  "text": "ヘアライン",
+  "back": "Hairline",
+  "why": "table word reused; composed in the language"
+ },
+ "STYLE_LEDGER": {
+  "text": "帳簿",
+  "back": "Account ledger",
+  "why": "table word reused; composed in the language"
+ },
+ "STYLE_BAND": {
+  "text": "帯",
+  "back": "Band",
+  "why": "table word reused; composed in the language"
+ },
+ "NOTICE_CALENDARS": {
+  "text": "載せるカレンダー",
+  "back": "Calendars to list",
+  "why": "table word reused; composed in the language"
+ },
+ "NOTICE_WINDOW": {
+  "text": "期間",
+  "back": "Period",
+  "why": "table word reused; composed in the language"
+ },
+ "NOTICE_WEEK": {
+  "text": "今後7日間",
+  "back": "Next 7 days",
+  "why": "table word reused; composed in the language"
+ },
+ "NOTICE_MONTH": {
+  "text": "今月",
+  "back": "This month",
+  "why": "table word reused; composed in the language"
+ },
+ "NOTICE_TITLE_COLOUR": {
+  "text": "タイトルの色",
+  "back": "Title's colour",
+  "why": "table word reused; composed in the language"
+ },
+ "NOTICE_READ_ACCOUNT": {
+  "text": "献金の振込先口座から",
+  "back": "From the transfer account of giving",
+  "why": "table word reused; composed in the language"
+ },
+ "NOTICE_READ_BIBLE": {
+  "text": "登録済みの聖書の本文から",
+  "back": "From the text of the installed Bible",
+  "why": "table word reused; composed in the language"
+ },
+ "NOTICE_EMPTY_CALENDAR": {
+  "text": "この期間の予定はありません。カレンダーに予定を足してください。",
+  "back": "No events in this period. Please add events to the calendar.",
+  "why": "table word reused; composed in the language"
+ },
+ "NOTICE_EMPTY_MEMBERS": {
+  "text": "この期間に誕生日の人はいません",
+  "back": "Nobody has a birthday in this period",
+  "why": "table word reused; composed in the language"
+ },
+ "TPL_GALLERY": {
+  "text": "お知らせのひな形",
+  "back": "Templates for announcements",
+  "why": "table word reused; composed in the language"
+ },
+ "TPL_GALLERY_NOTE": {
+  "text": "どれも教会の実際の情報で表示しています",
+  "back": "Each is shown with the church's actual information",
+  "why": "table word reused; composed in the language"
+ },
+ "TPL_ALL": {
+  "text": "すべての種類",
+  "back": "All kinds",
+  "why": "table word reused; composed in the language"
+ },
+ "STYLE_ALL": {
+  "text": "すべて",
+  "back": "All",
+  "why": "table word reused; composed in the language"
+ },
+ "TPL_USE": {
+  "text": "新しいお知らせ",
+  "back": "New announcement",
+  "why": "table word reused; composed in the language"
+ },
+ "TPL_APPLY": {
+  "text": "適用先",
+  "back": "Apply to",
+  "why": "table word reused; composed in the language"
+ },
+ "TPL_APPLY_SLIDE": {
+  "text": "このお知らせ",
+  "back": "This announcement",
+  "why": "table word reused; composed in the language"
+ },
+ "TPL_APPLY_ALL": {
+  "text": "すべてのお知らせ",
+  "back": "All announcements",
+  "why": "table word reused; composed in the language"
+ },
+ "TPL_APPLY_PLAN": {
+  "text": "式次第全体",
+  "back": "The whole plan",
+  "why": "table word reused; composed in the language"
+ },
+ "TPL_APPLIED_PLAN": {
+  "text": "式次第のお知らせに適用しました",
+  "back": "Applied to the plan's announcements",
+  "why": "table word reused; composed in the language"
+ },
+ "read_calendar": {
+  "text": {
+   "zero": "カレンダーに、この期間の予定はありません",
+   "other": "カレンダーから、予定{count}件"
+  },
+  "back": "zero: In the calendar, there are no events in this period; other: From the calendar, {count} events",
+  "why": "table word reused; composed in the language"
+ },
+ "read_members": {
+  "text": {
+   "zero": "教会員に、この期間の誕生日の人はいません",
+   "other": "教会員から、誕生日の人{count}名"
+  },
+  "back": "zero: Among the members, nobody has a birthday in this period; other: From the members, {count} people with a birthday",
+  "why": "table word reused; composed in the language"
+ },
+ "read_gifts": {
+  "text": {
+   "zero": "献金に、まだ記録がありません",
+   "other": "献金から、最新の日の{count}件"
+  },
+  "back": "zero: In the giving, there are no records yet; other: From the giving, {count} items of the newest day",
+  "why": "table word reused; composed in the language"
+ },
+ "style_applied": {
+  "text": {
+   "zero": "変更したお知らせはありません",
+   "other": "{count}件のお知らせに適用しました"
+  },
+  "back": "zero: There is no announcement that was changed; other: Applied to {count} announcements",
+  "why": "table word reused; composed in the language"
  }
 }

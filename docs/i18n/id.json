@@ -1959,11 +1959,6 @@
   "back": "The content is taken from",
   "why": "Where the text comes from; not 'automatic'"
  },
- "FILL_NOTHING": {
-  "text": "Manual",
-  "back": "Manual",
-  "why": "Answers the heading"
- },
  "FILL_WEEK": {
   "text": "Ulang tahun minggu ini",
   "back": "Birthdays this week",
@@ -4600,5 +4595,217 @@
   "text": "Tujuan {name} dan persembahannya dihapus",
   "back": "Purpose {name} and its offerings deleted",
   "why": "Names both fund and gifts"
+ },
+ "TPL_SCHEDULE": {
+  "text": "Jadwal ibadah",
+  "back": "Service schedule",
+  "why": "Same name as the table's schedule card"
+ },
+ "TPL_BIRTHDAYS": {
+  "text": "Ulang tahun",
+  "back": "Birthdays",
+  "why": "Table's word for birthday"
+ },
+ "TPL_OFFERINGS": {
+  "text": "Persembahan",
+  "back": "Offerings",
+  "why": "Window and card name in the table"
+ },
+ "TPL_TRANSFER": {
+  "text": "Transfer bank",
+  "back": "Bank transfer",
+  "why": "Transfer as in the offerings window, apart from Persembahan"
+ },
+ "TPL_PASSAGE": {
+  "text": "Ayat hafalan",
+  "back": "Memory verse",
+  "why": "Same as the table's ready-made verse title"
+ },
+ "TPL_PLAIN": {
+  "text": "Teks biasa",
+  "back": "Ordinary text",
+  "why": "Not a style; teks is the table's word"
+ },
+ "TPL_READS_CALENDAR": {
+  "text": "Diambil dari kalender",
+  "back": "Taken from the calendar",
+  "why": "Same opening in every caption"
+ },
+ "TPL_READS_MEMBERS": {
+  "text": "Diambil dari daftar jemaat",
+  "back": "Taken from the list of members",
+  "why": "jemaat is the table's word for member"
+ },
+ "TPL_READS_OFFERINGS": {
+  "text": "Diambil dari jendela Persembahan",
+  "back": "Taken from the Offerings window",
+  "why": "jendela is the window word"
+ },
+ "TPL_READS_BIBLE": {
+  "text": "Diambil dari versi Alkitab",
+  "back": "Taken from a Bible version",
+  "why": "versi Alkitab as in the table"
+ },
+ "TPL_READS_NOTHING": {
+  "text": "Hanya tampil yang diketik",
+  "back": "Only what is typed shows",
+  "why": "Says nothing is read from a window"
+ },
+ "TPL_HEADING": {
+  "text": "Jenis",
+  "back": "Kind",
+  "why": "One word for the kind of card"
+ },
+ "TPL_STYLE": {
+  "text": "Gaya",
+  "back": "Style",
+  "why": "One word, three layouts"
+ },
+ "TPL_SEE_ALL": {
+  "text": "Lihat semua templat",
+  "back": "See all templates",
+  "why": "Templat is the tab name"
+ },
+ "STYLE_HAIRLINE": {
+  "text": "Garis tipis",
+  "back": "Thin line",
+  "why": "Plain words for the thin rule"
+ },
+ "STYLE_LEDGER": {
+  "text": "Buku kas",
+  "back": "Cash book",
+  "why": "The account book a church treasurer keeps"
+ },
+ "STYLE_BAND": {
+  "text": "Pita",
+  "back": "Ribbon",
+  "why": "Strip across the top"
+ },
+ "NOTICE_CALENDARS": {
+  "text": "Kalender yang dipakai",
+  "back": "Calendars in use",
+  "why": "Heads the chips"
+ },
+ "NOTICE_WINDOW": {
+  "text": "Rentang",
+  "back": "Range",
+  "why": "Not jendela, which means program window"
+ },
+ "NOTICE_WEEK": {
+  "text": "7 hari ke depan",
+  "back": "Next 7 days",
+  "why": "From today to a week later"
+ },
+ "NOTICE_MONTH": {
+  "text": "Bulan ini",
+  "back": "This month",
+  "why": "Right half of the switch"
+ },
+ "NOTICE_TITLE_COLOUR": {
+  "text": "Warna judul",
+  "back": "Title colour",
+  "why": "Table's word judul"
+ },
+ "NOTICE_READ_ACCOUNT": {
+  "text": "Diambil dari rekening transfer",
+  "back": "Taken from the transfer account",
+  "why": "Table's word for the account"
+ },
+ "NOTICE_READ_BIBLE": {
+  "text": "Diambil dari versi Alkitab",
+  "back": "Taken from a Bible version",
+  "why": "Same opening as the other pills"
+ },
+ "NOTICE_EMPTY_CALENDAR": {
+  "text": "Tidak ada kegiatan di rentang ini. Tambahkan di Kalender.",
+  "back": "There are no events in this range. Add them in Calendar.",
+  "why": "The state, then the way out; kegiatan is the table's event"
+ },
+ "NOTICE_EMPTY_MEMBERS": {
+  "text": "Tidak ada yang berulang tahun di rentang ini",
+  "back": "No one has a birthday in this range",
+  "why": "One sentence"
+ },
+ "TPL_GALLERY": {
+  "text": "Templat pengumuman",
+  "back": "Announcement templates",
+  "why": "Tab name plus the card name"
+ },
+ "TPL_GALLERY_NOTE": {
+  "text": "Semua slide memakai data asli gereja ini",
+  "back": "All slides use this church's real data",
+  "why": "Says the tiles are real"
+ },
+ "TPL_ALL": {
+  "text": "Semua jenis",
+  "back": "All kinds",
+  "why": "Pairs with Jenis"
+ },
+ "STYLE_ALL": {
+  "text": "Semua",
+  "back": "All",
+  "why": "One word"
+ },
+ "TPL_USE": {
+  "text": "Tambah pengumuman",
+  "back": "Add an announcement",
+  "why": "Verb first, plus icon beside it"
+ },
+ "TPL_APPLY": {
+  "text": "Terapkan gaya pada",
+  "back": "Apply the style to",
+  "why": "Ends where the switch begins"
+ },
+ "TPL_APPLY_SLIDE": {
+  "text": "Yang terakhir dibuka",
+  "back": "The one opened last",
+  "why": "Reads after Terapkan gaya pada"
+ },
+ "TPL_APPLY_ALL": {
+  "text": "Semua pengumuman",
+  "back": "All announcements",
+  "why": "Reads after the label"
+ },
+ "TPL_APPLY_PLAN": {
+  "text": "Seluruh rundown",
+  "back": "The whole rundown",
+  "why": "Table's word rundown"
+ },
+ "TPL_APPLIED_PLAN": {
+  "text": "Gaya diterapkan ke rundown",
+  "back": "Style applied to the rundown",
+  "why": "Past tense"
+ },
+ "read_calendar": {
+  "text": {
+   "zero": "Diambil dari kalender, tidak ada kegiatan",
+   "other": "Diambil dari kalender, {count} kegiatan"
+  },
+  "back": "Taken from the calendar, no events / Taken from the calendar, {count} events",
+  "why": "Same opening as the other pills"
+ },
+ "read_members": {
+  "text": {
+   "zero": "Diambil dari daftar jemaat, tidak ada nama",
+   "other": "Diambil dari daftar jemaat, {count} nama"
+  },
+  "back": "Taken from the member list, no names / Taken from the member list, {count} names",
+  "why": "Same opening"
+ },
+ "read_gifts": {
+  "text": {
+   "zero": "Diambil dari persembahan, tidak ada catatan",
+   "other": "Diambil dari persembahan, {count} catatan"
+  },
+  "back": "Taken from the offerings, no records / Taken from the offerings, {count} records",
+  "why": "catatan as in the offerings table"
+ },
+ "style_applied": {
+  "text": {
+   "zero": "Tidak ada pengumuman yang diubah",
+   "other": "Gaya diterapkan ke {count} pengumuman"
+  },
+  "back": "No announcement was changed / Style applied to {count} announcements",
+  "why": "Zero says nothing changed"
  }
 }

@@ -2050,11 +2050,6 @@
   "back": "Where the words come from",
   "why": "plain"
  },
- "FILL_NOTHING": {
-  "text": "手动",
-  "back": "By hand",
-  "why": "answers the heading"
- },
  "FILL_WEEK": {
   "text": "本周生日",
   "back": "This week's birthdays",
@@ -4652,5 +4647,217 @@
   "text": "已删除用途“{name}”及其奉献记录",
   "back": "Deleted the purpose \"{name}\" and its offering records",
   "why": "says both fund and gifts are gone"
+ },
+ "TPL_SCHEDULE": {
+  "text": "聚会日程",
+  "back": "Gathering schedule",
+  "why": "table word reused; composed in the language"
+ },
+ "TPL_BIRTHDAYS": {
+  "text": "生日祝福",
+  "back": "Birthday wishes",
+  "why": "table word reused; composed in the language"
+ },
+ "TPL_OFFERINGS": {
+  "text": "奉献合计",
+  "back": "Giving total",
+  "why": "table word reused; composed in the language"
+ },
+ "TPL_TRANSFER": {
+  "text": "转账奉献",
+  "back": "Giving by transfer",
+  "why": "table word reused; composed in the language"
+ },
+ "TPL_PASSAGE": {
+  "text": "本周背诵经文",
+  "back": "This week's memory scripture",
+  "why": "table word reused; composed in the language"
+ },
+ "TPL_PLAIN": {
+  "text": "自填文字",
+  "back": "Self-filled text",
+  "why": "table word reused; composed in the language"
+ },
+ "TPL_READS_CALENDAR": {
+  "text": "取自日历里的活动",
+  "back": "Taken from the events in the calendar",
+  "why": "table word reused; composed in the language"
+ },
+ "TPL_READS_MEMBERS": {
+  "text": "取自会友名单里的生日",
+  "back": "Taken from the birthdays in the member list",
+  "why": "table word reused; composed in the language"
+ },
+ "TPL_READS_OFFERINGS": {
+  "text": "取自奉献里的记录和转账账户",
+  "back": "Taken from the records and transfer account in Giving",
+  "why": "table word reused; composed in the language"
+ },
+ "TPL_READS_BIBLE": {
+  "text": "取自已安装的圣经",
+  "back": "Taken from the installed Bible",
+  "why": "table word reused; composed in the language"
+ },
+ "TPL_READS_NOTHING": {
+  "text": "不取自别处，只显示自己输入的文字",
+  "back": "Taken from nowhere, shows only the text typed in it",
+  "why": "table word reused; composed in the language"
+ },
+ "TPL_HEADING": {
+  "text": "类型",
+  "back": "Type",
+  "why": "table word reused; composed in the language"
+ },
+ "TPL_STYLE": {
+  "text": "版式",
+  "back": "Layout",
+  "why": "table word reused; composed in the language"
+ },
+ "TPL_SEE_ALL": {
+  "text": "查看全部模板",
+  "back": "See all templates",
+  "why": "table word reused; composed in the language"
+ },
+ "STYLE_HAIRLINE": {
+  "text": "细线",
+  "back": "Thin line",
+  "why": "table word reused; composed in the language"
+ },
+ "STYLE_LEDGER": {
+  "text": "账本",
+  "back": "Account book",
+  "why": "table word reused; composed in the language"
+ },
+ "STYLE_BAND": {
+  "text": "色带",
+  "back": "Colour ribbon",
+  "why": "table word reused; composed in the language"
+ },
+ "NOTICE_CALENDARS": {
+  "text": "列出哪些日历",
+  "back": "Which calendars to list",
+  "why": "table word reused; composed in the language"
+ },
+ "NOTICE_WINDOW": {
+  "text": "范围",
+  "back": "Range",
+  "why": "table word reused; composed in the language"
+ },
+ "NOTICE_WEEK": {
+  "text": "未来七天",
+  "back": "Next seven days",
+  "why": "table word reused; composed in the language"
+ },
+ "NOTICE_MONTH": {
+  "text": "本月",
+  "back": "This month",
+  "why": "table word reused; composed in the language"
+ },
+ "NOTICE_TITLE_COLOUR": {
+  "text": "标题颜色",
+  "back": "Title colour",
+  "why": "table word reused; composed in the language"
+ },
+ "NOTICE_READ_ACCOUNT": {
+  "text": "取自奉献里的转账账户",
+  "back": "Taken from the transfer account in Giving",
+  "why": "table word reused; composed in the language"
+ },
+ "NOTICE_READ_BIBLE": {
+  "text": "取自已安装的圣经",
+  "back": "Taken from the installed Bible",
+  "why": "table word reused; composed in the language"
+ },
+ "NOTICE_EMPTY_CALENDAR": {
+  "text": "这几天没有活动。请到日历里添加。",
+  "back": "No events on these days. Add them in the calendar.",
+  "why": "table word reused; composed in the language"
+ },
+ "NOTICE_EMPTY_MEMBERS": {
+  "text": "这几天没有人过生日",
+  "back": "Nobody has a birthday on these days",
+  "why": "table word reused; composed in the language"
+ },
+ "TPL_GALLERY": {
+  "text": "公告模板",
+  "back": "Announcement templates",
+  "why": "table word reused; composed in the language"
+ },
+ "TPL_GALLERY_NOTE": {
+  "text": "每个模板显示的都是本教会的真实资料",
+  "back": "Every template shows this church's real data",
+  "why": "table word reused; composed in the language"
+ },
+ "TPL_ALL": {
+  "text": "全部类型",
+  "back": "All types",
+  "why": "table word reused; composed in the language"
+ },
+ "STYLE_ALL": {
+  "text": "全部",
+  "back": "All",
+  "why": "table word reused; composed in the language"
+ },
+ "TPL_USE": {
+  "text": "新建公告",
+  "back": "New announcement",
+  "why": "table word reused; composed in the language"
+ },
+ "TPL_APPLY": {
+  "text": "应用到",
+  "back": "Apply to",
+  "why": "table word reused; composed in the language"
+ },
+ "TPL_APPLY_SLIDE": {
+  "text": "这一张",
+  "back": "This one",
+  "why": "table word reused; composed in the language"
+ },
+ "TPL_APPLY_ALL": {
+  "text": "所有公告",
+  "back": "All announcements",
+  "why": "table word reused; composed in the language"
+ },
+ "TPL_APPLY_PLAN": {
+  "text": "整个流程",
+  "back": "The whole plan",
+  "why": "table word reused; composed in the language"
+ },
+ "TPL_APPLIED_PLAN": {
+  "text": "流程里的公告已换成这个版式",
+  "back": "The plan's announcements now use this layout",
+  "why": "table word reused; composed in the language"
+ },
+ "read_calendar": {
+  "text": {
+   "zero": "取自日历，这段时间没有活动",
+   "other": "取自日历，共 {count} 项活动"
+  },
+  "back": "zero: Taken from the calendar, no events in this time; other: Taken from the calendar, {count} events in all",
+  "why": "table word reused; composed in the language"
+ },
+ "read_members": {
+  "text": {
+   "zero": "取自会友名单，这段时间没人过生日",
+   "other": "取自会友名单，共 {count} 人过生日"
+  },
+  "back": "zero: Taken from the member list, nobody has a birthday in this time; other: Taken from the member list, {count} people have a birthday",
+  "why": "table word reused; composed in the language"
+ },
+ "read_gifts": {
+  "text": {
+   "zero": "取自奉献，还没有记录",
+   "other": "取自奉献，最近一天共 {count} 笔"
+  },
+  "back": "zero: Taken from Giving, no records yet; other: Taken from Giving, {count} gifts on the newest day",
+  "why": "table word reused; composed in the language"
+ },
+ "style_applied": {
+  "text": {
+   "zero": "没有公告被改动",
+   "other": "已应用到 {count} 张公告"
+  },
+  "back": "zero: No announcement was changed; other: Applied to {count} announcements",
+  "why": "table word reused; composed in the language"
  }
 }

@@ -2048,11 +2048,6 @@
   "back": "Source of the text",
   "why": ""
  },
- "FILL_NOTHING": {
-  "text": "직접 입력",
-  "back": "Type by hand",
-  "why": ""
- },
  "FILL_WEEK": {
   "text": "이번 주 생일인 사람",
   "back": "People with a birthday this week",
@@ -4652,5 +4647,217 @@
   "text": "용도와 헌금을 삭제했어요: {name}",
   "back": "Deleted the use and offerings: {name}",
   "why": "colon avoids a particle"
+ },
+ "TPL_SCHEDULE": {
+  "text": "일정 안내",
+  "back": "Schedule notice",
+  "why": "table word reused; composed in the language"
+ },
+ "TPL_BIRTHDAYS": {
+  "text": "생일 축하",
+  "back": "Birthday wishes",
+  "why": "table word reused; composed in the language"
+ },
+ "TPL_OFFERINGS": {
+  "text": "헌금 합계",
+  "back": "Giving total",
+  "why": "table word reused; composed in the language"
+ },
+ "TPL_TRANSFER": {
+  "text": "계좌이체 안내",
+  "back": "Bank transfer notice",
+  "why": "table word reused; composed in the language"
+ },
+ "TPL_PASSAGE": {
+  "text": "이번 주 암송 구절",
+  "back": "This week's memorization verse",
+  "why": "table word reused; composed in the language"
+ },
+ "TPL_PLAIN": {
+  "text": "직접 입력",
+  "back": "Typed by oneself",
+  "why": "table word reused; composed in the language"
+ },
+ "TPL_READS_CALENDAR": {
+  "text": "캘린더의 일정을 가져와요",
+  "back": "Takes the events of the calendar",
+  "why": "table word reused; composed in the language"
+ },
+ "TPL_READS_MEMBERS": {
+  "text": "교인 목록의 생일을 가져와요",
+  "back": "Takes the birthdays of the member list",
+  "why": "table word reused; composed in the language"
+ },
+ "TPL_READS_OFFERINGS": {
+  "text": "헌금 기록과 입금 계좌를 가져와요",
+  "back": "Takes the giving records and the deposit account",
+  "why": "table word reused; composed in the language"
+ },
+ "TPL_READS_BIBLE": {
+  "text": "설치된 성경에서 가져와요",
+  "back": "Takes from the installed Bible",
+  "why": "table word reused; composed in the language"
+ },
+ "TPL_READS_NOTHING": {
+  "text": "아무것도 가져오지 않고 입력한 글만 보여요",
+  "back": "Takes nothing and shows only the typed words",
+  "why": "table word reused; composed in the language"
+ },
+ "TPL_HEADING": {
+  "text": "종류",
+  "back": "Kind",
+  "why": "table word reused; composed in the language"
+ },
+ "TPL_STYLE": {
+  "text": "레이아웃",
+  "back": "Layout",
+  "why": "table word reused; composed in the language"
+ },
+ "TPL_SEE_ALL": {
+  "text": "템플릿 모두 보기",
+  "back": "See all templates",
+  "why": "table word reused; composed in the language"
+ },
+ "STYLE_HAIRLINE": {
+  "text": "가는 선",
+  "back": "Thin line",
+  "why": "table word reused; composed in the language"
+ },
+ "STYLE_LEDGER": {
+  "text": "장부",
+  "back": "Account book",
+  "why": "table word reused; composed in the language"
+ },
+ "STYLE_BAND": {
+  "text": "띠",
+  "back": "Band",
+  "why": "table word reused; composed in the language"
+ },
+ "NOTICE_CALENDARS": {
+  "text": "보여 줄 캘린더",
+  "back": "Calendars to show",
+  "why": "table word reused; composed in the language"
+ },
+ "NOTICE_WINDOW": {
+  "text": "기간",
+  "back": "Period",
+  "why": "table word reused; composed in the language"
+ },
+ "NOTICE_WEEK": {
+  "text": "앞으로 7일",
+  "back": "Next 7 days",
+  "why": "table word reused; composed in the language"
+ },
+ "NOTICE_MONTH": {
+  "text": "이번 달",
+  "back": "This month",
+  "why": "table word reused; composed in the language"
+ },
+ "NOTICE_TITLE_COLOUR": {
+  "text": "제목 색",
+  "back": "Title colour",
+  "why": "table word reused; composed in the language"
+ },
+ "NOTICE_READ_ACCOUNT": {
+  "text": "헌금의 입금 계좌에서",
+  "back": "From the deposit account of giving",
+  "why": "table word reused; composed in the language"
+ },
+ "NOTICE_READ_BIBLE": {
+  "text": "설치된 성경에서",
+  "back": "From the installed Bible",
+  "why": "table word reused; composed in the language"
+ },
+ "NOTICE_EMPTY_CALENDAR": {
+  "text": "이 기간에는 일정이 없어요. 캘린더에서 추가해 주세요.",
+  "back": "No events in this period. Please add them in the calendar.",
+  "why": "table word reused; composed in the language"
+ },
+ "NOTICE_EMPTY_MEMBERS": {
+  "text": "이 기간에 생일인 분이 없어요",
+  "back": "Nobody has a birthday in this period",
+  "why": "table word reused; composed in the language"
+ },
+ "TPL_GALLERY": {
+  "text": "공지 템플릿",
+  "back": "Announcement templates",
+  "why": "table word reused; composed in the language"
+ },
+ "TPL_GALLERY_NOTE": {
+  "text": "모든 템플릿에 우리 교회의 실제 정보가 들어 있어요",
+  "back": "Every template holds our church's real information",
+  "why": "table word reused; composed in the language"
+ },
+ "TPL_ALL": {
+  "text": "모든 종류",
+  "back": "All kinds",
+  "why": "table word reused; composed in the language"
+ },
+ "STYLE_ALL": {
+  "text": "전체",
+  "back": "All",
+  "why": "table word reused; composed in the language"
+ },
+ "TPL_USE": {
+  "text": "새 공지",
+  "back": "New announcement",
+  "why": "table word reused; composed in the language"
+ },
+ "TPL_APPLY": {
+  "text": "적용할 곳",
+  "back": "Where to apply",
+  "why": "table word reused; composed in the language"
+ },
+ "TPL_APPLY_SLIDE": {
+  "text": "이 공지",
+  "back": "This announcement",
+  "why": "table word reused; composed in the language"
+ },
+ "TPL_APPLY_ALL": {
+  "text": "모든 공지",
+  "back": "All announcements",
+  "why": "table word reused; composed in the language"
+ },
+ "TPL_APPLY_PLAN": {
+  "text": "예배 순서 전체",
+  "back": "The whole plan",
+  "why": "table word reused; composed in the language"
+ },
+ "TPL_APPLIED_PLAN": {
+  "text": "예배 순서의 공지에 적용했어요",
+  "back": "Applied to the plan's announcements",
+  "why": "table word reused; composed in the language"
+ },
+ "read_calendar": {
+  "text": {
+   "zero": "캘린더에 이 기간 일정이 없어요",
+   "other": "캘린더에서 일정 {count}개"
+  },
+  "back": "zero: In the calendar there are no events in this period; other: From the calendar, {count} events",
+  "why": "table word reused; composed in the language"
+ },
+ "read_members": {
+  "text": {
+   "zero": "교인 목록에 이 기간 생일인 분이 없어요",
+   "other": "교인 목록에서 생일 {count}명"
+  },
+  "back": "zero: In the member list nobody has a birthday in this period; other: From the member list, {count} birthdays",
+  "why": "table word reused; composed in the language"
+ },
+ "read_gifts": {
+  "text": {
+   "zero": "헌금 기록이 아직 없어요",
+   "other": "헌금 기록에서 최근 날짜 {count}건"
+  },
+  "back": "zero: There are no giving records yet; other: From the giving records, {count} items of the latest date",
+  "why": "table word reused; composed in the language"
+ },
+ "style_applied": {
+  "text": {
+   "zero": "바꾼 공지가 없어요",
+   "other": "공지 {count}개에 적용했어요"
+  },
+  "back": "zero: There is no announcement changed; other: Applied to {count} announcements",
+  "why": "table word reused; composed in the language"
  }
 }

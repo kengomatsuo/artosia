@@ -603,3 +603,12 @@ while there is no gift or the account lacks its bank, number or holder. A range 
 filters the table only; a card with a range of its own waits for OVTEMPL1's data-source panel.
 Scenes: `tab-giving`, `giving-edit`, `giving-empty`, `notice-offerings`, `notice-transfer`, and
 `giving-gift`, `giving-gift-date`, `giving-dates`, `giving-funds`, `giving-account` for the dialogs.
+
+### Announcement templates (OVTEMPL1, built 2026-11-14)
+
+Every announcement card is a template that reads one window: the service schedule reads the
+Calendar, birthdays the Members, the offering and the transfer the Offerings tab, a verse the Bible,
+and only plain text holds typed words. A card carries one of three styles (Hairline, Ledger, Band,
+drawn by `artosia-slides/src/notice.rs`) and a title colour from the one picker. A template whose
+window is empty says so where the slide would be, never as an empty slide. The Templates tab draws
+every template with this church's own data and applies a style to one card, every card or a plan.

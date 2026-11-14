@@ -26,12 +26,48 @@ pub enum NoticeKind {
     Account,
 }
 
+/// How an announcement slide is built: its structure, not only its colours.
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Hash, Serialize, Deserialize)]
+pub enum NoticeStyle {
+    /// Dark scrim over the background, a rule under a small label, a heavy title, bare rows.
+    #[default]
+    Hairline,
+    /// A side tab, and the rows on an opaque ruled table over the background.
+    Ledger,
+    /// A flat band for the title over a flat charcoal body.
+    Band,
+}
+
+impl NoticeStyle {
+    pub const ALL: [NoticeStyle; 3] = [NoticeStyle::Hairline, NoticeStyle::Ledger, NoticeStyle::Band];
+
+    /// The word stored in the library.
+    pub fn code(self) -> &'static str {
+        match self {
+            NoticeStyle::Hairline => "hairline",
+            NoticeStyle::Ledger => "ledger",
+            NoticeStyle::Band => "band",
+        }
+    }
+
+    /// None for a card that chose no style and follows the look.
+    pub fn from_code(code: &str) -> Option<NoticeStyle> {
+        NoticeStyle::ALL.into_iter().find(|style| style.code() == code)
+    }
+}
+
 #[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
 pub struct Slide {
     pub kind: SlideKind,
     /// What the announcement is about; `Plain` draws the words as they are.
     #[serde(default)]
     pub notice: NoticeKind,
+    /// The structure its card chose; None follows the look.
+    #[serde(default)]
+    pub style: Option<NoticeStyle>,
+    /// The title colour its card chose; None takes the style's own.
+    #[serde(default)]
+    pub title_colour: Option<[u8; 3]>,
     /// "Verse 1", "Chorus", "John 3:16".
     pub label: String,
     /// "V1", "C", "16".
@@ -136,6 +172,46 @@ impl Fill {
     }
 }
 
+/// What a card is: where its words come from. Only `Plain` holds words typed by a person.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum Template {
+    Schedule,
+    Birthdays,
+    Offerings,
+    Transfer,
+    Passage,
+    Plain,
+}
+
+impl Template {
+    pub const ALL: [Template; 6] = [Template::Schedule, Template::Birthdays, Template::Offerings, Template::Transfer, Template::Passage, Template::Plain];
+
+    /// The data source a new card of this template starts with.
+    pub fn fill(self) -> Fill {
+        match self {
+            Template::Schedule => Fill::ScheduleWeek,
+            Template::Birthdays => Fill::BirthdaysWeek,
+            Template::Offerings => Fill::Offerings,
+            Template::Transfer => Fill::Transfer,
+            Template::Passage => Fill::Passage,
+            Template::Plain => Fill::Nothing,
+        }
+    }
+}
+
+impl Fill {
+    pub fn template(self) -> Template {
+        match self {
+            Fill::Nothing => Template::Plain,
+            Fill::BirthdaysWeek | Fill::BirthdaysMonth => Template::Birthdays,
+            Fill::Passage => Template::Passage,
+            Fill::ScheduleWeek => Template::Schedule,
+            Fill::Offerings => Template::Offerings,
+            Fill::Transfer => Template::Transfer,
+        }
+    }
+}
+
 #[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
 pub struct Announcement {
     pub id: i64,
@@ -153,6 +229,19 @@ pub struct Announcement {
     /// the installed Bible's own parser. Empty on every other card.
     #[serde(default)]
     pub passage: String,
+    /// The structure the card is drawn in; None reads as the look's, which is how cards made
+    /// before styles existed keep their look.
+    #[serde(default)]
+    pub style: Option<NoticeStyle>,
+    /// The colour of the title; None takes the style's own.
+    #[serde(default)]
+    pub title_colour: Option<[u8; 3]>,
+    /// The calendars a schedule card reads, by id; empty reads all of them.
+    #[serde(default)]
+    pub calendars: Vec<i64>,
+    /// A schedule card reads the whole month instead of the seven days from today.
+    #[serde(default)]
+    pub month: bool,
 }
 
 /// Someone whose birthday the church keeps. The year, when known, is for the Members window's age
@@ -249,10 +338,34 @@ impl Today<'_> {
 
 /// The events of the seven days from today, in date and time order: date, start minute, name.
 pub fn week_events(events: &[Event], today: &Today) -> Vec<(Date, u16, String)> {
-    let from = today.date_of();
-    let mut found: Vec<(Date, u16, String)> = events.iter().flat_map(|event| occurrences(event, from, from.plus_days(6)).into_iter().map(|date| (date, event.start, event.name.clone()))).collect();
+    window_events(events, today, false, &[])
+}
+
+/// The events a schedule card reads: the seven days from today, or the whole month, of the
+/// calendars it names (all when it names none), in date and time order.
+pub fn window_events(events: &[Event], today: &Today, month: bool, calendars: &[i64]) -> Vec<(Date, u16, String)> {
+    let day = today.date_of();
+    let (from, to) = if month { (day.first_of_month(), day.first_of_month().plus_months(1).plus_days(-1)) } else { (day, day.plus_days(6)) };
+    let mut found: Vec<(Date, u16, String)> = events
+        .iter()
+        .filter(|event| calendars.is_empty() || calendars.contains(&event.calendar))
+        .flat_map(|event| occurrences(event, from, to).into_iter().map(|date| (date, event.start, event.name.clone())))
+        .collect();
     found.sort();
     found
+}
+
+/// How many things a card reads from its source today: events, names, gifts of the newest date,
+/// 1 or 0 for the account and for a passage; None for a card that holds typed words.
+pub fn source_count(item: &Announcement, people: &[Person], events: &[Event], giving: &Giving, today: &Today, bible: Option<&Bible>) -> Option<usize> {
+    match item.fill {
+        Fill::Nothing => None,
+        Fill::Passage => Some(usize::from(matches!(passage_state(item, bible), PassageState::Ready(_)))),
+        Fill::ScheduleWeek => Some(window_events(events, today, item.month, &item.calendars).len()),
+        Fill::BirthdaysWeek | Fill::BirthdaysMonth => Some(birthdays(people, item.fill, today).len()),
+        Fill::Offerings => Some(crate::giving::latest(giving.gifts).map_or(0, |day| giving.gifts.iter().filter(|gift| gift.date == day).count())),
+        Fill::Transfer => Some(usize::from(giving.account.ready())),
+    }
 }
 
 /// The lines of a schedule card: the weekday, the time and the name, with the weekday left empty
@@ -545,7 +658,7 @@ pub fn announcement_pages(announcements: &[Announcement], people: &[Person], eve
         }
         if item.fill == Fill::ScheduleWeek {
             // A week of services fits one slide; a longer one goes on, the weekday written again where a day is cut.
-            for group in week_events(events, today).chunks(LINES_PER_SLIDE) {
+            for group in window_events(events, today, item.month, &item.calendars).chunks(LINES_PER_SLIDE) {
                 let mut slide = announcement_slide(&Announcement { body: schedule_lines(group, today).join("
 "), ..item.clone() });
                 slide.notice = NoticeKind::Schedule;
@@ -589,6 +702,11 @@ pub fn announcement_pages(announcements: &[Announcement], people: &[Person], eve
             slide.notice = NoticeKind::Birthdays;
             pages.push((at, slide));
         }
+    }
+    // Every slide of a card is drawn in the card's own style and title colour.
+    for (at, slide) in &mut pages {
+        slide.style = announcements[*at].style;
+        slide.title_colour = announcements[*at].title_colour;
     }
     pages
 }
@@ -1039,5 +1157,36 @@ Wednesday	18.30	Prayer");
         assert_eq!(pages.len(), 2);
         assert!(pages[1].1.text.starts_with("Sunday	"));
         assert_eq!(pages[1].1.text.lines().count(), 2);
+    }
+    #[test]
+    fn a_schedule_card_reads_its_calendars_and_its_window_and_counts_them() {
+        use crate::calendar::Repeat;
+        const MONTHS: [&str; 12] = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        let mut youth = service("Youth", Date::new(2026, 11, 27).unwrap(), 19 * 60, Repeat::Once);
+        youth.calendar = 2;
+        let events = vec![service("Sunday", Date::new(2026, 11, 15).unwrap(), 9 * 60, Repeat::Once), youth, service("Early", Date::new(2026, 11, 2).unwrap(), 60, Repeat::Once)];
+        let today = today_on(11, 13, &MONTHS);
+        let count = |card: &Announcement| source_count(card, &[], &events, &nothing(), &today, None);
+        let week = Announcement { fill: Fill::ScheduleWeek, ..Announcement::default() };
+        assert_eq!(count(&week), Some(1));
+        // The month is the whole of November, the days gone included.
+        assert_eq!(count(&Announcement { month: true, ..week.clone() }), Some(3));
+        assert_eq!(count(&Announcement { month: true, calendars: vec![2], ..week.clone() }), Some(1));
+        assert_eq!(count(&Announcement { month: true, calendars: vec![9], ..week.clone() }), Some(0));
+        // Typed words read nothing.
+        assert_eq!(count(&Announcement::default()), None);
+        assert_eq!(Fill::from_code(Template::Offerings.fill().code()).template(), Template::Offerings);
+    }
+
+    #[test]
+    fn every_slide_of_a_card_is_drawn_in_its_style_and_title_colour() {
+        let plain = Announcement { title: "Hello".into(), body: "Words".into(), style: Some(NoticeStyle::Ledger), title_colour: Some([9, 8, 7]), ..Announcement::default() };
+        let old = Announcement { title: "Old".into(), ..Announcement::default() };
+        let today = today_on(11, 13, &["January"; 12]);
+        let pages = announcement_pages(&[plain, old], &[], &[], &nothing(), &today, None, 2);
+        assert_eq!((pages[0].1.style, pages[0].1.title_colour), (Some(NoticeStyle::Ledger), Some([9, 8, 7])));
+        assert_eq!((pages[1].1.style, pages[1].1.title_colour), (None, None));
+        assert_eq!(NoticeStyle::from_code(NoticeStyle::Band.code()), Some(NoticeStyle::Band));
+        assert_eq!(NoticeStyle::from_code(""), None);
     }
 }

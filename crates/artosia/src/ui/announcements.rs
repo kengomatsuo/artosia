@@ -1,22 +1,21 @@
 //! The announcement editor: the list on the left, the one being written in the middle, and
 //! how it will look on the projector on the right, changing as you type.
 
-use artosia_core::deck::{Fill, PassageState, announcement_slide, birthday_days, birthdays, passage_state, week_events};
-use rune::{Cursor, El, Key, KeyEvent, ScrollSpec, Tx, col, el, row, spacer, text};
+use artosia_core::deck::{Fill, NoticeStyle, PassageState, Template, birthday_days, birthdays, passage_state};
+use artosia_slides::look::rgb;
+use rune::{Cursor, El, Key, KeyEvent, ScrollSpec, Tx, col, el, icon, row, spacer, text};
 use rune_kit::{Kit, ScrollBar, SegmentedControl, TextArea, TextInput};
 
 use crate::state::{App, Notices};
 use crate::strings as t;
-use crate::theme::{icons, size, space, type_};
-use crate::ui::widgets::{btn, section_label};
+use crate::theme::{self, icons, size, space, type_};
+use crate::ui::colour::ColourFor;
+use crate::ui::templates::{empty_note, fill_words, glyph, read_line, reads, slide_or_note, style_name};
+use crate::ui::widgets::{btn, enter_key, section_label};
 
 const LIST: f32 = 330.0;
 /// The widest the preview is drawn.
 const PREVIEW: f32 = 340.0;
-/// The place of "Verse of the week" among `ANNOUNCEMENT_TEMPLATES`, in every language.
-const PASSAGE_TEMPLATE: usize = 3;
-/// The place of "Birthdays" among them: a card that reads the birthday list.
-const BIRTHDAY_TEMPLATE: usize = 5;
 /// How long an announcement may stay up, in seconds.
 const SECONDS: [u32; 6] = [5, 8, 10, 15, 20, 30];
 
@@ -134,18 +133,6 @@ fn list(s: &App, k: &Kit, form: &Notices) -> El {
     } else if s.announcements.is_empty() {
         rows = rows.child(text(t::ANNOUNCEMENTS_EMPTY()).font(type_::BODY).color(k.c.text_muted).px(space::S3).py(space::S2));
     }
-    // One Tab stop as well: the arrows move among the examples.
-    let mut templates = row().key("notice-templates").role("toolbar").label(t::ANNOUNCEMENT_START_FROM()).w_full().gap(6.0).flex_wrap().focus_group();
-    for (at, &(title, body)) in t::ANNOUNCEMENT_TEMPLATES().iter().enumerate() {
-        // The verse of the week reads its words from the Bible; the others are words to replace.
-        templates = if at == PASSAGE_TEMPLATE {
-            templates.child(btn(title).small().focusable().build(k, move |s, _| s.new_passage_notice(title)))
-        } else if at == BIRTHDAY_TEMPLATE {
-            templates.child(btn(title).small().focusable().build(k, move |s, _| s.new_birthday_notice(title)))
-        } else {
-            templates.child(btn(title).small().focusable().build(k, move |s, _| s.new_notice(title, body)))
-        };
-    }
     col()
         .key("notice-list")
         .w(LIST)
@@ -158,6 +145,7 @@ fn list(s: &App, k: &Kit, form: &Notices) -> El {
         .child(btn(t::ANNOUNCEMENT_NEW()).icon(&icons::PLUS).hint("Ctrl N").focusable().build(k, |s, _| s.new_notice("", "")))
         .child(rows)
         .child(row().w_full().gap(space::S2).center_y().child(text(t::announcements(s.announcements.len())).font(type_::SMALL).color(k.c.text_faint).px(space::S3).grow(1.0)).child(el().pr(space::S2).child(crate::ui::widgets::keycap(k, "Ctrl Up Down", false))))
+        .child(templates_block(s, k, form))
         .child(
             col()
                 .w_full()
@@ -167,8 +155,111 @@ fn list(s: &App, k: &Kit, form: &Notices) -> El {
                 .child(btn(t::CMD_IMPORT_BIRTHDAYS()).icon(&icons::IMPORT).small().focusable().build(k, |s, _| s.want_birthdays = true))
                 .child(text(t::birthdays_on_file(s.people.len())).font(type_::SMALL).color(k.c.text_faint)),
         )
-        .child(col().w_full().gap(space::S2).child(section_label(k, t::ANNOUNCEMENT_START_FROM())).child(templates))
         .scroll_bar(k)
+}
+
+/// The templates of a card, as rows: the one the card is has its name in bold and its icon filled.
+fn templates_block(s: &App, k: &Kit, form: &Notices) -> El {
+    let sf = theme::surf();
+    let current = form.fill.template();
+    // One Tab stop: the arrows move among the templates and pick as they go.
+    let mut rows = col().key("notice-templates").role("toolbar").label(t::ANNOUNCEMENT_START_FROM()).w_full().gap(2.0).focus_group().focus_follows();
+    for template in Template::ALL {
+        let on = current == template;
+        rows = rows.child(
+            row()
+                .key(format!("notice-template-{template:?}"))
+                .help(fill_words(if on { form.fill } else { template.fill() }).unwrap_or_default())
+                .role("button")
+                .label(crate::templates::name(template))
+                .checked(on)
+                .w_full()
+                .h(52.0)
+                .px(space::S3)
+                .gap(space::S3)
+                .center_y()
+                .radius(k.radius.md)
+                .fill(if on { theme::accent().alpha(0.18) } else { rune::Color::TRANSPARENT })
+                .hover(k.c.hover)
+                .cursor(Cursor::Pointer)
+                .focusable(true)
+                .focus_selected(on)
+                .on_key(enter_key)
+                .child(row().size(32.0, 32.0).center().radius(8.0).fill(if on { theme::accent() } else { sf.header }).child(icon(glyph(template), 16.0).color(if on { rune::Color::WHITE } else { k.c.text_muted }).a11y_hidden()))
+                .child(
+                    col()
+                        .grow(1.0)
+                        .min_w(0.0)
+                        .child(text(crate::templates::name(template)).font(if on { type_::BODY_STRONG } else { type_::BODY }).color(k.c.text_base).truncate().a11y_hidden())
+                        .child(text(reads(template)).font(type_::SMALL).color(k.c.text_muted).truncate().a11y_hidden()),
+                )
+                .on_press(move |s: &mut App| s.set_notice_template(template)),
+        );
+    }
+    let style = form.style.unwrap_or(s.look().notice_style);
+    let names: Vec<&str> = NoticeStyle::ALL.iter().map(|style| style_name(*style)).collect();
+    col()
+        .w_full()
+        .gap(space::S2)
+        .child(section_label(k, t::TPL_HEADING()))
+        .child(rows)
+        .child(section_label(k, t::TPL_STYLE()))
+        .child(
+            SegmentedControl::new(&names, NoticeStyle::ALL.iter().position(|own| *own == style))
+                .width(None)
+                .label(t::TPL_STYLE())
+                .on_pick(|s: &mut App, picked, _: &mut Tx| s.set_notice_style(NoticeStyle::ALL[picked.min(2)]))
+                .build(k),
+        )
+        .child(btn(t::TPL_SEE_ALL()).icon(&icons::ARROW_RIGHT).small().focusable().build(k, |s, _| s.open_tab(crate::state::Tab::Templates)))
+}
+
+/// What the card reads, as the pill beside the slide: a warning colour while the window is empty.
+fn reads_pill(s: &App, draft: Option<&artosia_core::deck::Announcement>, empty: bool) -> Option<El> {
+    let draft = draft.filter(|draft| draft.fill != Fill::Nothing)?;
+    let ink = if empty { theme::warn_ink() } else { theme::accent() };
+    Some(
+        row()
+            .key("notice-reads")
+            .h(24.0)
+            .px(space::S2)
+            .gap(6.0)
+            .center_y()
+            .radius(12.0)
+            .fill(if empty { theme::warn().alpha(0.2) } else { theme::accent().alpha(0.16) })
+            .child(icon(glyph(draft.fill.template()), 14.0).color(ink).a11y_hidden())
+            .child(text(read_line(s, draft)).font(type_::SMALL_STRONG).color(ink)),
+    )
+}
+
+/// The calendars a schedule card reads, as chips in the calendars' own colours.
+fn calendar_chips(s: &App, k: &Kit, form: &Notices) -> El {
+    let mut chips = row().key("notice-calendars").role("group").label(t::NOTICE_CALENDARS()).w_full().gap(space::S1).flex_wrap();
+    for calendar in &s.calendars {
+        let id = calendar.id;
+        let on = form.calendars.is_empty() || form.calendars.contains(&id);
+        let colour = rgb(calendar.colour);
+        let chip = row()
+            .key(format!("notice-calendar-{id}"))
+            .role("checkbox")
+            .label(calendar.name.clone())
+            .checked(on)
+            .h(26.0)
+            .px(space::S2)
+            .gap(6.0)
+            .center_y()
+            .radius(13.0)
+            .cursor(Cursor::Pointer)
+            .focusable(true)
+            .on_key(enter_key);
+        let chip = if on {
+            chip.fill(theme::tint_of(colour, false)).child(icon(&icons::CHECK, 12.0).color(theme::ink_of(colour)).a11y_hidden()).child(text(calendar.name.clone()).font(type_::SMALL_STRONG).color(theme::ink_of(colour)).a11y_hidden())
+        } else {
+            chip.border(1.0, k.c.border_base).child(crate::ui::calendar::dot(calendar.colour, 10.0)).child(text(calendar.name.clone()).font(type_::SMALL).color(k.c.text_base).a11y_hidden())
+        };
+        chips = chips.child(chip.on_press(move |s: &mut App| s.toggle_notice_calendar(id)));
+    }
+    col().w_full().gap(space::S1).child(section_label(k, t::NOTICE_CALENDARS())).child(chips)
 }
 
 fn form(s: &App, k: &Kit, form: &Notices, width: f32) -> El {
@@ -199,44 +290,27 @@ fn form(s: &App, k: &Kit, form: &Notices, width: f32) -> El {
     if !form.image.is_empty() {
         picture = picture.child(btn(t::BTN_REMOVE_PICTURE()).small().ghost().focusable().build(k, |s, _| s.set_notice_image(None)));
     }
-    // How it will look, drawn from what is in the form now.
+    // How it will look, drawn from what is in the form now; an empty window says so in its place.
     let shown = (width - 2.0 * space::S5).clamp(200.0, PREVIEW);
-    // A passage card with no words yet draws nothing; the words under the fields say why.
-    let slide = draft.as_ref().and_then(|draft| match draft.fill {
-        Fill::Passage => slides.first().cloned(),
-        _ => Some(slides.first().cloned().unwrap_or_else(|| announcement_slide(draft))),
-    });
-    let shown_state = s.preview_state(slide);
+    let card = draft.clone().unwrap_or_default();
+    let empty = draft.is_some() && empty_note(s, &card, slides.len()).is_some();
+    let template = form.fill.template();
     let preview = col()
         .key("notice-preview")
         .w_full()
         .gap(space::S1)
         // A passage or a long list of birthdays takes several slides; the sample is the first, and says of how many.
         .child(row().w_full().gap(space::S2).center_y().child(section_label(k, t::ANNOUNCEMENT_PREVIEW())).child(spacer()).children((slides.len() > 1).then(|| text(t::slides(slides.len())).font(type_::SMALL).color(k.c.text_muted))))
-        .child(el().size(shown, (shown * 9.0 / 16.0).round()).radius(k.radius.lg).clip_rounded(k.radius.lg).border(1.0, k.c.border_base).child(crate::ui::thumb(s, &shown_state, shown)));
-    let fields = col()
-        .key("notice-form")
+        .child(if draft.is_some() { slide_or_note(s, k, &card, shown) } else { el().size(shown, (shown * 9.0 / 16.0).round()).radius(k.radius.lg).border(1.0, k.c.border_base) });
+    let head = row()
         .w_full()
-        .grow(1.0)
-        .min_h(0.0)
-        .px(space::S5)
-        .pb(space::S3)
         .gap(space::S3)
-        .scroll(ScrollSpec { stick_bottom: false }).scroll_edge_fade(crate::theme::size::FADE)
-        .child(preview)
-        .children(holds(s, k, draft.as_ref()))
-        .child(
-            col().w_full().gap(space::S1).child(section_label(k, t::FIELD_TITLE())).child(
-                TextInput::new(&form.title)
-                    .width(None)
-                    .label(t::FIELD_TITLE())
-                    .placeholder(t::ANNOUNCEMENT_TITLE_HINT())
-                    .on_edit(|s: &mut App| edit_of(s, |form| &mut form.title))
-                    .on_key(escape_closes)
-                    .build(k),
-            ),
-        )
-        .child(if form.fill == Fill::Passage {
+        .center_y()
+        .child(text(crate::templates::name(template)).font(type_::HEADING).color(k.c.text_base).truncate().min_w(0.0))
+        .child(spacer())
+        .children(reads_pill(s, draft.as_ref(), empty));
+    let words = match template {
+        Template::Passage => {
             let mut field = col().w_full().gap(space::S1).child(section_label(k, t::ANNOUNCEMENT_PASSAGE())).child(
                 TextInput::new(&form.passage)
                     .width(None)
@@ -262,11 +336,10 @@ fn form(s: &App, k: &Kit, form: &Notices, width: f32) -> El {
                         .child(btn(t::BIBLES_MORE()).small().focusable().build(k, |s, _| s.open_bibles())),
                 );
             }
-            field
-        } else if form.fill != Fill::Nothing {
-            // A birthday card writes its own lines; there is nothing to type.
-            el()
-        } else {
+            Some(field)
+        }
+        // Typed words are the only free text there is.
+        Template::Plain => Some(
             col().w_full().gap(space::S1).child(section_label(k, t::ANNOUNCEMENT_BODY())).child(
                 TextArea::new(&form.body)
                     .width(None)
@@ -276,8 +349,41 @@ fn form(s: &App, k: &Kit, form: &Notices, width: f32) -> El {
                     .on_edit(|s: &mut App| edit_of(s, |form| &mut form.body))
                     .on_key(|s: &mut App, ev: &KeyEvent, tx: &mut Tx| crate::ui::widgets::enter_breaks_line(ev, tx) || escape_closes(s, ev, tx))
                     .build(k),
+            ),
+        ),
+        _ => None,
+    };
+    let window = match template {
+        Template::Schedule | Template::Birthdays => {
+            let month = if template == Template::Schedule { form.month } else { form.fill == Fill::BirthdaysMonth };
+            Some(
+                col().w_full().gap(space::S1).child(section_label(k, t::NOTICE_WINDOW())).child(
+                    SegmentedControl::new(&[t::NOTICE_WEEK(), t::NOTICE_MONTH()], Some(usize::from(month)))
+                        .width(None)
+                        .label(t::NOTICE_WINDOW())
+                        .on_pick(|s: &mut App, picked, _: &mut Tx| s.set_notice_month(picked == 1))
+                        .build(k),
+                ),
             )
-        })
+        }
+        _ => None,
+    };
+    let fields = col()
+        .key("notice-form")
+        .w_full()
+        .grow(1.0)
+        .min_h(0.0)
+        .px(space::S5)
+        .pb(space::S3)
+        .gap(space::S3)
+        .scroll(ScrollSpec { stick_bottom: false }).scroll_edge_fade(crate::theme::size::FADE)
+        .child(head)
+        .child(preview)
+        .child(section_label(k, t::ANNOUNCEMENT_FILL()))
+        .children(holds(s, k, draft.as_ref()))
+        .children((template == Template::Schedule).then(|| calendar_chips(s, k, form)))
+        .children(window)
+        .children(words)
         .child(
             row().w_full().h(36.0).gap(space::S3).center_y().child(text(t::ANNOUNCEMENT_SECONDS()).font(type_::BODY).color(k.c.text_base)).child(spacer()).child(
                 SegmentedControl::new(&labels, at)
@@ -288,42 +394,17 @@ fn form(s: &App, k: &Kit, form: &Notices, width: f32) -> El {
             ),
         )
         .child(
-            // Two rows of two, because four labels in one row cut the birthday choices short; the
-            // choice that is not picked in a row shows none selected.
-            col()
-                .w_full()
-                .gap(space::S1)
-                .child(section_label(k, t::ANNOUNCEMENT_FILL()))
-                .child(
-                    SegmentedControl::new(&[t::FILL_NOTHING(), t::FILL_PASSAGE()], [Fill::Nothing, Fill::Passage].iter().position(|fill| *fill == form.fill))
-                        .width(None)
-                        .label(t::ANNOUNCEMENT_FILL())
-                        .on_pick(|s: &mut App, picked, _: &mut Tx| s.set_notice_fill([Fill::Nothing, Fill::Passage][picked.min(1)]))
-                        .build(k),
-                )
-                .child(
-                    SegmentedControl::new(&[t::FILL_WEEK(), t::FILL_MONTH()], [Fill::BirthdaysWeek, Fill::BirthdaysMonth].iter().position(|fill| *fill == form.fill))
-                        .width(None)
-                        .label(t::ANNOUNCEMENT_FILL())
-                        .on_pick(|s: &mut App, picked, _: &mut Tx| s.set_notice_fill([Fill::BirthdaysWeek, Fill::BirthdaysMonth][picked.min(1)]))
-                        .build(k),
-                )
-                .child(
-                    SegmentedControl::new(&[t::FILL_SCHEDULE()], (form.fill == Fill::ScheduleWeek).then_some(0))
-                        .width(None)
-                        .label(t::ANNOUNCEMENT_FILL())
-                        .on_pick(|s: &mut App, _, _: &mut Tx| s.set_notice_fill(Fill::ScheduleWeek))
-                        .build(k),
-                )
-                .child(
-                    SegmentedControl::new(&[t::FILL_OFFERINGS(), t::FILL_TRANSFER()], [Fill::Offerings, Fill::Transfer].iter().position(|fill| *fill == form.fill))
-                        .width(None)
-                        .label(t::ANNOUNCEMENT_FILL())
-                        .on_pick(|s: &mut App, picked, _: &mut Tx| s.set_notice_fill([Fill::Offerings, Fill::Transfer][picked.min(1)]))
-                        .build(k),
-                ),
+            col().w_full().gap(space::S1).child(section_label(k, t::FIELD_TITLE())).child(
+                TextInput::new(&form.title)
+                    .width(None)
+                    .label(t::FIELD_TITLE())
+                    .placeholder(t::ANNOUNCEMENT_TITLE_HINT())
+                    .on_edit(|s: &mut App| edit_of(s, |form| &mut form.title))
+                    .on_key(escape_closes)
+                    .build(k),
+            ),
         )
-
+        .children(crate::ui::colour::rows(s, k, ColourFor::NoticeTitle, t::NOTICE_TITLE_COLOUR(), &crate::ui::look::text_colours()))
         .child(picture)
         .scroll_bar(k);
     // The two buttons that finish the form sit under it and never scroll away: the tester's
@@ -331,39 +412,36 @@ fn form(s: &App, k: &Kit, form: &Notices, width: f32) -> El {
     col().grow(1.0).min_w(0.0).h_full().min_h(0.0).child(fields).child(crate::ui::widgets::divider(k)).child(tools.px(space::S5).py(space::S3))
 }
 
-/// For a birthday card: the days it covers and how many names it holds today.
+/// What the card's window holds today, in a grey line: the days a birthday card covers, the
+/// last date of the offerings, the account's bank; a schedule card says it in the pill alone.
 fn holds(s: &App, k: &Kit, draft: Option<&artosia_core::deck::Announcement>) -> Option<El> {
     let draft = draft?;
     let today = s.today();
-    // A schedule card writes its lines from the calendar: how many it holds this week is all there is to say.
-    if draft.fill == Fill::ScheduleWeek {
-        return Some(col().key("notice-holds").w_full().child(text(t::events_this_week(week_events(&s.events, &today).len())).font(type_::SMALL).color(k.c.text_muted)));
+    let note = |words: String| Some(col().key("notice-holds").w_full().child(text(words).font(type_::SMALL).color(k.c.text_muted)));
+    match draft.fill.template() {
+        Template::Schedule | Template::Plain | Template::Passage => None,
+        // The money cards write their lines from the Offerings window: what they hold is said once.
+        Template::Offerings => note(artosia_core::giving::latest(&s.gifts).map_or_else(|| t::GIVING_EMPTY().to_string(), |date| t::giving_latest(&crate::calendar::date_words(date)))),
+        Template::Transfer => note(if s.account.ready() { s.account.bank.clone() } else { t::GIVING_ACCOUNT_NONE().to_string() }),
+        Template::Birthdays => {
+            let ((from_month, from_day), (to_month, to_day)) = birthday_days(draft.fill, &today)?;
+            let covers = if draft.fill == Fill::BirthdaysMonth { t::birthdays_cover_month(from_month) } else { t::birthdays_cover_week((from_month, from_day), (to_month, to_day)) };
+            let names = birthdays(&s.people, draft.fill, &today).len();
+            let mut holds = col().key("notice-holds").w_full().gap(space::S2).child(col().w_full().child(text(covers).font(type_::SMALL).color(k.c.text_muted)).child(text(t::names_today(names)).font(type_::SMALL).color(k.c.text_muted)));
+            // With no list on file the card can hold nobody, so the list is asked for here.
+            if s.people.is_empty() {
+                holds = holds.child(
+                    row()
+                        .w_full()
+                        .gap(space::S2)
+                        .center_y()
+                        .child(text(t::birthdays_on_file(0)).font(type_::BODY).color(k.c.text_base).grow(1.0))
+                        .child(btn(t::CMD_IMPORT_BIRTHDAYS()).icon(&icons::IMPORT).small().focusable().build(k, |s, _| s.want_birthdays = true)),
+                );
+            }
+            Some(holds)
+        }
     }
-    // The money cards write their lines from the Offerings window: what they hold is said once.
-    if matches!(draft.fill, Fill::Offerings | Fill::Transfer) {
-        let words = match draft.fill {
-            Fill::Offerings => artosia_core::giving::latest(&s.gifts).map_or_else(|| t::GIVING_EMPTY().to_string(), |date| t::giving_latest(&crate::calendar::date_words(date))),
-            _ if s.account.ready() => s.account.bank.clone(),
-            _ => t::GIVING_ACCOUNT_NONE().to_string(),
-        };
-        return Some(col().key("notice-holds").w_full().child(text(words).font(type_::SMALL).color(k.c.text_muted)));
-    }
-    let ((from_month, from_day), (to_month, to_day)) = birthday_days(draft.fill, &today)?;
-    let covers = if draft.fill == Fill::BirthdaysMonth { t::birthdays_cover_month(from_month) } else { t::birthdays_cover_week((from_month, from_day), (to_month, to_day)) };
-    let names = birthdays(&s.people, draft.fill, &today).len();
-    let mut holds = col().key("notice-holds").w_full().gap(space::S2).child(col().w_full().child(text(covers).font(type_::SMALL).color(k.c.text_muted)).child(text(t::names_today(names)).font(type_::SMALL).color(k.c.text_muted)));
-    // With no list on file the card can hold nobody, so the list is asked for here.
-    if s.people.is_empty() {
-        holds = holds.child(
-            row()
-                .w_full()
-                .gap(space::S2)
-                .center_y()
-                .child(text(t::birthdays_on_file(0)).font(type_::BODY).color(k.c.text_base).grow(1.0))
-                .child(btn(t::CMD_IMPORT_BIRTHDAYS()).icon(&icons::IMPORT).small().focusable().build(k, |s, _| s.want_birthdays = true)),
-        );
-    }
-    Some(holds)
 }
 
 pub fn view(s: &App, k: &Kit, width: f32) -> El {

@@ -2056,11 +2056,6 @@
   "back": "Where the text comes from",
   "why": "-"
  },
- "FILL_NOTHING": {
-  "text": "Manual",
-  "back": "Manual",
-  "why": "says the text is typed by hand"
- },
  "FILL_WEEK": {
   "text": "Aniversariantes da semana",
   "back": "Birthday people of the week",
@@ -4685,5 +4680,221 @@
   "text": "Destino «{name}» apagado, com suas ofertas",
   "back": "Destination «{name}» deleted, with its offerings",
   "why": "Reuses Ofertas/aviso; destino avoids the word for background"
+ },
+ "TPL_SCHEDULE": {
+  "text": "Horários dos cultos",
+  "back": "Times of the services",
+  "why": "Same as the ready title."
+ },
+ "TPL_BIRTHDAYS": {
+  "text": "Aniversariantes",
+  "back": "Birthday people",
+  "why": "Table word."
+ },
+ "TPL_OFFERINGS": {
+  "text": "Ofertas",
+  "back": "Offerings",
+  "why": "Same as the Ofertas tab."
+ },
+ "TPL_TRANSFER": {
+  "text": "Oferta pelo banco",
+  "back": "Offering by bank",
+  "why": "Apart from Ofertas; pelo banco as in the method."
+ },
+ "TPL_PASSAGE": {
+  "text": "Versículo da semana",
+  "back": "Verse of the week",
+  "why": "Same words as the ready verse title."
+ },
+ "TPL_PLAIN": {
+  "text": "Texto livre",
+  "back": "Free text",
+  "why": "Ordinary typed text, not a style."
+ },
+ "TPL_READS_CALENDAR": {
+  "text": "Puxa os eventos do calendário",
+  "back": "Pulls the events of the calendar",
+  "why": "Puxa as in the calendar hint."
+ },
+ "TPL_READS_MEMBERS": {
+  "text": "Puxa a lista de membros",
+  "back": "Pulls the list of members",
+  "why": "Membros tab word."
+ },
+ "TPL_READS_OFFERINGS": {
+  "text": "Puxa o que está em Ofertas",
+  "back": "Pulls what is in Offerings",
+  "why": "Names the window, covers gifts and bank."
+ },
+ "TPL_READS_BIBLE": {
+  "text": "Puxa a Bíblia instalada",
+  "back": "Pulls the installed Bible",
+  "why": "Bíblia."
+ },
+ "TPL_READS_NOTHING": {
+  "text": "Mostra só o texto que você digita",
+  "back": "Shows only the text you type",
+  "why": "Says what it shows."
+ },
+ "TPL_HEADING": {
+  "text": "Tipo",
+  "back": "Kind",
+  "why": "One word."
+ },
+ "TPL_STYLE": {
+  "text": "Estilo",
+  "back": "Style",
+  "why": "One word."
+ },
+ "TPL_SEE_ALL": {
+  "text": "Ver todos os modelos",
+  "back": "See all templates",
+  "why": "Modelo as the tab."
+ },
+ "STYLE_HAIRLINE": {
+  "text": "Linha fina",
+  "back": "Thin line",
+  "why": "Plain words for the hairline rule."
+ },
+ "STYLE_LEDGER": {
+  "text": "Livro-caixa",
+  "back": "Cash book",
+  "why": "Evokes the book of accounts."
+ },
+ "STYLE_BAND": {
+  "text": "Faixa",
+  "back": "Band",
+  "why": "Ribbon across the top."
+ },
+ "NOTICE_CALENDARS": {
+  "text": "Calendários incluídos",
+  "back": "Calendars included",
+  "why": "Calendários as in the calendar window."
+ },
+ "NOTICE_WINDOW": {
+  "text": "Período",
+  "back": "Period",
+  "why": "One word over the switch."
+ },
+ "NOTICE_WEEK": {
+  "text": "7 dias",
+  "back": "7 days",
+  "why": "Seven days from today."
+ },
+ "NOTICE_MONTH": {
+  "text": "Mês inteiro",
+  "back": "The whole month",
+  "why": "Pairs with 7 dias."
+ },
+ "NOTICE_TITLE_COLOUR": {
+  "text": "Cor do título",
+  "back": "Colour of the title",
+  "why": "Cor as in Cor do texto."
+ },
+ "NOTICE_READ_ACCOUNT": {
+  "text": "Puxa o banco salvo em Ofertas",
+  "back": "Pulls the bank saved in Offerings",
+  "why": "Same start as the other pills."
+ },
+ "NOTICE_READ_BIBLE": {
+  "text": "Puxa a Bíblia instalada",
+  "back": "Pulls the installed Bible",
+  "why": "Same start as the other pills."
+ },
+ "NOTICE_EMPTY_CALENDAR": {
+  "text": "Nenhum evento nesses dias. Adicione em Calendário",
+  "back": "No event on those days. Add in Calendar",
+  "why": "Adicionar as in the giving rows."
+ },
+ "NOTICE_EMPTY_MEMBERS": {
+  "text": "Ninguém faz aniversário nesses dias",
+  "back": "Nobody has a birthday on those days",
+  "why": "One sentence."
+ },
+ "TPL_GALLERY": {
+  "text": "Modelos de avisos",
+  "back": "Templates of announcements",
+  "why": "Window heading; aviso is the card."
+ },
+ "TPL_GALLERY_NOTE": {
+  "text": "Cada slide usa os dados reais da igreja",
+  "back": "Each slide uses the church's real data",
+  "why": "Says they are not samples."
+ },
+ "TPL_ALL": {
+  "text": "Todos os modelos",
+  "back": "All templates",
+  "why": "Every kind."
+ },
+ "STYLE_ALL": {
+  "text": "Todos",
+  "back": "All",
+  "why": "One word."
+ },
+ "TPL_USE": {
+  "text": "Usar modelo",
+  "back": "Use template",
+  "why": "Verb first."
+ },
+ "TPL_APPLY": {
+  "text": "Aplicar o estilo a",
+  "back": "Apply the style to",
+  "why": "Ends where the switch begins."
+ },
+ "TPL_APPLY_SLIDE": {
+  "text": "Só este aviso",
+  "back": "Only this announcement",
+  "why": "The one open last."
+ },
+ "TPL_APPLY_ALL": {
+  "text": "Todos os avisos",
+  "back": "All announcements",
+  "why": "Every one."
+ },
+ "TPL_APPLY_PLAN": {
+  "text": "Todo o roteiro",
+  "back": "The whole plan",
+  "why": "Roteiro is the plan."
+ },
+ "TPL_APPLIED_PLAN": {
+  "text": "Estilo aplicado ao roteiro",
+  "back": "Style applied to the plan",
+  "why": "Past tense."
+ },
+ "read_calendar": {
+  "text": {
+   "zero": "Puxa de Calendário: nenhum evento",
+   "one": "Puxa de Calendário: {count} evento",
+   "other": "Puxa de Calendário: {count} eventos"
+  },
+  "back": "Pulls from Calendar: no event / {count} event(s)",
+  "why": "Same start as the other pills; zero is a full statement."
+ },
+ "read_members": {
+  "text": {
+   "zero": "Puxa de Membros: nenhum nome",
+   "one": "Puxa de Membros: {count} nome",
+   "other": "Puxa de Membros: {count} nomes"
+  },
+  "back": "Pulls from Members: no name / {count} name(s)",
+  "why": "Same start."
+ },
+ "read_gifts": {
+  "text": {
+   "zero": "Puxa de Ofertas: nenhuma oferta",
+   "one": "Puxa de Ofertas: {count} oferta",
+   "other": "Puxa de Ofertas: {count} ofertas"
+  },
+  "back": "Pulls from Offerings: no gift / {count} gift(s)",
+  "why": "Same start."
+ },
+ "style_applied": {
+  "text": {
+   "zero": "Nenhum aviso foi alterado",
+   "one": "Estilo aplicado a {count} aviso",
+   "other": "Estilo aplicado a {count} avisos"
+  },
+  "back": "No announcement was changed / Style applied to {count} announcement(s)",
+  "why": "Past tense; zero says nothing changed."
  }
 }

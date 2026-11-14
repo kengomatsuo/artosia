@@ -1194,7 +1194,6 @@ text!(ANNOUNCEMENT_SECONDS, "Seconds on screen", "Detik per pengumuman");
 text!(ANNOUNCEMENT_START_FROM, "Start from", "Mulai dari contoh");
 text!(ANNOUNCEMENT_BRING_IN, "Bring in", "Ambil dari berkas");
 text!(ANNOUNCEMENT_FILL, "Fill in by itself", "Isi otomatis");
-text!(FILL_NOTHING, "No", "Manual");
 text!(FILL_WEEK, "Birthdays this week", "Ulang tahun minggu ini");
 text!(FILL_MONTH, "Birthdays this month", "Ulang tahun bulan ini");
 text!(ANNOUNCEMENT_PICTURE, "Picture", "Gambar");
@@ -2192,6 +2191,92 @@ text!(CMD_GIVING_DETAIL, "The offerings, gift by gift, and their totals", "The o
 text!(CMD_ADD_GIFT_DETAIL, "A gift, its date, giver, fund and amount", "A gift, its date, giver, fund and amount");
 text!(FILL_OFFERINGS, "Offerings of the latest service", "Offerings of the latest service");
 text!(FILL_TRANSFER, "Transfer account", "Transfer account");
+
+// ---- Announcement templates (OVTEMPL1) ----
+text!(TPL_SCHEDULE, "Service schedule", "Service schedule");
+text!(TPL_BIRTHDAYS, "Birthdays", "Birthdays");
+text!(TPL_OFFERINGS, "Offering", "Offering");
+text!(TPL_TRANSFER, "Offering transfer", "Offering transfer");
+text!(TPL_PASSAGE, "Verse of the week", "Verse of the week");
+text!(TPL_PLAIN, "Plain text", "Plain text");
+text!(TPL_READS_CALENDAR, "Reads the calendar", "Reads the calendar");
+text!(TPL_READS_MEMBERS, "Reads the members", "Reads the members");
+text!(TPL_READS_OFFERINGS, "Reads the offerings", "Reads the offerings");
+text!(TPL_READS_BIBLE, "Reads the Bible", "Reads the Bible");
+text!(TPL_READS_NOTHING, "Holds the words you type", "Holds the words you type");
+text!(TPL_HEADING, "Template", "Template");
+text!(TPL_STYLE, "Style", "Style");
+text!(TPL_SEE_ALL, "See all templates", "See all templates");
+text!(STYLE_HAIRLINE, "Hairline", "Hairline");
+text!(STYLE_LEDGER, "Ledger", "Ledger");
+text!(STYLE_BAND, "Band", "Band");
+text!(NOTICE_CALENDARS, "Calendars used", "Calendars used");
+text!(NOTICE_WINDOW, "Show", "Show");
+text!(NOTICE_WEEK, "This week", "This week");
+text!(NOTICE_MONTH, "This month", "This month");
+text!(NOTICE_TITLE_COLOUR, "Title colour", "Title colour");
+text!(NOTICE_READ_ACCOUNT, "Read from the transfer account", "Read from the transfer account");
+text!(NOTICE_READ_BIBLE, "Read from the Bible", "Read from the Bible");
+text!(NOTICE_EMPTY_CALENDAR, "No events in this window. Add some in the calendar.", "No events in this window. Add some in the calendar.");
+text!(NOTICE_EMPTY_MEMBERS, "Nobody has a birthday in this window.", "Nobody has a birthday in this window.");
+text!(TPL_GALLERY, "Announcement templates", "Announcement templates");
+text!(TPL_GALLERY_NOTE, "Drawn with this church's own data", "Drawn with this church's own data");
+text!(TPL_ALL, "All templates", "All templates");
+text!(STYLE_ALL, "All", "All");
+text!(TPL_USE, "Use template", "Use template");
+text!(TPL_APPLY, "Apply style to", "Apply style to");
+text!(TPL_APPLY_SLIDE, "This slide", "This slide");
+text!(TPL_APPLY_ALL, "Every announcement", "Every announcement");
+text!(TPL_APPLY_PLAN, "This plan", "This plan");
+text!(TPL_APPLIED_PLAN, "Style applied to this plan", "Style applied to this plan");
+
+/// What a schedule card reads, as a line at the top of its slide.
+pub fn read_calendar(count: usize) -> String {
+    if let Some(text) = say("read_calendar", None, Some(count), &[]) {
+        return text;
+    }
+    match count {
+        0 => "Read from the calendar, no events".to_string(),
+        1 => "Read from the calendar, 1 event".to_string(),
+        _ => format!("Read from the calendar, {count} events"),
+    }
+}
+
+/// What a birthday card reads.
+pub fn read_members(count: usize) -> String {
+    if let Some(text) = say("read_members", None, Some(count), &[]) {
+        return text;
+    }
+    match count {
+        0 => "Read from the members, nobody".to_string(),
+        1 => "Read from the members, 1 name".to_string(),
+        _ => format!("Read from the members, {count} names"),
+    }
+}
+
+/// What an offering card reads: the gifts of the newest date.
+pub fn read_gifts(count: usize) -> String {
+    if let Some(text) = say("read_gifts", None, Some(count), &[]) {
+        return text;
+    }
+    match count {
+        0 => "Read from the offerings, no gifts".to_string(),
+        1 => "Read from the offerings, 1 gift".to_string(),
+        _ => format!("Read from the offerings, {count} gifts"),
+    }
+}
+
+/// The toast after a style is applied to the announcements.
+pub fn style_applied(count: usize) -> String {
+    if let Some(text) = say("style_applied", None, Some(count), &[]) {
+        return text;
+    }
+    match count {
+        0 => "No announcement to change".to_string(),
+        1 => "Style applied to 1 announcement".to_string(),
+        _ => format!("Style applied to {count} announcements"),
+    }
+}
 
 /// The noun under the figure that counts the gifts the table lists.
 pub fn giving_count(count: usize) -> String {

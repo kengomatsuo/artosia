@@ -2048,11 +2048,6 @@
   "back": "Source of the content",
   "why": "No calque"
  },
- "FILL_NOTHING": {
-  "text": "Tự gõ",
-  "back": "Type it myself",
-  "why": "Answers the heading"
- },
  "FILL_WEEK": {
   "text": "Sinh nhật tuần này",
   "back": "This week's birthdays",
@@ -4651,5 +4646,217 @@
   "text": "Đã xóa quỹ {name} cùng các khoản dâng",
   "back": "Deleted fund {name} with its items",
   "why": "Names both fund and gifts"
+ },
+ "TPL_SCHEDULE": {
+  "text": "Giờ lễ",
+  "back": "Service times",
+  "why": "Table's name for the schedule card"
+ },
+ "TPL_BIRTHDAYS": {
+  "text": "Sinh nhật",
+  "back": "Birthdays",
+  "why": "Table's word"
+ },
+ "TPL_OFFERINGS": {
+  "text": "Dâng hiến",
+  "back": "Offerings",
+  "why": "Tab name"
+ },
+ "TPL_TRANSFER": {
+  "text": "Dâng hiến chuyển khoản",
+  "back": "Offering by bank transfer",
+  "why": "Kept apart from Dâng hiến"
+ },
+ "TPL_PASSAGE": {
+  "text": "Câu gốc tuần này",
+  "back": "This week's key verse",
+  "why": "Same as the table's ready-made verse title"
+ },
+ "TPL_PLAIN": {
+  "text": "Chữ tự gõ",
+  "back": "Self-typed text",
+  "why": "Ordinary typed text, not a style"
+ },
+ "TPL_READS_CALENDAR": {
+  "text": "Lấy từ Lịch",
+  "back": "Taken from the Calendar",
+  "why": "Same opening in every caption"
+ },
+ "TPL_READS_MEMBERS": {
+  "text": "Lấy từ danh sách tín hữu",
+  "back": "Taken from the list of believers",
+  "why": "tín hữu is the table's member word"
+ },
+ "TPL_READS_OFFERINGS": {
+  "text": "Lấy từ cửa sổ Dâng hiến",
+  "back": "Taken from the Offerings window",
+  "why": "cửa sổ is the window word"
+ },
+ "TPL_READS_BIBLE": {
+  "text": "Lấy từ bản dịch Kinh Thánh",
+  "back": "Taken from a Bible translation",
+  "why": "Table's word for a Bible version"
+ },
+ "TPL_READS_NOTHING": {
+  "text": "Chỉ hiện chữ đã gõ",
+  "back": "Only typed text shows",
+  "why": "Nothing is read from a window"
+ },
+ "TPL_HEADING": {
+  "text": "Loại",
+  "back": "Kind",
+  "why": "One word"
+ },
+ "TPL_STYLE": {
+  "text": "Kiểu",
+  "back": "Style",
+  "why": "One word, three layouts"
+ },
+ "TPL_SEE_ALL": {
+  "text": "Xem tất cả mẫu",
+  "back": "See all templates",
+  "why": "Mẫu is the tab name"
+ },
+ "STYLE_HAIRLINE": {
+  "text": "Đường kẻ",
+  "back": "Ruled line",
+  "why": "Plain word for the thin rule"
+ },
+ "STYLE_LEDGER": {
+  "text": "Sổ cái",
+  "back": "Ledger",
+  "why": "Account book"
+ },
+ "STYLE_BAND": {
+  "text": "Dải màu",
+  "back": "Colour strip",
+  "why": "Strip behind the title"
+ },
+ "NOTICE_CALENDARS": {
+  "text": "Các lịch được dùng",
+  "back": "Calendars in use",
+  "why": "Table says Các lịch"
+ },
+ "NOTICE_WINDOW": {
+  "text": "Khoảng",
+  "back": "Range",
+  "why": "Not cửa sổ, which means program window"
+ },
+ "NOTICE_WEEK": {
+  "text": "7 ngày tới",
+  "back": "Next 7 days",
+  "why": "From today to a week later"
+ },
+ "NOTICE_MONTH": {
+  "text": "Tháng này",
+  "back": "This month",
+  "why": "Right half of the switch"
+ },
+ "NOTICE_TITLE_COLOUR": {
+  "text": "Màu tiêu đề",
+  "back": "Title colour",
+  "why": "Plain"
+ },
+ "NOTICE_READ_ACCOUNT": {
+  "text": "Lấy từ tài khoản nhận tiền",
+  "back": "Taken from the account that receives money",
+  "why": "Table's word for the account"
+ },
+ "NOTICE_READ_BIBLE": {
+  "text": "Lấy từ bản dịch Kinh Thánh",
+  "back": "Taken from a Bible translation",
+  "why": "Same opening"
+ },
+ "NOTICE_EMPTY_CALENDAR": {
+  "text": "Không có sự kiện nào trong khoảng này. Thêm trong Lịch.",
+  "back": "There is no event in this range. Add in Calendar.",
+  "why": "The state, then the way out"
+ },
+ "NOTICE_EMPTY_MEMBERS": {
+  "text": "Không ai sinh nhật trong khoảng này",
+  "back": "No one has a birthday in this range",
+  "why": "Echoes the table's names_today"
+ },
+ "TPL_GALLERY": {
+  "text": "Mẫu thông báo",
+  "back": "Announcement templates",
+  "why": "Tab name plus the card name"
+ },
+ "TPL_GALLERY_NOTE": {
+  "text": "Mọi trang đều dùng dữ liệu thật của nhà thờ",
+  "back": "Every page uses the church's real data",
+  "why": "trang is the slide word"
+ },
+ "TPL_ALL": {
+  "text": "Mọi loại",
+  "back": "All kinds",
+  "why": "Pairs with Loại"
+ },
+ "STYLE_ALL": {
+  "text": "Tất cả",
+  "back": "All",
+  "why": "One word"
+ },
+ "TPL_USE": {
+  "text": "Thêm thông báo",
+  "back": "Add an announcement",
+  "why": "Verb first"
+ },
+ "TPL_APPLY": {
+  "text": "Áp dụng kiểu cho",
+  "back": "Apply the style to",
+  "why": "Ends where the switch begins"
+ },
+ "TPL_APPLY_SLIDE": {
+  "text": "Thông báo vừa mở",
+  "back": "The announcement opened last",
+  "why": "Reads after the label"
+ },
+ "TPL_APPLY_ALL": {
+  "text": "Tất cả thông báo",
+  "back": "All announcements",
+  "why": "Reads after the label"
+ },
+ "TPL_APPLY_PLAN": {
+  "text": "Cả thứ tự lễ",
+  "back": "The whole service order",
+  "why": "Table's word for plan"
+ },
+ "TPL_APPLIED_PLAN": {
+  "text": "Đã áp dụng kiểu cho thứ tự lễ",
+  "back": "Style applied to the service order",
+  "why": "Past tense"
+ },
+ "read_calendar": {
+  "text": {
+   "zero": "Lấy từ Lịch, chưa có sự kiện nào",
+   "other": "Lấy từ Lịch, {count} sự kiện"
+  },
+  "back": "Taken from the Calendar, no events yet / Taken from the Calendar, {count} events",
+  "why": "Same opening"
+ },
+ "read_members": {
+  "text": {
+   "zero": "Lấy từ danh sách tín hữu, chưa có tên nào",
+   "other": "Lấy từ danh sách tín hữu, {count} tên"
+  },
+  "back": "Taken from the list, no names yet / Taken from the list, {count} names",
+  "why": "Same opening"
+ },
+ "read_gifts": {
+  "text": {
+   "zero": "Lấy từ Dâng hiến, chưa có khoản dâng nào",
+   "other": "Lấy từ Dâng hiến, {count} khoản dâng"
+  },
+  "back": "Taken from Offerings, no gifts yet / Taken from Offerings, {count} gifts",
+  "why": "khoản dâng as in the table"
+ },
+ "style_applied": {
+  "text": {
+   "zero": "Không có thông báo nào được đổi",
+   "other": "Đã áp dụng kiểu cho {count} thông báo"
+  },
+  "back": "No announcement was changed / Style applied to {count} announcements",
+  "why": "Zero says nothing changed"
  }
 }

@@ -28,6 +28,7 @@ mod people;
 mod plans;
 mod recordings;
 mod starts;
+mod templates;
 mod song_languages;
 mod shortcut_icon;
 mod speech_model;
@@ -581,7 +582,16 @@ const SCENES: &[Scene] = &[
     }),
     // UIOVER1: the overhaul's three directions, seven pages each.
     // UIOVER1: each window of the tab bar.
-    ("tab-notices", |s| s.open_tab(Tab::Notices)),
+    // OVTEMPL1: the editor on a schedule card, in the three styles.
+    ("tab-notices", |s| s.demo_notices("schedule")),
+    ("notice-style-ledger", |s| {
+        s.demo_notices("schedule");
+        s.set_notice_style(artosia_core::deck::NoticeStyle::Ledger);
+    }),
+    ("notice-style-band", |s| {
+        s.demo_notices("schedule");
+        s.set_notice_style(artosia_core::deck::NoticeStyle::Band);
+    }),
     ("tab-calendar", |s| s.open_tab(Tab::Calendar)),
     // OVCAL1: the week, the dialog on the weekly service, a new event, and the schedule card that fills itself.
     // The week that runs from November into December, so the title names both months.
@@ -666,6 +676,11 @@ const SCENES: &[Scene] = &[
     ("notice-offerings", |s| s.demo_notices("offerings")),
     ("notice-transfer", |s| s.demo_notices("transfer")),
     ("tab-templates", |s| s.open_tab(Tab::Templates)),
+    // A church with no events: the schedule tiles say so where their slide would be.
+    ("templates-empty-source", |s| {
+        s.events.clear();
+        s.open_tab(Tab::Templates);
+    }),
     ("tab-look", |s| s.open_tab(Tab::Look)),
     // OVCOLOR1: the colour picker open under the words' colour, a colour used before it.
     ("colour-picker", |s| {

@@ -3,7 +3,7 @@
 use std::sync::Arc;
 
 use artosia_core::bible::Reference;
-use artosia_core::deck::{Announcement, DeckSource, Fill, Person};
+use artosia_core::deck::{Announcement, DeckSource, Fill, NoticeStyle, Person, Template};
 use artosia_core::plan::PlanEntry;
 use artosia_core::marks;
 use artosia_core::song::{SectionKind, Song, Tag, parse_order, song_from_paste, tidy_lyrics, write_order};
@@ -683,6 +683,10 @@ impl App {
                 image: item.image.clone(),
                 fill: item.fill,
                 passage: TextEdit::new(item.passage.clone()),
+                style: item.style,
+                title_colour: item.title_colour,
+                calendars: item.calendars.clone(),
+                month: item.month,
             },
             None => Notices { seconds: 10, ..Notices::default() },
         };
@@ -725,10 +729,11 @@ impl App {
         let (title, body) = (form.title.text.trim().to_string(), form.body.text.trim().to_string());
         let has_words = !title.is_empty() || !body.is_empty() || !form.image.is_empty() || form.fill != Fill::Nothing;
         let passage = if form.fill == Fill::Passage { form.passage.text.trim().to_string() } else { String::new() };
-        has_words.then_some(Announcement { id: form.id, title, body, seconds: form.seconds.clamp(2, 600), image: form.image.clone(), fill: form.fill, passage })
+        let calendars = if form.fill == Fill::ScheduleWeek { form.calendars.clone() } else { Vec::new() };
+        has_words.then_some(Announcement { id: form.id, title, body, seconds: form.seconds.clamp(2, 600), image: form.image.clone(), fill: form.fill, passage, style: form.style, title_colour: form.title_colour, calendars, month: form.month && form.fill == Fill::ScheduleWeek })
     }
 
-    fn reload_announcements(&mut self) {
+    pub(crate) fn reload_announcements(&mut self) {
         self.announcements = self.store.announcements().unwrap_or_default();
         self.refresh_decks();
     }
@@ -796,31 +801,6 @@ impl App {
         }
     }
 
-    /// Starts a new card that reads a Bible passage.
-    pub fn new_passage_notice(&mut self, title: &str) {
-        self.save_notice();
-        let mut form = App::notices_for(None);
-        form.title = TextEdit::new(title);
-        form.fill = Fill::Passage;
-        form.title.focused = false;
-        form.passage.focused = true;
-        self.notices = Some(form);
-    }
-
-    /// Starts a birthday card: it fills itself from the birthday list each week, so there is
-    /// nothing to type. The Birthdays button used to make a plain card that asked for the names
-    /// to be typed, with the list unread beside it (2026-11-13, owner-reported).
-    pub fn new_birthday_notice(&mut self, title: &str) {
-        self.save_notice();
-        let mut form = App::notices_for(None);
-        form.title = TextEdit::new(title);
-        form.fill = Fill::BirthdaysWeek;
-        form.seconds = 12;
-        form.title.focused = false;
-        self.notices = Some(form);
-        self.save_notice();
-    }
-
     /// Starts a new announcement, blank or from a ready-made one.
     pub fn new_notice(&mut self, title: &str, body: &str) {
         self.save_notice();
@@ -840,9 +820,48 @@ impl App {
         self.save_notice();
     }
 
-    pub fn set_notice_fill(&mut self, fill: Fill) {
+    /// Makes the card in the form a card of `template`: only where its words come from changes.
+    pub fn set_notice_template(&mut self, template: Template) {
+        if let Some(form) = self.notices.as_mut()
+            && form.fill.template() != template
+        {
+            form.fill = template.fill();
+        }
+        self.save_notice();
+    }
+
+    pub fn set_notice_style(&mut self, style: NoticeStyle) {
         if let Some(form) = self.notices.as_mut() {
-            form.fill = fill;
+            form.style = Some(style);
+        }
+        self.save_notice();
+    }
+
+    /// A schedule card reads the month or the week; a birthday card the same, as its two fills.
+    pub fn set_notice_month(&mut self, month: bool) {
+        if let Some(form) = self.notices.as_mut() {
+            form.month = month;
+            if form.fill.template() == Template::Birthdays {
+                form.fill = if month { Fill::BirthdaysMonth } else { Fill::BirthdaysWeek };
+            }
+        }
+        self.save_notice();
+    }
+
+    /// Takes a calendar in or out of those a schedule card reads. The last one stays: a card
+    /// naming none would read them all.
+    pub fn toggle_notice_calendar(&mut self, id: i64) {
+        let all: Vec<i64> = self.calendars.iter().map(|calendar| calendar.id).collect();
+        if let Some(form) = self.notices.as_mut() {
+            let mut chosen = if form.calendars.is_empty() { all.clone() } else { form.calendars.clone() };
+            match chosen.iter().position(|own| *own == id) {
+                Some(at) if chosen.len() > 1 => {
+                    chosen.remove(at);
+                }
+                Some(_) => {}
+                None => chosen.push(id),
+            }
+            form.calendars = if chosen.len() >= all.len() && all.iter().all(|own| chosen.contains(own)) { Vec::new() } else { chosen };
         }
         self.save_notice();
     }
@@ -900,7 +919,7 @@ impl App {
             if draft.title.trim().is_empty() && draft.body.trim().is_empty() && image.is_empty() {
                 continue;
             }
-            let mut item = Announcement { id: 0, title: draft.title, body: draft.body, seconds: 10, image, fill: Fill::Nothing, passage: String::new() };
+            let mut item = Announcement { id: 0, title: draft.title, body: draft.body, seconds: 10, image, fill: Fill::Nothing, passage: String::new(), ..Announcement::default() };
             if self.store.save_announcement(&mut item).is_ok() {
                 added += 1;
             }
@@ -958,6 +977,10 @@ impl App {
     /// Leaves the announcement editor; what was being written is saved.
     pub fn close_announcements(&mut self) {
         self.save_notice();
+        // The Templates tab applies a style to the card that was open last.
+        if let Some(form) = self.notices.as_ref() {
+            self.templates.card = form.id;
+        }
         self.notices = None;
         if self.tab == Tab::Notices {
             self.tab = Tab::Plan;
@@ -2072,19 +2095,6 @@ mod notice_tests {
         assert!(deck.slides[0].text.contains("Sample Alpha"));
         app.show_notice_now(id);
         assert_eq!(app.live.as_ref().map(|live| live.deck.slides.len()), Some(deck.slides.len()));
-    }
-
-    #[test]
-    fn the_birthdays_button_makes_a_card_that_reads_the_list() {
-        let mut app = App::practice();
-        app.demo_notices("birthdays");
-        let before = app.announcements.len();
-        app.new_birthday_notice("Birthdays");
-        assert_eq!(app.announcements.len(), before + 1, "kept without a press of Save");
-        let card = app.announcements.last().cloned().unwrap_or_default();
-        assert_eq!((card.fill, card.body.as_str()), (Fill::BirthdaysWeek, ""), "no words to replace");
-        let deck = app.card_deck(card.id).unwrap_or_else(|| panic!("no names in the made-up week"));
-        assert!(deck.slides[0].text.contains("Sample Alpha"));
     }
 }
 

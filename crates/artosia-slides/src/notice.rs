@@ -29,6 +29,14 @@ fn accent(style: NoticeStyle) -> Color {
     })
 }
 
+/// The colour a style draws its title in until its card picks one.
+pub fn title_default(style: NoticeStyle) -> [u8; 3] {
+    match style {
+        NoticeStyle::Hairline => [124, 196, 106],
+        NoticeStyle::Ledger | NoticeStyle::Band => [255, 255, 255],
+    }
+}
+
 struct Ctx {
     w: f32,
     h: f32,
@@ -37,6 +45,8 @@ struct Ctx {
     /// The face of a ledger's rows.
     serif: Family,
     accent: Color,
+    /// The title colour the card chose; None leaves the style's own.
+    title: Option<Color>,
 }
 
 /// The cells of a kind, split into blocks of rows side by side.
@@ -211,7 +221,17 @@ fn account_parts(body: &NoticeBody) -> (String, String, String, String) {
     (line(0), line(1), line(2), line(3))
 }
 
-/// The whole slide at `w` by `h` points, in the look's notice style.
+/// The structure a slide is drawn in: its card's own, else the look's.
+fn style_of_slide(slide: &Slide, look: &Look) -> NoticeStyle {
+    slide.style.unwrap_or(look.notice_style)
+}
+
+/// Whether a slide is drawn by `notice`: a kind with columns, or any announcement whose style is not the plain look.
+pub fn draws_notice(slide: &Slide, look: &Look) -> bool {
+    slide.notice != NoticeKind::Plain || style_of_slide(slide, look) != NoticeStyle::Hairline
+}
+
+/// The whole slide at `w` by `h` points, in its card's notice style, else the look's.
 pub fn notice(slide: &Slide, look: &Look, w: f32, h: f32) -> El {
     let mut body = notice_body(&slide.text);
     if slide.notice == NoticeKind::Plain || slide.notice == NoticeKind::Account {
@@ -220,9 +240,10 @@ pub fn notice(slide: &Slide, look: &Look, w: f32, h: f32) -> El {
     }
     let sans = fonts::family(&look.font);
     let serif = if look.font.trim().is_empty() { fonts::family("Cambria") } else { sans };
-    let c = Ctx { w, h, u: h / 1080.0, sans, serif, accent: accent(look.notice_style) };
+    let style = style_of_slide(slide, look);
+    let c = Ctx { w, h, u: h / 1080.0, sans, serif, accent: accent(style), title: slide.title_colour.map(rgb) };
     let layer = el().key("notice").absolute(0.0, 0.0).size(w, h);
-    match look.notice_style {
+    match style {
         NoticeStyle::Hairline => hairline(layer, slide, &body, &c),
         NoticeStyle::Ledger => ledger(layer, slide, &body, &c),
         NoticeStyle::Band => band(layer, slide, &body, &c),
@@ -238,7 +259,7 @@ fn hairline(layer: El, slide: &Slide, body: &NoticeBody, c: &Ctx) -> El {
         .child(el().key("scrim").absolute(0.0, 0.0).size(w, h).fill(Color::BLACK.alpha(0.62)).a11y_hidden())
         .child(text(kind_name(slide.notice)).font(TextStyle::new(label, 600.0).family(c.sans).tracking(label * 0.18)).color(Color::WHITE.alpha(0.6)).absolute(mx, (0.04 * h).round()))
         .child(el().key("rule").absolute(mx, (0.082 * h).round()).size(inner, (1.5 * u).max(1.0)).fill(Color::WHITE.alpha(0.3)).a11y_hidden())
-        .child(text(slide.heading.as_str()).font(title_style(c.sans, &slide.heading, 0.09 * h, 800.0, inner)).color(c.accent).absolute(mx, (0.098 * h).round()));
+        .child(text(slide.heading.as_str()).font(title_style(c.sans, &slide.heading, 0.09 * h, 800.0, inner)).color(c.title.unwrap_or(c.accent)).absolute(mx, (0.098 * h).round()));
     let (top, bottom) = ((0.33 * h).round(), (0.95 * h).round());
     if slide.notice == NoticeKind::Account {
         let (bank, number, holder, note) = account_parts(body);
@@ -322,7 +343,7 @@ fn ledger(layer: El, slide: &Slide, body: &NoticeBody, c: &Ctx) -> El {
     layer = layer.child(
         text(slide.heading.as_str())
             .font(title_style(c.sans, &slide.heading, 0.07 * h, 700.0, cw))
-            .color(Color::WHITE)
+            .color(c.title.unwrap_or(Color::WHITE))
             .absolute(cx0, (0.05 * h).round())
             .w(cw)
             .align(Align::Center),
@@ -427,7 +448,7 @@ fn band(layer: El, slide: &Slide, body: &NoticeBody, c: &Ctx) -> El {
                 .size(inner, band_h)
                 .justify_center()
                 .gap((0.012 * h).round())
-                .child(text(slide.heading.as_str()).font(title).color(ink))
+                .child(text(slide.heading.as_str()).font(title).color(c.title.unwrap_or(ink)))
                 .child(text(kind_name(slide.notice)).font(TextStyle::new(second, 600.0).family(c.sans).tracking(second * 0.16)).color(ink.alpha(0.85))),
         );
     let top = (band_h + 0.06 * h).round();
@@ -513,5 +534,17 @@ mod tests {
         let table = Table::of(NoticeKind::Birthdays, &rows(30));
         assert_eq!(table.blocks[2][0][0], "21.");
         assert_eq!(table.blocks[2][9][0], "30.");
+    }
+
+    #[test]
+    fn a_card_style_beats_the_look_and_a_plain_card_in_the_old_look_is_not_a_notice() {
+        let look = Look::default();
+        let mut slide = Slide::default();
+        assert!(!draws_notice(&slide, &look));
+        slide.style = Some(NoticeStyle::Band);
+        assert!(draws_notice(&slide, &look));
+        slide.style = Some(NoticeStyle::Hairline);
+        slide.notice = NoticeKind::Schedule;
+        assert!(draws_notice(&slide, &Look { notice_style: NoticeStyle::Ledger, ..look }));
     }
 }

@@ -488,7 +488,6 @@ pub fn dump() -> String {
     line(out, "ANNOUNCEMENT_START_FROM", ANNOUNCEMENT_START_FROM());
     line(out, "ANNOUNCEMENT_BRING_IN", ANNOUNCEMENT_BRING_IN());
     line(out, "ANNOUNCEMENT_FILL", ANNOUNCEMENT_FILL());
-    line(out, "FILL_NOTHING", FILL_NOTHING());
     line(out, "FILL_WEEK", FILL_WEEK());
     line(out, "FILL_MONTH", FILL_MONTH());
     line(out, "ANNOUNCEMENT_PICTURE", ANNOUNCEMENT_PICTURE());
