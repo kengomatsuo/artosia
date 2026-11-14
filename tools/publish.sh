@@ -184,22 +184,29 @@ elif ssh -o BatchMode=yes mac true 2>/dev/null; then
         && ssh -o BatchMode=yes mac "export PATH=\$HOME/.cargo/bin:\$HOME/.bun/bin:/opt/homebrew/bin:\$PATH
             cd ~/Repositories/artosia || exit 1
             git diff --quiet HEAD || { echo The clone on the Mac has changes that are not committed: a release is built from what is committed; exit 1; }
-            git fetch -q origin --tags --force && git checkout -q origin/main -- tools/package-macos.sh && cp tools/package-macos.sh /tmp/artosia-package-macos.sh && git checkout -q HEAD -- tools/package-macos.sh \
-                && git checkout -q --detach v$version \
-                && nice -n 19 bash /tmp/artosia-package-macos.sh $version --out dist/$version/macos \
+            git fetch -q origin --tags --force && git checkout -q --detach v$version \
+                && git show origin/main:tools/package-macos.sh > tools/package-macos.sh \
+                && nice -n 19 bash tools/package-macos.sh $version --out dist/$version/macos \
                 && cargo build --release -q -p artosia-update --bin artosia-release \
                 && rm -f /tmp/artosia-throwaway.key && target/release/artosia-release keygen /tmp/artosia-throwaway.key >/dev/null \
                 && rm -rf dist/$version/macos/feed \
                 && target/release/artosia-release build --dir dist/$version/macos/Artosia.app/Contents --version $version --platform macos-aarch64 --out dist/$version/macos/feed --notes-file ../artosia-notes-$version.txt --key-file /tmp/artosia-throwaway.key
-            built=\$?; rm -f /tmp/artosia-throwaway.key; git checkout -q main && git merge -q --ff-only origin/main; exit \$built" \
+            built=\$?; rm -f /tmp/artosia-throwaway.key; git checkout -q -- tools/package-macos.sh; git checkout -q main && git merge -q --ff-only origin/main; exit \$built" \
         && ssh -o BatchMode=yes mac "cd ~/$remote && tar -cf - feed Artosia-macos-aarch64.dmg" | tar -xf - -C "$mac" \
         && target/release-tool/release/artosia-release.exe sign --dir "$mac/feed" --platform macos-aarch64 --key-file "$key"; then
         gh release upload "v$version" "$mac/Artosia-macos-aarch64.dmg" --clobber
         find "$mac/feed" -type f -print0 | xargs -0 -n 12 gh release upload "v$version" --clobber
         mac_megabytes=$(( ($(stat -c %s "$mac/Artosia-macos-aarch64.dmg") + 524288) / 1048576 ))
+        # The notes say what the app really carries, read from its signature on the Mac.
+        if ssh -o BatchMode=yes mac "codesign -dv ~/$remote/Artosia.app 2>&1 | grep -q 'Authority=Developer ID Application'"; then
+            mac_signed="It is signed with a Developer ID and notarized by Apple."
+        else
+            mac_signed="It is not notarized yet: macOS refuses its first open, and System Settings, Privacy & Security, Open Anyway opens it."
+            echo "The Mac app is signed ad hoc: nobody was signed in at the Mac to open its keychain."
+        fi
         {
             echo
-            echo "**Mac (Apple silicon):** [Artosia-macos-aarch64.dmg]($files/Artosia-macos-aarch64.dmg) ($mac_megabytes MB). Drag Artosia to Applications. It is signed with a Developer ID and notarized by Apple."
+            echo "**Mac (Apple silicon):** [Artosia-macos-aarch64.dmg]($files/Artosia-macos-aarch64.dmg) ($mac_megabytes MB). Drag Artosia to Applications. $mac_signed"
         } > "dist/$version/macos.md"
         write_body
         gh release edit "v$version" --notes-file "$body"
