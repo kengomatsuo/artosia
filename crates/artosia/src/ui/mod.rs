@@ -6,6 +6,10 @@ mod backdrops;
 mod bibles;
 mod editor;
 mod languages;
+// UIOVER1: three directions of the overhaul, drawn only by the `mock-*` scenes.
+mod mock_a;
+mod mock_b;
+mod mock_c;
 pub(crate) mod onboard;
 pub(crate) mod live;
 pub(crate) mod look;
@@ -270,6 +274,15 @@ pub fn view(s: &App, cx: &mut Cx<App>) -> El {
     cx.caption_color(k.c.text_base);
     let insets = cx.chrome_insets();
     let mut layer: Vec<El> = Vec::new();
+    if let Some((direction, page)) = s.mock {
+        let mut layer: Vec<El> = Vec::new();
+        let body = match direction {
+            'a' => mock_a::page(s, cx, k, page, &mut layer),
+            'b' => mock_b::page(s, cx, k, page, &mut layer),
+            _ => mock_c::page(s, cx, k, page, &mut layer),
+        };
+        return rune_kit::root(body, layer);
+    }
     let sf = theme::surf();
     let hline = || el().h(1.0).w_full().fill(sf.edge).a11y_hidden();
     let body = col()

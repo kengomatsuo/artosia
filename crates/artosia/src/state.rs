@@ -561,6 +561,8 @@ pub struct App {
     pub want_zip: bool,
     /// A handler asked for a PowerPoint, a birthday list or an announcement picture to choose.
     pub want_pptx: bool,
+    /// UIOVER1 mocks: a direction (a, b or c) and a page (1 to 7) drawn instead of the window, for `--scene mock-*` only.
+    pub mock: Option<(char, u8)>,
     pub want_birthdays: bool,
     pub want_notice_image: bool,
     pub images: Option<ImageCache>,
@@ -757,6 +759,7 @@ impl App {
             want_folder: false,
             want_zip: false,
             want_pptx: false,
+            mock: None,
             want_birthdays: false,
             want_notice_image: false,
             images: None,
