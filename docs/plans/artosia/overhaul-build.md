@@ -22,7 +22,7 @@ WORDS    seven tab names; Design keeps BTN_LOOK, Announcements keeps CMD_ANNOUNC
 ACTION   press a pill or Ctrl+N: open_tab(tab); Notices with no announcement open opens the first;
          Look closes any sheet; the palette closes
          every caller that opened Sheet::Looks opens Tab::Look; the Look button leaves the title bar
-KEYS     Ctrl+1..7 outside the song editor (where Ctrl+digit adds a section) and outside a text field
+KEYS     Ctrl PgDn and Ctrl PgUp walk the tabs; Ctrl and a digit stay the Preview ring's
 EDGES    1366 wide in Indonesian: seven pills fit with room; dark and light
 ```
 
