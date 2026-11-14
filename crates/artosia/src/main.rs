@@ -14,6 +14,9 @@ mod backdrops;
 mod bibles;
 mod data;
 mod firewall;
+// GUIDE1: the guide engine; the window wires it in task G3.
+#[allow(dead_code)]
+mod guide;
 mod languages;
 mod learning;
 mod link;
