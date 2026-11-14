@@ -47,6 +47,18 @@ const FILE_RETRY: Duration = Duration::from_secs(10);
 /// the operator told, so a picture still on its way can never land after "the video is gone".
 static PREVIEW_GATE: Mutex<()> = Mutex::new(());
 
+/// A video item covers the frame and its frames are the operator's pictures.
+static ITEM_PICTURES: std::sync::atomic::AtomicBool = std::sync::atomic::AtomicBool::new(false);
+
+/// The video item in front starts (true) or stops (false) being what the operator's pictures
+/// show. Off, the operator is told its picture is over, once, and only if it was on.
+pub fn item_pictures(on: bool) {
+    let Ok(_gate) = PREVIEW_GATE.lock() else { return };
+    if ITEM_PICTURES.swap(on, Ordering::AcqRel) && !on {
+        shared().tell(&FromOutput::PreviewEnd);
+    }
+}
+
 /// Operators connected now; the pictures are made only while there is one.
 static OPERATORS: std::sync::atomic::AtomicUsize = std::sync::atomic::AtomicUsize::new(0);
 
@@ -81,7 +93,7 @@ fn start_previews() {
         let (mut count, mut began) = (0u32, Instant::now());
         while let Ok(small) = rx.recv() {
             let Ok(_gate) = PREVIEW_GATE.lock() else { continue };
-            if !shared().video_live.load(Ordering::Acquire) {
+            if !shared().video_live.load(Ordering::Acquire) && !ITEM_PICTURES.load(Ordering::Acquire) {
                 continue;
             }
             let rgb = artosia_slides::preview::pack(&small);

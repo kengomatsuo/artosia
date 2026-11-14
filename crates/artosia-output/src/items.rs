@@ -82,6 +82,7 @@ impl Items {
     fn clear_layer(&self) {
         let shared = shared();
         shared.item_live.store(false, Ordering::Release);
+        crate::video::item_pictures(false);
         shared.item_surface.clear();
         shared.touch();
     }
@@ -110,6 +111,7 @@ impl Items {
                     self.level = level;
                 } else if item.kind == MediaKind::Video {
                     shared().item_live.store(true, Ordering::Release);
+                    crate::video::item_pictures(true);
                     shared().touch();
                     self.covers(true);
                 } else {

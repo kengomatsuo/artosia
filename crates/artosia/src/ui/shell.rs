@@ -393,7 +393,7 @@ fn preview_pane(s: &App, k: &Kit, size: Foot) -> El {
     let live_index = s.live.as_ref().map(|live| live.index).filter(|_| s.open_is_live());
     let hidden = s.black || s.logo_on || s.text_hidden;
     let cursor_slide = open.and_then(|o| o.deck.slides.get(o.cursor).cloned());
-    let state = s.preview_state(cursor_slide);
+    let state = s.with_scene_look(s.preview_state(cursor_slide));
     // Ctrl moves the ring here while something is live; with nothing live the arrows do.
     let ctrl = s.held_ctrl && !s.held_shift;
     let keys = if s.live.is_some() { "Ctrl Up Down" } else { "Up Down" };

@@ -6,7 +6,7 @@ use std::path::Path;
 
 use artosia_core::deck::{Deck, DeckSource, Slide, SlideKind};
 use artosia_core::plan::{Clears, Clip, PlanEntry, RunEnd};
-use artosia_slides::frame::{MediaEnd, MediaItem, MediaKind};
+use artosia_slides::frame::{MediaEnd, MediaItem, MediaKind, OutputState};
 use artosia_slides::look::Background;
 use rune::TextEdit;
 
@@ -67,6 +67,8 @@ pub struct Run {
     pub form: Option<SceneForm>,
     /// A file dialog to open at the next poll, which has the window's `Tx`.
     pub pick: Option<Pick>,
+    /// The pictures behind scenes of the plan, decoded for the operator's small pictures.
+    pub pictures: std::collections::HashMap<String, rune::Image>,
 }
 
 /// What a file is being chosen for.
@@ -124,6 +126,16 @@ pub fn layers(entry: &PlanEntry, id: u64, cleared: Clears) -> Layers {
             logo: *logo && !cleared.logo,
         },
         _ => Layers::default(),
+    }
+}
+
+/// Whether the room is left looking at black when `entry` ends: a video that stops, and a scene
+/// whose video stops and is not cleared (the layer stays and is black).
+fn ends_black(entry: &PlanEntry) -> bool {
+    match entry {
+        PlanEntry::Video { end, .. } => *end == RunEnd::Stop,
+        PlanEntry::Scene { video, clears, .. } => video.is_some() && !clears.video,
+        _ => false,
     }
 }
 
@@ -203,6 +215,39 @@ impl App {
         }
     }
 
+    /// Decodes the pictures scenes of the plan show behind them, and lets go of those no scene wants.
+    fn load_scene_pictures(&mut self) {
+        let Some(images) = &self.images else { return };
+        let wanted: Vec<&str> = self
+            .plan
+            .items
+            .iter()
+            .filter_map(|item| match &item.entry {
+                PlanEntry::Scene { background, .. } if matches!(background_of(background), Some(Background::Image(_))) => Some(background.as_str()),
+                _ => None,
+            })
+            .collect();
+        self.run.pictures.retain(|path, _| wanted.contains(&path.as_str()));
+        for path in wanted {
+            if !self.run.pictures.contains_key(path) {
+                self.run.pictures.insert(path.to_string(), images.file(path, 640.0, 1.0));
+            }
+        }
+    }
+
+    /// Preview's picture of a scene that is open: its own background and its logo, as the room
+    /// would see them once it is shown.
+    pub fn with_scene_look(&self, mut state: OutputState) -> OutputState {
+        let item = self.open.as_ref().and_then(|open| open.item);
+        if let Some(PlanEntry::Scene { background, logo, .. }) = item.and_then(|id| self.plan.items.iter().find(|entry| entry.id == id)).map(|entry| &entry.entry) {
+            if let Some(background) = background_of(background) {
+                state.look.background = background;
+            }
+            state.logo_on = *logo;
+        }
+        state
+    }
+
     /// The live row's progress, 0 to 1.
     pub fn media_progress(&self, item: u64) -> Option<f32> {
         self.run.playing.filter(|playing| playing.item == item).and_then(|playing| playing.fraction())
@@ -224,6 +269,7 @@ impl App {
     /// Takes what the projector said about the item in front. An item set to Next moves the plan
     /// on when it ends; a scene's music or any older showing is told apart by its id and ignored.
     pub fn poll_media(&mut self) -> bool {
+        self.load_scene_pictures();
         let (ended, at) = self.link.take_media();
         let mut changed = false;
         if let (Some((id, position_ms, length_ms)), Some(playing)) = (at, self.run.playing.as_mut())
@@ -237,7 +283,11 @@ impl App {
             playing.ended = true;
             changed = true;
             let item = playing.item;
-            let Some((end, clears)) = self.plan.items.iter().find(|entry| entry.id == item).map(|entry| ending(&entry.entry)) else { continue };
+            let Some(((end, clears), black)) = self.plan.items.iter().find(|entry| entry.id == item).map(|entry| (ending(&entry.entry), ends_black(&entry.entry))) else { continue };
+            if black {
+                // The projector keeps its last frame in its own surface and draws black over it; the small picture goes black too.
+                self.link.inject_live_picture(1, 1, vec![0, 0, 0, 255]);
+            }
             if let Some(playing) = self.run.playing.as_mut() {
                 playing.cleared = clears;
             }

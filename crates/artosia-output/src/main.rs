@@ -271,6 +271,7 @@ fn view(s: &Screen, cx: &mut Cx<Screen>) -> El {
                 video: video.filter(|_| state.look.is_moving()),
                 logo: s.logo.as_ref().map(|(_, image)| image.pixels()),
                 slide: s.slide_picture.as_ref().map(|(_, image)| image.pixels()),
+                item: None,
             };
             let item = (shared.item_live.load(Ordering::Acquire) && !shared.quiet.load(Ordering::Acquire) && state.media.as_ref().is_some_and(|item| item.kind == MediaKind::Video)).then_some(&shared.item_surface);
             match demo::sheet(w, h).or_else(|| demo::direct().then(|| demo::through_notice(&state, w, h))) {

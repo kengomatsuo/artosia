@@ -24,6 +24,9 @@ pub struct Media<'a> {
     pub logo: Option<&'a Pixels>,
     /// The picture of the slide being drawn, when it has one and it has loaded.
     pub slide: Option<&'a Pixels>,
+    /// The newest picture of the video item in front, in a preview; the output draws the item's
+    /// own surface instead.
+    pub item: Option<&'a Pixels>,
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -342,6 +345,8 @@ pub fn audience_over(state: &OutputState, w: f32, h: f32, media: Media, item: Op
     }
     if let Some(item) = item {
         root = root.child(el().key("item").absolute(0.0, 0.0).size(w, h).fill(Color::BLACK).native_surface(item, SurfaceFit::Fit).a11y_hidden());
+    } else if let Some(picture) = media.item.filter(|_| state.media.as_ref().is_some_and(|item| item.kind == crate::frame::MediaKind::Video)) {
+        root = root.child(el().key("item").absolute(0.0, 0.0).size(w, h).fill(Color::BLACK).pixels_fit(picture, SurfaceFit::Fit).a11y_hidden());
     }
     let logo = media.logo.filter(|_| state.logo_on);
     if let Some(logo) = logo {

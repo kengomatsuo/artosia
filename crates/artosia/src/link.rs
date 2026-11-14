@@ -79,6 +79,11 @@ impl LivePicture {
         !self.on.swap(true, Ordering::AcqRel)
     }
 
+    /// The newest picture while one is on, whichever of the background or a video item made it.
+    pub fn current(&self) -> Option<&Pixels> {
+        self.on.load(Ordering::Acquire).then_some(&self.pixels)
+    }
+
     /// Drops the picture; the previews go back to the still picture or black. Returns true
     /// when there was one.
     pub fn drop_picture(&self) -> bool {
@@ -364,6 +369,11 @@ impl Link {
     /// The picture of the projector's moving background for a screen drawn with `look`.
     pub fn live_picture(&self, look: &Look, playing: &Look) -> Option<&Pixels> {
         self.live.for_look(look, playing)
+    }
+
+    /// The newest picture of the video item in front, which the previews draw over the background.
+    pub fn item_picture(&self) -> Option<&Pixels> {
+        self.live.current()
     }
 
     /// Hands the previews a picture as if the output had sent it, for headless renders.

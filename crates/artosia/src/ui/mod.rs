@@ -64,6 +64,7 @@ pub fn media(s: &App) -> Media<'_> {
         video: None,
         logo: s.logo.as_ref().map(|(_, image)| image.pixels()),
         slide: None,
+        item: None,
     }
 }
 
@@ -72,8 +73,23 @@ pub fn thumb(s: &App, state: &artosia_slides::frame::OutputState, width: f32) ->
     let picture = state.slide.as_ref().filter(|slide| !slide.image.is_empty()).and_then(|slide| s.slide_pictures.get(&slide.image));
     let base = media(s);
     // A video or camera shows its newest frame from the projector; a still picture is the fallback.
-    let moving = s.link.live_picture(&state.look, &s.look());
-    let media = Media { slide: picture.map(|image| image.pixels()), picture: moving.or(base.picture), ..base };
+    // What the projector plays is the look it was last sent: a scene's own background differs from the plan's.
+    let own;
+    let playing = match &s.sent {
+        Some(sent) => &sent.look,
+        None => {
+            own = s.look();
+            &own
+        }
+    };
+    let moving = s.link.live_picture(&state.look, playing);
+    // A scene's own picture, and the video item's newest frame while it covers the frame.
+    let scene = match &state.look.background {
+        artosia_slides::look::Background::Image(path) => s.run.pictures.get(path).map(|image| image.pixels()),
+        _ => None,
+    };
+    let item = state.media.as_ref().filter(|item| item.kind == artosia_slides::frame::MediaKind::Video).and_then(|_| s.link.item_picture());
+    let media = Media { slide: picture.map(|image| image.pixels()), picture: moving.or(scene).or(base.picture), item, ..base };
     artosia_slides::audience::thumbnail(state, width, media, s.now)
 }
 
