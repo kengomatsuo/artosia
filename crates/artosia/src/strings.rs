@@ -1216,6 +1216,24 @@ text!(REMOTE_PIN, "PIN", "PIN");
 // The Indonesian argument of the next two is the English again, until a writer who never sees it fills `docs/i18n/id.json`.
 text!(REMOTE_FIREWALL_ASKING, "Windows will ask for permission once, so phones can connect", "Windows akan minta izin sekali, agar ponsel bisa tersambung");
 text!(REMOTE_FIREWALL_REFUSED, "Windows is not letting phones in. Switch Phone off and on to be asked again", "Firewall komputer menahan ponsel. Matikan lalu nyalakan Remote ponsel, izin ditanya lagi.");
+// What a paired phone may do, set in the Phone dialog (PHONEEDIT1). English twice until a writer fills the tables.
+text!(PHONE_PAIRED, "Paired phones", "Paired phones");
+text!(PHONE_CONTROL, "Control", "Control");
+text!(PHONE_EDIT, "Edit", "Edit");
+text!(PHONE_EDIT_PIN, "Second PIN for editing", "Second PIN for editing");
+text!(PHONE_EDIT_PIN_HINT, "Typed on the phone instead of the first PIN", "Typed on the phone instead of the first PIN");
+text!(PHONE_EDIT_RULE, "Edit is off until you allow it. Switching Phone off resets it.", "Edit is off until you allow it. Switching Phone off resets it.");
+text!(PHONE_EDIT_BUSY, "A phone's change was not kept: it is open here", "A phone's change was not kept: it is open here");
+text!(PHONE_EDIT_OLD, "A phone's change was not kept: it was out of date", "A phone's change was not kept: it was out of date");
+
+/// "Phone 2, Android": a paired phone in the Phone dialog; the kind is as the phone said it.
+pub fn phone_label(number: u32, kind: &str) -> String {
+    if let Some(text) = say("phone_label", Some(if kind.is_empty() { "plain" } else { "kind" }), None, &[("number", text_arg(number.to_string())), ("kind", text_arg(kind))]) {
+        return text;
+    }
+    let word = if indonesian() { "HP" } else { "Phone" };
+    if kind.is_empty() { format!("{word} {number}") } else { format!("{word} {number}, {kind}") }
+}
 
 pub fn phones(count: usize) -> String {
     if let Some(text) = say("phones", None, Some(count), &[]) {
@@ -1331,6 +1349,10 @@ text!(FILL_WEEK, "Birthdays this week", "Ulang tahun minggu ini");
 text!(FILL_MONTH, "Birthdays this month", "Ulang tahun bulan ini");
 text!(ANNOUNCEMENT_PICTURE, "Picture", "Gambar");
 text!(BTN_REMOVE_PICTURE, "Remove", "Lepas");
+text!(ANNOUNCEMENT_PICTURE2, "Second picture", "Gambar kedua");
+text!(ANNOUNCEMENT_QRIS, "QRIS picture", "Gambar QRIS");
+text!(SETTINGS_CHURCH, "Church name", "Nama gereja");
+text!(SETTINGS_CHURCH_HINT, "Shown on announcements", "Tampil di pengumuman");
 text!(CMD_IMPORT_PPTX, "Import a PowerPoint", "Impor dari PowerPoint");
 text!(CMD_IMPORT_PPTX_DETAIL, "Pictures or redrawn, tables to Members and Offerings", "Pictures or redrawn, tables to Members and Offerings");
 text!(CMD_IMPORT_BIRTHDAYS, "Import a birthday list", "Impor ulang tahun");
@@ -2520,6 +2542,10 @@ text!(TPL_SEE_ALL, "See all templates", "See all templates");
 text!(STYLE_HAIRLINE, "Hairline", "Hairline");
 text!(STYLE_LEDGER, "Ledger", "Ledger");
 text!(STYLE_BAND, "Band", "Band");
+text!(STYLE_GREIGE, "Editorial", "Editorial");
+text!(STYLE_PILL, "Pill poster", "Pill poster");
+text!(STYLE_NEON, "Neon night", "Neon night");
+text!(STYLE_SPLIT, "Split panel", "Split panel");
 text!(NOTICE_CALENDARS, "Calendars used", "Calendars used");
 text!(NOTICE_WINDOW, "Show", "Show");
 text!(NOTICE_WEEK, "This week", "This week");

@@ -193,7 +193,7 @@ fn notice_title(kind: NoticeKind) -> &'static str {
         NoticeKind::Birthdays => "Ulang tahun bulan November",
         NoticeKind::Money => "Persembahan syukur",
         NoticeKind::Account => "Persembahan lewat transfer",
-        NoticeKind::Plain => "Ibadah Padang",
+        NoticeKind::Plain | NoticeKind::Verse => "Ibadah Padang",
     }
 }
 
@@ -207,7 +207,7 @@ fn notice_text(kind: NoticeKind) -> String {
             lines
         }
         NoticeKind::Account => ["Bank Contoh", "123 456 7890", "a.n. Gereja Contoh"].map(String::from).to_vec(),
-        NoticeKind::Plain => ["Sabtu, 8 November 2026", "Jam 10.00"].map(String::from).to_vec(),
+        NoticeKind::Plain | NoticeKind::Verse => ["Sabtu, 8 November 2026", "Jam 10.00"].map(String::from).to_vec(),
     };
     lines.join("\n")
 }
@@ -218,7 +218,7 @@ fn slide_tile(kind: NoticeKind, style: NoticeStyle, width: f32) -> El {
     let look = Look { notice_style: style, ..Look::default() };
     let state = OutputState { slide: None, look: look.clone(), ..OutputState::default() };
     let slide = Slide { kind: SlideKind::Announcement, notice: kind, label: notice_title(kind).to_string(), heading: notice_title(kind).to_string(), text: notice_text(kind), ..Slide::default() };
-    let page = el().size(w, h).child(audience(&state, w, h, Media::default(), Detail::Preview, 0.0).absolute(0.0, 0.0)).child(notice::notice(&slide, &look, w, h));
+    let page = el().size(w, h).child(audience(&state, w, h, Media::default(), Detail::Preview, 0.0).absolute(0.0, 0.0)).child(notice::notice(&slide, &look, w, h, &Default::default()));
     el().size(width, (width * 9.0 / 16.0).round()).radius(4.0).clip_rounded(4.0).child(page.absolute(0.0, 0.0).origin(0.0, 0.0).scale(width / w).inert())
 }
 

@@ -317,6 +317,7 @@ dependencies = [
  "artosia-core",
  "base64 0.22.1",
  "fontique",
+ "read-fonts",
  "rune",
  "serde",
  "serde_json",

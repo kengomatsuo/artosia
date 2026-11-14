@@ -1,6 +1,7 @@
 //! A tiny HTTP/1.1 server over `std::net`: one thread per connection, `Connection: close`.
 
-use crate::{RemoteCommand, RemoteState};
+use crate::edit::{Level, Refusal, Taken};
+use crate::{PhoneInfo, RemoteCommand, RemoteState};
 use serde_json::{Value, json};
 use std::collections::HashMap;
 use std::io::{Read, Write};
@@ -28,12 +29,51 @@ pub struct Shared {
     pub changed: Condvar,
 }
 
+/// A paired phone.
+pub struct Phone {
+    pub seen: Instant,
+    pub level: Level,
+    pub id: u32,
+    pub agent: String,
+}
+
+/// Wrong PINs counted, and the minute pairing waits after five.
+#[derive(Default)]
+pub struct Guard {
+    pub failures: u32,
+    pub locked_until: Option<Instant>,
+}
+
+impl Guard {
+    /// True while the lock holds; an expired lock is cleared.
+    fn locked(&mut self, now: Instant) -> bool {
+        match self.locked_until {
+            Some(until) if now < until => true,
+            Some(_) => {
+                *self = Guard::default();
+                false
+            }
+            None => false,
+        }
+    }
+
+    fn failed(&mut self, now: Instant) {
+        self.failures += 1;
+        if self.failures >= FAIL_LIMIT {
+            self.locked_until = Some(now + LOCKOUT);
+        }
+    }
+}
+
 pub struct Inner {
     pub state: RemoteState,
     pub version: u64,
-    pub tokens: HashMap<String, Instant>,
-    pub failures: u32,
-    pub locked_until: Option<Instant>,
+    pub tokens: HashMap<String, Phone>,
+    /// The first PIN's tries and the second PIN's own, so a guessed second PIN never stops pairing.
+    pub guard: Guard,
+    pub edit_guard: Guard,
+    pub edit_pin: Option<String>,
+    pub next_phone: u32,
     pub shutdown: bool,
     pub conns: HashMap<u64, TcpStream>,
     pub next_conn: u64,
@@ -50,6 +90,7 @@ struct Request {
     path: String,
     query: String,
     auth: Option<String>,
+    agent: String,
     body: Vec<u8>,
 }
 
@@ -81,6 +122,7 @@ fn read_request(stream: &mut TcpStream) -> Option<Request> {
     let target = first.next()?;
     let (path, query) = target.split_once('?').unwrap_or((target, ""));
     let mut auth = None;
+    let mut agent = String::new();
     let mut len = 0usize;
     for l in lines {
         let Some((k, v)) = l.split_once(':') else { continue };
@@ -88,6 +130,7 @@ fn read_request(stream: &mut TcpStream) -> Option<Request> {
         match k.trim().to_ascii_lowercase().as_str() {
             "authorization" => auth = v.strip_prefix("Bearer ").map(|t| t.trim().to_string()),
             "content-length" => len = v.parse().ok()?,
+            "user-agent" => agent = v.to_string(),
             _ => {}
         }
     }
@@ -106,7 +149,7 @@ fn read_request(stream: &mut TcpStream) -> Option<Request> {
         body.extend_from_slice(&chunk[..n]);
     }
     body.truncate(len);
-    Some(Request { method, path: path.to_string(), query: query.to_string(), auth, body })
+    Some(Request { method, path: path.to_string(), query: query.to_string(), auth, agent, body })
 }
 
 fn respond(stream: &mut TcpStream, status: u16, ctype: &str, body: &[u8]) {
@@ -116,6 +159,7 @@ fn respond(stream: &mut TcpStream, status: u16, ctype: &str, body: &[u8]) {
         400 => "Bad Request",
         401 => "Unauthorized",
         403 => "Forbidden",
+        409 => "Conflict",
         404 => "Not Found",
         405 => "Method Not Allowed",
         429 => "Too Many Requests",
@@ -139,7 +183,20 @@ fn now_secs() -> f64 {
     std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).map_or(0.0, |d| d.as_secs_f64())
 }
 
-fn state_json(s: &RemoteState, version: u64) -> Value {
+fn state_json(s: &RemoteState, version: u64, level: Level) -> Value {
+    let mut out = base_json(s, version);
+    out["level"] = json!(level.code());
+    if level == Level::Edit {
+        out["cards"] = json!(s.cards.iter().map(|c| json!({"id": c.id, "title": c.title, "body": c.body, "body_editable": c.body_editable, "kind": c.kind, "rev": c.rev()})).collect::<Vec<_>>());
+        out["people"] = json!(s.people.iter().map(|p| json!({"id": p.id, "name": p.name, "day": p.day, "month": p.month, "next": p.next, "rev": p.rev()})).collect::<Vec<_>>());
+        out["events"] = json!(s.events.iter().map(|e| json!({"id": e.id, "original": e.original, "name": e.name, "date": e.date, "start": e.start, "end": e.end, "repeats": e.repeats, "rev": e.rev()})).collect::<Vec<_>>());
+        out["live_card"] = json!(s.live_card);
+        out["locked"] = json!(s.locked);
+    }
+    out
+}
+
+fn base_json(s: &RemoteState, version: u64) -> Value {
     json!({
         "version": version,
         "now": now_secs(),
@@ -170,38 +227,38 @@ pub fn random_token() -> String {
     b.iter().map(|x| format!("{x:02x}")).collect()
 }
 
-/// Returns true if the bearer token is known, and marks it seen.
-fn authorize(shared: &Shared, req: &Request) -> bool {
-    let Some(t) = &req.auth else { return false };
+/// The level of the bearer token's phone when it is known, and marks it seen.
+fn authorize(shared: &Shared, req: &Request) -> Option<Level> {
+    let t = req.auth.as_ref()?;
     let mut g = shared.lock();
-    match g.tokens.get_mut(t) {
-        Some(seen) => {
-            *seen = Instant::now();
-            true
-        }
-        None => false,
-    }
+    let phone = g.tokens.get_mut(t)?;
+    phone.seen = Instant::now();
+    Some(phone.level)
+}
+
+/// "iPhone", "iPad", "Android" or nothing, from what the phone's browser calls itself.
+fn agent_name(agent: &str) -> String {
+    ["iPhone", "iPad", "Android"].iter().find(|name| agent.contains(**name)).map(|name| (*name).to_string()).unwrap_or_default()
 }
 
 fn pair(shared: &Shared, stream: &mut TcpStream, req: &Request) {
-    let pin = serde_json::from_slice::<Value>(&req.body)
-        .ok()
-        .and_then(|v| v.get("pin").and_then(Value::as_str).map(str::to_string))
-        .unwrap_or_default();
+    let body = serde_json::from_slice::<Value>(&req.body).ok();
+    let pin = body.as_ref().and_then(|v| v.get("pin").and_then(Value::as_str)).unwrap_or_default().to_string();
+    // The second PIN is typed on purpose (`edit: true`), so its tries are counted apart.
+    let second = body.as_ref().and_then(|v| v.get("edit").and_then(Value::as_bool)).unwrap_or(false);
     let mut g = shared.lock();
     let now = Instant::now();
-    if let Some(until) = g.locked_until {
-        if now < until {
-            drop(g);
-            return json_reply(stream, 429, &json!({"error": "locked"}));
-        }
-        g.locked_until = None;
-        g.failures = 0;
+    let locked = if second { g.edit_guard.locked(now) } else { g.guard.locked(now) };
+    if locked {
+        drop(g);
+        return json_reply(stream, 429, &json!({"error": "locked"}));
     }
-    if pin != shared.pin {
-        g.failures += 1;
-        if g.failures >= FAIL_LIMIT {
-            g.locked_until = Some(now + LOCKOUT);
+    let right = if second { g.edit_pin.as_deref() == Some(pin.as_str()) } else { pin == shared.pin };
+    if !right {
+        if second {
+            g.edit_guard.failed(now);
+        } else {
+            g.guard.failed(now);
         }
         drop(g);
         return json_reply(stream, 403, &json!({"error": "wrong pin"}));
@@ -211,15 +268,22 @@ fn pair(shared: &Shared, stream: &mut TcpStream, req: &Request) {
         drop(g);
         return json_reply(stream, 503, &json!({"error": "no randomness"}));
     }
-    g.failures = 0;
+    if second {
+        g.edit_guard = Guard::default();
+    } else {
+        g.guard = Guard::default();
+    }
     if g.tokens.len() >= MAX_TOKENS
-        && let Some(oldest) = g.tokens.iter().min_by_key(|(_, t)| **t).map(|(k, _)| k.clone())
+        && let Some(oldest) = g.tokens.iter().min_by_key(|(_, p)| p.seen).map(|(k, _)| k.clone())
     {
         g.tokens.remove(&oldest);
     }
-    g.tokens.insert(token.clone(), now);
+    g.next_phone += 1;
+    let level = if second { Level::Edit } else { Level::Control };
+    let id = g.next_phone;
+    g.tokens.insert(token.clone(), Phone { seen: now, level, id, agent: agent_name(&req.agent) });
     drop(g);
-    json_reply(stream, 200, &json!({"token": token}));
+    json_reply(stream, 200, &json!({"token": token, "level": level.code()}));
 }
 
 fn long_poll(shared: &Shared, stream: &mut TcpStream, req: &Request) {
@@ -238,10 +302,12 @@ fn long_poll(shared: &Shared, stream: &mut TcpStream, req: &Request) {
         }
         g = shared.changed.wait_timeout(g, left).unwrap_or_else(PoisonError::into_inner).0;
     }
-    if let Some(seen) = req.auth.as_ref().and_then(|t| g.tokens.get_mut(t)) {
-        *seen = Instant::now();
+    let mut level = Level::Control;
+    if let Some(phone) = req.auth.as_ref().and_then(|t| g.tokens.get_mut(t)) {
+        phone.seen = Instant::now();
+        level = phone.level;
     }
-    let body = state_json(&g.state, g.version);
+    let body = state_json(&g.state, g.version, level);
     drop(g);
     json_reply(stream, 200, &body);
 }
@@ -296,7 +362,10 @@ fn parse_command(body: &[u8], state: &RemoteState) -> Option<RemoteCommand> {
     }
 }
 
-fn command(shared: &Shared, stream: &mut TcpStream, req: &Request) {
+fn command(shared: &Shared, stream: &mut TcpStream, req: &Request, level: Level) {
+    if serde_json::from_slice::<Value>(&req.body).ok().is_some_and(|v| v.get("cmd").and_then(Value::as_str) == Some("edit")) {
+        return edit(shared, stream, req, level);
+    }
     let parsed = {
         let g = shared.lock();
         parse_command(&req.body, &g.state)
@@ -310,9 +379,49 @@ fn command(shared: &Shared, stream: &mut TcpStream, req: &Request) {
     }
 }
 
+/// An edit: the level, the limits, the revision and the console's lock are checked against the
+/// server's copy, the copy takes the change at once and the computer applies it.
+fn edit(shared: &Shared, stream: &mut TcpStream, req: &Request, level: Level) {
+    let Ok(body) = serde_json::from_slice::<Value>(&req.body) else { return json_reply(stream, 400, &json!({"error": "bad command"})) };
+    let taken = {
+        let mut g = shared.lock();
+        let taken = g.state.take_edit(level, &body);
+        if let Ok(Taken::Relay(edit)) = &taken {
+            g.state.apply_edit(edit);
+            g.version += 1;
+            shared.changed.notify_all();
+        }
+        taken
+    };
+    match taken {
+        Ok(Taken::Relay(edit)) => {
+            (shared.on_command)(RemoteCommand::Edit(edit));
+            respond(stream, 204, "text/plain", b"");
+        }
+        Ok(Taken::Already) => respond(stream, 204, "text/plain", b""),
+        Err(Refusal::Bad) => json_reply(stream, 400, &json!({"error": "bad command"})),
+        Err(Refusal::Forbidden) => json_reply(stream, 403, &json!({"error": "no edit"})),
+        Err(Refusal::Stale(current)) => json_reply(stream, 409, &json!({"error": "stale", "current": current})),
+        Err(Refusal::Console) => json_reply(stream, 409, &json!({"error": "console"})),
+    }
+}
+
 pub fn paired_count(shared: &Shared) -> usize {
     let now = Instant::now();
-    shared.lock().tokens.values().filter(|t| now.duration_since(**t) < PAIRED_WINDOW).count()
+    shared.lock().tokens.values().filter(|p| now.duration_since(p.seen) < PAIRED_WINDOW).count()
+}
+
+pub fn phones(shared: &Shared) -> Vec<PhoneInfo> {
+    let now = Instant::now();
+    let mut list: Vec<PhoneInfo> = shared
+        .lock()
+        .tokens
+        .values()
+        .filter(|p| now.duration_since(p.seen) < PAIRED_WINDOW)
+        .map(|p| PhoneInfo { id: p.id, agent: p.agent.clone(), level: p.level, active: true })
+        .collect();
+    list.sort_by_key(|p| p.id);
+    list
 }
 
 pub fn handle(shared: &Shared, mut stream: TcpStream) {
@@ -322,14 +431,13 @@ pub fn handle(shared: &Shared, mut stream: TcpStream) {
     let Some(req) = read_request(&mut stream) else {
         return respond(&mut stream, 400, "text/plain", b"bad request");
     };
+    let level = if matches!(req.path.as_str(), "/api/state" | "/api/command") { authorize(shared, &req) } else { None };
     match (req.method.as_str(), req.path.as_str()) {
         ("GET", "/") => respond(&mut stream, 200, "text/html; charset=utf-8", crate::languages::page().as_bytes()),
         ("POST", "/api/pair") => pair(shared, &mut stream, &req),
-        ("GET", "/api/state") | ("POST", "/api/command") if !authorize(shared, &req) => {
-            json_reply(&mut stream, 401, &json!({"error": "not paired"}))
-        }
+        ("GET", "/api/state") | ("POST", "/api/command") if level.is_none() => json_reply(&mut stream, 401, &json!({"error": "not paired"})),
         ("GET", "/api/state") => long_poll(shared, &mut stream, &req),
-        ("POST", "/api/command") => command(shared, &mut stream, &req),
+        ("POST", "/api/command") => command(shared, &mut stream, &req, level.unwrap_or_default()),
         (_, "/" | "/api/pair" | "/api/state" | "/api/command") => respond(&mut stream, 405, "text/plain", b"method not allowed"),
         _ => respond(&mut stream, 404, "text/plain", b"not found"),
     }

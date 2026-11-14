@@ -5816,5 +5816,96 @@
   "text": "Partie supprimée",
   "back": "Part deleted",
   "why": "table's word for a song part, short"
+ },
+ "PHONE_PAIRED": {
+  "text": "Téléphones connectés",
+  "back": "Connected phones",
+  "why": "Table's phones line"
+ },
+ "PHONE_CONTROL": {
+  "text": "Pilotage",
+  "back": "Steering",
+  "why": "One word, the start level"
+ },
+ "PHONE_EDIT": {
+  "text": "Édition",
+  "back": "Editing",
+  "why": "Noun parallel to Pilotage"
+ },
+ "PHONE_EDIT_PIN": {
+  "text": "Second code pour modifier",
+  "back": "Second code for changing",
+  "why": "Label"
+ },
+ "PHONE_EDIT_PIN_HINT": {
+  "text": "Le téléphone le saisit à la place du premier code",
+  "back": "The phone types it in place of the first code",
+  "why": "Short"
+ },
+ "PHONE_EDIT_RULE": {
+  "text": "Sans accord donné ici, aucun téléphone ne modifie. Télécommande coupée, accords retirés.",
+  "back": "Without agreement given here, no phone changes anything. Remote cut off, agreements withdrawn.",
+  "why": "Two sentences"
+ },
+ "PHONE_EDIT_BUSY": {
+  "text": "Changement du téléphone écarté, la même chose est ouverte ici",
+  "back": "The phone's change set aside, the same thing is open here",
+  "why": "One reason"
+ },
+ "PHONE_EDIT_OLD": {
+  "text": "Changement du téléphone écarté, fait sur une ancienne version",
+  "back": "The phone's change set aside, made on an old version",
+  "why": "Different reason"
+ },
+ "phone_label": {
+  "text": {
+   "plain": "Téléphone {number}",
+   "kind": "Téléphone {number}, {kind}"
+  },
+  "back": {
+   "plain": "Phone {number}",
+   "kind": "Phone {number}, {kind}"
+  },
+  "why": "Table's word"
+ },
+ "STYLE_GREIGE": {
+  "text": "Bulletin",
+  "back": "Bulletin",
+  "why": "Printed sheet of a service"
+ },
+ "STYLE_PILL": {
+  "text": "Affiche",
+  "back": "Poster",
+  "why": "Poster look"
+ },
+ "STYLE_NEON": {
+  "text": "Néon",
+  "back": "Neon",
+  "why": "Everyday word"
+ },
+ "STYLE_SPLIT": {
+  "text": "Deux volets",
+  "back": "Two panels",
+  "why": "Says the cut"
+ },
+ "ANNOUNCEMENT_QRIS": {
+  "text": "Image QRIS",
+  "back": "QRIS picture",
+  "why": "Image is the table's picture word"
+ },
+ "SETTINGS_CHURCH": {
+  "text": "Nom de l'église",
+  "back": "Name of the church",
+  "why": "Plain"
+ },
+ "SETTINGS_CHURCH_HINT": {
+  "text": "Affiché sur les annonces",
+  "back": "Shown on the announcements",
+  "why": "Says where"
+ },
+ "ANNOUNCEMENT_PICTURE2": {
+  "text": "Deuxième image",
+  "back": "Second image",
+  "why": "Pairs with Image"
  }
 }

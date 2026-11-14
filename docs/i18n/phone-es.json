@@ -303,5 +303,170 @@
   "text": "{0} {1}",
   "back": "the part's name and its number, in the order the window uses",
   "why": "carried from section_numbered so the phone and the window agree"
+ },
+ "pair_second": {
+  "text": "Usar el PIN de edición",
+  "back": "Use the editing PIN",
+  "why": "Link label."
+ },
+ "pair_first": {
+  "text": "Usar el PIN normal",
+  "back": "Use the ordinary PIN",
+  "why": "Mirror of the other link."
+ },
+ "pin_hint_second": {
+  "text": "Escribe el PIN de edición que se ve en la computadora",
+  "back": "Type the editing PIN that is seen on the computer",
+  "why": "Same verb Escribe as the sibling."
+ },
+ "edit": {
+  "text": "Editar",
+  "back": "Edit",
+  "why": "One word."
+ },
+ "edit_text": {
+  "text": "Editar texto",
+  "back": "Edit text",
+  "why": "Wraps if needed."
+ },
+ "sheet_cancel": {
+  "text": "Cancelar",
+  "back": "Cancel",
+  "why": "Same as the phone table."
+ },
+ "done": {
+  "text": "Listo",
+  "back": "Done",
+  "why": "Same as the computer's Listo."
+ },
+ "field_title": {
+  "text": "Título",
+  "back": "Title",
+  "why": "One word."
+ },
+ "field_body": {
+  "text": "Detalles",
+  "back": "Details",
+  "why": "The computer's word for the lines."
+ },
+ "after_done": {
+  "text": "Nada llega al proyector hasta que presiones Listo",
+  "back": "Nothing reaches the projector until you press Done",
+  "why": "Names the button."
+ },
+ "changed": {
+  "text": "Cambió en la computadora",
+  "back": "It changed on the computer",
+  "why": "Statement."
+ },
+ "use_theirs": {
+  "text": "Usar el actual",
+  "back": "Use the current one",
+  "why": "Computer's words; pairs with Mantener el mío."
+ },
+ "keep_mine": {
+  "text": "Mantener el mío",
+  "back": "Keep mine",
+  "why": "Phone's words."
+ },
+ "on_computer": {
+  "text": "En la computadora",
+  "back": "On the computer",
+  "why": "Parallel to the phone label."
+ },
+ "yours": {
+  "text": "En tu teléfono",
+  "back": "On your phone",
+  "why": "Parallel."
+ },
+ "busy": {
+  "text": "No se guardó: lo editan en la computadora. Prueba en un rato",
+  "back": "Not saved: it is being edited on the computer. Try in a while",
+  "why": "Two short sentences."
+ },
+ "gone": {
+  "text": "Ya no existe en la computadora",
+  "back": "It no longer exists on the computer",
+  "why": "No full stop."
+ },
+ "edit_cards": {
+  "text": "Anuncios",
+  "back": "Announcements",
+  "why": "The computer's name."
+ },
+ "edit_birthdays": {
+  "text": "Cumpleaños",
+  "back": "Birthdays",
+  "why": "Word of the birthday card."
+ },
+ "edit_week": {
+  "text": "Próximos 7 días",
+  "back": "Next 7 days",
+  "why": "Counted from today."
+ },
+ "edit_none": {
+  "text": "Aún no hay nada",
+  "back": "Nothing yet",
+  "why": "Calm."
+ },
+ "edit_person": {
+  "text": "Persona",
+  "back": "Person",
+  "why": "As Editar persona."
+ },
+ "edit_event": {
+  "text": "Evento",
+  "back": "Event",
+  "why": "Calendar's word."
+ },
+ "name": {
+  "text": "Nombre",
+  "back": "Name",
+  "why": "One word."
+ },
+ "day": {
+  "text": "Día",
+  "back": "Day",
+  "why": "Day of month."
+ },
+ "month": {
+  "text": "Mes",
+  "back": "Month",
+  "why": "One word."
+ },
+ "date": {
+  "text": "Fecha",
+  "back": "Date",
+  "why": "Same as the calendar."
+ },
+ "starts": {
+  "text": "Inicio",
+  "back": "Start",
+  "why": "As the calendar."
+ },
+ "ends": {
+  "text": "Fin",
+  "back": "End",
+  "why": "As the calendar."
+ },
+ "this_date": {
+  "text": "Solo cambia esta fecha, las demás quedan igual",
+  "back": "Only this date changes, the others stay the same",
+  "why": "Statement."
+ },
+ "delete": {
+  "text": "Eliminar",
+  "back": "Delete",
+  "why": "Same as the computer."
+ },
+ "ask_delete_person": {
+  "text": "¿Eliminar a {0} de los cumpleaños?",
+  "back": "Delete {0} from the birthdays?",
+  "why": "Question marks both sides."
+ },
+ "ask_delete_event": {
+  "text": "¿Eliminar «{0}» solo de este día?",
+  "back": "Delete «{0}» from this day only?",
+  "why": "Says this date only."
  }
 }

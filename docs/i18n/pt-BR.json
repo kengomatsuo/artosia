@@ -5794,5 +5794,96 @@
   "text": "Parte removida",
   "back": "Part removed",
   "why": "table's word for a song part, short"
+ },
+ "PHONE_PAIRED": {
+  "text": "Celulares conectados",
+  "back": "Connected phones",
+  "why": "Celular as in the table; fits 20."
+ },
+ "PHONE_CONTROL": {
+  "text": "Controlar",
+  "back": "Control",
+  "why": "Verb pair with Editar; the starting level."
+ },
+ "PHONE_EDIT": {
+  "text": "Editar",
+  "back": "Edit",
+  "why": "Same as the computer's Editar."
+ },
+ "PHONE_EDIT_PIN": {
+  "text": "PIN para editar",
+  "back": "PIN for editing",
+  "why": "A label."
+ },
+ "PHONE_EDIT_PIN_HINT": {
+  "text": "O celular digita no lugar do PIN",
+  "back": "The phone types it in place of the PIN",
+  "why": "Says where it is used."
+ },
+ "PHONE_EDIT_RULE": {
+  "text": "Nenhum celular edita sem permissão. Desligar o controle tira todas",
+  "back": "No phone edits without permission. Turning the control off takes them all away",
+  "why": "Two short sentences."
+ },
+ "PHONE_EDIT_BUSY": {
+  "text": "Mudança do celular descartada: aqui se edita a mesma coisa",
+  "back": "The change from the phone was thrown away: the same thing is being edited here",
+  "why": "Reason is the open editor."
+ },
+ "PHONE_EDIT_OLD": {
+  "text": "Mudança do celular descartada: partia de um texto antigo",
+  "back": "The change from the phone was thrown away: it started from an old text",
+  "why": "Reason is the older version."
+ },
+ "phone_label": {
+  "text": {
+   "plain": "Celular {number}",
+   "kind": "Celular {number}, {kind}"
+  },
+  "back": {
+   "plain": "Phone {number}",
+   "kind": "Phone {number}, {kind}"
+  },
+  "why": "Word, number, kind after a comma."
+ },
+ "STYLE_GREIGE": {
+  "text": "Boletim",
+  "back": "Bulletin",
+  "why": "Printed order of service on paper."
+ },
+ "STYLE_PILL": {
+  "text": "Pôster",
+  "back": "Poster",
+  "why": "Rounded shapes, loud."
+ },
+ "STYLE_NEON": {
+  "text": "Neon",
+  "back": "Neon",
+  "why": "Lights at night."
+ },
+ "STYLE_SPLIT": {
+  "text": "Dividido",
+  "back": "Divided",
+  "why": "Two halves."
+ },
+ "ANNOUNCEMENT_QRIS": {
+  "text": "Imagem QRIS",
+  "back": "QRIS picture",
+  "why": "Imagem as in the table; QRIS kept."
+ },
+ "SETTINGS_CHURCH": {
+  "text": "Nome da igreja",
+  "back": "Name of the church",
+  "why": "Plain."
+ },
+ "SETTINGS_CHURCH_HINT": {
+  "text": "Aparece nos avisos",
+  "back": "Appears in the announcements",
+  "why": "Aviso as in the table."
+ },
+ "ANNOUNCEMENT_PICTURE2": {
+  "text": "Segunda imagem",
+  "back": "Second picture",
+  "why": "Imagem as in the table."
  }
 }

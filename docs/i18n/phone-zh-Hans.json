@@ -303,5 +303,170 @@
   "text": "{0} {1}",
   "back": "the part's name and its number, in the order the window uses",
   "why": "carried from section_numbered so the phone and the window agree"
+ },
+ "pair_second": {
+  "text": "改用编辑PIN码",
+  "back": "Use the editing PIN code instead",
+  "why": "link label, same words as the computer"
+ },
+ "pair_first": {
+  "text": "改回普通PIN码",
+  "back": "Back to the ordinary PIN code",
+  "why": "opposite direction of the sibling"
+ },
+ "pin_hint_second": {
+  "text": "输入电脑上手机遥控窗口里显示的编辑PIN码",
+  "back": "Type the editing PIN code shown in the phone remote window on the computer",
+  "why": "same verb 输入 as the ordinary line"
+ },
+ "edit": {
+  "text": "编辑",
+  "back": "Edit",
+  "why": "same as the computer's Edit"
+ },
+ "edit_text": {
+  "text": "编辑文字",
+  "back": "Edit words",
+  "why": "文字 for slide words"
+ },
+ "sheet_cancel": {
+  "text": "取消",
+  "back": "Cancel",
+  "why": "phone table cancel"
+ },
+ "done": {
+  "text": "完成",
+  "back": "Done",
+  "why": "same as the computer's Done"
+ },
+ "field_title": {
+  "text": "标题",
+  "back": "Heading",
+  "why": "one word"
+ },
+ "field_body": {
+  "text": "内容",
+  "back": "Content",
+  "why": "same as the computer's body label"
+ },
+ "after_done": {
+  "text": "按“完成”之前，输入的内容不会上屏",
+  "back": "Until you press Done, what you type does not go on screen",
+  "why": "上屏 is the phone table's word"
+ },
+ "changed": {
+  "text": "电脑上刚被改过，还没有发送",
+  "back": "Just changed on the computer, not sent yet",
+  "why": "a statement"
+ },
+ "use_theirs": {
+  "text": "用电脑上的",
+  "back": "Use the computer's",
+  "why": "theirs means the computer"
+ },
+ "keep_mine": {
+  "text": "保留我的",
+  "back": "Keep mine",
+  "why": "pairs with the sibling"
+ },
+ "on_computer": {
+  "text": "电脑上的",
+  "back": "On the computer",
+  "why": "parallel to the phone label"
+ },
+ "yours": {
+  "text": "手机上的",
+  "back": "On the phone",
+  "why": "parallel to the computer label"
+ },
+ "busy": {
+  "text": "电脑那边正在改同一项，没有保存。请稍后再试",
+  "back": "The computer is editing the same item, so it was not saved. Try again shortly",
+  "why": "what is going on, then what to do"
+ },
+ "gone": {
+  "text": "电脑上已经没有这一项了",
+  "back": "This item is no longer on the computer",
+  "why": "statement, no full stop"
+ },
+ "edit_cards": {
+  "text": "公告",
+  "back": "Announcements",
+  "why": "the computer's word"
+ },
+ "edit_birthdays": {
+  "text": "生日",
+  "back": "Birthdays",
+  "why": "word of the birthday announcement"
+ },
+ "edit_week": {
+  "text": "未来7天活动",
+  "back": "Events in the next 7 days",
+  "why": "counted from today"
+ },
+ "edit_none": {
+  "text": "还没有内容",
+  "back": "Nothing in it yet",
+  "why": "calm, no apology"
+ },
+ "edit_person": {
+  "text": "生日",
+  "back": "Birthday",
+  "why": "one word"
+ },
+ "edit_event": {
+  "text": "活动",
+  "back": "Event",
+  "why": "the calendar's word 活动"
+ },
+ "name": {
+  "text": "名字",
+  "back": "Name",
+  "why": "fits a person and an event"
+ },
+ "day": {
+  "text": "日",
+  "back": "Day",
+  "why": "day of the month"
+ },
+ "month": {
+  "text": "月",
+  "back": "Month",
+  "why": "one character as on a calendar"
+ },
+ "date": {
+  "text": "日期",
+  "back": "Date",
+  "why": "full date"
+ },
+ "starts": {
+  "text": "开始",
+  "back": "Start",
+  "why": "parallel to the end"
+ },
+ "ends": {
+  "text": "结束",
+  "back": "End",
+  "why": "parallel to the start"
+ },
+ "this_date": {
+  "text": "只改这一天，其他日期不变",
+  "back": "Only this day changes, the other dates stay",
+  "why": "short statement"
+ },
+ "delete": {
+  "text": "删除",
+  "back": "Delete",
+  "why": "same on both buttons"
+ },
+ "ask_delete_person": {
+  "text": "要从生日名单中删除{0}吗？",
+  "back": "Delete {0} from the birthday list?",
+  "why": "question with the name"
+ },
+ "ask_delete_event": {
+  "text": "要删除这一天的{0}吗？其他日期保留",
+  "back": "Delete {0} on this day? Its other dates stay",
+  "why": "this day only, said plainly"
  }
 }

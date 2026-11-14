@@ -106,6 +106,8 @@ pub struct Settings {
     pub verses_per_slide: usize,
     /// The church's CCLI licence number, printed with song credits.
     pub licence: String,
+    /// The church's name, written in the kicker of the announcement styles that have one.
+    pub church: String,
     /// A picture shown alone by the Logo button.
     pub logo: String,
     pub bible: String,
@@ -182,6 +184,7 @@ impl Default for Settings {
             recent_colours: Vec::new(),
             verses_per_slide: 1,
             licence: String::new(),
+            church: String::new(),
             logo: String::new(),
             bible: "KJV".to_string(),
             second_bible: String::new(),
@@ -402,6 +405,19 @@ pub enum HeardHit {
     Passage(Reference, String),
 }
 
+/// The church's name as a string that lives as long as the program, so a Today can hold it; a
+/// name is kept once, and only a change of the setting adds one.
+fn kept_church(name: &str) -> &'static str {
+    static KEPT: std::sync::Mutex<Vec<&'static str>> = std::sync::Mutex::new(Vec::new());
+    let mut kept = KEPT.lock().unwrap_or_else(|poisoned| poisoned.into_inner());
+    if let Some(found) = kept.iter().find(|found| **found == name) {
+        return found;
+    }
+    let found: &'static str = Box::leak(name.to_string().into_boxed_str());
+    kept.push(found);
+    found
+}
+
 /// The announcement editor: the one being written, and whether it was changed.
 #[derive(Default)]
 pub struct Notices {
@@ -412,6 +428,10 @@ pub struct Notices {
     pub seconds: u32,
     /// A picture shown with the words; empty for none.
     pub image: String,
+    /// The QRIS picture of a transfer card; empty for none.
+    pub qris: String,
+    /// A second picture of the card; empty for none.
+    pub image2: String,
     pub fill: Fill,
     /// The reference of a passage card, as typed.
     pub passage: TextEdit,
@@ -643,6 +663,7 @@ pub struct App {
     /// This version has told the updater it started well.
     pub confirmed: bool,
     pub licence_edit: TextEdit,
+    pub church_edit: TextEdit,
     /// The Look dialog's hex fields and font picker.
     pub look_edit: crate::ui::look::LookEdit,
     /// The one colour picker (`ui/colour.rs`).
@@ -657,6 +678,10 @@ pub struct App {
     pub link: Link,
     pub remote: Option<RemoteServer>,
     pub remote_pin: String,
+    /// The second PIN that gives a phone the Edit level when it pairs with it; None while it is off.
+    pub remote_edit_pin: Option<String>,
+    /// The phones the Phone dialog last drew, so a phone that joins or leaves redraws it.
+    pub remote_phones: Vec<artosia_remote::PhoneInfo>,
     pub remote_problem: Option<String>,
     /// Where the firewall rule for the phone remote stands, and the press it answers: a late
     /// answer for an earlier press is dropped.
@@ -685,6 +710,8 @@ pub struct App {
     pub mock: Option<(char, u8)>,
     pub want_birthdays: bool,
     pub want_notice_image: bool,
+    pub want_notice_qris: bool,
+    pub want_notice_image2: bool,
     pub images: Option<ImageCache>,
     pub picture: Option<(String, Image)>,
     pub logo: Option<(String, Image)>,
@@ -774,6 +801,7 @@ impl App {
             .unwrap_or_else(|| Plan::named(""));
         let (remote_tx, remote_rx) = channel();
         let licence_edit = TextEdit::new(settings.licence.clone());
+        let church_edit = TextEdit::new(settings.church.clone());
         let first_look = plan.look.clone().and_then(|own| serde_json::from_value(own).ok()).unwrap_or_else(|| settings.look.clone());
         let look_edit = crate::ui::look::LookEdit::new(&first_look);
         let mut app = App {
@@ -879,6 +907,7 @@ impl App {
             demo_screens: false,
             confirmed: false,
             licence_edit,
+            church_edit,
             look_edit,
             colour: Default::default(),
             toast: None,
@@ -889,6 +918,8 @@ impl App {
             link: Link::default(),
             remote: None,
             remote_pin: String::new(),
+            remote_edit_pin: None,
+            remote_phones: Vec::new(),
             remote_problem: None,
             firewall: Default::default(),
             remote_round: 0,
@@ -906,6 +937,8 @@ impl App {
             mock: None,
             want_birthdays: false,
             want_notice_image: false,
+            want_notice_qris: false,
+            want_notice_image2: false,
             images: None,
             picture: None,
             logo: None,
@@ -1160,30 +1193,34 @@ impl App {
     /// Today's date, for announcements that fill themselves with this week's birthdays.
     pub fn today(&self) -> Today<'static> {
         let time = rune::LocalTime::at((self.now * 1000.0) as i64);
-        Today { year: time.year, month: time.month.clamp(1, 12) as u8, day: time.day.clamp(1, 31) as u8, months: t::MONTHS(), weekdays: t::WEEKDAYS(), clock: t::time_of_day, date: t::day_month, total: t::GIVING_TOTAL(), first_weekday: self.settings.first_weekday }
+        Today { year: time.year, month: time.month.clamp(1, 12) as u8, day: time.day.clamp(1, 31) as u8, months: t::MONTHS(), weekdays: t::WEEKDAYS(), clock: t::time_of_day, date: t::day_month, total: t::GIVING_TOTAL(), first_weekday: self.settings.first_weekday, church: kept_church(&self.settings.church) }
     }
 
     /// Every announcement slide in order, each with the place of its announcement in the list.
     pub fn announcement_pages(&self) -> Vec<(usize, Slide)> {
-        announcement_pages(&self.announcements, &self.people, &self.events, &self.giving_data(), &self.today(), self.bible().map(|bible| &**bible), self.settings.verses_per_slide)
+        self.paged(&self.announcements)
+    }
+
+    /// The pages of `cards`, a card too long for its poster style cut into slides that hold.
+    fn paged(&self, cards: &[Announcement]) -> Vec<(usize, Slide)> {
+        let pages = announcement_pages(cards, &self.people, &self.events, &self.giving_data(), &self.today(), self.bible().map(|bible| &**bible), self.settings.verses_per_slide);
+        artosia_slides::warta::paginate_pages(pages, self.look().notice_style)
     }
 
     pub fn announcements_deck(&self) -> Deck {
-        let mut deck = artosia_core::deck::announcements_deck(&self.announcements, &self.people, &self.events, &self.giving_data(), &self.today(), self.bible().map(|bible| &**bible), self.settings.verses_per_slide);
-        deck.title = t::CMD_ANNOUNCEMENTS().to_string();
-        deck
+        Deck { title: t::CMD_ANNOUNCEMENTS().to_string(), subtitle: String::new(), source: DeckSource::Announcements, slides: self.paged(&self.announcements).into_iter().map(|(_, slide)| slide).collect() }
     }
 
     /// The card a slide of the announcements came from. A card may give several slides or none.
     pub fn card_at_slide(&self, slide: usize) -> Option<&Announcement> {
-        let pages = announcement_pages(&self.announcements, &self.people, &self.events, &self.giving_data(), &self.today(), self.bible().map(|bible| &**bible), self.settings.verses_per_slide);
+        let pages = self.paged(&self.announcements);
         pages.get(slide).and_then(|(at, _)| self.announcements.get(*at))
     }
 
     /// The slides one card gives today: none for a birthday card with nobody, or a passage card
     /// the Bible cannot read.
     pub fn card_slides(&self, card: &Announcement) -> Vec<Slide> {
-        announcement_pages(std::slice::from_ref(card), &self.people, &self.events, &self.giving_data(), &self.today(), self.bible().map(|bible| &**bible), self.settings.verses_per_slide).into_iter().map(|(_, slide)| slide).collect()
+        self.paged(std::slice::from_ref(card)).into_iter().map(|(_, slide)| slide).collect()
     }
 
     /// One saved card as a deck of its own, so it can be shown without the rest; None when it has

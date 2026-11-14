@@ -222,7 +222,7 @@ fn notice_text(kind: NoticeKind) -> String {
         .map(String::from)
         .to_vec(),
         NoticeKind::Account => ["Bank Contoh", "123 456 7890", "a.n. Gereja Contoh"].map(String::from).to_vec(),
-        NoticeKind::Plain => ["Sabtu, 8 November 2026", "Jam 10.00"].map(String::from).to_vec(),
+        NoticeKind::Plain | NoticeKind::Verse => ["Sabtu, 8 November 2026", "Jam 10.00"].map(String::from).to_vec(),
     };
     lines.join("\n")
 }
@@ -253,6 +253,10 @@ pub fn sheet(w: f32, h: f32) -> Option<El> {
         NoticeStyle::Hairline => "Hairline",
         NoticeStyle::Ledger => "Ledger",
         NoticeStyle::Band => "Band",
+        NoticeStyle::Greige => "Greige",
+        NoticeStyle::Pill => "Pill",
+        NoticeStyle::Neon => "Neon",
+        NoticeStyle::Split => "Split",
     };
     let u = h / 1200.0;
     let (tile_w, gap) = ((w * 0.30).round(), (w * 0.025).round());
@@ -286,7 +290,7 @@ pub fn through_notice(state: &OutputState, w: f32, h: f32) -> El {
     let slide = bare.slide.take();
     let mut page = el().key("direct").size(w, h).child(audience(&bare, w, h, Media::default(), Detail::Preview, 0.0).absolute(0.0, 0.0));
     if let Some(slide) = slide {
-        page = page.child(notice::notice(&slide, &state.look, w, h));
+        page = page.child(notice::notice(&slide, &state.look, w, h, &Default::default()));
     }
     page
 }
@@ -309,4 +313,117 @@ pub fn notice_marked_scene(style: NoticeStyle) -> OutputState {
         slide.marked = (6..13).collect();
     }
     state
+}
+
+/// The path of a placeholder picture of the poster scenes.
+fn demo_picture(name: &str) -> String {
+    format!("{}/assets/warta-demo/{name}", env!("CARGO_MANIFEST_DIR"))
+}
+
+/// A made-up slide of `kind` with the designer's worst-case data: 8 rows, 30 names, 12-digit sums, a 60-word verse.
+pub fn poster_slide(kind: NoticeKind, pictures: bool) -> Slide {
+    use crate::warta_data as data;
+    use artosia_core::calendar::Date;
+    let nov = |day: u8| Date { year: 2026, month: 11, day };
+    let mut slide = Slide { kind: SlideKind::Announcement, notice: kind, church: data::CHURCH.to_string(), ..Slide::default() };
+    match kind {
+        NoticeKind::Schedule => {
+            slide.heading = "Jadwal Pekan Ini".into();
+            slide.text = data::ROWS.iter().map(|(_, time, event)| format!("	{time}	{event}")).collect::<Vec<_>>().join("
+");
+            slide.dates = data::ROWS.iter().map(|(day, _, _)| nov(*day)).collect();
+            slide.marked = vec![data::SPECIAL_ROW];
+            slide.week = Some((nov(15), nov(21)));
+        }
+        NoticeKind::Birthdays => {
+            slide.heading = "Ulang Tahun".into();
+            slide.text = data::NAMES.iter().map(|(day, name)| format!("{name}	{day} November")).collect::<Vec<_>>().join("
+");
+            slide.marked = data::NAMES.iter().enumerate().filter(|(_, (day, _))| (15..=21).contains(day)).map(|(at, _)| at).collect();
+            slide.week = Some((nov(15), nov(21)));
+        }
+        NoticeKind::Money => {
+            slide.heading = "Persembahan".into();
+            let total: i64 = data::FUNDS.iter().map(|(_, amount)| amount).sum();
+            let mut lines: Vec<String> = data::FUNDS.iter().map(|(label, amount)| format!("{label}	Rp {}", artosia_slides::warta::fit::digits(*amount))).collect();
+            lines.push(format!("== Jumlah	Rp {}", artosia_slides::warta::fit::digits(total)));
+            slide.text = lines.join("
+");
+            slide.dates = vec![nov(15)];
+        }
+        NoticeKind::Account => {
+            slide.heading = "Transfer Persembahan".into();
+            slide.text = data::ACCOUNT.join("
+");
+            if pictures {
+                slide.qris = demo_picture("qris-contoh.png");
+            }
+        }
+        NoticeKind::Verse => {
+            slide.heading = "Ayat Pekan Ini".into();
+            slide.label = data::REFERENCE.into();
+            slide.verses = data::VERSES.iter().map(|(n, text)| (*n, text.to_string())).collect();
+            if pictures {
+                slide.image = demo_picture("photo-dusk.jpg");
+            }
+        }
+        NoticeKind::Plain => {
+            slide.heading = data::NOTICE_TITLE.into();
+            slide.text = data::NOTICE_LINES.join("
+");
+            slide.dates = vec![Date { year: 2026, month: 12, day: 12 }];
+            if pictures {
+                slide.image = demo_picture("photo-warm.jpg");
+            }
+        }
+    }
+    slide
+}
+
+/// The state of a `notice-style-<style>-<kind>-long` scene: a schedule event or a fund label of 70 and more characters.
+pub fn poster_long_scene(style: NoticeStyle, kind: NoticeKind) -> OutputState {
+    let mut state = poster_scene(style, kind, false);
+    if let Some(slide) = state.slide.as_mut() {
+        let long = if kind == NoticeKind::Schedule { "Persekutuan Doa dan Pemahaman Alkitab Komisi Pemuda dan Remaja Wilayah Timur" } else { "Pembangunan Gedung Gereja dan Pastori Tahap Dua Ruang Serbaguna Lantai Tiga" };
+        let lines: Vec<String> = slide
+            .text
+            .lines()
+            .enumerate()
+            .map(|(at, line)| {
+                let mut cells: Vec<&str> = line.split('\t').collect();
+                let last = if kind == NoticeKind::Schedule { 2 } else { 0 };
+                if at == 2 && cells.len() > last {
+                    cells[last] = long;
+                }
+                cells.join("\t")
+            })
+            .collect();
+        slide.text = lines.join("\n");
+        // A card the floor size cannot hold continues on a second slide; the scene shows the first.
+        if let Some(first) = artosia_slides::warta::paginate(slide, style).into_iter().next() {
+            *slide = first;
+        }
+    }
+    state
+}
+
+/// The state of a `notice-style-<style>-<kind>-little` scene: two schedule rows or three names, with a picture.
+pub fn poster_little_scene(style: NoticeStyle, kind: NoticeKind) -> OutputState {
+    let mut state = poster_scene(style, kind, true);
+    if let Some(slide) = state.slide.as_mut() {
+        let keep = if kind == NoticeKind::Schedule { 2 } else { 3 };
+        slide.text = slide.text.lines().take(keep).collect::<Vec<_>>().join("\n");
+        slide.dates.truncate(keep);
+        slide.marked.retain(|at| *at < keep);
+        slide.image = demo_picture("photo-dusk.jpg");
+    }
+    state
+}
+
+/// The state of a `notice-style-<style>-<kind>` scene: a poster style drawing one kind, over the default look.
+pub fn poster_scene(style: NoticeStyle, kind: NoticeKind, pictures: bool) -> OutputState {
+    DIRECT.store(false, Ordering::Release);
+    let mut slide = poster_slide(kind, pictures);
+    slide.style = Some(style);
+    OutputState { slide: Some(slide), look: Look { notice_style: style, ..Look::default() }, ..OutputState::default() }
 }

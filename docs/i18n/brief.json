@@ -2421,7 +2421,7 @@
   "screen": "Main window, the sixth of seven tabs under the title bar, an icon of four tiles and a word, about 100 points wide.",
   "moment": "The person wants to pick a ready slide for an announcement.",
   "role": "tab name",
-  "does": "Names the window that shows every ready announcement slide, each filled with this church's own data, in its three styles.",
+  "does": "Names the window that shows every ready announcement slide, each filled with this church's own data, in its seven styles.",
   "budget": 12,
   "variables": [],
   "cases": [],
@@ -7674,6 +7674,180 @@
    "notice"
   ],
   "notes": "The reason follows a colon."
+ },
+ {
+  "key": "PHONE_PAIRED",
+  "kind": "const",
+  "screen": "Phone remote dialog, a small heading over the list of phones that joined, below the address and number.",
+  "moment": "At least one phone has joined and the person looks at who may do what.",
+  "role": "heading",
+  "does": "Names the group of phones that are currently joined to this computer.",
+  "budget": 20,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "phone_remote"
+  ],
+  "notes": "Two words at most."
+ },
+ {
+  "key": "PHONE_CONTROL",
+  "kind": "const",
+  "screen": "Phone remote dialog, the left half of a two-part switch on each phone's row.",
+  "moment": "The person decides what one joined phone may do.",
+  "role": "choice in a two-part switch",
+  "does": "Chooses that the phone may only move slides and press the projector switches, and change nothing in the program's own words or lists.",
+  "budget": 12,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "phone_remote"
+  ],
+  "notes": "One word, the level that every phone starts with. Contrasts with the other half, which allows changing words."
+ },
+ {
+  "key": "PHONE_EDIT",
+  "kind": "const",
+  "screen": "Phone remote dialog, the right half of a two-part switch on each phone's row.",
+  "moment": "The person decides what one joined phone may do.",
+  "role": "choice in a two-part switch",
+  "does": "Chooses that the phone may also change the words of announcements, the birthday list and the events of the week.",
+  "budget": 12,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "phone_remote",
+   "notice"
+  ],
+  "notes": "One word, the level above the other half."
+ },
+ {
+  "key": "PHONE_EDIT_PIN",
+  "kind": "const",
+  "screen": "Phone remote dialog, the label of a switch row under the list of phones.",
+  "moment": "The person wants a phone to join already allowed to change words, without pressing anything for it here.",
+  "role": "setting",
+  "does": "Names an extra number, different from the first, that gives a phone permission to change words when it is typed while joining.",
+  "budget": 30,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "phone_remote"
+  ],
+  "notes": "A label, not a sentence."
+ },
+ {
+  "key": "PHONE_EDIT_PIN_HINT",
+  "kind": "const",
+  "screen": "Phone remote dialog, a grey line under the switch for the extra number, shown with the number itself.",
+  "moment": "The extra number is switched on and shown.",
+  "role": "helper line",
+  "does": "Tells the person where this extra number is used: a phone types it in place of the first number when it joins.",
+  "budget": 60,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "phone_remote"
+  ],
+  "notes": "One short line without a full stop."
+ },
+ {
+  "key": "PHONE_EDIT_RULE",
+  "kind": "const",
+  "screen": "Phone remote dialog, a grey line at the foot, under the list of phones.",
+  "moment": "The person reads how permission to change words behaves.",
+  "role": "helper text",
+  "does": "States two rules together: no phone may change words until the person allows it here, and turning the whole phone remote off takes every permission back.",
+  "budget": 90,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "phone_remote"
+  ],
+  "notes": "Two short sentences."
+ },
+ {
+  "key": "PHONE_EDIT_BUSY",
+  "kind": "const",
+  "screen": "Main window, a toast.",
+  "moment": "A phone sent a change to something that is open for editing on this computer with changes not yet saved.",
+  "role": "toast",
+  "does": "Says the change from the phone was thrown away because the person here is working on the same thing.",
+  "budget": 70,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "phone_remote"
+  ],
+  "notes": "The phone's own screen says the same in its words; this one is for the person at the computer."
+ },
+ {
+  "key": "PHONE_EDIT_OLD",
+  "kind": "const",
+  "screen": "Main window, a toast.",
+  "moment": "A phone sent a change that was based on words that have since changed or been removed on this computer.",
+  "role": "toast",
+  "does": "Says the change from the phone was thrown away because it was made on an older version of the words.",
+  "budget": 70,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "phone_remote"
+  ],
+  "notes": "Different reason from the sibling toast about something being open here."
+ },
+ {
+  "key": "phone_label",
+  "kind": "sentence",
+  "screen": "Phone remote dialog, the name on each phone's row in the list of joined phones.",
+  "moment": "A phone has joined and the person must tell it from another one.",
+  "role": "name of a row",
+  "does": "Names one joined phone by the order in which it joined, with the kind of phone when its browser told us.",
+  "budget": 40,
+  "variables": [
+   {
+    "name": "number",
+    "example": "2",
+    "meaning": "The order in which the phone joined, counted from 1."
+   },
+   {
+    "name": "kind",
+    "example": "Android",
+    "meaning": "The kind of phone as its browser names it. A proper name, never translated."
+   }
+  ],
+  "cases": [
+   {
+    "name": "plain",
+    "when": "The phone did not say what kind it is."
+   },
+   {
+    "name": "kind",
+    "when": "The kind of phone is known."
+   }
+  ],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "phone_remote"
+  ],
+  "notes": "The word for a phone comes first, then its number, then the kind after a comma."
  },
  {
   "key": "IMPORT_FOUND",
@@ -17526,7 +17700,7 @@
  {
   "key": "TPL_SCHEDULE",
   "kind": "const",
-  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of three styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
+  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of seven styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
   "moment": "The person picks the kind of card that lists the church's services.",
   "role": "template name",
   "does": "Names the ready slide that lists the coming services taken from the calendar.",
@@ -17545,7 +17719,7 @@
  {
   "key": "TPL_BIRTHDAYS",
   "kind": "const",
-  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of three styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
+  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of seven styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
   "moment": "The person picks the kind of card that wishes people a happy birthday.",
   "role": "template name",
   "does": "Names the ready slide that lists whose birthday is near, taken from the members.",
@@ -17564,7 +17738,7 @@
  {
   "key": "TPL_OFFERINGS",
   "kind": "const",
-  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of three styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
+  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of seven styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
   "moment": "The person picks the kind of card that shows what was given.",
   "role": "template name",
   "does": "Names the ready slide that shows each fund's sum and the total of the last service.",
@@ -17583,7 +17757,7 @@
  {
   "key": "TPL_TRANSFER",
   "kind": "const",
-  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of three styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
+  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of seven styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
   "moment": "The person picks the kind of card that tells where to send a gift by bank.",
   "role": "template name",
   "does": "Names the ready slide that shows the church's bank, number and holder for sending a gift.",
@@ -17603,7 +17777,7 @@
  {
   "key": "TPL_PASSAGE",
   "kind": "const",
-  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of three styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
+  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of seven styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
   "moment": "The person picks the kind of card that shows a verse.",
   "role": "template name",
   "does": "Names the ready slide that shows one Bible passage chosen for the week.",
@@ -17622,7 +17796,7 @@
  {
   "key": "TPL_PLAIN",
   "kind": "const",
-  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of three styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
+  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of seven styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
   "moment": "The person picks the kind of card whose words they type themselves.",
   "role": "template name",
   "does": "Names the ready slide that holds only the words a person writes, with nothing read from a window.",
@@ -17640,7 +17814,7 @@
  {
   "key": "TPL_READS_CALENDAR",
   "kind": "const",
-  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of three styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
+  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of seven styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
   "moment": "The person looks at a template to see where its words come from.",
   "role": "caption",
   "does": "Says the template draws its lines from the church's events.",
@@ -17659,7 +17833,7 @@
  {
   "key": "TPL_READS_MEMBERS",
   "kind": "const",
-  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of three styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
+  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of seven styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
   "moment": "The person looks at a template to see where its words come from.",
   "role": "caption",
   "does": "Says the template draws its lines from the list of members and their birthdays.",
@@ -17678,7 +17852,7 @@
  {
   "key": "TPL_READS_OFFERINGS",
   "kind": "const",
-  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of three styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
+  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of seven styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
   "moment": "The person looks at a template to see where its words come from.",
   "role": "caption",
   "does": "Says the template draws its lines from the gifts and the bank details kept in the offerings window.",
@@ -17697,7 +17871,7 @@
  {
   "key": "TPL_READS_BIBLE",
   "kind": "const",
-  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of three styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
+  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of seven styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
   "moment": "The person looks at a template to see where its words come from.",
   "role": "caption",
   "does": "Says the template draws its words from an installed Bible.",
@@ -17716,7 +17890,7 @@
  {
   "key": "TPL_READS_NOTHING",
   "kind": "const",
-  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of three styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
+  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of seven styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
   "moment": "The person looks at a template to see where its words come from.",
   "role": "caption",
   "does": "Says the template takes nothing from any window and shows what is typed in it.",
@@ -17734,7 +17908,7 @@
  {
   "key": "TPL_HEADING",
   "kind": "const",
-  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of three styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
+  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of seven styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
   "moment": "The person wants to change what kind of card this is.",
   "role": "section heading",
   "does": "Labels the list of ready slide kinds a card can be.",
@@ -17752,7 +17926,7 @@
  {
   "key": "TPL_STYLE",
   "kind": "const",
-  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of three styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture. Also the heading over the style choices on the rail of the Templates window.",
+  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of seven styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture. Also the heading over the style choices on the rail of the Templates window.",
   "moment": "The person chooses how the slide is built and drawn.",
   "role": "section heading",
   "does": "Labels the choice among the three ways a slide can be laid out.",
@@ -17770,7 +17944,7 @@
  {
   "key": "TPL_SEE_ALL",
   "kind": "const",
-  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of three styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
+  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of seven styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
   "moment": "The person wants to compare every ready slide before choosing.",
   "role": "button",
   "does": "Opens the window that shows every kind of announcement in each style.",
@@ -17789,8 +17963,8 @@
  {
   "key": "STYLE_HAIRLINE",
   "kind": "const",
-  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of three styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
-  "moment": "The person picks one of three slide layouts.",
+  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of seven styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
+  "moment": "The person picks one of seven slide layouts.",
   "role": "choice label",
   "does": "Names the layout with a thin rule under a small label, a heavy title and plain rows.",
   "budget": 14,
@@ -17802,13 +17976,13 @@
    "slide_template",
    "announcement"
   ],
-  "notes": "The names of the three layouts are design terms; a transliteration or a short plain word is fine, but the three must stay distinct."
+  "notes": "The names of the layouts are design terms; a transliteration or a short plain word is fine, but all seven must stay distinct."
  },
  {
   "key": "STYLE_LEDGER",
   "kind": "const",
-  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of three styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
-  "moment": "The person picks one of three slide layouts.",
+  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of seven styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
+  "moment": "The person picks one of seven slide layouts.",
   "role": "choice label",
   "does": "Names the layout with a side tab and the rows set in a ruled table like an account book.",
   "budget": 14,
@@ -17825,8 +17999,8 @@
  {
   "key": "STYLE_BAND",
   "kind": "const",
-  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of three styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
-  "moment": "The person picks one of three slide layouts.",
+  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of seven styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
+  "moment": "The person picks one of seven slide layouts.",
   "role": "choice label",
   "does": "Names the layout with a flat coloured strip behind the title.",
   "budget": 14,
@@ -17841,9 +18015,151 @@
   "notes": "Evokes a ribbon across the top."
  },
  {
+  "key": "STYLE_GREIGE",
+  "kind": "const",
+  "screen": "Announcements window and Templates tab, in the switch of slide layouts and in the list of layouts on the left of the Templates tab.",
+  "moment": "The person picks one of seven slide layouts.",
+  "role": "choice label",
+  "does": "Names the layout set like a printed order of service, on paper with a thin frame.",
+  "budget": 14,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template",
+   "announcement"
+  ],
+  "notes": "A calm, printed look; the name is short because seven names share one switch."
+ },
+ {
+  "key": "STYLE_PILL",
+  "kind": "const",
+  "screen": "Announcements window and Templates tab, in the switch of slide layouts and in the list of layouts on the left of the Templates tab.",
+  "moment": "The person picks one of seven slide layouts.",
+  "role": "choice label",
+  "does": "Names the layout made of rounded shapes with a bold sticker, like a poster.",
+  "budget": 14,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template",
+   "announcement"
+  ],
+  "notes": "A loud, friendly look."
+ },
+ {
+  "key": "STYLE_NEON",
+  "kind": "const",
+  "screen": "Announcements window and Templates tab, in the switch of slide layouts and in the list of layouts on the left of the Templates tab.",
+  "moment": "The person picks one of seven slide layouts.",
+  "role": "choice label",
+  "does": "Names the dark layout with glowing coloured outlines, for an evening.",
+  "budget": 14,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template",
+   "announcement"
+  ],
+  "notes": "Evokes lights at night."
+ },
+ {
+  "key": "STYLE_SPLIT",
+  "kind": "const",
+  "screen": "Announcements window and Templates tab, in the switch of slide layouts and in the list of layouts on the left of the Templates tab.",
+  "moment": "The person picks one of seven slide layouts.",
+  "role": "choice label",
+  "does": "Names the layout cut in two halves, words on one side and the thing itself on the other.",
+  "budget": 14,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template",
+   "announcement"
+  ],
+  "notes": "Evokes a notice board beside a bank slide."
+ },
+ {
+  "key": "ANNOUNCEMENT_QRIS",
+  "kind": "const",
+  "screen": "Announcements editor of a transfer card, label at the left of a small button that chooses a picture, under the card's own picture.",
+  "moment": "The person wants the bank's QRIS code on the transfer card.",
+  "role": "row label",
+  "does": "Names the choice of the picture of the payment code shown beside the account.",
+  "budget": 14,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "announcement",
+   "card"
+  ],
+  "notes": "QRIS is the Indonesian name of the payment code and stays as it is."
+ },
+ {
+  "key": "SETTINGS_CHURCH",
+  "kind": "const",
+  "screen": "Settings, in the list above the songs section, at the left of a small text field.",
+  "moment": "The person wants the church's name on the announcement slides.",
+  "role": "setting label",
+  "does": "Names the field for what the congregation is called.",
+  "budget": 20,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "announcement"
+  ],
+  "notes": ""
+ },
+ {
+  "key": "SETTINGS_CHURCH_HINT",
+  "kind": "const",
+  "screen": "Settings, inside the empty text field for the church's name.",
+  "moment": "The field is empty and the person looks at what it is for.",
+  "role": "placeholder",
+  "does": "Says where the name will be seen.",
+  "budget": 28,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "announcement"
+  ],
+  "notes": ""
+ },
+ {
+  "key": "ANNOUNCEMENT_PICTURE2",
+  "kind": "const",
+  "screen": "Announcements editor, label at the left of a small button that chooses a picture, under the card's first picture; it shows once a first picture is chosen.",
+  "moment": "The person wants a second picture on the card, for a layout that stacks two.",
+  "role": "row label",
+  "does": "Names the choice of one more picture shown with the card.",
+  "budget": 20,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "announcement",
+   "card"
+  ],
+  "notes": "When there is no second picture the first is used again."
+ },
+ {
   "key": "NOTICE_CALENDARS",
   "kind": "const",
-  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of three styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
+  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of seven styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
   "moment": "The person chooses which of the church's calendars a schedule card lists.",
   "role": "section heading",
   "does": "Labels the chips of the calendars whose events the card may list.",
@@ -17862,7 +18178,7 @@
  {
   "key": "NOTICE_WINDOW",
   "kind": "const",
-  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of three styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
+  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of seven styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
   "moment": "The person chooses how far ahead a card looks.",
   "role": "section heading",
   "does": "Labels the row of ready-made stretches of days a schedule or birthday card reads.",
@@ -17880,7 +18196,7 @@
  {
   "key": "NOTICE_WEEK",
   "kind": "const",
-  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of three styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
+  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of seven styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
   "moment": "The person chooses how far ahead a card looks.",
   "role": "choice label",
   "does": "Chooses the seven days of the calendar week that holds today.",
@@ -17898,7 +18214,7 @@
  {
   "key": "NOTICE_MONTH",
   "kind": "const",
-  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of three styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
+  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of seven styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
   "moment": "The person chooses how far ahead a card looks.",
   "role": "choice label",
   "does": "Chooses the whole of the current month.",
@@ -18218,7 +18534,7 @@
  {
   "key": "NOTICE_TITLE_COLOUR",
   "kind": "const",
-  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of three styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
+  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of seven styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
   "moment": "The person picks the colour of the card's title.",
   "role": "row label",
   "does": "Names the row of colours that tints the heading of the slide.",
@@ -18237,7 +18553,7 @@
  {
   "key": "NOTICE_READ_ACCOUNT",
   "kind": "const",
-  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of three styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
+  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of seven styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
   "moment": "The person looks at the pill beside the slide of a transfer card.",
   "role": "status",
   "does": "Says the card shows the bank details kept in the offerings window.",
@@ -18256,7 +18572,7 @@
  {
   "key": "NOTICE_READ_BIBLE",
   "kind": "const",
-  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of three styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
+  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of seven styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
   "moment": "The person looks at the pill beside the slide of a verse card.",
   "role": "status",
   "does": "Says the card shows words from the installed Bible.",
@@ -18275,7 +18591,7 @@
  {
   "key": "NOTICE_EMPTY_CALENDAR",
   "kind": "const",
-  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of three styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture. Also where a tile's slide would be in the Templates window.",
+  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of seven styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture. Also where a tile's slide would be in the Templates window.",
   "moment": "The calendar has no events in the window the card reads.",
   "role": "empty state",
   "does": "Tells that nothing falls in the chosen days and points to the calendar to add events.",
@@ -18295,7 +18611,7 @@
  {
   "key": "NOTICE_EMPTY_MEMBERS",
   "kind": "const",
-  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of three styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture. Also where a tile's slide would be in the Templates window.",
+  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of seven styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture. Also where a tile's slide would be in the Templates window.",
   "moment": "No member has a birthday in the window the card reads.",
   "role": "empty state",
   "does": "Tells that no one's birthday falls in the chosen days.",
@@ -18314,7 +18630,7 @@
  {
   "key": "TPL_GALLERY",
   "kind": "const",
-  "screen": "Templates window, the sixth tab. A rail on the left lists the kinds of announcement and the three styles; the middle shows live slides of this church's own data in tiles, each with a name and a line under it; at the foot a switch says where to apply a style.",
+  "screen": "Templates window, the sixth tab. A rail on the left lists the kinds of announcement and the seven styles; the middle shows live slides of this church's own data in tiles, each with a name and a line under it; at the foot a switch says where to apply a style.",
   "moment": "The person arrives to choose a ready announcement slide.",
   "role": "window heading",
   "does": "Titles the window that shows every kind of announcement drawn in each style.",
@@ -18333,7 +18649,7 @@
  {
   "key": "TPL_GALLERY_NOTE",
   "kind": "const",
-  "screen": "Templates window, the sixth tab. A rail on the left lists the kinds of announcement and the three styles; the middle shows live slides of this church's own data in tiles, each with a name and a line under it; at the foot a switch says where to apply a style.",
+  "screen": "Templates window, the sixth tab. A rail on the left lists the kinds of announcement and the seven styles; the middle shows live slides of this church's own data in tiles, each with a name and a line under it; at the foot a switch says where to apply a style.",
   "moment": "The person wonders whether the tiles are only examples.",
   "role": "caption",
   "does": "Tells that every tile shows the congregation's real information instead of invented samples.",
@@ -18351,7 +18667,7 @@
  {
   "key": "TPL_ALL",
   "kind": "const",
-  "screen": "Templates window, the sixth tab. A rail on the left lists the kinds of announcement and the three styles; the middle shows live slides of this church's own data in tiles, each with a name and a line under it; at the foot a switch says where to apply a style.",
+  "screen": "Templates window, the sixth tab. A rail on the left lists the kinds of announcement and the seven styles; the middle shows live slides of this church's own data in tiles, each with a name and a line under it; at the foot a switch says where to apply a style.",
   "moment": "The person wants to see every kind of announcement.",
   "role": "rail choice",
   "does": "Shows tiles of every kind instead of one.",
@@ -18369,7 +18685,7 @@
  {
   "key": "STYLE_ALL",
   "kind": "const",
-  "screen": "Templates window, the sixth tab. A rail on the left lists the kinds of announcement and the three styles; the middle shows live slides of this church's own data in tiles, each with a name and a line under it; at the foot a switch says where to apply a style.",
+  "screen": "Templates window, the sixth tab. A rail on the left lists the kinds of announcement and the seven styles; the middle shows live slides of this church's own data in tiles, each with a name and a line under it; at the foot a switch says where to apply a style.",
   "moment": "The person wants to see every layout.",
   "role": "rail choice",
   "does": "Shows tiles of every layout instead of one.",
@@ -18387,7 +18703,7 @@
  {
   "key": "TPL_USE",
   "kind": "const",
-  "screen": "Templates window, the sixth tab. A rail on the left lists the kinds of announcement and the three styles; the middle shows live slides of this church's own data in tiles, each with a name and a line under it; at the foot a switch says where to apply a style.",
+  "screen": "Templates window, the sixth tab. A rail on the left lists the kinds of announcement and the seven styles; the middle shows live slides of this church's own data in tiles, each with a name and a line under it; at the foot a switch says where to apply a style.",
   "moment": "The person has picked a tile and wants a card like it.",
   "role": "button",
   "does": "Adds a new announcement of this kind and layout, then opens it for editing.",
@@ -18405,7 +18721,7 @@
  {
   "key": "TPL_APPLY",
   "kind": "const",
-  "screen": "Templates window, the sixth tab. A rail on the left lists the kinds of announcement and the three styles; the middle shows live slides of this church's own data in tiles, each with a name and a line under it; at the foot a switch says where to apply a style.",
+  "screen": "Templates window, the sixth tab. A rail on the left lists the kinds of announcement and the seven styles; the middle shows live slides of this church's own data in tiles, each with a name and a line under it; at the foot a switch says where to apply a style.",
   "moment": "The person wants the layout of the picked tile on slides already made.",
   "role": "label",
   "does": "Introduces the three places a layout can be put to work.",
@@ -18423,7 +18739,7 @@
  {
   "key": "TPL_APPLY_SLIDE",
   "kind": "const",
-  "screen": "Templates window, the sixth tab. A rail on the left lists the kinds of announcement and the three styles; the middle shows live slides of this church's own data in tiles, each with a name and a line under it; at the foot a switch says where to apply a style.",
+  "screen": "Templates window, the sixth tab. A rail on the left lists the kinds of announcement and the seven styles; the middle shows live slides of this church's own data in tiles, each with a name and a line under it; at the foot a switch says where to apply a style.",
   "moment": "The person applies a layout.",
   "role": "choice label",
   "does": "Chooses only the announcement that was open last.",
@@ -18441,7 +18757,7 @@
  {
   "key": "TPL_APPLY_ALL",
   "kind": "const",
-  "screen": "Templates window, the sixth tab. A rail on the left lists the kinds of announcement and the three styles; the middle shows live slides of this church's own data in tiles, each with a name and a line under it; at the foot a switch says where to apply a style.",
+  "screen": "Templates window, the sixth tab. A rail on the left lists the kinds of announcement and the seven styles; the middle shows live slides of this church's own data in tiles, each with a name and a line under it; at the foot a switch says where to apply a style.",
   "moment": "The person applies a layout.",
   "role": "choice label",
   "does": "Chooses every announcement that exists.",
@@ -18459,7 +18775,7 @@
  {
   "key": "TPL_APPLY_PLAN",
   "kind": "const",
-  "screen": "Templates window, the sixth tab. A rail on the left lists the kinds of announcement and the three styles; the middle shows live slides of this church's own data in tiles, each with a name and a line under it; at the foot a switch says where to apply a style.",
+  "screen": "Templates window, the sixth tab. A rail on the left lists the kinds of announcement and the seven styles; the middle shows live slides of this church's own data in tiles, each with a name and a line under it; at the foot a switch says where to apply a style.",
   "moment": "The person applies a layout.",
   "role": "choice label",
   "does": "Chooses the whole service plan that is open, so its cards follow it unless they chose their own.",
@@ -18478,7 +18794,7 @@
  {
   "key": "TPL_APPLIED_PLAN",
   "kind": "const",
-  "screen": "Templates window, the sixth tab. A rail on the left lists the kinds of announcement and the three styles; the middle shows live slides of this church's own data in tiles, each with a name and a line under it; at the foot a switch says where to apply a style.",
+  "screen": "Templates window, the sixth tab. A rail on the left lists the kinds of announcement and the seven styles; the middle shows live slides of this church's own data in tiles, each with a name and a line under it; at the foot a switch says where to apply a style.",
   "moment": "The person pressed apply to the plan.",
   "role": "toast",
   "does": "Confirms the open plan now draws its announcements in the picked layout.",
@@ -18497,7 +18813,7 @@
  {
   "key": "read_calendar",
   "kind": "sentence",
-  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of three styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
+  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of seven styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
   "moment": "The pill beside the slide of a schedule card.",
   "role": "status",
   "does": "Says the card shows the events the calendar holds in its window, with how many.",
@@ -18517,7 +18833,7 @@
  {
   "key": "read_members",
   "kind": "sentence",
-  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of three styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
+  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of seven styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
   "moment": "The pill beside the slide of a birthday card.",
   "role": "status",
   "does": "Says the card shows the members whose birthday falls in its window, with how many names.",
@@ -18536,7 +18852,7 @@
  {
   "key": "read_gifts",
   "kind": "sentence",
-  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of three styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
+  "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of seven styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
   "moment": "The pill beside the slide of an offering card.",
   "role": "status",
   "does": "Says the card shows the gifts of the newest day in the offerings window, with how many.",
@@ -18555,7 +18871,7 @@
  {
   "key": "style_applied",
   "kind": "sentence",
-  "screen": "Templates window, the sixth tab. A rail on the left lists the kinds of announcement and the three styles; the middle shows live slides of this church's own data in tiles, each with a name and a line under it; at the foot a switch says where to apply a style.",
+  "screen": "Templates window, the sixth tab. A rail on the left lists the kinds of announcement and the seven styles; the middle shows live slides of this church's own data in tiles, each with a name and a line under it; at the foot a switch says where to apply a style.",
   "moment": "A layout was just put on announcements.",
   "role": "toast",
   "does": "Confirms on how many announcements the picked layout was set, or that there was none to change.",

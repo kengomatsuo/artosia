@@ -1109,5 +1109,596 @@
    "projector"
   ],
   "notes": "A short statement without a full stop, with the same word for off that the operator's window uses for the projector."
+ },
+ {
+  "key": "pair_second",
+  "kind": "phone",
+  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. Dark screens. Pairing screen: a centred title, one line of help, four cells for the number, a wide Connect button, and under it one plain blue link.",
+  "moment": "The person was told to use a second number to be allowed to change words from this phone.",
+  "role": "link",
+  "does": "Switches the pairing screen to ask for the extra number that also allows changing words, in place of the ordinary one.",
+  "budget": 32,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+  "concepts": [
+   "phone_remote"
+  ],
+  "notes": "A label of a link, not a sentence; it wraps on a narrow phone."
+ },
+ {
+  "key": "pair_first",
+  "kind": "phone",
+  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. Dark screens. Pairing screen after the person chose the extra number: the same screen with the same blue link under Connect.",
+  "moment": "The person asked for the extra number and now wants the ordinary one again.",
+  "role": "link",
+  "does": "Goes back to asking for the ordinary number that every phone starts with.",
+  "budget": 28,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+  "concepts": [
+   "phone_remote"
+  ],
+  "notes": "The same link as the sibling with the other direction."
+ },
+ {
+  "key": "pin_hint_second",
+  "kind": "phone",
+  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. Dark screens. Pairing screen after the person chose the extra number: a centred title, then one grey line of help, then four cells.",
+  "moment": "The person is about to type the extra number.",
+  "role": "line of help",
+  "does": "Asks for the extra number that the computer's phone window shows for editing, and not the ordinary one.",
+  "budget": 60,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+  "concepts": [
+   "phone_remote"
+  ],
+  "notes": "Replaces the sibling line that asks for the ordinary number, so it uses the same verb."
+ },
+ {
+  "key": "edit",
+  "kind": "phone",
+  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. Dark screens. Live screen: a rounded pill with a small pencil at the right end of the line that holds the title and the slide counter. The same word also heads a group of buttons on the More screen.",
+  "moment": "The slide on the card belongs to an announcement and this phone is allowed to change words.",
+  "role": "button",
+  "does": "Opens the sheet in which the words of the slide on the card are changed.",
+  "budget": 10,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+  "concepts": [
+   "phone_remote",
+   "announcement"
+  ],
+  "notes": "One word, as on the computer's own Edit buttons."
+ },
+ {
+  "key": "edit_text",
+  "kind": "phone",
+  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. Dark screens. A sheet that fills the page, with a header bar: a button at the left, a title in the middle, a button at the right.",
+  "moment": "The person opened an announcement for changing its words.",
+  "role": "sheet title",
+  "does": "Names the sheet in which the heading and the lines of an announcement are retyped.",
+  "budget": 18,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+  "concepts": [
+   "phone_remote",
+   "announcement",
+   "slide_words"
+  ],
+  "notes": "Centred between two buttons; it wraps rather than being cut."
+ },
+ {
+  "key": "sheet_cancel",
+  "kind": "phone",
+  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. Dark screens. A sheet that fills the page, with a header bar: a grey button at the left, a title in the middle, a blue button at the right. A small question at the foot has the same grey button beside a second one.",
+  "moment": "The person decides not to go on with the sheet or with a removal.",
+  "role": "button",
+  "does": "Closes the sheet and keeps nothing of what was typed, so that nothing changes on the computer.",
+  "budget": 10,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+  "concepts": [
+   "phone_remote"
+  ],
+  "notes": "Not the same as the quiet Not now of the plan: this one leaves a sheet where something was typed."
+ },
+ {
+  "key": "done",
+  "kind": "phone",
+  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. Dark screens. A sheet that fills the page, with a header bar: a grey button at the left, a title in the middle, a filled blue button at the right.",
+  "moment": "The person finished typing and wants the change to go.",
+  "role": "button",
+  "does": "Sends everything typed on the sheet to the computer at once, after which the room sees it.",
+  "budget": 10,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+  "concepts": [
+   "phone_remote"
+  ],
+  "notes": "The only way a typed change reaches the room; it is dimmed while nothing valid is typed."
+ },
+ {
+  "key": "field_title",
+  "kind": "phone",
+  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. Dark screens. The text sheet of an announcement: a small preview of the slide, then a two-part switch, then a text field.",
+  "moment": "The person chooses which part of the announcement to retype.",
+  "role": "choice in a two-part switch",
+  "does": "Chooses the heading line of the announcement, the big line on top of its slide.",
+  "budget": 12,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+  "concepts": [
+   "phone_remote",
+   "announcement"
+  ],
+  "notes": "One word; also the name a screen reader gives the text field while it holds the heading."
+ },
+ {
+  "key": "field_body",
+  "kind": "phone",
+  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. Dark screens. The text sheet of an announcement: a small preview of the slide, then a two-part switch, then a text field.",
+  "moment": "The person chooses which part of the announcement to retype.",
+  "role": "choice in a two-part switch",
+  "does": "Chooses the lines under the heading of the announcement, the smaller text of its slide.",
+  "budget": 12,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+  "concepts": [
+   "phone_remote",
+   "announcement"
+  ],
+  "notes": "One word; also the name a screen reader gives the text field while it holds the lines."
+ },
+ {
+  "key": "after_done",
+  "kind": "phone",
+  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. Dark screens. The text sheet of an announcement: a small preview, a two-part switch, a text field, and under the field one small grey line.",
+  "moment": "The person is typing and wonders whether the room already sees the words.",
+  "role": "helper line",
+  "does": "Reassures that nothing typed reaches the projector until the blue button of the sheet is pressed.",
+  "budget": 50,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+  "concepts": [
+   "phone_remote",
+   "projector"
+  ],
+  "notes": "Refers to the blue button by the same word that button carries."
+ },
+ {
+  "key": "changed",
+  "kind": "phone",
+  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. Dark screens. A sheet over the live screen with a yellow warning box at the top: a bold line, two small framed texts, and two buttons side by side.",
+  "moment": "The person pressed the blue button, but someone changed the same thing on the computer after this phone opened it.",
+  "role": "warning heading",
+  "does": "Says that the thing being edited was altered on the computer in the meantime, so nothing was sent yet.",
+  "budget": 30,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+  "concepts": [
+   "phone_remote"
+  ],
+  "notes": "A statement, not a question; the two buttons below answer it."
+ },
+ {
+  "key": "use_theirs",
+  "kind": "phone",
+  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. Dark screens. A sheet with a yellow warning box at the top, a grey button and a blue button side by side at its foot.",
+  "moment": "Someone changed the same thing on the computer and the person must choose whose words stay.",
+  "role": "button",
+  "does": "Drops what was typed on the phone and takes the words that are on the computer.",
+  "budget": 16,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+  "concepts": [
+   "phone_remote"
+  ],
+  "notes": "Theirs means the computer's. It pairs with the sibling button about keeping the phone's own words."
+ },
+ {
+  "key": "keep_mine",
+  "kind": "phone",
+  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. Dark screens. A sheet with a yellow warning box at the top, a grey button and a blue button side by side at its foot.",
+  "moment": "Someone changed the same thing on the computer and the person must choose whose words stay.",
+  "role": "button",
+  "does": "Keeps the words typed on the phone, which can then be sent over what the computer has.",
+  "budget": 16,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+  "concepts": [
+   "phone_remote"
+  ],
+  "notes": "Mine means the phone's. It pairs with the sibling button about taking the computer's words."
+ },
+ {
+  "key": "on_computer",
+  "kind": "phone",
+  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. Dark screens. Inside the yellow warning box of a sheet, two framed texts one above the other; this is the small grey label of the first.",
+  "moment": "The person compares the two versions of the words.",
+  "role": "small label",
+  "does": "Labels the framed text that is what the computer holds now.",
+  "budget": 22,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+  "concepts": [
+   "phone_remote"
+  ],
+  "notes": "Parallel to the label of the phone's own text below it."
+ },
+ {
+  "key": "yours",
+  "kind": "phone",
+  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. Dark screens. Inside the yellow warning box of a sheet, two framed texts one above the other; this is the small grey label of the second.",
+  "moment": "The person compares the two versions of the words.",
+  "role": "small label",
+  "does": "Labels the framed text that was typed on this phone.",
+  "budget": 22,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+  "concepts": [
+   "phone_remote"
+  ],
+  "notes": "Parallel to the label of the computer's text above it."
+ },
+ {
+  "key": "busy",
+  "kind": "phone",
+  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. Dark screens. A sheet over the live screen; a yellow line of warning sits at the top of its body.",
+  "moment": "The person pressed the blue button, but the person at the computer is working on the same thing.",
+  "role": "warning line",
+  "does": "Says the change was not saved because it is being worked on at the computer, and suggests trying again shortly.",
+  "budget": 66,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+  "concepts": [
+   "phone_remote"
+  ],
+  "notes": "Two short sentences: what is going on, then what to do."
+ },
+ {
+  "key": "gone",
+  "kind": "phone",
+  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. Dark screens. Inside the yellow warning box of a sheet, under its bold line.",
+  "moment": "The person pressed the blue button, but the thing being edited was deleted at the computer.",
+  "role": "warning line",
+  "does": "Says the thing being edited no longer exists on the computer.",
+  "budget": 40,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+  "concepts": [
+   "phone_remote"
+  ],
+  "notes": "A statement without a full stop."
+ },
+ {
+  "key": "edit_cards",
+  "kind": "phone",
+  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. Dark screens. The list of what can be changed: a grey band with a heading, then rows. The same word is a button on the More screen.",
+  "moment": "The person looks for which announcement to change.",
+  "role": "band heading and button",
+  "does": "Names the group of announcements, the cards of notices shown between songs.",
+  "budget": 20,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+  "concepts": [
+   "phone_remote",
+   "announcement"
+  ],
+  "notes": "The same word as the computer's own name for them."
+ },
+ {
+  "key": "edit_birthdays",
+  "kind": "phone",
+  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. Dark screens. The list of what can be changed: a grey band with a heading and a small Add button, then rows of names. The same word is a button on the More screen.",
+  "moment": "The person looks for whose birthday to change or add.",
+  "role": "band heading and button",
+  "does": "Names the list of the church's people with the day of the year each was born.",
+  "budget": 20,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+  "concepts": [
+   "phone_remote",
+   "member"
+  ],
+  "notes": "The word the announcement of this week's birthdays uses."
+ },
+ {
+  "key": "edit_week",
+  "kind": "phone",
+  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. Dark screens. The list of what can be changed: a grey band with a heading and a small Add button, then rows of events. The same words are a button on the More screen.",
+  "moment": "The person looks for which event of the coming days to change or add.",
+  "role": "band heading and button",
+  "does": "Names the events the church has in the next seven days.",
+  "budget": 20,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+  "concepts": [
+   "phone_remote",
+   "church_calendar",
+   "event"
+  ],
+  "notes": "A week counted from today, not a calendar week."
+ },
+ {
+  "key": "edit_none",
+  "kind": "phone",
+  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. Dark screens. The list of what can be changed, under a band whose group has no rows; also stands in for the name of an announcement that has no words.",
+  "moment": "A list is empty.",
+  "role": "empty state line",
+  "does": "Says that a list has nothing in it yet.",
+  "budget": 28,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+  "concepts": [
+   "phone_remote"
+  ],
+  "notes": "Calm, no apology."
+ },
+ {
+  "key": "edit_person",
+  "kind": "phone",
+  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. Dark screens. A sheet that fills the page with a header bar: a button at the left, a title in the middle, a button at the right.",
+  "moment": "The person opened one person's birthday to change it or to add a new one.",
+  "role": "sheet title",
+  "does": "Names the sheet for one person's name and the day and month of their birthday.",
+  "budget": 18,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+  "concepts": [
+   "phone_remote",
+   "member"
+  ],
+  "notes": "One word is enough; the year of birth is never shown here."
+ },
+ {
+  "key": "edit_event",
+  "kind": "phone",
+  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. Dark screens. A sheet that fills the page with a header bar: a button at the left, a title in the middle, a button at the right.",
+  "moment": "The person opened one event of the week to change it or to add a new one.",
+  "role": "sheet title",
+  "does": "Names the sheet for one event's name, its date and the hours it begins and ends.",
+  "budget": 18,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+  "concepts": [
+   "phone_remote",
+   "event"
+  ],
+  "notes": "The word of the church's own calendar for one entry."
+ },
+ {
+  "key": "name",
+  "kind": "phone",
+  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. Dark screens. A sheet for one person or one event: a small grey label over a text field.",
+  "moment": "The person types or corrects a name.",
+  "role": "field label",
+  "does": "Names the field where the name of a person or of an event is typed.",
+  "budget": 14,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+  "concepts": [
+   "phone_remote"
+  ],
+  "notes": "One word."
+ },
+ {
+  "key": "day",
+  "kind": "phone",
+  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. Dark screens. A person's sheet: two small grey labels over two pickers side by side, the first a list of the numbers of a month.",
+  "moment": "The person sets the day of a birthday.",
+  "role": "field label",
+  "does": "Names the picker of the number of the day within its month.",
+  "budget": 10,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+  "concepts": [
+   "phone_remote"
+  ],
+  "notes": "One word; the day of the month, not a weekday."
+ },
+ {
+  "key": "month",
+  "kind": "phone",
+  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. Dark screens. A person's sheet: two small grey labels over two pickers side by side, the second a list of the twelve months by name.",
+  "moment": "The person sets the month of a birthday.",
+  "role": "field label",
+  "does": "Names the picker of the month of the year.",
+  "budget": 10,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+  "concepts": [
+   "phone_remote"
+  ],
+  "notes": "One word."
+ },
+ {
+  "key": "date",
+  "kind": "phone",
+  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. Dark screens. An event's sheet: a small grey label over a field that opens the system's calendar.",
+  "moment": "The person sets the day an event is held.",
+  "role": "field label",
+  "does": "Names the picker of the calendar day on which the event is held.",
+  "budget": 10,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+  "concepts": [
+   "phone_remote",
+   "event"
+  ],
+  "notes": "One word; a full date with a year, unlike the birthday's day."
+ },
+ {
+  "key": "starts",
+  "kind": "phone",
+  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. Dark screens. An event's sheet: two small grey labels over two time pickers side by side, this the first.",
+  "moment": "The person sets when an event begins.",
+  "role": "field label",
+  "does": "Names the picker of the time of day at which the event begins.",
+  "budget": 12,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+  "concepts": [
+   "phone_remote",
+   "event"
+  ],
+  "notes": "One word, parallel to the label of the end."
+ },
+ {
+  "key": "ends",
+  "kind": "phone",
+  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. Dark screens. An event's sheet: two small grey labels over two time pickers side by side, this the second.",
+  "moment": "The person sets when an event is over.",
+  "role": "field label",
+  "does": "Names the picker of the time of day at which the event is over.",
+  "budget": 12,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+  "concepts": [
+   "phone_remote",
+   "event"
+  ],
+  "notes": "One word, parallel to the label of the beginning."
+ },
+ {
+  "key": "this_date",
+  "kind": "phone",
+  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. Dark screens. An event's sheet, a small grey line under the fields of an event that repeats.",
+  "moment": "The person changes one date of an event that happens every week or month.",
+  "role": "helper line",
+  "does": "Warns that only this one date is changed and the other dates of the repeating event stay as they are.",
+  "budget": 46,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+  "concepts": [
+   "phone_remote",
+   "event_series"
+  ],
+  "notes": "A short statement without a full stop."
+ },
+ {
+  "key": "delete",
+  "kind": "phone",
+  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. Dark screens. A sheet for one person or event with a wide yellow-lettered button at its foot; a small question over the page has the same word on its blue button.",
+  "moment": "The person wants a person's birthday or one date of an event gone.",
+  "role": "button",
+  "does": "Takes the person or the date out of the church's data, after one more question.",
+  "budget": 12,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+  "concepts": [
+   "phone_remote"
+  ],
+  "notes": "One word, the same on both buttons."
+ },
+ {
+  "key": "ask_delete_person",
+  "kind": "phone",
+  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. Dark screens. A small question rising from the bottom of a person's sheet, with a grey button and a blue button under it.",
+  "moment": "The person pressed Delete on a person's birthday.",
+  "role": "question",
+  "does": "Asks whether this named person is really to be removed from the church's list of birthdays.",
+  "budget": 50,
+  "variables": [
+   {
+    "name": "0",
+    "example": "Sample Alpha",
+    "meaning": "The person's name as typed."
+   }
+  ],
+  "cases": [],
+  "counts": "",
+  "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+  "concepts": [
+   "phone_remote",
+   "member"
+  ],
+  "notes": "Ends in a question mark in the languages that use one. The name may be long and wraps."
+ },
+ {
+  "key": "ask_delete_event",
+  "kind": "phone",
+  "screen": "The phone remote: a web page opened on the volunteer's own phone (about 360 points wide, one hand, often in the dark), joined to the operator computer over the church's wireless network. Dark screens. A small question rising from the bottom of an event's sheet, with a grey button and a blue button under it.",
+  "moment": "The person pressed Delete on an event of the week.",
+  "role": "question",
+  "does": "Asks whether this named event is really to be taken out of the calendar on the day shown, leaving its other days.",
+  "budget": 60,
+  "variables": [
+   {
+    "name": "0",
+    "example": "Choir practice",
+    "meaning": "The event's name as typed."
+   }
+  ],
+  "cases": [],
+  "counts": "",
+  "register": "The page speaks to a volunteer holding a phone at the console or standing beside the stage: any age, no time to read, thumb-sized buttons. Plain, short, polite and familiar. No honorifics, no jargon.",
+  "concepts": [
+   "phone_remote",
+   "event"
+  ],
+  "notes": "Says this date only: the event on other days is not removed. The name may be long and wraps."
  }
 ]

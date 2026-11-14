@@ -9,6 +9,7 @@ use rune::{Align, Color, El, Family, TextStyle, col, el, row, text};
 
 use crate::fonts;
 use crate::look::{Look, NoticeStyle, rgb};
+use crate::warta::Pics;
 
 /// The word a kind's label, tab and band line show.
 pub fn kind_name(kind: NoticeKind) -> &'static str {
@@ -17,6 +18,7 @@ pub fn kind_name(kind: NoticeKind) -> &'static str {
         NoticeKind::Birthdays => "ULANG TAHUN",
         NoticeKind::Money | NoticeKind::Account => "PERSEMBAHAN",
         NoticeKind::Plain => "PENGUMUMAN",
+        NoticeKind::Verse => "AYAT",
     }
 }
 
@@ -26,6 +28,8 @@ fn accent(style: NoticeStyle) -> Color {
         NoticeStyle::Hairline => [124, 196, 106],
         NoticeStyle::Ledger => [104, 72, 184],
         NoticeStyle::Band => [22, 184, 170],
+        // The poster styles carry their own palette and never read this.
+        _ => [255, 255, 255],
     })
 }
 
@@ -33,7 +37,7 @@ fn accent(style: NoticeStyle) -> Color {
 pub fn title_default(style: NoticeStyle) -> [u8; 3] {
     match style {
         NoticeStyle::Hairline => [124, 196, 106],
-        NoticeStyle::Ledger | NoticeStyle::Band => [255, 255, 255],
+        _ => [255, 255, 255],
     }
 }
 
@@ -82,7 +86,7 @@ impl Table {
                 Table { blocks: numbered.chunks(per).map(<[_]>::to_vec).collect(), right: &[true, false, true], key: 1, stretch: 1, marked: marks }
             }
             NoticeKind::Money => Table { blocks: vec![rows.to_vec()], right: &[false, true], key: 0, stretch: 0, marked: Vec::new() },
-            NoticeKind::Plain | NoticeKind::Account => Table { blocks: vec![rows.to_vec()], right: &[false], key: 0, stretch: 0, marked: Vec::new() },
+            NoticeKind::Plain | NoticeKind::Account | NoticeKind::Verse => Table { blocks: vec![rows.to_vec()], right: &[false], key: 0, stretch: 0, marked: Vec::new() },
         }
     }
 
@@ -236,7 +240,7 @@ fn styles_for(style: NoticeStyle, table: &Table, c: &Ctx, size: f32) -> Vec<Text
         .map(|at| match style {
             NoticeStyle::Hairline => style_of(c.sans, size, if at == table.key { 800.0 } else { 400.0 }),
             NoticeStyle::Ledger => style_of(c.serif, size, if at == table.key || table.right[at] { 600.0 } else { 500.0 }),
-            NoticeStyle::Band => style_of(c.sans, size, 800.0),
+            _ => style_of(c.sans, size, 800.0),
         })
         .collect()
 }
@@ -262,7 +266,11 @@ pub fn draws_notice(slide: &Slide, look: &Look) -> bool {
 }
 
 /// The whole slide at `w` by `h` points, in its card's notice style, else the look's.
-pub fn notice(slide: &Slide, look: &Look, w: f32, h: f32) -> El {
+pub fn notice(slide: &Slide, look: &Look, w: f32, h: f32, pics: &Pics) -> El {
+    let style = style_of_slide(slide, look);
+    if style.is_poster() {
+        return crate::warta::draw(slide, style, w, h, pics);
+    }
     let mut body = notice_body(&slide.text);
     if slide.notice == NoticeKind::Plain || slide.notice == NoticeKind::Account {
         // These kinds have no columns: a tab in them would only clip a word.
@@ -270,13 +278,12 @@ pub fn notice(slide: &Slide, look: &Look, w: f32, h: f32) -> El {
     }
     let sans = fonts::family(&look.font);
     let serif = if look.font.trim().is_empty() { fonts::family("Cambria") } else { sans };
-    let style = style_of_slide(slide, look);
     let c = Ctx { w, h, u: h / 1080.0, sans, serif, accent: accent(style), title: slide.title_colour.map(rgb) };
     let layer = el().key("notice").absolute(0.0, 0.0).size(w, h);
     match style {
         NoticeStyle::Hairline => hairline(layer, slide, &body, &c),
         NoticeStyle::Ledger => ledger(layer, slide, &body, &c),
-        NoticeStyle::Band => band(layer, slide, &body, &c),
+        _ => band(layer, slide, &body, &c),
     }
 }
 

@@ -5761,5 +5761,93 @@
   "text": "파트를 삭제했어요",
   "back": "Deleted the part",
   "why": "table's word for a song part, short"
+ },
+ "PHONE_PAIRED": {
+  "text": "연결된 휴대폰",
+  "back": "Connected phones",
+  "why": "휴대폰 is the phone remote word"
+ },
+ "PHONE_CONTROL": {
+  "text": "조작만",
+  "back": "Operate only",
+  "why": "the starting level in one phrase"
+ },
+ "PHONE_EDIT": {
+  "text": "편집까지",
+  "back": "Up to editing",
+  "why": "one word above operating"
+ },
+ "PHONE_EDIT_PIN": {
+  "text": "편집용 추가 PIN",
+  "back": "Extra PIN for editing",
+  "why": "PIN is the existing label"
+ },
+ "PHONE_EDIT_PIN_HINT": {
+  "text": "휴대폰이 연결할 때 기본 PIN 대신 입력해요",
+  "back": "Type this when the phone connects, in place of the basic PIN",
+  "why": "says where it is used; 해요 register"
+ },
+ "PHONE_EDIT_RULE": {
+  "text": "여기서 허용하기 전에는 휴대폰이 글자를 못 바꿔요. 리모컨을 끄면 허용이 모두 취소돼요.",
+  "back": "Until you allow it here, a phone cannot change the letters. If you turn the remote off, every permission is cancelled.",
+  "why": "글자 is the everyday word for slide text"
+ },
+ "PHONE_EDIT_BUSY": {
+  "text": "휴대폰의 변경은 버렸어요. 여기서 같은 내용을 편집 중이에요",
+  "back": "The phone's change was thrown away. The same content is being edited here",
+  "why": "reason in the second sentence"
+ },
+ "PHONE_EDIT_OLD": {
+  "text": "휴대폰의 변경은 버렸어요. 예전 내용을 기준으로 한 변경이에요",
+  "back": "The phone's change was thrown away. It was based on older content",
+  "why": "different reason: older content"
+ },
+ "phone_label": {
+  "text": {
+   "plain": "휴대폰 {number}",
+   "kind": "휴대폰 {number}, {kind}"
+  },
+  "back": "Phone {number} / Phone {number}, {kind}",
+  "why": "phone word, number, kind after a comma"
+ },
+ "STYLE_GREIGE": {
+  "text": "주보",
+  "back": "Church bulletin",
+  "why": "the printed Sunday order of service"
+ },
+ "STYLE_PILL": {
+  "text": "스티커",
+  "back": "Sticker",
+  "why": "rounded shapes with a sticker"
+ },
+ "STYLE_NEON": {
+  "text": "네온",
+  "back": "Neon",
+  "why": "the usual loanword for night lights"
+ },
+ "STYLE_SPLIT": {
+  "text": "2분할",
+  "back": "Two halves",
+  "why": "cut into two"
+ },
+ "ANNOUNCEMENT_QRIS": {
+  "text": "QRIS 이미지",
+  "back": "QRIS image",
+  "why": "QRIS stays; 이미지 as in the picture row"
+ },
+ "SETTINGS_CHURCH": {
+  "text": "교회 이름",
+  "back": "Church name",
+  "why": "plain label"
+ },
+ "SETTINGS_CHURCH_HINT": {
+  "text": "공지 슬라이드에 나와요",
+  "back": "Appears on the announcement slides",
+  "why": "tells where the name appears"
+ },
+ "ANNOUNCEMENT_PICTURE2": {
+  "text": "두 번째 이미지",
+  "back": "Second image",
+  "why": "parallel to 이미지"
  }
 }

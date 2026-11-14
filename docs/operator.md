@@ -673,3 +673,19 @@ dates. A birthday card may highlight a part inside it (the past week, the coming
 picked dates); a highlight outside the window is clamped and the panel says so. Highlighted names are
 marked by a filled ground and weight, never by colour alone. The week starts on Sunday unless Settings
 says Monday.
+
+### Seven announcement styles (WARTADESIGN1, built 2026-11-14, owner-picked: all four)
+
+Editorial greige, Pill poster, Neon night and Split panel join Hairline, Ledger and Band
+(`crates/artosia-slides/src/warta/`, ported from the designer's spec in
+`~/Shared/inspo/artosia-notice-designs/directions`). Each draws all six kinds from the card's own
+data; a name or label too wide for its cell wraps onto two balanced lines before it shrinks, and a card
+that cannot hold its rows at the 40 px floor continues on a second slide marked 1/2. The fonts (SIL Open
+Font License, licences beside them) are built into the program.
+
+### Editing from a phone (PHONEEDIT1, built 2026-11-14, owner-picked: text and lists)
+
+A paired phone controls the slides; the operator grants Edit per phone in the Phone dialog, or a phone
+pairs with a second PIN. With Edit a phone changes a slide's words (live too), a birthday and an event's
+date, and the screen follows at once. Every item carries a revision: a save made from an older copy shows
+the phone both texts to choose from, and the computer wins while its own editor holds unsaved changes.

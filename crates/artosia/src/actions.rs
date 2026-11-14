@@ -661,6 +661,8 @@ impl App {
                 body: TextEdit::new(item.body.clone()),
                 seconds: item.seconds,
                 image: item.image.clone(),
+                qris: item.qris.clone(),
+                image2: item.image2.clone(),
                 fill: item.fill,
                 passage: TextEdit::new(item.passage.clone()),
                 style: item.style,
@@ -717,7 +719,7 @@ impl App {
             Fill::Birthdays => form.window,
             _ => Window::default(),
         };
-        has_words.then_some(Announcement { id: form.id, title, body, seconds: form.seconds.clamp(2, 600), image: form.image.clone(), fill: form.fill, passage, style: form.style, title_colour: form.title_colour, calendars, window })
+        has_words.then_some(Announcement { id: form.id, title, body, seconds: form.seconds.clamp(2, 600), image: form.image.clone(), qris: if form.fill == Fill::Transfer { form.qris.clone() } else { String::new() }, image2: form.image2.clone(), fill: form.fill, passage, style: form.style, title_colour: form.title_colour, calendars, window })
     }
 
     pub(crate) fn reload_announcements(&mut self) {
@@ -922,6 +924,22 @@ impl App {
     pub fn set_notice_image(&mut self, path: Option<&std::path::Path>) {
         if let Some(form) = self.notices.as_mut() {
             form.image = path.map(|path| path.to_string_lossy().to_string()).unwrap_or_default();
+        }
+        self.save_notice();
+    }
+
+    /// Sets or clears the second picture of the announcement in the form.
+    pub fn set_notice_image2(&mut self, path: Option<&std::path::Path>) {
+        if let Some(form) = self.notices.as_mut() {
+            form.image2 = path.map(|path| path.to_string_lossy().to_string()).unwrap_or_default();
+        }
+        self.save_notice();
+    }
+
+    /// Sets or clears the QRIS picture of the transfer announcement in the form.
+    pub fn set_notice_qris(&mut self, path: Option<&std::path::Path>) {
+        if let Some(form) = self.notices.as_mut() {
+            form.qris = path.map(|path| path.to_string_lossy().to_string()).unwrap_or_default();
         }
         self.save_notice();
     }
@@ -1449,6 +1467,8 @@ impl App {
             self.remote_round += 1;
             self.firewall = Standing::Idle;
             self.remote = None;
+            // Every phone's Edit level went with the server; the second PIN goes too.
+            self.remote_edit_pin = None;
             return;
         }
         if self.remote.is_some() || self.firewall.waiting() {
@@ -1503,7 +1523,7 @@ impl App {
 
     fn start_remote(&mut self) {
         let (tx, waker) = (self.remote_tx.clone(), self.waker.clone());
-        let started = RemoteServer::start(RemoteConfig { port: REMOTE_PORT, pin: self.remote_pin.clone(), local_only: false }, move |command| {
+        let started = RemoteServer::start(RemoteConfig { port: REMOTE_PORT, pin: self.remote_pin.clone(), local_only: crate::data::has_flag("--remote-local") }, move |command| {
             let _ = tx.send(command);
             if let Some(wake) = &waker {
                 wake();
@@ -1511,6 +1531,7 @@ impl App {
         });
         match started {
             Ok(server) => {
+                server.set_edit_pin(self.remote_edit_pin.clone());
                 self.remote = Some(server);
                 self.remote_problem = None;
                 self.remote_qr = self.remote_url().and_then(|url| qr_picture(&url));
@@ -1559,6 +1580,9 @@ impl App {
             countdown_ends_at: self.countdown.as_ref().map(|timer| timer.ends_at),
             ..RemoteState::default()
         };
+        if self.edit_phones() {
+            self.remote_rows(&mut state);
+        }
         if let Some(live) = &self.live {
             state.item_title = live.deck.title.clone();
             state.slides = live.deck.slides.iter().map(|slide| RemoteSlide { label: slide.label.clone(), text: slide.text.clone(), more: slide.more.iter().map(|voice| voice.text.clone()).collect() }).collect();
@@ -1940,6 +1964,24 @@ impl App {
                 Err(error) => s.say(error.to_string(), None),
             });
         }
+        if self.want_notice_image2 {
+            self.want_notice_image2 = false;
+            let options = rune::FileDialogOptions { title: t::LOOK_CHOOSE_LOGO().to_string(), ..Default::default() }.filter(t::LOOK_CHOOSE_LOGO(), &["png", "jpg", "jpeg", "webp", "bmp"]);
+            tx.open_file(options, |s: &mut App, result, _| match result {
+                Ok(Some(path)) => s.set_notice_image2(Some(&path)),
+                Ok(None) => {}
+                Err(error) => s.say(error.to_string(), None),
+            });
+        }
+        if self.want_notice_qris {
+            self.want_notice_qris = false;
+            let options = rune::FileDialogOptions { title: t::LOOK_CHOOSE_LOGO().to_string(), ..Default::default() }.filter(t::LOOK_CHOOSE_LOGO(), &["png", "jpg", "jpeg", "webp", "bmp"]);
+            tx.open_file(options, |s: &mut App, result, _| match result {
+                Ok(Some(path)) => s.set_notice_qris(Some(&path)),
+                Ok(None) => {}
+                Err(error) => s.say(error.to_string(), None),
+            });
+        }
         if self.want_folder {
             self.want_folder = false;
             let options = rune::FileDialogOptions { title: t::CMD_IMPORT_FOLDER().to_string(), ..Default::default() };
@@ -1970,6 +2012,10 @@ impl App {
         }
         if let Some(remote) = &self.remote {
             remote.set_state(self.remote_state());
+            if self.sheet == Sheet::Remote && remote.phones() != self.remote_phones {
+                self.remote_phones = remote.phones();
+                changed = true;
+            }
         }
         self.save_pending();
         self.load_pictures();
@@ -2026,6 +2072,7 @@ impl App {
                 self.timer_minutes.replace_text(minutes.to_string());
                 self.start_countdown();
             }
+            RemoteCommand::Edit(edit) => self.apply_remote_edit(edit),
         }
     }
 
@@ -2051,7 +2098,10 @@ impl App {
         }
         // Announcement pictures: those in the list and the one in the form.
         let mut wanted: Vec<String> = self.announcements.iter().map(|item| item.image.clone()).filter(|path| !path.is_empty()).collect();
+        wanted.extend(self.announcements.iter().flat_map(|item| [item.qris.clone(), item.image2.clone()]).filter(|path| !path.is_empty()));
         wanted.extend(self.notices.as_ref().map(|form| form.image.clone()).filter(|path| !path.is_empty()));
+        wanted.extend(self.notices.as_ref().map(|form| form.qris.clone()).filter(|path| !path.is_empty()));
+        wanted.extend(self.notices.as_ref().map(|form| form.image2.clone()).filter(|path| !path.is_empty()));
         self.slide_pictures.retain(|path, _| wanted.contains(path));
         for path in wanted {
             let image = || images.file(&path, 960.0, 1.0);

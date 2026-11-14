@@ -303,5 +303,170 @@
   "text": "{0} {1}",
   "back": "the part's name and its number, in the order the window uses",
   "why": "carried from section_numbered so the phone and the window agree"
+ },
+ "pair_second": {
+  "text": "Second code pour modifier",
+  "back": "Second code for changing",
+  "why": "Same second as the computer"
+ },
+ "pair_first": {
+  "text": "Revenir au code habituel",
+  "back": "Go back to the usual code",
+  "why": "Mirror"
+ },
+ "pin_hint_second": {
+  "text": "Le code de modification s'affiche dans Télécommande",
+  "back": "The code for changing shows in Remote control",
+  "why": "Same verb s'affiche as the ordinary line"
+ },
+ "edit": {
+  "text": "Modifier",
+  "back": "Edit",
+  "why": "Same as the computer"
+ },
+ "edit_text": {
+  "text": "Modifier le texte",
+  "back": "Edit the text",
+  "why": "Plain"
+ },
+ "sheet_cancel": {
+  "text": "Annuler",
+  "back": "Cancel",
+  "why": "Table's Annuler"
+ },
+ "done": {
+  "text": "Envoyer",
+  "back": "Send",
+  "why": "Names what happens"
+ },
+ "field_title": {
+  "text": "Titre",
+  "back": "Title",
+  "why": "Plain"
+ },
+ "field_body": {
+  "text": "Texte",
+  "back": "Text",
+  "why": "Table's ANNOUNCEMENT_BODY"
+ },
+ "after_done": {
+  "text": "Rien n'est projeté avant d'appuyer sur Envoyer",
+  "back": "Nothing is projected before pressing Send",
+  "why": "Names the button"
+ },
+ "changed": {
+  "text": "Modifié sur l'ordinateur",
+  "back": "Changed on the computer",
+  "why": "Statement"
+ },
+ "use_theirs": {
+  "text": "Prendre le sien",
+  "back": "Take theirs",
+  "why": "Pairs"
+ },
+ "keep_mine": {
+  "text": "Garder le mien",
+  "back": "Keep mine",
+  "why": "Pairs"
+ },
+ "on_computer": {
+  "text": "Sur l'ordinateur",
+  "back": "On the computer",
+  "why": "Parallel"
+ },
+ "yours": {
+  "text": "Sur ce téléphone",
+  "back": "On this phone",
+  "why": "Parallel"
+ },
+ "busy": {
+  "text": "Non enregistré, l'ordinateur modifie la même chose. Réessayez.",
+  "back": "Not saved, the computer is changing the same thing. Try again.",
+  "why": "What, then what to do"
+ },
+ "gone": {
+  "text": "Supprimé sur l'ordinateur",
+  "back": "Deleted on the computer",
+  "why": "Statement"
+ },
+ "edit_cards": {
+  "text": "Annonces",
+  "back": "Announcements",
+  "why": "Table's word"
+ },
+ "edit_birthdays": {
+  "text": "Anniversaires",
+  "back": "Birthdays",
+  "why": "Table's word"
+ },
+ "edit_week": {
+  "text": "7 prochains jours",
+  "back": "Next 7 days",
+  "why": "From today"
+ },
+ "edit_none": {
+  "text": "Vide",
+  "back": "Empty",
+  "why": "Calm"
+ },
+ "edit_person": {
+  "text": "Anniversaire",
+  "back": "Birthday",
+  "why": "One word"
+ },
+ "edit_event": {
+  "text": "Événement",
+  "back": "Event",
+  "why": "Calendar's word"
+ },
+ "name": {
+  "text": "Nom",
+  "back": "Name",
+  "why": "One word"
+ },
+ "day": {
+  "text": "Jour",
+  "back": "Day",
+  "why": "Day of the month"
+ },
+ "month": {
+  "text": "Mois",
+  "back": "Month",
+  "why": "One word"
+ },
+ "date": {
+  "text": "Date",
+  "back": "Date",
+  "why": "Same as CAL_DATE"
+ },
+ "starts": {
+  "text": "Début",
+  "back": "Start",
+  "why": "CAL_START"
+ },
+ "ends": {
+  "text": "Fin",
+  "back": "End",
+  "why": "CAL_END"
+ },
+ "this_date": {
+  "text": "Cette date seulement, les autres restent",
+  "back": "This date only, the others stay",
+  "why": "Extends CAL_THIS_EVENT"
+ },
+ "delete": {
+  "text": "Supprimer",
+  "back": "Delete",
+  "why": "Table's Supprimer"
+ },
+ "ask_delete_person": {
+  "text": "Supprimer {0} des anniversaires ?",
+  "back": "Delete {0} from the birthdays?",
+  "why": "Question"
+ },
+ "ask_delete_event": {
+  "text": "Supprimer {0} à cette date seulement ?",
+  "back": "Delete {0} on this date only?",
+  "why": "This date only"
  }
 }

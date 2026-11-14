@@ -211,13 +211,8 @@ fn templates_block(s: &App, k: &Kit, form: &Notices) -> El {
         .child(section_label(k, t::TPL_HEADING()))
         .child(rows)
         .child(section_label(k, t::TPL_STYLE()))
-        .child(
-            SegmentedControl::new(&names, NoticeStyle::ALL.iter().position(|own| *own == style))
-                .width(None)
-                .label(t::TPL_STYLE())
-                .on_pick(|s: &mut App, picked, _: &mut Tx| s.set_notice_style(NoticeStyle::ALL[picked.min(2)]))
-                .build(k),
-        )
+        // Seven names do not fit one row of the column, so they wrap as chips.
+        .child(choice_chips(k, "notice-style", t::TPL_STYLE(), &names, NoticeStyle::ALL.iter().position(|own| *own == style), |s, at| s.set_notice_style(NoticeStyle::ALL[at.min(NoticeStyle::ALL.len() - 1)])))
         .child(btn(t::TPL_SEE_ALL()).icon(&icons::ARROW_RIGHT).small().focusable().build(k, |s, _| s.open_tab(crate::state::Tab::Templates)))
 }
 
@@ -394,6 +389,30 @@ fn form(s: &App, k: &Kit, form: &Notices, width: f32) -> El {
     if !form.image.is_empty() {
         picture = picture.child(btn(t::BTN_REMOVE_PICTURE()).small().ghost().focusable().build(k, |s, _| s.set_notice_image(None)));
     }
+    let image2_file = std::path::Path::new(&form.image2).file_name().map(|name| name.to_string_lossy().to_string()).unwrap_or_default();
+    let mut picture2 = row()
+        .w_full()
+        .h(36.0)
+        .gap(space::S2)
+        .center_y()
+        .child(text(t::ANNOUNCEMENT_PICTURE2()).font(type_::BODY).color(k.c.text_base))
+        .child(text(image2_file).font(type_::SMALL).color(k.c.text_muted).truncate().grow(1.0))
+        .child(btn(t::LOOK_CHOOSE_LOGO()).icon(&icons::IMAGE).small().focusable().build(k, |s, _| s.want_notice_image2 = true));
+    if !form.image2.is_empty() {
+        picture2 = picture2.child(btn(t::BTN_REMOVE_PICTURE()).small().ghost().focusable().build(k, |s, _| s.set_notice_image2(None)));
+    }
+    let qris_file = std::path::Path::new(&form.qris).file_name().map(|name| name.to_string_lossy().to_string()).unwrap_or_default();
+    let mut qris = row()
+        .w_full()
+        .h(36.0)
+        .gap(space::S2)
+        .center_y()
+        .child(text(t::ANNOUNCEMENT_QRIS()).font(type_::BODY).color(k.c.text_base))
+        .child(text(qris_file).font(type_::SMALL).color(k.c.text_muted).truncate().grow(1.0))
+        .child(btn(t::LOOK_CHOOSE_LOGO()).icon(&icons::IMAGE).small().focusable().build(k, |s, _| s.want_notice_qris = true));
+    if !form.qris.is_empty() {
+        qris = qris.child(btn(t::BTN_REMOVE_PICTURE()).small().ghost().focusable().build(k, |s, _| s.set_notice_qris(None)));
+    }
     // How it will look, drawn from what is in the form now; an empty window says so in its place.
     let shown = (width - 2.0 * space::S5).clamp(200.0, PREVIEW);
     let card = draft.clone().unwrap_or_default();
@@ -496,6 +515,8 @@ fn form(s: &App, k: &Kit, form: &Notices, width: f32) -> El {
         )
         .children(crate::ui::colour::rows(s, k, ColourFor::NoticeTitle, t::NOTICE_TITLE_COLOUR(), &crate::ui::look::text_colours()))
         .child(picture)
+        .children((!form.image.is_empty()).then_some(picture2))
+        .children((form.fill == Fill::Transfer).then_some(qris))
         .scroll_bar(k);
     // The two buttons that finish the form sit under it and never scroll away: the tester's
     // Save was half off the bottom edge of a laptop screen (2026-11-11).

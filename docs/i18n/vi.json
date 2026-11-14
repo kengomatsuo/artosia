@@ -5769,5 +5769,96 @@
   "text": "Đã xóa phần này",
   "back": "This part deleted",
   "why": "table's word for a song part, short"
+ },
+ "PHONE_PAIRED": {
+  "text": "Đang kết nối",
+  "back": "Connected now",
+  "why": "Same đang kết nối as the table's phones line"
+ },
+ "PHONE_CONTROL": {
+  "text": "Điều khiển",
+  "back": "Control",
+  "why": "The start level: moving only"
+ },
+ "PHONE_EDIT": {
+  "text": "Sửa",
+  "back": "Edit",
+  "why": "Same as the computer's Sửa"
+ },
+ "PHONE_EDIT_PIN": {
+  "text": "Mã PIN thứ hai để sửa chữ",
+  "back": "Second PIN to edit words",
+  "why": "Label; chữ is the table's word for text on screen"
+ },
+ "PHONE_EDIT_PIN_HINT": {
+  "text": "Điện thoại gõ mã này thay mã PIN đầu",
+  "back": "The phone types this in place of the first PIN",
+  "why": "Short, no full stop"
+ },
+ "PHONE_EDIT_RULE": {
+  "text": "Phải cho phép ở đây thì điện thoại mới sửa được chữ. Tắt điều khiển là thu hết quyền.",
+  "back": "Only when allowed here can a phone edit words. Turning remote off takes all permissions back.",
+  "why": "Two sentences"
+ },
+ "PHONE_EDIT_BUSY": {
+  "text": "Đã bỏ thay đổi từ điện thoại vì máy tính đang sửa mục này",
+  "back": "The change from the phone was dropped because the computer is editing this item",
+  "why": "One reason"
+ },
+ "PHONE_EDIT_OLD": {
+  "text": "Đã bỏ thay đổi từ điện thoại vì dựa trên bản cũ",
+  "back": "The change from the phone was dropped because it was based on an old version",
+  "why": "Different reason"
+ },
+ "phone_label": {
+  "text": {
+   "plain": "Điện thoại {number}",
+   "kind": "Điện thoại {number}, {kind}"
+  },
+  "back": {
+   "plain": "Phone {number}",
+   "kind": "Phone {number}, {kind}"
+  },
+  "why": "Table's word for phone"
+ },
+ "STYLE_GREIGE": {
+  "text": "Bản tin",
+  "back": "Bulletin",
+  "why": "The printed sheet of a service"
+ },
+ "STYLE_PILL": {
+  "text": "Áp phích",
+  "back": "Poster",
+  "why": "Poster look"
+ },
+ "STYLE_NEON": {
+  "text": "Neon",
+  "back": "Neon",
+  "why": "Loan word"
+ },
+ "STYLE_SPLIT": {
+  "text": "Chia đôi",
+  "back": "Split in two",
+  "why": "Says the cut"
+ },
+ "ANNOUNCEMENT_QRIS": {
+  "text": "Ảnh QRIS",
+  "back": "QRIS picture",
+  "why": "Ảnh is the table's picture word"
+ },
+ "SETTINGS_CHURCH": {
+  "text": "Tên nhà thờ",
+  "back": "Church name",
+  "why": "Table says nhà thờ"
+ },
+ "SETTINGS_CHURCH_HINT": {
+  "text": "Hiện trên trang thông báo",
+  "back": "Shows on the announcement slides",
+  "why": "trang is the table's slide word"
+ },
+ "ANNOUNCEMENT_PICTURE2": {
+  "text": "Ảnh thứ hai",
+  "back": "Second picture",
+  "why": "Pairs with Ảnh"
  }
 }

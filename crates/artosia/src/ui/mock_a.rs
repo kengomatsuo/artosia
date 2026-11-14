@@ -109,7 +109,7 @@ fn notice_state(kind: NoticeKind, style: NoticeStyle, look: usize) -> OutputStat
             ("Persembahan syukur", lines.join("\n"))
         }
         NoticeKind::Account => ("Persembahan lewat transfer", "Bank Contoh\n123 456 7890\na.n. Gereja Contoh".to_string()),
-        NoticeKind::Plain => ("Ibadah Padang", "Sabtu, 8 November 2026\nJam 10.00".to_string()),
+        NoticeKind::Plain | NoticeKind::Verse => ("Ibadah Padang", "Sabtu, 8 November 2026\nJam 10.00".to_string()),
     };
     let mut look_value = presets()[look].clone();
     look_value.notice_style = style;

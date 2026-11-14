@@ -5759,5 +5759,93 @@
   "text": "已刪除該段落",
   "back": "Deleted that section",
   "why": "table's word for a song part, short"
+ },
+ "PHONE_PAIRED": {
+  "text": "已連線的手機",
+  "back": "Phones that are connected",
+  "why": "連線 matches the phone page"
+ },
+ "PHONE_CONTROL": {
+  "text": "只遙控",
+  "back": "Remote only",
+  "why": "short phrase for the starting level"
+ },
+ "PHONE_EDIT": {
+  "text": "可編輯",
+  "back": "Can edit",
+  "why": "level above, same 編輯 as the Edit button"
+ },
+ "PHONE_EDIT_PIN": {
+  "text": "編輯專用 PIN 碼",
+  "back": "PIN code just for editing",
+  "why": "PIN 碼 is the existing label"
+ },
+ "PHONE_EDIT_PIN_HINT": {
+  "text": "手機連線時輸入這組，取代第一組 PIN 碼",
+  "back": "Type this set when the phone connects, in place of the first PIN code",
+  "why": "says where it is used"
+ },
+ "PHONE_EDIT_RULE": {
+  "text": "在這裡允許之前，手機不能改文字。關閉手機遙控，所有手機的權限都會收回。",
+  "back": "Until you allow it here, a phone cannot change the words. Turn the phone remote off and every phone loses its permission.",
+  "why": "文字 is the everyday word for slide words"
+ },
+ "PHONE_EDIT_BUSY": {
+  "text": "手機的修改已捨棄，因為這裡正在編輯同一項",
+  "back": "The phone's change was discarded because the same item is being edited here",
+  "why": "reason in one clause"
+ },
+ "PHONE_EDIT_OLD": {
+  "text": "手機的修改已捨棄，因為它改的是舊版文字",
+  "back": "The phone's change was discarded because it changed an old version of the words",
+  "why": "different reason: old version"
+ },
+ "phone_label": {
+  "text": {
+   "plain": "手機 {number}",
+   "kind": "手機 {number}，{kind}"
+  },
+  "back": "Phone {number} / Phone {number}, {kind}",
+  "why": "phone word, number, then kind after a comma"
+ },
+ "STYLE_GREIGE": {
+  "text": "素紙",
+  "back": "Plain paper",
+  "why": "a printed order of service on paper"
+ },
+ "STYLE_PILL": {
+  "text": "圓角貼紙",
+  "back": "Round sticker",
+  "why": "rounded shapes and a sticker"
+ },
+ "STYLE_NEON": {
+  "text": "霓虹",
+  "back": "Neon",
+  "why": "the usual word for glowing night lights"
+ },
+ "STYLE_SPLIT": {
+  "text": "左右分欄",
+  "back": "Left-right columns",
+  "why": "two halves side by side"
+ },
+ "ANNOUNCEMENT_QRIS": {
+  "text": "QRIS 圖片",
+  "back": "QRIS picture",
+  "why": "QRIS stays; 圖片 as in the picture row"
+ },
+ "SETTINGS_CHURCH": {
+  "text": "教會名稱",
+  "back": "Church name",
+  "why": "教會 is the church word"
+ },
+ "SETTINGS_CHURCH_HINT": {
+  "text": "顯示在公告投影片上",
+  "back": "Shown on the announcement slides",
+  "why": "tells where the name appears"
+ },
+ "ANNOUNCEMENT_PICTURE2": {
+  "text": "第二張圖片",
+  "back": "Second picture",
+  "why": "parallel to 圖片"
  }
 }

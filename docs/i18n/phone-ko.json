@@ -303,5 +303,170 @@
   "text": "{0} {1}",
   "back": "the part's name and its number",
   "why": "same order as the window"
+ },
+ "pair_second": {
+  "text": "편집용 PIN으로 연결",
+  "back": "Connect with the editing PIN",
+  "why": "link label"
+ },
+ "pair_first": {
+  "text": "기본 PIN으로 연결",
+  "back": "Connect with the basic PIN",
+  "why": "the PIN every phone starts with"
+ },
+ "pin_hint_second": {
+  "text": "컴퓨터의 휴대폰 리모컨 창에 나온 편집용 번호를 입력하세요",
+  "back": "Type the editing number shown in the phone remote window on the computer",
+  "why": "same verb 입력하세요 as the ordinary line"
+ },
+ "edit": {
+  "text": "편집",
+  "back": "Edit",
+  "why": "same as the computer's Edit"
+ },
+ "edit_text": {
+  "text": "글자 편집",
+  "back": "Edit letters",
+  "why": "글자 for slide text"
+ },
+ "sheet_cancel": {
+  "text": "취소",
+  "back": "Cancel",
+  "why": "phone table cancel"
+ },
+ "done": {
+  "text": "완료",
+  "back": "Done",
+  "why": "same as the computer's Done"
+ },
+ "field_title": {
+  "text": "제목",
+  "back": "Heading",
+  "why": "one word"
+ },
+ "field_body": {
+  "text": "내용",
+  "back": "Content",
+  "why": "same as the computer's body label"
+ },
+ "after_done": {
+  "text": "“완료”를 누르기 전에는 프로젝터에 안 나가요",
+  "back": "Until you press Done, it does not go to the projector",
+  "why": "프로젝터 as in the phone table"
+ },
+ "changed": {
+  "text": "컴퓨터에서 먼저 바뀌었어요",
+  "back": "It was changed first on the computer",
+  "why": "a statement"
+ },
+ "use_theirs": {
+  "text": "컴퓨터 것 쓰기",
+  "back": "Use the computer's",
+  "why": "theirs means the computer"
+ },
+ "keep_mine": {
+  "text": "내 것 유지",
+  "back": "Keep mine",
+  "why": "pairs with the sibling"
+ },
+ "on_computer": {
+  "text": "컴퓨터에 있는 내용",
+  "back": "What is on the computer",
+  "why": "parallel to the phone label"
+ },
+ "yours": {
+  "text": "내가 입력한 내용",
+  "back": "What I typed",
+  "why": "parallel to the computer label"
+ },
+ "busy": {
+  "text": "컴퓨터에서 편집 중이라 저장 못 했어요. 잠시 뒤 다시 해 보세요",
+  "back": "It could not be saved because it is being edited on the computer. Try again in a moment",
+  "why": "what is going on, then what to do"
+ },
+ "gone": {
+  "text": "컴퓨터에서 이미 삭제됐어요",
+  "back": "It has already been deleted on the computer",
+  "why": "statement, no full stop"
+ },
+ "edit_cards": {
+  "text": "공지",
+  "back": "Announcements",
+  "why": "the computer's word"
+ },
+ "edit_birthdays": {
+  "text": "생일",
+  "back": "Birthdays",
+  "why": "word of the birthday announcement"
+ },
+ "edit_week": {
+  "text": "앞으로 7일 일정",
+  "back": "Events in the next 7 days",
+  "why": "counted from today"
+ },
+ "edit_none": {
+  "text": "아직 없어요",
+  "back": "Nothing yet",
+  "why": "calm, no apology"
+ },
+ "edit_person": {
+  "text": "생일",
+  "back": "Birthday",
+  "why": "one word"
+ },
+ "edit_event": {
+  "text": "일정",
+  "back": "Event",
+  "why": "the calendar's word 일정"
+ },
+ "name": {
+  "text": "이름",
+  "back": "Name",
+  "why": "fits a person and an event"
+ },
+ "day": {
+  "text": "일",
+  "back": "Day",
+  "why": "day of the month"
+ },
+ "month": {
+  "text": "월",
+  "back": "Month",
+  "why": "one syllable as on a calendar"
+ },
+ "date": {
+  "text": "날짜",
+  "back": "Date",
+  "why": "full date"
+ },
+ "starts": {
+  "text": "시작",
+  "back": "Start",
+  "why": "parallel to the end"
+ },
+ "ends": {
+  "text": "종료",
+  "back": "End",
+  "why": "parallel to the start"
+ },
+ "this_date": {
+  "text": "이 날짜만 바뀌고 다른 날짜는 그대로예요",
+  "back": "Only this date changes and the other dates stay as they are",
+  "why": "short statement"
+ },
+ "delete": {
+  "text": "삭제",
+  "back": "Delete",
+  "why": "same on both buttons"
+ },
+ "ask_delete_person": {
+  "text": "생일 목록에서 “{0}” 삭제할까요?",
+  "back": "Delete \"{0}\" from the birthday list?",
+  "why": "question with the name, no particle on a variable"
+ },
+ "ask_delete_event": {
+  "text": "이 날짜의 “{0}”만 삭제할까요? 다른 날짜는 그대로예요",
+  "back": "Delete only \"{0}\" on this date? The other dates stay",
+  "why": "this date only, said plainly"
  }
 }

@@ -23,7 +23,7 @@
 html, body { height: 100%; margin: 0; background: var(--field); color: var(--text); font-family: var(--font); font-size: 16px; line-height: 1.3; -webkit-font-smoothing: antialiased; }
 body { overscroll-behavior: none; }
 [hidden] { display: none !important; }
-button, input { font: inherit; color: inherit; }
+button, input, textarea, select { font: inherit; color: inherit; }
 button { border: 0; background: none; cursor: pointer; touch-action: manipulation; user-select: none; -webkit-user-select: none; padding: 0; }
 button:focus-visible, input:focus-visible, .prow:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
 button:disabled { opacity: 0.45; cursor: default; }
@@ -182,6 +182,55 @@ svg.ic { width: 22px; height: 22px; flex: 0 0 auto; fill: none; stroke: currentC
 @media (hover: hover) and (pointer: fine) { #keys-card { display: flex; } }
 #keys-text { line-height: 1.5; }
 
+/* editing (PHONEEDIT1): the Edit pill on the live card, the lists, and one sheet over everything */
+.linkbtn { min-height: 44px; padding: 0 12px; color: var(--blue); font-weight: 600; text-align: center; }
+#edit-pill { flex: 0 0 auto; min-width: 92px; height: 44px; padding: 0 16px; border-radius: 22px; background: var(--pill); display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-weight: 600; font-size: 1.0625rem; }
+#edit-pill svg.ic { width: 18px; height: 18px; }
+#now #edit-pill { margin-left: 8px; }
+#now #count { margin-left: auto; }
+#now.has-edit #count { margin-left: 0; }
+#now.has-edit b { flex: 1 1 auto; }
+#edit-list { padding-bottom: 24px; }
+.band.head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.band.head .sp { min-height: 44px; width: auto; min-width: 72px; }
+.erow { display: flex; align-items: center; gap: 12px; width: 100%; min-height: 64px; padding: 10px 14px; text-align: left; background: var(--row); border-bottom: 1px solid var(--line); border-left: 5px solid transparent; }
+.erow.soon { border-left-color: var(--blue); }
+.erow.soon .t { font-weight: 800; }
+.erow .meta { flex: 1 1 auto; min-width: 0; }
+.erow .t { font-size: 1.0625rem; font-weight: 600; overflow-wrap: anywhere; }
+.erow .d { color: var(--muted); font-size: 0.875rem; margin-top: 2px; }
+.erow svg.ic { color: var(--muted); transform: rotate(180deg); }
+#sheet { position: fixed; left: 0; right: 0; top: 0; height: 100dvh; z-index: 20; display: flex; flex-direction: column; max-width: 640px; margin: 0 auto; background: var(--field); border-radius: 18px 18px 0 0; overflow: hidden; }
+#sheet-head { flex: 0 0 auto; display: grid; grid-template-columns: minmax(84px, auto) minmax(0, 1fr) minmax(84px, auto); align-items: center; gap: 8px; padding: max(8px, env(safe-area-inset-top)) 12px 8px; background: var(--bar); }
+#sheet-title { text-align: center; font-weight: 700; font-size: 1.0625rem; overflow-wrap: anywhere; line-height: 1.15; }
+.hbtn { min-height: 44px; padding: 0 16px; border-radius: 22px; background: var(--deep); font-weight: 600; font-size: 1.0625rem; }
+.hbtn.go { background: var(--blue); color: var(--on-blue); }
+.hbtn.go:disabled { background: var(--pill); color: var(--muted); opacity: 1; }
+#sheet-body { flex: 1 1 auto; min-height: 0; overflow-y: auto; padding: 14px 12px; display: flex; flex-direction: column; gap: 12px; }
+#sheet-conflict { display: flex; flex-direction: column; gap: 10px; padding: 12px 14px; border-radius: 14px; background: var(--warn); color: var(--on-warn); }
+#sheet-conflict b { font-size: 1.0625rem; }
+#sheet-conflict .two .sp { min-height: 44px; font-size: 1.0625rem; background: rgba(32, 26, 9, 0.16); color: var(--on-warn); }
+#sheet-conflict .two .sp.go { background: var(--on-warn); color: var(--warn); }
+#sheet-conflict .cmp { color: var(--text); }
+#sheet-conflict .note { color: var(--on-warn); }
+.cmp { display: flex; flex-direction: column; gap: 2px; padding: 8px 10px; border-radius: 10px; background: var(--deep); }
+.cmp small { color: var(--muted); font-size: 0.8125rem; }
+.cmp span { white-space: pre-wrap; overflow-wrap: anywhere; }
+.warnline { margin: 0; color: var(--warn); font-weight: 600; font-size: 0.9375rem; }
+.pv { background: #14141c; border-radius: 6px; padding: 12px 14px; text-align: center; display: flex; flex-direction: column; gap: 6px; max-height: 26vh; overflow: hidden; }
+.pv b { font-size: 1.375rem; line-height: 1.2; overflow-wrap: anywhere; }
+.pv span { font-size: 1.0625rem; white-space: pre-wrap; overflow-wrap: anywhere; }
+textarea.field { height: auto; min-height: 132px; padding: 12px 14px; font-size: 1.125rem; line-height: 1.35; resize: none; }
+.lbl { display: flex; flex-direction: column; gap: 6px; font-size: 0.8125rem; color: var(--muted); font-weight: 600; }
+.lbl .field { font-size: 1.125rem; color: var(--text); font-weight: 400; }
+select.field { appearance: none; -webkit-appearance: none; }
+.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.row3 { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 10px; }
+.dangerbtn { min-height: 48px; border-radius: 12px; background: var(--deep); color: var(--warn); font-weight: 600; font-size: 1.0625rem; }
+#confirm { position: absolute; inset: 0; z-index: 2; display: flex; align-items: flex-end; background: rgba(0,0,0,0.5); }
+#confirm .card { width: 100%; background: var(--bar); border-radius: 18px 18px 0 0; padding: 18px 16px calc(18px + env(safe-area-inset-bottom)); display: flex; flex-direction: column; gap: 14px; }
+#confirm p { margin: 0; font-size: 1.0625rem; font-weight: 600; overflow-wrap: anywhere; }
+
 /* A short phone: the slide gives up height before the buttons do. */
 @media (max-height: 700px) {
   #steps button { min-height: 52px; } .flag { min-height: 52px; } #stage { gap: 8px; padding-top: 8px; }
@@ -208,16 +257,18 @@ svg.ic { width: 22px; height: 22px; flex: 0 0 auto; fill: none; stroke: currentC
   <symbol id="i-item" viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="2.5"/></symbol>
   <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
   <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+  <symbol id="i-edit" viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16zM13.5 6.5l4 4"/></symbol>
   <symbol id="i-lost" viewBox="0 0 24 24"><path d="M4.5 9.5a11 11 0 0 1 15 0M7.5 13a7 7 0 0 1 9 0M12 17h.01M4 4l16 16"/></symbol>
 </svg>
 
 <main id="pair" hidden>
   <h1 data-i="pair_title">Artosia remote</h1>
-  <p class="lead" data-i="pin_hint"></p>
+  <p class="lead" id="pair-lead" data-i="pin_hint"></p>
   <div class="cells" id="cells"><div class="cell at"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
     <input id="pin" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="one-time-code" data-i-aria="pin"></div>
   <p id="pair-error" role="alert"></p>
   <button id="pair-btn" class="cta press" type="button" data-i="connect">Connect</button>
+  <button id="pin-switch" class="linkbtn" type="button" data-keep></button>
   <div data-lang-switch></div>
 </main>
 
@@ -239,7 +290,7 @@ svg.ic { width: 22px; height: 22px; flex: 0 0 auto; fill: none; stroke: currentC
   <div id="screens">
     <section id="pane-live" class="screen" role="tabpanel">
       <div id="stage">
-        <div id="now"><b id="title"></b><span class="pill warn" id="clock-pill" data-clock-pill data-clock hidden></span><span id="count"></span></div>
+        <div id="now"><b id="title"></b><span class="pill warn" id="clock-pill" data-clock-pill data-clock hidden></span><span id="count"></span><button id="edit-pill" class="press" type="button" data-keep hidden><svg class="ic" aria-hidden="true"><use href="#i-edit"/></svg><span data-i="edit"></span></button></div>
         <div id="slide"><span class="pill tag name" id="live-tag"></span><span class="pill state" id="live-state"></span><div id="live-text" class="voices"></div></div>
         <div id="steps">
           <button class="press" type="button" data-act="prev"><svg class="ic" aria-hidden="true"><use href="#i-up"/></svg><span data-i="back"></span></button>
@@ -271,7 +322,17 @@ svg.ic { width: 22px; height: 22px; flex: 0 0 auto; fill: none; stroke: currentC
       <div id="hits" class="scroll"></div>
     </section>
 
+    <section id="pane-edit" class="screen scroll" role="tabpanel" hidden>
+      <div id="edit-list"></div>
+    </section>
+
     <section id="pane-more" class="screen scroll" role="tabpanel" hidden>
+      <section class="group" id="edit-group" hidden>
+        <h2 data-i="edit"></h2>
+        <button class="sp press" type="button" data-edit-open="cards" data-i="edit_cards"></button>
+        <button class="sp press" type="button" data-edit-open="people" data-i="edit_birthdays"></button>
+        <button class="sp press" type="button" data-edit-open="events" data-i="edit_week"></button>
+      </section>
       <section class="group">
         <h2 data-i="message"></h2>
         <input id="msg" class="field" maxlength="200" autocomplete="off" data-i-ph="message_ph" data-i-aria="message">
@@ -305,6 +366,20 @@ svg.ic { width: 22px; height: 22px; flex: 0 0 auto; fill: none; stroke: currentC
   </div>
 </main>
 
+<div id="sheet" role="dialog" aria-modal="true" hidden>
+  <div id="sheet-head">
+    <button id="sheet-cancel" class="hbtn press" type="button" data-keep data-i="sheet_cancel"></button>
+    <div id="sheet-title"></div>
+    <button id="sheet-done" class="hbtn go press" type="button" data-keep data-i="done"></button>
+  </div>
+  <div id="sheet-body"></div>
+  <div id="confirm" hidden>
+    <div class="card"><p id="confirm-text"></p>
+      <div class="two"><button id="confirm-no" class="sp press" type="button" data-keep data-i="sheet_cancel"></button><button id="confirm-yes" class="sp go press" type="button" data-keep data-i="delete"></button></div>
+    </div>
+  </div>
+</div>
+
 <script>
 "use strict";
 
@@ -333,7 +408,17 @@ const STR = {
     language: "Language",
     keys_title: "Keys",
     keys_text: "Space or the down arrow: next. Up arrow: back. / : search. C: chorus. V: next verse. B: bridge. 1 to 9: that section. F1 no text, F2 black, F3 logo, F6 projector.",
-    lost: "Lost connection", retrying: "Trying again"
+    lost: "Lost connection", retrying: "Trying again",
+    pair_second: "Second PIN for editing", pair_first: "Use the first PIN", pin_hint_second: "Type the second PIN shown on the computer",
+    edit: "Edit", edit_text: "Edit text", sheet_cancel: "Cancel", done: "Done",
+    field_title: "Title", field_body: "Body", after_done: "The room sees this after Done",
+    changed: "Changed on the computer", use_theirs: "Use theirs", keep_mine: "Keep mine",
+    on_computer: "On the computer", yours: "Your text",
+    busy: "Being edited on the computer. Try again in a moment.", gone: "Removed on the computer",
+    edit_cards: "Announcements", edit_birthdays: "Birthdays", edit_week: "This week", edit_none: "Nothing here yet",
+    edit_person: "Birthday", edit_event: "Event", name: "Name", day: "Day", month: "Month",
+    date: "Date", starts: "Start", ends: "End", this_date: "Changes this date only",
+    delete: "Delete", ask_delete_person: "Delete {0}?", ask_delete_event: "Delete {0} on this date?"
   },
   id: {
     pair_title: "Remote Artosia",
@@ -389,7 +474,40 @@ const STR = {
     keys_title: "Pintasan",
     keys_text: "Space atau panah bawah maju, panah atas mundur. Tombol / membuka pencarian. R ke reff, B ke bridge. Angka 1 sampai 9 ke bagian itu. F1 sembunyikan teks, F2 hitam, F3 logo, F6 nyalakan atau matikan proyektor",
     lost: "Terputus dari komputer",
-    retrying: "Mencoba tersambung lagi"
+    retrying: "Mencoba tersambung lagi",
+    pair_second: "Pakai PIN kedua untuk ubah teks",
+    pair_first: "Pakai PIN biasa",
+    pin_hint_second: "PIN ubah teks ada di komputer, di jendela Remote ponsel",
+    edit: "Ubah",
+    edit_text: "Ubah teks",
+    sheet_cancel: "Batal",
+    done: "Kirim",
+    field_title: "Judul",
+    field_body: "Isi",
+    after_done: "Proyektor baru berubah setelah Kirim ditekan",
+    changed: "Sudah diubah di komputer",
+    use_theirs: "Pakai komputer",
+    keep_mine: "Pakai ponsel",
+    on_computer: "Di komputer",
+    yours: "Dari ponsel ini",
+    busy: "Sedang diubah di komputer, belum tersimpan. Coba lagi sebentar.",
+    gone: "Sudah dihapus di komputer",
+    edit_cards: "Pengumuman",
+    edit_birthdays: "Ulang tahun",
+    edit_week: "Kegiatan 7 hari",
+    edit_none: "Kosong",
+    edit_person: "Ulang tahun",
+    edit_event: "Kegiatan",
+    name: "Nama",
+    day: "Tanggal",
+    month: "Bulan",
+    date: "Tanggal",
+    starts: "Mulai",
+    ends: "Selesai",
+    this_date: "Hanya tanggal ini, yang lain tetap",
+    delete: "Hapus",
+    ask_delete_person: "Hapus {0} dari daftar ulang tahun?",
+    ask_delete_event: "Hapus {0} hanya di tanggal ini?"
   }
 };
 /* Names the operator sends in English, shown in the volunteer's own words. */
@@ -443,6 +561,7 @@ let sentSearch = "";
 let msgDirty = false;
 let clockTimer = null;
 let wake = null;
+let second = false;
 
 function store(name, get, value) {
   try {
@@ -517,6 +636,7 @@ function applyLang() {
   if (state) render();
   refreshSearchHint();
   tickClock();
+  paintPair();
 }
 function setLang(code) {
   lang = code;
@@ -539,9 +659,9 @@ function setScreen(name) {
   if (name === "search") $("search").focus();
 }
 function paintScreens() {
-  for (const n of ["live", "plan", "search", "more"]) $("pane-" + n).hidden = n !== screen;
+  for (const n of ["live", "plan", "search", "more", "edit"]) $("pane-" + n).hidden = n !== screen;
   $$("#seg2 button").forEach((b) => b.setAttribute("aria-selected", String(b.dataset.screen === screen)));
-  const sub = screen === "search" || screen === "more";
+  const sub = screen === "search" || screen === "more" || screen === "edit";
   $("back-grp").hidden = !sub;
   $("spacer").hidden = sub;
   $("seg2").hidden = sub;
@@ -574,7 +694,7 @@ document.addEventListener("visibilitychange", () => { if (token) keepAwake(); })
 async function pair(pin) {
   $("pair-error").textContent = "";
   try {
-    const r = await fetch("/api/pair", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ pin }) });
+    const r = await fetch("/api/pair", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ pin, edit: second }) });
     if (r.ok) {
       token = (await r.json()).token;
       store(KEY, false, token);
@@ -716,6 +836,7 @@ function render() {
   renderPlan(s);
   renderHits(s);
   renderMessage(s);
+  renderEdit(s);
   tickClock();
   if (lost) setLost(true);
 }
@@ -904,6 +1025,280 @@ function nudge(by) {
   $("cd-start").disabled = lost;
 }
 
+/* ---------- editing (PHONEEDIT1) ---------- */
+
+/* A phone sees the Edit controls only when the computer says its level is edit; the server checks it again on every edit. */
+let sheet = null; /* the open sheet: { kind, id, rev, fields, original, field, conflict, note, busy } */
+
+function renderEdit(s) {
+  const on = s.level === "edit";
+  $("edit-group").hidden = !on;
+  const card = on && s.live_card !== null && s.live_card !== undefined && (s.cards || []).some((c) => c.id === s.live_card);
+  $("edit-pill").hidden = !card;
+  $("now").classList.toggle("has-edit", !!card);
+  if (!on) {
+    if (sheet) closeSheet();
+    if (screen === "edit") setScreen("live");
+    return;
+  }
+  if (changed("editlists", [s.cards, s.people, s.events, lang])) paintEditLists(s);
+}
+
+const monthName = (m, style) => {
+  try { return new Intl.DateTimeFormat(lang, { month: style }).format(new Date(2024, m - 1, 1)); } catch (e) { return String(m); }
+};
+function dayMonth(d, m) {
+  try { return new Intl.DateTimeFormat(lang, { day: "numeric", month: "short" }).format(new Date(2024, m - 1, d)); } catch (e) { return d + "/" + m; }
+}
+const localDate = (code) => { const p = code.split("-").map(Number); return new Date(p[0], p[1] - 1, p[2]); };
+function dateText(code) {
+  try { return new Intl.DateTimeFormat(lang, { weekday: "short", day: "numeric", month: "short" }).format(localDate(code)); } catch (e) { return code; }
+}
+const hhmm = (min) => String(Math.floor(min / 60)).padStart(2, "0") + ":" + String(min % 60).padStart(2, "0");
+const minutesOf = (text) => { const p = String(text).split(":"); return p.length === 2 ? Number(p[0]) * 60 + Number(p[1]) : NaN; };
+const todayCode = () => {
+  const d = new Date((Date.now() / 1000 + clockOffset) * 1000);
+  return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+};
+
+function paintEditLists(s) {
+  const box = $("edit-list");
+  box.replaceChildren();
+  const head = (key, text, add) => {
+    const h = el("div", "band head"); h.dataset.part = key; h.append(el("span", "", text));
+    if (add) {
+      const b = el("button", "sp go press", t("add")); b.type = "button";
+      b.setAttribute("aria-label", t("add") + " " + text); b.addEventListener("click", add); h.append(b);
+    }
+    box.append(h);
+  };
+  const row = (title, sub, soon, open) => {
+    const r = el("button", "erow press" + (soon ? " soon" : "")); r.type = "button";
+    const meta = el("span", "meta"); meta.append(el("div", "t", title), el("div", "d", sub));
+    r.append(meta, icon("back")); r.addEventListener("click", open); box.append(r);
+  };
+  const none = (list) => { if (!list.length) { const p = el("p", "note", t("edit_none")); p.style.padding = "12px 16px"; box.append(p); } };
+  head("cards", t("edit_cards"), null);
+  s.cards.forEach((c) => row(c.title || c.body.split("\n")[0] || t("edit_none"), c.body_editable ? c.body.split("\n")[0] : "", false, () => openCard(c.id)));
+  none(s.cards);
+  head("people", t("edit_birthdays"), () => openPerson(0));
+  s.people.forEach((p) => row(p.name, dayMonth(p.day, p.month), p.next < 7, () => openPerson(p.id)));
+  none(s.people);
+  head("events", t("edit_week"), () => openEvent(null));
+  s.events.forEach((e) => row(e.name, dateText(e.date) + ", " + hhmm(e.start) + "-" + hhmm(e.end), false, () => openEvent(e)));
+  none(s.events);
+}
+function openEditList(part) {
+  setScreen("edit");
+  const h = document.querySelector('#edit-list [data-part="' + part + '"]');
+  if (h) h.scrollIntoView({ block: "start" });
+}
+
+function openCard(id) {
+  const c = (state.cards || []).find((x) => x.id === id);
+  if (!c) return;
+  const f = { title: c.title, body: c.body };
+  sheet = { kind: "card", id, rev: c.rev, fields: { ...f }, original: { ...f }, editBody: c.body_editable, field: "title", conflict: null, note: "", busy: false };
+  paintSheet(true);
+}
+function openPerson(id) {
+  const p = id ? (state.people || []).find((x) => x.id === id) : null;
+  if (id && !p) return;
+  const today = todayCode().split("-").map(Number);
+  const f = p ? { name: p.name, day: p.day, month: p.month } : { name: "", day: today[2], month: today[1] };
+  sheet = { kind: "person", id, rev: p ? p.rev : 0, fields: { ...f }, original: { ...f }, conflict: null, note: "", busy: false };
+  paintSheet(true);
+}
+function openEvent(e) {
+  const f = e ? { name: e.name, date: e.date, start: e.start, end: e.end } : { name: "", date: todayCode(), start: 600, end: 660 };
+  sheet = { kind: "event", id: e ? e.id : 0, rev: e ? e.rev : 0, when: e ? e.original : "", repeats: !!(e && e.repeats), fields: { ...f }, original: { ...f }, conflict: null, note: "", busy: false };
+  paintSheet(true);
+}
+
+function sheetValid() {
+  const f = sheet.fields;
+  if (sheet.kind === "card") return !!(f.title.trim() || f.body.trim());
+  if (sheet.kind === "person") return !!f.name.trim() && Number.isFinite(f.day) && Number.isFinite(f.month);
+  return !!f.name.trim() && /^\d{4}-\d{2}-\d{2}$/.test(f.date) && Number.isFinite(f.start) && Number.isFinite(f.end) && f.end > f.start;
+}
+function sheetDirty() { return JSON.stringify(sheet.fields) !== JSON.stringify(sheet.original); }
+function refreshDone() { $("sheet-done").disabled = sheet.busy || !!sheet.conflict || !sheetValid(); }
+
+function summary(kind, f) {
+  if (kind === "card") return [f.title, f.body].filter(Boolean).join("\n");
+  if (kind === "person") return f.name + ", " + dayMonth(f.day, f.month);
+  return f.name + ", " + dateText(f.date) + ", " + hhmm(f.start) + "-" + hhmm(f.end);
+}
+
+function field(label, control) {
+  const l = el("label", "lbl"); l.append(el("span", "", label), control); return l;
+}
+function input(type, value, max) {
+  const i = document.createElement("input");
+  i.className = "field"; i.type = type; i.value = value; if (max) i.maxLength = max; i.autocomplete = "off";
+  return i;
+}
+function select(options, value) {
+  const s = document.createElement("select"); s.className = "field";
+  options.forEach(([v, text]) => { const o = document.createElement("option"); o.value = v; o.textContent = text; o.selected = String(v) === String(value); s.append(o); });
+  return s;
+}
+
+function paintSheet(focus) {
+  const body = $("sheet-body");
+  const f = sheet.fields;
+  body.replaceChildren();
+  $("sheet-title").textContent = t(sheet.kind === "card" ? "edit_text" : (sheet.kind === "person" ? "edit_person" : "edit_event"));
+  if (sheet.conflict) body.append(conflictBox());
+  if (sheet.note) body.append(el("p", "warnline", sheet.note));
+  let first = null;
+  if (sheet.kind === "card") {
+    const pv = el("div", "pv"); pv.id = "pv"; body.append(pv);
+    if (sheet.editBody) {
+      const seg = el("div", "seg"); seg.setAttribute("role", "tablist");
+      for (const key of ["title", "body"]) {
+        const b = el("button", "seg-btn" + (sheet.field === key ? " on" : ""), t("field_" + key)); b.type = "button"; b.dataset.keep = "";
+        b.addEventListener("click", () => { sheet.field = key; paintSheet(true); });
+        seg.append(b);
+      }
+      body.append(seg);
+    }
+    const ta = document.createElement("textarea");
+    ta.className = "field"; ta.id = "sheet-text"; ta.lang = lang; ta.autocapitalize = "sentences";
+    ta.rows = sheet.field === "body" ? 6 : 3; ta.maxLength = sheet.field === "body" ? 600 : 120; ta.value = f[sheet.field];
+    ta.setAttribute("aria-label", t("field_" + sheet.field));
+    ta.addEventListener("input", () => { f[sheet.field] = ta.value; paintPreview(); refreshDone(); });
+    /* A title is one line: Return does not add a second. */
+    ta.addEventListener("keydown", (e) => { if (e.key === "Enter" && sheet.field === "title") e.preventDefault(); });
+    body.append(ta, el("p", "note", t("after_done")));
+    first = ta;
+    paintPreview();
+  } else if (sheet.kind === "person") {
+    const name = input("text", f.name, 80); name.autocapitalize = "words"; name.lang = lang;
+    name.addEventListener("input", () => { f.name = name.value; refreshDone(); });
+    const day = select(Array.from({ length: 31 }, (_, i) => [i + 1, String(i + 1)]), f.day);
+    const month = select(Array.from({ length: 12 }, (_, i) => [i + 1, monthName(i + 1, "long")]), f.month);
+    day.addEventListener("change", () => { f.day = Number(day.value); refreshDone(); });
+    month.addEventListener("change", () => { f.month = Number(month.value); refreshDone(); });
+    const two = el("div", "row2"); two.append(field(t("day"), day), field(t("month"), month));
+    body.append(field(t("name"), name), two);
+    first = f.name ? null : name;
+  } else {
+    const name = input("text", f.name, 80); name.autocapitalize = "sentences"; name.lang = lang;
+    const date = input("date", f.date); const start = input("time", hhmm(f.start)); const end = input("time", hhmm(f.end));
+    name.addEventListener("input", () => { f.name = name.value; refreshDone(); });
+    date.addEventListener("input", () => { f.date = date.value; refreshDone(); });
+    start.addEventListener("input", () => { f.start = minutesOf(start.value); refreshDone(); });
+    end.addEventListener("input", () => { f.end = minutesOf(end.value); refreshDone(); });
+    const two = el("div", "row2"); two.append(field(t("starts"), start), field(t("ends"), end));
+    body.append(field(t("name"), name), field(t("date"), date), two);
+    if (sheet.repeats) body.append(el("p", "note", t("this_date")));
+    first = f.name ? null : name;
+  }
+  if (sheet.kind !== "card" && sheet.id) {
+    const del = el("button", "dangerbtn press", t("delete")); del.type = "button"; del.dataset.keep = "";
+    del.addEventListener("click", askDelete);
+    body.append(del);
+  }
+  $("sheet").hidden = false;
+  fitSheet();
+  refreshDone();
+  if (focus && first) first.focus();
+}
+function paintPreview() {
+  const f = sheet.fields, pv = $("pv");
+  if (!pv) return;
+  pv.replaceChildren(...[f.title && el("b", "", f.title), f.body && el("span", "", f.body)].filter(Boolean));
+  pv.hidden = !pv.childNodes.length;
+}
+
+function conflictBox() {
+  const box = el("div"); box.id = "sheet-conflict";
+  box.append(el("b", "", t("changed")));
+  const cur = sheet.conflict.current;
+  const cmp = (label, text) => { const c = el("div", "cmp"); c.append(el("small", "", label), el("span", "", text)); return c; };
+  if (!cur) { box.append(el("p", "note", t("gone"))); return box; }
+  const theirs = sheet.kind === "card" ? { title: cur.title, body: cur.body } : (sheet.kind === "person" ? { name: cur.name, day: cur.day, month: cur.month } : { name: cur.name, date: cur.date, start: cur.start, end: cur.end });
+  box.append(cmp(t("on_computer"), summary(sheet.kind, theirs)), cmp(t("yours"), summary(sheet.kind, sheet.fields)));
+  const two = el("div", "two");
+  const use = el("button", "sp press", t("use_theirs")); use.type = "button"; use.dataset.keep = "";
+  const keep = el("button", "sp go press", t("keep_mine")); keep.type = "button"; keep.dataset.keep = "";
+  use.addEventListener("click", () => { sheet.rev = cur.rev; sheet.fields = { ...theirs }; sheet.original = { ...theirs }; sheet.conflict = null; paintSheet(true); });
+  keep.addEventListener("click", () => { sheet.rev = cur.rev; sheet.original = { ...theirs }; sheet.conflict = null; paintSheet(true); });
+  two.append(use, keep);
+  box.append(two);
+  return box;
+}
+
+function sheetCommand() {
+  const f = sheet.fields, o = sheet.original;
+  if (sheet.kind === "card") {
+    const c = { cmd: "edit", kind: "card", id: sheet.id, rev: sheet.rev };
+    if (f.title !== o.title) c.title = f.title;
+    if (f.body !== o.body) c.body = f.body;
+    return "title" in c || "body" in c ? c : null;
+  }
+  if (sheet.id && !sheetDirty()) return null;
+  if (sheet.kind === "person") return { cmd: "edit", kind: "person", id: sheet.id, rev: sheet.rev, name: f.name, day: f.day, month: f.month };
+  return { cmd: "edit", kind: "event", id: sheet.id, original: sheet.when, rev: sheet.rev, name: f.name, date: f.date, start: f.start, end: f.end };
+}
+
+/* One edit, sent once: the sheet closes on the computer's yes and keeps the draft on any refusal. */
+async function sendEdit(cmd) {
+  if (!sheet || sheet.busy) return;
+  sheet.busy = true; sheet.note = ""; refreshDone();
+  try {
+    const r = await fetch("/api/command", { method: "POST", headers: { Authorization: "Bearer " + token, "Content-Type": "application/json" }, body: JSON.stringify(cmd) });
+    if (r.status === 204) { closeSheet(); return; }
+    if (r.status === 401) { closeSheet(); unpair(); return; }
+    if (r.status === 403) { closeSheet(); return; }
+    const info = await r.json().catch(() => ({}));
+    $("confirm").hidden = true;
+    if (r.status === 409 && info.error === "stale") sheet.conflict = { current: info.current };
+    else sheet.note = t("busy");
+  } catch (e) {
+    sheet.note = t("unreachable");
+  }
+  sheet.busy = false;
+  paintSheet(false);
+}
+function doneSheet() {
+  if (!sheet || sheet.busy || sheet.conflict || !sheetValid()) return;
+  const cmd = sheetCommand();
+  if (!cmd) closeSheet(); else sendEdit(cmd);
+}
+function askDelete() {
+  $("confirm-text").textContent = sheet.kind === "person" ? t("ask_delete_person", sheet.fields.name) : t("ask_delete_event", sheet.fields.name);
+  $("confirm").hidden = false;
+}
+function confirmDelete() {
+  if (!sheet) return;
+  sendEdit(sheet.kind === "person"
+    ? { cmd: "edit", kind: "person_delete", id: sheet.id, rev: sheet.rev }
+    : { cmd: "edit", kind: "event_delete", id: sheet.id, original: sheet.when, rev: sheet.rev });
+}
+function closeSheet() {
+  sheet = null;
+  $("sheet").hidden = true;
+  $("confirm").hidden = true;
+}
+/* The sheet is as tall as what the keyboard leaves, so its header and the field stay in view. */
+function fitSheet() {
+  const sh = $("sheet"), vv = window.visualViewport;
+  sh.style.height = vv ? vv.height + "px" : "";
+  sh.style.top = vv ? vv.offsetTop + "px" : "0";
+}
+if (window.visualViewport) {
+  window.visualViewport.addEventListener("resize", fitSheet);
+  window.visualViewport.addEventListener("scroll", fitSheet);
+}
+$("sheet-cancel").addEventListener("click", closeSheet);
+$("sheet-done").addEventListener("click", doneSheet);
+$("confirm-no").addEventListener("click", () => { $("confirm").hidden = true; });
+$("confirm-yes").addEventListener("click", confirmDelete);
+$("edit-pill").addEventListener("click", () => { if (state) openCard(state.live_card); });
+$$("[data-edit-open]").forEach((b) => b.addEventListener("click", () => openEditList(b.dataset.editOpen)));
+
 /* ---------- controls ---------- */
 
 const next = () => send({ cmd: "next" });
@@ -968,6 +1363,7 @@ function jumpTo(key) {
 }
 
 document.addEventListener("keydown", (e) => {
+  if (sheet) { if (e.key === "Escape") closeSheet(); return; }
   if (!token || $("remote").hidden || e.ctrlKey || e.metaKey || e.altKey) return;
   const tg = e.target;
   const typing = tg && (tg.tagName === "INPUT" || tg.tagName === "TEXTAREA" || tg.tagName === "SELECT" || tg.isContentEditable);
@@ -997,6 +1393,17 @@ document.addEventListener("keyup", (e) => {
 function paintCells(v) {
   $$("#cells .cell").forEach((c, i) => { c.textContent = v[i] || ""; c.classList.toggle("at", i === Math.min(v.length, 3)); });
 }
+/* The second PIN is typed instead of the first when the computer offers one for editing. */
+function paintPair() {
+  $("pair-lead").dataset.i = second ? "pin_hint_second" : "pin_hint";
+  $("pair-lead").textContent = t(second ? "pin_hint_second" : "pin_hint");
+  $("pin-switch").textContent = t(second ? "pair_first" : "pair_second");
+}
+$("pin-switch").addEventListener("click", () => {
+  second = !second;
+  paintPair();
+  $("pin").value = ""; paintCells(""); $("pair-error").textContent = ""; $("pin").focus();
+});
 $("pair-btn").addEventListener("click", () => pair($("pin").value.trim()));
 $("pin").addEventListener("input", () => {
   const v = $("pin").value.replace(/\D/g, "").slice(0, 4);

@@ -25,6 +25,8 @@ pub enum NoticeKind {
     Birthdays,
     Money,
     Account,
+    /// A Bible passage with its verse numbers raised, in a style that draws it.
+    Verse,
 }
 
 /// How an announcement slide is built: its structure, not only its colours.
@@ -37,10 +39,18 @@ pub enum NoticeStyle {
     Ledger,
     /// A flat band for the title over a flat charcoal body.
     Band,
+    /// A printed order of service: greige paper, a hairline frame, a didone and one terracotta accent.
+    Greige,
+    /// Rounded pills in near-black and white on warm grey, with a yellow and an orange sticker.
+    Pill,
+    /// Navy ground with neon outlines in pink, yellow and teal.
+    Neon,
+    /// A light text panel beside a navy panel that holds the thing itself.
+    Split,
 }
 
 impl NoticeStyle {
-    pub const ALL: [NoticeStyle; 3] = [NoticeStyle::Hairline, NoticeStyle::Ledger, NoticeStyle::Band];
+    pub const ALL: [NoticeStyle; 7] = [NoticeStyle::Hairline, NoticeStyle::Ledger, NoticeStyle::Band, NoticeStyle::Greige, NoticeStyle::Pill, NoticeStyle::Neon, NoticeStyle::Split];
 
     /// The word stored in the library.
     pub fn code(self) -> &'static str {
@@ -48,7 +58,16 @@ impl NoticeStyle {
             NoticeStyle::Hairline => "hairline",
             NoticeStyle::Ledger => "ledger",
             NoticeStyle::Band => "band",
+            NoticeStyle::Greige => "greige",
+            NoticeStyle::Pill => "pill",
+            NoticeStyle::Neon => "neon",
+            NoticeStyle::Split => "split",
         }
+    }
+
+    /// Whether the style brings its own ground, fonts and palette and ignores the look's.
+    pub fn is_poster(self) -> bool {
+        matches!(self, NoticeStyle::Greige | NoticeStyle::Pill | NoticeStyle::Neon | NoticeStyle::Split)
     }
 
     /// None for a card that chose no style and follows the look.
@@ -103,6 +122,24 @@ pub struct Slide {
     /// The rows of a notice's table that stand out, by their place among its rows.
     #[serde(default)]
     pub marked: Vec<usize>,
+    /// The passage's verses by number, for a style that raises the numbers; empty otherwise.
+    #[serde(default)]
+    pub verses: Vec<(u32, String)>,
+    /// The date of each row of a schedule, in step with its rows; of a plain notice, its date.
+    #[serde(default)]
+    pub dates: Vec<Date>,
+    /// The first and last day of the window the card reads, which a week strip draws.
+    #[serde(default)]
+    pub week: Option<(Date, Date)>,
+    /// The QRIS picture of a transfer slide, as a path; empty for none.
+    #[serde(default)]
+    pub qris: String,
+    /// A second picture of a card, as a path; a style that stacks two pictures uses `image` twice when empty.
+    #[serde(default)]
+    pub image2: String,
+    /// The church's name, for the kicker.
+    #[serde(default)]
+    pub church: String,
 }
 
 /// One further language on a slide.
@@ -226,6 +263,12 @@ pub struct Announcement {
     /// A picture shown with the words, as a path; empty when there is none.
     #[serde(default)]
     pub image: String,
+    /// The QRIS picture of a transfer card, as a path; empty when there is none.
+    #[serde(default)]
+    pub qris: String,
+    /// A second picture of the card, as a path; empty when there is none.
+    #[serde(default)]
+    pub image2: String,
     #[serde(default)]
     pub fill: Fill,
     /// The reference of a passage card as the volunteer typed it ("Mazmur 23:1-3"); read with
@@ -279,6 +322,8 @@ pub struct Today<'a> {
     pub total: &'a str,
     /// The church's first weekday, 0 for Sunday: the week a card reads starts on it.
     pub first_weekday: u8,
+    /// The church's name, written in the kicker of a style that has one.
+    pub church: &'a str,
 }
 
 /// The most names on one birthday slide, three columns of ten; more go on a second slide.
@@ -593,6 +638,7 @@ pub fn passage_deck(bible: &Bible, reference: &Reference, second: Option<&Bible>
             text: join(bible, &span),
             second: second.map(|other| join(other, &span)).unwrap_or_default(),
             caption: format!("{label} {codes}"),
+            verses: bible.verses(&span).iter().map(|verse| (u32::from(verse.verse), verse.text.to_string())).collect(),
             ..Slide::default()
         });
     }
@@ -641,6 +687,11 @@ pub fn announcement_pages(announcements: &[Announcement], people: &[Person], eve
                 let mut slide = announcement_slide(&Announcement { body: schedule_lines(group, today).join("
 "), ..item.clone() });
                 slide.notice = NoticeKind::Schedule;
+                slide.dates = group.iter().map(|(date, _, _)| *date).collect();
+                let shown = today.shown(&item.window);
+                slide.week = Some((shown.from, shown.to));
+                // A highlighted day of the window marks its rows, which a style draws with a word.
+                slide.marked = group.iter().enumerate().filter(|(_, (date, _, _))| shown.highlight.is_some_and(|(from, to)| *date >= from && *date <= to)).map(|(at, _)| at).collect();
                 pages.push((at, slide));
             }
             continue;
@@ -680,6 +731,9 @@ pub fn announcement_pages(announcements: &[Announcement], people: &[Person], eve
             let mut slide = announcement_slide(&filled);
             slide.notice = NoticeKind::Birthdays;
             slide.marked = group.iter().enumerate().filter(|(_, found)| found.marked).map(|(at, _)| at).collect();
+            let shown = today.shown(&item.window);
+            slide.week = Some(shown.highlight.unwrap_or((shown.from, shown.to)));
+            slide.dates = group.iter().map(|found| found.date).collect();
             pages.push((at, slide));
         }
     }
@@ -687,6 +741,15 @@ pub fn announcement_pages(announcements: &[Announcement], people: &[Person], eve
     for (at, slide) in &mut pages {
         slide.style = announcements[*at].style;
         slide.title_colour = announcements[*at].title_colour;
+        slide.church = today.church.to_string();
+        slide.image2 = announcements[*at].image2.clone();
+        if slide.notice == NoticeKind::Account {
+            slide.qris = announcements[*at].qris.clone();
+        }
+        // A passage in a style that draws verses is a Verse notice; its numbers are raised there.
+        if slide.kind == SlideKind::Scripture && slide.style.is_some_and(NoticeStyle::is_poster) {
+            slide.notice = NoticeKind::Verse;
+        }
     }
     pages
 }
@@ -823,7 +886,7 @@ Write the fund"));
 
     /// A day of 2026, with English names, for the cards that read the date.
     fn today_on<'a>(month: u8, day: u8, months: &'a [&'a str; 12]) -> Today<'a> {
-        Today { year: 2026, month, day, months, weekdays: &WEEKDAYS, clock: clock_dotted, date: day_first, total: "Total", first_weekday: 0 }
+        Today { year: 2026, month, day, months, weekdays: &WEEKDAYS, clock: clock_dotted, date: day_first, total: "Total", first_weekday: 0, church: "" }
     }
 
     /// The seven days from today, as the schedule card read them before it had windows.

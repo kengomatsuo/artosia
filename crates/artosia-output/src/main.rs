@@ -19,6 +19,7 @@ mod media;
 mod placer;
 #[cfg(feature = "video")]
 mod video;
+mod warta_data;
 
 use std::io::{BufRead, BufReader, Write};
 use std::net::{Ipv4Addr, TcpListener, TcpStream};
@@ -139,11 +140,13 @@ pub(crate) struct Screen {
     logo: Option<(String, Image)>,
     /// The picture of the slide on screen, when it has one.
     slide_picture: Option<(String, Image)>,
+    slide_qris: Option<(String, Image)>,
+    slide_image2: Option<(String, Image)>,
 }
 
 impl Screen {
     fn new(role: Role, number: usize) -> Screen {
-        Screen { role, number, seen: 0, tick: 0, now: unix_now(), images: None, picture: None, logo: None, slide_picture: None }
+        Screen { role, number, seen: 0, tick: 0, now: unix_now(), images: None, picture: None, logo: None, slide_picture: None, slide_qris: None, slide_image2: None }
     }
 }
 
@@ -175,6 +178,13 @@ fn setup(s: &mut Screen, waker: Waker) {
         shared.item_surface.set_waker(waker.clone());
         warp().add_waker(waker.clone());
         s.images = Some(ImageCache::new(waker));
+    }
+}
+
+/// A headless snapshot draws once, so it waits for a slide's picture to decode; the projector never blocks.
+fn waited(image: &Image) {
+    if std::env::args().any(|arg| arg == "--snap") {
+        let _ = image.wait();
     }
 }
 
@@ -214,10 +224,27 @@ fn poll(s: &mut Screen, _clock: f64, tx: &mut Tx) -> bool {
                 (path, image)
             });
         }
+        let second = state.slide.as_ref().map(|slide| slide.image2.clone()).filter(|path| !path.is_empty());
+        if s.slide_image2.as_ref().map(|(path, _)| path) != second.as_ref() {
+            s.slide_image2 = second.map(|path| {
+                let image = images.file(&path, 1920.0, 1.0);
+                waited(&image);
+                (path, image)
+            });
+        }
+        let qris = state.slide.as_ref().map(|slide| slide.qris.clone()).filter(|path| !path.is_empty());
+        if s.slide_qris.as_ref().map(|(path, _)| path) != qris.as_ref() {
+            s.slide_qris = qris.map(|path| {
+                let image = images.file(&path, 1920.0, 1.0);
+                waited(&image);
+                (path, image)
+            });
+        }
         let slide = state.slide.as_ref().map(|slide| slide.image.clone()).filter(|path| !path.is_empty());
         if s.slide_picture.as_ref().map(|(path, _)| path) != slide.as_ref() {
             s.slide_picture = slide.map(|path| {
                 let image = images.file(&path, 1920.0, 1.0);
+                waited(&image);
                 (path, image)
             });
         }
@@ -271,6 +298,8 @@ fn view(s: &Screen, cx: &mut Cx<Screen>) -> El {
                 video: video.filter(|_| state.look.is_moving()),
                 logo: s.logo.as_ref().map(|(_, image)| image.pixels()),
                 slide: s.slide_picture.as_ref().map(|(_, image)| image.pixels()),
+                qris: s.slide_qris.as_ref().map(|(_, image)| image.pixels()),
+                photo2: s.slide_image2.as_ref().map(|(_, image)| image.pixels()),
                 item: None,
             };
             let item = (shared.item_live.load(Ordering::Acquire) && !shared.quiet.load(Ordering::Acquire) && state.media.as_ref().is_some_and(|item| item.kind == MediaKind::Video)).then_some(&shared.item_surface);
@@ -419,6 +448,54 @@ const SCENES: &[Scene] = &[
     ("notice-band-money", |_| shared().set_state(demo::notice_scene(NoticeStyle::Band, NoticeKind::Money))),
     ("notice-band-account", |_| shared().set_state(demo::notice_scene(NoticeStyle::Band, NoticeKind::Account))),
     ("notice-band-plain", |_| shared().set_state(demo::notice_scene(NoticeStyle::Band, NoticeKind::Plain))),
+    ("notice-style-greige-schedule", |_| shared().set_state(demo::poster_scene(NoticeStyle::Greige, NoticeKind::Schedule, true))),
+    ("notice-style-greige-birthdays", |_| shared().set_state(demo::poster_scene(NoticeStyle::Greige, NoticeKind::Birthdays, true))),
+    ("notice-style-greige-money", |_| shared().set_state(demo::poster_scene(NoticeStyle::Greige, NoticeKind::Money, true))),
+    ("notice-style-greige-account", |_| shared().set_state(demo::poster_scene(NoticeStyle::Greige, NoticeKind::Account, true))),
+    ("notice-style-greige-verse", |_| shared().set_state(demo::poster_scene(NoticeStyle::Greige, NoticeKind::Verse, true))),
+    ("notice-style-greige-plain", |_| shared().set_state(demo::poster_scene(NoticeStyle::Greige, NoticeKind::Plain, true))),
+    ("notice-style-greige-plain-nopic", |_| shared().set_state(demo::poster_scene(NoticeStyle::Greige, NoticeKind::Plain, false))),
+    ("notice-style-greige-account-noqris", |_| shared().set_state(demo::poster_scene(NoticeStyle::Greige, NoticeKind::Account, false))),
+    ("notice-style-pill-schedule", |_| shared().set_state(demo::poster_scene(NoticeStyle::Pill, NoticeKind::Schedule, true))),
+    ("notice-style-pill-birthdays", |_| shared().set_state(demo::poster_scene(NoticeStyle::Pill, NoticeKind::Birthdays, true))),
+    ("notice-style-pill-money", |_| shared().set_state(demo::poster_scene(NoticeStyle::Pill, NoticeKind::Money, true))),
+    ("notice-style-pill-account", |_| shared().set_state(demo::poster_scene(NoticeStyle::Pill, NoticeKind::Account, true))),
+    ("notice-style-pill-verse", |_| shared().set_state(demo::poster_scene(NoticeStyle::Pill, NoticeKind::Verse, true))),
+    ("notice-style-pill-plain", |_| shared().set_state(demo::poster_scene(NoticeStyle::Pill, NoticeKind::Plain, true))),
+    ("notice-style-pill-plain-nopic", |_| shared().set_state(demo::poster_scene(NoticeStyle::Pill, NoticeKind::Plain, false))),
+    ("notice-style-pill-account-noqris", |_| shared().set_state(demo::poster_scene(NoticeStyle::Pill, NoticeKind::Account, false))),
+    ("notice-style-neon-schedule", |_| shared().set_state(demo::poster_scene(NoticeStyle::Neon, NoticeKind::Schedule, true))),
+    ("notice-style-neon-birthdays", |_| shared().set_state(demo::poster_scene(NoticeStyle::Neon, NoticeKind::Birthdays, true))),
+    ("notice-style-neon-money", |_| shared().set_state(demo::poster_scene(NoticeStyle::Neon, NoticeKind::Money, true))),
+    ("notice-style-neon-account", |_| shared().set_state(demo::poster_scene(NoticeStyle::Neon, NoticeKind::Account, true))),
+    ("notice-style-neon-verse", |_| shared().set_state(demo::poster_scene(NoticeStyle::Neon, NoticeKind::Verse, true))),
+    ("notice-style-neon-plain", |_| shared().set_state(demo::poster_scene(NoticeStyle::Neon, NoticeKind::Plain, true))),
+    ("notice-style-neon-plain-nopic", |_| shared().set_state(demo::poster_scene(NoticeStyle::Neon, NoticeKind::Plain, false))),
+    ("notice-style-neon-account-noqris", |_| shared().set_state(demo::poster_scene(NoticeStyle::Neon, NoticeKind::Account, false))),
+    ("notice-style-split-schedule", |_| shared().set_state(demo::poster_scene(NoticeStyle::Split, NoticeKind::Schedule, true))),
+    ("notice-style-split-birthdays", |_| shared().set_state(demo::poster_scene(NoticeStyle::Split, NoticeKind::Birthdays, true))),
+    ("notice-style-split-money", |_| shared().set_state(demo::poster_scene(NoticeStyle::Split, NoticeKind::Money, true))),
+    ("notice-style-split-account", |_| shared().set_state(demo::poster_scene(NoticeStyle::Split, NoticeKind::Account, true))),
+    ("notice-style-split-verse", |_| shared().set_state(demo::poster_scene(NoticeStyle::Split, NoticeKind::Verse, true))),
+    ("notice-style-split-plain", |_| shared().set_state(demo::poster_scene(NoticeStyle::Split, NoticeKind::Plain, true))),
+    ("notice-style-split-plain-nopic", |_| shared().set_state(demo::poster_scene(NoticeStyle::Split, NoticeKind::Plain, false))),
+    ("notice-style-split-account-noqris", |_| shared().set_state(demo::poster_scene(NoticeStyle::Split, NoticeKind::Account, false))),
+    ("notice-style-greige-schedule-little", |_| shared().set_state(demo::poster_little_scene(NoticeStyle::Greige, NoticeKind::Schedule))),
+    ("notice-style-greige-birthdays-little", |_| shared().set_state(demo::poster_little_scene(NoticeStyle::Greige, NoticeKind::Birthdays))),
+    ("notice-style-pill-schedule-little", |_| shared().set_state(demo::poster_little_scene(NoticeStyle::Pill, NoticeKind::Schedule))),
+    ("notice-style-pill-birthdays-little", |_| shared().set_state(demo::poster_little_scene(NoticeStyle::Pill, NoticeKind::Birthdays))),
+    ("notice-style-neon-schedule-little", |_| shared().set_state(demo::poster_little_scene(NoticeStyle::Neon, NoticeKind::Schedule))),
+    ("notice-style-neon-birthdays-little", |_| shared().set_state(demo::poster_little_scene(NoticeStyle::Neon, NoticeKind::Birthdays))),
+    ("notice-style-split-schedule-little", |_| shared().set_state(demo::poster_little_scene(NoticeStyle::Split, NoticeKind::Schedule))),
+    ("notice-style-split-birthdays-little", |_| shared().set_state(demo::poster_little_scene(NoticeStyle::Split, NoticeKind::Birthdays))),
+    ("notice-style-greige-schedule-long", |_| shared().set_state(demo::poster_long_scene(NoticeStyle::Greige, NoticeKind::Schedule))),
+    ("notice-style-greige-money-long", |_| shared().set_state(demo::poster_long_scene(NoticeStyle::Greige, NoticeKind::Money))),
+    ("notice-style-pill-schedule-long", |_| shared().set_state(demo::poster_long_scene(NoticeStyle::Pill, NoticeKind::Schedule))),
+    ("notice-style-pill-money-long", |_| shared().set_state(demo::poster_long_scene(NoticeStyle::Pill, NoticeKind::Money))),
+    ("notice-style-neon-schedule-long", |_| shared().set_state(demo::poster_long_scene(NoticeStyle::Neon, NoticeKind::Schedule))),
+    ("notice-style-neon-money-long", |_| shared().set_state(demo::poster_long_scene(NoticeStyle::Neon, NoticeKind::Money))),
+    ("notice-style-split-schedule-long", |_| shared().set_state(demo::poster_long_scene(NoticeStyle::Split, NoticeKind::Schedule))),
+    ("notice-style-split-money-long", |_| shared().set_state(demo::poster_long_scene(NoticeStyle::Split, NoticeKind::Money))),
     ("notice-sheet-hairline", |_| shared().set_state(demo::show_sheet(NoticeStyle::Hairline))),
     ("notice-sheet-ledger", |_| shared().set_state(demo::show_sheet(NoticeStyle::Ledger))),
     ("notice-sheet-band", |_| shared().set_state(demo::show_sheet(NoticeStyle::Band))),
@@ -443,6 +520,7 @@ fn spec(title: &'static str) -> AppSpec<Screen> {
         setup: Some(setup),
         poll: Some(poll),
         on_key: Some(on_key),
+        fonts: artosia_slides::fonts::bundled(),
         ..AppSpec::new(title, (960.0, 540.0), || Screen::new(Role::Audience, 0), view)
     }
 }

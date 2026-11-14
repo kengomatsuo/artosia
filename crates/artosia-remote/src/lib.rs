@@ -3,11 +3,13 @@
 //! A phone opens the served page, pairs with a PIN and then follows the live slide over a
 //! long-poll (`GET /api/state?since=<version>`). Taps arrive as `POST /api/command`.
 
+mod edit;
 mod languages;
 mod net;
 mod server;
 
-use server::{MAX_CONNECTIONS, Shared};
+pub use edit::{Level, MAX_BODY_CHARS, MAX_NAME_CHARS, MAX_TITLE_CHARS, RemoteCard, RemoteEdit, RemoteEvent, RemotePerson, card_key, event_key, person_key, revision};
+use server::{Guard, MAX_CONNECTIONS, Shared};
 use std::collections::HashMap;
 use std::io;
 use std::net::{Ipv4Addr, SocketAddr, TcpListener, TcpStream};
@@ -81,6 +83,16 @@ pub struct RemoteState {
     pub message: String,
     /// When the countdown ends, in seconds since the Unix epoch; None when none runs.
     pub countdown_ends_at: Option<f64>,
+    /// The announcements, birthdays and events of the coming week a phone with the Edit level
+    /// may change; sent to no other phone.
+    pub cards: Vec<RemoteCard>,
+    pub people: Vec<RemotePerson>,
+    pub events: Vec<RemoteEvent>,
+    /// The card the live slide belongs to, when it is an announcement's.
+    pub live_card: Option<i64>,
+    /// Keys (`card_key`, `person_key`, `event_key`) the computer's own editor holds with
+    /// unsaved changes: a phone's save of one is refused.
+    pub locked: Vec<String>,
 }
 
 #[derive(Clone, Debug, PartialEq, Eq)]
@@ -105,6 +117,19 @@ pub enum RemoteCommand {
     Message(String),
     /// Start a countdown of this many minutes; 0 stops it.
     Countdown(u32),
+    /// A change from a phone with the Edit level, already checked against its revision.
+    Edit(RemoteEdit),
+}
+
+/// A paired phone as the Phone dialog lists it.
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct PhoneInfo {
+    pub id: u32,
+    /// "iPhone", "Android" or empty when the phone did not say.
+    pub agent: String,
+    pub level: Level,
+    /// It talked to the server in the last 45 seconds.
+    pub active: bool,
 }
 
 pub struct RemoteConfig {
@@ -139,8 +164,10 @@ impl RemoteServer {
                 state: RemoteState::default(),
                 version: 1,
                 tokens: HashMap::new(),
-                failures: 0,
-                locked_until: None,
+                guard: Guard::default(),
+                edit_guard: Guard::default(),
+                edit_pin: None,
+                next_phone: 0,
                 shutdown: false,
                 conns: HashMap::new(),
                 next_conn: 0,
@@ -162,6 +189,27 @@ impl RemoteServer {
         g.version += 1;
         drop(g);
         self.shared.changed.notify_all();
+    }
+
+    /// The phones paired in the last 45 seconds, oldest first, with their levels.
+    pub fn phones(&self) -> Vec<PhoneInfo> {
+        server::phones(&self.shared)
+    }
+
+    /// Gives a phone the level; false when no phone has that id. Its page follows at once.
+    pub fn set_level(&self, id: u32, level: Level) -> bool {
+        let mut g = self.shared.lock();
+        let Some(phone) = g.tokens.values_mut().find(|p| p.id == id) else { return false };
+        phone.level = level;
+        g.version += 1;
+        drop(g);
+        self.shared.changed.notify_all();
+        true
+    }
+
+    /// The second PIN: a phone that types it when pairing gets the Edit level. None turns it off.
+    pub fn set_edit_pin(&self, pin: Option<String>) {
+        self.shared.lock().edit_pin = pin;
     }
 
     pub fn port(&self) -> u16 {

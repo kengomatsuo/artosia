@@ -213,3 +213,12 @@ STATE: the window lives in the open card (`Notices.window`); which picker is ope
 ACTION press a quick range: sync set `window.range`, drop an empty custom, save; commit 1 re-reads the pill, the preview and the covered line; nothing else renders. Press Highlight choice: same with `window.highlight`. Press a date in the picker: set that end of the custom range (the other end follows if it would cross), close the picker.
 TIMING: no animation added; a press writes the card and the preview is rebuilt in the same frame. Measured in a test: resolving a window and listing 600 people stays under a millisecond.
 EDGES: empty window says so (existing `empty_note`); 30 names fit one slide in all three styles; highlight outside the range is clamped and said; month ends, year ends, leap February tested in core.
+
+## WARTADESIGN1 plan (2026-11-14)
+SOURCES: the owner-approved designs in `~/Shared/inspo/artosia-notice-designs/directions` (spec.json tokens, d1..d4.py layouts); Hairline, Ledger and Band left as they are.
+BASE: `artosia-slides/src/warta`: a `Sheet` display list in 1920x1080 space (rect, image, text with explicit numbers) that four layout modules fill from `Data`; `fit.rs` holds the pure rules (balanced wrap, name ladder, money). Tokens come from `assets/warta/tokens.json`, faces from `assets/warta/fonts` (embedded, OFL licences in `assets/warta/licences`).
+BOUNDARY: `notice::notice` hands a poster style to `warta::draw`; the deck builder in `artosia-core` only carries data (verses, dates, week, qris, church); `state.rs` `paged` cuts long cards through `warta::paginate_pages`.
+DATA: Slide gains verses, dates, week, qris, church; Announcement gains qris (stored column); Settings gains church; schedule rows in a highlighted day are the special rows (Khusus).
+ACTION: pick a style or a template: the card is saved and the preview rebuilt in one frame; choose or remove a QRIS picture: same as the card's picture.
+TIMING: no animation added; layout is one pass of measures per slide, redone only when a slide is built.
+EDGES: more rows than the 40 px floor holds cut into slides with a place and range at the foot; a name too long for a cell goes through the initials ladder, then a smaller size; no picture draws the designer's no-picture layout.

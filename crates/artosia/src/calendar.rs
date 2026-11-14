@@ -242,7 +242,7 @@ pub fn civil_at(seconds: f64) -> Date {
 }
 
 /// The start, end and own name of a date of an event as the calendar shows it.
-fn held(event: &Event, original: Date) -> (Date, u16, u16, Option<String>) {
+pub(crate) fn held(event: &Event, original: Date) -> (Date, u16, u16, Option<String>) {
     match event.change_of(original) {
         Some(Change::Moved { date, start, end, name }) => (*date, *start, *end, name.clone()),
         _ => (original, event.start, event.end, None),
@@ -676,7 +676,7 @@ impl App {
     // ---- One date of a series ----
 
     /// Sets what happens on one original date and writes it; the event as it was comes back.
-    fn change_date(&mut self, id: i64, original: Date, change: Option<Change>) -> Option<Event> {
+    pub(crate) fn change_date(&mut self, id: i64, original: Date, change: Option<Change>) -> Option<Event> {
         let before = self.events.iter().find(|event| event.id == id)?.clone();
         let mut event = before.clone();
         event.set_change(original, change);

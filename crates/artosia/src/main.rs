@@ -26,6 +26,7 @@ mod onboard;
 mod palette;
 mod parts;
 mod people;
+mod phone_edit;
 mod plans;
 mod pptx_import;
 mod recordings;
@@ -767,6 +768,22 @@ const SCENES: &[Scene] = &[
     ("notice-offerings", |s| s.demo_notices("offerings")),
     ("notice-transfer", |s| s.demo_notices("transfer")),
     ("tab-templates", |s| s.open_tab(Tab::Templates)),
+    ("tab-templates-greige", |s| {
+        s.open_tab(Tab::Templates);
+        s.templates_filter(None, Some(artosia_core::deck::NoticeStyle::Greige));
+    }),
+    ("tab-templates-pill", |s| {
+        s.open_tab(Tab::Templates);
+        s.templates_filter(None, Some(artosia_core::deck::NoticeStyle::Pill));
+    }),
+    ("tab-templates-neon", |s| {
+        s.open_tab(Tab::Templates);
+        s.templates_filter(None, Some(artosia_core::deck::NoticeStyle::Neon));
+    }),
+    ("tab-templates-split", |s| {
+        s.open_tab(Tab::Templates);
+        s.templates_filter(None, Some(artosia_core::deck::NoticeStyle::Split));
+    }),
     // A church with no events: the schedule tiles say so where their slide would be.
     ("templates-empty-source", |s| {
         s.events.clear();
@@ -1244,6 +1261,7 @@ fn main() {
         setup: Some(setup),
         poll: Some(poll),
         on_key: Some(on_key),
+        fonts: artosia_slides::fonts::bundled(),
         ..AppSpec::new("Artosia", (1366.0, 768.0), App::load, ui::view)
     };
     // The window opens filling its screen. At its own size Windows placed it 128 points in from

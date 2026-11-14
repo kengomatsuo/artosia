@@ -24,6 +24,10 @@ pub struct Media<'a> {
     pub logo: Option<&'a Pixels>,
     /// The picture of the slide being drawn, when it has one and it has loaded.
     pub slide: Option<&'a Pixels>,
+    /// The QRIS picture of the transfer slide being drawn, when it has one and it has loaded.
+    pub qris: Option<&'a Pixels>,
+    /// The second picture of the slide being drawn, when it has one and it has loaded.
+    pub photo2: Option<&'a Pixels>,
     /// The newest picture of the video item in front, in a preview; the output draws the item's
     /// own surface instead.
     pub item: Option<&'a Pixels>,
@@ -361,7 +365,7 @@ pub fn audience_over(state: &OutputState, w: f32, h: f32, media: Media, item: Op
     } else {
         match state.slide.as_ref().filter(|_| !state.text_hidden && !state.logo_on) {
             Some(slide) if notice::draws_notice(slide, look) => {
-                root = root.child(notice::notice(slide, look, w, h).key(format!("{}-notice", key_of(slide))).transition(Transition::opacity()));
+                root = root.child(notice::notice(slide, look, w, h, &crate::warta::Pics { photo: media.slide, photo2: media.photo2, qris: media.qris }).key(format!("{}-notice", key_of(slide))).transition(Transition::opacity()));
             }
             Some(slide) => {
                 let picture = media.slide.filter(|_| !slide.image.is_empty());

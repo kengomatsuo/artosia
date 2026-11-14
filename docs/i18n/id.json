@@ -5718,5 +5718,96 @@
   "text": "Bagian dihapus",
   "back": "Part deleted",
   "why": "table's word for a song part, short"
+ },
+ "PHONE_PAIRED": {
+  "text": "Ponsel tersambung",
+  "back": "Connected phones",
+  "why": "Same verb as the table's phones line"
+ },
+ "PHONE_CONTROL": {
+  "text": "Kendali",
+  "back": "Control",
+  "why": "One word, the start level: moving only"
+ },
+ "PHONE_EDIT": {
+  "text": "Ubah",
+  "back": "Change",
+  "why": "Same word as the computer's Ubah button"
+ },
+ "PHONE_EDIT_PIN": {
+  "text": "PIN kedua untuk ubah teks",
+  "back": "Second PIN for changing text",
+  "why": "Label; teks is the table's word for slide words"
+ },
+ "PHONE_EDIT_PIN_HINT": {
+  "text": "Diketik di ponsel sebagai ganti PIN pertama",
+  "back": "Typed on the phone in place of the first PIN",
+  "why": "Passive, short, no full stop"
+ },
+ "PHONE_EDIT_RULE": {
+  "text": "Ponsel baru bisa ubah teks setelah diizinkan di sini. Remote mati, semua izin dicabut.",
+  "back": "A phone can change text only once allowed here. Remote off, every permission is withdrawn.",
+  "why": "Two short sentences; Remote is the table's short name"
+ },
+ "PHONE_EDIT_BUSY": {
+  "text": "Perubahan ponsel dibuang karena sedang diubah di komputer ini",
+  "back": "The phone's change was thrown away because it is being changed on this computer",
+  "why": "Names the reason in one clause"
+ },
+ "PHONE_EDIT_OLD": {
+  "text": "Perubahan ponsel dibuang karena dibuat dari versi lama",
+  "back": "The phone's change was thrown away because it was made from an old version",
+  "why": "Different reason from the busy toast"
+ },
+ "phone_label": {
+  "text": {
+   "plain": "Ponsel {number}",
+   "kind": "Ponsel {number}, {kind}"
+  },
+  "back": {
+   "plain": "Phone {number}",
+   "kind": "Phone {number}, {kind}"
+  },
+  "why": "Word for phone first, number, then the kind after a comma"
+ },
+ "STYLE_GREIGE": {
+  "text": "Warta",
+  "back": "Bulletin",
+  "why": "Warta is the printed order of service Indonesian churches hand out"
+ },
+ "STYLE_PILL": {
+  "text": "Poster",
+  "back": "Poster",
+  "why": "Everyday word, loud look"
+ },
+ "STYLE_NEON": {
+  "text": "Neon",
+  "back": "Neon",
+  "why": "Loan word everyone says"
+ },
+ "STYLE_SPLIT": {
+  "text": "Dua sisi",
+  "back": "Two sides",
+  "why": "Says the cut in halves"
+ },
+ "ANNOUNCEMENT_QRIS": {
+  "text": "Gambar QRIS",
+  "back": "QRIS picture",
+  "why": "Gambar is the table's word for picture; QRIS stays"
+ },
+ "SETTINGS_CHURCH": {
+  "text": "Nama gereja",
+  "back": "Church name",
+  "why": "Plain label"
+ },
+ "SETTINGS_CHURCH_HINT": {
+  "text": "Tampil di slide pengumuman",
+  "back": "Shows on the announcement slides",
+  "why": "Says where it is seen"
+ },
+ "ANNOUNCEMENT_PICTURE2": {
+  "text": "Gambar kedua",
+  "back": "Second picture",
+  "why": "Pairs with Gambar"
  }
 }

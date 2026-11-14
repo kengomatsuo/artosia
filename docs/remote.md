@@ -166,3 +166,16 @@ the same warning line. The tests use an injected runner; the elevated command wa
 the development PC. Everything unconfirmed (the name the elevation box prints, the effect of the
 delete on single-profile blocks, a non-English Windows) is listed in
 `docs/plans/artosia/firewall.md` and `~/Shared/research/artosia-firewall/notes.md`.
+
+## Editing from a phone (PHONEEDIT1, 2026-11-14)
+
+A paired phone is Control; the Phone dialog gives one phone Edit (a Control/Edit switch per row) and can show a
+second PIN that pairs a phone as Edit. Switching Phone off drops the server, so every level and the second PIN go.
+Only an Edit phone is sent `cards`, `people` (no birth year), `events` of the next seven days, `live_card` and
+`locked`; the server refuses every `edit` command from a Control token (403). A revision is a 48-bit hash of the
+fields a phone edits (`edit.rs` `revision`), so any change from any route moves it and nothing is stored: a stale one
+is refused with 409 and the current fields, and one the console's editor holds unsaved is refused with 409 `console`.
+The server's copy takes an accepted edit at once, so a second phone with the old revision is refused before the
+computer answers, and a Done sent twice lands once. The computer checks the revision again (`phone_edit.rs`).
+A repeating event's edit is an override of that date (`Change::Moved`); a once-only event is changed itself.
+Run a practice window with `--practice --remote-local` to try it: the server then listens on this computer only.

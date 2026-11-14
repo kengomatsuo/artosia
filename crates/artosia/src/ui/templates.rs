@@ -62,6 +62,10 @@ pub fn style_name(style: NoticeStyle) -> &'static str {
         NoticeStyle::Hairline => t::STYLE_HAIRLINE(),
         NoticeStyle::Ledger => t::STYLE_LEDGER(),
         NoticeStyle::Band => t::STYLE_BAND(),
+        NoticeStyle::Greige => t::STYLE_GREIGE(),
+        NoticeStyle::Pill => t::STYLE_PILL(),
+        NoticeStyle::Neon => t::STYLE_NEON(),
+        NoticeStyle::Split => t::STYLE_SPLIT(),
     }
 }
 

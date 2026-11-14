@@ -68,6 +68,8 @@ pub fn media(s: &App) -> Media<'_> {
         video: None,
         logo: s.logo.as_ref().map(|(_, image)| image.pixels()),
         slide: None,
+        qris: None,
+        photo2: None,
         item: None,
     }
 }
@@ -93,7 +95,9 @@ pub fn thumb(s: &App, state: &artosia_slides::frame::OutputState, width: f32) ->
         _ => None,
     };
     let item = state.media.as_ref().filter(|item| item.kind == artosia_slides::frame::MediaKind::Video).and_then(|_| s.link.item_picture());
-    let media = Media { slide: picture.map(|image| image.pixels()), picture: moving.or(scene).or(base.picture), item, ..base };
+    let qris = state.slide.as_ref().filter(|slide| !slide.qris.is_empty()).and_then(|slide| s.slide_pictures.get(&slide.qris));
+    let photo2 = state.slide.as_ref().filter(|slide| !slide.image2.is_empty()).and_then(|slide| s.slide_pictures.get(&slide.image2));
+    let media = Media { slide: picture.map(|image| image.pixels()), qris: qris.map(|image| image.pixels()), photo2: photo2.map(|image| image.pixels()), picture: moving.or(scene).or(base.picture), item, ..base };
     artosia_slides::audience::thumbnail(state, width, media, s.now)
 }
 

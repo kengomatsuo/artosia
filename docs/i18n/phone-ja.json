@@ -303,5 +303,170 @@
     "text": "{1}{0}",
     "back": "number then name",
     "why": "same order as section_numbered"
+  },
+  "pair_second": {
+    "text": "編集用のPINを使う",
+    "back": "Use the PIN for editing",
+    "why": "link label"
+  },
+  "pair_first": {
+    "text": "最初のPINに戻す",
+    "back": "Go back to the first PIN",
+    "why": "the PIN every phone starts with"
+  },
+  "pin_hint_second": {
+    "text": "パソコンのスマホリモコン画面に出ている編集用の数字を入力",
+    "back": "Type the editing number shown on the computer's phone remote screen",
+    "why": "same verb 入力 as the ordinary line"
+  },
+  "edit": {
+    "text": "編集",
+    "back": "Edit",
+    "why": "same as the computer's Edit"
+  },
+  "edit_text": {
+    "text": "文字を編集",
+    "back": "Edit the words",
+    "why": "文字 for slide words"
+  },
+  "sheet_cancel": {
+    "text": "やめる",
+    "back": "Stop",
+    "why": "the phone table's cancel"
+  },
+  "done": {
+    "text": "完了",
+    "back": "Done",
+    "why": "finishing the typing"
+  },
+  "field_title": {
+    "text": "見出し",
+    "back": "Heading",
+    "why": "one word"
+  },
+  "field_body": {
+    "text": "本文",
+    "back": "Body",
+    "why": "same as the computer's body label"
+  },
+  "after_done": {
+    "text": "「完了」を押すまで、会場の画面は変わりません",
+    "back": "Until you press Done, the screen in the hall does not change",
+    "why": "会場 as in the phone table"
+  },
+  "changed": {
+    "text": "パソコンで先に変更されました",
+    "back": "It was changed first on the computer",
+    "why": "a statement"
+  },
+  "use_theirs": {
+    "text": "パソコン側を使う",
+    "back": "Use the computer side",
+    "why": "theirs means the computer"
+  },
+  "keep_mine": {
+    "text": "スマホ側を残す",
+    "back": "Keep the phone side",
+    "why": "pairs with the sibling"
+  },
+  "on_computer": {
+    "text": "パソコンの内容",
+    "back": "What is on the computer",
+    "why": "parallel to the phone label"
+  },
+  "yours": {
+    "text": "スマホで入力した内容",
+    "back": "What was typed on the phone",
+    "why": "parallel to the computer label"
+  },
+  "busy": {
+    "text": "パソコンで編集中のため保存されません。少し待ってもう一度どうぞ",
+    "back": "It is not saved because the computer is editing it. Wait a little and try once more",
+    "why": "what is going on, then what to do"
+  },
+  "gone": {
+    "text": "パソコンから削除されています",
+    "back": "It has been deleted from the computer",
+    "why": "statement, no full stop"
+  },
+  "edit_cards": {
+    "text": "お知らせ",
+    "back": "Announcements",
+    "why": "the computer's word"
+  },
+  "edit_birthdays": {
+    "text": "誕生日",
+    "back": "Birthdays",
+    "why": "word of the birthday announcement"
+  },
+  "edit_week": {
+    "text": "今後7日間の予定",
+    "back": "Events in the next 7 days",
+    "why": "counted from today"
+  },
+  "edit_none": {
+    "text": "まだありません",
+    "back": "Nothing yet",
+    "why": "calm, no apology"
+  },
+  "edit_person": {
+    "text": "誕生日",
+    "back": "Birthday",
+    "why": "one word"
+  },
+  "edit_event": {
+    "text": "予定",
+    "back": "Event",
+    "why": "the calendar's word 予定"
+  },
+  "name": {
+    "text": "名前",
+    "back": "Name",
+    "why": "fits a person and an event"
+  },
+  "day": {
+    "text": "日",
+    "back": "Day",
+    "why": "day of the month"
+  },
+  "month": {
+    "text": "月",
+    "back": "Month",
+    "why": "one character as on a calendar"
+  },
+  "date": {
+    "text": "日付",
+    "back": "Date",
+    "why": "full date"
+  },
+  "starts": {
+    "text": "開始",
+    "back": "Start",
+    "why": "parallel to the end"
+  },
+  "ends": {
+    "text": "終了",
+    "back": "End",
+    "why": "parallel to the start"
+  },
+  "this_date": {
+    "text": "この日だけ変更します。ほかの日はそのまま",
+    "back": "Only this day is changed. The other days stay as they are",
+    "why": "short statement"
+  },
+  "delete": {
+    "text": "削除",
+    "back": "Delete",
+    "why": "same on both buttons"
+  },
+  "ask_delete_person": {
+    "text": "{0}を誕生日の一覧から削除しますか？",
+    "back": "Delete {0} from the birthday list?",
+    "why": "question with the name"
+  },
+  "ask_delete_event": {
+    "text": "この日の「{0}」を削除しますか？ほかの日は残ります",
+    "back": "Delete {0} on this day? The other days remain",
+    "why": "this day only, said plainly"
   }
 }

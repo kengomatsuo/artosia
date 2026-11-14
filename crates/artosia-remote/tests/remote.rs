@@ -387,3 +387,157 @@ fn page_is_self_contained_and_in_house_punctuation() {
         assert!(!body.contains(bad), "page has {bad:?}");
     }
 }
+
+fn editable() -> RemoteState {
+    RemoteState {
+        cards: vec![RemoteCard { id: 1, title: "Picnic".into(), body: "Bring food".into(), body_editable: true, kind: "plain".into() }],
+        people: vec![RemotePerson { id: 4, name: "Sample Alpha".into(), day: 15, month: 11, next: 0 }],
+        events: vec![RemoteEvent { id: 7, original: "2026-11-15".into(), name: "Service".into(), date: "2026-11-15".into(), start: 540, end: 600, repeats: true }],
+        ..rich()
+    }
+}
+
+fn pair_with(port: u16, body: Value) -> (u16, Value) {
+    let (st, b) = http(port, "POST", "/api/pair", None, &body.to_string());
+    (st, serde_json::from_str(&b).unwrap_or(Value::Null))
+}
+
+/// A server with a phone that has Control and one the operator gave Edit.
+fn two_phones() -> (RemoteServer, Seen, String, String) {
+    let (srv, seen) = start();
+    srv.set_state(editable());
+    let control = pair(srv.port());
+    let editor = pair(srv.port());
+    let id = srv.phones().iter().map(|p| p.id).max().unwrap();
+    assert!(srv.set_level(id, Level::Edit));
+    (srv, seen, control, editor)
+}
+
+fn state_of(port: u16, token: &str) -> Value {
+    serde_json::from_str(&http(port, "GET", "/api/state?since=0", Some(token), "").1).unwrap()
+}
+
+#[test]
+fn a_new_phone_has_control_and_the_operator_grants_edit_per_phone() {
+    let (srv, _, control, editor) = two_phones();
+    assert_eq!(state_of(srv.port(), &control)["level"], "control");
+    assert_eq!(state_of(srv.port(), &editor)["level"], "edit");
+    let levels: Vec<Level> = srv.phones().iter().map(|p| p.level).collect();
+    assert_eq!(levels, vec![Level::Control, Level::Edit]);
+    assert!(!srv.set_level(99, Level::Edit), "no such phone");
+}
+
+#[test]
+fn only_an_edit_phone_is_sent_the_editable_rows() {
+    let (srv, _, control, editor) = two_phones();
+    let c = state_of(srv.port(), &control);
+    assert!(c.get("cards").is_none() && c.get("people").is_none() && c.get("events").is_none());
+    let e = state_of(srv.port(), &editor);
+    assert_eq!(e["cards"][0]["title"], "Picnic");
+    assert_eq!(e["people"][0]["name"], "Sample Alpha");
+    assert!(e["people"][0].get("year").is_none(), "the year of birth stays on the computer");
+    assert_eq!(e["events"][0]["original"], "2026-11-15");
+    assert!(e["cards"][0]["rev"].as_u64().unwrap() > 0);
+}
+
+#[test]
+fn a_control_token_is_refused_every_edit_and_nothing_reaches_the_console() {
+    let (srv, seen, control, editor) = two_phones();
+    let rev = state_of(srv.port(), &editor)["cards"][0]["rev"].as_u64().unwrap();
+    let body = json!({"cmd":"edit","kind":"card","id":1,"rev":rev,"title":"Mine"}).to_string();
+    let (st, b) = http(srv.port(), "POST", "/api/command", Some(&control), &body);
+    assert_eq!(st, 403);
+    assert!(b.contains("no edit"));
+    assert!(seen.lock().unwrap().is_empty());
+    let (st, _) = http(srv.port(), "POST", "/api/command", None, &body);
+    assert_eq!(st, 401);
+}
+
+#[test]
+fn a_current_edit_reaches_the_console_and_a_stale_one_is_refused_with_the_current_text() {
+    let (srv, seen, _, editor) = two_phones();
+    let p = srv.port();
+    let rev = state_of(p, &editor)["cards"][0]["rev"].as_u64().unwrap();
+    let edit = |rev: u64, title: &str| json!({"cmd":"edit","kind":"card","id":1,"rev":rev,"title":title}).to_string();
+    assert_eq!(http(p, "POST", "/api/command", Some(&editor), &edit(rev, "Mine")).0, 204);
+    assert_eq!(seen.lock().unwrap().len(), 1);
+    assert!(matches!(&seen.lock().unwrap()[0], RemoteCommand::Edit(RemoteEdit::Card { id: 1, title: Some(t), .. }) if t == "Mine"));
+    // A second phone still holding the old revision is refused at once, before the computer answered.
+    let (st, b) = http(p, "POST", "/api/command", Some(&editor), &edit(rev, "Theirs"));
+    assert_eq!(st, 409);
+    let v: Value = serde_json::from_str(&b).unwrap();
+    assert_eq!((v["error"].as_str(), v["current"]["title"].as_str()), (Some("stale"), Some("Mine")));
+    assert_eq!(seen.lock().unwrap().len(), 1);
+    // The same Done sent again lands once.
+    assert_eq!(http(p, "POST", "/api/command", Some(&editor), &edit(rev, "Mine")).0, 204);
+    assert_eq!(seen.lock().unwrap().len(), 1);
+}
+
+#[test]
+fn the_console_wins_while_its_editor_holds_the_card() {
+    let (srv, seen, _, editor) = two_phones();
+    let p = srv.port();
+    let mut s = editable();
+    s.locked = vec![card_key(1)];
+    srv.set_state(s);
+    let rev = state_of(p, &editor)["cards"][0]["rev"].as_u64().unwrap();
+    let body = json!({"cmd":"edit","kind":"card","id":1,"rev":rev,"title":"Mine"}).to_string();
+    let (st, b) = http(p, "POST", "/api/command", Some(&editor), &body);
+    assert_eq!(st, 409);
+    assert!(b.contains("console"));
+    assert!(seen.lock().unwrap().is_empty());
+}
+
+#[test]
+fn a_birthday_and_an_event_edit_travel_the_command_path() {
+    let (srv, seen, _, editor) = two_phones();
+    let p = srv.port();
+    let s = state_of(p, &editor);
+    let (prev, erev) = (s["people"][0]["rev"].as_u64().unwrap(), s["events"][0]["rev"].as_u64().unwrap());
+    let person = json!({"cmd":"edit","kind":"person","id":4,"rev":prev,"name":"Sample Beta","day":3,"month":2});
+    let event = json!({"cmd":"edit","kind":"event","id":7,"original":"2026-11-15","rev":erev,"name":"Service","date":"2026-11-16","start":600,"end":660});
+    assert_eq!(http(p, "POST", "/api/command", Some(&editor), &person.to_string()).0, 204);
+    assert_eq!(http(p, "POST", "/api/command", Some(&editor), &event.to_string()).0, 204);
+    let got = seen.lock().unwrap().clone();
+    assert_eq!(got[0], RemoteCommand::Edit(RemoteEdit::Person { id: 4, rev: prev, name: "Sample Beta".into(), day: 3, month: 2 }));
+    assert_eq!(
+        got[1],
+        RemoteCommand::Edit(RemoteEdit::Event { id: 7, original: "2026-11-15".into(), rev: erev, name: "Service".into(), date: "2026-11-16".into(), start: 600, end: 660 })
+    );
+    // The phones see the new row at once.
+    assert_eq!(state_of(p, &editor)["people"][0]["name"], "Sample Beta");
+}
+
+#[test]
+fn the_second_pin_grants_edit_and_its_wrong_tries_never_lock_pairing() {
+    let (srv, _) = start();
+    let p = srv.port();
+    // With no second PIN set, no typed PIN is the second one.
+    assert_eq!(pair_with(p, json!({"pin":"1111","edit":true})).0, 403);
+    srv.set_edit_pin(Some("9876".into()));
+    for _ in 0..4 {
+        assert_eq!(pair_with(p, json!({"pin":"0000","edit":true})).0, 403);
+    }
+    assert_eq!(pair_with(p, json!({"pin":"9876","edit":true})).0, 429, "the second PIN is locked after five");
+    let (st, v) = pair_with(p, json!({"pin":"4321"}));
+    assert_eq!((st, v["level"].as_str()), (200, Some("control")), "pairing is not");
+}
+
+#[test]
+fn the_second_pin_gives_edit_to_the_phone_that_types_it() {
+    let (srv, _) = start();
+    srv.set_edit_pin(Some("9876".into()));
+    let (st, v) = pair_with(srv.port(), json!({"pin":"9876","edit":true}));
+    assert_eq!((st, v["level"].as_str()), (200, Some("edit")));
+    assert_eq!(pair_with(srv.port(), json!({"pin":"9876"})).0, 403, "typed as the first PIN it is wrong");
+    assert_eq!(srv.phones().iter().map(|p| p.level).collect::<Vec<_>>(), vec![Level::Edit]);
+}
+
+#[test]
+fn a_restarted_server_knows_no_phone_with_edit() {
+    let (srv, _, _, _) = two_phones();
+    assert_eq!(srv.phones().len(), 2);
+    drop(srv);
+    let (srv, _) = start();
+    assert!(srv.phones().is_empty(), "Phone switched off and on again resets every level");
+}

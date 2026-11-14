@@ -303,5 +303,170 @@
   "text": "{0} {1}",
   "back": "the part's name and its number, in the order the window uses",
   "why": "carried from section_numbered so the phone and the window agree"
+ },
+ "pair_second": {
+  "text": "Dùng mã PIN thứ hai để sửa chữ",
+  "back": "Use the second PIN to edit words",
+  "why": "Same thứ hai as the computer"
+ },
+ "pair_first": {
+  "text": "Dùng mã PIN thường",
+  "back": "Use the ordinary PIN",
+  "why": "Mirror"
+ },
+ "pin_hint_second": {
+  "text": "Gõ mã PIN sửa chữ hiện ở Điện thoại điều khiển",
+  "back": "Type the PIN for editing words shown in Remote control",
+  "why": "Same verb Gõ as the ordinary line"
+ },
+ "edit": {
+  "text": "Sửa",
+  "back": "Edit",
+  "why": "Same as the computer"
+ },
+ "edit_text": {
+  "text": "Sửa chữ",
+  "back": "Edit words",
+  "why": "Short"
+ },
+ "sheet_cancel": {
+  "text": "Hủy",
+  "back": "Cancel",
+  "why": "Table's Hủy; the phone's own Thôi stays the light refusal"
+ },
+ "done": {
+  "text": "Gửi",
+  "back": "Send",
+  "why": "Names what happens"
+ },
+ "field_title": {
+  "text": "Tiêu đề",
+  "back": "Title",
+  "why": "Plain"
+ },
+ "field_body": {
+  "text": "Nội dung",
+  "back": "Content",
+  "why": "Same as the computer's Nội dung"
+ },
+ "after_done": {
+  "text": "Máy chiếu chỉ đổi sau khi bấm Gửi",
+  "back": "The projector changes only after pressing Send",
+  "why": "Names the button"
+ },
+ "changed": {
+  "text": "Máy tính đã sửa mục này",
+  "back": "The computer has edited this item",
+  "why": "Statement"
+ },
+ "use_theirs": {
+  "text": "Lấy bản máy tính",
+  "back": "Take the computer's version",
+  "why": "Pairs"
+ },
+ "keep_mine": {
+  "text": "Giữ bản của tôi",
+  "back": "Keep my version",
+  "why": "Pairs"
+ },
+ "on_computer": {
+  "text": "Trên máy tính",
+  "back": "On the computer",
+  "why": "Parallel"
+ },
+ "yours": {
+  "text": "Trên điện thoại này",
+  "back": "On this phone",
+  "why": "Parallel"
+ },
+ "busy": {
+  "text": "Máy tính đang sửa mục này nên chưa lưu. Thử lại sau ít phút.",
+  "back": "The computer is editing this item, so not saved. Try again in a few minutes.",
+  "why": "What, then what to do"
+ },
+ "gone": {
+  "text": "Mục này đã bị xóa trên máy tính",
+  "back": "This item was deleted on the computer",
+  "why": "Statement"
+ },
+ "edit_cards": {
+  "text": "Thông báo",
+  "back": "Announcements",
+  "why": "Table's word"
+ },
+ "edit_birthdays": {
+  "text": "Sinh nhật",
+  "back": "Birthdays",
+  "why": "Table's word"
+ },
+ "edit_week": {
+  "text": "Sự kiện 7 ngày tới",
+  "back": "Events of the next 7 days",
+  "why": "Calendar's word"
+ },
+ "edit_none": {
+  "text": "Trống",
+  "back": "Empty",
+  "why": "Calm"
+ },
+ "edit_person": {
+  "text": "Sinh nhật",
+  "back": "Birthday",
+  "why": "One word"
+ },
+ "edit_event": {
+  "text": "Sự kiện",
+  "back": "Event",
+  "why": "Calendar's word"
+ },
+ "name": {
+  "text": "Tên",
+  "back": "Name",
+  "why": "One word"
+ },
+ "day": {
+  "text": "Ngày",
+  "back": "Day",
+  "why": "Day of the month"
+ },
+ "month": {
+  "text": "Tháng",
+  "back": "Month",
+  "why": "One word"
+ },
+ "date": {
+  "text": "Ngày",
+  "back": "Date",
+  "why": "Same word as the calendar's CAL_DATE"
+ },
+ "starts": {
+  "text": "Bắt đầu",
+  "back": "Starts",
+  "why": "Calendar's word"
+ },
+ "ends": {
+  "text": "Kết thúc",
+  "back": "Ends",
+  "why": "Calendar's word"
+ },
+ "this_date": {
+  "text": "Chỉ ngày này, các ngày khác giữ nguyên",
+  "back": "Only this day, the other days stay",
+  "why": "Extends CAL_THIS_EVENT"
+ },
+ "delete": {
+  "text": "Xóa",
+  "back": "Delete",
+  "why": "Table's Xóa"
+ },
+ "ask_delete_person": {
+  "text": "Xóa {0} khỏi danh sách sinh nhật?",
+  "back": "Delete {0} from the list of birthdays?",
+  "why": "Question"
+ },
+ "ask_delete_event": {
+  "text": "Xóa {0} chỉ ở ngày này?",
+  "back": "Delete {0} on this day only?",
+  "why": "This day only"
  }
 }

@@ -322,6 +322,23 @@ fn settings(s: &App, k: &Kit, layer: &mut Vec<El>, tall: f32) {
                 .child(btn(t::BIBLES_MORE()).icon(&icons::GLOBE).focusable().build(k, |s, _| s.open_bibles()).key("look-bible-more")),
         ))
         .child(el().h(2.0))
+        .child(setting(
+            k,
+            t::SETTINGS_CHURCH(),
+            el().w(220.0).child(
+                TextInput::new(&s.church_edit).width(None)
+                    .label(t::SETTINGS_CHURCH())
+                    .placeholder(t::SETTINGS_CHURCH_HINT())
+                    .on_edit(|s: &mut App| &mut s.church_edit)
+                    .on_change(|s: &mut App, _: &mut Tx| {
+                        s.settings.church = s.church_edit.text.trim().to_string();
+                        s.touch_settings();
+                        s.refresh_decks();
+                    })
+                    .build(k),
+            ),
+        ))
+        .child(el().h(2.0))
         .child(section_label(k, t::SETTINGS_SONGS()))
         .child(setting(
             k,
@@ -667,9 +684,57 @@ fn remote(s: &App, k: &Kit, layer: &mut Vec<El>) {
                 .child(text(s.remote_pin.clone()).font(type_::TIMER).color(k.c.text_base))
                 .child(text(t::phones(server.paired_count())).font(type_::SMALL).color(k.c.text_muted)),
         );
-        body = body.child(card);
+        body = body.child(card).children(phones_part(s, k, server));
     }
     Dialog::new("remote", t::CMD_REMOTE()).open(true).width(520.0).fit().on_close(close).child(body).build(k, layer);
+}
+
+/// The paired phones with their Control or Edit choice, the second PIN's switch and the rule line.
+fn phones_part(s: &App, k: &Kit, server: &artosia_remote::RemoteServer) -> Vec<El> {
+    let mut parts = Vec::new();
+    let phones = server.phones();
+    if !phones.is_empty() {
+        let mut list = col().w_full().gap(space::S2).child(section_label(k, t::PHONE_PAIRED()));
+        for phone in &phones {
+            let (id, name) = (phone.id, t::phone_label(phone.id, &phone.agent));
+            let at = usize::from(phone.level == artosia_remote::Level::Edit);
+            list = list.child(
+                row()
+                    .w_full()
+                    .gap(space::S3)
+                    .center_y()
+                    .child(text(name.clone()).font(type_::BODY).color(k.c.text_base).grow(1.0).min_w(0.0).wrap_anywhere())
+                    .child(
+                        SegmentedControl::new(&[t::PHONE_CONTROL(), t::PHONE_EDIT()], Some(at))
+                            .label(name)
+                            .fit()
+                            .on_pick(move |s: &mut App, picked, _: &mut Tx| s.set_phone_level(id, if picked == 1 { artosia_remote::Level::Edit } else { artosia_remote::Level::Control }))
+                            .build(k),
+                    )
+                    .key(format!("phone-{id}")),
+            );
+        }
+        parts.push(list);
+    }
+    let mut pin = col().w_full().gap(space::S2).child(
+        row().w_full().gap(space::S3).center_y().child(text(t::PHONE_EDIT_PIN()).font(type_::BODY).color(k.c.text_base).grow(1.0)).child(
+            Switch::new(s.remote_edit_pin.is_some())
+                .label(t::PHONE_EDIT_PIN())
+                .hide_label()
+                .on_toggle(|s: &mut App| {
+                    let on = s.remote_edit_pin.is_none();
+                    s.set_remote_edit_pin(on);
+                })
+                .build(k)
+                .key("remote-edit-pin-switch"),
+        ),
+    );
+    if let Some(code) = &s.remote_edit_pin {
+        pin = pin.child(text(code.clone()).font(type_::TIMER).color(k.c.text_base)).child(text(t::PHONE_EDIT_PIN_HINT()).font(type_::SMALL).color(k.c.text_muted));
+    }
+    parts.push(pin);
+    parts.push(crate::ui::widgets::wrapped(t::PHONE_EDIT_RULE()).font(type_::SMALL).color(k.c.text_muted).wrap());
+    parts
 }
 
 fn import(s: &App, k: &Kit, layer: &mut Vec<El>) {

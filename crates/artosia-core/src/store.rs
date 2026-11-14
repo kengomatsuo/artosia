@@ -220,6 +220,8 @@ impl Store {
             ("announcements", "fill", "text not null default ''"),
             ("announcements", "passage", "text not null default ''"),
             ("announcements", "style", "text not null default ''"),
+            ("announcements", "qris", "text not null default ''"),
+            ("announcements", "image2", "text not null default ''"),
             ("announcements", "title_colour", "text not null default ''"),
             ("announcements", "calendars", "text not null default ''"),
             ("announcements", "month", "integer not null default 0"),
@@ -424,7 +426,7 @@ impl Store {
     }
 
     pub fn announcements(&self) -> Result<Vec<Announcement>> {
-        let mut statement = self.db.prepare("select id, title, body, seconds, image, fill, passage, style, title_colour, calendars, month, window, highlight from announcements order by position, id")?;
+        let mut statement = self.db.prepare("select id, title, body, seconds, image, fill, passage, style, title_colour, calendars, month, window, highlight, qris, image2 from announcements order by position, id")?;
         let rows = statement.query_map([], |row| {
             let (fill, style, colour, calendars): (String, String, String, String) = (row.get(5)?, row.get(7)?, row.get(8)?, row.get(9)?);
             let (month, window, highlight): (i64, String, String) = (row.get(10)?, row.get(11)?, row.get(12)?);
@@ -436,6 +438,8 @@ impl Store {
                 image: row.get(4)?,
                 fill: Fill::from_code(&fill),
                 passage: row.get(6)?,
+                qris: row.get(13)?,
+                image2: row.get(14)?,
                 style: NoticeStyle::from_code(&style),
                 title_colour: colour_of_code(&colour),
                 calendars: calendars.split(',').filter_map(|id| id.parse().ok()).collect(),
@@ -455,15 +459,15 @@ impl Store {
         let month = announcement.window.range == Range::Month(0);
         if announcement.id == 0 {
             self.db.execute(
-                "insert into announcements (position, title, body, seconds, image, fill, passage, style, title_colour, calendars, month, window, highlight)
-                 values ((select coalesce(max(position), 0) + 1 from announcements), ?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12)",
-                params![announcement.title, announcement.body, announcement.seconds, announcement.image, announcement.fill.code(), announcement.passage, style, colour, calendars, month, window, highlight],
+                "insert into announcements (position, title, body, seconds, image, fill, passage, style, title_colour, calendars, month, window, highlight, qris, image2)
+                 values ((select coalesce(max(position), 0) + 1 from announcements), ?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13, ?14)",
+                params![announcement.title, announcement.body, announcement.seconds, announcement.image, announcement.fill.code(), announcement.passage, style, colour, calendars, month, window, highlight, announcement.qris, announcement.image2],
             )?;
             announcement.id = self.db.last_insert_rowid();
         } else {
             self.db.execute(
-                "update announcements set title = ?1, body = ?2, seconds = ?3, image = ?4, fill = ?5, passage = ?6, style = ?7, title_colour = ?8, calendars = ?9, month = ?10, window = ?11, highlight = ?12 where id = ?13",
-                params![announcement.title, announcement.body, announcement.seconds, announcement.image, announcement.fill.code(), announcement.passage, style, colour, calendars, month, window, highlight, announcement.id],
+                "update announcements set title = ?1, body = ?2, seconds = ?3, image = ?4, fill = ?5, passage = ?6, style = ?7, title_colour = ?8, calendars = ?9, month = ?10, window = ?11, highlight = ?12, qris = ?13, image2 = ?14 where id = ?15",
+                params![announcement.title, announcement.body, announcement.seconds, announcement.image, announcement.fill.code(), announcement.passage, style, colour, calendars, month, window, highlight, announcement.qris, announcement.image2, announcement.id],
             )?;
         }
         Ok(())
