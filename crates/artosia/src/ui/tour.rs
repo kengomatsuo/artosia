@@ -181,7 +181,7 @@ fn lesson_view(s: &App, cx: &mut Cx<App>, k: &Kit, layer: &mut Vec<El>) {
             layer.push(el().key("lesson-ring").absolute(x0, y0).size(x1 - x0, y1 - y0).radius(k.radius.lg).border(3.0, theme::accent()).a11y_hidden());
             let below = y1 + 220.0 < cx.layout_size("window").map_or(768.0, |size| size[1]);
             let side = if below { Side::Bottom } else { Side::Top };
-            layer.push(bubble(k, lesson.steps[step].id, step, total, None).anchored(&key, side, Align::Start, space::S3));
+            layer.push(bubble(s, k, lesson.steps[step].id, step, total, None).anchored(&key, side, Align::Start, space::S3));
         }
         Show::Search { step } => {
             let command = match lesson.steps[step].goal {
@@ -190,14 +190,35 @@ fn lesson_view(s: &App, cx: &mut Cx<App>, k: &Kit, layer: &mut Vec<El>) {
                 _ => None,
             };
             layer.push(el().key("lesson-dim").absolute(0.0, 0.0).w_full().h_full().fill(dim).a11y_hidden().on_press_tx(|_: &mut App, _: &mut Tx| {}));
-            layer.push(col().key("lesson-centre").absolute(0.0, 0.0).w_full().h_full().center().child(bubble(k, lesson.steps[step].id, step, total, command)));
+            layer.push(col().key("lesson-centre").absolute(0.0, 0.0).w_full().h_full().center().child(bubble(s, k, lesson.steps[step].id, step, total, command)));
         }
     }
 }
 
-/// The step's bubble: where it is in the lesson, its words, Skip, and the search when the control
-/// is not on screen. No Next: the step ends on the person's own press.
-fn bubble(k: &Kit, id: &str, step: usize, total: usize, search: Option<Action>) -> El {
+thread_local! {
+    /// The clip of the step on screen, decoded once: the window's image cache plays its frames.
+    static CLIPS: std::cell::RefCell<std::collections::HashMap<String, rune::Image>> = std::cell::RefCell::new(std::collections::HashMap::new());
+}
+
+/// The step's recorded clip, when it has one and the window can draw pictures.
+fn clip_of(s: &App, id: &str) -> Option<rune::Image> {
+    let bytes = crate::guide::lessons::clip(id)?;
+    let images = s.images.as_ref()?;
+    // Only the clip on screen is kept: a decoded clip is about 6 MB of frames, and a budget PC
+    // walking through every lesson must not hold them all.
+    Some(CLIPS.with(|clips| {
+        let mut clips = clips.borrow_mut();
+        clips.retain(|kept, _| kept == id);
+        clips.entry(id.to_string()).or_insert_with(|| images.load(bytes)).clone()
+    }))
+}
+
+/// The clip's size in the bubble: the card's width inside its padding, at 16 to 9.
+const CLIP_W: f32 = CARD - 2.0 * space::S4;
+
+/// The step's bubble: where it is in the lesson, its words, its clip of the move, Skip, and the
+/// search when the control is not on screen. No Next: the step ends on the person's own press.
+fn bubble(s: &App, k: &Kit, id: &str, step: usize, total: usize, search: Option<Action>) -> El {
     let (main, more) = crate::guide::lessons::words(id);
     let main = main.as_str();
     let mut buttons = row().w_full().gap(space::S2).center_y().child(row().w(BUTTON).child(btn(t::TOUR_SKIP()).icon(&icons::CLOSE).ghost().grow().focusable().build(k, |s, _| s.end_lesson()))).child(spacer());
@@ -222,6 +243,9 @@ fn bubble(k: &Kit, id: &str, step: usize, total: usize, search: Option<Action>) 
                 .child(crate::ui::widgets::wrapped(main).font(type_::TITLE).color(k.c.text_base).wrap())
                 .child(crate::ui::widgets::wrapped(more).font(type_::BODY).color(k.c.text_muted).wrap()),
         )
+        .children(clip_of(s, id).map(|clip| {
+            el().key("lesson-clip").size(CLIP_W, (CLIP_W * 9.0 / 16.0).round()).radius(k.radius.md).clip_rounded(k.radius.md).border(1.0, k.c.border_base).pixels_fit(clip.pixels(), rune::SurfaceFit::Fill).a11y_hidden()
+        }))
         .child(buttons)
 }
 

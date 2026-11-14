@@ -217,6 +217,7 @@ dependencies = [
  "artosia-slides",
  "artosia-update",
  "image",
+ "png 0.17.16",
  "rune",
  "rune-kit",
  "serde",

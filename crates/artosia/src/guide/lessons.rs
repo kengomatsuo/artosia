@@ -92,6 +92,23 @@ impl Feature {
     }
 }
 
+/// The recorded clip of a step: the real window, the pointer moving to the control and pressing
+/// it, made by `tools/record-guide.py` as an animated PNG that the window plays by itself.
+pub fn clip(step: &str) -> Option<&'static [u8]> {
+    Some(match step {
+        "screens-open" => include_bytes!("../../../../assets/guide/screens-open.png"),
+        "calendar-tab" => include_bytes!("../../../../assets/guide/calendar-tab.png"),
+        "calendar-new" => include_bytes!("../../../../assets/guide/calendar-new.png"),
+        "people-tab" => include_bytes!("../../../../assets/guide/people-tab.png"),
+        "people-add" => include_bytes!("../../../../assets/guide/people-add.png"),
+        "giving-tab" => include_bytes!("../../../../assets/guide/giving-tab.png"),
+        "giving-add" => include_bytes!("../../../../assets/guide/giving-add.png"),
+        "templates-tab" => include_bytes!("../../../../assets/guide/templates-tab.png"),
+        "templates-use" => include_bytes!("../../../../assets/guide/templates-use.png"),
+        _ => return None,
+    })
+}
+
 /// The headline and the line under it for a step.
 pub fn words(step: &str) -> (String, &'static str) {
     let tab = |feature: Feature| (t::guide_open_tab(crate::ui::tabs::name(feature.tab())), feature.about());
