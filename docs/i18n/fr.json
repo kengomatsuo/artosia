@@ -1355,11 +1355,6 @@
   "back": "Words",
   "why": "song words"
  },
- "FIELD_ORDER": {
-  "text": "Par exemple : Couplet1 Refrain*2 Couplet2 Refrain Pont",
-  "back": "For example: Verse1 Chorus*2 Verse2 Chorus Bridge",
-  "why": "the program reads these French names"
- },
  "ORDER": {
   "text": "Ordre",
   "back": "Order",
@@ -1422,11 +1417,6 @@
   "text": "Paroles prises sur {source}. Comparez avec votre copie.",
   "back": "Words taken from {source}. Compare with your copy.",
   "why": "checking advice kept"
- },
- "LYRICS_PLACEHOLDER": {
-  "text": "[Couplet 1]\nTu es bon\n\n[Refrain]\nGloire",
-  "back": "[Verse 1] / You are good / [Chorus] / Glory",
-  "why": "own word for a verse, space, 1, in brackets"
  },
  "MARK_VERSE": {
   "text": "Couplet",
@@ -5811,5 +5801,20 @@
   "text": "Comme Jean 3:16, ou des mots dont tu te souviens",
   "back": "Like John 3:16, or words you remember",
   "why": "Tu"
+ },
+ "PART_NEW": {
+  "text": "Nouvelle partie",
+  "back": "New part",
+  "why": "table's word for a song part, short"
+ },
+ "EDITOR_DETAILS": {
+  "text": "Détails",
+  "back": "Details",
+  "why": "table's word for a song part, short"
+ },
+ "PART_REMOVED": {
+  "text": "Partie supprimée",
+  "back": "Part deleted",
+  "why": "table's word for a song part, short"
  }
 }

@@ -31,7 +31,7 @@ const PHONE_STEPS: [Step<Action>; 2] = [go("phone-open", Action::Run(Command::Re
 const LISTEN_STEPS: [Step<Action>; 2] = [go("listen-open", Action::Run(Command::Listen), "listen-open"), point("listen-mics", "microphones", "listen-open", "listen-open")];
 const SONGS_STEPS: [Step<Action>; 4] = [
     go("song-new", Action::Run(Command::NewSong), "editor-open"),
-    point("song-words", "editor-words", "editor-open", "song-new"),
+    point("song-words", "editor-cards", "editor-open", "song-new"),
     point("song-parts", "editor-parts", "editor-open", "song-new"),
     point("song-save", "editor-save", "editor-open", "song-new"),
 ];

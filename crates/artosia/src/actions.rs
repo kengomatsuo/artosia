@@ -202,6 +202,7 @@ impl App {
             Some(Undo::PlanLook { plan, look }) => self.restore_plan_look(plan, look),
             Some(Undo::PlanLanguages { plan, list }) => self.restore_plan_languages(plan, list),
             Some(Undo::EditorLanguage { at, entry }) => self.restore_editor_language(at, entry),
+            Some(Undo::EditorWords(words)) => self.restore_editor_words(words),
             Some(Undo::Recordings) => self.restore_recordings(),
             Some(Undo::Event(event)) => self.restore_event(event),
             Some(Undo::Series { before, added }) => self.restore_series(before, added),
@@ -468,16 +469,6 @@ impl App {
         self.editor = None;
     }
 
-    /// Starts a section at the caret. A verse takes the next free number, and a second chorus
-    /// or bridge is numbered when the song already has one.
-    pub fn insert_section(&mut self, kind: SectionKind) {
-        let Some(song) = self.editor_song() else { return };
-        let taken = song.sections().iter().filter(|section| section.tag.kind == kind).map(|section| section.tag.number).max().unwrap_or(0);
-        let once = matches!(kind, SectionKind::Intro | SectionKind::Ending);
-        let tag = Tag::new(kind, if once { 1 } else { taken + 1 });
-        self.insert_marker(&tag.marker());
-    }
-
     /// The order the editor's song is sung in, as it stands: what is typed, else as written.
     pub fn editor_order(&self) -> Vec<Tag> {
         let Some(song) = self.editor_song() else { return Vec::new() };
@@ -577,23 +568,6 @@ impl App {
         });
         let (from, to) = (marks::caret_after(changes, from), marks::caret_after(changes, to));
         editor.lyrics.set_selection(from, to);
-        editor.lyrics.focused = true;
-    }
-
-    pub fn insert_marker(&mut self, marker: &str) {
-        let Some(editor) = self.editor.as_mut() else { return };
-        let at = editor.lyrics.range().0.min(editor.lyrics.text.len());
-        // A heading stands after an empty line, as stanzas are written: under a line of words
-        // it brings that empty line itself.
-        let before = &editor.lyrics.text[..at];
-        let text = if before.is_empty() || before.ends_with("\n\n") {
-            format!("{marker}\n")
-        } else if before.ends_with('\n') {
-            format!("\n{marker}\n")
-        } else {
-            format!("\n\n{marker}\n")
-        };
-        editor.lyrics.insert(&text);
         editor.lyrics.focused = true;
     }
 
@@ -2144,26 +2118,6 @@ mod notice_tests {
         app.select_at(1);
         app.edit_announcements();
         assert_eq!(app.notices.as_ref().map(|form| form.id), Some(second));
-    }
-
-    #[test]
-    fn a_heading_started_under_words_brings_its_empty_line() {
-        let mut app = App::practice();
-        app.edit_new_song(artosia_core::song::Song::default());
-        let lyrics = |app: &App| app.editor.as_ref().map(|editor| editor.lyrics.text.clone()).unwrap_or_default();
-        app.insert_marker("[1]");
-        assert_eq!(lyrics(&app), "[1]\n");
-        if let Some(editor) = app.editor.as_mut() {
-            editor.lyrics.insert("Morning light on the hill\n");
-        }
-        app.insert_marker("[chorus]");
-        assert_eq!(lyrics(&app), "[1]\nMorning light on the hill\n\n[chorus]\n");
-        // In the middle of a line the heading still starts a stanza of its own.
-        if let Some(editor) = app.editor.as_mut() {
-            editor.lyrics.insert("Quiet road below");
-        }
-        app.insert_marker("[2]");
-        assert!(lyrics(&app).ends_with("Quiet road below\n\n[2]\n"), "{:?}", lyrics(&app));
     }
 
     #[test]

@@ -1262,11 +1262,6 @@
   "back": "Lyrics",
   "why": "One word"
  },
- "FIELD_ORDER": {
-  "text": "Ketik urutan, contoh: Bait1 Reff*2 Bait2 Reff Bridge",
-  "back": "Type the order, example: Verse1 Chorus*2 Verse2 Chorus Bridge",
-  "why": "The program reads these section names"
- },
  "ORDER": {
   "text": "Urutan",
   "back": "Order",
@@ -1329,11 +1324,6 @@
   "text": "Lirik dari {source}. Cocokkan dulu dengan salinan gereja.",
   "back": "Words from {source}. Compare first with the church's own copy.",
   "why": "Checking advice kept"
- },
- "LYRICS_PLACEHOLDER": {
-  "text": "[Bait 1]\nBaris pertama lagu ini\n\n[Reff]\nBaris reff lagu ini",
-  "back": "[Verse 1]\nFirst line of this song\n\n[Chorus]\nChorus line of this song",
-  "why": "Marker syntax guessed as square brackets, see report"
  },
  "MARK_VERSE": {
   "text": "Bait",
@@ -5713,5 +5703,20 @@
   "text": "Misalnya Yohanes 3:16, atau kata yang teringat.",
   "back": "For example John 3:16, or a word that comes to mind.",
   "why": "Tombol berlingkar"
+ },
+ "PART_NEW": {
+  "text": "Bagian baru",
+  "back": "New part",
+  "why": "table's word for a song part, short"
+ },
+ "EDITOR_DETAILS": {
+  "text": "Detail lagu",
+  "back": "Song details",
+  "why": "table's word for a song part, short"
+ },
+ "PART_REMOVED": {
+  "text": "Bagian dihapus",
+  "back": "Part deleted",
+  "why": "table's word for a song part, short"
  }
 }

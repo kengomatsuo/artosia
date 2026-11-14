@@ -1355,11 +1355,6 @@
   "back": "Words",
   "why": "Everyday word for song words."
  },
- "FIELD_ORDER": {
-  "text": "Escribe el orden: Estrofa1 Coro*2 Estrofa2 Coro Puente",
-  "back": "Type the order: Verse1 Chorus*2 Verse2 Chorus Bridge",
-  "why": "Section names as the markers."
- },
  "ORDER": {
   "text": "Orden",
   "back": "Order",
@@ -1422,11 +1417,6 @@
   "text": "Letra de {source}. Compárala con la de tu iglesia antes de usarla.",
   "back": "Words from {source}. Compare them with your church's before using them.",
   "why": "Checking advice kept."
- },
- "LYRICS_PLACEHOLDER": {
-  "text": "[Estrofa 1]\nTu paz guía\n\n[Coro]\nAleluya",
-  "back": "[Verse 1] / Your peace guides / [Chorus] / Hallelujah",
-  "why": "Markers are the section names; sample lines kept short to fit 40 in all."
  },
  "MARK_VERSE": {
   "text": "Estrofa",
@@ -5789,5 +5779,20 @@
   "text": "Por ejemplo Juan 3:16, o las palabras que recuerdes.",
   "back": "For example John 3:16, or the words you remember.",
   "why": "Tuteo"
+ },
+ "PART_NEW": {
+  "text": "Nueva parte",
+  "back": "New part",
+  "why": "table's word for a song part, short"
+ },
+ "EDITOR_DETAILS": {
+  "text": "Detalles",
+  "back": "Details",
+  "why": "table's word for a song part, short"
+ },
+ "PART_REMOVED": {
+  "text": "Parte eliminada",
+  "back": "Part deleted",
+  "why": "table's word for a song part, short"
  }
 }

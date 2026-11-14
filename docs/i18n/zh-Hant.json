@@ -1349,11 +1349,6 @@
   "back": "Lyrics",
   "why": "一詞"
  },
- "FIELD_ORDER": {
-  "text": "輸入順序，如 主歌1 副歌*2 主歌2 副歌 橋段",
-  "back": "Type the order, e.g. Verse1 Chorus*2 Verse2 Chorus Bridge",
-  "why": "段落名與編號不留空格"
- },
  "ORDER": {
   "text": "順序",
   "back": "Order",
@@ -1416,11 +1411,6 @@
   "text": "歌詞取自 {source}，使用前請與教會自己的版本核對。",
   "back": "Words taken from {source}; check them against the church's own copy before use.",
   "why": "核對建議很重要"
- },
- "LYRICS_PLACEHOLDER": {
-  "text": "[主歌 1]\n讚美歸給主\n\n[副歌]\n歌頌祂的名",
-  "back": "[Verse 1] / Praise to the Lord / [Chorus] / Sing His name",
-  "why": "標記用段落名，主歌後空一格再 1"
  },
  "MARK_VERSE": {
   "text": "主歌",
@@ -5754,5 +5744,20 @@
   "text": "例如約翰福音 3:16，或是記得的幾個字",
   "back": "For example John 3:16, or a few words you remember",
   "why": "按下框起來的按鈕"
+ },
+ "PART_NEW": {
+  "text": "新增段落",
+  "back": "Add section",
+  "why": "table's word for a song part, short"
+ },
+ "EDITOR_DETAILS": {
+  "text": "詳細資料",
+  "back": "Detail data",
+  "why": "table's word for a song part, short"
+ },
+ "PART_REMOVED": {
+  "text": "已刪除該段落",
+  "back": "Deleted that section",
+  "why": "table's word for a song part, short"
  }
 }

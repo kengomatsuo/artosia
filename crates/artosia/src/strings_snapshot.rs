@@ -363,7 +363,6 @@ pub fn dump() -> String {
     line(out, "FIELD_COPYRIGHT", FIELD_COPYRIGHT());
     line(out, "FIELD_CCLI", FIELD_CCLI());
     line(out, "FIELD_LYRICS", FIELD_LYRICS());
-    line(out, "FIELD_ORDER", FIELD_ORDER());
     line(out, "ORDER", ORDER());
     line(out, "ORDER_AS_WRITTEN", ORDER_AS_WRITTEN());
     line(out, "ORDER_EMPTY", ORDER_EMPTY());
@@ -374,7 +373,6 @@ pub fn dump() -> String {
     line(out, "SUGGEST_LIBRARY", SUGGEST_LIBRARY());
     line(out, "SUGGEST_FETCHING", SUGGEST_FETCHING());
     line(out, "LICENCE_NOTE", LICENCE_NOTE());
-    line(out, "LYRICS_PLACEHOLDER", LYRICS_PLACEHOLDER());
     line(out, "MARK_VERSE", MARK_VERSE());
     line(out, "MARK_CHORUS", MARK_CHORUS());
     line(out, "MARK_BRIDGE", MARK_BRIDGE());

@@ -1355,11 +1355,6 @@
   "back": "Lyrics",
   "why": "letra is the slide words in the editor"
  },
- "FIELD_ORDER": {
-  "text": "Ordem, ex.: Estrofe1 Refrão*2 Estrofe2 Refrão Ponte",
-  "back": "Order, e.g.: Verse1 Chorus*2 Verse2 Chorus Bridge",
-  "why": "one-word part names, no space"
- },
  "ORDER": {
   "text": "Ordem",
   "back": "Order",
@@ -1422,11 +1417,6 @@
   "text": "Letra de {source}. Compare com a cópia da igreja antes de usar.",
   "back": "Lyrics from {source}. Compare with the church copy before use.",
   "why": "-"
- },
- "LYRICS_PLACEHOLDER": {
-  "text": "[Estrofe 1]\nTua graça me sustenta\n\n[Refrão]\nCantamos o teu nome",
-  "back": "[Verse 1] Your grace holds me up / [Chorus] We sing your name",
-  "why": "made-up song lines; width read per line"
  },
  "MARK_VERSE": {
   "text": "Estrofe",
@@ -5789,5 +5779,20 @@
   "text": "Como João 3:16, ou o trecho de que se lembra.",
   "back": "Like John 3:16, or the bit one remembers.",
   "why": "Botão destacado"
+ },
+ "PART_NEW": {
+  "text": "Nova parte",
+  "back": "New part",
+  "why": "table's word for a song part, short"
+ },
+ "EDITOR_DETAILS": {
+  "text": "Detalhes",
+  "back": "Details",
+  "why": "table's word for a song part, short"
+ },
+ "PART_REMOVED": {
+  "text": "Parte removida",
+  "back": "Part removed",
+  "why": "table's word for a song part, short"
  }
 }

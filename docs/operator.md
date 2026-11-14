@@ -265,11 +265,13 @@ Started again from the keys sheet (button at the bottom), from the search ("tour
 
 ## The song editor
 
-The words are plain text with marker lines, because that is what pastes in from anywhere and what EasiSlides wrote. The editor does the rest around the text (`ui/editor.rs`):
+Since 2026-11-14 the words are part cards (LYRICSEDIT1, the owner's pick A of three directions drawn from `~/Shared/inspo/artosia-lyrics-editor`, plan `docs/plans/artosia/lyrics-editor.md`). The song is still plain text with marker lines, because that is what pastes in from anywhere and what EasiSlides wrote; the cards are drawn from it (`parts.rs`, `ui/editor.rs`):
 
-- The words come right after the title, one Tab away; author, key, copyright and the CCLI number are the last rows, filled in when at all (two testers pressed Tab five times to reach the words).
-- Marker lines are coloured like their slides.
-- Verse, Chorus, Pre-chorus, Bridge and Ending write the next free marker at the caret (Ctrl 1 to 5). Under a line of words the marker brings the empty line that stanzas are written with (`insert_marker`).
+- Each part is a card in its colour: its kind as a chip, how many slides it makes, its words with a dashed rule where a slide starts, and its slides. Up, down and the bin move or remove it; a removal offers Undo.
+- A press on a card's words opens it for writing; its words are that part's body (`Section::body`), written back through `write_lyrics` on every change, so saving, search, decks and the projector read the song as before. An empty line starts a slide. Anything else that rewrites the words (Mark, Tidy, a language switch, Undo) closes the card instead of letting it write back a stale part (`PartEdit::current`).
+- The kind chip offers the six kinds; Ctrl 1 to 5 picks one in an open card. The New part tile under the cards starts a part of a kind, written on its first word, numbered by the next free number.
+- The sung order is a strip of the parts' colours at the foot, each as wide as the slides it shows, repeats as ×2: a press takes a part out, + offers the parts to sing again. There is no typed order field.
+- Author, key, copyright and the CCLI number sit behind Song details.
 - Tidy turns headings such as "Verse 1" or "Reff:" into markers and drops chord lines (`song::tidy_lyrics`).
 - A quiet strip over the words proposes marks while any stanza has none (`artosia-core/src/marks.rs`, `ui/editor.rs` `marks_strip`). It shows the sections the song would get as a row of chips, tinted where the words already say it and outlined where Mark would write it; the chip's tooltip says why (read from a written name, sung again word for word, short and late, next verse). Mark (Ctrl M) writes the marker lines as one edit that Ctrl Z undoes, and the caret stays before the same letter; the cross hides the strip for this song. Nothing is marked without a press. Pasting a song, filling one from the web and pressing Tidy leave words with no heading unmarked on purpose, so the strip is what offers the marks.
 - With the caret in a stanza that has no mark, a second row names what it would be and offers the six kinds (verse, chorus, pre-chorus, bridge, intro, ending) as chips of one width. A press writes one marker line before that stanza, numbered by `Proposal::tag_as`: a second verse is Verse 2 by itself, a second chorus worded differently is Chorus 2.

@@ -1349,11 +1349,6 @@
   "back": "Words",
   "why": ""
  },
- "FIELD_ORDER": {
-  "text": "곡 진행 입력 (예: 벌스1 후렴*2 벌스2 후렴 브리지 후렴)",
-  "back": "Type the song flow (for example: verse1 chorus*2 verse2 chorus bridge chorus)",
-  "why": ""
- },
  "ORDER": {
   "text": "곡 진행",
   "back": "Song flow",
@@ -1416,11 +1411,6 @@
   "text": "가사 출처: {source}. 쓰기 전에 교회 가사와 꼭 비교하세요",
   "back": "Words from: {source}. Compare with the church's own copy before using.",
   "why": ""
- },
- "LYRICS_PLACEHOLDER": {
-  "text": "[벌스 1]\n주님의 사랑 크시네\n\n[후렴]\n주님을 찬양해",
-  "back": "[Verse 1] / The Lord's love is great / [Chorus] / We praise the Lord",
-  "why": "marker names are the section names"
  },
  "MARK_VERSE": {
   "text": "벌스",
@@ -5756,5 +5746,20 @@
   "text": "예를 들어 요한복음 3:16, 또는 기억나는 말",
   "back": "For example John 3:16, or words you remember",
   "why": "표시된 버튼을 눌러"
+ },
+ "PART_NEW": {
+  "text": "새 파트",
+  "back": "New part",
+  "why": "table's word for a song part, short"
+ },
+ "EDITOR_DETAILS": {
+  "text": "상세 정보",
+  "back": "Detail info",
+  "why": "table's word for a song part, short"
+ },
+ "PART_REMOVED": {
+  "text": "파트를 삭제했어요",
+  "back": "Deleted the part",
+  "why": "table's word for a song part, short"
  }
 }

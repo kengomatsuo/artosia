@@ -1349,11 +1349,6 @@
   "back": "Lyrics",
   "why": "Word for song words"
  },
- "FIELD_ORDER": {
-  "text": "歌う順を入力。例：V1 C*2 V2 C B",
-  "back": "Type the singing order. Example: V1 C*2 V2 C B",
-  "why": "Letter codes, since 番 cannot carry the number after it"
- },
  "ORDER": {
   "text": "歌う順番",
   "back": "Singing order",
@@ -1416,11 +1411,6 @@
   "text": "{source}から取得した歌詞です。教会の手元の版と必ず見比べてください",
   "back": "Words fetched from {source}. Always compare with the church's own copy",
   "why": "Checking advice kept"
- },
- "LYRICS_PLACEHOLDER": {
-  "text": "[1番]\nここに一行目\n\n[サビ]\nサビの一行目",
-  "back": "[Verse 1]\nFirst line here\n\n[Chorus]\nFirst line of the chorus",
-  "why": "One marker form everywhere"
  },
  "MARK_VERSE": {
   "text": "1番",
@@ -5754,5 +5744,20 @@
   "text": "例えばヨハネ3:16、または覚えている言葉",
   "back": "For example John 3:16, or words you remember",
   "why": "枠のボタンを押して"
+ },
+ "PART_NEW": {
+  "text": "パートを追加",
+  "back": "Add part",
+  "why": "table's word for a song part, short"
+ },
+ "EDITOR_DETAILS": {
+  "text": "詳細",
+  "back": "Details",
+  "why": "table's word for a song part, short"
+ },
+ "PART_REMOVED": {
+  "text": "パートを削除しました",
+  "back": "Deleted the part",
+  "why": "table's word for a song part, short"
  }
 }

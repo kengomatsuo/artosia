@@ -1351,11 +1351,6 @@
   "back": "Lyrics",
   "why": "plain"
  },
- "FIELD_ORDER": {
-  "text": "可直接输入，如 主歌1 副歌*2 主歌2 副歌 桥段",
-  "back": "May be typed, as in verse1 chorus*2 verse2 chorus bridge",
-  "why": "names glued to numbers"
- },
  "ORDER": {
   "text": "演唱顺序",
   "back": "Order sung",
@@ -1418,11 +1413,6 @@
   "text": "歌词来自{source}。使用前请与教会自己的版本核对。",
   "back": "The words come from {source}. Check them against the church's own copy before use.",
   "why": "checking advice kept"
- },
- "LYRICS_PLACEHOLDER": {
-  "text": "[主歌 1]\n这里写歌词\n\n[副歌]\n这里写歌词",
-  "back": "[verse 1] sample, blank line, [chorus] sample",
-  "why": "names exactly as the parts are named"
  },
  "MARK_VERSE": {
   "text": "主歌",
@@ -5756,5 +5746,20 @@
   "text": "如约翰福音 3:16，或记得的几个字",
   "back": "Such as John 3:16, or a few words you remember",
   "why": "按下带框的按钮"
+ },
+ "PART_NEW": {
+  "text": "新段落",
+  "back": "New section",
+  "why": "table's word for a song part, short"
+ },
+ "EDITOR_DETAILS": {
+  "text": "详情",
+  "back": "Details",
+  "why": "table's word for a song part, short"
+ },
+ "PART_REMOVED": {
+  "text": "已删除该段落",
+  "back": "Deleted that section",
+  "why": "table's word for a song part, short"
  }
 }

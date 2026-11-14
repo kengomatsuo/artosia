@@ -5046,26 +5046,6 @@
   "notes": "One word. The writer of the words here is a volunteer typing what the congregation sings."
  },
  {
-  "key": "FIELD_ORDER",
-  "kind": "const",
-  "screen": "Song editor: it takes the place of the Preview pane. Heading and Delete, Cancel and Save buttons across the top; below them the fields Title, Author, Key, Copyright and CCLI song number; then the big box for the words with a row of small buttons above it; under it the order of the song; and a column of slide thumbnails at the right. Hint inside the thin text field under the order chips.",
-  "moment": "The person may type the order in code instead of clicking chips.",
-  "role": "placeholder",
-  "does": "The grey hint in the empty field where the order of a song's parts may be typed. It says the order may be typed, and gives one example: the first verse, the chorus sung twice, the second verse, the chorus, the bridge.",
-  "budget": 56,
-  "variables": [],
-  "cases": [],
-  "counts": "",
-  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
-  "concepts": [
-   "song_order",
-   "verse",
-   "chorus",
-   "bridge"
-  ],
-  "notes": "Write the example with the language's own names for the parts, each number attached to its name without a space, and a star with a number for a part sung several times: in the shape Name1 Name*2 Name2 Name Name. The program reads these names. A name of two words cannot be typed here, because a space divides the parts: for such a part write its letter code (V1 for the first verse, C for the chorus, P for the part before the chorus, B for the bridge). No full stop."
- },
- {
   "key": "ORDER",
   "kind": "const",
   "screen": "Song editor: it takes the place of the Preview pane. Heading and Delete, Cancel and Save buttons across the top; below them the fields Title, Author, Key, Copyright and CCLI song number; then the big box for the words with a row of small buttons above it; under it the order of the song; and a column of slide thumbnails at the right. Small bold label above the chips that show the order the song is sung in.",
@@ -5556,26 +5536,6 @@
    "song"
   ],
   "notes": "Two short statements; the checking advice matters."
- },
- {
-  "key": "LYRICS_PLACEHOLDER",
-  "kind": "const",
-  "screen": "Song editor: it takes the place of the Preview pane. Heading and Delete, Cancel and Save buttons across the top; below them the fields Title, Author, Key, Copyright and CCLI song number; then the big box for the words with a row of small buttons above it; under it the order of the song; and a column of slide thumbnails at the right. Hint inside the empty big words box, three or four short lines.",
-  "moment": "The words box is empty.",
-  "role": "placeholder",
-  "does": "Shows by example how the words are laid out: a numbered part marker line then a sung line, a blank line, the repeated part's marker line then a sung line.",
-  "budget": 40,
-  "variables": [],
-  "cases": [],
-  "counts": "",
-  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
-  "concepts": [
-   "section",
-   "verse",
-   "chorus",
-   "song"
-  ],
-  "notes": "The first marker line is your own word for a verse, a space and the number 1, inside square brackets; the second is your own word for the chorus inside square brackets. The program reads your words for the parts, so write them exactly as you named the parts. The sample sung lines are yours to make up: plain lines of about four words, not a real song."
  },
  {
   "key": "MARK_VERSE",
@@ -21135,5 +21095,59 @@
    "passage"
   ],
   "notes": "One sentence. Write the example reference with this language's own name of the book John, as its Bibles write it."
+ },
+ {
+  "key": "PART_NEW",
+  "kind": "const",
+  "screen": "The song editor: under the cards that hold a song's parts (verse, chorus, bridge), a dashed tile with a plus, this text, and one chip per kind of part to start.",
+  "moment": "The person wants to add another part to the song.",
+  "role": "label of a tile",
+  "does": "Names the tile that starts another part of the song.",
+  "budget": 16,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "section",
+   "song"
+  ],
+  "notes": "Two words at most. The word for a part of a song as the table already uses it."
+ },
+ {
+  "key": "EDITOR_DETAILS",
+  "kind": "const",
+  "screen": "The song editor's top bar, a button with a sliders icon beside Cancel and Save; it shows or hides the song's author, copyright, CCLI number and key.",
+  "moment": "The person wants to fill in who wrote the song and its rights.",
+  "role": "button",
+  "does": "Names the button that shows the song's details: author, copyright, licence number, key.",
+  "budget": 18,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "song",
+   "licence"
+  ],
+  "notes": "Short."
+ },
+ {
+  "key": "PART_REMOVED",
+  "kind": "const",
+  "screen": "A toast at the foot of the window with an Undo button, after a part was taken out of the song in the editor.",
+  "moment": "The person just pressed the bin on one part of the song.",
+  "role": "toast",
+  "does": "Says the part was taken out of the song; Undo beside it puts it back.",
+  "budget": 30,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "section",
+   "undo"
+  ],
+  "notes": "A plain statement, no exclamation."
  }
 ]

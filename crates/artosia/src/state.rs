@@ -266,6 +266,8 @@ pub enum Undo {
     PlanLook { plan: i64, look: serde_json::Value },
     /// A plan went back to the church's usual languages; this was its own list.
     PlanLanguages { plan: i64, list: Vec<String> },
+    /// A part was taken out of the song in the editor: its words as they were before.
+    EditorWords(String),
     /// A language's words were taken out of the song in the editor, from this place in its list.
     EditorLanguage { at: usize, entry: (String, String) },
     /// Every recording was deleted; they wait beside the folder until the toast leaves.
@@ -340,6 +342,14 @@ pub struct Editor {
     pub credit: Option<(String, String)>,
     /// The strip proposing section marks was dismissed for this song.
     pub marks_hidden: bool,
+    /// The part card being written in.
+    pub part: Option<crate::parts::PartEdit>,
+    /// The part card whose kinds are offered.
+    pub part_menu: Option<usize>,
+    /// The parts to sing again are offered under the order strip.
+    pub order_menu: bool,
+    /// Who wrote the song, its rights and its key are shown.
+    pub details_open: bool,
 }
 
 /// The program's windows, one tab each under the title bar (UIOVER1, direction B): the plan,

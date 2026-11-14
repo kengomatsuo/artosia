@@ -710,6 +710,9 @@ text!(GUIDE_BIBLE_BOOKS, "Pick a book, then the chapter and verses", "Pilih kita
 text!(GUIDE_BIBLE_BOOKS_MORE, "The passage then lands in Preview, ready to show.", "Ayatnya lalu masuk ke Preview, siap tampil.");
 text!(GUIDE_BIBLE_TYPE, "Or type a reference, or words from the verse", "Atau ketik rujukan, atau kata dari ayatnya");
 text!(GUIDE_BIBLE_TYPE_MORE, "A reference like John 3:16, or words you remember.", "Misalnya Yohanes 3:16, atau kata yang teringat.");
+text!(PART_NEW, "New part", "Bagian baru");
+text!(EDITOR_DETAILS, "Details", "Detail lagu");
+text!(PART_REMOVED, "Part removed", "Bagian dihapus");
 text!(GUIDE_HELP, "Help", "Bantuan");
 text!(GUIDE_SHOW_ME, "Show me", "Tunjukkan caranya");
 text!(HELP_CALENDAR, "Your regular services and events, entered once. The schedule slide fills itself from them.", "Kalender berisi ibadah dan acara gereja, cukup diisi sekali. Slide pengumuman jadwal terisi sendiri.");
@@ -838,7 +841,6 @@ text!(FIELD_KEY, "Key", "Nada");
 text!(FIELD_COPYRIGHT, "Copyright", "Hak cipta");
 text!(FIELD_CCLI, "CCLI song number", "Nomor CCLI");
 text!(FIELD_LYRICS, "Words", "Lirik");
-text!(FIELD_ORDER, "Or type it: V1 C*2 V2 C B", "Ketik urutan, misalnya V1 C*2 B");
 text!(ORDER, "Order", "Urutan");
 text!(ORDER_AS_WRITTEN, "As written", "Sesuai ketikan");
 text!(ORDER_EMPTY, "The order appears once the words have sections", "Urutan muncul setelah lirik dibagi per bagian");
@@ -884,7 +886,6 @@ pub fn words_from(source: &str) -> String {
     }
     format!("Words from {source}. Check them against your own copy.")
 }
-text!(LYRICS_PLACEHOLDER, "[1]\nFirst verse\n\n[chorus]\nChorus", "[1]\nBaris bait satu\n[chorus]\nBaris reff");
 text!(MARK_VERSE, "Verse", "Bait");
 text!(MARK_CHORUS, "Chorus", "Reff");
 text!(MARK_BRIDGE, "Bridge", "Bridge");

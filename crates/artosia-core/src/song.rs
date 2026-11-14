@@ -117,6 +117,42 @@ pub struct Section {
 }
 
 impl Section {
+    /// The section's words as a part card edits them: one line each, an empty line where a
+    /// slide starts.
+    pub fn body(&self) -> String {
+        let mut out = String::new();
+        for (at, line) in self.lines.iter().enumerate() {
+            if at > 0 {
+                out.push('\n');
+                if self.breaks.contains(&at) {
+                    out.push('\n');
+                }
+            }
+            out.push_str(line);
+        }
+        out
+    }
+
+    /// A section from a part card's words, read as `body` writes them: an empty line starts a
+    /// slide, and empty lines at the start or end start nothing.
+    pub fn from_body(tag: Tag, body: &str) -> Section {
+        let mut section = Section { tag, lines: Vec::new(), breaks: Vec::new() };
+        let mut gap = false;
+        for line in body.lines() {
+            let trimmed = line.trim();
+            if trimmed.is_empty() {
+                gap = true;
+                continue;
+            }
+            if gap && !section.lines.is_empty() && section.breaks.last() != Some(&section.lines.len()) {
+                section.breaks.push(section.lines.len());
+            }
+            gap = false;
+            section.lines.push(trimmed.to_string());
+        }
+        section
+    }
+
     /// The section's lines as the writer grouped them into slides.
     pub fn groups(&self) -> Vec<&[String]> {
         let mut out = Vec::with_capacity(self.breaks.len() + 1);
@@ -563,6 +599,28 @@ pub fn song_from_paste(text: &str) -> Song {
         song.title = song.first_line().unwrap_or_default();
     }
     song
+}
+
+#[cfg(test)]
+mod body_tests {
+    use super::*;
+
+    #[test]
+    fn a_part_body_round_trips_with_its_slide_breaks() {
+        let lyrics = "[1]\nFirst line\nSecond line\n\nThird line\n[chorus]\nShine on\n";
+        let sections = parse_lyrics(lyrics);
+        assert_eq!(sections[0].body(), "First line\nSecond line\n\nThird line");
+        let back = Section::from_body(sections[0].tag, &sections[0].body());
+        assert_eq!(back, sections[0]);
+        // Extra empty lines start one slide, and none at the ends.
+        let loose = Section::from_body(Tag::new(SectionKind::Verse, 1), "\n\nA\n\n\n\nB\n\n");
+        assert_eq!(loose.lines, ["A", "B"]);
+        assert_eq!(loose.breaks, [1]);
+        // A body written back keeps every other section as it was.
+        let mut changed = sections.clone();
+        changed[0] = Section::from_body(changed[0].tag, "New words");
+        assert_eq!(parse_lyrics(&write_lyrics(&changed))[1], sections[1]);
+    }
 }
 
 #[cfg(test)]

@@ -24,6 +24,7 @@ mod learning;
 mod link;
 mod onboard;
 mod palette;
+mod parts;
 mod people;
 mod plans;
 mod pptx_import;
@@ -456,6 +457,15 @@ const SCENES: &[Scene] = &[
     ("editor", |s| {
         s.open_song(0, None);
         s.edit_open_song();
+    }),
+    // LYRICSEDIT1: a song's second part open for writing, its kinds offered.
+    ("editor-part", |s| {
+        s.open_song(0, None);
+        s.edit_open_song();
+        s.open_part(1);
+        if let Some(editor) = s.editor.as_mut() {
+            editor.part_menu = Some(1);
+        }
     }),
     ("new-song", |s| {
         s.song_from_clipboard("Lantern Song\n\nVerse 1\nCarry the lantern through the night\nKeep the small flame burning bright\n\nChorus\nShine, shine on the road ahead\nShine till the morning comes\n");

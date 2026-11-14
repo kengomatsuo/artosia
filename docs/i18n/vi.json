@@ -1349,11 +1349,6 @@
   "back": "Words",
   "why": "One word"
  },
- "FIELD_ORDER": {
-  "text": "Hoặc gõ: Lời1 C*2 Lời2 C B",
-  "back": "Or type: Verse1 C*2 Verse2 C B",
-  "why": "Two-word parts use their letter codes"
- },
  "ORDER": {
   "text": "Thứ tự hát",
   "back": "Singing order",
@@ -1416,11 +1411,6 @@
   "text": "Lời lấy từ {source}. Hãy so với bản của nhà thờ trước khi chiếu.",
   "back": "Words taken from {source}. Compare with the church's own copy before showing.",
   "why": "Checking advice kept"
- },
- "LYRICS_PLACEHOLDER": {
-  "text": "[Lời 1]\nDòng một\n\n[Điệp khúc]\nDòng hai",
-  "back": "[Verse 1] / line one / [Chorus] / line two",
-  "why": "Markers are my part names in brackets"
  },
  "MARK_VERSE": {
   "text": "Lời",
@@ -5764,5 +5754,20 @@
   "text": "Như Giăng 3:16, hoặc những chữ còn nhớ.",
   "back": "Like John 3:16, or the words still remembered.",
   "why": "Bấm nút được khoanh"
+ },
+ "PART_NEW": {
+  "text": "Phần mới",
+  "back": "New part",
+  "why": "table's word for a song part, short"
+ },
+ "EDITOR_DETAILS": {
+  "text": "Chi tiết",
+  "back": "Details",
+  "why": "table's word for a song part, short"
+ },
+ "PART_REMOVED": {
+  "text": "Đã xóa phần này",
+  "back": "This part deleted",
+  "why": "table's word for a song part, short"
  }
 }
