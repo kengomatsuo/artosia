@@ -2097,9 +2097,9 @@
   "why": "plural reads as a list"
  },
  "CMD_IMPORT_BIRTHDAYS_DETAIL": {
-  "text": "Tableau de noms et de dates, Word ou PowerPoint",
-  "back": "Table of names and dates, Word or PowerPoint",
-  "why": "plain"
+  "text": "Word, PowerPoint, Excel ou csv, colonnes à associer",
+  "back": "Word, PowerPoint, Excel or csv, columns to match",
+  "why": "File kinds and the next step"
  },
  "BIRTHDAYS_NONE_FOUND": {
   "text": "Aucun nom avec une date dans ce fichier",
@@ -4222,5 +4222,223 @@
   "text": "Un culte, une réunion ou une répétition",
   "back": "A service, meeting or rehearsal",
   "why": "Reuses the table words: calendrier, annonce, culte; neutral register without addressing the reader"
+ },
+ "PEOPLE_SEARCH": {
+  "text": "Nom d'un membre",
+  "back": "Name of a member",
+  "why": "membre is the table's word for the tab"
+ },
+ "PEOPLE_BIRTH_MONTH": {
+  "text": "Mois de naissance",
+  "back": "Month of birth",
+  "why": "Reads before a month name"
+ },
+ "PEOPLE_IMPORT": {
+  "text": "Importer",
+  "back": "Import",
+  "why": "Same verb as the other import rows"
+ },
+ "PEOPLE_ADD": {
+  "text": "Ajouter un membre",
+  "back": "Add a member",
+  "why": "Ajouter as elsewhere"
+ },
+ "PEOPLE_EDIT": {
+  "text": "Modifier le membre",
+  "back": "Edit the member",
+  "why": "Modifier is the table's edit verb"
+ },
+ "PEOPLE_COL_NAME": {
+  "text": "Nom",
+  "back": "Name",
+  "why": "One word"
+ },
+ "PEOPLE_COL_BORN": {
+  "text": "Date de naissance",
+  "back": "Date of birth",
+  "why": "Plain"
+ },
+ "PEOPLE_COL_NEXT": {
+  "text": "Anniversaire",
+  "back": "Birthday",
+  "why": "The table opens sorted by it; the full phrase does not fit"
+ },
+ "PEOPLE_COL_GROUP": {
+  "text": "Tranche d'âge",
+  "back": "Age band",
+  "why": "Says what the group is"
+ },
+ "PEOPLE_COL_AGE": {
+  "text": "Âge",
+  "back": "Age",
+  "why": "One word"
+ },
+ "PEOPLE_TODAY": {
+  "text": "ce jour",
+  "back": "this day",
+  "why": "Aujourd'hui is 11 characters, the limit is 10"
+ },
+ "PEOPLE_CHILD": {
+  "text": "Enfant",
+  "back": "Child",
+  "why": "Plain"
+ },
+ "PEOPLE_YOUTH": {
+  "text": "Jeune",
+  "back": "Young person",
+  "why": "What a French church calls its young people"
+ },
+ "PEOPLE_ADULT": {
+  "text": "Adulte",
+  "back": "Adult",
+  "why": "Plain"
+ },
+ "PEOPLE_USED_BY": {
+  "text": "Utilisé par",
+  "back": "Used by",
+  "why": "Heading above the slide picture"
+ },
+ "PEOPLE_USED_BY_HINT": {
+  "text": "L'annonce des anniversaires prend les noms dans cette liste, sans les retaper.",
+  "back": "The birthday announcement takes the names from this list, without retyping them.",
+  "why": "annonce is the table's word"
+ },
+ "PEOPLE_OPEN_CARD": {
+  "text": "Ouvrir l'annonce",
+  "back": "Open the announcement",
+  "why": "Ouvrir as in the Open button"
+ },
+ "PEOPLE_IMPORT_LIST": {
+  "text": "Importer une liste",
+  "back": "Import a list",
+  "why": "Same verb as the button"
+ },
+ "PEOPLE_IMPORT_HINT": {
+  "text": "Word, PowerPoint, Excel ou csv. Les colonnes se choisissent à l'étape suivante.",
+  "back": "Word, PowerPoint, Excel or csv. The columns are chosen at the next step.",
+  "why": "Four kinds, then the next step"
+ },
+ "PEOPLE_DROP": {
+  "text": "Choisir un fichier ou le déposer ici",
+  "back": "Choose a file or drop it here",
+  "why": "fichier as the table says"
+ },
+ "PEOPLE_EMPTY": {
+  "text": "Aucun membre",
+  "back": "No member",
+  "why": "A state"
+ },
+ "PEOPLE_EMPTY_HINT": {
+  "text": "Ajoutez-les un à un, ou importez un fichier",
+  "back": "Add them one by one, or import a file",
+  "why": "Two ways in one sentence"
+ },
+ "PEOPLE_NONE": {
+  "text": "Aucun résultat",
+  "back": "No result",
+  "why": "States the filter result"
+ },
+ "PEOPLE_NONE_HINT": {
+  "text": "Changez de mois ou de lettres",
+  "back": "Change the month or the letters",
+  "why": "Short imperative; the longer form passed 40"
+ },
+ "PEOPLE_DAY": {
+  "text": "Jour",
+  "back": "Day",
+  "why": "One word"
+ },
+ "PEOPLE_MONTH": {
+  "text": "Mois",
+  "back": "Month",
+  "why": "One word"
+ },
+ "PEOPLE_YEAR": {
+  "text": "Année",
+  "back": "Year",
+  "why": "One word"
+ },
+ "PEOPLE_YEAR_UNKNOWN": {
+  "text": "Année inconnue",
+  "back": "Year unknown",
+  "why": "Says the year stays empty"
+ },
+ "PEOPLE_COL_IGNORE": {
+  "text": "Ignorer",
+  "back": "Ignore",
+  "why": "One word"
+ },
+ "PEOPLE_COLUMNS_HINT": {
+  "text": "Indiquez le contenu de chaque colonne",
+  "back": "Say what each column holds",
+  "why": "Short instruction"
+ },
+ "PEOPLE_FIRST_ROW": {
+  "text": "La première ligne donne les titres",
+  "back": "The first row gives the titles",
+  "why": "Statement beside a tick"
+ },
+ "PEOPLE_REPLACE": {
+  "text": "Remplacer la liste",
+  "back": "Replace the list",
+  "why": "Pair with Ajouter à la liste"
+ },
+ "PEOPLE_ADD_TO": {
+  "text": "Ajouter à la liste",
+  "back": "Add to the list",
+  "why": "Ajouter as elsewhere"
+ },
+ "PEOPLE_READ_AS_IS": {
+  "text": "Les tableaux du fichier sont lus tout seuls",
+  "back": "The tables of the file are read by themselves",
+  "why": "Nothing to set"
+ },
+ "CMD_PEOPLE_DETAIL": {
+  "text": "Liste des membres et de leurs anniversaires",
+  "back": "List of members and their birthdays",
+  "why": "Fragment"
+ },
+ "CMD_ADD_PERSON_DETAIL": {
+  "text": "Un membre et sa date de naissance",
+  "back": "A member and their date of birth",
+  "why": "Fragment"
+ },
+ "people_listed": {
+  "text": {
+   "zero": "Aucun membre",
+   "one": "{count} membre",
+   "other": "{count} membres"
+  },
+  "back": "No member / N member(s)",
+  "why": "French plural forms"
+ },
+ "people_showing": {
+  "text": "{shown} sur {total} membres",
+  "back": "{shown} of {total} members",
+  "why": "Shown first, total second"
+ },
+ "people_in_days": {
+  "text": {
+   "tomorrow": "demain",
+   "later": "dans {count} jours"
+  },
+  "back": "tomorrow / in {count} days",
+  "why": "Tomorrow for one day as the brief asks"
+ },
+ "people_found": {
+  "text": {
+   "none_skipped": {
+    "one": "{count} membre trouvé",
+    "other": "{count} membres trouvés"
+   },
+   "some_skipped": "Membres trouvés : {count}, lignes ignorées : {skipped}"
+  },
+  "back": "N member(s) found / Members found: N, rows ignored: N",
+  "why": "Second case avoids agreement with a number"
+ },
+ "person_deleted": {
+  "text": "Membre supprimé : {name}",
+  "back": "Member deleted: {name}",
+  "why": "Name last like plan_deleted"
  }
 }

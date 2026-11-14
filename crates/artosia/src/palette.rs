@@ -38,6 +38,10 @@ pub enum Command {
     Calendar,
     /// A new event on the Calendar tab.
     NewEvent,
+    /// The Members tab.
+    People,
+    /// A new person on the Members tab.
+    AddPerson,
     Looks,
     Backdrops,
     Settings,
@@ -82,7 +86,7 @@ pub enum Command {
 }
 
 impl Command {
-    pub const ALL: [Command; 44] = [
+    pub const ALL: [Command; 46] = [
         Command::StartService,
         Command::Next,
         Command::Previous,
@@ -100,6 +104,8 @@ impl Command {
         Command::NewAnnouncement,
         Command::Calendar,
         Command::NewEvent,
+        Command::People,
+        Command::AddPerson,
         Command::Heading,
         Command::StartHere,
         Command::Earlier,
@@ -136,6 +142,8 @@ impl Command {
             Command::Announcements => t::CMD_ANNOUNCEMENTS(),
             Command::Calendar => t::TAB_CALENDAR(),
             Command::NewEvent => t::CAL_NEW_EVENT(),
+            Command::People => t::TAB_PEOPLE(),
+            Command::AddPerson => t::PEOPLE_ADD(),
             Command::Looks => t::CMD_LOOKS(),
             Command::Settings => t::CMD_SETTINGS(),
             Command::Backdrops => t::BACKDROPS_TITLE(),
@@ -185,6 +193,8 @@ impl Command {
             Command::Announcements => t::CMD_ANNOUNCEMENTS_DETAIL(),
             Command::Calendar => t::CMD_CALENDAR_DETAIL(),
             Command::NewEvent => t::CMD_NEW_EVENT_DETAIL(),
+            Command::People => t::CMD_PEOPLE_DETAIL(),
+            Command::AddPerson => t::CMD_ADD_PERSON_DETAIL(),
             Command::Looks => t::CMD_LOOKS_DETAIL(),
             Command::Settings => t::CMD_SETTINGS_DETAIL(),
             Command::Backdrops => t::CMD_BACKDROPS_DETAIL(),
@@ -236,6 +246,8 @@ impl Command {
             Command::Announcements => &["notices", "edit announcements", "pengumuman", "warta"],
             Command::Calendar => &["calendar", "schedule", "events", "week", "month", "services", "kalender", "jadwal", "acara", "agenda", "minggu ini"],
             Command::NewEvent => &["add event", "new service", "new meeting", "prayer", "rehearsal", "youth", "schedule", "calendar", "acara baru", "tambah acara", "jadwal", "kalender", "rapat", "latihan"],
+            Command::People => &["members", "people", "birthdays", "congregation", "list", "jemaat", "anggota", "ulang tahun", "ultah", "daftar"],
+            Command::AddPerson => &["add member", "new member", "new person", "add birthday", "birthday", "jemaat baru", "tambah jemaat", "tambah anggota", "tambah ulang tahun"],
             Command::Looks => &[
                 "look", "theme", "background", "font", "text size", "colour", "color", "text colour", "text color", "yellow", "white", "outline", "shadow", "words", "lines", "position", "tampilan", "desain", "tema", "latar", "ukuran teks", "warna", "warna teks", "kuning", "putih",
                 "huruf", "garis tepi", "baris", "posisi teks",
@@ -272,7 +284,7 @@ impl Command {
             Command::Undo => &["revert", "batalkan", "urungkan"],
             Command::LoopAnnouncements => &["auto advance", "slideshow", "putar pengumuman", "ulang pengumuman", "otomatis"],
             Command::ImportPptx => &["powerpoint", "ppt", "pptx", "slides", "warta", "impor powerpoint"],
-            Command::ImportBirthdays => &["birthdays", "birthday", "ulang tahun", "ultah", "hut"],
+            Command::ImportBirthdays => &["birthdays", "birthday", "ulang tahun", "ultah", "hut", "import members", "impor jemaat", "excel", "csv"],
             Command::CheckUpdate => &["update", "upgrade", "new version", "version", "perbarui", "pembaruan", "versi baru"],
             Command::Listen => &["microphone", "mic", "hear", "speech", "dengar", "dengarkan", "mikrofon", "suara"],
             Command::Stream => &["live stream", "broadcast", "youtube", "facebook", "record", "recording", "siaran", "siaran langsung", "rekam", "streaming"],
@@ -1031,6 +1043,8 @@ impl App {
                 self.open_tab(crate::state::Tab::Calendar);
                 self.new_event_here();
             }
+            Command::People => self.open_tab(crate::state::Tab::People),
+            Command::AddPerson => self.add_person_here(),
             Command::Looks => {
                 // The part the typed word lives in opens first: "yellow" and "font" are about the words.
                 let typed = self.palette.query.text.to_lowercase();
@@ -1153,6 +1167,22 @@ mod tests {
         app.run(Command::NewEvent);
         assert_eq!(app.tab, crate::state::Tab::Calendar);
         assert!(app.calendar.form.is_some(), "the dialog for a new event is open");
+    }
+
+    #[test]
+    fn the_search_opens_the_members_and_starts_a_person() {
+        let mut app = App::practice();
+        search(&mut app, "members");
+        assert!(matches!(app.palette.hits.first(), Some(Hit::Command(Command::People))));
+        search(&mut app, "add person");
+        assert!(matches!(app.palette.hits.first(), Some(Hit::Command(Command::AddPerson))));
+        app.run(Command::People);
+        assert_eq!(app.tab, crate::state::Tab::People);
+        assert!(app.members.form.is_none());
+        app.open_tab(crate::state::Tab::Plan);
+        app.run(Command::AddPerson);
+        assert_eq!(app.tab, crate::state::Tab::People);
+        assert!(app.members.form.is_some(), "the dialog for a new person is open");
     }
 
     fn search(app: &mut App, query: &str) {

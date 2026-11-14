@@ -195,6 +195,27 @@ pub fn practice_calendar(store: &Store) {
     let _ = store.save_event(&mut communion);
 }
 
+/// The practice members: thirty made-up names (Greek letters, as the practice songs' titles are)
+/// with birthdays spread over the year from today, so a render shows one today, some this month
+/// and a few years left out. Names are the made-up church's own, the same in every language.
+pub fn practice_people(store: &Store) {
+    use artosia_core::calendar::Date;
+    let today = crate::calendar::civil_at(crate::state::unix_now());
+    let first = ["Alfa", "Beta", "Gamma", "Delta", "Epsilon", "Zeta", "Eta", "Teta", "Iota", "Kapa"];
+    // Days from today to each birthday, 0 being today.
+    let ahead: [i64; 30] = [0, 1, 2, 4, 5, 7, 9, 11, 13, 16, 20, 28, 35, 48, 62, 80, 101, 120, 140, 160, 185, 200, 225, 250, 270, 290, 310, 330, 345, 360];
+    let mut people = Vec::new();
+    for (at, days) in ahead.iter().enumerate() {
+        let on: Date = today.plus_days(*days);
+        let last = (at * 3 + at / 10 + 1) % 10;
+        let last = if last == at % 10 { (last + 1) % 10 } else { last };
+        // Every seventh person has no year; the rest are spread from 1944 to 2019.
+        let year = if at % 7 == 3 { 0 } else { 1944 + (at as u16 * 37) % 76 };
+        people.push(artosia_core::deck::Person { name: format!("{} {}", first[at % 10], first[last]), day: on.day, month: on.month, year, ..Default::default() });
+    }
+    let _ = store.replace_people(&people);
+}
+
 /// The practice announcements, in the window's language (`strings::PRACTICE_NOTICES`): a tester
 /// read "Wednesday" on a card of an Indonesian window.
 pub fn practice_announcements() -> Vec<Announcement> {

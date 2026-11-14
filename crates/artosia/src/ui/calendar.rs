@@ -42,7 +42,7 @@ fn dot(colour: [u8; 3], d: f32) -> El {
 }
 
 /// The first letters of a weekday's name, as a column head or a toggle prints it.
-fn short(name: &str) -> String {
+pub(super) fn short(name: &str) -> String {
     name.chars().take(3).collect()
 }
 
@@ -51,7 +51,7 @@ fn hline(sf: &theme::Surf) -> El {
 }
 
 /// A calendar's tick in the rail.
-fn tick(k: &Kit, on: bool, colour: Color) -> El {
+pub(super) fn tick(k: &Kit, on: bool, colour: Color) -> El {
     let e = row().size(16.0, 16.0).center().radius(4.0);
     if on { e.fill(colour).child(icon(&icons::CHECK, 12.0).color(Color::WHITE)) } else { e.border(1.0, k.c.border_strong) }
 }
@@ -338,12 +338,12 @@ fn edit_name(s: &mut App) -> &mut rune::TextEdit {
 }
 
 /// A field of the dialog under its label.
-fn field(k: &Kit, words: &str, control: El) -> El {
+pub(super) fn field(k: &Kit, words: &str, control: El) -> El {
     col().gap(4.0).child(label(k, words)).child(control)
 }
 
 /// The closed look of a list: a box with its value and a chevron, as the mock's.
-fn picker(k: &Kit, key: &str, name: &str, lead: Option<El>, value: String, open: bool) -> El {
+pub(super) fn picker(k: &Kit, key: &str, name: &str, lead: Option<El>, value: String, open: bool) -> El {
     let mut e = row()
         .key(key)
         .role("button")

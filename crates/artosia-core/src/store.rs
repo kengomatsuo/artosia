@@ -182,6 +182,7 @@ impl Store {
             ("songs", "edited", "integer not null default 0"),
             ("songs", "lang", "text not null default ''"),
             ("songs", "texts", "text not null default ''"),
+            ("people", "year", "integer not null default 0"),
             ("announcements", "image", "text not null default ''"),
             ("announcements", "fill", "text not null default ''"),
             ("announcements", "passage", "text not null default ''"),
@@ -411,9 +412,14 @@ impl Store {
 
     /// Everyone whose birthday is kept, by date.
     pub fn people(&self) -> Result<Vec<Person>> {
-        let mut statement = self.db.prepare("select id, name, day, month from people order by month, day, name collate nocase")?;
-        let rows = statement.query_map([], |row| Ok(Person { id: row.get(0)?, name: row.get(1)?, day: row.get(2)?, month: row.get(3)? }))?;
+        let mut statement = self.db.prepare("select id, name, day, month, year from people order by month, day, name collate nocase")?;
+        let rows = statement.query_map([], |row| Ok(Person { id: row.get(0)?, name: row.get(1)?, day: row.get(2)?, month: row.get(3)?, year: row.get(4)? }))?;
         Ok(rows.collect::<rusqlite::Result<Vec<_>>>()?)
+    }
+
+    fn insert_person(&self, person: &Person) -> Result<i64> {
+        self.db.execute("insert into people (name, day, month, year) values (?1, ?2, ?3, ?4)", params![person.name, person.day, person.month, person.year])?;
+        Ok(self.db.last_insert_rowid())
     }
 
     /// Replaces the whole birthday list, as a fresh import of the church's file does.
@@ -422,12 +428,35 @@ impl Store {
         let done = (|| -> Result<()> {
             self.db.execute("delete from people", [])?;
             for person in people {
-                self.db.execute("insert into people (name, day, month) values (?1, ?2, ?3)", params![person.name, person.day, person.month])?;
+                self.insert_person(person)?;
             }
             Ok(())
         })();
         self.db.execute_batch(if done.is_ok() { "commit" } else { "rollback" })?;
         done
+    }
+
+    /// Adds people to the list, as the dialog or an import that keeps the list does.
+    pub fn add_people(&self, people: &[Person]) -> Result<()> {
+        self.db.execute_batch("begin")?;
+        let done = people.iter().try_for_each(|person| self.insert_person(person).map(drop));
+        self.db.execute_batch(if done.is_ok() { "commit" } else { "rollback" })?;
+        done
+    }
+
+    /// Inserts a person with id 0, otherwise updates them; the id is set either way.
+    pub fn save_person(&self, person: &mut Person) -> Result<()> {
+        if person.id == 0 {
+            person.id = self.insert_person(person)?;
+        } else {
+            self.db.execute("update people set name = ?1, day = ?2, month = ?3, year = ?4 where id = ?5", params![person.name, person.day, person.month, person.year, person.id])?;
+        }
+        Ok(())
+    }
+
+    pub fn delete_person(&self, id: i64) -> Result<()> {
+        self.db.execute("delete from people where id = ?1", [id])?;
+        Ok(())
     }
 
     /// Puts the announcements in the order given; ids left out keep their place after them.
@@ -784,11 +813,40 @@ Other words
     #[test]
     fn people_are_replaced_whole_and_read_by_date() {
         let store = Store::in_memory().unwrap_or_else(|_| unreachable!());
-        let person = |name: &str, month: u8, day: u8| Person { id: 0, name: name.into(), day, month };
+        let person = |name: &str, month: u8, day: u8| Person { name: name.into(), day, month, ..Person::default() };
         assert!(store.replace_people(&[person("Later", 9, 2), person("Sooner", 2, 14)]).is_ok());
         assert!(store.replace_people(&[person("Only", 5, 5), person("First", 1, 1)]).is_ok());
         let names: Vec<String> = store.people().unwrap_or_default().into_iter().map(|p| p.name).collect();
         assert_eq!(names, ["First", "Only"]);
+    }
+
+    #[test]
+    fn a_person_keeps_a_birth_year_and_is_added_edited_and_deleted_alone() {
+        let store = Store::in_memory().unwrap_or_else(|_| unreachable!());
+        let mut ana = Person { name: "Ana".into(), day: 3, month: 4, year: 1988, ..Person::default() };
+        assert!(store.save_person(&mut ana).is_ok() && ana.id != 0);
+        assert!(store.add_people(&[Person { name: "Budi".into(), day: 1, month: 1, ..Person::default() }]).is_ok());
+        ana.year = 0;
+        ana.name = "Ana K".into();
+        assert!(store.save_person(&mut ana).is_ok());
+        let all = store.people().unwrap_or_default();
+        assert_eq!(all.iter().map(|p| (p.name.as_str(), p.year)).collect::<Vec<_>>(), [("Budi", 0), ("Ana K", 0)]);
+        assert!(store.delete_person(ana.id).is_ok());
+        assert_eq!(store.people().unwrap_or_default().len(), 1);
+    }
+
+    #[test]
+    fn a_library_made_before_the_year_column_gains_it() {
+        let folder = std::env::temp_dir().join(format!("artosia-people-{}", std::process::id()));
+        let _ = std::fs::remove_dir_all(&folder);
+        std::fs::create_dir_all(&folder).unwrap_or_default();
+        let path = folder.join("library.db");
+        let db = Connection::open(&path).unwrap_or_else(|_| unreachable!());
+        assert!(db.execute_batch("create table people (id integer primary key, name text not null, day integer not null, month integer not null); insert into people (name, day, month) values ('Old', 5, 6);").is_ok());
+        drop(db);
+        let store = Store::open(&path).unwrap_or_else(|_| unreachable!());
+        assert_eq!(store.people().unwrap_or_default().iter().map(|p| (p.name.as_str(), p.year)).collect::<Vec<_>>(), [("Old", 0)]);
+        let _ = std::fs::remove_dir_all(&folder);
     }
 
     #[test]

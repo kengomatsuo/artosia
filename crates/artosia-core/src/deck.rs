@@ -146,7 +146,8 @@ pub struct Announcement {
     pub passage: String,
 }
 
-/// Someone whose birthday the church keeps. The year is never stored.
+/// Someone whose birthday the church keeps. The year, when known, is for the Members window's age
+/// and group only; no slide ever carries it.
 #[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
 pub struct Person {
     pub id: i64,
@@ -155,6 +156,9 @@ pub struct Person {
     pub day: u8,
     /// 1 to 12.
     pub month: u8,
+    /// The year of birth; 0 when it is not known.
+    #[serde(default)]
+    pub year: u16,
 }
 
 /// The day an announcement is built on, with the month names to write dates in.
@@ -172,8 +176,8 @@ pub struct Today<'a> {
     pub date: fn(u8, &str) -> String,
 }
 
-/// The most names on one birthday slide; more go on a second slide.
-pub const BIRTHDAYS_PER_SLIDE: usize = 8;
+/// The most names on one birthday slide, three columns of ten; more go on a second slide.
+pub const BIRTHDAYS_PER_SLIDE: usize = 30;
 /// The most lines of an announcement on one slide.
 pub const LINES_PER_SLIDE: usize = 10;
 
@@ -559,7 +563,9 @@ pub fn announcement_pages(announcements: &[Announcement], people: &[Person], eve
                 .collect();
             let filled = Announcement { body: lines.join("
 "), ..item.clone() };
-            pages.push((at, announcement_slide(&filled)));
+            let mut slide = announcement_slide(&filled);
+            slide.notice = NoticeKind::Birthdays;
+            pages.push((at, slide));
         }
     }
     pages
@@ -674,7 +680,7 @@ mod tests {
     #[test]
     fn a_birthday_announcement_fills_itself_and_pages() {
         const MONTHS: [&str; 12] = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-        let person = |name: &str, month: u8, day: u8| Person { id: 0, name: name.into(), day, month };
+        let person = |name: &str, month: u8, day: u8| Person { name: name.into(), day, month, ..Person::default() };
         let mut people = vec![person("Rina", 1, 2), person("Budi", 12, 30), person("Tom", 12, 20), person("Ana", 6, 1)];
         let today = today_on(12, 28, &MONTHS);
         // The week from 28 December runs into January, and 20 December is already past.
@@ -692,9 +698,15 @@ mod tests {
         // A language that names the month first writes its dates that way.
         let month_first = Today { date: |day, month| format!("{month} {day}"), ..today };
         assert_eq!(announcement_pages(&items, &people, &[], &month_first, None, 2)[1].1.text, "Tom\tDecember 20\nBudi\tDecember 30");
-        // Ten more December birthdays spill onto a second slide; an empty month gives none.
-        people.extend((1..=10).map(|day| person(&format!("Person {day:02}"), 12, day)));
-        assert_eq!(announcement_pages(&items, &people, &[], &today, None, 2).iter().filter(|(at, _)| *at == 1).count(), 2);
+        // Thirty names fill one slide of three columns; the thirty-first goes on a second. An empty month gives none.
+        people.extend((1..=28).map(|day| person(&format!("Person {day:02}"), 12, day)));
+        let cards = |people: &[Person]| announcement_pages(&items, people, &[], &today, None, 2).into_iter().filter(|(at, _)| *at == 1).collect::<Vec<_>>();
+        assert_eq!(people.iter().filter(|p| p.month == 12).count(), 30);
+        let thirty = cards(&people);
+        assert_eq!((thirty.len(), thirty[0].1.text.lines().count(), thirty[0].1.notice), (1, 30, NoticeKind::Birthdays));
+        people.push(person("Person 29", 12, 29));
+        assert_eq!(cards(&people).iter().map(|(_, slide)| slide.text.lines().count()).collect::<Vec<_>>(), [30, 1]);
+        people.pop();
         let june = today_on(7, 1, &MONTHS);
         assert_eq!(announcement_pages(&items, &people, &[], &june, None, 2).len(), 1);
         // Twenty-five lines of a brought-in table become three slides of the same announcement.

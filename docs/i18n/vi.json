@@ -2089,9 +2089,9 @@
   "why": "Bảng says many, not one"
  },
  "CMD_IMPORT_BIRTHDAYS_DETAIL": {
-  "text": "Bảng tên và ngày sinh, từ Word hoặc PowerPoint",
-  "back": "A table of names and birth dates, from Word or PowerPoint",
-  "why": "No full stop"
+  "text": "Word, PowerPoint, Excel hoặc csv; bước sau chọn cột",
+  "back": "Word, PowerPoint, Excel or csv; the next step chooses columns",
+  "why": "File kinds and the next step"
  },
  "BIRTHDAYS_NONE_FOUND": {
   "text": "Không thấy dòng nào có cả tên và ngày sinh",
@@ -4186,5 +4186,223 @@
   "text": "Buổi lễ, buổi họp hoặc buổi tập trong lịch",
   "back": "A service, meeting or rehearsal in the calendar",
   "why": "Reuses the table words: sự kiện, lịch, thông báo, thứ tự lễ; short plain register"
+ },
+ "PEOPLE_SEARCH": {
+  "text": "Tìm tên tín hữu",
+  "back": "Find a member's name",
+  "why": "tín hữu is the table's word for the tab and the people"
+ },
+ "PEOPLE_BIRTH_MONTH": {
+  "text": "Tháng sinh",
+  "back": "Birth month",
+  "why": "Reads before a month name"
+ },
+ "PEOPLE_IMPORT": {
+  "text": "Lấy từ tệp",
+  "back": "Take from file",
+  "why": "Lấy is the table's import verb, since nhập means typing"
+ },
+ "PEOPLE_ADD": {
+  "text": "Thêm tín hữu",
+  "back": "Add member",
+  "why": "Thêm as elsewhere"
+ },
+ "PEOPLE_EDIT": {
+  "text": "Sửa tín hữu",
+  "back": "Edit member",
+  "why": "Sửa is the table's edit verb"
+ },
+ "PEOPLE_COL_NAME": {
+  "text": "Họ tên",
+  "back": "Full name",
+  "why": "The usual column heading"
+ },
+ "PEOPLE_COL_BORN": {
+  "text": "Ngày sinh",
+  "back": "Birth date",
+  "why": "Plain"
+ },
+ "PEOPLE_COL_NEXT": {
+  "text": "Sinh nhật tới",
+  "back": "Next birthday",
+  "why": "sinh nhật as in the birthday rows"
+ },
+ "PEOPLE_COL_GROUP": {
+  "text": "Nhóm tuổi",
+  "back": "Age group",
+  "why": "Says what the group is"
+ },
+ "PEOPLE_COL_AGE": {
+  "text": "Tuổi",
+  "back": "Age",
+  "why": "One word"
+ },
+ "PEOPLE_TODAY": {
+  "text": "hôm nay",
+  "back": "today",
+  "why": "Lowercase"
+ },
+ "PEOPLE_CHILD": {
+  "text": "Thiếu nhi",
+  "back": "Children",
+  "why": "What Vietnamese churches call the children"
+ },
+ "PEOPLE_YOUTH": {
+  "text": "Thanh niên",
+  "back": "Young people",
+  "why": "Church word for the young"
+ },
+ "PEOPLE_ADULT": {
+  "text": "Người lớn",
+  "back": "Adults",
+  "why": "Plain"
+ },
+ "PEOPLE_USED_BY": {
+  "text": "Được dùng ở",
+  "back": "Used in",
+  "why": "Heading above the slide picture"
+ },
+ "PEOPLE_USED_BY_HINT": {
+  "text": "Thông báo sinh nhật lấy tên từ danh sách này, khỏi gõ lại trên trang chiếu.",
+  "back": "The birthday announcement takes names from this list, no retyping on the slide.",
+  "why": "thông báo for announcement, trang for slide, khỏi as in the zip hint"
+ },
+ "PEOPLE_OPEN_CARD": {
+  "text": "Mở thông báo",
+  "back": "Open the announcement",
+  "why": "Mở as in the Open button"
+ },
+ "PEOPLE_IMPORT_LIST": {
+  "text": "Lấy danh sách",
+  "back": "Take the list",
+  "why": "Same verb as the button"
+ },
+ "PEOPLE_IMPORT_HINT": {
+  "text": "Word, PowerPoint, Excel hoặc csv. Bước sau sẽ chọn cột nào là gì.",
+  "back": "Word, PowerPoint, Excel or csv. The next step will choose which column is what.",
+  "why": "Four kinds, then the next step"
+ },
+ "PEOPLE_DROP": {
+  "text": "Chọn tệp hoặc thả tệp vào đây",
+  "back": "Choose a file or drop a file here",
+  "why": "tệp as the table says"
+ },
+ "PEOPLE_EMPTY": {
+  "text": "Chưa có tín hữu",
+  "back": "No members yet",
+  "why": "A state"
+ },
+ "PEOPLE_EMPTY_HINT": {
+  "text": "Thêm từng người, hoặc lấy cả danh sách từ tệp",
+  "back": "Add one by one, or take a whole list from a file",
+  "why": "Two ways in one sentence"
+ },
+ "PEOPLE_NONE": {
+  "text": "Không có ai khớp",
+  "back": "Nobody matches",
+  "why": "States the filter result"
+ },
+ "PEOPLE_NONE_HINT": {
+  "text": "Thử tháng khác hoặc chữ khác",
+  "back": "Try another month or other letters",
+  "why": "Short imperative"
+ },
+ "PEOPLE_DAY": {
+  "text": "Ngày",
+  "back": "Day",
+  "why": "One word"
+ },
+ "PEOPLE_MONTH": {
+  "text": "Tháng",
+  "back": "Month",
+  "why": "One word"
+ },
+ "PEOPLE_YEAR": {
+  "text": "Năm",
+  "back": "Year",
+  "why": "One word"
+ },
+ "PEOPLE_YEAR_UNKNOWN": {
+  "text": "Không rõ năm",
+  "back": "Year unknown",
+  "why": "Short"
+ },
+ "PEOPLE_COL_IGNORE": {
+  "text": "Bỏ qua",
+  "back": "Skip",
+  "why": "One word"
+ },
+ "PEOPLE_COLUMNS_HINT": {
+  "text": "Chọn nội dung của từng cột trong tệp",
+  "back": "Choose what each column of the file holds",
+  "why": "Short instruction"
+ },
+ "PEOPLE_FIRST_ROW": {
+  "text": "Dòng đầu là tiêu đề các cột",
+  "back": "The first row is the column titles",
+  "why": "dòng for a row of the file"
+ },
+ "PEOPLE_REPLACE": {
+  "text": "Thay danh sách hiện có",
+  "back": "Replace the present list",
+  "why": "Pair with Thêm vào danh sách"
+ },
+ "PEOPLE_ADD_TO": {
+  "text": "Thêm vào danh sách",
+  "back": "Add to the list",
+  "why": "Same Thêm as elsewhere"
+ },
+ "PEOPLE_READ_AS_IS": {
+  "text": "Bảng trong tệp được đọc tự động, không cần chọn",
+  "back": "Tables in the file are read automatically, nothing to choose",
+  "why": "Nothing to do"
+ },
+ "CMD_PEOPLE_DETAIL": {
+  "text": "Danh sách tín hữu và ngày sinh nhật",
+  "back": "List of members and birthdays",
+  "why": "Fragment"
+ },
+ "CMD_ADD_PERSON_DETAIL": {
+  "text": "Tên và ngày sinh của một tín hữu",
+  "back": "A member's name and birth date",
+  "why": "Fragment"
+ },
+ "people_listed": {
+  "text": {
+   "zero": "Chưa có tín hữu",
+   "other": "{count} tín hữu"
+  },
+  "back": "No members yet / {count} members",
+  "why": "One form"
+ },
+ "people_showing": {
+  "text": {
+   "other": "{shown} trong {total} tín hữu"
+  },
+  "back": "{shown} of {total} members",
+  "why": "Shown first, total second"
+ },
+ "people_in_days": {
+  "text": {
+   "tomorrow": "ngày mai",
+   "later": "còn {count} ngày"
+  },
+  "back": "tomorrow / {count} days left",
+  "why": "Tomorrow for one day as the brief asks"
+ },
+ "people_found": {
+  "text": {
+   "none_skipped": {
+    "other": "Tìm được {count} tín hữu"
+   },
+   "some_skipped": "Tìm được {count} tín hữu, bỏ qua {skipped} dòng"
+  },
+  "back": "Found {count} members / Found {count} members, skipped {skipped} rows",
+  "why": "Two cases"
+ },
+ "person_deleted": {
+  "text": "Đã xóa {name}",
+  "back": "Deleted {name}",
+  "why": "Past tense as plan_deleted"
  }
 }

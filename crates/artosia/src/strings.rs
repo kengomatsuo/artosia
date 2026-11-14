@@ -1202,7 +1202,7 @@ text!(BTN_REMOVE_PICTURE, "Remove", "Lepas");
 text!(CMD_IMPORT_PPTX, "Import a PowerPoint", "Impor dari PowerPoint");
 text!(CMD_IMPORT_PPTX_DETAIL, "Each slide becomes an announcement", "Tiap slide jadi satu pengumuman");
 text!(CMD_IMPORT_BIRTHDAYS, "Import a birthday list", "Impor ulang tahun");
-text!(CMD_IMPORT_BIRTHDAYS_DETAIL, "A Word or PowerPoint table of names and dates", "Tabel nama dan tanggal lahir di Word");
+text!(CMD_IMPORT_BIRTHDAYS_DETAIL, "Names and dates from Word, PowerPoint, Excel or csv", "Tabel nama dan tanggal lahir di Word");
 text!(BIRTHDAYS_NONE_FOUND, "No names with dates were found in that file", "Tidak ada baris berisi nama dan tanggal lahir");
 const MONTHS_EN: [&str; 12] = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 const MONTHS_ID: [&str; 12] = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
@@ -2053,6 +2053,97 @@ pub fn calendar_deleted(name: &str) -> String {
         return text;
     }
     format!("Deleted {name} and its events")
+}
+
+// ---- The Members window (OVPEOPLE1)
+
+text!(PEOPLE_SEARCH, "Search names", "Search names");
+text!(PEOPLE_BIRTH_MONTH, "Birth month", "Birth month");
+text!(PEOPLE_IMPORT, "Import", "Import");
+text!(PEOPLE_ADD, "Add person", "Add person");
+text!(PEOPLE_EDIT, "Edit person", "Edit person");
+text!(PEOPLE_COL_NAME, "Name", "Name");
+text!(PEOPLE_COL_BORN, "Birth date", "Birth date");
+text!(PEOPLE_COL_NEXT, "Next birthday", "Next birthday");
+text!(PEOPLE_COL_GROUP, "Group", "Group");
+text!(PEOPLE_COL_AGE, "Age", "Age");
+text!(PEOPLE_TODAY, "today", "today");
+text!(PEOPLE_CHILD, "Child", "Child");
+text!(PEOPLE_YOUTH, "Youth", "Youth");
+text!(PEOPLE_ADULT, "Adult", "Adult");
+text!(PEOPLE_USED_BY, "Used by", "Used by");
+text!(PEOPLE_USED_BY_HINT, "The birthday card reads this list, so no name is typed on a slide.", "The birthday card reads this list, so no name is typed on a slide.");
+text!(PEOPLE_OPEN_CARD, "Open the card", "Open the card");
+text!(PEOPLE_IMPORT_LIST, "Import a list", "Import a list");
+text!(PEOPLE_IMPORT_HINT, "From a Word, PowerPoint, Excel or csv file. A next step matches its columns.", "From a Word, PowerPoint, Excel or csv file. A next step matches its columns.");
+text!(PEOPLE_DROP, "Choose a file or drop it here", "Choose a file or drop it here");
+text!(PEOPLE_EMPTY, "No members yet", "No members yet");
+text!(PEOPLE_EMPTY_HINT, "Add a person, or bring in the church's list.", "Add a person, or bring in the church's list.");
+text!(PEOPLE_NONE, "Nobody matches", "Nobody matches");
+text!(PEOPLE_NONE_HINT, "Change the month or the name.", "Change the month or the name.");
+text!(PEOPLE_DAY, "Day", "Day");
+text!(PEOPLE_MONTH, "Month", "Month");
+text!(PEOPLE_YEAR, "Year", "Year");
+text!(PEOPLE_YEAR_UNKNOWN, "Not known", "Not known");
+text!(PEOPLE_COL_IGNORE, "Ignore", "Ignore");
+text!(PEOPLE_COLUMNS_HINT, "Choose what each column holds.", "Choose what each column holds.");
+text!(PEOPLE_FIRST_ROW, "First row is a heading", "First row is a heading");
+text!(PEOPLE_REPLACE, "Replace the list", "Replace the list");
+text!(PEOPLE_ADD_TO, "Add to the list", "Add to the list");
+text!(PEOPLE_READ_AS_IS, "The tables of this file are read as they are.", "The tables of this file are read as they are.");
+text!(CMD_PEOPLE_DETAIL, "The members, their birthdays and ages", "The members, their birthdays and ages");
+text!(CMD_ADD_PERSON_DETAIL, "A member and their birth date", "A member and their birth date");
+
+/// The count under the Members title.
+pub fn people_listed(count: usize) -> String {
+    if let Some(text) = say("people_listed", None, Some(count), &[]) {
+        return text;
+    }
+    match count {
+        1 => "1 person".to_string(),
+        _ => format!("{count} people"),
+    }
+}
+
+/// The line under the table: how many of the list its filters show.
+pub fn people_showing(shown: usize, total: usize) -> String {
+    if let Some(text) = say("people_showing", None, None, &[("shown", text_arg(shown)), ("total", text_arg(total))]) {
+        return text;
+    }
+    format!("Showing {shown} of {total}")
+}
+
+/// When the next birthday comes, in the table: "tomorrow", "in 5 days".
+pub fn people_in_days(days: u32) -> String {
+    // Tomorrow is a case, not a plural form: Indonesian and others have no "one" form.
+    if let Some(text) = say("people_in_days", Some(if days == 1 { "tomorrow" } else { "later" }), None, &[("count", text_arg(days))]) {
+        return text;
+    }
+    match days {
+        1 => "tomorrow".to_string(),
+        _ => format!("in {days} days"),
+    }
+}
+
+/// What the import dialog found with the columns as they are set.
+pub fn people_found(count: usize, skipped: usize) -> String {
+    if let Some(text) = say("people_found", Some(if skipped == 0 { "none_skipped" } else { "some_skipped" }), if skipped == 0 { Some(count) } else { None }, &[("count", text_arg(count)), ("skipped", text_arg(skipped))]) {
+        return text;
+    }
+    let found = if count == 1 { "1 person found".to_string() } else { format!("{count} people found") };
+    match skipped {
+        0 => found,
+        1 => format!("{found}, 1 row skipped"),
+        _ => format!("{found}, {skipped} rows skipped"),
+    }
+}
+
+/// The toast after a person was deleted.
+pub fn person_deleted(name: &str) -> String {
+    if let Some(text) = say("person_deleted", None, None, &[("name", text_arg(name))]) {
+        return text;
+    }
+    format!("Deleted {name}")
 }
 
 #[cfg(test)]

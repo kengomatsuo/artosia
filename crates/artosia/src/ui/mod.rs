@@ -16,6 +16,7 @@ pub(crate) mod onboard;
 pub(crate) mod live;
 pub(crate) mod look;
 mod palette;
+mod people;
 pub(crate) mod plan;
 mod plans;
 mod sheets;
@@ -270,6 +271,7 @@ fn window(s: &App, cx: &mut Cx<App>, k: &Kit, layer: &mut Vec<El>) -> El {
         Tab::Notices => shell::beside_live(s, cx, k, layer, |s, k, width, _| announcements::view(s, k, width)),
         Tab::Look => sheets::design(s, cx, k, layer),
         Tab::Calendar => calendar::view(s, cx, k, layer),
+        Tab::People => people::view(s, cx, k, layer),
         tab => col().key("window-body").w_full().grow(1.0).min_h(0.0).fill(theme::surf().work).center().gap(space::S2)
             .child(icon(tabs::glyph(tab), 32.0).color(k.c.text_faint).a11y_hidden())
             .child(text(tabs::name(tab)).font(type_::HEADING).color(k.c.text_muted)),
@@ -315,7 +317,12 @@ pub fn view(s: &App, cx: &mut Cx<App>) -> El {
         .on_paste(|s: &mut App, text: &str, _: &mut Tx| s.song_from_clipboard(text))
         .on_drop_files(|s: &mut App, paths: &[std::path::PathBuf], _: &mut Tx| {
             if let Some(path) = paths.first() {
-                s.set_background_file(path);
+                // A list dropped on the Members tab is a list of people, anywhere else a background.
+                if s.tab == Tab::People {
+                    s.open_import(path);
+                } else {
+                    s.set_background_file(path);
+                }
             }
         });
     if s.palette.open {

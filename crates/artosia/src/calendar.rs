@@ -153,11 +153,16 @@ pub fn rule_words(event: &Event) -> String {
     }
 }
 
+/// The calendar day a unix time in seconds falls on, on this computer's clock.
+pub fn civil_at(seconds: f64) -> Date {
+    let time = rune::LocalTime::at((seconds * 1000.0) as i64);
+    Date::new(time.year, time.month.clamp(1, 12) as u8, 1).map(|first| Date { day: (time.day as u8).clamp(1, Date::month_days(first.year, first.month)), ..first }).unwrap_or(Date { year: 1970, month: 1, day: 1 })
+}
+
 impl App {
     /// Today on this computer's clock.
     pub fn civil_today(&self) -> Date {
-        let time = rune::LocalTime::at((self.now * 1000.0) as i64);
-        Date::new(time.year, time.month.clamp(1, 12) as u8, 1).map(|first| Date { day: (time.day as u8).clamp(1, Date::month_days(first.year, first.month)), ..first }).unwrap_or(Date { year: 1970, month: 1, day: 1 })
+        civil_at(self.now)
     }
 
     /// The calendars and events as the library holds them, and a first calendar for a library with none.

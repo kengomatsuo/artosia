@@ -7970,8 +7970,8 @@
   "screen": "Search panel, results list: a row for an action; this is its second line.",
   "moment": "Under the birthday import row.",
   "role": "detail line",
-  "does": "Says the document holds a table pairing people's names with their dates, made in a word processor or a presentation program.",
-  "budget": 48,
+  "does": "Says the file can be a document, a slide show, a spreadsheet or a comma-separated file holding people's names with their birth dates; a next step matches its columns.",
+  "budget": 52,
   "variables": [],
   "cases": [],
   "counts": "",
@@ -15397,5 +15397,775 @@
    "event"
   ],
   "notes": "A fragment, no full stop."
+ },
+ {
+  "key": "PEOPLE_SEARCH",
+  "kind": "const",
+  "screen": "Members window, the fourth tab under the title bar. A title with a count, a strip of twelve month tiles each with its number of birthdays, a name search with Import and Add person buttons, a table of people (name, birth date, next birthday, group, age, and an edit and a delete icon per row), and a side panel with the birthday slide, an Open the card button and a drop box for a list file.",
+  "moment": "The person wants one name among many.",
+  "role": "field label and placeholder",
+  "does": "Invites typing part of a member name to narrow the table.",
+  "budget": 20,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "member",
+   "search"
+  ],
+  "notes": "A hint inside an empty box and the field name for a screen reader."
+ },
+ {
+  "key": "PEOPLE_BIRTH_MONTH",
+  "kind": "const",
+  "screen": "Members window, the fourth tab under the title bar. A title with a count, a strip of twelve month tiles each with its number of birthdays, a name search with Import and Add person buttons, a table of people (name, birth date, next birthday, group, age, and an edit and a delete icon per row), and a side panel with the birthday slide, an Open the card button and a drop box for a list file.",
+  "moment": "The person looks at the month tiles, or at the chip that shows one month is chosen.",
+  "role": "label",
+  "does": "Names the month a person was born in, used to filter the table.",
+  "budget": 20,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "member",
+   "program_window"
+  ],
+  "notes": "Sits before the month name in a chip, so it reads like Birth month November."
+ },
+ {
+  "key": "PEOPLE_IMPORT",
+  "kind": "const",
+  "screen": "Members window, the fourth tab under the title bar. A title with a count, a strip of twelve month tiles each with its number of birthdays, a name search with Import and Add person buttons, a table of people (name, birth date, next birthday, group, age, and an edit and a delete icon per row), and a side panel with the birthday slide, an Open the card button and a drop box for a list file.",
+  "moment": "The person has a list of members in a file and wants it in the program.",
+  "role": "button",
+  "does": "Starts bringing a list in from a file. Also the confirming button of the import dialog and the label over its adding switch.",
+  "budget": 14,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "member",
+   "import"
+  ],
+  "notes": "One word, with a download icon."
+ },
+ {
+  "key": "PEOPLE_ADD",
+  "kind": "const",
+  "screen": "Members window, the fourth tab under the title bar. A title with a count, a strip of twelve month tiles each with its number of birthdays, a name search with Import and Add person buttons, a table of people (name, birth date, next birthday, group, age, and an edit and a delete icon per row), and a side panel with the birthday slide, an Open the card button and a drop box for a list file.",
+  "moment": "The person wants to put one more member in the list.",
+  "role": "button and dialog title",
+  "does": "Starts a member that is not in the list yet.",
+  "budget": 18,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "member"
+  ],
+  "notes": "A name of the thing started, with a plus icon. Also the search command name."
+ },
+ {
+  "key": "PEOPLE_EDIT",
+  "kind": "const",
+  "screen": "Person dialog, opened over the Members window by Add person or by editing a row. A name field, three lists for the day, month and year of birth, and Delete, Cancel and Save at the foot.",
+  "moment": "The person opens an existing member to change a name or a date.",
+  "role": "dialog title and icon tooltip",
+  "does": "Names the dialog for changing someone already in the list.",
+  "budget": 18,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "member"
+  ],
+  "notes": "A pencil icon on every row carries it as a tooltip."
+ },
+ {
+  "key": "PEOPLE_COL_NAME",
+  "kind": "const",
+  "screen": "Members window, the fourth tab under the title bar. A title with a count, a strip of twelve month tiles each with its number of birthdays, a name search with Import and Add person buttons, a table of people (name, birth date, next birthday, group, age, and an edit and a delete icon per row), and a side panel with the birthday slide, an Open the card button and a drop box for a list file.",
+  "moment": "The person reads the first column of the table, or the first field of the dialog.",
+  "role": "column heading and field label",
+  "does": "Labels the place that holds what a member is called.",
+  "budget": 12,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "member"
+  ],
+  "notes": "One word. Also what a column of the imported file is called when it holds names."
+ },
+ {
+  "key": "PEOPLE_COL_BORN",
+  "kind": "const",
+  "screen": "Members window, the fourth tab under the title bar. A title with a count, a strip of twelve month tiles each with its number of birthdays, a name search with Import and Add person buttons, a table of people (name, birth date, next birthday, group, age, and an edit and a delete icon per row), and a side panel with the birthday slide, an Open the card button and a drop box for a list file.",
+  "moment": "The person reads the second column of the table.",
+  "role": "column heading",
+  "does": "Labels the day a member was born, with the year when it is known.",
+  "budget": 18,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "member"
+  ],
+  "notes": "Also the name of an imported column that holds a whole date in one cell."
+ },
+ {
+  "key": "PEOPLE_COL_NEXT",
+  "kind": "const",
+  "screen": "Members window, the fourth tab under the title bar. A title with a count, a strip of twelve month tiles each with its number of birthdays, a name search with Import and Add person buttons, a table of people (name, birth date, next birthday, group, age, and an edit and a delete icon per row), and a side panel with the birthday slide, an Open the card button and a drop box for a list file.",
+  "moment": "The person wants to know who is celebrating soon.",
+  "role": "column heading",
+  "does": "Labels when each birthday comes round next. The table opens sorted by it.",
+  "budget": 20,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "member"
+  ],
+  "notes": "Short, a heading above a date."
+ },
+ {
+  "key": "PEOPLE_COL_GROUP",
+  "kind": "const",
+  "screen": "Members window, the fourth tab under the title bar. A title with a count, a strip of twelve month tiles each with its number of birthdays, a name search with Import and Add person buttons, a table of people (name, birth date, next birthday, group, age, and an edit and a delete icon per row), and a side panel with the birthday slide, an Open the card button and a drop box for a list file.",
+  "moment": "The person reads the fourth column of the table.",
+  "role": "column heading",
+  "does": "Labels the age band a member falls in: child, youth or adult.",
+  "budget": 14,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "member"
+  ],
+  "notes": "One word."
+ },
+ {
+  "key": "PEOPLE_COL_AGE",
+  "kind": "const",
+  "screen": "Members window, the fourth tab under the title bar. A title with a count, a strip of twelve month tiles each with its number of birthdays, a name search with Import and Add person buttons, a table of people (name, birth date, next birthday, group, age, and an edit and a delete icon per row), and a side panel with the birthday slide, an Open the card button and a drop box for a list file.",
+  "moment": "The person reads the last data column.",
+  "role": "column heading",
+  "does": "Labels how many years old each member is today.",
+  "budget": 10,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "member"
+  ],
+  "notes": "One word, right aligned over numbers."
+ },
+ {
+  "key": "PEOPLE_TODAY",
+  "kind": "const",
+  "screen": "Members window, the fourth tab under the title bar. A title with a count, a strip of twelve month tiles each with its number of birthdays, a name search with Import and Add person buttons, a table of people (name, birth date, next birthday, group, age, and an edit and a delete icon per row), and a side panel with the birthday slide, an Open the card button and a drop box for a list file.",
+  "moment": "A birthday falls on the present day.",
+  "role": "small note beside a date",
+  "does": "Says the birthday is this very day.",
+  "budget": 10,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "member"
+  ],
+  "notes": "A single lowercase word, coloured and bold."
+ },
+ {
+  "key": "PEOPLE_CHILD",
+  "kind": "const",
+  "screen": "Members window, the fourth tab under the title bar. A title with a count, a strip of twelve month tiles each with its number of birthdays, a name search with Import and Add person buttons, a table of people (name, birth date, next birthday, group, age, and an edit and a delete icon per row), and a side panel with the birthday slide, an Open the card button and a drop box for a list file.",
+  "moment": "The table shows a member under thirteen.",
+  "role": "chip",
+  "does": "Names the youngest age band.",
+  "budget": 12,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "member"
+  ],
+  "notes": "One word in a coloured chip."
+ },
+ {
+  "key": "PEOPLE_YOUTH",
+  "kind": "const",
+  "screen": "Members window, the fourth tab under the title bar. A title with a count, a strip of twelve month tiles each with its number of birthdays, a name search with Import and Add person buttons, a table of people (name, birth date, next birthday, group, age, and an edit and a delete icon per row), and a side panel with the birthday slide, an Open the card button and a drop box for a list file.",
+  "moment": "The table shows a member from thirteen to twenty four.",
+  "role": "chip",
+  "does": "Names the age band of teenagers and young adults.",
+  "budget": 12,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "member"
+  ],
+  "notes": "One word in a coloured chip; the word a church uses for its young people."
+ },
+ {
+  "key": "PEOPLE_ADULT",
+  "kind": "const",
+  "screen": "Members window, the fourth tab under the title bar. A title with a count, a strip of twelve month tiles each with its number of birthdays, a name search with Import and Add person buttons, a table of people (name, birth date, next birthday, group, age, and an edit and a delete icon per row), and a side panel with the birthday slide, an Open the card button and a drop box for a list file.",
+  "moment": "The table shows a member of twenty five or more.",
+  "role": "chip",
+  "does": "Names the oldest age band.",
+  "budget": 12,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "member"
+  ],
+  "notes": "One word in a coloured chip."
+ },
+ {
+  "key": "PEOPLE_USED_BY",
+  "kind": "const",
+  "screen": "Members window, the fourth tab under the title bar. A title with a count, a strip of twelve month tiles each with its number of birthdays, a name search with Import and Add person buttons, a table of people (name, birth date, next birthday, group, age, and an edit and a delete icon per row), and a side panel with the birthday slide, an Open the card button and a drop box for a list file.",
+  "moment": "The person looks at the side panel and wonders what this list is for.",
+  "role": "panel heading",
+  "does": "Says which part of the program makes use of the list.",
+  "budget": 14,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "member",
+   "announcement"
+  ],
+  "notes": "A short heading above a picture of a slide."
+ },
+ {
+  "key": "PEOPLE_USED_BY_HINT",
+  "kind": "const",
+  "screen": "Members window, the fourth tab under the title bar. A title with a count, a strip of twelve month tiles each with its number of birthdays, a name search with Import and Add person buttons, a table of people (name, birth date, next birthday, group, age, and an edit and a delete icon per row), and a side panel with the birthday slide, an Open the card button and a drop box for a list file.",
+  "moment": "The person reads under the panel heading.",
+  "role": "grey note",
+  "does": "Explains that the birthday announcement takes its names from this list, so nobody retypes them on a slide.",
+  "budget": 90,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "member",
+   "announcement",
+   "card",
+   "slide"
+  ],
+  "notes": "Two short sentences at most."
+ },
+ {
+  "key": "PEOPLE_OPEN_CARD",
+  "kind": "const",
+  "screen": "Members window, the fourth tab under the title bar. A title with a count, a strip of twelve month tiles each with its number of birthdays, a name search with Import and Add person buttons, a table of people (name, birth date, next birthday, group, age, and an edit and a delete icon per row), and a side panel with the birthday slide, an Open the card button and a drop box for a list file.",
+  "moment": "The person wants to change how the birthday slide looks or when it comes up.",
+  "role": "button",
+  "does": "Goes to the announcement that shows birthdays, to edit it there.",
+  "budget": 20,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "announcement",
+   "card"
+  ],
+  "notes": "A small button with an arrow."
+ },
+ {
+  "key": "PEOPLE_IMPORT_LIST",
+  "kind": "const",
+  "screen": "Members window, the fourth tab under the title bar. A title with a count, a strip of twelve month tiles each with its number of birthdays, a name search with Import and Add person buttons, a table of people (name, birth date, next birthday, group, age, and an edit and a delete icon per row), and a side panel with the birthday slide, an Open the card button and a drop box for a list file.",
+  "moment": "The person has a file with the church members.",
+  "role": "panel heading and dialog title",
+  "does": "Names the act of bringing a whole list in at once.",
+  "budget": 20,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "member",
+   "import"
+  ],
+  "notes": "Heading above a short hint and a drop box."
+ },
+ {
+  "key": "PEOPLE_IMPORT_HINT",
+  "kind": "const",
+  "screen": "Members window, the fourth tab under the title bar. A title with a count, a strip of twelve month tiles each with its number of birthdays, a name search with Import and Add person buttons, a table of people (name, birth date, next birthday, group, age, and an edit and a delete icon per row), and a side panel with the birthday slide, an Open the card button and a drop box for a list file.",
+  "moment": "The person reads under the import heading.",
+  "role": "grey note",
+  "does": "Lists the kinds of file that can be brought in and says a later step lets the person say which column is which.",
+  "budget": 90,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "member",
+   "import"
+  ],
+  "notes": "Names Word, PowerPoint, Excel and csv as the file kinds; those four names stay as they are."
+ },
+ {
+  "key": "PEOPLE_DROP",
+  "kind": "const",
+  "screen": "Members window, the fourth tab under the title bar. A title with a count, a strip of twelve month tiles each with its number of birthdays, a name search with Import and Add person buttons, a table of people (name, birth date, next birthday, group, age, and an edit and a delete icon per row), and a side panel with the birthday slide, an Open the card button and a drop box for a list file.",
+  "moment": "The person has a file ready and sees an empty framed box.",
+  "role": "drop box text",
+  "does": "Tells the person they can pick a file or let go of one over the box.",
+  "budget": 40,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "member",
+   "import"
+  ],
+  "notes": "Inside a dashed box; pressing it opens the file chooser."
+ },
+ {
+  "key": "PEOPLE_EMPTY",
+  "kind": "const",
+  "screen": "Members window, the fourth tab under the title bar. A title with a count, a strip of twelve month tiles each with its number of birthdays, a name search with Import and Add person buttons, a table of people (name, birth date, next birthday, group, age, and an edit and a delete icon per row), and a side panel with the birthday slide, an Open the card button and a drop box for a list file.",
+  "moment": "Nobody has been added yet, so the table is replaced by this message.",
+  "role": "empty state heading",
+  "does": "States that the list holds no one.",
+  "budget": 20,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "member"
+  ],
+  "notes": "A heading over a hint and two buttons."
+ },
+ {
+  "key": "PEOPLE_EMPTY_HINT",
+  "kind": "const",
+  "screen": "Members window, the fourth tab under the title bar. A title with a count, a strip of twelve month tiles each with its number of birthdays, a name search with Import and Add person buttons, a table of people (name, birth date, next birthday, group, age, and an edit and a delete icon per row), and a side panel with the birthday slide, an Open the card button and a drop box for a list file.",
+  "moment": "Nobody has been added yet.",
+  "role": "empty state hint",
+  "does": "Suggests the two ways to fill the list: one person at a time or a whole file.",
+  "budget": 50,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "member",
+   "import"
+  ],
+  "notes": "One short sentence."
+ },
+ {
+  "key": "PEOPLE_NONE",
+  "kind": "const",
+  "screen": "Members window, the fourth tab under the title bar. A title with a count, a strip of twelve month tiles each with its number of birthdays, a name search with Import and Add person buttons, a table of people (name, birth date, next birthday, group, age, and an edit and a delete icon per row), and a side panel with the birthday slide, an Open the card button and a drop box for a list file.",
+  "moment": "The month or the name typed matches no one in a list that does have people.",
+  "role": "empty state heading",
+  "does": "States that the filters leave nobody to show.",
+  "budget": 20,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "member"
+  ],
+  "notes": "A heading over a hint."
+ },
+ {
+  "key": "PEOPLE_NONE_HINT",
+  "kind": "const",
+  "screen": "Members window, the fourth tab under the title bar. A title with a count, a strip of twelve month tiles each with its number of birthdays, a name search with Import and Add person buttons, a table of people (name, birth date, next birthday, group, age, and an edit and a delete icon per row), and a side panel with the birthday slide, an Open the card button and a drop box for a list file.",
+  "moment": "The filters leave nobody to show.",
+  "role": "empty state hint",
+  "does": "Suggests trying another birth month, or other letters in the search box.",
+  "budget": 40,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "member"
+  ],
+  "notes": "One short imperative sentence."
+ },
+ {
+  "key": "PEOPLE_DAY",
+  "kind": "const",
+  "screen": "Person dialog, opened over the Members window by Add person or by editing a row. A name field, three lists for the day, month and year of birth, and Delete, Cancel and Save at the foot.",
+  "moment": "The person sets the day of a birth date.",
+  "role": "field label and column role",
+  "does": "Labels the list of days of the month. Also names an imported column that holds only the day.",
+  "budget": 10,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "member"
+  ],
+  "notes": "One word."
+ },
+ {
+  "key": "PEOPLE_MONTH",
+  "kind": "const",
+  "screen": "Person dialog, opened over the Members window by Add person or by editing a row. A name field, three lists for the day, month and year of birth, and Delete, Cancel and Save at the foot.",
+  "moment": "The person sets the month of a birth date.",
+  "role": "field label and column role",
+  "does": "Labels the list of months. Also names an imported column that holds only the month.",
+  "budget": 10,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "member"
+  ],
+  "notes": "One word."
+ },
+ {
+  "key": "PEOPLE_YEAR",
+  "kind": "const",
+  "screen": "Person dialog, opened over the Members window by Add person or by editing a row. A name field, three lists for the day, month and year of birth, and Delete, Cancel and Save at the foot.",
+  "moment": "The person sets the year of a birth date.",
+  "role": "field label and column role",
+  "does": "Labels the list of years. Also names an imported column that holds only the year.",
+  "budget": 10,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "member"
+  ],
+  "notes": "One word."
+ },
+ {
+  "key": "PEOPLE_YEAR_UNKNOWN",
+  "kind": "const",
+  "screen": "Person dialog, opened over the Members window by Add person or by editing a row. A name field, three lists for the day, month and year of birth, and Delete, Cancel and Save at the foot.",
+  "moment": "The person does not know when someone was born, or prefers not to write it.",
+  "role": "list entry",
+  "does": "Is the choice that leaves the birth year empty, so no age is worked out.",
+  "budget": 16,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "member"
+  ],
+  "notes": "First entry of the year list; short."
+ },
+ {
+  "key": "PEOPLE_COL_IGNORE",
+  "kind": "const",
+  "screen": "Import dialog, opened over the Members window with a spreadsheet or csv file chosen. The file name, the first rows of the file as columns each under a list saying what it holds, a tick for a heading row, a sentence on what was found, a switch between adding and replacing, and Cancel and Import.",
+  "moment": "A column of the file is not needed.",
+  "role": "list entry",
+  "does": "Is the choice that skips a column of the imported file.",
+  "budget": 14,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "member",
+   "import"
+  ],
+  "notes": "One word."
+ },
+ {
+  "key": "PEOPLE_COLUMNS_HINT",
+  "kind": "const",
+  "screen": "Import dialog, opened over the Members window with a spreadsheet or csv file chosen. The file name, the first rows of the file as columns each under a list saying what it holds, a tick for a heading row, a sentence on what was found, a switch between adding and replacing, and Cancel and Import.",
+  "moment": "The person sees the first rows of the file and a list over each column.",
+  "role": "instruction",
+  "does": "Asks the person to say, for each column of the file, what kind of thing it holds.",
+  "budget": 50,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "member",
+   "import"
+  ],
+  "notes": "A grey sentence above the columns."
+ },
+ {
+  "key": "PEOPLE_FIRST_ROW",
+  "kind": "const",
+  "screen": "Import dialog, opened over the Members window with a spreadsheet or csv file chosen. The file name, the first rows of the file as columns each under a list saying what it holds, a tick for a heading row, a sentence on what was found, a switch between adding and replacing, and Cancel and Import.",
+  "moment": "The person checks whether the top row of the file is only titles.",
+  "role": "tick label",
+  "does": "Says that the top row of the file holds titles of the columns, not a person.",
+  "budget": 36,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "member",
+   "import"
+  ],
+  "notes": "Label of a tick box."
+ },
+ {
+  "key": "PEOPLE_REPLACE",
+  "kind": "const",
+  "screen": "Import dialog, opened over the Members window with a spreadsheet or csv file chosen. The file name, the first rows of the file as columns each under a list saying what it holds, a tick for a heading row, a sentence on what was found, a switch between adding and replacing, and Cancel and Import.",
+  "moment": "The person chooses what the file does to the people already listed.",
+  "role": "switch segment",
+  "does": "Throws the present list away and keeps only what the file brings.",
+  "budget": 24,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "member",
+   "import"
+  ],
+  "notes": "One of two segments; the other keeps the present list."
+ },
+ {
+  "key": "PEOPLE_ADD_TO",
+  "kind": "const",
+  "screen": "Import dialog, opened over the Members window with a spreadsheet or csv file chosen. The file name, the first rows of the file as columns each under a list saying what it holds, a tick for a heading row, a sentence on what was found, a switch between adding and replacing, and Cancel and Import.",
+  "moment": "The person chooses what the file does to the people already listed.",
+  "role": "switch segment",
+  "does": "Keeps the present list and puts the people of the file after it, leaving out those already there.",
+  "budget": 24,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "member",
+   "import"
+  ],
+  "notes": "One of two segments; the other throws the present list away."
+ },
+ {
+  "key": "PEOPLE_READ_AS_IS",
+  "kind": "const",
+  "screen": "Import dialog, opened over the Members window with a spreadsheet or csv file chosen. The file name, the first rows of the file as columns each under a list saying what it holds, a tick for a heading row, a sentence on what was found, a switch between adding and replacing, and Cancel and Import.",
+  "moment": "A Word or PowerPoint file was chosen, which has no columns to choose.",
+  "role": "grey note",
+  "does": "Says the program reads the tables of the file by itself, so there is nothing to set.",
+  "budget": 60,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "member",
+   "import"
+  ],
+  "notes": "Takes the place of the columns."
+ },
+ {
+  "key": "CMD_PEOPLE_DETAIL",
+  "kind": "const",
+  "screen": "Search (the box at the top of the window): a list of results, each with a name in bold and a grey line under it.",
+  "moment": "The person typed something like members or birthdays.",
+  "role": "command description",
+  "does": "Says what the window opened by this command is for.",
+  "budget": 48,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "member",
+   "program_window"
+  ],
+  "notes": "A fragment, no full stop."
+ },
+ {
+  "key": "CMD_ADD_PERSON_DETAIL",
+  "kind": "const",
+  "screen": "Search (the box at the top of the window): a list of results, each with a name in bold and a grey line under it.",
+  "moment": "The person typed something like add member.",
+  "role": "command description",
+  "does": "Says what the command starts: a record of one congregation member and the day they were born.",
+  "budget": 48,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "member"
+  ],
+  "notes": "A fragment, no full stop."
+ },
+ {
+  "key": "people_listed",
+  "kind": "sentence",
+  "screen": "Members window, the fourth tab under the title bar. A title with a count, a strip of twelve month tiles each with its number of birthdays, a name search with Import and Add person buttons, a table of people (name, birth date, next birthday, group, age, and an edit and a delete icon per row), and a side panel with the birthday slide, an Open the card button and a drop box for a list file.",
+  "moment": "The person looks at the title of the window.",
+  "role": "count under the title",
+  "does": "Tells how many people the list holds.",
+  "budget": 20,
+  "variables": [],
+  "cases": [],
+  "counts": "count = number of people; forms for one and for many.",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "member"
+  ],
+  "notes": "No full stop. Zero reads naturally too."
+ },
+ {
+  "key": "people_showing",
+  "kind": "sentence",
+  "screen": "Members window, the fourth tab under the title bar. A title with a count, a strip of twelve month tiles each with its number of birthdays, a name search with Import and Add person buttons, a table of people (name, birth date, next birthday, group, age, and an edit and a delete icon per row), and a side panel with the birthday slide, an Open the card button and a drop box for a list file.",
+  "moment": "The person has narrowed the table and looks under it.",
+  "role": "note under the table",
+  "does": "Tells how many of all the people the table now lists.",
+  "budget": 36,
+  "variables": [
+   {
+    "name": "shown",
+    "example": "11",
+    "meaning": "How many rows the table lists now."
+   },
+   {
+    "name": "total",
+    "example": "30",
+    "meaning": "How many people the list holds in all."
+   }
+  ],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "member"
+  ],
+  "notes": "Shown number first, total second, in a short phrase."
+ },
+ {
+  "key": "people_in_days",
+  "kind": "sentence",
+  "screen": "Members window, the fourth tab under the title bar. A title with a count, a strip of twelve month tiles each with its number of birthdays, a name search with Import and Add person buttons, a table of people (name, birth date, next birthday, group, age, and an edit and a delete icon per row), and a side panel with the birthday slide, an Open the card button and a drop box for a list file.",
+  "moment": "The table shows a birthday that is not today.",
+  "role": "small note beside a date",
+  "does": "Tells how far away the next birthday is, counted in days; one day away is said as the day after today.",
+  "budget": 20,
+  "variables": [
+   {
+    "name": "count",
+    "example": "5",
+    "meaning": "Days until the birthday, two or more."
+   }
+  ],
+  "cases": [
+   {
+    "name": "tomorrow",
+    "when": "The birthday is tomorrow: the word for tomorrow."
+   },
+   {
+    "name": "later",
+    "when": "Two or more days away: the number of days."
+   }
+  ],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "member"
+  ],
+  "notes": "The tomorrow case need not use the number."
+ },
+ {
+  "key": "people_found",
+  "kind": "sentence",
+  "screen": "Import dialog, opened over the Members window with a spreadsheet or csv file chosen. The file name, the first rows of the file as columns each under a list saying what it holds, a tick for a heading row, a sentence on what was found, a switch between adding and replacing, and Cancel and Import.",
+  "moment": "The person changes the role of a column and watches what the file gives.",
+  "role": "status sentence",
+  "does": "Says how many people the file gives under the present settings and, when some rows could not be read, how many.",
+  "budget": 48,
+  "variables": [
+   {
+    "name": "count",
+    "example": "28",
+    "meaning": "People found."
+   },
+   {
+    "name": "skipped",
+    "example": "2",
+    "meaning": "Rows that gave no name or no valid date."
+   }
+  ],
+  "cases": [
+   {
+    "name": "none_skipped",
+    "when": "Every row was read; count has forms for one and many."
+   },
+   {
+    "name": "some_skipped",
+    "when": "Some rows could not be read; both numbers are said."
+   }
+  ],
+  "counts": "count = number of people found when no row was skipped; forms for one and many.",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "member",
+   "import"
+  ],
+  "notes": "Two cases: no row skipped, some skipped. A row is a line of the file."
+ },
+ {
+  "key": "person_deleted",
+  "kind": "sentence",
+  "screen": "A grey bar over the foot of the Members window, with an Undo button and the key Ctrl Z.",
+  "moment": "The person has just removed someone from the list.",
+  "role": "toast",
+  "does": "Confirms that the named person is gone, while Undo still brings them back.",
+  "budget": 40,
+  "variables": [
+   {
+    "name": "name",
+    "example": "Alfa Beta",
+    "meaning": "The name of the person."
+   }
+  ],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "member",
+   "undo"
+  ],
+  "notes": "Short, past tense; the name leads or follows as the language likes."
  }
 ]

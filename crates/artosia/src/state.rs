@@ -266,6 +266,10 @@ pub enum Undo {
     Event(Event),
     /// A calendar was deleted with its events.
     Calendar(Calendar, Vec<Event>),
+    /// A person was deleted from the Members list.
+    Person(Person),
+    /// An import replaced the whole Members list; this was it.
+    People(Vec<Person>),
 }
 
 pub struct Toast {
@@ -428,6 +432,8 @@ pub struct App {
     pub calendars: Vec<Calendar>,
     pub events: Vec<Event>,
     pub calendar: crate::calendar::Window,
+    /// The Members tab (`people.rs`).
+    pub members: crate::people::Window,
     pub plan: Plan,
     pub settings: Settings,
 
@@ -668,6 +674,7 @@ impl App {
                 let _ = store.save_announcement(&mut item);
             }
             data::practice_calendar(&store);
+            data::practice_people(&store);
         }
         let songs = store.songs().unwrap_or_default();
         let index = SongIndex::build(&songs);
@@ -707,6 +714,7 @@ impl App {
             calendars: Vec::new(),
             events: Vec::new(),
             calendar: Default::default(),
+            members: Default::default(),
             plan,
             settings,
             open: None,
@@ -825,6 +833,7 @@ impl App {
         t::set_language(&app.settings.language);
         app.people = app.store.people().unwrap_or_default();
         app.load_calendar();
+        app.refresh_members();
         app.stream_address.replace_text(app.settings.stream_address.clone());
         app.stream_key.replace_text(app.settings.stream_key.clone());
         app.sync_camera_address();

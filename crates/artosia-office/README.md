@@ -7,7 +7,9 @@ dependency (`zip` and `quick-xml` only). Both formats are zips of XML.
 | --- | --- | --- |
 | `Pptx` | .pptx | slides in presentation order: title, paragraphs, tables, pictures with their place |
 | `Docx` | .docx | paragraphs and tables in document order |
-| `birthdays` | tables from either | `Vec<Birthday { name, day, month }>`, `in_range`, `in_month`, `dedup` |
+| `birthdays` | tables from either | `Vec<Birthday { name, day, month, year }>` (year 0 when unknown), `in_range`, `in_month`, `dedup` |
+| `xlsx_table`, `csv_from_bytes` | .xlsx, .csv | the first sheet or the file as rows of cell text; a date held as a number comes out as `1990-01-05` |
+| `guess`, `read` | rows of a table | which column is name, date, day, month or year (`Mapping`), and the people under a mapping |
 | `to_announcements` | a read `Pptx` | `Vec<Draft { title, body, picture, .. }>` for Artosia's announcements |
 | `Picture::drawable` | any picture | PNG or JPEG bytes Artosia can draw |
 
@@ -40,7 +42,7 @@ real congregation's files.
 ## Birthdays
 
 A date cell is a day plus a month in Indonesian or English (full and short forms), also `05/01`,
-`5-1`, `1990-01-05` and `5 Jan 1990`. The year is dropped. Day comes before month in numbers. A dot
+`5-1`, `1990-01-05` and `5 Jan 1990`. A four-digit year of birth is kept (0 when there is none or it is doubtful); no slide carries it. Day comes before month in numbers. A dot
 is not a separator, so an amount like `10.5` is never a date. Typos survive when they are one
 letter off a long month name and cannot mean another month (`Nopvember`); a five-digit year typo
 is accepted and dropped. A row with a name and a date in one cell (`Name 12 Nov`) reads too, and a

@@ -2089,9 +2089,9 @@
   "why": "목록 shows it is a list"
  },
  "CMD_IMPORT_BIRTHDAYS_DETAIL": {
-  "text": "이름과 날짜 표가 든 Word나 PowerPoint 파일",
-  "back": "A Word or PowerPoint file with a table of names and dates",
-  "why": ""
+  "text": "이름과 생일이 든 Word, PowerPoint, Excel, csv",
+  "back": "Word, PowerPoint, Excel, csv with names and birthdays",
+  "why": "uses the table word 교인 for member, in the briefed register"
  },
  "BIRTHDAYS_NONE_FOUND": {
   "text": "파일에서 이름과 날짜를 찾지 못했어요",
@@ -4187,5 +4187,223 @@
   "text": "예배, 모임, 연습을 교회 캘린더에 넣어요",
   "back": "A service, meeting or rehearsal can go on the church calendar",
   "why": "fragment"
+ },
+ "PEOPLE_SEARCH": {
+  "text": "이름 검색",
+  "back": "Name search",
+  "why": "uses the table word 교인 for member, in the briefed register"
+ },
+ "PEOPLE_BIRTH_MONTH": {
+  "text": "태어난 달",
+  "back": "Month born",
+  "why": "uses the table word 교인 for member, in the briefed register"
+ },
+ "PEOPLE_IMPORT": {
+  "text": "가져오기",
+  "back": "Import",
+  "why": "uses the table word 교인 for member, in the briefed register"
+ },
+ "PEOPLE_ADD": {
+  "text": "교인 추가",
+  "back": "Add member",
+  "why": "uses the table word 교인 for member, in the briefed register"
+ },
+ "PEOPLE_EDIT": {
+  "text": "교인 수정",
+  "back": "Edit member",
+  "why": "uses the table word 교인 for member, in the briefed register"
+ },
+ "PEOPLE_COL_NAME": {
+  "text": "이름",
+  "back": "Name",
+  "why": "uses the table word 교인 for member, in the briefed register"
+ },
+ "PEOPLE_COL_BORN": {
+  "text": "생년월일",
+  "back": "Birth date",
+  "why": "uses the table word 교인 for member, in the briefed register"
+ },
+ "PEOPLE_COL_NEXT": {
+  "text": "다음 생일",
+  "back": "Next birthday",
+  "why": "uses the table word 교인 for member, in the briefed register"
+ },
+ "PEOPLE_COL_GROUP": {
+  "text": "연령대",
+  "back": "Age band",
+  "why": "uses the table word 교인 for member, in the briefed register"
+ },
+ "PEOPLE_COL_AGE": {
+  "text": "나이",
+  "back": "Age",
+  "why": "uses the table word 교인 for member, in the briefed register"
+ },
+ "PEOPLE_TODAY": {
+  "text": "오늘",
+  "back": "today",
+  "why": "uses the table word 교인 for member, in the briefed register"
+ },
+ "PEOPLE_CHILD": {
+  "text": "어린이",
+  "back": "Child",
+  "why": "uses the table word 교인 for member, in the briefed register"
+ },
+ "PEOPLE_YOUTH": {
+  "text": "청년",
+  "back": "Youth",
+  "why": "uses the table word 교인 for member, in the briefed register"
+ },
+ "PEOPLE_ADULT": {
+  "text": "성인",
+  "back": "Adult",
+  "why": "uses the table word 교인 for member, in the briefed register"
+ },
+ "PEOPLE_USED_BY": {
+  "text": "쓰이는 곳",
+  "back": "Where it is used",
+  "why": "uses the table word 교인 for member, in the briefed register"
+ },
+ "PEOPLE_USED_BY_HINT": {
+  "text": "생일 공지가 이 목록에서 이름을 가져와요. 슬라이드에 다시 칠 필요가 없어요.",
+  "back": "The birthday notice takes names from this list. No retyping on a slide.",
+  "why": "uses the table word 교인 for member, in the briefed register"
+ },
+ "PEOPLE_OPEN_CARD": {
+  "text": "생일 공지 열기",
+  "back": "Open birthday notice",
+  "why": "uses the table word 교인 for member, in the briefed register"
+ },
+ "PEOPLE_IMPORT_LIST": {
+  "text": "목록 가져오기",
+  "back": "Import a list",
+  "why": "uses the table word 교인 for member, in the briefed register"
+ },
+ "PEOPLE_IMPORT_HINT": {
+  "text": "Word, PowerPoint, Excel, csv 파일을 고를 수 있어요. 열 지정은 다음 단계에서 해요.",
+  "back": "Word, PowerPoint, Excel, csv files can be chosen. Columns are set in the next step.",
+  "why": "uses the table word 교인 for member, in the briefed register"
+ },
+ "PEOPLE_DROP": {
+  "text": "눌러서 고르거나 파일을 여기에 놓기",
+  "back": "Press to choose, or drop a file here",
+  "why": "uses the table word 교인 for member, in the briefed register"
+ },
+ "PEOPLE_EMPTY": {
+  "text": "교인이 아직 없어요",
+  "back": "No members yet",
+  "why": "uses the table word 교인 for member, in the briefed register"
+ },
+ "PEOPLE_EMPTY_HINT": {
+  "text": "한 명씩 추가하거나 파일로 가져오세요",
+  "back": "Add one at a time or import a file",
+  "why": "uses the table word 교인 for member, in the briefed register"
+ },
+ "PEOPLE_NONE": {
+  "text": "해당하는 교인 없음",
+  "back": "No matching member",
+  "why": "uses the table word 교인 for member, in the briefed register"
+ },
+ "PEOPLE_NONE_HINT": {
+  "text": "다른 생일 달이나 다른 글자로 찾기",
+  "back": "Search another birth month or other letters",
+  "why": "uses the table word 교인 for member, in the briefed register"
+ },
+ "PEOPLE_DAY": {
+  "text": "일",
+  "back": "Day",
+  "why": "uses the table word 교인 for member, in the briefed register"
+ },
+ "PEOPLE_MONTH": {
+  "text": "월",
+  "back": "Month",
+  "why": "uses the table word 교인 for member, in the briefed register"
+ },
+ "PEOPLE_YEAR": {
+  "text": "연도",
+  "back": "Year",
+  "why": "uses the table word 교인 for member, in the briefed register"
+ },
+ "PEOPLE_YEAR_UNKNOWN": {
+  "text": "연도 모름",
+  "back": "Year unknown",
+  "why": "uses the table word 교인 for member, in the briefed register"
+ },
+ "PEOPLE_COL_IGNORE": {
+  "text": "사용 안 함",
+  "back": "Not used",
+  "why": "uses the table word 교인 for member, in the briefed register"
+ },
+ "PEOPLE_COLUMNS_HINT": {
+  "text": "각 열에 든 내용을 골라 주세요",
+  "back": "Please choose what each column holds",
+  "why": "uses the table word 교인 for member, in the briefed register"
+ },
+ "PEOPLE_FIRST_ROW": {
+  "text": "첫 줄은 열 제목",
+  "back": "First row is column titles",
+  "why": "uses the table word 교인 for member, in the briefed register"
+ },
+ "PEOPLE_REPLACE": {
+  "text": "현재 목록 바꾸기",
+  "back": "Replace the current list",
+  "why": "uses the table word 교인 for member, in the briefed register"
+ },
+ "PEOPLE_ADD_TO": {
+  "text": "현재 목록에 추가",
+  "back": "Add to the current list",
+  "why": "uses the table word 교인 for member, in the briefed register"
+ },
+ "PEOPLE_READ_AS_IS": {
+  "text": "표는 자동으로 읽어요. 설정할 것이 없어요",
+  "back": "Tables are read automatically. Nothing to set",
+  "why": "uses the table word 교인 for member, in the briefed register"
+ },
+ "CMD_PEOPLE_DETAIL": {
+  "text": "교인 명단과 생일",
+  "back": "Member roster and birthdays",
+  "why": "uses the table word 교인 for member, in the briefed register"
+ },
+ "CMD_ADD_PERSON_DETAIL": {
+  "text": "교인 한 명과 생일을 기록",
+  "back": "Record one member and a birthday",
+  "why": "uses the table word 교인 for member, in the briefed register"
+ },
+ "people_listed": {
+  "text": {
+   "zero": "교인 없음",
+   "other": "교인 {count}명"
+  },
+  "back": "{count} members",
+  "why": "uses the table word 교인 for member, in the briefed register"
+ },
+ "people_showing": {
+  "text": "{total}명 중 {shown}명 표시",
+  "back": "Showing {shown} of {total}",
+  "why": "uses the table word 교인 for member, in the briefed register"
+ },
+ "people_in_days": {
+  "text": {
+   "tomorrow": "내일",
+   "later": "{count}일 뒤"
+  },
+  "back": "tomorrow / in {count} days",
+  "why": "uses the table word 교인 for member, in the briefed register"
+ },
+ "people_found": {
+  "text": {
+   "none_skipped": {
+    "other": "{count}명을 찾았어요"
+   },
+   "some_skipped": {
+    "other": "{count}명을 찾았고 {skipped}줄은 못 읽었어요"
+   }
+  },
+  "back": "Found {count} people / and could not read {skipped} rows",
+  "why": "uses the table word 교인 for member, in the briefed register"
+ },
+ "person_deleted": {
+  "text": "{name} 님을 삭제했어요",
+  "back": "{name} was deleted",
+  "why": "uses the table word 교인 for member, in the briefed register"
  }
 }

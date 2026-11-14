@@ -1,5 +1,6 @@
-//! Birthdays out of a table's rows: a name, and a date that is a day plus a month. The year is
-//! dropped on purpose; nobody should have ages on a screen.
+//! Birthdays out of a table's rows: a name, and a date that is a day plus a month, with the year
+//! of birth when the file has one (0 when not). The year is for the Members window's own age and
+//! group; no slide carries it.
 
 use crate::docx::{Block, Docx};
 use crate::pptx::Pptx;
@@ -10,6 +11,8 @@ pub struct Birthday {
     pub name: String,
     pub day: u8,
     pub month: u8,
+    /// The year of birth, 0 when the file gives none.
+    pub year: u16,
 }
 
 /// What a read found, and what it could not make sense of.
@@ -57,7 +60,7 @@ fn one_edit_apart(a: &str, b: &str) -> bool {
 
 /// A month by name. The church's own files carry typos, so a long name one letter off still
 /// counts when it can only mean one month.
-fn month_name(token: &str) -> Option<u8> {
+pub(crate) fn month_name(token: &str) -> Option<u8> {
     if let Some((_, m)) = MONTHS.iter().find(|(name, _)| *name == token) {
         return Some(*m);
     }
@@ -69,11 +72,11 @@ fn month_name(token: &str) -> Option<u8> {
     near.all(|m| m == first).then_some(first)
 }
 
-fn number(token: &str, max_digits: usize) -> Option<u32> {
+pub(crate) fn number(token: &str, max_digits: usize) -> Option<u32> {
     (!token.is_empty() && token.len() <= max_digits && token.bytes().all(|b| b.is_ascii_digit())).then(|| token.parse().ok()).flatten()
 }
 
-fn valid(day: u32, month: u32) -> Option<(u8, u8)> {
+pub(crate) fn valid(day: u32, month: u32) -> Option<(u8, u8)> {
     ((1..=12).contains(&month) && day >= 1 && day <= u32::from(DAYS_IN_MONTH[month as usize - 1])).then_some((day as u8, month as u8))
 }
 
@@ -82,11 +85,21 @@ fn year(token: &str) -> bool {
     number(token, 5).is_some() && matches!(token.len(), 2 | 4 | 5)
 }
 
+/// A four-digit year of birth between 1900 and 2100; anything else (two digits, a typo) is unknown, 0.
+pub(crate) fn birth_year(token: &str) -> u16 {
+    number(token, 4).filter(|year| token.len() == 4 && (1900..=2100).contains(year)).map_or(0, |year| year as u16)
+}
+
 /// Reads a whole string as a date: `05 Januari`, `5 Jan 1990`, `Jan 5`, `05/01`, `5-1`,
 /// `05-01-1990`, `1990-01-05`. Day comes before month in numbers, as in Indonesia. A dot between
 /// numbers is not a date separator, so an amount such as `10.5` never reads as 10 May.
-/// Returns `(day, month)`; a year is checked and dropped.
+/// Returns `(day, month)`; use [`parse_date_year`] to keep the year too.
 pub fn parse_date(text: &str) -> Option<(u8, u8)> {
+    parse_date_year(text).map(|(day, month, _)| (day, month))
+}
+
+/// As [`parse_date`], with the year of birth when the text has a four-digit one, else 0.
+pub fn parse_date_year(text: &str) -> Option<(u8, u8, u16)> {
     let lower = text.to_lowercase();
     let tokens: Vec<&str> = lower
         .split(|c: char| c.is_whitespace() || matches!(c, ',' | '/' | '-'))
@@ -101,45 +114,46 @@ pub fn parse_date(text: &str) -> Option<(u8, u8)> {
         let t = raw.get(i)?;
         month_name(t).map(u32::from).or_else(|| number(t, 2))
     };
+    let with = |date: Option<(u8, u8)>, year: &str| date.map(|(day, month)| (day, month, birth_year(year)));
     match raw.len() {
         2 => {
             // Day then month, or an English "Jan 5".
             if let (Some(d), Some(m)) = (day_of(0), month_of(1)) {
-                return valid(d, m);
+                return with(valid(d, m), "");
             }
             let m = month_name(raw[0])?;
-            valid(day_of(1)?, u32::from(m))
+            with(valid(day_of(1)?, u32::from(m)), "")
         }
         3 => {
             if year(raw[2])
                 && let (Some(d), Some(m)) = (day_of(0), month_of(1))
             {
-                return valid(d, m);
+                return with(valid(d, m), raw[2]);
             }
             if raw[0].len() == 4 && year(raw[0]) {
                 // ISO order: year, month, day.
-                return valid(number(raw[2], 2)?, month_of(1)?);
+                return with(valid(number(raw[2], 2)?, month_of(1)?), raw[0]);
             }
             // English "Jan 5 1990".
             let m = month_name(raw[0])?;
             year(raw[2]).then_some(())?;
-            valid(day_of(1)?, u32::from(m))
+            with(valid(day_of(1)?, u32::from(m)), raw[2])
         }
         _ => None,
     }
 }
 
-fn clean(text: &str) -> String {
+pub(crate) fn clean(text: &str) -> String {
     text.split_whitespace().collect::<Vec<_>>().join(" ")
 }
 
 /// A cell that only numbers the row: `12`, `12.`, `#12`.
-fn is_number_cell(cell: &str) -> bool {
+pub(crate) fn is_number_cell(cell: &str) -> bool {
     let c = cell.trim().trim_start_matches('#').trim_end_matches(['.', ')']);
     !c.is_empty() && c.bytes().all(|b| b.is_ascii_digit())
 }
 
-fn is_header(cells: &[String]) -> bool {
+pub(crate) fn is_header(cells: &[String]) -> bool {
     cells.iter().any(|c| {
         let c = c.to_lowercase();
         ["nama", "tanggal", "lahir", "name", "date", "birth"].iter().any(|w| c.contains(w))
@@ -147,15 +161,15 @@ fn is_header(cells: &[String]) -> bool {
 }
 
 /// "Budi 5 Jan" in one cell: the date is the last two or three words.
-fn trailing_date(cell: &str) -> Option<(String, u8, u8)> {
+fn trailing_date(cell: &str) -> Option<(String, u8, u8, u16)> {
     let words: Vec<&str> = cell.split_whitespace().collect();
     for take in [3usize, 2] {
         if words.len() > take {
             let (name, date) = words.split_at(words.len() - take);
-            if let Some((d, m)) = parse_date(&date.join(" ")) {
+            if let Some((d, m, y)) = parse_date_year(&date.join(" ")) {
                 let name = name.join(" ").trim_end_matches(['-', ',', ':', '(']).trim().to_string();
                 if !name.is_empty() {
-                    return Some((name, d, m));
+                    return Some((name, d, m, y));
                 }
             }
         }
@@ -179,8 +193,8 @@ fn read_row(cells: &[String], heading_month: Option<u8>) -> Row {
         return Row::Blank;
     }
     let dated = cells.iter().position(|c| parse_date(c).is_some());
-    let (date_at, (day, month)) = match dated {
-        Some(at) => (at, parse_date(&cells[at]).unwrap_or((0, 0))),
+    let (date_at, (day, month, year)) = match dated {
+        Some(at) => (at, parse_date_year(&cells[at]).unwrap_or((0, 0, 0))),
         None => {
             if is_header(&cells) {
                 return Row::Header;
@@ -191,17 +205,17 @@ fn read_row(cells: &[String], heading_month: Option<u8>) -> Row {
                 && let Some((d, m)) = valid(number(&cells[at], 2).unwrap_or(0), u32::from(m))
                 && let Some(name) = cells.iter().enumerate().filter(|(i, c)| *i != at && !c.is_empty() && !is_number_cell(c)).map(|(_, c)| c.clone()).next()
             {
-                return Row::Person(Birthday { name, day: d, month: m });
+                return Row::Person(Birthday { name, day: d, month: m, year: 0 });
             }
             return match cells.iter().find_map(|c| trailing_date(c)) {
-                Some((name, day, month)) => Row::Person(Birthday { name, day, month }),
+                Some((name, day, month, year)) => Row::Person(Birthday { name, day, month, year }),
                 None => Row::Unread,
             };
         }
     };
     let name = cells.iter().enumerate().filter(|(i, c)| *i != date_at && !c.is_empty() && !is_number_cell(c)).map(|(_, c)| c.clone()).next();
     match name {
-        Some(name) => Row::Person(Birthday { name, day, month }),
+        Some(name) => Row::Person(Birthday { name, day, month, year }),
         None => Row::Unread,
     }
 }
@@ -291,7 +305,11 @@ mod tests {
     use super::*;
 
     fn b(name: &str, month: u8, day: u8) -> Birthday {
-        Birthday { name: name.into(), day, month }
+        Birthday { name: name.into(), day, month, year: 0 }
+    }
+
+    fn born(name: &str, month: u8, day: u8, year: u16) -> Birthday {
+        Birthday { year, ..b(name, month, day) }
     }
 
     fn table(rows: &[&[&str]]) -> Table {
@@ -327,6 +345,13 @@ mod tests {
     }
 
     #[test]
+    fn a_four_digit_year_of_birth_is_kept_and_a_doubtful_one_is_not() {
+        for (text, want) in [("5 Jan 1990", 1990), ("05-01-1990", 1990), ("1990-01-05", 1990), ("Jan 5 1990", 1990), ("5 Jan", 0), ("5 Jan 90", 0), ("9 Mei 19900", 0), ("5 Jan 1850", 0)] {
+            assert_eq!(parse_date_year(text).map(|(_, _, year)| year), Some(want), "{text}");
+        }
+    }
+
+    #[test]
     fn things_that_are_not_dates() {
         for text in ["", "1", "Maria", "No", "32 Januari", "30 Februari", "5 13", "0 Mei", "10.5", "1.500.000", "TANGGAL LAHIR", "Mei", "5 Jan 199", "12 Tuesday"] {
             assert_eq!(parse_date(text), None, "{text}");
@@ -344,14 +369,14 @@ mod tests {
             &["4", "", "9 Mei"],
         ]);
         let found = from_tables([&t]);
-        assert_eq!(found.people, vec![b("Anna Test", 1, 5), b("Budi Contoh", 2, 7)]);
+        assert_eq!(found.people, vec![b("Anna Test", 1, 5), born("Budi Contoh", 2, 7, 1980)]);
         assert_eq!((found.unread, found.headers), (2, 1));
     }
 
     #[test]
     fn name_and_date_in_one_cell_and_a_bare_day_under_a_month_heading() {
         let one = table(&[&["Dodi Uji 12 Nov"], &["Eka Fiktif - 3 Mar 1999"]]);
-        assert_eq!(from_tables([&one]).people, vec![b("Dodi Uji", 11, 12), b("Eka Fiktif", 3, 3)]);
+        assert_eq!(from_tables([&one]).people, vec![b("Dodi Uji", 11, 12), born("Eka Fiktif", 3, 3, 1999)]);
 
         let doc = Docx {
             blocks: vec![

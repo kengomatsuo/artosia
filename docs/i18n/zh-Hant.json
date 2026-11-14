@@ -2089,9 +2089,9 @@
   "why": "要有名單二字"
  },
  "CMD_IMPORT_BIRTHDAYS_DETAIL": {
-  "text": "Word 或 PowerPoint 裡姓名配日期的表格",
-  "back": "A table pairing names with dates in Word or PowerPoint",
-  "why": "無句號"
+  "text": "Word、PowerPoint、Excel 或 csv 裡的姓名和生日",
+  "back": "Word, PowerPoint, Excel or csv with names and birthdays",
+  "why": "uses the table word 會友 for member, in the briefed register"
  },
  "BIRTHDAYS_NONE_FOUND": {
   "text": "檔案裡找不到姓名加日期",
@@ -4185,5 +4185,223 @@
   "text": "聚會、會議或排練，都能放進教會行事曆",
   "back": "A service, meeting or rehearsal can go on the church calendar",
   "why": "fragment"
+ },
+ "PEOPLE_SEARCH": {
+  "text": "搜尋姓名",
+  "back": "Search name",
+  "why": "uses the table word 會友 for member, in the briefed register"
+ },
+ "PEOPLE_BIRTH_MONTH": {
+  "text": "出生月份",
+  "back": "Birth month",
+  "why": "uses the table word 會友 for member, in the briefed register"
+ },
+ "PEOPLE_IMPORT": {
+  "text": "匯入",
+  "back": "Import",
+  "why": "uses the table word 會友 for member, in the briefed register"
+ },
+ "PEOPLE_ADD": {
+  "text": "新增會友",
+  "back": "Add member",
+  "why": "uses the table word 會友 for member, in the briefed register"
+ },
+ "PEOPLE_EDIT": {
+  "text": "編輯會友",
+  "back": "Edit member",
+  "why": "uses the table word 會友 for member, in the briefed register"
+ },
+ "PEOPLE_COL_NAME": {
+  "text": "姓名",
+  "back": "Name",
+  "why": "uses the table word 會友 for member, in the briefed register"
+ },
+ "PEOPLE_COL_BORN": {
+  "text": "出生日期",
+  "back": "Birth date",
+  "why": "uses the table word 會友 for member, in the briefed register"
+ },
+ "PEOPLE_COL_NEXT": {
+  "text": "下次生日",
+  "back": "Next birthday",
+  "why": "uses the table word 會友 for member, in the briefed register"
+ },
+ "PEOPLE_COL_GROUP": {
+  "text": "年齡層",
+  "back": "Age band",
+  "why": "uses the table word 會友 for member, in the briefed register"
+ },
+ "PEOPLE_COL_AGE": {
+  "text": "年齡",
+  "back": "Age",
+  "why": "uses the table word 會友 for member, in the briefed register"
+ },
+ "PEOPLE_TODAY": {
+  "text": "今天",
+  "back": "today",
+  "why": "uses the table word 會友 for member, in the briefed register"
+ },
+ "PEOPLE_CHILD": {
+  "text": "兒童",
+  "back": "Child",
+  "why": "uses the table word 會友 for member, in the briefed register"
+ },
+ "PEOPLE_YOUTH": {
+  "text": "青年",
+  "back": "Youth",
+  "why": "uses the table word 會友 for member, in the briefed register"
+ },
+ "PEOPLE_ADULT": {
+  "text": "成人",
+  "back": "Adult",
+  "why": "uses the table word 會友 for member, in the briefed register"
+ },
+ "PEOPLE_USED_BY": {
+  "text": "用在哪裡",
+  "back": "Used where",
+  "why": "uses the table word 會友 for member, in the briefed register"
+ },
+ "PEOPLE_USED_BY_HINT": {
+  "text": "生日公告直接取用這份名單，不必在投影片上再打一遍名字。",
+  "back": "The birthday announcement takes names straight from this list; no retyping names on a slide.",
+  "why": "uses the table word 會友 for member, in the briefed register"
+ },
+ "PEOPLE_OPEN_CARD": {
+  "text": "開啟生日公告",
+  "back": "Open the birthday announcement",
+  "why": "uses the table word 會友 for member, in the briefed register"
+ },
+ "PEOPLE_IMPORT_LIST": {
+  "text": "匯入名單",
+  "back": "Import list",
+  "why": "uses the table word 會友 for member, in the briefed register"
+ },
+ "PEOPLE_IMPORT_HINT": {
+  "text": "可選 Word、PowerPoint、Excel 或 csv 檔。每一欄是什麼，下一步再選。",
+  "back": "Word, PowerPoint, Excel or csv files can be chosen. What each column is, you pick in the next step.",
+  "why": "uses the table word 會友 for member, in the briefed register"
+ },
+ "PEOPLE_DROP": {
+  "text": "點此選擇檔案，或把檔案拖到這裡",
+  "back": "Click here to choose a file, or drag one here",
+  "why": "uses the table word 會友 for member, in the briefed register"
+ },
+ "PEOPLE_EMPTY": {
+  "text": "還沒有會友",
+  "back": "No members yet",
+  "why": "uses the table word 會友 for member, in the briefed register"
+ },
+ "PEOPLE_EMPTY_HINT": {
+  "text": "一位一位新增，或匯入整個檔案",
+  "back": "Add one by one, or import a whole file",
+  "why": "uses the table word 會友 for member, in the briefed register"
+ },
+ "PEOPLE_NONE": {
+  "text": "沒有符合的會友",
+  "back": "No matching members",
+  "why": "uses the table word 會友 for member, in the briefed register"
+ },
+ "PEOPLE_NONE_HINT": {
+  "text": "換個出生月份，或搜尋別的字",
+  "back": "Try another birth month or other letters",
+  "why": "uses the table word 會友 for member, in the briefed register"
+ },
+ "PEOPLE_DAY": {
+  "text": "日",
+  "back": "Day",
+  "why": "uses the table word 會友 for member, in the briefed register"
+ },
+ "PEOPLE_MONTH": {
+  "text": "月",
+  "back": "Month",
+  "why": "uses the table word 會友 for member, in the briefed register"
+ },
+ "PEOPLE_YEAR": {
+  "text": "年",
+  "back": "Year",
+  "why": "uses the table word 會友 for member, in the briefed register"
+ },
+ "PEOPLE_YEAR_UNKNOWN": {
+  "text": "不填年份",
+  "back": "No year",
+  "why": "uses the table word 會友 for member, in the briefed register"
+ },
+ "PEOPLE_COL_IGNORE": {
+  "text": "略過",
+  "back": "Skip",
+  "why": "uses the table word 會友 for member, in the briefed register"
+ },
+ "PEOPLE_COLUMNS_HINT": {
+  "text": "請選擇檔案中每一欄的內容",
+  "back": "Choose what each column of the file holds",
+  "why": "uses the table word 會友 for member, in the briefed register"
+ },
+ "PEOPLE_FIRST_ROW": {
+  "text": "第一列是欄位標題",
+  "back": "The first row is column titles",
+  "why": "uses the table word 會友 for member, in the briefed register"
+ },
+ "PEOPLE_REPLACE": {
+  "text": "取代現有名單",
+  "back": "Replace the present list",
+  "why": "uses the table word 會友 for member, in the briefed register"
+ },
+ "PEOPLE_ADD_TO": {
+  "text": "加到現有名單後面",
+  "back": "Add after the present list",
+  "why": "uses the table word 會友 for member, in the briefed register"
+ },
+ "PEOPLE_READ_AS_IS": {
+  "text": "表格由程式自動讀取，不用設定",
+  "back": "The program reads the tables itself; nothing to set",
+  "why": "uses the table word 會友 for member, in the briefed register"
+ },
+ "CMD_PEOPLE_DETAIL": {
+  "text": "會友名單和生日",
+  "back": "Member list and birthdays",
+  "why": "uses the table word 會友 for member, in the briefed register"
+ },
+ "CMD_ADD_PERSON_DETAIL": {
+  "text": "記錄一位會友和他的出生日期",
+  "back": "Record one member and their birth date",
+  "why": "uses the table word 會友 for member, in the briefed register"
+ },
+ "people_listed": {
+  "text": {
+   "zero": "還沒有會友",
+   "other": "{count} 位會友"
+  },
+  "back": "{count} members",
+  "why": "uses the table word 會友 for member, in the briefed register"
+ },
+ "people_showing": {
+  "text": "顯示 {shown} 位，共 {total} 位",
+  "back": "Showing {shown}, {total} in all",
+  "why": "uses the table word 會友 for member, in the briefed register"
+ },
+ "people_in_days": {
+  "text": {
+   "tomorrow": "明天",
+   "later": "{count} 天後"
+  },
+  "back": "tomorrow / in {count} days",
+  "why": "uses the table word 會友 for member, in the briefed register"
+ },
+ "people_found": {
+  "text": {
+   "none_skipped": {
+    "other": "找到 {count} 位會友"
+   },
+   "some_skipped": {
+    "other": "找到 {count} 位會友，{skipped} 列無法讀取"
+   }
+  },
+  "back": "Found {count} members / and {skipped} rows could not be read",
+  "why": "uses the table word 會友 for member, in the briefed register"
+ },
+ "person_deleted": {
+  "text": "已刪除 {name}",
+  "back": "{name} deleted",
+  "why": "uses the table word 會友 for member, in the briefed register"
  }
 }

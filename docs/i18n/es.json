@@ -2097,8 +2097,8 @@
   "why": "Importar lista de cumpleaños does not fit 26."
  },
  "CMD_IMPORT_BIRTHDAYS_DETAIL": {
-  "text": "Tabla de nombres y fechas en Word o PowerPoint",
-  "back": "Table of names and dates in Word or PowerPoint",
+  "text": "Word, PowerPoint, Excel o csv con nombres y fechas",
+  "back": "Word, PowerPoint, Excel or csv with names and dates",
   "why": "No full stop."
  },
  "BIRTHDAYS_NONE_FOUND": {
@@ -4219,5 +4219,223 @@
   "text": "Un servicio, una reunión o un ensayo",
   "back": "A service, a meeting or a rehearsal",
   "why": "Fragment."
+ },
+ "PEOPLE_SEARCH": {
+  "text": "Buscar un nombre",
+  "back": "Search for a name",
+  "why": "Invites typing; Miembros is the tab word."
+ },
+ "PEOPLE_BIRTH_MONTH": {
+  "text": "Mes de nacimiento",
+  "back": "Birth month",
+  "why": "Reads before a month name in the chip."
+ },
+ "PEOPLE_IMPORT": {
+  "text": "Importar",
+  "back": "Import",
+  "why": "Same verb as the existing Importar button."
+ },
+ "PEOPLE_ADD": {
+  "text": "Agregar persona",
+  "back": "Add person",
+  "why": "Agregar is the table's add verb."
+ },
+ "PEOPLE_EDIT": {
+  "text": "Editar persona",
+  "back": "Edit person",
+  "why": "Pairs with Agregar persona."
+ },
+ "PEOPLE_COL_NAME": {
+  "text": "Nombre",
+  "back": "Name",
+  "why": "One word."
+ },
+ "PEOPLE_COL_BORN": {
+  "text": "Nacimiento",
+  "back": "Birth",
+  "why": "Short heading over a date."
+ },
+ "PEOPLE_COL_NEXT": {
+  "text": "Próximo cumpleaños",
+  "back": "Next birthday",
+  "why": "Cumpleaños is the table's birthday word."
+ },
+ "PEOPLE_COL_GROUP": {
+  "text": "Grupo",
+  "back": "Group",
+  "why": "Plain word for an age band."
+ },
+ "PEOPLE_COL_AGE": {
+  "text": "Edad",
+  "back": "Age",
+  "why": "One word."
+ },
+ "PEOPLE_TODAY": {
+  "text": "hoy",
+  "back": "today",
+  "why": "Lowercase, same word as Hoy elsewhere."
+ },
+ "PEOPLE_CHILD": {
+  "text": "Niño",
+  "back": "Child",
+  "why": "Church word for the youngest band."
+ },
+ "PEOPLE_YOUTH": {
+  "text": "Joven",
+  "back": "Youth",
+  "why": "What a church calls its young people."
+ },
+ "PEOPLE_ADULT": {
+  "text": "Adulto",
+  "back": "Adult",
+  "why": "One word."
+ },
+ "PEOPLE_USED_BY": {
+  "text": "Dónde se usa",
+  "back": "Where it is used",
+  "why": "Answers the question over the slide picture."
+ },
+ "PEOPLE_USED_BY_HINT": {
+  "text": "Los nombres del anuncio de cumpleaños salen de esta lista, sin escribirlos.",
+  "back": "The names in the birthday announcement come from this list, without typing them.",
+  "why": "Anuncio is the table's word for a card."
+ },
+ "PEOPLE_OPEN_CARD": {
+  "text": "Abrir anuncio",
+  "back": "Open announcement",
+  "why": "Each card is an anuncio in the table."
+ },
+ "PEOPLE_IMPORT_LIST": {
+  "text": "Importar una lista",
+  "back": "Import a list",
+  "why": "Names the act of bringing a whole list."
+ },
+ "PEOPLE_IMPORT_HINT": {
+  "text": "Word, PowerPoint, Excel o csv. Después indicas qué es cada columna.",
+  "back": "Word, PowerPoint, Excel or csv. Then you say what each column is.",
+  "why": "File names stay; familiar tú."
+ },
+ "PEOPLE_DROP": {
+  "text": "Elige un archivo o suéltalo aquí",
+  "back": "Pick a file or drop it here",
+  "why": "Elegir is the table's pick verb."
+ },
+ "PEOPLE_EMPTY": {
+  "text": "Aún no hay nadie",
+  "back": "There is nobody yet",
+  "why": "Same Aún no hay pattern as other empty states."
+ },
+ "PEOPLE_EMPTY_HINT": {
+  "text": "Agrega una persona o importa un archivo",
+  "back": "Add a person or import a file",
+  "why": "Two ways, one sentence."
+ },
+ "PEOPLE_NONE": {
+  "text": "Nadie coincide",
+  "back": "Nobody matches",
+  "why": "Says the filters leave no one."
+ },
+ "PEOPLE_NONE_HINT": {
+  "text": "Prueba con otro mes u otras letras",
+  "back": "Try another month or other letters",
+  "why": "Short imperative."
+ },
+ "PEOPLE_DAY": {
+  "text": "Día",
+  "back": "Day",
+  "why": "Same as PLAN_DAY."
+ },
+ "PEOPLE_MONTH": {
+  "text": "Mes",
+  "back": "Month",
+  "why": "One word."
+ },
+ "PEOPLE_YEAR": {
+  "text": "Año",
+  "back": "Year",
+  "why": "One word."
+ },
+ "PEOPLE_YEAR_UNKNOWN": {
+  "text": "Sin año",
+  "back": "No year",
+  "why": "Short list entry that leaves the year empty."
+ },
+ "PEOPLE_COL_IGNORE": {
+  "text": "Ignorar",
+  "back": "Ignore",
+  "why": "One word."
+ },
+ "PEOPLE_COLUMNS_HINT": {
+  "text": "Indica qué contiene cada columna del archivo",
+  "back": "Say what each column of the file holds",
+  "why": "Instruction over the columns."
+ },
+ "PEOPLE_FIRST_ROW": {
+  "text": "La primera fila son los títulos",
+  "back": "The first row is the titles",
+  "why": "Says the top row is not a person."
+ },
+ "PEOPLE_REPLACE": {
+  "text": "Reemplazar la lista",
+  "back": "Replace the list",
+  "why": "Throws the present list away."
+ },
+ "PEOPLE_ADD_TO": {
+  "text": "Agregar a la lista",
+  "back": "Add to the list",
+  "why": "Keeps the present list; Agregar."
+ },
+ "PEOPLE_READ_AS_IS": {
+  "text": "Las tablas del archivo se leen solas, sin nada que ajustar",
+  "back": "The tables of the file read themselves, with nothing to set",
+  "why": "Impersonal, nothing to do."
+ },
+ "CMD_PEOPLE_DETAIL": {
+  "text": "Lista de miembros y sus cumpleaños",
+  "back": "List of members and their birthdays",
+  "why": "Fragment."
+ },
+ "CMD_ADD_PERSON_DETAIL": {
+  "text": "Un miembro y el día en que nació",
+  "back": "A member and the day they were born",
+  "why": "Fragment."
+ },
+ "people_listed": {
+  "text": {
+   "zero": "Nadie en la lista",
+   "one": "{count} persona",
+   "other": "{count} personas"
+  },
+  "back": "Nobody in the list / {count} person(s)",
+  "why": "Counted noun."
+ },
+ "people_showing": {
+  "text": "Mostrando {shown} de {total}",
+  "back": "Showing {shown} of {total}",
+  "why": "Shown first, total second."
+ },
+ "people_in_days": {
+  "text": {
+   "tomorrow": "mañana",
+   "later": "en {count} días"
+  },
+  "back": "tomorrow / in {count} days",
+  "why": "Mañana for one day."
+ },
+ "people_found": {
+  "text": {
+   "none_skipped": {
+    "one": "{count} persona en el archivo",
+    "other": "{count} personas en el archivo"
+   },
+   "some_skipped": "Personas: {count}. Filas omitidas: {skipped}"
+  },
+  "back": "{count} person(s) in the file / People: {count}. Rows skipped: {skipped}",
+  "why": "Filas omitidas as in the birthdays import."
+ },
+ "person_deleted": {
+  "text": "Se eliminó a {name}",
+  "back": "{name} was deleted",
+  "why": "Eliminar is the delete verb; name last."
  }
 }

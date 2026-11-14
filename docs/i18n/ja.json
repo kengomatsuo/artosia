@@ -2089,9 +2089,9 @@
   "why": "Says list"
  },
  "CMD_IMPORT_BIRTHDAYS_DETAIL": {
-  "text": "名前と日付の表を入れたWordかPowerPointの文書",
-  "back": "A Word or PowerPoint document with a table of names and dates",
-  "why": "No full stop"
+  "text": "名前と誕生日を入れたWord、PowerPoint、Excel、csv",
+  "back": "Word, PowerPoint, Excel, csv with names and birthdays",
+  "why": "uses the table word 教会員 for member, in the briefed register"
  },
  "BIRTHDAYS_NONE_FOUND": {
   "text": "名前と日付の組が見つかりません",
@@ -4185,5 +4185,223 @@
   "text": "礼拝、集まり、練習などをカレンダーに入れます",
   "back": "A service, meeting or rehearsal can go on the church calendar",
   "why": "fragment"
+ },
+ "PEOPLE_SEARCH": {
+  "text": "名前で探す",
+  "back": "Search by name",
+  "why": "uses the table word 教会員 for member, in the briefed register"
+ },
+ "PEOPLE_BIRTH_MONTH": {
+  "text": "誕生月",
+  "back": "Birth month",
+  "why": "uses the table word 教会員 for member, in the briefed register"
+ },
+ "PEOPLE_IMPORT": {
+  "text": "取り込む",
+  "back": "Import",
+  "why": "uses the table word 教会員 for member, in the briefed register"
+ },
+ "PEOPLE_ADD": {
+  "text": "教会員を追加",
+  "back": "Add member",
+  "why": "uses the table word 教会員 for member, in the briefed register"
+ },
+ "PEOPLE_EDIT": {
+  "text": "教会員を編集",
+  "back": "Edit member",
+  "why": "uses the table word 教会員 for member, in the briefed register"
+ },
+ "PEOPLE_COL_NAME": {
+  "text": "名前",
+  "back": "Name",
+  "why": "uses the table word 教会員 for member, in the briefed register"
+ },
+ "PEOPLE_COL_BORN": {
+  "text": "生年月日",
+  "back": "Birth date",
+  "why": "uses the table word 教会員 for member, in the briefed register"
+ },
+ "PEOPLE_COL_NEXT": {
+  "text": "次の誕生日",
+  "back": "Next birthday",
+  "why": "uses the table word 教会員 for member, in the briefed register"
+ },
+ "PEOPLE_COL_GROUP": {
+  "text": "区分",
+  "back": "Category",
+  "why": "uses the table word 教会員 for member, in the briefed register"
+ },
+ "PEOPLE_COL_AGE": {
+  "text": "年齢",
+  "back": "Age",
+  "why": "uses the table word 教会員 for member, in the briefed register"
+ },
+ "PEOPLE_TODAY": {
+  "text": "今日",
+  "back": "today",
+  "why": "uses the table word 教会員 for member, in the briefed register"
+ },
+ "PEOPLE_CHILD": {
+  "text": "子ども",
+  "back": "Child",
+  "why": "uses the table word 教会員 for member, in the briefed register"
+ },
+ "PEOPLE_YOUTH": {
+  "text": "青年",
+  "back": "Youth",
+  "why": "uses the table word 教会員 for member, in the briefed register"
+ },
+ "PEOPLE_ADULT": {
+  "text": "大人",
+  "back": "Adult",
+  "why": "uses the table word 教会員 for member, in the briefed register"
+ },
+ "PEOPLE_USED_BY": {
+  "text": "使われる場所",
+  "back": "Where it is used",
+  "why": "uses the table word 教会員 for member, in the briefed register"
+ },
+ "PEOPLE_USED_BY_HINT": {
+  "text": "誕生日のお知らせは、この一覧の名前を使います。スライドに打ち直す手間はありません。",
+  "back": "The birthday notice uses names from this list; no retyping on a slide.",
+  "why": "uses the table word 教会員 for member, in the briefed register"
+ },
+ "PEOPLE_OPEN_CARD": {
+  "text": "誕生日カードを開く",
+  "back": "Open the birthday card",
+  "why": "uses the table word 教会員 for member, in the briefed register"
+ },
+ "PEOPLE_IMPORT_LIST": {
+  "text": "一覧を取り込む",
+  "back": "Import a list",
+  "why": "uses the table word 教会員 for member, in the briefed register"
+ },
+ "PEOPLE_IMPORT_HINT": {
+  "text": "Word、PowerPoint、Excel、csvのファイルを選べます。列の指定は次の画面で",
+  "back": "Word, PowerPoint, Excel, csv files can be chosen. Columns are set on the next screen",
+  "why": "uses the table word 教会員 for member, in the briefed register"
+ },
+ "PEOPLE_DROP": {
+  "text": "ここを押して選ぶか、ファイルをここへ",
+  "back": "Press here to choose, or drop a file here",
+  "why": "uses the table word 教会員 for member, in the briefed register"
+ },
+ "PEOPLE_EMPTY": {
+  "text": "教会員はまだいません",
+  "back": "No members yet",
+  "why": "uses the table word 教会員 for member, in the briefed register"
+ },
+ "PEOPLE_EMPTY_HINT": {
+  "text": "一人ずつ追加するか、ファイルで取り込みます",
+  "back": "Add one at a time, or import a file",
+  "why": "uses the table word 教会員 for member, in the briefed register"
+ },
+ "PEOPLE_NONE": {
+  "text": "該当者なし",
+  "back": "Nobody matches",
+  "why": "uses the table word 教会員 for member, in the briefed register"
+ },
+ "PEOPLE_NONE_HINT": {
+  "text": "別の誕生月か、別の文字を試す",
+  "back": "Try another birth month or other letters",
+  "why": "uses the table word 教会員 for member, in the briefed register"
+ },
+ "PEOPLE_DAY": {
+  "text": "日",
+  "back": "Day",
+  "why": "uses the table word 教会員 for member, in the briefed register"
+ },
+ "PEOPLE_MONTH": {
+  "text": "月",
+  "back": "Month",
+  "why": "uses the table word 教会員 for member, in the briefed register"
+ },
+ "PEOPLE_YEAR": {
+  "text": "年",
+  "back": "Year",
+  "why": "uses the table word 教会員 for member, in the briefed register"
+ },
+ "PEOPLE_YEAR_UNKNOWN": {
+  "text": "年は不明",
+  "back": "Year unknown",
+  "why": "uses the table word 教会員 for member, in the briefed register"
+ },
+ "PEOPLE_COL_IGNORE": {
+  "text": "使わない",
+  "back": "Not used",
+  "why": "uses the table word 教会員 for member, in the briefed register"
+ },
+ "PEOPLE_COLUMNS_HINT": {
+  "text": "各列に入っている内容を選ぶ",
+  "back": "Choose what each column holds",
+  "why": "uses the table word 教会員 for member, in the briefed register"
+ },
+ "PEOPLE_FIRST_ROW": {
+  "text": "1行目は列の見出し",
+  "back": "Row 1 is column headings",
+  "why": "uses the table word 教会員 for member, in the briefed register"
+ },
+ "PEOPLE_REPLACE": {
+  "text": "今の一覧を置き換える",
+  "back": "Replace the present list",
+  "why": "uses the table word 教会員 for member, in the briefed register"
+ },
+ "PEOPLE_ADD_TO": {
+  "text": "今の一覧に追加",
+  "back": "Add to the present list",
+  "why": "uses the table word 教会員 for member, in the briefed register"
+ },
+ "PEOPLE_READ_AS_IS": {
+  "text": "表は自動で読むので設定は不要",
+  "back": "Tables are read automatically; no setting needed",
+  "why": "uses the table word 教会員 for member, in the briefed register"
+ },
+ "CMD_PEOPLE_DETAIL": {
+  "text": "教会員の一覧と誕生日",
+  "back": "Member list and birthdays",
+  "why": "uses the table word 教会員 for member, in the briefed register"
+ },
+ "CMD_ADD_PERSON_DETAIL": {
+  "text": "教会員一人と誕生日を記録",
+  "back": "Record one member and a birthday",
+  "why": "uses the table word 教会員 for member, in the briefed register"
+ },
+ "people_listed": {
+  "text": {
+   "zero": "0人",
+   "other": "{count}人"
+  },
+  "back": "{count} people",
+  "why": "uses the table word 教会員 for member, in the briefed register"
+ },
+ "people_showing": {
+  "text": "{total}人中{shown}人を表示",
+  "back": "Showing {shown} of {total}",
+  "why": "uses the table word 教会員 for member, in the briefed register"
+ },
+ "people_in_days": {
+  "text": {
+   "tomorrow": "明日",
+   "later": "{count}日後"
+  },
+  "back": "tomorrow / in {count} days",
+  "why": "uses the table word 教会員 for member, in the briefed register"
+ },
+ "people_found": {
+  "text": {
+   "none_skipped": {
+    "other": "{count}人が見つかりました"
+   },
+   "some_skipped": {
+    "other": "{count}人が見つかり、{skipped}行は読めません"
+   }
+  },
+  "back": "{count} people found / and {skipped} rows cannot be read",
+  "why": "uses the table word 教会員 for member, in the briefed register"
+ },
+ "person_deleted": {
+  "text": "{name}さんを削除しました",
+  "back": "{name} was deleted",
+  "why": "uses the table word 教会員 for member, in the briefed register"
  }
 }

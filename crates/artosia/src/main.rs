@@ -23,6 +23,7 @@ mod learning;
 mod link;
 mod onboard;
 mod palette;
+mod people;
 mod plans;
 mod recordings;
 mod starts;
@@ -181,6 +182,11 @@ fn on_key(s: &mut App, ev: &KeyEvent, tx: &mut Tx) -> bool {
         // On the Calendar tab New means an event, as a card on the announcements' tab.
         Key::Command('n') if s.tab == Tab::Calendar && s.sheet == Sheet::None && !s.palette.open && s.calendar.form.is_none() && s.calendar.manage.is_none() => {
             s.new_event_here();
+            return true;
+        }
+        // And a person on the Members tab.
+        Key::Command('n') if s.tab == Tab::People && s.sheet == Sheet::None && !s.palette.open && s.members.form.is_none() && s.members.import.is_none() => {
+            s.new_person();
             return true;
         }
         Key::Command('n') if !editing && !s.palette.open => {
@@ -591,6 +597,27 @@ const SCENES: &[Scene] = &[
     }),
     ("notice-schedule", |s| s.demo_notices("schedule")),
     ("tab-people", |s| s.open_tab(Tab::People)),
+    // OVPEOPLE1: the dialog on one person, the import's column step with a made-up csv, an empty list.
+    ("people-edit", |s| {
+        s.open_tab(Tab::People);
+        if let Some(id) = s.person_at(2).map(|person| person.id) {
+            s.edit_person(id);
+        }
+    }),
+    ("people-import", |s| {
+        let path = std::env::temp_dir().join("artosia-people-import.csv");
+        let rows = ["Nama;Tgl;Bulan;Tahun", "Alfa Beta;5;Januari;1991", "Gamma Delta;17;2;", "Epsilon Zeta;30;2;1980", "Eta Teta;9;11;2012", "Iota Kapa;21;6;1975", "Alfa Gamma;3;9;"];
+        let _ = std::fs::write(&path, rows.join("
+"));
+        s.open_import(&path);
+        let _ = std::fs::remove_file(path);
+    }),
+    ("people-empty", |s| {
+        let _ = s.store.replace_people(&[]);
+        s.people.clear();
+        s.refresh_members();
+        s.open_tab(Tab::People);
+    }),
     ("tab-giving", |s| s.open_tab(Tab::Giving)),
     ("tab-templates", |s| s.open_tab(Tab::Templates)),
     ("tab-look", |s| s.open_tab(Tab::Look)),

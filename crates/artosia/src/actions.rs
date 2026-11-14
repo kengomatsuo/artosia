@@ -201,6 +201,8 @@ impl App {
             Some(Undo::Recordings) => self.restore_recordings(),
             Some(Undo::Event(event)) => self.restore_event(event),
             Some(Undo::Calendar(calendar, events)) => self.restore_calendar(calendar, events),
+            Some(Undo::Person(person)) => self.restore_person(person),
+            Some(Undo::People(people)) => self.restore_people(people),
             None => {}
         }
     }
@@ -669,7 +671,7 @@ impl App {
 
     // ---- Announcements ----
 
-    fn notices_for(item: Option<&Announcement>) -> Notices {
+    pub(crate) fn notices_for(item: Option<&Announcement>) -> Notices {
         let mut form = match item {
             Some(item) => Notices {
                 id: item.id,
@@ -908,33 +910,6 @@ impl App {
         self.say(t::pptx_imported(added, lost), None);
     }
 
-    /// Replaces the birthday list with the one in a Word or PowerPoint file.
-    pub fn import_birthdays(&mut self, path: &std::path::Path) {
-        let extension = path.extension().and_then(|e| e.to_str()).unwrap_or("").to_lowercase();
-        let found = match extension.as_str() {
-            "pptx" => artosia_office::Pptx::open(path).map(|deck| artosia_office::from_pptx(&deck)),
-            _ => artosia_office::Docx::open(path).map(|file| artosia_office::from_docx(&file)),
-        };
-        let found = match found {
-            Ok(found) => found,
-            Err(error) => {
-                self.say(t::could_not_read(&error.to_string()), None);
-                return;
-            }
-        };
-        // Church lists repeat people across tables; each person is kept once.
-        let people: Vec<Person> = artosia_office::dedup(found.people).into_iter().map(|person| Person { id: 0, name: person.name, day: person.day, month: person.month }).collect();
-        if people.is_empty() {
-            self.say(t::BIRTHDAYS_NONE_FOUND(), None);
-            return;
-        }
-        if self.store.replace_people(&people).is_ok() {
-            self.people = self.store.people().unwrap_or_default();
-            self.refresh_decks();
-            self.say(t::birthdays_imported(self.people.len(), found.unread), None);
-        }
-    }
-
     pub fn duplicate_notice(&mut self, id: i64) {
         self.save_notice();
         let Some(mut copy) = self.announcements.iter().find(|item| item.id == id).cloned() else { return };
@@ -998,7 +973,7 @@ impl App {
     /// "passage-no-bible" or "birthdays". The names are made up and fall on today's date.
     pub fn demo_notices(&mut self, kind: &str) {
         let today = self.today();
-        let person = |name: &str, day: u8| Person { id: 0, name: name.into(), day: day.clamp(1, 28), month: today.month };
+        let person = |name: &str, day: u8| Person { name: name.into(), day: day.clamp(1, 28), month: today.month, ..Person::default() };
         self.people = vec![person("Sample Alpha", today.day), person("Sample Beta", today.day.saturating_add(2)), person("Sample Gamma", today.day.saturating_add(3))];
         let mut cards = vec![
             // The cards take their titles from the templates, so a render reads in the window's language.
@@ -1776,6 +1751,10 @@ impl App {
             self.toast = None;
             changed = true;
         }
+        if self.members.on != self.civil_today() {
+            self.refresh_members();
+            changed = true;
+        }
         if self.stream.as_mut().is_some_and(|stream| stream.finished()) {
             // The helper has gone: by Stop, or by itself, in which case its last words stay up.
             let last = self.stream.take().and_then(|stream| stream.status().problem);
@@ -1808,9 +1787,9 @@ impl App {
         }
         if self.want_birthdays {
             self.want_birthdays = false;
-            let options = rune::FileDialogOptions { title: t::CMD_IMPORT_BIRTHDAYS().to_string(), ..Default::default() }.filter(t::CMD_IMPORT_BIRTHDAYS(), &["docx", "pptx"]);
+            let options = rune::FileDialogOptions { title: t::CMD_IMPORT_BIRTHDAYS().to_string(), ..Default::default() }.filter(t::CMD_IMPORT_BIRTHDAYS(), &["docx", "pptx", "xlsx", "csv"]);
             tx.open_file(options, |s: &mut App, result, _| match result {
-                Ok(Some(path)) => s.import_birthdays(&path),
+                Ok(Some(path)) => s.open_import(&path),
                 Ok(None) => {}
                 Err(error) => s.say(error.to_string(), None),
             });

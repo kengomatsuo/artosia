@@ -290,7 +290,7 @@ The announcement editor takes the Preview pane and the dock: the list on the lef
 |---|---|
 | Seconds on screen | How long this one stays up in the loop |
 | Start the loop | Shows each announcement in turn on the projector until stopped or until something else is shown (`App::loop_step`). Showing one announcement by hand does not start it |
-| Fill in by itself | Four choices: Manual, Bible passage, Birthdays this week, Birthdays this month. The two birthday choices write the names from the birthday list each time the card is shown, eight to a slide, each with its date as the window's language reads one (`Today::date`, the `day_month` text: "30 December", "12月30日"), and under the choice the card says which days it covers ("Covers 11 November to 17 November", or all of the month) and how many names it holds today, so a volunteer knows what will come up before showing it |
+| Fill in by itself | Four choices: Manual, Bible passage, Birthdays this week, Birthdays this month. The two birthday choices write the names from the birthday list each time the card is shown, thirty to a slide in three columns of ten (`BIRTHDAYS_PER_SLIDE`, drawn by `NoticeKind::Birthdays`), each with its date as the window's language reads one (`Today::date`, the `day_month` text: "30 December", "12月30日"), and under the choice the card says which days it covers ("Covers 11 November to 17 November", or all of the month) and how many names it holds today, so a volunteer knows what will come up before showing it |
 | Bible passage | The volunteer types a reference, in Indonesian or English, and the words come from the Bible in use with the reference and its code as the small print (`deck::passage_state`, `announcement_pages`). It reads the reference with `Bible::guess`, the same parser the search uses, so "Mazmur 23:1-3" and "psalm 23 1-3" both work; a bare book name is not enough. It is read again whenever the Bible changes or finishes loading. With no Bible installed, or a reference the Bible has no verse for, the card says so under the field and offers the Bibles dialog; it shows nothing on the projector meanwhile. The "Verse of the week" ready-made card starts as a passage card; choosing Manual makes it plain text again |
 | Picture | A picture shown with the words |
 | Import a PowerPoint | Each slide becomes an announcement: a table row becomes a line with its cells in columns, a picture slide keeps its picture (`artosia-office`) |
@@ -565,3 +565,19 @@ the one picker. A card whose fill is `Fill::ScheduleWeek` writes the seven days 
 calendar (a day once, then its times), so a change of an event changes the slide; hiding a calendar
 in the rail hides it on screen only. Ctrl N is a new event on this tab, a double press on a day
 makes one there, and Esc cancels an open colour picker before it closes a dialog.
+
+### Members (OVPEOPLE1, built 2026-11-14)
+
+The Members tab (`ui/people.rs`, `people.rs`, `artosia-core/src/people.rs`) is the table of the
+church's people that the birthday card reads: rune-kit's `Table` (virtual rows, `TableState` in
+`App::members`) sorted by next birthday, a strip of twelve months with their counts that filters,
+a name search, and a side panel with the birthday slide as the card reads it. A person is a name and
+a birth date from day, month and year lists (the year is optional, 0 when unknown, and only the
+window's age and group, child under 13, youth under 25, adult, use it; no slide carries it).
+Delete takes a person out with Undo in a toast. Import takes .docx and .pptx as before and .xlsx
+and .csv through `artosia-office` (`sheet.rs`, no new crate: the zip and XML readers were there),
+then a column step shows the first rows with a list over each column, guessed from the headings and
+the values (`mapping.rs`), and the choice of Add (the default, repeats are left out) or Replace (Undo
+brings the old list back). A birthday card writes up to 30 names on one slide in three columns of ten
+(`BIRTHDAYS_PER_SLIDE`, `NoticeKind::Birthdays`). Ctrl N is a new person on this tab, and a file
+dropped on it is an import.

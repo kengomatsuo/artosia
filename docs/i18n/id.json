@@ -2000,9 +2000,9 @@
   "why": "'daftar' so it is not one birthday"
  },
  "CMD_IMPORT_BIRTHDAYS_DETAIL": {
-  "text": "Dokumen berisi tabel nama dan tanggal lahir",
-  "back": "A document holding a table of names and dates of birth",
-  "why": "Fragment"
+  "text": "Word, PowerPoint, Excel, atau csv; kolom dicocokkan",
+  "back": "Word, PowerPoint, Excel, or csv; columns are matched",
+  "why": "File kinds and the next step"
  },
  "BIRTHDAYS_NONE_FOUND": {
   "text": "Tidak ada nama dengan tanggal lahir di berkas ini",
@@ -4137,5 +4137,221 @@
   "text": "Ibadah, pertemuan, atau latihan di kalender",
   "back": "A service, meeting or rehearsal on the calendar",
   "why": "Reuses the table words: kegiatan for event, kalender, pengumuman for the card; pekan so it is not Sunday"
+ },
+ "PEOPLE_SEARCH": {
+  "text": "Cari nama jemaat",
+  "back": "Look for a member name",
+  "why": "jemaat is the table's word for the congregation and its people"
+ },
+ "PEOPLE_BIRTH_MONTH": {
+  "text": "Bulan lahir",
+  "back": "Birth month",
+  "why": "Reads before a month name in the chip"
+ },
+ "PEOPLE_IMPORT": {
+  "text": "Impor",
+  "back": "Import",
+  "why": "Same verb as the other import rows"
+ },
+ "PEOPLE_ADD": {
+  "text": "Tambah jemaat",
+  "back": "Add member",
+  "why": "Tambah, as in Tambah ke rundown"
+ },
+ "PEOPLE_EDIT": {
+  "text": "Ubah data jemaat",
+  "back": "Change member's details",
+  "why": "Ubah is the table's word for editing"
+ },
+ "PEOPLE_COL_NAME": {
+  "text": "Nama",
+  "back": "Name",
+  "why": "One plain word"
+ },
+ "PEOPLE_COL_BORN": {
+  "text": "Tanggal lahir",
+  "back": "Birth date",
+  "why": "Plain noun phrase"
+ },
+ "PEOPLE_COL_NEXT": {
+  "text": "Ulang tahun berikut",
+  "back": "Next birthday",
+  "why": "Same word as the birthday import row"
+ },
+ "PEOPLE_COL_GROUP": {
+  "text": "Golongan",
+  "back": "Group",
+  "why": "One word for an age band"
+ },
+ "PEOPLE_COL_AGE": {
+  "text": "Usia",
+  "back": "Age",
+  "why": "Short, fits over numbers"
+ },
+ "PEOPLE_TODAY": {
+  "text": "hari ini",
+  "back": "today",
+  "why": "Lowercase as the brief asks"
+ },
+ "PEOPLE_CHILD": {
+  "text": "Anak",
+  "back": "Child",
+  "why": "Church word for the youngest band"
+ },
+ "PEOPLE_YOUTH": {
+  "text": "Pemuda",
+  "back": "Youth",
+  "why": "What Indonesian churches call their young people"
+ },
+ "PEOPLE_ADULT": {
+  "text": "Dewasa",
+  "back": "Adult",
+  "why": "Plain"
+ },
+ "PEOPLE_USED_BY": {
+  "text": "Dipakai oleh",
+  "back": "Used by",
+  "why": "Heading above the slide picture"
+ },
+ "PEOPLE_USED_BY_HINT": {
+  "text": "Pengumuman ulang tahun mengambil namanya dari daftar ini, jadi tidak diketik ulang.",
+  "back": "The birthday announcement takes its names from this list, so they are not typed again.",
+  "why": "One sentence, pengumuman is the table's word for announcement"
+ },
+ "PEOPLE_OPEN_CARD": {
+  "text": "Buka pengumuman",
+  "back": "Open the announcement",
+  "why": "Buka as in the Open button"
+ },
+ "PEOPLE_IMPORT_LIST": {
+  "text": "Impor daftar jemaat",
+  "back": "Import member list",
+  "why": "Matches Impor daftar ulang tahun"
+ },
+ "PEOPLE_IMPORT_HINT": {
+  "text": "Word, PowerPoint, Excel, atau csv. Kolomnya dicocokkan di langkah berikutnya.",
+  "back": "Word, PowerPoint, Excel, or csv. Its columns are matched in the next step.",
+  "why": "Names the four kinds, then the next step"
+ },
+ "PEOPLE_DROP": {
+  "text": "Pilih berkas atau lepas di sini",
+  "back": "Choose a file or let go here",
+  "why": "berkas is the table's word for file"
+ },
+ "PEOPLE_EMPTY": {
+  "text": "Belum ada jemaat",
+  "back": "No members yet",
+  "why": "A state, like Rundown masih kosong"
+ },
+ "PEOPLE_EMPTY_HINT": {
+  "text": "Tambah satu per satu, atau impor dari berkas",
+  "back": "Add one by one, or import from a file",
+  "why": "Two ways, one sentence"
+ },
+ "PEOPLE_NONE": {
+  "text": "Tidak ada yang cocok",
+  "back": "Nothing matches",
+  "why": "States the filter result"
+ },
+ "PEOPLE_NONE_HINT": {
+  "text": "Coba bulan lain atau huruf lain",
+  "back": "Try another month or other letters",
+  "why": "Short imperative"
+ },
+ "PEOPLE_DAY": {
+  "text": "Tanggal",
+  "back": "Date (day of the month)",
+  "why": "Indonesians say tanggal for the day number"
+ },
+ "PEOPLE_MONTH": {
+  "text": "Bulan",
+  "back": "Month",
+  "why": "One word"
+ },
+ "PEOPLE_YEAR": {
+  "text": "Tahun",
+  "back": "Year",
+  "why": "One word"
+ },
+ "PEOPLE_YEAR_UNKNOWN": {
+  "text": "Tanpa tahun",
+  "back": "Without year",
+  "why": "Fits 16 and says the year stays empty"
+ },
+ "PEOPLE_COL_IGNORE": {
+  "text": "Abaikan",
+  "back": "Ignore",
+  "why": "One word"
+ },
+ "PEOPLE_COLUMNS_HINT": {
+  "text": "Pilih isi tiap kolom berkas",
+  "back": "Choose what each column of the file holds",
+  "why": "Short instruction"
+ },
+ "PEOPLE_FIRST_ROW": {
+  "text": "Baris pertama berisi judul kolom",
+  "back": "The first row holds column titles",
+  "why": "Statement beside a tick"
+ },
+ "PEOPLE_REPLACE": {
+  "text": "Ganti daftar yang ada",
+  "back": "Replace the present list",
+  "why": "Pair with Tambah ke daftar"
+ },
+ "PEOPLE_ADD_TO": {
+  "text": "Tambah ke daftar",
+  "back": "Add to the list",
+  "why": "Same verb as Tambah jemaat"
+ },
+ "PEOPLE_READ_AS_IS": {
+  "text": "Tabel dalam berkas dibaca otomatis, tidak perlu diatur",
+  "back": "Tables in the file are read automatically, nothing to set",
+  "why": "Nothing to do for the person"
+ },
+ "CMD_PEOPLE_DETAIL": {
+  "text": "Daftar jemaat dan hari ulang tahunnya",
+  "back": "List of members and their birthdays",
+  "why": "Fragment"
+ },
+ "CMD_ADD_PERSON_DETAIL": {
+  "text": "Nama jemaat dengan tanggal lahirnya",
+  "back": "A member's name with their birth date",
+  "why": "Fragment"
+ },
+ "people_listed": {
+  "text": {
+   "zero": "Belum ada jemaat",
+   "other": "{count} jemaat"
+  },
+  "back": "No members yet / {count} members",
+  "why": "No plural form; jemaat as a count noun"
+ },
+ "people_showing": {
+  "text": "{shown} dari {total} jemaat",
+  "back": "{shown} of {total} members",
+  "why": "Shown first, total second"
+ },
+ "people_in_days": {
+  "text": {
+   "tomorrow": "besok",
+   "later": "{count} hari lagi"
+  },
+  "back": "tomorrow / {count} days to go",
+  "why": "Tomorrow for one day as the brief asks"
+ },
+ "people_found": {
+  "text": {
+   "none_skipped": {
+    "other": "{count} jemaat ditemukan"
+   },
+   "some_skipped": "{count} jemaat ditemukan, {skipped} baris dilewati"
+  },
+  "back": "{count} members found / {count} members found, {skipped} rows skipped",
+  "why": "Two cases; baris for a line of the file"
+ },
+ "person_deleted": {
+  "text": "{name} dihapus",
+  "back": "{name} deleted",
+  "why": "Name leads, past tense like plan_deleted"
  }
 }
