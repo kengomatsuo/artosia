@@ -2554,6 +2554,38 @@ text!(CMD_ADD_GIFT_DETAIL, "A gift, its date, giver, fund and amount", "A gift, 
 text!(FILL_OFFERINGS, "Offerings of the latest service", "Offerings of the latest service");
 text!(FILL_TRANSFER, "Transfer account", "Transfer account");
 
+// ---- The fixed words an announcement slide writes (SLIDEWORDS1) ----
+text!(SLIDE_CHURCH_NEWS, "Church news", "Church news");
+text!(SLIDE_LOCAL_TIME, "All times are local", "All times are local");
+text!(SLIDE_SPECIAL, "Special", "Special");
+text!(SLIDE_TOTAL_GIFTS, "Total given", "Total given");
+text!(SLIDE_CHURCH_ACCOUNT, "Church account", "Church account");
+text!(SLIDE_HOLDER, "in the name of", "in the name of");
+text!(SLIDE_SCAN, "Scan to give", "Scan to give");
+text!(SLIDE_STICKER, "Info", "Info");
+
+/// The words the announcement styles write on the screen, in the window's language.
+pub fn notice_words() -> artosia_core::deck::NoticeWords {
+    let owned = |words: &[&str]| words.iter().map(|word| word.to_string()).collect::<Vec<_>>();
+    // The window lists weekdays Monday first; a slide counts them from Sunday.
+    let monday_first = WEEKDAYS();
+    let weekdays = std::iter::once(monday_first[6]).chain(monday_first[..6].iter().copied()).map(str::to_string).collect();
+    artosia_core::deck::NoticeWords {
+        months: owned(MONTHS()),
+        weekdays,
+        kinds: owned(&[TPL_SCHEDULE(), TPL_BIRTHDAYS(), TPL_OFFERINGS(), CMD_ANNOUNCEMENTS(), TPL_PASSAGE()]),
+        church_news: SLIDE_CHURCH_NEWS().into(),
+        local_time: SLIDE_LOCAL_TIME().into(),
+        special: SLIDE_SPECIAL().into(),
+        total: GIVING_TOTAL().into(),
+        total_gifts: SLIDE_TOTAL_GIFTS().into(),
+        account: SLIDE_CHURCH_ACCOUNT().into(),
+        holder: SLIDE_HOLDER().into(),
+        scan: SLIDE_SCAN().into(),
+        sticker: SLIDE_STICKER().into(),
+    }
+}
+
 // ---- Announcement templates (OVTEMPL1) ----
 text!(TPL_SCHEDULE, "Service schedule", "Service schedule");
 text!(TPL_BIRTHDAYS, "Birthdays", "Birthdays");
@@ -2576,6 +2608,8 @@ text!(STYLE_GREIGE, "Editorial", "Editorial");
 text!(STYLE_PILL, "Pill poster", "Pill poster");
 text!(STYLE_NEON, "Neon night", "Neon night");
 text!(STYLE_SPLIT, "Split panel", "Split panel");
+text!(STYLE_SIMPLE, "Simple", "Simple");
+text!(STYLE_SIMPLE_DARK, "Simple dark", "Simple dark");
 text!(NOTICE_CALENDARS, "Calendars used", "Calendars used");
 text!(NOTICE_WINDOW, "Show", "Show");
 text!(NOTICE_WEEK, "This week", "This week");

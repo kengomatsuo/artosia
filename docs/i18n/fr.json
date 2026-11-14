@@ -177,7 +177,7 @@
  "CMD_ANNOUNCEMENTS": {
   "text": "Annonces",
   "back": "Announcements",
-  "why": "Table's word"
+  "why": "Table's existing word"
  },
  "CMD_ANNOUNCEMENTS_DETAIL": {
   "text": "Annonces à tour de rôle pendant l'arrivée",
@@ -4662,18 +4662,18 @@
  },
  "TPL_SCHEDULE": {
   "text": "Horaires",
-  "back": "Times",
-  "why": "Table's name for the schedule card"
+  "back": "Schedule",
+  "why": "Table's existing word"
  },
  "TPL_BIRTHDAYS": {
   "text": "Anniversaires",
   "back": "Birthdays",
-  "why": "Table's word"
+  "why": "Table's existing word"
  },
  "TPL_OFFERINGS": {
   "text": "Offrandes",
   "back": "Offerings",
-  "why": "Tab name"
+  "why": "Table's existing word"
  },
  "TPL_TRANSFER": {
   "text": "Offrande par virement",
@@ -4683,7 +4683,7 @@
  "TPL_PASSAGE": {
   "text": "Verset de la semaine",
   "back": "Verse of the week",
-  "why": "Same as the table's ready-made verse title"
+  "why": "Table's existing word"
  },
  "TPL_PLAIN": {
   "text": "Texte libre",
@@ -6152,5 +6152,55 @@
   "text": "Diapo non créée, l'annonce n'a pas changé",
   "back": "Slide not created, the announcement did not change",
   "why": "Reuses table words: annonce, diapo, texte, tab names"
+ },
+ "SLIDE_CHURCH_NEWS": {
+  "text": "Bulletin",
+  "back": "Bulletin",
+  "why": "The word for a church's weekly sheet"
+ },
+ "SLIDE_LOCAL_TIME": {
+  "text": "Heure locale",
+  "back": "Local time",
+  "why": "Plain phrase, no zone code"
+ },
+ "SLIDE_SPECIAL": {
+  "text": "Spécial",
+  "back": "Special",
+  "why": "One word tag"
+ },
+ "SLIDE_TOTAL_GIFTS": {
+  "text": "Total des offrandes",
+  "back": "Total of the offerings",
+  "why": "Table's word offrandes"
+ },
+ "SLIDE_CHURCH_ACCOUNT": {
+  "text": "Compte de l'église",
+  "back": "Church account",
+  "why": "Compte is the bank word"
+ },
+ "SLIDE_HOLDER": {
+  "text": "au nom de",
+  "back": "in the name of",
+  "why": "Phrase banks print before the holder"
+ },
+ "SLIDE_SCAN": {
+  "text": "Scannez pour donner",
+  "back": "Scan to give",
+  "why": "Vous form, as the table does"
+ },
+ "SLIDE_STICKER": {
+  "text": "À lire",
+  "back": "To read",
+  "why": "Flags a notice worth reading"
+ },
+ "STYLE_SIMPLE": {
+  "text": "Sobre",
+  "back": "plain",
+  "why": "Sobre fits a plain look, like the other one-word style names"
+ },
+ "STYLE_SIMPLE_DARK": {
+  "text": "Sobre sombre",
+  "back": "plain dark",
+  "why": "Sobre fits a plain look, like the other one-word style names"
  }
 }

@@ -172,7 +172,7 @@
  "CMD_ANNOUNCEMENTS": {
   "text": "公告",
   "back": "Announcements",
-  "why": "Table's word"
+  "why": "existing tab word"
  },
  "CMD_ANNOUNCEMENTS_DETAIL": {
   "text": "人們入座時輪流投影的公告",
@@ -4625,17 +4625,17 @@
  "TPL_SCHEDULE": {
   "text": "聚會行程",
   "back": "Gathering schedule",
-  "why": "table word reused; composed in the language"
+  "why": "kept from the existing table"
  },
  "TPL_BIRTHDAYS": {
   "text": "生日祝福",
   "back": "Birthday wishes",
-  "why": "table word reused; composed in the language"
+  "why": "kept from the existing table"
  },
  "TPL_OFFERINGS": {
   "text": "奉獻合計",
-  "back": "Giving total",
-  "why": "table word reused; composed in the language"
+  "back": "Offering total",
+  "why": "kept from the existing table"
  },
  "TPL_TRANSFER": {
   "text": "轉帳奉獻",
@@ -4644,8 +4644,8 @@
  },
  "TPL_PASSAGE": {
   "text": "本週金句",
-  "back": "This week's memory verse",
-  "why": "table word reused; composed in the language"
+  "back": "This week's golden verse",
+  "why": "same as the verse card title"
  },
  "TPL_PLAIN": {
   "text": "自填文字",
@@ -6092,5 +6092,55 @@
   "text": "沒能新增投影片，公告維持原樣",
   "back": "The slide could not be added; the announcement stays as it was",
   "why": "States the fact"
+ },
+ "SLIDE_CHURCH_NEWS": {
+  "text": "教會週報",
+  "back": "Church weekly bulletin",
+  "why": "週報 is the Sunday sheet"
+ },
+ "SLIDE_LOCAL_TIME": {
+  "text": "皆為當地時間",
+  "back": "All in local time",
+  "why": "short phrase, no zone code"
+ },
+ "SLIDE_SPECIAL": {
+  "text": "特別",
+  "back": "Special",
+  "why": "one word tag"
+ },
+ "SLIDE_TOTAL_GIFTS": {
+  "text": "奉獻合計",
+  "back": "Offering total",
+  "why": "合計 as in the offering table"
+ },
+ "SLIDE_CHURCH_ACCOUNT": {
+  "text": "教會奉獻帳戶",
+  "back": "Church offering account",
+  "why": "帳戶 as the table's 轉帳帳戶"
+ },
+ "SLIDE_HOLDER": {
+  "text": "戶名",
+  "back": "Account name",
+  "why": "bank's own 戶名"
+ },
+ "SLIDE_SCAN": {
+  "text": "用手機掃一掃奉獻",
+  "back": "Scan with your phone to give",
+  "why": "掃一掃 is the everyday phone phrase"
+ },
+ "SLIDE_STICKER": {
+  "text": "公告",
+  "back": "Notice",
+  "why": "same word as the announcements"
+ },
+ "STYLE_SIMPLE": {
+  "text": "簡約",
+  "back": "minimal",
+  "why": "Short, familiar word for a plain look"
+ },
+ "STYLE_SIMPLE_DARK": {
+  "text": "簡約深色",
+  "back": "minimal dark",
+  "why": "Short, familiar word for a plain look"
  }
 }

@@ -66,6 +66,8 @@ pub fn style_name(style: NoticeStyle) -> &'static str {
         NoticeStyle::Pill => t::STYLE_PILL(),
         NoticeStyle::Neon => t::STYLE_NEON(),
         NoticeStyle::Split => t::STYLE_SPLIT(),
+        NoticeStyle::Simple => t::STYLE_SIMPLE(),
+        NoticeStyle::SimpleDark => t::STYLE_SIMPLE_DARK(),
     }
 }
 

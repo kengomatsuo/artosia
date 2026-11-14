@@ -177,7 +177,7 @@
  "CMD_ANNOUNCEMENTS": {
   "text": "Avisos",
   "back": "Announcements",
-  "why": "Existing word for announcements."
+  "why": "Existing word."
  },
  "CMD_ANNOUNCEMENTS_DETAIL": {
   "text": "Avisos alternados enquanto o pessoal chega",
@@ -4659,18 +4659,18 @@
  },
  "TPL_SCHEDULE": {
   "text": "Horários dos cultos",
-  "back": "Times of the services",
-  "why": "Same as the ready title."
+  "back": "Service times",
+  "why": "Same word as the table."
  },
  "TPL_BIRTHDAYS": {
   "text": "Aniversariantes",
   "back": "Birthday people",
-  "why": "Table word."
+  "why": "Same word as the table."
  },
  "TPL_OFFERINGS": {
   "text": "Ofertas",
   "back": "Offerings",
-  "why": "Same as the Ofertas tab."
+  "why": "Same word as the table."
  },
  "TPL_TRANSFER": {
   "text": "Oferta pelo banco",
@@ -4680,7 +4680,7 @@
  "TPL_PASSAGE": {
   "text": "Versículo da semana",
   "back": "Verse of the week",
-  "why": "Same words as the ready verse title."
+  "why": "Same as the verse card title in the table."
  },
  "TPL_PLAIN": {
   "text": "Texto livre",
@@ -6130,5 +6130,55 @@
   "text": "Não foi possível criar o slide, nada mudou",
   "back": "It was not possible to create the slide, nothing changed",
   "why": "States what is true, no apology; 42 of 44."
+ },
+ "SLIDE_CHURCH_NEWS": {
+  "text": "Boletim semanal",
+  "back": "Weekly bulletin",
+  "why": "Boletim is the printed Sunday sheet."
+ },
+ "SLIDE_LOCAL_TIME": {
+  "text": "Horário da nossa igreja",
+  "back": "Time of our church",
+  "why": "Says the clock is the church's own."
+ },
+ "SLIDE_SPECIAL": {
+  "text": "Especial",
+  "back": "Special",
+  "why": "One plain word."
+ },
+ "SLIDE_TOTAL_GIFTS": {
+  "text": "Total das ofertas",
+  "back": "Total of offerings",
+  "why": "Oferta is the table's word."
+ },
+ "SLIDE_CHURCH_ACCOUNT": {
+  "text": "Conta da igreja",
+  "back": "The church's account",
+  "why": "Conta, as the bank account label."
+ },
+ "SLIDE_HOLDER": {
+  "text": "em nome de",
+  "back": "in the name of",
+  "why": "Phrase bank screens print."
+ },
+ "SLIDE_SCAN": {
+  "text": "Aponte a câmera",
+  "back": "Point the camera",
+  "why": "Invitation; the code is on screen."
+ },
+ "SLIDE_STICKER": {
+  "text": "Aviso",
+  "back": "Notice",
+  "why": "Short for a notice."
+ },
+ "STYLE_SIMPLE": {
+  "text": "Simples",
+  "back": "simple",
+  "why": "Plain common word; escuro for dark"
+ },
+ "STYLE_SIMPLE_DARK": {
+  "text": "Simples escuro",
+  "back": "simple dark",
+  "why": "Plain common word; escuro for dark"
  }
 }

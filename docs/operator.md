@@ -688,6 +688,33 @@ data; a name or label too wide for its cell wraps onto two balanced lines before
 that cannot hold its rows at the 40 px floor continues on a second slide marked 1/2. The fonts (SIL Open
 Font License, licences beside them) are built into the program.
 
+### Every birthday setting, checked at projector size (BDAYCHECK1, 2026-11-15, owner-reported)
+
+The owner asked whether the birthday slides had been looked at in their settings; they had not.
+`tools/notice-matrix.sh [id|en]` builds the projector's state for thirteen settings (this week, one
+name, a month with the past week or this week highlighted, 31 and 45 names, a quarter of 90, the coming
+14 days, the past 7, a custom range, long names, next month, a range over New Year) in every style through
+the operator's own `announcement_pages` and `paginate_pages`, draws each with
+`artosia-output --scene state-file`, and lays each setting out as one sheet in
+`fixtures/notice-matrix/<language>/sheets/`. The first run found long names running off the slide in
+Hairline, Ledger and Band, a grey Hairline on a light look, seven names drawn as small as thirty, a
+"this week" chip on a past week, a month and a quarter, day numbers with no month on a page that crosses
+one, and 31 names split 30 and 1. Now: a name too wide at the floor takes its middle names as initials
+and a column that is still too wide truncates inside its cell; names grow toward the sparse size as
+fewer share the height; a chip names the highlight's own days and shows only beside highlighted names;
+Split draws its week strip only for one week; a page's heading names its own months and each day
+carries its month when they differ; a card's slides split evenly (`deck.rs` `even_chunks`). Run the
+matrix after any change to a style or to how a card is filled.
+
+### A slide's fixed words in the window's language (SLIDEWORDS1, 2026-11-15)
+
+The styles were designed in Indonesian, and every church saw "ULANG TAHUN", "WARTA JEMAAT" and
+"PEKAN INI" whatever its window's language. The operator now puts `NoticeWords` (months, weekdays, the
+kinds' names and the eight fixed words of `SLIDE_*`) on every announcement slide through
+`Today::words` (`strings.rs` `notice_words`); the projector's styles read them through `warta::data::Words`
+and `notice.rs` `kind_label`, and fall back to the design's Indonesian only for a word that is missing,
+as in a state saved by an older version.
+
 ### Editing from a phone (PHONEEDIT1, built 2026-11-14, owner-picked: text and lists)
 
 A paired phone controls the slides; the operator grants Edit per phone in the Phone dialog, or a phone

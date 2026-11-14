@@ -37,6 +37,18 @@ fn accent(style: NoticeStyle) -> Color {
     rgb(accent_rgb(style))
 }
 
+/// What a slide's kind is called, as its small label writes it: the window's word, else the design's.
+fn kind_label(slide: &Slide) -> String {
+    let at = match slide.notice {
+        NoticeKind::Schedule => 0,
+        NoticeKind::Birthdays => 1,
+        NoticeKind::Money | NoticeKind::Account => 2,
+        NoticeKind::Plain => 3,
+        NoticeKind::Verse => 4,
+    };
+    slide.words.kinds.get(at).filter(|word| !word.trim().is_empty()).map_or_else(|| kind_name(slide.notice).to_string(), |word| word.to_uppercase())
+}
+
 /// Whether a small label would only repeat the title above or below it, as "ULANG TAHUN" over "Ulang Tahun".
 fn repeats(label: &str, title: &str) -> bool {
     label.trim().to_lowercase() == title.trim().to_lowercase()
@@ -379,8 +391,8 @@ fn hairline(layer: El, slide: &Slide, body: &NoticeBody, c: &Ctx) -> El {
     // A light look keeps its light ground under a light scrim and writes in its own ink.
     let (fg, scrim) = if c.light { (rgb(c.ink), rgb(c.ground).alpha(0.7)) } else { (Color::WHITE, Color::BLACK.alpha(0.62)) };
     let mut layer = layer.child(el().key("scrim").absolute(0.0, 0.0).size(w, h).fill(scrim).a11y_hidden());
-    if !repeats(kind_name(slide.notice), &slide.heading) {
-        layer = layer.child(text(kind_name(slide.notice)).font(TextStyle::new(label, 600.0).family(c.sans).tracking(label * 0.18)).color(fg.alpha(0.6)).absolute(mx, (0.04 * h).round()));
+    if !repeats(&kind_label(slide), &slide.heading) {
+        layer = layer.child(text(kind_label(slide)).font(TextStyle::new(label, 600.0).family(c.sans).tracking(label * 0.18)).color(fg.alpha(0.6)).absolute(mx, (0.04 * h).round()));
     }
     layer = layer
         .child(el().key("rule").absolute(mx, (0.082 * h).round()).size(inner, (1.5 * u).max(1.0)).fill(fg.alpha(0.3)).a11y_hidden())
@@ -480,7 +492,7 @@ fn ledger(layer: El, slide: &Slide, body: &NoticeBody, c: &Ctx) -> El {
             .size(length, thick)
             .center()
             .rotate(-std::f32::consts::FRAC_PI_2)
-            .child(text(kind_name(slide.notice)).font(TextStyle::new(name, 800.0).family(c.sans).tracking(name * 0.2)).color(Color::WHITE).w(length).align(Align::Center)),
+            .child(text(kind_label(slide)).font(TextStyle::new(name, 800.0).family(c.sans).tracking(name * 0.2)).color(Color::WHITE).w(length).align(Align::Center)),
     );
     layer = layer.child(
         text(slide.heading.as_str())
@@ -534,7 +546,7 @@ fn ledger(layer: El, slide: &Slide, body: &NoticeBody, c: &Ctx) -> El {
     if Grid::new(&table, styles_for(NoticeStyle::Ledger, &table, c, 0.03 * h), 0.0, 0.03 * h * pad_k).natural(0.0) > panel_w {
         table = table.shortened(slide.notice);
     }
-    let headed = !repeats(kind_name(slide.notice), &slide.heading);
+    let headed = !repeats(&kind_label(slide), &slide.heading);
     let size = fit_size(
         |size| (Grid::new(&table, styles_for(NoticeStyle::Ledger, &table, c, size), 0.0, size * pad_k).natural(0.0), (table.rows_tall() + usize::from(headed)) as f32 * row_k * size),
         (panel_w, limit - top),
@@ -553,7 +565,7 @@ fn ledger(layer: El, slide: &Slide, body: &NoticeBody, c: &Ctx) -> El {
         .w(panel_w)
         .fill(paper)
         .border(hair, line)
-        .children(headed.then(|| heading_row(kind_name(slide.notice), size * 0.85, row_h, tint, panel_w)))
+        .children(headed.then(|| heading_row(&kind_label(slide), size * 0.85, row_h, tint, panel_w)))
         .child(grid.build(&Paint { colors, row_h, row_line: Some(line), col_line: Some(line), marked: (c.accent, Color::WHITE), spread: Some(panel_w), block_gap: 0.0 }));
     layer = layer.child(panel);
     if let Some(cells) = &body.total {
@@ -599,7 +611,7 @@ fn band(layer: El, slide: &Slide, body: &NoticeBody, c: &Ctx) -> El {
                 .justify_center()
                 .gap((0.012 * h).round())
                 .child(text(slide.heading.as_str()).font(title).color(c.title.unwrap_or(ink)))
-                .children((!repeats(kind_name(slide.notice), &slide.heading)).then(|| text(kind_name(slide.notice)).font(TextStyle::new(second, 600.0).family(c.sans).tracking(second * 0.16)).color(ink.alpha(0.85)))),
+                .children((!repeats(&kind_label(slide), &slide.heading)).then(|| text(kind_label(slide)).font(TextStyle::new(second, 600.0).family(c.sans).tracking(second * 0.16)).color(ink.alpha(0.85)))),
         );
     let top = (band_h + 0.06 * h).round();
     let foot = (0.965 * h).round();

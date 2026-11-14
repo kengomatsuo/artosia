@@ -324,7 +324,7 @@ mod tests {
     use artosia_core::deck::{Align, Face};
 
     const WORDS: &str = "Pendaftaran di meja informasi sampai 6 Desember Biaya Rp 350.000 per orang anak di bawah lima tahun gratis Bawa perlengkapan tidur alat mandi dan Alkitab sendiri Bus berangkat Sabtu pukul 06.00 dari halaman gereja dan kembali Minggu sore";
-    const POSTERS: [NoticeStyle; 4] = [NoticeStyle::Greige, NoticeStyle::Pill, NoticeStyle::Neon, NoticeStyle::Split];
+    const POSTERS: [NoticeStyle; 6] = [NoticeStyle::Greige, NoticeStyle::Pill, NoticeStyle::Neon, NoticeStyle::Split, NoticeStyle::Simple, NoticeStyle::SimpleDark];
 
     fn card(title: &str, body: &str) -> Slide {
         Slide { notice: NoticeKind::Plain, heading: title.into(), text: body.into(), ..Slide::default() }
@@ -362,10 +362,10 @@ mod tests {
 
     #[test]
     fn a_body_past_the_floor_is_cut_into_a_part_that_holds_and_the_rest() {
-        let body = std::iter::repeat_n(WORDS, 3).collect::<Vec<_>>().join(" ");
+        let body = std::iter::repeat_n(WORDS, 5).collect::<Vec<_>>().join(" ");
         for style in POSTERS {
             let slide = card("Retret keluarga jemaat", &body);
-            assert!(!holds(&slide, style), "{style:?}: three times the words cannot fit");
+            assert!(!holds(&slide, style), "{style:?}: five times the words cannot fit");
             let (first, rest) = cut(&slide, style).unwrap_or_else(|| panic!("{style:?} has a cut"));
             assert!(holds(&first, style), "{style:?}: the first part holds");
             assert!(!rest.text.is_empty() && first.heading == rest.heading);

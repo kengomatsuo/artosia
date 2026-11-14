@@ -606,7 +606,7 @@
    "plan_item",
    "program_window"
   ],
-  "notes": "The same word as every other place that names the announcements. The plan row and the Start screen tile use it too."
+  "notes": "The same word as every other place that names the announcements. The plan row and the Start screen tile use it too. Also drawn on the projector, in small capitals, as the label of an announcement slide of this kind."
  },
  {
   "key": "CMD_ANNOUNCEMENTS_DETAIL",
@@ -10495,11 +10495,96 @@
   ],
   "notes": "Fragment, no full stop."
  },
- {"key": "KEYS_EDITING_ROWS[6].1", "kind": "row", "screen": "Keyboard shortcuts sheet: a wide window with two columns of groups. Each row has the keys drawn as little key caps at the left (never translated) and a description at the right, about 300 points wide. This text is the description. Fourth group (editing). The keys at the left are: Tab.", "moment": "The person opens the sheet to learn what pressing these keys does, and reads this line while looking at the key caps beside it. The announcement is open on its slide.", "role": "key description", "does": "Moves the pick on to the following piece of the slide that can be changed, and to the buttons after the last.", "budget": 56, "variables": [], "cases": [], "counts": "", "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.", "concepts": ["announcement", "slide"], "notes": "Fragment, no full stop."},
- {"key": "KEYS_EDITING_ROWS[7].1", "kind": "row", "screen": "Keyboard shortcuts sheet: a wide window with two columns of groups. Each row has the keys drawn as little key caps at the left (never translated) and a description at the right, about 300 points wide. This text is the description. Fourth group (editing). The keys at the left are: Enter.", "moment": "The person opens the sheet to learn what pressing these keys does, and reads this line while looking at the key caps beside it. A part of the announcement's slide is picked.", "role": "key description", "does": "Puts the typing cursor into the picked words so they can be changed where they are on the slide.", "budget": 48, "variables": [], "cases": [], "counts": "", "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.", "concepts": ["announcement", "slide_words"], "notes": "Fragment, no full stop."},
- {"key": "KEYS_EDITING_ROWS[8].1", "kind": "row", "screen": "Keyboard shortcuts sheet: a wide window with two columns of groups. Each row has the keys drawn as little key caps at the left (never translated) and a description at the right, about 300 points wide. This text is the description. Fourth group (editing). The keys at the left are: Esc.", "moment": "The person opens the sheet to learn what pressing these keys does, and reads this line while looking at the key caps beside it. An announcement is open on its slide.", "role": "key description", "does": "Steps back one level each press: the typing cursor first, then the picked part and its sheet, then the announcement itself.", "budget": 56, "variables": [], "cases": [], "counts": "", "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.", "concepts": ["announcement", "slide"], "notes": "Fragment, no full stop."},
- {"key": "KEYS_EDITING_ROWS[9].1", "kind": "row", "screen": "Keyboard shortcuts sheet: a wide window with two columns of groups. Each row has the keys drawn as little key caps at the left (never translated) and a description at the right, about 300 points wide. This text is the description. Fourth group (editing). The keys at the left are: Ctrl, Shift and Z.", "moment": "The person opens the sheet to learn what pressing these keys does, and reads this line while looking at the key caps beside it. An edit on the slide was just taken back with Ctrl and Z.", "role": "key description", "does": "Puts back the change that the last undo took away.", "budget": 48, "variables": [], "cases": [], "counts": "", "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.", "concepts": ["announcement", "undo"], "notes": "Fragment, no full stop."},
- {"key": "KEYS_EDITING_ROWS[10].1", "kind": "row", "screen": "Keyboard shortcuts sheet: a wide window with two columns of groups. Each row has the keys drawn as little key caps at the left (never translated) and a description at the right, about 300 points wide. This text is the description. Fourth group (editing). The keys at the left are: Ctrl with B or with I.", "moment": "The person opens the sheet to learn what pressing these keys does, and reads this line while looking at the key caps beside it. Words of the announcement's slide are picked.", "role": "key description", "does": "Makes the picked words heavier with the one letter and slanted with the other.", "budget": 56, "variables": [], "cases": [], "counts": "", "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.", "concepts": ["announcement", "slide_words"], "notes": "Fragment, no full stop; the letters B and I are as a text editor uses them."},
+ {
+  "key": "KEYS_EDITING_ROWS[6].1",
+  "kind": "row",
+  "screen": "Keyboard shortcuts sheet: a wide window with two columns of groups. Each row has the keys drawn as little key caps at the left (never translated) and a description at the right, about 300 points wide. This text is the description. Fourth group (editing). The keys at the left are: Tab.",
+  "moment": "The person opens the sheet to learn what pressing these keys does, and reads this line while looking at the key caps beside it. The announcement is open on its slide.",
+  "role": "key description",
+  "does": "Moves the pick on to the following piece of the slide that can be changed, and to the buttons after the last.",
+  "budget": 56,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "announcement",
+   "slide"
+  ],
+  "notes": "Fragment, no full stop."
+ },
+ {
+  "key": "KEYS_EDITING_ROWS[7].1",
+  "kind": "row",
+  "screen": "Keyboard shortcuts sheet: a wide window with two columns of groups. Each row has the keys drawn as little key caps at the left (never translated) and a description at the right, about 300 points wide. This text is the description. Fourth group (editing). The keys at the left are: Enter.",
+  "moment": "The person opens the sheet to learn what pressing these keys does, and reads this line while looking at the key caps beside it. A part of the announcement's slide is picked.",
+  "role": "key description",
+  "does": "Puts the typing cursor into the picked words so they can be changed where they are on the slide.",
+  "budget": 48,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "announcement",
+   "slide_words"
+  ],
+  "notes": "Fragment, no full stop."
+ },
+ {
+  "key": "KEYS_EDITING_ROWS[8].1",
+  "kind": "row",
+  "screen": "Keyboard shortcuts sheet: a wide window with two columns of groups. Each row has the keys drawn as little key caps at the left (never translated) and a description at the right, about 300 points wide. This text is the description. Fourth group (editing). The keys at the left are: Esc.",
+  "moment": "The person opens the sheet to learn what pressing these keys does, and reads this line while looking at the key caps beside it. An announcement is open on its slide.",
+  "role": "key description",
+  "does": "Steps back one level each press: the typing cursor first, then the picked part and its sheet, then the announcement itself.",
+  "budget": 56,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "announcement",
+   "slide"
+  ],
+  "notes": "Fragment, no full stop."
+ },
+ {
+  "key": "KEYS_EDITING_ROWS[9].1",
+  "kind": "row",
+  "screen": "Keyboard shortcuts sheet: a wide window with two columns of groups. Each row has the keys drawn as little key caps at the left (never translated) and a description at the right, about 300 points wide. This text is the description. Fourth group (editing). The keys at the left are: Ctrl, Shift and Z.",
+  "moment": "The person opens the sheet to learn what pressing these keys does, and reads this line while looking at the key caps beside it. An edit on the slide was just taken back with Ctrl and Z.",
+  "role": "key description",
+  "does": "Puts back the change that the last undo took away.",
+  "budget": 48,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "announcement",
+   "undo"
+  ],
+  "notes": "Fragment, no full stop."
+ },
+ {
+  "key": "KEYS_EDITING_ROWS[10].1",
+  "kind": "row",
+  "screen": "Keyboard shortcuts sheet: a wide window with two columns of groups. Each row has the keys drawn as little key caps at the left (never translated) and a description at the right, about 300 points wide. This text is the description. Fourth group (editing). The keys at the left are: Ctrl with B or with I.",
+  "moment": "The person opens the sheet to learn what pressing these keys does, and reads this line while looking at the key caps beside it. Words of the announcement's slide are picked.",
+  "role": "key description",
+  "does": "Makes the picked words heavier with the one letter and slanted with the other.",
+  "budget": 56,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "announcement",
+   "slide_words"
+  ],
+  "notes": "Fragment, no full stop; the letters B and I are as a text editor uses them."
+ },
  {
   "key": "announcement_deleted",
   "kind": "sentence",
@@ -17587,6 +17672,147 @@
   "notes": "A label in a switch."
  },
  {
+  "key": "SLIDE_CHURCH_NEWS",
+  "kind": "const",
+  "screen": "An announcement slide on the projector, seen by the whole room. A small line of capitals sits above the big title, sometimes followed by the church's own name after a dot.",
+  "moment": "The room sees an announcement come up between songs.",
+  "role": "slide kicker",
+  "does": "Says this slide belongs to the church's weekly bulletin of notices, the printed sheet a congregation is handed on Sunday.",
+  "budget": 22,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "announcement",
+   "slide"
+  ],
+  "notes": "Drawn on the projector in capitals. The word a congregation uses for its weekly news sheet, two words at most."
+ },
+ {
+  "key": "SLIDE_LOCAL_TIME",
+  "kind": "const",
+  "screen": "A schedule slide on the projector: rows of day, time and event for the week. A small line sits beside the church's bulletin name above the title.",
+  "moment": "The room reads the week's services and events.",
+  "role": "slide kicker",
+  "does": "Tells the room the hours in the rows are the clock where the church meets.",
+  "budget": 26,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "event",
+   "slide"
+  ],
+  "notes": "Drawn on the projector in small capitals; a short phrase, never a time zone code."
+ },
+ {
+  "key": "SLIDE_SPECIAL",
+  "kind": "const",
+  "screen": "A schedule slide on the projector. One row of the week is set apart with a small tag at its end.",
+  "moment": "The room spots the one event of the week that is out of the ordinary.",
+  "role": "tag",
+  "does": "Marks the one row that is not a usual weekly service, such as a baptism or a guest speaker.",
+  "budget": 10,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "event"
+  ],
+  "notes": "One word, in capitals inside a small tag or a round sticker."
+ },
+ {
+  "key": "SLIDE_TOTAL_GIFTS",
+  "kind": "const",
+  "screen": "An offering slide on the projector: rows of funds with amounts in rupiah, and a last row set apart that holds the sum.",
+  "moment": "The room reads how much was received last week.",
+  "role": "label",
+  "does": "Names the last row: everything the congregation gave, added up.",
+  "budget": 22,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "offering",
+   "fund"
+  ],
+  "notes": "Two or three words, on the left of the sum."
+ },
+ {
+  "key": "SLIDE_CHURCH_ACCOUNT",
+  "kind": "const",
+  "screen": "A transfer slide on the projector: the bank's name, the account number in large digits, the holder, and sometimes a payment code picture.",
+  "moment": "The room reads where to send an offering from a phone.",
+  "role": "slide kicker",
+  "does": "Says the number below is the bank account the church receives gifts in.",
+  "budget": 22,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "transfer_account",
+   "slide"
+  ],
+  "notes": "Drawn in small capitals above the bank's name."
+ },
+ {
+  "key": "SLIDE_HOLDER",
+  "kind": "const",
+  "screen": "A transfer slide on the projector: the bank, the account number large, then a short lead-in before the name the account is held under.",
+  "moment": "The room checks the name a transfer will show before sending it.",
+  "role": "label",
+  "does": "Leads into the name the bank account is registered under, the way a bank's transfer screen does.",
+  "budget": 18,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "transfer_account"
+  ],
+  "notes": "Lower case, the phrase banks print before an account holder's name; it is followed by the name on the same line."
+ },
+ {
+  "key": "SLIDE_SCAN",
+  "kind": "const",
+  "screen": "A transfer slide on the projector with the church's payment code picture, a square of dots a phone camera reads.",
+  "moment": "Someone in the room lifts a phone to give without typing the number.",
+  "role": "caption",
+  "does": "Invites the room to point a phone camera at the square code to give.",
+  "budget": 22,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "offering",
+   "transfer_account"
+  ],
+  "notes": "Under the code picture. An invitation, short, no exclamation mark."
+ },
+ {
+  "key": "SLIDE_STICKER",
+  "kind": "const",
+  "screen": "A plain announcement slide on the projector in a playful poster style: a big title, a few lines and a round tilted sticker in a corner.",
+  "moment": "The room sees a notice come up.",
+  "role": "sticker",
+  "does": "Flags the slide as a notice worth reading, written inside a small round sticker.",
+  "budget": 6,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "notice"
+  ],
+  "notes": "One very short word, in capitals inside a circle."
+ },
+ {
   "key": "giving_count",
   "kind": "sentence",
   "screen": "Offerings window, the fifth tab under the title bar. A title with the date of the latest service, filters for dates, fund and method with the number of gifts and their sum, a table of gifts (date, giver, fund, method, amount, and an edit and a delete icon per row), an Add gift button with the total under the table, and a side panel with the money slide, the sum per fund and the transfer account.",
@@ -17718,7 +17944,7 @@
    "announcement",
    "church_calendar"
   ],
-  "notes": "A noun phrase that fits a row 250 points wide and a tile caption."
+  "notes": "A noun phrase that fits a row 250 points wide and a tile caption. Also drawn on the projector, in small capitals, as the label of an announcement slide of this kind."
  },
  {
   "key": "TPL_BIRTHDAYS",
@@ -17737,7 +17963,7 @@
    "announcement",
    "member"
   ],
-  "notes": "A noun phrase, one or two words."
+  "notes": "A noun phrase, one or two words. Also drawn on the projector, in small capitals, as the label of an announcement slide of this kind."
  },
  {
   "key": "TPL_OFFERINGS",
@@ -17756,7 +17982,7 @@
    "announcement",
    "offering"
   ],
-  "notes": "A noun phrase, one or two words."
+  "notes": "A noun phrase, one or two words. Also drawn on the projector, in small capitals, as the label of an announcement slide of this kind."
  },
  {
   "key": "TPL_TRANSFER",
@@ -17795,7 +18021,7 @@
    "announcement",
    "passage"
   ],
-  "notes": "Same words as the ready-made title for a verse card."
+  "notes": "Same words as the ready-made title for a verse card. Also drawn on the projector, in small capitals, as the label of an announcement slide of this kind."
  },
  {
   "key": "TPL_PLAIN",
@@ -18089,6 +18315,42 @@
    "announcement"
   ],
   "notes": "Evokes a notice board beside a bank slide."
+ },
+ {
+  "key": "STYLE_SIMPLE",
+  "kind": "const",
+  "screen": "Announcements window and Templates tab, in the switch of slide layouts and in the list of layouts on the left of the Templates tab.",
+  "moment": "The person picks one of nine slide layouts.",
+  "role": "choice label",
+  "does": "Names the plain default layout on a white ground, the one a church with no taste in layouts keeps.",
+  "budget": 14,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template",
+   "announcement"
+  ],
+  "notes": "Plain and light, like the first white theme of a presentation program."
+ },
+ {
+  "key": "STYLE_SIMPLE_DARK",
+  "kind": "const",
+  "screen": "Announcements window and Templates tab, in the switch of slide layouts and in the list of layouts on the left of the Templates tab.",
+  "moment": "The person picks one of nine slide layouts.",
+  "role": "choice label",
+  "does": "Names the same plain layout on a near black ground, for a dim hall.",
+  "budget": 14,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template",
+   "announcement"
+  ],
+  "notes": "The dark partner of the plain layout."
  },
  {
   "key": "ANNOUNCEMENT_QRIS",

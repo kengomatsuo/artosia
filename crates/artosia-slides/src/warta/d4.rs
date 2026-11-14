@@ -40,7 +40,7 @@ fn s01(sl: &mut Sheet, d: &Data) -> Fits {
     let rows = &d.rows;
     let n = rows.len().max(1);
     ground(sl, Some(k("left_w")), None);
-    sl.text("kicker", &d.kicker(w::WIB), Tx::l(mx, ky).cy().maxw(900.0));
+    sl.text("kicker", &d.kicker(d.w.wib.as_str()), Tx::l(mx, ky).cy().maxw(900.0));
     sl.text("title", &d.title, Tx::l(mx, base).maxw(k("left_w") - 2.0 * mx));
     if !d.week_short.is_empty() {
         sl.text("sub", &d.week_short, Tx::l(mx, sub_base));
@@ -150,7 +150,7 @@ fn s03(sl: &mut Sheet, d: &Data) -> Fits {
     let funds = &d.funds;
     let n = funds.len().max(1);
     ground(sl, Some(k("left_w")), None);
-    sl.text("kicker", &d.kicker(w::KAS), Tx::l(k("mx"), ky).cy().maxw(900.0));
+    sl.text("kicker", &d.kicker(d.w.offerings.as_str()), Tx::l(k("mx"), ky).cy().maxw(900.0));
     sl.text("title", &d.title, Tx::l(k("mx"), base).maxw(k("left_w") - 2.0 * k("mx")));
     if let Some(date) = &d.date_long {
         sl.text("sub", date, Tx::l(k("mx"), sub_base));
@@ -190,7 +190,7 @@ fn s03(sl: &mut Sheet, d: &Data) -> Fits {
     let iw = pw - 104.0;
     let tv = fit::digits(d.total());
     let tz = largest(sl.ty_size("total"), 41.0, |z| sl.measure("total", &tv, Some(z), None) <= iw).unwrap_or(41.0);
-    sl.text("total_label", &format!("{} {}", w::TOTAL, w::TOTAL_SUFFIX), Tx::l(ix, H / 2.0 - 120.0).cy().maxw(iw));
+    sl.text("total_label", &d.w.total_gifts.clone(), Tx::l(ix, H / 2.0 - 120.0).cy().maxw(iw));
     sl.text("total_rp", "Rp", Tx::l(ix, H / 2.0 - 40.0).cy());
     sl.text("total", &tv, Tx::l(ix, H / 2.0 + 60.0).cy().size(tz).maxw(iw));
     sl.push(R::new(ix, H / 2.0 + 140.0, 140.0, 8.0).fill("yellow").rx(4.0));
@@ -203,7 +203,7 @@ fn s04(sl: &mut Sheet, d: &Data, have: Have) -> Fits {
     ground(sl, Some(k("left_w")), None);
     let wide = k("left_w") - 2.0 * k("mx");
     let a = &d.account;
-    sl.text("kicker", &d.kicker(w::BANK_KICKER), Tx::l(k("mx"), ky).cy().maxw(wide));
+    sl.text("kicker", &d.kicker(d.w.account.as_str()), Tx::l(k("mx"), ky).cy().maxw(wide));
     sl.text("title", &d.title, Tx::l(k("mx"), base).size(68.0).maxw(wide));
     let nsz = largest_step(k("number_max"), k("number_floor"), 2.0, |z| sl.measure("number", &a.number, Some(z), None) <= wide).unwrap_or(k("number_floor"));
     let note_size = sl.ty_size("note");
@@ -217,7 +217,7 @@ fn s04(sl: &mut Sheet, d: &Data, have: Have) -> Fits {
     let nb = top + 46.0 + 30.0 + ncap;
     sl.text("number", &a.number, Tx::l(k("mx"), nb).size(nsz).maxw(wide));
     let y = nb + 40.0;
-    sl.text("holder_l", w::HOLDER_LABEL, Tx::l(k("mx"), y + 14.0).cy());
+    sl.text("holder_l", d.w.holder.as_str(), Tx::l(k("mx"), y + 14.0).cy());
     let hsz = largest(sl.ty_size("holder"), 40.0, |z| sl.measure("holder", &a.holder, Some(z), None) <= wide).unwrap_or(40.0);
     sl.text("holder", &a.holder, Tx::l(k("mx"), y + 14.0 + 70.0).size(hsz).maxw(wide));
     let y = y + 14.0 + 70.0 + 40.0;
@@ -231,7 +231,7 @@ fn s04(sl: &mut Sheet, d: &Data, have: Have) -> Fits {
         let (px, py) = (k("left_w") + (W - k("left_w") - k("card")) / 2.0, (H - k("card")) / 2.0 - 30.0);
         sl.push(R::new(px, py, k("card"), k("card")).fill("white").rx(28.0));
         sl.image(Pic::Qris, px, py, k("card"), k("card"), 28.0, true, Pos::Mid);
-        sl.text("caption", w::QRIS_CAPTION, Tx::c(px + k("card") / 2.0, py + k("card") + 64.0).maxw(k("card") + 60.0));
+        sl.text("caption", d.w.scan.as_str(), Tx::c(px + k("card") / 2.0, py + k("card") + 64.0).maxw(k("card") + 60.0));
     }
     Ok(())
 }
@@ -249,7 +249,7 @@ fn s05(sl: &mut Sheet, d: &Data, have: Have) -> Fits {
     let face = sl.face_of("verse");
     verse(sl, &d.verses, &VerseBox { x: k("mx"), top: k("top"), w: k("text_w"), room: k("bottom") - k("top"), font: &face, section: "s05" })?;
     let px = k("left_w") + 56.0;
-    sl.text("kicker_y", w::VERSE_KICKER, Tx::l(px, 904.0).cy());
+    sl.text("kicker_y", d.w.verse.as_str(), Tx::l(px, 904.0).cy());
     sl.text("ref", &d.reference, Tx::l(px, 1004.0).maxw(W - px - 40.0));
     Ok(())
 }
@@ -292,7 +292,7 @@ fn s06(sl: &mut Sheet, d: &Data, have: Have) -> Fits {
     let lines = wrap_at(z);
     let block = 32.0 + 36.0 + lines.len() as f32 * z * k("title_lh") + 44.0 + body_h;
     let top = (H - block) / 2.0;
-    sl.text("kicker", w::NOTICE_KICKER, Tx::l(k("mx"), top + 16.0).cy());
+    sl.text("kicker", d.w.notice.as_str(), Tx::l(k("mx"), top + 16.0).cy());
     let mut y = top + 32.0 + 36.0;
     let cap = sl.cap(&face, z);
     for (i, line) in lines.iter().enumerate() {

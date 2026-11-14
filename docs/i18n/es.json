@@ -177,7 +177,7 @@
  "CMD_ANNOUNCEMENTS": {
   "text": "Anuncios",
   "back": "Announcements",
-  "why": "Existing word for announcements."
+  "why": "Existing word."
  },
  "CMD_ANNOUNCEMENTS_DETAIL": {
   "text": "Se alternan en el proyector mientras llega gente",
@@ -4660,17 +4660,17 @@
  "TPL_SCHEDULE": {
   "text": "Horarios",
   "back": "Schedules",
-  "why": "Same as the ready title."
+  "why": "Same word as the table."
  },
  "TPL_BIRTHDAYS": {
   "text": "Cumpleaños",
   "back": "Birthdays",
-  "why": "Table word."
+  "why": "Same word as the table."
  },
  "TPL_OFFERINGS": {
   "text": "Ofrendas",
   "back": "Offerings",
-  "why": "Same as the Ofrendas tab."
+  "why": "Same word as the table."
  },
  "TPL_TRANSFER": {
   "text": "Ofrenda por banco",
@@ -4680,7 +4680,7 @@
  "TPL_PASSAGE": {
   "text": "Para memorizar",
   "back": "To memorise",
-  "why": "Same words as the ready verse title."
+  "why": "Same as the verse card title in the table."
  },
  "TPL_PLAIN": {
   "text": "Texto libre",
@@ -6130,5 +6130,55 @@
   "text": "No se pudo crear la diapositiva, nada cambió",
   "back": "The slide could not be created, nothing changed",
   "why": "States what is true, no apology; 43 of 44."
+ },
+ "SLIDE_CHURCH_NEWS": {
+  "text": "Boletín semanal",
+  "back": "Weekly bulletin",
+  "why": "Boletín is the printed Sunday sheet."
+ },
+ "SLIDE_LOCAL_TIME": {
+  "text": "Hora de nuestra iglesia",
+  "back": "Time of our church",
+  "why": "Says the clock is the church's own."
+ },
+ "SLIDE_SPECIAL": {
+  "text": "Especial",
+  "back": "Special",
+  "why": "One plain word."
+ },
+ "SLIDE_TOTAL_GIFTS": {
+  "text": "Total de ofrendas",
+  "back": "Total of offerings",
+  "why": "Ofrenda is the table's offering word."
+ },
+ "SLIDE_CHURCH_ACCOUNT": {
+  "text": "Cuenta de la iglesia",
+  "back": "The church's account",
+  "why": "Cuenta, as the bank account label."
+ },
+ "SLIDE_HOLDER": {
+  "text": "a nombre de",
+  "back": "in the name of",
+  "why": "Phrase Latin American bank screens print."
+ },
+ "SLIDE_SCAN": {
+  "text": "Escanea para ofrendar",
+  "back": "Scan to give",
+  "why": "Ofrendar is what churches say for giving."
+ },
+ "SLIDE_STICKER": {
+  "text": "Aviso",
+  "back": "Notice",
+  "why": "Short for a notice."
+ },
+ "STYLE_SIMPLE": {
+  "text": "Liso",
+  "back": "plain",
+  "why": "Liso means unadorned, short"
+ },
+ "STYLE_SIMPLE_DARK": {
+  "text": "Liso oscuro",
+  "back": "plain dark",
+  "why": "Liso means unadorned, short"
  }
 }

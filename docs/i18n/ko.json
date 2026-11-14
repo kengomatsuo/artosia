@@ -172,7 +172,7 @@
  "CMD_ANNOUNCEMENTS": {
   "text": "공지",
   "back": "Announcements",
-  "why": "Table's word"
+  "why": "existing tab word"
  },
  "CMD_ANNOUNCEMENTS_DETAIL": {
   "text": "예배 전 화면에 차례로 돌아가며 나오는 공지",
@@ -4626,18 +4626,18 @@
  },
  "TPL_SCHEDULE": {
   "text": "일정 안내",
-  "back": "Schedule notice",
-  "why": "table word reused; composed in the language"
+  "back": "Schedule guide",
+  "why": "kept from the existing table"
  },
  "TPL_BIRTHDAYS": {
   "text": "생일 축하",
   "back": "Birthday wishes",
-  "why": "table word reused; composed in the language"
+  "why": "kept from the existing table"
  },
  "TPL_OFFERINGS": {
   "text": "헌금 합계",
-  "back": "Giving total",
-  "why": "table word reused; composed in the language"
+  "back": "Offering total",
+  "why": "kept from the existing table"
  },
  "TPL_TRANSFER": {
   "text": "계좌이체 안내",
@@ -4646,8 +4646,8 @@
  },
  "TPL_PASSAGE": {
   "text": "이번 주 암송 구절",
-  "back": "This week's memorization verse",
-  "why": "table word reused; composed in the language"
+  "back": "This week's memory passage",
+  "why": "same as the verse card title"
  },
  "TPL_PLAIN": {
   "text": "직접 입력",
@@ -6094,5 +6094,55 @@
   "text": "새 슬라이드를 못 만들었고 공지는 그대로예요",
   "back": "The new slide could not be made and the announcement is as it was",
   "why": "States the fact"
+ },
+ "SLIDE_CHURCH_NEWS": {
+  "text": "주보",
+  "back": "Weekly bulletin",
+  "why": "주보 is the Sunday sheet"
+ },
+ "SLIDE_LOCAL_TIME": {
+  "text": "현지 시간 기준",
+  "back": "Based on local time",
+  "why": "short phrase, no zone code"
+ },
+ "SLIDE_SPECIAL": {
+  "text": "특별",
+  "back": "Special",
+  "why": "one word tag"
+ },
+ "SLIDE_TOTAL_GIFTS": {
+  "text": "헌금 합계",
+  "back": "Offering total",
+  "why": "합계 as in the table"
+ },
+ "SLIDE_CHURCH_ACCOUNT": {
+  "text": "헌금 입금 계좌",
+  "back": "Offering deposit account",
+  "why": "입금 계좌 as the table's word"
+ },
+ "SLIDE_HOLDER": {
+  "text": "예금주",
+  "back": "Account holder",
+  "why": "the bank's own word"
+ },
+ "SLIDE_SCAN": {
+  "text": "휴대폰으로 스캔해 헌금",
+  "back": "Scan with your phone and give",
+  "why": "plain invitation under the code"
+ },
+ "SLIDE_STICKER": {
+  "text": "공지",
+  "back": "Notice",
+  "why": "same word as the announcements"
+ },
+ "STYLE_SIMPLE": {
+  "text": "심플",
+  "back": "simple",
+  "why": "심플 is the common loanword; 다크 for dark"
+ },
+ "STYLE_SIMPLE_DARK": {
+  "text": "심플 다크",
+  "back": "simple dark",
+  "why": "심플 is the common loanword; 다크 for dark"
  }
 }

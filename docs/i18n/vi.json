@@ -172,7 +172,7 @@
  "CMD_ANNOUNCEMENTS": {
   "text": "Thông báo",
   "back": "Announcements",
-  "why": "Table's word"
+  "why": "Table's existing word"
  },
  "CMD_ANNOUNCEMENTS_DETAIL": {
   "text": "Lần lượt chiếu khi mọi người đang vào chỗ",
@@ -4626,18 +4626,18 @@
  },
  "TPL_SCHEDULE": {
   "text": "Giờ lễ",
-  "back": "Service times",
-  "why": "Table's name for the schedule card"
+  "back": "Service hours",
+  "why": "Table's existing word"
  },
  "TPL_BIRTHDAYS": {
   "text": "Sinh nhật",
-  "back": "Birthdays",
-  "why": "Table's word"
+  "back": "Birthday",
+  "why": "Table's existing word"
  },
  "TPL_OFFERINGS": {
   "text": "Dâng hiến",
-  "back": "Offerings",
-  "why": "Tab name"
+  "back": "Giving",
+  "why": "Table's existing word"
  },
  "TPL_TRANSFER": {
   "text": "Dâng hiến chuyển khoản",
@@ -4646,8 +4646,8 @@
  },
  "TPL_PASSAGE": {
   "text": "Câu gốc tuần này",
-  "back": "This week's key verse",
-  "why": "Same as the table's ready-made verse title"
+  "back": "This week's memory verse",
+  "why": "Table's existing word"
  },
  "TPL_PLAIN": {
   "text": "Chữ tự gõ",
@@ -6105,5 +6105,55 @@
   "text": "Không tạo được slide mới, mọi thứ giữ nguyên",
   "back": "New slide could not be made, everything stays",
   "why": "Reuses table words: thông báo, slide, chữ, tab names"
+ },
+ "SLIDE_CHURCH_NEWS": {
+  "text": "Bản tin",
+  "back": "Bulletin",
+  "why": "Bản tin is the weekly church sheet"
+ },
+ "SLIDE_LOCAL_TIME": {
+  "text": "Giờ địa phương",
+  "back": "Local time",
+  "why": "Standard phrase, no zone code"
+ },
+ "SLIDE_SPECIAL": {
+  "text": "Đặc biệt",
+  "back": "Special",
+  "why": "One word tag"
+ },
+ "SLIDE_TOTAL_GIFTS": {
+  "text": "Tổng dâng hiến",
+  "back": "Total giving",
+  "why": "Table's word dâng hiến"
+ },
+ "SLIDE_CHURCH_ACCOUNT": {
+  "text": "Tài khoản nhà thờ",
+  "back": "Church account",
+  "why": "Plain bank word"
+ },
+ "SLIDE_HOLDER": {
+  "text": "chủ tài khoản",
+  "back": "account holder",
+  "why": "Phrase banks print before the name"
+ },
+ "SLIDE_SCAN": {
+  "text": "Quét mã để dâng hiến",
+  "back": "Scan the code to give",
+  "why": "Quét mã is the phone word"
+ },
+ "SLIDE_STICKER": {
+  "text": "Lưu ý",
+  "back": "Note",
+  "why": "Short sticker word that asks to be read"
+ },
+ "STYLE_SIMPLE": {
+  "text": "Đơn giản",
+  "back": "simple",
+  "why": "Plain everyday word; tối for dark"
+ },
+ "STYLE_SIMPLE_DARK": {
+  "text": "Đơn giản tối",
+  "back": "simple dark",
+  "why": "Plain everyday word; tối for dark"
  }
 }

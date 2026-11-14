@@ -162,7 +162,7 @@
  "CMD_ANNOUNCEMENTS": {
   "text": "Pengumuman",
   "back": "Announcements",
-  "why": "Table's word"
+  "why": "Table's existing word"
  },
  "CMD_ANNOUNCEMENTS_DETAIL": {
   "text": "Bergantian di layar saat jemaat masih datang",
@@ -4576,17 +4576,17 @@
  "TPL_SCHEDULE": {
   "text": "Jadwal ibadah",
   "back": "Service schedule",
-  "why": "Same name as the table's schedule card"
+  "why": "Table's existing word"
  },
  "TPL_BIRTHDAYS": {
   "text": "Ulang tahun",
-  "back": "Birthdays",
-  "why": "Table's word for birthday"
+  "back": "Birthday",
+  "why": "Table's existing word"
  },
  "TPL_OFFERINGS": {
   "text": "Persembahan",
   "back": "Offerings",
-  "why": "Window and card name in the table"
+  "why": "Table's existing word"
  },
  "TPL_TRANSFER": {
   "text": "Transfer bank",
@@ -4596,7 +4596,7 @@
  "TPL_PASSAGE": {
   "text": "Ayat hafalan",
   "back": "Memory verse",
-  "why": "Same as the table's ready-made verse title"
+  "why": "Table's existing word"
  },
  "TPL_PLAIN": {
   "text": "Teks biasa",
@@ -6054,5 +6054,55 @@
   "text": "Slide gagal dibuat, pengumuman tidak berubah",
   "back": "Slide could not be made, announcement unchanged",
   "why": "Reuses table words: pengumuman, slide, teks, tab names"
+ },
+ "SLIDE_CHURCH_NEWS": {
+  "text": "Warta jemaat",
+  "back": "Congregation news",
+  "why": "The printed Sunday sheet is the warta"
+ },
+ "SLIDE_LOCAL_TIME": {
+  "text": "Waktu setempat",
+  "back": "Local time",
+  "why": "Plain phrase, no zone code"
+ },
+ "SLIDE_SPECIAL": {
+  "text": "Khusus",
+  "back": "Special",
+  "why": "One word tag"
+ },
+ "SLIDE_TOTAL_GIFTS": {
+  "text": "Total persembahan",
+  "back": "Total offering",
+  "why": "Table's word persembahan"
+ },
+ "SLIDE_CHURCH_ACCOUNT": {
+  "text": "Rekening gereja",
+  "back": "Church account",
+  "why": "Rekening is the bank word"
+ },
+ "SLIDE_HOLDER": {
+  "text": "atas nama",
+  "back": "in the name of",
+  "why": "Phrase banks print before the holder"
+ },
+ "SLIDE_SCAN": {
+  "text": "Pindai untuk memberi",
+  "back": "Scan to give",
+  "why": "Pindai is the app word for scan"
+ },
+ "SLIDE_STICKER": {
+  "text": "Info",
+  "back": "Info",
+  "why": "Short everyday word in a sticker"
+ },
+ "STYLE_SIMPLE": {
+  "text": "Polos",
+  "back": "plain",
+  "why": "Polos is the plain-paper word; gelap marks the dark partner"
+ },
+ "STYLE_SIMPLE_DARK": {
+  "text": "Polos gelap",
+  "back": "plain dark",
+  "why": "Polos is the plain-paper word; gelap marks the dark partner"
  }
 }

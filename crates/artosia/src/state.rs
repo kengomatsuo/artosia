@@ -1261,7 +1261,7 @@ impl App {
     /// Today's date, for announcements that fill themselves with this week's birthdays.
     pub fn today(&self) -> Today<'static> {
         let time = rune::LocalTime::at((self.now * 1000.0) as i64);
-        Today { year: time.year, month: time.month.clamp(1, 12) as u8, day: time.day.clamp(1, 31) as u8, months: t::MONTHS(), weekdays: t::WEEKDAYS(), clock: t::time_of_day, date: t::day_month, total: t::GIVING_TOTAL(), first_weekday: self.settings.first_weekday, church: kept_church(&self.settings.church) }
+        Today { year: time.year, month: time.month.clamp(1, 12) as u8, day: time.day.clamp(1, 31) as u8, months: t::MONTHS(), weekdays: t::WEEKDAYS(), clock: t::time_of_day, date: t::day_month, total: t::GIVING_TOTAL(), first_weekday: self.settings.first_weekday, church: kept_church(&self.settings.church), words: t::notice_words }
     }
 
     /// Every announcement slide in order, each with the place of its announcement in the list.

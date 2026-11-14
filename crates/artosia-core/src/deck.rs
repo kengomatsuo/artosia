@@ -84,10 +84,14 @@ pub enum NoticeStyle {
     Neon,
     /// A light text panel beside a navy panel that holds the thing itself.
     Split,
+    /// A plain white ground, one sans, rows on hairlines: the default a church with no preference falls back on.
+    Simple,
+    /// Simple on a near-black ground.
+    SimpleDark,
 }
 
 impl NoticeStyle {
-    pub const ALL: [NoticeStyle; 7] = [NoticeStyle::Hairline, NoticeStyle::Ledger, NoticeStyle::Band, NoticeStyle::Greige, NoticeStyle::Pill, NoticeStyle::Neon, NoticeStyle::Split];
+    pub const ALL: [NoticeStyle; 9] = [NoticeStyle::Simple, NoticeStyle::SimpleDark, NoticeStyle::Hairline, NoticeStyle::Ledger, NoticeStyle::Band, NoticeStyle::Greige, NoticeStyle::Pill, NoticeStyle::Neon, NoticeStyle::Split];
 
     /// The word stored in the library.
     pub fn code(self) -> &'static str {
@@ -99,17 +103,46 @@ impl NoticeStyle {
             NoticeStyle::Pill => "pill",
             NoticeStyle::Neon => "neon",
             NoticeStyle::Split => "split",
+            NoticeStyle::Simple => "simple",
+            NoticeStyle::SimpleDark => "simpledark",
         }
     }
 
     /// Whether the style brings its own ground, fonts and palette and ignores the look's.
     pub fn is_poster(self) -> bool {
-        matches!(self, NoticeStyle::Greige | NoticeStyle::Pill | NoticeStyle::Neon | NoticeStyle::Split)
+        matches!(self, NoticeStyle::Greige | NoticeStyle::Pill | NoticeStyle::Neon | NoticeStyle::Split | NoticeStyle::Simple | NoticeStyle::SimpleDark)
     }
 
     /// None for a card that chose no style and follows the look.
     pub fn from_code(code: &str) -> Option<NoticeStyle> {
         NoticeStyle::ALL.into_iter().find(|style| style.code() == code)
+    }
+}
+
+/// The fixed words an announcement style writes on the screen, in the window's language. An empty
+/// field falls back to the Indonesian the styles were designed in.
+#[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
+pub struct NoticeWords {
+    /// Twelve month names, January first.
+    pub months: Vec<String>,
+    /// Seven weekday names, Sunday first.
+    pub weekdays: Vec<String>,
+    /// What each kind of card is called: schedule, birthdays, offerings, announcement, verse.
+    pub kinds: Vec<String>,
+    pub church_news: String,
+    pub local_time: String,
+    pub special: String,
+    pub total: String,
+    pub total_gifts: String,
+    pub account: String,
+    pub holder: String,
+    pub scan: String,
+    pub sticker: String,
+}
+
+impl NoticeWords {
+    pub fn is_empty(&self) -> bool {
+        *self == NoticeWords::default()
     }
 }
 
@@ -182,6 +215,9 @@ pub struct Slide {
     /// The church's name, for the kicker.
     #[serde(default)]
     pub church: String,
+    /// The fixed words an announcement style writes, in the window's language; empty on a song.
+    #[serde(default, skip_serializing_if = "NoticeWords::is_empty")]
+    pub words: NoticeWords,
 }
 
 /// One further language on a slide.
@@ -371,6 +407,8 @@ pub struct Today<'a> {
     pub first_weekday: u8,
     /// The church's name, written in the kicker of a style that has one.
     pub church: &'a str,
+    /// The fixed words of the announcement styles in the window's language.
+    pub words: fn() -> NoticeWords,
 }
 
 /// The most names on one birthday slide, three columns of ten; more go on a second slide.
@@ -791,8 +829,10 @@ pub fn announcement_pages(announcements: &[Announcement], people: &[Person], eve
             pages.push((at, slide));
         }
     }
-    // Every slide of a card is drawn in the card's own style and title colour.
+    // Every slide of a card is drawn in the card's own style and title colour, with the window's words.
+    let words = (today.words)();
     for (at, slide) in &mut pages {
+        slide.words = words.clone();
         slide.style = announcements[*at].style;
         slide.title_colour = announcements[*at].title_colour;
         slide.title_face = announcements[*at].title_face;
@@ -942,7 +982,7 @@ Write the fund"));
 
     /// A day of 2026, with English names, for the cards that read the date.
     fn today_on<'a>(month: u8, day: u8, months: &'a [&'a str; 12]) -> Today<'a> {
-        Today { year: 2026, month, day, months, weekdays: &WEEKDAYS, clock: clock_dotted, date: day_first, total: "Total", first_weekday: 0, church: "" }
+        Today { year: 2026, month, day, months, weekdays: &WEEKDAYS, clock: clock_dotted, date: day_first, total: "Total", first_weekday: 0, church: "", words: NoticeWords::default }
     }
 
     /// The seven days from today, as the schedule card read them before it had windows.

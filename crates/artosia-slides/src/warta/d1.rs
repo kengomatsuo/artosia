@@ -2,7 +2,7 @@
 
 use artosia_core::deck::NoticeKind;
 
-use super::data::{self as w, Data, Have};
+use super::data::{Data, Have};
 use super::fit;
 use super::{Fits, H, fit_cells, grown_size, put_lines, Pic, Pos, R, Sheet, Split, Tx, W, largest, largest_name_size, largest_step, name_in, paragraph, paragraphs, verse, VerseBox};
 
@@ -54,7 +54,7 @@ fn s01(sl: &mut Sheet, d: &Data, have: Have) -> Fits {
     let k = sl.sec("s01");
     let rows = &d.rows;
     let n = rows.len().max(1);
-    page(sl, &d.church_kicker(""), Some(w::WIB));
+    page(sl, &d.church_kicker(""), Some(d.w.wib.as_str()));
     masthead(sl, &d.title, (!d.week_short.is_empty()).then_some(d.week_short.as_str()));
     let firsts: Vec<bool> = (0..rows.len()).map(|i| i == 0 || rows[i].day != rows[i - 1].day).collect();
     let breaks = firsts.iter().filter(|first| **first).count().saturating_sub(1) as f32;
@@ -89,10 +89,10 @@ fn s01(sl: &mut Sheet, d: &Data, have: Have) -> Fits {
         sl.text("time", &r.time, Tx::l(time_x, by).maxw(event_x - time_x - 20.0));
         put_lines(sl, if special { "event_hl" } else { "event" }, &cells[i], event_x, cy, size, ev_w);
         if special {
-            let tw = sl.measure("tag", w::SPECIAL, None, None) + 40.0;
+            let tw = sl.measure("tag", d.w.special.as_str(), None, None) + 40.0;
             let tx = x2 - tw;
             sl.push(R::new(tx, cy - k("tag_h") / 2.0, tw, k("tag_h")).border(2.0, "accent"));
-            sl.text("tag", w::SPECIAL, Tx::l(tx + 20.0, cy).cy());
+            sl.text("tag", d.w.special.as_str(), Tx::l(tx + 20.0, cy).cy());
         }
         y += pitch;
     }
@@ -175,7 +175,7 @@ fn s03(sl: &mut Sheet, d: &Data) -> Fits {
     let k = sl.sec("s03");
     let funds = &d.funds;
     let n = funds.len().max(1);
-    page(sl, &d.church_kicker(""), Some(w::KAS));
+    page(sl, &d.church_kicker(""), Some(d.w.offerings.as_str()));
     masthead(sl, &d.title, d.date_long.as_deref());
     let total = d.total();
     let avail = bottom - top - k("total_h") - k("total_gap");
@@ -205,7 +205,7 @@ fn s03(sl: &mut Sheet, d: &Data) -> Fits {
     rule(sl, mx, ty, x2 - mx, Some(3.0), Some(1.0));
     rule(sl, mx, ty + 11.0, x2 - mx, None, Some(1.0));
     let tb = ty + 28.0 + sl.cap(&sl.face_of("total"), sl.ty_size("total")) + 12.0;
-    sl.text("total_label", &format!("{} {}", w::TOTAL, w::TOTAL_SUFFIX), Tx::l(mx, tb));
+    sl.text("total_label", &d.w.total_gifts.clone(), Tx::l(mx, tb));
     sl.text("total", &fit::rupiah(total), Tx::r(x2, tb).maxw(x2 - mx - 420.0));
     Ok(())
 }
@@ -226,12 +226,12 @@ fn s04(sl: &mut Sheet, d: &Data, have: Have) -> Fits {
     let nlh = (note_size * 1.4).round();
     let stack = 16.0 + 76.0 + 44.0 + ncap + 44.0 + 60.0 + 70.0 + 40.0 + 10.0 + notes.len() as f32 * nlh;
     let top = (H - stack) / 2.0;
-    sl.text("kicker", w::BANK_KICKER, Tx::l(x0, top + 16.0).cy().fill("accent"));
+    sl.text("kicker", d.w.account.as_str(), Tx::l(x0, top + 16.0).cy().fill("accent"));
     sl.text("bank", &a.bank, Tx::l(x0, top + 92.0).maxw(wide));
     let nb = top + 92.0 + 44.0 + ncap;
     sl.text("number", &a.number, Tx::l(x0, nb).size(nsz).maxw(wide));
     rule(sl, x0, nb + 44.0, wide, Some(3.0), Some(1.0));
-    sl.text("atas", w::HOLDER_LABEL, Tx::l(x0, nb + 44.0 + 62.0));
+    sl.text("atas", d.w.holder.as_str(), Tx::l(x0, nb + 44.0 + 62.0));
     let hb = nb + 44.0 + 62.0 + 70.0;
     sl.text("holder", &a.holder, Tx::l(x0, hb).size(hsz).maxw(wide));
     rule(sl, x0, hb + 40.0, wide, None, Some(0.4));
@@ -244,7 +244,7 @@ fn s04(sl: &mut Sheet, d: &Data, have: Have) -> Fits {
         let cy = (H - card) / 2.0 - 20.0;
         sl.push(R::new(mx + k("frame_off"), cy + k("frame_off"), card, card).border(sl.g("frame_w"), "ink"));
         sl.image(Pic::Qris, mx, cy, card, card, 0.0, true, Pos::Mid);
-        sl.text("caption", w::QRIS_CAPTION, Tx::c(mx + k("frame_off") + card / 2.0, cy + card + k("frame_off") + 62.0).maxw(card));
+        sl.text("caption", d.w.scan.as_str(), Tx::c(mx + k("frame_off") + card / 2.0, cy + card + k("frame_off") + 62.0).maxw(card));
     }
     Ok(())
 }
@@ -254,7 +254,7 @@ fn s05(sl: &mut Sheet, d: &Data, have: Have) -> Fits {
     let k = sl.sec("s05");
     page(sl, &d.kicker(d.date_long.as_deref().unwrap_or("")), None);
     let text_w = if have.photo { k("text_w") } else { sl.g("x2") - mx };
-    sl.text("kicker", w::VERSE_KICKER, Tx::l(mx, k("kick_y")).cy().fill("accent"));
+    sl.text("kicker", d.w.verse.as_str(), Tx::l(mx, k("kick_y")).cy().fill("accent"));
     sl.text("ref", &d.reference, Tx::l(mx, k("kick_y") + 104.0).maxw(text_w));
     sl.push(R::new(mx, k("kick_y") + 104.0 + 30.0, 96.0, 4.0).fill("accent"));
     let face = sl.face_of("verse");
@@ -309,7 +309,7 @@ fn s06(sl: &mut Sheet, d: &Data, have: Have) -> Fits {
     // The stack stays clear of the frame; a body taller than that does not fit at this size.
     sl.need(top >= 110.0)?;
     let place = |x: f32, y: f32| if centre { Tx::c(x, y) } else { Tx::l(x, y) };
-    sl.text("kicker", w::NOTICE_KICKER, place(x0, top + 16.0).cy().fill("accent"));
+    sl.text("kicker", d.w.notice.as_str(), place(x0, top + 16.0).cy().fill("accent"));
     let mut y = top + 16.0 + 44.0;
     let cap = sl.cap(&face, z);
     for (i, line) in lines.iter().enumerate() {

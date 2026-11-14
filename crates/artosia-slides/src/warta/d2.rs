@@ -3,7 +3,7 @@
 use artosia_core::deck::NoticeKind;
 
 use super::largest_step;
-use super::data::{self as w, Data, Have};
+use super::data::{Data, Have};
 use super::fit;
 use super::{Fits, H, fit_cells, grown_size, put_lines, Pic, Pos, R, Sheet, Split, Tx, W, largest, name_in, paragraph, paragraphs, verse, VerseBox};
 
@@ -47,7 +47,7 @@ fn s01(sl: &mut Sheet, d: &Data) -> Fits {
     let k = sl.sec("s01");
     let rows = &d.rows;
     let n = rows.len().max(1);
-    head(sl, w::WARTA, (!d.week_short.is_empty()).then_some(d.week_short.as_str()), Some(&d.title));
+    head(sl, d.w.warta.as_str(), (!d.week_short.is_empty()).then_some(d.week_short.as_str()), Some(&d.title));
     let avail = bottom - top;
     let sparse = n as f32 <= k("sparse_rows");
     let pitch = (avail / n as f32).min(if sparse { k("sparse_h") } else { 999.0 } + row_gap);
@@ -87,7 +87,7 @@ fn s01(sl: &mut Sheet, d: &Data) -> Fits {
     }
     // Last, so no later row covers one.
     for (cx, cy) in stickers {
-        sticker(sl, cx, cy, k("sticker_d"), w::SPECIAL, -10.0);
+        sticker(sl, cx, cy, k("sticker_d"), d.w.special.as_str(), -10.0);
     }
     Ok(())
 }
@@ -97,7 +97,7 @@ fn s02(sl: &mut Sheet, d: &Data) -> Fits {
     let k = sl.sec("s02");
     let names = &d.names;
     let n = names.len().max(1);
-    head(sl, w::WARTA, Some(&d.month), Some(&d.title));
+    head(sl, d.w.warta.as_str(), Some(&d.month), Some(&d.title));
     if d.highlighted() {
         let week = d.week_label.clone();
         let ww = sl.measure("tag_ink", &week, None, None) + 2.0 * pad;
@@ -147,7 +147,7 @@ fn s03(sl: &mut Sheet, d: &Data) -> Fits {
     let k = sl.sec("s03");
     let funds = &d.funds;
     let n = funds.len().max(1);
-    head(sl, w::WARTA, d.date_long.as_deref(), Some(&d.title));
+    head(sl, d.w.warta.as_str(), d.date_long.as_deref(), Some(&d.title));
     let avail = bottom - top - k("total_h") - k("total_gap");
     let pitch = (avail / n as f32).min(k("pitch_max"));
     let rh = pitch - row_gap;
@@ -170,7 +170,7 @@ fn s03(sl: &mut Sheet, d: &Data) -> Fits {
     }
     let (th, ty) = (k("total_h"), bottom - k("total_h"));
     sl.push(R::new(mx, ty, x2 - mx, th).fill("yellow").pill());
-    sl.text("total_label", w::TOTAL, Tx::l(mx + 52.0, ty + th / 2.0).cy());
+    sl.text("total_label", d.w.total.as_str(), Tx::l(mx + 52.0, ty + th / 2.0).cy());
     let tv = fit::digits(d.total());
     let tw = sl.measure("total", &tv, None, None);
     let trp = sl.measure("total_rp", "Rp", None, None);
@@ -185,7 +185,7 @@ fn s03(sl: &mut Sheet, d: &Data) -> Fits {
 fn s04(sl: &mut Sheet, d: &Data, have: Have) -> Fits {
     let (mx, pad) = (sl.g("mx"), sl.g("pad"));
     let k = sl.sec("s04");
-    head(sl, w::WARTA, None, None);
+    head(sl, d.w.warta.as_str(), None, None);
     let a = &d.account;
     let (left, gap) = (if have.qris { k("left_w") } else { sl.g("x2") - mx }, k("gap"));
     let nsz = largest_step(k("number_max"), k("number_floor"), 2.0, |z| sl.measure("number", &a.number, Some(z), None) <= left - 112.0).unwrap_or(k("number_floor"));
@@ -203,10 +203,10 @@ fn s04(sl: &mut Sheet, d: &Data, have: Have) -> Fits {
     sl.push(R::new(mx, y, left, k("number_h")).fill("pill").pill());
     sl.text("number", &a.number, Tx::c(mx + left / 2.0, y + k("number_h") / 2.0).cy().size(nsz).maxw(left - 112.0));
     y += k("number_h") + gap;
-    let hlw = sl.measure("holder_l", w::HOLDER_LABEL, None, None) + 60.0;
+    let hlw = sl.measure("holder_l", d.w.holder.as_str(), None, None) + 60.0;
     sl.push(R::new(mx, y, left, k("holder_h")).fill("white").pill());
     sl.push(R::new(mx + 8.0, y + 8.0, hlw, k("holder_h") - 16.0).fill("pill").pill());
-    sl.text("holder_l", w::HOLDER_LABEL, Tx::l(mx + 38.0, y + k("holder_h") / 2.0).cy());
+    sl.text("holder_l", d.w.holder.as_str(), Tx::l(mx + 38.0, y + k("holder_h") / 2.0).cy());
     let hx = mx + 8.0 + hlw + 30.0;
     let hsz = largest(sl.ty_size("holder"), 40.0, |z| sl.measure("holder", &a.holder, Some(z), None) <= mx + left - 36.0 - hx).unwrap_or(40.0);
     sl.text("holder", &a.holder, Tx::l(hx, y + k("holder_h") / 2.0).cy().size(hsz).maxw(mx + left - 36.0 - hx));
@@ -222,9 +222,9 @@ fn s04(sl: &mut Sheet, d: &Data, have: Have) -> Fits {
         let cy0 = (bottom + py + ph) / 2.0 - card / 2.0;
         sl.push(R::new(k("card_x"), cy0, card, card).fill("white").rx(56.0));
         sl.image(Pic::Qris, k("card_x"), cy0, card, card, 56.0, true, Pos::Mid);
-        let cw = sl.measure("caption", w::QRIS_CAPTION, None, None) + 2.0 * pad;
+        let cw = sl.measure("caption", d.w.scan.as_str(), None, None) + 2.0 * pad;
         sl.push(R::new(k("card_x") + card / 2.0 - cw / 2.0, cy0 + card - 28.0, cw, 64.0).fill("pill").pill());
-        sl.text("caption", w::QRIS_CAPTION, Tx::c(k("card_x") + card / 2.0, cy0 + card + 4.0).cy());
+        sl.text("caption", d.w.scan.as_str(), Tx::c(k("card_x") + card / 2.0, cy0 + card + 4.0).cy());
     }
     Ok(())
 }
@@ -232,7 +232,7 @@ fn s04(sl: &mut Sheet, d: &Data, have: Have) -> Fits {
 fn s05(sl: &mut Sheet, d: &Data) -> Fits {
     let (mx, x2, bottom) = (sl.g("mx"), sl.g("x2"), sl.g("body_bottom"));
     let k = sl.sec("s05");
-    head(sl, w::WARTA, Some(w::VERSE_KICKER), None);
+    head(sl, d.w.warta.as_str(), Some(d.w.verse.as_str()), None);
     let (cx0, cy0) = (mx, k("card_y"));
     let (cw, ch) = (x2 - mx, bottom - k("card_y"));
     sl.push(R::new(cx0, cy0, cw, ch).fill("white").rx(64.0));
@@ -253,7 +253,7 @@ fn s05(sl: &mut Sheet, d: &Data) -> Fits {
 fn s06(sl: &mut Sheet, d: &Data, have: Have) -> Fits {
     let (mx, py, ph, bottom) = (sl.g("mx"), sl.g("pill_y"), sl.g("pill_h"), sl.g("body_bottom"));
     let k = sl.sec("s06");
-    head(sl, w::WARTA, Some(w::NOTICE_KICKER), None);
+    head(sl, d.w.warta.as_str(), Some(d.w.notice.as_str()), None);
     let wide = k("text_w");
     let face = sl.face_of("n_title");
     let words = fit::words(&d.title.to_uppercase());
@@ -276,7 +276,7 @@ fn s06(sl: &mut Sheet, d: &Data, have: Have) -> Fits {
         let dd = k("disc_d");
         sl.push(R::new(k("disc_x"), k("disc_y"), dd, dd).fill("orange").pill());
         sl.push(R::new(k("disc_x") + 24.0, k("disc_y") + 24.0, dd - 48.0, dd - 48.0).pill().border(6.0, "ink").bop(0.35));
-        sl.spin("sticker", w::STICKER, k("disc_x") + dd / 2.0, k("disc_y") + dd / 2.0, -10.0, Some(k("disc_text")));
+        sl.spin("sticker", d.w.sticker.as_str(), k("disc_x") + dd / 2.0, k("disc_y") + dd / 2.0, -10.0, Some(k("disc_text")));
     }
     let cap = sl.cap(&face, z);
     for (i, line) in lines.iter().enumerate() {
@@ -294,7 +294,7 @@ fn s06(sl: &mut Sheet, d: &Data, have: Have) -> Fits {
     }
     if have.photo {
         sl.image(Pic::Photo, k("photo_x"), k("photo_y"), k("photo_w"), k("photo_h"), k("photo_w") / 2.0, false, Pos::Mid);
-        sticker(sl, k("photo_x") + 24.0, k("photo_y") + k("photo_h") - 150.0, k("sticker_d"), w::STICKER, -12.0);
+        sticker(sl, k("photo_x") + 24.0, k("photo_y") + k("photo_h") - 150.0, k("sticker_d"), d.w.sticker.as_str(), -12.0);
     }
     Ok(())
 }

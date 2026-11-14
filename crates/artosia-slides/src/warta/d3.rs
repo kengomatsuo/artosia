@@ -3,7 +3,7 @@
 use artosia_core::deck::NoticeKind;
 
 use super::largest_step;
-use super::data::{self as w, Data, Have};
+use super::data::{Data, Have};
 use super::fit;
 use super::{Fits, H, fit_cells, grown_size, put_lines, Pic, Pos, R, Sheet, Split, Tx, W, largest, largest_name_size, name_in, paragraph, paragraphs, repeats, verse, VerseBox};
 
@@ -68,7 +68,7 @@ fn s01(sl: &mut Sheet, d: &Data) -> Fits {
     let rows = &d.rows;
     let n = rows.len().max(1);
     let pills = if d.week_short.is_empty() { Vec::new() } else { vec![(d.week_short.clone(), "yellow", "pill_t")] };
-    page(sl, "s01", &d.kicker(w::WIB), Some(&d.title), &pills);
+    page(sl, "s01", &d.kicker(d.w.wib.as_str()), Some(&d.title), &pills);
     let avail = bottom - top;
     let sparse = n as f32 <= k("sparse_rows");
     let ev_w = x2 - k("event_x") - k("tag_room");
@@ -95,10 +95,10 @@ fn s01(sl: &mut Sheet, d: &Data) -> Fits {
         sl.text("time", &r.time, Tx::l(k("time_x"), by));
         put_lines(sl, if r.special { "event_hl" } else { "event" }, &cells[i], k("event_x"), cy, size, ev_w);
         if r.special {
-            let tw = sl.measure("tag", w::SPECIAL, None, None) + 52.0;
+            let tw = sl.measure("tag", d.w.special.as_str(), None, None) + 52.0;
             let tx = x2 + k("hl_pad") - 20.0 - tw;
             sl.push(R::new(tx, cy - 31.0, tw, 62.0).fill("yellow").rx(31.0));
-            sl.text("tag", w::SPECIAL, Tx::l(tx + 26.0, cy).cy());
+            sl.text("tag", d.w.special.as_str(), Tx::l(tx + 26.0, cy).cy());
         }
     }
     Ok(())
@@ -113,7 +113,7 @@ fn s02(sl: &mut Sheet, d: &Data) -> Fits {
     if d.highlighted() {
         pills.push((d.week_label.clone(), "yellow", "pill_t"));
     }
-    let kicker = if repeats(w::BIRTHDAYS, &d.title) { d.church_kicker("") } else { d.kicker(w::BIRTHDAYS) };
+    let kicker = if repeats(d.w.birthdays.as_str(), &d.title) { d.church_kicker("") } else { d.kicker(d.w.birthdays.as_str()) };
     page(sl, "s02", &kicker, Some(&d.title), &pills);
     let cols = sl.list("s02", "cols").into_iter().find(|row| n as f32 <= row[0]).map(|row| row[1] as usize).ok_or(Split)?;
     let per = n.div_ceil(cols);
@@ -162,7 +162,7 @@ fn s03(sl: &mut Sheet, d: &Data) -> Fits {
     let funds = &d.funds;
     let n = funds.len().max(1);
     let pills = d.date_long.clone().map(|date| vec![(date, "yellow", "pill_t")]).unwrap_or_default();
-    page(sl, "s03", &d.kicker(w::KAS), Some(&d.title), &pills);
+    page(sl, "s03", &d.kicker(d.w.offerings.as_str()), Some(&d.title), &pills);
     let avail = bottom - top - k("total_h") - k("total_gap");
     let rp_w = sl.measure("rp", "Rp", None, None);
     let col_at = |z: f32| rp_w + k("rp_gap") + funds.iter().map(|f| sl.measure("amount", &fit::digits(f.rupiah), Some(z), None)).fold(0.0, f32::max);
@@ -187,7 +187,7 @@ fn s03(sl: &mut Sheet, d: &Data) -> Fits {
     }
     let ty = bottom - k("total_h");
     neon(sl, mx, ty, x2 - mx, k("total_h"), k("total_h") / 2.0, "pink", 6.0, 0.0);
-    sl.text("total_label", w::TOTAL, Tx::l(mx + 56.0, ty + k("total_h") / 2.0).cy());
+    sl.text("total_label", d.w.total.as_str(), Tx::l(mx + 56.0, ty + k("total_h") / 2.0).cy());
     let tv = fit::digits(d.total());
     let tw = sl.measure("total", &tv, None, None);
     sl.text("total", &tv, Tx::r(x2 - 56.0, ty + k("total_h") / 2.0).cy().maxw(x2 - mx - 560.0));
@@ -217,7 +217,7 @@ fn s04(sl: &mut Sheet, d: &Data, have: Have) -> Fits {
     let nb = y + 58.0 + 40.0 + ncap;
     sl.text("number", &a.number, Tx::l(mx, nb).size(nsz).maxw(wide));
     let y = nb + 44.0;
-    sl.text("holder_l", w::HOLDER_LABEL, Tx::l(mx, y + 16.0).cy());
+    sl.text("holder_l", d.w.holder.as_str(), Tx::l(mx, y + 16.0).cy());
     let hsz = largest(sl.ty_size("holder"), 40.0, |z| sl.measure("holder", &a.holder, Some(z), None) <= wide).unwrap_or(40.0);
     sl.text("holder", &a.holder, Tx::l(mx, y + 16.0 + 62.0).size(hsz).maxw(wide));
     let y = y + 16.0 + 62.0 + 40.0;
@@ -229,14 +229,14 @@ fn s04(sl: &mut Sheet, d: &Data, have: Have) -> Fits {
         let cy0 = (bottom + py) / 2.0 - card / 2.0 + 20.0;
         neon(sl, k("card_x") + k("frame_off"), cy0 + k("frame_off"), card, card, 36.0, "pink", 6.0, 0.0);
         sl.image(Pic::Qris, k("card_x"), cy0, card, card, 36.0, true, Pos::Mid);
-        sl.text("caption", w::QRIS_CAPTION, Tx::c(k("card_x") + card / 2.0 + k("frame_off") / 2.0, cy0 + card + k("frame_off") + 56.0).maxw(card + 60.0));
+        sl.text("caption", d.w.scan.as_str(), Tx::c(k("card_x") + card / 2.0 + k("frame_off") / 2.0, cy0 + card + k("frame_off") + 56.0).maxw(card + 60.0));
     }
     Ok(())
 }
 
 fn s05(sl: &mut Sheet, d: &Data) -> Fits {
     let k = sl.sec("s05");
-    page(sl, "s05", &d.kicker(w::VERSE_KICKER), None, &[]);
+    page(sl, "s05", &d.kicker(d.w.verse.as_str()), None, &[]);
     let rw = sl.measure("ref", &d.reference, None, None) + 72.0;
     neon(sl, k("x"), 152.0, rw, 76.0, 38.0, "pink", 5.0, 0.0);
     sl.text("ref", &d.reference, Tx::l(k("x") + 36.0, 152.0 + 38.0).cy());
@@ -268,9 +268,9 @@ fn s06(sl: &mut Sheet, d: &Data, have: Have) -> Fits {
     let lines = wrap_at(z);
     let block = 58.0 + 36.0 + lines.len() as f32 * z * k("title_lh") + 44.0 + body_h;
     let top = (H - block) / 2.0;
-    let pw = sl.measure("pill_p", w::NOTICE_KICKER, None, None) + 60.0;
+    let pw = sl.measure("pill_p", d.w.notice.as_str(), None, None) + 60.0;
     neon(sl, mx, top, pw, 58.0, 29.0, "pink", 4.0, 0.0);
-    sl.text("pill_p", w::NOTICE_KICKER, Tx::l(mx + 30.0, top + 29.0).cy());
+    sl.text("pill_p", d.w.notice.as_str(), Tx::l(mx + 30.0, top + 29.0).cy());
     let mut y = top + 58.0 + 36.0;
     let cap = sl.cap(&face, z);
     for (i, line) in lines.iter().enumerate() {

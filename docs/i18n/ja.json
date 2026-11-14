@@ -172,7 +172,7 @@
  "CMD_ANNOUNCEMENTS": {
   "text": "お知らせ",
   "back": "Announcements",
-  "why": "Table's word"
+  "why": "existing tab word"
  },
  "CMD_ANNOUNCEMENTS_DETAIL": {
   "text": "集まる間に、お知らせが順番に映ります",
@@ -4625,17 +4625,17 @@
  "TPL_SCHEDULE": {
   "text": "今後の予定",
   "back": "Coming schedule",
-  "why": "table word reused; composed in the language"
+  "why": "kept from the existing table"
  },
  "TPL_BIRTHDAYS": {
   "text": "誕生日",
   "back": "Birthdays",
-  "why": "table word reused; composed in the language"
+  "why": "short noun"
  },
  "TPL_OFFERINGS": {
   "text": "献金の合計",
-  "back": "Giving total",
-  "why": "table word reused; composed in the language"
+  "back": "Offering total",
+  "why": "table word 献金"
  },
  "TPL_TRANSFER": {
   "text": "振込のご案内",
@@ -4645,7 +4645,7 @@
  "TPL_PASSAGE": {
   "text": "今週の聖句",
   "back": "This week's verse",
-  "why": "table word reused; composed in the language"
+  "why": "same as the verse card title"
  },
  "TPL_PLAIN": {
   "text": "自由入力",
@@ -6092,5 +6092,55 @@
   "text": "スライドを作れず、お知らせは元のままです",
   "back": "The slide could not be made, and the announcement is as it was",
   "why": "States the fact"
+ },
+ "SLIDE_CHURCH_NEWS": {
+  "text": "週報",
+  "back": "Weekly bulletin",
+  "why": "週報 is the Sunday sheet; the church name follows"
+ },
+ "SLIDE_LOCAL_TIME": {
+  "text": "時刻は現地時間",
+  "back": "Times are local time",
+  "why": "short phrase, no zone code"
+ },
+ "SLIDE_SPECIAL": {
+  "text": "特別",
+  "back": "Special",
+  "why": "one word tag"
+ },
+ "SLIDE_TOTAL_GIFTS": {
+  "text": "献金の合計",
+  "back": "Total of the offerings",
+  "why": "matches 献金の合計 style of the table"
+ },
+ "SLIDE_CHURCH_ACCOUNT": {
+  "text": "献金の振込先",
+  "back": "Where to send offerings",
+  "why": "振込先 as in 振込先口座"
+ },
+ "SLIDE_HOLDER": {
+  "text": "口座名義",
+  "back": "Account holder",
+  "why": "the bank's own phrase"
+ },
+ "SLIDE_SCAN": {
+  "text": "カメラで読み取って献金",
+  "back": "Read with the camera and give",
+  "why": "plain invitation under the code"
+ },
+ "SLIDE_STICKER": {
+  "text": "告知",
+  "back": "Notice",
+  "why": "short enough for the circle"
+ },
+ "STYLE_SIMPLE": {
+  "text": "シンプル",
+  "back": "simple",
+  "why": "Katakana simple is the usual word; 黒 keeps it short"
+ },
+ "STYLE_SIMPLE_DARK": {
+  "text": "シンプル黒",
+  "back": "simple black",
+  "why": "Katakana simple is the usual word; 黒 keeps it short"
  }
 }

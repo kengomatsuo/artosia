@@ -15,6 +15,7 @@ mod d1;
 mod d2;
 mod d3;
 mod d4;
+mod d5;
 mod data;
 
 use std::collections::HashMap;
@@ -49,7 +50,16 @@ pub struct Pics<'a> {
 
 fn tokens() -> &'static Value {
     static ALL: OnceLock<Value> = OnceLock::new();
-    ALL.get_or_init(|| serde_json::from_str(include_str!("../../assets/warta/tokens.json")).unwrap_or(Value::Null))
+    ALL.get_or_init(|| {
+        let mut all: Value = serde_json::from_str(include_str!("../../assets/warta/tokens.json")).unwrap_or(Value::Null);
+        // Simple dark is Simple with its own colours.
+        let mut dark = all["directions"]["d5"].clone();
+        if let (Some(own), Some(palette)) = (dark["dark_palette"].as_object().cloned(), dark["palette"].as_object_mut()) {
+            palette.extend(own);
+        }
+        all["directions"]["d5d"] = dark;
+        all
+    })
 }
 
 fn dir_of(style: NoticeStyle) -> &'static Value {
@@ -57,6 +67,8 @@ fn dir_of(style: NoticeStyle) -> &'static Value {
         NoticeStyle::Greige => "d1",
         NoticeStyle::Pill => "d2",
         NoticeStyle::Neon => "d3",
+        NoticeStyle::Simple => "d5",
+        NoticeStyle::SimpleDark => "d5d",
         _ => "d4",
     };
     &tokens()["directions"][key]
@@ -867,6 +879,7 @@ fn build(slide: &Slide, style: NoticeStyle, have: data::Have, body: Option<f32>,
         NoticeStyle::Greige => d1::draw(&mut sheet, &data, have)?,
         NoticeStyle::Pill => d2::draw(&mut sheet, &data, have)?,
         NoticeStyle::Neon => d3::draw(&mut sheet, &data, have)?,
+        NoticeStyle::Simple | NoticeStyle::SimpleDark => d5::draw(&mut sheet, &data, have)?,
         _ => d4::draw(&mut sheet, &data, have)?,
     }
     foot(&mut sheet, slide, style);
@@ -885,6 +898,7 @@ fn foot(sheet: &mut Sheet, slide: &Slide, style: NoticeStyle) {
         NoticeStyle::Greige => ("mute", sheet.g("mx")),
         NoticeStyle::Pill => ("pill", sheet.g("mx")),
         NoticeStyle::Neon => ("white", sheet.g("mx")),
+        NoticeStyle::Simple | NoticeStyle::SimpleDark => ("mute", sheet.g("mx")),
         _ => ("blue", sheet.g("mx")),
     };
     sheet.text("kicker", &note, Tx::l(x, 1040.0).cy().fill(colour));
@@ -967,7 +981,7 @@ mod tests {
 
     #[test]
     fn the_tokens_of_all_four_directions_are_there_with_their_faces() {
-        for style in [NoticeStyle::Greige, NoticeStyle::Pill, NoticeStyle::Neon, NoticeStyle::Split] {
+        for style in [NoticeStyle::Greige, NoticeStyle::Pill, NoticeStyle::Neon, NoticeStyle::Split, NoticeStyle::Simple, NoticeStyle::SimpleDark] {
             let d = dir_of(style);
             assert!(d["palette"].is_object() && d["grid"]["mx"].is_number(), "{style:?}");
             for font in d["fonts"].as_object().into_iter().flatten().map(|(_, spec)| spec) {

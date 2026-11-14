@@ -8,7 +8,7 @@
 //! Names and dates are made up for Artosia; no church's list is read.
 
 use artosia_core::calendar::Date;
-use artosia_core::deck::{Announcement, Fill, NoticeStyle, Person, Today, announcement_pages};
+use artosia_core::deck::{Announcement, Fill, NoticeStyle, NoticeWords, Person, Today, announcement_pages};
 use artosia_core::giving::{Account, Giving};
 use artosia_core::window::{Range, Window};
 use artosia_slides::frame::OutputState;
@@ -29,6 +29,25 @@ fn people(count: usize, from: Date, days: usize, long: bool) -> Vec<Person> {
         .collect()
 }
 
+/// The words an English window gives a slide; an Indonesian one writes the design's own.
+fn english_words() -> NoticeWords {
+    let owned = |words: &[&str]| words.iter().map(|word| word.to_string()).collect::<Vec<_>>();
+    NoticeWords {
+        months: owned(&["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]),
+        weekdays: owned(&["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]),
+        kinds: owned(&["Service schedule", "Birthdays", "Offering", "Announcements", "Verse of the week"]),
+        church_news: "Church news".into(),
+        local_time: "All times are local".into(),
+        special: "Special".into(),
+        total: "Total".into(),
+        total_gifts: "Total given".into(),
+        account: "Church account".into(),
+        holder: "in the name of".into(),
+        scan: "Scan to give".into(),
+        sticker: "Info".into(),
+    }
+}
+
 fn main() {
     let args: Vec<String> = std::env::args().collect();
     let out = std::path::PathBuf::from(args.get(1).expect("a folder to write into"));
@@ -40,7 +59,7 @@ fn main() {
     let weekdays_en = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
     let (months, weekdays, title) = if language == "en" { (&months_en, &weekdays_en, "Birthdays") } else { (&months_id, &weekdays_id, "Ulang Tahun") };
     // A Sunday, the day a card is shown.
-    let today = Today { year: 2026, month: 11, day: 15, months, weekdays, clock: |h, m| format!("{h:02}.{m:02}"), date: |d, m| format!("{d} {m}"), total: "Total", first_weekday: 0, church: "GKI Contoh" };
+    let today = Today { year: 2026, month: 11, day: 15, months, weekdays, clock: |h, m| format!("{h:02}.{m:02}"), date: |d, m| format!("{d} {m}"), total: "Total", first_weekday: 0, church: "GKI Contoh", words: if language == "en" { english_words } else { NoticeWords::default } };
     let nov = |day: u8| Date { year: 2026, month: 11, day };
     let week = Range::Week(0);
     let cases: Vec<(&str, Window, Vec<Person>)> = vec![
@@ -58,7 +77,7 @@ fn main() {
         ("l-year-end", Window { range: Range::Custom(Date { year: 2026, month: 12, day: 20 }, Date { year: 2027, month: 1, day: 10 }), highlight: None }, people(9, Date { year: 2026, month: 12, day: 20 }, 22, false)),
         ("m-thirty-one", Window { range: Range::Month(0), highlight: Some(week) }, people(31, nov(1), 30, false)),
     ];
-    let styles: [(&str, Option<NoticeStyle>, &str); 8] = [
+    let styles: [(&str, Option<NoticeStyle>, &str); 10] = [
         ("1-look-midnight", None, "Midnight"),
         ("2-look-paper", None, "Paper"),
         ("3-ledger", Some(NoticeStyle::Ledger), "Midnight"),
@@ -67,6 +86,8 @@ fn main() {
         ("6-pill", Some(NoticeStyle::Pill), "Midnight"),
         ("7-neon", Some(NoticeStyle::Neon), "Midnight"),
         ("8-split", Some(NoticeStyle::Split), "Midnight"),
+        ("9-simple", Some(NoticeStyle::Simple), "Midnight"),
+        ("a-simpledark", Some(NoticeStyle::SimpleDark), "Midnight"),
     ];
     let account = Account::default();
     let giving = Giving { funds: &[], gifts: &[], account: &account };
