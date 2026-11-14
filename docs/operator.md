@@ -501,3 +501,27 @@ All fifteen goals were reached; these are the places where the tester had to gue
 `tools/snap.sh <folder>` renders every scene in `main.rs` (`SCENES`) to PNG with the practice library; `--query "<text>"` opens the search on any text; `--background <file>` puts a picture behind the text; `--script crates/artosia/scripts/type-and-show.json --at mark:live` plays a keyboard flow first. `--data <folder>` points at a real library.
 
 Rendering a scene shows how a screen looks, and only a script shows what a key or a click does: the Save and Escape defects above passed every scene render. Played through scripts on 2026-11-10: type to search, open, show, Space, F2, click a slide; Ctrl S in the editor; Escape in the editor with and without changes; Undo from the toast; a plan row's menu; adding an announcement; "Add the next verse"; turning the phone remote on. Not yet played: the file pickers, drag and drop, the Screens dialog with two screens, the Look dialog's controls, moving a plan row, the logo.
+
+## The UI overhaul (2026-11-14, owner-picked)
+
+The owner asked for as few plain text fields as possible ("the one method you keep falling back
+to without research"), a colour picker instead of hex codes, a real calendar for the schedule,
+birthdays and money as lists and tables, video with sound and OBS-like scenes in the rundown.
+Research: `~/Shared/inspo/artosia-ui-overhaul/` (README, directions.md, skeleton.md; 11 worship
+and church office programs, Mobbin for seven controls) and
+`~/Shared/research/artosia-scenes-pptx-video/README.md` (PowerPoint, video items, scenes).
+
+Three directions were drawn in the real window as scenes `mock-a-p1` to `mock-c-p7`
+(`crates/artosia/src/ui/mock_a.rs`, `mock_b.rs`, `mock_c.rs`; sheets by `tools/overhaul-sheets.ps1`).
+**The owner picked B, Data windows after Planning Center and ChurchSuite, with A's rundown.**
+
+| Part | What B looks like (mock page) |
+|---|---|
+| Window | pill tabs under the top bar: Rencana ibadah, Pengumuman, Kalender, Jemaat, Persembahan, Templat, Tampilan (`mock-b-p1`) |
+| Announcements | a template list, the slide, and a data source panel; nothing typed on the slide but its title (`mock-b-p1`) |
+| Colour | colours named by role, theme swatches, a swatch grid, a square picker with hue strip and eyedropper; hex only behind Lainnya (`mock-b-p2`) |
+| Calendar | a month grid with coloured chips and a repeating-event dialog: day toggles, time and date pickers, the rule as a sentence (`mock-b-p3`) |
+| People | a table with month strip, a birth-month filter and import with column mapping (`mock-b-p4`) |
+| Offerings | a statement table, amounts right-aligned, a total that sums itself (`mock-b-p5`) |
+| Templates | live tiles from the church's data in each style, apply modes (`mock-b-p6`) |
+| Rundown | A's layout: header bands, video and audio items with end action (stop, loop, next) and volume, a scene of layers with actions that clear, music lowered under a video with sound (`mock-a-p7`) |
