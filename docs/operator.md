@@ -633,3 +633,21 @@ titles-only file in the library, read again after seven days) come before LRCLIB
 parsed into Artosia's own preview of sections before a person sees it; the page itself is never drawn.
 Import, a primary button with Ctrl Enter printed, is the only thing that saves a song. Search in my
 browser opens the person's own browser, because no search engine can be read by a program from here.
+
+## The guide: lessons, help marks and what's new (2026-11-14, owner-required)
+
+Plan and research: `docs/plans/artosia/guide.md`, `~/Shared/research/artosia-guide-framework/`
+(JetBrains' lesson engine, VS Code walkthroughs, Shepherd, Driver, Appcues),
+`~/Shared/inspo/artosia-guide/` (help marks, coach marks, lesson lists, what's new, recovery).
+
+| Part | Where | What it does |
+|---|---|---|
+| Engine | `crates/artosia/src/guide/mod.rs` | A lesson is steps; a step is a goal (run an action, reach a state, or point at a part). `Runner::advance` passes steps already done, goes back to a step's `restore` when what it `needs` is gone, and offers the search when no control is on screen. It never touches the projector. |
+| Actions | `guide/window.rs` `Action` | A command (`Run`), a tab (`Tab`, its pill is the control) or a window's own keyed button (`Press`). States a step waits for are named in `KNOWN` and read from `App`; a test checks every lesson against them. |
+| Which control | `guide/rank.rs`, `guide/anchors.rs` | A button declares the command it fires while the window is drawn (`Btn::anchor`); the control on screen wins, then the open panel, then the bars, then a menu, then fewest presses; the search is always last. |
+| Lessons and words | `guide/lessons.rs` | One lesson per feature, each step's headline and line, and its clip. |
+| Clips | `assets/guide/*.png`, `tools/record-guide.py`, `examples/guide_clip.rs` | Each step's move recorded headless from the real program, the pointer drawn along the script's path and the press ringed, built in as animated PNG; Rune's image cache plays them. Only the clip on screen stays decoded (about 6 MB of frames). Record again when a screen a lesson points at changes. |
+| Bubble and help marks | `ui/tour.rs` | The ringed control stays pressable and the dim around it takes presses; a centred bubble opens the search when the control is not on screen. A help mark in each data window opens what it is for and Show me. The five-stop tour is the first lesson. |
+| What's new | `guide/news.rs`, `ui/tour.rs` `news_view` | Each release's features; opens once after an update that brought some (`Settings::news_seen`), and from the search. The features as a list, the picked one's clip beside it, Try starts its lesson. |
+
+Every text is written in ten languages from its brief (`docs/i18n/brief.json`).
