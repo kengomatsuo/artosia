@@ -11,6 +11,7 @@
 /fixtures/speech/
 # The tempo tracker's own steps of real tracks (rises per band, not sound), for tools/score-tempo.py.
 /fixtures/tempo-steps/
+/fixtures/notice-matrix/
 .taste-skill/
 # The board script's own note of which session holds which card.
 .board-sessions

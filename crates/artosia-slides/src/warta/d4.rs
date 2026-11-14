@@ -5,7 +5,7 @@ use artosia_core::deck::NoticeKind;
 use super::largest_step;
 use super::data::{self as w, Data, Have};
 use super::fit;
-use super::{Fits, H, fit_cells, put_lines, Pic, Pos, R, Sheet, Split, Tx, W, largest, largest_name_size, name_in, paragraph, paragraphs, verse, VerseBox};
+use super::{Fits, H, fit_cells, grown_size, put_lines, Pic, Pos, R, Sheet, Split, Tx, W, largest, largest_name_size, name_in, paragraph, paragraphs, verse, VerseBox};
 
 pub fn draw(sl: &mut Sheet, d: &Data, have: Have) -> Fits {
     match d.kind {
@@ -74,7 +74,7 @@ fn s01(sl: &mut Sheet, d: &Data) -> Fits {
         y += pitch;
     }
     if !d.days.is_empty() {
-        sl.text("kicker_y", w::THIS_WEEK, Tx::l(k("left_w") + 40.0, ky).cy());
+        sl.text("kicker_y", &d.week_label, Tx::l(k("left_w") + 40.0, ky).cy());
         let hot_dates: Vec<u8> = rows.iter().filter(|r| r.special).map(|r| r.date).collect();
         for (at, (dow, date)) in d.days.iter().enumerate() {
             let cy0 = k("cell_top") + at as f32 * (k("cell_h") + k("cell_gap"));
@@ -98,8 +98,12 @@ fn s02(sl: &mut Sheet, d: &Data) -> Fits {
     ground(sl, None, Some(k("band_h")));
     sl.text("title_w", &d.title, Tx::l(k("mx"), 140.0).maxw(k("strip_x") - k("mx") - 30.0));
     sl.text("sub_s", &d.month, Tx::l(k("mx"), 196.0));
-    if !d.days.is_empty() {
-        sl.text("kicker_y", w::THIS_WEEK, Tx::l(k("strip_x"), 40.0).cy());
+    if d.highlighted() && d.days.is_empty() {
+        // A highlight longer than a week is written as its range where the week's strip would stand.
+        sl.text("title_w", &d.week_label, Tx::l(k("strip_x"), 140.0).maxw(W - k("strip_x") - k("mx")));
+    }
+    if !d.days.is_empty() && (d.highlighted() || d.covers) {
+        sl.text("kicker_y", &d.week_label, Tx::l(k("strip_x"), 40.0).cy());
         for (at, (dow, date)) in d.days.iter().enumerate() {
             let x = k("strip_x") + at as f32 * (k("strip_w") + k("strip_gap"));
             sl.push(R::new(x, k("strip_y"), k("strip_w"), 150.0).fill("white").rx(20.0).op(0.12));
@@ -119,9 +123,11 @@ fn s02(sl: &mut Sheet, d: &Data) -> Fits {
     let pitch = (avail / per as f32).min(if sparse { 130.0 } else { 999.0 });
     let rh = pitch - k("row_gap");
     let y0 = if sparse { k("top") + (avail - per as f32 * pitch) / 2.0 } else { k("top") };
-    let name_w = colw - k("card_pad") - k("day_w") - k("name_gap") - k("name_pad");
+    let day_w = if d.spans { names.iter().map(|x| sl.measure("bday_day_hl", &d.day_of(x), Some(40.0), None)).fold(k("day_w"), f32::max) + 8.0 } else { k("day_w") };
+    let name_w = colw - k("card_pad") - day_w - k("name_gap") - k("name_pad");
     let list: Vec<&str> = names.iter().map(|x| x.name.as_str()).collect();
-    let size = largest_name_size(sl, &list, "name_hl", name_w, if sparse { k("sparse_size") } else { k("size_max") }, k("size_floor")).ok_or(Split)?;
+    let hi = if sparse { k("sparse_size") } else { grown_size(k("size_max"), k("sparse_size"), avail, per, 1.7) };
+    let size = largest_name_size(sl, &list, "name_hl", name_w, hi, k("size_floor")).ok_or(Split)?;
     for (i, nm) in names.iter().enumerate() {
         let (c, r) = (i / per, i % per);
         let cx = k("mx") + c as f32 * (colw + k("col_gap"));
@@ -132,8 +138,8 @@ fn s02(sl: &mut Sheet, d: &Data) -> Fits {
         }
         let role = if nm.hl { "name_hl" } else { "name" };
         let (text, _) = name_in(sl, &nm.name, role, name_w, size);
-        sl.text(if nm.hl { "bday_day_hl" } else { "bday_day" }, &format!("{:02}", nm.day), Tx::l(cx + k("card_pad") + k("bar_w") - 4.0, cy).cy().size(40.0_f32.min(size)));
-        sl.text(role, &text, Tx::l(cx + k("card_pad") + k("day_w") + k("name_gap"), cy).cy().size(size).maxw(name_w));
+        sl.text(if nm.hl { "bday_day_hl" } else { "bday_day" }, &d.day_of(nm), Tx::l(cx + k("card_pad") + k("bar_w") - 4.0, cy).cy().size(40.0_f32.min(size)));
+        sl.text(role, &text, Tx::l(cx + k("card_pad") + day_w + k("name_gap"), cy).cy().size(size).maxw(name_w));
     }
     Ok(())
 }

@@ -429,6 +429,8 @@ const SCENES: &[Scene] = &[
     ("languages-one", |_| shared().set_state(demo::languages(&["id"], "Midnight", false))),
     ("scripture", |_| shared().set_state(demo::scripture())),
     ("announcement", |_| shared().set_state(demo::announcement())),
+    // The state in the JSON file `--state-file` names, as `examples/notice_matrix.rs` writes it.
+    ("state-file", |_| shared().set_state(flag_value("--state-file").and_then(|path| std::fs::read_to_string(path).ok()).and_then(|json| serde_json::from_str(&json).ok()).unwrap_or_default())),
     // The announcement slides in three styles, for the owner to choose from.
     ("notice-hairline-schedule", |_| shared().set_state(demo::notice_scene(NoticeStyle::Hairline, NoticeKind::Schedule))),
     ("notice-hairline-birthdays", |_| shared().set_state(demo::notice_scene(NoticeStyle::Hairline, NoticeKind::Birthdays))),

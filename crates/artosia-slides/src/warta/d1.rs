@@ -4,7 +4,7 @@ use artosia_core::deck::NoticeKind;
 
 use super::data::{self as w, Data, Have};
 use super::fit;
-use super::{Fits, H, fit_cells, put_lines, Pic, Pos, R, Sheet, Split, Tx, W, largest, largest_name_size, largest_step, name_in, paragraph, paragraphs, verse, VerseBox};
+use super::{Fits, H, fit_cells, grown_size, put_lines, Pic, Pos, R, Sheet, Split, Tx, W, largest, largest_name_size, largest_step, name_in, paragraph, paragraphs, verse, VerseBox};
 
 const ROMAN: [&str; 10] = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"];
 
@@ -112,11 +112,11 @@ fn s02(sl: &mut Sheet, d: &Data, have: Have) -> Fits {
     let k = sl.sec("s02");
     let names = &d.names;
     let n = names.len().max(1);
-    page(sl, &d.kicker(&d.month), None);
+    page(sl, &d.church_kicker(""), None);
     let mh = masthead(sl, &d.title, None);
     let sub = sl.text("subtitle", &d.month, Tx::l(mh.x + mh.w + 34.0, base));
-    if let Some((from, to)) = d.week {
-        let week = format!("{}{}{}\u{2013}{}", w::THIS_WEEK, w::SEP, from, to);
+    if d.highlighted() {
+        let week = d.week_label.clone();
         let rw = sl.measure("ribbon", &week, None, None) + 48.0;
         let rx = (x2 - rw).max(sub.x + sub.w + 30.0);
         let cy = base - 0.7 * 96.0 / 2.0;
@@ -130,9 +130,10 @@ fn s02(sl: &mut Sheet, d: &Data, have: Have) -> Fits {
     let colw = (cw - k("col_gap") * (cols as f32 - 1.0)) / cols as f32;
     let avail = bottom - top;
     let ratio = if sparse { k("sparse_ratio") } else { k("ratio") };
-    let name_w = colw - k("day_w") - k("name_gap") - k("name_pad");
+    let day_w = if d.spans { names.iter().map(|x| sl.measure("bday_day_hl", &d.day_of(x), None, None)).fold(k("day_w"), f32::max) } else { k("day_w") };
+    let name_w = colw - day_w - k("name_gap") - k("name_pad");
     let list: Vec<&str> = names.iter().map(|x| x.name.as_str()).collect();
-    let hi = (if sparse { k("sparse_size_max") } else { k("size_max") }).min((avail / per as f32 / ratio).floor());
+    let hi = if sparse { k("sparse_size_max").min((avail / per as f32 / ratio).floor()) } else { grown_size(k("size_max"), k("sparse_size_max"), avail, per, ratio) };
     let size = largest_name_size(sl, &list, "name_hl", name_w, hi, k("size_floor")).ok_or(Split)?;
     let pitch = (avail / per as f32).min(1.9 * size);
     let y0 = if sparse { top + (avail - per as f32 * pitch) / 2.0 } else { top };
@@ -154,8 +155,8 @@ fn s02(sl: &mut Sheet, d: &Data, have: Have) -> Fits {
         let role = if nm.hl { "name_hl" } else { "name" };
         let (text, _) = name_in(sl, &nm.name, role, name_w, size);
         let by = cy + sl.cap(&face, size) / 2.0;
-        sl.text(if nm.hl { "bday_day_hl" } else { "bday_day" }, &format!("{:02}", nm.day), Tx::r(cx + k("day_w"), by).size(48.0_f32.min(size + 4.0)));
-        sl.text(role, &text, Tx::l(cx + k("day_w") + k("name_gap"), by).size(size).maxw(name_w));
+        sl.text(if nm.hl { "bday_day_hl" } else { "bday_day" }, &d.day_of(nm), Tx::r(cx + day_w, by).size(48.0_f32.min(size + 4.0)));
+        sl.text(role, &text, Tx::l(cx + day_w + k("name_gap"), by).size(size).maxw(name_w));
         let last_in_col = r == per - 1 || i + 1 == n;
         if !last_in_col && !(nm.hl && names[i + 1].hl) {
             rule(sl, cx, cy + pitch / 2.0, colw, None, Some(0.16));

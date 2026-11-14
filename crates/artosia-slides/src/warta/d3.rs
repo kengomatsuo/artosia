@@ -5,7 +5,7 @@ use artosia_core::deck::NoticeKind;
 use super::largest_step;
 use super::data::{self as w, Data, Have};
 use super::fit;
-use super::{Fits, H, fit_cells, put_lines, Pic, Pos, R, Sheet, Split, Tx, W, largest, largest_name_size, name_in, paragraph, paragraphs, verse, VerseBox};
+use super::{Fits, H, fit_cells, grown_size, put_lines, Pic, Pos, R, Sheet, Split, Tx, W, largest, largest_name_size, name_in, paragraph, paragraphs, repeats, verse, VerseBox};
 
 pub fn draw(sl: &mut Sheet, d: &Data, have: Have) -> Fits {
     match d.kind {
@@ -110,10 +110,11 @@ fn s02(sl: &mut Sheet, d: &Data) -> Fits {
     let names = &d.names;
     let n = names.len().max(1);
     let mut pills = vec![(d.month.clone(), "pink", "pill_p")];
-    if let Some((from, to)) = d.week {
-        pills.push((format!("{} {}\u{2013}{}", w::THIS_WEEK, from, to), "yellow", "pill_t"));
+    if d.highlighted() {
+        pills.push((d.week_label.clone(), "yellow", "pill_t"));
     }
-    page(sl, "s02", &d.kicker(w::BIRTHDAYS), Some(&d.title), &pills);
+    let kicker = if repeats(w::BIRTHDAYS, &d.title) { d.church_kicker("") } else { d.kicker(w::BIRTHDAYS) };
+    page(sl, "s02", &kicker, Some(&d.title), &pills);
     let cols = sl.list("s02", "cols").into_iter().find(|row| n as f32 <= row[0]).map(|row| row[1] as usize).ok_or(Split)?;
     let per = n.div_ceil(cols);
     let sparse = n as f32 <= k("sparse_names");
@@ -122,10 +123,12 @@ fn s02(sl: &mut Sheet, d: &Data) -> Fits {
     let cw = if sparse { k("sparse_w") } else { W - 2.0 * mx };
     let colw = (cw - k("col_gap") * (cols as f32 - 1.0)) / cols as f32;
     let avail = bottom - top;
-    let name_w = colw - k("day_w") - k("name_gap") - k("name_pad") - k("hl_over") / 2.0;
+    let day_w = if d.spans { names.iter().map(|x| sl.measure("bday_day_hl", &d.day_of(x), None, None)).fold(k("day_w"), f32::max) } else { k("day_w") };
+    let name_w = colw - day_w - k("name_gap") - k("name_pad") - k("hl_over") / 2.0;
     let list: Vec<&str> = names.iter().map(|x| x.name.as_str()).collect();
-    let size = largest_name_size(sl, &list, "name_hl", name_w, if sparse { k("sparse_size_max") } else { k("size_max") }, k("size_floor")).ok_or(Split)?;
-    let pitch = (avail / per as f32).min(if sparse { 130.0 } else { k("pitch_max") });
+    let hi = if sparse { k("sparse_size_max") } else { grown_size(k("size_max"), k("sparse_size_max"), avail, per, k("ratio")) };
+    let size = largest_name_size(sl, &list, "name_hl", name_w, hi, k("size_floor")).ok_or(Split)?;
+    let pitch = (avail / per as f32).min(if sparse { 130.0 } else { k("pitch_max").max(size * k("ratio")) });
     let y0 = if sparse { top + (avail - per as f32 * pitch) / 2.0 } else { top };
     for c in 0..cols {
         let idx: Vec<usize> = (c * per..((c + 1) * per).min(n)).filter(|i| names[*i].hl).collect();
@@ -147,8 +150,8 @@ fn s02(sl: &mut Sheet, d: &Data) -> Fits {
         }
         let role = if nm.hl { "name_hl" } else { "name" };
         let (text, _) = name_in(sl, &nm.name, role, name_w, size);
-        sl.text(if nm.hl { "bday_day_hl" } else { "bday_day" }, &format!("{:02}", nm.day), Tx::r(cx + k("day_w"), by));
-        sl.text(role, &text, Tx::l(cx + k("day_w") + k("name_gap"), by).size(size).maxw(name_w));
+        sl.text(if nm.hl { "bday_day_hl" } else { "bday_day" }, &d.day_of(nm), Tx::r(cx + day_w, by));
+        sl.text(role, &text, Tx::l(cx + day_w + k("name_gap"), by).size(size).maxw(name_w));
     }
     Ok(())
 }

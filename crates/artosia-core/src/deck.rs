@@ -375,6 +375,12 @@ pub struct Today<'a> {
 
 /// The most names on one birthday slide, three columns of ten; more go on a second slide.
 pub const BIRTHDAYS_PER_SLIDE: usize = 30;
+
+/// `items` in the fewest groups of at most `most`, as even as they come: 31 names give 16 and 15, never 30 and 1.
+pub fn even_chunks<T>(items: &[T], most: usize) -> std::slice::Chunks<'_, T> {
+    let groups = items.len().div_ceil(most.max(1)).max(1);
+    items.chunks(items.len().div_ceil(groups).max(1))
+}
 /// The most lines of an announcement on one slide.
 pub const LINES_PER_SLIDE: usize = 10;
 
@@ -730,7 +736,7 @@ pub fn announcement_pages(announcements: &[Announcement], people: &[Person], eve
         }
         if item.fill == Fill::Schedule {
             // A week of services fits one slide; a longer one goes on, the weekday written again where a day is cut.
-            for group in window_events(events, today, &item.window, &item.calendars).chunks(LINES_PER_SLIDE) {
+            for group in even_chunks(&window_events(events, today, &item.window, &item.calendars), LINES_PER_SLIDE) {
                 let mut slide = announcement_slide(&Announcement { body: schedule_lines(group, today).join("
 "), ..item.clone() });
                 slide.notice = NoticeKind::Schedule;
@@ -760,7 +766,7 @@ pub fn announcement_pages(announcements: &[Announcement], people: &[Person], eve
             if lines.len() <= LINES_PER_SLIDE {
                 pages.push((at, announcement_slide(item)));
             } else {
-                for group in lines.chunks(LINES_PER_SLIDE) {
+                for group in even_chunks(&lines, LINES_PER_SLIDE) {
                     pages.push((at, announcement_slide(&Announcement { body: group.join("
 "), ..item.clone() })));
                 }
@@ -768,7 +774,7 @@ pub fn announcement_pages(announcements: &[Announcement], people: &[Person], eve
             continue;
         }
         let found = birthdays(people, &item.window, today);
-        for group in found.chunks(BIRTHDAYS_PER_SLIDE) {
+        for group in even_chunks(&found, BIRTHDAYS_PER_SLIDE) {
             let lines: Vec<String> = group
                 .iter()
                 .map(|found| format!("{}\t{}", found.person.name, (today.date)(found.date.day, today.months[usize::from(found.date.month.clamp(1, 12)) - 1])))
@@ -778,6 +784,7 @@ pub fn announcement_pages(announcements: &[Announcement], people: &[Person], eve
             let mut slide = announcement_slide(&filled);
             slide.notice = NoticeKind::Birthdays;
             slide.marked = group.iter().enumerate().filter(|(_, found)| found.marked).map(|(at, _)| at).collect();
+            // The highlight's days, else the window's: a style writes them beside highlighted names or over a week's strip.
             let shown = today.shown(&item.window);
             slide.week = Some(shown.highlight.unwrap_or((shown.from, shown.to)));
             slide.dates = group.iter().map(|found| found.date).collect();
@@ -969,22 +976,22 @@ Write the fund"));
         // A language that names the month first writes its dates that way.
         let month_first = Today { date: |day, month| format!("{month} {day}"), ..today };
         assert_eq!(announcement_pages(&items, &people, &[], &nothing(), &month_first, None, 2)[1].1.text, "Tom\tDecember 20\nBudi\tDecember 30");
-        // Thirty names fill one slide of three columns; the thirty-first goes on a second. An empty month gives none.
+        // Thirty names fill one slide of three columns; thirty-one go on two slides as even as they come. An empty month gives none.
         people.extend((1..=28).map(|day| person(&format!("Person {day:02}"), 12, day)));
         let cards = |people: &[Person]| announcement_pages(&items, people, &[], &nothing(), &today, None, 2).into_iter().filter(|(at, _)| *at == 1).collect::<Vec<_>>();
         assert_eq!(people.iter().filter(|p| p.month == 12).count(), 30);
         let thirty = cards(&people);
         assert_eq!((thirty.len(), thirty[0].1.text.lines().count(), thirty[0].1.notice), (1, 30, NoticeKind::Birthdays));
         people.push(person("Person 29", 12, 29));
-        assert_eq!(cards(&people).iter().map(|(_, slide)| slide.text.lines().count()).collect::<Vec<_>>(), [30, 1]);
+        assert_eq!(cards(&people).iter().map(|(_, slide)| slide.text.lines().count()).collect::<Vec<_>>(), [16, 15]);
         people.pop();
         let june = today_on(7, 1, &MONTHS);
         assert_eq!(announcement_pages(&items, &people, &[], &nothing(), &june, None, 2).len(), 1);
-        // Twenty-five lines of a brought-in table become three slides of the same announcement.
+        // Twenty-five lines of a brought-in table become three even slides of the same announcement.
         let long = vec![Announcement { title: "List".into(), body: (1..=25).map(|n| format!("Row {n}	{n}")).collect::<Vec<_>>().join("
 "), ..Announcement::default() }];
         let pages = announcement_pages(&long, &[], &[], &nothing(), &today, None, 2);
-        assert_eq!(pages.iter().map(|(_, slide)| slide.text.lines().count()).collect::<Vec<_>>(), [10, 10, 5]);
+        assert_eq!(pages.iter().map(|(_, slide)| slide.text.lines().count()).collect::<Vec<_>>(), [9, 9, 7]);
     }
 
     fn made_up_bible() -> Bible {
@@ -1295,12 +1302,12 @@ Wednesday	18.30	Prayer");
         // Nothing in the week: no slide at all.
         let none = vec![service("Once", Date::new(2027, 6, 1).unwrap(), 60, Repeat::Once)];
         assert!(announcement_pages(&[card.clone()], &[], &none, &nothing(), &today, None, 2).is_empty());
-        // More than ten lines go on a second slide, which writes its first day again.
+        // More than ten lines go on two even slides, the second writing its first day again.
         let many: Vec<Event> = (0..12).map(|n| service(&format!("Event {n}"), Date::new(2026, 11, 15).unwrap(), 6 * 60 + n * 15, Repeat::Once)).collect();
         let pages = announcement_pages(&[card], &[], &many, &nothing(), &today, None, 2);
         assert_eq!(pages.len(), 2);
         assert!(pages[1].1.text.starts_with("Sunday	"));
-        assert_eq!(pages[1].1.text.lines().count(), 2);
+        assert_eq!(pages[1].1.text.lines().count(), 6);
     }
     #[test]
     fn a_schedule_card_follows_cancelled_and_moved_dates() {

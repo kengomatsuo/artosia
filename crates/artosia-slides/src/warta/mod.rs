@@ -675,6 +675,17 @@ pub fn largest_step(hi: f32, lo: f32, step: f32, ok: impl Fn(f32) -> bool) -> Op
     Some(at(last))
 }
 
+/// The cap on a list's name size: `base` for a full column, growing toward `big` as fewer rows share
+/// the height, so seven names are not drawn as small as thirty.
+pub fn grown_size(base: f32, big: f32, avail: f32, rows: usize, ratio: f32) -> f32 {
+    (avail / rows.max(1) as f32 / ratio).floor().clamp(base, big.max(base))
+}
+
+/// Whether a small label only repeats the title beside it, as "Ulang tahun" over "ULANG TAHUN".
+pub fn repeats(label: &str, title: &str) -> bool {
+    label.trim().to_lowercase() == title.trim().to_lowercase()
+}
+
 /// The largest size at which every name fits `width` in `role`, shortened by the ladder where it must be.
 pub fn largest_name_size(sl: &Sheet, names: &[&str], role: &str, width: f32, hi: f32, lo: f32) -> Option<f32> {
     largest(hi, lo, |z| names.iter().all(|name| fit::ladder(name, width, &|s| sl.measure(role, s, Some(z), None)).is_some()))

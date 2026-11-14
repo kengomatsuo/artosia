@@ -5,7 +5,7 @@ use artosia_core::deck::NoticeKind;
 use super::largest_step;
 use super::data::{self as w, Data, Have};
 use super::fit;
-use super::{Fits, H, fit_cells, put_lines, Pic, Pos, R, Sheet, Split, Tx, W, largest, largest_name_size, name_in, paragraph, paragraphs, verse, VerseBox};
+use super::{Fits, H, fit_cells, grown_size, put_lines, Pic, Pos, R, Sheet, Split, Tx, W, largest, name_in, paragraph, paragraphs, verse, VerseBox};
 
 pub fn draw(sl: &mut Sheet, d: &Data, have: Have) -> Fits {
     match d.kind {
@@ -98,8 +98,8 @@ fn s02(sl: &mut Sheet, d: &Data) -> Fits {
     let names = &d.names;
     let n = names.len().max(1);
     head(sl, w::WARTA, Some(&d.month), Some(&d.title));
-    if let Some((from, to)) = d.week {
-        let week = format!("{} {}\u{2013}{}", w::THIS_WEEK, from, to);
+    if d.highlighted() {
+        let week = d.week_label.clone();
         let ww = sl.measure("tag_ink", &week, None, None) + 2.0 * pad;
         let cap = 0.7 * sl.ty_size("title");
         sl.push(R::new(x2 - ww, base - cap / 2.0 - 32.0, ww, 64.0).fill("orange").pill());
@@ -111,26 +111,33 @@ fn s02(sl: &mut Sheet, d: &Data) -> Fits {
     let cw = if sparse { k("sparse_w") } else { x2 - mx };
     let colw = (cw - k("col_gap") * (cols as f32 - 1.0)) / cols as f32;
     let avail = bottom - top;
-    let pitch = (avail / per as f32).min(if sparse { k("sparse_h") } else { k("pitch_max") });
-    let rh = (pitch - 10.0).min(if sparse { 100.0 } else { 66.0 });
-    let pw = colw - k("circle") - k("circle_gap");
-    let name_w = pw - 2.0 * k("pill_pad");
+    let hi = if sparse { k("sparse_size") } else { grown_size(k("size_max"), k("sparse_size"), avail, per, 1.6) };
+    // The day is a circle, or a pill wide enough for "08 Okt" on a page that crosses a month.
+    let day_size = |size: f32| (size * 0.8).max(36.0).min(if sparse { 44.0 } else { 52.0 });
+    let circ_at = |size: f32| if sparse { 84.0 } else { k("circle").max(size * 1.25) };
+    let day_wide = |size: f32| if d.spans { names.iter().map(|x| sl.measure("dot", &d.day_of(x), Some(day_size(size)), None)).fold(0.0, f32::max) + 32.0 } else { 0.0 };
     let list: Vec<&str> = names.iter().map(|x| x.name.as_str()).collect();
-    let size = largest_name_size(sl, &list, "name_hl", name_w, if sparse { k("sparse_size") } else { k("size_max") }, k("size_floor")).ok_or(Split)?;
-    let circ = if sparse { 84.0 } else { k("circle") };
+    let name_w_at = |size: f32| colw - circ_at(size).max(day_wide(size)) - k("circle_gap") - 2.0 * k("pill_pad");
+    let size = largest(hi, k("size_floor"), |z| list.iter().all(|name| fit::ladder(name, name_w_at(z), &|s| sl.measure("name_hl", s, Some(z), None)).is_some())).ok_or(Split)?;
+    let circ = circ_at(size);
+    let day_w = circ.max(day_wide(size));
+    let pitch = (avail / per as f32).min(if sparse { k("sparse_h") } else { k("pitch_max").max(size * 1.75) });
+    let rh = (pitch - 10.0).min(if sparse { 100.0 } else { 66.0_f32.max(size * 1.45) });
+    let pw = colw - day_w - k("circle_gap");
+    let name_w = pw - 2.0 * k("pill_pad");
     let y0 = if sparse { top + (avail - per as f32 * pitch) / 2.0 } else { top };
     for (i, nm) in names.iter().enumerate() {
         let (c, r) = (i / per, i % per);
         let cx = mx + c as f32 * (colw + k("col_gap"));
         let cy = y0 + r as f32 * pitch + pitch / 2.0;
-        sl.push(R::new(cx, cy - circ / 2.0, circ, circ).fill(if nm.hl { "orange" } else { "pill" }).pill());
-        sl.text(if nm.hl { "dot_hl" } else { "dot" }, &format!("{:02}", nm.day), Tx::c(cx + circ / 2.0, cy).cy().size(if sparse { 44.0 } else { 36.0 }));
+        sl.push(R::new(cx, cy - circ / 2.0, day_w, circ).fill(if nm.hl { "orange" } else { "pill" }).pill());
+        sl.text(if nm.hl { "dot_hl" } else { "dot" }, &d.day_of(nm), Tx::c(cx + day_w / 2.0, cy).cy().size(day_size(size)));
         if nm.hl {
-            sl.push(R::new(cx + circ + k("circle_gap"), cy - rh / 2.0, pw, rh).fill("yellow").pill());
+            sl.push(R::new(cx + day_w + k("circle_gap"), cy - rh / 2.0, pw, rh).fill("yellow").pill());
         }
         let role = if nm.hl { "name_hl" } else { "name" };
         let (text, _) = name_in(sl, &nm.name, role, name_w, size);
-        sl.text(role, &text, Tx::l(cx + circ + k("circle_gap") + k("pill_pad"), cy).cy().size(size).maxw(name_w));
+        sl.text(role, &text, Tx::l(cx + day_w + k("circle_gap") + k("pill_pad"), cy).cy().size(size).maxw(name_w));
     }
     Ok(())
 }
