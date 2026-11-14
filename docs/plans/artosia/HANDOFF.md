@@ -15,12 +15,14 @@
 | Announcement styles | Hairline, Ledger, Band drawn for five kinds (`crates/artosia-slides/src/notice.rs`), demo scenes only | [commit 88013b9] |
 | UI overhaul | All in Review: tabs c7ff4e7, colour picker e63fb2c, calendar 30ff5d9, members b300540, offerings 9435328, templates 7318e0d, rundown items ebeb24c with playback 1671469 and thumbnails 24a39ee, PowerPoint 8bd3111 with export f059ebe | [card: UIOVER1] [rule: .claude/rules/operator.md, last lines] |
 | Song browser | In Review: page reader 35ad9cd (repeat directions dropped d3018b0), browse layer d2df40f, dialog 9c494ab | [card: WEBSONGS1] |
+| Guide | In Review: fifteen lessons and the tour, help on every feature, what's new, all texts in ten languages; a lesson keeps its progress and rings scrolled controls | [card: GUIDE1] [card: HELPNEAR1] [commit 825682f] [rule: docs/plans/artosia/guide.md "Where it stands"] |
 
 ## Last checks
 
 - `bun ~/.claude/scripts/limit.ts 1200 cargo test -q -p artosia -p artosia-lyrics`: 303 and 42 passed (1 ignored) [read: run before 9c494ab]
 - `cargo test -p artosia-core -p artosia-slides -p artosia-office`: 215 (+2), 22 and 51 passed [read: runs before ebeb24c and 8bd3111]
 - `python -I tools/check-brief.py`: 5 problems, all `GUIDE_SCREENS_OPEN*` from the guide session's commit 7859a8f [read: last run]
+- `python -I tools/check-lessons.py`: 16 of 16 lessons walk to their end; `python -I tools/check-help.py`: 15 of 15 features show their help; `cargo test -p artosia`: 312 passed [read: runs on a copy of 825682f]
 - RAM, `artosia-output` release: 293 MB background alone, 355 MB with a looping 1080p item with sound, 286 MB with the background torn down under it [commit 1671469]
 
 ## Next actions, in order
@@ -49,6 +51,8 @@
 - The kit `Table` needs a `TableState` in `App`; the mocks drew tables by hand [read: builders' reports].
 - Ledger style with the Paper look draws its heading white on cream [read: direction A builder's report].
 - Other sessions commit to `crates/artosia` at the same time (a guide engine landed today): commit by path only, read `git status` first, and never sweep a peer's file into a card's commit [read: commits 4e5fa6d, 70433d2 by another session].
+- A session whose work sits beside another session's unfinished edits builds in a copy of HEAD (`git archive HEAD | tar -x -C <copy>`, `CARGO_TARGET_DIR=target/headcheck`) and commits it with `python -I tools/commit-scratch.py <copy> <the rev it was made from> <message file>`, which merges three ways onto the current HEAD, merges translation tables by key, and pushes. A plain copy of the copy's files over HEAD once reverted two commits another session had landed meanwhile [commit ef940ac, rebuilt on c463a33].
+- The other session commits whole files from the shared tree: apply every edit to the shared tree too, or its next commit takes the edit back out [read: 8350452 carried this session's unfinished main.rs and actions.rs hunks].
 - Python prints of non-English text fail on this console's cp1252 unless `PYTHONIOENCODING=utf8` is set; a script that writes then prints can stop half way [read: the people_in_days rewrite stopped at zh-Hans].
 - A table language with no plural "one" (Indonesian, Vietnamese, Chinese, Japanese, Korean) never reads a "one" form: a word that differs for one item (tomorrow) is a case, never a plural form [commit b300540, `people_in_days`].
 - The interface never draws an em dash, an en dash, a middle dot or an exclamation mark, in English too; the table test catches it only in tables [rule: crates/artosia/src/languages.rs test `every_table_answers_every_brief_inside_its_width_with_its_variables`].

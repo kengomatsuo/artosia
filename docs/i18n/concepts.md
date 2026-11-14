@@ -182,6 +182,8 @@ A second reader of a finished language found one thing under two or three names,
 
 **`tour`** A five-stop walk-through of the window, shown at the first start and available again later. Each stop is a speech bubble pointing at a part of the window: the plan, Preview, Show, Live and the search.
 
+**`guide`** A short lesson the program walks a person through for one feature: it rings the control to press, explains a part with a Next button, checks that each step happened before the next, and plays a short moving picture of the move. A lesson starts from Show me beside a feature's help mark, or from What's new. The tour is the first lesson.
+
 **`practice`** Practice mode: the program runs with a made-up library, saves nothing, and keeps the projector off. For learning without risk.
 
 **`undo`** Taking back the last removal: a plan item, a song, an announcement, a whole plan, the editor that was just closed, or what the search had learned. Offered in the toast that reports the removal.
