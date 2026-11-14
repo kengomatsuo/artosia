@@ -8,6 +8,7 @@
 
 pub mod anchors;
 pub mod lessons;
+pub mod news;
 pub mod rank;
 pub mod window;
 

@@ -6,7 +6,7 @@
 //! While it is open it owns the keyboard (`App::tour_key`) and the card is a modal, so nothing
 //! behind it can be pressed and nothing in it can reach the projector.
 
-use rune::{Align, Cx, El, Key, Side, Tx, col, el, row, spacer, text};
+use rune::{Align, Cx, El, Key, Side, Tx, col, el, icon, row, spacer, text};
 use rune_kit::Kit;
 
 use crate::guide::lessons::Feature;
@@ -141,6 +141,28 @@ impl App {
             Action::Tab(tab) => self.open_tab(tab),
             Action::Press(_) => {}
         }
+    }
+
+    /// Whether this version brought features the church has not been shown.
+    pub fn has_news(&self) -> bool {
+        !crate::guide::news::unseen(&self.settings.news_seen, env!("CARGO_PKG_VERSION")).is_empty()
+    }
+
+    /// What's new closes and its version counts as seen.
+    pub fn close_news(&mut self) {
+        self.news = None;
+        if let Some(version) = crate::guide::news::newest(env!("CARGO_PKG_VERSION")) {
+            if self.settings.news_seen != version {
+                self.settings.news_seen = version.to_string();
+                self.touch_settings();
+            }
+        }
+    }
+
+    /// An entry's Try: What's new closes and the feature's lesson starts.
+    pub fn try_news(&mut self, feature: Feature) {
+        self.close_news();
+        self.show_me(feature);
     }
 
     /// A help mark's press: its card opens, or closes when it was open.
@@ -290,8 +312,79 @@ fn help_card(s: &App, k: &Kit, layer: &mut Vec<El>) {
     layer.push(card.anchored(feature.key(), Side::Bottom, Align::End, space::S2));
 }
 
+/// What's new: the release's features as a list, and the picked one's clip playing beside it
+/// with what it is for and Try (VS Code's walkthrough layout in the research). One clip plays,
+/// so one clip is decoded, and the list fits any window.
+fn news_view(s: &App, k: &Kit, layer: &mut Vec<El>) {
+    let Some(picked) = s.news else { return };
+    let running = env!("CARGO_PKG_VERSION");
+    // After an update: what came since the last one seen. Opened by hand with nothing unseen:
+    // the newest release's entries, so the panel is never empty.
+    let unseen = crate::guide::news::unseen(&s.settings.news_seen, running);
+    let (version, shown) = match crate::guide::news::RELEASES.first() {
+        Some((latest, features)) if unseen.is_empty() => (*latest, features.to_vec()),
+        _ => (crate::guide::news::newest(running).unwrap_or(running), unseen),
+    };
+    let Some(&current) = shown.get(picked.min(shown.len().saturating_sub(1))) else { return };
+    let mut list = col().key("news-list").role("list").w(NEWS_LIST_W).gap(2.0).focus_group().focus_follows();
+    for (at, feature) in shown.iter().copied().enumerate() {
+        let on = feature == current;
+        list = list.child(
+            row()
+                .key(format!("news-{}", feature.key()))
+                .role("listitem")
+                .label(crate::ui::tabs::name(feature.tab()))
+                .w_full()
+                .h(40.0)
+                .px(space::S3)
+                .gap(space::S2)
+                .center_y()
+                .radius(k.radius.md)
+                .fill(if on { k.c.layer_03 } else { rune::Color::TRANSPARENT })
+                .hover(k.c.hover)
+                .cursor(rune::Cursor::Pointer)
+                .focusable(true)
+                .on_press(move |s: &mut App| s.news = Some(at))
+                .child(icon(crate::ui::tabs::glyph(feature.tab()), 16.0).color(if on { k.c.text_base } else { k.c.text_muted }).a11y_hidden())
+                .child(text(crate::ui::tabs::name(feature.tab())).font(if on { type_::BODY_STRONG } else { type_::BODY }).color(k.c.text_base)),
+        );
+    }
+    let mut detail = col().key("news-detail").grow(1.0).gap(space::S3);
+    detail = match clip_of(s, current.clip_step()) {
+        Some(clip) => detail.child(el().key("news-clip").size(NEWS_CLIP_W, (NEWS_CLIP_W * 9.0 / 16.0).round()).radius(k.radius.md).clip_rounded(k.radius.md).border(1.0, k.c.border_base).pixels_fit(clip.pixels(), rune::SurfaceFit::Fill).a11y_hidden()),
+        None => detail,
+    };
+    detail = detail
+        .child(text(crate::ui::tabs::name(current.tab())).font(type_::TITLE).color(k.c.text_base))
+        .child(crate::ui::widgets::wrapped(current.about()).font(type_::BODY).color(k.c.text_muted).wrap())
+        .child(row().child(btn(t::WHATSNEW_TRY()).icon(&icons::ARROW_RIGHT).primary().focusable().build(k, move |s, _| s.try_news(current)).key("news-try")));
+    let card = col()
+        .key("news-card")
+        .role("dialog")
+        .label(t::CMD_WHATSNEW())
+        .w(NEWS_W)
+        .padding(space::S5)
+        .gap(space::S4)
+        .radius(k.radius.lg)
+        .fill(k.c.layer_04)
+        .border(1.0, k.c.border_strong)
+        .shadow(8.0, 24.0, rune::Color::BLACK.alpha(0.4))
+        .child(text(t::whats_new_title(version)).font(type_::HEADING).color(k.c.text_base))
+        .child(row().w_full().gap(space::S5).child(list).child(detail))
+        .child(row().w_full().child(spacer()).child(btn(t::BTN_CLOSE()).icon(&icons::CLOSE).focusable().build(k, |s, _| s.close_news()).key("news-close")))
+        .modal(true, |s: &mut App| s.close_news());
+    layer.push(el().key("news-dim").absolute(0.0, 0.0).w_full().h_full().fill(rune::Color::BLACK.alpha(0.45)).a11y_hidden());
+    layer.push(col().key("news-centre").absolute(0.0, 0.0).w_full().h_full().center().child(card));
+}
+
+/// What's new's width, its list's width and the picked entry's clip.
+const NEWS_W: f32 = 760.0;
+const NEWS_LIST_W: f32 = 200.0;
+const NEWS_CLIP_W: f32 = 480.0;
+
 /// The dim around the part a stop points at, the ring, and the card.
 pub(crate) fn view(s: &App, cx: &mut Cx<App>, k: &Kit, layer: &mut Vec<El>) {
+    news_view(s, k, layer);
     help_card(s, k, layer);
     lesson_view(s, cx, k, layer);
     let Some(at) = s.tour else { return };

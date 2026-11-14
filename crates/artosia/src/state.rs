@@ -115,6 +115,8 @@ pub struct Settings {
     pub welcomed: bool,
     /// The first-start tour has been finished or skipped.
     pub toured: bool,
+    /// The newest version whose What's new was seen; empty before the first.
+    pub news_seen: String,
     /// The first run was begun and not finished or skipped: it opens again at the next start.
     #[serde(skip_serializing_if = "std::ops::Not::not")]
     pub first_run_open: bool,
@@ -183,6 +185,7 @@ impl Default for Settings {
             plan: 0,
             welcomed: false,
             toured: false,
+            news_seen: String::new(),
             first_run_open: false,
             country: String::new(),
             remote_on: false,
@@ -519,6 +522,8 @@ pub struct App {
     pub lesson: Option<(crate::guide::Lesson<crate::guide::window::Action>, usize)>,
     /// The feature whose help card is open under its help mark.
     pub help: Option<crate::guide::lessons::Feature>,
+    /// What's new is open, on the entry picked (the first when it opens).
+    pub news: Option<usize>,
     /// The clock when Enter last moved the tour. If Rune also presses the focused button for
     /// the same Enter, that press is the same step and is dropped.
     pub tour_entered_at: f64,
@@ -797,6 +802,7 @@ impl App {
             tour_focus: false,
             lesson: None,
             help: None,
+            news: None,
             notices: None,
             looping: false,
             resume: None,

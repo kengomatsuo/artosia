@@ -85,6 +85,7 @@ pub enum Command {
     Bibles,
     Tour,
     FirstRun,
+    WhatsNew,
     /// Which languages a song's slides show together (board card MULTI1).
     Languages,
     /// All the languages together again, while one shows alone.
@@ -92,7 +93,7 @@ pub enum Command {
 }
 
 impl Command {
-    pub const ALL: [Command; 49] = [
+    pub const ALL: [Command; 50] = [
         Command::StartService,
         Command::Next,
         Command::Previous,
@@ -141,6 +142,7 @@ impl Command {
         Command::Keys,
         Command::Tour,
         Command::FirstRun,
+        Command::WhatsNew,
         Command::CheckUpdate,
     ];
 
@@ -174,6 +176,7 @@ impl Command {
             Command::Keys => t::CMD_KEYS(),
             Command::Tour => t::CMD_TOUR(),
             Command::FirstRun => t::CMD_FIRST_RUN(),
+            Command::WhatsNew => t::CMD_WHATSNEW(),
             Command::Languages => t::LANGUAGES_ON_SLIDE(),
             Command::AllLanguages => t::CMD_ALL_LANGUAGES(),
             Command::StartService => t::CMD_START(),
@@ -228,6 +231,7 @@ impl Command {
             Command::Keys => t::CMD_KEYS_DETAIL(),
             Command::Tour => t::CMD_TOUR_DETAIL(),
             Command::FirstRun => t::CMD_FIRST_RUN_DETAIL(),
+            Command::WhatsNew => t::CMD_WHATSNEW_DETAIL(),
             Command::Languages => t::LANGUAGES_HINT(),
             // A command that changes which languages show is named by what it belongs to, as a look is.
             Command::AllLanguages => t::LANGUAGES_ON_SLIDE(),
@@ -287,6 +291,7 @@ impl Command {
             Command::Keys => &["shortcuts", "help", "hotkeys", "pintasan", "tombol", "bantuan"],
             Command::Tour => &["tutorial", "help", "guide", "walkthrough", "intro", "onboarding", "panduan", "bantuan", "tur", "pengenalan", "cara pakai"],
             Command::FirstRun => &["setup", "set up", "first run", "first start", "welcome", "onboarding", "again", "language", "country", "region"],
+            Command::WhatsNew => &["what's new", "whats new", "new", "news", "update", "release", "yang baru", "fitur baru", "pembaruan"],
             Command::Languages => &["language", "languages", "translation", "translations", "lyrics language", "bilingual", "bahasa", "bahasa lagu", "terjemahan", "dua bahasa"],
             Command::AllLanguages => &["language", "languages", "both", "together", "every language", "bahasa", "semua bahasa", "bersama"],
             Command::StartService => &["start live", "go live", "begin", "mulai", "mulai ibadah", "tayangkan"],
@@ -1106,6 +1111,7 @@ impl App {
             Command::Keys => self.sheet = Sheet::Keys,
             Command::Tour => self.start_tour(),
             Command::FirstRun => self.start_onboarding(),
+            Command::WhatsNew => self.news = Some(0),
             Command::Languages => self.open_languages(self.plan.languages.is_some()),
             Command::AllLanguages => self.show_all_languages(),
             Command::StartService => self.start_service(),

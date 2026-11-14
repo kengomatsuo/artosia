@@ -85,6 +85,9 @@ fn setup(s: &mut App, waker: Waker) {
         s.start_first_run();
     } else if !rune::is_headless() && (!s.settings.toured || s.folder.is_none()) {
         s.start_tour();
+    } else if !rune::is_headless() && s.has_news() {
+        // An update brought new features: they are shown once, after the tour has been seen.
+        s.news = Some(0);
     }
 }
 
@@ -771,6 +774,8 @@ const SCENES: &[Scene] = &[
         s.help = Some(crate::guide::lessons::Feature::Calendar);
     }),
     ("lesson-calendar", |s| s.start_lesson(crate::guide::lessons::CALENDAR)),
+    ("whats-new", |s| s.news = Some(0)),
+    ("whats-new-people", |s| s.news = Some(1)),
     ("lesson-calendar-new", |s| {
         s.open_tab(Tab::Calendar);
         s.start_lesson(crate::guide::lessons::CALENDAR);

@@ -642,6 +642,9 @@ text!(TOUR_SKIP, "Skip", "Skip");
 text!(GUIDE_SCREENS_OPEN, "Press the ringed button to set up the projector", "Tekan tombol berlingkar untuk atur proyektor");
 text!(GUIDE_SCREENS_OPEN_MORE, "Pick which screen the congregation sees and which one the stage sees", "Pilih monitor untuk jemaat dan monitor untuk panggung");
 text!(GUIDE_OPEN_SEARCH, "Open search", "Buka pencarian");
+text!(WHATSNEW_TRY, "Try it", "Coba");
+text!(CMD_WHATSNEW, "What's new", "Yang baru");
+text!(CMD_WHATSNEW_DETAIL, "The features this version brought, each with a short demonstration", "The features this version brought, each with a short demonstration");
 text!(GUIDE_HELP, "Help", "Bantuan");
 text!(GUIDE_SHOW_ME, "Show me", "Tunjukkan caranya");
 text!(HELP_CALENDAR, "Your regular services and events, entered once. The schedule slide fills itself from them.", "Kalender berisi ibadah dan acara gereja, cukup diisi sekali. Slide pengumuman jadwal terisi sendiri.");
@@ -1658,6 +1661,17 @@ pub fn stage_next(label: &str) -> String {
 }
 
 /// Which stop of the tour is showing, out of how many.
+/// What's new's heading, naming the version whose features it shows.
+pub fn whats_new_title(version: &str) -> String {
+    if let Some(text) = say("whats_new_title", None, None, &[("version", text_arg(version))]) {
+        return text;
+    }
+    if indonesian() {
+        return format!("Yang baru di Artosia {version}");
+    }
+    format!("New in Artosia {version}")
+}
+
 /// A lesson step that sends the person to a tab, named as the tab bar names it.
 pub fn guide_open_tab(tab: &str) -> String {
     if let Some(text) = say("guide_open_tab", None, None, &[("tab", text_arg(tab))]) {

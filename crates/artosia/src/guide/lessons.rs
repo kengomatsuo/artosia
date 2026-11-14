@@ -82,6 +82,16 @@ impl Feature {
         }
     }
 
+    /// The clip that shows the feature best: its window's own button being pressed.
+    pub fn clip_step(self) -> &'static str {
+        match self {
+            Feature::Calendar => "calendar-new",
+            Feature::People => "people-add",
+            Feature::Giving => "giving-add",
+            Feature::Templates => "templates-use",
+        }
+    }
+
     pub fn lesson(self) -> Lesson<Action> {
         match self {
             Feature::Calendar => CALENDAR,
