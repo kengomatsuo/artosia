@@ -82,3 +82,11 @@ A language is listed once its writer has composed it from the briefs and the tes
 2. List them: a line in `LANGUAGES` (`crates/artosia/src/languages.rs`), in `EXTRA_LANGUAGES` (`crates/artosia-remote/src/languages.rs`), in the setup's strings and in `LANGUAGES` of `tools/build-site.py`; add its plural rule to `plural_category`.
 3. Run the tests that hold every table to the briefs' widths and variables: `cargo test -p artosia languages`, `cargo test -p artosia-remote`, `cargo test -p artosia-setup`.
 4. Render the screens in it (steps 4 and 5 of "A round"; `tools/site-shots.sh` for the homepage) and give them to a second reader.
+
+## A round for new texts (the overhaul's way, 2026-11-14)
+
+1. Briefs: add entries with `python -I tools/add-briefs.py . <entries.json>` (or by hand), then `python -I tools/check-brief.py` to 0 problems.
+2. Pack the briefs no table answers yet: `python -I tools/i18n-round.py pack . <round>/briefs.md <keys...>`.
+3. Three writer agents in parallel (Indonesian, Vietnamese and French; the two Chinese, Japanese and Korean; Spanish and Brazilian Portuguese), each given `docs/i18n/writer-rules.md`, the pack and the round folder, and nothing else.
+4. Read every back-translation against its brief; send a wrong key back with a fuller brief.
+5. `python -I tools/i18n-round.py merge . <round>`, then `ARTOSIA_WRITE_SNAPSHOT=1 cargo test -p artosia strings_snapshot` when English or Indonesian changed, then the tests, a fresh `cargo build` and renders in two or three languages.
