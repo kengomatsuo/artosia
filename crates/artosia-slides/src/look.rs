@@ -62,6 +62,18 @@ impl Outline {
     }
 }
 
+/// How an announcement slide is built: its structure, not only its colours.
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
+pub enum NoticeStyle {
+    /// Dark scrim over the background, a rule under a small label, a heavy title, bare rows.
+    #[default]
+    Hairline,
+    /// A side tab, and the rows on an opaque ruled table over the background.
+    Ledger,
+    /// A flat band for the title over a flat charcoal body.
+    Band,
+}
+
 fn black() -> [u8; 3] {
     [0, 0, 0]
 }
@@ -91,6 +103,9 @@ pub struct Look {
     pub dim: f32,
     /// The most lyric lines on one slide; 0 keeps each section whole.
     pub max_lines: usize,
+    /// How announcement slides are built.
+    #[serde(default)]
+    pub notice_style: NoticeStyle,
 }
 
 pub fn rgb(c: [u8; 3]) -> Color {
@@ -114,6 +129,7 @@ impl Look {
             shadow: false,
             dim: 0.35,
             max_lines: 4,
+            notice_style: NoticeStyle::Hairline,
         }
     }
 

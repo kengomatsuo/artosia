@@ -5,6 +5,7 @@ pub mod audience;
 pub mod fonts;
 pub mod frame;
 pub mod look;
+pub mod notice;
 pub mod preview;
 pub mod stage;
 pub mod voices;

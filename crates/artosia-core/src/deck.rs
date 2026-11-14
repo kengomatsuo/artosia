@@ -13,9 +13,23 @@ pub enum SlideKind {
     Announcement,
 }
 
+/// What an announcement is about, which decides how its lines are laid out.
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Hash, Serialize, Deserialize)]
+pub enum NoticeKind {
+    #[default]
+    Plain,
+    Schedule,
+    Birthdays,
+    Money,
+    Account,
+}
+
 #[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
 pub struct Slide {
     pub kind: SlideKind,
+    /// What the announcement is about; `Plain` draws the words as they are.
+    #[serde(default)]
+    pub notice: NoticeKind,
     /// "Verse 1", "Chorus", "John 3:16".
     pub label: String,
     /// "V1", "C", "16".
@@ -509,6 +523,28 @@ pub fn announcements_deck(announcements: &[Announcement], people: &[Person], tod
     }
 }
 
+/// A notice's lines as rows of cells.
+#[derive(Clone, Debug, Default, PartialEq, Eq)]
+pub struct NoticeBody {
+    /// A tab splits a line into cells. In a schedule an empty first cell means "the same day as
+    /// the row above", and stays empty so the day is drawn once.
+    pub rows: Vec<Vec<String>>,
+    /// The line that started with `== `, drawn apart as the total.
+    pub total: Option<Vec<String>>,
+}
+
+pub fn notice_body(text: &str) -> NoticeBody {
+    let cells = |line: &str| line.split('\t').map(|cell| cell.trim().to_string()).collect::<Vec<_>>();
+    let mut body = NoticeBody::default();
+    for line in text.lines().filter(|line| !line.trim().is_empty()) {
+        match line.strip_prefix("== ") {
+            Some(total) => body.total = Some(cells(total)),
+            None => body.rows.push(cells(line)),
+        }
+    }
+    body
+}
+
 pub fn announcement_slide(announcement: &Announcement) -> Slide {
     Slide {
         kind: SlideKind::Announcement,
@@ -541,6 +577,14 @@ mod tests {
     use super::*;
     use crate::bible::Verse;
     use crate::song::Translation;
+
+    #[test]
+    fn a_notice_body_splits_cells_and_sets_the_total_line_apart() {
+        let body = notice_body("Minggu\t06.30\tIbadah\n\t09.00\tIbadah 2\n\n== Total\tRp 10");
+        assert_eq!(body.rows, vec![vec!["Minggu", "06.30", "Ibadah"], vec!["", "09.00", "Ibadah 2"]]);
+        assert_eq!(body.total, Some(vec!["Total".to_string(), "Rp 10".to_string()]));
+        assert_eq!(notice_body("one line").rows, vec![vec!["one line"]]);
+    }
 
     #[test]
     fn a_song_deck_follows_the_order_and_splits_long_sections() {

@@ -5,12 +5,13 @@
 
 use std::hash::{Hash, Hasher};
 
-use artosia_core::deck::{Slide, SlideKind};
+use artosia_core::deck::{NoticeKind, Slide, SlideKind};
 use rune::{Align, Color, El, NativeSurface, Pixels, SurfaceFit, TextStyle, Transition, col, el, row, text};
 
 use crate::frame::{Countdown, OutputState};
 use crate::fonts;
-use crate::look::{Background, Look, Outline, Place, rgb};
+use crate::look::{Background, Look, NoticeStyle, Outline, Place, rgb};
+use crate::notice;
 use crate::voices;
 
 /// Pictures and video a screen draws; the caller loads them.
@@ -46,6 +47,7 @@ pub fn clock_text(seconds: f64) -> String {
 fn key_of(slide: &Slide) -> String {
     let mut hasher = std::collections::hash_map::DefaultHasher::new();
     (&slide.label, &slide.heading, &slide.text, &slide.second, &slide.image).hash(&mut hasher);
+    slide.notice.hash(&mut hasher);
     // Another language, or the other half of a split slide, is another slide to fade to.
     if !slide.more.is_empty() || slide.part.is_some() {
         (&slide.more, slide.part).hash(&mut hasher);
@@ -344,6 +346,9 @@ pub fn audience(state: &OutputState, w: f32, h: f32, media: Media, detail: Detai
         );
     } else {
         match state.slide.as_ref().filter(|_| !state.text_hidden && !state.logo_on) {
+            Some(slide) if slide.notice != NoticeKind::Plain || look.notice_style != NoticeStyle::Hairline => {
+                root = root.child(notice::notice(slide, look, w, h).key(format!("{}-notice", key_of(slide))).transition(Transition::opacity()));
+            }
             Some(slide) => {
                 let picture = media.slide.filter(|_| !slide.image.is_empty());
                 if let Some(picture) = picture {

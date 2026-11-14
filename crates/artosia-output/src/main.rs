@@ -24,7 +24,8 @@ use std::sync::{Arc, Mutex, OnceLock};
 
 use artosia_slides::audience::{Detail, Media, audience};
 use artosia_slides::frame::{DisplayInfo, FromOutput, OutputState, PORT, ToOutput, decode, encode, trace};
-use artosia_slides::look::Background;
+use artosia_core::deck::NoticeKind;
+use artosia_slides::look::{Background, NoticeStyle};
 use artosia_slides::stage::stage;
 use rune::{AppSpec, Color, Cx, El, Image, ImageCache, NativeSurface, TextStyle, Tx, Waker, WindowOptions, WindowSpec, col, el, text};
 
@@ -261,7 +262,10 @@ fn view(s: &Screen, cx: &mut Cx<Screen>) -> El {
                 logo: s.logo.as_ref().map(|(_, image)| image.pixels()),
                 slide: s.slide_picture.as_ref().map(|(_, image)| image.pixels()),
             };
-            root.child(audience(&state, w, h, media, Detail::Output, s.now).absolute(0.0, 0.0))
+            match demo::sheet(w, h).or_else(|| demo::direct().then(|| demo::through_notice(&state, w, h))) {
+                Some(sheet) => root.child(sheet),
+                None => root.child(audience(&state, w, h, media, Detail::Output, s.now).absolute(0.0, 0.0)),
+            }
         }
         Role::Stage => root.child(stage(&state, w, h, s.now).absolute(0.0, 0.0)),
         Role::Anchor => root,
@@ -378,6 +382,25 @@ const SCENES: &[Scene] = &[
     ("languages-one", |_| shared().set_state(demo::languages(&["id"], "Midnight", false))),
     ("scripture", |_| shared().set_state(demo::scripture())),
     ("announcement", |_| shared().set_state(demo::announcement())),
+    // The announcement slides in three styles, for the owner to choose from.
+    ("notice-hairline-schedule", |_| shared().set_state(demo::notice_scene(NoticeStyle::Hairline, NoticeKind::Schedule))),
+    ("notice-hairline-birthdays", |_| shared().set_state(demo::notice_scene(NoticeStyle::Hairline, NoticeKind::Birthdays))),
+    ("notice-hairline-money", |_| shared().set_state(demo::notice_scene(NoticeStyle::Hairline, NoticeKind::Money))),
+    ("notice-hairline-account", |_| shared().set_state(demo::notice_scene(NoticeStyle::Hairline, NoticeKind::Account))),
+    ("notice-hairline-plain", |_| shared().set_state(demo::notice_scene(NoticeStyle::Hairline, NoticeKind::Plain))),
+    ("notice-ledger-schedule", |_| shared().set_state(demo::notice_scene(NoticeStyle::Ledger, NoticeKind::Schedule))),
+    ("notice-ledger-birthdays", |_| shared().set_state(demo::notice_scene(NoticeStyle::Ledger, NoticeKind::Birthdays))),
+    ("notice-ledger-money", |_| shared().set_state(demo::notice_scene(NoticeStyle::Ledger, NoticeKind::Money))),
+    ("notice-ledger-account", |_| shared().set_state(demo::notice_scene(NoticeStyle::Ledger, NoticeKind::Account))),
+    ("notice-ledger-plain", |_| shared().set_state(demo::notice_scene(NoticeStyle::Ledger, NoticeKind::Plain))),
+    ("notice-band-schedule", |_| shared().set_state(demo::notice_scene(NoticeStyle::Band, NoticeKind::Schedule))),
+    ("notice-band-birthdays", |_| shared().set_state(demo::notice_scene(NoticeStyle::Band, NoticeKind::Birthdays))),
+    ("notice-band-money", |_| shared().set_state(demo::notice_scene(NoticeStyle::Band, NoticeKind::Money))),
+    ("notice-band-account", |_| shared().set_state(demo::notice_scene(NoticeStyle::Band, NoticeKind::Account))),
+    ("notice-band-plain", |_| shared().set_state(demo::notice_scene(NoticeStyle::Band, NoticeKind::Plain))),
+    ("notice-sheet-hairline", |_| shared().set_state(demo::show_sheet(NoticeStyle::Hairline))),
+    ("notice-sheet-ledger", |_| shared().set_state(demo::show_sheet(NoticeStyle::Ledger))),
+    ("notice-sheet-band", |_| shared().set_state(demo::show_sheet(NoticeStyle::Band))),
     ("countdown", |_| shared().set_state(demo::countdown(unix_now()))),
     ("message", |_| shared().set_state(demo::message())),
     ("classic", |_| shared().set_state(demo::classic())),
