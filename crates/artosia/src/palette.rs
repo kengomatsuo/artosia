@@ -32,6 +32,8 @@ pub enum Scope {
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum Command {
     NewSong,
+    /// The search on the Bible: the books, then chapters and verses.
+    Bible,
     PasteSong,
     Announcements,
     /// The Calendar tab.
@@ -93,7 +95,7 @@ pub enum Command {
 }
 
 impl Command {
-    pub const ALL: [Command; 50] = [
+    pub const ALL: [Command; 51] = [
         Command::StartService,
         Command::Next,
         Command::Previous,
@@ -105,6 +107,7 @@ impl Command {
         Command::LoopAnnouncements,
         Command::Undo,
         Command::NewSong,
+        Command::Bible,
         Command::PasteSong,
         Command::EditSong,
         Command::Announcements,
@@ -149,6 +152,7 @@ impl Command {
     pub fn label(self) -> &'static str {
         match self {
             Command::NewSong => t::CMD_NEW_SONG(),
+            Command::Bible => t::START_BIBLE(),
             Command::PasteSong => t::CMD_PASTE_SONG(),
             Command::Announcements => t::CMD_ANNOUNCEMENTS(),
             Command::Calendar => t::TAB_CALENDAR(),
@@ -204,6 +208,7 @@ impl Command {
     pub fn detail(self) -> &'static str {
         match self {
             Command::NewSong => t::CMD_NEW_SONG_DETAIL(),
+            Command::Bible => t::START_BIBLE_DETAIL(),
             Command::PasteSong => t::CMD_PASTE_SONG_DETAIL(),
             Command::Announcements => t::CMD_ANNOUNCEMENTS_DETAIL(),
             Command::Calendar => t::CMD_CALENDAR_DETAIL(),
@@ -261,6 +266,7 @@ impl Command {
     fn aliases(self) -> &'static [&'static str] {
         match self {
             Command::NewSong => &["add song", "create song", "lagu baru", "tambah lagu", "buat lagu"],
+            Command::Bible => &["bible", "scripture", "verse", "passage", "alkitab", "ayat", "firman", "perikop"],
             Command::PasteSong => &["paste", "clipboard", "tempel lirik", "tempel lagu"],
             Command::Announcements => &["notices", "edit announcements", "pengumuman", "warta"],
             Command::Calendar => &["calendar", "schedule", "events", "week", "month", "services", "kalender", "jadwal", "acara", "agenda", "minggu ini"],
@@ -1063,6 +1069,7 @@ impl App {
     pub fn run(&mut self, command: Command) {
         match command {
             Command::NewSong => self.edit_new_song(artosia_core::song::Song::default()),
+            Command::Bible => self.open_palette(Scope::Bible, ""),
             Command::PasteSong => self.want_paste = true,
             Command::Announcements => self.edit_announcements(),
             Command::Calendar => self.open_tab(crate::state::Tab::Calendar),

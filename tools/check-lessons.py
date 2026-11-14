@@ -17,7 +17,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 EXE = Path(os.environ.get("ARTOSIA_EXE", ROOT / "target" / "debug" / "artosia.exe"))
-LESSONS = ["basics", "screens", "calendar", "people", "giving", "templates", "notices", "look", "plan", "phone", "listen", "stream", "web", "pptx"]
+LESSONS = ["basics", "screens", "calendar", "people", "giving", "templates", "notices", "look", "plan", "phone", "listen", "stream", "web", "pptx", "songs", "bible"]
 # Long enough for the poll, which wakes once a second, to scroll a ringed control into view.
 GAP = 1.6
 WORK = Path(tempfile.gettempdir()) / "artosia-check-lessons"

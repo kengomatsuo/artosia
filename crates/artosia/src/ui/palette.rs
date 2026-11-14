@@ -20,6 +20,7 @@ const LIST: f32 = 400.0;
 fn command_icon(command: Command) -> &'static rune::Icon {
     match command {
         Command::NewSong => &icons::PLUS,
+        Command::Bible => &icons::BOOK,
         Command::PasteSong => &icons::PASTE,
         Command::Announcements | Command::LoopAnnouncements => &icons::ANNOUNCE,
         Command::Calendar => &icons::CALENDAR,
@@ -529,7 +530,8 @@ fn input_row(s: &App, k: &Kit) -> El {
     // Tab turns this switch unless the picked row gives Tab another job: its key is drawn
     // beside it, where the eye is when it wonders how to narrow the list.
     let turns = !matches!(s.palette.hits.get(s.palette.picked), Some(Hit::Song { .. } | Hit::Passage { step: Some(_), .. }));
-    line.child(field).child(el().layer_opacity(if turns { 1.0 } else { 0.0 }).child(keycaps(k, "Tab", None))).child(scopes).child(close(k))
+    let help = if s.palette.scope == Scope::Bible { crate::ui::tour::help_mark(s, k, crate::guide::lessons::Feature::Bible) } else { el() };
+    line.child(field).child(el().layer_opacity(if turns { 1.0 } else { 0.0 }).child(keycaps(k, "Tab", None))).child(help).child(scopes).child(close(k))
 }
 
 /// The way out for the pointer: the panel stays open after a song is added to the plan with

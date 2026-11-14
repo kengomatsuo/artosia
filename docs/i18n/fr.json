@@ -5731,5 +5731,85 @@
   "text": "Cherche « {name} » dans la recherche",
   "back": "Look for \"{name}\" in the search",
   "why": "tu as in the guide steps; French spaced quotes"
+ },
+ "HELP_SONGS": {
+  "text": "Écris un chant une fois, avec ses paroles et ses parties, et montre-le quand tu veux.",
+  "back": "Write a song once, with its words and parts, and show it when you want.",
+  "why": "Tu"
+ },
+ "HELP_BIBLE": {
+  "text": "Trouve un passage par livre, chapitre et verset, ou par des mots du texte.",
+  "back": "Find a passage by book, chapter and verse, or by words of the text.",
+  "why": "Tu"
+ },
+ "GUIDE_SONG_NEW": {
+  "text": "Clique sur le bouton entouré pour écrire un chant",
+  "back": "Click the ringed button to write a song",
+  "why": "Tu"
+ },
+ "GUIDE_SONG_NEW_MORE": {
+  "text": "Tu peux aussi coller les paroles d'ailleurs.",
+  "back": "You can also paste the words from elsewhere.",
+  "why": "Tu"
+ },
+ "GUIDE_SONG_WORDS": {
+  "text": "Écris ou colle les paroles ici",
+  "back": "Write or paste the words here",
+  "why": "Tu"
+ },
+ "GUIDE_SONG_WORDS_MORE": {
+  "text": "Une ligne vide commence la diapositive suivante.",
+  "back": "An empty line starts the next slide.",
+  "why": "Tu"
+ },
+ "GUIDE_SONG_PARTS": {
+  "text": "Nomme chaque partie : couplet, refrain, pont",
+  "back": "Name each part: verse, chorus, bridge",
+  "why": "Tu"
+ },
+ "GUIDE_SONG_PARTS_MORE": {
+  "text": "Place le curseur dans une partie, puis clique sur son nom.",
+  "back": "Place the cursor in a part, then click its name.",
+  "why": "Tu"
+ },
+ "GUIDE_SONG_SAVE": {
+  "text": "Valider ajoute le chant à ceux de l'église",
+  "back": "Validate adds the song to the church's",
+  "why": "Tu"
+ },
+ "GUIDE_SONG_SAVE_MORE": {
+  "text": "La recherche le trouve ensuite par titre ou par paroles.",
+  "back": "The search then finds it by title or by words.",
+  "why": "Tu"
+ },
+ "GUIDE_BIBLE_OPEN": {
+  "text": "Clique sur le bouton entouré : un passage biblique",
+  "back": "Click the ringed button: a Bible passage",
+  "why": "Tu"
+ },
+ "GUIDE_BIBLE_OPEN_MORE": {
+  "text": "Il s'affiche dans la Bible choisie par l'église.",
+  "back": "It shows in the Bible chosen by the church.",
+  "why": "Tu"
+ },
+ "GUIDE_BIBLE_BOOKS": {
+  "text": "Choisis un livre, puis le chapitre et les versets",
+  "back": "Choose a book, then the chapter and verses",
+  "why": "Tu"
+ },
+ "GUIDE_BIBLE_BOOKS_MORE": {
+  "text": "Le passage arrive dans l'Aperçu, prêt à afficher.",
+  "back": "The passage arrives in the Preview, ready to display.",
+  "why": "Tu"
+ },
+ "GUIDE_BIBLE_TYPE": {
+  "text": "Ou tape une référence, ou des mots du verset",
+  "back": "Or type a reference, or words of the verse",
+  "why": "Tu"
+ },
+ "GUIDE_BIBLE_TYPE_MORE": {
+  "text": "Comme Jean 3:16, ou des mots dont tu te souviens",
+  "back": "Like John 3:16, or words you remember",
+  "why": "Tu"
  }
 }

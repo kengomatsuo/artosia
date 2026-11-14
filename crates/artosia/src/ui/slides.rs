@@ -49,12 +49,12 @@ pub(crate) fn start(s: &App, k: &Kit) -> El {
                 row()
                     .gap(space::S3)
                     .child(quick(k, t::START_SONGS(), t::START_SONGS_DETAIL(), &icons::SONG, |s, _| s.open_palette(Scope::Songs, "")))
-                    .child(quick(k, t::START_BIBLE(), t::START_BIBLE_DETAIL(), &icons::BOOK, |s, _| s.open_palette(Scope::Bible, ""))),
+                    .child(quick(k, t::START_BIBLE(), t::START_BIBLE_DETAIL(), &icons::BOOK, |s, _| s.run(Command::Bible)).key(crate::guide::anchors::mark(Command::Bible, crate::guide::Place::Panel, true, 1))),
             )
             .child(
                 row()
                     .gap(space::S3)
-                    .child(quick(k, t::CMD_NEW_SONG(), t::START_NEW_DETAIL(), &icons::PLUS, |s, _| s.run(Command::NewSong)))
+                    .child(quick(k, t::CMD_NEW_SONG(), t::START_NEW_DETAIL(), &icons::PLUS, |s, _| s.run(Command::NewSong)).key(crate::guide::anchors::mark(Command::NewSong, crate::guide::Place::Panel, true, 1)))
                     .child(quick(k, t::CMD_ANNOUNCEMENTS(), t::START_ANNOUNCEMENTS_DETAIL(), &icons::ANNOUNCE, |s, _| {
                         // With announcements written, the card opens them to show; with none, to write.
                         if s.announcements.is_empty() { s.run(Command::Announcements) } else { s.open_announcements() }

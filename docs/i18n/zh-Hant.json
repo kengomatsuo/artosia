@@ -5674,5 +5674,85 @@
   "text": "在搜尋中找到「{name}」",
   "back": "Find \"{name}\" in the search",
   "why": "table word 搜尋, Taiwan quotes"
+ },
+ "HELP_SONGS": {
+  "text": "詩歌只要寫一次，歌詞與各段都會記住，隨時能投影。",
+  "back": "A song only needs writing once; its words and parts are remembered, and it can be projected any time.",
+  "why": "按下框起來的按鈕"
+ },
+ "HELP_BIBLE": {
+  "text": "聖經經文可依書卷、章、節尋找，也能用經文裡的字詞找",
+  "back": "Passages can be found by book, chapter, verse, or by words in the passage",
+  "why": "按下框起來的按鈕"
+ },
+ "GUIDE_SONG_NEW": {
+  "text": "按下框起來的按鈕，新增一首詩歌",
+  "back": "Press the boxed button, add a song",
+  "why": "按下框起來的按鈕"
+ },
+ "GUIDE_SONG_NEW_MORE": {
+  "text": "歌詞也能從其他地方貼上",
+  "back": "The words can also be pasted from other places",
+  "why": "按下框起來的按鈕"
+ },
+ "GUIDE_SONG_WORDS": {
+  "text": "在這裡輸入或貼上歌詞",
+  "back": "Type or paste the words here",
+  "why": "按下框起來的按鈕"
+ },
+ "GUIDE_SONG_WORDS_MORE": {
+  "text": "空一行就是下一張投影片",
+  "back": "One empty line is the next slide",
+  "why": "按下框起來的按鈕"
+ },
+ "GUIDE_SONG_PARTS": {
+  "text": "替每一段取名，例如主歌、副歌、橋段",
+  "back": "Give each part a name, for example verse, chorus, bridge",
+  "why": "按下框起來的按鈕"
+ },
+ "GUIDE_SONG_PARTS_MORE": {
+  "text": "游標放進某一段，再按那一段名稱的按鈕",
+  "back": "Put the cursor into a part, then press that part's name button",
+  "why": "按下框起來的按鈕"
+ },
+ "GUIDE_SONG_SAVE": {
+  "text": "儲存後，這首詩歌就收進教會的詩歌庫",
+  "back": "After saving, this song is taken into the church's song library",
+  "why": "按下框起來的按鈕"
+ },
+ "GUIDE_SONG_SAVE_MORE": {
+  "text": "之後用搜尋，輸入標題或歌詞就找得到",
+  "back": "After that, use search; type the title or words and it is found",
+  "why": "按下框起來的按鈕"
+ },
+ "GUIDE_BIBLE_OPEN": {
+  "text": "按下框起來的按鈕，尋找一段經文",
+  "back": "Press the boxed button, find a passage",
+  "why": "按下框起來的按鈕"
+ },
+ "GUIDE_BIBLE_OPEN_MORE": {
+  "text": "經文會用教會選定的聖經譯本顯示",
+  "back": "The passage is shown in the Bible translation the church selected",
+  "why": "按下框起來的按鈕"
+ },
+ "GUIDE_BIBLE_BOOKS": {
+  "text": "先點書卷，再選章與節",
+  "back": "First tap the book, then pick chapter and verses",
+  "why": "按下框起來的按鈕"
+ },
+ "GUIDE_BIBLE_BOOKS_MORE": {
+  "text": "經文接著進到預覽，隨時可以投影",
+  "back": "The passage then goes into Preview, can be projected any time",
+  "why": "按下框起來的按鈕"
+ },
+ "GUIDE_BIBLE_TYPE": {
+  "text": "也能直接輸入經文出處，或經文裡的字詞",
+  "back": "You can also type the reference directly, or words in the passage",
+  "why": "按下框起來的按鈕"
+ },
+ "GUIDE_BIBLE_TYPE_MORE": {
+  "text": "例如約翰福音 3:16，或是記得的幾個字",
+  "back": "For example John 3:16, or a few words you remember",
+  "why": "按下框起來的按鈕"
  }
 }

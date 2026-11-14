@@ -5676,5 +5676,85 @@
   "text": "在搜索中找到“{name}”",
   "back": "Find \"{name}\" in the search",
   "why": "table word 搜索"
+ },
+ "HELP_SONGS": {
+  "text": "诗歌写一次就行，歌词和各段都存好，随时可以投出来。",
+  "back": "Write a song once; the words and parts are kept, and it can be shown any time.",
+  "why": "按下带框的按钮"
+ },
+ "HELP_BIBLE": {
+  "text": "圣经经文可按书卷、章、节查找，也可按其中的字句查找",
+  "back": "Bible passages can be found by book, chapter, verse, or by words in them",
+  "why": "按下带框的按钮"
+ },
+ "GUIDE_SONG_NEW": {
+  "text": "按下带框的按钮，新建诗歌",
+  "back": "Press the framed button, new song",
+  "why": "按下带框的按钮"
+ },
+ "GUIDE_SONG_NEW_MORE": {
+  "text": "歌词也可以从别处粘贴进来",
+  "back": "The words can also be pasted in from elsewhere",
+  "why": "按下带框的按钮"
+ },
+ "GUIDE_SONG_WORDS": {
+  "text": "在这里输入或粘贴歌词",
+  "back": "Type or paste the words here",
+  "why": "按下带框的按钮"
+ },
+ "GUIDE_SONG_WORDS_MORE": {
+  "text": "空一行，就开始下一张幻灯片",
+  "back": "Leave a blank line and the next slide begins",
+  "why": "按下带框的按钮"
+ },
+ "GUIDE_SONG_PARTS": {
+  "text": "给每一段命名，如主歌、副歌、桥段",
+  "back": "Name each part, such as verse, chorus, bridge",
+  "why": "按下带框的按钮"
+ },
+ "GUIDE_SONG_PARTS_MORE": {
+  "text": "光标放在某一段里，再按这段名称的按钮",
+  "back": "Put the cursor in a part, then press the button with that part's name",
+  "why": "按下带框的按钮"
+ },
+ "GUIDE_SONG_SAVE": {
+  "text": "保存后，诗歌就归入教会的诗歌",
+  "back": "After saving, the song joins the church's songs",
+  "why": "按下带框的按钮"
+ },
+ "GUIDE_SONG_SAVE_MORE": {
+  "text": "之后搜索可按标题或歌词找到它",
+  "back": "After that, search can find it by title or words",
+  "why": "按下带框的按钮"
+ },
+ "GUIDE_BIBLE_OPEN": {
+  "text": "按下带框的按钮，查找圣经经文",
+  "back": "Press the framed button, find Bible passages",
+  "why": "按下带框的按钮"
+ },
+ "GUIDE_BIBLE_OPEN_MORE": {
+  "text": "经文会按教会选定的圣经译本显示",
+  "back": "The passage shows in the Bible translation the church selected",
+  "why": "按下带框的按钮"
+ },
+ "GUIDE_BIBLE_BOOKS": {
+  "text": "先选书卷，再选章和节",
+  "back": "First pick the book, then chapter and verses",
+  "why": "按下带框的按钮"
+ },
+ "GUIDE_BIBLE_BOOKS_MORE": {
+  "text": "经文随即进入预览，随时可以投出",
+  "back": "The passage then enters Preview, can be shown any time",
+  "why": "按下带框的按钮"
+ },
+ "GUIDE_BIBLE_TYPE": {
+  "text": "也可以直接输入经文出处，或其中的字句",
+  "back": "You can also type the reference directly, or words in it",
+  "why": "按下带框的按钮"
+ },
+ "GUIDE_BIBLE_TYPE_MORE": {
+  "text": "如约翰福音 3:16，或记得的几个字",
+  "back": "Such as John 3:16, or a few words you remember",
+  "why": "按下带框的按钮"
  }
 }

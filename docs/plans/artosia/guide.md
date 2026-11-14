@@ -54,6 +54,6 @@ Order: G1, G2, G3, G4, G5, G6, G7, G8 (strings ride along with each task).
 | Task | State |
 |---|---|
 | G1 to G4, G7 | Built: engine, anchors, bubble, clips, what's new |
-| G5 | Help marks on the seven tabs; help rows in Screens, Phone, Listen, Stream, songs from the internet and the PowerPoint import. Owed: a static check that lists a panel without one; the song editor and the Bible search |
-| G6 | Thirteen lessons and the tour, each walked to its end by `tools/check-lessons.py` (14 pass). Owed: songs (the editor) and Bible |
+| G5 | Built: help marks on the seven tabs, the song editor and the Bible search; help rows in Screens, Phone, Listen, Stream, songs from the internet and the PowerPoint import. `tools/check-help.py` renders each and fails one that lost it (15 pass) |
+| G6 | Built: fifteen lessons and the tour, each walked to its end in the real program by `tools/check-lessons.py` (16 pass) |
 | G8 | Every guide text in ten languages from its brief |

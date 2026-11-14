@@ -20856,5 +20856,286 @@
    "search"
   ],
   "notes": "Keep the token {name} exactly, in quotation marks the language uses. Use the table's word for the search (GUIDE_OPEN_SEARCH)."
+ },
+ {
+  "key": "HELP_SONGS",
+  "kind": "const",
+  "screen": "The song editor, where a new song is written or a song is changed. A small question-mark mark beside the title opens a card with this text and a button that starts a short guided lesson; the same text is also the grey line of the guide step that opens it.",
+  "moment": "The person wonders what the song editor is for.",
+  "role": "explanation",
+  "does": "Says a song is written once, its words and its parts, and can then be shown any time.",
+  "budget": 90,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "song",
+   "section"
+  ],
+  "notes": "One sentence."
+ },
+ {
+  "key": "HELP_BIBLE",
+  "kind": "const",
+  "screen": "The search, switched to the Bible: a grid of the Bible's books. A small question-mark mark beside the title opens a card with this text and a button that starts a short guided lesson; the same text is also the grey line of the guide step that opens it.",
+  "moment": "The person wonders how to find a Bible passage.",
+  "role": "explanation",
+  "does": "Says a passage is found by book, chapter and verse, or by words from it.",
+  "budget": 90,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "passage",
+   "search"
+  ],
+  "notes": "One sentence."
+ },
+ {
+  "key": "GUIDE_SONG_NEW",
+  "kind": "const",
+  "screen": "A guide bubble beside the ringed button that starts a new song, the rest of the window dimmed.",
+  "moment": "The guide waits for the person to press it themselves.",
+  "role": "headline of a guide step",
+  "does": "Tells the person to press the ringed button to write a new song.",
+  "budget": 50,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "song"
+  ],
+  "notes": "Same verb and the same words for the ringed button as the program's other guide steps (GUIDE_CAL_NEW, GUIDE_NOTICE_NEW, GUIDE_PHONE_OPEN)."
+ },
+ {
+  "key": "GUIDE_SONG_NEW_MORE",
+  "kind": "const",
+  "screen": "The grey line under that headline.",
+  "moment": "The person reads what comes next.",
+  "role": "explanation line of a guide step",
+  "does": "Says the words can also be pasted from anywhere.",
+  "budget": 55,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "song"
+  ],
+  "notes": "One sentence."
+ },
+ {
+  "key": "GUIDE_SONG_WORDS",
+  "kind": "const",
+  "screen": "A guide bubble pointing at the big field for a song's words in the song editor. The bubble has Next.",
+  "moment": "The guide explains this part; the person reads and presses Next.",
+  "role": "headline of a guide explanation",
+  "does": "Tells the person to type or paste the words here.",
+  "budget": 40,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "song"
+  ],
+  "notes": "Short."
+ },
+ {
+  "key": "GUIDE_SONG_WORDS_MORE",
+  "kind": "const",
+  "screen": "The grey line under that headline.",
+  "moment": "The person reads the detail.",
+  "role": "explanation line",
+  "does": "Says an empty line starts the next slide.",
+  "budget": 50,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide"
+  ],
+  "notes": "One sentence."
+ },
+ {
+  "key": "GUIDE_SONG_PARTS",
+  "kind": "const",
+  "screen": "A guide bubble pointing at a row of buttons above the words, one per kind of part: verse, chorus, pre-chorus, bridge, ending. The bubble has Next.",
+  "moment": "The guide explains this part; the person reads and presses Next.",
+  "role": "headline of a guide explanation",
+  "does": "Tells the person to name each part of the song, for example verse, chorus, bridge.",
+  "budget": 50,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "section",
+   "verse",
+   "chorus",
+   "bridge"
+  ],
+  "notes": "Short. Use the table's words for verse, chorus and bridge."
+ },
+ {
+  "key": "GUIDE_SONG_PARTS_MORE",
+  "kind": "const",
+  "screen": "The grey line under that headline.",
+  "moment": "The person reads the detail.",
+  "role": "explanation line",
+  "does": "Says to put the text cursor in a part, then press the button with its name.",
+  "budget": 60,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "section"
+  ],
+  "notes": "One sentence."
+ },
+ {
+  "key": "GUIDE_SONG_SAVE",
+  "kind": "const",
+  "screen": "A guide bubble pointing at the song editor's save button. The bubble has Next.",
+  "moment": "The guide explains this part; the person reads and presses Next.",
+  "role": "headline of a guide explanation",
+  "does": "Says saving adds the song to the church's songs.",
+  "budget": 45,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "song",
+   "library"
+  ],
+  "notes": "Short."
+ },
+ {
+  "key": "GUIDE_SONG_SAVE_MORE",
+  "kind": "const",
+  "screen": "The grey line under that headline.",
+  "moment": "The person reads the detail.",
+  "role": "explanation line",
+  "does": "Says the search then finds it by its title or by its words.",
+  "budget": 60,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "search",
+   "song"
+  ],
+  "notes": "One sentence."
+ },
+ {
+  "key": "GUIDE_BIBLE_OPEN",
+  "kind": "const",
+  "screen": "A guide bubble beside the ringed button that opens the search on the Bible, the rest of the window dimmed.",
+  "moment": "The guide waits for the person to press it themselves.",
+  "role": "headline of a guide step",
+  "does": "Tells the person to press the ringed button to find a Bible passage.",
+  "budget": 52,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "passage"
+  ],
+  "notes": "Same verb and the same words for the ringed button as the program's other guide steps (GUIDE_CAL_NEW, GUIDE_NOTICE_NEW, GUIDE_PHONE_OPEN)."
+ },
+ {
+  "key": "GUIDE_BIBLE_OPEN_MORE",
+  "kind": "const",
+  "screen": "The grey line under that headline.",
+  "moment": "The person reads what comes next.",
+  "role": "explanation line of a guide step",
+  "does": "Says the passage shows in the Bible translation the church chose.",
+  "budget": 55,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "bible_translation"
+  ],
+  "notes": "One sentence."
+ },
+ {
+  "key": "GUIDE_BIBLE_BOOKS",
+  "kind": "const",
+  "screen": "A guide bubble pointing at the grid of the Bible's books in the search. The bubble has Next.",
+  "moment": "The guide explains this part; the person reads and presses Next.",
+  "role": "headline of a guide explanation",
+  "does": "Tells the person to pick a book, then the chapter and the verses.",
+  "budget": 50,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "passage"
+  ],
+  "notes": "Short."
+ },
+ {
+  "key": "GUIDE_BIBLE_BOOKS_MORE",
+  "kind": "const",
+  "screen": "The grey line under that headline.",
+  "moment": "The person reads the detail.",
+  "role": "explanation line",
+  "does": "Says the passage then comes into Preview, ready to show.",
+  "budget": 55,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "preview",
+   "passage"
+  ],
+  "notes": "One sentence."
+ },
+ {
+  "key": "GUIDE_BIBLE_TYPE",
+  "kind": "const",
+  "screen": "A guide bubble pointing at the search field at the top of the search. The bubble has Next.",
+  "moment": "The guide explains this part; the person reads and presses Next.",
+  "role": "headline of a guide explanation",
+  "does": "Says they can also type a reference, or words from the verse.",
+  "budget": 50,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "search",
+   "passage"
+  ],
+  "notes": "Short."
+ },
+ {
+  "key": "GUIDE_BIBLE_TYPE_MORE",
+  "kind": "const",
+  "screen": "The grey line under that headline.",
+  "moment": "The person reads the detail.",
+  "role": "explanation line",
+  "does": "Gives an example: a reference such as John 3:16, or the words they remember.",
+  "budget": 55,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "passage"
+  ],
+  "notes": "One sentence. Write the example reference with this language's own name of the book John, as its Bibles write it."
  }
 ]

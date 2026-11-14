@@ -5676,5 +5676,85 @@
   "text": "검색에서 \"{name}\" 찾기",
   "back": "Find \"{name}\" in the search",
   "why": "table word 검색, no particle after the name"
+ },
+ "HELP_SONGS": {
+  "text": "곡은 한 번 쓰면 가사와 파트가 저장돼, 언제든 띄울 수 있어요",
+  "back": "Write a song once and its words and parts are kept, so it can be shown any time",
+  "why": "표시된 버튼을 눌러"
+ },
+ "HELP_BIBLE": {
+  "text": "성경 구절은 책, 장, 절이나 구절 속 말로 찾아요",
+  "back": "Find a Bible passage by book, chapter, verse, or words in it",
+  "why": "표시된 버튼을 눌러"
+ },
+ "GUIDE_SONG_NEW": {
+  "text": "표시된 버튼을 눌러 새 곡을 써요",
+  "back": "Press the marked button to write a new song",
+  "why": "표시된 버튼을 눌러"
+ },
+ "GUIDE_SONG_NEW_MORE": {
+  "text": "가사는 어디서든 붙여 넣을 수 있어요",
+  "back": "The words can be pasted in from anywhere",
+  "why": "표시된 버튼을 눌러"
+ },
+ "GUIDE_SONG_WORDS": {
+  "text": "여기에 가사를 입력하거나 붙여 넣어요",
+  "back": "Type or paste the words here",
+  "why": "표시된 버튼을 눌러"
+ },
+ "GUIDE_SONG_WORDS_MORE": {
+  "text": "빈 줄을 넣으면 다음 슬라이드가 시작돼요",
+  "back": "An empty line starts the next slide",
+  "why": "표시된 버튼을 눌러"
+ },
+ "GUIDE_SONG_PARTS": {
+  "text": "파트마다 이름을 붙여요: 벌스, 후렴, 브리지",
+  "back": "Name each part: verse, chorus, bridge",
+  "why": "표시된 버튼을 눌러"
+ },
+ "GUIDE_SONG_PARTS_MORE": {
+  "text": "파트 안에 커서를 놓고 그 이름의 버튼을 눌러요",
+  "back": "Put the cursor in a part and press the button of its name",
+  "why": "표시된 버튼을 눌러"
+ },
+ "GUIDE_SONG_SAVE": {
+  "text": "저장하면 교회 곡 목록에 들어가요",
+  "back": "Saving puts it in the church's song list",
+  "why": "표시된 버튼을 눌러"
+ },
+ "GUIDE_SONG_SAVE_MORE": {
+  "text": "그 뒤로는 검색에서 제목이나 가사로 찾아요",
+  "back": "After that, find it in search by title or words",
+  "why": "표시된 버튼을 눌러"
+ },
+ "GUIDE_BIBLE_OPEN": {
+  "text": "표시된 버튼을 눌러 성경 구절을 찾아요",
+  "back": "Press the marked button to find a Bible passage",
+  "why": "표시된 버튼을 눌러"
+ },
+ "GUIDE_BIBLE_OPEN_MORE": {
+  "text": "교회가 고른 성경 번역으로 보여요",
+  "back": "It shows in the Bible translation the church chose",
+  "why": "표시된 버튼을 눌러"
+ },
+ "GUIDE_BIBLE_BOOKS": {
+  "text": "책을 고른 다음 장과 절을 골라요",
+  "back": "Pick a book, then pick chapter and verses",
+  "why": "표시된 버튼을 눌러"
+ },
+ "GUIDE_BIBLE_BOOKS_MORE": {
+  "text": "구절이 미리보기로 와서 바로 띄울 수 있어요",
+  "back": "The passage comes to Preview and can be shown right away",
+  "why": "표시된 버튼을 눌러"
+ },
+ "GUIDE_BIBLE_TYPE": {
+  "text": "참조나 구절 속 말을 입력해도 돼요",
+  "back": "You can also type a reference or words in the verse",
+  "why": "표시된 버튼을 눌러"
+ },
+ "GUIDE_BIBLE_TYPE_MORE": {
+  "text": "예를 들어 요한복음 3:16, 또는 기억나는 말",
+  "back": "For example John 3:16, or words you remember",
+  "why": "표시된 버튼을 눌러"
  }
 }

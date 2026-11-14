@@ -5709,5 +5709,85 @@
   "text": "Procure “{name}” na busca",
   "back": "Look for \"{name}\" in the search",
   "why": "table uses busca; polite imperative"
+ },
+ "HELP_SONGS": {
+  "text": "Escreva uma música uma vez, com letra e partes, e mostre quando quiser.",
+  "back": "Write a song once, with words and parts, and show it when you want.",
+  "why": "Botão destacado"
+ },
+ "HELP_BIBLE": {
+  "text": "Ache uma passagem por livro, capítulo e versículo, ou por palavras dela.",
+  "back": "Find a passage by book, chapter and verse, or by words of it.",
+  "why": "Botão destacado"
+ },
+ "GUIDE_SONG_NEW": {
+  "text": "Clique no botão destacado para criar uma música",
+  "back": "Click the highlighted button to create a song",
+  "why": "Botão destacado"
+ },
+ "GUIDE_SONG_NEW_MORE": {
+  "text": "Também dá para colar a letra de qualquer lugar.",
+  "back": "You can also paste the words from anywhere.",
+  "why": "Botão destacado"
+ },
+ "GUIDE_SONG_WORDS": {
+  "text": "Digite ou cole a letra aqui",
+  "back": "Type or paste the words here",
+  "why": "Botão destacado"
+ },
+ "GUIDE_SONG_WORDS_MORE": {
+  "text": "Uma linha em branco começa o próximo slide.",
+  "back": "A blank line starts the next slide.",
+  "why": "Botão destacado"
+ },
+ "GUIDE_SONG_PARTS": {
+  "text": "Dê nome a cada parte: estrofe, refrão, ponte",
+  "back": "Give each part a name: verse, chorus, bridge",
+  "why": "Botão destacado"
+ },
+ "GUIDE_SONG_PARTS_MORE": {
+  "text": "Ponha o cursor numa parte e clique no botão do nome.",
+  "back": "Put the cursor in a part and click the name's button.",
+  "why": "Botão destacado"
+ },
+ "GUIDE_SONG_SAVE": {
+  "text": "Salvar põe a música nas músicas da igreja",
+  "back": "Save puts the song among the church's songs",
+  "why": "Botão destacado"
+ },
+ "GUIDE_SONG_SAVE_MORE": {
+  "text": "Depois a busca acha pelo título ou pela letra.",
+  "back": "Then the search finds it by title or by words.",
+  "why": "Botão destacado"
+ },
+ "GUIDE_BIBLE_OPEN": {
+  "text": "Clique no botão destacado para achar uma passagem",
+  "back": "Click the highlighted button to find a passage",
+  "why": "Botão destacado"
+ },
+ "GUIDE_BIBLE_OPEN_MORE": {
+  "text": "Ela aparece na Bíblia que a igreja escolheu.",
+  "back": "It appears in the Bible the church chose.",
+  "why": "Botão destacado"
+ },
+ "GUIDE_BIBLE_BOOKS": {
+  "text": "Escolha o livro, o capítulo e os versículos",
+  "back": "Choose the book, the chapter and the verses",
+  "why": "Botão destacado"
+ },
+ "GUIDE_BIBLE_BOOKS_MORE": {
+  "text": "A passagem vai para a Prévia, pronta para mostrar.",
+  "back": "The passage goes to Preview, ready to show.",
+  "why": "Botão destacado"
+ },
+ "GUIDE_BIBLE_TYPE": {
+  "text": "Ou digite a referência ou palavras do versículo",
+  "back": "Or type the reference or words of the verse",
+  "why": "Botão destacado"
+ },
+ "GUIDE_BIBLE_TYPE_MORE": {
+  "text": "Como João 3:16, ou o trecho de que se lembra.",
+  "back": "Like John 3:16, or the bit one remembers.",
+  "why": "Botão destacado"
  }
 }

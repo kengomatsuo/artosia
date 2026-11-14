@@ -52,11 +52,12 @@ impl World<Action> for Window<'_> {
 }
 
 /// Every state name `holds` knows; the lesson test checks each step against it.
-pub const KNOWN: [&str; 25] = [
+pub const KNOWN: [&str; 27] = [
     "screens-open", "phone-open", "settings-open", "no-dialog", "plan-tab", "calendar-tab", "people-tab", "giving-tab",
     "notices-tab", "templates-tab", "look-tab", "search-open", "event-form-open", "gift-form-open", "person-form-open",
     "notice-draft", "add-menu-open", "listen-open", "no-projector", "no-monitor-list",
     "stream-open", "no-stream", "web-open", "pptx-open", "new-notice",
+    "editor-open", "bible-open",
 ];
 
 /// The states lessons name. A name nobody knows is never true, and a test lists the names every
@@ -89,6 +90,8 @@ pub fn holds(app: &App, state: &str) -> bool {
         "no-stream" => !crate::stream::available(),
         "web-open" => app.web.is_some(),
         "pptx-open" => app.pptx.is_some(),
+        "editor-open" => app.editor.is_some(),
+        "bible-open" => app.palette.open && app.palette.scope == crate::palette::Scope::Bible,
         // An announcement opened from the list is not a new one.
         "new-notice" => app.notices.as_ref().is_some_and(|form| !app.announcements.iter().any(|card| card.id == form.id)),
         _ => false,

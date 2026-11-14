@@ -45,6 +45,8 @@ STEPS = [
     ("web-open", "start", "anchor-WebSongs-Panel-0", "whole"),
     # The PowerPoint button sits at the foot of the announcement list: the list is scrolled first.
     ("pptx-open", "tab-notices", "anchor-ImportPptx-Panel-0", "whole", "notice-list"),
+    ("song-new", "start", "anchor-NewSong-Panel-0", "whole"),
+    ("bible-open", "start", "anchor-Bible-Panel-0", "whole"),
 ]
 START, STEP, PRESS = 0.2, 0.1, 1.4
 

@@ -29,6 +29,17 @@ const SCREENS_STEPS: [Step<Action>; 3] = [
 ];
 const PHONE_STEPS: [Step<Action>; 2] = [go("phone-open", Action::Run(Command::Remote), "phone-open"), point("phone-switch", "remote-switch", "phone-open", "phone-open")];
 const LISTEN_STEPS: [Step<Action>; 2] = [go("listen-open", Action::Run(Command::Listen), "listen-open"), point("listen-mics", "microphones", "listen-open", "listen-open")];
+const SONGS_STEPS: [Step<Action>; 4] = [
+    go("song-new", Action::Run(Command::NewSong), "editor-open"),
+    point("song-words", "editor-words", "editor-open", "song-new"),
+    point("song-parts", "editor-parts", "editor-open", "song-new"),
+    point("song-save", "editor-save", "editor-open", "song-new"),
+];
+const BIBLE_STEPS: [Step<Action>; 3] = [
+    go("bible-open", Action::Run(Command::Bible), "bible-open"),
+    point("bible-books", "bible-grid", "bible-open", "bible-open"),
+    point("bible-type", "palette-query", "bible-open", "bible-open"),
+];
 const STREAM_STEPS: [Step<Action>; 3] = [
     go("stream-open", Action::Run(Command::Stream), "stream-open"),
     Step { done: Some("no-stream"), ..point("stream-fields", "stream-fields", "stream-open", "stream-open") },
@@ -86,9 +97,11 @@ pub const LISTEN: Lesson<Action> = Lesson { id: "listen", steps: &LISTEN_STEPS }
 pub const STREAM: Lesson<Action> = Lesson { id: "stream", steps: &STREAM_STEPS };
 pub const WEB: Lesson<Action> = Lesson { id: "web", steps: &WEB_STEPS };
 pub const PPTX: Lesson<Action> = Lesson { id: "pptx", steps: &PPTX_STEPS };
+pub const SONGS: Lesson<Action> = Lesson { id: "songs", steps: &SONGS_STEPS };
+pub const BIBLE: Lesson<Action> = Lesson { id: "bible", steps: &BIBLE_STEPS };
 
 /// Every lesson, for the lesson list and the test that runs each one.
-pub const ALL: [Lesson<Action>; 13] = [SCREENS, CALENDAR, PEOPLE, GIVING, TEMPLATES, NOTICES, LOOK, PLAN, PHONE, LISTEN, STREAM, WEB, PPTX];
+pub const ALL: [Lesson<Action>; 15] = [SCREENS, CALENDAR, PEOPLE, GIVING, TEMPLATES, NOTICES, LOOK, PLAN, PHONE, LISTEN, STREAM, WEB, PPTX, SONGS, BIBLE];
 
 /// A feature with a help mark: its name, what it is for, and the lesson that shows it.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -106,6 +119,8 @@ pub enum Feature {
     Stream,
     WebSongs,
     Pptx,
+    Songs,
+    Bible,
 }
 
 impl Feature {
@@ -124,6 +139,8 @@ impl Feature {
             Feature::Stream => "help-stream",
             Feature::WebSongs => "help-web",
             Feature::Pptx => "help-pptx",
+            Feature::Songs => "help-songs",
+            Feature::Bible => "help-bible",
         }
     }
 
@@ -136,6 +153,8 @@ impl Feature {
             Feature::Stream => t::BTN_STREAM(),
             Feature::WebSongs => t::CMD_WEB_SONGS(),
             Feature::Pptx => t::CMD_IMPORT_PPTX(),
+            Feature::Songs => t::START_SONGS(),
+            Feature::Bible => t::START_BIBLE(),
             tabbed => crate::ui::tabs::name(tabbed.tab()),
         }
     }
@@ -151,7 +170,7 @@ impl Feature {
             Feature::Look => Tab::Look,
             // The PowerPoint import adds announcements, and its button is on their tab.
             Feature::Pptx => Tab::Notices,
-            Feature::Plan | Feature::Screens | Feature::Phone | Feature::Listen | Feature::Stream | Feature::WebSongs => Tab::Plan,
+            Feature::Plan | Feature::Screens | Feature::Phone | Feature::Listen | Feature::Stream | Feature::WebSongs | Feature::Songs | Feature::Bible => Tab::Plan,
         }
     }
 
@@ -172,6 +191,8 @@ impl Feature {
             Feature::Stream => t::HELP_STREAM(),
             Feature::WebSongs => t::HELP_WEB(),
             Feature::Pptx => t::HELP_PPTX(),
+            Feature::Songs => t::HELP_SONGS(),
+            Feature::Bible => t::HELP_BIBLE(),
         }
     }
 
@@ -191,6 +212,8 @@ impl Feature {
             Feature::Stream => "stream-open",
             Feature::WebSongs => "web-open",
             Feature::Pptx => "pptx-open",
+            Feature::Songs => "song-new",
+            Feature::Bible => "bible-open",
         }
     }
 
@@ -210,6 +233,8 @@ impl Feature {
             Feature::Stream => STREAM,
             Feature::WebSongs => WEB,
             Feature::Pptx => PPTX,
+            Feature::Songs => SONGS,
+            Feature::Bible => BIBLE,
         }
     }
 }
@@ -237,6 +262,8 @@ pub fn clip(step: &str) -> Option<&'static [u8]> {
         "stream-open" => include_bytes!("../../../../assets/guide/stream-open.png"),
         "web-open" => include_bytes!("../../../../assets/guide/web-open.png"),
         "pptx-open" => include_bytes!("../../../../assets/guide/pptx-open.png"),
+        "song-new" => include_bytes!("../../../../assets/guide/song-new.png"),
+        "bible-open" => include_bytes!("../../../../assets/guide/bible-open.png"),
         _ => return None,
     })
 }
@@ -277,6 +304,13 @@ pub fn words(step: &str) -> (String, &'static str) {
         "pptx-open" => (t::GUIDE_PPTX_OPEN().to_string(), t::GUIDE_PPTX_OPEN_MORE()),
         "pptx-way" => (t::GUIDE_PPTX_WAY().to_string(), t::GUIDE_PPTX_WAY_MORE()),
         "pptx-import" => (t::GUIDE_PPTX_IMPORT().to_string(), t::GUIDE_PPTX_IMPORT_MORE()),
+        "song-new" => (t::GUIDE_SONG_NEW().to_string(), t::GUIDE_SONG_NEW_MORE()),
+        "song-words" => (t::GUIDE_SONG_WORDS().to_string(), t::GUIDE_SONG_WORDS_MORE()),
+        "song-parts" => (t::GUIDE_SONG_PARTS().to_string(), t::GUIDE_SONG_PARTS_MORE()),
+        "song-save" => (t::GUIDE_SONG_SAVE().to_string(), t::GUIDE_SONG_SAVE_MORE()),
+        "bible-open" => (t::GUIDE_BIBLE_OPEN().to_string(), t::GUIDE_BIBLE_OPEN_MORE()),
+        "bible-books" => (t::GUIDE_BIBLE_BOOKS().to_string(), t::GUIDE_BIBLE_BOOKS_MORE()),
+        "bible-type" => (t::GUIDE_BIBLE_TYPE().to_string(), t::GUIDE_BIBLE_TYPE_MORE()),
         _ => (String::new(), ""),
     }
 }

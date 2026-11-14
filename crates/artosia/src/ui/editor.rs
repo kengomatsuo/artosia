@@ -370,7 +370,7 @@ fn form(s: &App, k: &Kit, layer: &mut Vec<El>) -> El {
                         .gap(space::S2)
                         .child(section_label(k, t::FIELD_LYRICS()))
                         .child(spacer())
-                        .child(sections)
+                        .child(sections.key("editor-parts"))
                         .child(btn(t::BTN_TIDY()).small().ghost().help(t::TIDY_HELP()).build(k, |s, _| s.tidy_editor())),
                 )
                 .child(crate::ui::languages::chips(k, editor, layer))
@@ -388,7 +388,8 @@ fn form(s: &App, k: &Kit, layer: &mut Vec<El>) -> El {
                             s.dismiss_suggestions();
                         })
                         .on_key(lyrics_keys)
-                        .build(k),
+                        .build(k)
+                        .key("editor-words"),
                 ),
         )
         .child(order_block(s, k, editor));
@@ -448,6 +449,7 @@ pub fn view(s: &App, k: &Kit, _width: f32, layer: &mut Vec<El>) -> El {
         .gap(space::S2)
         .center_y()
         .child(text(if existing { t::EDITOR_EDIT() } else { t::EDITOR_NEW() }).font(type_::HEADING).color(k.c.text_base))
+        .child(crate::ui::tour::help_mark(s, k, crate::guide::lessons::Feature::Songs))
         .child(spacer());
     if !existing {
         header = header.child(btn(t::CMD_WEB_SONGS()).icon(&icons::GLOBE).ghost().focusable().anchor(crate::palette::Command::WebSongs, crate::guide::Place::Panel).build(k, |s, _| s.open_web_songs()));
@@ -466,7 +468,7 @@ pub fn view(s: &App, k: &Kit, _width: f32, layer: &mut Vec<El>) -> El {
         .child(btn(t::BTN_SAVE()).primary().hint(t::KEY_SAVE()).focusable().build(k, |s, tx| {
             s.save_editor();
             tx.blur();
-        }));
+        }).key("editor-save"));
     col().key("editor").w_full().h_full().min_h(0.0).child(header).child(
         row().w_full().grow(1.0).min_h(0.0).child(form(s, k, layer)).child(crate::ui::widgets::vertical_divider(k)).child(slides(s, k)),
     )

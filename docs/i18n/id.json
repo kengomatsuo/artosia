@@ -5633,5 +5633,85 @@
   "text": "Cari “{name}” di pencarian",
   "back": "Look for \"{name}\" in the search",
   "why": "cari + pencarian, familiar register"
+ },
+ "HELP_SONGS": {
+  "text": "Tulis lagu sekali, lengkap dengan bait dan reff, lalu tampilkan kapan saja.",
+  "back": "Write a song once, complete with verses and chorus, then show it any time.",
+  "why": "Tombol berlingkar"
+ },
+ "HELP_BIBLE": {
+  "text": "Cari ayat dari nama kitab, pasal, dan ayat, atau dari kata-katanya.",
+  "back": "Find a verse from the book name, chapter and verse, or from its words.",
+  "why": "Tombol berlingkar"
+ },
+ "GUIDE_SONG_NEW": {
+  "text": "Tekan tombol berlingkar untuk tulis lagu baru",
+  "back": "Press the ringed button to write a new song",
+  "why": "Tombol berlingkar"
+ },
+ "GUIDE_SONG_NEW_MORE": {
+  "text": "Liriknya juga bisa ditempel dari mana saja.",
+  "back": "The words can also be pasted from anywhere.",
+  "why": "Tombol berlingkar"
+ },
+ "GUIDE_SONG_WORDS": {
+  "text": "Ketik atau tempel lirik di sini",
+  "back": "Type or paste the words here",
+  "why": "Tombol berlingkar"
+ },
+ "GUIDE_SONG_WORDS_MORE": {
+  "text": "Baris kosong memulai slide berikutnya.",
+  "back": "An empty line starts the next slide.",
+  "why": "Tombol berlingkar"
+ },
+ "GUIDE_SONG_PARTS": {
+  "text": "Beri nama tiap bagian: bait, reff, bridge",
+  "back": "Name each part: verse, chorus, bridge",
+  "why": "Tombol berlingkar"
+ },
+ "GUIDE_SONG_PARTS_MORE": {
+  "text": "Taruh kursor di satu bagian, lalu tekan tombol namanya.",
+  "back": "Put the cursor in one part, then press the button of its name.",
+  "why": "Tombol berlingkar"
+ },
+ "GUIDE_SONG_SAVE": {
+  "text": "Simpan menambah lagu ke daftar lagu gereja",
+  "back": "Save adds the song to the church's song list",
+  "why": "Tombol berlingkar"
+ },
+ "GUIDE_SONG_SAVE_MORE": {
+  "text": "Lalu pencarian menemukannya lewat judul atau liriknya.",
+  "back": "Then the search finds it by its title or its words.",
+  "why": "Tombol berlingkar"
+ },
+ "GUIDE_BIBLE_OPEN": {
+  "text": "Tekan tombol berlingkar untuk cari ayat Alkitab",
+  "back": "Press the ringed button to look for a Bible verse",
+  "why": "Tombol berlingkar"
+ },
+ "GUIDE_BIBLE_OPEN_MORE": {
+  "text": "Ayat tampil dalam terjemahan Alkitab pilihan gereja.",
+  "back": "The verse shows in the Bible translation the church chose.",
+  "why": "Tombol berlingkar"
+ },
+ "GUIDE_BIBLE_BOOKS": {
+  "text": "Pilih kitab, lalu pasal dan ayatnya",
+  "back": "Pick the book, then its chapter and verses",
+  "why": "Tombol berlingkar"
+ },
+ "GUIDE_BIBLE_BOOKS_MORE": {
+  "text": "Ayatnya lalu masuk ke Preview, siap tampil.",
+  "back": "The verses then go into Preview, ready to show.",
+  "why": "Tombol berlingkar"
+ },
+ "GUIDE_BIBLE_TYPE": {
+  "text": "Atau ketik rujukan, atau kata dari ayatnya",
+  "back": "Or type a reference, or a word from the verse",
+  "why": "Tombol berlingkar"
+ },
+ "GUIDE_BIBLE_TYPE_MORE": {
+  "text": "Misalnya Yohanes 3:16, atau kata yang teringat.",
+  "back": "For example John 3:16, or a word that comes to mind.",
+  "why": "Tombol berlingkar"
  }
 }

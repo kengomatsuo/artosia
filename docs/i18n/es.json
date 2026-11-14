@@ -5709,5 +5709,85 @@
   "text": "Busca «{name}» en la búsqueda",
   "back": "Look for \"{name}\" in the search",
   "why": "tú form like the table, Spanish quotes"
+ },
+ "HELP_SONGS": {
+  "text": "Escribe una canción una vez, con su letra y sus partes, y muéstrala cuando quieras.",
+  "back": "Write a song once, with its words and parts, and show it whenever you want.",
+  "why": "Tuteo"
+ },
+ "HELP_BIBLE": {
+  "text": "Encuentra un pasaje por libro, capítulo y versículo, o por palabras suyas.",
+  "back": "Find a passage by book, chapter and verse, or by words of it.",
+  "why": "Tuteo"
+ },
+ "GUIDE_SONG_NEW": {
+  "text": "Pulsa el botón marcado para crear una canción",
+  "back": "Press the marked button to create a song",
+  "why": "Tuteo"
+ },
+ "GUIDE_SONG_NEW_MORE": {
+  "text": "También puedes pegar la letra desde cualquier lugar.",
+  "back": "You can also paste the words from any place.",
+  "why": "Tuteo"
+ },
+ "GUIDE_SONG_WORDS": {
+  "text": "Escribe o pega la letra aquí",
+  "back": "Type or paste the words here",
+  "why": "Tuteo"
+ },
+ "GUIDE_SONG_WORDS_MORE": {
+  "text": "Una línea vacía empieza la diapositiva siguiente.",
+  "back": "An empty line starts the next slide.",
+  "why": "Tuteo"
+ },
+ "GUIDE_SONG_PARTS": {
+  "text": "Nombra cada parte: estrofa, coro, puente",
+  "back": "Name each part: verse, chorus, bridge",
+  "why": "Tuteo"
+ },
+ "GUIDE_SONG_PARTS_MORE": {
+  "text": "Pon el cursor en una parte y pulsa el botón con su nombre.",
+  "back": "Put the cursor in a part and press the button with its name.",
+  "why": "Tuteo"
+ },
+ "GUIDE_SONG_SAVE": {
+  "text": "Guardar suma la canción a las de tu iglesia",
+  "back": "Save adds the song to those of your church",
+  "why": "Tuteo"
+ },
+ "GUIDE_SONG_SAVE_MORE": {
+  "text": "Luego la búsqueda la halla por título o por letra.",
+  "back": "Then the search finds it by title or by words.",
+  "why": "Tuteo"
+ },
+ "GUIDE_BIBLE_OPEN": {
+  "text": "Pulsa el botón marcado para buscar un pasaje",
+  "back": "Press the marked button to search for a passage",
+  "why": "Tuteo"
+ },
+ "GUIDE_BIBLE_OPEN_MORE": {
+  "text": "Sale en la versión bíblica que eligió tu iglesia.",
+  "back": "It comes out in the Bible version your church chose.",
+  "why": "Tuteo"
+ },
+ "GUIDE_BIBLE_BOOKS": {
+  "text": "Elige libro, capítulo y versículos",
+  "back": "Choose book, chapter and verses",
+  "why": "Tuteo"
+ },
+ "GUIDE_BIBLE_BOOKS_MORE": {
+  "text": "El pasaje pasa a Vista previa, listo para mostrar.",
+  "back": "The passage moves to Preview, ready to show.",
+  "why": "Tuteo"
+ },
+ "GUIDE_BIBLE_TYPE": {
+  "text": "O escribe una cita, o palabras del versículo",
+  "back": "Or type a citation, or words of the verse",
+  "why": "Tuteo"
+ },
+ "GUIDE_BIBLE_TYPE_MORE": {
+  "text": "Por ejemplo Juan 3:16, o las palabras que recuerdes.",
+  "back": "For example John 3:16, or the words you remember.",
+  "why": "Tuteo"
  }
 }

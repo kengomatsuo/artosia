@@ -5674,5 +5674,85 @@
   "text": "検索で「{name}」を探しましょう",
   "back": "Let's look for \"{name}\" in the search",
   "why": "table word 検索, soft polite"
+ },
+ "HELP_SONGS": {
+  "text": "曲は一度書けば、歌詞も各部分もそのまま、いつでも映せます",
+  "back": "Once a song is written, its words and parts stay as they are, and can be shown any time",
+  "why": "枠のボタンを押して"
+ },
+ "HELP_BIBLE": {
+  "text": "聖書の箇所は、書名、章、節か、本文の言葉で探せます",
+  "back": "A Bible passage can be found by book name, chapter, verse, or words of the text",
+  "why": "枠のボタンを押して"
+ },
+ "GUIDE_SONG_NEW": {
+  "text": "枠のボタンを押して、新しい曲を書く",
+  "back": "Press the ringed button, write a new song",
+  "why": "枠のボタンを押して"
+ },
+ "GUIDE_SONG_NEW_MORE": {
+  "text": "歌詞はどこからでも貼り付けられます",
+  "back": "The words can be pasted from anywhere",
+  "why": "枠のボタンを押して"
+ },
+ "GUIDE_SONG_WORDS": {
+  "text": "ここに歌詞を入力か貼り付け",
+  "back": "Type or paste the words here",
+  "why": "枠のボタンを押して"
+ },
+ "GUIDE_SONG_WORDS_MORE": {
+  "text": "空の行で次のスライドになります",
+  "back": "An empty line makes the next slide",
+  "why": "枠のボタンを押して"
+ },
+ "GUIDE_SONG_PARTS": {
+  "text": "各部分に名前を付ける（1番、サビ、ブリッジ）",
+  "back": "Name each part (verse 1, chorus, bridge)",
+  "why": "枠のボタンを押して"
+ },
+ "GUIDE_SONG_PARTS_MORE": {
+  "text": "部分にカーソルを置き、その名前のボタンを押します",
+  "back": "Put the cursor in a part and press the button of its name",
+  "why": "枠のボタンを押して"
+ },
+ "GUIDE_SONG_SAVE": {
+  "text": "保存で、教会の曲に加わります",
+  "back": "With save, it joins the church's songs",
+  "why": "枠のボタンを押して"
+ },
+ "GUIDE_SONG_SAVE_MORE": {
+  "text": "あとは検索で、題名でも歌詞でも見つかります",
+  "back": "After that, search finds it by title or by words",
+  "why": "枠のボタンを押して"
+ },
+ "GUIDE_BIBLE_OPEN": {
+  "text": "枠のボタンを押して、聖書の箇所を探す",
+  "back": "Press the ringed button, find a Bible passage",
+  "why": "枠のボタンを押して"
+ },
+ "GUIDE_BIBLE_OPEN_MORE": {
+  "text": "教会が選んだ聖書の訳で表示されます",
+  "back": "It is shown in the Bible translation the church chose",
+  "why": "枠のボタンを押して"
+ },
+ "GUIDE_BIBLE_BOOKS": {
+  "text": "書名を選び、続けて章と節を選びます",
+  "back": "Choose the book name, then the chapter and verses",
+  "why": "枠のボタンを押して"
+ },
+ "GUIDE_BIBLE_BOOKS_MORE": {
+  "text": "箇所はプレビューに入り、すぐ映せます",
+  "back": "The passage goes into Preview and can be shown at once",
+  "why": "枠のボタンを押して"
+ },
+ "GUIDE_BIBLE_TYPE": {
+  "text": "参照や本文の言葉を入力しても探せます",
+  "back": "You can also search by typing a reference or words of the text",
+  "why": "枠のボタンを押して"
+ },
+ "GUIDE_BIBLE_TYPE_MORE": {
+  "text": "例えばヨハネ3:16、または覚えている言葉",
+  "back": "For example John 3:16, or words you remember",
+  "why": "枠のボタンを押して"
  }
 }

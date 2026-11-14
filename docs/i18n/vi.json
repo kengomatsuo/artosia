@@ -5684,5 +5684,85 @@
   "text": "Tìm “{name}” trong phần tìm kiếm",
   "back": "Find \"{name}\" in the search section",
   "why": "table word tìm kiếm"
+ },
+ "HELP_SONGS": {
+  "text": "Viết bài hát một lần, cả lời bài hát lẫn các phần, rồi trình chiếu lúc nào cũng được.",
+  "back": "Write a song once, both its words and parts, then show it any time.",
+  "why": "Bấm nút được khoanh"
+ },
+ "HELP_BIBLE": {
+  "text": "Tìm đoạn Kinh Thánh theo sách, chương, câu, hoặc theo vài chữ trong đó.",
+  "back": "Find a Bible passage by book, chapter, verse, or by a few words in it.",
+  "why": "Bấm nút được khoanh"
+ },
+ "GUIDE_SONG_NEW": {
+  "text": "Bấm nút được khoanh để viết bài hát mới",
+  "back": "Press the ringed button to write a new song",
+  "why": "Bấm nút được khoanh"
+ },
+ "GUIDE_SONG_NEW_MORE": {
+  "text": "Cũng có thể dán lời từ bất cứ đâu.",
+  "back": "You can also paste the words from anywhere.",
+  "why": "Bấm nút được khoanh"
+ },
+ "GUIDE_SONG_WORDS": {
+  "text": "Gõ hoặc dán lời bài hát vào đây",
+  "back": "Type or paste the song words here",
+  "why": "Bấm nút được khoanh"
+ },
+ "GUIDE_SONG_WORDS_MORE": {
+  "text": "Một dòng trống bắt đầu slide kế tiếp.",
+  "back": "An empty line starts the next slide.",
+  "why": "Bấm nút được khoanh"
+ },
+ "GUIDE_SONG_PARTS": {
+  "text": "Đặt tên cho từng phần: lời, điệp khúc, đoạn nối",
+  "back": "Name each part: verse, chorus, bridge",
+  "why": "Bấm nút được khoanh"
+ },
+ "GUIDE_SONG_PARTS_MORE": {
+  "text": "Đặt con trỏ vào một phần, rồi bấm nút mang tên nó.",
+  "back": "Put the cursor in a part, then press the button bearing its name.",
+  "why": "Bấm nút được khoanh"
+ },
+ "GUIDE_SONG_SAVE": {
+  "text": "Lưu là bài hát vào kho của hội thánh",
+  "back": "Save and the song is in the church's store",
+  "why": "Bấm nút được khoanh"
+ },
+ "GUIDE_SONG_SAVE_MORE": {
+  "text": "Sau đó ô tìm kiếm thấy bài theo tên hoặc lời.",
+  "back": "Then the search box finds it by name or words.",
+  "why": "Bấm nút được khoanh"
+ },
+ "GUIDE_BIBLE_OPEN": {
+  "text": "Bấm nút được khoanh để tìm đoạn Kinh Thánh",
+  "back": "Press the ringed button to find a Bible passage",
+  "why": "Bấm nút được khoanh"
+ },
+ "GUIDE_BIBLE_OPEN_MORE": {
+  "text": "Đoạn hiện theo bản Kinh Thánh hội thánh đã chọn.",
+  "back": "The passage shows in the Bible version the church chose.",
+  "why": "Bấm nút được khoanh"
+ },
+ "GUIDE_BIBLE_BOOKS": {
+  "text": "Chọn một sách, rồi chương và các câu",
+  "back": "Pick a book, then the chapter and verses",
+  "why": "Bấm nút được khoanh"
+ },
+ "GUIDE_BIBLE_BOOKS_MORE": {
+  "text": "Đoạn đó vào mục Xem trước, sẵn sàng trình chiếu.",
+  "back": "That passage goes into Preview, ready to project.",
+  "why": "Bấm nút được khoanh"
+ },
+ "GUIDE_BIBLE_TYPE": {
+  "text": "Hoặc gõ địa chỉ câu, hoặc vài chữ trong câu",
+  "back": "Or type a verse address, or a few words in the verse",
+  "why": "Bấm nút được khoanh"
+ },
+ "GUIDE_BIBLE_TYPE_MORE": {
+  "text": "Như Giăng 3:16, hoặc những chữ còn nhớ.",
+  "back": "Like John 3:16, or the words still remembered.",
+  "why": "Bấm nút được khoanh"
  }
 }
