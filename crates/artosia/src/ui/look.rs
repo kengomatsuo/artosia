@@ -115,4 +115,5 @@ fn chooser(s: &App, k: &Kit) -> El {
         .gap(space::S2)
         .child(el().w_full().max_w(280.0).grow(1.0).child(first(usual.build(k, |s: &mut App, _: &mut Tx| s.use_usual_look()).key("look-for-usual"), !own)))
         .child(el().w_full().max_w(280.0).grow(1.0).child(first(plan.build(k, |s: &mut App, _: &mut Tx| s.use_own_look()).key("look-for-plan"), own)))
+        .child(crate::ui::tour::help_mark(s, k, crate::guide::lessons::Feature::Look))
 }

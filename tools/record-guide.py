@@ -9,16 +9,19 @@ assets/guide/<step>.png, an animated PNG the guide's bubble plays. Run it again 
 a lesson points at changes. Needs a debug build (`cargo build -p artosia --examples`).
 """
 import json
+import os
 import shutil
 import subprocess
 import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-EXE = ROOT / "target" / "debug" / "artosia.exe"
+# ARTOSIA_EXE and ARTOSIA_CLIP name another build, such as one made from HEAD while the shared
+# tree holds another session's unfinished work.
+EXE = Path(os.environ.get("ARTOSIA_EXE", ROOT / "target" / "debug" / "artosia.exe"))
 # Built once by `cargo build -p artosia --example guide_clip`; run as it is, so a tree another
 # session is editing never has to compile in the middle of a recording.
-CLIP = ROOT / "target" / "debug" / "examples" / "guide_clip.exe"
+CLIP = Path(os.environ.get("ARTOSIA_CLIP", ROOT / "target" / "debug" / "examples" / "guide_clip.exe"))
 W, H = 1366, 768
 # Whole window: the step changes the whole window (a tab); part: the change happens near the control.
 STEPS = [
@@ -31,6 +34,11 @@ STEPS = [
     ("giving-add", "tab-giving", "giving-add", "part"),
     ("templates-tab", "start", "tab-templates", "whole"),
     ("templates-use", "tab-templates", "tpl-use", "whole"),
+    ("notices-tab", "start", "tab-notices", "whole"),
+    ("notices-new", "tab-notices", "notice-add", "part"),
+    ("look-tab", "start", "tab-look", "whole"),
+    ("plan-tab", "tab-calendar", "tab-plan", "whole"),
+    ("plan-add", "start", "plan-add-button", "part"),
 ]
 START, STEP, PRESS = 0.2, 0.1, 1.4
 

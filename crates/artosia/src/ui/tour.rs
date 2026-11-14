@@ -133,6 +133,13 @@ impl App {
         self.lesson = None;
     }
 
+    /// Next on a lesson's explanation step: the step counts as read.
+    pub fn lesson_next(&mut self) {
+        if let Some((_, at)) = self.lesson.as_mut() {
+            *at += 1;
+        }
+    }
+
     /// The centred bubble's button: the search, with the step's command already typed, or the
     /// tab itself when the step asks for a tab.
     fn lesson_search(&mut self, action: Action) {
@@ -246,6 +253,10 @@ fn bubble(s: &App, k: &Kit, id: &str, step: usize, total: usize, search: Option<
     let mut buttons = row().w_full().gap(space::S2).center_y().child(row().w(BUTTON).child(btn(t::TOUR_SKIP()).icon(&icons::CLOSE).ghost().grow().focusable().build(k, |s, _| s.end_lesson()))).child(spacer());
     if let Some(command) = search {
         buttons = buttons.child(btn(t::GUIDE_OPEN_SEARCH()).icon(&rune_kit::glyphs::SEARCH).primary().focusable().build(k, move |s, _| s.lesson_search(command)).key("lesson-search"));
+    }
+    let explains = s.lesson.is_some_and(|(lesson, _)| matches!(lesson.steps.get(step).map(|step| step.goal), Some(crate::guide::Goal::Point(_))));
+    if explains {
+        buttons = buttons.child(row().w(BUTTON).child(btn(t::TOUR_NEXT()).icon(&icons::ARROW_RIGHT).primary().grow().focusable().build(k, |s, _| s.lesson_next()).key("lesson-next")));
     }
     col()
         .key("lesson-card")

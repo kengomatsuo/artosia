@@ -52,9 +52,10 @@ impl World<Action> for Window<'_> {
 }
 
 /// Every state name `holds` knows; the lesson test checks each step against it.
-pub const KNOWN: [&str; 15] = [
+pub const KNOWN: [&str; 17] = [
     "screens-open", "phone-open", "settings-open", "no-dialog", "plan-tab", "calendar-tab", "people-tab", "giving-tab",
     "notices-tab", "templates-tab", "look-tab", "search-open", "event-form-open", "gift-form-open", "person-form-open",
+    "notice-draft", "add-menu-open",
 ];
 
 /// The states lessons name. A name nobody knows is never true, and a test lists the names every
@@ -76,6 +77,8 @@ pub fn holds(app: &App, state: &str) -> bool {
         "event-form-open" => app.calendar.form.is_some(),
         "gift-form-open" => app.giving.form.is_some(),
         "person-form-open" => app.members.form.is_some(),
+        "notice-draft" => app.notice_draft().is_some(),
+        "add-menu-open" => app.add_menu,
         _ => false,
     }
 }

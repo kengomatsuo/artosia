@@ -16,7 +16,22 @@ const fn on_tab(id: &'static str, action: Action, needs: &'static str, done: &'s
     Step { id, goal: Goal::Run(action), needs: Some(needs), done: Some(done), restore: Some(back) }
 }
 
+/// An explanation of a part of the window, read and passed with Next.
+const fn point(id: &'static str, key: &'static str) -> Step<Action> {
+    Step { id, goal: Goal::Point(key), needs: None, done: None, restore: None }
+}
+
 const SCREENS_STEPS: [Step<Action>; 1] = [go("screens-open", Action::Run(Command::Screens), "screens-open")];
+const NOTICES_STEPS: [Step<Action>; 2] = [
+    go("notices-tab", Action::Tab(Tab::Notices), "notices-tab"),
+    on_tab("notices-new", Action::Press("notice-add"), "notices-tab", "notice-draft", "notices-tab"),
+];
+const LOOK_STEPS: [Step<Action>; 2] = [go("look-tab", Action::Tab(Tab::Look), "look-tab"), point("look-for", "look-for")];
+const PLAN_STEPS: [Step<Action>; 3] = [
+    go("plan-tab", Action::Tab(Tab::Plan), "plan-tab"),
+    point("plan-explain", "plan-add"),
+    on_tab("plan-add", Action::Press("plan-add-button"), "plan-tab", "add-menu-open", "plan-tab"),
+];
 const CALENDAR_STEPS: [Step<Action>; 2] = [
     go("calendar-tab", Action::Tab(Tab::Calendar), "calendar-tab"),
     on_tab("calendar-new", Action::Press("cal-new"), "calendar-tab", "event-form-open", "calendar-tab"),
@@ -39,9 +54,12 @@ pub const CALENDAR: Lesson<Action> = Lesson { id: "calendar", steps: &CALENDAR_S
 pub const PEOPLE: Lesson<Action> = Lesson { id: "people", steps: &PEOPLE_STEPS };
 pub const GIVING: Lesson<Action> = Lesson { id: "giving", steps: &GIVING_STEPS };
 pub const TEMPLATES: Lesson<Action> = Lesson { id: "templates", steps: &TEMPLATES_STEPS };
+pub const NOTICES: Lesson<Action> = Lesson { id: "notices", steps: &NOTICES_STEPS };
+pub const LOOK: Lesson<Action> = Lesson { id: "look", steps: &LOOK_STEPS };
+pub const PLAN: Lesson<Action> = Lesson { id: "plan", steps: &PLAN_STEPS };
 
 /// Every lesson, for the lesson list and the test that runs each one.
-pub const ALL: [Lesson<Action>; 5] = [SCREENS, CALENDAR, PEOPLE, GIVING, TEMPLATES];
+pub const ALL: [Lesson<Action>; 8] = [SCREENS, CALENDAR, PEOPLE, GIVING, TEMPLATES, NOTICES, LOOK, PLAN];
 
 /// A feature with a help mark: its name, what it is for, and the lesson that shows it.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -50,6 +68,9 @@ pub enum Feature {
     People,
     Giving,
     Templates,
+    Notices,
+    Look,
+    Plan,
 }
 
 impl Feature {
@@ -59,6 +80,9 @@ impl Feature {
             Feature::People => "help-people",
             Feature::Giving => "help-giving",
             Feature::Templates => "help-templates",
+            Feature::Notices => "help-notices",
+            Feature::Look => "help-look",
+            Feature::Plan => "help-plan",
         }
     }
 
@@ -68,6 +92,9 @@ impl Feature {
             Feature::People => Tab::People,
             Feature::Giving => Tab::Giving,
             Feature::Templates => Tab::Templates,
+            Feature::Notices => Tab::Notices,
+            Feature::Look => Tab::Look,
+            Feature::Plan => Tab::Plan,
         }
     }
 
@@ -79,6 +106,9 @@ impl Feature {
             Feature::People => t::HELP_PEOPLE(),
             Feature::Giving => t::HELP_GIVING(),
             Feature::Templates => t::HELP_TEMPLATES(),
+            Feature::Notices => t::HELP_NOTICES(),
+            Feature::Look => t::HELP_LOOK(),
+            Feature::Plan => t::HELP_PLAN(),
         }
     }
 
@@ -89,6 +119,9 @@ impl Feature {
             Feature::People => "people-add",
             Feature::Giving => "giving-add",
             Feature::Templates => "templates-use",
+            Feature::Notices => "notices-new",
+            Feature::Look => "look-tab",
+            Feature::Plan => "plan-add",
         }
     }
 
@@ -98,6 +131,9 @@ impl Feature {
             Feature::People => PEOPLE,
             Feature::Giving => GIVING,
             Feature::Templates => TEMPLATES,
+            Feature::Notices => NOTICES,
+            Feature::Look => LOOK,
+            Feature::Plan => PLAN,
         }
     }
 }
@@ -115,6 +151,11 @@ pub fn clip(step: &str) -> Option<&'static [u8]> {
         "giving-add" => include_bytes!("../../../../assets/guide/giving-add.png"),
         "templates-tab" => include_bytes!("../../../../assets/guide/templates-tab.png"),
         "templates-use" => include_bytes!("../../../../assets/guide/templates-use.png"),
+        "notices-tab" => include_bytes!("../../../../assets/guide/notices-tab.png"),
+        "notices-new" => include_bytes!("../../../../assets/guide/notices-new.png"),
+        "look-tab" => include_bytes!("../../../../assets/guide/look-tab.png"),
+        "plan-tab" => include_bytes!("../../../../assets/guide/plan-tab.png"),
+        "plan-add" => include_bytes!("../../../../assets/guide/plan-add.png"),
         _ => return None,
     })
 }
@@ -132,6 +173,13 @@ pub fn words(step: &str) -> (String, &'static str) {
         "giving-add" => (t::GUIDE_GIVING_ADD().to_string(), t::GUIDE_GIVING_ADD_MORE()),
         "templates-tab" => tab(Feature::Templates),
         "templates-use" => (t::GUIDE_TPL_USE().to_string(), t::GUIDE_TPL_USE_MORE()),
+        "notices-tab" => tab(Feature::Notices),
+        "notices-new" => (t::GUIDE_NOTICE_NEW().to_string(), t::GUIDE_NOTICE_NEW_MORE()),
+        "look-tab" => tab(Feature::Look),
+        "look-for" => (t::GUIDE_LOOK_FOR().to_string(), t::GUIDE_LOOK_FOR_MORE()),
+        "plan-tab" => tab(Feature::Plan),
+        "plan-explain" => (t::GUIDE_PLAN_EXPLAIN().to_string(), t::GUIDE_PLAN_EXPLAIN_MORE()),
+        "plan-add" => (t::GUIDE_PLAN_ADD().to_string(), t::GUIDE_PLAN_ADD_MORE()),
         _ => (String::new(), ""),
     }
 }

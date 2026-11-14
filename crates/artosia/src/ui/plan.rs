@@ -464,7 +464,7 @@ pub(crate) fn add_bar(s: &App, k: &Kit, layer: &mut Vec<El>) -> El {
             s.add_menu = false;
         }))
         .build(k, layer);
-    row().key("plan-add").w_full().padding(space::S2).child(menu.grow(1.0))
+    row().key("plan-add").w_full().padding(space::S2).gap(space::S1).center_y().child(menu.grow(1.0)).child(crate::ui::tour::help_mark(s, k, crate::guide::lessons::Feature::Plan))
 }
 
 /// How tall a plan row is drawn, which a drag needs to know to find the place it lands in.

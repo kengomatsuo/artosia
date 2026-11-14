@@ -775,6 +775,8 @@ const SCENES: &[Scene] = &[
     }),
     ("lesson-calendar", |s| s.start_lesson(crate::guide::lessons::CALENDAR)),
     ("whats-new", |s| s.news = Some(0)),
+    ("lesson-plan", |s| s.start_lesson(crate::guide::lessons::PLAN)),
+    ("help-plan", |s| s.help = Some(crate::guide::lessons::Feature::Plan)),
     ("whats-new-people", |s| s.news = Some(1)),
     ("lesson-calendar-new", |s| {
         s.open_tab(Tab::Calendar);
