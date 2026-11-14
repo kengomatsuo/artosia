@@ -1,6 +1,6 @@
 # Artosia handoff (2026-11-14)
 
-**Now:** build the UI overhaul the owner picked (direction B, the church's data in its own windows, with A's rundown), starting with card OVSHELL1. The song browser (WEBSONGS1) waits on its parser research (LYRICPARSE1).
+**Now:** the UI overhaul (direction B with A's rundown) is half built: the tabs, the colour picker, the calendar and the lyric reader are in Review; the members tab is being built; offerings, templates, the rundown, PowerPoint as made and the song browser dialog remain. Per-card plans: [overhaul-build.md](overhaul-build.md).
 
 ## Where things stand
 
@@ -13,8 +13,8 @@
 | Mac | Reached over Tailscale SSH at 100.120.153.35 (`Host mac` in `C:\Users\kenne\.ssh\config`); Tailscale's check mode wants the owner's Tailscale sign-in, then 12 hours free | [read: ssh mac printed "Tailscale SSH requires an additional check"] |
 | PowerPoint import | Works (6 of 6 Warta slides); redraws text only; picture-only card now named | [commit c2f10e6] [card: PPTX1] |
 | Announcement styles | Hairline, Ledger, Band drawn for five kinds (`crates/artosia-slides/src/notice.rs`), demo scenes only | [commit 88013b9] |
-| UI overhaul | Research done, three directions rendered (`--scene mock-a-p1` to `mock-c-p7`), owner picked B with A's rundown; eight build cards in Ready under UIOVER1 | [commit 7045f0b] [card: UIOVER1] [rule: .claude/rules/operator.md, last line] |
-| Song browser | Reader in `crates/artosia-lyrics` (Gema index from allowed list pages, page reader by shape); no dialog yet; parser to be rebuilt on research | [commit 47155a8] [card: WEBSONGS1] [card: LYRICPARSE1] |
+| UI overhaul | Tabs (c7ff4e7), one colour picker (e63fb2c), calendar with schedule card (30ff5d9) in Review; OVPEOPLE1 in Doing; OVGIVING1, OVTEMPL1, OVRUN1, OVPPTX1 in Ready, each planned in overhaul-build.md | [card: UIOVER1] [rule: .claude/rules/operator.md, last four lines] |
+| Song browser | Page reader rebuilt on scraper with a site table and ChordPro chord tests, 10 real pages (35ad9cd); `browse` and `words` give the dialog one call each (d2df40f); the dialog itself is card WEBDLG1 | [card: WEBSONGS1] [card: LYRICPARSE1] [card: WEBDLG1] |
 
 ## Last checks
 
@@ -25,10 +25,9 @@
 
 ## Next actions, in order
 
-1. Read `~/Shared/research/artosia-lyric-extraction/README.md` when it exists; rebuild `crates/artosia-lyrics/src/page.rs` on its method [card: LYRICPARSE1].
-2. OVSHELL1: port `mock_b.rs`'s tab bar into the real window [card: OVSHELL1]; then OVCOLOR1, OVCAL1, OVPEOPLE1, OVGIVING1, OVTEMPL1, OVRUN1, OVPPTX1 in that order [card: UIOVER1 children].
-3. WEBSONGS1: the dialog, parsed preview, Import with a key [card: WEBSONGS1].
-4. When the owner has signed in to Tailscale: `bash tools/publish.sh 0.1.31 --finish` adds the Mac edition [commit 211d426], then `bash tools/publish-site.sh`.
+1. OVPEOPLE1, then OVGIVING1, OVTEMPL1, OVRUN1, OVPPTX1, then WEBDLG1 [card: UIOVER1 children] [card: WEBDLG1]; each card's plan is its section of overhaul-build.md.
+2. A card lands as: plan section, build (a builder subagent works well), snaps in English dark and Indonesian light, briefs in `docs/i18n/brief.json` and a blind-writer round for the nine table languages, `ARTOSIA_WRITE_SNAPSHOT=1 cargo test strings_snapshot` when English or Indonesian change, a real-window press with `tools/drive-window.ps1` (a practice window runs at 125%, so headless 1366x768 coordinates map one to one), commit of the card's own paths only (other sessions edit `crates/artosia`), board to Review.
+3. When the owner has signed in to Tailscale: `bash tools/publish.sh 0.1.31 --finish` adds the Mac edition [commit 211d426], then `bash tools/publish-site.sh`.
 
 ## Owner decisions in force
 
