@@ -25,5 +25,21 @@
     "licence_page": "https://fontawesome.com/license/free",
     "source": "https://github.com/FortAwesome/Font-Awesome/blob/6.x/svgs/brands/linux.svg",
     "note": "The mark itself is its owner's trademark; it names the system a download is for."
+  },
+  {
+    "file": "copy.svg",
+    "title": "Copy",
+    "creator": "Fonticons, Inc. (Font Awesome Free 6.7.2)",
+    "licence": "CC BY 4.0",
+    "licence_page": "https://fontawesome.com/license/free",
+    "source": "https://github.com/FortAwesome/Font-Awesome/blob/6.x/svgs/regular/copy.svg"
+  },
+  {
+    "file": "check.svg",
+    "title": "Check",
+    "creator": "Fonticons, Inc. (Font Awesome Free 6.7.2)",
+    "licence": "CC BY 4.0",
+    "licence_page": "https://fontawesome.com/license/free",
+    "source": "https://github.com/FortAwesome/Font-Awesome/blob/6.x/svgs/solid/check.svg"
   }
 ]

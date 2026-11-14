@@ -1,7 +1,7 @@
 //! The release maker: `keygen`, `build` and `pubkey`. The private key never goes on a command line.
 
 use artosia_update::manifest::{public_key_of, to_hex};
-use artosia_update::publish::{ReleaseSpec, build_release, parse_seed};
+use artosia_update::publish::{ReleaseSpec, build_release, parse_seed, sign_release};
 use std::path::PathBuf;
 use std::process::ExitCode;
 
@@ -13,6 +13,9 @@ artosia-release pubkey [--key-file <file>]
 artosia-release build --dir <built folder> --version <x.y.z> --out <folder>
         [--notes <text> | --notes-file <file>] [--platform <os-arch>] [--date <YYYY-MM-DD>]
         [--key-file <file>]
+
+artosia-release sign --dir <folder build made> --platform <os-arch> [--key-file <file>]
+    Signs that folder's list again with this key, after checking every file against it.
     Writes manifest.json, manifest.json.sig and the flat files into <folder>.
     The private key comes from --key-file or the ARTOSIA_UPDATE_KEY variable.";
 
@@ -100,6 +103,15 @@ fn run() -> Result<(), String> {
                 m.files.len(),
                 out.display()
             );
+            Ok(())
+        }
+        Some("sign") => {
+            let need = |name: &str| flag(&args, name).ok_or(format!("Missing {name}\n{USAGE}"));
+            let dir = PathBuf::from(need("--dir")?);
+            let platform = need("--platform")?;
+            let m = sign_release(&dir, &platform, &load_seed(&args)?)
+                .map_err(|e| format!("{e}: {}", e.detail().unwrap_or("")))?;
+            println!("Signed release {} for {}: {} files in {}", m.version, m.platform, m.files.len(), dir.display());
             Ok(())
         }
         _ => Err(USAGE.to_string()),

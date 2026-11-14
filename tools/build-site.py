@@ -148,10 +148,10 @@ def page(lang: str, strings: dict, numbers: dict, langs: list[str]) -> str:
             w, h = png_size(SITE / key[3:])
             return f'width="{w}" height="{h}"'
         if key.startswith("icon:"):
-            # A system's mark, drawn in the colour of the words beside it. The file keeps its
-            # licence comment, which is the attribution its licence asks for.
-            mark = (SITE / "img" / "os" / f"{key[5:]}.svg").read_text(encoding="utf-8").strip()
-            return mark.replace("<svg ", '<svg class="os-icon" aria-hidden="true" focusable="false" ', 1)
+            # An icon drawn in the colour of the words beside it. The file keeps its licence
+            # comment, which is the attribution its licence asks for.
+            mark = (SITE / "img" / "icons" / f"{key[5:]}.svg").read_text(encoding="utf-8").strip()
+            return mark.replace("<svg ", '<svg class="icon" aria-hidden="true" focusable="false" ', 1)
         if key.startswith("json:"):
             return json.dumps(strings[key[5:]], ensure_ascii=False)[1:-1]
         return words(key)
@@ -249,6 +249,8 @@ def main() -> None:
     for name in ("fonts", "img"):
         shutil.copytree(SITE / name, out / name)
     shutil.copy(ROOT / "assets/brand/artosia.ico", out / "favicon.ico")
+    # The Linux install line fetches this, served from the site as bun and rustup serve theirs.
+    shutil.copy(ROOT / "tools/linux/get.sh", out / "install.sh")
     shutil.copy(ROOT / "assets/brand/artosia-icon.svg", out / "img" / "icon.svg")
 
     (out / "robots.txt").write_text(

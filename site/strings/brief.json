@@ -380,9 +380,19 @@
     }
   },
   "linux_do": {
-    "where": "two short sentences in the Linux row, above its link",
-    "does": "how to start: unpack the downloaded archive into the user's home folder and run the program called artosia (written exactly so); then a warning that playing video needs the GStreamer library to be installed on the computer",
-    "max": 130
+    "where": "two short sentences in the Linux row, directly above a grey box holding a one-line terminal command and a copy button; under the box sits a button that downloads the package by hand",
+    "does": "how to install: copy the line below and run it in a terminal. It puts Artosia in the person's own home folder and in the applications menu, and needs no administrator password. Then a warning that playing video needs the GStreamer library installed on the computer",
+    "max": 150
+  },
+  "copy": {
+    "where": "the name of a small square button showing a copy icon, at the right of the terminal command in the grey box: read aloud by a screen reader and shown as a tooltip on hover",
+    "does": "the act of putting that command on the clipboard, as one verb, the word computer programs in your language use for this button",
+    "max": 12
+  },
+  "copied": {
+    "where": "the same button's name for two seconds after it was pressed, while its icon shows a check mark, read aloud by a screen reader, then the name goes back",
+    "does": "says the command is now on the clipboard and can be pasted, as short as the language allows",
+    "max": 14
   },
   "mac_file": {
     "where": "small grey line under the Mac heading, repeated under the hero button when the visitor uses a Mac",

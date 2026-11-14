@@ -669,6 +669,31 @@ fn each_platform_has_a_list_of_its_own_on_the_host() {
     let _ = fs::remove_dir_all(&root);
 }
 
+/// The Mac builds its folder under a throwaway key; the release PC signs the list again.
+#[test]
+fn a_folder_signed_again_verifies_with_the_new_key_only() {
+    use artosia_update::publish::sign_release;
+    let root = std::env::temp_dir().join(format!("artosia-update-resign-{}", std::process::id()));
+    let _ = fs::remove_dir_all(&root);
+    let built = root.join("built");
+    blob(&built.join("MacOS/artosia"), 1, 100);
+    let out = root.join("out");
+    let throwaway = [9u8; 32];
+    let spec = ReleaseSpec { dir: &built, version: "1.0.0", notes: "", platform: Some("macos-aarch64"), date: Some("2026-11-14"), out: &out };
+    build_release(&spec, &throwaway).unwrap();
+    sign_release(&out, "macos-aarch64", &SEED).unwrap();
+    let bytes = fs::read(out.join(manifest::remote_manifest_name("macos-aarch64"))).unwrap();
+    let sig = fs::read_to_string(out.join(manifest::remote_signature_name("macos-aarch64"))).unwrap();
+    let ours = manifest::TrustedKeys::from_keys(vec![manifest::public_key_of(&SEED).unwrap()]);
+    assert!(manifest::verify(&bytes, sig.trim(), &ours).is_ok());
+    let theirs = manifest::TrustedKeys::from_keys(vec![manifest::public_key_of(&throwaway).unwrap()]);
+    assert!(manifest::verify(&bytes, sig.trim(), &theirs).is_err());
+    // A file changed after the list was made is refused, not signed.
+    fs::write(out.join(manifest::remote_file_name("macos-aarch64", "MacOS/artosia")), b"changed").unwrap();
+    assert!(sign_release(&out, "macos-aarch64", &SEED).is_err());
+    let _ = fs::remove_dir_all(&root);
+}
+
 #[test]
 fn the_release_tool_makes_a_folder_the_app_accepts() {
     let root =

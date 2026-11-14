@@ -67,6 +67,27 @@ pub fn build_release(spec: &ReleaseSpec, seed: &[u8; 32]) -> Result<Manifest, Up
     Ok(m)
 }
 
+/// Signs again the list in a folder `build_release` made, with this key. The Mac builds its own
+/// folder, where a file keeps its mode, under a throwaway key; the release PC signs only the
+/// list, so the real key never leaves it.
+pub fn sign_release(out: &Path, platform: &str, seed: &[u8; 32]) -> Result<Manifest, UpdateError> {
+    let bytes = fs::read(out.join(manifest::remote_manifest_name(platform)))?;
+    let m: Manifest = serde_json::from_slice(&bytes).map_err(|e| UpdateError::BadList(e.to_string()))?;
+    if m.platform != platform {
+        return Err(UpdateError::BadList(format!("the list is for {}, not {platform}", m.platform)));
+    }
+    for f in &m.files {
+        if sha256_hex_of_file(&out.join(&f.name))? != f.sha256 {
+            return Err(UpdateError::BadList(format!("{} differs from its list", f.name)));
+        }
+    }
+    let sig = manifest::sign(&bytes, seed)?;
+    let keys = manifest::TrustedKeys::from_keys(vec![manifest::public_key_of(seed)?]);
+    manifest::verify(&bytes, &sig, &keys)?;
+    fs::write(out.join(manifest::remote_signature_name(platform)), format!("{sig}\n"))?;
+    Ok(m)
+}
+
 fn walk(root: &Path, dir: &Path, out: &mut Vec<(String, PathBuf)>) -> Result<(), UpdateError> {
     for entry in fs::read_dir(dir)? {
         let path = entry?.path();

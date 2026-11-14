@@ -18,6 +18,14 @@ One file, `Artosia-linux-x86_64.tar.gz`, that unpacks to a folder `Artosia`:
 
 The library and the settings live apart from the folder, in `~/.local/share/artosia` (Rune's `dirs.rs`, `$XDG_DATA_HOME`).
 
+## The one-line install (2026-11-14)
+
+```bash
+curl -fsSL https://artosia.matsuokengo.com/install.sh | bash
+```
+
+`tools/linux/get.sh`, served by the homepage as `install.sh`, does what a person would do by hand: it takes the newest release that carries the Linux package (a release built while WSL was busy has none, so `latest` alone can point at nothing), unpacks it into `~/.local/share/artosia/` (`$ARTOSIA_HOME` overrides), and runs that folder's `install.sh` for the menu entry. Nothing needs an administrator. A folder already there that holds no Artosia is refused and left alone. The new folder replaces the old one in two renames, so a running copy keeps its open files. Its shape follows bun's installer: strict mode, curl that fails on an error page, a home-folder install, and the whole script in one function so half a download runs nothing. bun, rustup and Ollama each serve their line from their own domain, and so does Artosia. Checked in WSL on 2026-11-14 with an empty home folder: installed, installed again over itself, and refused a foreign folder.
+
 ## Why a folder and not an AppImage, a deb or a Flatpak
 
 | Choice | Decision | Why |
@@ -54,13 +62,15 @@ The list is a superset: it was written from Rune's and GStreamer's documentation
 
 ## How a release carries it
 
-`tools/publish.sh <version> "<notes>"` on the Windows PC, after it has pushed the commit and uploaded the Windows files, runs in WSL:
+**Paused since 2026-11-14.** The Linux edition was built in the release PC's WSL, and the owner put WSL off limits that day (it is suspected of dropping the F drive, where its disk lives). Until another Linux builder exists, a release carries no Linux files, the homepage and the one-line install take the newest release that has them (0.1.31), and installed copies keep that version.
+
+Until then, `tools/publish.sh` ran in WSL, from the release's tag:
 
 ```bash
-cd ~/artosia && git pull --no-rebase -q && bash tools/package-linux.sh <version> --out <the Windows checkout>/dist/<version>/linux --key-file <the signing key> --notes-file <notes>
+cd ~/artosia && git fetch -q origin --tags --force && git checkout -q --detach v<version> && bash tools/package-linux.sh <version> --out <the Windows checkout>/dist/<version>/linux --key-file <the signing key> --notes-file <notes>
 ```
 
-and uploads `Artosia-linux-x86_64.tar.gz` and everything in `dist/<version>/linux/feed` to the same release, then adds the Linux download to the release's notes. The key never leaves the PC: WSL reads the same file under `/mnt/c`. Without WSL, or when the Linux build fails, the release carries Windows only and the script says so. The homepage does not offer the Linux download yet (board card SITEOS1).
+and uploaded `Artosia-linux-x86_64.tar.gz` and everything in `dist/<version>/linux/feed` to the same release. A release that stopped as a draft is finished with `tools/publish.sh <version> --finish`, which builds only the systems the draft lacks.
 
 ## Checked on 2026-11-12
 

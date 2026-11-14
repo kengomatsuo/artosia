@@ -26,10 +26,12 @@ by hand: wrangler's own sign-in may not write DNS records, and Cloudflare's page
 domains says it "will create DNS records and issue certificates". Requests for static files
 are free and unlimited (both pages read 2026-11-12).
 
-wrangler is signed in on the Mac and not on this PC, so `tools/publish-site.sh` copies the
-built folder to the Mac over WSL's SSH and runs `wrangler deploy` there. When the Mac cannot
-be reached the script says so and the site keeps its last deploy; the page's own script
-still shows the newest version and sizes, read from GitHub when it is opened.
+wrangler is signed in on the Mac, so `tools/publish-site.sh` sends the built folder there over
+ssh from Windows itself (Tailscale) and runs `wrangler deploy` there. Until 2026-11-14 that ssh
+went through WSL, whose network could not reach the Mac, and every release since 0.1.28 left the
+page behind; 0.1.31 was deployed from WSL's own signed-in wrangler once, before the owner put
+WSL off limits. When the Mac cannot be reached the script says so and the site keeps its last
+deploy; the page's own script still shows the newest version and sizes, read from GitHub.
 
 GitHub Pages served the first copy for a day (2026-11-11) from a `gh-pages` branch, waiting
 for a DNS record at Cloudflare. It was switched off and the branch deleted on 2026-11-12,
@@ -55,7 +57,8 @@ shows only when its download exists: no row, no link and no word for it otherwis
   `target/site-en/index.html` and `target/site-en-mac/index.html` from a local server with each value.
 - The Windows button points at `https://github.com/kengomatsuo/artosia/releases/latest/download/Artosia-setup.exe`,
   which always answers with the newest release's setup ([setup.md](setup.md)). The zip of the same
-  release is the second way, in the Windows row, for a computer with no internet. The Linux link is
+  release is the second way, in the Windows row, for a computer with no internet. The Linux row
+  leads with the one-line install and a copy button ([linux.md](linux.md)); its link is
   `Artosia-linux-x86_64.tar.gz` (every release from 0.1.22, [linux.md](linux.md)); the Mac link is
   `Artosia-macos-aarch64.dmg` (Apple silicon, every release from 0.1.23, [macos.md](macos.md)).
   Both name the release the page was built for (`releases/download/v<version>/`), never `latest`:
@@ -63,9 +66,9 @@ shows only when its download exists: no row, no link and no word for it otherwis
   then answer 404. `tools/publish-site.sh` refuses to build from a release with no Linux package,
   so the page keeps its last deploy and its links keep working.
 - Each download button and link carries its system's mark before the words (`{{icon:windows}}`, `{{icon:apple}}`, `{{icon:linux}}` in
-  `page.html`; the build puts the SVG of `site/img/os/` in, drawn in the words' colour), as Audacity's download page does; a mark
+  `page.html`; the build puts the SVG of `site/img/icons/` in, drawn in the words' colour), as Audacity's download page does; a mark
   alone, as FreeShow and VLC have it, was left because it cannot be read aloud. The three are Font Awesome Free 6.7.2 (CC BY 4.0;
-  each file keeps the licence comment its licence asks for, `site/img/os/credits.json`), and each mark is its owner's trademark,
+  each file keeps the licence comment its licence asks for, `site/img/icons/credits.json`), and each mark is its owner's trademark,
   used to name the system a file is for.
 - The Mac row says how to install and nothing more since 2026-11-13: the app is signed with a
   Developer ID and notarized, so macOS opens it without a step of its own. Until then the row

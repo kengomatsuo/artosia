@@ -204,6 +204,11 @@
         </div>
         <div class="os-body">
           <p class="feature-text">{{linux_do}}</p>
+          <div class="cmd">
+            <code class="cmd-line" id="linux-line">curl -fsSL https://artosia.matsuokengo.com/<wbr>install.sh | bash</code>
+            <button class="cmd-copy" type="button" data-copy="linux-line" aria-label="{{copy}}" title="{{copy}}" data-done="{{copied}}"><span class="icon-copy">{{icon:copy}}</span><span class="icon-done">{{icon:check}}</span></button>
+            <span class="cmd-said" aria-live="polite"></span>
+          </div>
           <a class="dl hero-btn hero-btn--quiet" href="{{linux}}">{{icon:linux}}{{dl_linux}}</a>
         </div>
       </article>

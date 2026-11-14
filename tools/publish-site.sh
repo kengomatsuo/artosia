@@ -7,8 +7,9 @@
 # holds the Mac disk image.
 #
 # The site is a Cloudflare Worker that only serves files (site/deploy/wrangler.jsonc);
-# its custom domain made the DNS record and the certificate. wrangler is signed in on
-# the Mac, so the built folder goes there over WSL's SSH and is deployed from there.
+# its custom domain made the DNS record and the certificate. wrangler is signed in on the
+# Mac, so the built folder goes there over ssh from Windows itself (Tailscale, `Host mac` in
+# ~/.ssh/config) and is deployed from there. WSL is off limits since 2026-11-14.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
@@ -33,18 +34,13 @@ python -I tools/build-site.py --version "${tag#v}" --setup-bytes "$setup" --zip-
     --linux-bytes "$linux" --linux-version "${linux_tag#v}" \
     $([ -z "${mac:-}" ] || echo "--mac-bytes $mac --mac-version ${mac_tag#v}") --out "$out" ${SITE_LANGS:+--langs "$SITE_LANGS"}
 
-# This folder as WSL names it, worked out here: asking WSL for it is one more call a busy WSL
-# can leave unanswered (tools/publish.sh works it out the same way).
-here="$(cygpath -m "$PWD")"
-here="/mnt/$(printf '%s' "${here%%:*}" | tr 'A-Z' 'a-z')${here#*:}"
-wsl.exe -d Ubuntu -e bash -lc "
-  set -e
-  ssh -o BatchMode=yes -o ConnectTimeout=10 mac 'mkdir -p ~/artosia-site/public' \
-    || { echo 'The Mac cannot be reached, so the site was built and not deployed.' >&2; exit 1; }
-  rsync -a --delete '$here/$out/' mac:artosia-site/public/
-  scp -q '$here/site/deploy/wrangler.jsonc' '$here/site/deploy/package.json' mac:artosia-site/
-  ssh -o BatchMode=yes mac 'export PATH=\$HOME/.bun/bin:/opt/homebrew/bin:\$PATH
-    cd ~/artosia-site && bun install --silent && bunx --no-install wrangler deploy' | tail -4
-" | tr -d '\0'
+ssh -o BatchMode=yes mac 'mkdir -p ~/artosia-site' \
+    || { echo "The Mac cannot be reached over ssh, so the site was built and not deployed." >&2; exit 1; }
+# The folder goes over as one tar stream: this shell has no rsync.
+tar -C "$out" -cf - . | ssh -o BatchMode=yes mac 'rm -rf ~/artosia-site/public.new && mkdir -p ~/artosia-site/public.new && tar -xf - -C ~/artosia-site/public.new && rm -rf ~/artosia-site/public && mv ~/artosia-site/public.new ~/artosia-site/public'
+scp -q site/deploy/wrangler.jsonc site/deploy/package.json mac:artosia-site/
+ssh -o BatchMode=yes mac 'export PATH=$HOME/.bun/bin:/opt/homebrew/bin:$PATH
+  set -o pipefail
+  cd ~/artosia-site && bun install --silent && bunx --no-install wrangler deploy 2>&1 | tail -4'
 
 echo "Site for ${tag#v} is at https://artosia.matsuokengo.com."

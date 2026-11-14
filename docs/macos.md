@@ -94,10 +94,13 @@ The host gave each connection about 170 kB a second and dropped one HTTP/2 strea
 
 ## How a release carries it
 
-`tools/publish.sh` reaches the Mac through WSL's `ssh mac`, as `tools/publish-site.sh` does:
+`tools/publish.sh` reaches the Mac from Windows itself over Tailscale (`Host mac` in the PC's
+`~/.ssh/config`), as `tools/publish-site.sh` does. Until 2026-11-14 it went through WSL's `ssh mac`;
+WSL's network stopped reaching the Mac, so 0.1.29 to 0.1.31 went out with no Mac files, and the
+owner then put WSL off limits.
 
-1. On the Mac: `git pull`, then `tools/package-macos.sh <version>`, which builds the two programs, puts the app together, signs it inside out (every library, plugin and helper, the projector program, then the app), verifies the seal and makes the disk image.
-2. The app's `Contents` and the image come back to WSL, and `artosia-release build --platform macos-aarch64` makes and signs the update list there. The signing key stays on the release PC.
+1. On the Mac, from the release's tag: `tools/package-macos.sh <version>`, which builds the two programs, puts the app together, signs it inside out (every library, plugin and helper, the projector program, then the app), verifies the seal and makes the disk image. Then `artosia-release build --platform macos-aarch64` makes the update folder there, where every file keeps its executable mark, under a throwaway key.
+2. The update folder and the image come back as one tar stream, and `artosia-release sign` signs the list again on the release PC after checking every file against it. The real signing key never leaves the PC.
 3. The image, `manifest-macos-aarch64.json`, its signature and the files (`macos-aarch64__...`) are uploaded beside the other systems' ([linux.md](linux.md) has the naming).
 
 When the Mac cannot be reached or its build fails, the release carries no Mac files and says so, and the homepage, which shows a system only when the newest release holds its file, shows no Mac row ([site.md](site.md)).

@@ -267,3 +267,30 @@ function system() {
 }
 
 system();
+
+// A copy button puts its line on the clipboard and shows a check for two seconds, and a
+// screen reader hears it. Where the clipboard is refused (a page opened from a file), the
+// line is selected for Ctrl+C instead.
+document.querySelectorAll("[data-copy]").forEach((button) => {
+  const line = document.getElementById(button.dataset.copy);
+  const said = button.parentElement.querySelector(".cmd-said");
+  const idle = button.title;
+  let timer;
+  button.addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(line.textContent);
+    } catch {
+      getSelection().selectAllChildren(line);
+      return;
+    }
+    button.classList.add("is-done");
+    button.title = button.dataset.done;
+    said.textContent = button.dataset.done;
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      button.classList.remove("is-done");
+      button.title = idle;
+      said.textContent = "";
+    }, 2000);
+  });
+});
