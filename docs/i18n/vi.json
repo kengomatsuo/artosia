@@ -5860,5 +5860,15 @@
   "text": "Ảnh thứ hai",
   "back": "Second picture",
   "why": "Pairs with Ảnh"
+ },
+ "TOUR_END": {
+  "text": "Kết thúc",
+  "back": "Finish",
+  "why": "short stop-all verb, unlike Bỏ qua"
+ },
+ "course_part": {
+  "text": "Phần {at}/{total}: {name}",
+  "back": "Part {at}/{total}: {name}",
+  "why": "part place then feature name"
  }
 }

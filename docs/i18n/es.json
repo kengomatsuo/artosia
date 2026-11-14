@@ -5885,5 +5885,15 @@
   "text": "Segunda imagen",
   "back": "Second picture",
   "why": "Imagen as in the table."
+ },
+ "TOUR_END": {
+  "text": "Terminar",
+  "back": "Finish",
+  "why": "short stop-all verb, unlike Omitir"
+ },
+ "course_part": {
+  "text": "Parte {at} de {total}: {name}",
+  "back": "Part {at} of {total}: {name}",
+  "why": "part place then feature name"
  }
 }

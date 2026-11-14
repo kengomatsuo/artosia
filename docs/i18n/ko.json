@@ -5849,5 +5849,15 @@
   "text": "두 번째 이미지",
   "back": "Second image",
   "why": "parallel to 이미지"
+ },
+ "TOUR_END": {
+  "text": "끝내기",
+  "back": "Finish",
+  "why": "short stop-all verb, unlike 건너뛰기"
+ },
+ "course_part": {
+  "text": "{at}/{total}번째: {name}",
+  "back": "{at}/{total}th: {name}",
+  "why": "part place then feature name"
  }
 }

@@ -247,7 +247,10 @@ On a church's library the tour runs on the practice library (TOURROOM1, 2026-11-
 plan `docs/plans/artosia/tour-room.md`): `start_tour` saves what waits, sets the church's app aside in
 `App::church` and swaps in `App::load_in(None)`, so every stop shows songs, a plan and the church's
 windows filled in. Done or Skip gives the church's app back as it was left; nothing the tour showed is
-saved, and the practice app never starts the projector, so the room keeps its last picture. A lesson
+saved, and the practice app never starts the projector, so the room keeps its last picture. The tour
+is the whole course (TOURFULL1): its five stops, then each feature's lesson in `ui::tour::COURSE`, the
+card naming the part ("Part 3 of 15: Calendar"), Skip for one lesson and End tour for all; the
+PowerPoint lesson opens a made-up PowerPoint inside it. A lesson
 from a help mark or What's new stays on the church's own data: the person is mid-task, and a lesson
 saves nothing itself.
 

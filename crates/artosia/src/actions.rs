@@ -1923,7 +1923,7 @@ impl App {
             self.want_paste = false;
             tx.request_paste();
         }
-        if self.want_pptx && rune::is_headless() {
+        if self.want_pptx && (rune::is_headless() || self.course.is_some()) {
             self.want_pptx = false;
             self.demo_pptx("made");
             changed = true;

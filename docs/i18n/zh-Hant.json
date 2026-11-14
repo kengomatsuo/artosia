@@ -5847,5 +5847,15 @@
   "text": "第二張圖片",
   "back": "Second picture",
   "why": "parallel to 圖片"
+ },
+ "TOUR_END": {
+  "text": "結束導覽",
+  "back": "End tour",
+  "why": "uses the table's 導覽, unlike 略過"
+ },
+ "course_part": {
+  "text": "第 {at} 段,共 {total} 段:{name}",
+  "back": "Segment {at}, {total} in all: {name}",
+  "why": "Taiwan phrasing, part place then feature name"
  }
 }

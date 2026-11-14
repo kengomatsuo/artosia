@@ -720,6 +720,9 @@ pub struct App {
     pub waker: Option<Waker>,
     /// The church's own app, waiting while the tour shows the practice library (TOURROOM1).
     pub church: Option<Box<App>>,
+    /// The whole tour is running: how many of its parts have started, the five stops first and
+    /// then each feature's lesson in `ui::tour::COURSE` (TOURFULL1).
+    pub course: Option<usize>,
     pub inbox: Arc<Mutex<Vec<Arrived>>>,
     pub remote_tx: Sender<RemoteCommand>,
     pub remote_rx: Receiver<RemoteCommand>,
@@ -945,6 +948,7 @@ impl App {
             slide_pictures: HashMap::new(),
             waker: None,
             church: None,
+            course: None,
             inbox: Arc::new(Mutex::new(Vec::new())),
             remote_tx,
             remote_rx,

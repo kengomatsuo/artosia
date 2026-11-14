@@ -5847,5 +5847,15 @@
   "text": "2枚目の画像",
   "back": "Second image",
   "why": "counter 枚 for pictures"
+ },
+ "TOUR_END": {
+  "text": "ガイド終了",
+  "back": "Guide end",
+  "why": "names the whole guide, unlike 飛ばす"
+ },
+ "course_part": {
+  "text": "パート{at}/{total}: {name}",
+  "back": "Part {at}/{total}: {name}",
+  "why": "part place then feature name"
  }
 }

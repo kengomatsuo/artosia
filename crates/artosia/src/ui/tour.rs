@@ -46,6 +46,26 @@ const STOPS: [Stop; 5] = [
     Stop { side: Side::Bottom, align: Align::Start, main: t::TOUR_SEARCH, more: t::TOUR_SEARCH_MORE },
 ];
 
+/// The whole tour after its five stops: each feature's lesson, in the order a volunteer meets
+/// them, from the plan and its songs to the church's windows and the dialogs.
+pub(crate) const COURSE: [Feature; 15] = [
+    Feature::Plan,
+    Feature::Songs,
+    Feature::Bible,
+    Feature::WebSongs,
+    Feature::Notices,
+    Feature::Templates,
+    Feature::Pptx,
+    Feature::Calendar,
+    Feature::People,
+    Feature::Giving,
+    Feature::Look,
+    Feature::Screens,
+    Feature::Phone,
+    Feature::Listen,
+    Feature::Stream,
+];
+
 /// How many stops there are.
 pub const STOP_COUNT: usize = STOPS.len();
 
@@ -80,6 +100,9 @@ impl App {
             let church = std::mem::replace(self, practice);
             self.church = Some(Box::new(church));
         }
+        // The five stops open the whole tour; every feature's lesson follows them.
+        self.course = Some(0);
+        self.lesson = None;
         self.sheet = Sheet::None;
         self.close_palette();
         self.tour = Some(0);
@@ -90,7 +113,7 @@ impl App {
     pub fn tour_next(&mut self) {
         match self.tour {
             Some(at) if at + 1 < STOP_COUNT => self.tour = Some(at + 1),
-            Some(_) => self.end_tour(),
+            Some(_) => self.finish_stops(),
             None => {}
         }
     }
@@ -108,10 +131,48 @@ impl App {
         }
     }
 
-    /// Closes the tour from any stop, and remembers it was seen so it does not start by itself again.
-    pub fn end_tour(&mut self) {
-        if self.tour.take().is_some() {
+    /// Done on the last stop: the whole tour goes on with the features' lessons.
+    fn finish_stops(&mut self) {
+        if self.course.is_some() {
+            self.tour = None;
             self.tour_focus = false;
+            // The stops seen count as the tour seen, on the church's library while it waits aside.
+            let owner = match self.church.as_mut() {
+                Some(church) => church.as_mut(),
+                None => self,
+            };
+            if !owner.settings.toured {
+                owner.settings.toured = true;
+                owner.touch_settings();
+            }
+            self.next_course_lesson();
+        } else {
+            self.end_tour();
+        }
+    }
+
+    /// The next feature's lesson of the whole tour, or the end of the tour after the last.
+    pub fn next_course_lesson(&mut self) {
+        let Some(started) = self.course else { return };
+        match COURSE.get(started) {
+            Some(feature) => {
+                self.start_lesson(feature.lesson());
+                self.course = Some(started + 1);
+            }
+            None => self.end_tour(),
+        }
+    }
+
+    /// Closes the tour from any stop or lesson of it, gives the church's library back, and
+    /// remembers it was seen so it does not start by itself again.
+    pub fn end_tour(&mut self) {
+        let stops = self.tour.take().is_some();
+        let course = self.course.take().is_some();
+        if stops || course {
+            self.tour_focus = false;
+            if course {
+                self.lesson = None;
+            }
             // The church's own library comes back as it was left.
             if let Some(church) = self.church.take() {
                 let mut church = *church;
@@ -152,8 +213,13 @@ impl App {
         self.lesson = Some((lesson, 0));
     }
 
+    /// Skip on a lesson: within the whole tour the next feature's lesson starts.
     pub fn end_lesson(&mut self) {
-        self.lesson = None;
+        if self.course.is_some() {
+            self.next_course_lesson();
+        } else {
+            self.lesson = None;
+        }
     }
 
     /// Next on a lesson's explanation step: the step counts as read.
@@ -295,7 +361,11 @@ pub(crate) fn settle_lesson(app: &mut App) -> bool {
             true
         }
         (None, Some((lesson, _))) if lesson.id == id => {
-            app.lesson = None;
+            if app.course.is_some() {
+                app.next_course_lesson();
+            } else {
+                app.lesson = None;
+            }
             true
         }
         _ => false,
@@ -360,6 +430,9 @@ fn bubble(s: &App, k: &Kit, id: &str, step: usize, total: usize, search: Option<
     };
     let main = main.as_str();
     let mut buttons = row().w_full().gap(space::S2).center_y().child(row().w(BUTTON).child(btn(t::TOUR_SKIP()).icon(&icons::CLOSE).ghost().grow().focusable().build(k, |s, _| s.end_lesson()))).child(spacer());
+    if s.course.is_some() {
+        buttons = buttons.child(row().w(BUTTON).child(btn(t::TOUR_END()).ghost().grow().focusable().build(k, |s, _| s.end_tour()).key("tour-end")));
+    }
     if let Some(command) = search {
         buttons = buttons.child(btn(t::GUIDE_OPEN_SEARCH()).icon(&rune_kit::glyphs::SEARCH).primary().focusable().build(k, move |s, _| s.lesson_search(command)).key("lesson-search"));
     }
@@ -381,6 +454,10 @@ fn bubble(s: &App, k: &Kit, id: &str, step: usize, total: usize, search: Option<
             col()
                 .w_full()
                 .gap(space::S1)
+                .children(s.course.filter(|started| *started > 0).and_then(|started| COURSE.get(started - 1)).map(|feature| {
+                    let started = s.course.unwrap_or(1);
+                    text(t::course_part(started, COURSE.len(), feature.name())).key("course-part").font(type_::SMALL_STRONG).color(theme::accent())
+                }))
                 .child(text(t::tour_place(step + 1, total)).key(format!("lesson-step-{id}")).font(type_::SMALL).color(k.c.text_muted))
                 .child(crate::ui::widgets::wrapped(main).font(type_::TITLE).color(k.c.text_base).wrap())
                 .child(crate::ui::widgets::wrapped(more).font(type_::BODY).color(k.c.text_muted).wrap()),
@@ -620,6 +697,22 @@ mod tests {
         assert!(app.store.songs().unwrap_or_default().is_empty(), "nothing the tour showed was saved");
         drop(app);
         let _ = std::fs::remove_dir_all(&folder);
+    }
+
+    #[test]
+    fn the_whole_tour_runs_every_lesson_after_the_stops_and_ends_on_end_tour() {
+        let mut app = App::practice();
+        app.start_tour();
+        assert_eq!((app.tour, app.course), (Some(0), Some(0)));
+        for _ in 0..STOP_COUNT {
+            app.tour_next();
+        }
+        assert!(app.tour.is_none(), "the stops are done");
+        assert_eq!(app.lesson.map(|(lesson, _)| lesson.id), Some(COURSE[0].lesson().id), "the first feature's lesson follows");
+        app.end_lesson();
+        assert_eq!(app.lesson.map(|(lesson, _)| lesson.id), Some(COURSE[1].lesson().id), "Skip goes to the next lesson");
+        app.end_tour();
+        assert!(app.lesson.is_none() && app.course.is_none(), "End tour ends all of it");
     }
 
     #[test]

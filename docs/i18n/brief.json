@@ -21465,5 +21465,57 @@
    "undo"
   ],
   "notes": "A plain statement, no exclamation."
+ },
+ {
+  "key": "TOUR_END",
+  "kind": "const",
+  "screen": "A guide card during the whole tour, which runs a short lesson for every feature one after another; three buttons at its foot: Skip (this lesson), this one, and Next.",
+  "moment": "The person wants to stop the whole tour now, not only this lesson.",
+  "role": "button",
+  "does": "Names the button that stops the whole tour and gives the window back as it was.",
+  "budget": 12,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "tour",
+   "guide"
+  ],
+  "notes": "Two words at most; it must read differently from the Skip button beside it."
+ },
+ {
+  "key": "course_part",
+  "kind": "sentence",
+  "screen": "The top line of a guide card during the whole tour, in the accent colour, above the lesson's own step count (such as 2 of 3).",
+  "moment": "The person sees how far into the whole tour they are.",
+  "role": "progress line",
+  "does": "Says which part of the whole tour this is, out of how many, and names the feature this part shows.",
+  "budget": 48,
+  "variables": [
+   {
+    "name": "at",
+    "example": "3",
+    "meaning": "This part's place."
+   },
+   {
+    "name": "total",
+    "example": "15",
+    "meaning": "How many parts the tour has."
+   },
+   {
+    "name": "name",
+    "example": "Kalender",
+    "meaning": "The feature's name as its tab or dialog shows it."
+   }
+  ],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "tour",
+   "guide"
+  ],
+  "notes": "Keep the tokens {at}, {total} and {name} exactly."
  }
 ]

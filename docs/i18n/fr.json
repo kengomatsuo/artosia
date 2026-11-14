@@ -5907,5 +5907,15 @@
   "text": "Deuxième image",
   "back": "Second image",
   "why": "Pairs with Image"
+ },
+ "TOUR_END": {
+  "text": "Quitter",
+  "back": "Quit",
+  "why": "short stop-all verb, unlike Passer"
+ },
+ "course_part": {
+  "text": "Partie {at} sur {total} : {name}",
+  "back": "Part {at} out of {total}: {name}",
+  "why": "part place then feature name"
  }
 }

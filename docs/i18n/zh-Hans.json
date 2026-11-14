@@ -5849,5 +5849,15 @@
   "text": "第二张图片",
   "back": "Second picture",
   "why": "parallel to 图片"
+ },
+ "TOUR_END": {
+  "text": "结束导览",
+  "back": "End tour",
+  "why": "uses the table's 导览, unlike 跳过"
+ },
+ "course_part": {
+  "text": "第{at}/{total}部分: {name}",
+  "back": "Part {at}/{total}: {name}",
+  "why": "part place then feature name"
  }
 }

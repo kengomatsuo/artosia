@@ -713,6 +713,7 @@ text!(GUIDE_BIBLE_TYPE_MORE, "A reference like John 3:16, or words you remember.
 text!(PART_NEW, "New part", "Bagian baru");
 text!(EDITOR_DETAILS, "Details", "Detail lagu");
 text!(PART_REMOVED, "Part removed", "Bagian dihapus");
+text!(TOUR_END, "End tour", "Akhiri");
 text!(GUIDE_HELP, "Help", "Bantuan");
 text!(GUIDE_SHOW_ME, "Show me", "Tunjukkan caranya");
 text!(HELP_CALENDAR, "Your regular services and events, entered once. The schedule slide fills itself from them.", "Kalender berisi ibadah dan acara gereja, cukup diisi sekali. Slide pengumuman jadwal terisi sendiri.");
@@ -1769,6 +1770,17 @@ pub fn guide_find(name: &str) -> String {
         return format!("Cari \u{201c}{name}\u{201d} di pencarian");
     }
     format!("Find \u{201c}{name}\u{201d} in the search")
+}
+
+/// Where the whole tour stands: which part of how many, and the feature it shows.
+pub fn course_part(at: usize, total: usize, name: &str) -> String {
+    if let Some(text) = say("course_part", None, None, &[("at", text_arg(at.to_string())), ("total", text_arg(total.to_string())), ("name", text_arg(name))]) {
+        return text;
+    }
+    if indonesian() {
+        return format!("Bagian {at} dari {total}: {name}");
+    }
+    format!("Part {at} of {total}: {name}")
 }
 
 /// A lesson step that sends the person to a tab, named as the tab bar names it.

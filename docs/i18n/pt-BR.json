@@ -5885,5 +5885,15 @@
   "text": "Segunda imagem",
   "back": "Second picture",
   "why": "Imagem as in the table."
+ },
+ "TOUR_END": {
+  "text": "Encerrar",
+  "back": "End",
+  "why": "short stop-all verb, unlike Pular"
+ },
+ "course_part": {
+  "text": "Parte {at} de {total}: {name}",
+  "back": "Part {at} of {total}: {name}",
+  "why": "part place then feature name"
  }
 }
