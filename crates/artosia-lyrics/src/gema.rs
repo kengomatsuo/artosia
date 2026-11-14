@@ -98,10 +98,11 @@ fn hymn_number(query: &str) -> String {
     let lower = trimmed.to_ascii_lowercase();
     if let Some(rest) = lower.strip_prefix("kj") {
         let digits = rest.trim();
-        if !digits.is_empty() && digits.chars().all(|c| c.is_ascii_digit()) {
-            if let Ok(number) = digits.parse::<u32>() {
-                return format!("KJ {number:03}");
-            }
+        if !digits.is_empty()
+            && digits.chars().all(|c| c.is_ascii_digit())
+            && let Ok(number) = digits.parse::<u32>()
+        {
+            return format!("KJ {number:03}");
         }
     }
     trimmed.to_string()

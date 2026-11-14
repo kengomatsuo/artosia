@@ -16,6 +16,7 @@
 
 mod gema;
 mod http;
+mod lines;
 mod lrclib;
 mod page;
 mod text;

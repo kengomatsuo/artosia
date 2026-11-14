@@ -66,3 +66,25 @@ No Indonesian church lyric database with an API or export turned up. News and pa
 - **Rate limit.** About 90 calls a minute; a debounced field never gets near it. A `429` shows "The lyrics service is busy" and the crate stops calling until the wait ends.
 - **Offline or slow.** After 5 seconds the call fails with a readable network message.
 - **Time-synced only records** are converted to plain text with timestamps removed.
+
+## Reading a page the person chose (LYRICPARSE1, 2026-11-14)
+
+`page.rs` reads one lyrics page a person picked or pasted and returns its sung lines with stanza
+breaks, on the method in `~/Shared/research/artosia-lyric-extraction/README.md` (Readability,
+trafilatura, jusText, FreeShow, LyricsGenius, lyrics.ovh and ChordPro read; no extractor crate
+handled short sung lines, `<br>` breaks or chords, so the design is copied, not adopted).
+
+1. The page is parsed by `scraper` 0.29 (html5ever underneath); `<br>` and block ends become
+   newlines before anything is measured, and ad and header nodes are removed by node.
+2. A table of sites first (Gema SABDA, KapanLagi, Chordtela, Genius, Letras, AZLyrics), each with
+   its lyric selector, the nodes to drop, where the song ends, and its own title and artist rule.
+3. Then the page's JSON-LD `lyrics.text`, then the shape finder run per candidate container, with
+   Readability's class words and link density as tie-breaks.
+4. `lines.rs` drops chord lines by ChordPro's two tests (spaces against letters, more than 40% of
+   words chords) with a real chord grammar (C7sus4, Cm7b5, D/F#), drops `N.C.`, `(2x)`, tablature
+   and `Intro : G D` lines, keeps section labels as `[Reff]` style lines, and drops hymn verse
+   numbers and a trailing credit only when a check proves them.
+
+Measured on 10 saved pages from Gema SABDA (3), KapanLagi (2), Chordtela (2), Genius (1) and AZLyrics
+(2), each compared with the page by eye. Letras answers 403 to a program, so its selector is tested
+on a made-up page only. Tests use made-up words in each site's shape; no page is kept in the repository.
