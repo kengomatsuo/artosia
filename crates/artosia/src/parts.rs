@@ -165,6 +165,26 @@ impl App {
         self.write_parts(&sections);
     }
 
+    /// Splits a line too long for the screen in two at the space nearest its middle.
+    pub fn split_line(&mut self, index: usize, line: usize) {
+        let mut sections = self.written_parts();
+        let Some(section) = sections.get_mut(index) else { return };
+        let Some(words) = section.lines.get(line).cloned() else { return };
+        let middle = words.len() / 2;
+        let cut = words.char_indices().filter(|(_, c)| *c == ' ').map(|(at, _)| at).min_by_key(|at| at.abs_diff(middle));
+        let Some(cut) = cut else { return };
+        section.lines[line] = words[..cut].trim_end().to_string();
+        section.lines.insert(line + 1, words[cut..].trim_start().to_string());
+        // Slide breaks after the line move down with it.
+        for at in section.breaks.iter_mut() {
+            if *at > line {
+                *at += 1;
+            }
+        }
+        self.close_part();
+        self.write_parts(&sections);
+    }
+
     /// Takes a part out of the song; Undo in the toast puts the words back as they were.
     pub fn delete_part(&mut self, index: usize) {
         let mut sections = self.written_parts();
@@ -230,6 +250,15 @@ mod tests {
         app.part_changed();
         assert_eq!(app.written_parts().len(), 2);
         assert!(words(&app).contains("A second verse"));
+    }
+
+    #[test]
+    fn a_long_line_splits_at_the_space_nearest_its_middle_and_keeps_its_slide_breaks() {
+        let mut app = editor_with("[1]\nOne two three four five six\n\nNext slide\n");
+        app.split_line(0, 0);
+        let part = &app.written_parts()[0];
+        assert_eq!(part.lines, ["One two three", "four five six", "Next slide"]);
+        assert_eq!(part.breaks, [2], "the slide break moved down with the line");
     }
 
     #[test]

@@ -5857,5 +5857,15 @@
   "text": "第 {at} 段,共 {total} 段:{name}",
   "back": "Segment {at}, {total} in all: {name}",
   "why": "Taiwan phrasing, part place then feature name"
+ },
+ "PART_TOO_LONG": {
+  "text": "這行太長，投影機放不下",
+  "back": "This line is too long, the projector cannot fit it",
+  "why": "short warning, projector word from table"
+ },
+ "PART_SPLIT": {
+  "text": "分行",
+  "back": "Break line",
+  "why": "one word, cuts line in two"
  }
 }

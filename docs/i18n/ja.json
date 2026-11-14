@@ -5857,5 +5857,15 @@
   "text": "パート{at}/{total}: {name}",
   "back": "Part {at}/{total}: {name}",
   "why": "part place then feature name"
+ },
+ "PART_TOO_LONG": {
+  "text": "映すには長すぎます",
+  "back": "Too long to show on screen",
+  "why": "short warning, projector word from table"
+ },
+ "PART_SPLIT": {
+  "text": "分割",
+  "back": "Split",
+  "why": "one word, cuts line in two"
  }
 }

@@ -714,6 +714,8 @@ text!(PART_NEW, "New part", "Bagian baru");
 text!(EDITOR_DETAILS, "Details", "Detail lagu");
 text!(PART_REMOVED, "Part removed", "Bagian dihapus");
 text!(TOUR_END, "End tour", "Akhiri");
+text!(PART_TOO_LONG, "Too long for the screen", "Kepanjangan di proyektor");
+text!(PART_SPLIT, "Split", "Pisah");
 text!(GUIDE_HELP, "Help", "Bantuan");
 text!(GUIDE_SHOW_ME, "Show me", "Tunjukkan caranya");
 text!(HELP_CALENDAR, "Your regular services and events, entered once. The schedule slide fills itself from them.", "Kalender berisi ibadah dan acara gereja, cukup diisi sekali. Slide pengumuman jadwal terisi sendiri.");

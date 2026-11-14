@@ -111,6 +111,15 @@ pub fn fits(look: &Look, size: (f32, f32)) -> impl Fn(&[&[String]]) -> bool + us
     }
 }
 
+/// Whether one line alone is too long to be read on a screen `size` in a look: drawn by itself
+/// it would still have to shrink below the readable size, the same test `fits` makes for slides.
+pub fn too_long(look: &Look, size: (f32, f32)) -> impl Fn(&str) -> bool + use<> {
+    let (width, height) = room(size);
+    let face = face(look);
+    let base = (96.0 * look.size).round();
+    move |line: &str| fit(&[line], face, width, height, gap(1080.0), base, HARD_FLOOR) < FLOOR
+}
+
 /// A song's slides in the languages `languages` picks, split where the blocks would not be
 /// readable in `look` on a screen `size`. The look and the shape decide the split, so a deck is
 /// built again when either changes.

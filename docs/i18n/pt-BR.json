@@ -5895,5 +5895,15 @@
   "text": "Parte {at} de {total}: {name}",
   "back": "Part {at} of {total}: {name}",
   "why": "part place then feature name"
+ },
+ "PART_TOO_LONG": {
+  "text": "Longa para o projetor",
+  "back": "Long for the projector",
+  "why": "short warning, projector word from table"
+ },
+ "PART_SPLIT": {
+  "text": "Dividir",
+  "back": "Divide",
+  "why": "one word, cuts line in two"
  }
 }

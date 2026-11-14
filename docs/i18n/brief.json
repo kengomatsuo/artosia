@@ -21517,5 +21517,40 @@
    "guide"
   ],
   "notes": "Keep the tokens {at}, {total} and {name} exactly."
+ },
+ {
+  "key": "PART_TOO_LONG",
+  "kind": "const",
+  "screen": "The song editor: in a part card, after one line of the words, small text in the warning colour, followed by a small button.",
+  "moment": "The line is so long that the projector could only show it in letters too small to read.",
+  "role": "warning",
+  "does": "Says this line is too long for the screen.",
+  "budget": 26,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "projector",
+   "slide_words"
+  ],
+  "notes": "Short; no exclamation."
+ },
+ {
+  "key": "PART_SPLIT",
+  "kind": "const",
+  "screen": "The small button right after that warning, on the same line of the part card.",
+  "moment": "The person wants the long line made into two lines.",
+  "role": "button",
+  "does": "Names the button that cuts the line in two at the space nearest its middle.",
+  "budget": 10,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_words"
+  ],
+  "notes": "One word."
  }
 ]

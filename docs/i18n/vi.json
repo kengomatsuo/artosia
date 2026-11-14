@@ -5870,5 +5870,15 @@
   "text": "Phần {at}/{total}: {name}",
   "back": "Part {at}/{total}: {name}",
   "why": "part place then feature name"
+ },
+ "PART_TOO_LONG": {
+  "text": "Quá dài cho máy chiếu",
+  "back": "Too long for the projector",
+  "why": "short warning, projector word from table"
+ },
+ "PART_SPLIT": {
+  "text": "Tách",
+  "back": "Separate",
+  "why": "one word, cuts line in two"
  }
 }

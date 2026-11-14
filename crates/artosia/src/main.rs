@@ -468,6 +468,15 @@ const SCENES: &[Scene] = &[
             editor.part_menu = Some(1);
         }
     }),
+    // LYRICSEDIT1: a line too long for the screen, marked in its card with Split beside it.
+    ("editor-long-line", |s| {
+        s.song_from_clipboard("Lantern Song
+
+[1]
+We will keep on walking together through every valley however dark the night becomes
+Until we reach the house
+");
+    }),
     ("new-song", |s| {
         s.song_from_clipboard("Lantern Song\n\nVerse 1\nCarry the lantern through the night\nKeep the small flame burning bright\n\nChorus\nShine, shine on the road ahead\nShine till the morning comes\n");
     }),

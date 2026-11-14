@@ -5917,5 +5917,15 @@
   "text": "Partie {at} sur {total} : {name}",
   "back": "Part {at} out of {total}: {name}",
   "why": "part place then feature name"
+ },
+ "PART_TOO_LONG": {
+  "text": "Trop long à projeter",
+  "back": "Too long to project",
+  "why": "short warning, projector word from table"
+ },
+ "PART_SPLIT": {
+  "text": "Couper",
+  "back": "Cut",
+  "why": "one word, cuts line in two"
  }
 }

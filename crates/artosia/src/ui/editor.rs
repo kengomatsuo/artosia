@@ -383,13 +383,24 @@ fn part_card(s: &App, k: &Kit, index: usize, section: &Section, open: Option<&cr
             .min_w(0.0),
         None => {
             let mut lines = col().grow(1.0).min_w(0.0).gap(space::S1);
+            // A line the projector could not show at a readable size is marked where it stands.
+            let too_long = artosia_slides::voices::too_long(&s.look(), s.slide_shape());
+            let mut number = 0usize;
             for (at, group) in section.groups().iter().enumerate() {
                 if at > 0 {
                     let dash = || el().h(1.0).grow(1.0).border(1.0, color.alpha(0.5)).border_dash(4.0, 4.0).a11y_hidden();
                     lines = lines.child(row().w_full().gap(space::S2).center_y().py(2.0).child(dash()).child(text((at + 1).to_string()).font(type_::TINY).color(k.c.text_faint)).child(dash()));
                 }
                 for line in group.iter() {
-                    lines = lines.child(text(line.clone()).font(type_::BODY).color(k.c.text_base).wrap());
+                    let place = number;
+                    number += 1;
+                    let mut row_of = row().w_full().gap(space::S2).center_y().child(text(line.clone()).font(type_::BODY).color(k.c.text_base).wrap().grow(1.0).min_w(0.0));
+                    if too_long(line) {
+                        row_of = row_of
+                            .child(text(t::PART_TOO_LONG()).font(type_::SMALL_STRONG).color(theme::warn_ink()))
+                            .child(btn(t::PART_SPLIT()).small().build(k, move |s, _| s.split_line(index, place)).key(format!("split-{index}-{place}")));
+                    }
+                    lines = lines.child(row_of);
                 }
             }
             lines.key(format!("part-words-{index}")).role("button").label(t::section_label(tag)).cursor(Cursor::Text).on_press(move |s: &mut App| s.open_part(index))
