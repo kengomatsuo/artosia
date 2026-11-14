@@ -126,7 +126,7 @@ fn order(column: &str, dir: SortDir, a: &Person, b: &Person, today: Date) -> Ord
 }
 
 /// The same person is not listed twice: name in any letter case, and day and month.
-fn same(a: &Person, b: &Person) -> bool {
+pub(crate) fn same(a: &Person, b: &Person) -> bool {
     a.name.to_lowercase() == b.name.to_lowercase() && (a.day, a.month) == (b.day, b.month)
 }
 
@@ -144,7 +144,7 @@ impl App {
     }
 
     /// Reads the people from the library again, after a write.
-    fn reload_people(&mut self) {
+    pub(crate) fn reload_people(&mut self) {
         self.people = self.store.people().unwrap_or_default();
         self.refresh_members();
         self.refresh_decks();

@@ -188,4 +188,16 @@ BASE     an import offers both: As made (each slide a picture, exported by the i
 SCREEN   the import dialog shows the file's slides as thumbnails with the two choices side by side
 VERIFY   a made-up Warta-shaped file built by the tests both ways; the church's own file from fixtures/
          rendered locally and never committed
+BUILD    (operator side) pptx_import.rs holds `PptxImport` (file, visible slides, the redraw's cards and
+         proposals, the way, the export's state) on `App::pptx`; ui/pptx_import.rs draws the dialog.
+         open (file picked): read with artosia-office on the UI thread (parse only), start slides_as_pictures
+           on a worker into temp/artosia-pptx-<pid>-<round>; the frame poll counts the PNGs written for
+           the progress bar; the worker posts Arrived::Pptx(round, Made)
+         press way: select As made or Redraw (As made only once its pictures are Ready)
+         press tick: a proposal's tick flips; nothing is written
+         press Cancel on the bar: the round moves on, the late result deletes its folder, As made says stopped
+         press Import: As made copies each PNG into media/ and makes a picture card each, in order; Redraw
+           makes today's cards, adds the ticked people (dedup, repeats left out) and gifts; one Undo-less
+           toast; the temp folder is removed
+         close (Cancel, Esc): round moves on, folder removed
 ```

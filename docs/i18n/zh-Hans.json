@@ -2076,9 +2076,9 @@
   "why": "PowerPoint stays"
  },
  "CMD_IMPORT_PPTX_DETAIL": {
-  "text": "文件里的每一页幻灯片变成一张卡片",
-  "back": "Every slide of the file becomes one card",
-  "why": "no full stop"
+  "text": "可导入为图片或重排文字，表格能补会友和奉献",
+  "back": "Can come in as pictures or with the words set again; tables can fill members and offerings",
+  "why": "Two ways, then the tables"
  },
  "CMD_IMPORT_BIRTHDAYS": {
   "text": "导入生日名单",
@@ -4984,5 +4984,91 @@
   "text": "无法播放音频文件 {file}",
   "back": "Cannot play the audio file {file}",
   "why": "mirrors the existing video line"
+ },
+ "PPTX_AS_MADE": {
+  "text": "按原样做成图片",
+  "back": "Made into pictures as they are",
+  "why": "按原样 says it looks like the original; 图片 for picture"
+ },
+ "PPTX_AS_MADE_HINT": {
+  "text": "每页幻灯片由演示软件画成一张图片",
+  "back": "Each slide is drawn by the presentation software into one picture",
+  "why": "幻灯片 is the slide word of the table; 页 for one slide of the file"
+ },
+ "PPTX_REDRAW": {
+  "text": "重新排成公告卡",
+  "back": "Set again as announcement cards",
+  "why": "公告 and 卡片 follow the table"
+ },
+ "PPTX_REDRAW_HINT": {
+  "text": "每页幻灯片的文字和表格，重新排成公告卡片",
+  "back": "The words and tables of each slide are set again as announcement cards",
+  "why": "文字 is the everyday word for words on a screen"
+ },
+ "PPTX_DRAWING": {
+  "text": "正在把幻灯片画成图片",
+  "back": "Turning the slides into pictures now",
+  "why": "正在 marks work in progress; this is the bar's name"
+ },
+ "PPTX_NO_RENDERER": {
+  "text": "这台电脑没有安装 PowerPoint 或 LibreOffice，画不出幻灯片的图片",
+  "back": "This computer has no PowerPoint or LibreOffice installed, so it cannot draw pictures of the slides",
+  "why": "Gives the cause first, product names kept"
+ },
+ "PPTX_FAILED": {
+  "text": "幻灯片没能画成图片",
+  "back": "The slides could not be drawn as pictures",
+  "why": "Names what happened in one clause"
+ },
+ "PPTX_STOPPED": {
+  "text": "你已停止，没有画完",
+  "back": "You stopped it; it was not finished",
+  "why": "Says the person ended it; 你 kept short and plain"
+ },
+ "PPTX_FOUND": {
+  "text": "表格里找到的内容",
+  "back": "What was found in the tables",
+  "why": "找到 for what the program recognised"
+ },
+ "pptx_progress": {
+  "text": "已画好 {done} / {total} 张幻灯片",
+  "back": "{done} of {total} slides drawn",
+  "why": "张 is the slide counter of the table"
+ },
+ "pptx_members": {
+  "text": {
+   "other": "把 {count} 位会友加入会友名单"
+  },
+  "back": {
+   "other": "Add {count} people to the members list"
+  },
+  "why": "会友 and 位 for people; Chinese has one form"
+ },
+ "pptx_gifts": {
+  "text": {
+   "other": "把 {count} 笔奉献记入奉献记录"
+  },
+  "back": {
+   "other": "Record {count} gifts in the offering record"
+  },
+  "why": "笔 counts gifts; 奉献 is the word of the table"
+ },
+ "pptx_total_differs": {
+  "text": "表上的合计是 {printed}，各行加起来是 {sum}",
+  "back": "The total on the table is {printed}, the lines add up to {sum}",
+  "why": "Both amounts side by side, plain verbs"
+ },
+ "pptx_also": {
+  "text": {
+   "both": "另外加入了 {members} 位会友和 {gifts} 笔奉献。",
+   "members": "另外加入了 {members} 位会友。",
+   "gifts": "另外记入了 {gifts} 笔奉献。"
+  },
+  "back": {
+   "both": "Also added {members} people and {gifts} gifts.",
+   "members": "Also added {members} people.",
+   "gifts": "Also recorded {gifts} gifts."
+  },
+  "why": "另外 follows the card-count sentence; 加入 for people, 记入 for gifts"
  }
 }

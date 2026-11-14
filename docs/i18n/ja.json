@@ -2074,9 +2074,9 @@
   "why": "取り込む"
  },
  "CMD_IMPORT_PPTX_DETAIL": {
-  "text": "スライド1枚がカード1枚になります",
-  "back": "Each slide becomes one card",
-  "why": "No full stop"
+  "text": "画像か組み直しで取り込み、表は教会員と献金に使えます",
+  "back": "Taken in as pictures or set again; tables can be used for members and offerings",
+  "why": "取り込む is the import verb"
  },
  "CMD_IMPORT_BIRTHDAYS": {
   "text": "誕生日の一覧を取り込む",
@@ -4982,5 +4982,91 @@
   "text": "音声を再生できません：{file}",
   "back": "Cannot play sound: {file}",
   "why": "mirrors the existing video line"
+ },
+ "PPTX_AS_MADE": {
+  "text": "見た目のまま画像に",
+  "back": "As a picture, looking the same",
+  "why": "見た目のまま says it looks like the original"
+ },
+ "PPTX_AS_MADE_HINT": {
+  "text": "スライドを1枚ずつ、ソフトが画像に描きます",
+  "back": "The software draws the slides one by one into pictures",
+  "why": "描きます for the program drawing; 枚 is the slide counter"
+ },
+ "PPTX_REDRAW": {
+  "text": "カードに組み直す",
+  "back": "Set again as cards",
+  "why": "組み直す is set again; カード follows the table"
+ },
+ "PPTX_REDRAW_HINT": {
+  "text": "スライドの文字と表を、お知らせカードとして組み直します",
+  "back": "The words and tables of the slides are set again as announcement cards",
+  "why": "お知らせ is the announcement word of the table"
+ },
+ "PPTX_DRAWING": {
+  "text": "スライドを画像にしています",
+  "back": "Turning the slides into pictures",
+  "why": "ています for work in progress"
+ },
+ "PPTX_NO_RENDERER": {
+  "text": "PowerPointもLibreOfficeも入っていないので、スライドを画像にできません",
+  "back": "Neither PowerPoint nor LibreOffice is installed, so the slides cannot be made into pictures",
+  "why": "Cause first with ので; product names kept"
+ },
+ "PPTX_FAILED": {
+  "text": "スライドを画像にできませんでした",
+  "back": "The slides could not be made into pictures",
+  "why": "One clause naming what happened"
+ },
+ "PPTX_STOPPED": {
+  "text": "画像にする途中でやめました",
+  "back": "Stopped partway through making pictures",
+  "why": "やめました matches the やめる of the table"
+ },
+ "PPTX_FOUND": {
+  "text": "見つかった表の中身",
+  "back": "What was found in the tables",
+  "why": "中身 for the content of the tables"
+ },
+ "pptx_progress": {
+  "text": "{total}枚中{done}枚を画像にしました",
+  "back": "{done} of {total} slides made into pictures",
+  "why": "枚中 gives done against total"
+ },
+ "pptx_members": {
+  "text": {
+   "other": "教会員{count}人を追加"
+  },
+  "back": {
+   "other": "Add {count} members"
+  },
+  "why": "教会員 is the member word of the table"
+ },
+ "pptx_gifts": {
+  "text": {
+   "other": "献金{count}件を追加"
+  },
+  "back": {
+   "other": "Add {count} gifts"
+  },
+  "why": "献金 is the word of the table; 件 counts records"
+ },
+ "pptx_total_differs": {
+  "text": "表の合計は{printed}ですが、各行の合計は{sum}です",
+  "back": "The total of the table is {printed}, but the lines total {sum}",
+  "why": "Both amounts, plain です"
+ },
+ "pptx_also": {
+  "text": {
+   "both": "教会員{members}人と献金{gifts}件も追加しました。",
+   "members": "教会員{members}人も追加しました。",
+   "gifts": "献金{gifts}件も追加しました。"
+  },
+  "back": {
+   "both": "Also added {members} members and {gifts} gifts.",
+   "members": "Also added {members} members.",
+   "gifts": "Also added {gifts} gifts."
+  },
+  "why": "も marks the addition to the card count"
  }
 }

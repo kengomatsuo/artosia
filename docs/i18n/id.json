@@ -1985,9 +1985,9 @@
   "why": "Button and dialog title"
  },
  "CMD_IMPORT_PPTX_DETAIL": {
-  "text": "Tiap slide jadi satu pengumuman",
-  "back": "Every slide becomes one announcement",
-  "why": "Fragment"
+  "text": "Gambar atau tata ulang; tabel isi Jemaat, Persembahan",
+  "back": "As pictures or arranged again; tables fill Jemaat, Persembahan",
+  "why": "Window names as the tabs are named"
  },
  "CMD_IMPORT_BIRTHDAYS": {
   "text": "Impor daftar ulang tahun",
@@ -4932,5 +4932,91 @@
   "text": "File suara tidak bisa diputar: {file}",
   "back": "The sound file cannot be played: {file}",
   "why": "plain word"
+ },
+ "PPTX_AS_MADE": {
+  "text": "Sebagai gambar",
+  "back": "As pictures",
+  "why": "Plain phrase; 'gambar' is what a slide picture is called"
+ },
+ "PPTX_AS_MADE_HINT": {
+  "text": "Tiap slide jadi satu gambar, dibuat program presentasi",
+  "back": "Each slide becomes one picture, made by the presentation program",
+  "why": "'slide' is the table's word"
+ },
+ "PPTX_REDRAW": {
+  "text": "Susun ulang",
+  "back": "Arrange again",
+  "why": "Short, says words are set again"
+ },
+ "PPTX_REDRAW_HINT": {
+  "text": "Teks dan tabel tiap slide disusun ulang jadi kartu pengumuman",
+  "back": "The text and tables of each slide are arranged again into announcement cards",
+  "why": "'pengumuman' and 'kartu' as in the table"
+ },
+ "PPTX_DRAWING": {
+  "text": "Slide dijadikan gambar",
+  "back": "Slides are being made into pictures",
+  "why": "Passive, no subject needed"
+ },
+ "PPTX_NO_RENDERER": {
+  "text": "PowerPoint dan LibreOffice tidak ada di komputer ini, jadi slide tidak bisa dijadikan gambar",
+  "back": "PowerPoint and LibreOffice are not on this computer, so the slides cannot be made into pictures",
+  "why": "Reason first, consequence after 'jadi'"
+ },
+ "PPTX_FAILED": {
+  "text": "Slide gagal dijadikan gambar",
+  "back": "The slides failed to be made into pictures",
+  "why": "Plain fact"
+ },
+ "PPTX_STOPPED": {
+  "text": "Dihentikan sebelum semua slide jadi gambar",
+  "back": "Stopped before all the slides became pictures",
+  "why": "Passive hides the actor as the brief allows"
+ },
+ "PPTX_FOUND": {
+  "text": "Ditemukan di tabel slide",
+  "back": "Found in the slides' tables",
+  "why": "Heading above ticks"
+ },
+ "pptx_progress": {
+  "text": "{done} dari {total} slide sudah jadi gambar",
+  "back": "{done} of {total} slides have become pictures",
+  "why": "Plain progress line"
+ },
+ "pptx_members": {
+  "text": {
+   "other": "Tambahkan {count} orang ke daftar jemaat"
+  },
+  "back": {
+   "other": "Add {count} people to the list of the congregation"
+  },
+  "why": "'jemaat' as in the Jemaat window; 'orang' counts people"
+ },
+ "pptx_gifts": {
+  "text": {
+   "other": "Catat {count} persembahan"
+  },
+  "back": {
+   "other": "Record {count} offerings"
+  },
+  "why": "'Catat persembahan' as in the offerings window"
+ },
+ "pptx_total_differs": {
+  "text": "Total di slide {printed}, jumlah barisnya {sum}",
+  "back": "The total on the slide is {printed}, the sum of its rows is {sum}",
+  "why": "Two facts, no judgement"
+ },
+ "pptx_also": {
+  "text": {
+   "both": "Daftar jemaat bertambah {members} orang, persembahan {gifts} catatan.",
+   "members": "Daftar jemaat bertambah {members} orang.",
+   "gifts": "Catatan persembahan bertambah {gifts}."
+  },
+  "back": {
+   "both": "The congregation list grew by {members} people, offerings by {gifts} records.",
+   "members": "The congregation list grew by {members} people.",
+   "gifts": "The offerings record grew by {gifts}."
+  },
+  "why": "Starts with a capital, ends with a full stop"
  }
 }

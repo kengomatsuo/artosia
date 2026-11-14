@@ -2074,9 +2074,9 @@
   "why": ""
  },
  "CMD_IMPORT_PPTX_DETAIL": {
-  "text": "슬라이드 한 장이 공지 카드 하나가 돼요",
-  "back": "Each slide becomes one card",
-  "why": ""
+  "text": "그림 또는 글자로 가져오고 표는 교인과 헌금에 써요",
+  "back": "Brought in as pictures or as words; tables are used for members and offerings",
+  "why": "가져오기 is the import word"
  },
  "CMD_IMPORT_BIRTHDAYS": {
   "text": "생일 목록 가져오기",
@@ -4984,5 +4984,91 @@
   "text": "소리 파일을 재생하지 못했어요: {file}",
   "back": "Could not play the sound file: {file}",
   "why": "mirrors the existing video line"
+ },
+ "PPTX_AS_MADE": {
+  "text": "원본 모습 그대로",
+  "back": "Just as the original looks",
+  "why": "원본 모습 그대로 says the picture keeps the original look"
+ },
+ "PPTX_AS_MADE_HINT": {
+  "text": "슬라이드마다 프로그램이 그림 한 장으로 그려요",
+  "back": "For each slide the program draws one picture",
+  "why": "해요 style; 장 here counts pictures, not slides"
+ },
+ "PPTX_REDRAW": {
+  "text": "공지 카드로 만들기",
+  "back": "Make into announcement cards",
+  "why": "공지 and 카드 follow the table"
+ },
+ "PPTX_REDRAW_HINT": {
+  "text": "슬라이드의 글자와 표를 공지 카드로 다시 배치해요",
+  "back": "The words and tables of the slides are set again as announcement cards",
+  "why": "글자 is the word of the table for words on a slide"
+ },
+ "PPTX_DRAWING": {
+  "text": "그림으로 만드는 중",
+  "back": "Making into pictures",
+  "why": "중 for work in progress"
+ },
+ "PPTX_NO_RENDERER": {
+  "text": "PowerPoint도 LibreOffice도 설치되어 있지 않아 슬라이드를 그림으로 만들 수 없어요",
+  "back": "Neither PowerPoint nor LibreOffice is installed, so the slides cannot be made into pictures",
+  "why": "Cause first with 아; product names kept"
+ },
+ "PPTX_FAILED": {
+  "text": "슬라이드를 그림으로 만들지 못했어요",
+  "back": "The slides could not be made into pictures",
+  "why": "One clause naming what happened"
+ },
+ "PPTX_STOPPED": {
+  "text": "그림 만들기를 도중에 멈췄어요",
+  "back": "Stopped making pictures midway",
+  "why": "멈췄어요 says the person ended it"
+ },
+ "PPTX_FOUND": {
+  "text": "표에서 찾은 것",
+  "back": "What was found in the tables",
+  "why": "찾은 것 for what the program recognised"
+ },
+ "pptx_progress": {
+  "text": "슬라이드 {done}/{total}개 그림 완료",
+  "back": "Slides {done} of {total} pictured",
+  "why": "개 is the slide counter of the table"
+ },
+ "pptx_members": {
+  "text": {
+   "other": "교인 {count}명 추가"
+  },
+  "back": {
+   "other": "Add {count} members"
+  },
+  "why": "교인 is the member word of the table"
+ },
+ "pptx_gifts": {
+  "text": {
+   "other": "헌금 {count}건 추가"
+  },
+  "back": {
+   "other": "Add {count} gifts"
+  },
+  "why": "헌금 is the word of the table; 건 counts records"
+ },
+ "pptx_total_differs": {
+  "text": "표의 합계는 {printed}인데 각 줄을 더하면 {sum}이에요",
+  "back": "The total of the table is {printed}, but adding the lines gives {sum}",
+  "why": "Both amounts, plain 이에요"
+ },
+ "pptx_also": {
+  "text": {
+   "both": "교인 {members}명과 헌금 {gifts}건도 추가했어요.",
+   "members": "교인 {members}명도 추가했어요.",
+   "gifts": "헌금 {gifts}건도 추가했어요."
+  },
+  "back": {
+   "both": "Also added {members} members and {gifts} gifts.",
+   "members": "Also added {members} members.",
+   "gifts": "Also added {gifts} gifts."
+  },
+  "why": "도 marks the addition to the card count"
  }
 }

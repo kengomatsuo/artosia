@@ -1234,7 +1234,7 @@ text!(FILL_MONTH, "Birthdays this month", "Ulang tahun bulan ini");
 text!(ANNOUNCEMENT_PICTURE, "Picture", "Gambar");
 text!(BTN_REMOVE_PICTURE, "Remove", "Lepas");
 text!(CMD_IMPORT_PPTX, "Import a PowerPoint", "Impor dari PowerPoint");
-text!(CMD_IMPORT_PPTX_DETAIL, "Each slide becomes an announcement", "Tiap slide jadi satu pengumuman");
+text!(CMD_IMPORT_PPTX_DETAIL, "Pictures or redrawn, tables to Members and Offerings", "Pictures or redrawn, tables to Members and Offerings");
 text!(CMD_IMPORT_BIRTHDAYS, "Import a birthday list", "Impor ulang tahun");
 text!(CMD_IMPORT_BIRTHDAYS_DETAIL, "Names and dates from Word, PowerPoint, Excel or csv", "Tabel nama dan tanggal lahir di Word");
 text!(BIRTHDAYS_NONE_FOUND, "No names with dates were found in that file", "Tidak ada baris berisi nama dan tanggal lahir");
@@ -1269,6 +1269,65 @@ pub fn pptx_imported(added: usize, lost: usize) -> String {
         0 => added,
         1 => format!("{added}. 1 picture could not be brought in"),
         _ => format!("{added}. {lost} pictures could not be brought in"),
+    }
+}
+
+text!(PPTX_AS_MADE, "As made", "As made");
+text!(PPTX_AS_MADE_HINT, "Each slide as a picture, just as PowerPoint draws it", "Each slide as a picture, just as PowerPoint draws it");
+text!(PPTX_REDRAW, "Redraw", "Redraw");
+text!(PPTX_REDRAW_HINT, "The words and tables of each slide, drawn again in Artosia's look", "The words and tables of each slide, drawn again in Artosia's look");
+text!(PPTX_DRAWING, "Drawing the slides", "Drawing the slides");
+text!(PPTX_NO_RENDERER, "Slides can only be drawn as made when PowerPoint or LibreOffice is installed, and neither is on this computer.", "Slides can only be drawn as made when PowerPoint or LibreOffice is installed, and neither is on this computer.");
+text!(PPTX_FAILED, "The slides could not be drawn as pictures.", "The slides could not be drawn as pictures.");
+text!(PPTX_STOPPED, "Drawing the slides was stopped.", "Drawing the slides was stopped.");
+text!(PPTX_FOUND, "Found in the tables", "Found in the tables");
+
+/// The progress of the export, beside its bar.
+pub fn pptx_progress(done: usize, total: usize) -> String {
+    if let Some(text) = say("pptx_progress", None, None, &[("done", text_arg(done)), ("total", text_arg(total))]) {
+        return text;
+    }
+    format!("{done} of {total} slides drawn")
+}
+
+/// A birthday table found in the slides, offered for Members.
+pub fn pptx_members(count: usize) -> String {
+    if let Some(text) = say("pptx_members", None, Some(count), &[("count", text_arg(count))]) {
+        return text;
+    }
+    if count == 1 { "1 person for Members".to_string() } else { format!("{count} people for Members") }
+}
+
+/// A money table found in the slides, offered for Offerings.
+pub fn pptx_gifts(count: usize) -> String {
+    if let Some(text) = say("pptx_gifts", None, Some(count), &[("count", text_arg(count))]) {
+        return text;
+    }
+    if count == 1 { "1 gift for Offerings".to_string() } else { format!("{count} gifts for Offerings") }
+}
+
+/// A money table whose printed total is not what its rows add up to; both are rupiah.
+pub fn pptx_total_differs(printed: &str, sum: &str) -> String {
+    if let Some(text) = say("pptx_total_differs", None, None, &[("printed", text_arg(printed)), ("sum", text_arg(sum))]) {
+        return text;
+    }
+    format!("The table prints a total of {printed}, but its rows add up to {sum}")
+}
+
+/// What an import also wrote besides the cards, after the toast that counts the cards.
+pub fn pptx_also(members: usize, gifts: usize) -> String {
+    let case = match (members > 0, gifts > 0) {
+        (true, true) => "both",
+        (true, false) => "members",
+        _ => "gifts",
+    };
+    if let Some(text) = say("pptx_also", Some(case), None, &[("members", text_arg(members)), ("gifts", text_arg(gifts))]) {
+        return text;
+    }
+    match case {
+        "both" => format!("Added {members} to Members and {gifts} to Offerings"),
+        "members" => format!("Added {members} to Members"),
+        _ => format!("Added {gifts} to Offerings"),
     }
 }
 

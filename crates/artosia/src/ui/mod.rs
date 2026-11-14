@@ -20,6 +20,7 @@ mod people;
 mod giving;
 pub(crate) mod plan;
 mod plans;
+mod pptx_import;
 mod scene;
 mod sheets;
 mod templates;
@@ -348,6 +349,7 @@ pub fn view(s: &App, cx: &mut Cx<App>) -> El {
     }
     sheets::view(s, k, &mut layer, cx.layout_size("window").map(|size| size[1]).unwrap_or(768.0));
     languages::picker(s, k, &mut layer);
+    pptx_import::view(s, k, &mut layer, cx.layout_size("window").map(|size| size[1]).unwrap_or(768.0));
     plans::view(s, k, &mut layer);
     scene::dialog(s, k, &mut layer, cx.layout_size("window").map(|size| size[1]).unwrap_or(768.0));
     layer.extend(toast(s, k));

@@ -882,18 +882,26 @@ impl App {
     }
 
     /// Where Artosia keeps pictures it made itself, such as slides brought in from PowerPoint.
-    fn media_folder(&self) -> std::path::PathBuf {
+    pub(crate) fn media_folder(&self) -> std::path::PathBuf {
         let base = self.folder.clone().unwrap_or_else(|| std::env::temp_dir().join("artosia-practice"));
         base.join("media")
     }
 
-    /// Brings a PowerPoint in as announcements: one per slide, tables as columns, pictures kept.
+    /// Brings a PowerPoint in as announcements at once, as a start from a script wants.
     pub fn import_pptx(&mut self, path: &std::path::Path) {
+        if let Some((added, lost)) = self.redraw_cards(path) {
+            self.say(t::pptx_imported(added, lost), None);
+        }
+    }
+
+    /// Redraws a PowerPoint as announcements: one per slide, tables as columns, pictures kept.
+    /// The cards made and the pictures that did not come across; None when the file would not read.
+    pub(crate) fn redraw_cards(&mut self, path: &std::path::Path) -> Option<(usize, usize)> {
         let deck = match artosia_office::Pptx::open(path) {
             Ok(deck) => deck,
-            Err(error) => {
-                self.say(t::could_not_read(&error.to_string()), None);
-                return;
+            Err(_) => {
+                self.say(t::could_not_read(t::WHY_UNREADABLE()), None);
+                return None;
             }
         };
         self.save_notice();
@@ -926,11 +934,8 @@ impl App {
                 added += 1;
             }
         }
-        self.reload_announcements();
-        if self.notices.is_some() {
-            self.notices = Some(App::notices_for(self.announcements.last()));
-        }
-        self.say(t::pptx_imported(added, lost), None);
+        self.show_new_cards();
+        Some((added, lost))
     }
 
     pub fn duplicate_notice(&mut self, id: i64) {
@@ -1693,6 +1698,7 @@ impl App {
         }
         self.meter_shown.store(self.listener.is_some() && (self.sheet == Sheet::Listen || self.settings.beat_blink), std::sync::atomic::Ordering::Relaxed);
         changed |= self.take_tempo(clock);
+        changed |= self.watch_pptx(&mut wake);
         self.note_recordings();
         self.purge_recordings();
         if self.beat_moving() {
@@ -1748,6 +1754,7 @@ impl App {
                     }
                 }
                 Arrived::Heard(_) => {}
+                Arrived::Pptx(round, made) => self.pptx_arrived(round, made),
                 Arrived::Model(result) => self.model_arrived(result),
                 Arrived::BetterModel(result) => self.better_arrived(result),
                 Arrived::RecordingsSaved(saved) => self.recordings_saved(saved),
@@ -1812,7 +1819,7 @@ impl App {
             self.want_pptx = false;
             let options = rune::FileDialogOptions { title: t::CMD_IMPORT_PPTX().to_string(), ..Default::default() }.filter(t::CMD_IMPORT_PPTX(), &["pptx"]);
             tx.open_file(options, |s: &mut App, result, _| match result {
-                Ok(Some(path)) => s.import_pptx(&path),
+                Ok(Some(path)) => s.open_pptx_import(&path),
                 Ok(None) => {}
                 Err(error) => s.say(error.to_string(), None),
             });

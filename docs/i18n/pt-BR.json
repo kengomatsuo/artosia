@@ -2082,8 +2082,8 @@
   "why": "-"
  },
  "CMD_IMPORT_PPTX_DETAIL": {
-  "text": "Cada slide do arquivo vira um aviso",
-  "back": "Each slide of the file becomes an announcement",
+  "text": "Imagens ou texto novo; tabelas em Membros e Ofertas",
+  "back": "Images or new text; tables in Members and Offerings",
   "why": "-"
  },
  "CMD_IMPORT_BIRTHDAYS": {
@@ -5021,5 +5021,85 @@
   "text": "Não foi possível tocar o som: {file}",
   "back": "The sound could not be played: {file}",
   "why": "News first, then the name."
+ },
+ "PPTX_AS_MADE": {
+  "text": "Como imagens",
+  "back": "As images",
+  "why": "Names the picture way."
+ },
+ "PPTX_AS_MADE_HINT": {
+  "text": "Cada slide vira uma imagem desenhada pelo próprio programa",
+  "back": "Each slide becomes an image drawn by the program itself",
+  "why": "-"
+ },
+ "PPTX_REDRAW": {
+  "text": "Redesenhado",
+  "back": "Redrawn",
+  "why": "-"
+ },
+ "PPTX_REDRAW_HINT": {
+  "text": "Texto e tabelas de cada slide viram avisos no estilo do programa",
+  "back": "Text and tables of each slide become announcements in the program's style",
+  "why": "-"
+ },
+ "PPTX_DRAWING": {
+  "text": "Criando as imagens",
+  "back": "Creating the images",
+  "why": "-"
+ },
+ "PPTX_NO_RENDERER": {
+  "text": "Não há PowerPoint nem LibreOffice neste computador para desenhar os slides",
+  "back": "There is no PowerPoint or LibreOffice on this computer to draw the slides",
+  "why": "-"
+ },
+ "PPTX_FAILED": {
+  "text": "Não foi possível criar as imagens dos slides",
+  "back": "It was not possible to create the images of the slides",
+  "why": "-"
+ },
+ "PPTX_STOPPED": {
+  "text": "Parado antes de terminar as imagens",
+  "back": "Stopped before finishing the images",
+  "why": "-"
+ },
+ "PPTX_FOUND": {
+  "text": "Achado nas tabelas",
+  "back": "Found in the tables",
+  "why": "-"
+ },
+ "pptx_progress": {
+  "text": "{done} de {total} slides prontos",
+  "back": "{done} of {total} slides ready",
+  "why": "-"
+ },
+ "pptx_members": {
+  "text": {
+   "one": "Adicionar {count} membro novo",
+   "other": "Adicionar {count} membros novos"
+  },
+  "back": "Add {count} new member / Add {count} new members",
+  "why": "Membros is the tab word."
+ },
+ "pptx_gifts": {
+  "text": {
+   "one": "Adicionar {count} oferta nova",
+   "other": "Adicionar {count} ofertas novas"
+  },
+  "back": "Add {count} new offering / Add {count} new offerings",
+  "why": "Ofertas is the tab word."
+ },
+ "pptx_total_differs": {
+  "text": "O total da tabela diz {printed}, mas as linhas somam {sum}",
+  "back": "The table's total says {printed}, but the lines add up to {sum}",
+  "why": "-"
+ },
+ "pptx_also": {
+  "text": {
+   "both": "Membros adicionados: {members}. Ofertas adicionadas: {gifts}",
+   "members": "Membros adicionados: {members}",
+   "gifts": "Ofertas adicionadas: {gifts}"
+  },
+  "back": "Members added: {members}. Offerings added: {gifts} / Members added: {members} / Offerings added: {gifts}",
+  "why": "Label form avoids number agreement."
  }
 }

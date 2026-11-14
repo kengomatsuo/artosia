@@ -616,3 +616,12 @@ every template with this church's own data and applies a style to one card, ever
 ## Rundown items: video, sound and scenes in the plan (2026-11-14, OVRUN1 operator side)
 
 `PlanEntry` holds `Video`, `Audio` and `Scene` beside songs and passages (`artosia-core/src/plan.rs`); a bare older record loads with Stop at full volume. A row has a colour per kind, three toggles for the end (stop, loop, next) and a slider for the level (`ui/plan.rs` `run_item`, `volume_slider`); an open or live scene lists its layers and what it clears. The add menu offers Video, Sound and Scene, each file chosen in the computer's file window, a scene in a small dialog (`ui/scene.rs`). `run.rs` turns the live item into `OutputState.media`, `music` and the scene's background and logo, with a new id on every Show (`begin_media`); the projector's `MediaEnded` moves the plan on only for the item's own id and an item set to Next, and a scene's video ending takes away what the scene clears. A row whose file is gone says "Not found" and Show does nothing; Show on a video with a projector built without video says so in a toast. Scenes: `plan-media`, `plan-media-live`, `plan-media-scene`.
+
+### PowerPoint as made or redrawn (OVPPTX1, built 2026-11-14)
+
+Import a PowerPoint offers both ways side by side: As made turns each slide into a picture card
+through the installed PowerPoint (else LibreOffice; with neither, the reason is said and Redraw
+stays), and Redraw keeps today's text import. A redraw proposes a birthday table's people for
+Members and a money table's gifts for Offerings, and says in yellow when a table's printed total
+differs from the sum of its rows; nothing is written before Import. Cancel stops the export and the
+PowerPoint it started, never one the person had open (`artosia-office/src/export.rs`, `pptx_import.rs`).

@@ -2074,9 +2074,9 @@
   "why": "軟體名不變"
  },
  "CMD_IMPORT_PPTX_DETAIL": {
-  "text": "檔案裡每張投影片變成一則公告",
-  "back": "Every slide in the file becomes one announcement",
-  "why": "無句號"
+  "text": "可匯入為圖片或重排文字，表格能補會友和奉獻",
+  "back": "Can come in as pictures or with the words set again; tables can fill members and offerings",
+  "why": "Two ways, then the tables"
  },
  "CMD_IMPORT_BIRTHDAYS": {
   "text": "匯入生日名單",
@@ -4982,5 +4982,91 @@
   "text": "無法播放音訊檔 {file}",
   "back": "Cannot play the audio file {file}",
   "why": "mirrors the existing video line"
+ },
+ "PPTX_AS_MADE": {
+  "text": "照原樣做成圖片",
+  "back": "Made into pictures just as they were",
+  "why": "照原樣 for the original look; 圖片 for picture"
+ },
+ "PPTX_AS_MADE_HINT": {
+  "text": "每張投影片由簡報軟體畫成一張圖片",
+  "back": "Each slide is drawn by the presentation software into one picture",
+  "why": "投影片 and 簡報 are the Taiwan words"
+ },
+ "PPTX_REDRAW": {
+  "text": "重新排成公告卡",
+  "back": "Set again as announcement cards",
+  "why": "公告 follows the table"
+ },
+ "PPTX_REDRAW_HINT": {
+  "text": "每張投影片的文字和表格，重新排成公告卡片",
+  "back": "The words and tables of each slide are set again as announcement cards",
+  "why": "文字 for words on a screen"
+ },
+ "PPTX_DRAWING": {
+  "text": "正在把投影片畫成圖片",
+  "back": "Turning the slides into pictures now",
+  "why": "正在 marks work in progress"
+ },
+ "PPTX_NO_RENDERER": {
+  "text": "這台電腦沒有安裝 PowerPoint 或 LibreOffice，畫不出投影片的圖片",
+  "back": "This computer has no PowerPoint or LibreOffice installed, so it cannot draw pictures of the slides",
+  "why": "Cause first, product names kept"
+ },
+ "PPTX_FAILED": {
+  "text": "投影片沒能畫成圖片",
+  "back": "The slides could not be drawn as pictures",
+  "why": "One clause naming what happened"
+ },
+ "PPTX_STOPPED": {
+  "text": "你已停止，沒有畫完",
+  "back": "You stopped it; it was not finished",
+  "why": "Says the person ended it"
+ },
+ "PPTX_FOUND": {
+  "text": "表格裡找到的內容",
+  "back": "What was found in the tables",
+  "why": "找到 for what the program recognised"
+ },
+ "pptx_progress": {
+  "text": "已畫好 {done} / {total} 張投影片",
+  "back": "{done} of {total} slides drawn",
+  "why": "張 is the slide counter of the table"
+ },
+ "pptx_members": {
+  "text": {
+   "other": "把 {count} 位會友加入會友名單"
+  },
+  "back": {
+   "other": "Add {count} people to the members list"
+  },
+  "why": "會友 and 位 for people"
+ },
+ "pptx_gifts": {
+  "text": {
+   "other": "把 {count} 筆奉獻記入奉獻紀錄"
+  },
+  "back": {
+   "other": "Record {count} gifts in the offering record"
+  },
+  "why": "筆 counts gifts; 奉獻 is the word of the table"
+ },
+ "pptx_total_differs": {
+  "text": "表上的合計是 {printed}，各行加起來是 {sum}",
+  "back": "The total on the table is {printed}, the lines add up to {sum}",
+  "why": "Both amounts side by side"
+ },
+ "pptx_also": {
+  "text": {
+   "both": "另外加入了 {members} 位會友和 {gifts} 筆奉獻。",
+   "members": "另外加入了 {members} 位會友。",
+   "gifts": "另外記入了 {gifts} 筆奉獻。"
+  },
+  "back": {
+   "both": "Also added {members} people and {gifts} gifts.",
+   "members": "Also added {members} people.",
+   "gifts": "Also recorded {gifts} gifts."
+  },
+  "why": "另外 follows the card-count sentence"
  }
 }

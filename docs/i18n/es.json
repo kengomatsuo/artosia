@@ -2082,9 +2082,9 @@
   "why": "PowerPoint stays."
  },
  "CMD_IMPORT_PPTX_DETAIL": {
-  "text": "Cada diapositiva pasa a ser un anuncio",
-  "back": "Each slide becomes an announcement",
-  "why": "No full stop."
+  "text": "Imágenes o texto nuevo; tablas a Miembros y Ofrendas",
+  "back": "Images or new text; tables to Members and Offerings",
+  "why": "-"
  },
  "CMD_IMPORT_BIRTHDAYS": {
   "text": "Cargar lista de cumpleaños",
@@ -5021,5 +5021,85 @@
   "text": "No se puede reproducir el audio: {file}",
   "back": "The audio cannot be played: {file}",
   "why": "News first, then the name."
+ },
+ "PPTX_AS_MADE": {
+  "text": "Como imágenes",
+  "back": "As images",
+  "why": "Names the picture way."
+ },
+ "PPTX_AS_MADE_HINT": {
+  "text": "Cada diapositiva, una imagen dibujada por su programa",
+  "back": "Each slide, an image drawn by its program",
+  "why": "-"
+ },
+ "PPTX_REDRAW": {
+  "text": "Redibujado",
+  "back": "Redrawn",
+  "why": "-"
+ },
+ "PPTX_REDRAW_HINT": {
+  "text": "Texto y tablas de cada diapositiva, como tarjetas de anuncio",
+  "back": "Text and tables of each slide, as announcement cards",
+  "why": "-"
+ },
+ "PPTX_DRAWING": {
+  "text": "Creando las imágenes",
+  "back": "Creating the images",
+  "why": "-"
+ },
+ "PPTX_NO_RENDERER": {
+  "text": "No hay PowerPoint ni LibreOffice en este equipo para dibujar las diapositivas",
+  "back": "There is no PowerPoint or LibreOffice on this machine to draw the slides",
+  "why": "-"
+ },
+ "PPTX_FAILED": {
+  "text": "No se pudieron crear las imágenes de las diapositivas",
+  "back": "The images of the slides could not be created",
+  "why": "-"
+ },
+ "PPTX_STOPPED": {
+  "text": "Se detuvo antes de terminar las imágenes",
+  "back": "Stopped before the images were finished",
+  "why": "-"
+ },
+ "PPTX_FOUND": {
+  "text": "Hallado en las tablas",
+  "back": "Found in the tables",
+  "why": "-"
+ },
+ "pptx_progress": {
+  "text": "{done} de {total} diapositivas listas",
+  "back": "{done} of {total} slides ready",
+  "why": "-"
+ },
+ "pptx_members": {
+  "text": {
+   "one": "Agregar {count} miembro nuevo",
+   "other": "Agregar {count} miembros nuevos"
+  },
+  "back": "Add {count} new member / Add {count} new members",
+  "why": "Miembro is the Members tab word."
+ },
+ "pptx_gifts": {
+  "text": {
+   "one": "Agregar {count} ofrenda nueva",
+   "other": "Agregar {count} ofrendas nuevas"
+  },
+  "back": "Add {count} new offering / Add {count} new offerings",
+  "why": "Ofrenda is the Offerings tab word."
+ },
+ "pptx_total_differs": {
+  "text": "El total de la tabla dice {printed}, pero las líneas suman {sum}",
+  "back": "The table's total says {printed}, but the lines add up to {sum}",
+  "why": "-"
+ },
+ "pptx_also": {
+  "text": {
+   "both": "Miembros agregados: {members}. Ofrendas agregadas: {gifts}",
+   "members": "Miembros agregados: {members}",
+   "gifts": "Ofrendas agregadas: {gifts}"
+  },
+  "back": "Members added: {members}. Offerings added: {gifts} / Members added: {members} / Offerings added: {gifts}",
+  "why": "Label form avoids number agreement."
  }
 }

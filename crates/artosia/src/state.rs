@@ -421,6 +421,8 @@ pub enum Arrived {
     RecordingsSaved(Result<String, ()>),
     /// The firewall step of one press of the Phone switch (the number of the press) and where it got to.
     Firewall(u64, crate::firewall::Progress),
+    /// The slides of a PowerPoint were drawn as pictures, or why not (the number of the dialog's export).
+    Pptx(u64, crate::pptx_import::Made),
 }
 
 pub struct App {
@@ -629,6 +631,9 @@ pub struct App {
     pub want_zip: bool,
     /// A handler asked for a PowerPoint, a birthday list or an announcement picture to choose.
     pub want_pptx: bool,
+    /// The PowerPoint import dialog, and the function that draws its slides.
+    pub pptx: Option<crate::pptx_import::PptxImport>,
+    pub pptx_exporter: crate::pptx_import::Exporter,
     /// UIOVER1 mocks: a direction (a, b or c) and a page (1 to 7) drawn instead of the window, for `--scene mock-*` only.
     pub mock: Option<(char, u8)>,
     pub want_birthdays: bool,
@@ -843,6 +848,8 @@ impl App {
             want_folder: false,
             want_zip: false,
             want_pptx: false,
+            pptx: None,
+            pptx_exporter: artosia_office::slides_as_pictures,
             mock: None,
             want_birthdays: false,
             want_notice_image: false,

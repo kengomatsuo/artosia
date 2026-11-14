@@ -26,7 +26,7 @@ pub use announce::{Draft, to_announcements};
 pub use birthdays::{Birthday, Found, dedup, from_docx, from_pptx, from_tables, in_month, in_range, parse_date, parse_date_year};
 pub use docx::{Block, Docx, DocxParagraph};
 pub use error::Error;
-pub use export::{Exported, Tool, slides_as_pictures};
+pub use export::{Cancel, Exported, Tool, slides_as_pictures};
 pub use mapping::{Column, Mapping, guess, read};
 pub use picture::{ConvertError, ImageFormat, Picture, Rect};
 pub use pptx::{Item, Paragraph, Pptx, Slide};

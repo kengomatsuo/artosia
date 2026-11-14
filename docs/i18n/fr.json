@@ -2082,9 +2082,9 @@
   "why": "proper name kept"
  },
  "CMD_IMPORT_PPTX_DETAIL": {
-  "text": "Chaque diapo devient une annonce",
-  "back": "Each slide becomes an announcement",
-  "why": "plain"
+  "text": "En images ou texte, tableaux vers Membres et Offrandes",
+  "back": "As images or text, tables to Members and Offerings",
+  "why": "Window names as tabs"
  },
  "CMD_IMPORT_BIRTHDAYS": {
   "text": "Importer des anniversaires",
@@ -5024,5 +5024,95 @@
   "text": "Lecture du son impossible : {file}",
   "back": "Playing the sound impossible: {file}",
   "why": "plain word"
+ },
+ "PPTX_AS_MADE": {
+  "text": "Comme l'original",
+  "back": "Like the original",
+  "why": "Says the look is kept"
+ },
+ "PPTX_AS_MADE_HINT": {
+  "text": "Chaque diapo devient une image du logiciel de présentation",
+  "back": "Each slide becomes an image from the presentation software",
+  "why": "'diapo' as in the table"
+ },
+ "PPTX_REDRAW": {
+  "text": "Remise en forme",
+  "back": "Reshaping",
+  "why": "Noun, like a feature name"
+ },
+ "PPTX_REDRAW_HINT": {
+  "text": "Texte et tableaux de chaque diapo refaits en cartes d'annonce",
+  "back": "Text and tables of each slide remade as announcement cards",
+  "why": "'annonce' as in the table"
+ },
+ "PPTX_DRAWING": {
+  "text": "Création des images",
+  "back": "Making the images",
+  "why": "Noun phrase for a screen reader"
+ },
+ "PPTX_NO_RENDERER": {
+  "text": "Ni PowerPoint ni LibreOffice n'est installé sur cet ordinateur : les diapos ne peuvent pas devenir des images",
+  "back": "Neither PowerPoint nor LibreOffice is installed on this computer: the slides cannot become images",
+  "why": "'installé sur cet ordinateur' as in the table"
+ },
+ "PPTX_FAILED": {
+  "text": "Les diapos n'ont pas pu devenir des images",
+  "back": "The slides could not become images",
+  "why": "Plain fact"
+ },
+ "PPTX_STOPPED": {
+  "text": "Création des images arrêtée avant la fin",
+  "back": "Making of the images stopped before the end",
+  "why": "Matches the progress label"
+ },
+ "PPTX_FOUND": {
+  "text": "Trouvé dans les tableaux",
+  "back": "Found in the tables",
+  "why": "Heading above ticks"
+ },
+ "pptx_progress": {
+  "text": "Diapos mises en images : {done} sur {total}",
+  "back": "Slides made into images: {done} of {total}",
+  "why": "Number last, so no plural to agree"
+ },
+ "pptx_members": {
+  "text": {
+   "one": "Ajouter {count} personne à la liste des membres",
+   "other": "Ajouter {count} personnes à la liste des membres"
+  },
+  "back": {
+   "one": "Add {count} person to the members list",
+   "other": "Add {count} people to the members list"
+  },
+  "why": "'membres' as in the window"
+ },
+ "pptx_gifts": {
+  "text": {
+   "one": "Noter {count} offrande",
+   "other": "Noter {count} offrandes"
+  },
+  "back": {
+   "one": "Note {count} offering",
+   "other": "Note {count} offerings"
+  },
+  "why": "'offrandes' as in the window"
+ },
+ "pptx_total_differs": {
+  "text": "Total affiché {printed}, mais les lignes font {sum}",
+  "back": "Total shown {printed}, but the lines make {sum}",
+  "why": "Two facts"
+ },
+ "pptx_also": {
+  "text": {
+   "both": "Membres ajoutés : {members}, offrandes ajoutées : {gifts}.",
+   "members": "Membres ajoutés : {members}.",
+   "gifts": "Offrandes ajoutées : {gifts}."
+  },
+  "back": {
+   "both": "Members added: {members}, offerings added: {gifts}.",
+   "members": "Members added: {members}.",
+   "gifts": "Offerings added: {gifts}."
+  },
+  "why": "Label and number avoids plural agreement"
  }
 }

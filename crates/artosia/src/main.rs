@@ -26,6 +26,7 @@ mod onboard;
 mod palette;
 mod people;
 mod plans;
+mod pptx_import;
 mod recordings;
 mod run;
 mod starts;
@@ -703,6 +704,19 @@ const SCENES: &[Scene] = &[
         s.scene_file(crate::run::Layer::Video, std::path::Path::new("closing.mp4"));
         s.scene_file(crate::run::Layer::Music, std::path::Path::new("closing-music.mp3"));
         s.scene_clears(crate::run::Layer::Video, true);
+    }),
+    // OVPPTX1: the import dialog with both ways, a money table whose total differs, and no renderer.
+    ("pptx-import", |s| {
+        s.open_tab(Tab::Notices);
+        s.demo_pptx("made");
+    }),
+    ("pptx-import-money", |s| {
+        s.open_tab(Tab::Notices);
+        s.demo_pptx("money");
+    }),
+    ("pptx-import-none", |s| {
+        s.open_tab(Tab::Notices);
+        s.demo_pptx("none");
     }),
     ("tab-look", |s| s.open_tab(Tab::Look)),
     // OVCOLOR1: the colour picker open under the words' colour, a colour used before it.

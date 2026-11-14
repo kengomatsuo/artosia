@@ -36,5 +36,9 @@ windows = { version = "0.62", features = ["Win32_Foundation", "Win32_System_Com"
 [build-dependencies]
 winresource = "0.1.34"
 
+[dev-dependencies]
+# Builds the made-up decks of the PowerPoint import tests.
+zip = { version = "9.5.0", default-features = false, features = ["deflate"] }
+
 [lints]
 workspace = true

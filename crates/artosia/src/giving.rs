@@ -157,7 +157,7 @@ impl App {
     }
 
     /// Reads the gifts again after a write, and what the cards read with them.
-    fn reload_gifts(&mut self) {
+    pub(crate) fn reload_gifts(&mut self) {
         self.gifts = self.store.gifts().unwrap_or_default();
         self.refresh_giving();
         self.refresh_decks();

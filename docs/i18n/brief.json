@@ -7914,16 +7914,18 @@
   "screen": "Search panel, results list: a row for an action; this is its second line.",
   "moment": "Under the presentation import row.",
   "role": "detail line",
-  "does": "Says every slide of the file becomes one card.",
-  "budget": 44,
+  "does": "Says a presentation comes in either as pictures or with its words set again, and that its tables can fill the people and offerings windows.",
+  "budget": 55,
   "variables": [],
   "cases": [],
   "counts": "",
   "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
   "concepts": [
    "announcement",
-   "card",
-   "import"
+   "slide",
+   "import",
+   "member",
+   "offering"
   ],
   "notes": "No full stop."
  },
@@ -7983,6 +7985,177 @@
    "notice"
   ],
   "notes": "No full stop."
+ },
+ {
+  "key": "PPTX_AS_MADE",
+  "kind": "const",
+  "screen": "Import dialog for a presentation file, opened over any window after a file is chosen. A file name and slide count on top; two side by side panels, each with a radio choice, a hint and small pictures of what it would make; the right panel also lists what the tables of the slides offer for Members and Offerings, each with a tick; Cancel and Import at the foot.",
+  "moment": "The person decides how the file comes in.",
+  "role": "choice title",
+  "does": "Names the way that keeps each slide as a picture, looking exactly like the original.",
+  "budget": 18,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "announcement",
+   "import",
+   "slide"
+  ],
+  "notes": "Heading of the left panel, beside a radio."
+ },
+ {
+  "key": "PPTX_AS_MADE_HINT",
+  "kind": "const",
+  "screen": "Import dialog for a presentation file, opened over any window after a file is chosen. A file name and slide count on top; two side by side panels, each with a radio choice, a hint and small pictures of what it would make; the right panel also lists what the tables of the slides offer for Members and Offerings, each with a tick; Cancel and Import at the foot.",
+  "moment": "Reading what the left choice does.",
+  "role": "hint under a choice title",
+  "does": "Explains that every slide becomes one image drawn by the presentation program itself.",
+  "budget": 60,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "announcement",
+   "import",
+   "slide"
+  ],
+  "notes": "Up to two lines in a panel about 330 points wide."
+ },
+ {
+  "key": "PPTX_REDRAW",
+  "kind": "const",
+  "screen": "Import dialog for a presentation file, opened over any window after a file is chosen. A file name and slide count on top; two side by side panels, each with a radio choice, a hint and small pictures of what it would make; the right panel also lists what the tables of the slides offer for Members and Offerings, each with a tick; Cancel and Import at the foot.",
+  "moment": "The person decides how the file comes in.",
+  "role": "choice title",
+  "does": "Names the way that takes the words and tables out of the slides and sets them again in this program's own look.",
+  "budget": 18,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "announcement",
+   "import",
+   "slide"
+  ],
+  "notes": "Heading of the right panel, beside a radio."
+ },
+ {
+  "key": "PPTX_REDRAW_HINT",
+  "kind": "const",
+  "screen": "Import dialog for a presentation file, opened over any window after a file is chosen. A file name and slide count on top; two side by side panels, each with a radio choice, a hint and small pictures of what it would make; the right panel also lists what the tables of the slides offer for Members and Offerings, each with a tick; Cancel and Import at the foot.",
+  "moment": "Reading what the right choice does.",
+  "role": "hint under a choice title",
+  "does": "Explains that the text and tables of every slide are set again as announcement cards.",
+  "budget": 70,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "announcement",
+   "import",
+   "slide"
+  ],
+  "notes": "Up to two lines in a panel about 330 points wide."
+ },
+ {
+  "key": "PPTX_DRAWING",
+  "kind": "const",
+  "screen": "Import dialog for a presentation file, opened over any window after a file is chosen. A file name and slide count on top; two side by side panels, each with a radio choice, a hint and small pictures of what it would make; the right panel also lists what the tables of the slides offer for Members and Offerings, each with a tick; Cancel and Import at the foot.",
+  "moment": "The presentation program is working and may take up to a minute.",
+  "role": "progress bar label",
+  "does": "Says that the slides are being turned into pictures now.",
+  "budget": 26,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "announcement",
+   "import",
+   "slide"
+  ],
+  "notes": "Read by a screen reader as the bar's name; a Cancel button stands beside the bar."
+ },
+ {
+  "key": "PPTX_NO_RENDERER",
+  "kind": "const",
+  "screen": "Import dialog for a presentation file, opened over any window after a file is chosen. A file name and slide count on top; two side by side panels, each with a radio choice, a hint and small pictures of what it would make; the right panel also lists what the tables of the slides offer for Members and Offerings, each with a tick; Cancel and Import at the foot.",
+  "moment": "The left panel is dimmed because neither PowerPoint nor LibreOffice is installed.",
+  "role": "explanation",
+  "does": "Gives the reason the picture way is not offered: the machine has no program able to draw slides.",
+  "budget": 120,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "announcement",
+   "import",
+   "slide"
+  ],
+  "notes": "PowerPoint and LibreOffice are product names and stay as they are. Wrapped over several lines, about 330 points wide."
+ },
+ {
+  "key": "PPTX_FAILED",
+  "kind": "const",
+  "screen": "Import dialog for a presentation file, opened over any window after a file is chosen. A file name and slide count on top; two side by side panels, each with a radio choice, a hint and small pictures of what it would make; the right panel also lists what the tables of the slides offer for Members and Offerings, each with a tick; Cancel and Import at the foot.",
+  "moment": "The drawing program ran but did not finish every slide.",
+  "role": "explanation",
+  "does": "Says that turning the slides into pictures did not work.",
+  "budget": 60,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "announcement",
+   "import",
+   "slide"
+  ],
+  "notes": "The other way stays available."
+ },
+ {
+  "key": "PPTX_STOPPED",
+  "kind": "const",
+  "screen": "Import dialog for a presentation file, opened over any window after a file is chosen. A file name and slide count on top; two side by side panels, each with a radio choice, a hint and small pictures of what it would make; the right panel also lists what the tables of the slides offer for Members and Offerings, each with a tick; Cancel and Import at the foot.",
+  "moment": "The person pressed Cancel beside the progress bar.",
+  "role": "explanation",
+  "does": "Says that the person ended the picture drawing before it finished.",
+  "budget": 50,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "announcement",
+   "import",
+   "slide"
+  ],
+  "notes": "The other way stays available."
+ },
+ {
+  "key": "PPTX_FOUND",
+  "kind": "const",
+  "screen": "Import dialog for a presentation file, opened over any window after a file is chosen. A file name and slide count on top; two side by side panels, each with a radio choice, a hint and small pictures of what it would make; the right panel also lists what the tables of the slides offer for Members and Offerings, each with a tick; Cancel and Import at the foot.",
+  "moment": "A heading above ticks for what could be added to other windows.",
+  "role": "small heading",
+  "does": "Introduces the lists of people or gifts the program recognised inside the slides' tables.",
+  "budget": 30,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "member",
+   "offering",
+   "slide"
+  ],
+  "notes": ""
  },
  {
   "key": "MONTHS[0]",
@@ -8332,6 +8505,155 @@
    "notice"
   ],
   "notes": "Two counted phrases."
+ },
+ {
+  "key": "pptx_progress",
+  "kind": "sentence",
+  "screen": "Import dialog for a presentation file, opened over any window after a file is chosen. A file name and slide count on top; two side by side panels, each with a radio choice, a hint and small pictures of what it would make; the right panel also lists what the tables of the slides offer for Members and Offerings, each with a tick; Cancel and Import at the foot.",
+  "moment": "The bar moves while the presentation program works.",
+  "role": "status line",
+  "does": "Reports how many of the slides have been turned into pictures so far.",
+  "budget": 50,
+  "variables": [
+   {
+    "name": "done",
+    "example": "3",
+    "meaning": "Slides drawn so far."
+   },
+   {
+    "name": "total",
+    "example": "12",
+    "meaning": "Slides to draw."
+   }
+  ],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide",
+   "import"
+  ],
+  "notes": ""
+ },
+ {
+  "key": "pptx_members",
+  "kind": "sentence",
+  "screen": "Import dialog for a presentation file, opened over any window after a file is chosen. A file name and slide count on top; two side by side panels, each with a radio choice, a hint and small pictures of what it would make; the right panel also lists what the tables of the slides offer for Members and Offerings, each with a tick; Cancel and Import at the foot.",
+  "moment": "A tick the person may clear before importing.",
+  "role": "tick label",
+  "does": "Says how many people of a birthday table would be added to the church's list of people.",
+  "budget": 50,
+  "variables": [
+   {
+    "name": "count",
+    "example": "4",
+    "meaning": "People not yet in the list."
+   }
+  ],
+  "cases": [],
+  "counts": "count = people to add; forms for one and many.",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "member",
+   "import"
+  ],
+  "notes": ""
+ },
+ {
+  "key": "pptx_gifts",
+  "kind": "sentence",
+  "screen": "Import dialog for a presentation file, opened over any window after a file is chosen. A file name and slide count on top; two side by side panels, each with a radio choice, a hint and small pictures of what it would make; the right panel also lists what the tables of the slides offer for Members and Offerings, each with a tick; Cancel and Import at the foot.",
+  "moment": "A tick the person may clear before importing.",
+  "role": "tick label",
+  "does": "Says how many gifts of a money table would be added to the church's record of offerings.",
+  "budget": 50,
+  "variables": [
+   {
+    "name": "count",
+    "example": "3",
+    "meaning": "Gifts not yet recorded."
+   }
+  ],
+  "cases": [],
+  "counts": "count = gifts to add; forms for one and many.",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "offering",
+   "import"
+  ],
+  "notes": ""
+ },
+ {
+  "key": "pptx_total_differs",
+  "kind": "sentence",
+  "screen": "Import dialog for a presentation file, opened over any window after a file is chosen. A file name and slide count on top; two side by side panels, each with a radio choice, a hint and small pictures of what it would make; the right panel also lists what the tables of the slides offer for Members and Offerings, each with a tick; Cancel and Import at the foot.",
+  "moment": "Under the tick of a money table whose total looks wrong; shown in a warning colour.",
+  "role": "warning",
+  "does": "Warns that the sum printed on a table does not equal what its lines add up to, giving both amounts.",
+  "budget": 100,
+  "variables": [
+   {
+    "name": "printed",
+    "example": "Rp 650.000",
+    "meaning": "Amount written on the slide's total line, already formatted."
+   },
+   {
+    "name": "sum",
+    "example": "Rp 700.000",
+    "meaning": "Amount the lines really add up to, already formatted."
+   }
+  ],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "offering",
+   "slide"
+  ],
+  "notes": "Both amounts keep their formatting; the program writes them."
+ },
+ {
+  "key": "pptx_also",
+  "kind": "sentence",
+  "screen": "Import dialog for a presentation file, opened over any window after a file is chosen. A file name and slide count on top; two side by side panels, each with a radio choice, a hint and small pictures of what it would make; the right panel also lists what the tables of the slides offer for Members and Offerings, each with a tick; Cancel and Import at the foot.",
+  "moment": "A second sentence after the toast that counts the new cards.",
+  "role": "toast addition",
+  "does": "Says what was added to the people list and to the offerings record besides the cards.",
+  "budget": 80,
+  "variables": [
+   {
+    "name": "members",
+    "example": "4",
+    "meaning": "People added; only in members and both."
+   },
+   {
+    "name": "gifts",
+    "example": "3",
+    "meaning": "Gifts added; only in gifts and both."
+   }
+  ],
+  "cases": [
+   {
+    "name": "both",
+    "when": "People and gifts were both added."
+   },
+   {
+    "name": "members",
+    "when": "Only people were added."
+   },
+   {
+    "name": "gifts",
+    "when": "Only gifts were added."
+   }
+  ],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "member",
+   "offering",
+   "import"
+  ],
+  "notes": "Follows a sentence and a full stop, so it starts with a capital."
  },
  {
   "key": "birthdays_on_file",

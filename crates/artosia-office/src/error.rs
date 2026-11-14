@@ -13,6 +13,8 @@ pub enum Error {
     NoRenderer,
     /// A program was found but did not draw every slide (it failed or ran past its time limit).
     Export(String),
+    /// The export was stopped by a `Cancel`.
+    Cancelled,
 }
 
 impl fmt::Display for Error {
@@ -24,6 +26,7 @@ impl fmt::Display for Error {
             Error::Xml(e) => write!(f, "damaged XML: {e}"),
             Error::NoRenderer => write!(f, "neither PowerPoint nor LibreOffice is installed"),
             Error::Export(e) => write!(f, "drawing the slides failed: {e}"),
+            Error::Cancelled => write!(f, "drawing the slides was cancelled"),
         }
     }
 }

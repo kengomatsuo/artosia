@@ -224,6 +224,7 @@ dependencies = [
  "ureq",
  "windows",
  "winresource",
+ "zip",
 ]
 
 [[package]]

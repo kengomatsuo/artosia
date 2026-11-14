@@ -2074,9 +2074,9 @@
   "why": "Lấy"
  },
  "CMD_IMPORT_PPTX_DETAIL": {
-  "text": "Mỗi trang thành một thông báo",
-  "back": "Each slide becomes one announcement",
-  "why": "No full stop"
+  "text": "Ảnh hoặc soạn lại chữ; bảng điền Tín hữu, Dâng hiến",
+  "back": "Pictures or words composed again; tables fill Believers, Offering",
+  "why": "Tab names as in the table"
  },
  "CMD_IMPORT_BIRTHDAYS": {
   "text": "Lấy bảng sinh nhật từ tệp",
@@ -4983,5 +4983,91 @@
   "text": "Không phát được tệp âm thanh {file}",
   "back": "Cannot play the sound file {file}",
   "why": "plain word"
+ },
+ "PPTX_AS_MADE": {
+  "text": "Ảnh giống bản gốc",
+  "back": "Picture like the original",
+  "why": "Fits 18 and says exact look"
+ },
+ "PPTX_AS_MADE_HINT": {
+  "text": "Mỗi trang thành một ảnh do chính phần mềm trình chiếu vẽ",
+  "back": "Each page becomes one picture drawn by the presentation software itself",
+  "why": "'trang' is the slide classifier in the table"
+ },
+ "PPTX_REDRAW": {
+  "text": "Soạn lại",
+  "back": "Compose again",
+  "why": "Short; words and tables set again"
+ },
+ "PPTX_REDRAW_HINT": {
+  "text": "Chữ và bảng của mỗi trang được soạn lại thành thẻ thông báo",
+  "back": "The words and tables of each page are composed again into announcement cards",
+  "why": "'thông báo' for announcement, 'chữ' for words on screen"
+ },
+ "PPTX_DRAWING": {
+  "text": "Đang đổi trang thành ảnh",
+  "back": "Turning pages into pictures",
+  "why": "Progress label"
+ },
+ "PPTX_NO_RENDERER": {
+  "text": "Máy này không có PowerPoint hay LibreOffice nên không vẽ được trang thành ảnh",
+  "back": "This computer has no PowerPoint or LibreOffice so pages cannot be drawn into pictures",
+  "why": "'Máy này' as in the table"
+ },
+ "PPTX_FAILED": {
+  "text": "Không đổi được trang thành ảnh",
+  "back": "Could not turn the pages into pictures",
+  "why": "Plain fact"
+ },
+ "PPTX_STOPPED": {
+  "text": "Đã dừng trước khi vẽ xong các trang",
+  "back": "Stopped before the pages were all drawn",
+  "why": "Passive, the actor is clear"
+ },
+ "PPTX_FOUND": {
+  "text": "Tìm thấy trong các bảng",
+  "back": "Found in the tables",
+  "why": "Heading above ticks"
+ },
+ "pptx_progress": {
+  "text": "Đã vẽ xong {done} trên {total} trang",
+  "back": "Finished drawing {done} of {total} pages",
+  "why": "Plain progress line"
+ },
+ "pptx_members": {
+  "text": {
+   "other": "Thêm {count} người vào danh sách tín hữu"
+  },
+  "back": {
+   "other": "Add {count} people to the list of believers"
+  },
+  "why": "'tín hữu' as in the members window"
+ },
+ "pptx_gifts": {
+  "text": {
+   "other": "Ghi {count} khoản dâng"
+  },
+  "back": {
+   "other": "Record {count} offerings"
+  },
+  "why": "'Ghi khoản dâng' as in the table"
+ },
+ "pptx_total_differs": {
+  "text": "Trang ghi tổng {printed}, các dòng cộng lại {sum}",
+  "back": "The page writes a total of {printed}, the rows add up to {sum}",
+  "why": "Two facts, no judgement"
+ },
+ "pptx_also": {
+  "text": {
+   "both": "Thêm {members} người vào danh sách tín hữu, {gifts} khoản vào mục dâng hiến.",
+   "members": "Thêm {members} người vào danh sách tín hữu.",
+   "gifts": "Thêm {gifts} khoản vào mục dâng hiến."
+  },
+  "back": {
+   "both": "Added {members} people to the list of believers, {gifts} items to the offering section.",
+   "members": "Added {members} people to the list of believers.",
+   "gifts": "Added {gifts} items to the offering section."
+  },
+  "why": "Starts with a capital, ends with a full stop"
  }
 }
