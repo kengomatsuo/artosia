@@ -1,0 +1,47 @@
+//! The real window as the guide's `World`: controls from this frame's anchors with the last
+//! layout's rectangles, and states read from `App`.
+
+use super::{Anchor, World, anchors};
+use crate::palette::Command;
+use crate::state::{App, Sheet, Tab};
+
+pub struct Window<'a> {
+    pub app: &'a App,
+    pub layout: &'a dyn Fn(&str) -> Option<[f32; 4]>,
+}
+
+impl World<Command> for Window<'_> {
+    fn anchors(&self, command: Command) -> Vec<Anchor> {
+        anchors::for_command(command, self.layout)
+    }
+
+    fn holds(&self, state: &str) -> bool {
+        holds(self.app, state)
+    }
+
+    /// Buttons call their own code rather than a command, so a step finishes on a state, never
+    /// on "the command ran"; every lesson step names its `done` state.
+    fn ran(&self, _command: Command) -> bool {
+        false
+    }
+}
+
+/// The states lessons name. A name nobody knows is never true, and a test lists the names every
+/// lesson uses against this match.
+pub fn holds(app: &App, state: &str) -> bool {
+    match state {
+        "screens-open" => app.sheet == Sheet::Screens,
+        "phone-open" => app.sheet == Sheet::Remote,
+        "settings-open" => app.sheet == Sheet::Settings,
+        "no-dialog" => app.sheet == Sheet::None,
+        "plan-tab" => app.tab == Tab::Plan,
+        "calendar-tab" => app.tab == Tab::Calendar,
+        "people-tab" => app.tab == Tab::People,
+        "giving-tab" => app.tab == Tab::Giving,
+        "notices-tab" => app.tab == Tab::Notices,
+        "templates-tab" => app.tab == Tab::Templates,
+        "look-tab" => app.tab == Tab::Look,
+        "search-open" => app.palette.open,
+        _ => false,
+    }
+}

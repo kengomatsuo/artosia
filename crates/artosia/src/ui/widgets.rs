@@ -63,6 +63,8 @@ pub struct Btn {
     help: Option<String>,
     icon_only: bool,
     focus: bool,
+    /// The command this button fires, declared for the guide (`crate::guide::anchors`).
+    anchor: Option<(crate::palette::Command, crate::guide::Place)>,
 }
 
 /// Text for a box that wraps. Every wrapping text of the window starts here, so a Korean word
@@ -84,10 +86,18 @@ pub fn btn(label: impl Into<String>) -> Btn {
         help: None,
         icon_only: false,
         focus: false,
+        anchor: None,
     }
 }
 
 impl Btn {
+    /// Declares the command this button fires and where it sits, so a lesson whose step is that
+    /// command can ring it. The button then carries the guide's key; a later `.key()` replaces it.
+    pub fn anchor(mut self, command: crate::palette::Command, place: crate::guide::Place) -> Self {
+        self.anchor = Some((command, place));
+        self
+    }
+
     pub fn icon(mut self, icon: &'static Icon) -> Self {
         self.icon = Some(icon);
         self
@@ -196,6 +206,9 @@ impl Btn {
         let tip = self.help.or(self.icon_only.then(|| self.label.clone()));
         if let Some(tip) = tip {
             e = e.help(tip);
+        }
+        if let Some((command, place)) = self.anchor {
+            e = e.key(crate::guide::anchors::mark(command, place, !self.disabled, 1));
         }
         if self.disabled {
             return e.layer_opacity(0.45).disabled(true);

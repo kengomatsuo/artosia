@@ -6,7 +6,9 @@
 //! The engine has no window. A `World` answers what is on screen and what is true; the window
 //! implements it from the layout's rectangles and `App`, a test implements it from a table.
 
+pub mod anchors;
 pub mod rank;
+pub mod window;
 
 pub use rank::{Anchor, Place, best_anchor};
 
