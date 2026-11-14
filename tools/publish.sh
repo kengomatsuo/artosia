@@ -177,15 +177,16 @@ remote="Repositories/artosia/dist/$version/macos"
 if [ -f "dist/$version/macos.md" ] && has_asset Artosia-macos-aarch64.dmg; then
     echo "The release already carries the Mac edition."
 elif ssh -o BatchMode=yes mac true 2>/dev/null; then
-    [ -x target/release-tool/release/artosia-release.exe ] \
-        || cargo build --release -q -p artosia-update --bin artosia-release --target-dir target/release-tool
+    # Built every time: a tool left from an older release may lack a command used below.
+    cargo build --release -q -p artosia-update --bin artosia-release --target-dir target/release-tool
     rm -rf "$mac" && mkdir -p "$mac"
     if scp -q "dist/$version/notes.txt" "mac:Repositories/artosia-notes-$version.txt" \
         && ssh -o BatchMode=yes mac "export PATH=\$HOME/.cargo/bin:\$HOME/.bun/bin:/opt/homebrew/bin:\$PATH
             cd ~/Repositories/artosia || exit 1
             git diff --quiet HEAD || { echo The clone on the Mac has changes that are not committed: a release is built from what is committed; exit 1; }
-            git fetch -q origin --tags --force && git checkout -q --detach v$version \
-                && nice -n 19 bash tools/package-macos.sh $version --out dist/$version/macos \
+            git fetch -q origin --tags --force && git checkout -q origin/main -- tools/package-macos.sh && cp tools/package-macos.sh /tmp/artosia-package-macos.sh && git checkout -q HEAD -- tools/package-macos.sh \
+                && git checkout -q --detach v$version \
+                && nice -n 19 bash /tmp/artosia-package-macos.sh $version --out dist/$version/macos \
                 && cargo build --release -q -p artosia-update --bin artosia-release \
                 && rm -f /tmp/artosia-throwaway.key && target/release/artosia-release keygen /tmp/artosia-throwaway.key >/dev/null \
                 && rm -rf dist/$version/macos/feed \

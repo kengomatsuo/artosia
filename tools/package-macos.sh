@@ -89,7 +89,9 @@ python3 tools/macos/info-strings.py "$contents/Resources"
 python3 tools/gstreamer-subset.py --thin arm64 --copy "$contents/Resources/gstreamer"
 
 image="$out/Artosia-$platform.dmg"
-if [ "${ARTOSIA_MAC_ADHOC:-}" != 1 ] && security find-identity -v -p codesigning 2>/dev/null | grep -q "Developer ID Application"; then
+# An SSH shell cannot check a certificate's trust, so `find-identity -v` lists none there; the
+# login keychain is asked by its path, without -v, for the identity the signing Terminal uses.
+if [ "${ARTOSIA_MAC_ADHOC:-}" != 1 ] && security find-identity -p codesigning "$HOME/Library/Keychains/login.keychain-db" 2>/dev/null | grep -q "Developer ID Application"; then
     bash tools/macos/in-login-session.sh tools/macos/sign.sh "$app" "$image"
     echo "App: $app ($(du -sh "$app" | awk '{print $1}'), $(find "$app" -type f | wc -l | tr -d ' ') files, signed with the Developer ID and notarized)"
 else
