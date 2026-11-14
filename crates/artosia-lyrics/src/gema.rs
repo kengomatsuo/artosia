@@ -50,6 +50,31 @@ impl GemaIndex {
         Ok(GemaIndex { songs, read_on: today.to_string() })
     }
 
+    /// The index kept in `path`; `None` when the file is missing or unreadable, so it is read again.
+    pub fn load(path: &std::path::Path) -> Option<GemaIndex> {
+        serde_json::from_slice(&std::fs::read(path).ok()?).ok()
+    }
+
+    /// Keeps the index in `path` as one JSON file (titles and addresses only), replacing any old one.
+    pub fn save(&self, path: &std::path::Path) -> std::io::Result<()> {
+        if let Some(dir) = path.parent() {
+            std::fs::create_dir_all(dir)?;
+        }
+        let json = serde_json::to_vec(self).map_err(std::io::Error::other)?;
+        let tmp = path.with_extension("tmp");
+        std::fs::write(&tmp, json)?;
+        std::fs::rename(&tmp, path)
+    }
+
+    /// True when the lists were read seven or more days before `today` (`YYYY-MM-DD`), or never,
+    /// or when either date cannot be read.
+    pub fn is_stale(&self, today: &str) -> bool {
+        match (day_number(&self.read_on), day_number(today)) {
+            (Some(read), Some(now)) => now - read >= 7,
+            _ => true,
+        }
+    }
+
     /// Titles matching `query`, best first: the same title, then titles starting with it, then
     /// titles holding every typed word. A hymn number works too ("kj 4", "KJ 004").
     pub fn search(&self, query: &str, most: usize) -> Vec<Found> {
@@ -92,6 +117,24 @@ impl GemaIndex {
     }
 }
 
+/// Days since 1970-01-01 of a `YYYY-MM-DD` date.
+fn day_number(date: &str) -> Option<i64> {
+    let mut parts = date.trim().split('-');
+    let year: i64 = parts.next()?.parse().ok()?;
+    let month: i64 = parts.next()?.parse().ok()?;
+    let day: i64 = parts.next()?.parse().ok()?;
+    if parts.next().is_some() || !(1..=12).contains(&month) || !(1..=31).contains(&day) {
+        return None;
+    }
+    // Civil date to day count (Howard Hinnant's days_from_civil).
+    let year = if month <= 2 { year - 1 } else { year };
+    let era = year.div_euclid(400);
+    let year_of_era = year - era * 400;
+    let day_of_year = (153 * ((month + 9) % 12) + 2) / 5 + day - 1;
+    let day_of_era = year_of_era * 365 + year_of_era / 4 - year_of_era / 100 + day_of_year;
+    Some(era * 146_097 + day_of_era - 719_468)
+}
+
 /// "kj 4" and "KJ4" become "KJ 004", the way the site writes its hymn numbers.
 fn hymn_number(query: &str) -> String {
     let trimmed = query.trim();
@@ -109,7 +152,7 @@ fn hymn_number(query: &str) -> String {
 }
 
 /// "KJ 004. Hai Mari Sembah" without its number, so the title alone matches too.
-fn strip_number(title: &str) -> &str {
+pub(crate) fn strip_number(title: &str) -> &str {
     match title.split_once(". ") {
         Some((head, tail)) if head.starts_with("KJ") && head.len() <= 8 => tail,
         _ => title,
@@ -167,5 +210,30 @@ mod tests {
         assert_eq!(titles("ku tak dapat"), ["'Ku Tak Dapat Jalan Sendiri"]);
         assert!(titles("tidak ada").is_empty());
         assert_eq!(index.search("suci", 5)[0].url, "https://gema.sabda.org/kj_002_suci_suci_suci");
+    }
+
+    #[test]
+    fn stale_after_seven_days_or_when_empty() {
+        let at = |read_on: &str| GemaIndex { songs: Vec::new(), read_on: read_on.to_string() };
+        assert!(!at("2026-11-08").is_stale("2026-11-14"));
+        assert!(at("2026-11-07").is_stale("2026-11-14"));
+        assert!(at("2026-10-31").is_stale("2026-11-14"));
+        assert!(!at("2026-12-28").is_stale("2027-01-03"));
+        assert!(at("2026-12-27").is_stale("2027-01-03"));
+        assert!(at("").is_stale("2026-11-14"));
+        assert!(at("2026-11-14").is_stale("soon"));
+    }
+
+    #[test]
+    fn index_survives_a_save_and_load() {
+        let dir = std::env::temp_dir().join(format!("artosia-gema-{}", std::process::id()));
+        let path = dir.join("lib").join("gema.json");
+        let index = index();
+        index.save(&path).unwrap();
+        assert_eq!(GemaIndex::load(&path), Some(index));
+        assert_eq!(GemaIndex::load(&dir.join("none.json")), None);
+        std::fs::write(&path, "{ not json").unwrap();
+        assert_eq!(GemaIndex::load(&path), None);
+        std::fs::remove_dir_all(&dir).unwrap();
     }
 }

@@ -9,7 +9,7 @@ use serde::Deserialize;
 use crate::text::{self, norm};
 use crate::{Fetched, Found, LyricsError, http};
 
-const SOURCE: &str = "LRCLIB";
+pub(crate) const SOURCE: &str = "LRCLIB";
 const BASE: &str = "https://lrclib.net/api";
 /// Suggestions shown at most; the service sends up to 20 and many are the same song.
 const MAX_FOUND: usize = 12;

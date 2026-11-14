@@ -14,6 +14,7 @@
 
 #![cfg_attr(test, allow(clippy::unwrap_used))]
 
+mod browse;
 mod gema;
 mod http;
 mod lines;
@@ -21,6 +22,7 @@ mod lrclib;
 mod page;
 mod text;
 
+pub use browse::{Browse, PASTED, browse, words};
 pub use gema::{GemaIndex, GemaSong};
 
 use std::fmt;
