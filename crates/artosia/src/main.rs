@@ -717,6 +717,8 @@ const SCENES: &[Scene] = &[
     ("announcement-birthdays", |s| s.demo_notices("birthdays")),
     ("keys", |s| s.sheet = Sheet::Keys),
     ("tour-plan", |s| s.tour = Some(0)),
+    // GUIDE1: the Screens lesson, with its control on screen and with the control hidden.
+    ("lesson-screens", |s| s.start_lesson(crate::guide::lessons::SCREENS)),
     ("tour-preview", |s| s.tour = Some(1)),
     ("tour-show", |s| s.tour = Some(2)),
     ("tour-live", |s| s.tour = Some(3)),

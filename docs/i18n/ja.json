@@ -4857,5 +4857,20 @@
   },
   "back": "zero: There is no announcement that was changed; other: Applied to {count} announcements",
   "why": "table word reused; composed in the language"
+ },
+ "GUIDE_SCREENS_OPEN": {
+  "text": "枠のボタンを押して、プロジェクターを設定",
+  "back": "Press the framed button and set up the projector",
+  "why": "プロジェクター from the table"
+ },
+ "GUIDE_SCREENS_OPEN_MORE": {
+  "text": "会場に映すモニターと、ステージ用のモニターを選びます",
+  "back": "Choose the monitor shown in the hall and the monitor for the stage",
+  "why": "Polite ます form"
+ },
+ "GUIDE_OPEN_SEARCH": {
+  "text": "検索を開く",
+  "back": "Open search",
+  "why": "検索 is the table's word"
  }
 }

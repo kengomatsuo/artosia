@@ -4858,5 +4858,20 @@
   },
   "back": "No announcement was changed / Style applied to {count} announcements",
   "why": "Zero says nothing changed"
+ },
+ "GUIDE_SCREENS_OPEN": {
+  "text": "Bấm nút được khoanh để chọn máy chiếu",
+  "back": "Press the circled button to choose the projector",
+  "why": "máy chiếu as in the table"
+ },
+ "GUIDE_SCREENS_OPEN_MORE": {
+  "text": "Chọn màn hình cho hội chúng và màn hình cho ban nhạc",
+  "back": "Pick the screen for the congregation and the screen for the band",
+  "why": "Table words"
+ },
+ "GUIDE_OPEN_SEARCH": {
+  "text": "Mở tìm kiếm",
+  "back": "Open the search",
+  "why": "tìm kiếm as in the table"
  }
 }

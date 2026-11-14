@@ -4896,5 +4896,20 @@
   },
   "back": "No announcement changed / Style applied to {count} announcement(s)",
   "why": "Past tense; zero says nothing changed."
+ },
+ "GUIDE_SCREENS_OPEN": {
+  "text": "Pulsa el botón marcado para elegir el proyector",
+  "back": "Press the marked button to choose the projector",
+  "why": "Familiar tú imperative"
+ },
+ "GUIDE_SCREENS_OPEN_MORE": {
+  "text": "Elige la pantalla de la gente y la de la banda",
+  "back": "Pick the screen for the people and the one for the band",
+  "why": "The table's own phrase"
+ },
+ "GUIDE_OPEN_SEARCH": {
+  "text": "Abrir la búsqueda",
+  "back": "Open the search",
+  "why": "Infinitive suits a button"
  }
 }

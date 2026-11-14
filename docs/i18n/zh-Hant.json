@@ -4857,5 +4857,20 @@
   },
   "back": "zero: No announcement was changed; other: Applied to {count} announcements",
   "why": "table word reused; composed in the language"
+ },
+ "GUIDE_SCREENS_OPEN": {
+  "text": "按下框起來的按鈕，設定投影機",
+  "back": "Press the boxed button and set up the projector",
+  "why": "投影機 from the table"
+ },
+ "GUIDE_SCREENS_OPEN_MORE": {
+  "text": "選哪個螢幕給會眾看，哪個給台上的人看",
+  "back": "Choose which screen the congregation sees and which the stage sees",
+  "why": "螢幕 and 會眾 from the table"
+ },
+ "GUIDE_OPEN_SEARCH": {
+  "text": "用搜尋開啟",
+  "back": "Open with search",
+  "why": "搜尋 is the table's word"
  }
 }

@@ -17773,5 +17773,59 @@
    "announcement"
   ],
   "notes": "Past tense; the zero case says nothing was changed."
+ },
+ {
+  "key": "GUIDE_SCREENS_OPEN",
+  "kind": "const",
+  "screen": "A lesson bubble of the program's guide: a card about 430 points wide beside a button the guide has ringed in colour, with the rest of the window dimmed. The card shows '1 of 1' above, this headline, one grey line under it, and a Skip button. The ringed button is the top bar's button that opens the Screens dialog, where the person chooses which monitor is the projector and which is the stage screen.",
+  "moment": "The person asked the guide to show how to set up the projector screen. The guide waits for them to press the ringed button themselves.",
+  "role": "headline of a guide step",
+  "does": "Tells the person to press the ringed button to open the dialog for choosing the projector screen.",
+  "budget": 48,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "screens",
+   "projector"
+  ],
+  "notes": "An instruction to press; the button is ringed, so no need to name its colour or place. No full stop if the language allows."
+ },
+ {
+  "key": "GUIDE_SCREENS_OPEN_MORE",
+  "kind": "const",
+  "screen": "The same lesson bubble, the grey line under the headline that tells the person to press the ringed button that opens the Screens dialog.",
+  "moment": "The person is reading what the dialog is for before pressing.",
+  "role": "explanation line of a guide step",
+  "does": "Says what they will do in that dialog: pick which monitor the congregation sees and which one the people on stage see.",
+  "budget": 80,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "screens",
+   "projector",
+   "stage"
+  ],
+  "notes": "One sentence."
+ },
+ {
+  "key": "GUIDE_OPEN_SEARCH",
+  "kind": "const",
+  "screen": "A lesson bubble of the program's guide, centred over a dimmed window, shown when the button a step needs is not on screen. Its filled button opens the program's search with the name of the needed action already typed in.",
+  "moment": "The guide cannot point at the button, so it offers the search instead.",
+  "role": "primary button",
+  "does": "Opens the search with the action's name already typed.",
+  "budget": 18,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "search"
+  ],
+  "notes": "A verb and 'search' or the word the program uses for its search."
  }
 ]

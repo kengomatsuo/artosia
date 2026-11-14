@@ -4807,5 +4807,20 @@
   },
   "back": "No announcement was changed / Style applied to {count} announcements",
   "why": "Zero says nothing changed"
+ },
+ "GUIDE_SCREENS_OPEN": {
+  "text": "Tekan tombol berlingkar untuk atur proyektor",
+  "back": "Press the ringed button to set up the projector",
+  "why": "proyektor is the table's word; tekan is plain and short"
+ },
+ "GUIDE_SCREENS_OPEN_MORE": {
+  "text": "Pilih monitor untuk jemaat dan monitor untuk panggung",
+  "back": "Pick the monitor for the congregation and the monitor for the stage",
+  "why": "jemaat and panggung as in the table's Screens detail"
+ },
+ "GUIDE_OPEN_SEARCH": {
+  "text": "Buka pencarian",
+  "back": "Open the search",
+  "why": "pencarian matches the table"
  }
 }

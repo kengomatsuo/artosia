@@ -30,6 +30,12 @@ impl World<Command> for Window<'_> {
     }
 }
 
+/// Every state name `holds` knows; the lesson test checks each step against it.
+pub const KNOWN: [&str; 12] = [
+    "screens-open", "phone-open", "settings-open", "no-dialog", "plan-tab", "calendar-tab", "people-tab", "giving-tab",
+    "notices-tab", "templates-tab", "look-tab", "search-open",
+];
+
 /// The states lessons name. A name nobody knows is never true, and a test lists the names every
 /// lesson uses against this match.
 pub fn holds(app: &App, state: &str) -> bool {

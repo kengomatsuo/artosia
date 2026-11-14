@@ -6,7 +6,7 @@
 //! While it is open it owns the keyboard (`App::tour_key`) and the card is a modal, so nothing
 //! behind it can be pressed and nothing in it can reach the projector.
 
-use rune::{Align, Cx, El, Key, Side, col, el, row, spacer, text};
+use rune::{Align, Cx, El, Key, Side, Tx, col, el, row, spacer, text};
 use rune_kit::Kit;
 
 use crate::guide::window::Window;
@@ -121,8 +121,94 @@ impl App {
     }
 }
 
+impl App {
+    /// Starts a lesson at its first step, over whatever the window shows.
+    pub fn start_lesson(&mut self, lesson: Lesson<Command>) {
+        self.close_palette();
+        self.lesson = Some((lesson, 0));
+    }
+
+    pub fn end_lesson(&mut self) {
+        self.lesson = None;
+    }
+
+    /// The centred bubble's button: the search, with the step's command already typed.
+    fn lesson_search(&mut self, command: Command) {
+        self.open_palette(crate::palette::Scope::All, command.label());
+    }
+}
+
+/// A running lesson: the ring round the control the guide picked, a dim that swallows presses
+/// everywhere but there, and a bubble that waits for the person's own press. With no control on
+/// screen the bubble sits in the middle and opens the search with the command typed.
+fn lesson_view(s: &App, cx: &mut Cx<App>, k: &Kit, layer: &mut Vec<El>) {
+    let Some((lesson, at)) = s.lesson else { return };
+    let shown = {
+        let layout = |key: &str| cx.layout(key);
+        Runner::starting_at(lesson, at).advance(&Window { app: s, layout: &layout })
+    };
+    let dim = rune::Color::BLACK.alpha(0.38);
+    let total = lesson.steps.len();
+    match shown {
+        Show::Finished => {}
+        Show::At { step, key } => {
+            let Some([x, y, w, h]) = cx.layout(&key) else { return };
+            let (x0, y0) = ((x - PAD).max(0.0), (y - PAD).max(0.0));
+            let (x1, y1) = (x + w + PAD, y + h + PAD);
+            // The dim takes presses so only the ringed control can be pressed (Driver's overlay).
+            let strip = || el().fill(dim).a11y_hidden().on_press_tx(|_: &mut App, _: &mut Tx| {});
+            layer.push(strip().key("lesson-dim-top").pin(Some(0.0), Some(0.0), Some(0.0), None).h(y0));
+            layer.push(strip().key("lesson-dim-bottom").pin(Some(0.0), Some(y1), Some(0.0), Some(0.0)));
+            layer.push(strip().key("lesson-dim-left").pin(Some(0.0), Some(y0), None, None).w(x0).h(y1 - y0));
+            layer.push(strip().key("lesson-dim-right").pin(Some(x1), Some(y0), Some(0.0), None).h(y1 - y0));
+            layer.push(el().key("lesson-ring").absolute(x0, y0).size(x1 - x0, y1 - y0).radius(k.radius.lg).border(3.0, theme::accent()).a11y_hidden());
+            let below = y1 + 220.0 < cx.layout_size("window").map_or(768.0, |size| size[1]);
+            let side = if below { Side::Bottom } else { Side::Top };
+            layer.push(bubble(k, lesson.steps[step].id, step, total, None).anchored(&key, side, Align::Start, space::S3));
+        }
+        Show::Search { step } => {
+            let command = match lesson.steps[step].goal {
+                crate::guide::Goal::Run(command) => Some(command),
+                _ => None,
+            };
+            layer.push(el().key("lesson-dim").absolute(0.0, 0.0).w_full().h_full().fill(dim).a11y_hidden().on_press_tx(|_: &mut App, _: &mut Tx| {}));
+            layer.push(col().key("lesson-centre").absolute(0.0, 0.0).w_full().h_full().center().child(bubble(k, lesson.steps[step].id, step, total, command)));
+        }
+    }
+}
+
+/// The step's bubble: where it is in the lesson, its words, Skip, and the search when the control
+/// is not on screen. No Next: the step ends on the person's own press.
+fn bubble(k: &Kit, id: &str, step: usize, total: usize, search: Option<Command>) -> El {
+    let (main, more) = crate::guide::lessons::words(id);
+    let mut buttons = row().w_full().gap(space::S2).center_y().child(row().w(BUTTON).child(btn(t::TOUR_SKIP()).icon(&icons::CLOSE).ghost().grow().focusable().build(k, |s, _| s.end_lesson()))).child(spacer());
+    if let Some(command) = search {
+        buttons = buttons.child(btn(t::GUIDE_OPEN_SEARCH()).icon(&rune_kit::glyphs::SEARCH).primary().focusable().build(k, move |s, _| s.lesson_search(command)).key("lesson-search"));
+    }
+    col()
+        .key("lesson-card")
+        .role("dialog")
+        .w(CARD)
+        .padding(space::S4)
+        .gap(space::S3)
+        .radius(k.radius.lg)
+        .fill(k.c.layer_04)
+        .border(1.0, k.c.border_strong)
+        .shadow(8.0, 24.0, rune::Color::BLACK.alpha(0.4))
+        .child(
+            col()
+                .w_full()
+                .gap(space::S1)
+                .child(text(t::tour_place(step + 1, total)).font(type_::SMALL).color(k.c.text_muted))
+                .child(crate::ui::widgets::wrapped(main).font(type_::TITLE).color(k.c.text_base).wrap())
+                .child(crate::ui::widgets::wrapped(more).font(type_::BODY).color(k.c.text_muted).wrap()),
+        )
+        .child(buttons)
+}
+
 /// The dim around the part a stop points at, the ring, and the card.
 pub(crate) fn view(s: &App, cx: &mut Cx<App>, k: &Kit, layer: &mut Vec<El>) {
+    lesson_view(s, cx, k, layer);
     let Some(at) = s.tour else { return };
     let stop = &STOPS[at.min(STOP_COUNT - 1)];
     let dim = rune::Color::BLACK.alpha(0.38);

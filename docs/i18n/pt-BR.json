@@ -4896,5 +4896,20 @@
   },
   "back": "No announcement was changed / Style applied to {count} announcement(s)",
   "why": "Past tense; zero says nothing changed."
+ },
+ "GUIDE_SCREENS_OPEN": {
+  "text": "Clique no botão destacado e escolha o projetor",
+  "back": "Click the highlighted button and choose the projector",
+  "why": "projetor as in the table"
+ },
+ "GUIDE_SCREENS_OPEN_MORE": {
+  "text": "Escolha qual monitor é da igreja e qual é do palco",
+  "back": "Choose which monitor is the church's and which is the stage's",
+  "why": "The table's Screens words"
+ },
+ "GUIDE_OPEN_SEARCH": {
+  "text": "Abrir a busca",
+  "back": "Open the search",
+  "why": "busca is the table's word"
  }
 }

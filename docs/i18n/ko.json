@@ -4859,5 +4859,20 @@
   },
   "back": "zero: There is no announcement changed; other: Applied to {count} announcements",
   "why": "table word reused; composed in the language"
+ },
+ "GUIDE_SCREENS_OPEN": {
+  "text": "표시된 버튼을 눌러 프로젝터를 설정해요",
+  "back": "Press the marked button and set up the projector",
+  "why": "해요 style as the table"
+ },
+ "GUIDE_SCREENS_OPEN_MORE": {
+  "text": "예배당에 띄울 모니터와 무대용 모니터를 골라요",
+  "back": "Choose the monitor for the sanctuary and the monitor for the stage",
+  "why": "Table verb 띄우다"
+ },
+ "GUIDE_OPEN_SEARCH": {
+  "text": "검색으로 열기",
+  "back": "Open with search",
+  "why": "검색 is the table's word"
  }
 }

@@ -7,6 +7,7 @@
 //! implements it from the layout's rectangles and `App`, a test implements it from a table.
 
 pub mod anchors;
+pub mod lessons;
 pub mod rank;
 pub mod window;
 

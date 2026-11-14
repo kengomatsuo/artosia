@@ -506,6 +506,8 @@ pub struct App {
     pub onboard_work: crate::ui::onboard::Work,
     /// The tour has just opened and its Next button should take keyboard focus.
     pub tour_focus: bool,
+    /// A running guide lesson and the step the person has gone past with Next.
+    pub lesson: Option<(crate::guide::Lesson<crate::palette::Command>, usize)>,
     /// The clock when Enter last moved the tour. If Rune also presses the focused button for
     /// the same Enter, that press is the same step and is dropped.
     pub tour_entered_at: f64,
@@ -775,6 +777,7 @@ impl App {
             onboard_work: Default::default(),
             tour_entered_at: -1.0,
             tour_focus: false,
+            lesson: None,
             notices: None,
             looping: false,
             resume: None,

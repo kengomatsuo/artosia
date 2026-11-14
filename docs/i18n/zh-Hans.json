@@ -4859,5 +4859,20 @@
   },
   "back": "zero: No announcement was changed; other: Applied to {count} announcements",
   "why": "table word reused; composed in the language"
+ },
+ "GUIDE_SCREENS_OPEN": {
+  "text": "按下带框的按钮，设置投影屏",
+  "back": "Press the framed button and set up the projector",
+  "why": "投影屏 from the table"
+ },
+ "GUIDE_SCREENS_OPEN_MORE": {
+  "text": "选一块屏幕给现场观众，一块给台上的人",
+  "back": "Choose one screen for the room and one for the people on stage",
+  "why": "屏幕 as the table"
+ },
+ "GUIDE_OPEN_SEARCH": {
+  "text": "用搜索打开",
+  "back": "Open with search",
+  "why": "搜索 is the table's word"
  }
 }
