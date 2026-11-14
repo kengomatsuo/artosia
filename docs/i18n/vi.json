@@ -545,9 +545,9 @@
   "why": "phần mềm is the program, apart from chương trình"
  },
  "update_ready": {
-  "text": "Đã tải bản {version}, sẽ dùng khi mở lại phần mềm",
-  "back": "Version {version} downloaded, used when the software is next opened",
-  "why": "Two clauses"
+  "text": "Artosia {version} đã sẵn sàng",
+  "back": "Artosia {version} is ready",
+  "why": "program's own words for update and projector, plain volunteer register"
  },
  "update_none": {
   "text": "Bạn đang dùng bản mới nhất ({version})",
@@ -5880,5 +5880,30 @@
   "text": "Tách",
   "back": "Separate",
   "why": "one word, cuts line in two"
+ },
+ "UPDATE_BUTTON": {
+  "text": "Cập nhật",
+  "back": "Update ready",
+  "why": "program's own words for update and projector, plain volunteer register"
+ },
+ "UPDATE_CARD_HINT": {
+  "text": "Khởi động lại chỉ mất vài giây, máy chiếu tự bật lại.",
+  "back": "Restarting takes a few seconds; the projector comes back by itself",
+  "why": "program's own words for update and projector, plain volunteer register"
+ },
+ "UPDATE_RESTART": {
+  "text": "Khởi động lại",
+  "back": "Restart now",
+  "why": "program's own words for update and projector, plain volunteer register"
+ },
+ "UPDATE_LATER": {
+  "text": "Để sau",
+  "back": "Later",
+  "why": "program's own words for update and projector, plain volunteer register"
+ },
+ "UPDATE_RESTART_FAILED": {
+  "text": "Không khởi động lại được. Hãy đóng phần mềm rồi mở lại để cập nhật.",
+  "back": "Could not restart; close the program and open it again to update",
+  "why": "program's own words for update and projector, plain volunteer register"
  }
 }

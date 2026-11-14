@@ -11,8 +11,9 @@ pub mod manifest;
 pub mod publish;
 
 pub use apply::{
-    Applied, RollbackReason, apply_on_start, apply_on_start_with, confirm_started, own_files_dir,
-    relaunch, roll_back, staging_dir,
+    Applied, RollbackReason, apply_on_start, apply_on_start_with, confirm_started, finish_on_start,
+    finish_on_start_with, own_files_dir, relaunch, roll_back, staged_version, staged_version_with,
+    staging_dir,
 };
 pub use error::UpdateError;
 pub use fetch::{Release, Staged, check, check_with, download, download_with};

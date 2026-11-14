@@ -51,11 +51,18 @@ pub fn feed() -> Option<String> {
     artosia_update::feed_address(install_dir().as_deref())
 }
 
-/// Swaps in an update that was downloaded earlier. True when the new program has been
-/// started and this one must leave at once, before it opens a window.
+/// Before the window opens: finishes or undoes an interrupted update and counts a trial start.
+/// A downloaded update is installed only on the start Restart now asked for (`--apply-update`);
+/// any other start leaves it waiting, and the window offers it (UPDATEASK1). True when the new
+/// program has been started and this one must leave at once, before it opens a window.
 pub fn apply_before_window() -> bool {
     let Some(folder) = install_dir() else { return false };
-    let relaunch = match artosia_update::apply_on_start(&folder) {
+    let asked = crate::data::has_flag("--apply-update");
+    if asked {
+        wait_for_old_copy();
+    }
+    let outcome = if asked { artosia_update::apply_on_start(&folder) } else { artosia_update::finish_on_start(&folder) };
+    let relaunch = match outcome {
         Ok(Applied::Updated { relaunch, .. }) | Ok(Applied::RolledBack { relaunch, .. }) => relaunch,
         Ok(Applied::Nothing) | Err(_) => return false,
     };
@@ -64,6 +71,30 @@ pub fn apply_before_window() -> bool {
         let _ = std::fs::write(marker, VERSION);
     }
     artosia_update::relaunch(&program).is_ok()
+}
+
+/// The copy that pressed Restart now is still closing: wait, at most fifteen seconds, until it
+/// lets go of the port that keeps one Artosia per library, so the updated program does not
+/// find it still running and step aside.
+fn wait_for_old_copy() {
+    for _ in 0..150 {
+        if std::net::TcpListener::bind(("127.0.0.1", crate::INSTANCE_PORT)).is_ok() {
+            return;
+        }
+        std::thread::sleep(std::time::Duration::from_millis(100));
+    }
+}
+
+/// The version of a downloaded update waiting to be installed, if any.
+pub fn waiting() -> Option<String> {
+    install_dir().and_then(|folder| artosia_update::staged_version(&folder))
+}
+
+/// Restart now: starts a copy that installs the waiting update before its window opens. The
+/// caller then quits; the copy waits for it to close first.
+pub fn restart_to_update() -> bool {
+    let Ok(program) = std::env::current_exe() else { return false };
+    std::process::Command::new(program).arg("--apply-update").spawn().is_ok()
 }
 
 /// Set by `just_updated`, read once by `confirm`: this start is the first on a new version.

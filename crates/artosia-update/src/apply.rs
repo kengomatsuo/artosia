@@ -218,6 +218,39 @@ pub fn apply_on_start(install_dir: &Path) -> Result<Applied, UpdateError> {
 }
 
 pub fn apply_on_start_with(install_dir: &Path, keys: &TrustedKeys) -> Result<Applied, UpdateError> {
+    on_start(install_dir, keys, true)
+}
+
+/// Like `apply_on_start`, but a downloaded update keeps waiting: an interrupted swap is finished
+/// or undone, a trial start is counted and a build that never confirmed is rolled back, and
+/// nothing new is installed. The operator calls it until the person asks for the update.
+pub fn finish_on_start(install_dir: &Path) -> Result<Applied, UpdateError> {
+    finish_on_start_with(install_dir, &TrustedKeys::compiled())
+}
+
+pub fn finish_on_start_with(install_dir: &Path, keys: &TrustedKeys) -> Result<Applied, UpdateError> {
+    on_start(install_dir, keys, false)
+}
+
+/// The version of a downloaded, verified update waiting beside the program; None while none
+/// waits, while a swap is under way or on trial, and for a version that was rolled back.
+pub fn staged_version(install_dir: &Path) -> Option<String> {
+    staged_version_with(install_dir, &TrustedKeys::compiled())
+}
+
+pub fn staged_version_with(install_dir: &Path, keys: &TrustedKeys) -> Option<String> {
+    let stage = staging_dir(install_dir);
+    if matches!(load_state(&stage).map(|state| state.phase), Some(Phase::Applying | Phase::Trial)) {
+        return None;
+    }
+    if !stage.join(SIGNATURE_NAME).is_file() {
+        return None;
+    }
+    let manifest = read_staged(&stage, keys).ok()?;
+    (!rejected_versions(&stage).contains(&manifest.version)).then_some(manifest.version)
+}
+
+fn on_start(install_dir: &Path, keys: &TrustedKeys, install_new: bool) -> Result<Applied, UpdateError> {
     let stage = staging_dir(install_dir);
     if !stage.is_dir() {
         return Ok(Applied::Nothing);
@@ -246,7 +279,7 @@ pub fn apply_on_start_with(install_dir: &Path, keys: &TrustedKeys) -> Result<App
             }
         }
     }
-    if !stage.join(SIGNATURE_NAME).is_file() {
+    if !install_new || !stage.join(SIGNATURE_NAME).is_file() {
         return Ok(Applied::Nothing);
     }
     match apply_staged(install_dir, &stage, keys) {

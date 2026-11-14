@@ -1933,26 +1933,25 @@
  {
   "key": "update_ready",
   "kind": "sentence",
-  "screen": "Main window, a toast near the bottom after an update was found and fetched.",
-  "moment": "A newer version was downloaded; it will be used the next time the program starts.",
-  "role": "toast",
-  "does": "Says which version has been downloaded and that it takes over when the program is next opened.",
-  "budget": 70,
+  "screen": "The title of a small dialog that opens when a newer version of the program has been downloaded and is ready to install.",
+  "moment": "At start, or a few minutes after, when nothing is on the projector.",
+  "role": "dialog title",
+  "does": "Says the named version of the program is ready.",
+  "budget": 34,
   "variables": [
    {
     "name": "version",
-    "example": "0.2.1",
-    "meaning": "The new version number."
+    "example": "0.1.33",
+    "meaning": "The version number of the update."
    }
   ],
   "cases": [],
   "counts": "",
   "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
   "concepts": [
-   "update",
-   "notice"
+   "update"
   ],
-  "notes": "Two clauses. The version is a number such as 0.2.1; keep it as a figure."
+  "notes": "Keep the token {version} exactly; name the program Artosia."
  },
  {
   "key": "update_none",
@@ -21552,5 +21551,91 @@
    "slide_words"
   ],
   "notes": "One word."
+ },
+ {
+  "key": "UPDATE_BUTTON",
+  "kind": "const",
+  "screen": "The top bar, a filled button in the accent colour with a download icon, shown only while a downloaded update waits to be installed; it opens the update dialog.",
+  "moment": "The person notices it any time and may press it when it suits them.",
+  "role": "top bar button",
+  "does": "Names the button that says an update is ready and opens it.",
+  "budget": 14,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "update"
+  ],
+  "notes": "Two words at most."
+ },
+ {
+  "key": "UPDATE_CARD_HINT",
+  "kind": "const",
+  "screen": "The text in the update dialog, above the two buttons Later and Restart now.",
+  "moment": "The person decides whether to restart now, perhaps just before a service.",
+  "role": "explanation",
+  "does": "Says restarting takes only a few seconds and the projector comes back on its own.",
+  "budget": 80,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "update",
+   "projector"
+  ],
+  "notes": "One or two short sentences."
+ },
+ {
+  "key": "UPDATE_RESTART",
+  "kind": "const",
+  "screen": "The update dialog's main button.",
+  "moment": "The person wants the update installed now.",
+  "role": "button",
+  "does": "Names the button that closes the program, installs the update and opens it again.",
+  "budget": 16,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "update"
+  ],
+  "notes": "Short."
+ },
+ {
+  "key": "UPDATE_LATER",
+  "kind": "const",
+  "screen": "The update dialog's other button, beside the main one.",
+  "moment": "The person wants to keep working; the update keeps waiting and the top bar button stays.",
+  "role": "button",
+  "does": "Names the button that puts the update off for now.",
+  "budget": 10,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "update"
+  ],
+  "notes": "One word."
+ },
+ {
+  "key": "UPDATE_RESTART_FAILED",
+  "kind": "const",
+  "screen": "A toast at the foot of the window after Restart now did not work.",
+  "moment": "The program could not start its updated copy.",
+  "role": "toast",
+  "does": "Says the program could not restart, and to close it and open it again to update.",
+  "budget": 80,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "update"
+  ],
+  "notes": "Plain; no exclamation."
  }
 ]

@@ -590,6 +590,27 @@ fn news_view(s: &App, k: &Kit, layer: &mut Vec<El>) {
     layer.push(col().key("news-centre").absolute(0.0, 0.0).w_full().h_full().center().child(card));
 }
 
+/// A downloaded update offered: what it is, that restarting is short, Later and Restart now
+/// (Sparkle's install and remind-later choices; the button in the top bar keeps it findable).
+fn update_card(s: &App, k: &Kit, layer: &mut Vec<El>) {
+    let (true, Some(version)) = (s.update_card, s.update_waiting.as_ref()) else { return };
+    let body = col()
+        .w_full()
+        .px(space::S4)
+        .pb(space::S4)
+        .gap(space::S4)
+        .child(crate::ui::widgets::wrapped(t::UPDATE_CARD_HINT()).font(type_::BODY).color(k.c.text_muted).wrap())
+        .child(
+            row()
+                .w_full()
+                .gap(space::S2)
+                .child(rune::spacer())
+                .child(btn(t::UPDATE_LATER()).focusable().build(k, |s, _| s.update_card = false).key("update-later"))
+                .child(btn(t::UPDATE_RESTART()).icon(&icons::IMPORT).primary().focusable().build(k, |s, tx| s.restart_to_update(tx)).key("update-restart").autofocus()),
+        );
+    rune_kit::Dialog::new("update", t::update_ready(version)).open(true).width(440.0).fit().on_close(|s: &mut App| s.update_card = false).child(body).build(k, layer);
+}
+
 /// What's new's width, its list's width and the picked entry's clip.
 const NEWS_W: f32 = 760.0;
 const NEWS_LIST_W: f32 = 200.0;
@@ -597,6 +618,7 @@ const NEWS_CLIP_W: f32 = 480.0;
 
 /// The dim around the part a stop points at, the ring, and the card.
 pub(crate) fn view(s: &App, cx: &mut Cx<App>, k: &Kit, layer: &mut Vec<El>) {
+    update_card(s, k, layer);
     news_view(s, k, layer);
     help_card(s, k, layer);
     lesson_view(s, cx, k, layer);

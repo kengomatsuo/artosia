@@ -718,6 +718,10 @@ pub struct App {
     /// The pictures announcements carry, by path, for the previews.
     pub slide_pictures: HashMap<String, Image>,
     pub waker: Option<Waker>,
+    /// The version of a downloaded update waiting to be installed (UPDATEASK1).
+    pub update_waiting: Option<String>,
+    /// The card offering that update, Restart now or Later, is open.
+    pub update_card: bool,
     /// The church's own app, waiting while the tour shows the practice library (TOURROOM1).
     pub church: Option<Box<App>>,
     /// The whole tour is running: how many of its parts have started, the five stops first and
@@ -948,6 +952,8 @@ impl App {
             slide_pictures: HashMap::new(),
             waker: None,
             church: None,
+            update_waiting: None,
+            update_card: false,
             course: None,
             inbox: Arc::new(Mutex::new(Vec::new())),
             remote_tx,

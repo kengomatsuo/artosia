@@ -150,6 +150,8 @@ pub(crate) fn topbar(s: &App, k: &Kit, insets: rune::ChromeInsets, wide: bool) -
         )
         .child(search)
         .child(spacer())
+        // A downloaded update stays findable here until it is installed (UPDATEASK1).
+        .children(s.update_waiting.as_ref().map(|_| btn(t::UPDATE_BUTTON()).icon(&icons::IMPORT).primary().build(k, |s, _| s.update_card = true).key("update-button")))
         // Two groups: what Artosia is connected to, and the program's own settings, last, where
         // a person looks for them. What the projector draws is the Design tab.
         .child(btn(t::BTN_SCREENS()).icon(&icons::SCREEN).ghost().anchor(crate::palette::Command::Screens, crate::guide::Place::Bar).build(k, |s, _| s.sheet = Sheet::Screens))

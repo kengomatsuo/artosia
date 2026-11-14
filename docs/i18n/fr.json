@@ -551,9 +551,9 @@
   "why": "reassurance"
  },
  "update_ready": {
-  "text": "Version {version} téléchargée, prête au prochain démarrage",
-  "back": "Version {version} downloaded, ready at next start",
-  "why": "two clauses"
+  "text": "Artosia {version} est prête",
+  "back": "Artosia {version} is ready",
+  "why": "program's own words for update and projector, plain volunteer register"
  },
  "update_none": {
   "text": "Vous avez la dernière version, {version}",
@@ -5927,5 +5927,30 @@
   "text": "Couper",
   "back": "Cut",
   "why": "one word, cuts line in two"
+ },
+ "UPDATE_BUTTON": {
+  "text": "Mise à jour",
+  "back": "Update ready",
+  "why": "program's own words for update and projector, plain volunteer register"
+ },
+ "UPDATE_CARD_HINT": {
+  "text": "Le redémarrage prend quelques secondes. Le projecteur revient seul.",
+  "back": "Restarting takes a few seconds; the projector comes back by itself",
+  "why": "program's own words for update and projector, plain volunteer register"
+ },
+ "UPDATE_RESTART": {
+  "text": "Redémarrer",
+  "back": "Restart now",
+  "why": "program's own words for update and projector, plain volunteer register"
+ },
+ "UPDATE_LATER": {
+  "text": "Plus tard",
+  "back": "Later",
+  "why": "program's own words for update and projector, plain volunteer register"
+ },
+ "UPDATE_RESTART_FAILED": {
+  "text": "Redémarrage impossible. Fermez le programme et rouvrez-le pour mettre à jour.",
+  "back": "Could not restart; close the program and open it again to update",
+  "why": "program's own words for update and projector, plain volunteer register"
  }
 }

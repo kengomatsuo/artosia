@@ -83,6 +83,11 @@ fn setup(s: &mut App, waker: Waker) {
     // A new church (a library with no settings file before this start) begins with the first
     // run, whose last page offers the tour. The first start on a library that has settings, and
     // every practice run, begins with the tour. A headless run never does unless a scene asks.
+    // A downloaded update is asked about at start, unless something else opens first.
+    if let Some(version) = crate::update::waiting() {
+        s.update_waiting = Some(version);
+        s.update_card = !rune::is_headless();
+    }
     if s.first_run {
         s.start_first_run();
     } else if !rune::is_headless() && (!s.settings.toured || s.folder.is_none()) {
@@ -1212,11 +1217,16 @@ Until we reach the house
         }
     }),
     // The only notice of a new version: a toast after it was fetched in the background.
-    ("toast-update", |s| s.say(crate::strings::update_ready("0.1.19"), None)),
+    // UPDATEASK1: a downloaded update offered, and its button in the top bar.
+    ("update-card", |s| {
+        s.update_waiting = Some("0.1.33".to_string());
+        s.update_card = true;
+    }),
+    ("update-button", |s| s.update_waiting = Some("0.1.33".to_string())),
 ];
 
 /// The port one Artosia holds so a second start finds it. The output process has the next one down.
-const INSTANCE_PORT: u16 = 47824;
+pub(crate) const INSTANCE_PORT: u16 = 47824;
 const INSTANCE_WORD: &str = "artosia";
 
 enum Instance {

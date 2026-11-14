@@ -551,9 +551,9 @@
   "why": "Reassures."
  },
  "update_ready": {
-  "text": "Versión {version} descargada. Se usará al abrir Artosia",
-  "back": "Version {version} downloaded. It will be used when Artosia opens",
-  "why": "Two clauses."
+  "text": "Artosia {version} está lista",
+  "back": "Artosia {version} is ready",
+  "why": "program's own words for update and projector, plain volunteer register"
  },
  "update_none": {
   "text": "Ya tienes la última versión ({version})",
@@ -5905,5 +5905,30 @@
   "text": "Dividir",
   "back": "Divide",
   "why": "one word, cuts line in two"
+ },
+ "UPDATE_BUTTON": {
+  "text": "Actualizar",
+  "back": "Update ready",
+  "why": "program's own words for update and projector, plain volunteer register"
+ },
+ "UPDATE_CARD_HINT": {
+  "text": "Reiniciar tarda unos segundos. El proyector se enciende solo.",
+  "back": "Restarting takes a few seconds; the projector comes back by itself",
+  "why": "program's own words for update and projector, plain volunteer register"
+ },
+ "UPDATE_RESTART": {
+  "text": "Reiniciar ya",
+  "back": "Restart now",
+  "why": "program's own words for update and projector, plain volunteer register"
+ },
+ "UPDATE_LATER": {
+  "text": "Luego",
+  "back": "Later",
+  "why": "program's own words for update and projector, plain volunteer register"
+ },
+ "UPDATE_RESTART_FAILED": {
+  "text": "No se pudo reiniciar. Cierra el programa y ábrelo otra vez para actualizar.",
+  "back": "Could not restart; close the program and open it again to update",
+  "why": "program's own words for update and projector, plain volunteer register"
  }
 }

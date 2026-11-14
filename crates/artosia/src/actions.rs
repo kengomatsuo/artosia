@@ -1867,7 +1867,12 @@ impl App {
                 Arrived::BetterModel(result) => self.better_arrived(result),
                 Arrived::RecordingsSaved(saved) => self.recordings_saved(saved),
                 Arrived::Firewall(round, progress) => self.firewall_answered(round, progress),
-                Arrived::Update(Ok(Some(version))) => self.say(t::update_ready(&version), None),
+                Arrived::Update(Ok(Some(version))) => {
+                    // Offered at once when nothing is on the projector; during a service only
+                    // the Update ready button says so, and waits.
+                    self.update_card = self.live.is_none();
+                    self.update_waiting = Some(version);
+                }
                 Arrived::Update(Ok(None)) => self.say(t::update_none(crate::update::VERSION), None),
                 Arrived::Update(Err(problem)) => self.say(problem, None),
                 Arrived::LyricsText(Ok(fetched)) => self.fill_editor(fetched),
@@ -2020,6 +2025,18 @@ impl App {
         self.save_pending();
         self.load_pictures();
         changed
+    }
+
+    /// Restart now on the update card: what waits is saved, a copy that installs the update
+    /// starts, and this one quits.
+    pub fn restart_to_update(&mut self, tx: &mut Tx) {
+        self.save_pending();
+        if crate::update::restart_to_update() {
+            tx.quit();
+        } else {
+            self.update_card = false;
+            self.say(t::UPDATE_RESTART_FAILED().to_string(), None);
+        }
     }
 
     /// Writes what waits to be saved: the plan, the calendars' and funds' colours, the settings.

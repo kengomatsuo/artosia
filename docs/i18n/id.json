@@ -453,9 +453,9 @@
   "why": "Reassurance"
  },
  "update_ready": {
-  "text": "Versi {version} sudah diunduh dan dipakai saat program dibuka lagi",
-  "back": "Version {version} has been downloaded and is used when the program opens again",
-  "why": "Two clauses"
+  "text": "Artosia {version} siap",
+  "back": "Artosia {version} is ready",
+  "why": "program's own words for update and projector, plain volunteer register"
  },
  "update_none": {
   "text": "Versi {version} sudah yang terbaru",
@@ -5829,5 +5829,30 @@
   "text": "Pisah",
   "back": "Separate",
   "why": "one word, cuts line in two"
+ },
+ "UPDATE_BUTTON": {
+  "text": "Pembaruan",
+  "back": "Update ready",
+  "why": "program's own words for update and projector, plain volunteer register"
+ },
+ "UPDATE_CARD_HINT": {
+  "text": "Mulai ulang hanya butuh beberapa detik. Proyektor menyala lagi sendiri.",
+  "back": "Restarting takes a few seconds; the projector comes back by itself",
+  "why": "program's own words for update and projector, plain volunteer register"
+ },
+ "UPDATE_RESTART": {
+  "text": "Mulai ulang",
+  "back": "Restart now",
+  "why": "program's own words for update and projector, plain volunteer register"
+ },
+ "UPDATE_LATER": {
+  "text": "Nanti",
+  "back": "Later",
+  "why": "program's own words for update and projector, plain volunteer register"
+ },
+ "UPDATE_RESTART_FAILED": {
+  "text": "Gagal memulai ulang. Tutup program lalu buka lagi untuk memperbarui.",
+  "back": "Could not restart; close the program and open it again to update",
+  "why": "program's own words for update and projector, plain volunteer register"
  }
 }

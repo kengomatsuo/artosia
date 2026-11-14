@@ -547,9 +547,9 @@
   "why": "reassures"
  },
  "update_ready": {
-  "text": "新版本{version}已下载，下次打开程序时生效",
-  "back": "Version {version} is downloaded and takes over next time the program opens",
-  "why": "two clauses"
+  "text": "Artosia {version} 已就绪",
+  "back": "Artosia {version} is ready",
+  "why": "program's own words for update and projector, plain volunteer register"
  },
  "update_none": {
   "text": "当前版本{version}已是最新",
@@ -5869,5 +5869,30 @@
   "text": "分行",
   "back": "Break line",
   "why": "one word, cuts line in two"
+ },
+ "UPDATE_BUTTON": {
+  "text": "有更新",
+  "back": "Update ready",
+  "why": "program's own words for update and projector, plain volunteer register"
+ },
+ "UPDATE_CARD_HINT": {
+  "text": "重启只需几秒，投影屏会自动恢复",
+  "back": "Restarting takes a few seconds; the projector comes back by itself",
+  "why": "program's own words for update and projector, plain volunteer register"
+ },
+ "UPDATE_RESTART": {
+  "text": "立即重启",
+  "back": "Restart now",
+  "why": "program's own words for update and projector, plain volunteer register"
+ },
+ "UPDATE_LATER": {
+  "text": "稍后",
+  "back": "Later",
+  "why": "program's own words for update and projector, plain volunteer register"
+ },
+ "UPDATE_RESTART_FAILED": {
+  "text": "无法重启。请关闭程序再重新打开来更新",
+  "back": "Could not restart; close the program and open it again to update",
+  "why": "program's own words for update and projector, plain volunteer register"
  }
 }

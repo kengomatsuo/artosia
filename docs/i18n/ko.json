@@ -545,9 +545,9 @@
   "why": ""
  },
  "update_ready": {
-  "text": "{version} 버전을 받았어요. 다시 열면 적용돼요",
-  "back": "Version {version} downloaded. It applies when reopened",
-  "why": ""
+  "text": "Artosia {version} 준비 완료",
+  "back": "Artosia {version} is ready",
+  "why": "program's own words for update and projector, plain volunteer register"
  },
  "update_none": {
   "text": "이미 최신 버전이에요 ({version})",
@@ -5869,5 +5869,30 @@
   "text": "나누기",
   "back": "Divide",
   "why": "one word, cuts line in two"
+ },
+ "UPDATE_BUTTON": {
+  "text": "업데이트",
+  "back": "Update ready",
+  "why": "program's own words for update and projector, plain volunteer register"
+ },
+ "UPDATE_CARD_HINT": {
+  "text": "다시 시작은 몇 초면 돼요. 프로젝터는 저절로 다시 켜져요",
+  "back": "Restarting takes a few seconds; the projector comes back by itself",
+  "why": "program's own words for update and projector, plain volunteer register"
+ },
+ "UPDATE_RESTART": {
+  "text": "지금 다시 시작",
+  "back": "Restart now",
+  "why": "program's own words for update and projector, plain volunteer register"
+ },
+ "UPDATE_LATER": {
+  "text": "나중에",
+  "back": "Later",
+  "why": "program's own words for update and projector, plain volunteer register"
+ },
+ "UPDATE_RESTART_FAILED": {
+  "text": "다시 시작하지 못했어요. 닫았다가 다시 열면 업데이트돼요",
+  "back": "Could not restart; close the program and open it again to update",
+  "why": "program's own words for update and projector, plain volunteer register"
  }
 }

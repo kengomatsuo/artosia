@@ -385,9 +385,9 @@ pub fn update_ready(version: &str) -> String {
         return text;
     }
     if indonesian() {
-        return format!("Versi {version} sudah diunduh. Terpasang saat Artosia dibuka lagi.");
+        return format!("Artosia {version} siap");
     }
-    format!("Version {version} is ready. It installs when Artosia next starts.")
+    format!("Artosia {version} is ready")
 }
 
 pub fn update_none(version: &str) -> String {
@@ -716,6 +716,11 @@ text!(PART_REMOVED, "Part removed", "Bagian dihapus");
 text!(TOUR_END, "End tour", "Akhiri");
 text!(PART_TOO_LONG, "Too long for the screen", "Kepanjangan di proyektor");
 text!(PART_SPLIT, "Split", "Pisah");
+text!(UPDATE_BUTTON, "Update ready", "Pembaruan");
+text!(UPDATE_CARD_HINT, "Restarting takes a few seconds. The projector comes back on its own.", "Mulai ulang hanya butuh beberapa detik. Proyektor menyala lagi sendiri.");
+text!(UPDATE_RESTART, "Restart now", "Mulai ulang");
+text!(UPDATE_LATER, "Later", "Nanti");
+text!(UPDATE_RESTART_FAILED, "Could not restart. Close Artosia and open it again to update.", "Gagal memulai ulang. Tutup program lalu buka lagi untuk memperbarui.");
 text!(GUIDE_HELP, "Help", "Bantuan");
 text!(GUIDE_SHOW_ME, "Show me", "Tunjukkan caranya");
 text!(HELP_CALENDAR, "Your regular services and events, entered once. The schedule slide fills itself from them.", "Kalender berisi ibadah dan acara gereja, cukup diisi sekali. Slide pengumuman jadwal terisi sendiri.");

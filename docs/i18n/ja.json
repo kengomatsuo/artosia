@@ -545,9 +545,9 @@
   "why": "Reassurance"
  },
  "update_ready": {
-  "text": "{version}版をダウンロードしました。次回の起動で切り替わります",
-  "back": "Version {version} was downloaded. It takes over at the next start",
-  "why": "Round 23, rewritten from the reader marks"
+  "text": "Artosia {version}版の準備完了",
+  "back": "Artosia {version} is ready",
+  "why": "program's own words for update and projector, plain volunteer register"
  },
  "update_none": {
   "text": "{version}は最新版です",
@@ -5867,5 +5867,30 @@
   "text": "分割",
   "back": "Split",
   "why": "one word, cuts line in two"
+ },
+ "UPDATE_BUTTON": {
+  "text": "更新あり",
+  "back": "Update ready",
+  "why": "program's own words for update and projector, plain volunteer register"
+ },
+ "UPDATE_CARD_HINT": {
+  "text": "再起動は数秒で終わり、プロジェクターは自動で戻ります",
+  "back": "Restarting takes a few seconds; the projector comes back by itself",
+  "why": "program's own words for update and projector, plain volunteer register"
+ },
+ "UPDATE_RESTART": {
+  "text": "今すぐ再起動",
+  "back": "Restart now",
+  "why": "program's own words for update and projector, plain volunteer register"
+ },
+ "UPDATE_LATER": {
+  "text": "あとで",
+  "back": "Later",
+  "why": "program's own words for update and projector, plain volunteer register"
+ },
+ "UPDATE_RESTART_FAILED": {
+  "text": "再起動できませんでした。閉じてもう一度開くと更新されます",
+  "back": "Could not restart; close the program and open it again to update",
+  "why": "program's own words for update and projector, plain volunteer register"
  }
 }

@@ -6,7 +6,7 @@ use artosia_update::manifest::{self, TrustedKeys, sha256_hex_of_file};
 use artosia_update::publish::{ReleaseSpec, build_release};
 use artosia_update::{
     Applied, RollbackReason, UpdateError, apply_on_start_with, check_with, confirm_started,
-    download_with, roll_back, staging_dir,
+    download_with, finish_on_start_with, roll_back, staged_version_with, staging_dir,
 };
 use std::fs;
 use std::io::{BufRead, BufReader, Write};
@@ -417,6 +417,21 @@ fn a_tampered_file_is_refused_and_nothing_is_installed() {
         Applied::Nothing
     );
     assert!(w.is_v1());
+}
+
+#[test]
+fn a_downloaded_update_waits_until_it_is_asked_for() {
+    let w = World::new("waits");
+    assert_eq!(staged_version_with(&w.install, &w.keys), None, "nothing waits before a download");
+    w.download().unwrap();
+    let waiting = staged_version_with(&w.install, &w.keys).expect("the downloaded version waits");
+    // A start nobody asked to update finishes nothing and installs nothing.
+    assert_eq!(finish_on_start_with(&w.install, &w.keys).unwrap(), Applied::Nothing);
+    assert!(w.is_v1(), "the old version still runs");
+    assert_eq!(staged_version_with(&w.install, &w.keys).as_deref(), Some(waiting.as_str()), "and the update still waits");
+    // The start that was asked for installs it, and then nothing waits.
+    assert!(matches!(apply_on_start_with(&w.install, &w.keys).unwrap(), Applied::Updated { .. }));
+    assert_eq!(staged_version_with(&w.install, &w.keys), None);
 }
 
 #[test]
