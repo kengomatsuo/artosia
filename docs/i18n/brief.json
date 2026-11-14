@@ -20169,5 +20169,407 @@
    "monitor"
   ],
   "notes": "Use exactly the program's words for the three choices, read from the table, so the line matches the row."
+ },
+ {
+  "key": "HELP_STREAM",
+  "kind": "const",
+  "screen": "The first row inside a dialog: a grey band with a small question-mark icon, this text, and a button that starts a short guided lesson. The dialog is the stream dialog; the same text is also the grey line of the guide step that opens it.",
+  "moment": "The person opened the stream dialog and wonders what it is for.",
+  "role": "explanation",
+  "does": "Says it sends the projector's picture with the room's sound live to a video website.",
+  "budget": 90,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "stream",
+   "projector"
+  ],
+  "notes": "One sentence."
+ },
+ {
+  "key": "HELP_WEB",
+  "kind": "const",
+  "screen": "The first row inside a dialog: a grey band with a small question-mark icon, this text, and a button that starts a short guided lesson. The dialog finds songs on the internet: a search field and results on the left, the chosen song's words on the right, an import button below.",
+  "moment": "The person opened the dialog and wonders what it is for.",
+  "role": "explanation",
+  "does": "Says it finds a song's words on the internet, lets the person check them, then import them into the program's songs.",
+  "budget": 90,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "song",
+   "library",
+   "lyrics_service"
+  ],
+  "notes": "One sentence."
+ },
+ {
+  "key": "HELP_PPTX",
+  "kind": "const",
+  "screen": "The first row inside a dialog: a grey band with a small question-mark icon, this text, and a button that starts a short guided lesson. The dialog imports a PowerPoint file as announcement slides.",
+  "moment": "The person opened the dialog and wonders what it is for.",
+  "role": "explanation",
+  "does": "Says a PowerPoint comes in either exactly as it was made, or with its words drawn again in the program's own look.",
+  "budget": 90,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "import",
+   "announcement",
+   "design"
+  ],
+  "notes": "One sentence. PowerPoint is a product name; keep it."
+ },
+ {
+  "key": "GUIDE_STREAM_OPEN",
+  "kind": "const",
+  "screen": "A guide bubble beside the ringed stream button in the top bar, the rest of the window dimmed.",
+  "moment": "The guide waits for the person to press it themselves.",
+  "role": "headline of a guide step",
+  "does": "Tells the person to press the ringed button to open the stream.",
+  "budget": 48,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "stream"
+  ],
+  "notes": "Same verb and the same words for the ringed button as the program's other guide steps (GUIDE_CAL_NEW, GUIDE_NOTICE_NEW, GUIDE_PHONE_OPEN)."
+ },
+ {
+  "key": "GUIDE_STREAM_OPEN_MORE",
+  "kind": "const",
+  "screen": "The grey line under that headline.",
+  "moment": "The person reads what comes next.",
+  "role": "explanation line of a guide step",
+  "does": "Says the projector's picture goes out live, with the room's sound.",
+  "budget": 60,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "stream",
+   "projector"
+  ],
+  "notes": "One sentence."
+ },
+ {
+  "key": "GUIDE_STREAM_FIELDS",
+  "kind": "const",
+  "screen": "A guide bubble pointing at two fields in the stream dialog: the stream address and the stream key. The bubble has Next.",
+  "moment": "The guide explains this part; the person reads and presses Next.",
+  "role": "headline of a guide explanation",
+  "does": "Tells the person to paste the address and the key their video website gives them.",
+  "budget": 55,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "stream"
+  ],
+  "notes": "Short."
+ },
+ {
+  "key": "GUIDE_STREAM_FIELDS_MORE",
+  "kind": "const",
+  "screen": "The grey line under that headline.",
+  "moment": "The person reads the detail.",
+  "role": "explanation line",
+  "does": "Says both are on the video website's page for going live.",
+  "budget": 60,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "stream"
+  ],
+  "notes": "One sentence."
+ },
+ {
+  "key": "GUIDE_STREAM_START",
+  "kind": "const",
+  "screen": "A guide bubble pointing at the stream dialog's start button. The bubble has Next.",
+  "moment": "The guide explains this part; the person reads and presses Next.",
+  "role": "headline of a guide explanation",
+  "does": "Tells the person to press start when the service begins.",
+  "budget": 45,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "stream"
+  ],
+  "notes": "Short."
+ },
+ {
+  "key": "GUIDE_STREAM_START_MORE",
+  "kind": "const",
+  "screen": "The grey line under that headline.",
+  "moment": "The person reads the detail.",
+  "role": "explanation line",
+  "does": "Says that switching on the recording also keeps a video file on this computer.",
+  "budget": 60,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "stream"
+  ],
+  "notes": "One sentence. Not the microphone helper's sound recordings."
+ },
+ {
+  "key": "GUIDE_WEB_OPEN",
+  "kind": "const",
+  "screen": "A guide bubble beside the ringed button that opens the dialog for songs from the internet, the rest of the window dimmed.",
+  "moment": "The guide waits for the person to press it themselves.",
+  "role": "headline of a guide step",
+  "does": "Tells the person to press the ringed button to find songs on the internet.",
+  "budget": 55,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "song"
+  ],
+  "notes": "Same verb and the same words for the ringed button as the program's other guide steps (GUIDE_CAL_NEW, GUIDE_NOTICE_NEW, GUIDE_PHONE_OPEN)."
+ },
+ {
+  "key": "GUIDE_WEB_OPEN_MORE",
+  "kind": "const",
+  "screen": "The grey line under that headline.",
+  "moment": "The person reads what comes next.",
+  "role": "explanation line of a guide step",
+  "does": "Says the program looks on song websites and shows the words found.",
+  "budget": 60,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "lyrics_service"
+  ],
+  "notes": "One sentence."
+ },
+ {
+  "key": "GUIDE_WEB_FIND",
+  "kind": "const",
+  "screen": "A guide bubble pointing at the search field of the dialog for songs from the internet. The bubble has Next.",
+  "moment": "The guide explains this part; the person reads and presses Next.",
+  "role": "headline of a guide explanation",
+  "does": "Tells the person to type a song's title, a hymn number or a web page's address.",
+  "budget": 55,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "song"
+  ],
+  "notes": "Short. A hymn number is like KJ 4, a number in the church's hymn book."
+ },
+ {
+  "key": "GUIDE_WEB_FIND_MORE",
+  "kind": "const",
+  "screen": "The grey line under that headline.",
+  "moment": "The person reads the detail.",
+  "role": "explanation line",
+  "does": "Says choosing a result shows its words on the right.",
+  "budget": 55,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "song"
+  ],
+  "notes": "One sentence."
+ },
+ {
+  "key": "GUIDE_WEB_BROWSER",
+  "kind": "const",
+  "screen": "A guide bubble pointing at the button that opens the person's own web browser on a search for the song. The bubble has Next.",
+  "moment": "The guide explains this part; the person reads and presses Next.",
+  "role": "headline of a guide explanation",
+  "does": "Asks, if the song is not found, to search in their own web browser.",
+  "budget": 45,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "song"
+  ],
+  "notes": "Short."
+ },
+ {
+  "key": "GUIDE_WEB_BROWSER_MORE",
+  "kind": "const",
+  "screen": "The grey line under that headline.",
+  "moment": "The person reads the detail.",
+  "role": "explanation line",
+  "does": "Says to copy the address of the page they choose there and paste it back into this search field.",
+  "budget": 70,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "song"
+  ],
+  "notes": "One sentence."
+ },
+ {
+  "key": "GUIDE_WEB_IMPORT",
+  "kind": "const",
+  "screen": "A guide bubble pointing at the dialog's import button. The bubble has Next.",
+  "moment": "The guide explains this part; the person reads and presses Next.",
+  "role": "headline of a guide explanation",
+  "does": "Says the import button adds the song to the church's songs.",
+  "budget": 45,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "song",
+   "library",
+   "import"
+  ],
+  "notes": "Short."
+ },
+ {
+  "key": "GUIDE_WEB_IMPORT_MORE",
+  "kind": "const",
+  "screen": "The grey line under that headline.",
+  "moment": "The person reads the detail.",
+  "role": "explanation line",
+  "does": "Says to check the words first; nothing is saved until it is pressed.",
+  "budget": 65,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "song"
+  ],
+  "notes": "One sentence."
+ },
+ {
+  "key": "GUIDE_PPTX_OPEN",
+  "kind": "const",
+  "screen": "A guide bubble beside the ringed button in the Announcements window that imports a PowerPoint, the rest of the window dimmed.",
+  "moment": "The guide waits for the person to press it and then choose a file.",
+  "role": "headline of a guide step",
+  "does": "Tells the person to press the ringed button and choose a PowerPoint file.",
+  "budget": 55,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "import"
+  ],
+  "notes": "Same verb and the same words for the ringed button as the program's other guide steps (GUIDE_CAL_NEW, GUIDE_NOTICE_NEW, GUIDE_PHONE_OPEN). PowerPoint is a product name; keep it."
+ },
+ {
+  "key": "GUIDE_PPTX_OPEN_MORE",
+  "kind": "const",
+  "screen": "The grey line under that headline.",
+  "moment": "The person reads what comes next.",
+  "role": "explanation line of a guide step",
+  "does": "Says its slides are shown first, before anything is added.",
+  "budget": 55,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide"
+  ],
+  "notes": "One sentence."
+ },
+ {
+  "key": "GUIDE_PPTX_WAY",
+  "kind": "const",
+  "screen": "A guide bubble pointing at two choices side by side in the PowerPoint import dialog: keep each slide as made, or redraw it. The bubble has Next.",
+  "moment": "The guide explains this part; the person reads and presses Next.",
+  "role": "headline of a guide explanation",
+  "does": "Says the slides can be kept as they were made, or drawn again.",
+  "budget": 50,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide"
+  ],
+  "notes": "Short. Reuse the table's words for the two choices (PPTX_AS_MADE, PPTX_REDRAW) if the table has them."
+ },
+ {
+  "key": "GUIDE_PPTX_WAY_MORE",
+  "kind": "const",
+  "screen": "The grey line under that headline.",
+  "moment": "The person reads the detail.",
+  "role": "explanation line",
+  "does": "Says redrawing puts the words in the program's look, and offers the people and gifts found in its tables to the Members and Offerings windows.",
+  "budget": 95,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "design",
+   "member",
+   "offering"
+  ],
+  "notes": "One sentence. Use the table's names of the Members and Offerings windows."
+ },
+ {
+  "key": "GUIDE_PPTX_IMPORT",
+  "kind": "const",
+  "screen": "A guide bubble pointing at the PowerPoint import dialog's import button. The bubble has Next.",
+  "moment": "The guide explains this part; the person reads and presses Next.",
+  "role": "headline of a guide explanation",
+  "does": "Says the import button adds the slides to the announcements.",
+  "budget": 45,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "announcement",
+   "import"
+  ],
+  "notes": "Short."
+ },
+ {
+  "key": "GUIDE_PPTX_IMPORT_MORE",
+  "kind": "const",
+  "screen": "The grey line under that headline.",
+  "moment": "The person reads the detail.",
+  "role": "explanation line",
+  "does": "Says nothing is added until it is pressed.",
+  "budget": 50,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "import"
+  ],
+  "notes": "One sentence."
  }
 ]

@@ -5486,5 +5486,120 @@
   "text": "会場用は会衆向け、ステージ用は演奏者向け、または使用しない",
   "back": "Venue use is for the congregation, stage use for the players, or not used",
   "why": "plain volunteer register, table words reused"
+ },
+ "HELP_STREAM": {
+  "text": "プロジェクターの映像と会場の音を、そのまま動画サイトに配信します。",
+  "back": "Streams the projector's picture and the venue's sound as they are to a video site",
+  "why": "table words reused; plain volunteer register"
+ },
+ "HELP_WEB": {
+  "text": "曲の歌詞をインターネットで探し、確かめてから曲として取り込みます。",
+  "back": "Looks for a song's lyrics on the internet and, after checking, imports them as a song",
+  "why": "table words reused; plain volunteer register"
+ },
+ "HELP_PPTX": {
+  "text": "PowerPointを見た目のまま取り込むか、文字をこのプログラムのデザインで組み直します。",
+  "back": "Imports a PowerPoint as it looks, or rearranges its text in this program's design",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_STREAM_OPEN": {
+  "text": "枠のボタンを押して、配信を開く",
+  "back": "Press the framed button to open the stream",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_STREAM_OPEN_MORE": {
+  "text": "プロジェクターの映像を会場の音と一緒に配信します",
+  "back": "Streams the projector's picture together with the venue's sound",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_STREAM_FIELDS": {
+  "text": "動画サイトでもらうアドレスとキーを貼り付け",
+  "back": "Paste the address and key given by the video site",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_STREAM_FIELDS_MORE": {
+  "text": "どちらも動画サイトの配信開始のページにあります",
+  "back": "Both are on the video site's page for starting a stream",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_STREAM_START": {
+  "text": "礼拝の開始時に「配信を開始」を押す",
+  "back": "Press Start streaming when the service starts",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_STREAM_START_MORE": {
+  "text": "録画をオンにすると、動画ファイルがこのパソコンにも残ります",
+  "back": "With recording on, a video file is also kept on this computer",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_WEB_OPEN": {
+  "text": "枠のボタンを押して、インターネットの曲を探す",
+  "back": "Press the framed button to look for songs on the internet",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_WEB_OPEN_MORE": {
+  "text": "曲のサイトを調べて、見つかった歌詞を表示します",
+  "back": "Checks song sites and shows the lyrics it finds",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_WEB_FIND": {
+  "text": "曲名、賛美歌の番号、またはページのアドレスを入力",
+  "back": "Enter a song title, a hymn number or a page address",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_WEB_FIND_MORE": {
+  "text": "結果を選ぶと、右側に歌詞が出ます",
+  "back": "Choose a result and the lyrics appear on the right",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_WEB_BROWSER": {
+  "text": "見つからなければブラウザで探す",
+  "back": "If not found, search in the browser",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_WEB_BROWSER_MORE": {
+  "text": "選んだページのアドレスをコピーし、この検索欄に貼り付けます",
+  "back": "Copy the chosen page's address and paste it in this search box",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_WEB_IMPORT": {
+  "text": "取り込むと、曲が教会の曲に加わる",
+  "back": "Importing adds the song to the church's songs",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_WEB_IMPORT_MORE": {
+  "text": "先に歌詞を確かめて。押すまで何も保存されません",
+  "back": "Check the lyrics first. Nothing is saved until you press",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_PPTX_OPEN": {
+  "text": "枠のボタンを押して、PowerPointのファイルを選ぶ",
+  "back": "Press the framed button and choose a PowerPoint file",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_PPTX_OPEN_MORE": {
+  "text": "何かを加える前に、まずスライドを表示します",
+  "back": "Before adding anything, the slides are shown first",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_PPTX_WAY": {
+  "text": "スライドは見た目のまま、または組み直し",
+  "back": "Slides as they look, or rearranged",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_PPTX_WAY_MORE": {
+  "text": "組み直すとデザインが付き、表にある人と献金を教会員と献金の画面に提案します",
+  "back": "Rearranging applies the design and offers the people and offerings in the tables to the members and offerings windows",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_PPTX_IMPORT": {
+  "text": "取り込むと、スライドがお知らせに加わる",
+  "back": "Importing adds the slides to the announcements",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_PPTX_IMPORT_MORE": {
+  "text": "押すまで何も加わりません",
+  "back": "Nothing is added until you press",
+  "why": "table words reused; plain volunteer register"
  }
 }

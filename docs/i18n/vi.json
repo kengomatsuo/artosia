@@ -5495,5 +5495,120 @@
   "text": "Máy chiếu cho hội thánh, Ban nhạc cho nhóm nhạc, hoặc Không dùng",
   "back": "Projector for the church, Band for the music group, or Not used",
   "why": "plain volunteer register, table words reused"
+ },
+ "HELP_STREAM": {
+  "text": "Phát hình từ máy chiếu cùng âm thanh trong phòng trực tiếp lên trang video.",
+  "back": "Broadcast the projector's picture with the room sound live to a video site",
+  "why": "table words reused; plain volunteer register"
+ },
+ "HELP_WEB": {
+  "text": "Tìm lời bài hát trên mạng, xem lại rồi lấy vào kho bài hát.",
+  "back": "Find a song's words on the net, look them over, then bring into the song store",
+  "why": "table words reused; plain volunteer register"
+ },
+ "HELP_PPTX": {
+  "text": "Lấy PowerPoint về y như bản gốc, hoặc soạn lại chữ theo giao diện của chương trình.",
+  "back": "Bring in a PowerPoint exactly like the original, or rewrite its text in the program's interface look",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_STREAM_OPEN": {
+  "text": "Bấm nút được khoanh để mở Livestream",
+  "back": "Press the ringed button to open Livestream",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_STREAM_OPEN_MORE": {
+  "text": "Hình từ máy chiếu phát trực tiếp, kèm âm thanh trong phòng",
+  "back": "The projector's picture airs live, with the room sound",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_STREAM_FIELDS": {
+  "text": "Dán địa chỉ và mã khóa lấy từ trang video",
+  "back": "Paste the address and key taken from the video site",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_STREAM_FIELDS_MORE": {
+  "text": "Cả hai có trên trang phát trực tiếp của trang video.",
+  "back": "Both are on the video site's live broadcast page.",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_STREAM_START": {
+  "text": "Bấm Bắt đầu phát khi buổi lễ bắt đầu",
+  "back": "Press Start broadcasting when the service starts",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_STREAM_START_MORE": {
+  "text": "Bật ghi hình thì máy này cũng lưu một tệp video.",
+  "back": "Turn on recording and this computer also keeps a video file.",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_WEB_OPEN": {
+  "text": "Bấm nút được khoanh để tìm bài hát trên mạng",
+  "back": "Press the ringed button to find songs on the net",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_WEB_OPEN_MORE": {
+  "text": "Chương trình tìm trên các trang bài hát và hiện lời.",
+  "back": "The program searches song sites and shows the words found.",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_WEB_FIND": {
+  "text": "Gõ tên bài, số thánh ca hoặc địa chỉ trang web",
+  "back": "Type a song name, hymn number or web page address",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_WEB_FIND_MORE": {
+  "text": "Chọn một kết quả, lời bài hát hiện ở bên phải",
+  "back": "Choose a result, the words show on the right",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_WEB_BROWSER": {
+  "text": "Không thấy? Tìm trong trình duyệt",
+  "back": "Not found? Search in the browser",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_WEB_BROWSER_MORE": {
+  "text": "Chép địa chỉ trang đã chọn rồi dán vào ô tìm kiếm này",
+  "back": "Copy the chosen page's address then paste it into this search box",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_WEB_IMPORT": {
+  "text": "Nút lấy về thêm bài hát vào kho bài hát",
+  "back": "The import button adds the song to the song store",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_WEB_IMPORT_MORE": {
+  "text": "Xem lời trước, bấm nút thì mới lưu",
+  "back": "Look at the words first, only pressing the button saves",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_PPTX_OPEN": {
+  "text": "Bấm nút được khoanh rồi chọn tệp PowerPoint",
+  "back": "Press the ringed button then choose a PowerPoint file",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_PPTX_OPEN_MORE": {
+  "text": "Các slide hiện trước, chưa thêm gì cả",
+  "back": "The slides show first, nothing added yet",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_PPTX_WAY": {
+  "text": "Giữ slide như bản gốc hoặc soạn lại",
+  "back": "Keep slides like the original or rewrite",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_PPTX_WAY_MORE": {
+  "text": "Soạn lại dùng giao diện chương trình, đưa người và khoản dâng tìm thấy sang Tín hữu, Dâng hiến",
+  "back": "Rewriting uses the program's interface look, sends people and gifts found to Tín hữu and Dâng hiến",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_PPTX_IMPORT": {
+  "text": "Nút lấy về thêm slide vào thông báo",
+  "back": "The import button adds the slides to the announcements",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_PPTX_IMPORT_MORE": {
+  "text": "Bấm nút thì mới thêm",
+  "back": "Only pressing the button adds",
+  "why": "table words reused; plain volunteer register"
  }
 }

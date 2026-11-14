@@ -842,6 +842,19 @@ const SCENES: &[Scene] = &[
         s.sheet = Sheet::Screens;
         s.start_lesson(crate::guide::lessons::SCREENS);
     }),
+    ("lesson-stream", |s| {
+        s.open_stream();
+        s.start_lesson(crate::guide::lessons::STREAM);
+    }),
+    ("lesson-web", |s| {
+        s.demo_web_songs("results");
+        s.start_lesson(crate::guide::lessons::WEB);
+    }),
+    ("lesson-pptx", |s| {
+        s.open_tab(Tab::Notices);
+        s.demo_pptx("made");
+        s.start_lesson(crate::guide::lessons::PPTX);
+    }),
     ("lesson-screens-jobs", |s| {
         s.demo_screens = true;
         s.sheet = Sheet::Screens;

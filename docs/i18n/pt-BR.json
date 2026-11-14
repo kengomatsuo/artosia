@@ -5520,5 +5520,120 @@
   "text": "Projetor é para a igreja, Palco para os músicos, ou Sem uso",
   "back": "Projector is for the church, Stage for the musicians, or Unused",
   "why": "plain volunteer register, table words reused"
+ },
+ "HELP_STREAM": {
+  "text": "Envia a imagem do projetor e o som da sala ao vivo para um site de vídeo.",
+  "back": "Sends the projector's image and the room's sound live to a video site",
+  "why": "table words reused; plain volunteer register"
+ },
+ "HELP_WEB": {
+  "text": "Acha a letra de uma música na internet, você confere e importa para suas músicas.",
+  "back": "Finds a song's words on the internet, you check and import into your songs",
+  "why": "table words reused; plain volunteer register"
+ },
+ "HELP_PPTX": {
+  "text": "Importa um PowerPoint como foi feito, ou com o texto redesenhado na aparência do programa.",
+  "back": "Imports a PowerPoint as it was made, or with the text redrawn in the program's appearance",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_STREAM_OPEN": {
+  "text": "Clique no botão destacado para abrir o streaming",
+  "back": "Click the highlighted button to open the streaming",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_STREAM_OPEN_MORE": {
+  "text": "A imagem do projetor sai ao vivo, com o som da sala",
+  "back": "The projector's image goes out live, with the room's sound",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_STREAM_FIELDS": {
+  "text": "Cole o endereço e a chave do seu site de vídeo",
+  "back": "Paste the address and key of your video site",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_STREAM_FIELDS_MORE": {
+  "text": "Os dois ficam na página do site para entrar ao vivo.",
+  "back": "Both are on the site's page for going live.",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_STREAM_START": {
+  "text": "Clique em Transmitir quando o culto começar",
+  "back": "Click Stream when the service begins",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_STREAM_START_MORE": {
+  "text": "Com a gravação ligada, um vídeo fica neste computador.",
+  "back": "With recording on, a video file stays on this computer.",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_WEB_OPEN": {
+  "text": "Clique no botão destacado: músicas da internet",
+  "back": "Click the highlighted button: songs from the internet",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_WEB_OPEN_MORE": {
+  "text": "Procura em sites de música e mostra as letras que achar.",
+  "back": "Searches music sites and shows the words it finds.",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_WEB_FIND": {
+  "text": "Digite um título, número de hino ou endereço de página",
+  "back": "Type a title, hymn number or page address",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_WEB_FIND_MORE": {
+  "text": "Escolha um resultado e a letra aparece à direita",
+  "back": "Choose a result and the words appear on the right",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_WEB_BROWSER": {
+  "text": "Não achou? Busque no navegador",
+  "back": "Didn't find it? Search in the browser",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_WEB_BROWSER_MORE": {
+  "text": "Copie o endereço da página escolhida e cole neste campo de busca",
+  "back": "Copy the chosen page's address and paste it in this search field",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_WEB_IMPORT": {
+  "text": "Importar adiciona a música às suas músicas",
+  "back": "Import adds the song to your songs",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_WEB_IMPORT_MORE": {
+  "text": "Confira a letra antes: nada é salvo até clicar",
+  "back": "Check the words first: nothing is saved until you click",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_PPTX_OPEN": {
+  "text": "Clique no botão destacado e escolha um PowerPoint",
+  "back": "Click the highlighted button and choose a PowerPoint",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_PPTX_OPEN_MORE": {
+  "text": "Os slides aparecem primeiro, antes de adicionar algo",
+  "back": "The slides appear first, before adding anything",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_PPTX_WAY": {
+  "text": "Manter os slides como imagens ou redesenhar",
+  "back": "Keep the slides as images or redraw",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_PPTX_WAY_MORE": {
+  "text": "Redesenhar usa a aparência do programa e oferece pessoas e ofertas a Membros e Ofertas",
+  "back": "Redrawing uses the program's appearance and offers people and gifts to Members and Offerings",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_PPTX_IMPORT": {
+  "text": "Importar adiciona os slides aos avisos",
+  "back": "Import adds the slides to the notices",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_PPTX_IMPORT_MORE": {
+  "text": "Nada é adicionado até você clicar",
+  "back": "Nothing is added until you click",
+  "why": "table words reused; plain volunteer register"
  }
 }

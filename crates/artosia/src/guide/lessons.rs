@@ -29,6 +29,22 @@ const SCREENS_STEPS: [Step<Action>; 3] = [
 ];
 const PHONE_STEPS: [Step<Action>; 2] = [go("phone-open", Action::Run(Command::Remote), "phone-open"), point("phone-switch", "remote-switch", "phone-open", "phone-open")];
 const LISTEN_STEPS: [Step<Action>; 2] = [go("listen-open", Action::Run(Command::Listen), "listen-open"), point("listen-mics", "microphones", "listen-open", "listen-open")];
+const STREAM_STEPS: [Step<Action>; 3] = [
+    go("stream-open", Action::Run(Command::Stream), "stream-open"),
+    Step { done: Some("no-stream"), ..point("stream-fields", "stream-fields", "stream-open", "stream-open") },
+    Step { done: Some("no-stream"), ..point("stream-start", "stream-start", "stream-open", "stream-open") },
+];
+const WEB_STEPS: [Step<Action>; 4] = [
+    go("web-open", Action::Run(Command::WebSongs), "web-open"),
+    point("web-find", "web-field", "web-open", "web-open"),
+    point("web-browser", "web-browser", "web-open", "web-open"),
+    point("web-import", "web-go", "web-open", "web-open"),
+];
+const PPTX_STEPS: [Step<Action>; 3] = [
+    go("pptx-open", Action::Run(Command::ImportPptx), "pptx-open"),
+    point("pptx-way", "pptx-ways", "pptx-open", "pptx-open"),
+    point("pptx-import", "pptx-go", "pptx-open", "pptx-open"),
+];
 const NOTICES_STEPS: [Step<Action>; 2] = [
     go("notices-tab", Action::Tab(Tab::Notices), "notices-tab"),
     on_tab("notices-new", Action::Press("notice-add"), "notices-tab", "notice-draft", "notices-tab"),
@@ -66,9 +82,12 @@ pub const LOOK: Lesson<Action> = Lesson { id: "look", steps: &LOOK_STEPS };
 pub const PLAN: Lesson<Action> = Lesson { id: "plan", steps: &PLAN_STEPS };
 pub const PHONE: Lesson<Action> = Lesson { id: "phone", steps: &PHONE_STEPS };
 pub const LISTEN: Lesson<Action> = Lesson { id: "listen", steps: &LISTEN_STEPS };
+pub const STREAM: Lesson<Action> = Lesson { id: "stream", steps: &STREAM_STEPS };
+pub const WEB: Lesson<Action> = Lesson { id: "web", steps: &WEB_STEPS };
+pub const PPTX: Lesson<Action> = Lesson { id: "pptx", steps: &PPTX_STEPS };
 
 /// Every lesson, for the lesson list and the test that runs each one.
-pub const ALL: [Lesson<Action>; 10] = [SCREENS, CALENDAR, PEOPLE, GIVING, TEMPLATES, NOTICES, LOOK, PLAN, PHONE, LISTEN];
+pub const ALL: [Lesson<Action>; 13] = [SCREENS, CALENDAR, PEOPLE, GIVING, TEMPLATES, NOTICES, LOOK, PLAN, PHONE, LISTEN, STREAM, WEB, PPTX];
 
 /// A feature with a help mark: its name, what it is for, and the lesson that shows it.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -83,6 +102,9 @@ pub enum Feature {
     Screens,
     Phone,
     Listen,
+    Stream,
+    WebSongs,
+    Pptx,
 }
 
 impl Feature {
@@ -98,6 +120,9 @@ impl Feature {
             Feature::Screens => "help-screens",
             Feature::Phone => "help-phone",
             Feature::Listen => "help-listen",
+            Feature::Stream => "help-stream",
+            Feature::WebSongs => "help-web",
+            Feature::Pptx => "help-pptx",
         }
     }
 
@@ -107,6 +132,9 @@ impl Feature {
             Feature::Screens => t::BTN_SCREENS(),
             Feature::Phone => t::BTN_PHONE(),
             Feature::Listen => t::BTN_LISTEN(),
+            Feature::Stream => t::BTN_STREAM(),
+            Feature::WebSongs => t::CMD_WEB_SONGS(),
+            Feature::Pptx => t::CMD_IMPORT_PPTX(),
             tabbed => crate::ui::tabs::name(tabbed.tab()),
         }
     }
@@ -120,7 +148,9 @@ impl Feature {
             Feature::Templates => Tab::Templates,
             Feature::Notices => Tab::Notices,
             Feature::Look => Tab::Look,
-            Feature::Plan | Feature::Screens | Feature::Phone | Feature::Listen => Tab::Plan,
+            // The PowerPoint import adds announcements, and its button is on their tab.
+            Feature::Pptx => Tab::Notices,
+            Feature::Plan | Feature::Screens | Feature::Phone | Feature::Listen | Feature::Stream | Feature::WebSongs => Tab::Plan,
         }
     }
 
@@ -138,6 +168,9 @@ impl Feature {
             Feature::Screens => t::HELP_SCREENS(),
             Feature::Phone => t::HELP_PHONE(),
             Feature::Listen => t::HELP_LISTEN(),
+            Feature::Stream => t::HELP_STREAM(),
+            Feature::WebSongs => t::HELP_WEB(),
+            Feature::Pptx => t::HELP_PPTX(),
         }
     }
 
@@ -154,9 +187,13 @@ impl Feature {
             Feature::Screens => "screens-open",
             Feature::Phone => "phone-open",
             Feature::Listen => "listen-open",
+            Feature::Stream => "stream-open",
+            Feature::WebSongs => "web-open",
+            Feature::Pptx => "pptx-open",
         }
     }
 
+    /// The feature's lesson, which Show me starts.
     pub fn lesson(self) -> Lesson<Action> {
         match self {
             Feature::Calendar => CALENDAR,
@@ -169,6 +206,9 @@ impl Feature {
             Feature::Screens => SCREENS,
             Feature::Phone => PHONE,
             Feature::Listen => LISTEN,
+            Feature::Stream => STREAM,
+            Feature::WebSongs => WEB,
+            Feature::Pptx => PPTX,
         }
     }
 }
@@ -193,6 +233,9 @@ pub fn clip(step: &str) -> Option<&'static [u8]> {
         "plan-add" => include_bytes!("../../../../assets/guide/plan-add.png"),
         "phone-open" => include_bytes!("../../../../assets/guide/phone-open.png"),
         "listen-open" => include_bytes!("../../../../assets/guide/listen-open.png"),
+        "stream-open" => include_bytes!("../../../../assets/guide/stream-open.png"),
+        "web-open" => include_bytes!("../../../../assets/guide/web-open.png"),
+        "pptx-open" => include_bytes!("../../../../assets/guide/pptx-open.png"),
         _ => return None,
     })
 }
@@ -223,6 +266,16 @@ pub fn words(step: &str) -> (String, &'static str) {
         "phone-switch" => (t::GUIDE_PHONE_SWITCH().to_string(), t::GUIDE_PHONE_SWITCH_MORE()),
         "listen-open" => (t::GUIDE_LISTEN_OPEN().to_string(), t::GUIDE_LISTEN_OPEN_MORE()),
         "listen-mics" => (t::GUIDE_LISTEN_MICS().to_string(), t::GUIDE_LISTEN_MICS_MORE()),
+        "stream-open" => (t::GUIDE_STREAM_OPEN().to_string(), t::GUIDE_STREAM_OPEN_MORE()),
+        "stream-fields" => (t::GUIDE_STREAM_FIELDS().to_string(), t::GUIDE_STREAM_FIELDS_MORE()),
+        "stream-start" => (t::GUIDE_STREAM_START().to_string(), t::GUIDE_STREAM_START_MORE()),
+        "web-open" => (t::GUIDE_WEB_OPEN().to_string(), t::GUIDE_WEB_OPEN_MORE()),
+        "web-find" => (t::GUIDE_WEB_FIND().to_string(), t::GUIDE_WEB_FIND_MORE()),
+        "web-browser" => (t::GUIDE_WEB_BROWSER().to_string(), t::GUIDE_WEB_BROWSER_MORE()),
+        "web-import" => (t::GUIDE_WEB_IMPORT().to_string(), t::GUIDE_WEB_IMPORT_MORE()),
+        "pptx-open" => (t::GUIDE_PPTX_OPEN().to_string(), t::GUIDE_PPTX_OPEN_MORE()),
+        "pptx-way" => (t::GUIDE_PPTX_WAY().to_string(), t::GUIDE_PPTX_WAY_MORE()),
+        "pptx-import" => (t::GUIDE_PPTX_IMPORT().to_string(), t::GUIDE_PPTX_IMPORT_MORE()),
         _ => (String::new(), ""),
     }
 }

@@ -725,7 +725,7 @@ fn keys(s: &App, k: &Kit, layer: &mut Vec<El>, tall: f32) {
 fn stream(s: &App, k: &Kit, layer: &mut Vec<El>) {
     let running = s.stream.as_ref().map(|stream| stream.status());
     let on = running.is_some();
-    let mut body = col().w_full().px(space::S4).pb(space::S4).gap(space::S3);
+    let mut body = col().w_full().px(space::S4).pb(space::S4).gap(space::S3).child(crate::ui::tour::help_row(k, crate::guide::lessons::Feature::Stream));
     if !crate::stream::available() {
         body = body.child(crate::ui::widgets::wrapped(t::STREAM_MISSING()).font(type_::BODY).color(k.c.text_muted).wrap());
         return Dialog::new("stream", t::CMD_STREAM()).open(true).width(560.0).fit().on_close(close).child(body).build(k, layer);
@@ -738,14 +738,16 @@ fn stream(s: &App, k: &Kit, layer: &mut Vec<El>) {
     body = body
         .child(crate::ui::widgets::wrapped(t::STREAM_HINT()).font(type_::BODY).color(k.c.text_muted).wrap())
         .child(
-            col().w_full().gap(space::S1).child(section_label(k, t::STREAM_ADDRESS())).child(
-                TextInput::new(&s.stream_address).width(None).label(t::STREAM_ADDRESS()).placeholder(t::STREAM_ADDRESS_HINT()).disabled(on).on_edit(|s: &mut App| &mut s.stream_address).build(k),
-            ),
-        )
-        .child(
-            col().w_full().gap(space::S1).child(section_label(k, t::STREAM_KEY())).child(
-                TextInput::new(&s.stream_key).width(None).label(t::STREAM_KEY()).secure().disabled(on).on_edit(|s: &mut App| &mut s.stream_key).build(k),
-            ),
+            col()
+                .key("stream-fields")
+                .w_full()
+                .gap(space::S3)
+                .child(col().w_full().gap(space::S1).child(section_label(k, t::STREAM_ADDRESS())).child(
+                    TextInput::new(&s.stream_address).width(None).label(t::STREAM_ADDRESS()).placeholder(t::STREAM_ADDRESS_HINT()).disabled(on).on_edit(|s: &mut App| &mut s.stream_address).build(k),
+                ))
+                .child(col().w_full().gap(space::S1).child(section_label(k, t::STREAM_KEY())).child(
+                    TextInput::new(&s.stream_key).width(None).label(t::STREAM_KEY()).secure().disabled(on).on_edit(|s: &mut App| &mut s.stream_key).build(k),
+                )),
         )
         .child(switch_row(k, "record-switch", t::STREAM_RECORD(), t::STREAM_RECORD_HINT(), s.settings.stream_record, |s| {
             if s.stream.is_none() {
@@ -768,7 +770,7 @@ fn stream(s: &App, k: &Kit, layer: &mut Vec<El>) {
     } else {
         foot = foot.child(spacer());
     }
-    foot = foot.child(first(btn(if on { t::BTN_STREAM_STOP() } else { t::BTN_STREAM_START() }).icon(&icons::STREAM).toggle(on).tall().focusable().build(k, |s, _| s.toggle_stream()), ready));
+    foot = foot.child(first(btn(if on { t::BTN_STREAM_STOP() } else { t::BTN_STREAM_START() }).icon(&icons::STREAM).toggle(on).tall().focusable().build(k, |s, _| s.toggle_stream()).key("stream-start"), ready));
     if let Some(problem) = problem {
         body = body.child(crate::ui::widgets::wrapped(problem).font(type_::BODY).color(theme::warn_ink()).wrap());
     }

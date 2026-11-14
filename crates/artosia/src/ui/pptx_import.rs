@@ -194,7 +194,7 @@ pub fn view(s: &App, k: &Kit, layer: &mut Vec<El>, tall: f32) {
         if import.way == Way::Redraw { redraw_body } else { redraw_body.layer_opacity(0.6) },
     );
     let top = row().w_full().gap(space::S3).center_y().child(icon(&icons::ANNOUNCE, 16.0).color(k.c.text_muted).a11y_hidden()).child(text(import.file.clone()).font(type_::BODY_STRONG).color(k.c.text_base).truncate().min_w(0.0).grow(1.0)).child(text(t::slides(import.slides)).font(type_::SMALL).color(k.c.text_muted));
-    let body = col().key("pptx-form").w_full().px(space::S4).pb(space::S3).gap(space::S3).child(top).child(row().w_full().gap(space::S3).child(as_made).child(redraw));
+    let body = col().key("pptx-form").w_full().px(space::S4).pb(space::S3).gap(space::S3).child(crate::ui::tour::help_row(k, crate::guide::lessons::Feature::Pptx)).child(top).child(row().key("pptx-ways").w_full().gap(space::S3).child(as_made).child(redraw));
     let scrolling = col().w_full().max_h((tall - 84.0 - 60.0).max(240.0)).scroll(ScrollSpec { stick_bottom: false }).scroll_edge_fade(theme::size::FADE).child(body).scroll_bar(k);
     let go = btn(t::PEOPLE_IMPORT()).icon(&icons::IMPORT).primary().disabled(!import.ready()).focusable().build(k, |s, _| s.apply_pptx_import()).key("pptx-go");
     let foot = row().w_full().px(space::S4).py(space::S3).gap(space::S2).center_y().child(spacer()).child(btn(t::BTN_CANCEL()).focusable().build(k, |s, _| s.close_pptx_import()).key("pptx-cancel")).child(if import.ready() { go.autofocus() } else { go });

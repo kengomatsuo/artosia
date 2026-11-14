@@ -152,7 +152,7 @@ fn list(s: &App, k: &Kit, form: &Notices) -> El {
                 .w_full()
                 .gap(space::S2)
                 .child(section_label(k, t::ANNOUNCEMENT_BRING_IN()))
-                .child(btn(t::CMD_IMPORT_PPTX()).icon(&icons::IMPORT).small().focusable().build(k, |s, _| s.want_pptx = true))
+                .child(btn(t::CMD_IMPORT_PPTX()).icon(&icons::IMPORT).small().focusable().anchor(crate::palette::Command::ImportPptx, crate::guide::Place::Panel).build(k, |s, _| s.want_pptx = true))
                 .child(btn(t::CMD_IMPORT_BIRTHDAYS()).icon(&icons::IMPORT).small().focusable().build(k, |s, _| s.want_birthdays = true))
                 .child(text(t::birthdays_on_file(s.people.len())).font(type_::SMALL).color(k.c.text_faint)),
         )

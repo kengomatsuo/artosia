@@ -41,13 +41,29 @@ STEPS = [
     ("plan-add", "start", "plan-add-button", "part"),
     ("phone-open", "start", "anchor-Remote-Bar-0", "part"),
     ("listen-open", "start", "anchor-Listen-Bar-0", "part"),
+    ("stream-open", "start", "anchor-Stream-Bar-0", "part"),
+    ("web-open", "start", "anchor-WebSongs-Panel-0", "whole"),
+    # The PowerPoint button sits at the foot of the announcement list: the list is scrolled first.
+    ("pptx-open", "tab-notices", "anchor-ImportPptx-Panel-0", "whole", "notice-list"),
 ]
 START, STEP, PRESS = 0.2, 0.1, 1.4
 
 
-def rect_of(scene: str, key: str) -> list[float]:
+def scrolled(over: str | None) -> list[dict]:
+    """The events that scroll the list named `over` to its foot before the step starts."""
+    if not over:
+        return []
+    return [{"t": 0.05, "type": "move", "key": over}, {"t": 0.1, "type": "wheel", "dx": 0, "dy": -4000}]
+
+
+def rect_of(scene: str, key: str, over: str | None = None) -> list[float]:
     tree = ROOT / "target" / "guide-rec" / f"{scene}-tree.json"
-    subprocess.run([str(EXE), "--scene", scene, "--indonesian", "--tree", str(tree), "--size", f"{W}x{H}", "--scale", "1"], check=True, capture_output=True)
+    args = [str(EXE), "--scene", scene, "--indonesian", "--tree", str(tree), "--size", f"{W}x{H}", "--scale", "1"]
+    if over:
+        pre = ROOT / "target" / "guide-rec" / f"{scene}-pre.json"
+        pre.write_text(json.dumps({"events": scrolled(over) + [{"t": 0.6, "type": "mark", "name": "end"}]}), encoding="utf-8")
+        args += ["--script", str(pre), "--at", "0.6"]
+    subprocess.run(args, check=True, capture_output=True)
     found = []
 
     def walk(node):
@@ -76,12 +92,12 @@ def crop_for(rect: list[float], kind: str) -> tuple[int, int, int, int]:
     return x, y, cw, ch
 
 
-def record(step: str, scene: str, key: str, kind: str) -> None:
-    rect = rect_of(scene, key)
+def record(step: str, scene: str, key: str, kind: str, over: str | None = None) -> None:
+    rect = rect_of(scene, key, over)
     tx, ty = rect[0] + rect[2] / 2, rect[1] + rect[3] / 2
     sx, sy = W * 0.5, H * 0.62
     script = ROOT / "target" / "guide-rec" / f"{step}.json"
-    script.write_text(json.dumps({"events": [
+    script.write_text(json.dumps({"events": scrolled(over) + [
         {"t": 0.3, "type": "move", "x": sx, "y": sy},
         {"t": 0.9, "type": "move", "key": key},
         {"t": PRESS, "type": "tap", "key": key},
@@ -104,9 +120,9 @@ def record(step: str, scene: str, key: str, kind: str) -> None:
 
 def main() -> None:
     wanted = set(sys.argv[1:])
-    for step, scene, key, kind in STEPS:
+    for step, scene, key, kind, *over in STEPS:
         if not wanted or step in wanted:
-            record(step, scene, key, kind)
+            record(step, scene, key, kind, *over)
 
 
 if __name__ == "__main__":

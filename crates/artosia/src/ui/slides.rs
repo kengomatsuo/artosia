@@ -60,7 +60,7 @@ pub(crate) fn start(s: &App, k: &Kit) -> El {
                         if s.announcements.is_empty() { s.run(Command::Announcements) } else { s.open_announcements() }
                     })),
             )
-            .child(row().gap(space::S3).child(quick(k, t::CMD_WEB_SONGS(), t::START_WEB_DETAIL(), &icons::GLOBE, |s, _| s.run(Command::WebSongs)))),
+            .child(row().gap(space::S3).child(quick(k, t::CMD_WEB_SONGS(), t::START_WEB_DETAIL(), &icons::GLOBE, |s, _| s.run(Command::WebSongs)).key(crate::guide::anchors::mark(Command::WebSongs, crate::guide::Place::Panel, true, 1)))),
     );
     // A quiet way into the tour while there is nothing else to do.
     column = column.child(btn(t::CMD_TOUR()).icon(&icons::PLAY).ghost().build(k, |s, _| s.start_tour()));

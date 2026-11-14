@@ -5486,5 +5486,120 @@
   "text": "投影機給會眾，樂團給樂手，或不使用",
   "back": "Projector for the congregation, band for the players, or not used",
   "why": "plain volunteer register, table words reused"
+ },
+ "HELP_STREAM": {
+  "text": "把投影機的畫面和現場的聲音，即時送到影音網站直播。",
+  "back": "Sends the projector's picture and the venue's sound live to a video site",
+  "why": "table words reused; plain volunteer register"
+ },
+ "HELP_WEB": {
+  "text": "到網路上找一首詩歌的歌詞，確認後匯入自己的詩歌。",
+  "back": "Find a hymn's words on the web, confirm, then import into your own hymns",
+  "why": "table words reused; plain volunteer register"
+ },
+ "HELP_PPTX": {
+  "text": "PowerPoint 可以照原樣匯入，也可以把文字改用程式的樣式重新排版。",
+  "back": "A PowerPoint can be imported as is, or its text re-typeset in the program's style",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_STREAM_OPEN": {
+  "text": "按下框起來的按鈕，開啟直播",
+  "back": "Press the boxed button to open the livestream",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_STREAM_OPEN_MORE": {
+  "text": "投影機的畫面連同現場聲音即時播出",
+  "back": "The projector's picture goes out live with the venue sound",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_STREAM_FIELDS": {
+  "text": "貼上影音網站提供的直播網址和串流金鑰",
+  "back": "Paste the livestream URL and stream key the video site provides",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_STREAM_FIELDS_MORE": {
+  "text": "兩樣都在影音網站的開始直播頁面上",
+  "back": "Both are on the video site's start-live page",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_STREAM_START": {
+  "text": "禮拜開始時，按下開始直播",
+  "back": "When the service begins, press Start livestream",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_STREAM_START_MORE": {
+  "text": "開啟錄影後，這台電腦也會留一個影片檔",
+  "back": "With recording on, this computer also keeps a video file",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_WEB_OPEN": {
+  "text": "按下框起來的按鈕，到網路上找詩歌",
+  "back": "Press the boxed button to look for hymns on the web",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_WEB_OPEN_MORE": {
+  "text": "程式會到詩歌網站查找，並顯示找到的歌詞",
+  "back": "The program searches hymn sites and shows the words found",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_WEB_FIND": {
+  "text": "輸入詩歌標題、詩歌本編號或網頁網址",
+  "back": "Enter a hymn title, hymnal number or web page URL",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_WEB_FIND_MORE": {
+  "text": "點選一個結果，歌詞就顯示在右邊",
+  "back": "Click a result and the words show on the right",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_WEB_BROWSER": {
+  "text": "找不到時，改用瀏覽器搜尋",
+  "back": "When not found, search with the browser instead",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_WEB_BROWSER_MORE": {
+  "text": "把挑好的頁面網址複製起來，貼回這個搜尋欄",
+  "back": "Copy the chosen page's URL and paste it back into this search box",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_WEB_IMPORT": {
+  "text": "匯入按鈕會把這首詩歌加進教會的詩歌",
+  "back": "The import button adds this hymn to the church's hymns",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_WEB_IMPORT_MORE": {
+  "text": "先確認歌詞，沒按匯入就不會儲存",
+  "back": "Confirm the words first; without pressing import nothing is saved",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_PPTX_OPEN": {
+  "text": "按下框起來的按鈕，選一個 PowerPoint 檔",
+  "back": "Press the boxed button and pick a PowerPoint file",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_PPTX_OPEN_MORE": {
+  "text": "會先顯示它的投影片，還沒加入任何東西",
+  "back": "Its slides show first, nothing added yet",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_PPTX_WAY": {
+  "text": "投影片可以照原樣做成圖片，也可以重新排",
+  "back": "Slides can be made into pictures as is, or re-laid",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_PPTX_WAY_MORE": {
+  "text": "重新排會用程式的樣式，並把表格裡的人和奉獻提供給會友和奉獻視窗",
+  "back": "Re-laying uses the program's style and offers the people and gifts in the tables to the Members and Offerings windows",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_PPTX_IMPORT": {
+  "text": "匯入按鈕會把投影片加進公告",
+  "back": "The import button adds the slides to the announcements",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_PPTX_IMPORT_MORE": {
+  "text": "沒按匯入，就不會加入任何東西",
+  "back": "Without pressing import, nothing is added",
+  "why": "table words reused; plain volunteer register"
  }
 }

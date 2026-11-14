@@ -5444,5 +5444,120 @@
   "text": "Proyektor untuk jemaat, Panggung untuk pemusik, atau Tidak dipakai",
   "back": "Projector for the congregation, Stage for the musicians, or Not used",
   "why": "plain volunteer register, table words reused"
+ },
+ "HELP_STREAM": {
+  "text": "Kirim gambar proyektor dan suara ruangan secara langsung ke situs video.",
+  "back": "Send the projector picture and room sound live to a video site",
+  "why": "table words reused; plain volunteer register"
+ },
+ "HELP_WEB": {
+  "text": "Cari lirik sebuah lagu di internet, periksa, lalu impor ke daftar lagu.",
+  "back": "Look up a song's words on the internet, check, then import into the song list",
+  "why": "table words reused; plain volunteer register"
+ },
+ "HELP_PPTX": {
+  "text": "Impor PowerPoint apa adanya, atau susun ulang tulisannya dengan tampilan program.",
+  "back": "Import a PowerPoint as it is, or arrange its text again in the program's look",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_STREAM_OPEN": {
+  "text": "Tekan tombol berlingkar untuk buka streaming",
+  "back": "Press the ringed button to open streaming",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_STREAM_OPEN_MORE": {
+  "text": "Gambar proyektor tayang langsung bersama suara ruangan",
+  "back": "The projector picture airs live, together with the room sound",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_STREAM_FIELDS": {
+  "text": "Tempel URL dan kunci dari situs video",
+  "back": "Paste the URL and key from the video site",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_STREAM_FIELDS_MORE": {
+  "text": "Keduanya ada di halaman siaran langsung situs videonya.",
+  "back": "Both are on the video site's live broadcast page.",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_STREAM_START": {
+  "text": "Tekan Mulai streaming saat ibadah dimulai",
+  "back": "Press Start streaming when the service starts",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_STREAM_START_MORE": {
+  "text": "Dengan rekaman aktif, file video tersimpan di komputer ini.",
+  "back": "If recording is on, a video file is also saved on this computer.",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_WEB_OPEN": {
+  "text": "Tekan tombol berlingkar untuk cari lagu di internet",
+  "back": "Press the ringed button to look for songs on the internet",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_WEB_OPEN_MORE": {
+  "text": "Program mencari di situs lagu dan menampilkan liriknya.",
+  "back": "The program searches song sites and shows the words.",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_WEB_FIND": {
+  "text": "Ketik judul lagu, nomor KJ, atau alamat halaman web",
+  "back": "Type a song title, a KJ number or a web page address",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_WEB_FIND_MORE": {
+  "text": "Pilih hasilnya, liriknya muncul di kanan",
+  "back": "Choose the result, its words appear on the right",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_WEB_BROWSER": {
+  "text": "Tidak ketemu? Cari di peramban",
+  "back": "Not found? Search in the browser",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_WEB_BROWSER_MORE": {
+  "text": "Salin alamat halaman pilihan, lalu tempel di kolom pencarian ini",
+  "back": "Copy the chosen page's address, then paste it in this search field",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_WEB_IMPORT": {
+  "text": "Impor menambahkan lagu ke lagu gereja",
+  "back": "Import adds the song to the church's songs",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_WEB_IMPORT_MORE": {
+  "text": "Periksa dulu liriknya. Belum ada yang tersimpan sebelum ditekan.",
+  "back": "Check the words first. Nothing is saved before it is pressed.",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_PPTX_OPEN": {
+  "text": "Tekan tombol berlingkar, lalu pilih file PowerPoint",
+  "back": "Press the ringed button, then choose a PowerPoint file",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_PPTX_OPEN_MORE": {
+  "text": "Slide-nya tampil dulu, sebelum ada yang ditambahkan",
+  "back": "Its slides show first, before anything is added",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_PPTX_WAY": {
+  "text": "Slide dibiarkan apa adanya, atau disusun ulang",
+  "back": "Slides left as they are, or arranged again",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_PPTX_WAY_MORE": {
+  "text": "Susun ulang memakai tampilan program, dan isi tabel ditawarkan ke Jemaat dan Persembahan",
+  "back": "Arranging again uses the program's look, and the table contents are offered to Congregation and Offering",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_PPTX_IMPORT": {
+  "text": "Impor menambahkan slide ke pengumuman",
+  "back": "Import adds the slides to the announcements",
+  "why": "table words reused; plain volunteer register"
+ },
+ "GUIDE_PPTX_IMPORT_MORE": {
+  "text": "Belum ada yang ditambahkan sebelum ditekan",
+  "back": "Nothing is added before it is pressed",
+  "why": "table words reused; plain volunteer register"
  }
 }

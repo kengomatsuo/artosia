@@ -165,6 +165,7 @@ pub fn view(s: &App, k: &Kit, layer: &mut Vec<El>) {
         .on_change(|s: &mut App, _: &mut Tx| s.web_typed())
         .on_key(keys)
         .build(k)
+        .key("web-field")
         .autofocus();
     let left = col().key("web-left").w(LEFT).gap(space::S2).child(field).child(results(s, k)).child(status(s, k));
     let right = col().key("web-right").grow(1.0).min_w(0.0).gap(space::S2).child(preview(s, k)).child(wrapped(t::WEB_LICENCE()).key("web-licence").font(type_::SMALL).color(k.c.text_faint).wrap().h(NOTE));
@@ -178,5 +179,5 @@ pub fn view(s: &App, k: &Kit, layer: &mut Vec<El>) {
     });
     let go = btn(t::PEOPLE_IMPORT()).icon(&icons::IMPORT).primary().hint(t::KEY_IMPORT()).disabled(!web.ready()).focusable().build(k, |s, _| s.web_import()).key("web-go");
     let foot = row().w_full().px(space::S4).py(space::S3).gap(space::S2).center_y().child(browser.key("web-browser")).child(spacer()).child(btn(t::BTN_CANCEL()).hint("Esc").focusable().build(k, |s, _| s.close_web_songs()).key("web-cancel")).child(go);
-    Dialog::new("web-songs-dialog", t::CMD_WEB_SONGS()).open(true).width(WIDTH).fit().on_close(|s: &mut App| s.close_web_songs()).child(col().w_full().child(body).child(divider(k)).child(foot)).build(k, layer);
+    Dialog::new("web-songs-dialog", t::CMD_WEB_SONGS()).open(true).width(WIDTH).fit().on_close(|s: &mut App| s.close_web_songs()).child(col().w_full().child(el().w_full().px(space::S4).pb(space::S3).child(crate::ui::tour::help_row(k, crate::guide::lessons::Feature::WebSongs))).child(body).child(divider(k)).child(foot)).build(k, layer);
 }

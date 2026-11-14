@@ -1702,6 +1702,7 @@ impl App {
         self.meter_shown.store(self.listener.is_some() && (self.sheet == Sheet::Listen || self.settings.beat_blink), std::sync::atomic::Ordering::Relaxed);
         changed |= self.take_tempo(clock);
         changed |= self.watch_pptx(&mut wake);
+        changed |= crate::ui::tour::reveal_ring(self.lesson.is_some(), tx);
         self.pump_web(&mut wake);
         self.note_recordings();
         self.purge_recordings();
@@ -1821,6 +1822,11 @@ impl App {
         if self.want_paste {
             self.want_paste = false;
             tx.request_paste();
+        }
+        if self.want_pptx && rune::is_headless() {
+            self.want_pptx = false;
+            self.demo_pptx("made");
+            changed = true;
         }
         if self.want_pptx {
             self.want_pptx = false;

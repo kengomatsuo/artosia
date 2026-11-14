@@ -194,6 +194,7 @@ fn lesson_view(s: &App, cx: &mut Cx<App>, k: &Kit, layer: &mut Vec<El>) {
     match shown {
         Show::Finished => {}
         Show::At { step, key } => {
+            REVEAL.with(|reveal| reveal.borrow_mut().0 = Some(key.clone()));
             let Some([x, y, w, h]) = cx.layout(&key) else { return };
             let (x0, y0) = ((x - PAD).max(0.0), (y - PAD).max(0.0));
             let (x1, y1) = (x + w + PAD, y + h + PAD);
@@ -243,6 +244,32 @@ fn beside(dialog: [f32; 4], top: f32, window: [f32; 2], tall: f32) -> Option<(f3
     } else {
         None
     }
+}
+
+thread_local! {
+    /// The part the lesson rings now, and the last one scrolled into view.
+    static REVEAL: std::cell::RefCell<(Option<String>, Option<String>)> = const { std::cell::RefCell::new((None, None)) };
+}
+
+/// Scrolls the part a lesson rings into view the first time it is rung, so a control at the
+/// foot of a list is never ringed off screen. Called from the poll, which has a `Tx`.
+pub(crate) fn reveal_ring(lesson_on: bool, tx: &mut Tx) -> bool {
+    REVEAL.with(|reveal| {
+        let mut reveal = reveal.borrow_mut();
+        if !lesson_on {
+            *reveal = (None, None);
+            return false;
+        }
+        let (want, done) = &mut *reveal;
+        match want.clone() {
+            Some(key) if done.as_ref() != Some(&key) => {
+                tx.scroll_into_view(key.clone());
+                *done = Some(key);
+                true
+            }
+            _ => false,
+        }
+    })
 }
 
 thread_local! {

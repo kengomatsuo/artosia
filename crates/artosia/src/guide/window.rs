@@ -52,10 +52,11 @@ impl World<Action> for Window<'_> {
 }
 
 /// Every state name `holds` knows; the lesson test checks each step against it.
-pub const KNOWN: [&str; 20] = [
+pub const KNOWN: [&str; 24] = [
     "screens-open", "phone-open", "settings-open", "no-dialog", "plan-tab", "calendar-tab", "people-tab", "giving-tab",
     "notices-tab", "templates-tab", "look-tab", "search-open", "event-form-open", "gift-form-open", "person-form-open",
     "notice-draft", "add-menu-open", "listen-open", "no-projector", "no-monitor-list",
+    "stream-open", "no-stream", "web-open", "pptx-open",
 ];
 
 /// The states lessons name. A name nobody knows is never true, and a test lists the names every
@@ -83,6 +84,11 @@ pub fn holds(app: &App, state: &str) -> bool {
         // Practice and a window started before the projector have no switch to explain.
         "no-projector" => !(app.link.is_started() || app.demo_screens),
         "no-monitor-list" => !app.lists_monitors(),
+        "stream-open" => app.sheet == Sheet::Stream,
+        // A copy without the streaming program says so in the dialog and has nothing to explain.
+        "no-stream" => !crate::stream::available(),
+        "web-open" => app.web.is_some(),
+        "pptx-open" => app.pptx.is_some(),
         _ => false,
     }
 }
