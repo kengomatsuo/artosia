@@ -155,6 +155,9 @@ pub struct Slide {
     /// The structure its card chose; None follows the look.
     #[serde(default)]
     pub style: Option<NoticeStyle>,
+    /// The colourway of its style its card chose; empty is the style's first.
+    #[serde(default)]
+    pub colourway: String,
     /// The title colour its card chose; None takes the style's own.
     #[serde(default)]
     pub title_colour: Option<[u8; 3]>,
@@ -357,6 +360,9 @@ pub struct Announcement {
     /// before styles existed keep their look.
     #[serde(default)]
     pub style: Option<NoticeStyle>,
+    /// The colourway of the style, by id; empty is the style's first.
+    #[serde(default)]
+    pub colourway: String,
     /// The colour of the title; None takes the style's own.
     #[serde(default)]
     pub title_colour: Option<[u8; 3]>,
@@ -834,6 +840,7 @@ pub fn announcement_pages(announcements: &[Announcement], people: &[Person], eve
     for (at, slide) in &mut pages {
         slide.words = words.clone();
         slide.style = announcements[*at].style;
+        slide.colourway = announcements[*at].colourway.clone();
         slide.title_colour = announcements[*at].title_colour;
         slide.title_face = announcements[*at].title_face;
         slide.body_face = announcements[*at].body_face;

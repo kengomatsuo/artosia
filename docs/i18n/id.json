@@ -6104,5 +6104,12 @@
   "text": "Polos gelap",
   "back": "plain dark",
   "why": "Polos is the plain-paper word; gelap marks the dark partner"
+ },
+ "tpl_colourway": {
+  "text": {
+   "other": "Pilihan warna {n}"
+  },
+  "back": "Colour choice {n}",
+  "why": "Pilihan names a set; numbered by place"
  }
 }

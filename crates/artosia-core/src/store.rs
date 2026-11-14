@@ -431,6 +431,8 @@ impl Store {
         let rows = statement.query_map([], |row| {
             let (fill, style, colour, calendars): (String, String, String, String) = (row.get(5)?, row.get(7)?, row.get(8)?, row.get(9)?);
             let (month, window, highlight): (i64, String, String) = (row.get(10)?, row.get(11)?, row.get(12)?);
+            // The style column holds `family/colourway`; a plain family code is its first colourway.
+            let (family, colourway) = style.split_once('/').unwrap_or((&style, ""));
             let faces: String = row.get(15)?;
             let (title_face, body_face) = faces.split_once(',').map_or_else(Default::default, |(title, body)| (Face::from_code(title), Face::from_code(body)));
             Ok(Announcement {
@@ -445,7 +447,8 @@ impl Store {
                 image2: row.get(14)?,
                 title_face,
                 body_face,
-                style: NoticeStyle::from_code(&style),
+                style: NoticeStyle::from_code(family),
+                colourway: colourway.to_string(),
                 title_colour: colour_of_code(&colour),
                 calendars: calendars.split(',').filter_map(|id| id.parse().ok()).collect(),
                 // A card saved before windows had its days in its data source's word and a month flag.
@@ -456,7 +459,8 @@ impl Store {
     }
 
     pub fn save_announcement(&self, announcement: &mut Announcement) -> Result<()> {
-        let style = announcement.style.map_or("", NoticeStyle::code);
+        let family = announcement.style.map_or("", NoticeStyle::code);
+        let style = if announcement.colourway.is_empty() || family.is_empty() { family.to_string() } else { format!("{family}/{}", announcement.colourway) };
         let colour = announcement.title_colour.map_or(String::new(), |[r, g, b]| format!("{r:02x}{g:02x}{b:02x}"));
         let calendars = announcement.calendars.iter().map(i64::to_string).collect::<Vec<_>>().join(",");
         let (window, highlight) = announcement.window.codes();
@@ -1091,6 +1095,22 @@ Other words
         assert!(store.save_announcement(&mut old).is_ok());
         let kept = store.announcements().unwrap_or_default();
         assert_eq!((kept[1].style, kept[1].title_colour, kept[1].calendars.len(), kept[1].window), (None, None, 0, Window::default()));
+    }
+
+    #[test]
+    fn a_card_keeps_its_colourway_in_the_style_column_and_an_old_row_reads_unchanged() {
+        let store = Store::in_memory().unwrap_or_else(|_| unreachable!());
+        let mut item = Announcement { title: "Colours".into(), style: Some(NoticeStyle::Neon), colourway: "ember".into(), ..Announcement::default() };
+        assert!(store.save_announcement(&mut item).is_ok());
+        let written: String = store.db.query_row("select style from announcements", [], |row| row.get(0)).unwrap();
+        assert_eq!(written, "neon/ember");
+        assert_eq!(store.announcements().unwrap_or_default(), [item]);
+        // A row written before colourways held a plain family code: the first colourway.
+        store.db.execute("update announcements set style = 'neon'", []).unwrap();
+        let old = store.announcements().unwrap_or_default();
+        assert_eq!((old[0].style, old[0].colourway.as_str()), (Some(NoticeStyle::Neon), ""));
+        store.db.execute("update announcements set style = ''", []).unwrap();
+        assert_eq!(store.announcements().unwrap_or_default()[0].style, None);
     }
 
     #[test]

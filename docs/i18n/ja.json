@@ -6142,5 +6142,12 @@
   "text": "シンプル黒",
   "back": "simple black",
   "why": "Katakana simple is the usual word; 黒 keeps it short"
+ },
+ "tpl_colourway": {
+  "text": {
+   "other": "配色 {n}"
+  },
+  "back": "Colour scheme {n}",
+  "why": "配色 is a combination of colours, told apart by place"
  }
 }

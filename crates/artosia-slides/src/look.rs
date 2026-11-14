@@ -216,13 +216,16 @@ fn luminance(color: [u8; 3]) -> f32 {
     0.2126 * linear(color[0]) + 0.7152 * linear(color[1]) + 0.0722 * linear(color[2])
 }
 
+/// WCAG's contrast ratio of two colours, from 1 to 21.
+pub fn contrast_of(a: [u8; 3], b: [u8; 3]) -> f32 {
+    let (a, b) = (luminance(a), luminance(b));
+    (a.max(b) + 0.05) / (a.min(b) + 0.05)
+}
+
 /// Whether text of this colour can be read on a plain background: 4.5 to 1 against every
 /// colour it is made of. A picture, a video or a camera is not judged.
 fn reads_on(ink: [u8; 3], background: &Background) -> bool {
-    let against = |ground: [u8; 3]| {
-        let (a, b) = (luminance(ink), luminance(ground));
-        (a.max(b) + 0.05) / (a.min(b) + 0.05) >= 4.5
-    };
+    let against = |ground: [u8; 3]| contrast_of(ink, ground) >= 4.5;
     match background {
         Background::Solid(color) => against(*color),
         Background::Gradient(top, bottom) => against(*top) && against(*bottom),

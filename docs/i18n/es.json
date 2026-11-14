@@ -6180,5 +6180,12 @@
   "text": "Liso oscuro",
   "back": "plain dark",
   "why": "Liso means unadorned, short"
+ },
+ "tpl_colourway": {
+  "text": {
+   "other": "Colores {n}"
+  },
+  "back": "Colours {n}",
+  "why": "Plural because it is a set of colours"
  }
 }

@@ -1,0 +1,5 @@
+{
+"copy": {"warta":"Warta jemaat","sep":" · ","wib":"Semua jam WIB","this_week":"Pekan ini","kas":"Kas jemaat","birthdays":"Ulang tahun","currency":"Rp","total_suffix":"persembahan","quote":"“","note":"fixed Indonesian words of the templates; every other string on a slide comes from data"},
+"money": {"prefix":"Rp ","thousand":".","suffix":""},
+"data": {"week":{"from":15,"to":21,"month":"November","year":2026,"short":"15 – 21 November 2026","pill":"Minggu 15 – Sabtu 21 November","days":[{"dow":"Min","date":15},{"dow":"Sen","date":16},{"dow":"Sel","date":17},{"dow":"Rab","date":18},{"dow":"Kam","date":19},{"dow":"Jum","date":20},{"dow":"Sab","date":21}]}}
+}

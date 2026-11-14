@@ -37,11 +37,20 @@ pub struct Window {
     pub picked: (Template, NoticeStyle),
     /// The card that was open in the Announcements tab last; 0 when none was.
     pub card: i64,
+    /// The colourway each poster style's tile is drawn in; none is the style's first.
+    pub colourways: std::collections::HashMap<NoticeStyle, String>,
 }
 
 impl Default for Window {
     fn default() -> Window {
-        Window { kind: None, style: None, picked: CURATED[0], card: 0 }
+        Window { kind: None, style: None, picked: CURATED[0], card: 0, colourways: Default::default() }
+    }
+}
+
+impl Window {
+    /// The colourway a style's tile is drawn in; empty is the style's first.
+    pub fn colourway_of(&self, style: NoticeStyle) -> String {
+        self.colourways.get(&style).cloned().unwrap_or_default()
     }
 }
 
@@ -90,6 +99,7 @@ impl App {
     /// Applies the picked tile's style: to the card open last, to every card, or to the plan's look.
     pub fn apply_style(&mut self, target: Target) {
         let style = self.templates.picked.1;
+        let colourway = self.templates.colourway_of(style);
         if target == Target::Plan {
             self.use_own_look();
             let mut look = self.look();
@@ -105,6 +115,7 @@ impl App {
         for id in ids {
             if let Some(mut card) = self.announcements.iter().find(|card| card.id == id).cloned() {
                 card.style = Some(style);
+                card.colourway = colourway.clone();
                 if self.store.save_announcement(&mut card).is_ok() {
                     changed += 1;
                 }
@@ -123,7 +134,7 @@ impl App {
         };
         // The gallery shows a month of birthdays: the list a church keeps is longer than a week's.
         let window = if template == Template::Birthdays { window::Window { range: Range::Month(0), highlight: None } } else { window::Window::default() };
-        Announcement { title: title.into(), body: body.into(), fill: template.fill(), style: Some(style), window, ..Announcement::default() }
+        Announcement { title: title.into(), body: body.into(), fill: template.fill(), style: Some(style), colourway: self.templates.colourway_of(style), window, ..Announcement::default() }
     }
 }
 
@@ -166,6 +177,21 @@ mod tests {
         app.templates.picked.1 = NoticeStyle::Band;
         app.apply_style(Target::Plan);
         assert_eq!(app.look().notice_style, NoticeStyle::Band);
+    }
+
+    #[test]
+    fn a_colourway_goes_with_use_template_and_apply_and_draws_in_the_tile() {
+        let mut app = App::practice();
+        let ids: Vec<&str> = artosia_slides::warta::colourways(NoticeStyle::Neon).iter().map(|swatch| swatch.id).collect();
+        app.templates.colourways.insert(NoticeStyle::Neon, ids[2].to_string());
+        assert_eq!(app.tile_card(Template::Schedule, NoticeStyle::Neon).colourway, ids[2]);
+        assert_eq!(app.tile_card(Template::Schedule, NoticeStyle::Pill).colourway, "");
+        assert!(app.card_slides(&app.tile_card(Template::Schedule, NoticeStyle::Neon)).iter().all(|slide| slide.colourway == ids[2]));
+        app.use_template(Template::Schedule, NoticeStyle::Neon);
+        assert_eq!(app.announcements.last().map(|card| card.colourway.as_str()), Some(ids[2]));
+        app.templates.picked.1 = NoticeStyle::Neon;
+        app.apply_style(Target::Every);
+        assert!(app.announcements.iter().all(|card| card.colourway == ids[2]));
     }
 
     #[test]

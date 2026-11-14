@@ -6144,5 +6144,12 @@
   "text": "심플 다크",
   "back": "simple dark",
   "why": "심플 is the common loanword; 다크 for dark"
+ },
+ "tpl_colourway": {
+  "text": {
+   "other": "색 조합 {n}"
+  },
+  "back": "Colour combination {n}",
+  "why": "색 조합 is a bundle of colours, told apart by number"
  }
 }

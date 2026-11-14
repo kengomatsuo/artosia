@@ -6144,5 +6144,12 @@
   "text": "简约深色",
   "back": "minimal dark",
   "why": "Short, familiar word for a plain look"
+ },
+ "tpl_colourway": {
+  "text": {
+   "other": "配色 {n}"
+  },
+  "back": "Colour scheme {n}",
+  "why": "配色 is a group of colours, numbered by place"
  }
 }

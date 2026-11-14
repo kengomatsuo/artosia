@@ -6202,5 +6202,12 @@
   "text": "Sobre sombre",
   "back": "plain dark",
   "why": "Sobre fits a plain look, like the other one-word style names"
+ },
+ "tpl_colourway": {
+  "text": {
+   "other": "Couleurs {n}"
+  },
+  "back": "Colours {n}",
+  "why": "Plural because a choice is a set of colours"
  }
 }

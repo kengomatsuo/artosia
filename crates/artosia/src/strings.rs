@@ -2740,6 +2740,14 @@ pub fn style_applied(count: usize) -> String {
     }
 }
 
+/// The name of a colourway swatch under a template tile, by its place in the row.
+pub fn tpl_colourway(n: usize) -> String {
+    if let Some(text) = say("tpl_colourway", None, Some(n), &[("n", text_arg(n))]) {
+        return text;
+    }
+    format!("Colours {n}")
+}
+
 /// The noun under the figure that counts the gifts the table lists.
 pub fn giving_count(count: usize) -> String {
     if let Some(text) = say("giving_count", None, Some(count), &[]) {

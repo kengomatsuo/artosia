@@ -19153,6 +19153,29 @@
   "notes": "Past tense; the zero case says nothing was changed."
  },
  {
+  "key": "tpl_colourway",
+  "kind": "sentence",
+  "screen": "Templates window, the sixth tab. Under each live slide tile of a poster style sits a row of small round colour dots, one per colour choice of that style, each dot showing the slide's ground with its accent; one is ringed. A dot has no visible words; this is its name for a screen reader and its tooltip.",
+  "moment": "The person moved to or pressed a colour dot to see the tile in other colours.",
+  "role": "accessible name of a round button",
+  "does": "Names the colour choice by its place in the row, so the person can tell the dots apart without colour names.",
+  "budget": 24,
+  "variables": [
+   {
+    "name": "n",
+    "example": "2",
+    "meaning": "The place of the colour choice in the row, counted from one."
+   }
+  ],
+  "cases": [],
+  "counts": "count = n; one form is enough.",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template"
+  ],
+  "notes": "Never a colour name: a colour choice is a set of colours, and the dots differ by place."
+ },
+ {
   "key": "GUIDE_SCREENS_OPEN",
   "kind": "const",
   "screen": "A lesson bubble of the program's guide: a card about 430 points wide beside a button the guide has ringed in colour, with the rest of the window dimmed. The card shows '1 of 1' above, this headline, one grey line under it, and a Skip button. The ringed button is the top bar's button that opens the Screens dialog, where the person chooses which monitor is the projector and which is the stage screen.",

@@ -1,0 +1,18 @@
+{
+"name": "Simple",
+"colourways": [{"id":"light","palette":{"paper":"#FFFFFF","white":"#FFFFFF","ink":"#1F2328","mute":"#5F6368","rule":"#DADCE0","accent":"#1A73E8","tint":"#E8F0FE"}},{"id":"dark","palette":{"paper":"#121417","white":"#FFFFFF","ink":"#F1F3F4","mute":"#9AA0A6","rule":"#3C4043","accent":"#8AB4F8","tint":"#28313F"}},{"id":"warm","palette":{"paper":"#FBF8F3","white":"#FFFFFF","ink":"#2B2622","mute":"#6B635B","rule":"#E3DCD2","accent":"#B3541E","tint":"#F6E6D8"}},{"id":"green","palette":{"paper":"#FFFFFF","white":"#FFFFFF","ink":"#1E2421","mute":"#5B6560","rule":"#D8DFDB","accent":"#1E7B4F","tint":"#E3F2EA"}}],
+"swatch": ["paper","accent"],
+"pairs": [["ink","paper","text"],["mute","paper","text"],["accent","paper","text"],["ink","tint","text"]],
+"folder": "5-simple",
+"language": "Plain ground, one sans, rows on hairlines (Keynote Basic White and Black)",
+"fonts": {"sans":{"family":"Instrument Sans","weight":500,"italic":false,"file":"InstrumentSans-500.ttf"},"sans_b":{"family":"Instrument Sans","weight":600,"italic":false,"file":"InstrumentSans-600.ttf"},"sans_bb":{"family":"Instrument Sans","weight":700,"italic":false,"file":"InstrumentSans-700.ttf"}},
+"gradients": {},
+"type": {"kicker":{"font":"sans_b","size":32,"ls":0.02,"color":"mute"},"title":{"font":"sans_bb","size":88,"ls":-0.01,"color":"ink"},"subtitle":{"font":"sans_b","size":48,"color":"mute"},"ribbon":{"font":"sans_b","size":36,"color":"accent"},"day_name":{"font":"sans_bb","size":44,"color":"ink"},"date_small":{"font":"sans_b","size":34,"color":"mute"},"time":{"font":"sans_b","size":52,"color":"ink"},"event":{"font":"sans","size":52,"color":"ink"},"event_hl":{"font":"sans_b","size":52,"color":"ink"},"name":{"font":"sans","size":44,"color":"ink"},"name_hl":{"font":"sans_b","size":44,"color":"ink"},"bday_day":{"font":"sans_b","size":44,"color":"mute"},"bday_day_hl":{"font":"sans_b","size":44,"color":"ink"},"fund":{"font":"sans","size":46,"color":"ink"},"amount":{"font":"sans_b","size":48,"color":"ink"},"rp":{"font":"sans_b","size":32,"color":"mute"},"total_label":{"font":"sans_b","size":40,"color":"mute"},"total":{"font":"sans_bb","size":88,"color":"ink"},"bank":{"font":"sans_b","size":48,"color":"mute"},"number":{"font":"sans_bb","size":150,"ls":0.01,"color":"ink"},"atas":{"font":"sans","size":40,"color":"mute"},"holder":{"font":"sans_b","size":56,"color":"ink"},"note":{"font":"sans","size":40,"color":"mute"},"caption":{"font":"sans_b","size":32,"color":"mute"},"ref":{"font":"sans_b","size":44,"color":"mute"},"verse":{"font":"sans","size":64,"color":"ink"},"verse_n":{"font":"sans_b","size":64,"color":"accent"},"n_title":{"font":"sans_bb","size":112,"ls":-0.01,"color":"ink"},"n_body":{"font":"sans","size":48,"color":"ink"}},
+"grid": {"mx":96,"x2":1824,"kicker_y":88,"title_base":200,"body_top":264,"body_bottom":1000,"band_pad":24,"rule_w":2,"bar_w":6},
+"s01": {"day_x":96,"date_x":292,"time_x":442,"event_x":634,"size_max":56,"size_floor":40,"ratio":1.45,"ratio_max":1.9,"sparse_rows":3,"sparse_size_max":64},
+"s02": {"cols":[[8,1],[20,2],[30,3]],"col_gap":56,"day_w":64,"name_gap":20,"name_pad":6,"size_max":46,"size_floor":40,"ratio":1.5,"sparse_size_max":72,"band_over":14},
+"s03": {"size_max":50,"size_floor":40,"ratio":1.7,"ratio_max":2.0,"total_h":150,"total_gap":30,"rp_gap":14},
+"s04": {"card":520,"pad":24,"col_gap":96,"number_max":150,"number_floor":80,"holder_floor":40},
+"s05": {"text_w":1600,"size_max":72,"size_floor":44,"lh":1.4,"sup_scale":0.6,"sup_gap":0.04,"sup_rise":0.34,"ref_y":196,"top":276,"bottom":990},
+"s06": {"photo_w":560,"photo_gap":28,"photo_h":376,"photo_top":132,"text_gap":72,"title_max":112,"title_floor":72,"title_lh":1.08,"line_gap":30}
+}

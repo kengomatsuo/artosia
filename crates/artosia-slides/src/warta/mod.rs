@@ -1,5 +1,5 @@
 //! The four poster styles of an announcement (Editorial greige, Pill poster, Neon night, Split
-//! panel), ported from the designer's layouts in `assets/warta/tokens.json`.
+//! panel), ported from the designer's layouts in `assets/warta/directions`.
 //!
 //! A layout is a function that fills a [`Sheet`], a display list in a 1920x1080 space whose every
 //! number is explicit, from a slide's data and the style's tokens. [`Sheet::build`] turns the list
@@ -48,30 +48,88 @@ pub struct Pics<'a> {
     pub qris: Option<&'a Pixels>,
 }
 
+/// The layout families, each one file of tokens in `assets/warta/directions`.
+const FAMILIES: [(&str, &str); 5] = [
+    ("d1", include_str!("../../assets/warta/directions/d1.json")),
+    ("d2", include_str!("../../assets/warta/directions/d2.json")),
+    ("d3", include_str!("../../assets/warta/directions/d3.json")),
+    ("d4", include_str!("../../assets/warta/directions/d4.json")),
+    ("d5", include_str!("../../assets/warta/directions/d5.json")),
+];
+
+/// The shared tokens, each family under `families`, and every family with each colourway's
+/// palette under `directions` as `family/colourway`.
 fn tokens() -> &'static Value {
     static ALL: OnceLock<Value> = OnceLock::new();
     ALL.get_or_init(|| {
-        let mut all: Value = serde_json::from_str(include_str!("../../assets/warta/tokens.json")).unwrap_or(Value::Null);
-        // Simple dark is Simple with its own colours.
-        let mut dark = all["directions"]["d5"].clone();
-        if let (Some(own), Some(palette)) = (dark["dark_palette"].as_object().cloned(), dark["palette"].as_object_mut()) {
-            palette.extend(own);
+        let mut all: Value = serde_json::from_str(include_str!("../../assets/warta/shared.json")).unwrap_or(Value::Null);
+        let (mut families, mut directions) = (serde_json::Map::new(), serde_json::Map::new());
+        for (family, source) in FAMILIES {
+            let base: Value = serde_json::from_str(source).unwrap_or(Value::Null);
+            for colourway in base["colourways"].as_array().into_iter().flatten() {
+                let mut direction = base.clone();
+                direction["palette"] = colourway["palette"].clone();
+                directions.insert(format!("{family}/{}", colourway["id"].as_str().unwrap_or("")), direction);
+            }
+            families.insert(family.to_string(), base);
         }
-        all["directions"]["d5d"] = dark;
+        all["families"] = Value::Object(families);
+        all["directions"] = Value::Object(directions);
         all
     })
 }
 
-fn dir_of(style: NoticeStyle) -> &'static Value {
-    let key = match style {
+fn family_of(style: NoticeStyle) -> &'static str {
+    match style {
         NoticeStyle::Greige => "d1",
         NoticeStyle::Pill => "d2",
         NoticeStyle::Neon => "d3",
-        NoticeStyle::Simple => "d5",
-        NoticeStyle::SimpleDark => "d5d",
+        NoticeStyle::Simple | NoticeStyle::SimpleDark => "d5",
         _ => "d4",
-    };
-    &tokens()["directions"][key]
+    }
+}
+
+/// The ids of a style's colourways, the design's own first.
+fn colourway_ids(style: NoticeStyle) -> impl Iterator<Item = &'static str> {
+    tokens()["families"][family_of(style)]["colourways"].as_array().into_iter().flatten().filter_map(|colourway| colourway["id"].as_str())
+}
+
+/// The colourway an empty name means: the first, and for Simple dark the dark one.
+fn first_colourway(style: NoticeStyle) -> &'static str {
+    if style == NoticeStyle::SimpleDark { "dark" } else { colourway_ids(style).next().unwrap_or("") }
+}
+
+/// The style's direction in `colourway`; an empty or unknown name is the style's first.
+fn dir_of(style: NoticeStyle, colourway: &str) -> &'static Value {
+    let directions = &tokens()["directions"];
+    let family = family_of(style);
+    let found = &directions[format!("{family}/{colourway}")];
+    if !colourway.is_empty() && found.is_object() { found } else { &directions[format!("{family}/{}", first_colourway(style))] }
+}
+
+/// A colourway as a swatch draws it: its ground and its accent.
+pub struct Swatch {
+    pub id: &'static str,
+    pub ground: Color,
+    pub accent: Color,
+}
+
+/// The colourways of a poster style, the design's own first.
+pub fn colourways(style: NoticeStyle) -> Vec<Swatch> {
+    let keys = &tokens()["families"][family_of(style)]["swatch"];
+    let (ground, accent) = (keys[0].as_str().unwrap_or(""), keys[1].as_str().unwrap_or(""));
+    colourway_ids(style)
+        .map(|id| {
+            let palette = &dir_of(style, id)["palette"];
+            Swatch { id, ground: hex(palette[ground].as_str().unwrap_or("#FF00FF")), accent: hex(palette[accent].as_str().unwrap_or("#FF00FF")) }
+        })
+        .collect()
+}
+
+/// Where `colourway` stands among the style's colourways; an empty or unknown name is the style's first.
+pub fn colourway_at(style: NoticeStyle, colourway: &str) -> usize {
+    let wanted = if colourway_ids(style).any(|id| id == colourway) { colourway } else { first_colourway(style) };
+    colourway_ids(style).position(|id| id == wanted).unwrap_or(0)
 }
 
 #[derive(Clone, Copy)]
@@ -374,8 +432,8 @@ type Advances = HashMap<(&'static str, u32, bool, u32, String), f32>;
 pub const BODY_FLOOR: f32 = 40.0;
 
 impl Sheet {
-    fn new(style: NoticeStyle) -> Sheet {
-        Sheet { d: dir_of(style), items: Vec::new(), body_px: None, title_cap: None, force: false, styled: Vec::new() }
+    fn new(style: NoticeStyle, colourway: &str) -> Sheet {
+        Sheet { d: dir_of(style, colourway), items: Vec::new(), body_px: None, title_cap: None, force: false, styled: Vec::new() }
     }
 
     /// `found`, or the floor when a drawing is forced; the layout cannot hold it otherwise.
@@ -593,7 +651,7 @@ impl Sheet {
         let mut layer = el().key("warta").absolute(0.0, 0.0).size(w, h);
         let gradient = |name: &str| -> Option<(Color, Color)> {
             let stops = self.d["gradients"][name]["stops"].as_array()?;
-            let at = |row: &Value| Some(hex(row[1].as_str()?).alpha(number(&row[2])));
+            let at = |row: &Value| Some(hex(&self.c(row[1].as_str()?)).alpha(number(&row[2])));
             Some((at(stops.first()?)?, at(stops.last()?)?))
         };
         for (at, item) in self.items.iter().enumerate() {
@@ -826,7 +884,7 @@ pub fn draw(slide: &Slide, style: NoticeStyle, w: f32, h: f32, pics: &Pics) -> E
             }
         }
         // What nothing can hold is drawn at its floors, so the editor still shows it.
-        forced(slide, style, have).unwrap_or_else(|_| Sheet::new(style))
+        forced(slide, style, have).unwrap_or_else(|_| Sheet::new(style, &slide.colourway))
     });
     sheet.build(w, h, pics)
 }
@@ -840,7 +898,7 @@ fn forced(slide: &Slide, style: NoticeStyle, have: data::Have) -> Result<Sheet, 
 /// The largest and smallest size a plain card's body is set in: the card's own ceiling or the
 /// style's, down to the floor.
 fn plain_body_range(slide: &Slide, style: NoticeStyle) -> (f32, f32) {
-    let spec = number(&dir_of(style)["type"]["n_body"]["size"]);
+    let spec = number(&dir_of(style, "")["type"]["n_body"]["size"]);
     let hi = if slide.body_face.size > 0 { f32::from(slide.body_face.size) } else { spec }.floor();
     (hi, BODY_FLOOR.min(hi))
 }
@@ -868,7 +926,7 @@ fn sheet(slide: &Slide, style: NoticeStyle, have: data::Have) -> Result<Sheet, S
 
 fn build(slide: &Slide, style: NoticeStyle, have: data::Have, body: Option<f32>, force: bool) -> Result<Sheet, Split> {
     let data = Data::of(slide);
-    let mut sheet = Sheet::new(style);
+    let mut sheet = Sheet::new(style, &slide.colourway);
     (sheet.body_px, sheet.force) = (body, force);
     if slide.notice == NoticeKind::Plain {
         sheet.title_cap = (slide.title_face.size > 0).then(|| f32::from(slide.title_face.size));
@@ -982,13 +1040,52 @@ mod tests {
     #[test]
     fn the_tokens_of_all_four_directions_are_there_with_their_faces() {
         for style in [NoticeStyle::Greige, NoticeStyle::Pill, NoticeStyle::Neon, NoticeStyle::Split, NoticeStyle::Simple, NoticeStyle::SimpleDark] {
-            let d = dir_of(style);
+            let d = dir_of(style, "");
             assert!(d["palette"].is_object() && d["grid"]["mx"].is_number(), "{style:?}");
             for font in d["fonts"].as_object().into_iter().flatten().map(|(_, spec)| spec) {
                 let file = font["file"].as_str().unwrap_or("");
                 assert!(fonts::face_bytes(file).is_some(), "{file} is not bundled");
             }
         }
+    }
+
+    #[test]
+    fn every_colourway_of_every_direction_reads_on_every_pair_its_layout_draws() {
+        let families = tokens()["families"].as_object().expect("families");
+        assert_eq!(families.len(), FAMILIES.len());
+        for (family, base) in families {
+            let colourways = base["colourways"].as_array().expect("colourways");
+            assert!(colourways.len() >= 4, "{family} has {} colourways", colourways.len());
+            let keys: Vec<&String> = colourways[0]["palette"].as_object().expect("palette").keys().collect();
+            for colourway in colourways {
+                let (id, palette) = (colourway["id"].as_str().unwrap_or(""), &colourway["palette"]);
+                assert_eq!(palette.as_object().map(|own| own.keys().collect::<Vec<_>>()), Some(keys.clone()), "{family}/{id} has the direction's keys");
+                let colour = |key: &str| crate::look::parse_hex(palette[key].as_str().unwrap_or("")).unwrap_or_else(|| panic!("{family}/{id} has no colour {key}"));
+                for pair in base["pairs"].as_array().expect("pairs") {
+                    let (fg, bg, kind) = (pair[0].as_str().unwrap_or(""), pair[1].as_str().unwrap_or(""), pair[2].as_str().unwrap_or(""));
+                    let need = match kind {
+                        "text" => 4.5,
+                        "large" | "mark" => 3.0,
+                        other => panic!("{family} pair kind {other}"),
+                    };
+                    let got = crate::look::contrast_of(colour(fg), colour(bg));
+                    assert!(got >= need, "{family}/{id}: {fg} on {bg} is {got:.2}, {kind} needs {need}");
+                }
+            }
+        }
+    }
+
+    #[test]
+    fn a_colourway_picks_the_palette_a_slide_draws_and_an_unknown_one_is_the_first() {
+        let own = dir_of(NoticeStyle::Greige, "")["palette"]["paper"].clone();
+        assert_eq!(dir_of(NoticeStyle::Greige, "greige")["palette"]["paper"], own);
+        assert_ne!(dir_of(NoticeStyle::Greige, "moss")["palette"]["paper"], own);
+        assert_eq!(dir_of(NoticeStyle::Greige, "no-such")["palette"]["paper"], own);
+        // Simple dark is Simple in its dark colourway, so a saved card still draws.
+        assert_eq!(dir_of(NoticeStyle::SimpleDark, "")["palette"]["paper"], "#121417");
+        assert_eq!(dir_of(NoticeStyle::Simple, "")["palette"]["paper"], "#FFFFFF");
+        assert_eq!(colourway_at(NoticeStyle::SimpleDark, ""), 1);
+        assert_eq!(colourways(NoticeStyle::Neon).len(), 4);
     }
 
     #[test]

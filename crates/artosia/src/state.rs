@@ -439,6 +439,8 @@ pub struct Notices {
     pub passage: TextEdit,
     /// The structure the card is drawn in; None follows the look.
     pub style: Option<artosia_core::deck::NoticeStyle>,
+    /// The colourway of the style; empty is its first.
+    pub colourway: String,
     /// The title's colour; None takes the style's own.
     pub title_colour: Option<[u8; 3]>,
     /// The calendars a schedule card reads; empty reads all.

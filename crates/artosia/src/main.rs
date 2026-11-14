@@ -886,6 +886,13 @@ Until we reach the house
         s.open_tab(Tab::Templates);
         s.templates_filter(None, Some(artosia_core::deck::NoticeStyle::Neon));
     }),
+    // A colourway other than the first picked under the Neon tile.
+    ("tab-templates-neon-colours", |s| {
+        s.open_tab(Tab::Templates);
+        s.templates_filter(None, Some(artosia_core::deck::NoticeStyle::Neon));
+        let picked = artosia_slides::warta::colourways(artosia_core::deck::NoticeStyle::Neon).get(2).map_or("", |swatch| swatch.id);
+        s.templates.colourways.insert(artosia_core::deck::NoticeStyle::Neon, picked.to_string());
+    }),
     ("tab-templates-split", |s| {
         s.open_tab(Tab::Templates);
         s.templates_filter(None, Some(artosia_core::deck::NoticeStyle::Split));

@@ -16,6 +16,8 @@ use crate::theme::{self, icons, space, type_};
 const TILE: f32 = 330.0;
 /// The rail's width.
 const RAIL: f32 = 220.0;
+/// A colourway swatch's diameter.
+const SWATCH: f32 = 24.0;
 
 pub fn glyph(template: Template) -> &'static rune::Icon {
     match template {
@@ -159,6 +161,39 @@ fn rail(s: &App, k: &Kit) -> El {
     col().key("templates-rail").w(RAIL).h_full().fill(sf.side).padding(space::S3).gap(2.0).child(row().w_full().child(spacer()).child(crate::ui::tour::help_mark(s, k, crate::guide::lessons::Feature::Templates))).child(kinds).child(el().h(space::S4)).child(section_label(k, t::TPL_STYLE())).child(el().h(2.0)).child(styles)
 }
 
+/// One round swatch: the colourway's ground with its accent; ringed while the tile draws it.
+fn swatch(k: &Kit, template: Template, style: NoticeStyle, at: usize, colours: &artosia_slides::warta::Swatch, on: bool) -> El {
+    let id = colours.id.to_string();
+    el()
+        .key(format!("tpl-cw-{template:?}-{}-{at}", style.code()))
+        .role("button")
+        .label(t::tpl_colourway(at + 1))
+        .checked(on)
+        .size(SWATCH, SWATCH)
+        .radius(SWATCH / 2.0)
+        .fill(colours.ground)
+        .border(if on { 2.5 } else { 1.0 }, if on { theme::accent() } else { k.c.border_base })
+        .center()
+        .cursor(Cursor::Pointer)
+        .focusable(true)
+        .on_key(enter_key)
+        .child(el().size(SWATCH / 2.0 - 2.0, SWATCH / 2.0 - 2.0).radius(SWATCH / 4.0).fill(colours.accent).a11y_hidden())
+        .on_press(move |s: &mut App| {
+            s.templates.colourways.insert(style, id.clone());
+            s.templates.picked = (template, style);
+        })
+}
+
+/// The colourway swatches under a poster style's tile; none for a style with a single look.
+fn swatches(s: &App, k: &Kit, template: Template, style: NoticeStyle) -> Option<El> {
+    let all = artosia_slides::warta::colourways(style);
+    if !style.is_poster() || all.len() < 2 {
+        return None;
+    }
+    let on = artosia_slides::warta::colourway_at(style, &s.templates.colourway_of(style));
+    Some(row().gap(space::S2).center_y().children(all.iter().enumerate().map(|(at, colours)| swatch(k, template, style, at, colours, at == on))))
+}
+
 fn tile(s: &App, k: &Kit, template: Template, style: NoticeStyle) -> El {
     let on = s.templates.picked == (template, style);
     let card = s.tile_card(template, style);
@@ -171,6 +206,7 @@ fn tile(s: &App, k: &Kit, template: Template, style: NoticeStyle) -> El {
     // Style and source apart: the interface never joins words with a middle dot.
     let note = format!("{}, {}", style_name(style), reads(template));
     let tip = fill_words(card.fill, &card.window).unwrap_or_default();
+    let colours = swatches(s, k, template, style);
     col()
         .key(format!("tile-{template:?}-{}", style.code()))
         .help(tip)
@@ -195,6 +231,7 @@ fn tile(s: &App, k: &Kit, template: Template, style: NoticeStyle) -> El {
                         .child(text(reads(template)).font(type_::SMALL).color(k.c.text_muted).truncate()),
                 ),
         )
+        .children(colours)
         .on_press(move |s: &mut App| s.templates.picked = (template, style))
 }
 

@@ -667,6 +667,7 @@ impl App {
                 fill: item.fill,
                 passage: TextEdit::new(item.passage.clone()),
                 style: item.style,
+                colourway: item.colourway.clone(),
                 title_colour: item.title_colour,
                 calendars: item.calendars.clone(),
                 window: item.window,
@@ -723,7 +724,7 @@ impl App {
             Fill::Birthdays => form.window,
             _ => Window::default(),
         };
-        has_words.then_some(Announcement { id: form.id, title, body, seconds: form.seconds.clamp(2, 600), image: form.image.clone(), qris: if form.fill == Fill::Transfer { form.qris.clone() } else { String::new() }, image2: form.image2.clone(), fill: form.fill, passage, style: form.style, title_colour: form.title_colour, calendars, window, title_face: form.title_face, body_face: form.body_face })
+        has_words.then_some(Announcement { id: form.id, title, body, seconds: form.seconds.clamp(2, 600), image: form.image.clone(), qris: if form.fill == Fill::Transfer { form.qris.clone() } else { String::new() }, image2: form.image2.clone(), fill: form.fill, passage, style: form.style, colourway: form.colourway.clone(), title_colour: form.title_colour, calendars, window, title_face: form.title_face, body_face: form.body_face })
     }
 
     pub(crate) fn reload_announcements(&mut self) {
@@ -857,6 +858,7 @@ impl App {
     pub fn set_notice_style(&mut self, style: NoticeStyle) {
         if let Some(form) = self.notices.as_mut() {
             form.style = Some(style);
+            form.colourway.clear();
         }
         self.save_notice();
     }

@@ -10,7 +10,7 @@ Artosia copies the split PowerPoint, Keynote and Google Slides share:
 
 | Part | From | In Artosia |
 |---|---|---|
-| Layout family | slide masters and layouts | a warta direction: one Rust file drawing the six kinds (`crates/artosia-slides/src/warta/dN.rs`), its tokens in `assets/warta/tokens.json` |
+| Layout family | slide masters and layouts | a warta direction: one Rust file drawing the six kinds (`crates/artosia-slides/src/warta/dN.rs`), its tokens in `assets/warta/directions/dN.json` |
 | Colour scheme by role | OOXML `clrScheme` (12 slots), Google's 12 theme colour types, Canva's colour themes | `colourways` per direction: each a full map of the direction's colour keys, the design's own first |
 | Font scheme | OOXML major and minor fonts, Canva's H1 to H5 and body | the direction's `fonts`; a later step may add font pairs per colourway |
 | Contrast | WCAG 2.2 1.4.3, 1.4.6, 1.4.11; Radix and Material solve text steps for contrast | a test: every text-on-ground pair a direction lists passes 4.5:1 (3:1 for large text and marks) in every colourway |
@@ -28,3 +28,5 @@ A template is a family and a colourway, stored in the card's style column as `fa
 - Shared colour and type role names across families, so one archetype serves several families (the README's step 1 and 3). Families keep their own key names until an archetype is shared.
 - Font pairs per colourway.
 - Generated colourway candidates (oklch tone steps on one accent, then the contrast gate, then a person picks).
+
+<!-- GUESS (TPLMODEL1, 2026-11-15): every colourway after each direction's own is a builder's guess that passes the contrast gate; the designer pass replaces the values. Shared tokens: assets/warta/shared.json. A new family is one directions/dN.json plus one line in warta/mod.rs FAMILIES. -->

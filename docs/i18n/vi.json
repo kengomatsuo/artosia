@@ -6155,5 +6155,12 @@
   "text": "Đơn giản tối",
   "back": "simple dark",
   "why": "Plain everyday word; tối for dark"
+ },
+ "tpl_colourway": {
+  "text": {
+   "other": "Bộ màu {n}"
+  },
+  "back": "Colour set {n}",
+  "why": "Bộ màu is a group of colours, numbered by place"
  }
 }

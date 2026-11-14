@@ -422,6 +422,16 @@ pub fn poster_little_scene(style: NoticeStyle, kind: NoticeKind) -> OutputState 
     state
 }
 
+/// The birthdays scene of a poster style in its `n`th colourway (from 1), the check of a colourway's contrast.
+pub fn colourway_scene(style: NoticeStyle, n: usize) -> OutputState {
+    let mut state = poster_scene(style, NoticeKind::Birthdays, true);
+    let id = artosia_slides::warta::colourways(style).get(n - 1).map_or("", |swatch| swatch.id);
+    if let Some(slide) = state.slide.as_mut() {
+        slide.colourway = id.to_string();
+    }
+    state
+}
+
 /// The state of a `notice-style-<style>-<kind>` scene: a poster style drawing one kind, over the default look.
 pub fn poster_scene(style: NoticeStyle, kind: NoticeKind, pictures: bool) -> OutputState {
     DIRECT.store(false, Ordering::Release);

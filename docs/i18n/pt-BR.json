@@ -6180,5 +6180,12 @@
   "text": "Simples escuro",
   "back": "simple dark",
   "why": "Plain common word; escuro for dark"
+ },
+ "tpl_colourway": {
+  "text": {
+   "other": "Cores {n}"
+  },
+  "back": "Colours {n}",
+  "why": "Plural because it is a set of colours"
  }
 }
