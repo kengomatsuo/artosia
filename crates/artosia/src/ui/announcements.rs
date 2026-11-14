@@ -1,14 +1,18 @@
 //! The announcement editor: the list on the left, the one being written in the middle, and
 //! how it will look on the projector on the right, changing as you type.
 
-use artosia_core::deck::{Fill, NoticeStyle, PassageState, Template, birthday_days, birthdays, passage_state};
+use artosia_core::calendar::Date;
+use artosia_core::deck::{Fill, NoticeStyle, PassageState, Template, passage_state};
+use artosia_core::window::{Range, Window};
 use artosia_slides::look::rgb;
 use rune::{Cursor, El, Key, KeyEvent, ScrollSpec, Tx, col, el, icon, row, spacer, text};
 use rune_kit::{Kit, ScrollBar, SegmentedControl, TextArea, TextInput};
 
-use crate::state::{App, Notices};
+use crate::calendar::date_words;
+use crate::state::{App, Edge, Notices};
 use crate::strings as t;
 use crate::theme::{self, icons, size, space, type_};
+use crate::ui::calendar;
 use crate::ui::colour::ColourFor;
 use crate::ui::templates::{empty_note, fill_words, glyph, read_line, reads, slide_or_note, style_name};
 use crate::ui::widgets::{btn, enter_key, section_label};
@@ -16,6 +20,8 @@ use crate::ui::widgets::{btn, enter_key, section_label};
 const LIST: f32 = 330.0;
 /// The widest the preview is drawn.
 const PREVIEW: f32 = 340.0;
+/// The width of one date picker of a custom range.
+const PICKER: f32 = 190.0;
 /// How long an announcement may stay up, in seconds.
 const SECONDS: [u32; 6] = [5, 8, 10, 15, 20, 30];
 
@@ -170,7 +176,7 @@ fn templates_block(s: &App, k: &Kit, form: &Notices) -> El {
         rows = rows.child(
             row()
                 .key(format!("notice-template-{template:?}"))
-                .help(fill_words(if on { form.fill } else { template.fill() }).unwrap_or_default())
+                .help(fill_words(if on { form.fill } else { template.fill() }, &if on { form.window } else { Window::default() }).unwrap_or_default())
                 .role("button")
                 .label(crate::templates::name(template))
                 .checked(on)
@@ -261,6 +267,103 @@ fn calendar_chips(s: &App, k: &Kit, form: &Notices) -> El {
         chips = chips.child(chip.on_press(move |s: &mut App| s.toggle_notice_calendar(id)));
     }
     col().w_full().gap(space::S1).child(section_label(k, t::NOTICE_CALENDARS())).child(chips)
+}
+
+/// The quick ranges of a window, in the order of their chips; Custom is the chip after them.
+const QUICK: [Range; 7] = [Range::Coming(7), Range::Coming(30), Range::Coming(90), Range::Week(0), Range::Week(1), Range::Month(0), Range::Month(1)];
+/// What can stand out, in the order of its chips; Custom is the chip after them.
+const HIGHLIGHTS: [Option<Range>; 4] = [None, Some(Range::Past(7)), Some(Range::Coming(7)), Some(Range::Coming(1))];
+
+/// The Custom chip's range: its dates are the days the card reads now, which the action puts in.
+const CUSTOM: Range = Range::Custom(Date { year: 1970, month: 1, day: 1 }, Date { year: 1970, month: 1, day: 1 });
+
+/// A row of choices that wraps, one lit: the chip's key is `{key}-{place}`.
+fn choice_chips(k: &Kit, key: &str, label: &str, names: &[&str], on: Option<usize>, press: fn(&mut App, usize)) -> El {
+    let mut chips = row().key(key.to_string()).role("radiogroup").label(label.to_string()).w_full().gap(space::S1).flex_wrap().focus_group();
+    for (at, name) in names.iter().enumerate() {
+        let lit = on == Some(at);
+        let chip = row()
+            .key(format!("{key}-{at}"))
+            .role("radio")
+            .label(name.to_string())
+            .checked(lit)
+            .h(30.0)
+            .px(space::S3)
+            .center()
+            .radius(k.radius.md)
+            .cursor(Cursor::Pointer)
+            .focusable(true)
+            .on_key(enter_key);
+        let chip = if lit {
+            chip.fill(theme::accent()).child(text(name.to_string()).font(type_::BODY_STRONG).color(rune::Color::WHITE).a11y_hidden())
+        } else {
+            chip.fill(k.c.layer_02).border(1.0, k.c.border_base).hover(k.c.hover).child(text(name.to_string()).font(type_::BODY).color(k.c.text_base).a11y_hidden())
+        };
+        chips = chips.child(chip.on_press(move |s: &mut App| press(s, at)));
+    }
+    chips
+}
+
+/// The two dates of a custom range or highlight, as pickers, with the month under the open one.
+fn date_pickers(s: &App, k: &Kit, form: &Notices, edges: (Edge, Edge), dates: (Date, Date), within: (Date, Date)) -> El {
+    let key = |edge: Edge| match edge {
+        Edge::RangeFrom => "notice-range-from",
+        Edge::RangeTo => "notice-range-to",
+        Edge::HighlightFrom => "notice-highlight-from",
+        Edge::HighlightTo => "notice-highlight-to",
+    };
+    let one = |edge: Edge, name: &str, date: Date| {
+        let open = form.pick.is_some_and(|(at, _)| at == edge);
+        calendar::field(k, name, calendar::picker(k, key(edge), name, None, date_words(date), open).w(PICKER).on_press(move |s: &mut App| s.notice_open_pick(edge)))
+    };
+    let mut both = col().w_full().gap(space::S2).child(row().w_full().gap(space::S2).child(one(edges.0, t::NOTICE_FROM(), dates.0)).child(one(edges.1, t::NOTICE_TO(), dates.1)));
+    if let Some((edge, shown)) = form.pick.filter(|(edge, _)| *edge == edges.0 || *edge == edges.1) {
+        let sf = theme::surf();
+        let chosen = if edge == edges.0 { dates.0 } else { dates.1 };
+        let grid = calendar::month_grid(s, k, "notice", shown, move |date| date == chosen, move |date| date >= within.0 && date <= within.1, |_| true, |s, by| s.notice_pick_month(by), |s, date| s.notice_pick_date(date), el());
+        both = both.child(col().key("notice-picker").w(2.0 * PICKER + space::S2).padding(space::S3).radius(k.radius.md).fill(sf.raised).border(1.0, sf.edge).child(grid));
+    }
+    both
+}
+
+/// The days a schedule or birthday card reads: the quick ranges, two dates for a custom one, and for
+/// birthdays what stands out, with the dates they come to and a word when a choice was cut to fit.
+fn window_panel(s: &App, k: &Kit, form: &Notices, window: Window, birthdays: bool) -> El {
+    let shown = s.today().shown(&window);
+    let range = form.window.range;
+    let names = [t::NOTICE_WEEKLY(), t::NOTICE_MONTHLY(), t::NOTICE_QUARTERLY(), t::NOTICE_WEEK(), t::NOTICE_NEXT_WEEK(), t::NOTICE_MONTH(), t::NOTICE_NEXT_MONTH(), t::NOTICE_CUSTOM()];
+    let place = QUICK.iter().position(|quick| *quick == range).or(matches!(range, Range::Custom(..)).then_some(QUICK.len()));
+    let mut panel = col().key("notice-window").w_full().gap(space::S2).child(section_label(k, t::NOTICE_WINDOW())).child(choice_chips(
+        k,
+        "notice-range",
+        t::NOTICE_WINDOW(),
+        &names,
+        place,
+        |s, at| s.set_notice_range(QUICK.get(at).copied().unwrap_or(CUSTOM)),
+    ));
+    if let Range::Custom(..) = range {
+        panel = panel.child(date_pickers(s, k, form, (Edge::RangeFrom, Edge::RangeTo), (shown.from, shown.to), (shown.from, shown.to)));
+    }
+    if birthdays {
+        let marks = [t::NOTICE_HL_NONE(), t::NOTICE_HL_PAST(), t::NOTICE_HL_COMING(), t::NOTICE_HL_TODAY(), t::NOTICE_CUSTOM()];
+        let lit = HIGHLIGHTS.iter().position(|own| *own == form.window.highlight).or(matches!(form.window.highlight, Some(Range::Custom(..))).then_some(HIGHLIGHTS.len()));
+        panel = panel.child(el().h(space::S1)).child(section_label(k, t::NOTICE_HIGHLIGHT())).child(choice_chips(k, "notice-highlight", t::NOTICE_HIGHLIGHT(), &marks, lit, |s, at| {
+            s.set_notice_highlight(HIGHLIGHTS.get(at).copied().unwrap_or(Some(CUSTOM)))
+        }));
+        if let Some(Range::Custom(a, b)) = form.window.highlight {
+            panel = panel.child(date_pickers(s, k, form, (Edge::HighlightFrom, Edge::HighlightTo), (a.min(b), a.max(b)), shown.highlight.unwrap_or((a.min(b), a.max(b)))));
+        }
+    }
+    let covers = if shown.from.day == 1 && shown.from.plus_months(1).plus_days(-1) == shown.to {
+        t::birthdays_cover_month(shown.from.month)
+    } else {
+        t::birthdays_cover_week((shown.from.month, shown.from.day), (shown.to.month, shown.to.day))
+    };
+    let mut notes = col().key("notice-covers").w_full().child(text(covers).font(type_::SMALL).color(k.c.text_muted));
+    if shown.clamped {
+        notes = notes.child(crate::ui::widgets::wrapped(t::NOTICE_CUT()).font(type_::SMALL).color(theme::warn_ink()).wrap());
+    }
+    panel.child(notes)
 }
 
 fn form(s: &App, k: &Kit, form: &Notices, width: f32) -> El {
@@ -355,18 +458,7 @@ fn form(s: &App, k: &Kit, form: &Notices, width: f32) -> El {
         _ => None,
     };
     let window = match template {
-        Template::Schedule | Template::Birthdays => {
-            let month = if template == Template::Schedule { form.month } else { form.fill == Fill::BirthdaysMonth };
-            Some(
-                col().w_full().gap(space::S1).child(section_label(k, t::NOTICE_WINDOW())).child(
-                    SegmentedControl::new(&[t::NOTICE_WEEK(), t::NOTICE_MONTH()], Some(usize::from(month)))
-                        .width(None)
-                        .label(t::NOTICE_WINDOW())
-                        .on_pick(|s: &mut App, picked, _: &mut Tx| s.set_notice_month(picked == 1))
-                        .build(k),
-                ),
-            )
-        }
+        Template::Schedule | Template::Birthdays => Some(window_panel(s, k, form, draft.as_ref().map_or(form.window, |draft| draft.window), template == Template::Birthdays)),
         _ => None,
     };
     let fields = col()
@@ -413,35 +505,27 @@ fn form(s: &App, k: &Kit, form: &Notices, width: f32) -> El {
     col().grow(1.0).min_w(0.0).h_full().min_h(0.0).child(fields).child(crate::ui::widgets::divider(k)).child(tools.px(space::S5).py(space::S3))
 }
 
-/// What the card's window holds today, in a grey line: the days a birthday card covers, the
-/// last date of the offerings, the account's bank; a schedule card says it in the pill alone.
+/// What the card's window holds today, in a grey line: the last date of the offerings, the
+/// account's bank, or the ask for a list of birthdays; the days a card reads are in its window panel.
 fn holds(s: &App, k: &Kit, draft: Option<&artosia_core::deck::Announcement>) -> Option<El> {
     let draft = draft?;
-    let today = s.today();
     let note = |words: String| Some(col().key("notice-holds").w_full().child(text(words).font(type_::SMALL).color(k.c.text_muted)));
     match draft.fill.template() {
         Template::Schedule | Template::Plain | Template::Passage => None,
         // The money cards write their lines from the Offerings window: what they hold is said once.
         Template::Offerings => note(artosia_core::giving::latest(&s.gifts).map_or_else(|| t::GIVING_EMPTY().to_string(), |date| t::giving_latest(&crate::calendar::date_words(date)))),
         Template::Transfer => note(if s.account.ready() { s.account.bank.clone() } else { t::GIVING_ACCOUNT_NONE().to_string() }),
-        Template::Birthdays => {
-            let ((from_month, from_day), (to_month, to_day)) = birthday_days(draft.fill, &today)?;
-            let covers = if draft.fill == Fill::BirthdaysMonth { t::birthdays_cover_month(from_month) } else { t::birthdays_cover_week((from_month, from_day), (to_month, to_day)) };
-            let names = birthdays(&s.people, draft.fill, &today).len();
-            let mut holds = col().key("notice-holds").w_full().gap(space::S2).child(col().w_full().child(text(covers).font(type_::SMALL).color(k.c.text_muted)).child(text(t::names_today(names)).font(type_::SMALL).color(k.c.text_muted)));
-            // With no list on file the card can hold nobody, so the list is asked for here.
-            if s.people.is_empty() {
-                holds = holds.child(
-                    row()
-                        .w_full()
-                        .gap(space::S2)
-                        .center_y()
-                        .child(text(t::birthdays_on_file(0)).font(type_::BODY).color(k.c.text_base).grow(1.0))
-                        .child(btn(t::CMD_IMPORT_BIRTHDAYS()).icon(&icons::IMPORT).small().focusable().build(k, |s, _| s.want_birthdays = true)),
-                );
-            }
-            Some(holds)
-        }
+        // With no list on file the card can hold nobody, so the list is asked for here.
+        Template::Birthdays if s.people.is_empty() => Some(
+            row()
+                .key("notice-holds")
+                .w_full()
+                .gap(space::S2)
+                .center_y()
+                .child(text(t::birthdays_on_file(0)).font(type_::BODY).color(k.c.text_base).grow(1.0))
+                .child(btn(t::CMD_IMPORT_BIRTHDAYS()).icon(&icons::IMPORT).small().focusable().build(k, |s, _| s.want_birthdays = true)),
+        ),
+        Template::Birthdays => None,
     }
 }
 

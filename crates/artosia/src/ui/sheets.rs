@@ -293,6 +293,19 @@ fn settings(s: &App, k: &Kit, layer: &mut Vec<El>, tall: f32) {
                 })
                 .build(k),
         ))
+        .child(setting(
+            k,
+            t::SETTINGS_WEEK_START(),
+            SegmentedControl::new(&[crate::calendar::weekday_name(0), crate::calendar::weekday_name(1)], Some(usize::from(s.first_weekday().min(1))))
+                .label(t::SETTINGS_WEEK_START())
+                .fit()
+                .on_pick(|s: &mut App, picked, _: &mut Tx| {
+                    s.settings.first_weekday = u8::from(picked == 1);
+                    s.touch_settings();
+                    s.refresh_decks();
+                })
+                .build(k),
+        ))
         .child(el().h(2.0))
         .child(section_label(k, t::KIND_BIBLE()))
         .child(setting(k, t::LOOK_BIBLE(), bible_picker(s, k, false)))

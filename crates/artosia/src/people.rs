@@ -166,10 +166,9 @@ impl App {
         self.refresh_members();
     }
 
-    /// The announcement that reads the list: the saved card for this month's birthdays, else the week's.
+    /// The announcement that reads the list: the first saved birthday card.
     pub fn birthday_card(&self) -> Option<&artosia_core::deck::Announcement> {
-        use artosia_core::deck::Fill;
-        [Fill::BirthdaysMonth, Fill::BirthdaysWeek].into_iter().find_map(|fill| self.announcements.iter().find(|card| card.fill == fill))
+        self.announcements.iter().find(|card| card.fill == artosia_core::deck::Fill::Birthdays)
     }
 
     /// "Open the card" beside the side panel's slide: the announcement editor on that card.

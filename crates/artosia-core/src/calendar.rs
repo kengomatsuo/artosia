@@ -6,7 +6,7 @@
 //! by the original date).
 
 /// A civil date. Ordered by year, month, day.
-#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, serde::Serialize, serde::Deserialize)]
 pub struct Date {
     pub year: i32,
     /// 1 to 12.

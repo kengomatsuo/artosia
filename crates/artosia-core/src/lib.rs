@@ -23,3 +23,4 @@ pub mod search;
 pub mod song;
 pub mod store;
 pub mod text;
+pub mod window;

@@ -3,7 +3,9 @@
 use std::sync::Arc;
 
 use artosia_core::bible::Reference;
+use artosia_core::calendar::Date;
 use artosia_core::deck::{Announcement, DeckSource, Fill, NoticeStyle, Person, Template};
+use artosia_core::window::{Range, Window};
 use artosia_core::plan::PlanEntry;
 use artosia_core::marks;
 use artosia_core::song::{SectionKind, Song, Tag, parse_order, song_from_paste, tidy_lyrics, write_order};
@@ -14,7 +16,7 @@ use rune::{TextEdit, Tx};
 
 use crate::link::OutputOptions;
 use crate::firewall::{self, Standing};
-use crate::state::{App, Arrived, Editor, HeardHit, Notices, OpenDeck, Sheet, Suggestion, Tab, TempoCount, Undo, entry_matches, section_starts, unix_now};
+use crate::state::{App, Arrived, Edge, Editor, HeardHit, Notices, OpenDeck, Sheet, Suggestion, Tab, TempoCount, Undo, entry_matches, section_starts, unix_now};
 use crate::strings as t;
 
 /// The phone remote's port, for the server and for its firewall rule.
@@ -690,7 +692,8 @@ impl App {
                 style: item.style,
                 title_colour: item.title_colour,
                 calendars: item.calendars.clone(),
-                month: item.month,
+                window: item.window,
+                pick: None,
             },
             None => Notices { seconds: 10, ..Notices::default() },
         };
@@ -733,8 +736,14 @@ impl App {
         let (title, body) = (form.title.text.trim().to_string(), form.body.text.trim().to_string());
         let has_words = !title.is_empty() || !body.is_empty() || !form.image.is_empty() || form.fill != Fill::Nothing;
         let passage = if form.fill == Fill::Passage { form.passage.text.trim().to_string() } else { String::new() };
-        let calendars = if form.fill == Fill::ScheduleWeek { form.calendars.clone() } else { Vec::new() };
-        has_words.then_some(Announcement { id: form.id, title, body, seconds: form.seconds.clamp(2, 600), image: form.image.clone(), fill: form.fill, passage, style: form.style, title_colour: form.title_colour, calendars, month: form.month && form.fill == Fill::ScheduleWeek })
+        let calendars = if form.fill == Fill::Schedule { form.calendars.clone() } else { Vec::new() };
+        // Only a birthday card has a part that stands out; a card with no window reads the default one.
+        let window = match form.fill {
+            Fill::Schedule => Window { highlight: None, ..form.window },
+            Fill::Birthdays => form.window,
+            _ => Window::default(),
+        };
+        has_words.then_some(Announcement { id: form.id, title, body, seconds: form.seconds.clamp(2, 600), image: form.image.clone(), fill: form.fill, passage, style: form.style, title_colour: form.title_colour, calendars, window })
     }
 
     pub(crate) fn reload_announcements(&mut self) {
@@ -841,13 +850,78 @@ impl App {
         self.save_notice();
     }
 
-    /// A schedule card reads the month or the week; a birthday card the same, as its two fills.
-    pub fn set_notice_month(&mut self, month: bool) {
+    /// The days the card in the form reads. Custom starts from the days it read until then.
+    pub fn set_notice_range(&mut self, range: Range) {
+        let today = self.today();
         if let Some(form) = self.notices.as_mut() {
-            form.month = month;
-            if form.fill.template() == Template::Birthdays {
-                form.fill = if month { Fill::BirthdaysMonth } else { Fill::BirthdaysWeek };
+            form.window.range = match range {
+                Range::Custom(..) => {
+                    let shown = today.shown(&form.window);
+                    Range::Custom(shown.from, shown.to)
+                }
+                other => other,
+            };
+            form.pick = None;
+        }
+        self.save_notice();
+    }
+
+    /// The part of the days that stands out; Custom starts on the first week of the days read.
+    pub fn set_notice_highlight(&mut self, highlight: Option<Range>) {
+        let today = self.today();
+        if let Some(form) = self.notices.as_mut() {
+            form.window.highlight = match highlight {
+                Some(Range::Custom(..)) => {
+                    let shown = today.shown(&form.window);
+                    Some(Range::Custom(shown.from, shown.to.min(shown.from.plus_days(6))))
+                }
+                other => other,
+            };
+            form.pick = None;
+        }
+        self.save_notice();
+    }
+
+    /// Opens the month picker under one date of the window, or closes it when it is that one's.
+    pub fn notice_open_pick(&mut self, edge: Edge) {
+        let today = self.today();
+        let Some(form) = self.notices.as_mut() else { return };
+        if form.pick.is_some_and(|(open, _)| open == edge) {
+            form.pick = None;
+            return;
+        }
+        let shown = today.shown(&form.window);
+        let own = match (edge, form.window.range, form.window.highlight) {
+            (Edge::RangeFrom, ..) => shown.from,
+            (Edge::RangeTo, ..) => shown.to,
+            (Edge::HighlightFrom, _, Some(Range::Custom(from, to))) => from.min(to),
+            (Edge::HighlightTo, _, Some(Range::Custom(from, to))) => from.max(to),
+            _ => shown.from,
+        };
+        form.pick = Some((edge, own.first_of_month()));
+    }
+
+    /// The open month picker shows the month `by` months on.
+    pub fn notice_pick_month(&mut self, by: i32) {
+        if let Some((_, shown)) = self.notices.as_mut().and_then(|form| form.pick.as_mut()) {
+            *shown = shown.plus_months(by);
+        }
+    }
+
+    /// Sets the date the open picker is for; the other end of the days follows when they would cross.
+    pub fn notice_pick_date(&mut self, date: Date) {
+        let Some(form) = self.notices.as_mut() else { return };
+        let Some((edge, _)) = form.pick.take() else { return };
+        let ends = |range: Range, from: bool| match range {
+            Range::Custom(a, b) => {
+                let (a, b) = (a.min(b), a.max(b));
+                Range::Custom(if from { date } else { a.min(date) }, if from { b.max(date) } else { date })
             }
+            other => other,
+        };
+        match edge {
+            Edge::RangeFrom | Edge::RangeTo => form.window.range = ends(form.window.range, edge == Edge::RangeFrom),
+            Edge::HighlightFrom | Edge::HighlightTo => form.window.highlight = form.window.highlight.map(|range| ends(range, edge == Edge::HighlightFrom)),
         }
         self.save_notice();
     }
@@ -1012,7 +1086,7 @@ impl App {
         let mut cards = vec![
             // The cards take their titles from the templates, so a render reads in the window's language.
             Announcement { title: t::ANNOUNCEMENT_TEMPLATES()[3].0.into(), fill: Fill::Passage, passage: "Psalm 23:1-3".into(), seconds: 12, ..Announcement::default() },
-            Announcement { title: t::ANNOUNCEMENT_TEMPLATES()[5].0.into(), fill: Fill::BirthdaysWeek, seconds: 12, ..Announcement::default() },
+            Announcement { title: t::ANNOUNCEMENT_TEMPLATES()[5].0.into(), fill: Fill::Birthdays, seconds: 12, ..Announcement::default() },
         ];
         if kind == "birthdays" {
             cards.reverse();
@@ -1022,7 +1096,7 @@ impl App {
             cards.push(Announcement { title: t::ANNOUNCEMENT_TEMPLATES()[4].0.into(), fill: if kind == "offerings" { Fill::Offerings } else { Fill::Transfer }, seconds: 12, ..Announcement::default() });
         }
         if kind == "schedule" {
-            cards.push(Announcement { title: t::ANNOUNCEMENT_TEMPLATES()[crate::calendar::SCHEDULE_TEMPLATE].0.into(), fill: Fill::ScheduleWeek, seconds: 12, ..Announcement::default() });
+            cards.push(Announcement { title: t::ANNOUNCEMENT_TEMPLATES()[crate::calendar::SCHEDULE_TEMPLATE].0.into(), fill: Fill::Schedule, seconds: 12, ..Announcement::default() });
         }
         for card in &mut cards {
             let _ = self.store.save_announcement(card);
@@ -1035,8 +1109,8 @@ impl App {
         self.reload_announcements();
         // The editor opens on the card the scene is about.
         let wanted = match kind {
-            "birthdays" => Fill::BirthdaysWeek,
-            "schedule" => Fill::ScheduleWeek,
+            "birthdays" => Fill::Birthdays,
+            "schedule" => Fill::Schedule,
             "offerings" => Fill::Offerings,
             "transfer" => Fill::Transfer,
             _ => Fill::Passage,
@@ -1044,6 +1118,33 @@ impl App {
         let id = self.announcements.iter().find(|card| card.fill == wanted).map(|card| card.id).unwrap_or(0);
         self.edit_announcements();
         self.pick_notice(id);
+    }
+
+    /// Fills the practice library for a render of the birthday card of this month with the past week
+    /// highlighted: thirty made-up names spread over the days of the month.
+    pub fn demo_birthdays_highlight(&mut self, style: Option<NoticeStyle>) {
+        let today = self.today().date_of();
+        let days = usize::from(Date::month_days(today.year, today.month));
+        let first = ["Alfa", "Beta", "Gamma", "Delta", "Epsilon", "Zeta", "Eta", "Teta", "Iota", "Kapa"];
+        self.people = (0..30)
+            .map(|at| {
+                let last = (at * 3 + at / 10 + 1) % 10;
+                let last = if last == at % 10 { (last + 1) % 10 } else { last };
+                Person { name: format!("{} {}", first[at % 10], first[last]), day: (1 + at * days / 30) as u8, month: today.month, ..Person::default() }
+            })
+            .collect();
+        let mut card = Announcement {
+            title: t::ANNOUNCEMENT_TEMPLATES()[5].0.into(),
+            fill: Fill::Birthdays,
+            seconds: 12,
+            style,
+            window: Window { range: Range::Month(0), highlight: Some(Range::Past(7)) },
+            ..Announcement::default()
+        };
+        let _ = self.store.save_announcement(&mut card);
+        self.reload_announcements();
+        self.edit_announcements();
+        self.pick_notice(card.id);
     }
 
     /// Whether the announcements are a row of today's plan already.
@@ -2117,10 +2218,62 @@ mod notice_tests {
     }
 
     #[test]
+    fn the_panel_sets_the_range_and_the_highlight_and_a_custom_date_keeps_its_ends_in_order() {
+        let mut app = App::practice();
+        app.demo_birthdays_highlight(None);
+        let id = app.notices.as_ref().map(|form| form.id).unwrap_or_default();
+        let saved = |app: &App| app.announcements.iter().find(|card| card.id == id).map(|card| card.window).unwrap_or_default();
+        assert_eq!(saved(&app), Window { range: Range::Month(0), highlight: Some(Range::Past(7)) });
+        // A quick range replaces the days and keeps the highlight, which the card then cuts to fit.
+        app.set_notice_range(Range::Week(1));
+        assert_eq!(saved(&app), Window { range: Range::Week(1), highlight: Some(Range::Past(7)) });
+        assert!(app.today().shown(&saved(&app)).clamped);
+        // Custom starts from the days the card read, and a picked first date later than the last pulls the last along.
+        app.set_notice_range(Range::Custom(Date { year: 1970, month: 1, day: 1 }, Date { year: 1970, month: 1, day: 1 }));
+        let shown = app.today().shown(&saved(&app));
+        assert_eq!(saved(&app).range, Range::Custom(shown.from, shown.to));
+        app.notice_open_pick(Edge::RangeFrom);
+        assert_eq!(app.notices.as_ref().and_then(|form| form.pick).map(|(edge, month)| (edge, month.day)), Some((Edge::RangeFrom, 1)));
+        let later = shown.to.plus_days(5);
+        app.notice_pick_date(later);
+        assert_eq!(saved(&app).range, Range::Custom(later, later));
+        assert!(app.notices.as_ref().is_some_and(|form| form.pick.is_none()));
+        // The highlight's own custom dates are set the same way and stay inside nothing until they are cut.
+        app.set_notice_highlight(Some(Range::Custom(Date { year: 1970, month: 1, day: 1 }, Date { year: 1970, month: 1, day: 1 })));
+        app.notice_open_pick(Edge::HighlightTo);
+        app.notice_pick_date(later);
+        assert_eq!(saved(&app).highlight, Some(Range::Custom(later, later)));
+        // None clears it; a schedule card never keeps one.
+        app.set_notice_highlight(None);
+        assert_eq!(saved(&app).highlight, None);
+    }
+
+    #[test]
+    fn a_schedule_card_of_next_week_lists_next_weeks_events_and_a_monday_week_moves_them() {
+        let mut app = App::practice();
+        app.demo_notices("schedule");
+        let id = app.notices.as_ref().map(|form| form.id).unwrap_or_default();
+        app.set_notice_range(Range::Week(1));
+        let card = app.announcements.iter().find(|card| card.id == id).cloned().unwrap_or_default();
+        let shown = app.today().shown(&card.window);
+        assert_eq!((shown.from.weekday(), shown.to.weekday()), (0, 6), "Sunday to Saturday by default");
+        let slides = app.card_slides(&card);
+        let listed: usize = slides.iter().map(|slide| slide.text.lines().count()).sum();
+        assert_eq!(listed, artosia_core::deck::window_events(&app.events, &app.today(), &card.window, &[]).len());
+        assert!(listed >= 6, "a whole week of the practice calendar");
+        // With Monday as the first weekday the same card reads Monday to Sunday, and the calendar grid follows.
+        app.settings.first_weekday = 1;
+        let monday = app.today().shown(&card.window);
+        assert_eq!((monday.from.weekday(), monday.to.weekday()), (1, 0));
+        app.calendar.anchor = Date { year: 2026, month: 11, day: 14 };
+        assert_eq!((app.week_start().weekday(), app.month_start().weekday()), (1, 1));
+    }
+
+    #[test]
     fn a_birthday_card_holds_names_and_is_shown_at_once() {
         let mut app = App::practice();
         app.demo_notices("birthdays");
-        let id = app.announcements.iter().find(|card| card.fill == Fill::BirthdaysWeek).map(|card| card.id).unwrap_or_default();
+        let id = app.announcements.iter().find(|card| card.fill == Fill::Birthdays).map(|card| card.id).unwrap_or_default();
         let deck = app.card_deck(id).unwrap_or_else(|| panic!("no names in the made-up week"));
         assert!(deck.slides[0].text.contains("Sample Alpha"));
         app.show_notice_now(id);

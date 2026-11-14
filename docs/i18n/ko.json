@@ -4092,11 +4092,6 @@
   "back": "Services",
   "why": "the usual word for the main meetings; 聚会 as in the table"
  },
- "FILL_SCHEDULE": {
-  "text": "이번 주 일정",
-  "back": "This weeks events",
-  "why": "pairs with the birthday choices"
- },
  "month_year": {
   "text": "{year}년 {month}",
   "back": "{year} {month}",
@@ -4111,15 +4106,6 @@
   "text": "{count}개 더",
   "back": "{count} more",
   "why": "one form"
- },
- "events_this_week": {
-  "text": {
-   "zero": "이번 주 일정이 없어요",
-   "one": "이번 주 일정 {count}개",
-   "other": "이번 주 일정 {count}개"
-  },
-  "back": "zero: nothing this week; otherwise {count} events this week",
-  "why": "zero is a full statement"
  },
  "weekday_list": {
   "text": {
@@ -4744,9 +4730,9 @@
   "why": "table word reused; composed in the language"
  },
  "NOTICE_WEEK": {
-  "text": "앞으로 7일",
-  "back": "Next 7 days",
-  "why": "table word reused; composed in the language"
+  "text": "이번 주",
+  "back": "This week",
+  "why": "pairs with 이번 달 in the table"
  },
  "NOTICE_MONTH": {
   "text": "이번 달",
@@ -5603,5 +5589,87 @@
   "text": "누르기 전에는 아무것도 더해지지 않아요",
   "back": "Nothing is added before pressing",
   "why": "table words reused; plain volunteer register"
+ },
+ "NOTICE_NEXT_WEEK": {
+  "text": "다음 주",
+  "back": "Next week",
+  "why": "everyday word"
+ },
+ "NOTICE_NEXT_MONTH": {
+  "text": "다음 달",
+  "back": "Next month",
+  "why": "pairs with 이번 달 in the table"
+ },
+ "NOTICE_WEEKLY": {
+  "text": "앞으로 7일",
+  "back": "Next 7 days",
+  "why": "table's own 앞으로 phrasing"
+ },
+ "NOTICE_MONTHLY": {
+  "text": "앞으로 30일",
+  "back": "Next 30 days",
+  "why": "same pattern"
+ },
+ "NOTICE_QUARTERLY": {
+  "text": "앞으로 90일",
+  "back": "Next 90 days",
+  "why": "same pattern"
+ },
+ "NOTICE_CUSTOM": {
+  "text": "직접 정하기",
+  "back": "Set yourself",
+  "why": "plain native word"
+ },
+ "NOTICE_FROM": {
+  "text": "시작일",
+  "back": "Start date",
+  "why": "first day"
+ },
+ "NOTICE_TO": {
+  "text": "종료일",
+  "back": "End date",
+  "why": "last day"
+ },
+ "NOTICE_HIGHLIGHT": {
+  "text": "강조 표시",
+  "back": "Highlight",
+  "why": "common UI term for making something stand out"
+ },
+ "NOTICE_HL_NONE": {
+  "text": "없음",
+  "back": "None",
+  "why": "one word"
+ },
+ "NOTICE_HL_PAST": {
+  "text": "지난 7일",
+  "back": "Past 7 days",
+  "why": "ends yesterday"
+ },
+ "NOTICE_HL_COMING": {
+  "text": "앞으로 7일",
+  "back": "Next 7 days",
+  "why": "today included"
+ },
+ "NOTICE_HL_TODAY": {
+  "text": "오늘",
+  "back": "Today",
+  "why": "one word"
+ },
+ "NOTICE_CUT": {
+  "text": "강조할 날은 카드가 읽는 기간 안으로 줄였고, 직접 정한 기간은 최대 1년이에요",
+  "back": "Days to highlight were cut to fit the period the card reads, and a self-set period is one year at most",
+  "why": "reports the trim, 요 register matching the table"
+ },
+ "SETTINGS_WEEK_START": {
+  "text": "한 주의 시작",
+  "back": "Start of the week",
+  "why": "noun phrase label"
+ },
+ "read_members_marked": {
+  "text": {
+   "other": "교인 목록에서 생일 {count}명, 강조 {marked}명"
+  },
+  "back": "From the member list, {count} birthdays, {marked} highlighted",
+  "why": "extends the table's 교인 목록 wording"
  }
 }

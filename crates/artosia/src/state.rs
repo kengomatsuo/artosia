@@ -170,6 +170,9 @@ pub struct Settings {
     /// The languages the church usually shows together on a slide, in the order they are drawn
     /// (BCP 47 codes). A plan may have its own list; empty shows each song's first language.
     pub song_languages: Vec<String>,
+    /// The church's first weekday, 0 for Sunday or 1 for Monday: the calendar's weeks and the
+    /// weeks an announcement reads start on it.
+    pub first_weekday: u8,
 }
 
 impl Default for Settings {
@@ -211,6 +214,7 @@ impl Default for Settings {
             learn: true,
             letter_keys: true,
             song_languages: Vec::new(),
+            first_weekday: 0,
         }
     }
 }
@@ -407,8 +411,19 @@ pub struct Notices {
     pub title_colour: Option<[u8; 3]>,
     /// The calendars a schedule card reads; empty reads all.
     pub calendars: Vec<i64>,
-    /// A schedule card reads the month, not the next seven days.
-    pub month: bool,
+    /// The days a schedule or birthday card reads, and the part of them that stands out.
+    pub window: artosia_core::window::Window,
+    /// The date of the window a month picker is open for, and the month it shows.
+    pub pick: Option<(Edge, artosia_core::calendar::Date)>,
+}
+
+/// Which date of a card's window the open month picker sets.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum Edge {
+    RangeFrom,
+    RangeTo,
+    HighlightFrom,
+    HighlightTo,
 }
 
 /// Results a worker thread hands back to the window.
@@ -1132,7 +1147,7 @@ impl App {
     /// Today's date, for announcements that fill themselves with this week's birthdays.
     pub fn today(&self) -> Today<'static> {
         let time = rune::LocalTime::at((self.now * 1000.0) as i64);
-        Today { year: time.year, month: time.month.clamp(1, 12) as u8, day: time.day.clamp(1, 31) as u8, months: t::MONTHS(), weekdays: t::WEEKDAYS(), clock: t::time_of_day, date: t::day_month, total: t::GIVING_TOTAL() }
+        Today { year: time.year, month: time.month.clamp(1, 12) as u8, day: time.day.clamp(1, 31) as u8, months: t::MONTHS(), weekdays: t::WEEKDAYS(), clock: t::time_of_day, date: t::day_month, total: t::GIVING_TOTAL(), first_weekday: self.settings.first_weekday }
     }
 
     /// Every announcement slide in order, each with the place of its announcement in the list.

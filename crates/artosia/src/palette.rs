@@ -746,18 +746,18 @@ impl App {
             let body = match item.fill {
                 Fill::Nothing => item.body.clone(),
                 Fill::Passage => item.passage.clone(),
-                Fill::ScheduleWeek => t::events_this_week(artosia_core::deck::week_events(&self.events, &self.today()).len()),
+                Fill::Schedule => t::read_calendar(artosia_core::deck::window_events(&self.events, &self.today(), &item.window, &item.calendars).len()),
                 Fill::Offerings => artosia_core::giving::latest(&self.gifts).map(|date| t::giving_latest(&crate::calendar::date_words(date))).unwrap_or_default(),
                 Fill::Transfer => self.account.bank.clone(),
-                _ => t::names_today(artosia_core::deck::birthdays(&self.people, item.fill, &self.today()).len()),
+                Fill::Birthdays => t::names_today(artosia_core::deck::birthdays(&self.people, &item.window, &self.today()).len()),
             };
             let mut doc = Doc::new(format!("announcement:{}", item.id), "announcement", item.title.clone())
                 .detail(body.clone())
                 .aliases(&["announcement", "show announcement", "notice", "pengumuman", "tampilkan pengumuman", "warta"]);
             doc = match item.fill {
-                Fill::BirthdaysWeek | Fill::BirthdaysMonth => doc.aliases(&["birthday", "birthdays", "show birthdays", "ulang tahun", "ultah", "tampilkan ulang tahun"]),
+                Fill::Birthdays => doc.aliases(&["birthday", "birthdays", "show birthdays", "ulang tahun", "ultah", "tampilkan ulang tahun"]),
                 Fill::Passage => doc.aliases(&["verse of the week", "bible verse", "verse", "ayat", "ayat minggu ini"]),
-                Fill::ScheduleWeek => doc.aliases(&["schedule", "this week", "events", "jadwal", "jadwal ibadah", "minggu ini"]),
+                Fill::Schedule => doc.aliases(&["schedule", "this week", "events", "jadwal", "jadwal ibadah", "minggu ini"]),
                 Fill::Offerings => doc.aliases(&["offering", "offerings", "collection", "tithe", "persembahan", "persepuluhan", "kolekte"]),
                 Fill::Transfer => doc.aliases(&["transfer", "account", "bank", "rekening", "nomor rekening", "persembahan transfer"]),
                 Fill::Nothing => doc,
@@ -1293,7 +1293,7 @@ mod tests {
         let mut app = App::practice();
         app.demo_notices("birthdays");
         app.open_palette(Scope::All, "");
-        let at = app.announcements.iter().position(|card| card.fill == artosia_core::deck::Fill::BirthdaysWeek).unwrap_or_default();
+        let at = app.announcements.iter().position(|card| card.fill == artosia_core::deck::Fill::Birthdays).unwrap_or_default();
         // The import command also answers to "birthday", so the card is only required to be
         // among the hits there; asking to show birthdays puts it first.
         for query in ["birthday", "ulang tahun", "show birthdays", "tampilkan ulang tahun"] {

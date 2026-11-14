@@ -4092,11 +4092,6 @@
   "back": "Services",
   "why": "the usual word for the main meetings; 聚会 as in the table"
  },
- "FILL_SCHEDULE": {
-  "text": "本周的活动",
-  "back": "This weeks events",
-  "why": "pairs with the birthday choices"
- },
  "month_year": {
   "text": "{year}年{month}",
   "back": "{year} {month}",
@@ -4111,15 +4106,6 @@
   "text": "还有{count}项",
   "back": "{count} more",
   "why": "one form"
- },
- "events_this_week": {
-  "text": {
-   "zero": "本周的日历里没有活动",
-   "one": "本周有{count}项活动",
-   "other": "本周有{count}项活动"
-  },
-  "back": "zero: nothing this week; otherwise {count} events this week",
-  "why": "zero is a full statement"
  },
  "weekday_list": {
   "text": {
@@ -4744,9 +4730,9 @@
   "why": "table word reused; composed in the language"
  },
  "NOTICE_WEEK": {
-  "text": "未来七天",
-  "back": "Next seven days",
-  "why": "table word reused; composed in the language"
+  "text": "本周",
+  "back": "This week",
+  "why": "pairs with 本月 already in the table"
  },
  "NOTICE_MONTH": {
   "text": "本月",
@@ -5603,5 +5589,87 @@
   "text": "不按导入，就不会添加任何东西",
   "back": "Without pressing import, nothing is added",
   "why": "table words reused; plain volunteer register"
+ },
+ "NOTICE_NEXT_WEEK": {
+  "text": "下周",
+  "back": "Next week",
+  "why": "周 as in the table's CAL_WEEK"
+ },
+ "NOTICE_NEXT_MONTH": {
+  "text": "下个月",
+  "back": "Next month",
+  "why": "plain month word, same as 本月 in the table"
+ },
+ "NOTICE_WEEKLY": {
+  "text": "未来7天",
+  "back": "Next 7 days",
+  "why": "number states the stretch exactly"
+ },
+ "NOTICE_MONTHLY": {
+  "text": "未来30天",
+  "back": "Next 30 days",
+  "why": "number states the stretch exactly"
+ },
+ "NOTICE_QUARTERLY": {
+  "text": "未来90天",
+  "back": "Next 90 days",
+  "why": "number states the stretch exactly"
+ },
+ "NOTICE_CUSTOM": {
+  "text": "自定义",
+  "back": "Custom",
+  "why": "common settings word"
+ },
+ "NOTICE_FROM": {
+  "text": "开始",
+  "back": "Start",
+  "why": "first day of the stretch"
+ },
+ "NOTICE_TO": {
+  "text": "结束",
+  "back": "End",
+  "why": "last day of the stretch"
+ },
+ "NOTICE_HIGHLIGHT": {
+  "text": "突出显示",
+  "back": "Make stand out",
+  "why": "verb heading, 突出 is the familiar word for standing out"
+ },
+ "NOTICE_HL_NONE": {
+  "text": "不突出",
+  "back": "None stand out",
+  "why": "one short phrase"
+ },
+ "NOTICE_HL_PAST": {
+  "text": "过去7天",
+  "back": "Past 7 days",
+  "why": "ends yesterday, today is its own choice"
+ },
+ "NOTICE_HL_COMING": {
+  "text": "未来7天",
+  "back": "Next 7 days",
+  "why": "today included"
+ },
+ "NOTICE_HL_TODAY": {
+  "text": "今天",
+  "back": "Today",
+  "why": "plain"
+ },
+ "NOTICE_CUT": {
+  "text": "突出的日子限在卡片读取的范围内，自定范围最长一年，已按此缩短",
+  "back": "Highlighted days are kept inside the range the card reads, a custom range is at most one year, shortened accordingly",
+  "why": "two short clauses, no blame on the reader"
+ },
+ "SETTINGS_WEEK_START": {
+  "text": "每周从哪天开始",
+  "back": "Which day the week starts on",
+  "why": "asks the question the two weekday names answer"
+ },
+ "read_members_marked": {
+  "text": {
+   "other": "取自会友名单，共 {count} 人，突出 {marked} 人"
+  },
+  "back": "From the member list, {count} people in all, {marked} stand out",
+  "why": "extends the table's 取自会友名单 wording"
  }
 }

@@ -8,6 +8,7 @@ use serde::de::DeserializeOwned;
 
 use crate::calendar::{Calendar, Change, Date, Event, Override, Repeat};
 use crate::deck::{Announcement, Fill, NoticeStyle, Person};
+use crate::window::{Range, Window};
 use crate::giving::{Account, Fund, Gift, Method};
 use crate::plan::Plan;
 use crate::song::{Song, Translation};
@@ -222,6 +223,8 @@ impl Store {
             ("announcements", "title_colour", "text not null default ''"),
             ("announcements", "calendars", "text not null default ''"),
             ("announcements", "month", "integer not null default 0"),
+            ("announcements", "window", "text not null default ''"),
+            ("announcements", "highlight", "text not null default ''"),
         ];
         for (table, column, definition) in added {
             let present = db.prepare(&format!("select 1 from pragma_table_info('{table}') where name = ?1"))?.exists([column])?;
@@ -421,9 +424,10 @@ impl Store {
     }
 
     pub fn announcements(&self) -> Result<Vec<Announcement>> {
-        let mut statement = self.db.prepare("select id, title, body, seconds, image, fill, passage, style, title_colour, calendars, month from announcements order by position, id")?;
+        let mut statement = self.db.prepare("select id, title, body, seconds, image, fill, passage, style, title_colour, calendars, month, window, highlight from announcements order by position, id")?;
         let rows = statement.query_map([], |row| {
             let (fill, style, colour, calendars): (String, String, String, String) = (row.get(5)?, row.get(7)?, row.get(8)?, row.get(9)?);
+            let (month, window, highlight): (i64, String, String) = (row.get(10)?, row.get(11)?, row.get(12)?);
             Ok(Announcement {
                 id: row.get(0)?,
                 title: row.get(1)?,
@@ -435,7 +439,8 @@ impl Store {
                 style: NoticeStyle::from_code(&style),
                 title_colour: colour_of_code(&colour),
                 calendars: calendars.split(',').filter_map(|id| id.parse().ok()).collect(),
-                month: row.get::<_, i64>(10)? != 0,
+                // A card saved before windows had its days in its data source's word and a month flag.
+                window: Window::from_codes(&window, &highlight).unwrap_or_else(|| Window::migrated(&fill, month != 0)),
             })
         })?;
         Ok(rows.collect::<rusqlite::Result<Vec<_>>>()?)
@@ -445,17 +450,20 @@ impl Store {
         let style = announcement.style.map_or("", NoticeStyle::code);
         let colour = announcement.title_colour.map_or(String::new(), |[r, g, b]| format!("{r:02x}{g:02x}{b:02x}"));
         let calendars = announcement.calendars.iter().map(i64::to_string).collect::<Vec<_>>().join(",");
+        let (window, highlight) = announcement.window.codes();
+        // `month` is still written, so an older Artosia reads a card of the month as it did.
+        let month = announcement.window.range == Range::Month(0);
         if announcement.id == 0 {
             self.db.execute(
-                "insert into announcements (position, title, body, seconds, image, fill, passage, style, title_colour, calendars, month)
-                 values ((select coalesce(max(position), 0) + 1 from announcements), ?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10)",
-                params![announcement.title, announcement.body, announcement.seconds, announcement.image, announcement.fill.code(), announcement.passage, style, colour, calendars, announcement.month],
+                "insert into announcements (position, title, body, seconds, image, fill, passage, style, title_colour, calendars, month, window, highlight)
+                 values ((select coalesce(max(position), 0) + 1 from announcements), ?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12)",
+                params![announcement.title, announcement.body, announcement.seconds, announcement.image, announcement.fill.code(), announcement.passage, style, colour, calendars, month, window, highlight],
             )?;
             announcement.id = self.db.last_insert_rowid();
         } else {
             self.db.execute(
-                "update announcements set title = ?1, body = ?2, seconds = ?3, image = ?4, fill = ?5, passage = ?6, style = ?7, title_colour = ?8, calendars = ?9, month = ?10 where id = ?11",
-                params![announcement.title, announcement.body, announcement.seconds, announcement.image, announcement.fill.code(), announcement.passage, style, colour, calendars, announcement.month, announcement.id],
+                "update announcements set title = ?1, body = ?2, seconds = ?3, image = ?4, fill = ?5, passage = ?6, style = ?7, title_colour = ?8, calendars = ?9, month = ?10, window = ?11, highlight = ?12 where id = ?13",
+                params![announcement.title, announcement.body, announcement.seconds, announcement.image, announcement.fill.code(), announcement.passage, style, colour, calendars, month, window, highlight, announcement.id],
             )?;
         }
         Ok(())
@@ -1056,7 +1064,7 @@ Other words
     #[test]
     fn an_announcement_keeps_its_picture_and_what_fills_it() {
         let store = Store::in_memory().unwrap_or_else(|_| unreachable!());
-        let mut item = Announcement { title: "Birthdays".into(), image: "cake.png".into(), fill: Fill::BirthdaysWeek, seconds: 12, ..Announcement::default() };
+        let mut item = Announcement { title: "Birthdays".into(), image: "cake.png".into(), fill: Fill::Birthdays, seconds: 12, ..Announcement::default() };
         assert!(store.save_announcement(&mut item).is_ok());
         assert_eq!(store.announcements().unwrap_or_default(), [item]);
     }
@@ -1064,14 +1072,30 @@ Other words
     #[test]
     fn a_card_keeps_its_style_title_colour_calendars_and_window() {
         let store = Store::in_memory().unwrap_or_else(|_| unreachable!());
-        let mut item = Announcement { title: "Week".into(), fill: Fill::ScheduleWeek, style: Some(NoticeStyle::Band), title_colour: Some([1, 171, 255]), calendars: vec![3, 7], month: true, ..Announcement::default() };
+        let mut item = Announcement { title: "Week".into(), fill: Fill::Schedule, style: Some(NoticeStyle::Band), title_colour: Some([1, 171, 255]), calendars: vec![3, 7], window: Window { range: Range::Month(1), highlight: Some(Range::Past(7)) }, ..Announcement::default() };
         assert!(store.save_announcement(&mut item).is_ok());
         assert_eq!(store.announcements().unwrap_or_default(), [item.clone()]);
         // A card saved with none of them reads back as the look it always had.
         let mut old = Announcement { title: "Old".into(), ..Announcement::default() };
         assert!(store.save_announcement(&mut old).is_ok());
         let kept = store.announcements().unwrap_or_default();
-        assert_eq!((kept[1].style, kept[1].title_colour, kept[1].calendars.len(), kept[1].month), (None, None, 0, false));
+        assert_eq!((kept[1].style, kept[1].title_colour, kept[1].calendars.len(), kept[1].window), (None, None, 0, Window::default()));
+    }
+
+    #[test]
+    fn a_card_saved_before_windows_opens_with_the_days_it_read() {
+        let store = Store::in_memory().unwrap_or_else(|_| unreachable!());
+        // Rows as 0.1.x wrote them: a data source word and the month flag, no window columns filled.
+        for (title, fill, month) in [("Week", "birthdays-week", 0), ("Month", "birthdays-month", 0), ("Cal week", "schedule-week", 0), ("Cal month", "schedule-week", 1)] {
+            store.db.execute("insert into announcements (title, fill, month) values (?1, ?2, ?3)", params![title, fill, month]).unwrap();
+        }
+        let cards = store.announcements().unwrap_or_default();
+        assert_eq!(cards.iter().map(|card| (card.fill, card.window.range)).collect::<Vec<_>>(), [(Fill::Birthdays, Range::Coming(7)), (Fill::Birthdays, Range::Month(0)), (Fill::Schedule, Range::Coming(7)), (Fill::Schedule, Range::Month(0))]);
+        // Saved again, a card keeps its window and no longer needs the old words.
+        let mut moved = cards[1].clone();
+        moved.window.highlight = Some(Range::Past(7));
+        assert!(store.save_announcement(&mut moved).is_ok());
+        assert_eq!(store.announcements().unwrap_or_default()[1].window, moved.window);
     }
 
     #[test]

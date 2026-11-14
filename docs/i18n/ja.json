@@ -4090,11 +4090,6 @@
   "back": "Services",
   "why": "the usual word for the main meetings; 聚会 as in the table"
  },
- "FILL_SCHEDULE": {
-  "text": "今週の予定",
-  "back": "This weeks events",
-  "why": "pairs with the birthday choices"
- },
  "month_year": {
   "text": "{year}年{month}",
   "back": "{year} {month}",
@@ -4109,15 +4104,6 @@
   "text": "ほか{count}件",
   "back": "{count} more",
   "why": "one form"
- },
- "events_this_week": {
-  "text": {
-   "zero": "今週の予定はありません",
-   "one": "今週の予定は{count}件",
-   "other": "今週の予定は{count}件"
-  },
-  "back": "zero: nothing this week; otherwise {count} events this week",
-  "why": "zero is a full statement"
  },
  "weekday_list": {
   "text": {
@@ -4742,9 +4728,9 @@
   "why": "table word reused; composed in the language"
  },
  "NOTICE_WEEK": {
-  "text": "今後7日間",
-  "back": "Next 7 days",
-  "why": "table word reused; composed in the language"
+  "text": "今週",
+  "back": "This week",
+  "why": "pairs with 今月 already in the table"
  },
  "NOTICE_MONTH": {
   "text": "今月",
@@ -5601,5 +5587,87 @@
   "text": "押すまで何も加わりません",
   "back": "Nothing is added until you press",
   "why": "table words reused; plain volunteer register"
+ },
+ "NOTICE_NEXT_WEEK": {
+  "text": "来週",
+  "back": "Next week",
+  "why": "everyday word"
+ },
+ "NOTICE_NEXT_MONTH": {
+  "text": "来月",
+  "back": "Next month",
+  "why": "everyday word"
+ },
+ "NOTICE_WEEKLY": {
+  "text": "今後7日間",
+  "back": "Next 7 days",
+  "why": "table's own 今後 phrasing, number states the stretch"
+ },
+ "NOTICE_MONTHLY": {
+  "text": "今後30日間",
+  "back": "Next 30 days",
+  "why": "same pattern"
+ },
+ "NOTICE_QUARTERLY": {
+  "text": "今後90日間",
+  "back": "Next 90 days",
+  "why": "same pattern"
+ },
+ "NOTICE_CUSTOM": {
+  "text": "自分で指定",
+  "back": "Specify yourself",
+  "why": "short, no technical word"
+ },
+ "NOTICE_FROM": {
+  "text": "開始日",
+  "back": "Start date",
+  "why": "first day"
+ },
+ "NOTICE_TO": {
+  "text": "終了日",
+  "back": "End date",
+  "why": "last day"
+ },
+ "NOTICE_HIGHLIGHT": {
+  "text": "目立たせる",
+  "back": "Make stand out",
+  "why": "verb heading as the brief asks"
+ },
+ "NOTICE_HL_NONE": {
+  "text": "なし",
+  "back": "None",
+  "why": "one word"
+ },
+ "NOTICE_HL_PAST": {
+  "text": "過去7日間",
+  "back": "Past 7 days",
+  "why": "ends yesterday"
+ },
+ "NOTICE_HL_COMING": {
+  "text": "今後7日間",
+  "back": "Next 7 days",
+  "why": "today included"
+ },
+ "NOTICE_HL_TODAY": {
+  "text": "今日",
+  "back": "Today",
+  "why": "one word"
+ },
+ "NOTICE_CUT": {
+  "text": "目立たせる日は表示期間の中に収め、自分で指定する期間は最長1年で切りました",
+  "back": "Highlighted days are kept within the display period and a self-set period is cut at one year at most",
+  "why": "reports what the card did, plain polite past"
+ },
+ "SETTINGS_WEEK_START": {
+  "text": "週の始まり",
+  "back": "Start of the week",
+  "why": "noun phrase label"
+ },
+ "read_members_marked": {
+  "text": {
+   "other": "教会員から、誕生日の人{count}名、目立たせるのは{marked}名"
+  },
+  "back": "From the members, {count} birthday people, {marked} made to stand out",
+  "why": "keeps the table's 教会員 and 名"
  }
 }

@@ -675,6 +675,24 @@ const SCENES: &[Scene] = &[
         }
     }),
     ("notice-schedule", |s| s.demo_notices("schedule")),
+    // SCHEDRANGE1 and BDAYRANGE1: next week's schedule, and a month of birthdays with the past week highlighted in each style.
+    ("notice-schedule-next-week", |s| {
+        s.demo_notices("schedule");
+        s.set_notice_range(artosia_core::window::Range::Week(1));
+    }),
+    ("notice-birthdays-highlight", |s| s.demo_birthdays_highlight(None)),
+    ("notice-birthdays-highlight-ledger", |s| s.demo_birthdays_highlight(Some(artosia_core::deck::NoticeStyle::Ledger))),
+    ("notice-birthdays-highlight-band", |s| s.demo_birthdays_highlight(Some(artosia_core::deck::NoticeStyle::Band))),
+    // The panel with its quick ranges and a custom highlight; the same with a month picker open.
+    ("notice-window-panel", |s| {
+        s.demo_birthdays_highlight(None);
+        s.set_notice_highlight(Some(artosia_core::window::Range::Custom(artosia_core::calendar::Date { year: 1970, month: 1, day: 1 }, artosia_core::calendar::Date { year: 1970, month: 1, day: 1 })));
+    }),
+    ("notice-window-picker", |s| {
+        s.demo_birthdays_highlight(None);
+        s.set_notice_highlight(Some(artosia_core::window::Range::Custom(artosia_core::calendar::Date { year: 1970, month: 1, day: 1 }, artosia_core::calendar::Date { year: 1970, month: 1, day: 1 })));
+        s.notice_open_pick(crate::state::Edge::HighlightFrom);
+    }),
     ("tab-people", |s| s.open_tab(Tab::People)),
     // OVPEOPLE1: the dialog on one person, the import's column step with a made-up csv, an empty list.
     ("people-edit", |s| {

@@ -224,7 +224,7 @@ fn main_column(s: &App, k: &Kit) -> El {
 /// The birthday slide as the announcement reads it, the card it belongs to, and the way to bring a list in.
 fn side(s: &App, k: &Kit) -> El {
     let sf = theme::surf();
-    let card = s.birthday_card().cloned().unwrap_or(Announcement { title: t::ANNOUNCEMENT_TEMPLATES()[5].0.to_string(), fill: Fill::BirthdaysMonth, seconds: 10, ..Announcement::default() });
+    let card = s.birthday_card().cloned().unwrap_or(Announcement { title: t::ANNOUNCEMENT_TEMPLATES()[5].0.to_string(), fill: Fill::Birthdays, window: artosia_core::window::Window { range: artosia_core::window::Range::Month(0), highlight: None }, seconds: 10, ..Announcement::default() });
     let width = SIDE - 2.0 * space::S4;
     let frame = el().key("people-slide").size(width, (width * 9.0 / 16.0).round()).radius(k.radius.md).clip_rounded(k.radius.md).border(1.0, k.c.border_base);
     let picture = match s.card_slides(&card).into_iter().next() {

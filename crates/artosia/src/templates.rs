@@ -2,7 +2,8 @@
 //! drawn with this church's own data, and the two things a tile does: add a card of its kind, or
 //! apply its style to a slide, to every announcement or to the open plan.
 
-use artosia_core::deck::{Announcement, Fill, NoticeStyle, Template};
+use artosia_core::deck::{Announcement, NoticeStyle, Template};
+use artosia_core::window::{self, Range};
 
 use crate::state::{App, Tab};
 use crate::strings as t;
@@ -120,8 +121,8 @@ impl App {
             other => (name(other), ""),
         };
         // The gallery shows a month of birthdays: the list a church keeps is longer than a week's.
-        let fill = if template == Template::Birthdays { Fill::BirthdaysMonth } else { template.fill() };
-        Announcement { title: title.into(), body: body.into(), fill, style: Some(style), ..Announcement::default() }
+        let window = if template == Template::Birthdays { window::Window { range: Range::Month(0), highlight: None } } else { window::Window::default() };
+        Announcement { title: title.into(), body: body.into(), fill: template.fill(), style: Some(style), window, ..Announcement::default() }
     }
 }
 
@@ -144,7 +145,7 @@ mod tests {
         app.use_template(Template::Schedule, NoticeStyle::Band);
         assert_eq!(app.announcements.len(), before + 1);
         let card = app.announcements.last().cloned().unwrap_or_default();
-        assert_eq!((card.fill, card.style), (Fill::ScheduleWeek, Some(NoticeStyle::Band)));
+        assert_eq!((card.fill, card.style), (artosia_core::deck::Fill::Schedule, Some(NoticeStyle::Band)));
         assert_eq!((app.tab, app.notices.as_ref().map(|form| form.id)), (Tab::Notices, Some(card.id)));
         // It reads the calendar, so the practice week gives it a slide in its style.
         assert!(app.card_slides(&card).first().is_some_and(|slide| slide.style == Some(NoticeStyle::Band)));

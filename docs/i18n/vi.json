@@ -4090,11 +4090,6 @@
   "back": "Services",
   "why": "Reuses the table words: sự kiện, lịch, thông báo, thứ tự lễ; short plain register"
  },
- "FILL_SCHEDULE": {
-  "text": "Sự kiện tuần này từ lịch",
-  "back": "This week's events from the calendar",
-  "why": "Reuses the table words: sự kiện, lịch, thông báo, thứ tự lễ; short plain register"
- },
  "month_year": {
   "text": "{month} năm {year}",
   "back": "{month} of year {year}",
@@ -4110,14 +4105,6 @@
    "other": "+{count} nữa"
   },
   "back": "+{count} more",
-  "why": "Reuses the table words: sự kiện, lịch, thông báo, thứ tự lễ; short plain register"
- },
- "events_this_week": {
-  "text": {
-   "zero": "Tuần này chưa có sự kiện nào",
-   "other": "Tuần này có {count} sự kiện"
-  },
-  "back": "No event this week yet / This week has {count} events",
   "why": "Reuses the table words: sự kiện, lịch, thông báo, thứ tự lễ; short plain register"
  },
  "weekday_list": {
@@ -4743,9 +4730,9 @@
   "why": "Not cửa sổ, which means program window"
  },
  "NOTICE_WEEK": {
-  "text": "7 ngày tới",
-  "back": "Next 7 days",
-  "why": "From today to a week later"
+  "text": "Tuần này",
+  "back": "This week",
+  "why": ""
  },
  "NOTICE_MONTH": {
   "text": "Tháng này",
@@ -5610,5 +5597,87 @@
   "text": "Bấm nút thì mới thêm",
   "back": "Only pressing the button adds",
   "why": "table words reused; plain volunteer register"
+ },
+ "NOTICE_NEXT_WEEK": {
+  "text": "Tuần sau",
+  "back": "Next week",
+  "why": ""
+ },
+ "NOTICE_NEXT_MONTH": {
+  "text": "Tháng sau",
+  "back": "Next month",
+  "why": ""
+ },
+ "NOTICE_WEEKLY": {
+  "text": "Hằng tuần",
+  "back": "Every week",
+  "why": ""
+ },
+ "NOTICE_MONTHLY": {
+  "text": "Hằng tháng",
+  "back": "Every month",
+  "why": ""
+ },
+ "NOTICE_QUARTERLY": {
+  "text": "Hằng quý",
+  "back": "Every quarter",
+  "why": ""
+ },
+ "NOTICE_CUSTOM": {
+  "text": "Tự chọn",
+  "back": "Choose yourself",
+  "why": ""
+ },
+ "NOTICE_FROM": {
+  "text": "Từ",
+  "back": "From",
+  "why": ""
+ },
+ "NOTICE_TO": {
+  "text": "Đến",
+  "back": "To",
+  "why": ""
+ },
+ "NOTICE_HIGHLIGHT": {
+  "text": "Làm nổi bật",
+  "back": "Make stand out",
+  "why": ""
+ },
+ "NOTICE_HL_NONE": {
+  "text": "Không",
+  "back": "None",
+  "why": ""
+ },
+ "NOTICE_HL_PAST": {
+  "text": "7 ngày qua",
+  "back": "Past 7 days",
+  "why": ""
+ },
+ "NOTICE_HL_COMING": {
+  "text": "7 ngày tới",
+  "back": "Next 7 days",
+  "why": ""
+ },
+ "NOTICE_HL_TODAY": {
+  "text": "Hôm nay",
+  "back": "Today",
+  "why": ""
+ },
+ "NOTICE_CUT": {
+  "text": "Ngày nổi bật đã được cắt cho vừa khoảng của thẻ, hoặc khoảng tự chọn dừng ở một năm",
+  "back": "The highlighted days were cut to fit the card's stretch, or the self-chosen stretch stops at one year",
+  "why": ""
+ },
+ "SETTINGS_WEEK_START": {
+  "text": "Tuần bắt đầu từ",
+  "back": "Week begins on",
+  "why": ""
+ },
+ "read_members_marked": {
+  "text": {
+   "other": "{count} tên có sinh nhật, {marked} tên nổi bật"
+  },
+  "back": "{count} names with a birthday, {marked} names stand out",
+  "why": ""
  }
 }

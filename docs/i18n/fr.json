@@ -4124,11 +4124,6 @@
   "back": "Services",
   "why": "Reuses the table words: calendrier, annonce, culte; neutral register without addressing the reader"
  },
- "FILL_SCHEDULE": {
-  "text": "Événements (semaine)",
-  "back": "Events (week)",
-  "why": "Reuses the table words: calendrier, annonce, culte; neutral register without addressing the reader"
- },
  "month_year": {
   "text": "{month} {year}",
   "back": "{month} {year}",
@@ -4145,15 +4140,6 @@
    "other": "+{count} autres"
   },
   "back": "+{count} other(s)",
-  "why": "Reuses the table words: calendrier, annonce, culte; neutral register without addressing the reader"
- },
- "events_this_week": {
-  "text": {
-   "zero": "Aucun événement cette semaine",
-   "one": "{count} événement cette semaine",
-   "other": "{count} événements cette semaine"
-  },
-  "back": "No event this week / N event(s) this week",
   "why": "Reuses the table words: calendrier, annonce, culte; neutral register without addressing the reader"
  },
  "weekday_list": {
@@ -4780,9 +4766,9 @@
   "why": "Table's word for a span of dates"
  },
  "NOTICE_WEEK": {
-  "text": "7 jours à venir",
-  "back": "Next 7 days",
-  "why": "From today to a week later"
+  "text": "Cette semaine",
+  "back": "This week",
+  "why": ""
  },
  "NOTICE_MONTH": {
   "text": "Ce mois-ci",
@@ -5657,5 +5643,88 @@
   "text": "Rien n'est ajouté avant le clic",
   "back": "Nothing is added before the click",
   "why": "table words reused; plain volunteer register"
+ },
+ "NOTICE_NEXT_WEEK": {
+  "text": "Semaine suivante",
+  "back": "Following week",
+  "why": ""
+ },
+ "NOTICE_NEXT_MONTH": {
+  "text": "Mois suivant",
+  "back": "Following month",
+  "why": ""
+ },
+ "NOTICE_WEEKLY": {
+  "text": "Hebdomadaire",
+  "back": "Weekly",
+  "why": ""
+ },
+ "NOTICE_MONTHLY": {
+  "text": "Mensuel",
+  "back": "Monthly",
+  "why": ""
+ },
+ "NOTICE_QUARTERLY": {
+  "text": "Trimestriel",
+  "back": "Quarterly",
+  "why": ""
+ },
+ "NOTICE_CUSTOM": {
+  "text": "Personnalisé",
+  "back": "Custom",
+  "why": ""
+ },
+ "NOTICE_FROM": {
+  "text": "Du",
+  "back": "From (the)",
+  "why": ""
+ },
+ "NOTICE_TO": {
+  "text": "Au",
+  "back": "To (the)",
+  "why": "pairs with Du, as dates read 'du ... au ...'"
+ },
+ "NOTICE_HIGHLIGHT": {
+  "text": "Mettre en avant",
+  "back": "Put forward",
+  "why": ""
+ },
+ "NOTICE_HL_NONE": {
+  "text": "Aucun",
+  "back": "None",
+  "why": ""
+ },
+ "NOTICE_HL_PAST": {
+  "text": "7 derniers jours",
+  "back": "Last 7 days",
+  "why": ""
+ },
+ "NOTICE_HL_COMING": {
+  "text": "7 prochains jours",
+  "back": "Next 7 days",
+  "why": ""
+ },
+ "NOTICE_HL_TODAY": {
+  "text": "Aujourd'hui",
+  "back": "Today",
+  "why": ""
+ },
+ "NOTICE_CUT": {
+  "text": "Jours mis en avant réduits à la période de la carte, ou période libre limitée à un an",
+  "back": "Highlighted days reduced to the card's period, or free period limited to one year",
+  "why": ""
+ },
+ "SETTINGS_WEEK_START": {
+  "text": "Début de la semaine",
+  "back": "Start of the week",
+  "why": ""
+ },
+ "read_members_marked": {
+  "text": {
+   "one": "{count} nom, {marked} mis en avant",
+   "other": "{count} noms, {marked} mis en avant"
+  },
+  "back": "{count} name, {marked} put forward / {count} names, {marked} put forward",
+  "why": ""
  }
 }

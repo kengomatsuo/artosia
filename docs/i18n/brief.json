@@ -15494,26 +15494,6 @@
   "notes": "The usual word for the main meetings of a church."
  },
  {
-  "key": "FILL_SCHEDULE",
-  "kind": "const",
-  "screen": "Announcements editor, the row of fill choices under the fields of a card (Fill in by itself). Third choice, alone on its own row.",
-  "moment": "The person wants the card to list what the calendar holds for the days ahead.",
-  "role": "switch option",
-  "does": "Means the card lists this week's events taken from the calendar.",
-  "budget": 34,
-  "variables": [],
-  "cases": [],
-  "counts": "",
-  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
-  "concepts": [
-   "church_calendar",
-   "event",
-   "card",
-   "announcement"
-  ],
-  "notes": "A phrase, as long as the birthday ones."
- },
- {
   "key": "month_year",
   "kind": "sentence",
   "screen": "Calendar window, the third tab under the title bar. Left, a rail: the heading Calendars with a Manage button, one row per calendar (a coloured tick and a name), a label and a small picture of the schedule card with a grey note under it. Right, a toolbar (Today, two arrows, the month's name, a Week and Month switch, a New event button) over a grid of days whose cells hold small coloured chips.",
@@ -15593,26 +15573,6 @@
    "event"
   ],
   "notes": "Starts with a plus sign or says 'more'."
- },
- {
-  "key": "events_this_week",
-  "kind": "sentence",
-  "screen": "Announcements editor, the row of fill choices under the fields of a card (Fill in by itself). Grey line under the fill choices of a schedule card.",
-  "moment": "The card lists the calendar's events of the coming days.",
-  "role": "status",
-  "does": "Says how many events the card holds now, including none.",
-  "budget": 44,
-  "variables": [],
-  "cases": [],
-  "counts": "count = number of events; forms for zero, one and many.",
-  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
-  "concepts": [
-   "church_calendar",
-   "event",
-   "card",
-   "announcement"
-  ],
-  "notes": "The zero case is a full statement."
  },
  {
   "key": "weekday_list",
@@ -17945,7 +17905,7 @@
   "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of three styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
   "moment": "The person chooses how far ahead a card looks.",
   "role": "section heading",
-  "does": "Labels the choice between the next seven days and the whole month.",
+  "does": "Labels the row of ready-made stretches of days a schedule or birthday card reads.",
   "budget": 14,
   "variables": [],
   "cases": [],
@@ -17963,7 +17923,7 @@
   "screen": "Announcements window, opened beside the live pane. Left column: the numbered cards, then the templates as rows with an icon, a name and what each reads, a switch of three styles and a button to see all templates. Right column: the slide as it will look, a small pill saying what it reads, then the data source, the window, the seconds on screen, the title, the title colour and the picture.",
   "moment": "The person chooses how far ahead a card looks.",
   "role": "choice label",
-  "does": "Chooses the days from today to a week later.",
+  "does": "Chooses the seven days of the calendar week that holds today.",
   "budget": 16,
   "variables": [],
   "cases": [],
@@ -17973,7 +17933,7 @@
    "slide_template",
    "announcement"
   ],
-  "notes": "Left half of a two-way switch."
+  "notes": "One of eight choices in a row; the next one says Next week."
  },
  {
   "key": "NOTICE_MONTH",
@@ -17991,7 +17951,309 @@
    "slide_template",
    "announcement"
   ],
-  "notes": "Right half of a two-way switch."
+  "notes": "One of eight choices in a row; the next one says Next month."
+ },
+ {
+  "key": "NOTICE_NEXT_WEEK",
+  "kind": "const",
+  "screen": "The Show row of the announcement window's data-source panel: eight choices that wrap onto two lines.",
+  "moment": "The person chooses which days the card reads.",
+  "role": "choice label",
+  "does": "Chooses the seven days of the calendar week that follows the current one.",
+  "budget": 16,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template",
+   "announcement",
+   "church_calendar"
+  ],
+  "notes": "One of eight choices in a row."
+ },
+ {
+  "key": "NOTICE_NEXT_MONTH",
+  "kind": "const",
+  "screen": "The Show row of the announcement window's data-source panel: eight choices that wrap onto two lines.",
+  "moment": "The person chooses which days the card reads.",
+  "role": "choice label",
+  "does": "Chooses the whole of the calendar month after the current one.",
+  "budget": 16,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template",
+   "announcement",
+   "church_calendar"
+  ],
+  "notes": "One of eight choices in a row."
+ },
+ {
+  "key": "NOTICE_WEEKLY",
+  "kind": "const",
+  "screen": "The Show row of the announcement window's data-source panel: eight choices that wrap onto two lines.",
+  "moment": "The person chooses which days the card reads.",
+  "role": "choice label",
+  "does": "Chooses a stretch that runs a week ahead, starting today, whatever day the week begins on.",
+  "budget": 14,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template",
+   "announcement"
+  ],
+  "notes": "An adjective in the sense of every week; it sits beside Monthly and Quarterly, which run a month and three months ahead from today."
+ },
+ {
+  "key": "NOTICE_MONTHLY",
+  "kind": "const",
+  "screen": "The Show row of the announcement window's data-source panel: eight choices that wrap onto two lines.",
+  "moment": "The person chooses which days the card reads.",
+  "role": "choice label",
+  "does": "Chooses a stretch that runs about a month ahead, starting today.",
+  "budget": 14,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template",
+   "announcement"
+  ],
+  "notes": "Beside Weekly and Quarterly; thirty days."
+ },
+ {
+  "key": "NOTICE_QUARTERLY",
+  "kind": "const",
+  "screen": "The Show row of the announcement window's data-source panel: eight choices that wrap onto two lines.",
+  "moment": "The person chooses which days the card reads.",
+  "role": "choice label",
+  "does": "Chooses a stretch that runs about three months ahead, starting today.",
+  "budget": 14,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template",
+   "announcement"
+  ],
+  "notes": "Beside Weekly and Monthly; ninety days."
+ },
+ {
+  "key": "NOTICE_CUSTOM",
+  "kind": "const",
+  "screen": "The last choice of the Show row and of the Highlight row of the announcement window's data-source panel.",
+  "moment": "The person wants first and last days of their own, or their own highlighted days.",
+  "role": "choice label",
+  "does": "Chooses days the person sets by hand with two date boxes instead of a ready-made stretch.",
+  "budget": 14,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template",
+   "announcement"
+  ],
+  "notes": "Used at the end of both rows."
+ },
+ {
+  "key": "NOTICE_FROM",
+  "kind": "const",
+  "screen": "Over the first of two date boxes shown when Custom is chosen in the announcement window's data-source panel.",
+  "moment": "The person sets the first of two dates.",
+  "role": "field label",
+  "does": "Labels the box holding the first day of a stretch.",
+  "budget": 10,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template",
+   "announcement"
+  ],
+  "notes": "The other box says To."
+ },
+ {
+  "key": "NOTICE_TO",
+  "kind": "const",
+  "screen": "Over the second of two date boxes shown when Custom is chosen in the announcement window's data-source panel.",
+  "moment": "The person sets the second of two dates.",
+  "role": "field label",
+  "does": "Labels the box holding the last day of a stretch.",
+  "budget": 10,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template",
+   "announcement"
+  ],
+  "notes": "The other box says From."
+ },
+ {
+  "key": "NOTICE_HIGHLIGHT",
+  "kind": "const",
+  "screen": "The heading over the second row of choices in the announcement window's data-source panel, shown for a birthday card.",
+  "moment": "The person chooses which of the names stand out on a birthday slide.",
+  "role": "section heading",
+  "does": "Labels the row that picks which names on a birthday slide are drawn heavier and set apart.",
+  "budget": 16,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template",
+   "announcement",
+   "member"
+  ],
+  "notes": "A heading made from a verb, as in making something stand out."
+ },
+ {
+  "key": "NOTICE_HL_NONE",
+  "kind": "const",
+  "screen": "The first of five choices in the Highlight row of the announcement window's data-source panel.",
+  "moment": "The person chooses which of the names stand out on a birthday slide.",
+  "role": "choice label",
+  "does": "Chooses that no name is set apart.",
+  "budget": 10,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template",
+   "announcement",
+   "member"
+  ],
+  "notes": "One word."
+ },
+ {
+  "key": "NOTICE_HL_PAST",
+  "kind": "const",
+  "screen": "The second of five choices in the Highlight row of the announcement window's data-source panel.",
+  "moment": "The person chooses which of the names stand out on a birthday slide.",
+  "role": "choice label",
+  "does": "Chooses the people whose birthday fell in the seven days before today.",
+  "budget": 18,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template",
+   "announcement",
+   "member"
+  ],
+  "notes": "Ends yesterday; today is a separate choice."
+ },
+ {
+  "key": "NOTICE_HL_COMING",
+  "kind": "const",
+  "screen": "The third of five choices in the Highlight row of the announcement window's data-source panel.",
+  "moment": "The person chooses which of the names stand out on a birthday slide.",
+  "role": "choice label",
+  "does": "Chooses the people whose birthday comes in the seven days from today, today included.",
+  "budget": 18,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template",
+   "announcement",
+   "member"
+  ],
+  "notes": "Pairs with the past week."
+ },
+ {
+  "key": "NOTICE_HL_TODAY",
+  "kind": "const",
+  "screen": "The fourth of five choices in the Highlight row of the announcement window's data-source panel.",
+  "moment": "The person chooses which of the names stand out on a birthday slide.",
+  "role": "choice label",
+  "does": "Chooses only the people whose birthday is on the current day.",
+  "budget": 12,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template",
+   "announcement",
+   "member"
+  ],
+  "notes": "One word."
+ },
+ {
+  "key": "NOTICE_CUT",
+  "kind": "const",
+  "screen": "A grey line in warning colour under the dates of the announcement window's data-source panel.",
+  "moment": "The person chose days that did not fit, and the card changed them.",
+  "role": "explanation line",
+  "does": "Tells the person their highlighted days were trimmed to fit within the stretch the card reads, or that a hand-set stretch was stopped at one year.",
+  "budget": 100,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template",
+   "announcement"
+  ],
+  "notes": "No exclamation mark; two short clauses are fine."
+ },
+ {
+  "key": "SETTINGS_WEEK_START",
+  "kind": "const",
+  "screen": "The Settings dialog, in the part about how the window looks, right under the choice of light or dark. The row has this label and a two-way switch showing the names Sunday and Monday.",
+  "moment": "The person sets which day the church's week begins on.",
+  "role": "row label",
+  "does": "Labels the choice of the first day of the week, Sunday or Monday, used by the calendar and by cards that read a week.",
+  "budget": 20,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "settings",
+   "church_calendar"
+  ],
+  "notes": "Beside the two weekday names, from the program's own list of weekdays."
+ },
+ {
+  "key": "read_members_marked",
+  "kind": "sentence",
+  "screen": "Announcements window, opened beside the live pane. Right column: the slide as it will look, with a small pill over it saying what the card reads.",
+  "moment": "The pill beside the slide of a birthday card, when some of the names are set apart.",
+  "role": "status",
+  "does": "Says the card shows the members whose birthday falls in its days, how many names there are and how many of them stand out.",
+  "budget": 60,
+  "variables": [
+   {
+    "name": "marked",
+    "example": "4",
+    "meaning": "How many of the names stand out."
+   }
+  ],
+  "cases": [],
+  "counts": "count = number of names; forms for one and many. marked is a plain number.",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template",
+   "announcement",
+   "member"
+  ],
+  "notes": "A pill, one line. It extends the sentence that only counts names."
  },
  {
   "key": "NOTICE_TITLE_COLOUR",

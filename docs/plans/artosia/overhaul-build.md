@@ -201,3 +201,15 @@ BUILD    (operator side) pptx_import.rs holds `PptxImport` (file, visible slides
            toast; the temp folder is removed
          close (Cancel, Esc): round moves on, folder removed
 ```
+
+## SCHEDRANGE1 and BDAYRANGE1: one card window (plan, 2026-11-14)
+
+SOURCES: `~/Shared/research/artosia-calendar-editing/README.md` question 4, recommendations 9 and 10 (Grafana's "this week" against "so far", Planning Center and ChurchSuite week start as an organisation setting). BASE: `artosia_core::window` (`Range`, `Window`, `Window::resolve`), read by the schedule card, the birthday card, the pill and the panel; the month picker is `ui/calendar.rs` `month_grid`, not a second one. BOUNDARY: core resolves dates from `Today` (carries `week_start`); `App::today()` fills it from `Settings.week_start`; the slide gets `Slide.marked` (row numbers) and draws only. SCREEN: Announcements tab, the data-source panel of a schedule or birthday card.
+TREE: panel = row of seven quick choices (Weekly, Monthly, Quarterly, This week, Next week, This month, Next month) + Custom with two date pickers; birthdays add a Highlight row (None, Past week, Coming week, Today, Custom); a grey line says the dates covered and, when the highlight was clamped, says so.
+RULES: Weekly, Monthly, Quarterly are the coming 7, 30 and 90 days (rolling, from today); This/Next week start on the church's week start; a highlight is a `Range` clipped to the shown range, the clamp is reported by `Shown.clamped`. Custom is capped at 366 days. A 29 February birthday sits on 28 February in a common year (UNSURE what the church wants; one line in `birthdays`).
+WORDS: new strings are consts of one or two words plus one sentence for the pill (`read_members_marked`) and one for the clamp note; briefs by Edit in `docs/i18n/brief.json`.
+DATA: window and highlight are two text columns of `announcements` (`week:0`, `month:1`, `quarter:0`, `coming:7`, `past:7`, `custom:2026-11-01..2026-11-30`); old rows (`window` empty) migrate from the fill word and `month` on load; `month` keeps being written for an older Artosia.
+STATE: the window lives in the open card (`Notices.window`); which picker is open is `Notices.pick`; nothing is stored that can be derived.
+ACTION press a quick range: sync set `window.range`, drop an empty custom, save; commit 1 re-reads the pill, the preview and the covered line; nothing else renders. Press Highlight choice: same with `window.highlight`. Press a date in the picker: set that end of the custom range (the other end follows if it would cross), close the picker.
+TIMING: no animation added; a press writes the card and the preview is rebuilt in the same frame. Measured in a test: resolving a window and listing 600 people stays under a millisecond.
+EDGES: empty window says so (existing `empty_note`); 30 names fit one slide in all three styles; highlight outside the range is clamped and said; month ends, year ends, leap February tested in core.

@@ -4121,11 +4121,6 @@
   "back": "Services",
   "why": "Culto is the event."
  },
- "FILL_SCHEDULE": {
-  "text": "Eventos da semana",
-  "back": "Events of the week",
-  "why": "Phrase like the birthday ones."
- },
  "month_year": {
   "text": "{month} de {year}",
   "back": "{month} of {year}",
@@ -4143,15 +4138,6 @@
   },
   "back": "+{count} more",
   "why": "Same form for every count."
- },
- "events_this_week": {
-  "text": {
-   "zero": "Nenhum evento esta semana",
-   "one": "{count} evento esta semana",
-   "other": "{count} eventos esta semana"
-  },
-  "back": "No event this week / {count} event(s) this week",
-  "why": "Full statement for zero."
  },
  "weekday_list": {
   "text": {
@@ -4777,9 +4763,9 @@
   "why": "One word over the switch."
  },
  "NOTICE_WEEK": {
-  "text": "7 dias",
-  "back": "7 days",
-  "why": "Seven days from today."
+  "text": "Esta semana",
+  "back": "This week",
+  "why": "The calendar week that holds today."
  },
  "NOTICE_MONTH": {
   "text": "Mês inteiro",
@@ -5635,5 +5621,88 @@
   "text": "Nada é adicionado até você clicar",
   "back": "Nothing is added until you click",
   "why": "table words reused; plain volunteer register"
+ },
+ "NOTICE_NEXT_WEEK": {
+  "text": "Próxima semana",
+  "back": "Next week",
+  "why": "Semana is the calendar week."
+ },
+ "NOTICE_NEXT_MONTH": {
+  "text": "Próximo mês",
+  "back": "Next month",
+  "why": "Pairs with Próxima semana."
+ },
+ "NOTICE_WEEKLY": {
+  "text": "Semanal",
+  "back": "Weekly",
+  "why": "Adjective beside Mensal."
+ },
+ "NOTICE_MONTHLY": {
+  "text": "Mensal",
+  "back": "Monthly",
+  "why": "Adjective."
+ },
+ "NOTICE_QUARTERLY": {
+  "text": "Trimestral",
+  "back": "Quarterly",
+  "why": "Three months."
+ },
+ "NOTICE_CUSTOM": {
+  "text": "Personalizado",
+  "back": "Customised",
+  "why": "Same word as the calendar menu."
+ },
+ "NOTICE_FROM": {
+  "text": "De",
+  "back": "From",
+  "why": "Over the first date box."
+ },
+ "NOTICE_TO": {
+  "text": "Até",
+  "back": "Until",
+  "why": "Pairs with De."
+ },
+ "NOTICE_HIGHLIGHT": {
+  "text": "Destacar",
+  "back": "Highlight",
+  "why": "Verb heading."
+ },
+ "NOTICE_HL_NONE": {
+  "text": "Nenhum",
+  "back": "None",
+  "why": "One word."
+ },
+ "NOTICE_HL_PAST": {
+  "text": "Semana passada",
+  "back": "Last week",
+  "why": "Seven days before today."
+ },
+ "NOTICE_HL_COMING": {
+  "text": "Próximos 7 dias",
+  "back": "Next 7 days",
+  "why": "Seven days from today."
+ },
+ "NOTICE_HL_TODAY": {
+  "text": "Hoje",
+  "back": "Today",
+  "why": "Same word as elsewhere."
+ },
+ "NOTICE_CUT": {
+  "text": "Os dias foram cortados: o destaque fica dentro do período e o máximo é de um ano",
+  "back": "The days were cut: the highlight stays within the period and the maximum is one year",
+  "why": "Two clauses, no exclamation."
+ },
+ "SETTINGS_WEEK_START": {
+  "text": "A semana começa em",
+  "back": "The week begins on",
+  "why": "Reads into the weekday name beside it."
+ },
+ "read_members_marked": {
+  "text": {
+   "one": "Puxa de Membros: {count} nome (em destaque: {marked})",
+   "other": "Puxa de Membros: {count} nomes (em destaque: {marked})"
+  },
+  "back": "Pulls from Members: {count} name(s) (highlighted: {marked})",
+  "why": "Same start as read_members; marked as a plain number."
  }
 }

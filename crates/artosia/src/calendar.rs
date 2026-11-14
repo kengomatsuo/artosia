@@ -893,15 +893,25 @@ impl App {
         self.new_event(date);
     }
 
-    /// The first day of the grid of the month on show: the Sunday on or before the 1st.
-    pub fn month_start(&self) -> Date {
-        let first = self.calendar.anchor.first_of_month();
-        first.plus_days(-i64::from(first.weekday()))
+    /// The church's first weekday, 0 for Sunday: the one setting the calendar and the cards read.
+    pub fn first_weekday(&self) -> u8 {
+        self.settings.first_weekday % 7
     }
 
-    /// The Sunday that starts the week on show.
+    /// How many days a date is after the first day of its week.
+    pub fn lead(&self, date: Date) -> u8 {
+        (date.weekday() + 7 - self.first_weekday()) % 7
+    }
+
+    /// The first day of the grid of the month on show: the first weekday on or before the 1st.
+    pub fn month_start(&self) -> Date {
+        let first = self.calendar.anchor.first_of_month();
+        first.plus_days(-i64::from(self.lead(first)))
+    }
+
+    /// The first day of the week on show.
     pub fn week_start(&self) -> Date {
-        self.calendar.anchor.plus_days(-i64::from(self.calendar.anchor.weekday()))
+        self.calendar.anchor.plus_days(-i64::from(self.lead(self.calendar.anchor)))
     }
 }
 
@@ -1249,10 +1259,10 @@ mod tests {
     #[test]
     fn a_schedule_card_reads_the_calendar_with_nothing_typed() {
         let mut app = App::practice();
-        let card = Announcement { title: "This week".into(), fill: Fill::ScheduleWeek, ..Announcement::default() };
+        let card = Announcement { title: "This week".into(), fill: Fill::Schedule, ..Announcement::default() };
         let slides = app.card_slides(&card);
         assert_eq!(slides.len(), 1);
-        let expected = artosia_core::deck::week_events(&app.events, &app.today()).len();
+        let expected = artosia_core::deck::window_events(&app.events, &app.today(), &artosia_core::window::Window::default(), &[]).len();
         assert_eq!(slides[0].text.lines().count(), expected);
         assert!(expected >= 6, "a week of the practice calendar holds the services, prayer, youth and rehearsal");
         // Changing an event changes the slide; hiding a calendar in the window does not.

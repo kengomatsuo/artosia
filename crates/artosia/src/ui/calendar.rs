@@ -254,7 +254,7 @@ fn rail(s: &App, k: &Kit) -> El {
     }
     // The schedule card as the announcements read it: the saved one, or a plain one made for this picture.
     // The saved card's own title, or the template's when it has none or there is no card.
-    let mut card = s.announcements.iter().find(|card| card.fill == Fill::ScheduleWeek).cloned().unwrap_or(Announcement { fill: Fill::ScheduleWeek, seconds: 10, ..Announcement::default() });
+    let mut card = s.announcements.iter().find(|card| card.fill == Fill::Schedule).cloned().unwrap_or(Announcement { fill: Fill::Schedule, seconds: 10, ..Announcement::default() });
     if card.title.trim().is_empty() {
         card.title = t::ANNOUNCEMENT_TEMPLATES()[crate::calendar::SCHEDULE_TEMPLATE].0.to_string();
     }
@@ -308,13 +308,13 @@ fn toolbar(s: &App, k: &Kit) -> El {
         .child(crate::ui::tour::help_mark(s, k, crate::guide::lessons::Feature::Calendar))
 }
 
-/// The grid of a month, Sunday first, today filled, each day with the chips that fit and "+N more".
+/// The grid of a month, the church's first weekday first, today filled, each day with the chips that fit and "+N more".
 fn month(s: &App, cx: &Cx<App>, k: &Kit) -> El {
     let sf = theme::surf();
     let today = s.civil_today();
     let anchor = s.calendar.anchor;
     let first = s.month_start();
-    let weeks = (usize::from(anchor.first_of_month().weekday()) + usize::from(Date::month_days(anchor.year, anchor.month))).div_ceil(7);
+    let weeks = (usize::from(s.lead(anchor.first_of_month())) + usize::from(Date::month_days(anchor.year, anchor.month))).div_ceil(7);
     let found = by_day(s, first, first.plus_days(7 * weeks as i64 - 1));
     let size = cx.layout_size("cal-grid").unwrap_or(GRID_FALLBACK);
     // The room a day has under its number, from what the grid measured last frame.
@@ -323,7 +323,7 @@ fn month(s: &App, cx: &Cx<App>, k: &Kit) -> El {
     let room = row_height - 2.0 * 4.0 - NUMBER - 2.0;
     let mut heads = row().w_full().h(26.0);
     for day in 0..7u8 {
-        heads = heads.child(row().w(0.0).grow(1.0).px(space::S2).justify_end().center_y().child(cap(k, &short(weekday_name(day)))));
+        heads = heads.child(row().w(0.0).grow(1.0).px(space::S2).justify_end().center_y().child(cap(k, &short(weekday_name((s.first_weekday() + day) % 7)))));
     }
     let mut grid = col().key("cal-grid").w_full().grow(1.0).min_h(0.0).child(hline(&sf)).child(heads);
     for week in 0..weeks {
@@ -376,7 +376,7 @@ fn month(s: &App, cx: &Cx<App>, k: &Kit) -> El {
     grid
 }
 
-/// Seven columns, Sunday first, each a day's events in full.
+/// Seven columns from the church's first weekday, each a day's events in full.
 fn week(s: &App, cx: &Cx<App>, k: &Kit) -> El {
     let sf = theme::surf();
     let today = s.civil_today();
@@ -552,7 +552,7 @@ fn day_toggle(k: &Kit, weekday: u8, on: bool) -> El {
 pub(super) fn month_grid(s: &App, k: &Kit, id: &str, shown: Date, on: impl Fn(Date) -> bool, within: impl Fn(Date) -> bool, allowed: impl Fn(Date) -> bool, step: fn(&mut App, i32), pick: fn(&mut App, Date), foot: El) -> El {
     let today = s.civil_today();
     let first = shown.first_of_month();
-    let start = first.plus_days(-i64::from(first.weekday()));
+    let start = first.plus_days(-i64::from(s.lead(first)));
     let head = row()
         .w_full()
         .gap(space::S2)
@@ -562,11 +562,11 @@ pub(super) fn month_grid(s: &App, k: &Kit, id: &str, shown: Date, on: impl Fn(Da
         .child(btn(t::CAL_NEXT()).icon(&icons::ARROW_RIGHT).icon_only().small().focusable().build(k, move |s, _| step(s, 1)));
     let mut heads = row().w_full();
     for day in 0..7u8 {
-        heads = heads.child(row().w(0.0).grow(1.0).h(20.0).center().child(cap(k, &short(weekday_name(day)))));
+        heads = heads.child(row().w(0.0).grow(1.0).h(20.0).center().child(cap(k, &short(weekday_name((s.first_weekday() + day) % 7)))));
     }
     let mut grid = col().key(format!("{id}-month")).role("grid").w_full().gap(2.0).focus_group().focus_follows();
     // As many weeks as the month has, so a short month does not end in a row of next month's days.
-    let weeks = (usize::from(first.weekday()) + usize::from(Date::month_days(shown.year, shown.month))).div_ceil(7) as i64;
+    let weeks = (usize::from(s.lead(first)) + usize::from(Date::month_days(shown.year, shown.month))).div_ceil(7) as i64;
     for week in 0..weeks {
         let mut line = row().w_full().gap(2.0);
         for day in 0..7 {

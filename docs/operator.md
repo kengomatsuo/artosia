@@ -651,3 +651,12 @@ Plan and research: `docs/plans/artosia/guide.md`, `~/Shared/research/artosia-gui
 | What's new | `guide/news.rs`, `ui/tour.rs` `news_view` | Each release's features; opens once after an update that brought some (`Settings::news_seen`), and from the search. The features as a list, the picked one's clip beside it, Try starts its lesson. |
 
 Every text is written in ten languages from its brief (`docs/i18n/brief.json`).
+
+### What a card's dates cover (SCHEDRANGE1, BDAYRANGE1, built 2026-11-14)
+
+A schedule or birthday card shows one window of dates (`artosia-core/src/window.rs`): this or next
+week, this or next month, the coming 7, 30 or 90 days (Weekly, Monthly, Quarterly), or two picked
+dates. A birthday card may highlight a part inside it (the past week, the coming week, today, or two
+picked dates); a highlight outside the window is clamped and the panel says so. Highlighted names are
+marked by a filled ground and weight, never by colour alone. The week starts on Sunday unless Settings
+says Monday.

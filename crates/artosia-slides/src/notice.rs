@@ -37,6 +37,9 @@ pub fn title_default(style: NoticeStyle) -> [u8; 3] {
     }
 }
 
+/// The weight of a row that stands out; its inverted ground is the other cue.
+const MARKED_WEIGHT: f32 = 900.0;
+
 struct Ctx {
     w: f32,
     h: f32,
@@ -57,12 +60,15 @@ struct Table {
     key: usize,
     /// The column that takes the room a wider block leaves.
     stretch: usize,
+    /// Per block, per row: the row stands out. Empty when none does.
+    marked: Vec<Vec<bool>>,
 }
 
 impl Table {
-    fn of(kind: NoticeKind, rows: &[Vec<String>]) -> Table {
+    /// `marked` are the rows, by place, that stand out; only birthdays have them.
+    fn of(kind: NoticeKind, rows: &[Vec<String>], marked: &[usize]) -> Table {
         match kind {
-            NoticeKind::Schedule => Table { blocks: vec![rows.to_vec()], right: &[false, true, false], key: 0, stretch: 2 },
+            NoticeKind::Schedule => Table { blocks: vec![rows.to_vec()], right: &[false, true, false], key: 0, stretch: 2, marked: Vec::new() },
             NoticeKind::Birthdays => {
                 // The number is the template's, not typed; 11 to 20 names take two columns, more three.
                 let blocks = match rows.len() {
@@ -72,15 +78,24 @@ impl Table {
                 };
                 let numbered: Vec<Vec<String>> = rows.iter().enumerate().map(|(at, cells)| std::iter::once(format!("{}.", at + 1)).chain(cells.iter().cloned()).collect()).collect();
                 let per = rows.len().div_ceil(blocks).max(1);
-                Table { blocks: numbered.chunks(per).map(<[_]>::to_vec).collect(), right: &[true, false, true], key: 1, stretch: 1 }
+                let marks = if marked.is_empty() { Vec::new() } else { (0..numbered.len()).collect::<Vec<_>>().chunks(per).map(|block| block.iter().map(|at| marked.contains(at)).collect()).collect() };
+                Table { blocks: numbered.chunks(per).map(<[_]>::to_vec).collect(), right: &[true, false, true], key: 1, stretch: 1, marked: marks }
             }
-            NoticeKind::Money => Table { blocks: vec![rows.to_vec()], right: &[false, true], key: 0, stretch: 0 },
-            NoticeKind::Plain | NoticeKind::Account => Table { blocks: vec![rows.to_vec()], right: &[false], key: 0, stretch: 0 },
+            NoticeKind::Money => Table { blocks: vec![rows.to_vec()], right: &[false, true], key: 0, stretch: 0, marked: Vec::new() },
+            NoticeKind::Plain | NoticeKind::Account => Table { blocks: vec![rows.to_vec()], right: &[false], key: 0, stretch: 0, marked: Vec::new() },
         }
     }
 
     fn rows_tall(&self) -> usize {
         self.blocks.first().map_or(1, Vec::len).max(1)
+    }
+
+    fn is_marked(&self, block: usize, row: usize) -> bool {
+        self.marked.get(block).and_then(|rows| rows.get(row)).copied().unwrap_or(false)
+    }
+
+    fn has_marks(&self) -> bool {
+        self.marked.iter().flatten().any(|marked| *marked)
     }
 }
 
@@ -120,6 +135,8 @@ fn title_style(family: Family, content: &str, size: f32, weight: f32, width: f32
 struct Grid<'a> {
     table: &'a Table,
     styles: Vec<TextStyle>,
+    /// The same styles at the weight a marked row is drawn in.
+    heavy: Vec<TextStyle>,
     gap: f32,
     pad: f32,
     /// Per block, per column.
@@ -131,6 +148,8 @@ struct Paint {
     row_h: f32,
     row_line: Option<Color>,
     col_line: Option<Color>,
+    /// A marked row's ground and the ink of its words; the rows stand out by this and by weight.
+    marked: (Color, Color),
     /// The width the blocks and the gaps between them are spread to, when they should fill it.
     spread: Option<f32>,
     block_gap: f32,
@@ -138,12 +157,18 @@ struct Paint {
 
 impl<'a> Grid<'a> {
     fn new(table: &'a Table, styles: Vec<TextStyle>, gap: f32, pad: f32) -> Grid<'a> {
+        let heavy: Vec<TextStyle> = styles.iter().map(|style| TextStyle { weight: MARKED_WEIGHT, ..*style }).collect();
         let widths = table
             .blocks
             .iter()
-            .map(|block| (0..styles.len()).map(|at| block.iter().map(|cells| width_of(cells.get(at).map_or("", String::as_str), styles[at])).fold(0.0, f32::max) + 2.0 * pad).collect())
+            .enumerate()
+            .map(|(b, block)| {
+                (0..styles.len())
+                    .map(|at| block.iter().enumerate().map(|(r, cells)| width_of(cells.get(at).map_or("", String::as_str), if table.is_marked(b, r) { heavy[at] } else { styles[at] })).fold(0.0, f32::max) + 2.0 * pad)
+                    .collect()
+            })
             .collect();
-        Grid { table, styles, gap, pad, widths }
+        Grid { table, styles, heavy, gap, pad, widths }
     }
 
     fn block_width(&self, block: usize) -> f32 {
@@ -170,14 +195,19 @@ impl<'a> Grid<'a> {
                 lines = lines.border_sides([0.0, 0.0, 0.0, 1.0], line);
             }
             for (index, cells) in block.iter().enumerate() {
+                let marked = self.table.is_marked(at, index);
                 let mut line = row().key(format!("row-{index}")).w(wide).h(paint.row_h).items_center().gap(self.gap);
+                if marked {
+                    line = line.fill(paint.marked.0);
+                }
                 if let Some(rule) = paint.row_line {
                     line = line.border_sides([0.0, 0.0, 1.0, 0.0], rule);
                 }
                 for (column, width) in widths.iter().enumerate() {
                     let content = cells.get(column).map_or("", String::as_str);
                     let rule = paint.col_line.filter(|_| column > 0);
-                    line = line.child(cell(content, self.styles[column], paint.colors[column], *width, self.table.right[column], self.pad, rule));
+                    let (style, colour) = if marked { (self.heavy[column], paint.marked.1) } else { (self.styles[column], paint.colors[column]) };
+                    line = line.child(cell(content, style, colour, *width, self.table.right[column], self.pad, rule));
                 }
                 lines = lines.child(line);
             }
@@ -276,10 +306,12 @@ fn hairline(layer: El, slide: &Slide, body: &NoticeBody, c: &Ctx) -> El {
             .children((!note.is_empty()).then(|| text(note).font(style_of(c.sans, (0.04 * h).round(), 400.0)).color(Color::WHITE.alpha(0.6))));
         return layer.child(lines);
     }
-    let table = Table::of(slide.notice, &body.rows);
+    let table = Table::of(slide.notice, &body.rows, &slide.marked);
     let blocks = table.blocks.len() as f32;
     // Side by side, the columns of a block sit closer, so three blocks fit one slide.
     let gap_k = if blocks > 1.0 { 0.5 } else { 1.5 };
+    // A row that stands out is filled, so its words keep a margin inside the fill, taken from the gaps between columns.
+    let pad_k = if table.has_marks() { 0.1 } else { 0.0 };
     let (row_k, total_k, block_gap) = (1.35, 1.25, (0.02 * w).round());
     let total_tall = |size: f32| if body.total.is_some() { row_k * total_k * size + 0.03 * h } else { 0.0 };
     let total_wide = |size: f32| -> f32 {
@@ -287,19 +319,19 @@ fn hairline(layer: El, slide: &Slide, body: &NoticeBody, c: &Ctx) -> El {
         body.total.as_ref().map_or(0.0, |cells| cells.iter().map(|cell| width_of(cell, style)).sum::<f32>() + size * 2.5)
     };
     let size = fit_size(
-        |size| (Grid::new(&table, styles_for(NoticeStyle::Hairline, &table, c, size), size * gap_k, 0.0).natural(block_gap).max(total_wide(size)), table.rows_tall() as f32 * row_k * size + total_tall(size)),
+        |size| (Grid::new(&table, styles_for(NoticeStyle::Hairline, &table, c, size), size * f32::max(gap_k - 3.0 * pad_k, 0.0), size * pad_k).natural(block_gap).max(total_wide(size)), table.rows_tall() as f32 * row_k * size + total_tall(size)),
         (inner, bottom - top),
         0.075 * h,
         0.03 * h,
     );
-    let grid = Grid::new(&table, styles_for(NoticeStyle::Hairline, &table, c, size), size * gap_k, 0.0);
+    let grid = Grid::new(&table, styles_for(NoticeStyle::Hairline, &table, c, size), size * f32::max(gap_k - 3.0 * pad_k, 0.0), size * pad_k);
     let colors: Vec<Color> = (0..table.right.len())
         .map(|at| if slide.notice == NoticeKind::Birthdays && at == 0 { c.accent } else if at == table.key { Color::WHITE } else { Color::WHITE.alpha(0.85) })
         .collect();
     let spread = (blocks > 1.0).then_some(inner);
     let table_w = if blocks > 1.0 { inner } else { grid.natural(0.0).max(total_wide(size)).ceil() };
     let mut lines = col().key("rows").absolute(mx, top).w(table_w).gap((0.02 * h).round());
-    lines = lines.child(grid.build(&Paint { colors, row_h: row_k * size, row_line: None, col_line: None, spread, block_gap }));
+    lines = lines.child(grid.build(&Paint { colors, row_h: row_k * size, row_line: None, col_line: None, marked: (c.accent, rgb([18, 24, 18])), spread, block_gap }));
     if let Some(total) = &body.total {
         let style = style_of(c.sans, size * total_k, 800.0);
         let value = total.get(1).cloned().unwrap_or_default();
@@ -382,7 +414,7 @@ fn ledger(layer: El, slide: &Slide, body: &NoticeBody, c: &Ctx) -> El {
         }
         return layer;
     }
-    let table = Table::of(slide.notice, &body.rows);
+    let table = Table::of(slide.notice, &body.rows, &slide.marked);
     let total = body.total.is_some();
     let pad_k = if table.blocks.len() > 1 { 0.25 } else { 0.4 };
     let limit = if total { (0.82 * h).round() } else { (0.955 * h).round() };
@@ -406,7 +438,7 @@ fn ledger(layer: El, slide: &Slide, body: &NoticeBody, c: &Ctx) -> El {
         .fill(paper)
         .border(hair, line)
         .child(heading_row(kind_name(slide.notice), size * 0.85, row_h, tint, panel_w))
-        .child(grid.build(&Paint { colors, row_h, row_line: Some(line), col_line: Some(line), spread: Some(panel_w), block_gap: 0.0 }));
+        .child(grid.build(&Paint { colors, row_h, row_line: Some(line), col_line: Some(line), marked: (c.accent, Color::WHITE), spread: Some(panel_w), block_gap: 0.0 }));
     layer = layer.child(panel);
     if let Some(cells) = &body.total {
         // Apart from the table, wider than it, and heavier and bigger than its rows.
@@ -470,10 +502,12 @@ fn band(layer: El, slide: &Slide, body: &NoticeBody, c: &Ctx) -> El {
             .children((!note.is_empty()).then(|| text(note).font(style_of(c.sans, (0.04 * h).round(), 400.0)).color(ink.alpha(0.6))));
         return layer.child(lines);
     }
-    let table = Table::of(slide.notice, &body.rows);
+    let table = Table::of(slide.notice, &body.rows, &slide.marked);
     let blocks = table.blocks.len() as f32;
     // Side by side, the columns of a block sit closer, so three blocks fit one slide.
     let gap_k = if blocks > 1.0 { 0.5 } else { 1.5 };
+    // A row that stands out is filled, so its words keep a margin inside the fill, taken from the gaps between columns.
+    let pad_k = if table.has_marks() { 0.1 } else { 0.0 };
     let (row_k, block_gap) = (1.4, (0.02 * w).round());
     let pill_k = 1.9;
     let pill_style = |size: f32| style_of(c.sans, (size * 1.1).min(0.06 * h), 800.0);
@@ -483,17 +517,17 @@ fn band(layer: El, slide: &Slide, body: &NoticeBody, c: &Ctx) -> El {
         body.total.as_ref().map_or(0.0, |cells| cells.iter().map(|cell| width_of(cell, style)).sum::<f32>() + style.size * 3.5)
     };
     let size = fit_size(
-        |size| (Grid::new(&table, styles_for(NoticeStyle::Band, &table, c, size), size * gap_k, 0.0).natural(block_gap).max(pill_wide(size)), table.rows_tall() as f32 * row_k * size + pill_h(size)),
+        |size| (Grid::new(&table, styles_for(NoticeStyle::Band, &table, c, size), size * f32::max(gap_k - 3.0 * pad_k, 0.0), size * pad_k).natural(block_gap).max(pill_wide(size)), table.rows_tall() as f32 * row_k * size + pill_h(size)),
         (inner, foot - top),
         0.075 * h,
         0.03 * h,
     );
-    let grid = Grid::new(&table, styles_for(NoticeStyle::Band, &table, c, size), size * gap_k, 0.0);
+    let grid = Grid::new(&table, styles_for(NoticeStyle::Band, &table, c, size), size * f32::max(gap_k - 3.0 * pad_k, 0.0), size * pad_k);
     let spread = (blocks > 1.0).then_some(inner);
     let table_w = if blocks > 1.0 { inner } else { grid.natural(0.0).max(pill_wide(size)).ceil() };
     let colors = vec![ink; table.right.len()];
     let mut lines = col().key("rows").absolute(mx, top).w(table_w);
-    lines = lines.child(grid.build(&Paint { colors, row_h: (row_k * size).round(), row_line: Some(rule), col_line: None, spread, block_gap }));
+    lines = lines.child(grid.build(&Paint { colors, row_h: (row_k * size).round(), row_line: Some(rule), col_line: None, marked: (c.accent, rgb([16, 22, 24])), spread, block_gap }));
     layer = layer.child(lines);
     if let Some(cells) = &body.total {
         let style = pill_style(size);
@@ -527,13 +561,22 @@ mod tests {
     #[test]
     fn birthdays_take_one_two_or_three_columns_and_the_template_numbers_them() {
         for (count, columns) in [(6, 1), (10, 1), (11, 2), (20, 2), (21, 3), (30, 3)] {
-            let table = Table::of(NoticeKind::Birthdays, &rows(count));
+            let table = Table::of(NoticeKind::Birthdays, &rows(count), &[]);
             assert_eq!(table.blocks.len(), columns, "{count} names");
             assert_eq!(table.blocks.iter().map(Vec::len).sum::<usize>(), count);
         }
-        let table = Table::of(NoticeKind::Birthdays, &rows(30));
+        let table = Table::of(NoticeKind::Birthdays, &rows(30), &[]);
         assert_eq!(table.blocks[2][0][0], "21.");
         assert_eq!(table.blocks[2][9][0], "30.");
+    }
+
+    #[test]
+    fn marked_rows_are_found_by_their_place_in_each_column_of_names() {
+        let table = Table::of(NoticeKind::Birthdays, &rows(30), &[0, 10, 29]);
+        assert!(table.has_marks());
+        assert_eq!([table.is_marked(0, 0), table.is_marked(1, 0), table.is_marked(2, 9), table.is_marked(2, 8)], [true, true, true, false]);
+        assert!(!Table::of(NoticeKind::Birthdays, &rows(30), &[]).has_marks());
+        assert!(!Table::of(NoticeKind::Schedule, &rows(3), &[1]).has_marks());
     }
 
     #[test]

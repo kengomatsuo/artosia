@@ -4041,11 +4041,6 @@
   "back": "Services",
   "why": "Reuses the table words: kegiatan for event, kalender, pengumuman for the card; pekan so it is not Sunday"
  },
- "FILL_SCHEDULE": {
-  "text": "Kegiatan minggu ini dari kalender",
-  "back": "This week's events from the calendar",
-  "why": "Reuses the table words: kegiatan for event, kalender, pengumuman for the card; pekan so it is not Sunday"
- },
  "month_year": {
   "text": "{month} {year}",
   "back": "{month} {year}",
@@ -4061,14 +4056,6 @@
    "other": "+{count} lagi"
   },
   "back": "+{count} more",
-  "why": "Reuses the table words: kegiatan for event, kalender, pengumuman for the card; pekan so it is not Sunday"
- },
- "events_this_week": {
-  "text": {
-   "zero": "Tidak ada kegiatan minggu ini",
-   "other": "{count} kegiatan minggu ini"
-  },
-  "back": "No events this week / {count} events this week",
   "why": "Reuses the table words: kegiatan for event, kalender, pengumuman for the card; pekan so it is not Sunday"
  },
  "weekday_list": {
@@ -4692,9 +4679,9 @@
   "why": "Not jendela, which means program window"
  },
  "NOTICE_WEEK": {
-  "text": "7 hari ke depan",
-  "back": "Next 7 days",
-  "why": "From today to a week later"
+  "text": "Minggu ini",
+  "back": "This week",
+  "why": "calendar week holding today"
  },
  "NOTICE_MONTH": {
   "text": "Bulan ini",
@@ -5559,5 +5546,87 @@
   "text": "Belum ada yang ditambahkan sebelum ditekan",
   "back": "Nothing is added before it is pressed",
   "why": "table words reused; plain volunteer register"
+ },
+ "NOTICE_NEXT_WEEK": {
+  "text": "Minggu depan",
+  "back": "Next week",
+  "why": ""
+ },
+ "NOTICE_NEXT_MONTH": {
+  "text": "Bulan depan",
+  "back": "Next month",
+  "why": ""
+ },
+ "NOTICE_WEEKLY": {
+  "text": "Mingguan",
+  "back": "Weekly",
+  "why": ""
+ },
+ "NOTICE_MONTHLY": {
+  "text": "Bulanan",
+  "back": "Monthly",
+  "why": ""
+ },
+ "NOTICE_QUARTERLY": {
+  "text": "Tiga bulanan",
+  "back": "Every three months",
+  "why": "'tiga bulanan' since there is no short word"
+ },
+ "NOTICE_CUSTOM": {
+  "text": "Atur sendiri",
+  "back": "Set yourself",
+  "why": ""
+ },
+ "NOTICE_FROM": {
+  "text": "Dari",
+  "back": "From",
+  "why": ""
+ },
+ "NOTICE_TO": {
+  "text": "Sampai",
+  "back": "Until",
+  "why": ""
+ },
+ "NOTICE_HIGHLIGHT": {
+  "text": "Tandai nama",
+  "back": "Mark names",
+  "why": "verb heading"
+ },
+ "NOTICE_HL_NONE": {
+  "text": "Tanpa",
+  "back": "None",
+  "why": ""
+ },
+ "NOTICE_HL_PAST": {
+  "text": "7 hari lalu",
+  "back": "7 days ago",
+  "why": ""
+ },
+ "NOTICE_HL_COMING": {
+  "text": "7 hari ke depan",
+  "back": "Next 7 days",
+  "why": "same phrase as the table's week-ahead wording"
+ },
+ "NOTICE_HL_TODAY": {
+  "text": "Hari ini",
+  "back": "Today",
+  "why": ""
+ },
+ "NOTICE_CUT": {
+  "text": "Hari yang ditandai dipangkas agar muat di rentang kartu, atau rentang sendiri dibatasi satu tahun",
+  "back": "The marked days were trimmed to fit the card's stretch, or the own stretch was limited to one year",
+  "why": ""
+ },
+ "SETTINGS_WEEK_START": {
+  "text": "Awal minggu",
+  "back": "Start of the week",
+  "why": ""
+ },
+ "read_members_marked": {
+  "text": {
+   "other": "{count} nama ulang tahun, {marked} ditandai"
+  },
+  "back": "{count} birthday names, {marked} marked",
+  "why": ""
  }
 }

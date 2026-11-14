@@ -2,7 +2,7 @@
 //! drawn with this church's own data, Use template, and "Apply style to". The names, icons and
 //! "reads" lines here are shared with the template rows of the Announcements tab.
 
-use artosia_core::deck::{Announcement, Fill, NoticeStyle, Template, source_count};
+use artosia_core::deck::{Announcement, Fill, NoticeStyle, Template, birthdays, source_count};
 use rune::{Cursor, El, ScrollSpec, col, el, icon, row, spacer, text};
 use rune_kit::{Kit, ScrollBar, SegmentedControl};
 
@@ -39,14 +39,19 @@ pub fn reads(template: Template) -> &'static str {
     }
 }
 
-/// What a data source gives, as the tip on a row or a tile; typed words give none.
-pub fn fill_words(fill: Fill) -> Option<&'static str> {
+/// What a data source gives, as the tip on a row or a tile; typed words give none. A birthday
+/// card of the calendar week or month says so; any other days are said by its panel.
+pub fn fill_words(fill: Fill, window: &artosia_core::window::Window) -> Option<&'static str> {
+    use artosia_core::window::Range;
     match fill {
         Fill::Nothing => None,
-        Fill::BirthdaysWeek => Some(t::FILL_WEEK()),
-        Fill::BirthdaysMonth => Some(t::FILL_MONTH()),
+        Fill::Birthdays => Some(match window.range {
+            Range::Week(0) => t::FILL_WEEK(),
+            Range::Month(0) => t::FILL_MONTH(),
+            _ => t::TPL_READS_MEMBERS(),
+        }),
         Fill::Passage => Some(t::FILL_PASSAGE()),
-        Fill::ScheduleWeek => Some(t::FILL_SCHEDULE()),
+        Fill::Schedule => Some(t::TPL_READS_CALENDAR()),
         Fill::Offerings => Some(t::FILL_OFFERINGS()),
         Fill::Transfer => Some(t::FILL_TRANSFER()),
     }
@@ -65,7 +70,10 @@ pub fn read_line(s: &App, card: &Announcement) -> String {
     let count = source_count(card, &s.people, &s.events, &s.giving_data(), &s.today(), s.bible().map(|bible| &**bible)).unwrap_or(0);
     match card.fill.template() {
         Template::Schedule => t::read_calendar(count),
-        Template::Birthdays => t::read_members(count),
+        Template::Birthdays => {
+            let marked = birthdays(&s.people, &card.window, &s.today()).iter().filter(|found| found.marked).count();
+            if marked == 0 { t::read_members(count) } else { t::read_members_marked(count, marked) }
+        }
         Template::Offerings => t::read_gifts(count),
         Template::Transfer => t::NOTICE_READ_ACCOUNT().to_string(),
         Template::Passage => t::NOTICE_READ_BIBLE().to_string(),
@@ -156,7 +164,7 @@ fn tile(s: &App, k: &Kit, template: Template, style: NoticeStyle) -> El {
     }
     // Style and source apart: the interface never joins words with a middle dot.
     let note = format!("{}, {}", style_name(style), reads(template));
-    let tip = fill_words(card.fill).unwrap_or_default();
+    let tip = fill_words(card.fill, &card.window).unwrap_or_default();
     col()
         .key(format!("tile-{template:?}-{}", style.code()))
         .help(tip)

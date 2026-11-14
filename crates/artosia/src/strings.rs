@@ -2151,7 +2151,6 @@ text!(CAL_COLOUR, "Colour", "Colour");
 text!(CAL_DELETE_CALENDAR, "Delete calendar", "Delete calendar");
 text!(CAL_NEW_CALENDAR, "New calendar", "New calendar");
 text!(CAL_SERVICES, "Services", "Services");
-text!(FILL_SCHEDULE, "Calendar events this week", "Calendar events this week");
 
 /// The month and year over a month of the calendar.
 pub fn month_year(month: &str, year: i32) -> String {
@@ -2189,18 +2188,6 @@ pub fn more_events(count: usize) -> String {
         return text;
     }
     format!("+{count} more")
-}
-
-/// How many events a schedule card holds this week, under the card's fill choice.
-pub fn events_this_week(count: usize) -> String {
-    if let Some(text) = say("events_this_week", None, Some(count), &[]) {
-        return text;
-    }
-    match count {
-        0 => "No events in the next seven days".to_string(),
-        1 => "1 event in the next seven days".to_string(),
-        _ => format!("{count} events in the next seven days"),
-    }
 }
 
 /// Weekday names run together: "Sunday and Wednesday", "Sunday, Tuesday and Friday".
@@ -2509,6 +2496,21 @@ text!(NOTICE_CALENDARS, "Calendars used", "Calendars used");
 text!(NOTICE_WINDOW, "Show", "Show");
 text!(NOTICE_WEEK, "This week", "This week");
 text!(NOTICE_MONTH, "This month", "This month");
+text!(NOTICE_NEXT_WEEK, "Next week", "Next week");
+text!(NOTICE_NEXT_MONTH, "Next month", "Next month");
+text!(NOTICE_WEEKLY, "Weekly", "Weekly");
+text!(NOTICE_MONTHLY, "Monthly", "Monthly");
+text!(NOTICE_QUARTERLY, "Quarterly", "Quarterly");
+text!(NOTICE_CUSTOM, "Custom", "Custom");
+text!(NOTICE_FROM, "From", "From");
+text!(NOTICE_TO, "To", "To");
+text!(NOTICE_HIGHLIGHT, "Highlight", "Highlight");
+text!(NOTICE_HL_NONE, "None", "None");
+text!(NOTICE_HL_PAST, "Past week", "Past week");
+text!(NOTICE_HL_COMING, "Coming week", "Coming week");
+text!(NOTICE_HL_TODAY, "Today", "Today");
+text!(NOTICE_CUT, "Cut to fit: a highlight stays inside the days shown, and a range stops at a year", "Cut to fit: a highlight stays inside the days shown, and a range stops at a year");
+text!(SETTINGS_WEEK_START, "Week starts on", "Week starts on");
 text!(NOTICE_TITLE_COLOUR, "Title colour", "Title colour");
 text!(NOTICE_READ_ACCOUNT, "Read from the transfer account", "Read from the transfer account");
 text!(NOTICE_READ_BIBLE, "Read from the Bible", "Read from the Bible");
@@ -2546,6 +2548,17 @@ pub fn read_members(count: usize) -> String {
         0 => "Read from the members, nobody".to_string(),
         1 => "Read from the members, 1 name".to_string(),
         _ => format!("Read from the members, {count} names"),
+    }
+}
+
+/// What a birthday card reads when some of the names stand out.
+pub fn read_members_marked(count: usize, marked: usize) -> String {
+    if let Some(text) = say("read_members_marked", None, Some(count), &[("marked", text_arg(marked))]) {
+        return text;
+    }
+    match count {
+        1 => format!("Read from the members, 1 name, {marked} highlighted"),
+        _ => format!("Read from the members, {count} names, {marked} highlighted"),
     }
 }
 

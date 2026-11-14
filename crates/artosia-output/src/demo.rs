@@ -301,3 +301,12 @@ pub fn notice_scene(style: NoticeStyle, kind: NoticeKind) -> OutputState {
     DIRECT.store(style == NoticeStyle::Hairline && kind == NoticeKind::Plain, Ordering::Release);
     notice(style, kind)
 }
+
+/// The state of a `notice-<style>-birthdays-marked` scene: the thirty names with seven rows, as a past week would, standing out.
+pub fn notice_marked_scene(style: NoticeStyle) -> OutputState {
+    let mut state = notice_scene(style, NoticeKind::Birthdays);
+    if let Some(slide) = state.slide.as_mut() {
+        slide.marked = (6..13).collect();
+    }
+    state
+}
