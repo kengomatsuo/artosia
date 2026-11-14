@@ -5235,5 +5235,60 @@
   "text": "Artosia {version} 的新功能",
   "back": "New features of Artosia {version}",
   "why": "Matches the command name."
+ },
+ "HELP_NOTICES": {
+  "text": "放在礼拜前和各环节之间播放的幻灯片，如欢迎、日程、生日、奉献。",
+  "back": "Slides played before the service and between its stages, such as welcome, schedule, birthdays, offerings.",
+  "why": "Table's 奉献"
+ },
+ "HELP_LOOK": {
+  "text": "样式决定投影上显示什么：背景图片或视频，文字的字体和颜色，还有标志。",
+  "back": "The style decides what is shown on the projection: background picture or video, the text's font and colour, and the logo.",
+  "why": "样式 is the table's design word"
+ },
+ "HELP_PLAN": {
+  "text": "流程就是礼拜的顺序：诗歌、圣经经文、公告、视频和场景，依次播放。",
+  "back": "The flow is the order of the service: hymns, Bible passages, announcements, videos and scenes, played in turn.",
+  "why": "流程 is the tab word"
+ },
+ "GUIDE_NOTICE_NEW": {
+  "text": "按下带框的按钮，添加公告",
+  "back": "Press the framed button, add an announcement",
+  "why": "Same pattern"
+ },
+ "GUIDE_NOTICE_NEW_MORE": {
+  "text": "可以从模板开始，也可以自己写一条简单的",
+  "back": "You can start from a template, or write a simple one yourself",
+  "why": "模板 from the table"
+ },
+ "GUIDE_LOOK_FOR": {
+  "text": "样式可以所有礼拜共用，也可以只用于这一场",
+  "back": "The style can be shared by all services, or used for this one only",
+  "why": "Short"
+ },
+ "GUIDE_LOOK_FOR_MORE": {
+  "text": "有自己样式的礼拜，切换礼拜后样式不变",
+  "back": "A service with its own style keeps the style after you switch services",
+  "why": "One sentence"
+ },
+ "GUIDE_PLAN_EXPLAIN": {
+  "text": "礼拜要用的内容都放进这个列表",
+  "back": "Everything the service uses goes into this list",
+  "why": "Short"
+ },
+ "GUIDE_PLAN_EXPLAIN_MORE": {
+  "text": "诗歌、圣经经文、公告、视频、场景，按顺序排列",
+  "back": "Hymns, Bible passages, announcements, videos, scenes, arranged in order",
+  "why": "List"
+ },
+ "GUIDE_PLAN_ADD": {
+  "text": "按下带框的按钮，添加到礼拜里",
+  "back": "Press the framed button, add to the service",
+  "why": "Same pattern"
+ },
+ "GUIDE_PLAN_ADD_MORE": {
+  "text": "在打开的列表里选择要添加的内容",
+  "back": "In the list that opens, choose what to add",
+  "why": "Plain"
  }
 }

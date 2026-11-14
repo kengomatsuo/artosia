@@ -5233,5 +5233,60 @@
   "text": "Artosia {version} の新機能",
   "back": "New features of Artosia {version}",
   "why": "Matches the command name."
+ },
+ "HELP_NOTICES": {
+  "text": "お知らせは、礼拝の前や合間に映すスライドです。あいさつ、予定、誕生日、献金など。",
+  "back": "Announcements are slides shown before and between parts of the service. Greeting, events, birthdays, offerings and so on.",
+  "why": "です/ます"
+ },
+ "HELP_LOOK": {
+  "text": "デザインで、プロジェクターに映る背景の画像や動画、文字の書体と色、ロゴを決めます。",
+  "back": "With Design you decide the background picture or video, the font and colour of the text, and the logo.",
+  "why": "デザイン is the table's word"
+ },
+ "HELP_PLAN": {
+  "text": "式次第は礼拝の順番です。歌、聖書朗読、お知らせ、動画、シーンを順に映します。",
+  "back": "The order of service. Songs, Bible readings, announcements, videos and scenes are shown in turn.",
+  "why": "式次第 is the tab word"
+ },
+ "GUIDE_NOTICE_NEW": {
+  "text": "枠のボタンを押して、お知らせを追加",
+  "back": "Press the framed button and add an announcement",
+  "why": "Same pattern as GUIDE_CAL_NEW"
+ },
+ "GUIDE_NOTICE_NEW_MORE": {
+  "text": "ひな形から始めるか、自分で簡単に書けます",
+  "back": "You can start from a template or write one simply yourself",
+  "why": "ひな形 from the table"
+ },
+ "GUIDE_LOOK_FOR": {
+  "text": "デザインは全礼拝共通か、この礼拝だけにできます",
+  "back": "The design can be common to all services or only this service",
+  "why": "Short"
+ },
+ "GUIDE_LOOK_FOR_MORE": {
+  "text": "専用のデザインにした礼拝は、礼拝を切り替えてもそのままです",
+  "back": "A service given its own design stays that way even when you switch services",
+  "why": "One sentence"
+ },
+ "GUIDE_PLAN_EXPLAIN": {
+  "text": "礼拝に使うものは、すべてこの一覧に入れます",
+  "back": "Everything used in the service goes into this list",
+  "why": "Short"
+ },
+ "GUIDE_PLAN_EXPLAIN_MORE": {
+  "text": "歌、聖書朗読、お知らせ、動画、シーンを順番に",
+  "back": "Songs, Bible readings, announcements, videos, scenes, in order",
+  "why": "List"
+ },
+ "GUIDE_PLAN_ADD": {
+  "text": "枠のボタンを押して、礼拝に追加",
+  "back": "Press the framed button and add to the service",
+  "why": "Same pattern"
+ },
+ "GUIDE_PLAN_ADD_MORE": {
+  "text": "開いた一覧から、追加するものを選びます",
+  "back": "From the list that opened, choose what to add",
+  "why": "Plain polite"
  }
 }

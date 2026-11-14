@@ -5234,5 +5234,60 @@
   "text": "Artosia {version} có gì mới",
   "back": "Artosia {version}: what is new",
   "why": "Reads naturally, token kept."
+ },
+ "HELP_NOTICES": {
+  "text": "Các slide chiếu trước buổi lễ và giữa các phần: chào mừng, lịch, sinh nhật, dâng hiến.",
+  "back": "The slides shown before the service and between the parts: welcome, schedule, birthdays, offerings.",
+  "why": "Words from the table"
+ },
+ "HELP_LOOK": {
+  "text": "Hiển thị quyết định máy chiếu hiện gì: hình hoặc video nền, phông chữ, màu chữ và logo.",
+  "back": "Display decides what the projector shows: background picture or video, font, text colour and logo.",
+  "why": "Hiển thị is the table's design word"
+ },
+ "HELP_PLAN": {
+  "text": "Thứ tự buổi lễ: bài hát, đoạn Kinh Thánh, thông báo, video và cảnh, lần lượt từng mục.",
+  "back": "Order of the service: songs, Bible passages, announcements, videos and scenes, one item at a time.",
+  "why": "Tab word"
+ },
+ "GUIDE_NOTICE_NEW": {
+  "text": "Bấm nút được khoanh để thêm thông báo",
+  "back": "Press the ringed button to add an announcement",
+  "why": "Same phrase as GUIDE_CAL_NEW"
+ },
+ "GUIDE_NOTICE_NEW_MORE": {
+  "text": "Bắt đầu từ mẫu hoặc tự viết một cái đơn giản",
+  "back": "Start from a template or write a simple one yourself",
+  "why": "Mẫu is the template word"
+ },
+ "GUIDE_LOOK_FOR": {
+  "text": "Một kiểu hiển thị cho mọi buổi lễ, hoặc chỉ buổi này",
+  "back": "One display style for every service, or only this one",
+  "why": "Keeps the window name"
+ },
+ "GUIDE_LOOK_FOR_MORE": {
+  "text": "Buổi lễ có kiểu riêng vẫn giữ kiểu đó khi bạn chuyển buổi lễ",
+  "back": "A service with its own style keeps that style when you switch services",
+  "why": "Bạn, plain"
+ },
+ "GUIDE_PLAN_EXPLAIN": {
+  "text": "Mọi thứ của buổi lễ nằm trong danh sách này",
+  "back": "Everything of the service sits in this list",
+  "why": "Short"
+ },
+ "GUIDE_PLAN_EXPLAIN_MORE": {
+  "text": "Bài hát, đoạn Kinh Thánh, thông báo, video, cảnh, theo thứ tự",
+  "back": "Songs, Bible passages, announcements, videos, scenes, in order",
+  "why": "List"
+ },
+ "GUIDE_PLAN_ADD": {
+  "text": "Bấm nút được khoanh để thêm vào buổi lễ",
+  "back": "Press the ringed button to add to the service",
+  "why": "Same pattern"
+ },
+ "GUIDE_PLAN_ADD_MORE": {
+  "text": "Chọn mục cần thêm trong danh sách vừa mở",
+  "back": "Choose the item to add in the list that just opened",
+  "why": "Plain"
  }
 }

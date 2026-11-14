@@ -5183,5 +5183,60 @@
   "text": "Baru di Artosia {version}",
   "back": "New in Artosia {version}",
   "why": "Natural headline with the token."
+ },
+ "HELP_NOTICES": {
+  "text": "Slide yang tayang sebelum ibadah dan di sela bagiannya: sambutan, jadwal, ulang tahun, persembahan.",
+  "back": "Slides that air before the service and between its parts: welcome, schedule, birthdays, offerings.",
+  "why": "Familiar register"
+ },
+ "HELP_LOOK": {
+  "text": "Tema mengatur isi layar proyektor: gambar atau video latar, jenis huruf dan warna teks, serta logo.",
+  "back": "The theme sets what is on the projector screen: background picture or video, font and text colour, and the logo.",
+  "why": "Tema and latar as in the table"
+ },
+ "HELP_PLAN": {
+  "text": "Urutan ibadah: lagu, bacaan Alkitab, pengumuman, video, dan scene, tayang satu per satu.",
+  "back": "Order of the service: songs, Bible readings, announcements, videos, and scenes, shown one by one.",
+  "why": "Matches the rundown word"
+ },
+ "GUIDE_NOTICE_NEW": {
+  "text": "Tekan tombol berlingkar untuk tambah pengumuman",
+  "back": "Press the ringed button to add an announcement",
+  "why": "Same phrase as GUIDE_CAL_NEW"
+ },
+ "GUIDE_NOTICE_NEW_MORE": {
+  "text": "Mulai dari templat atau tulis yang sederhana",
+  "back": "Start from a template or write a simple one",
+  "why": "Templat as in the tab name"
+ },
+ "GUIDE_LOOK_FOR": {
+  "text": "Satu tema untuk semua ibadah, atau hanya ibadah ini",
+  "back": "One theme for all services, or only this service",
+  "why": "Tema is the table's design word"
+ },
+ "GUIDE_LOOK_FOR_MORE": {
+  "text": "Ibadah dengan tema sendiri tetap memakainya saat kamu pindah ibadah",
+  "back": "A service with its own theme keeps using it when you move between services",
+  "why": "Kamu register"
+ },
+ "GUIDE_PLAN_EXPLAIN": {
+  "text": "Semua untuk ibadah ini masuk ke daftar ini",
+  "back": "Everything for this service goes into this list",
+  "why": "Short"
+ },
+ "GUIDE_PLAN_EXPLAIN_MORE": {
+  "text": "Lagu, bacaan Alkitab, pengumuman, video, scene, berurutan",
+  "back": "Songs, Bible readings, announcements, videos, scenes, in sequence",
+  "why": "List"
+ },
+ "GUIDE_PLAN_ADD": {
+  "text": "Tekan tombol berlingkar untuk tambah ke ibadah",
+  "back": "Press the ringed button to add to the service",
+  "why": "Same pattern as GUIDE_PEOPLE_ADD"
+ },
+ "GUIDE_PLAN_ADD_MORE": {
+  "text": "Pilih yang mau ditambah dari daftar yang terbuka",
+  "back": "Choose what you want to add from the list that opens",
+  "why": "Spoken register"
  }
 }

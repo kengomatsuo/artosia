@@ -5279,5 +5279,60 @@
   "text": "Nouveautés d'Artosia {version}",
   "back": "New things of Artosia {version}",
   "why": "Matches the command name."
+ },
+ "HELP_NOTICES": {
+  "text": "Les annonces projetées avant le culte et entre ses parties : accueil, horaires, anniversaires, offrandes.",
+  "back": "The announcements projected before the service and between its parts: welcome, times, birthdays, offerings.",
+  "why": "Words from the table"
+ },
+ "HELP_LOOK": {
+  "text": "L'apparence règle ce que le projecteur dessine : image ou vidéo de fond, police et couleur du texte, logo.",
+  "back": "The look sets what the projector draws: background image or video, font and colour of the text, logo.",
+  "why": "Apparence is the table's design word"
+ },
+ "HELP_PLAN": {
+  "text": "L'ordre du culte : chants, lectures bibliques, annonces, vidéos et scènes, l'un après l'autre.",
+  "back": "The order of the service: songs, Bible readings, announcements, videos and scenes, one after the other.",
+  "why": "Culte for the service"
+ },
+ "GUIDE_NOTICE_NEW": {
+  "text": "Clique sur le bouton entouré pour une annonce",
+  "back": "Click the circled button for an announcement",
+  "why": "Same pattern as GUIDE_CAL_NEW"
+ },
+ "GUIDE_NOTICE_NEW_MORE": {
+  "text": "Pars d'un modèle ou écris-en une simple",
+  "back": "Start from a template or write a simple one",
+  "why": "Tu register"
+ },
+ "GUIDE_LOOK_FOR": {
+  "text": "Une apparence pour tous les cultes, ou pour celui-ci",
+  "back": "One look for all services, or for this one",
+  "why": "Short"
+ },
+ "GUIDE_LOOK_FOR_MORE": {
+  "text": "Un culte à l'apparence propre la garde quand tu changes de culte",
+  "back": "A service with its own look keeps it when you change service",
+  "why": "Tu as in the table"
+ },
+ "GUIDE_PLAN_EXPLAIN": {
+  "text": "Tout le culte se met dans cette liste",
+  "back": "The whole service goes in this list",
+  "why": "Short"
+ },
+ "GUIDE_PLAN_EXPLAIN_MORE": {
+  "text": "Chants, lectures bibliques, annonces, vidéos, scènes, dans l'ordre",
+  "back": "Songs, Bible readings, announcements, videos, scenes, in order",
+  "why": "List"
+ },
+ "GUIDE_PLAN_ADD": {
+  "text": "Clique sur le bouton entouré pour un élément",
+  "back": "Click the circled button for an item",
+  "why": "Fits 48"
+ },
+ "GUIDE_PLAN_ADD_MORE": {
+  "text": "Choisis quoi ajouter dans la liste qui s'ouvre",
+  "back": "Choose what to add in the list that opens",
+  "why": "Plain tu"
  }
 }

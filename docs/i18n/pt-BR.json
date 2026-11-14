@@ -5266,5 +5266,60 @@
   "text": "Novidades do Artosia {version}",
   "back": "News of Artosia {version}",
   "why": "Matches the command name."
+ },
+ "HELP_NOTICES": {
+  "text": "Os avisos exibidos antes do culto e entre as partes: boas-vindas, programação, aniversários, ofertas.",
+  "back": "The notices shown before the service and between the parts: welcome, schedule, birthdays, offerings.",
+  "why": "Words from the table"
+ },
+ "HELP_LOOK": {
+  "text": "A aparência define o que o projetor desenha: imagem ou vídeo de fundo, fonte e cor das letras, e o logo.",
+  "back": "The look defines what the projector draws: background image or video, font and colour of the letters, and the logo.",
+  "why": "Aparência is the table's design word"
+ },
+ "HELP_PLAN": {
+  "text": "A ordem do culto: músicas, leituras da Bíblia, avisos, vídeos e cenas, um depois do outro.",
+  "back": "The order of the service: songs, Bible readings, notices, videos and scenes, one after the other.",
+  "why": "Culto used"
+ },
+ "GUIDE_NOTICE_NEW": {
+  "text": "Clique no botão destacado e adicione um aviso",
+  "back": "Click the highlighted button and add a notice",
+  "why": "Same pattern as GUIDE_CAL_NEW"
+ },
+ "GUIDE_NOTICE_NEW_MORE": {
+  "text": "Comece por um modelo ou escreva um aviso simples",
+  "back": "Start with a template or write a simple notice",
+  "why": "Modelo from the table"
+ },
+ "GUIDE_LOOK_FOR": {
+  "text": "Uma aparência para todos os cultos ou só para este",
+  "back": "One look for all services or only for this one",
+  "why": "Short"
+ },
+ "GUIDE_LOOK_FOR_MORE": {
+  "text": "O culto com aparência própria a mantém quando você troca de culto",
+  "back": "A service with its own look keeps it when you switch service",
+  "why": "Você register"
+ },
+ "GUIDE_PLAN_EXPLAIN": {
+  "text": "Tudo do culto entra nesta lista",
+  "back": "Everything of the service goes into this list",
+  "why": "Short"
+ },
+ "GUIDE_PLAN_EXPLAIN_MORE": {
+  "text": "Músicas, leituras da Bíblia, avisos, vídeos e cenas, em ordem",
+  "back": "Songs, Bible readings, notices, videos and scenes, in order",
+  "why": "List"
+ },
+ "GUIDE_PLAN_ADD": {
+  "text": "Clique no botão destacado e adicione ao culto",
+  "back": "Click the highlighted button and add to the service",
+  "why": "Same pattern"
+ },
+ "GUIDE_PLAN_ADD_MORE": {
+  "text": "Escolha o que adicionar na lista que abrir",
+  "back": "Choose what to add in the list that opens",
+  "why": "Plain"
  }
 }

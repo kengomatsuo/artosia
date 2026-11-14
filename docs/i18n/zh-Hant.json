@@ -5233,5 +5233,60 @@
   "text": "Artosia {version} 新功能介紹",
   "back": "Artosia {version} introduction to new features",
   "why": "Matches the command name."
+ },
+ "HELP_NOTICES": {
+  "text": "禮拜前和各段之間播放的投影片，例如歡迎、行程、生日、奉獻。",
+  "back": "Slides played before the service and between its sections, for example welcome, itinerary, birthdays, offerings.",
+  "why": "Taiwan wording"
+ },
+ "HELP_LOOK": {
+  "text": "外觀決定投影機畫出什麼：背景圖片或影片、文字的字型與顏色，還有標誌。",
+  "back": "The appearance decides what the projector draws: background picture or video, the text's typeface and colour, and the logo.",
+  "why": "外觀 is the table's design word"
+ },
+ "HELP_PLAN": {
+  "text": "流程是禮拜的先後順序：詩歌、聖經經文、公告、影片和場景，一項接一項播出。",
+  "back": "The flow is the order of the service: hymns, Bible passages, announcements, videos and scenes, one item after another.",
+  "why": "流程 is the tab word"
+ },
+ "GUIDE_NOTICE_NEW": {
+  "text": "按下框起來的按鈕，新增公告",
+  "back": "Press the boxed button, add an announcement",
+  "why": "Same pattern"
+ },
+ "GUIDE_NOTICE_NEW_MORE": {
+  "text": "可以從範本開始，也可以自己寫個簡單的",
+  "back": "You can start from a template, or write a simple one yourself",
+  "why": "範本 from the table"
+ },
+ "GUIDE_LOOK_FOR": {
+  "text": "外觀可以全部禮拜共用，或只給這場禮拜",
+  "back": "The appearance can be shared by all services, or given only to this service",
+  "why": "Short"
+ },
+ "GUIDE_LOOK_FOR_MORE": {
+  "text": "有專屬外觀的禮拜，切換禮拜後外觀不會變",
+  "back": "A service with its own appearance keeps it after you switch services",
+  "why": "One sentence"
+ },
+ "GUIDE_PLAN_EXPLAIN": {
+  "text": "禮拜要用的內容都放進這份清單",
+  "back": "Everything the service uses goes into this list",
+  "why": "清單 is Taiwan usage"
+ },
+ "GUIDE_PLAN_EXPLAIN_MORE": {
+  "text": "詩歌、經文、公告、影片、場景，依序排列",
+  "back": "Hymns, scripture, announcements, videos, scenes, arranged in order",
+  "why": "List"
+ },
+ "GUIDE_PLAN_ADD": {
+  "text": "按下框起來的按鈕，加進禮拜",
+  "back": "Press the boxed button, add into the service",
+  "why": "Same pattern"
+ },
+ "GUIDE_PLAN_ADD_MORE": {
+  "text": "從打開的清單裡挑選要加入的內容",
+  "back": "From the list that opens, pick what to add",
+  "why": "Plain"
  }
 }

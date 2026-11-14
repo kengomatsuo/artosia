@@ -19127,5 +19127,196 @@
   "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
   "concepts": [],
   "notes": "Keep the token {version} and the name Artosia exactly."
+ },
+ {
+  "key": "HELP_NOTICES",
+  "kind": "const",
+  "screen": "The help card of the Announcements window, under the window's name; also the grey line of the guide's first step that opens that tab.",
+  "moment": "The person asked what the Announcements window is for.",
+  "role": "explanation",
+  "does": "Says it holds the slides shown before the service and between its parts (welcome, schedule, birthdays, offerings).",
+  "budget": 110,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "announcement"
+  ],
+  "notes": "One or two short sentences."
+ },
+ {
+  "key": "HELP_LOOK",
+  "kind": "const",
+  "screen": "The help card of the Theme window, under the window's name; also the grey line of the guide's first step that opens that tab.",
+  "moment": "The person asked what the Theme window is for.",
+  "role": "explanation",
+  "does": "Says it sets what the projector draws: the background picture or video, the words' font and colour, and the logo.",
+  "budget": 110,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "design",
+   "projector"
+  ],
+  "notes": "One or two short sentences."
+ },
+ {
+  "key": "HELP_PLAN",
+  "kind": "const",
+  "screen": "The help card of the service rundown (the plan of the service, its first tab), under the window's name; also the grey line of the guide's first step that opens that tab.",
+  "moment": "The person asked what the rundown is for.",
+  "role": "explanation",
+  "does": "Says it is the order of the service: songs, Bible readings, announcements, videos and scenes, shown one after another.",
+  "budget": 110,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "plan"
+  ],
+  "notes": "One or two short sentences."
+ },
+ {
+  "key": "GUIDE_NOTICE_NEW",
+  "kind": "const",
+  "screen": "A guide bubble beside the Announcements window's ringed button that adds an announcement, the rest of the window dimmed.",
+  "moment": "The guide waits for the person to press it themselves.",
+  "role": "headline of a guide step",
+  "does": "Tells the person to press the ringed button to add an announcement.",
+  "budget": 48,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "announcement"
+  ],
+  "notes": "Same verb and the same words for the ringed button as the program's other guide steps (GUIDE_CAL_NEW, GUIDE_PEOPLE_ADD)."
+ },
+ {
+  "key": "GUIDE_NOTICE_NEW_MORE",
+  "kind": "const",
+  "screen": "The grey line under that headline.",
+  "moment": "The person reads what comes next.",
+  "role": "explanation line of a guide step",
+  "does": "Says they can start from a template or write a simple one themselves.",
+  "budget": 60,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "announcement",
+   "template"
+  ],
+  "notes": "One sentence."
+ },
+ {
+  "key": "GUIDE_LOOK_FOR",
+  "kind": "const",
+  "screen": "A guide bubble pointing at two buttons in the Theme window: one applies the look to every service, the other gives only this service its own look. The bubble has Next.",
+  "moment": "The guide explains a choice; the person reads and presses Next.",
+  "role": "headline of a guide explanation",
+  "does": "Says the look can be one for all services or one for this service only.",
+  "budget": 60,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "design",
+   "plan"
+  ],
+  "notes": "Short."
+ },
+ {
+  "key": "GUIDE_LOOK_FOR_MORE",
+  "kind": "const",
+  "screen": "The grey line under that headline.",
+  "moment": "The person reads the detail.",
+  "role": "explanation line",
+  "does": "Says a service with its own look keeps that look when the person switches between services.",
+  "budget": 80,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "design",
+   "plan"
+  ],
+  "notes": "One sentence."
+ },
+ {
+  "key": "GUIDE_PLAN_EXPLAIN",
+  "kind": "const",
+  "screen": "A guide bubble pointing at the bar under the service rundown, with its add button. The bubble has Next.",
+  "moment": "The guide explains the rundown; the person reads and presses Next.",
+  "role": "headline of a guide explanation",
+  "does": "Says everything for the service goes into this list.",
+  "budget": 50,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "plan"
+  ],
+  "notes": "Short."
+ },
+ {
+  "key": "GUIDE_PLAN_EXPLAIN_MORE",
+  "kind": "const",
+  "screen": "The grey line under that headline.",
+  "moment": "The person reads the detail.",
+  "role": "explanation line",
+  "does": "Lists what can go in, in order: songs, Bible readings, announcements, videos and scenes.",
+  "budget": 80,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "plan"
+  ],
+  "notes": "A list, no full stop needed."
+ },
+ {
+  "key": "GUIDE_PLAN_ADD",
+  "kind": "const",
+  "screen": "A guide bubble beside the ringed button under the rundown that adds something to the service.",
+  "moment": "The guide waits for the person to press it themselves.",
+  "role": "headline of a guide step",
+  "does": "Tells the person to press the ringed button to add something to the service.",
+  "budget": 48,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "plan"
+  ],
+  "notes": "Same pattern as the other guide steps."
+ },
+ {
+  "key": "GUIDE_PLAN_ADD_MORE",
+  "kind": "const",
+  "screen": "The grey line under that headline.",
+  "moment": "The person reads what happens next.",
+  "role": "explanation line of a guide step",
+  "does": "Says they choose what to add from the list that opens.",
+  "budget": 60,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "plan"
+  ],
+  "notes": "One sentence."
  }
 ]

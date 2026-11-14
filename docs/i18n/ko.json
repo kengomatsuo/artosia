@@ -5235,5 +5235,60 @@
   "text": "Artosia {version}의 새 기능",
   "back": "New features of Artosia {version}",
   "why": "Matches the command name."
+ },
+ "HELP_NOTICES": {
+  "text": "예배 전과 순서 사이에 보여 주는 공지 슬라이드예요. 환영, 일정, 생일, 헌금 같은 것이 들어가요.",
+  "back": "Announcement slides shown before the service and between its parts. Welcome, schedule, birthdays and offerings go in.",
+  "why": "해요 style"
+ },
+ "HELP_LOOK": {
+  "text": "디자인에서 프로젝터에 나올 배경 사진이나 영상, 글자 서체와 색, 로고를 정해요.",
+  "back": "In Design you set the background photo or video, the font and colour of the text, and the logo.",
+  "why": "디자인 is the table's word"
+ },
+ "HELP_PLAN": {
+  "text": "예배 순서예요. 노래, 성경 봉독, 공지, 영상, 장면이 차례로 나와요.",
+  "back": "It is the order of the service. Songs, Bible readings, announcements, videos and scenes come out in turn.",
+  "why": "Tab word"
+ },
+ "GUIDE_NOTICE_NEW": {
+  "text": "표시된 버튼을 눌러 공지를 추가해요",
+  "back": "Press the marked button to add an announcement",
+  "why": "Same pattern"
+ },
+ "GUIDE_NOTICE_NEW_MORE": {
+  "text": "템플릿으로 시작하거나 간단히 직접 써요",
+  "back": "Start from a template or simply write it yourself",
+  "why": "템플릿 from the table"
+ },
+ "GUIDE_LOOK_FOR": {
+  "text": "디자인은 모든 예배에, 또는 이 예배에만 둘 수 있어요",
+  "back": "The design can be set for all services, or only for this service",
+  "why": "Short"
+ },
+ "GUIDE_LOOK_FOR_MORE": {
+  "text": "자기 디자인이 있는 예배는 예배를 바꿔도 그대로예요",
+  "back": "A service with its own design stays the same even when you change services",
+  "why": "One sentence"
+ },
+ "GUIDE_PLAN_EXPLAIN": {
+  "text": "예배에 쓸 것은 모두 이 목록에 넣어요",
+  "back": "Everything to use in the service goes in this list",
+  "why": "Short"
+ },
+ "GUIDE_PLAN_EXPLAIN_MORE": {
+  "text": "노래, 성경 봉독, 공지, 영상, 장면을 순서대로",
+  "back": "Songs, Bible readings, announcements, videos, scenes, in order",
+  "why": "List"
+ },
+ "GUIDE_PLAN_ADD": {
+  "text": "표시된 버튼을 눌러 예배에 추가해요",
+  "back": "Press the marked button to add to the service",
+  "why": "Same pattern"
+ },
+ "GUIDE_PLAN_ADD_MORE": {
+  "text": "열리는 목록에서 추가할 것을 골라요",
+  "back": "Pick what to add from the list that opens",
+  "why": "해요 style"
  }
 }
