@@ -20833,5 +20833,28 @@
    "import"
   ],
   "notes": "One sentence."
+ },
+ {
+  "key": "guide_find",
+  "kind": "sentence",
+  "screen": "A guide bubble in the middle of the dimmed window, with a button that opens the program's search with the name already typed. It appears when the control a lesson step needs is not on screen.",
+  "moment": "The guide sends the person to the search to find the command.",
+  "role": "headline of a guide step",
+  "does": "Tells the person to find the command named by the variable in the search.",
+  "budget": 60,
+  "variables": [
+   {
+    "name": "name",
+    "example": "Import a PowerPoint",
+    "meaning": "The command's name exactly as the search lists it."
+   }
+  ],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "search"
+  ],
+  "notes": "Keep the token {name} exactly, in quotation marks the language uses. Use the table's word for the search (GUIDE_OPEN_SEARCH)."
  }
 ]

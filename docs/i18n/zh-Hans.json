@@ -5671,5 +5671,10 @@
   },
   "back": "From the member list, {count} people in all, {marked} stand out",
   "why": "extends the table's 取自会友名单 wording"
+ },
+ "guide_find": {
+  "text": "在搜索中找到“{name}”",
+  "back": "Find \"{name}\" in the search",
+  "why": "table word 搜索"
  }
 }

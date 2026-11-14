@@ -5671,5 +5671,10 @@
   },
   "back": "From the member list, {count} birthdays, {marked} highlighted",
   "why": "extends the table's 교인 목록 wording"
+ },
+ "guide_find": {
+  "text": "검색에서 \"{name}\" 찾기",
+  "back": "Find \"{name}\" in the search",
+  "why": "table word 검색, no particle after the name"
  }
 }

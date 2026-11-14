@@ -5669,5 +5669,10 @@
   },
   "back": "From the members, {count} birthday people, {marked} made to stand out",
   "why": "keeps the table's 教会員 and 名"
+ },
+ "guide_find": {
+  "text": "検索で「{name}」を探しましょう",
+  "back": "Let's look for \"{name}\" in the search",
+  "why": "table word 検索, soft polite"
  }
 }

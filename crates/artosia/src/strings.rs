@@ -1721,6 +1721,17 @@ pub fn whats_new_title(version: &str) -> String {
     format!("New in Artosia {version}")
 }
 
+/// A lesson step whose control is not on screen: the search finds it by the command's name.
+pub fn guide_find(name: &str) -> String {
+    if let Some(text) = say("guide_find", None, None, &[("name", text_arg(name))]) {
+        return text;
+    }
+    if indonesian() {
+        return format!("Cari \u{201c}{name}\u{201d} di pencarian");
+    }
+    format!("Find \u{201c}{name}\u{201d} in the search")
+}
+
 /// A lesson step that sends the person to a tab, named as the tab bar names it.
 pub fn guide_open_tab(tab: &str) -> String {
     if let Some(text) = say("guide_open_tab", None, None, &[("tab", text_arg(tab))]) {

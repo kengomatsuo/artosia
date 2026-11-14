@@ -113,8 +113,8 @@ impl<C: Copy + PartialEq + 'static> Runner<C> {
             }
             return match step.goal {
                 Goal::Run(command) => match best_anchor(world.anchors(command)) {
-                    Some(anchor) => Show::At { step: self.at, key: anchor.key },
-                    None => Show::Search { step: self.at },
+                    Some(anchor) if anchor.place != Place::Search => Show::At { step: self.at, key: anchor.key },
+                    _ => Show::Search { step: self.at },
                 },
                 Goal::Reach(_) => Show::Search { step: self.at },
                 Goal::Point(key) if world.shown(key) => Show::At { step: self.at, key: key.to_string() },
@@ -176,6 +176,13 @@ mod tests {
         Step { id: "add", goal: Goal::Run(Cmd::AddEvent), needs: Some("calendar-open"), done: Some("event-added"), restore: Some("open") },
     ];
     const LESSON: Lesson<Cmd> = Lesson { id: "calendar", steps: STEPS };
+
+    #[test]
+    fn a_step_only_the_search_reaches_shows_the_search_card_and_never_rings_the_search() {
+        let lesson = Lesson { id: "t", steps: &[Step { id: "add", goal: Goal::Run(Cmd::AddEvent), needs: None, done: None, restore: None }] };
+        let world = Table { anchors: vec![(Cmd::AddEvent, anchor("search-button", Place::Search, true))], ..Table::default() };
+        assert_eq!(Runner::new(lesson).advance(&world), Show::Search { step: 0 });
+    }
 
     fn anchor(key: &str, place: Place, visible: bool) -> Anchor {
         Anchor { key: key.to_string(), place, visible, enabled: true, presses: 1 }

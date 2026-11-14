@@ -123,6 +123,7 @@ impl App {
 impl App {
     /// Starts a lesson at its first step, over whatever the window shows.
     pub fn start_lesson(&mut self, lesson: Lesson<Action>) {
+        SETTLED.with(|settled| settled.set(None));
         self.close_palette();
         self.lesson = Some((lesson, 0));
     }
@@ -133,6 +134,7 @@ impl App {
 
     /// Next on a lesson's explanation step: the step counts as read.
     pub fn lesson_next(&mut self) {
+        settle_lesson(self);
         if let Some((_, at)) = self.lesson.as_mut() {
             *at += 1;
         }
@@ -141,6 +143,7 @@ impl App {
     /// The centred bubble's button: the search, with the step's command already typed, or the
     /// tab itself when the step asks for a tab.
     fn lesson_search(&mut self, action: Action) {
+        settle_lesson(self);
         match action {
             Action::Run(command) => self.open_palette(crate::palette::Scope::All, command.label()),
             Action::Tab(tab) => self.open_tab(tab),
@@ -186,16 +189,22 @@ impl App {
 fn lesson_view(s: &App, cx: &mut Cx<App>, k: &Kit, layer: &mut Vec<El>) {
     let Some((lesson, at)) = s.lesson else { return };
     let shown = {
-        let layout = |key: &str| cx.layout(key);
+        // Where the window shows each part now: a control in a scrolled list moves with it.
+        let layout = |key: &str| cx.window_layout(key);
         Runner::starting_at(lesson, at).advance(&Window { app: s, layout: &layout })
     };
+    let reached = match &shown {
+        Show::At { step, .. } | Show::Search { step } => Some(*step),
+        Show::Finished => None,
+    };
+    SETTLED.with(|settled| settled.set(Some((lesson.id, reached))));
     let dim = rune::Color::BLACK.alpha(0.38);
     let total = lesson.steps.len();
     match shown {
         Show::Finished => {}
         Show::At { step, key } => {
             REVEAL.with(|reveal| reveal.borrow_mut().0 = Some(key.clone()));
-            let Some([x, y, w, h]) = cx.layout(&key) else { return };
+            let Some([x, y, w, h]) = cx.window_layout(&key) else { return };
             let (x0, y0) = ((x - PAD).max(0.0), (y - PAD).max(0.0));
             let (x1, y1) = (x + w + PAD, y + h + PAD);
             // The dim takes presses so only the ringed control can be pressed (Driver's overlay).
@@ -243,6 +252,29 @@ fn beside(dialog: [f32; 4], top: f32, window: [f32; 2], tall: f32) -> Option<(f3
         Some((dx - gap - CARD, y))
     } else {
         None
+    }
+}
+
+thread_local! {
+    /// Where the last frame found the lesson: its id and the step on screen, or None when done.
+    static SETTLED: std::cell::Cell<Option<(&'static str, Option<usize>)>> = const { std::cell::Cell::new(None) };
+}
+
+/// Keeps where the last frame found the lesson, so a step that was done stays passed when the
+/// window moves on (a template's Use leaves the Templates tab), Next counts from the step on
+/// screen, and a finished lesson ends. Called by the lesson's own buttons and by the poll.
+pub(crate) fn settle_lesson(app: &mut App) -> bool {
+    let Some((id, reached)) = SETTLED.with(|settled| settled.take()) else { return false };
+    match (reached, app.lesson.as_mut()) {
+        (Some(step), Some((lesson, at))) if lesson.id == id && *at != step => {
+            *at = step;
+            true
+        }
+        (None, Some((lesson, _))) if lesson.id == id => {
+            app.lesson = None;
+            true
+        }
+        _ => false,
     }
 }
 
@@ -297,6 +329,11 @@ const CLIP_W: f32 = CARD - 2.0 * space::S4;
 /// search when the control is not on screen. No Next: the step ends on the person's own press.
 fn bubble(s: &App, k: &Kit, id: &str, step: usize, total: usize, search: Option<Action>) -> El {
     let (main, more) = crate::guide::lessons::words(id);
+    // With no control on screen the card points at the search and names what to find there.
+    let main = match search {
+        Some(Action::Run(command)) => t::guide_find(command.label()),
+        _ => main,
+    };
     let main = main.as_str();
     let mut buttons = row().w_full().gap(space::S2).center_y().child(row().w(BUTTON).child(btn(t::TOUR_SKIP()).icon(&icons::CLOSE).ghost().grow().focusable().build(k, |s, _| s.end_lesson()))).child(spacer());
     if let Some(command) = search {
@@ -320,7 +357,7 @@ fn bubble(s: &App, k: &Kit, id: &str, step: usize, total: usize, search: Option<
             col()
                 .w_full()
                 .gap(space::S1)
-                .child(text(t::tour_place(step + 1, total)).font(type_::SMALL).color(k.c.text_muted))
+                .child(text(t::tour_place(step + 1, total)).key(format!("lesson-step-{id}")).font(type_::SMALL).color(k.c.text_muted))
                 .child(crate::ui::widgets::wrapped(main).font(type_::TITLE).color(k.c.text_base).wrap())
                 .child(crate::ui::widgets::wrapped(more).font(type_::BODY).color(k.c.text_muted).wrap()),
         )

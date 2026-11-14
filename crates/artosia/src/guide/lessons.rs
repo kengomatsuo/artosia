@@ -40,14 +40,15 @@ const WEB_STEPS: [Step<Action>; 4] = [
     point("web-browser", "web-browser", "web-open", "web-open"),
     point("web-import", "web-go", "web-open", "web-open"),
 ];
-const PPTX_STEPS: [Step<Action>; 3] = [
-    go("pptx-open", Action::Run(Command::ImportPptx), "pptx-open"),
+const PPTX_STEPS: [Step<Action>; 4] = [
+    go("notices-tab", Action::Tab(Tab::Notices), "notices-tab"),
+    on_tab("pptx-open", Action::Run(Command::ImportPptx), "notices-tab", "pptx-open", "notices-tab"),
     point("pptx-way", "pptx-ways", "pptx-open", "pptx-open"),
     point("pptx-import", "pptx-go", "pptx-open", "pptx-open"),
 ];
 const NOTICES_STEPS: [Step<Action>; 2] = [
     go("notices-tab", Action::Tab(Tab::Notices), "notices-tab"),
-    on_tab("notices-new", Action::Press("notice-add"), "notices-tab", "notice-draft", "notices-tab"),
+    on_tab("notices-new", Action::Press("notice-add"), "notices-tab", "new-notice", "notices-tab"),
 ];
 const LOOK_STEPS: [Step<Action>; 2] = [go("look-tab", Action::Tab(Tab::Look), "look-tab"), point("look-for", "look-for", "look-tab", "look-tab")];
 const PLAN_STEPS: [Step<Action>; 3] = [

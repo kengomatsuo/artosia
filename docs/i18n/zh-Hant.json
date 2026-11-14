@@ -5669,5 +5669,10 @@
   },
   "back": "From the member list, {count} people in all, {marked} stand out",
   "why": "extends the table's 取自會友名單 wording"
+ },
+ "guide_find": {
+  "text": "在搜尋中找到「{name}」",
+  "back": "Find \"{name}\" in the search",
+  "why": "table word 搜尋, Taiwan quotes"
  }
 }

@@ -1803,6 +1803,7 @@ impl App {
         self.meter_shown.store(self.listener.is_some() && (self.sheet == Sheet::Listen || self.settings.beat_blink), std::sync::atomic::Ordering::Relaxed);
         changed |= self.take_tempo(clock);
         changed |= self.watch_pptx(&mut wake);
+        changed |= crate::ui::tour::settle_lesson(self);
         changed |= crate::ui::tour::reveal_ring(self.lesson.is_some(), tx);
         self.pump_web(&mut wake);
         self.note_recordings();

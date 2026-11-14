@@ -860,6 +860,19 @@ const SCENES: &[Scene] = &[
         s.sheet = Sheet::Screens;
         s.start_lesson(crate::guide::lessons::SCREENS);
     }),
+    // tools/check-lessons.py walks each lesson from here: the lesson ARTOSIA_LESSON names.
+    ("lesson-from-env", |s| {
+        let wanted = std::env::var("ARTOSIA_LESSON").unwrap_or_default();
+        let every = crate::guide::lessons::ALL.iter().chain(std::iter::once(&crate::ui::tour::BASICS));
+        if let Some(lesson) = every.into_iter().find(|lesson| lesson.id == wanted) {
+            s.start_lesson(*lesson);
+        }
+    }),
+    // A song in Preview hides the start tiles: the web lesson's first step goes by the search.
+    ("lesson-web-search", |s| {
+        s.open_song(0, None);
+        s.start_lesson(crate::guide::lessons::WEB);
+    }),
     ("lesson-stream", |s| {
         s.open_stream();
         s.start_lesson(crate::guide::lessons::STREAM);

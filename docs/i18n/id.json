@@ -5628,5 +5628,10 @@
   },
   "back": "{count} birthday names, {marked} marked",
   "why": ""
+ },
+ "guide_find": {
+  "text": "Cari “{name}” di pencarian",
+  "back": "Look for \"{name}\" in the search",
+  "why": "cari + pencarian, familiar register"
  }
 }

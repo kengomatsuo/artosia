@@ -5704,5 +5704,10 @@
   },
   "back": "Takes from Members: {count} name(s) (highlighted: {marked})",
   "why": "Same start as read_members; marked as a plain number."
+ },
+ "guide_find": {
+  "text": "Busca «{name}» en la búsqueda",
+  "back": "Look for \"{name}\" in the search",
+  "why": "tú form like the table, Spanish quotes"
  }
 }

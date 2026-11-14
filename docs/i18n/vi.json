@@ -5679,5 +5679,10 @@
   },
   "back": "{count} names with a birthday, {marked} names stand out",
   "why": ""
+ },
+ "guide_find": {
+  "text": "Tìm “{name}” trong phần tìm kiếm",
+  "back": "Find \"{name}\" in the search section",
+  "why": "table word tìm kiếm"
  }
 }

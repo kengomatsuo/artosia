@@ -5726,5 +5726,10 @@
   },
   "back": "{count} name, {marked} put forward / {count} names, {marked} put forward",
   "why": ""
+ },
+ "guide_find": {
+  "text": "Cherche « {name} » dans la recherche",
+  "back": "Look for \"{name}\" in the search",
+  "why": "tu as in the guide steps; French spaced quotes"
  }
 }
