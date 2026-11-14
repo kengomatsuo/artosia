@@ -5213,5 +5213,25 @@
   "text": "「{tab}」タブを開く",
   "back": "Open the '{tab}' tab",
   "why": "Brackets keep the tab name clear"
+ },
+ "WHATSNEW_TRY": {
+  "text": "試してみる",
+  "back": "Try it out",
+  "why": "Soft, polite button form."
+ },
+ "CMD_WHATSNEW": {
+  "text": "新機能",
+  "back": "New features",
+  "why": "Usual Japanese software term."
+ },
+ "CMD_WHATSNEW_DETAIL": {
+  "text": "このバージョンの新機能を、短い動画つきで見られます",
+  "back": "You can see this version's new features with short videos",
+  "why": "Polite plain form."
+ },
+ "whats_new_title": {
+  "text": "Artosia {version} の新機能",
+  "back": "New features of Artosia {version}",
+  "why": "Matches the command name."
  }
 }

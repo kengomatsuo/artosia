@@ -19059,5 +19059,73 @@
    "tab"
   ],
   "notes": "Keep the token {tab} exactly."
+ },
+ {
+  "key": "WHATSNEW_TRY",
+  "kind": "const",
+  "screen": "What's new: a dialog listing the new features of this version on the left; on the right the picked feature's short looping demonstration, its name, one or two sentences on what it is for, and this filled button.",
+  "moment": "The person saw a new feature and wants to use it now.",
+  "role": "primary button",
+  "does": "Starts a short guided walk through the feature, ringing the buttons to press one at a time.",
+  "budget": 14,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "guide"
+  ],
+  "notes": "A short invitation to try."
+ },
+ {
+  "key": "CMD_WHATSNEW",
+  "kind": "const",
+  "screen": "The name of the What's new dialog, and the name of the command in the program's search that opens it again.",
+  "moment": "The person looks for what changed in the version they have.",
+  "role": "dialog name and search command",
+  "does": "Names the list of features the latest version brought.",
+  "budget": 22,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [],
+  "notes": "The usual phrase programs in your language use for this."
+ },
+ {
+  "key": "CMD_WHATSNEW_DETAIL",
+  "kind": "const",
+  "screen": "The grey line under the What's new command in the program's search results.",
+  "moment": "The person is reading the search results.",
+  "role": "command detail",
+  "does": "Says it shows the features this version brought, each with a short demonstration.",
+  "budget": 70,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [],
+  "notes": "Fragment, no full stop."
+ },
+ {
+  "key": "whats_new_title",
+  "kind": "sentence",
+  "screen": "The heading at the top of the What's new dialog.",
+  "moment": "The dialog opened after the program updated itself, or from the search.",
+  "role": "dialog heading",
+  "does": "Says these are the new things in this version of Artosia, naming the version.",
+  "budget": 36,
+  "variables": [
+   {
+    "name": "version",
+    "example": "0.1.32",
+    "meaning": "The version number, written as digits and dots."
+   }
+  ],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [],
+  "notes": "Keep the token {version} and the name Artosia exactly."
  }
 ]

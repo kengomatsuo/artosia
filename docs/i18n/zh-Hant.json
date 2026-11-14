@@ -5213,5 +5213,25 @@
   "text": "開啟「{tab}」分頁",
   "back": "Open the '{tab}' tab",
   "why": "Taiwan says 分頁"
+ },
+ "WHATSNEW_TRY": {
+  "text": "試試看",
+  "back": "Try and see",
+  "why": "Taiwan colloquial button wording."
+ },
+ "CMD_WHATSNEW": {
+  "text": "新功能介紹",
+  "back": "Introduction to new features",
+  "why": "Taiwan programs name the page as an introduction."
+ },
+ "CMD_WHATSNEW_DETAIL": {
+  "text": "看這個版本新增的功能，每項附有簡短示範",
+  "back": "See the features added in this version, each with a short demo",
+  "why": "Taiwan wording; fragment, no full stop."
+ },
+ "whats_new_title": {
+  "text": "Artosia {version} 新功能介紹",
+  "back": "Artosia {version} introduction to new features",
+  "why": "Matches the command name."
  }
 }

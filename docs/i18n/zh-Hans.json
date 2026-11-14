@@ -5215,5 +5215,25 @@
   "text": "打开“{tab}”标签页",
   "back": "Open the '{tab}' tab page",
   "why": "Quotes keep the tab name clear"
+ },
+ "WHATSNEW_TRY": {
+  "text": "试一试",
+  "back": "Give it a try",
+  "why": "Casual, short."
+ },
+ "CMD_WHATSNEW": {
+  "text": "新功能",
+  "back": "New features",
+  "why": "Common mainland term."
+ },
+ "CMD_WHATSNEW_DETAIL": {
+  "text": "这个版本带来的新功能，每项配有简短演示",
+  "back": "New features this version brought, each with a short demonstration",
+  "why": "Fragment, no full stop."
+ },
+ "whats_new_title": {
+  "text": "Artosia {version} 的新功能",
+  "back": "New features of Artosia {version}",
+  "why": "Matches the command name."
  }
 }

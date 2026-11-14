@@ -5246,5 +5246,25 @@
   "text": "Abre la pestaña {tab}",
   "back": "Open the {tab} tab",
   "why": "Tú imperative"
+ },
+ "WHATSNEW_TRY": {
+  "text": "Probarlo",
+  "back": "Try it",
+  "why": "Short infinitive with clitic."
+ },
+ "CMD_WHATSNEW": {
+  "text": "Novedades",
+  "back": "New things",
+  "why": "The usual word in Spanish programs."
+ },
+ "CMD_WHATSNEW_DETAIL": {
+  "text": "Lo nuevo de esta versión, cada cosa con un clip corto",
+  "back": "What is new in this version, each thing with a short clip",
+  "why": "Fragment, no full stop."
+ },
+ "whats_new_title": {
+  "text": "Novedades de Artosia {version}",
+  "back": "New things of Artosia {version}",
+  "why": "Matches the command name."
  }
 }

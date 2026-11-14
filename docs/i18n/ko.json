@@ -5215,5 +5215,25 @@
   "text": "{tab} 탭을 열어요",
   "back": "Open the {tab} tab",
   "why": "Short polite command"
+ },
+ "WHATSNEW_TRY": {
+  "text": "해 보기",
+  "back": "Try doing",
+  "why": "Matches the guide's wording."
+ },
+ "CMD_WHATSNEW": {
+  "text": "새로운 기능",
+  "back": "New features",
+  "why": "Usual Korean software phrase."
+ },
+ "CMD_WHATSNEW_DETAIL": {
+  "text": "이 버전의 새 기능을 짧은 영상과 함께 보여줍니다",
+  "back": "Shows this version's new features together with short videos",
+  "why": "Polite ending, no full stop."
+ },
+ "whats_new_title": {
+  "text": "Artosia {version}의 새 기능",
+  "back": "New features of Artosia {version}",
+  "why": "Matches the command name."
  }
 }

@@ -5246,5 +5246,25 @@
   "text": "Abra a aba {tab}",
   "back": "Open the {tab} tab",
   "why": "Aba is the Brazilian word"
+ },
+ "WHATSNEW_TRY": {
+  "text": "Experimentar",
+  "back": "Try out",
+  "why": "Usual button verb in Brazil."
+ },
+ "CMD_WHATSNEW": {
+  "text": "Novidades",
+  "back": "New things",
+  "why": "The usual word in Brazilian programs."
+ },
+ "CMD_WHATSNEW_DETAIL": {
+  "text": "Os recursos desta versão, cada um com um clipe curto",
+  "back": "The features of this version, each with a short clip",
+  "why": "Fragment, no full stop."
+ },
+ "whats_new_title": {
+  "text": "Novidades do Artosia {version}",
+  "back": "News of Artosia {version}",
+  "why": "Matches the command name."
  }
 }

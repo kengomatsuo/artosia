@@ -5214,5 +5214,25 @@
   "text": "Mở tab {tab}",
   "back": "Open the {tab} tab",
   "why": "Mở as in Mở tìm kiếm"
+ },
+ "WHATSNEW_TRY": {
+  "text": "Dùng thử",
+  "back": "Use as a trial",
+  "why": "Usual Vietnamese button for trying."
+ },
+ "CMD_WHATSNEW": {
+  "text": "Có gì mới",
+  "back": "What is new",
+  "why": "Common phrase for update notes."
+ },
+ "CMD_WHATSNEW_DETAIL": {
+  "text": "Tính năng mới của bản này, mỗi tính năng có clip ngắn",
+  "back": "New features of this build, each feature has a short clip",
+  "why": "Fragment, no full stop."
+ },
+ "whats_new_title": {
+  "text": "Artosia {version} có gì mới",
+  "back": "Artosia {version}: what is new",
+  "why": "Reads naturally, token kept."
  }
 }

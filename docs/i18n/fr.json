@@ -5259,5 +5259,25 @@
   "text": "Ouvre l'onglet {tab}",
   "back": "Open the {tab} tab",
   "why": "Tu imperative; onglet"
+ },
+ "WHATSNEW_TRY": {
+  "text": "Essayer",
+  "back": "Try",
+  "why": "Infinitive, standard button form."
+ },
+ "CMD_WHATSNEW": {
+  "text": "Nouveautés",
+  "back": "New things",
+  "why": "The usual French software word."
+ },
+ "CMD_WHATSNEW_DETAIL": {
+  "text": "Les nouveautés de cette version, chacune avec un court clip",
+  "back": "The new things of this version, each with a short clip",
+  "why": "Fragment, no full stop."
+ },
+ "whats_new_title": {
+  "text": "Nouveautés d'Artosia {version}",
+  "back": "New things of Artosia {version}",
+  "why": "Matches the command name."
  }
 }

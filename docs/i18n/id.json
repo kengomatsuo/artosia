@@ -5163,5 +5163,25 @@
   "text": "Buka tab {tab}",
   "back": "Open the {tab} tab",
   "why": "Buka as in Buka pencarian"
+ },
+ "WHATSNEW_TRY": {
+  "text": "Coba sekarang",
+  "back": "Try now",
+  "why": "Familiar, short invitation."
+ },
+ "CMD_WHATSNEW": {
+  "text": "Yang baru",
+  "back": "What is new",
+  "why": "Plain Indonesian phrase for this."
+ },
+ "CMD_WHATSNEW_DETAIL": {
+  "text": "Fitur baru versi ini, masing-masing dengan klip singkat",
+  "back": "New features of this version, each with a short clip",
+  "why": "Fragment, no full stop."
+ },
+ "whats_new_title": {
+  "text": "Baru di Artosia {version}",
+  "back": "New in Artosia {version}",
+  "why": "Natural headline with the token."
  }
 }
