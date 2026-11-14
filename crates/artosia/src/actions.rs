@@ -91,6 +91,8 @@ impl App {
                 PlanEntry::Passage { reference: *reference, bible: bible.clone(), second: second.clone(), title: open.deck.title.clone() }
             }
             DeckSource::Announcements | DeckSource::Announcement(_) => PlanEntry::Announcements,
+            // A rundown item is opened from the plan and is already in it.
+            DeckSource::Media(_) => return,
         };
         let was_live = self.open_is_live();
         let title = open.deck.title.clone();
@@ -108,7 +110,7 @@ impl App {
 
     /// Adds an entry to the plan right after what is live, so it is the next one. With
     /// nothing from the plan live yet it goes to the end, the order a plan is written in.
-    fn queue_entry(&mut self, entry: PlanEntry) -> u64 {
+    pub(crate) fn queue_entry(&mut self, entry: PlanEntry) -> u64 {
         let after = self.live.as_ref().and_then(|live| live.item).or(self.resume).and_then(|id| self.plan.position(id));
         let id = match after {
             Some(at) => self.plan.insert(at + 1, entry),
@@ -1325,14 +1327,9 @@ impl App {
 
     pub fn set_background_file(&mut self, path: &std::path::Path) {
         let text = path.to_string_lossy().to_string();
-        let extension = path.extension().and_then(|e| e.to_str()).unwrap_or("").to_lowercase();
-        let background = match extension.as_str() {
-            "png" | "jpg" | "jpeg" | "webp" | "bmp" | "gif" => Background::Image(text),
-            "mp4" | "mov" | "mkv" | "webm" | "avi" | "m4v" | "wmv" => Background::Video(text),
-            _ => {
-                self.say(t::BACKGROUND_UNKNOWN(), None);
-                return;
-            }
+        let Some(background) = crate::run::background_of(&text) else {
+            self.say(t::BACKGROUND_UNKNOWN(), None);
+            return;
         };
         let mut look = self.look();
         look.background = background;
@@ -1458,6 +1455,9 @@ impl App {
                     PlanEntry::Passage { .. } => "passage",
                     PlanEntry::Announcements => "announcements",
                     PlanEntry::Heading { .. } => "heading",
+                    PlanEntry::Video { .. } => "video",
+                    PlanEntry::Audio { .. } => "audio",
+                    PlanEntry::Scene { .. } => "scene",
                 }
                 .to_string(),
                 live: live_item == Some(item.id),
@@ -1764,6 +1764,7 @@ impl App {
                 }
             }
         }
+        changed |= self.poll_media();
         if self.link.take_hidden_here() {
             // Someone pressed Escape on the projector shown on this screen.
             self.settings.projector_here = false;
@@ -1821,6 +1822,15 @@ impl App {
             let options = rune::FileDialogOptions { title: t::CMD_IMPORT_BIRTHDAYS().to_string(), ..Default::default() }.filter(t::CMD_IMPORT_BIRTHDAYS(), &["docx", "pptx", "xlsx", "csv"]);
             tx.open_file(options, |s: &mut App, result, _| match result {
                 Ok(Some(path)) => s.open_import(&path),
+                Ok(None) => {}
+                Err(error) => s.say(error.to_string(), None),
+            });
+        }
+        if let Some(pick) = self.run.pick.take() {
+            let (title, kinds) = pick.dialog();
+            let options = rune::FileDialogOptions { title: title.to_string(), ..Default::default() }.filter(title, kinds);
+            tx.open_file(options, move |s: &mut App, result, _| match result {
+                Ok(Some(path)) => s.picked(pick, &path),
                 Ok(None) => {}
                 Err(error) => s.say(error.to_string(), None),
             });

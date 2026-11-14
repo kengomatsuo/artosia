@@ -612,3 +612,7 @@ and only plain text holds typed words. A card carries one of three styles (Hairl
 drawn by `artosia-slides/src/notice.rs`) and a title colour from the one picker. A template whose
 window is empty says so where the slide would be, never as an empty slide. The Templates tab draws
 every template with this church's own data and applies a style to one card, every card or a plan.
+
+## Rundown items: video, sound and scenes in the plan (2026-11-14, OVRUN1 operator side)
+
+`PlanEntry` holds `Video`, `Audio` and `Scene` beside songs and passages (`artosia-core/src/plan.rs`); a bare older record loads with Stop at full volume. A row has a colour per kind, three toggles for the end (stop, loop, next) and a slider for the level (`ui/plan.rs` `run_item`, `volume_slider`); an open or live scene lists its layers and what it clears. The add menu offers Video, Sound and Scene, each file chosen in the computer's file window, a scene in a small dialog (`ui/scene.rs`). `run.rs` turns the live item into `OutputState.media`, `music` and the scene's background and logo, with a new id on every Show (`begin_media`); the projector's `MediaEnded` moves the plan on only for the item's own id and an item set to Next, and a scene's video ending takes away what the scene clears. A row whose file is gone says "Not found" and Show does nothing; Show on a video with a projector built without video says so in a toast. Scenes: `plan-media`, `plan-media-live`, `plan-media-scene`.

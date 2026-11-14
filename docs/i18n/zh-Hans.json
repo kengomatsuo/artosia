@@ -4874,5 +4874,115 @@
   "text": "用搜索打开",
   "back": "Open with search",
   "why": "搜索 is the table's word"
+ },
+ "PLAN_ADD_VIDEO": {
+  "text": "视频",
+  "back": "Video",
+  "why": "plan table uses 视频 for video"
+ },
+ "PLAN_ADD_AUDIO": {
+  "text": "音频",
+  "back": "Audio",
+  "why": "sound file word, covers music and recordings"
+ },
+ "PLAN_ADD_SCENE": {
+  "text": "场景",
+  "back": "Scene",
+  "why": "scene as a set of layers"
+ },
+ "RUN_PICK_VIDEO": {
+  "text": "选择视频文件",
+  "back": "Choose video file",
+  "why": "plain request"
+ },
+ "RUN_PICK_AUDIO": {
+  "text": "选择音频文件",
+  "back": "Choose audio file",
+  "why": "plain request"
+ },
+ "RUN_PICK_BACKGROUND": {
+  "text": "选择背景图片或视频",
+  "back": "Choose background picture or video",
+  "why": "背景 and 图片 as in the Design table"
+ },
+ "RUN_END_STOP": {
+  "text": "播完后停止",
+  "back": "Stop after playing to the end",
+  "why": "short action"
+ },
+ "RUN_END_LOOP": {
+  "text": "播完后重播",
+  "back": "Play again after the end",
+  "why": "重播 is the plain word"
+ },
+ "RUN_END_NEXT": {
+  "text": "播完后自动进入下一项",
+  "back": "After the end go on to the next item by itself",
+  "why": "自动 shows the program does it"
+ },
+ "RUN_VOLUME": {
+  "text": "音量",
+  "back": "Volume",
+  "why": "same word as the existing level text"
+ },
+ "RUN_LAYER_BACKGROUND": {
+  "text": "背景",
+  "back": "Background",
+  "why": "existing word"
+ },
+ "RUN_LAYER_VIDEO": {
+  "text": "视频",
+  "back": "Video",
+  "why": "same as add menu"
+ },
+ "RUN_LAYER_MUSIC": {
+  "text": "音乐",
+  "back": "Music",
+  "why": "music"
+ },
+ "RUN_LAYER_LOGO": {
+  "text": "标志",
+  "back": "Emblem",
+  "why": "the table calls the logo 标志"
+ },
+ "RUN_CLEARS": {
+  "text": "视频播完后撤下",
+  "back": "Taken away after the video ends",
+  "why": "begins a sentence the chips finish"
+ },
+ "RUN_CLEARS_NONE": {
+  "text": "无",
+  "back": "None",
+  "why": "one character"
+ },
+ "RUN_SCENE_NEW": {
+  "text": "新建场景",
+  "back": "New scene",
+  "why": "新建 as used for new plan"
+ },
+ "RUN_SCENE_NAME": {
+  "text": "名称",
+  "back": "Name",
+  "why": "field label as in the table"
+ },
+ "RUN_MISSING": {
+  "text": "找不到文件",
+  "back": "File not found",
+  "why": "short yellow tag"
+ },
+ "MEDIA_ITEM_NONE": {
+  "text": "这个版本不能播放视频和声音，完整版可以。",
+  "back": "This version cannot play video and sound; the full version can.",
+  "why": "statement about the build, not the person"
+ },
+ "media_audio_missing": {
+  "text": "找不到音频文件 {file}",
+  "back": "Cannot find the audio file {file}",
+  "why": "mirrors the existing video line"
+ },
+ "media_audio_failed": {
+  "text": "无法播放音频文件 {file}",
+  "back": "Cannot play the audio file {file}",
+  "why": "mirrors the existing video line"
  }
 }

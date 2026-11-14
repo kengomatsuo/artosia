@@ -717,6 +717,25 @@ text!(HINT_CANCEL, "Cancel", "Cancel");
 text!(PLAN_ADD_SONG, "Song", "Song");
 text!(PLAN_ADD_PASSAGE, "Bible passage", "Bible passage");
 text!(PLAN_ADD_HEADING, "Divider", "Divider");
+text!(PLAN_ADD_VIDEO, "Video", "Video");
+text!(PLAN_ADD_AUDIO, "Sound", "Sound");
+text!(PLAN_ADD_SCENE, "Scene", "Scene");
+text!(RUN_PICK_VIDEO, "Choose a video", "Choose a video");
+text!(RUN_PICK_AUDIO, "Choose a sound", "Choose a sound");
+text!(RUN_PICK_BACKGROUND, "Choose a picture or video", "Choose a picture or video");
+text!(RUN_END_STOP, "Stop at the end", "Stop at the end");
+text!(RUN_END_LOOP, "Play again and again", "Play again and again");
+text!(RUN_END_NEXT, "Go to the next item", "Go to the next item");
+text!(RUN_VOLUME, "Volume", "Volume");
+text!(RUN_LAYER_BACKGROUND, "Background", "Background");
+text!(RUN_LAYER_VIDEO, "Video", "Video");
+text!(RUN_LAYER_MUSIC, "Music", "Music");
+text!(RUN_LAYER_LOGO, "Logo", "Logo");
+text!(RUN_CLEARS, "Clears when the video ends", "Clears when the video ends");
+text!(RUN_CLEARS_NONE, "Nothing", "Nothing");
+text!(RUN_SCENE_NEW, "New scene", "New scene");
+text!(RUN_SCENE_NAME, "Name", "Name");
+text!(RUN_MISSING, "Not found", "Not found");
 text!(PLAN_DRAG, "Drag to reorder", "Drag to reorder");
 text!(ADDING_TO_PLAN, "Adding to the plan", "Adding to the plan");
 text!(BTN_DONE, "Done", "Done");
@@ -992,6 +1011,19 @@ pub fn media_video_failed(file: &str) -> String {
     }
     format!("The video will not play: {file}")
 }
+pub fn media_audio_missing(file: &str) -> String {
+    if let Some(text) = say("media_audio_missing", None, None, &[("file", text_arg(file))]) {
+        return text;
+    }
+    format!("Sound file missing: {file}")
+}
+pub fn media_audio_failed(file: &str) -> String {
+    if let Some(text) = say("media_audio_failed", None, None, &[("file", text_arg(file))]) {
+        return text;
+    }
+    format!("The sound will not play: {file}")
+}
+text!(MEDIA_ITEM_NONE, "Video and sound need the full edition.", "Video and sound need the full edition.");
 text!(MEDIA_VIDEO_NONE, "This copy of Artosia cannot play videos or cameras.", "This copy of Artosia cannot play videos or cameras.");
 text!(MEDIA_VIDEO_SOFTWARE, "The graphics card cannot play this video. The processor does.", "The graphics card cannot play this video. The processor does.");
 text!(SCREENS_HERE, "Show it on this screen", "Layar di jendela ini");

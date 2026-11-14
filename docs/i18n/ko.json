@@ -4874,5 +4874,115 @@
   "text": "검색으로 열기",
   "back": "Open with search",
   "why": "검색 is the table's word"
+ },
+ "PLAN_ADD_VIDEO": {
+  "text": "영상",
+  "back": "Video",
+  "why": "table uses 영상"
+ },
+ "PLAN_ADD_AUDIO": {
+  "text": "소리",
+  "back": "Sound",
+  "why": "소리 for a sound or music"
+ },
+ "PLAN_ADD_SCENE": {
+  "text": "장면",
+  "back": "Scene",
+  "why": "scene as a set of layers"
+ },
+ "RUN_PICK_VIDEO": {
+  "text": "영상 파일 선택",
+  "back": "Choose video file",
+  "why": "as BTN_CHOOSE style"
+ },
+ "RUN_PICK_AUDIO": {
+  "text": "소리 파일 선택",
+  "back": "Choose sound file",
+  "why": "as BTN_CHOOSE style"
+ },
+ "RUN_PICK_BACKGROUND": {
+  "text": "배경 사진이나 영상 선택",
+  "back": "Choose picture or video for the background",
+  "why": "배경 as in the Design table"
+ },
+ "RUN_END_STOP": {
+  "text": "끝나면 멈춤",
+  "back": "Stops when it ends",
+  "why": "noun-ending action"
+ },
+ "RUN_END_LOOP": {
+  "text": "끝나면 처음부터 반복",
+  "back": "Repeat from the start when it ends",
+  "why": "plain"
+ },
+ "RUN_END_NEXT": {
+  "text": "끝나면 자동으로 다음 항목으로",
+  "back": "When it ends, to the next item automatically",
+  "why": "항목 as in the plan table"
+ },
+ "RUN_VOLUME": {
+  "text": "소리 크기",
+  "back": "Sound size",
+  "why": "existing word for level"
+ },
+ "RUN_LAYER_BACKGROUND": {
+  "text": "배경",
+  "back": "Background",
+  "why": "existing word"
+ },
+ "RUN_LAYER_VIDEO": {
+  "text": "영상",
+  "back": "Video",
+  "why": "same as add menu"
+ },
+ "RUN_LAYER_MUSIC": {
+  "text": "음악",
+  "back": "Music",
+  "why": "music"
+ },
+ "RUN_LAYER_LOGO": {
+  "text": "로고",
+  "back": "Logo",
+  "why": "the table uses 로고"
+ },
+ "RUN_CLEARS": {
+  "text": "영상이 끝나면 지워지는 것",
+  "back": "What is erased when the video ends",
+  "why": "begins a phrase the chips finish"
+ },
+ "RUN_CLEARS_NONE": {
+  "text": "없음",
+  "back": "None",
+  "why": "one word"
+ },
+ "RUN_SCENE_NEW": {
+  "text": "새 장면",
+  "back": "New scene",
+  "why": "새 as in the table"
+ },
+ "RUN_SCENE_NAME": {
+  "text": "이름",
+  "back": "Name",
+  "why": "field label as in the table"
+ },
+ "RUN_MISSING": {
+  "text": "파일 없음",
+  "back": "No file",
+  "why": "short yellow tag"
+ },
+ "MEDIA_ITEM_NONE": {
+  "text": "영상과 소리는 정식 버전에서만 재생돼요.",
+  "back": "Video and sound play only in the full version.",
+  "why": "statement about the build, polite 요 as the table"
+ },
+ "media_audio_missing": {
+  "text": "소리 파일이 없어요: {file}",
+  "back": "The sound file is missing: {file}",
+  "why": "mirrors the existing video line"
+ },
+ "media_audio_failed": {
+  "text": "소리 파일을 재생하지 못했어요: {file}",
+  "back": "Could not play the sound file: {file}",
+  "why": "mirrors the existing video line"
  }
 }

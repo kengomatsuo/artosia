@@ -185,3 +185,7 @@ A second reader of a finished language found one thing under two or three names,
 **`undo`** Taking back the last removal: a plan item, a song, an announcement, a whole plan, the editor that was just closed, or what the search had learned. Offered in the toast that reports the removal.
 
 **`notice`** A toast: a short message that appears near the bottom of the window for a few seconds after something happened and then goes. Not to be confused with an announcement card or a notice to the room.
+
+**`rundown_item`** A video, a sound or a scene in the plan, beside the songs and passages. It has a file, what it does when it reaches its end (stop, play again, or go on to the next item of the plan) and how loud it plays. Showing it plays it through the projector.
+
+**`scene`** Several layers shown together as one plan item: a background of its own, a video, music, and the church's logo. It also lists which of those it takes away when its video has played to its end.

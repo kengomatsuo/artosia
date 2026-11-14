@@ -346,6 +346,8 @@ fn open_tools(s: &App, k: &Kit) -> Vec<El> {
     }
     match open.deck.source {
         DeckSource::Song(_) => tools.push(btn(t::BTN_EDIT()).icon(&icons::PENCIL).small().hint("Ctrl E").build(k, |s, _| s.edit_open_song())),
+        // A rundown item is edited on its own row.
+        DeckSource::Media(_) => {}
         DeckSource::Announcements | DeckSource::Announcement(_) => tools.push(btn(t::BTN_EDIT()).icon(&icons::PENCIL).small().hint("Ctrl E").build(k, |s, _| s.edit_announcements())),
         DeckSource::Passage { .. } => tools.push(btn(t::BTN_NEXT_VERSE()).icon(&icons::PLUS).icon_only().small().build(k, |s, tx| {
             s.extend_passage();

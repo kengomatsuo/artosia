@@ -115,6 +115,8 @@ pub enum DeckSource {
     Passage { reference: Reference, bible: String, second: Option<String> },
     Announcement(i64),
     Announcements,
+    /// A rundown video, sound or scene, by `PlanEntry::media_key`.
+    Media(String),
 }
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]

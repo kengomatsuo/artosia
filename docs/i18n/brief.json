@@ -17827,5 +17827,397 @@
    "search"
   ],
   "notes": "A verb and 'search' or the word the program uses for its search."
+ },
+ {
+  "key": "PLAN_ADD_VIDEO",
+  "kind": "const",
+  "screen": "Plan column, add menu, between the Bible passage and the divider items, with an icon.",
+  "moment": "The person wants a film clip to play during the service.",
+  "role": "menu item",
+  "does": "Names the choice of adding a video file that plays on the projector.",
+  "budget": 14,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "plan",
+   "rundown_item"
+  ],
+  "notes": "One word, the same as the video layer of a scene."
+ },
+ {
+  "key": "PLAN_ADD_AUDIO",
+  "kind": "const",
+  "screen": "Plan column, add menu, between the Bible passage and the divider items, with an icon.",
+  "moment": "The person wants a recorded sound to play during the service, such as music for a prayer.",
+  "role": "menu item",
+  "does": "Names the choice of adding a sound file that plays with nothing drawn for it.",
+  "budget": 14,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "plan",
+   "rundown_item"
+  ],
+  "notes": "One word for a sound or a piece of music, not for a microphone."
+ },
+ {
+  "key": "PLAN_ADD_SCENE",
+  "kind": "const",
+  "screen": "Plan column, add menu, between the Bible passage and the divider items, with an icon.",
+  "moment": "The person wants several things to appear together, such as a background, a video, music and the logo.",
+  "role": "menu item",
+  "does": "Names the choice of adding a group of layers that are shown at once.",
+  "budget": 14,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "plan",
+   "scene"
+  ],
+  "notes": "One word. It is also the name a scene gets when the person types none."
+ },
+ {
+  "key": "RUN_PICK_VIDEO",
+  "kind": "const",
+  "screen": "Title of the computer's own file window, opened from the add menu or from a scene's dialog.",
+  "moment": "The person is choosing the film clip to add.",
+  "role": "dialog title",
+  "does": "Asks the person to pick a video file.",
+  "budget": 30,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "rundown_item"
+  ],
+  "notes": "A request, no full stop."
+ },
+ {
+  "key": "RUN_PICK_AUDIO",
+  "kind": "const",
+  "screen": "Title of the computer's own file window, opened from the add menu or from a scene's dialog.",
+  "moment": "The person is choosing the sound or music to add.",
+  "role": "dialog title",
+  "does": "Asks the person to pick a sound file.",
+  "budget": 30,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "rundown_item"
+  ],
+  "notes": "A request, no full stop."
+ },
+ {
+  "key": "RUN_PICK_BACKGROUND",
+  "kind": "const",
+  "screen": "Title of the computer's own file window, opened from the background line of a scene's dialog.",
+  "moment": "The person is choosing what fills the screen behind a scene.",
+  "role": "dialog title",
+  "does": "Asks the person to pick a picture or a video for the back of the screen.",
+  "budget": 40,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "scene",
+   "backdrop"
+  ],
+  "notes": "A request, no full stop."
+ },
+ {
+  "key": "RUN_END_STOP",
+  "kind": "const",
+  "screen": "Plan column, on a row of a video or a sound: under its title three small buttons, one lit, then a slider and a percentage.",
+  "moment": "The person points at the first of the three buttons, or a screen reader reads it.",
+  "role": "tooltip and spoken name",
+  "does": "Says the file halts when it reaches its end and nothing else follows.",
+  "budget": 40,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "rundown_item"
+  ],
+  "notes": "Names an action, no full stop. A video is left on black."
+ },
+ {
+  "key": "RUN_END_LOOP",
+  "kind": "const",
+  "screen": "Plan column, on a row of a video or a sound: under its title three small buttons, one lit, then a slider and a percentage.",
+  "moment": "The person points at the second of the three buttons, or a screen reader reads it.",
+  "role": "tooltip and spoken name",
+  "does": "Says the file starts over each time it ends, for as long as it is on.",
+  "budget": 40,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "rundown_item"
+  ],
+  "notes": "Names an action, no full stop."
+ },
+ {
+  "key": "RUN_END_NEXT",
+  "kind": "const",
+  "screen": "Plan column, on a row of a video or a sound: under its title three small buttons, one lit, then a slider and a percentage.",
+  "moment": "The person points at the third of the three buttons, or a screen reader reads it.",
+  "role": "tooltip and spoken name",
+  "does": "Says that when the file ends the program shows the next item of the plan by itself.",
+  "budget": 40,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "rundown_item",
+   "plan_item"
+  ],
+  "notes": "Names an action, no full stop."
+ },
+ {
+  "key": "RUN_VOLUME",
+  "kind": "const",
+  "screen": "Plan column, on a row of a video or a sound: under its title three small buttons, one lit, then a slider and a percentage.",
+  "moment": "A screen reader reaches the slider that sets how loud the file plays.",
+  "role": "spoken name",
+  "does": "Names the slider that sets how loud the file plays.",
+  "budget": 14,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "rundown_item"
+  ],
+  "notes": "One word, never shown as text beside the slider, which shows only a percentage."
+ },
+ {
+  "key": "RUN_LAYER_BACKGROUND",
+  "kind": "const",
+  "screen": "Plan column, under a scene that is open: a list of its layers, each with an icon, its kind at the left and its file at the right. Also the first line of a scene's dialog.",
+  "moment": "The person reads which layers a scene holds.",
+  "role": "row label",
+  "does": "Names the layer that fills the screen behind everything.",
+  "budget": 16,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "scene",
+   "backdrop"
+  ],
+  "notes": "One word."
+ },
+ {
+  "key": "RUN_LAYER_VIDEO",
+  "kind": "const",
+  "screen": "Plan column, under a scene that is open: a list of its layers, each with an icon, its kind at the left and its file at the right. Also a line and a box of a scene's dialog, and a chip under the plan row.",
+  "moment": "The person reads which layers a scene holds and which it clears.",
+  "role": "row label",
+  "does": "Names the layer that plays a film clip in front of the background.",
+  "budget": 16,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "scene",
+   "rundown_item"
+  ],
+  "notes": "One word, the same as the add menu item."
+ },
+ {
+  "key": "RUN_LAYER_MUSIC",
+  "kind": "const",
+  "screen": "Plan column, under a scene that is open: a list of its layers, each with an icon, its kind at the left and its file at the right. Also a line and a box of a scene's dialog, and a chip under the plan row.",
+  "moment": "The person reads which layers a scene holds and which it clears.",
+  "role": "row label",
+  "does": "Names the layer that plays music under everything.",
+  "budget": 16,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "scene",
+   "rundown_item"
+  ],
+  "notes": "One word for music."
+ },
+ {
+  "key": "RUN_LAYER_LOGO",
+  "kind": "const",
+  "screen": "Plan column, under a scene that is open: a list of its layers, each with an icon, its kind at the left and its file at the right. Also a box of a scene's dialog and a chip under the plan row.",
+  "moment": "The person reads which layers a scene holds and which it clears.",
+  "role": "row label",
+  "does": "Names the layer that shows the church's picture alone.",
+  "budget": 16,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "scene",
+   "logo"
+  ],
+  "notes": "One word, as the logo button of the live pane."
+ },
+ {
+  "key": "RUN_CLEARS",
+  "kind": "const",
+  "screen": "Plan column, a small grey line under the layers of an open scene, with chips under it; and the heading over three boxes in a scene's dialog.",
+  "moment": "The person wants to know what leaves the screen once the scene's video is over.",
+  "role": "heading",
+  "does": "Introduces the list of layers that are taken away when the video has played to its end.",
+  "budget": 40,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "scene"
+  ],
+  "notes": "Reads as the start of a sentence the chips below finish. No full stop."
+ },
+ {
+  "key": "RUN_CLEARS_NONE",
+  "kind": "const",
+  "screen": "Plan column, under the line about what a scene clears, where the chips would be.",
+  "moment": "The scene takes nothing away when its video ends.",
+  "role": "tag",
+  "does": "Says the scene removes none of its layers.",
+  "budget": 14,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "scene"
+  ],
+  "notes": "One word or two."
+ },
+ {
+  "key": "RUN_SCENE_NEW",
+  "kind": "const",
+  "screen": "The dialog a scene is made in, opened from the add menu of the plan: a name field, then one line each for the background, the video and the music with a Choose button, a slider for the sound level, a Logo box and three boxes under a heading about what is cleared.",
+  "moment": "The dialog has just opened.",
+  "role": "dialog title",
+  "does": "Titles the dialog in which a new scene is made.",
+  "budget": 24,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "scene"
+  ],
+  "notes": "Short, no full stop."
+ },
+ {
+  "key": "RUN_SCENE_NAME",
+  "kind": "const",
+  "screen": "The dialog a scene is made in, opened from the add menu of the plan: a name field, then one line each for the background, the video and the music with a Choose button, a slider for the sound level, a Logo box and three boxes under a heading about what is cleared.",
+  "moment": "The person may type what the scene is called in the plan.",
+  "role": "field label",
+  "does": "Names the field where the scene gets its name.",
+  "budget": 14,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "scene"
+  ],
+  "notes": "One word, as a form field."
+ },
+ {
+  "key": "RUN_MISSING",
+  "kind": "const",
+  "screen": "Plan column, a small yellow tag at the right of the row of a video, a sound or a scene.",
+  "moment": "A file the row plays has been moved or deleted since it was added, so showing the row does nothing.",
+  "role": "tag",
+  "does": "Says one of the item's files cannot be found.",
+  "budget": 12,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "plan_item",
+   "rundown_item"
+  ],
+  "notes": "A small tag about 60 points wide: one or two short words."
+ },
+ {
+  "key": "MEDIA_ITEM_NONE",
+  "kind": "const",
+  "screen": "Main window, the thin bar along the bottom edge. At its left a dot and a few words about the projector; beside them, in the warning colour, one line that appears only while a video, a sound or a scene shown from the plan cannot be played. The line is cut with an ellipsis when the window is narrow, so the first words carry the news.",
+  "moment": "The person pressed Show on a video, a sound or a scene, and the Artosia installed here is a kind without the part that plays them.",
+  "role": "warning line",
+  "does": "Says that this kind of Artosia cannot play video or sound, and that the full edition can.",
+  "budget": 60,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "rundown_item"
+  ],
+  "notes": "One plain statement, never about the person. Full stop."
+ },
+ {
+  "key": "media_audio_missing",
+  "kind": "sentence",
+  "screen": "Main window, the thin bar along the bottom edge. At its left a dot and a few words about the projector; beside them, in the warning colour, one line that appears only while a video, a sound or a scene shown from the plan cannot be played. The line is cut with an ellipsis when the window is narrow, so the first words carry the news.",
+  "moment": "A sound of the plan is shown and its file is no longer where it was.",
+  "role": "warning line",
+  "does": "Says the sound file is missing and names it.",
+  "budget": 60,
+  "variables": [
+   {
+    "name": "file",
+    "example": "prayer.mp3",
+    "meaning": "The file's name with its ending."
+   }
+  ],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [],
+  "notes": "The news first, then the file's name. No full stop after the name."
+ },
+ {
+  "key": "media_audio_failed",
+  "kind": "sentence",
+  "screen": "Main window, the thin bar along the bottom edge. At its left a dot and a few words about the projector; beside them, in the warning colour, one line that appears only while a video, a sound or a scene shown from the plan cannot be played. The line is cut with an ellipsis when the window is narrow, so the first words carry the news.",
+  "moment": "A sound of the plan is shown, its file is there and cannot be played, or stopped playing.",
+  "role": "warning line",
+  "does": "Says the sound file cannot be played and names it.",
+  "budget": 60,
+  "variables": [
+   {
+    "name": "file",
+    "example": "prayer.mp3",
+    "meaning": "The file's name with its ending."
+   }
+  ],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [],
+  "notes": "The news first, then the file's name. No full stop after the name."
  }
 ]

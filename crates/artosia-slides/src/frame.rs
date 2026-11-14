@@ -214,8 +214,14 @@ pub enum FromOutput {
     PreviewEnd,
     /// A `Stop` or `Next` item reached its end.
     MediaEnded { id: u64 },
-    /// Where the item in front is, at most twice a second while it plays.
-    MediaPlaying { id: u64, position_ms: u64 },
+    /// Where the item in front is, at most twice a second while it plays, and how long the file
+    /// is (0 while the player does not know yet).
+    MediaPlaying {
+        id: u64,
+        position_ms: u64,
+        #[serde(default)]
+        length_ms: u64,
+    },
 }
 
 #[cfg(test)]
@@ -251,6 +257,9 @@ mod tests {
         assert_eq!((back.media, back.music), (Some(item.clone()), Some(item)));
         let ended = encode(&FromOutput::MediaEnded { id: 7 });
         assert_eq!(decode::<FromOutput>(&ended), Some(FromOutput::MediaEnded { id: 7 }));
+        // A projector that does not send the length yet still decodes.
+        let old = r#"{"MediaPlaying":{"id":7,"position_ms":1500}}"#;
+        assert_eq!(decode::<FromOutput>(old), Some(FromOutput::MediaPlaying { id: 7, position_ms: 1500, length_ms: 0 }));
     }
 }
 

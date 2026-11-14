@@ -709,7 +709,7 @@ impl App {
         for item in &self.plan.items {
             let title = self.entry_title(&item.entry);
             match &item.entry {
-                PlanEntry::Passage { .. } | PlanEntry::Announcements => {
+                PlanEntry::Passage { .. } | PlanEntry::Announcements | PlanEntry::Video { .. } | PlanEntry::Audio { .. } | PlanEntry::Scene { .. } => {
                     let doc = Doc::new(format!("plan:{}", item.id), "plan", title.clone()).detail(t::IN_PLAN()).aliases(&["plan", "today", "rencana", "hari ini"]);
                     out.push((doc, Hit::PlanItem { id: item.id, title }));
                 }

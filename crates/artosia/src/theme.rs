@@ -243,6 +243,9 @@ pub mod icons {
     icon!(CHECK, "a-check", r#"<path d="M3 8.5L6.5 12L13 4.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>"#);
     icon!(MINUS, "a-minus", r#"<path d="M3 8H13" stroke="currentColor" stroke-linecap="round"/>"#);
     icon!(CAMERA, "a-camera", r#"<rect x="1.5" y="4.5" width="9" height="7" rx="1.5" stroke="currentColor"/><path d="M10.5 7.2L14.5 5V11L10.5 8.8" stroke="currentColor" stroke-linejoin="round"/>"#);
+    icon!(SPEAKER, "a-speaker", r#"<path d="M2.5 6.2V9.8H5L8.5 12.5V3.5L5 6.2H2.5Z" stroke="currentColor" stroke-linejoin="round"/><path d="M10.8 5.8C11.5 6.4 11.8 7.1 11.8 8C11.8 8.9 11.5 9.6 10.8 10.2M12.6 4C13.8 5 14.4 6.4 14.4 8C14.4 9.6 13.8 11 12.6 12" stroke="currentColor" stroke-linecap="round"/>"#);
+    icon!(LAYERS, "a-layers", r#"<path d="M8 2L14 5.4L8 8.8L2 5.4L8 2Z" stroke="currentColor" stroke-linejoin="round"/><path d="M2 8.2L8 11.6L14 8.2M2 10.8L8 14.2L14 10.8" stroke="currentColor" stroke-linejoin="round" stroke-linecap="round"/>"#);
+    icon!(STOP, "a-stop", r#"<rect x="4" y="4" width="8" height="8" rx="1.2" stroke="currentColor"/>"#);
     icon!(STREAM, "a-stream", r#"<circle cx="8" cy="8" r="1.6" fill="currentColor"/><path d="M4.6 4.6C2.7 6.5 2.7 9.5 4.6 11.4M11.4 4.6C13.3 6.5 13.3 9.5 11.4 11.4M2.4 2.6C-0.4 5.6 -0.4 10.4 2.4 13.4M13.6 2.6C16.4 5.6 16.4 10.4 13.6 13.4" stroke="currentColor" stroke-linecap="round"/>"#);
     icon!(PLAN, "a-plan", r#"<path d="M5.5 4H13.5M5.5 8H13.5M5.5 12H13.5" stroke="currentColor" stroke-linecap="round"/><circle cx="2.8" cy="4" r="0.9" fill="currentColor"/><circle cx="2.8" cy="8" r="0.9" fill="currentColor"/><circle cx="2.8" cy="12" r="0.9" fill="currentColor"/>"#);
     icon!(CALENDAR, "a-calendar", r#"<rect x="2" y="3" width="12" height="10.5" rx="1.5" stroke="currentColor"/><path d="M2 6.5H14M5.5 1.5V4M10.5 1.5V4" stroke="currentColor" stroke-linecap="round"/>"#);

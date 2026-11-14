@@ -20,6 +20,7 @@ mod people;
 mod giving;
 pub(crate) mod plan;
 mod plans;
+mod scene;
 mod sheets;
 mod templates;
 pub use sheets::SETTINGS_FIRST;
@@ -332,6 +333,7 @@ pub fn view(s: &App, cx: &mut Cx<App>) -> El {
     sheets::view(s, k, &mut layer, cx.layout_size("window").map(|size| size[1]).unwrap_or(768.0));
     languages::picker(s, k, &mut layer);
     plans::view(s, k, &mut layer);
+    scene::dialog(s, k, &mut layer, cx.layout_size("window").map(|size| size[1]).unwrap_or(768.0));
     layer.extend(toast(s, k));
     tour::view(s, cx, k, &mut layer);
     onboard::view(s, cx, k, &mut layer);

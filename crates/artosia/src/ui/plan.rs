@@ -2,11 +2,12 @@
 
 use std::rc::Rc;
 
-use artosia_core::plan::{PlanEntry, PlanItem};
-use rune::{Anim, Cursor, Drag, El, Phase, ScrollSpec, Tx, col, el, icon, row, text};
+use artosia_core::plan::{Clears, PlanEntry, PlanItem, RunEnd};
+use rune::{Anim, Color, Cursor, Drag, El, Key, Phase, ScrollSpec, Tx, col, el, icon, row, text};
 use rune_kit::{Kit, Menu, MenuItem, ScrollBar};
 
 use crate::palette::Scope;
+use crate::run::Pick;
 use crate::state::{App, PlanDrag};
 use crate::strings as t;
 use crate::theme::{self, icons, size, space, type_};
@@ -18,7 +19,26 @@ pub(crate) fn entry_icon(entry: &PlanEntry) -> &'static rune::Icon {
         PlanEntry::Passage { .. } => &icons::BOOK,
         PlanEntry::Announcements => &icons::ANNOUNCE,
         PlanEntry::Heading { .. } => &icons::HEADING,
+        PlanEntry::Video { .. } => &icons::CAMERA,
+        PlanEntry::Audio { .. } => &icons::SPEAKER,
+        PlanEntry::Scene { .. } => &icons::LAYERS,
     }
+}
+
+/// A colour per kind of rundown item, so a video, a sound and a scene read apart at a glance.
+fn kind_ink(entry: &PlanEntry) -> Option<Color> {
+    let group = match entry {
+        PlanEntry::Video { .. } => 2,
+        PlanEntry::Audio { .. } => 3,
+        PlanEntry::Scene { .. } => 5,
+        _ => return None,
+    };
+    Some(theme::ink_of(artosia_slides::stage::group_color(group)))
+}
+
+/// The file's own name, for the line under a video's or sound's title.
+fn file_name(path: &str) -> String {
+    std::path::Path::new(path).file_name().map(|name| name.to_string_lossy().into_owned()).unwrap_or_else(|| path.to_string())
 }
 
 /// A divider of the plan: the name of a part of the service, with a rule drawn on to the
@@ -75,12 +95,14 @@ pub(crate) fn item_row(s: &App, k: &Kit, item: &PlanItem, menu: El, inside: bool
         .fill(if open { k.c.layer_03 } else { rune::Color::TRANSPARENT })
         .hover_group()
         .child(grip(k))
-        .child(icon(entry_icon(&item.entry), 16.0).color(if live && s.on_air() { theme::live() } else { k.c.text_muted }).a11y_hidden())
+        .child(icon(entry_icon(&item.entry), 16.0).color(if live && s.on_air() { theme::live() } else { kind_ink(&item.entry).unwrap_or(k.c.text_muted) }).a11y_hidden())
+        .children(progress_line(s, k, id))
         .child({
             // The title has the row's whole width. Where the song begins is a small line under
             // it, in the section's colour: beside the title it took the room the name needs.
             let title = text(s.entry_title(&item.entry)).font(if open { type_::BODY_STRONG } else { type_::BODY }).color(ink).truncate();
             match s.entry_start(&item.entry).filter(|_| !missing) {
+                _ if item.entry.media_key().is_some() => rune::col().grow(1.0).min_w(0.0).child(title).child(run_line(k, &item.entry)),
                 Some(tag) => {
                     let color = theme::ink_of(artosia_slides::stage::group_color(artosia_core::deck::tag_group(tag)));
                     let begins = row().gap(3.0).center_y().child(icon(&icons::PLAY, 9.0).color(color).a11y_hidden()).child(text(t::section_label(tag)).font(type_::TINY).color(color).truncate());
@@ -91,7 +113,8 @@ pub(crate) fn item_row(s: &App, k: &Kit, item: &PlanItem, menu: El, inside: bool
         });
     if missing {
         // An entry that cannot be shown says so in words across the row, not by a cursor.
-        return body.child(state_pill(t::PLAN_MISSING(), theme::warn(), rune::Color::BLACK)).child(menu);
+        let word = if item.entry.media_key().is_some() { t::RUN_MISSING() } else { t::PLAN_MISSING() };
+        return body.child(state_pill(word, theme::warn(), rune::Color::BLACK)).child(menu);
     }
     // A song marked to begin at one of its parts shows that part's chip, as the lists draw it.
     let mut body = body;
@@ -130,7 +153,144 @@ pub(crate) fn item_row(s: &App, k: &Kit, item: &PlanItem, menu: El, inside: bool
         })
 }
 
+/// The line under a rundown item's title: a video's or sound's file, and the layers a scene holds.
+fn run_line(k: &Kit, entry: &PlanEntry) -> El {
+    match entry {
+        PlanEntry::Scene { background, video, music, logo, .. } => {
+            let mut layers = row().gap(space::S2).center_y().h(14.0);
+            for (held, glyph) in [(!background.is_empty(), &icons::IMAGE), (video.is_some(), &icons::CAMERA), (music.is_some(), &icons::SPEAKER), (*logo, &icons::BADGE)] {
+                layers = layers.children(held.then(|| icon(glyph, 11.0).color(k.c.text_muted).a11y_hidden()));
+            }
+            layers
+        }
+        other => text(other.files().first().map(|path| file_name(path)).unwrap_or_default()).font(type_::TINY).color(k.c.text_muted).truncate().min_w(0.0),
+    }
+}
+
+/// How far the live item has played, a thin line on the foot of its row.
+fn progress_line(s: &App, k: &Kit, id: u64) -> Option<El> {
+    let live = s.live.as_ref().is_some_and(|live| live.item == Some(id));
+    let fraction = s.media_progress(id).filter(|_| live)?;
+    let fill = el().w((PROGRESS * fraction).round()).h(2.0).radius(1.0).fill(theme::accent());
+    Some(el().key(format!("plan-progress-{id}")).pin(Some(space::S2), None, Some(space::S2), Some(1.0)).h(2.0).radius(1.0).fill(k.c.layer_03).a11y_hidden().child(fill))
+}
+
+/// A rundown item's row: the item's own line, and under it what it does at its end and how loud
+/// it is, or for a scene opened here its layers and what it clears.
+pub(crate) fn run_item(s: &App, k: &Kit, item: &PlanItem, menu: El, inside: bool) -> El {
+    let id = item.id;
+    let open = s.open.as_ref().is_some_and(|open| open.item == Some(id));
+    let live = s.live.as_ref().is_some_and(|live| live.item == Some(id));
+    let left = space::S2 + 22.0 + if inside { INSET } else { 0.0 };
+    let mut stack = col().w_full().radius(k.radius.md).fill(if open { k.c.layer_03 } else { Color::TRANSPARENT }).child(item_row(s, k, item, menu, inside));
+    match &item.entry {
+        PlanEntry::Video { end, volume, .. } | PlanEntry::Audio { end, volume, .. } => {
+            let mut line = row().key(format!("plan-run-{id}")).w_full().h(CONTROLS).pl(left).pr(space::S3).gap(2.0).center_y();
+            for (to, glyph, words) in [(RunEnd::Stop, &icons::STOP, t::RUN_END_STOP()), (RunEnd::Loop, &icons::LOOP, t::RUN_END_LOOP()), (RunEnd::Next, &icons::ARROW_DOWN, t::RUN_END_NEXT())] {
+                line = line.child(end_toggle(k, id, to, glyph, words, *end == to));
+            }
+            stack = stack.child(line.child(el().w(space::S2)).child(volume_slider(k, format!("plan-volume-{id}"), *volume, SLIDER - if inside { INSET } else { 0.0 }, move |s, to| s.set_run_volume(id, to))).child(el().w(space::S1)).child(text(format!("{volume}%")).font(type_::TINY.features("'tnum' 1")).color(k.c.text_muted).w(30.0).a11y_hidden()));
+        }
+        PlanEntry::Scene { background, video, music, logo, clears, .. } if open || live => {
+            let layer = |glyph: &'static rune::Icon, name: &'static str, value: String| {
+                row().w_full().h(LAYER).pl(left).pr(space::S3).gap(space::S2).center_y().child(icon(glyph, 12.0).color(k.c.text_muted).a11y_hidden()).child(text(name).font(type_::SMALL).color(k.c.text_base)).child(rune::spacer()).child(text(value).font(type_::TINY).color(k.c.text_muted).truncate().min_w(0.0))
+            };
+            let mut layers = col().key(format!("plan-layers-{id}")).w_full();
+            if !background.is_empty() {
+                layers = layers.child(layer(&icons::IMAGE, t::RUN_LAYER_BACKGROUND(), file_name(background)));
+            }
+            if let Some(clip) = video {
+                layers = layers.child(layer(&icons::CAMERA, t::RUN_LAYER_VIDEO(), file_name(&clip.path)));
+            }
+            if let Some(clip) = music {
+                layers = layers.child(layer(&icons::SPEAKER, t::RUN_LAYER_MUSIC(), file_name(&clip.path)));
+            }
+            if *logo {
+                layers = layers.child(layer(&icons::BADGE, t::RUN_LAYER_LOGO(), String::new()));
+            }
+            stack = stack.child(layers).child(clears_line(k, left, clears)).child(el().h(PAD));
+        }
+        _ => {}
+    }
+    stack
+}
+
+/// What a scene takes away when its video ends, as small chips under a line that says so.
+fn clears_line(k: &Kit, left: f32, clears: &Clears) -> El {
+    let chip = |name: &str| row().h(20.0).px(6.0).center_y().radius(6.0).fill(k.c.layer_03).child(text(name.to_string()).font(type_::TINY).color(k.c.text_base));
+    let mut chips = row().key("plan-clears").w_full().h(CLEARS_CHIPS).pl(left).pr(space::S3).gap(space::S1).center_y();
+    for (on, name) in [(clears.video, t::RUN_LAYER_VIDEO()), (clears.music, t::RUN_LAYER_MUSIC()), (clears.logo, t::RUN_LAYER_LOGO())] {
+        chips = chips.children(on.then(|| chip(name)));
+    }
+    if clears.none() {
+        chips = chips.child(text(t::RUN_CLEARS_NONE()).font(type_::TINY).color(k.c.text_muted));
+    }
+    col().w_full().child(row().w_full().h(CLEARS_LABEL).pl(left).pr(space::S3).center_y().child(text(t::RUN_CLEARS()).font(type_::TINY).color(k.c.text_muted).truncate().min_w(0.0))).child(chips)
+}
+
+/// One of the three things an item can do at its end, lit when it is the one set.
+fn end_toggle(k: &Kit, id: u64, to: RunEnd, glyph: &'static rune::Icon, words: &'static str, on: bool) -> El {
+    el().key(format!("plan-end-{id}-{}", to as u8))
+        .role("radio")
+        .label(words)
+        .checked(on)
+        .size(22.0, 22.0)
+        .radius(k.radius.sm)
+        .center()
+        .fill(if on { theme::tint_of(theme::accent(), true) } else { Color::TRANSPARENT })
+        .hover(k.c.hover)
+        .cursor(Cursor::Pointer)
+        .help(words)
+        .child(icon(glyph, 14.0).color(if on { theme::accent() } else { k.c.text_muted }).a11y_hidden())
+        .on_press(move |s: &mut App| s.set_run_end(id, to))
+}
+
+/// The level of a video or sound, dragged or moved with the arrows, 0 to 100.
+pub(crate) fn volume_slider(k: &Kit, key: String, volume: u8, width: f32, set: impl Fn(&mut App, u8) + Clone + 'static) -> El {
+    let fraction = f32::from(volume.min(100)) / 100.0;
+    let thumb = 14.0;
+    let on_key = set.clone();
+    el().key(key)
+        .role("slider")
+        .label(t::RUN_VOLUME())
+        .range_value(f64::from(volume), 0.0, 100.0)
+        .size(width, 18.0)
+        .cursor(Cursor::Pointer)
+        .focusable(true)
+        .child(el().absolute(0.0, 7.0).size(width, 4.0).radius(2.0).fill(k.c.layer_03).border(1.0, k.c.border_base).a11y_hidden())
+        .child(el().absolute(0.0, 7.0).size((width * fraction).max(2.0), 4.0).radius(2.0).fill(theme::accent()).a11y_hidden())
+        .child(el().absolute(((width - thumb) * fraction).round(), 2.0).size(thumb, thumb).radius(thumb / 2.0).fill(Color::WHITE).shadow(1.0, 3.0, Color::BLACK.alpha(0.4)).a11y_hidden())
+        .on_drag(move |s: &mut App, drag: &mut Drag, tx: &mut Tx| {
+            if drag.phase != Phase::Up && drag.w > 0.0 {
+                set(s, (drag.x / drag.w * 100.0).round().clamp(0.0, 100.0) as u8);
+            }
+            // The keys are the projector's again once the slider is let go.
+            if drag.phase == Phase::Up {
+                tx.blur();
+            }
+        })
+        .on_key(move |s: &mut App, ev: &rune::KeyEvent, _: &mut Tx| {
+            let step: i16 = match ev.key {
+                Key::Left | Key::Down => -5,
+                Key::Right | Key::Up => 5,
+                _ => return false,
+            };
+            on_key(s, (i16::from(volume) + step).clamp(0, 100) as u8);
+            true
+        })
+}
+
 const HEADING: f32 = 38.0;
+/// A video's or sound's second line, a scene's layer, and the lines under a scene's layers.
+const CONTROLS: f32 = 30.0;
+const LAYER: f32 = 24.0;
+const CLEARS_LABEL: f32 = 18.0;
+const CLEARS_CHIPS: f32 = 26.0;
+const PAD: f32 = 4.0;
+/// The progress line's length: the plan column less the list's and the row's padding.
+const PROGRESS: f32 = size::PLAN - 4.0 * space::S2;
+/// The volume slider's length under a title, which leaves room for the toggles and the number.
+const SLIDER: f32 = 84.0;
 /// Points an item under a divider is set in from it.
 const INSET: f32 = 10.0;
 /// Points between two rows of the plan.
@@ -286,6 +446,15 @@ pub(crate) fn add_bar(s: &App, k: &Kit, layer: &mut Vec<El>) -> El {
             s.add_announcements_to_plan();
             s.add_menu = false;
         }))
+        .item(MenuItem::new(t::PLAN_ADD_VIDEO()).icon(&icons::CAMERA).on_select(|s: &mut App| {
+            s.add_menu = false;
+            s.run.pick = Some(Pick::Video);
+        }))
+        .item(MenuItem::new(t::PLAN_ADD_AUDIO()).icon(&icons::SPEAKER).on_select(|s: &mut App| {
+            s.add_menu = false;
+            s.run.pick = Some(Pick::Audio);
+        }))
+        .item(MenuItem::new(t::PLAN_ADD_SCENE()).icon(&icons::LAYERS).on_select(|s: &mut App| s.open_scene_form()))
         .item(MenuItem::new(t::PLAN_ADD_HEADING()).icon(&icons::HEADING).on_select(|s: &mut App| {
             s.add_heading();
             s.add_menu = false;
@@ -294,19 +463,37 @@ pub(crate) fn add_bar(s: &App, k: &Kit, layer: &mut Vec<El>) -> El {
     row().key("plan-add").w_full().padding(space::S2).child(menu.grow(1.0))
 }
 
+/// How tall a plan row is drawn, which a drag needs to know to find the place it lands in.
+fn height_of(s: &App, item: &PlanItem) -> f32 {
+    let shown = s.open.as_ref().is_some_and(|open| open.item == Some(item.id)) || s.live.as_ref().is_some_and(|live| live.item == Some(item.id));
+    match &item.entry {
+        PlanEntry::Heading { .. } => HEADING,
+        PlanEntry::Video { .. } | PlanEntry::Audio { .. } => size::ROW + CONTROLS,
+        PlanEntry::Scene { background, video, music, logo, .. } if shown => {
+            let layers = [!background.is_empty(), video.is_some(), music.is_some(), *logo].into_iter().filter(|held| *held).count();
+            size::ROW + layers as f32 * LAYER + CLEARS_LABEL + CLEARS_CHIPS + PAD
+        }
+        _ => size::ROW,
+    }
+}
+
 /// The plan's rows, scrolling; the column and its title belong to the shell.
 pub(crate) fn list(s: &App, k: &Kit, layer: &mut Vec<El>) -> El {
     if s.plan.items.is_empty() {
         return empty(k);
     }
     let mut list = col().key("plan-list").role("list").label(s.plan_title()).w_full().grow(1.0).min_h(0.0).px(space::S2).py(space::S2).gap(GAP).scroll(ScrollSpec { stick_bottom: false }).scroll_edge_fade(crate::theme::size::FADE);
-    let heights: Rc<[f32]> = s.plan.items.iter().map(|item| if item.entry.is_heading() { HEADING } else { size::ROW }).collect();
+    let heights: Rc<[f32]> = s.plan.items.iter().map(|item| height_of(s, item)).collect();
     let mut inside = false;
     for (at, item) in s.plan.items.iter().enumerate() {
         let menu = row_menu(s, k, item, at, layer);
         // Everything after a divider is inside it, until the next one.
         inside |= item.entry.is_heading();
-        let body = if item.entry.is_heading() { heading_row(s, k, item, menu) } else { item_row(s, k, item, menu, inside) };
+        let body = match &item.entry {
+            PlanEntry::Heading { .. } => heading_row(s, k, item, menu),
+            PlanEntry::Video { .. } | PlanEntry::Audio { .. } | PlanEntry::Scene { .. } => run_item(s, k, item, menu, inside),
+            _ => item_row(s, k, item, menu, inside),
+        };
         list = list.child(draggable(s, body, item.id, at, &heights));
     }
     list.scroll_bar(k)

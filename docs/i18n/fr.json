@@ -4914,5 +4914,115 @@
   "text": "Rechercher",
   "back": "Search",
   "why": "Fits the budget"
+ },
+ "PLAN_ADD_VIDEO": {
+  "text": "Vidéo",
+  "back": "Video",
+  "why": "as the layer"
+ },
+ "PLAN_ADD_AUDIO": {
+  "text": "Son",
+  "back": "Sound",
+  "why": "sound file, not audio jargon"
+ },
+ "PLAN_ADD_SCENE": {
+  "text": "Scène",
+  "back": "Scene",
+  "why": "a scene of layers"
+ },
+ "RUN_PICK_VIDEO": {
+  "text": "Choisir un fichier vidéo",
+  "back": "Choose a video file",
+  "why": "request"
+ },
+ "RUN_PICK_AUDIO": {
+  "text": "Choisir un fichier son",
+  "back": "Choose a sound file",
+  "why": "plain word"
+ },
+ "RUN_PICK_BACKGROUND": {
+  "text": "Choisir une image ou une vidéo de fond",
+  "back": "Choose a picture or a video for the background",
+  "why": "fond as in Design"
+ },
+ "RUN_END_STOP": {
+  "text": "S'arrêter à la fin",
+  "back": "Stop at the end",
+  "why": "plain word"
+ },
+ "RUN_END_LOOP": {
+  "text": "Recommencer en boucle",
+  "back": "Start over in a loop",
+  "why": "plain word"
+ },
+ "RUN_END_NEXT": {
+  "text": "Passer à l'élément suivant",
+  "back": "Go on to the next item",
+  "why": "next plan item"
+ },
+ "RUN_VOLUME": {
+  "text": "Volume",
+  "back": "Volume",
+  "why": "plain word"
+ },
+ "RUN_LAYER_BACKGROUND": {
+  "text": "Fond",
+  "back": "Background",
+  "why": "same as Design"
+ },
+ "RUN_LAYER_VIDEO": {
+  "text": "Vidéo",
+  "back": "Video",
+  "why": "plain word"
+ },
+ "RUN_LAYER_MUSIC": {
+  "text": "Musique",
+  "back": "Music",
+  "why": "plain word"
+ },
+ "RUN_LAYER_LOGO": {
+  "text": "Logo",
+  "back": "Logo",
+  "why": "as the logo button"
+ },
+ "RUN_CLEARS": {
+  "text": "Retiré à la fin de la vidéo",
+  "back": "Taken off at the end of the video",
+  "why": "start of a sentence the chips finish"
+ },
+ "RUN_CLEARS_NONE": {
+  "text": "Rien",
+  "back": "Nothing",
+  "why": "plain word"
+ },
+ "RUN_SCENE_NEW": {
+  "text": "Nouvelle scène",
+  "back": "New scene",
+  "why": "plain word"
+ },
+ "RUN_SCENE_NAME": {
+  "text": "Nom",
+  "back": "Name",
+  "why": "plain word"
+ },
+ "RUN_MISSING": {
+  "text": "Introuvable",
+  "back": "Not found",
+  "why": "short tag"
+ },
+ "MEDIA_ITEM_NONE": {
+  "text": "Vidéo et son : édition complète seulement.",
+  "back": "Video and sound: full edition only.",
+  "why": "news first"
+ },
+ "media_audio_missing": {
+  "text": "Son introuvable : {file}",
+  "back": "Sound not found: {file}",
+  "why": "same shape as the video line"
+ },
+ "media_audio_failed": {
+  "text": "Lecture du son impossible : {file}",
+  "back": "Playing the sound impossible: {file}",
+  "why": "plain word"
  }
 }

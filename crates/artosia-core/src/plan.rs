@@ -6,6 +6,47 @@ use crate::bible::Reference;
 use crate::deck::Deck;
 use crate::song::Tag;
 
+/// What a video or sound does when it reaches its end.
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
+pub enum RunEnd {
+    /// It stops and waits (a video goes black).
+    #[default]
+    Stop,
+    /// It plays again from the start for as long as it is on.
+    Loop,
+    /// The plan goes on to its next item.
+    Next,
+}
+
+fn full_volume() -> u8 {
+    100
+}
+
+/// A file a scene plays, with the level it plays at, 0 to 100.
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+pub struct Clip {
+    pub path: String,
+    #[serde(default = "full_volume")]
+    pub volume: u8,
+}
+
+/// What a scene takes off the screen when its video ends.
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
+pub struct Clears {
+    #[serde(default)]
+    pub video: bool,
+    #[serde(default)]
+    pub music: bool,
+    #[serde(default)]
+    pub logo: bool,
+}
+
+impl Clears {
+    pub fn none(&self) -> bool {
+        *self == Clears::default()
+    }
+}
+
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub enum PlanEntry {
     /// `title` is kept so a deleted song still reads as itself in the plan. `start` is the
@@ -22,6 +63,39 @@ pub enum PlanEntry {
     Announcements,
     /// A divider such as "Worship" or "Word".
     Heading { title: String },
+    /// A video that plays in front of the background, with its sound.
+    Video {
+        path: String,
+        title: String,
+        #[serde(default)]
+        end: RunEnd,
+        #[serde(default = "full_volume")]
+        volume: u8,
+    },
+    /// A sound that plays with nothing drawn for it.
+    Audio {
+        path: String,
+        title: String,
+        #[serde(default)]
+        end: RunEnd,
+        #[serde(default = "full_volume")]
+        volume: u8,
+    },
+    /// Layers shown together: a background of its own, a video, music, the logo, and what is
+    /// taken away when the video ends. An empty `background` keeps the look's.
+    Scene {
+        title: String,
+        #[serde(default)]
+        background: String,
+        #[serde(default)]
+        video: Option<Clip>,
+        #[serde(default)]
+        music: Option<Clip>,
+        #[serde(default)]
+        logo: bool,
+        #[serde(default)]
+        clears: Clears,
+    },
 }
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
@@ -86,13 +160,40 @@ pub fn valid_date(text: &str) -> Option<String> {
 impl PlanEntry {
     pub fn title(&self) -> &str {
         match self {
-            PlanEntry::Song { title, .. } | PlanEntry::Passage { title, .. } | PlanEntry::Heading { title } => title,
+            PlanEntry::Song { title, .. }
+            | PlanEntry::Passage { title, .. }
+            | PlanEntry::Heading { title }
+            | PlanEntry::Video { title, .. }
+            | PlanEntry::Audio { title, .. }
+            | PlanEntry::Scene { title, .. } => title,
             PlanEntry::Announcements => "Announcements",
         }
     }
 
     pub fn is_heading(&self) -> bool {
         matches!(self, PlanEntry::Heading { .. })
+    }
+
+    /// What names a rundown item to the deck made for it; None for every other entry.
+    pub fn media_key(&self) -> Option<String> {
+        match self {
+            PlanEntry::Video { path, .. } | PlanEntry::Audio { path, .. } => Some(path.clone()),
+            PlanEntry::Scene { title, .. } => Some(format!("scene:{title}")),
+            _ => None,
+        }
+    }
+
+    /// The files a rundown item plays or draws, in layer order; empty for every other entry.
+    pub fn files(&self) -> Vec<&str> {
+        match self {
+            PlanEntry::Video { path, .. } | PlanEntry::Audio { path, .. } => vec![path],
+            PlanEntry::Scene { background, video, music, .. } => {
+                let mut files: Vec<&str> = vec![background.as_str()].into_iter().filter(|path| !path.is_empty()).collect();
+                files.extend(video.iter().chain(music).map(|clip| clip.path.as_str()));
+                files
+            }
+            _ => Vec::new(),
+        }
     }
 
     /// A song entry with no start set: it begins at its first slide.
@@ -291,6 +392,24 @@ mod tests {
         let mut plan = Plan::named("Youth");
         plan.date = "2026-11-14".into();
         assert_eq!(plan.month_day(), Some((11, 14)));
+    }
+
+    #[test]
+    fn a_plan_with_video_audio_and_a_scene_round_trips_and_old_ones_load_unchanged() {
+        let mut plan = Plan::named("Sunday");
+        plan.push(PlanEntry::Video { path: "v.mp4".into(), title: "Testimony".into(), end: RunEnd::Next, volume: 80 });
+        plan.push(PlanEntry::Audio { path: "a.mp3".into(), title: "Prayer".into(), end: RunEnd::Loop, volume: 60 });
+        let scene = PlanEntry::Scene { title: "Closing".into(), background: "b.png".into(), video: Some(Clip { path: "c.mp4".into(), volume: 70 }), music: Some(Clip { path: "m.mp3".into(), volume: 50 }), logo: true, clears: Clears { video: true, music: false, logo: true } };
+        plan.push(scene.clone());
+        let back: Plan = serde_json::from_str(&serde_json::to_string(&plan).expect("written")).expect("read back");
+        assert_eq!(back.items[2].entry, scene);
+        assert_eq!(back.items.iter().map(|item| item.entry.title()).collect::<Vec<_>>(), ["Testimony", "Prayer", "Closing"]);
+        assert_eq!(back.items[2].entry.files(), ["b.png", "c.mp4", "m.mp3"]);
+        // Fields a later build adds are optional: a bare video is a stopping video at full volume.
+        let bare: PlanEntry = serde_json::from_str(r#"{"Video":{"path":"v.mp4","title":"T"}}"#).expect("a bare video loads");
+        assert_eq!(bare, PlanEntry::Video { path: "v.mp4".into(), title: "T".into(), end: RunEnd::Stop, volume: 100 });
+        let bare: PlanEntry = serde_json::from_str(r#"{"Scene":{"title":"S"}}"#).expect("a bare scene loads");
+        assert!(matches!(bare, PlanEntry::Scene { ref background, video: None, music: None, logo: false, clears, .. } if background.is_empty() && clears.none()));
     }
 
     #[test]

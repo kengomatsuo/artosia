@@ -4873,5 +4873,115 @@
   "text": "Mở tìm kiếm",
   "back": "Open the search",
   "why": "tìm kiếm as in the table"
+ },
+ "PLAN_ADD_VIDEO": {
+  "text": "Video",
+  "back": "Video",
+  "why": "as the layer"
+ },
+ "PLAN_ADD_AUDIO": {
+  "text": "Âm thanh",
+  "back": "Sound",
+  "why": "sound file"
+ },
+ "PLAN_ADD_SCENE": {
+  "text": "Cảnh",
+  "back": "Scene",
+  "why": "a scene of layers"
+ },
+ "RUN_PICK_VIDEO": {
+  "text": "Chọn tệp video",
+  "back": "Choose a video file",
+  "why": "tệp as in existing table"
+ },
+ "RUN_PICK_AUDIO": {
+  "text": "Chọn tệp âm thanh",
+  "back": "Choose a sound file",
+  "why": "plain word"
+ },
+ "RUN_PICK_BACKGROUND": {
+  "text": "Chọn ảnh hoặc video làm nền",
+  "back": "Choose a picture or video as the background",
+  "why": "nền as in Design"
+ },
+ "RUN_END_STOP": {
+  "text": "Dừng khi hết tệp",
+  "back": "Stop when the file runs out",
+  "why": "plain word"
+ },
+ "RUN_END_LOOP": {
+  "text": "Phát lại từ đầu",
+  "back": "Play again from the start",
+  "why": "plain word"
+ },
+ "RUN_END_NEXT": {
+  "text": "Chuyển sang mục kế tiếp",
+  "back": "Move on to the next item",
+  "why": "next plan item"
+ },
+ "RUN_VOLUME": {
+  "text": "Âm lượng",
+  "back": "Volume",
+  "why": "plain word"
+ },
+ "RUN_LAYER_BACKGROUND": {
+  "text": "Nền",
+  "back": "Background",
+  "why": "same as Design"
+ },
+ "RUN_LAYER_VIDEO": {
+  "text": "Video",
+  "back": "Video",
+  "why": "plain word"
+ },
+ "RUN_LAYER_MUSIC": {
+  "text": "Nhạc",
+  "back": "Music",
+  "why": "plain word"
+ },
+ "RUN_LAYER_LOGO": {
+  "text": "Logo",
+  "back": "Logo",
+  "why": "as the logo button"
+ },
+ "RUN_CLEARS": {
+  "text": "Gỡ khi video phát xong",
+  "back": "Taken off when the video has played",
+  "why": "start of a sentence the chips finish"
+ },
+ "RUN_CLEARS_NONE": {
+  "text": "Không gỡ gì",
+  "back": "Nothing taken off",
+  "why": "plain word"
+ },
+ "RUN_SCENE_NEW": {
+  "text": "Cảnh mới",
+  "back": "New scene",
+  "why": "plain word"
+ },
+ "RUN_SCENE_NAME": {
+  "text": "Tên",
+  "back": "Name",
+  "why": "plain word"
+ },
+ "RUN_MISSING": {
+  "text": "Mất tệp",
+  "back": "File lost",
+  "why": "short tag"
+ },
+ "MEDIA_ITEM_NONE": {
+  "text": "Chỉ bản đầy đủ phát được video và âm thanh.",
+  "back": "Only the full edition can play video and sound.",
+  "why": "statement, news first"
+ },
+ "media_audio_missing": {
+  "text": "Không thấy tệp âm thanh {file}",
+  "back": "Cannot find the sound file {file}",
+  "why": "same shape as the video line"
+ },
+ "media_audio_failed": {
+  "text": "Không phát được tệp âm thanh {file}",
+  "back": "Cannot play the sound file {file}",
+  "why": "plain word"
  }
 }

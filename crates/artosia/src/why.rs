@@ -78,6 +78,9 @@ pub fn media_problem(code: &str) -> String {
         "video-failed" | "video-stopped" => t::media_video_failed(about),
         "video-software" => t::MEDIA_VIDEO_SOFTWARE().to_string(),
         "video-none" => t::MEDIA_VIDEO_NONE().to_string(),
+        "audio-missing" => t::media_audio_missing(about),
+        "audio-failed" => t::media_audio_failed(about),
+        "item-none" => t::MEDIA_ITEM_NONE().to_string(),
         // An older projector program still sends a sentence of its own.
         _ => code.to_string(),
     }
@@ -107,6 +110,9 @@ mod tests {
         assert!(media_problem("video-missing\twater.mp4").contains("water.mp4"));
         assert_eq!(media_problem("video-stopped\twater.mp4"), t::media_video_failed("water.mp4"));
         assert_eq!(media_problem("camera-far"), t::MEDIA_CAMERA_FAR());
+        assert!(media_problem("audio-missing\tprayer.mp3").contains("prayer.mp3"));
+        assert_eq!(media_problem("audio-failed\tprayer.mp3"), t::media_audio_failed("prayer.mp3"));
+        assert_eq!(media_problem("item-none"), t::MEDIA_ITEM_NONE());
     }
 
     #[test]

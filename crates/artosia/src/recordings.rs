@@ -269,6 +269,8 @@ impl App {
                     DeckSource::Passage { .. } => ("passage", Some(live.deck.title.clone())),
                     // A notice may hold people's names, so only that one is shown is written.
                     DeckSource::Announcement(_) | DeckSource::Announcements => ("notice", None),
+                    // A file's name may be a person's, so only that one is shown is written.
+                    DeckSource::Media(_) => ("media", None),
                 };
                 json!({ "what": what, "title": title, "slide": live.index, "section": slide.map(|slide| slide.short.clone()), "in_the_room": self.on_air() && !self.black && !self.text_hidden })
             }

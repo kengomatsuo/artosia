@@ -4911,5 +4911,115 @@
   "text": "Abrir a busca",
   "back": "Open the search",
   "why": "busca is the table's word"
+ },
+ "PLAN_ADD_VIDEO": {
+  "text": "Vídeo",
+  "back": "Video",
+  "why": "Same word as the scene's video layer."
+ },
+ "PLAN_ADD_AUDIO": {
+  "text": "Som",
+  "back": "Sound",
+  "why": "Som for a sound or music, not a microphone."
+ },
+ "PLAN_ADD_SCENE": {
+  "text": "Cena",
+  "back": "Scene",
+  "why": "One word, also the default name."
+ },
+ "RUN_PICK_VIDEO": {
+  "text": "Escolha um vídeo",
+  "back": "Choose a video",
+  "why": "Plain request, as the table's Escolha."
+ },
+ "RUN_PICK_AUDIO": {
+  "text": "Escolha um som",
+  "back": "Choose a sound",
+  "why": "Som."
+ },
+ "RUN_PICK_BACKGROUND": {
+  "text": "Escolha uma imagem ou vídeo",
+  "back": "Choose a picture or video",
+  "why": "Fundo is the backdrop word."
+ },
+ "RUN_END_STOP": {
+  "text": "Parar no fim",
+  "back": "Stop at the end",
+  "why": "Action name."
+ },
+ "RUN_END_LOOP": {
+  "text": "Repetir ao terminar",
+  "back": "Repeat when it ends",
+  "why": "Action name."
+ },
+ "RUN_END_NEXT": {
+  "text": "Ir ao próximo item",
+  "back": "Go to the next item",
+  "why": "Item is a plan item."
+ },
+ "RUN_VOLUME": {
+  "text": "Volume",
+  "back": "Volume",
+  "why": "One word."
+ },
+ "RUN_LAYER_BACKGROUND": {
+  "text": "Fundo",
+  "back": "Background",
+  "why": "Backdrop word."
+ },
+ "RUN_LAYER_VIDEO": {
+  "text": "Vídeo",
+  "back": "Video",
+  "why": "Same as the add item."
+ },
+ "RUN_LAYER_MUSIC": {
+  "text": "Música",
+  "back": "Music",
+  "why": "Music, one word."
+ },
+ "RUN_LAYER_LOGO": {
+  "text": "Logo",
+  "back": "Logo",
+  "why": "Same as the logo button."
+ },
+ "RUN_CLEARS": {
+  "text": "Ao terminar o vídeo, sai",
+  "back": "When the video ends, this leaves",
+  "why": "Start of a sentence the chips finish."
+ },
+ "RUN_CLEARS_NONE": {
+  "text": "Nada",
+  "back": "Nothing",
+  "why": "Short."
+ },
+ "RUN_SCENE_NEW": {
+  "text": "Nova cena",
+  "back": "New scene",
+  "why": "Pairs with Nova música."
+ },
+ "RUN_SCENE_NAME": {
+  "text": "Nome",
+  "back": "Name",
+  "why": "Form field."
+ },
+ "RUN_MISSING": {
+  "text": "Ausente",
+  "back": "Absent",
+  "why": "Same as the plan tag Ausente."
+ },
+ "MEDIA_ITEM_NONE": {
+  "text": "Esta versão não toca vídeo nem som. A completa toca.",
+  "back": "This version does not play video or sound. The full one does.",
+  "why": "Statement about the build, not the person."
+ },
+ "media_audio_missing": {
+  "text": "Arquivo de som não encontrado: {file}",
+  "back": "Sound file not found: {file}",
+  "why": "News first, then the name."
+ },
+ "media_audio_failed": {
+  "text": "Não foi possível tocar o som: {file}",
+  "back": "The sound could not be played: {file}",
+  "why": "News first, then the name."
  }
 }

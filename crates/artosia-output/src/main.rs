@@ -328,7 +328,7 @@ fn apply(message: ToOutput) {
             items::want(state.media.clone(), state.music.clone());
             #[cfg(not(feature = "video"))]
             if state.media.is_some() || state.music.is_some() {
-                shared.tell(&FromOutput::MediaError("video-none".to_string()));
+                shared.tell(&FromOutput::MediaError("item-none".to_string()));
             }
             #[cfg(not(feature = "video"))]
             if state.look.is_moving() {

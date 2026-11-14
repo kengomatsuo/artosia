@@ -27,6 +27,7 @@ mod palette;
 mod people;
 mod plans;
 mod recordings;
+mod run;
 mod starts;
 mod templates;
 mod song_languages;
@@ -680,6 +681,28 @@ const SCENES: &[Scene] = &[
     ("templates-empty-source", |s| {
         s.events.clear();
         s.open_tab(Tab::Templates);
+    }),
+    // OVRUN1: a plan with a video, a sound and a scene opened into its layers; the video live with
+    // its progress line; the dialog a scene is made in.
+    ("plan-media", |s| {
+        let (_, _, scene) = s.demo_media();
+        s.open_plan_item(scene);
+    }),
+    ("plan-media-live", |s| {
+        let (video, _, _) = s.demo_media();
+        s.open_plan_item(video);
+        s.show(0);
+        if let Some(playing) = s.run.playing.as_mut() {
+            (playing.position_ms, playing.length_ms) = (82_000, 200_000);
+        }
+    }),
+    ("plan-media-scene", |s| {
+        s.demo_media();
+        s.open_scene_form();
+        s.scene_file(crate::run::Layer::Background, std::path::Path::new("night.png"));
+        s.scene_file(crate::run::Layer::Video, std::path::Path::new("closing.mp4"));
+        s.scene_file(crate::run::Layer::Music, std::path::Path::new("closing-music.mp3"));
+        s.scene_clears(crate::run::Layer::Video, true);
     }),
     ("tab-look", |s| s.open_tab(Tab::Look)),
     // OVCOLOR1: the colour picker open under the words' colour, a colour used before it.

@@ -4822,5 +4822,115 @@
   "text": "Buka pencarian",
   "back": "Open the search",
   "why": "pencarian matches the table"
+ },
+ "PLAN_ADD_VIDEO": {
+  "text": "Video",
+  "back": "Video",
+  "why": "as the layer"
+ },
+ "PLAN_ADD_AUDIO": {
+  "text": "Audio",
+  "back": "Audio",
+  "why": "sound file, not microphone"
+ },
+ "PLAN_ADD_SCENE": {
+  "text": "Adegan",
+  "back": "Scene",
+  "why": "adegan for a scene of layers"
+ },
+ "RUN_PICK_VIDEO": {
+  "text": "Pilih file video",
+  "back": "Choose a video file",
+  "why": "file is what volunteers say"
+ },
+ "RUN_PICK_AUDIO": {
+  "text": "Pilih file audio",
+  "back": "Choose an audio file",
+  "why": "plain word"
+ },
+ "RUN_PICK_BACKGROUND": {
+  "text": "Pilih foto atau video latar",
+  "back": "Choose a photo or video for the backdrop",
+  "why": "latar as in Design"
+ },
+ "RUN_END_STOP": {
+  "text": "Berhenti di akhir",
+  "back": "Stop at the end",
+  "why": "plain word"
+ },
+ "RUN_END_LOOP": {
+  "text": "Ulangi dari awal",
+  "back": "Start over from the beginning",
+  "why": "plain word"
+ },
+ "RUN_END_NEXT": {
+  "text": "Lanjut ke berikutnya",
+  "back": "Go on to the next",
+  "why": "next plan item"
+ },
+ "RUN_VOLUME": {
+  "text": "Volume",
+  "back": "Volume",
+  "why": "plain word"
+ },
+ "RUN_LAYER_BACKGROUND": {
+  "text": "Latar",
+  "back": "Backdrop",
+  "why": "same as Design"
+ },
+ "RUN_LAYER_VIDEO": {
+  "text": "Video",
+  "back": "Video",
+  "why": "plain word"
+ },
+ "RUN_LAYER_MUSIC": {
+  "text": "Musik",
+  "back": "Music",
+  "why": "plain word"
+ },
+ "RUN_LAYER_LOGO": {
+  "text": "Logo",
+  "back": "Logo",
+  "why": "as the logo button"
+ },
+ "RUN_CLEARS": {
+  "text": "Hilang saat video selesai",
+  "back": "Gone when the video is done",
+  "why": "start of a sentence the chips finish"
+ },
+ "RUN_CLEARS_NONE": {
+  "text": "Tidak ada",
+  "back": "None",
+  "why": "plain word"
+ },
+ "RUN_SCENE_NEW": {
+  "text": "Adegan baru",
+  "back": "New scene",
+  "why": "plain word"
+ },
+ "RUN_SCENE_NAME": {
+  "text": "Nama",
+  "back": "Name",
+  "why": "plain word"
+ },
+ "RUN_MISSING": {
+  "text": "File hilang",
+  "back": "File gone",
+  "why": "short tag"
+ },
+ "MEDIA_ITEM_NONE": {
+  "text": "Video dan suara hanya jalan di edisi lengkap.",
+  "back": "Video and sound only run in the full edition.",
+  "why": "statement, news first"
+ },
+ "media_audio_missing": {
+  "text": "File suara tidak ditemukan: {file}",
+  "back": "The sound file was not found: {file}",
+  "why": "same shape as the video line"
+ },
+ "media_audio_failed": {
+  "text": "File suara tidak bisa diputar: {file}",
+  "back": "The sound file cannot be played: {file}",
+  "why": "plain word"
  }
 }

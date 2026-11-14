@@ -51,16 +51,15 @@ fn file_name(path: &str) -> String {
     Path::new(path).file_name().map(|name| name.to_string_lossy().into_owned()).unwrap_or_else(|| path.to_string())
 }
 
-/// Why `item` could not play. A video's trouble is a kind the operator words in its own
-/// language (`why.rs` `media_problem`); a sound has no kind there yet, so it is a sentence, which
-/// the operator shows as it is.
+/// Why `item` could not play, as a kind the operator words in its own language (`why.rs`
+/// `media_problem`).
 fn trouble(item: &MediaItem, error: &VideoError) -> String {
     let name = file_name(&item.path);
     match (item.kind, error) {
         (MediaKind::Video, VideoError::NotFound(_)) => format!("video-missing\t{name}"),
         (MediaKind::Video, _) => format!("video-failed\t{name}"),
-        (MediaKind::Audio, VideoError::NotFound(_)) => format!("The sound file {name} is not in its folder."),
-        (MediaKind::Audio, _) => format!("The sound file {name} could not be played."),
+        (MediaKind::Audio, VideoError::NotFound(_)) => format!("audio-missing	{name}"),
+        (MediaKind::Audio, _) => format!("audio-failed	{name}"),
     }
 }
 
@@ -215,7 +214,8 @@ impl Items {
         {
             let position_ms = video.position().map_or(0, |at| at.as_millis() as u64);
             trace(|| format!("item {} pos={position_ms} ms loops={}", slot.item.id, video.loops()));
-            shared().tell(&FromOutput::MediaPlaying { id: slot.item.id, position_ms });
+            let length_ms = video.duration().map_or(0, |length| length.as_millis() as u64);
+            shared().tell(&FromOutput::MediaPlaying { id: slot.item.id, position_ms, length_ms });
             self.reported = Instant::now();
         }
         if self.ramping() {

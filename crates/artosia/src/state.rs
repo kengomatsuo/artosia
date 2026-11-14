@@ -452,6 +452,7 @@ pub struct App {
     pub gifts: Vec<Gift>,
     pub account: Account,
     pub giving: crate::giving::Window,
+    pub run: crate::run::Run,
     /// The Templates tab: the rail's choices and the tile picked (`templates.rs`).
     pub templates: crate::templates::Window,
     pub plan: Plan,
@@ -742,6 +743,7 @@ impl App {
             gifts: Vec::new(),
             account: Account::default(),
             giving: Default::default(),
+            run: Default::default(),
             templates: Default::default(),
             plan,
             settings,
@@ -1067,12 +1069,13 @@ impl App {
             }
             PlanEntry::Announcements => Some(self.announcements_deck()),
             PlanEntry::Heading { .. } => None,
+            PlanEntry::Video { .. } | PlanEntry::Audio { .. } | PlanEntry::Scene { .. } => self.deck_of_media(entry),
         }
     }
 
     /// Whether a plan entry can no longer be shown, and so needs a warning in the list.
     pub fn entry_is_missing(&self, entry: &PlanEntry) -> bool {
-        matches!(entry, PlanEntry::Song { song_id, .. } if self.song_position(*song_id).is_none())
+        matches!(entry, PlanEntry::Song { song_id, .. } if self.song_position(*song_id).is_none()) || Self::media_missing(entry)
     }
 
     fn plan_item_of(&self, source: &DeckSource) -> Option<u64> {
@@ -1090,7 +1093,7 @@ impl App {
     /// Something with a field of its own has just opened: a dialog, the box that names a plan,
     /// an editor. Whoever closes the search then must not drop the keyboard focus.
     pub fn wants_focus(&self) -> bool {
-        self.sheet != Sheet::None || self.switcher.editing.is_some() || self.editor.is_some() || self.notices.is_some()
+        self.sheet != Sheet::None || self.run.form.is_some() || self.switcher.editing.is_some() || self.editor.is_some() || self.notices.is_some()
     }
 
     /// Today's date, for announcements that fill themselves with this week's birthdays.
@@ -1494,6 +1497,9 @@ impl App {
     /// Puts a slide of the Preview deck on the projector, and queues what comes after it.
     /// Anything sent to the screen shows: black, logo and cleared text all lift.
     pub fn show(&mut self, index: usize) {
+        if self.media_blocked() {
+            return;
+        }
         let Some(open) = self.open.as_mut() else { return };
         if open.deck.slides.is_empty() {
             return;
@@ -1506,6 +1512,7 @@ impl App {
         let (deck, item) = (open.deck.clone(), open.item);
         self.remember_live(&source);
         self.live = Some(LiveDeck { deck, item, index });
+        self.begin_media();
         // Another slide of what is already live is not a new song going up.
         if before.as_ref() != Some(&source) {
             self.log_live(&source, tag, first, index);
@@ -1588,6 +1595,7 @@ impl App {
             let index = deck.slides.len().saturating_sub(1);
             self.remember_live(&deck.source);
             self.live = Some(LiveDeck { deck, item: Some(id), index });
+            self.begin_media();
             self.reveal();
             self.requeue();
         }
@@ -1669,18 +1677,24 @@ impl App {
                 ..StageInfo::default()
             },
         };
+        let run = self.media_layers();
+        let mut look = self.look();
+        if let Some(background) = run.background {
+            look.background = background;
+        }
         OutputState {
             slide,
-            look: self.look(),
+            look,
             black: self.black,
             text_hidden: self.text_hidden,
             logo: self.settings.logo.clone(),
-            logo_on: self.logo_on,
+            logo_on: self.logo_on || run.logo,
             message: if self.message_on { self.message.text.clone() } else { String::new() },
             countdown: self.countdown.clone(),
             stage,
             warp: self.settings.warp,
-            ..OutputState::default()
+            media: run.front,
+            music: run.music,
         }
     }
 
@@ -1713,6 +1727,7 @@ impl App {
                 DeckSource::Passage { reference, .. } => app.deck_of_passage(reference),
                 DeckSource::Announcements => Some(app.announcements_deck()),
                 DeckSource::Announcement(id) => app.card_deck(*id),
+                DeckSource::Media(key) => app.plan.items.iter().find(|item| item.entry.media_key().as_deref() == Some(key)).and_then(|item| app.deck_of_media(&item.entry)),
             }
         };
         if let Some(source) = self.open.as_ref().map(|open| open.deck.source.clone()) {
@@ -1767,6 +1782,7 @@ pub fn entry_matches(entry: &PlanEntry, source: &DeckSource) -> bool {
         (PlanEntry::Song { song_id, .. }, DeckSource::Song(id)) => song_id == id,
         (PlanEntry::Passage { reference, .. }, DeckSource::Passage { reference: other, .. }) => reference == other,
         (PlanEntry::Announcements, DeckSource::Announcements) => true,
+        (entry, DeckSource::Media(key)) => entry.media_key().as_deref() == Some(key),
         _ => false,
     }
 }

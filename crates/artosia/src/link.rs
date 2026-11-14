@@ -32,6 +32,10 @@ pub struct LinkStatus {
     /// The person at the projector window on this screen closed it; the operator has not
     /// yet turned its switch off.
     pub hidden_here: bool,
+    /// Rundown items that reached their end, not yet taken (`Link::take_media`).
+    pub ended: Vec<u64>,
+    /// Where the item in front is: its id, position and length in milliseconds.
+    pub playing: Option<(u64, u64, u64)>,
     /// When the worker began waiting for the output, for telling "starting" from "stuck".
     pub waiting_since: Option<Instant>,
 }
@@ -239,8 +243,9 @@ fn serve(stream: TcpStream, rx: &Receiver<ToOutput>, last: &mut Last, options: &
                         }
                 }
                 Some(FromOutput::PreviewEnd) if reader_live.drop_picture() => reader_waker(),
-                // The operator side of the rundown (OVRUN1) will act on these two.
-                Some(FromOutput::PreviewEnd | FromOutput::MediaEnded { .. } | FromOutput::MediaPlaying { .. }) | None => {}
+                Some(FromOutput::MediaEnded { id }) => set(&reader_status, &reader_waker, |s| s.ended.push(id)),
+                Some(FromOutput::MediaPlaying { id, position_ms, length_ms }) => set(&reader_status, &reader_waker, |s| s.playing = Some((id, position_ms, length_ms))),
+                Some(FromOutput::PreviewEnd) | None => {}
             }
         }
         // The projector is gone, and with it the picture.
@@ -395,6 +400,20 @@ impl Link {
             *current = options;
         }
         self.send(message);
+    }
+
+    /// The rundown items that ended and where the item in front is, since this was last asked.
+    pub fn take_media(&self) -> (Vec<u64>, Option<(u64, u64, u64)>) {
+        self.status.lock().map(|mut status| (std::mem::take(&mut status.ended), status.playing.take())).unwrap_or_default()
+    }
+
+    /// Hands the operator what the projector would have said about its items, for tests.
+    #[cfg(test)]
+    pub fn inject_media(&self, ended: &[u64], playing: Option<(u64, u64, u64)>) {
+        if let Ok(mut status) = self.status.lock() {
+            status.ended.extend_from_slice(ended);
+            status.playing = playing.or(status.playing);
+        }
     }
 
     /// Whether the person at the projector window closed it since this was last asked.

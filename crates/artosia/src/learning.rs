@@ -81,7 +81,7 @@ impl App {
                 let reference = format!("{}:{}:{}-{}:{}", r.book, r.chapter, r.verse, r.end_chapter, r.end_verse);
                 self.store.record_passage_live(&now, plan, &reference, &typed).map(|_| ())
             }
-            DeckSource::Announcement(_) | DeckSource::Announcements => Ok(()),
+            DeckSource::Announcement(_) | DeckSource::Announcements | DeckSource::Media(_) => Ok(()),
         };
     }
 

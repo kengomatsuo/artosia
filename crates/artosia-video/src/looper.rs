@@ -304,6 +304,11 @@ impl VideoLoop {
         self.pipeline.query_position::<gst::ClockTime>().map(|t| Duration::from_nanos(t.nseconds()))
     }
 
+    /// The file's length, once the player knows it.
+    pub fn duration(&self) -> Option<Duration> {
+        self.pipeline.query_duration::<gst::ClockTime>().map(|t| Duration::from_nanos(t.nseconds()))
+    }
+
     /// Whether a non-looping file has played to its end.
     pub fn ended(&self) -> bool {
         self.shared.ended.load(Ordering::Relaxed)

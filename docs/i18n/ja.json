@@ -4872,5 +4872,115 @@
   "text": "検索を開く",
   "back": "Open search",
   "why": "検索 is the table's word"
+ },
+ "PLAN_ADD_VIDEO": {
+  "text": "動画",
+  "back": "Video",
+  "why": "動画 as in the existing lines"
+ },
+ "PLAN_ADD_AUDIO": {
+  "text": "音声",
+  "back": "Sound",
+  "why": "音声 for a sound file"
+ },
+ "PLAN_ADD_SCENE": {
+  "text": "シーン",
+  "back": "Scene",
+  "why": "common loanword for a scene"
+ },
+ "RUN_PICK_VIDEO": {
+  "text": "動画ファイルを選ぶ",
+  "back": "Choose a video file",
+  "why": "選ぶ as the table"
+ },
+ "RUN_PICK_AUDIO": {
+  "text": "音声ファイルを選ぶ",
+  "back": "Choose a sound file",
+  "why": "選ぶ as the table"
+ },
+ "RUN_PICK_BACKGROUND": {
+  "text": "背景の画像か動画を選ぶ",
+  "back": "Choose a picture or video for the background",
+  "why": "背景 as in the Design table"
+ },
+ "RUN_END_STOP": {
+  "text": "最後まで再生して停止",
+  "back": "Play to the end and stop",
+  "why": "names the action"
+ },
+ "RUN_END_LOOP": {
+  "text": "終わったら最初から繰り返す",
+  "back": "Repeat from the start when it ends",
+  "why": "plain spoken"
+ },
+ "RUN_END_NEXT": {
+  "text": "終わったら自動で次の項目へ",
+  "back": "When it ends, to the next item by itself",
+  "why": "項目 as in the plan table"
+ },
+ "RUN_VOLUME": {
+  "text": "音の大きさ",
+  "back": "Loudness",
+  "why": "existing word for level"
+ },
+ "RUN_LAYER_BACKGROUND": {
+  "text": "背景",
+  "back": "Background",
+  "why": "existing word"
+ },
+ "RUN_LAYER_VIDEO": {
+  "text": "動画",
+  "back": "Video",
+  "why": "same as add menu"
+ },
+ "RUN_LAYER_MUSIC": {
+  "text": "音楽",
+  "back": "Music",
+  "why": "music"
+ },
+ "RUN_LAYER_LOGO": {
+  "text": "ロゴ",
+  "back": "Logo",
+  "why": "the table uses ロゴ"
+ },
+ "RUN_CLEARS": {
+  "text": "動画が終わると消えるもの",
+  "back": "What disappears when the video ends",
+  "why": "begins a phrase the chips finish"
+ },
+ "RUN_CLEARS_NONE": {
+  "text": "なし",
+  "back": "None",
+  "why": "two kana"
+ },
+ "RUN_SCENE_NEW": {
+  "text": "新しいシーン",
+  "back": "New scene",
+  "why": "plain title"
+ },
+ "RUN_SCENE_NAME": {
+  "text": "名前",
+  "back": "Name",
+  "why": "as in the plan name label"
+ },
+ "RUN_MISSING": {
+  "text": "ファイルなし",
+  "back": "No file",
+  "why": "fits the narrow tag"
+ },
+ "MEDIA_ITEM_NONE": {
+  "text": "この版では動画と音声を再生できません。完全版なら可能です。",
+  "back": "This edition cannot play video and sound. The full edition can.",
+  "why": "statement about the build"
+ },
+ "media_audio_missing": {
+  "text": "音声が見つかりません：{file}",
+  "back": "Sound not found: {file}",
+  "why": "mirrors the existing video line"
+ },
+ "media_audio_failed": {
+  "text": "音声を再生できません：{file}",
+  "back": "Cannot play sound: {file}",
+  "why": "mirrors the existing video line"
  }
 }

@@ -4872,5 +4872,115 @@
   "text": "用搜尋開啟",
   "back": "Open with search",
   "why": "搜尋 is the table's word"
+ },
+ "PLAN_ADD_VIDEO": {
+  "text": "影片",
+  "back": "Video",
+  "why": "table uses 影片"
+ },
+ "PLAN_ADD_AUDIO": {
+  "text": "音訊",
+  "back": "Audio",
+  "why": "sound file word"
+ },
+ "PLAN_ADD_SCENE": {
+  "text": "場景",
+  "back": "Scene",
+  "why": "scene as a set of layers"
+ },
+ "RUN_PICK_VIDEO": {
+  "text": "選擇影片檔",
+  "back": "Choose video file",
+  "why": "plain request"
+ },
+ "RUN_PICK_AUDIO": {
+  "text": "選擇音訊檔",
+  "back": "Choose audio file",
+  "why": "plain request"
+ },
+ "RUN_PICK_BACKGROUND": {
+  "text": "選擇背景圖片或影片",
+  "back": "Choose background picture or video",
+  "why": "背景 and 圖片 as in the Design table"
+ },
+ "RUN_END_STOP": {
+  "text": "播完後停止",
+  "back": "Stop after playing to the end",
+  "why": "short action"
+ },
+ "RUN_END_LOOP": {
+  "text": "播完後重播",
+  "back": "Play again after the end",
+  "why": "plain word"
+ },
+ "RUN_END_NEXT": {
+  "text": "播完後自動進入下一項",
+  "back": "After the end go on to the next item by itself",
+  "why": "自動 shows the program does it"
+ },
+ "RUN_VOLUME": {
+  "text": "音量",
+  "back": "Volume",
+  "why": "existing word"
+ },
+ "RUN_LAYER_BACKGROUND": {
+  "text": "背景",
+  "back": "Background",
+  "why": "existing word"
+ },
+ "RUN_LAYER_VIDEO": {
+  "text": "影片",
+  "back": "Video",
+  "why": "same as add menu"
+ },
+ "RUN_LAYER_MUSIC": {
+  "text": "音樂",
+  "back": "Music",
+  "why": "music"
+ },
+ "RUN_LAYER_LOGO": {
+  "text": "標誌",
+  "back": "Emblem",
+  "why": "the table calls the logo 標誌"
+ },
+ "RUN_CLEARS": {
+  "text": "影片播完後撤下",
+  "back": "Taken away after the video ends",
+  "why": "begins a sentence the chips finish"
+ },
+ "RUN_CLEARS_NONE": {
+  "text": "無",
+  "back": "None",
+  "why": "one character"
+ },
+ "RUN_SCENE_NEW": {
+  "text": "新增場景",
+  "back": "New scene",
+  "why": "新增 as the table uses for adding"
+ },
+ "RUN_SCENE_NAME": {
+  "text": "名稱",
+  "back": "Name",
+  "why": "field label as in the table"
+ },
+ "RUN_MISSING": {
+  "text": "找不到檔案",
+  "back": "File not found",
+  "why": "short yellow tag"
+ },
+ "MEDIA_ITEM_NONE": {
+  "text": "這個版本無法播放影片和聲音，完整版可以。",
+  "back": "This version cannot play video and sound; the full version can.",
+  "why": "statement about the build"
+ },
+ "media_audio_missing": {
+  "text": "找不到音訊檔 {file}",
+  "back": "Cannot find the audio file {file}",
+  "why": "mirrors the existing video line"
+ },
+ "media_audio_failed": {
+  "text": "無法播放音訊檔 {file}",
+  "back": "Cannot play the audio file {file}",
+  "why": "mirrors the existing video line"
  }
 }

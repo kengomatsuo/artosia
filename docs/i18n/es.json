@@ -4911,5 +4911,115 @@
   "text": "Abrir la búsqueda",
   "back": "Open the search",
   "why": "Infinitive suits a button"
+ },
+ "PLAN_ADD_VIDEO": {
+  "text": "Video",
+  "back": "Video",
+  "why": "Same word as the scene's video layer."
+ },
+ "PLAN_ADD_AUDIO": {
+  "text": "Audio",
+  "back": "Audio",
+  "why": "Table uses audio for sound."
+ },
+ "PLAN_ADD_SCENE": {
+  "text": "Escena",
+  "back": "Scene",
+  "why": "One word, also the default name."
+ },
+ "RUN_PICK_VIDEO": {
+  "text": "Elige un video",
+  "back": "Choose a video",
+  "why": "Plain request."
+ },
+ "RUN_PICK_AUDIO": {
+  "text": "Elige un audio",
+  "back": "Choose a sound",
+  "why": "Audio as elsewhere."
+ },
+ "RUN_PICK_BACKGROUND": {
+  "text": "Elige una imagen o un video",
+  "back": "Choose a picture or a video",
+  "why": "Fondo is the backdrop word; the request names what fits."
+ },
+ "RUN_END_STOP": {
+  "text": "Detener al terminar",
+  "back": "Stop when it ends",
+  "why": "Action name."
+ },
+ "RUN_END_LOOP": {
+  "text": "Repetir al terminar",
+  "back": "Repeat when it ends",
+  "why": "Action name."
+ },
+ "RUN_END_NEXT": {
+  "text": "Pasar al elemento siguiente",
+  "back": "Go on to the next item",
+  "why": "Elemento is a plan item."
+ },
+ "RUN_VOLUME": {
+  "text": "Volumen",
+  "back": "Volume",
+  "why": "One word."
+ },
+ "RUN_LAYER_BACKGROUND": {
+  "text": "Fondo",
+  "back": "Background",
+  "why": "Backdrop word of the table."
+ },
+ "RUN_LAYER_VIDEO": {
+  "text": "Video",
+  "back": "Video",
+  "why": "Same as the add item."
+ },
+ "RUN_LAYER_MUSIC": {
+  "text": "Música",
+  "back": "Music",
+  "why": "Music, one word."
+ },
+ "RUN_LAYER_LOGO": {
+  "text": "Logo",
+  "back": "Logo",
+  "why": "Same as the logo button."
+ },
+ "RUN_CLEARS": {
+  "text": "Al terminar el video se quita",
+  "back": "When the video ends, this is removed",
+  "why": "Start of a sentence the chips finish."
+ },
+ "RUN_CLEARS_NONE": {
+  "text": "Nada",
+  "back": "Nothing",
+  "why": "Short."
+ },
+ "RUN_SCENE_NEW": {
+  "text": "Nueva escena",
+  "back": "New scene",
+  "why": "Pairs with Nueva canción."
+ },
+ "RUN_SCENE_NAME": {
+  "text": "Nombre",
+  "back": "Name",
+  "why": "Form field."
+ },
+ "RUN_MISSING": {
+  "text": "Falta",
+  "back": "Missing",
+  "why": "Same as the plan tag Falta."
+ },
+ "MEDIA_ITEM_NONE": {
+  "text": "Esta versión no reproduce video ni audio. La completa sí.",
+  "back": "This version does not play video or audio. The full one does.",
+  "why": "Statement about the build, not the person."
+ },
+ "media_audio_missing": {
+  "text": "Falta el archivo de audio: {file}",
+  "back": "The audio file is missing: {file}",
+  "why": "News first, then the name."
+ },
+ "media_audio_failed": {
+  "text": "No se puede reproducir el audio: {file}",
+  "back": "The audio cannot be played: {file}",
+  "why": "News first, then the name."
  }
 }
