@@ -48,3 +48,12 @@ reachable from search [rule: .claude/rules/operator.md, "every menu action is al
 | G8 | Every string in ten languages from briefs | `tools/check-brief.py` passes | blind writers per `blind-translation` |
 
 Order: G1, G2, G3, G4, G5, G6, G7, G8 (strings ride along with each task).
+
+## Where it stands (2026-11-14)
+
+| Task | State |
+|---|---|
+| G1 to G4, G7 | Built: engine, anchors, bubble, clips, what's new |
+| G5 | Help marks on the seven tabs; help rows in Screens, Phone, Listen, Stream, songs from the internet and the PowerPoint import. Owed: a static check that lists a panel without one; the song editor and the Bible search |
+| G6 | Thirteen lessons and the tour, each walked to its end by `tools/check-lessons.py` (14 pass). Owed: songs (the editor) and Bible |
+| G8 | Every guide text in ten languages from its brief |
