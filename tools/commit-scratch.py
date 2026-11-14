@@ -6,7 +6,8 @@ Every file under crates, docs, tools and assets that differs from the base is ta
 scratch copy. The merge base is the scratch's base, so commits another session landed since are
 kept. A conflict in a translation table or the briefs is merged by key (the scratch wins on keys
 it changed); any other conflict stops the commit. Then the index of the touched paths is synced,
-and the commit is pushed. Run from the repo root.
+and the commit is pushed. The copy is then refreshed to the new commit, which is the base to
+give next time. Run from the repo root.
 """
 import json
 import os
@@ -86,4 +87,8 @@ commit = git('commit-tree', tree, '-p', head, input=message).stdout.decode().str
 git('update-ref', 'refs/heads/main', commit, head)
 git('reset', '-q', 'HEAD', '--', *changed)
 push = git('push', '-q', 'origin', 'main', check=False)
-print(commit[:7], f'{len(changed)} files', 'merged by key: ' + ', '.join(conflicted) if conflicted else '', 'pushed' if push.returncode == 0 else 'PUSH FAILED: ' + push.stderr.decode())
+# The copy now holds the new commit, other sessions' work included, so its next base is that
+# commit: a copy left as it was would hand an older file back on the next commit.
+archive = subprocess.run(['git', 'archive', commit], capture_output=True, check=True).stdout
+subprocess.run(['tar', '-x', '-C', str(scratch)], input=archive, check=True)
+print(commit[:7], f'{len(changed)} files; the copy now holds {commit[:7]}, the base for the next commit;', 'merged by key: ' + ', '.join(conflicted) if conflicted else '', 'pushed' if push.returncode == 0 else 'PUSH FAILED: ' + push.stderr.decode())
