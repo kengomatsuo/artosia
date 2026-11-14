@@ -43,14 +43,16 @@ fn edit_of(s: &mut App, pick: fn(&mut Notices) -> &mut rune::TextEdit) -> &mut r
     }
 }
 
-/// A card's name in the list: its title, or its first line. The card in the form reads what
-/// is being typed, so the list never shows an old name beside the new one.
+/// A card's name in the list: its title, or its first line, or Picture for a card that is a
+/// picture alone (a slide of only a picture imported from PowerPoint had no name at all). The
+/// card in the form reads what is being typed, so the list never shows an old name beside the new one.
 fn shown_title(item: &artosia_core::deck::Announcement, form: Option<&Notices>) -> String {
     let (title, body) = match form {
         Some(form) => (form.title.text.as_str(), form.body.text.as_str()),
         None => (item.title.as_str(), item.body.as_str()),
     };
-    if title.trim().is_empty() { body.lines().next().unwrap_or_default().trim().to_string() } else { title.trim().to_string() }
+    let first = if title.trim().is_empty() { body.lines().next().unwrap_or_default().trim() } else { title.trim() };
+    if first.is_empty() && !item.image.is_empty() { t::ANNOUNCEMENT_PICTURE().to_string() } else { first.to_string() }
 }
 
 fn list(s: &App, k: &Kit, form: &Notices) -> El {
@@ -65,7 +67,7 @@ fn list(s: &App, k: &Kit, form: &Notices) -> El {
         let mut line = row()
             .key(format!("notice-{id}"))
             .role("listitem")
-            .label(item.title.clone())
+            .label(shown_title(item, None))
             .w_full()
             .h(size::ROW)
             .pl(space::S3)
