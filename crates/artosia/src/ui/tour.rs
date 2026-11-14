@@ -61,8 +61,25 @@ const BASICS_STEPS: [Step<Action>; STOP_COUNT] = [
 pub(crate) const BASICS: Lesson<Action> = Lesson { id: "basics", steps: &BASICS_STEPS };
 
 impl App {
-    /// Opens the tour at its first stop, over whatever the window shows.
+    /// Opens the tour at its first stop. On a church's library the tour shows the practice
+    /// library instead, so every stop has songs, a plan and the church's windows filled in: the
+    /// church's app waits in `church`, untouched, and comes back when the tour ends. Nothing the
+    /// tour shows is saved, and the practice app never starts the projector, so the room keeps
+    /// its last picture (TOURROOM1, `docs/plans/artosia/tour-room.md`).
     pub fn start_tour(&mut self) {
+        if self.folder.is_some() && self.church.is_none() {
+            // Nothing of the church's waits unsaved while its app is set aside.
+            self.save_pending();
+            let mut practice = App::load_in(None);
+            // What the runtime gave the church's app, and the window's own choices.
+            practice.waker = self.waker.clone();
+            practice.images = self.images.take();
+            practice.settings.language = self.settings.language.clone();
+            practice.settings.appearance = self.settings.appearance;
+            t::set_language(&practice.settings.language);
+            let church = std::mem::replace(self, practice);
+            self.church = Some(Box::new(church));
+        }
         self.sheet = Sheet::None;
         self.close_palette();
         self.tour = Some(0);
@@ -95,6 +112,13 @@ impl App {
     pub fn end_tour(&mut self) {
         if self.tour.take().is_some() {
             self.tour_focus = false;
+            // The church's own library comes back as it was left.
+            if let Some(church) = self.church.take() {
+                let mut church = *church;
+                church.images = self.images.take();
+                t::set_language(&church.settings.language);
+                *self = church;
+            }
             if !self.settings.toured {
                 self.settings.toured = true;
                 self.touch_settings();
@@ -577,6 +601,25 @@ mod tests {
         let (_, low) = beside([258.0, 20.0, 483.0, 700.0], 700.0, window, 200.0).unwrap();
         assert!(low + 200.0 <= window[1], "a part low in the window pulls the card up");
         assert_eq!(beside([403.0, 80.0, 560.0, 600.0], 100.0, window, 200.0), None, "no room either side");
+    }
+
+    #[test]
+    fn a_church_tour_shows_the_practice_library_and_gives_the_church_its_own_back() {
+        let folder = std::env::temp_dir().join(format!("artosia-tour-room-{}", std::process::id()));
+        let _ = std::fs::remove_dir_all(&folder);
+        std::fs::create_dir_all(&folder).expect("a folder for the church's library");
+        let mut app = App::load_in(Some(folder.clone()));
+        assert!(app.songs.is_empty(), "a new church starts with no songs");
+        app.start_tour();
+        assert!(!app.songs.is_empty(), "the tour shows the practice songs");
+        assert!(app.folder.is_none() && app.church.is_some(), "the church's app waits aside");
+        app.end_tour();
+        assert!(app.songs.is_empty(), "the church's own library comes back, with nothing of the tour in it");
+        assert_eq!(app.folder.as_ref(), Some(&folder));
+        assert!(app.settings.toured, "the tour counts as seen");
+        assert!(app.store.songs().unwrap_or_default().is_empty(), "nothing the tour showed was saved");
+        drop(app);
+        let _ = std::fs::remove_dir_all(&folder);
     }
 
     #[test]

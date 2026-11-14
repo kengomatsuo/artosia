@@ -691,6 +691,8 @@ pub struct App {
     /// The pictures announcements carry, by path, for the previews.
     pub slide_pictures: HashMap<String, Image>,
     pub waker: Option<Waker>,
+    /// The church's own app, waiting while the tour shows the practice library (TOURROOM1).
+    pub church: Option<Box<App>>,
     pub inbox: Arc<Mutex<Vec<Arrived>>>,
     pub remote_tx: Sender<RemoteCommand>,
     pub remote_rx: Receiver<RemoteCommand>,
@@ -736,7 +738,7 @@ impl App {
         App::load_in(None)
     }
 
-    fn load_in(folder: Option<PathBuf>) -> App {
+    pub(crate) fn load_in(folder: Option<PathBuf>) -> App {
         let asked = data::flag_value("--language").filter(|code| crate::languages::index_of(code).is_some()).or_else(|| data::has_flag("--indonesian").then(|| "id".to_string()));
         t::set_language(asked.as_deref().unwrap_or("en"));
         let (store, store_problem) = data::open_store(folder.as_ref());
@@ -909,6 +911,7 @@ impl App {
             logo: None,
             slide_pictures: HashMap::new(),
             waker: None,
+            church: None,
             inbox: Arc::new(Mutex::new(Vec::new())),
             remote_tx,
             remote_rx,

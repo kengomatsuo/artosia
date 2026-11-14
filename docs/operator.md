@@ -243,6 +243,14 @@ Checked in a real practice window on 2026-11-13 with `tools/drive-window.ps1`: t
 
 ## The tour
 
+On a church's library the tour runs on the practice library (TOURROOM1, 2026-11-14, owner-asked;
+plan `docs/plans/artosia/tour-room.md`): `start_tour` saves what waits, sets the church's app aside in
+`App::church` and swaps in `App::load_in(None)`, so every stop shows songs, a plan and the church's
+windows filled in. Done or Skip gives the church's app back as it was left; nothing the tour showed is
+saved, and the practice app never starts the projector, so the room keeps its last picture. A lesson
+from a help mark or What's new stays on the church's own data: the person is mid-task, and a lesson
+saves nothing itself.
+
 A first start on a library, and every practice run, opens a tour of this window (`ui/tour.rs`, 2026-11-11, owner-asked: "Not even a tutorial onboarding phase at all? Especially one that can be re-triggered easily?"). It has five stops over the real window and its plan, one part ringed in the accent colour at each, with a card beside it holding the stop's words, "2 of 5", and three buttons of one fixed width, each with an icon: Skip, Back, and Next (the filled one, a tick and Done at the end). Headless `--snap` runs never start it; the scenes `tour-plan`, `tour-preview`, `tour-show`, `tour-live` and `tour-search` render each stop.
 
 The research the shape follows (`ux-principles/principles.md`, section 5): tutorials mostly fail when they are long or in the way, so five stops of a few words each, Skip on every stop, never shown again by itself once finished or skipped (`Settings::toured`), and findable again.

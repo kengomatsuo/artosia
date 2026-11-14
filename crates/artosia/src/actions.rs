@@ -1971,6 +1971,13 @@ impl App {
         if let Some(remote) = &self.remote {
             remote.set_state(self.remote_state());
         }
+        self.save_pending();
+        self.load_pictures();
+        changed
+    }
+
+    /// Writes what waits to be saved: the plan, the calendars' and funds' colours, the settings.
+    pub(crate) fn save_pending(&mut self) {
         if self.plan_dirty {
             self.save_plan_now();
         }
@@ -1984,8 +1991,6 @@ impl App {
             self.settings_dirty = false;
             let _ = self.store.set_setting("settings", &self.settings);
         }
-        self.load_pictures();
-        changed
     }
 
     fn remote_command(&mut self, command: RemoteCommand) {
