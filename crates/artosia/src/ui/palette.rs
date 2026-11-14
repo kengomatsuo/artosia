@@ -22,6 +22,8 @@ fn command_icon(command: Command) -> &'static rune::Icon {
         Command::NewSong => &icons::PLUS,
         Command::PasteSong => &icons::PASTE,
         Command::Announcements | Command::LoopAnnouncements => &icons::ANNOUNCE,
+        Command::Calendar => &icons::CALENDAR,
+        Command::NewEvent => &icons::PLUS,
         Command::Looks => &icons::PALETTE,
         Command::Settings => &icons::SLIDERS,
         Command::Backdrops => crate::ui::backdrops::mark(),

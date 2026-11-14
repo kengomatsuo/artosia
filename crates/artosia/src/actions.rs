@@ -199,6 +199,8 @@ impl App {
             Some(Undo::PlanLanguages { plan, list }) => self.restore_plan_languages(plan, list),
             Some(Undo::EditorLanguage { at, entry }) => self.restore_editor_language(at, entry),
             Some(Undo::Recordings) => self.restore_recordings(),
+            Some(Undo::Event(event)) => self.restore_event(event),
+            Some(Undo::Calendar(calendar, events)) => self.restore_calendar(calendar, events),
             None => {}
         }
     }
@@ -1006,6 +1008,9 @@ impl App {
         if kind == "birthdays" {
             cards.reverse();
         }
+        if kind == "schedule" {
+            cards.push(Announcement { title: t::ANNOUNCEMENT_TEMPLATES()[crate::calendar::SCHEDULE_TEMPLATE].0.into(), fill: Fill::ScheduleWeek, seconds: 12, ..Announcement::default() });
+        }
         for card in &mut cards {
             let _ = self.store.save_announcement(card);
         }
@@ -1016,7 +1021,11 @@ impl App {
         }
         self.reload_announcements();
         // The editor opens on the card the scene is about.
-        let wanted = if kind == "birthdays" { Fill::BirthdaysWeek } else { Fill::Passage };
+        let wanted = match kind {
+            "birthdays" => Fill::BirthdaysWeek,
+            "schedule" => Fill::ScheduleWeek,
+            _ => Fill::Passage,
+        };
         let id = self.announcements.iter().find(|card| card.fill == wanted).map(|card| card.id).unwrap_or(0);
         self.edit_announcements();
         self.pick_notice(id);
@@ -1848,6 +1857,9 @@ impl App {
         }
         if self.plan_dirty {
             self.save_plan_now();
+        }
+        if self.calendar.dirty {
+            self.save_calendar_colours();
         }
         if self.settings_dirty {
             self.settings_dirty = false;

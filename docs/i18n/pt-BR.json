@@ -3930,5 +3930,294 @@
   "text": "Só funciona com fundo de foto ou de uma cor",
   "back": "Only works with a photo or one-colour background",
   "why": "Plain statement"
+ },
+ "CAL_TODAY": {
+  "text": "Hoje",
+  "back": "Today",
+  "why": "Same word as the plans list."
+ },
+ "CAL_PREVIOUS": {
+  "text": "Anterior",
+  "back": "Previous",
+  "why": "Works for a month and a week."
+ },
+ "CAL_NEXT": {
+  "text": "Próximo",
+  "back": "Next",
+  "why": "Pairs with Anterior."
+ },
+ "CAL_WEEK": {
+  "text": "Semana",
+  "back": "Week",
+  "why": "One unit word."
+ },
+ "CAL_MONTH": {
+  "text": "Mês",
+  "back": "Month",
+  "why": "One unit word."
+ },
+ "CAL_NEW_EVENT": {
+  "text": "Novo evento",
+  "back": "New event",
+  "why": "Evento is the calendar entry."
+ },
+ "CAL_EVENT": {
+  "text": "Evento",
+  "back": "Event",
+  "why": "One word."
+ },
+ "CAL_CALENDARS": {
+  "text": "Calendários",
+  "back": "Calendars",
+  "why": "Plural of the tab word."
+ },
+ "CAL_MANAGE": {
+  "text": "Gerenciar",
+  "back": "Manage",
+  "why": "Common verb for looking after a list."
+ },
+ "CAL_READ_BY": {
+  "text": "Usado nos avisos",
+  "back": "Used in the announcements",
+  "why": "Aviso is the table's word."
+ },
+ "CAL_READ_BY_HINT": {
+  "text": "O aviso de horários puxa as linhas deste calendário. O que mudar aqui aparece lá, sem digitar de novo.",
+  "back": "The schedule announcement pulls its lines from this calendar. What you change here shows there, with no typing again.",
+  "why": "Each card is an aviso in this table."
+ },
+ "CAL_EVENT_NAME": {
+  "text": "Nome",
+  "back": "Name",
+  "why": "One word."
+ },
+ "CAL_CALENDAR": {
+  "text": "Calendário",
+  "back": "Calendar",
+  "why": "Singular, the group."
+ },
+ "CAL_REPEAT": {
+  "text": "Repetir",
+  "back": "Repeat",
+  "why": "Verb that labels a choice."
+ },
+ "CAL_ONCE": {
+  "text": "Uma vez",
+  "back": "Once",
+  "why": "Plain."
+ },
+ "CAL_EVERY_WEEK": {
+  "text": "Toda semana",
+  "back": "Every week",
+  "why": "Plain."
+ },
+ "CAL_EVERY_MONTH": {
+  "text": "Todo mês",
+  "back": "Every month",
+  "why": "Pairs with Toda semana."
+ },
+ "CAL_DAYS": {
+  "text": "Dias",
+  "back": "Days",
+  "why": "Seven toggles."
+ },
+ "CAL_WHICH": {
+  "text": "Semana",
+  "back": "Week",
+  "why": "The options are weeks of the month, so the rule sentence agrees."
+ },
+ "CAL_POS_FIRST": {
+  "text": "1ª",
+  "back": "1st",
+  "why": "Ordinal digit: Segunda and Quarta would read as Monday and Wednesday."
+ },
+ "CAL_POS_SECOND": {
+  "text": "2ª",
+  "back": "2nd",
+  "why": "Same."
+ },
+ "CAL_POS_THIRD": {
+  "text": "3ª",
+  "back": "3rd",
+  "why": "Same."
+ },
+ "CAL_POS_FOURTH": {
+  "text": "4ª",
+  "back": "4th",
+  "why": "Same."
+ },
+ "CAL_POS_LAST": {
+  "text": "Última",
+  "back": "Last",
+  "why": "Agrees with semana."
+ },
+ "CAL_WEEKDAY": {
+  "text": "Dia",
+  "back": "Day",
+  "why": "Single weekday."
+ },
+ "CAL_START": {
+  "text": "Início",
+  "back": "Start",
+  "why": "One word."
+ },
+ "CAL_END": {
+  "text": "Fim",
+  "back": "End",
+  "why": "One word."
+ },
+ "CAL_FIRST_DATE": {
+  "text": "A partir de",
+  "back": "From",
+  "why": "Pairs with Até."
+ },
+ "CAL_UNTIL": {
+  "text": "Até",
+  "back": "Until",
+  "why": "Pairs with A partir de."
+ },
+ "CAL_NO_END": {
+  "text": "Sem data final",
+  "back": "No end date",
+  "why": "Fits 14."
+ },
+ "CAL_DATES": {
+  "text": "Próximas datas (x tira a data)",
+  "back": "Coming dates (x takes the date out)",
+  "why": "Tirar, as in the plan; x as the chips show it."
+ },
+ "CAL_SKIPPED": {
+  "text": "Datas tiradas (clique para voltar)",
+  "back": "Taken-out dates (click to bring back)",
+  "why": "Tirar again."
+ },
+ "CAL_NO_DATES": {
+  "text": "Nenhuma data pela frente",
+  "back": "No date ahead",
+  "why": "Plain statement."
+ },
+ "CAL_ADD_CALENDAR": {
+  "text": "Novo calendário",
+  "back": "New calendar",
+  "why": "Adicionar calendário is 20, over 18."
+ },
+ "CAL_CALENDAR_NAME": {
+  "text": "Nome",
+  "back": "Name",
+  "why": "Fits 18."
+ },
+ "CAL_COLOUR": {
+  "text": "Cor",
+  "back": "Colour",
+  "why": "Same as the picker."
+ },
+ "CAL_DELETE_CALENDAR": {
+  "text": "Apagar calendário",
+  "back": "Delete calendar",
+  "why": "Apagar is the table's delete."
+ },
+ "CAL_NEW_CALENDAR": {
+  "text": "Calendário novo",
+  "back": "New calendar",
+  "why": "A name."
+ },
+ "CAL_SERVICES": {
+  "text": "Cultos",
+  "back": "Services",
+  "why": "Culto is the event."
+ },
+ "FILL_SCHEDULE": {
+  "text": "Eventos da semana",
+  "back": "Events of the week",
+  "why": "Phrase like the birthday ones."
+ },
+ "month_year": {
+  "text": "{month} de {year}",
+  "back": "{month} of {year}",
+  "why": "Portuguese order with de."
+ },
+ "date_long": {
+  "text": "{day} de {month} de {year}",
+  "back": "{day} of {month} of {year}",
+  "why": "Usual written date."
+ },
+ "more_events": {
+  "text": {
+   "one": "+{count} mais",
+   "other": "+{count} mais"
+  },
+  "back": "+{count} more",
+  "why": "Same form for every count."
+ },
+ "events_this_week": {
+  "text": {
+   "zero": "Nenhum evento esta semana",
+   "one": "{count} evento esta semana",
+   "other": "{count} eventos esta semana"
+  },
+  "back": "No event this week / {count} event(s) this week",
+  "why": "Full statement for zero."
+ },
+ "weekday_list": {
+  "text": {
+   "one": "{first}",
+   "other": "{all} e {last}"
+  },
+  "back": "{first} / {all} and {last}",
+  "why": "All is the names before the last."
+ },
+ "rule_once": {
+  "text": "{date}, das {start} às {end}.",
+  "back": "{date}, from {start} to {end}.",
+  "why": "Date then hours."
+ },
+ "rule_week": {
+  "text": {
+   "until": "{days}, das {start} às {end}, de {from} a {until}.",
+   "open": "{days}, das {start} às {end}, a partir de {from}."
+  },
+  "back": "{days}, from {start} to {end}, from {from} to {until}. / ... starting {from}.",
+  "why": "Weekday names arrive capitalised from the table."
+ },
+ "rule_month": {
+  "text": {
+   "until": "{weekday}, {position} semana do mês, das {start} às {end}, de {from} a {until}.",
+   "open": "{weekday}, {position} semana do mês, das {start} às {end}, a partir de {from}."
+  },
+  "back": "{weekday}, {position} week of the month, from {start} to {end}, from {from} to {until}. / ... starting {from}.",
+  "why": "Position agrees with semana, so no gender clash with Segunda or Domingo."
+ },
+ "event_deleted": {
+  "text": "Evento “{name}” apagado",
+  "back": "Event “{name}” deleted",
+  "why": "Same shape as song_deleted."
+ },
+ "calendar_deleted": {
+  "text": "Calendário “{name}” apagado, com os eventos",
+  "back": "Calendar “{name}” deleted, with the events",
+  "why": "Says the events went too."
+ },
+ "CAL_DATE": {
+  "text": "Data",
+  "back": "Date",
+  "why": "One word."
+ },
+ "week_title": {
+  "text": {
+   "two_months": "{from_day} de {from_month} a {to_day} de {to_month} de {to_year}",
+   "two_years": "{from_day} de {from_month} de {from_year} a {to_day} de {to_month} de {to_year}"
+  },
+  "back": "{from_day} of {from_month} to {to_day} of {to_month} of {to_year}",
+  "why": "Each year keeps its de, as in date_long."
+ },
+ "CMD_CALENDAR_DETAIL": {
+  "text": "Cultos e reuniões por semana e por mês",
+  "back": "Services and meetings by week and by month",
+  "why": "Fragment."
+ },
+ "CMD_NEW_EVENT_DETAIL": {
+  "text": "Um culto, uma reunião ou um ensaio",
+  "back": "A service, a meeting or a rehearsal",
+  "why": "Fragment."
  }
 }

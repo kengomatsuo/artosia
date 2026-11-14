@@ -6,6 +6,7 @@ use std::sync::mpsc::{Receiver, Sender, channel};
 use std::sync::{Arc, Mutex};
 
 use artosia_core::bible::{Bible, Reference};
+use artosia_core::calendar::{Calendar, Event};
 use artosia_core::deck::{Announcement, Deck, DeckSource, Fill, Person, Slide, Today, announcement_pages, passage_deck, tag_group};
 use artosia_core::plan::{Plan, PlanEntry, PlanItem};
 use artosia_core::search::SongIndex;
@@ -261,6 +262,10 @@ pub enum Undo {
     EditorLanguage { at: usize, entry: (String, String) },
     /// Every recording was deleted; they wait beside the folder until the toast leaves.
     Recordings,
+    /// An event was deleted from the calendar.
+    Event(Event),
+    /// A calendar was deleted with its events.
+    Calendar(Calendar, Vec<Event>),
 }
 
 pub struct Toast {
@@ -419,6 +424,10 @@ pub struct App {
     pub announcements: Vec<Announcement>,
     /// Everyone whose birthday the church keeps, for announcements that fill themselves.
     pub people: Vec<Person>,
+    /// The church's calendars and their events (`calendar.rs`).
+    pub calendars: Vec<Calendar>,
+    pub events: Vec<Event>,
+    pub calendar: crate::calendar::Window,
     pub plan: Plan,
     pub settings: Settings,
 
@@ -658,6 +667,7 @@ impl App {
             for mut item in data::practice_announcements() {
                 let _ = store.save_announcement(&mut item);
             }
+            data::practice_calendar(&store);
         }
         let songs = store.songs().unwrap_or_default();
         let index = SongIndex::build(&songs);
@@ -694,6 +704,9 @@ impl App {
             backdrops: crate::backdrops::Desk::default(),
             announcements,
             people: Vec::new(),
+            calendars: Vec::new(),
+            events: Vec::new(),
+            calendar: Default::default(),
             plan,
             settings,
             open: None,
@@ -811,6 +824,7 @@ impl App {
         app.settings.language = asked.unwrap_or_else(|| crate::languages::from_settings(&app.settings.language, app.settings.legacy_indonesian).to_string());
         t::set_language(&app.settings.language);
         app.people = app.store.people().unwrap_or_default();
+        app.load_calendar();
         app.stream_address.replace_text(app.settings.stream_address.clone());
         app.stream_key.replace_text(app.settings.stream_key.clone());
         app.sync_camera_address();
@@ -1043,30 +1057,30 @@ impl App {
     /// Today's date, for announcements that fill themselves with this week's birthdays.
     pub fn today(&self) -> Today<'static> {
         let time = rune::LocalTime::at((self.now * 1000.0) as i64);
-        Today { month: time.month.clamp(1, 12) as u8, day: time.day.clamp(1, 31) as u8, months: t::MONTHS(), date: t::day_month }
+        Today { year: time.year, month: time.month.clamp(1, 12) as u8, day: time.day.clamp(1, 31) as u8, months: t::MONTHS(), weekdays: t::WEEKDAYS(), clock: t::time_of_day, date: t::day_month }
     }
 
     /// Every announcement slide in order, each with the place of its announcement in the list.
     pub fn announcement_pages(&self) -> Vec<(usize, Slide)> {
-        announcement_pages(&self.announcements, &self.people, &self.today(), self.bible().map(|bible| &**bible), self.settings.verses_per_slide)
+        announcement_pages(&self.announcements, &self.people, &self.events, &self.today(), self.bible().map(|bible| &**bible), self.settings.verses_per_slide)
     }
 
     pub fn announcements_deck(&self) -> Deck {
-        let mut deck = artosia_core::deck::announcements_deck(&self.announcements, &self.people, &self.today(), self.bible().map(|bible| &**bible), self.settings.verses_per_slide);
+        let mut deck = artosia_core::deck::announcements_deck(&self.announcements, &self.people, &self.events, &self.today(), self.bible().map(|bible| &**bible), self.settings.verses_per_slide);
         deck.title = t::CMD_ANNOUNCEMENTS().to_string();
         deck
     }
 
     /// The card a slide of the announcements came from. A card may give several slides or none.
     pub fn card_at_slide(&self, slide: usize) -> Option<&Announcement> {
-        let pages = announcement_pages(&self.announcements, &self.people, &self.today(), self.bible().map(|bible| &**bible), self.settings.verses_per_slide);
+        let pages = announcement_pages(&self.announcements, &self.people, &self.events, &self.today(), self.bible().map(|bible| &**bible), self.settings.verses_per_slide);
         pages.get(slide).and_then(|(at, _)| self.announcements.get(*at))
     }
 
     /// The slides one card gives today: none for a birthday card with nobody, or a passage card
     /// the Bible cannot read.
     pub fn card_slides(&self, card: &Announcement) -> Vec<Slide> {
-        announcement_pages(std::slice::from_ref(card), &self.people, &self.today(), self.bible().map(|bible| &**bible), self.settings.verses_per_slide).into_iter().map(|(_, slide)| slide).collect()
+        announcement_pages(std::slice::from_ref(card), &self.people, &self.events, &self.today(), self.bible().map(|bible| &**bible), self.settings.verses_per_slide).into_iter().map(|(_, slide)| slide).collect()
     }
 
     /// One saved card as a deck of its own, so it can be shown without the rest; None when it has

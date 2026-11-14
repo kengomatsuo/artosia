@@ -1898,6 +1898,163 @@ pub fn day_month(day: u8, month: &str) -> String {
     format!("{day} {month}")
 }
 
+// ---- The calendar window (OVCAL1) ----
+text!(CAL_TODAY, "Today", "Today");
+text!(CAL_PREVIOUS, "Previous", "Previous");
+text!(CAL_NEXT, "Next", "Next");
+text!(CAL_WEEK, "Week", "Week");
+text!(CAL_MONTH, "Month", "Month");
+text!(CAL_NEW_EVENT, "New event", "New event");
+text!(CAL_EVENT, "Event", "Event");
+text!(CAL_CALENDARS, "Calendars", "Calendars");
+text!(CAL_MANAGE, "Manage", "Manage");
+text!(CAL_READ_BY, "Read by the announcements", "Read by the announcements");
+text!(CAL_READ_BY_HINT, "The schedule card reads this calendar. Change an event here and its slide follows.", "The schedule card reads this calendar. Change an event here and its slide follows.");
+text!(CAL_EVENT_NAME, "Event name", "Event name");
+text!(CAL_CALENDAR, "Calendar", "Calendar");
+text!(CAL_DATE, "Date", "Date");
+text!(CMD_CALENDAR_DETAIL, "The week and month of services and meetings", "The week and month of services and meetings");
+text!(CMD_NEW_EVENT_DETAIL, "A service, meeting or rehearsal on the calendar", "A service, meeting or rehearsal on the calendar");
+text!(CAL_REPEAT, "Repeats", "Repeats");
+text!(CAL_ONCE, "Once", "Once");
+text!(CAL_EVERY_WEEK, "Every week", "Every week");
+text!(CAL_EVERY_MONTH, "Every month", "Every month");
+text!(CAL_DAYS, "Days", "Days");
+text!(CAL_WHICH, "Which", "Which");
+text!(CAL_POS_FIRST, "First", "First");
+text!(CAL_POS_SECOND, "Second", "Second");
+text!(CAL_POS_THIRD, "Third", "Third");
+text!(CAL_POS_FOURTH, "Fourth", "Fourth");
+text!(CAL_POS_LAST, "Last", "Last");
+text!(CAL_WEEKDAY, "Day", "Day");
+text!(CAL_START, "Start", "Start");
+text!(CAL_END, "End", "End");
+text!(CAL_FIRST_DATE, "First date", "First date");
+text!(CAL_UNTIL, "Until", "Until");
+text!(CAL_NO_END, "No end", "No end");
+text!(CAL_DATES, "Dates, press x to skip one", "Dates, press x to skip one");
+text!(CAL_SKIPPED, "Skipped, press to bring one back", "Skipped, press to bring one back");
+text!(CAL_NO_DATES, "No dates in the coming years", "No dates in the coming years");
+text!(CAL_ADD_CALENDAR, "Add calendar", "Add calendar");
+text!(CAL_CALENDAR_NAME, "Calendar name", "Calendar name");
+text!(CAL_COLOUR, "Colour", "Colour");
+text!(CAL_DELETE_CALENDAR, "Delete calendar", "Delete calendar");
+text!(CAL_NEW_CALENDAR, "New calendar", "New calendar");
+text!(CAL_SERVICES, "Services", "Services");
+text!(FILL_SCHEDULE, "Calendar events this week", "Calendar events this week");
+
+/// The month and year over a month of the calendar.
+pub fn month_year(month: &str, year: i32) -> String {
+    if let Some(text) = say("month_year", None, None, &[("month", text_arg(month)), ("year", text_arg(year))]) {
+        return text;
+    }
+    format!("{month} {year}")
+}
+
+/// The title over a week that runs into another month (or year): both ends in full.
+pub fn week_title(from: (u8, &str, i32), to: (u8, &str, i32)) -> String {
+    let case = if from.2 == to.2 { "two_months" } else { "two_years" };
+    let args = [("from_day", text_arg(from.0)), ("from_month", text_arg(from.1)), ("from_year", text_arg(from.2)), ("to_day", text_arg(to.0)), ("to_month", text_arg(to.1)), ("to_year", text_arg(to.2))];
+    if let Some(text) = say("week_title", Some(case), None, &args) {
+        return text;
+    }
+    if from.2 == to.2 {
+        format!("{} {} to {} {} {}", from.0, from.1, to.0, to.1, to.2)
+    } else {
+        format!("{} {} {} to {} {} {}", from.0, from.1, from.2, to.0, to.1, to.2)
+    }
+}
+
+/// A whole date: day, month and year.
+pub fn date_long(day: u8, month: &str, year: i32) -> String {
+    if let Some(text) = say("date_long", None, None, &[("day", text_arg(day)), ("month", text_arg(month)), ("year", text_arg(year))]) {
+        return text;
+    }
+    format!("{day} {month} {year}")
+}
+
+/// The events a day cell has no room to draw.
+pub fn more_events(count: usize) -> String {
+    if let Some(text) = say("more_events", None, Some(count), &[]) {
+        return text;
+    }
+    format!("+{count} more")
+}
+
+/// How many events a schedule card holds this week, under the card's fill choice.
+pub fn events_this_week(count: usize) -> String {
+    if let Some(text) = say("events_this_week", None, Some(count), &[]) {
+        return text;
+    }
+    match count {
+        0 => "No events in the next seven days".to_string(),
+        1 => "1 event in the next seven days".to_string(),
+        _ => format!("{count} events in the next seven days"),
+    }
+}
+
+/// Weekday names run together: "Sunday and Wednesday", "Sunday, Tuesday and Friday".
+pub fn weekday_list(days: &[&str]) -> String {
+    // One day is its own name in every language; a table without a plural "one" read it as two.
+    let [before @ .., last] = days else { return String::new() };
+    if before.is_empty() {
+        return (*last).to_string();
+    }
+    if let Some(text) = say("weekday_list", None, Some(days.len()), &[("first", text_arg(days[0])), ("last", text_arg(*last)), ("all", text_arg(before.join(", ")))]) {
+        return text;
+    }
+    format!("{} and {last}", before.join(", "))
+}
+
+/// The rule of a one-time event, said back as the dialog is filled in.
+pub fn rule_once(date: &str, start: &str, end: &str) -> String {
+    if let Some(text) = say("rule_once", None, None, &[("date", text_arg(date)), ("start", text_arg(start)), ("end", text_arg(end))]) {
+        return text;
+    }
+    format!("On {date}, from {start} to {end}.")
+}
+
+/// The rule of an event that repeats every week on some days.
+pub fn rule_week(days: &str, start: &str, end: &str, from: &str, until: Option<&str>) -> String {
+    let until_text = until.unwrap_or_default();
+    if let Some(text) = say("rule_week", Some(if until.is_some() { "until" } else { "open" }), None, &[("days", text_arg(days)), ("start", text_arg(start)), ("end", text_arg(end)), ("from", text_arg(from)), ("until", text_arg(until_text))]) {
+        return text;
+    }
+    match until {
+        Some(until) => format!("Every {days}, {start} to {end}, from {from} until {until}."),
+        None => format!("Every {days}, {start} to {end}, from {from}, with no end."),
+    }
+}
+
+/// The rule of an event that repeats every month on a numbered weekday.
+pub fn rule_month(position: &str, weekday: &str, start: &str, end: &str, from: &str, until: Option<&str>) -> String {
+    let until_text = until.unwrap_or_default();
+    if let Some(text) = say("rule_month", Some(if until.is_some() { "until" } else { "open" }), None, &[("position", text_arg(position)), ("weekday", text_arg(weekday)), ("start", text_arg(start)), ("end", text_arg(end)), ("from", text_arg(from)), ("until", text_arg(until_text))]) {
+        return text;
+    }
+    let position = position.to_lowercase();
+    match until {
+        Some(until) => format!("Every month on the {position} {weekday}, {start} to {end}, from {from} until {until}."),
+        None => format!("Every month on the {position} {weekday}, {start} to {end}, from {from}, with no end."),
+    }
+}
+
+/// The toast after an event was deleted.
+pub fn event_deleted(name: &str) -> String {
+    if let Some(text) = say("event_deleted", None, None, &[("name", text_arg(name))]) {
+        return text;
+    }
+    format!("Deleted {name}")
+}
+
+/// The toast after a calendar was deleted with its events.
+pub fn calendar_deleted(name: &str) -> String {
+    if let Some(text) = say("calendar_deleted", None, None, &[("name", text_arg(name))]) {
+        return text;
+    }
+    format!("Deleted {name} and its events")
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

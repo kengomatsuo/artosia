@@ -14222,5 +14222,1180 @@
    "notice"
   ],
   "notes": "Name first or last as the language prefers. The languages are those of a song's words, never the window's."
+ },
+ {
+  "key": "CAL_TODAY",
+  "kind": "const",
+  "screen": "Calendar window, the third tab under the title bar. Left, a rail: the heading Calendars with a Manage button, one row per calendar (a coloured tick and a name), a label and a small picture of the schedule card with a grey note under it. Right, a toolbar (Today, two arrows, the month's name, a Week and Month switch, a New event button) over a grid of days whose cells hold small coloured chips.",
+  "moment": "The person has paged away from the present and wants the current month or week back.",
+  "role": "button",
+  "does": "Brings the view back to the present day.",
+  "budget": 12,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event",
+   "program_window"
+  ],
+  "notes": "One word."
+ },
+ {
+  "key": "CAL_PREVIOUS",
+  "kind": "const",
+  "screen": "Calendar window, the third tab under the title bar. Left, a rail: the heading Calendars with a Manage button, one row per calendar (a coloured tick and a name), a label and a small picture of the schedule card with a grey note under it. Right, a toolbar (Today, two arrows, the month's name, a Week and Month switch, a New event button) over a grid of days whose cells hold small coloured chips.",
+  "moment": "The person pages to the month or week before the one shown.",
+  "role": "button label",
+  "does": "Names the arrow that goes to the earlier stretch of time; shown as a hover name, since the button is an arrow.",
+  "budget": 14,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event",
+   "program_window"
+  ],
+  "notes": "Said of both a month and a week."
+ },
+ {
+  "key": "CAL_NEXT",
+  "kind": "const",
+  "screen": "Calendar window, the third tab under the title bar. Left, a rail: the heading Calendars with a Manage button, one row per calendar (a coloured tick and a name), a label and a small picture of the schedule card with a grey note under it. Right, a toolbar (Today, two arrows, the month's name, a Week and Month switch, a New event button) over a grid of days whose cells hold small coloured chips.",
+  "moment": "The person pages to the month or week after the one shown.",
+  "role": "button label",
+  "does": "Names the arrow that goes to the later stretch of time; shown as a hover name, since the button is an arrow.",
+  "budget": 14,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event",
+   "program_window"
+  ],
+  "notes": "Said of both a month and a week."
+ },
+ {
+  "key": "CAL_WEEK",
+  "kind": "const",
+  "screen": "Calendar window, the third tab under the title bar. Left, a rail: the heading Calendars with a Manage button, one row per calendar (a coloured tick and a name), a label and a small picture of the schedule card with a grey note under it. Right, a toolbar (Today, two arrows, the month's name, a Week and Month switch, a New event button) over a grid of days whose cells hold small coloured chips.",
+  "moment": "The person chooses to see seven days in columns.",
+  "role": "switch option",
+  "does": "Chooses the view of one week, one column a day.",
+  "budget": 10,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event",
+   "program_window"
+  ],
+  "notes": "One word, a unit of time."
+ },
+ {
+  "key": "CAL_MONTH",
+  "kind": "const",
+  "screen": "Calendar window, the third tab under the title bar. Left, a rail: the heading Calendars with a Manage button, one row per calendar (a coloured tick and a name), a label and a small picture of the schedule card with a grey note under it. Right, a toolbar (Today, two arrows, the month's name, a Week and Month switch, a New event button) over a grid of days whose cells hold small coloured chips.",
+  "moment": "The person chooses to see the whole month as a grid.",
+  "role": "switch option",
+  "does": "Chooses the view of a whole month, one cell a day.",
+  "budget": 10,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event",
+   "program_window"
+  ],
+  "notes": "One word, a unit of time."
+ },
+ {
+  "key": "CAL_NEW_EVENT",
+  "kind": "const",
+  "screen": "Calendar window, the third tab under the title bar. Left, a rail: the heading Calendars with a Manage button, one row per calendar (a coloured tick and a name), a label and a small picture of the schedule card with a grey note under it. Right, a toolbar (Today, two arrows, the month's name, a Week and Month switch, a New event button) over a grid of days whose cells hold small coloured chips. Also the dialog's title while an event is being made.",
+  "moment": "The person wants to put something on the church's calendar.",
+  "role": "button and dialog title",
+  "does": "Starts an event that is not in the calendar yet.",
+  "budget": 16,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event"
+  ],
+  "notes": "A name of the thing started, with a plus icon beside it."
+ },
+ {
+  "key": "CAL_EVENT",
+  "kind": "const",
+  "screen": "Event dialog, opened over the calendar window by a press on a chip, a double press on an empty day or the New event button. Fields top to bottom: name, calendar, repeat switch, days or position, start and end times, first date and until date, one sentence saying the rule, the next dates as small chips, and Cancel, Delete and Save at the foot.",
+  "moment": "An event that exists is open to be looked at or changed.",
+  "role": "dialog title",
+  "does": "Names the dialog that holds one thing happening at a time.",
+  "budget": 12,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event"
+  ],
+  "notes": "One word."
+ },
+ {
+  "key": "CAL_CALENDARS",
+  "kind": "const",
+  "screen": "Calendar window, the third tab under the title bar. Left, a rail: the heading Calendars with a Manage button, one row per calendar (a coloured tick and a name), a label and a small picture of the schedule card with a grey note under it. Right, a toolbar (Today, two arrows, the month's name, a Week and Month switch, a New event button) over a grid of days whose cells hold small coloured chips. Also the title of the dialog that manages them. Also the small heading over the squares of every calendar's colour inside the colour picker.",
+  "moment": "The person looks at the church's groups of events, each with its colour.",
+  "role": "heading and dialog title",
+  "does": "Names the groups the events are sorted into, each with its own colour.",
+  "budget": 16,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event",
+   "program_window"
+  ],
+  "notes": "Plural. The word for several calendars, not for a date book."
+ },
+ {
+  "key": "CAL_MANAGE",
+  "kind": "const",
+  "screen": "Calendar window, the third tab under the title bar. Left, a rail: the heading Calendars with a Manage button, one row per calendar (a coloured tick and a name), a label and a small picture of the schedule card with a grey note under it. Right, a toolbar (Today, two arrows, the month's name, a Week and Month switch, a New event button) over a grid of days whose cells hold small coloured chips.",
+  "moment": "The person wants to rename a group of events, change its colour, add or remove one.",
+  "role": "button",
+  "does": "Opens the place where the groups of events are looked after.",
+  "budget": 12,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event",
+   "program_window"
+  ],
+  "notes": "Small button beside a heading."
+ },
+ {
+  "key": "CAL_READ_BY",
+  "kind": "const",
+  "screen": "Calendar window, the third tab under the title bar. Left, a rail: the heading Calendars with a Manage button, one row per calendar (a coloured tick and a name), a label and a small picture of the schedule card with a grey note under it. Right, a toolbar (Today, two arrows, the month's name, a Week and Month switch, a New event button) over a grid of days whose cells hold small coloured chips.",
+  "moment": "The person sees that a card of the announcements uses this calendar.",
+  "role": "small heading",
+  "does": "Says the picture below is taken from the announcements, which read the calendar.",
+  "budget": 30,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event",
+   "program_window",
+   "announcement"
+  ],
+  "notes": "Small grey label above a picture."
+ },
+ {
+  "key": "CAL_READ_BY_HINT",
+  "kind": "const",
+  "screen": "Calendar window, the third tab under the title bar. Left, a rail: the heading Calendars with a Manage button, one row per calendar (a coloured tick and a name), a label and a small picture of the schedule card with a grey note under it. Right, a toolbar (Today, two arrows, the month's name, a Week and Month switch, a New event button) over a grid of days whose cells hold small coloured chips.",
+  "moment": "The person wonders whether to type the week's services again on an announcement.",
+  "role": "explanatory text",
+  "does": "Promises that a schedule card draws its lines from this calendar, so a change made here shows there with no second typing.",
+  "budget": 110,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event",
+   "program_window",
+   "announcement",
+   "card"
+  ],
+  "notes": "Two short sentences; the second is the promise. Grey, small, under a picture."
+ },
+ {
+  "key": "CAL_EVENT_NAME",
+  "kind": "const",
+  "screen": "Event dialog, opened over the calendar window by a press on a chip, a double press on an empty day or the New event button. Fields top to bottom: name, calendar, repeat switch, days or position, start and end times, first date and until date, one sentence saying the rule, the next dates as small chips, and Cancel, Delete and Save at the foot.",
+  "moment": "The person types what the event is called, such as a service.",
+  "role": "field label",
+  "does": "Labels the one field of the dialog that is typed freely.",
+  "budget": 16,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event"
+  ],
+  "notes": "A label above a text field."
+ },
+ {
+  "key": "CAL_CALENDAR",
+  "kind": "const",
+  "screen": "Event dialog, opened over the calendar window by a press on a chip, a double press on an empty day or the New event button. Fields top to bottom: name, calendar, repeat switch, days or position, start and end times, first date and until date, one sentence saying the rule, the next dates as small chips, and Cancel, Delete and Save at the foot.",
+  "moment": "The person chooses which group the event belongs to.",
+  "role": "field label",
+  "does": "Labels the drop-down of groups, each shown with its colour.",
+  "budget": 14,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event"
+  ],
+  "notes": "Singular. One calendar, the group, not the whole window."
+ },
+ {
+  "key": "CAL_REPEAT",
+  "kind": "const",
+  "screen": "Event dialog, opened over the calendar window by a press on a chip, a double press on an empty day or the New event button. Fields top to bottom: name, calendar, repeat switch, days or position, start and end times, first date and until date, one sentence saying the rule, the next dates as small chips, and Cancel, Delete and Save at the foot.",
+  "moment": "The person decides whether the event happens once or comes back.",
+  "role": "field label",
+  "does": "Labels the choice between a single date and a rule that returns.",
+  "budget": 14,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event"
+  ],
+  "notes": "Label above a three-way switch."
+ },
+ {
+  "key": "CAL_ONCE",
+  "kind": "const",
+  "screen": "Event dialog, opened over the calendar window by a press on a chip, a double press on an empty day or the New event button. Fields top to bottom: name, calendar, repeat switch, days or position, start and end times, first date and until date, one sentence saying the rule, the next dates as small chips, and Cancel, Delete and Save at the foot.",
+  "moment": "The event takes place on one date only.",
+  "role": "switch option",
+  "does": "Chooses that the event does not come back.",
+  "budget": 10,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event"
+  ],
+  "notes": "One word or two."
+ },
+ {
+  "key": "CAL_EVERY_WEEK",
+  "kind": "const",
+  "screen": "Event dialog, opened over the calendar window by a press on a chip, a double press on an empty day or the New event button. Fields top to bottom: name, calendar, repeat switch, days or position, start and end times, first date and until date, one sentence saying the rule, the next dates as small chips, and Cancel, Delete and Save at the foot.",
+  "moment": "The event comes back on chosen days of each week.",
+  "role": "switch option",
+  "does": "Chooses that the event returns each week.",
+  "budget": 16,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event"
+  ],
+  "notes": "A phrase."
+ },
+ {
+  "key": "CAL_EVERY_MONTH",
+  "kind": "const",
+  "screen": "Event dialog, opened over the calendar window by a press on a chip, a double press on an empty day or the New event button. Fields top to bottom: name, calendar, repeat switch, days or position, start and end times, first date and until date, one sentence saying the rule, the next dates as small chips, and Cancel, Delete and Save at the foot.",
+  "moment": "The event comes back once each month.",
+  "role": "switch option",
+  "does": "Chooses that the event returns monthly, on a numbered weekday such as the first one.",
+  "budget": 16,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event"
+  ],
+  "notes": "A phrase."
+ },
+ {
+  "key": "CAL_DAYS",
+  "kind": "const",
+  "screen": "Event dialog, opened over the calendar window by a press on a chip, a double press on an empty day or the New event button. Fields top to bottom: name, calendar, repeat switch, days or position, start and end times, first date and until date, one sentence saying the rule, the next dates as small chips, and Cancel, Delete and Save at the foot.",
+  "moment": "A weekly event needs its weekdays picked.",
+  "role": "field label",
+  "does": "Labels a row of seven buttons, one per weekday, each lit or not.",
+  "budget": 10,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event"
+  ],
+  "notes": "Label above seven toggles."
+ },
+ {
+  "key": "CAL_WHICH",
+  "kind": "const",
+  "screen": "Event dialog, opened over the calendar window by a press on a chip, a double press on an empty day or the New event button. Fields top to bottom: name, calendar, repeat switch, days or position, start and end times, first date and until date, one sentence saying the rule, the next dates as small chips, and Cancel, Delete and Save at the foot.",
+  "moment": "A monthly event needs the place of its weekday in the month.",
+  "role": "field label",
+  "does": "Labels the choice between the first, second, third, fourth or last.",
+  "budget": 12,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event"
+  ],
+  "notes": "Label above a drop-down of ordinals."
+ },
+ {
+  "key": "CAL_POS_FIRST",
+  "kind": "const",
+  "screen": "Event dialog, opened over the calendar window by a press on a chip, a double press on an empty day or the New event button. Fields top to bottom: name, calendar, repeat switch, days or position, start and end times, first date and until date, one sentence saying the rule, the next dates as small chips, and Cancel, Delete and Save at the foot.",
+  "moment": "A monthly event falls on the first such weekday of the month.",
+  "role": "drop-down option",
+  "does": "Names the earliest of the month's weekdays of one kind.",
+  "budget": 12,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event"
+  ],
+  "notes": "Ordinal. Also read inside the sentence that says the rule."
+ },
+ {
+  "key": "CAL_POS_SECOND",
+  "kind": "const",
+  "screen": "Event dialog, opened over the calendar window by a press on a chip, a double press on an empty day or the New event button. Fields top to bottom: name, calendar, repeat switch, days or position, start and end times, first date and until date, one sentence saying the rule, the next dates as small chips, and Cancel, Delete and Save at the foot.",
+  "moment": "A monthly event falls on the second such weekday of the month.",
+  "role": "drop-down option",
+  "does": "Names the weekday that comes one week after the earliest.",
+  "budget": 12,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event"
+  ],
+  "notes": "Ordinal. Also read inside the sentence that says the rule."
+ },
+ {
+  "key": "CAL_POS_THIRD",
+  "kind": "const",
+  "screen": "Event dialog, opened over the calendar window by a press on a chip, a double press on an empty day or the New event button. Fields top to bottom: name, calendar, repeat switch, days or position, start and end times, first date and until date, one sentence saying the rule, the next dates as small chips, and Cancel, Delete and Save at the foot.",
+  "moment": "A monthly event falls on the third such weekday of the month.",
+  "role": "drop-down option",
+  "does": "Names the weekday that comes two weeks after the earliest.",
+  "budget": 12,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event"
+  ],
+  "notes": "Ordinal. Also read inside the sentence that says the rule."
+ },
+ {
+  "key": "CAL_POS_FOURTH",
+  "kind": "const",
+  "screen": "Event dialog, opened over the calendar window by a press on a chip, a double press on an empty day or the New event button. Fields top to bottom: name, calendar, repeat switch, days or position, start and end times, first date and until date, one sentence saying the rule, the next dates as small chips, and Cancel, Delete and Save at the foot.",
+  "moment": "A monthly event falls on the fourth such weekday of the month.",
+  "role": "drop-down option",
+  "does": "Names the weekday that comes three weeks after the earliest.",
+  "budget": 12,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event"
+  ],
+  "notes": "Ordinal. Also read inside the sentence that says the rule."
+ },
+ {
+  "key": "CAL_POS_LAST",
+  "kind": "const",
+  "screen": "Event dialog, opened over the calendar window by a press on a chip, a double press on an empty day or the New event button. Fields top to bottom: name, calendar, repeat switch, days or position, start and end times, first date and until date, one sentence saying the rule, the next dates as small chips, and Cancel, Delete and Save at the foot.",
+  "moment": "A monthly event falls on the final such weekday of the month, however many there are.",
+  "role": "drop-down option",
+  "does": "Names the latest of the month's weekdays of one kind.",
+  "budget": 12,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event"
+  ],
+  "notes": "Ordinal. Also read inside the sentence that says the rule."
+ },
+ {
+  "key": "CAL_WEEKDAY",
+  "kind": "const",
+  "screen": "Event dialog, opened over the calendar window by a press on a chip, a double press on an empty day or the New event button. Fields top to bottom: name, calendar, repeat switch, days or position, start and end times, first date and until date, one sentence saying the rule, the next dates as small chips, and Cancel, Delete and Save at the foot.",
+  "moment": "A monthly event needs the weekday it falls on.",
+  "role": "field label",
+  "does": "Labels the drop-down of the seven weekday names.",
+  "budget": 12,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event"
+  ],
+  "notes": "Label above a drop-down."
+ },
+ {
+  "key": "CAL_START",
+  "kind": "const",
+  "screen": "Event dialog, opened over the calendar window by a press on a chip, a double press on an empty day or the New event button. Fields top to bottom: name, calendar, repeat switch, days or position, start and end times, first date and until date, one sentence saying the rule, the next dates as small chips, and Cancel, Delete and Save at the foot.",
+  "moment": "The person picks the time the event begins.",
+  "role": "field label",
+  "does": "Labels the drop-down of times that gives the beginning.",
+  "budget": 12,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event"
+  ],
+  "notes": "Label above a drop-down of times of day."
+ },
+ {
+  "key": "CAL_END",
+  "kind": "const",
+  "screen": "Event dialog, opened over the calendar window by a press on a chip, a double press on an empty day or the New event button. Fields top to bottom: name, calendar, repeat switch, days or position, start and end times, first date and until date, one sentence saying the rule, the next dates as small chips, and Cancel, Delete and Save at the foot.",
+  "moment": "The person picks the time the event is over.",
+  "role": "field label",
+  "does": "Labels the drop-down of times that gives the finish.",
+  "budget": 12,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event"
+  ],
+  "notes": "Label above a drop-down of times of day."
+ },
+ {
+  "key": "CAL_FIRST_DATE",
+  "kind": "const",
+  "screen": "Event dialog, opened over the calendar window by a press on a chip, a double press on an empty day or the New event button. Fields top to bottom: name, calendar, repeat switch, days or position, start and end times, first date and until date, one sentence saying the rule, the next dates as small chips, and Cancel, Delete and Save at the foot.",
+  "moment": "The person picks the day an event happens, or the day a repeating one begins.",
+  "role": "field label",
+  "does": "Labels the date button that opens a month to pick the opening day from.",
+  "budget": 16,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event"
+  ],
+  "notes": "Label above a button showing a date."
+ },
+ {
+  "key": "CAL_UNTIL",
+  "kind": "const",
+  "screen": "Event dialog, opened over the calendar window by a press on a chip, a double press on an empty day or the New event button. Fields top to bottom: name, calendar, repeat switch, days or position, start and end times, first date and until date, one sentence saying the rule, the next dates as small chips, and Cancel, Delete and Save at the foot.",
+  "moment": "The person picks the last day a repeating event may happen.",
+  "role": "field label",
+  "does": "Labels the date button for the closing day of a rule.",
+  "budget": 12,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event"
+  ],
+  "notes": "Label above a button showing a date or the words for no end."
+ },
+ {
+  "key": "CAL_NO_END",
+  "kind": "const",
+  "screen": "Event dialog, opened over the calendar window by a press on a chip, a double press on an empty day or the New event button. Fields top to bottom: name, calendar, repeat switch, days or position, start and end times, first date and until date, one sentence saying the rule, the next dates as small chips, and Cancel, Delete and Save at the foot.",
+  "moment": "No last day was set, so the event goes on for good.",
+  "role": "button text",
+  "does": "Says the rule has no closing day; also the press that removes a chosen one.",
+  "budget": 14,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event"
+  ],
+  "notes": "Shown where a date would be."
+ },
+ {
+  "key": "CAL_DATES",
+  "kind": "const",
+  "screen": "Event dialog, opened over the calendar window by a press on a chip, a double press on an empty day or the New event button. Fields top to bottom: name, calendar, repeat switch, days or position, start and end times, first date and until date, one sentence saying the rule, the next dates as small chips, and Cancel, Delete and Save at the foot.",
+  "moment": "The person looks at the coming dates of a repeating event and may drop one.",
+  "role": "small heading",
+  "does": "Heads a row of date chips, telling the person that the small cross on a chip leaves that day out.",
+  "budget": 40,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event"
+  ],
+  "notes": "Mention the cross as a letter x, as on the chips."
+ },
+ {
+  "key": "CAL_SKIPPED",
+  "kind": "const",
+  "screen": "Event dialog, opened over the calendar window by a press on a chip, a double press on an empty day or the New event button. Fields top to bottom: name, calendar, repeat switch, days or position, start and end times, first date and until date, one sentence saying the rule, the next dates as small chips, and Cancel, Delete and Save at the foot.",
+  "moment": "Some dates of the rule were left out earlier.",
+  "role": "small heading",
+  "does": "Heads dates that were taken out, saying a press brings one back.",
+  "budget": 40,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event"
+  ],
+  "notes": "Shown only when a date was left out."
+ },
+ {
+  "key": "CAL_NO_DATES",
+  "kind": "const",
+  "screen": "Event dialog, opened over the calendar window by a press on a chip, a double press on an empty day or the New event button. Fields top to bottom: name, calendar, repeat switch, days or position, start and end times, first date and until date, one sentence saying the rule, the next dates as small chips, and Cancel, Delete and Save at the foot.",
+  "moment": "The rule gives no date in the years ahead, because of its closing day or its first one.",
+  "role": "grey note",
+  "does": "Says there is nothing coming for this event.",
+  "budget": 34,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event"
+  ],
+  "notes": "Plain statement."
+ },
+ {
+  "key": "CAL_ADD_CALENDAR",
+  "kind": "const",
+  "screen": "Calendars dialog, opened by Manage in the rail. A list of the calendars on the left, and for the picked one a name field, a colour row with a More button that opens the colour picker, and a Delete button; Add calendar at the foot.",
+  "moment": "The person wants a new group for events.",
+  "role": "button",
+  "does": "Makes another group, to be named and coloured.",
+  "budget": 18,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event"
+  ],
+  "notes": "Button with a plus icon."
+ },
+ {
+  "key": "CAL_CALENDAR_NAME",
+  "kind": "const",
+  "screen": "Calendars dialog, opened by Manage in the rail. A list of the calendars on the left, and for the picked one a name field, a colour row with a More button that opens the colour picker, and a Delete button; Add calendar at the foot.",
+  "moment": "The person types what a group is called, such as youth or music.",
+  "role": "field label",
+  "does": "Labels the field with the group's name.",
+  "budget": 18,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event"
+  ],
+  "notes": "Label above a text field."
+ },
+ {
+  "key": "CAL_COLOUR",
+  "kind": "const",
+  "screen": "Calendars dialog, opened by Manage in the rail. A list of the calendars on the left, and for the picked one a name field, a colour row with a More button that opens the colour picker, and a Delete button; Add calendar at the foot.",
+  "moment": "The person chooses the colour the group's chips wear.",
+  "role": "row label",
+  "does": "Labels the row where the group's colour is chosen.",
+  "budget": 12,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event"
+  ],
+  "notes": "Row label left of colour squares."
+ },
+ {
+  "key": "CAL_DELETE_CALENDAR",
+  "kind": "const",
+  "screen": "Calendars dialog, opened by Manage in the rail. A list of the calendars on the left, and for the picked one a name field, a colour row with a More button that opens the colour picker, and a Delete button; Add calendar at the foot.",
+  "moment": "The person no longer wants a group and every event in it.",
+  "role": "button",
+  "does": "Removes the group together with its events.",
+  "budget": 20,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event"
+  ],
+  "notes": "Danger button."
+ },
+ {
+  "key": "CAL_NEW_CALENDAR",
+  "kind": "const",
+  "screen": "Calendars dialog, opened by Manage in the rail. A list of the calendars on the left, and for the picked one a name field, a colour row with a More button that opens the colour picker, and a Delete button; Add calendar at the foot.",
+  "moment": "A new group has just been made and has no name yet.",
+  "role": "starting name",
+  "does": "Gives a fresh group a name until its own is typed.",
+  "budget": 16,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event"
+  ],
+  "notes": "A name, not an instruction."
+ },
+ {
+  "key": "CAL_SERVICES",
+  "kind": "const",
+  "screen": "Calendar window, the third tab under the title bar. Left, a rail: the heading Calendars with a Manage button, one row per calendar (a coloured tick and a name), a label and a small picture of the schedule card with a grey note under it. Right, a toolbar (Today, two arrows, the month's name, a Week and Month switch, a New event button) over a grid of days whose cells hold small coloured chips.",
+  "moment": "A church with no calendar yet starts with one, named for its services.",
+  "role": "calendar name",
+  "does": "Names the first group, holding the church's services.",
+  "budget": 16,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event"
+  ],
+  "notes": "The usual word for the main meetings of a church."
+ },
+ {
+  "key": "FILL_SCHEDULE",
+  "kind": "const",
+  "screen": "Announcements editor, the row of fill choices under the fields of a card (Fill in by itself). Third choice, alone on its own row.",
+  "moment": "The person wants the card to list what the calendar holds for the days ahead.",
+  "role": "switch option",
+  "does": "Means the card lists this week's events taken from the calendar.",
+  "budget": 34,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event",
+   "card",
+   "announcement"
+  ],
+  "notes": "A phrase, as long as the birthday ones."
+ },
+ {
+  "key": "month_year",
+  "kind": "sentence",
+  "screen": "Calendar window, the third tab under the title bar. Left, a rail: the heading Calendars with a Manage button, one row per calendar (a coloured tick and a name), a label and a small picture of the schedule card with a grey note under it. Right, a toolbar (Today, two arrows, the month's name, a Week and Month switch, a New event button) over a grid of days whose cells hold small coloured chips.",
+  "moment": "The toolbar names the month on show.",
+  "role": "heading",
+  "does": "Writes a month's name and its year together.",
+  "budget": 18,
+  "variables": [
+   {
+    "name": "month",
+    "example": "November",
+    "meaning": "Month name from the month table."
+   },
+   {
+    "name": "year",
+    "example": "2026",
+    "meaning": "The year."
+   }
+  ],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event"
+  ],
+  "notes": "Order as the language writes it."
+ },
+ {
+  "key": "date_long",
+  "kind": "sentence",
+  "screen": "Event dialog, opened over the calendar window by a press on a chip, a double press on an empty day or the New event button. Fields top to bottom: name, calendar, repeat switch, days or position, start and end times, first date and until date, one sentence saying the rule, the next dates as small chips, and Cancel, Delete and Save at the foot.",
+  "moment": "A date is written out whole on a button and inside the sentence that says the rule.",
+  "role": "date",
+  "does": "Writes a day, a month's name and a year as one date.",
+  "budget": 24,
+  "variables": [
+   {
+    "name": "day",
+    "example": "14",
+    "meaning": "Day of the month."
+   },
+   {
+    "name": "month",
+    "example": "November",
+    "meaning": "Month name from the month table."
+   },
+   {
+    "name": "year",
+    "example": "2026",
+    "meaning": "The year."
+   }
+  ],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event"
+  ],
+  "notes": "Order as the language writes dates in running text."
+ },
+ {
+  "key": "more_events",
+  "kind": "sentence",
+  "screen": "Calendar window, the third tab under the title bar. Left, a rail: the heading Calendars with a Manage button, one row per calendar (a coloured tick and a name), a label and a small picture of the schedule card with a grey note under it. Right, a toolbar (Today, two arrows, the month's name, a Week and Month switch, a New event button) over a grid of days whose cells hold small coloured chips.",
+  "moment": "A day has more events than its cell can draw.",
+  "role": "small note",
+  "does": "Says how many more events the cell holds than it shows.",
+  "budget": 12,
+  "variables": [],
+  "cases": [],
+  "counts": "count = number of events not drawn; forms for each count the language needs.",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event"
+  ],
+  "notes": "Starts with a plus sign or says 'more'."
+ },
+ {
+  "key": "events_this_week",
+  "kind": "sentence",
+  "screen": "Announcements editor, the row of fill choices under the fields of a card (Fill in by itself). Grey line under the fill choices of a schedule card.",
+  "moment": "The card lists the calendar's events of the coming days.",
+  "role": "status",
+  "does": "Says how many events the card holds now, including none.",
+  "budget": 44,
+  "variables": [],
+  "cases": [],
+  "counts": "count = number of events; forms for zero, one and many.",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event",
+   "card",
+   "announcement"
+  ],
+  "notes": "The zero case is a full statement."
+ },
+ {
+  "key": "weekday_list",
+  "kind": "sentence",
+  "screen": "Event dialog, opened over the calendar window by a press on a chip, a double press on an empty day or the New event button. Fields top to bottom: name, calendar, repeat switch, days or position, start and end times, first date and until date, one sentence saying the rule, the next dates as small chips, and Cancel, Delete and Save at the foot.",
+  "moment": "A weekly event on several days is read back in the sentence of its rule.",
+  "role": "list",
+  "does": "Joins weekday names into running text, with the last one set apart by a word for and.",
+  "budget": 40,
+  "variables": [
+   {
+    "name": "first",
+    "example": "Sunday",
+    "meaning": "The first weekday name."
+   },
+   {
+    "name": "last",
+    "example": "Wednesday",
+    "meaning": "The last weekday name."
+   },
+   {
+    "name": "all",
+    "example": "Sunday, Tuesday",
+    "meaning": "Every name but the last, joined by commas."
+   }
+  ],
+  "cases": [],
+  "counts": "count = number of days, two or more; one day is shown as its name alone.",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event"
+  ],
+  "notes": "One name stands alone; two are joined by and; more use commas then and."
+ },
+ {
+  "key": "rule_once",
+  "kind": "sentence",
+  "screen": "Event dialog, opened over the calendar window by a press on a chip, a double press on an empty day or the New event button. Fields top to bottom: name, calendar, repeat switch, days or position, start and end times, first date and until date, one sentence saying the rule, the next dates as small chips, and Cancel, Delete and Save at the foot.",
+  "moment": "The dialog is on Once.",
+  "role": "explanatory sentence",
+  "does": "Says in one sentence the date and the hours of an event that does not return.",
+  "budget": 50,
+  "variables": [
+   {
+    "name": "date",
+    "example": "14 November 2026",
+    "meaning": "A whole date."
+   },
+   {
+    "name": "start",
+    "example": "06.30",
+    "meaning": "Start time."
+   },
+   {
+    "name": "end",
+    "example": "08.00",
+    "meaning": "End time."
+   }
+  ],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event"
+  ],
+  "notes": "Ends with a full stop."
+ },
+ {
+  "key": "rule_week",
+  "kind": "sentence",
+  "screen": "Event dialog, opened over the calendar window by a press on a chip, a double press on an empty day or the New event button. Fields top to bottom: name, calendar, repeat switch, days or position, start and end times, first date and until date, one sentence saying the rule, the next dates as small chips, and Cancel, Delete and Save at the foot.",
+  "moment": "The dialog is on Every week.",
+  "role": "explanatory sentence",
+  "does": "Says in one sentence the weekdays, hours and opening date of a weekly event, and its closing date or that it has none.",
+  "budget": 90,
+  "variables": [
+   {
+    "name": "days",
+    "example": "Sunday and Wednesday",
+    "meaning": "Weekday names already joined."
+   },
+   {
+    "name": "start",
+    "example": "06.30",
+    "meaning": "Start time."
+   },
+   {
+    "name": "end",
+    "example": "08.00",
+    "meaning": "End time."
+   },
+   {
+    "name": "from",
+    "example": "1 November 2026",
+    "meaning": "Whole opening date."
+   },
+   {
+    "name": "until",
+    "example": "1 June 2027",
+    "meaning": "Whole closing date; used only in the case with an end."
+   }
+  ],
+  "cases": [
+   {
+    "name": "until",
+    "when": "The rule has a closing date. Uses until."
+   },
+   {
+    "name": "open",
+    "when": "The rule has no closing date; no until."
+   }
+  ],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event"
+  ],
+  "notes": "Two cases: until (a closing date) and open (none). Ends with a full stop."
+ },
+ {
+  "key": "rule_month",
+  "kind": "sentence",
+  "screen": "Event dialog, opened over the calendar window by a press on a chip, a double press on an empty day or the New event button. Fields top to bottom: name, calendar, repeat switch, days or position, start and end times, first date and until date, one sentence saying the rule, the next dates as small chips, and Cancel, Delete and Save at the foot.",
+  "moment": "The dialog is on Every month.",
+  "role": "explanatory sentence",
+  "does": "Says in one sentence which weekday of the month the event is on, its hours and opening date, and its closing date or that it has none.",
+  "budget": 100,
+  "variables": [
+   {
+    "name": "position",
+    "example": "First",
+    "meaning": "Ordinal word as in the drop-down, capitalised; change case if the language needs."
+   },
+   {
+    "name": "weekday",
+    "example": "Sunday",
+    "meaning": "Weekday name."
+   },
+   {
+    "name": "start",
+    "example": "06.30",
+    "meaning": "Start time."
+   },
+   {
+    "name": "end",
+    "example": "08.00",
+    "meaning": "End time."
+   },
+   {
+    "name": "from",
+    "example": "1 November 2026",
+    "meaning": "Whole opening date."
+   },
+   {
+    "name": "until",
+    "example": "1 June 2027",
+    "meaning": "Whole closing date; used only in the case with an end."
+   }
+  ],
+  "cases": [
+   {
+    "name": "until",
+    "when": "The rule has a closing date. Uses until."
+   },
+   {
+    "name": "open",
+    "when": "The rule has no closing date; no until."
+   }
+  ],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event"
+  ],
+  "notes": "Two cases: until and open. Ends with a full stop."
+ },
+ {
+  "key": "event_deleted",
+  "kind": "sentence",
+  "screen": "A grey bar over the foot of the Calendar window, with an Undo button and the key Ctrl Z.",
+  "moment": "The person has just removed an event from the calendar.",
+  "role": "toast",
+  "does": "Confirms that the named event is gone, while Undo still brings it back.",
+  "budget": 40,
+  "variables": [
+   {
+    "name": "name",
+    "example": "Sunday service",
+    "meaning": "What it was called."
+   }
+  ],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event"
+  ],
+  "notes": "Short, past tense; the name leads or follows as the language likes."
+ },
+ {
+  "key": "calendar_deleted",
+  "kind": "sentence",
+  "screen": "A grey bar over the foot of the Calendar window, with an Undo button and the key Ctrl Z.",
+  "moment": "The person has just removed a whole group of events from the calendar.",
+  "role": "toast",
+  "does": "Confirms that the named group is gone together with everything planned in it, while Undo still brings it back.",
+  "budget": 60,
+  "variables": [
+   {
+    "name": "name",
+    "example": "Music",
+    "meaning": "What it was called."
+   }
+  ],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event"
+  ],
+  "notes": "Say that the events went with the group."
+ },
+ {
+  "key": "CAL_DATE",
+  "kind": "const",
+  "screen": "Event dialog, opened over the calendar window by a press on a chip, a double press on an empty day or the New event button. Fields top to bottom: name, calendar, repeat switch, days or position, start and end times, first date and until date, one sentence saying the rule, the next dates as small chips, and Cancel, Delete and Save at the foot.",
+  "moment": "The event happens once, so the date field is the only date.",
+  "role": "field label",
+  "does": "Labels the date button of an event that does not return.",
+  "budget": 10,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event"
+  ],
+  "notes": "One word."
+ },
+ {
+  "key": "week_title",
+  "kind": "sentence",
+  "screen": "Calendar window, the third tab under the title bar. Left, a rail: the heading Calendars with a Manage button, one row per calendar (a coloured tick and a name), a label and a small picture of the schedule card with a grey note under it. Right, a toolbar (Today, two arrows, the month's name, a Week and Month switch, a New event button) over a grid of days whose cells hold small coloured chips.",
+  "moment": "The week on show begins in one month and ends in the next, or begins in December and ends in January.",
+  "role": "heading",
+  "does": "Names the two ends of the week, each with its day and month, and the year once or twice depending on whether the year changes.",
+  "budget": 56,
+  "variables": [
+   {
+    "name": "from_day",
+    "example": "28",
+    "meaning": "Day of the month the week begins."
+   },
+   {
+    "name": "from_month",
+    "example": "November",
+    "meaning": "Month name the week begins in, from the month table."
+   },
+   {
+    "name": "from_year",
+    "example": "2026",
+    "meaning": "Year the week begins in."
+   },
+   {
+    "name": "to_day",
+    "example": "4",
+    "meaning": "Day of the month the week ends."
+   },
+   {
+    "name": "to_month",
+    "example": "December",
+    "meaning": "Month name the week ends in."
+   },
+   {
+    "name": "to_year",
+    "example": "2026",
+    "meaning": "Year the week ends in."
+   }
+  ],
+  "cases": [
+   {
+    "name": "two_months",
+    "when": "Both ends in the same year: the year is said once, at the end."
+   },
+   {
+    "name": "two_years",
+    "when": "Across New Year: each end carries its own year."
+   }
+  ],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event"
+  ],
+  "notes": "Two dates joined the way the language says from one day to another; no dash of any kind."
+ },
+ {
+  "key": "CMD_CALENDAR_DETAIL",
+  "kind": "const",
+  "screen": "Search (the box at the top of the window): a list of results, each with a name in bold and one grey line under it that says what it does. This is the grey line under the command that opens the calendar window.",
+  "moment": "The person wants to look at the church's week or month.",
+  "role": "command description",
+  "does": "Says the window shows the church's services and meetings laid out by week and by month.",
+  "budget": 48,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event",
+   "program_window"
+  ],
+  "notes": "A fragment, no full stop."
+ },
+ {
+  "key": "CMD_NEW_EVENT_DETAIL",
+  "kind": "const",
+  "screen": "Search (the box at the top of the window): a list of results, each with a name in bold and one grey line under it that says what it does. This is the grey line under the command that puts a new event on the calendar.",
+  "moment": "The person wants to add a service, meeting or rehearsal.",
+  "role": "command description",
+  "does": "Says an event can be a service, a meeting or a rehearsal, put on the church's calendar.",
+  "budget": 48,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event"
+  ],
+  "notes": "A fragment, no full stop."
  }
 ]

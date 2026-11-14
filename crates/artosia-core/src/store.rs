@@ -6,6 +6,7 @@ use rusqlite::{Connection, OptionalExtension, params};
 use serde::Serialize;
 use serde::de::DeserializeOwned;
 
+use crate::calendar::{Calendar, Date, Event, Repeat};
 use crate::deck::{Announcement, Fill, Person};
 use crate::plan::Plan;
 use crate::song::{Song, Translation};
@@ -102,6 +103,22 @@ create table if not exists people (
     name text not null,
     day integer not null,
     month integer not null
+);
+create table if not exists calendars (
+    id integer primary key,
+    name text not null,
+    colour integer not null default 0
+);
+create table if not exists events (
+    id integer primary key,
+    calendar integer not null,
+    name text not null,
+    date text not null,
+    start integer not null default 0,
+    finish integer not null default 0,
+    repeat text not null default 'once',
+    until text not null default '',
+    skipped text not null default ''
 );
 create table if not exists settings (
     key text primary key,
@@ -426,6 +443,79 @@ impl Store {
         Ok(())
     }
 
+    /// The church's calendars, in the order they were made.
+    pub fn calendars(&self) -> Result<Vec<Calendar>> {
+        let mut statement = self.db.prepare("select id, name, colour from calendars order by id")?;
+        let rows = statement.query_map([], |row| {
+            let colour: u32 = row.get(2)?;
+            Ok(Calendar { id: row.get(0)?, name: row.get(1)?, colour: [(colour >> 16) as u8, (colour >> 8) as u8, colour as u8] })
+        })?;
+        Ok(rows.collect::<rusqlite::Result<Vec<_>>>()?)
+    }
+
+    /// Inserts a calendar with id 0, otherwise updates it; the id is set either way.
+    pub fn save_calendar(&self, calendar: &mut Calendar) -> Result<()> {
+        let [r, g, b] = calendar.colour;
+        let colour = u32::from(r) << 16 | u32::from(g) << 8 | u32::from(b);
+        if calendar.id == 0 {
+            self.db.execute("insert into calendars (name, colour) values (?1, ?2)", params![calendar.name, colour])?;
+            calendar.id = self.db.last_insert_rowid();
+        } else {
+            self.db.execute("update calendars set name = ?1, colour = ?2 where id = ?3", params![calendar.name, colour, calendar.id])?;
+        }
+        Ok(())
+    }
+
+    /// Deletes a calendar and the events in it.
+    pub fn delete_calendar(&self, id: i64) -> Result<()> {
+        self.db.execute("delete from events where calendar = ?1", [id])?;
+        self.db.execute("delete from calendars where id = ?1", [id])?;
+        Ok(())
+    }
+
+    pub fn events(&self) -> Result<Vec<Event>> {
+        let mut statement = self.db.prepare("select id, calendar, name, date, start, finish, repeat, until, skipped from events order by id")?;
+        let rows = statement.query_map([], |row| {
+            let (date, repeat, until, skipped): (String, String, String, String) = (row.get(3)?, row.get(6)?, row.get(7)?, row.get(8)?);
+            Ok(Event {
+                id: row.get(0)?,
+                calendar: row.get(1)?,
+                name: row.get(2)?,
+                date: Date::parse(&date).unwrap_or(Date { year: 1970, month: 1, day: 1 }),
+                start: row.get(4)?,
+                end: row.get(5)?,
+                repeat: Repeat::from_code(&repeat),
+                until: Date::parse(&until),
+                skipped: skipped.split(',').filter_map(Date::parse).collect(),
+            })
+        })?;
+        Ok(rows.collect::<rusqlite::Result<Vec<_>>>()?)
+    }
+
+    /// Inserts an event with id 0, otherwise updates it; the id is set either way.
+    pub fn save_event(&self, event: &mut Event) -> Result<()> {
+        let until = event.until.map(Date::code).unwrap_or_default();
+        let skipped = event.skipped.iter().map(|date| date.code()).collect::<Vec<_>>().join(",");
+        if event.id == 0 {
+            self.db.execute(
+                "insert into events (calendar, name, date, start, finish, repeat, until, skipped) values (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8)",
+                params![event.calendar, event.name, event.date.code(), event.start, event.end, event.repeat.code(), until, skipped],
+            )?;
+            event.id = self.db.last_insert_rowid();
+        } else {
+            self.db.execute(
+                "update events set calendar = ?1, name = ?2, date = ?3, start = ?4, finish = ?5, repeat = ?6, until = ?7, skipped = ?8 where id = ?9",
+                params![event.calendar, event.name, event.date.code(), event.start, event.end, event.repeat.code(), until, skipped, event.id],
+            )?;
+        }
+        Ok(())
+    }
+
+    pub fn delete_event(&self, id: i64) -> Result<()> {
+        self.db.execute("delete from events where id = ?1", [id])?;
+        Ok(())
+    }
+
     /// Reads a setting, or None when it was never saved or no longer parses.
     pub fn setting<T: DeserializeOwned>(&self, key: &str) -> Option<T> {
         let value: Option<String> =
@@ -485,6 +575,37 @@ mod tests {
 
     fn store() -> Store {
         Store::in_memory().unwrap_or_else(|error| panic!("{error}"))
+    }
+
+    #[test]
+    fn calendars_and_events_round_trip_and_a_calendar_takes_its_events_with_it() {
+        use crate::calendar::{Position, Repeat};
+        let store = store();
+        let mut services = Calendar { id: 0, name: "Services".into(), colour: [18, 52, 86] };
+        let mut youth = Calendar { id: 0, name: "Youth".into(), colour: [255, 0, 1] };
+        store.save_calendar(&mut services).unwrap();
+        store.save_calendar(&mut youth).unwrap();
+        assert!(services.id > 0 && youth.id > services.id);
+        let day = |year, month, day| Date::new(year, month, day).unwrap();
+        let mut weekly = Event { id: 0, calendar: services.id, name: "Morning".into(), date: day(2026, 1, 4), start: 390, end: 480, repeat: Repeat::Weekly(1), until: Some(day(2027, 1, 3)), skipped: vec![day(2026, 12, 27), day(2026, 11, 1)] };
+        let mut monthly = Event { id: 0, calendar: youth.id, name: "Night".into(), date: day(2026, 1, 1), start: 1110, end: 1170, repeat: Repeat::Monthly(Position::Last, 5), until: None, skipped: Vec::new() };
+        store.save_event(&mut weekly).unwrap();
+        store.save_event(&mut monthly).unwrap();
+        assert_eq!(store.calendars().unwrap(), vec![services.clone(), youth.clone()]);
+        assert_eq!(store.events().unwrap(), vec![weekly.clone(), monthly.clone()]);
+        weekly.name = "Early".into();
+        weekly.until = None;
+        weekly.skipped.clear();
+        store.save_event(&mut weekly).unwrap();
+        services.colour = [1, 2, 3];
+        store.save_calendar(&mut services).unwrap();
+        assert_eq!(store.events().unwrap(), vec![weekly.clone(), monthly.clone()]);
+        assert_eq!(store.calendars().unwrap()[0].colour, [1, 2, 3]);
+        store.delete_event(monthly.id).unwrap();
+        assert_eq!(store.events().unwrap().len(), 1);
+        store.delete_calendar(services.id).unwrap();
+        assert!(store.events().unwrap().is_empty(), "the events of a deleted calendar go with it");
+        assert_eq!(store.calendars().unwrap(), vec![youth]);
     }
 
     #[test]

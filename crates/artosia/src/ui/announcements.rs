@@ -1,7 +1,7 @@
 //! The announcement editor: the list on the left, the one being written in the middle, and
 //! how it will look on the projector on the right, changing as you type.
 
-use artosia_core::deck::{Fill, PassageState, announcement_slide, birthday_days, birthdays, passage_state};
+use artosia_core::deck::{Fill, PassageState, announcement_slide, birthday_days, birthdays, passage_state, week_events};
 use rune::{Cursor, El, Key, KeyEvent, ScrollSpec, Tx, col, el, row, spacer, text};
 use rune_kit::{Kit, ScrollBar, SegmentedControl, TextArea, TextInput};
 
@@ -307,6 +307,13 @@ fn form(s: &App, k: &Kit, form: &Notices, width: f32) -> El {
                         .label(t::ANNOUNCEMENT_FILL())
                         .on_pick(|s: &mut App, picked, _: &mut Tx| s.set_notice_fill([Fill::BirthdaysWeek, Fill::BirthdaysMonth][picked.min(1)]))
                         .build(k),
+                )
+                .child(
+                    SegmentedControl::new(&[t::FILL_SCHEDULE()], (form.fill == Fill::ScheduleWeek).then_some(0))
+                        .width(None)
+                        .label(t::ANNOUNCEMENT_FILL())
+                        .on_pick(|s: &mut App, _, _: &mut Tx| s.set_notice_fill(Fill::ScheduleWeek))
+                        .build(k),
                 ),
         )
 
@@ -321,6 +328,10 @@ fn form(s: &App, k: &Kit, form: &Notices, width: f32) -> El {
 fn holds(s: &App, k: &Kit, draft: Option<&artosia_core::deck::Announcement>) -> Option<El> {
     let draft = draft?;
     let today = s.today();
+    // A schedule card writes its lines from the calendar: how many it holds this week is all there is to say.
+    if draft.fill == Fill::ScheduleWeek {
+        return Some(col().key("notice-holds").w_full().child(text(t::events_this_week(week_events(&s.events, &today).len())).font(type_::SMALL).color(k.c.text_muted)));
+    }
     let ((from_month, from_day), (to_month, to_day)) = birthday_days(draft.fill, &today)?;
     let covers = if draft.fill == Fill::BirthdaysMonth { t::birthdays_cover_month(from_month) } else { t::birthdays_cover_week((from_month, from_day), (to_month, to_day)) };
     let names = birthdays(&s.people, draft.fill, &today).len();

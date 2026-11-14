@@ -550,3 +550,18 @@ shows each colour as it is tried. The colours already in the design come first, 
 then a saturation square with a hue strip and a dropper that takes a colour from the slide, then
 the colours used last; a colour code is typed only behind its own disclosure. Cancel and Esc put
 back the colour it opened with.
+
+### The calendar (OVCAL1, built 2026-11-14)
+
+The Calendar tab (`ui/calendar.rs`, `calendar.rs`, `artosia-core/src/calendar.rs`) keeps the church's
+events in named, coloured calendars: a rail with a tick per calendar, a month or a week of coloured
+chips (Sunday first, today filled, "+N more" past the room a day has), and a dialog per event. Every
+value has the control of its shape: days are toggles, times come from a list in 15-minute steps,
+dates from a month, a calendar from a drop-down with its colour; only an event's and a calendar's
+name are typed. A rule is once, every week on some days, or every month on the first to fourth or
+last weekday, with an end and skipped dates (RFC 5545's BYDAY, UNTIL and EXDATE); one function,
+`calendar::occurrences`, works out every date. A calendar's colour is `ColourFor::Calendar(id)` in
+the one picker. A card whose fill is `Fill::ScheduleWeek` writes the seven days from today from the
+calendar (a day once, then its times), so a change of an event changes the slide; hiding a calendar
+in the rail hides it on screen only. Ctrl N is a new event on this tab, a double press on a day
+makes one there, and Esc cancels an open colour picker before it closes a dialog.

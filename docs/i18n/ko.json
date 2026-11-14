@@ -3901,5 +3901,291 @@
   "text": "배경이 사진이나 단색일 때만 쓸 수 있어요",
   "back": "Usable only when the background is a photo or single colour",
   "why": "plain everyday word"
+ },
+ "CAL_TODAY": {
+  "text": "오늘",
+  "back": "Today",
+  "why": "plain one word"
+ },
+ "CAL_PREVIOUS": {
+  "text": "이전",
+  "back": "Back",
+  "why": "paging verb, fits month and week"
+ },
+ "CAL_NEXT": {
+  "text": "다음",
+  "back": "Forward",
+  "why": "paging verb, pair of previous"
+ },
+ "CAL_WEEK": {
+  "text": "주",
+  "back": "Week",
+  "why": "unit of time"
+ },
+ "CAL_MONTH": {
+  "text": "월",
+  "back": "Month",
+  "why": "unit of time"
+ },
+ "CAL_NEW_EVENT": {
+  "text": "새 일정",
+  "back": "New event",
+  "why": "event word of this round; 新建/新增 as in the table"
+ },
+ "CAL_EVENT": {
+  "text": "일정",
+  "back": "Event",
+  "why": "one word for an event"
+ },
+ "CAL_CALENDARS": {
+  "text": "캘린더",
+  "back": "All calendars / Calendars",
+  "why": "calendar = the group; 所有 as in 所有流程"
+ },
+ "CAL_MANAGE": {
+  "text": "관리",
+  "back": "Manage",
+  "why": "plain"
+ },
+ "CAL_READ_BY": {
+  "text": "공지가 이 캘린더를 읽어요",
+  "back": "The announcements read the calendar",
+  "why": "announcement word from the table"
+ },
+ "CAL_READ_BY_HINT": {
+  "text": "공지의 일정 카드는 이 캘린더에서 줄을 가져와요. 여기서 고치면 거기도 바로 바뀌어요.",
+  "back": "The schedule card in the announcements takes its lines straight from this calendar. Change it here and it follows there, no typing twice.",
+  "why": "second sentence is the promise"
+ },
+ "CAL_EVENT_NAME": {
+  "text": "일정 이름",
+  "back": "Event name",
+  "why": "plain label"
+ },
+ "CAL_CALENDAR": {
+  "text": "캘린더",
+  "back": "Calendar",
+  "why": "singular group"
+ },
+ "CAL_REPEAT": {
+  "text": "반복",
+  "back": "Repeat",
+  "why": "plain"
+ },
+ "CAL_ONCE": {
+  "text": "한 번",
+  "back": "Once",
+  "why": "plain"
+ },
+ "CAL_EVERY_WEEK": {
+  "text": "매주",
+  "back": "Every week",
+  "why": "phrase"
+ },
+ "CAL_EVERY_MONTH": {
+  "text": "매월",
+  "back": "Every month",
+  "why": "phrase"
+ },
+ "CAL_DAYS": {
+  "text": "요일",
+  "back": "Which days",
+  "why": "label above weekday toggles"
+ },
+ "CAL_WHICH": {
+  "text": "몇 번째",
+  "back": "Which one (the how-manyth)",
+  "why": "asks the place in the month"
+ },
+ "CAL_POS_FIRST": {
+  "text": "첫째",
+  "back": "First",
+  "why": "reads inside the rule sentence"
+ },
+ "CAL_POS_SECOND": {
+  "text": "둘째",
+  "back": "Second",
+  "why": "reads inside the rule sentence"
+ },
+ "CAL_POS_THIRD": {
+  "text": "셋째",
+  "back": "Third",
+  "why": "reads inside the rule sentence"
+ },
+ "CAL_POS_FOURTH": {
+  "text": "넷째",
+  "back": "Fourth",
+  "why": "reads inside the rule sentence"
+ },
+ "CAL_POS_LAST": {
+  "text": "마지막",
+  "back": "Last",
+  "why": "reads inside the rule sentence"
+ },
+ "CAL_WEEKDAY": {
+  "text": "요일",
+  "back": "Weekday",
+  "why": "same word as the weekday table"
+ },
+ "CAL_START": {
+  "text": "시작 시간",
+  "back": "Start time",
+  "why": "plain"
+ },
+ "CAL_END": {
+  "text": "종료 시간",
+  "back": "End time",
+  "why": "pair of start"
+ },
+ "CAL_FIRST_DATE": {
+  "text": "시작 날짜",
+  "back": "Start date",
+  "why": "first day of the rule"
+ },
+ "CAL_UNTIL": {
+  "text": "종료 날짜",
+  "back": "Last date",
+  "why": "closing day"
+ },
+ "CAL_NO_END": {
+  "text": "종료 없음",
+  "back": "No last date",
+  "why": "shown where a date would be"
+ },
+ "CAL_DATES": {
+  "text": "앞으로의 날짜 (x를 누르면 빠져요)",
+  "back": "Coming dates; the x leaves a day out",
+  "why": "x named as a letter"
+ },
+ "CAL_SKIPPED": {
+  "text": "뺀 날짜 (누르면 돌아와요)",
+  "back": "Dates left out; a press brings one back",
+  "why": "plain"
+ },
+ "CAL_NO_DATES": {
+  "text": "앞으로 날짜가 없어요",
+  "back": "No dates ahead",
+  "why": "statement"
+ },
+ "CAL_ADD_CALENDAR": {
+  "text": "캘린더 추가",
+  "back": "Add calendar",
+  "why": "verb as the table uses"
+ },
+ "CAL_CALENDAR_NAME": {
+  "text": "캘린더 이름",
+  "back": "Calendar name",
+  "why": "plain label"
+ },
+ "CAL_COLOUR": {
+  "text": "색",
+  "back": "Colour",
+  "why": "plain"
+ },
+ "CAL_DELETE_CALENDAR": {
+  "text": "이 캘린더 삭제",
+  "back": "Delete this calendar",
+  "why": "names the object"
+ },
+ "CAL_NEW_CALENDAR": {
+  "text": "새 캘린더",
+  "back": "New calendar",
+  "why": "a name, not an order"
+ },
+ "CAL_SERVICES": {
+  "text": "예배",
+  "back": "Services",
+  "why": "the usual word for the main meetings; 聚会 as in the table"
+ },
+ "FILL_SCHEDULE": {
+  "text": "이번 주 일정",
+  "back": "This weeks events",
+  "why": "pairs with the birthday choices"
+ },
+ "month_year": {
+  "text": "{year}년 {month}",
+  "back": "{year} {month}",
+  "why": "year first as written"
+ },
+ "date_long": {
+  "text": "{year}년 {month} {day}일",
+  "back": "{year} {month} {day}",
+  "why": "year first as written"
+ },
+ "more_events": {
+  "text": "{count}개 더",
+  "back": "{count} more",
+  "why": "one form"
+ },
+ "events_this_week": {
+  "text": {
+   "zero": "이번 주 일정이 없어요",
+   "one": "이번 주 일정 {count}개",
+   "other": "이번 주 일정 {count}개"
+  },
+  "back": "zero: nothing this week; otherwise {count} events this week",
+  "why": "zero is a full statement"
+ },
+ "weekday_list": {
+  "text": {
+   "one": "{first}",
+   "other": "{all}, {last}"
+  },
+  "back": "one: first; more: all, and last",
+  "why": "last one set apart by the word for and"
+ },
+ "rule_once": {
+  "text": "{date}, {start}부터 {end}까지예요.",
+  "back": "{date}, {start} to {end}.",
+  "why": "one sentence"
+ },
+ "rule_week": {
+  "text": {
+   "until": "매주 {days} {start}부터 {end}까지, {from}부터 {until}까지 해요.",
+   "open": "매주 {days} {start}부터 {end}까지, {from}부터 계속돼요."
+  },
+  "back": "every {days}, {start} to {end}, from {from} until {until} / with no end",
+  "why": "two cases"
+ },
+ "rule_month": {
+  "text": {
+   "until": "매월 {position} {weekday} {start}부터 {end}까지, {from}부터 {until}까지 해요.",
+   "open": "매월 {position} {weekday} {start}부터 {end}까지, {from}부터 계속돼요."
+  },
+  "back": "every month the {position} {weekday}, {start} to {end}, from {from} until {until} / with no end",
+  "why": "two cases; position as the drop-down word"
+ },
+ "event_deleted": {
+  "text": "‘{name}’ 일정을 삭제했어요",
+  "back": "Deleted the event \"{name}\"",
+  "why": "past tense"
+ },
+ "calendar_deleted": {
+  "text": "‘{name}’ 캘린더를 일정과 함께 삭제했어요",
+  "back": "Deleted the calendar \"{name}\" and all its events",
+  "why": "says the events went too"
+ },
+ "CAL_DATE": {
+  "text": "날짜",
+  "back": "Date",
+  "why": "one word"
+ },
+ "week_title": {
+  "text": {
+   "two_months": "{to_year}년 {from_month} {from_day}일부터 {to_month} {to_day}일까지",
+   "two_years": "{from_year}년 {from_month} {from_day}일부터 {to_year}년 {to_month} {to_day}일까지"
+  },
+  "back": "{from} to {to} with the year once or twice",
+  "why": "same join as the birthday week text"
+ },
+ "CMD_CALENDAR_DETAIL": {
+  "text": "교회의 예배와 모임을 주별, 월별로 봐요",
+  "back": "See the churchs services and meetings by week and by month",
+  "why": "fragment"
+ },
+ "CMD_NEW_EVENT_DETAIL": {
+  "text": "예배, 모임, 연습을 교회 캘린더에 넣어요",
+  "back": "A service, meeting or rehearsal can go on the church calendar",
+  "why": "fragment"
  }
 }

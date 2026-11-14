@@ -3850,5 +3850,292 @@
   "text": "Hanya bisa jika latar foto atau satu warna",
   "back": "Only possible if the backdrop is a photo or one colour",
   "why": "latar is the table's backdrop word"
+ },
+ "CAL_TODAY": {
+  "text": "Hari ini",
+  "back": "Today",
+  "why": "Reuses the table words: kegiatan for event, kalender, pengumuman for the card; pekan so it is not Sunday"
+ },
+ "CAL_PREVIOUS": {
+  "text": "Sebelumnya",
+  "back": "Previous",
+  "why": "Reuses the table words: kegiatan for event, kalender, pengumuman for the card; pekan so it is not Sunday"
+ },
+ "CAL_NEXT": {
+  "text": "Berikutnya",
+  "back": "Next",
+  "why": "Reuses the table words: kegiatan for event, kalender, pengumuman for the card; pekan so it is not Sunday"
+ },
+ "CAL_WEEK": {
+  "text": "Pekan",
+  "back": "Week",
+  "why": "Reuses the table words: kegiatan for event, kalender, pengumuman for the card; pekan so it is not Sunday"
+ },
+ "CAL_MONTH": {
+  "text": "Bulan",
+  "back": "Month",
+  "why": "Reuses the table words: kegiatan for event, kalender, pengumuman for the card; pekan so it is not Sunday"
+ },
+ "CAL_NEW_EVENT": {
+  "text": "Kegiatan baru",
+  "back": "New event",
+  "why": "Reuses the table words: kegiatan for event, kalender, pengumuman for the card; pekan so it is not Sunday"
+ },
+ "CAL_EVENT": {
+  "text": "Kegiatan",
+  "back": "Event",
+  "why": "Reuses the table words: kegiatan for event, kalender, pengumuman for the card; pekan so it is not Sunday"
+ },
+ "CAL_CALENDARS": {
+  "text": "Kalender",
+  "back": "Calendars",
+  "why": "Reuses the table words: kegiatan for event, kalender, pengumuman for the card; pekan so it is not Sunday"
+ },
+ "CAL_MANAGE": {
+  "text": "Kelola",
+  "back": "Manage",
+  "why": "Reuses the table words: kegiatan for event, kalender, pengumuman for the card; pekan so it is not Sunday"
+ },
+ "CAL_READ_BY": {
+  "text": "Dibaca oleh pengumuman",
+  "back": "Read by the announcements",
+  "why": "Reuses the table words: kegiatan for event, kalender, pengumuman for the card; pekan so it is not Sunday"
+ },
+ "CAL_READ_BY_HINT": {
+  "text": "Pengumuman jadwal mengambil barisnya dari kalender. Ubah di sini, di pengumuman ikut berubah.",
+  "back": "A schedule announcement takes its lines from the calendar. Change it here and it changes in the announcement too.",
+  "why": "Reuses the table words: kegiatan for event, kalender, pengumuman for the card; pekan so it is not Sunday"
+ },
+ "CAL_EVENT_NAME": {
+  "text": "Nama kegiatan",
+  "back": "Name of the event",
+  "why": "Reuses the table words: kegiatan for event, kalender, pengumuman for the card; pekan so it is not Sunday"
+ },
+ "CAL_CALENDAR": {
+  "text": "Kalender",
+  "back": "Calendar",
+  "why": "Reuses the table words: kegiatan for event, kalender, pengumuman for the card; pekan so it is not Sunday"
+ },
+ "CAL_REPEAT": {
+  "text": "Berulang",
+  "back": "Repeating",
+  "why": "Reuses the table words: kegiatan for event, kalender, pengumuman for the card; pekan so it is not Sunday"
+ },
+ "CAL_ONCE": {
+  "text": "Sekali",
+  "back": "Once",
+  "why": "Reuses the table words: kegiatan for event, kalender, pengumuman for the card; pekan so it is not Sunday"
+ },
+ "CAL_EVERY_WEEK": {
+  "text": "Tiap pekan",
+  "back": "Every week",
+  "why": "Reuses the table words: kegiatan for event, kalender, pengumuman for the card; pekan so it is not Sunday"
+ },
+ "CAL_EVERY_MONTH": {
+  "text": "Tiap bulan",
+  "back": "Every month",
+  "why": "Reuses the table words: kegiatan for event, kalender, pengumuman for the card; pekan so it is not Sunday"
+ },
+ "CAL_DAYS": {
+  "text": "Hari",
+  "back": "Days",
+  "why": "Reuses the table words: kegiatan for event, kalender, pengumuman for the card; pekan so it is not Sunday"
+ },
+ "CAL_WHICH": {
+  "text": "Urutan",
+  "back": "Order",
+  "why": "Reuses the table words: kegiatan for event, kalender, pengumuman for the card; pekan so it is not Sunday"
+ },
+ "CAL_POS_FIRST": {
+  "text": "Pertama",
+  "back": "First",
+  "why": "Reuses the table words: kegiatan for event, kalender, pengumuman for the card; pekan so it is not Sunday"
+ },
+ "CAL_POS_SECOND": {
+  "text": "Kedua",
+  "back": "Second",
+  "why": "Reuses the table words: kegiatan for event, kalender, pengumuman for the card; pekan so it is not Sunday"
+ },
+ "CAL_POS_THIRD": {
+  "text": "Ketiga",
+  "back": "Third",
+  "why": "Reuses the table words: kegiatan for event, kalender, pengumuman for the card; pekan so it is not Sunday"
+ },
+ "CAL_POS_FOURTH": {
+  "text": "Keempat",
+  "back": "Fourth",
+  "why": "Reuses the table words: kegiatan for event, kalender, pengumuman for the card; pekan so it is not Sunday"
+ },
+ "CAL_POS_LAST": {
+  "text": "Terakhir",
+  "back": "Last",
+  "why": "Reuses the table words: kegiatan for event, kalender, pengumuman for the card; pekan so it is not Sunday"
+ },
+ "CAL_WEEKDAY": {
+  "text": "Hari",
+  "back": "Day",
+  "why": "Reuses the table words: kegiatan for event, kalender, pengumuman for the card; pekan so it is not Sunday"
+ },
+ "CAL_START": {
+  "text": "Mulai",
+  "back": "Start",
+  "why": "Reuses the table words: kegiatan for event, kalender, pengumuman for the card; pekan so it is not Sunday"
+ },
+ "CAL_END": {
+  "text": "Selesai",
+  "back": "Finish",
+  "why": "Reuses the table words: kegiatan for event, kalender, pengumuman for the card; pekan so it is not Sunday"
+ },
+ "CAL_FIRST_DATE": {
+  "text": "Tanggal mulai",
+  "back": "Start date",
+  "why": "Reuses the table words: kegiatan for event, kalender, pengumuman for the card; pekan so it is not Sunday"
+ },
+ "CAL_UNTIL": {
+  "text": "Sampai",
+  "back": "Until",
+  "why": "Reuses the table words: kegiatan for event, kalender, pengumuman for the card; pekan so it is not Sunday"
+ },
+ "CAL_NO_END": {
+  "text": "Tanpa akhir",
+  "back": "No end",
+  "why": "Reuses the table words: kegiatan for event, kalender, pengumuman for the card; pekan so it is not Sunday"
+ },
+ "CAL_DATES": {
+  "text": "Tanggal berikut, x untuk dilewati",
+  "back": "The next dates, x to skip",
+  "why": "Reuses the table words: kegiatan for event, kalender, pengumuman for the card; pekan so it is not Sunday"
+ },
+ "CAL_SKIPPED": {
+  "text": "Dilewati, klik untuk mengembalikan",
+  "back": "Skipped, click to bring back",
+  "why": "Reuses the table words: kegiatan for event, kalender, pengumuman for the card; pekan so it is not Sunday"
+ },
+ "CAL_NO_DATES": {
+  "text": "Tidak ada tanggal berikutnya",
+  "back": "There is no next date",
+  "why": "Reuses the table words: kegiatan for event, kalender, pengumuman for the card; pekan so it is not Sunday"
+ },
+ "CAL_ADD_CALENDAR": {
+  "text": "Tambah kalender",
+  "back": "Add calendar",
+  "why": "Reuses the table words: kegiatan for event, kalender, pengumuman for the card; pekan so it is not Sunday"
+ },
+ "CAL_CALENDAR_NAME": {
+  "text": "Nama kalender",
+  "back": "Name of the calendar",
+  "why": "Reuses the table words: kegiatan for event, kalender, pengumuman for the card; pekan so it is not Sunday"
+ },
+ "CAL_COLOUR": {
+  "text": "Warna",
+  "back": "Colour",
+  "why": "Reuses the table words: kegiatan for event, kalender, pengumuman for the card; pekan so it is not Sunday"
+ },
+ "CAL_DELETE_CALENDAR": {
+  "text": "Hapus kalender",
+  "back": "Delete calendar",
+  "why": "Reuses the table words: kegiatan for event, kalender, pengumuman for the card; pekan so it is not Sunday"
+ },
+ "CAL_NEW_CALENDAR": {
+  "text": "Kalender baru",
+  "back": "New calendar",
+  "why": "Reuses the table words: kegiatan for event, kalender, pengumuman for the card; pekan so it is not Sunday"
+ },
+ "CAL_SERVICES": {
+  "text": "Ibadah",
+  "back": "Services",
+  "why": "Reuses the table words: kegiatan for event, kalender, pengumuman for the card; pekan so it is not Sunday"
+ },
+ "FILL_SCHEDULE": {
+  "text": "Kegiatan minggu ini dari kalender",
+  "back": "This week's events from the calendar",
+  "why": "Reuses the table words: kegiatan for event, kalender, pengumuman for the card; pekan so it is not Sunday"
+ },
+ "month_year": {
+  "text": "{month} {year}",
+  "back": "{month} {year}",
+  "why": "Reuses the table words: kegiatan for event, kalender, pengumuman for the card; pekan so it is not Sunday"
+ },
+ "date_long": {
+  "text": "{day} {month} {year}",
+  "back": "{day} {month} {year}",
+  "why": "Reuses the table words: kegiatan for event, kalender, pengumuman for the card; pekan so it is not Sunday"
+ },
+ "more_events": {
+  "text": {
+   "other": "+{count} lagi"
+  },
+  "back": "+{count} more",
+  "why": "Reuses the table words: kegiatan for event, kalender, pengumuman for the card; pekan so it is not Sunday"
+ },
+ "events_this_week": {
+  "text": {
+   "zero": "Tidak ada kegiatan minggu ini",
+   "other": "{count} kegiatan minggu ini"
+  },
+  "back": "No events this week / {count} events this week",
+  "why": "Reuses the table words: kegiatan for event, kalender, pengumuman for the card; pekan so it is not Sunday"
+ },
+ "weekday_list": {
+  "text": {
+   "one": "{first}",
+   "other": "{all} dan {last}"
+  },
+  "back": "{first} / {all} and {last}",
+  "why": "Reuses the table words: kegiatan for event, kalender, pengumuman for the card; pekan so it is not Sunday"
+ },
+ "rule_once": {
+  "text": "{date}, {start} sampai {end}.",
+  "back": "{date}, {start} to {end}.",
+  "why": "Reuses the table words: kegiatan for event, kalender, pengumuman for the card; pekan so it is not Sunday"
+ },
+ "rule_week": {
+  "text": {
+   "until": "Tiap {days}, {start} sampai {end}, dari {from} sampai {until}.",
+   "open": "Tiap {days}, {start} sampai {end}, mulai {from}, tanpa batas akhir."
+  },
+  "back": "Every {days}, {start} to {end}, from {from} to {until}. / ..., starting {from}, no end date.",
+  "why": "Reuses the table words: kegiatan for event, kalender, pengumuman for the card; pekan so it is not Sunday"
+ },
+ "rule_month": {
+  "text": {
+   "until": "Hari {weekday} {position} tiap bulan, {start} sampai {end}, dari {from} sampai {until}.",
+   "open": "Hari {weekday} {position} tiap bulan, {start} sampai {end}, mulai {from}, tanpa batas akhir."
+  },
+  "back": "On the {position} {weekday} of every month, {start} to {end}, from {from} to {until}. / ..., starting {from}, no end date.",
+  "why": "Reuses the table words: kegiatan for event, kalender, pengumuman for the card; pekan so it is not Sunday"
+ },
+ "event_deleted": {
+  "text": "Kegiatan “{name}” dihapus",
+  "back": "Event “{name}” deleted",
+  "why": "Reuses the table words: kegiatan for event, kalender, pengumuman for the card; pekan so it is not Sunday"
+ },
+ "calendar_deleted": {
+  "text": "Kalender “{name}” dihapus beserta semua kegiatannya",
+  "back": "Calendar “{name}” deleted along with all its events",
+  "why": "Reuses the table words: kegiatan for event, kalender, pengumuman for the card; pekan so it is not Sunday"
+ },
+ "CAL_DATE": {
+  "text": "Tanggal",
+  "back": "Date",
+  "why": "Reuses the table words: kegiatan for event, kalender, pengumuman for the card; pekan so it is not Sunday"
+ },
+ "week_title": {
+  "text": {
+   "two_months": "{from_day} {from_month} sampai {to_day} {to_month} {to_year}",
+   "two_years": "{from_day} {from_month} {from_year} sampai {to_day} {to_month} {to_year}"
+  },
+  "back": "{from_day} {from_month} to {to_day} {to_month} {to_year}",
+  "why": "Reuses the table words: kegiatan for event, kalender, pengumuman for the card; pekan so it is not Sunday"
+ },
+ "CMD_CALENDAR_DETAIL": {
+  "text": "Ibadah dan pertemuan per pekan dan per bulan",
+  "back": "Services and meetings by week and by month",
+  "why": "Reuses the table words: kegiatan for event, kalender, pengumuman for the card; pekan so it is not Sunday"
+ },
+ "CMD_NEW_EVENT_DETAIL": {
+  "text": "Ibadah, pertemuan, atau latihan di kalender",
+  "back": "A service, meeting or rehearsal on the calendar",
+  "why": "Reuses the table words: kegiatan for event, kalender, pengumuman for the card; pekan so it is not Sunday"
  }
 }

@@ -3899,5 +3899,291 @@
   "text": "背景是相片或單一顏色時才能取色",
   "back": "Colour can be taken only when the background is a photo or single colour",
   "why": "plain everyday word"
+ },
+ "CAL_TODAY": {
+  "text": "今天",
+  "back": "Today",
+  "why": "plain one word"
+ },
+ "CAL_PREVIOUS": {
+  "text": "往前翻",
+  "back": "Back",
+  "why": "paging verb, fits month and week"
+ },
+ "CAL_NEXT": {
+  "text": "往後翻",
+  "back": "Forward",
+  "why": "paging verb, pair of previous"
+ },
+ "CAL_WEEK": {
+  "text": "週",
+  "back": "Week",
+  "why": "unit of time"
+ },
+ "CAL_MONTH": {
+  "text": "月",
+  "back": "Month",
+  "why": "unit of time"
+ },
+ "CAL_NEW_EVENT": {
+  "text": "新增活動",
+  "back": "New event",
+  "why": "event word of this round; 新建/新增 as in the table"
+ },
+ "CAL_EVENT": {
+  "text": "活動",
+  "back": "Event",
+  "why": "one word for an event"
+ },
+ "CAL_CALENDARS": {
+  "text": "所有行事曆",
+  "back": "All calendars / Calendars",
+  "why": "calendar = the group; 所有 as in 所有流程"
+ },
+ "CAL_MANAGE": {
+  "text": "管理",
+  "back": "Manage",
+  "why": "plain"
+ },
+ "CAL_READ_BY": {
+  "text": "公告會讀取行事曆",
+  "back": "The announcements read the calendar",
+  "why": "announcement word from the table"
+ },
+ "CAL_READ_BY_HINT": {
+  "text": "公告裡的行程卡片直接取自這個行事曆。這裡改了，那邊自動跟著變，不用再輸入一遍。",
+  "back": "The schedule card in the announcements takes its lines straight from this calendar. Change it here and it follows there, no typing twice.",
+  "why": "second sentence is the promise"
+ },
+ "CAL_EVENT_NAME": {
+  "text": "活動名稱",
+  "back": "Event name",
+  "why": "plain label"
+ },
+ "CAL_CALENDAR": {
+  "text": "行事曆",
+  "back": "Calendar",
+  "why": "singular group"
+ },
+ "CAL_REPEAT": {
+  "text": "重複",
+  "back": "Repeat",
+  "why": "plain"
+ },
+ "CAL_ONCE": {
+  "text": "一次",
+  "back": "Once",
+  "why": "plain"
+ },
+ "CAL_EVERY_WEEK": {
+  "text": "每週",
+  "back": "Every week",
+  "why": "phrase"
+ },
+ "CAL_EVERY_MONTH": {
+  "text": "每月",
+  "back": "Every month",
+  "why": "phrase"
+ },
+ "CAL_DAYS": {
+  "text": "哪幾天",
+  "back": "Which days",
+  "why": "label above weekday toggles"
+ },
+ "CAL_WHICH": {
+  "text": "第幾個",
+  "back": "Which one (the how-manyth)",
+  "why": "asks the place in the month"
+ },
+ "CAL_POS_FIRST": {
+  "text": "第一個",
+  "back": "First",
+  "why": "reads inside the rule sentence"
+ },
+ "CAL_POS_SECOND": {
+  "text": "第二個",
+  "back": "Second",
+  "why": "reads inside the rule sentence"
+ },
+ "CAL_POS_THIRD": {
+  "text": "第三個",
+  "back": "Third",
+  "why": "reads inside the rule sentence"
+ },
+ "CAL_POS_FOURTH": {
+  "text": "第四個",
+  "back": "Fourth",
+  "why": "reads inside the rule sentence"
+ },
+ "CAL_POS_LAST": {
+  "text": "最後一個",
+  "back": "Last",
+  "why": "reads inside the rule sentence"
+ },
+ "CAL_WEEKDAY": {
+  "text": "星期",
+  "back": "Weekday",
+  "why": "same word as the weekday table"
+ },
+ "CAL_START": {
+  "text": "開始時間",
+  "back": "Start time",
+  "why": "plain"
+ },
+ "CAL_END": {
+  "text": "結束時間",
+  "back": "End time",
+  "why": "pair of start"
+ },
+ "CAL_FIRST_DATE": {
+  "text": "開始日期",
+  "back": "Start date",
+  "why": "first day of the rule"
+ },
+ "CAL_UNTIL": {
+  "text": "截止日期",
+  "back": "Last date",
+  "why": "closing day"
+ },
+ "CAL_NO_END": {
+  "text": "不設截止日期",
+  "back": "No last date",
+  "why": "shown where a date would be"
+ },
+ "CAL_DATES": {
+  "text": "接下來的日期，點 x 可去掉某一天",
+  "back": "Coming dates; the x leaves a day out",
+  "why": "x named as a letter"
+ },
+ "CAL_SKIPPED": {
+  "text": "已去掉的日期，點一下可恢復",
+  "back": "Dates left out; a press brings one back",
+  "why": "plain"
+ },
+ "CAL_NO_DATES": {
+  "text": "今後沒有符合的日期",
+  "back": "No dates ahead",
+  "why": "statement"
+ },
+ "CAL_ADD_CALENDAR": {
+  "text": "新增行事曆",
+  "back": "Add calendar",
+  "why": "verb as the table uses"
+ },
+ "CAL_CALENDAR_NAME": {
+  "text": "行事曆名稱",
+  "back": "Calendar name",
+  "why": "plain label"
+ },
+ "CAL_COLOUR": {
+  "text": "顏色",
+  "back": "Colour",
+  "why": "plain"
+ },
+ "CAL_DELETE_CALENDAR": {
+  "text": "刪除這個行事曆",
+  "back": "Delete this calendar",
+  "why": "names the object"
+ },
+ "CAL_NEW_CALENDAR": {
+  "text": "新行事曆",
+  "back": "New calendar",
+  "why": "a name, not an order"
+ },
+ "CAL_SERVICES": {
+  "text": "聚會",
+  "back": "Services",
+  "why": "the usual word for the main meetings; 聚会 as in the table"
+ },
+ "FILL_SCHEDULE": {
+  "text": "本週的活動",
+  "back": "This weeks events",
+  "why": "pairs with the birthday choices"
+ },
+ "month_year": {
+  "text": "{year}年{month}",
+  "back": "{year} {month}",
+  "why": "year first as written"
+ },
+ "date_long": {
+  "text": "{year}年{month}{day}日",
+  "back": "{year} {month} {day}",
+  "why": "year first as written"
+ },
+ "more_events": {
+  "text": "還有 {count} 項",
+  "back": "{count} more",
+  "why": "one form"
+ },
+ "events_this_week": {
+  "text": {
+   "zero": "本週的行事曆裡沒有活動",
+   "one": "本週有 {count} 項活動",
+   "other": "本週有 {count} 項活動"
+  },
+  "back": "zero: nothing this week; otherwise {count} events this week",
+  "why": "zero is a full statement"
+ },
+ "weekday_list": {
+  "text": {
+   "one": "{first}",
+   "other": "{all}和{last}"
+  },
+  "back": "one: first; more: all, and last",
+  "why": "last one set apart by the word for and"
+ },
+ "rule_once": {
+  "text": "{date}，{start}至{end}。",
+  "back": "{date}, {start} to {end}.",
+  "why": "one sentence"
+ },
+ "rule_week": {
+  "text": {
+   "until": "每{days}，{start}至{end}，從{from}開始，到{until}為止。",
+   "open": "每{days}，{start}至{end}，從{from}開始，沒有結束日期。"
+  },
+  "back": "every {days}, {start} to {end}, from {from} until {until} / with no end",
+  "why": "two cases"
+ },
+ "rule_month": {
+  "text": {
+   "until": "每月{position}{weekday}，{start}至{end}，從{from}開始，到{until}為止。",
+   "open": "每月{position}{weekday}，{start}至{end}，從{from}開始，沒有結束日期。"
+  },
+  "back": "every month the {position} {weekday}, {start} to {end}, from {from} until {until} / with no end",
+  "why": "two cases; position as the drop-down word"
+ },
+ "event_deleted": {
+  "text": "已刪除活動「{name}」",
+  "back": "Deleted the event \"{name}\"",
+  "why": "past tense"
+ },
+ "calendar_deleted": {
+  "text": "已刪除行事曆「{name}」和其中的所有活動",
+  "back": "Deleted the calendar \"{name}\" and all its events",
+  "why": "says the events went too"
+ },
+ "CAL_DATE": {
+  "text": "日期",
+  "back": "Date",
+  "why": "one word"
+ },
+ "week_title": {
+  "text": {
+   "two_months": "{to_year}年{from_month}{from_day}日至{to_month}{to_day}日",
+   "two_years": "{from_year}年{from_month}{from_day}日至{to_year}年{to_month}{to_day}日"
+  },
+  "back": "{from} to {to} with the year once or twice",
+  "why": "same join as the birthday week text"
+ },
+ "CMD_CALENDAR_DETAIL": {
+  "text": "按週、按月查看教會的聚會和活動",
+  "back": "See the churchs services and meetings by week and by month",
+  "why": "fragment"
+ },
+ "CMD_NEW_EVENT_DETAIL": {
+  "text": "聚會、會議或排練，都能放進教會行事曆",
+  "back": "A service, meeting or rehearsal can go on the church calendar",
+  "why": "fragment"
  }
 }

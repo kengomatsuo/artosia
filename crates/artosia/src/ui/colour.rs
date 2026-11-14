@@ -25,6 +25,8 @@ pub enum ColourFor {
     Ink,
     /// The line round the words.
     Outline,
+    /// A calendar's chips, by the calendar's id.
+    Calendar(i64),
 }
 
 impl ColourFor {
@@ -32,6 +34,7 @@ impl ColourFor {
         match self {
             ColourFor::Ink => "ink",
             ColourFor::Outline => "outline",
+            ColourFor::Calendar(_) => "calendar",
         }
     }
 }
@@ -66,6 +69,7 @@ pub fn current(s: &App, target: ColourFor) -> [u8; 3] {
     match target {
         ColourFor::Ink => look.ink,
         ColourFor::Outline => look.outline_ink,
+        ColourFor::Calendar(id) => s.calendar_of(id).map_or([128, 128, 128], |calendar| calendar.colour),
     }
 }
 
@@ -74,6 +78,14 @@ fn apply(s: &mut App, target: ColourFor, colour: [u8; 3]) {
     match target {
         ColourFor::Ink => look.ink = colour,
         ColourFor::Outline => look.outline_ink = colour,
+        ColourFor::Calendar(id) => {
+            // The colour is kept in the library once the picker stops moving it.
+            if let Some(calendar) = s.calendars.iter_mut().find(|calendar| calendar.id == id) {
+                calendar.colour = colour;
+                s.calendar.dirty = true;
+            }
+            return;
+        }
     }
     s.set_look(look);
 }
@@ -307,6 +319,12 @@ fn panel(s: &App, k: &Kit, target: ColourFor, label: &'static str) -> El {
         Background::Gradient(top, bottom) => theirs.extend([*top, *bottom]),
         _ => {}
     }
+    // A calendar's colour is placed among the other calendars', not among the slide's.
+    let mut heading = t::COLOUR_DESIGN();
+    if matches!(target, ColourFor::Calendar(_)) {
+        theirs = s.calendars.iter().map(|calendar| calendar.colour).collect();
+        heading = t::CAL_CALENDARS();
+    }
     theirs.extend([[255, 255, 255], [255, 244, 222], [255, 214, 0], [0, 0, 0]]);
     let mut seen = Vec::new();
     theirs.retain(|colour| {
@@ -384,7 +402,7 @@ fn panel(s: &App, k: &Kit, target: ColourFor, label: &'static str) -> El {
         .fill(sf.raised)
         .border(1.0, sf.edge)
         .child(head)
-        .child(caption(k, t::COLOUR_DESIGN()))
+        .child(caption(k, heading))
         .child(line_of(&theirs, "design"))
         .child(pickers)
         .children((!recent.is_empty()).then(|| caption(k, t::COLOUR_RECENT())))

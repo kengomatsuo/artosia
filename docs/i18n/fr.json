@@ -3933,5 +3933,294 @@
   "text": "Possible avec une photo ou un fond uni",
   "back": "Possible with a photo or a plain backdrop",
   "why": "fond is the table's backdrop word"
+ },
+ "CAL_TODAY": {
+  "text": "Aujourd'hui",
+  "back": "Today",
+  "why": "Reuses the table words: calendrier, annonce, culte; neutral register without addressing the reader"
+ },
+ "CAL_PREVIOUS": {
+  "text": "Précédent",
+  "back": "Previous",
+  "why": "Reuses the table words: calendrier, annonce, culte; neutral register without addressing the reader"
+ },
+ "CAL_NEXT": {
+  "text": "Suivant",
+  "back": "Next",
+  "why": "Reuses the table words: calendrier, annonce, culte; neutral register without addressing the reader"
+ },
+ "CAL_WEEK": {
+  "text": "Semaine",
+  "back": "Week",
+  "why": "Reuses the table words: calendrier, annonce, culte; neutral register without addressing the reader"
+ },
+ "CAL_MONTH": {
+  "text": "Mois",
+  "back": "Month",
+  "why": "Reuses the table words: calendrier, annonce, culte; neutral register without addressing the reader"
+ },
+ "CAL_NEW_EVENT": {
+  "text": "Nouvel événement",
+  "back": "New event",
+  "why": "Reuses the table words: calendrier, annonce, culte; neutral register without addressing the reader"
+ },
+ "CAL_EVENT": {
+  "text": "Événement",
+  "back": "Event",
+  "why": "Reuses the table words: calendrier, annonce, culte; neutral register without addressing the reader"
+ },
+ "CAL_CALENDARS": {
+  "text": "Calendriers",
+  "back": "Calendars",
+  "why": "Reuses the table words: calendrier, annonce, culte; neutral register without addressing the reader"
+ },
+ "CAL_MANAGE": {
+  "text": "Gérer",
+  "back": "Manage",
+  "why": "Reuses the table words: calendrier, annonce, culte; neutral register without addressing the reader"
+ },
+ "CAL_READ_BY": {
+  "text": "Lu par les annonces",
+  "back": "Read by the announcements",
+  "why": "Reuses the table words: calendrier, annonce, culte; neutral register without addressing the reader"
+ },
+ "CAL_READ_BY_HINT": {
+  "text": "Une annonce d'horaires lit ce calendrier. Un changement ici s'y retrouve, sans rien retaper.",
+  "back": "A schedule announcement reads this calendar. A change here shows up there, with nothing retyped.",
+  "why": "Reuses the table words: calendrier, annonce, culte; neutral register without addressing the reader"
+ },
+ "CAL_EVENT_NAME": {
+  "text": "Nom",
+  "back": "Name",
+  "why": "Reuses the table words: calendrier, annonce, culte; neutral register without addressing the reader"
+ },
+ "CAL_CALENDAR": {
+  "text": "Calendrier",
+  "back": "Calendar",
+  "why": "Reuses the table words: calendrier, annonce, culte; neutral register without addressing the reader"
+ },
+ "CAL_REPEAT": {
+  "text": "Répétition",
+  "back": "Repetition",
+  "why": "Reuses the table words: calendrier, annonce, culte; neutral register without addressing the reader"
+ },
+ "CAL_ONCE": {
+  "text": "Une fois",
+  "back": "Once",
+  "why": "Reuses the table words: calendrier, annonce, culte; neutral register without addressing the reader"
+ },
+ "CAL_EVERY_WEEK": {
+  "text": "Chaque semaine",
+  "back": "Every week",
+  "why": "Reuses the table words: calendrier, annonce, culte; neutral register without addressing the reader"
+ },
+ "CAL_EVERY_MONTH": {
+  "text": "Chaque mois",
+  "back": "Every month",
+  "why": "Reuses the table words: calendrier, annonce, culte; neutral register without addressing the reader"
+ },
+ "CAL_DAYS": {
+  "text": "Jours",
+  "back": "Days",
+  "why": "Reuses the table words: calendrier, annonce, culte; neutral register without addressing the reader"
+ },
+ "CAL_WHICH": {
+  "text": "Position",
+  "back": "Position",
+  "why": "Reuses the table words: calendrier, annonce, culte; neutral register without addressing the reader"
+ },
+ "CAL_POS_FIRST": {
+  "text": "Premier",
+  "back": "First",
+  "why": "Reuses the table words: calendrier, annonce, culte; neutral register without addressing the reader"
+ },
+ "CAL_POS_SECOND": {
+  "text": "Deuxième",
+  "back": "Second",
+  "why": "Reuses the table words: calendrier, annonce, culte; neutral register without addressing the reader"
+ },
+ "CAL_POS_THIRD": {
+  "text": "Troisième",
+  "back": "Third",
+  "why": "Reuses the table words: calendrier, annonce, culte; neutral register without addressing the reader"
+ },
+ "CAL_POS_FOURTH": {
+  "text": "Quatrième",
+  "back": "Fourth",
+  "why": "Reuses the table words: calendrier, annonce, culte; neutral register without addressing the reader"
+ },
+ "CAL_POS_LAST": {
+  "text": "Dernier",
+  "back": "Last",
+  "why": "Reuses the table words: calendrier, annonce, culte; neutral register without addressing the reader"
+ },
+ "CAL_WEEKDAY": {
+  "text": "Jour",
+  "back": "Day",
+  "why": "Reuses the table words: calendrier, annonce, culte; neutral register without addressing the reader"
+ },
+ "CAL_START": {
+  "text": "Début",
+  "back": "Start",
+  "why": "Reuses the table words: calendrier, annonce, culte; neutral register without addressing the reader"
+ },
+ "CAL_END": {
+  "text": "Fin",
+  "back": "End",
+  "why": "Reuses the table words: calendrier, annonce, culte; neutral register without addressing the reader"
+ },
+ "CAL_FIRST_DATE": {
+  "text": "Date de début",
+  "back": "Start date",
+  "why": "Reuses the table words: calendrier, annonce, culte; neutral register without addressing the reader"
+ },
+ "CAL_UNTIL": {
+  "text": "Jusqu'au",
+  "back": "Until",
+  "why": "Reuses the table words: calendrier, annonce, culte; neutral register without addressing the reader"
+ },
+ "CAL_NO_END": {
+  "text": "Sans fin",
+  "back": "No end",
+  "why": "Reuses the table words: calendrier, annonce, culte; neutral register without addressing the reader"
+ },
+ "CAL_DATES": {
+  "text": "Dates à venir, x pour en retirer une",
+  "back": "Coming dates, x to remove one",
+  "why": "Reuses the table words: calendrier, annonce, culte; neutral register without addressing the reader"
+ },
+ "CAL_SKIPPED": {
+  "text": "Retirées, un clic pour remettre",
+  "back": "Removed, one click to put back",
+  "why": "Reuses the table words: calendrier, annonce, culte; neutral register without addressing the reader"
+ },
+ "CAL_NO_DATES": {
+  "text": "Aucune date à venir",
+  "back": "No date coming up",
+  "why": "Reuses the table words: calendrier, annonce, culte; neutral register without addressing the reader"
+ },
+ "CAL_ADD_CALENDAR": {
+  "text": "Nouveau calendrier",
+  "back": "New calendar",
+  "why": "Reuses the table words: calendrier, annonce, culte; neutral register without addressing the reader"
+ },
+ "CAL_CALENDAR_NAME": {
+  "text": "Nom du calendrier",
+  "back": "Name of the calendar",
+  "why": "Reuses the table words: calendrier, annonce, culte; neutral register without addressing the reader"
+ },
+ "CAL_COLOUR": {
+  "text": "Couleur",
+  "back": "Colour",
+  "why": "Reuses the table words: calendrier, annonce, culte; neutral register without addressing the reader"
+ },
+ "CAL_DELETE_CALENDAR": {
+  "text": "Supprimer",
+  "back": "Delete",
+  "why": "Reuses the table words: calendrier, annonce, culte; neutral register without addressing the reader"
+ },
+ "CAL_NEW_CALENDAR": {
+  "text": "Sans nom",
+  "back": "Unnamed",
+  "why": "Reuses the table words: calendrier, annonce, culte; neutral register without addressing the reader"
+ },
+ "CAL_SERVICES": {
+  "text": "Cultes",
+  "back": "Services",
+  "why": "Reuses the table words: calendrier, annonce, culte; neutral register without addressing the reader"
+ },
+ "FILL_SCHEDULE": {
+  "text": "Événements (semaine)",
+  "back": "Events (week)",
+  "why": "Reuses the table words: calendrier, annonce, culte; neutral register without addressing the reader"
+ },
+ "month_year": {
+  "text": "{month} {year}",
+  "back": "{month} {year}",
+  "why": "Reuses the table words: calendrier, annonce, culte; neutral register without addressing the reader"
+ },
+ "date_long": {
+  "text": "{day} {month} {year}",
+  "back": "{day} {month} {year}",
+  "why": "Reuses the table words: calendrier, annonce, culte; neutral register without addressing the reader"
+ },
+ "more_events": {
+  "text": {
+   "one": "+{count} autre",
+   "other": "+{count} autres"
+  },
+  "back": "+{count} other(s)",
+  "why": "Reuses the table words: calendrier, annonce, culte; neutral register without addressing the reader"
+ },
+ "events_this_week": {
+  "text": {
+   "zero": "Aucun événement cette semaine",
+   "one": "{count} événement cette semaine",
+   "other": "{count} événements cette semaine"
+  },
+  "back": "No event this week / N event(s) this week",
+  "why": "Reuses the table words: calendrier, annonce, culte; neutral register without addressing the reader"
+ },
+ "weekday_list": {
+  "text": {
+   "one": "{first}",
+   "other": "{all} et {last}"
+  },
+  "back": "{first} / {all} and {last}",
+  "why": "Reuses the table words: calendrier, annonce, culte; neutral register without addressing the reader"
+ },
+ "rule_once": {
+  "text": "{date}, de {start} à {end}.",
+  "back": "{date}, from {start} to {end}.",
+  "why": "Reuses the table words: calendrier, annonce, culte; neutral register without addressing the reader"
+ },
+ "rule_week": {
+  "text": {
+   "until": "Chaque {days}, de {start} à {end}, du {from} au {until}.",
+   "open": "Chaque {days}, de {start} à {end}, à partir du {from}, sans fin."
+  },
+  "back": "Every {days}, from {start} to {end}, from {from} to {until}. / ..., starting {from}, no end.",
+  "why": "Reuses the table words: calendrier, annonce, culte; neutral register without addressing the reader"
+ },
+ "rule_month": {
+  "text": {
+   "until": "{position} {weekday} du mois, de {start} à {end}, du {from} au {until}.",
+   "open": "{position} {weekday} du mois, de {start} à {end}, à partir du {from}, sans fin."
+  },
+  "back": "{position} {weekday} of the month, from {start} to {end}, from {from} to {until}. / ..., starting {from}, no end.",
+  "why": "Reuses the table words: calendrier, annonce, culte; neutral register without addressing the reader"
+ },
+ "event_deleted": {
+  "text": "Événement supprimé : « {name} »",
+  "back": "Event deleted: “{name}”",
+  "why": "Reuses the table words: calendrier, annonce, culte; neutral register without addressing the reader"
+ },
+ "calendar_deleted": {
+  "text": "Calendrier supprimé : « {name} », avec ses événements",
+  "back": "Calendar deleted: “{name}”, with its events",
+  "why": "Reuses the table words: calendrier, annonce, culte; neutral register without addressing the reader"
+ },
+ "CAL_DATE": {
+  "text": "Date",
+  "back": "Date",
+  "why": "Reuses the table words: calendrier, annonce, culte; neutral register without addressing the reader"
+ },
+ "week_title": {
+  "text": {
+   "two_months": "Du {from_day} {from_month} au {to_day} {to_month} {to_year}",
+   "two_years": "Du {from_day} {from_month} {from_year} au {to_day} {to_month} {to_year}"
+  },
+  "back": "From {from_day} {from_month} to {to_day} {to_month} {to_year}",
+  "why": "Reuses the table words: calendrier, annonce, culte; neutral register without addressing the reader"
+ },
+ "CMD_CALENDAR_DETAIL": {
+  "text": "Cultes et réunions, par semaine et par mois",
+  "back": "Services and meetings, by week and by month",
+  "why": "Reuses the table words: calendrier, annonce, culte; neutral register without addressing the reader"
+ },
+ "CMD_NEW_EVENT_DETAIL": {
+  "text": "Un culte, une réunion ou une répétition",
+  "back": "A service, meeting or rehearsal",
+  "why": "Reuses the table words: calendrier, annonce, culte; neutral register without addressing the reader"
  }
 }

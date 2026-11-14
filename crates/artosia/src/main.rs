@@ -12,6 +12,7 @@
 mod actions;
 mod backdrops;
 mod bibles;
+mod calendar;
 mod data;
 mod firewall;
 // GUIDE1: the guide engine; the window wires it in task G3.
@@ -175,6 +176,11 @@ fn on_key(s: &mut App, ev: &KeyEvent, tx: &mut Tx) -> bool {
         }
         Key::Command('n') if s.notices.is_some() && !s.palette.open => {
             s.new_notice("", "");
+            return true;
+        }
+        // On the Calendar tab New means an event, as a card on the announcements' tab.
+        Key::Command('n') if s.tab == Tab::Calendar && s.sheet == Sheet::None && !s.palette.open && s.calendar.form.is_none() && s.calendar.manage.is_none() => {
+            s.new_event_here();
             return true;
         }
         Key::Command('n') if !editing && !s.palette.open => {
@@ -565,6 +571,25 @@ const SCENES: &[Scene] = &[
     // UIOVER1: each window of the tab bar.
     ("tab-notices", |s| s.open_tab(Tab::Notices)),
     ("tab-calendar", |s| s.open_tab(Tab::Calendar)),
+    // OVCAL1: the week, the dialog on the weekly service, a new event, and the schedule card that fills itself.
+    // The week that runs from November into December, so the title names both months.
+    ("calendar-week", |s| {
+        s.open_tab(Tab::Calendar);
+        s.calendar.anchor = artosia_core::calendar::Date { year: 2026, month: 11, day: 30 };
+        s.calendar_show_week(true);
+    }),
+    ("calendar-event", |s| {
+        s.open_tab(Tab::Calendar);
+        if let Some(id) = s.events.iter().find(|event| event.name == "Ibadah Raya 1").map(|event| event.id) {
+            s.edit_event(id);
+        }
+    }),
+    ("calendar-new", |s| {
+        s.open_tab(Tab::Calendar);
+        let today = s.civil_today();
+        s.new_event(today);
+    }),
+    ("notice-schedule", |s| s.demo_notices("schedule")),
     ("tab-people", |s| s.open_tab(Tab::People)),
     ("tab-giving", |s| s.open_tab(Tab::Giving)),
     ("tab-templates", |s| s.open_tab(Tab::Templates)),

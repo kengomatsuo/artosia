@@ -3,6 +3,7 @@
 use serde::{Deserialize, Serialize};
 
 use crate::bible::{Bible, Reference};
+use crate::calendar::{Date, Event, occurrences};
 use crate::song::{SectionKind, Song, Tag};
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Hash, Serialize, Deserialize)]
@@ -99,6 +100,8 @@ pub enum Fill {
     BirthdaysMonth,
     /// The words of a Bible passage, read from the installed Bible each time the card is shown.
     Passage,
+    /// The calendar's events in the seven days from today, one line each.
+    ScheduleWeek,
 }
 
 impl Fill {
@@ -109,6 +112,7 @@ impl Fill {
             Fill::BirthdaysWeek => "birthdays-week",
             Fill::BirthdaysMonth => "birthdays-month",
             Fill::Passage => "passage",
+            Fill::ScheduleWeek => "schedule-week",
         }
     }
 
@@ -117,6 +121,7 @@ impl Fill {
             "birthdays-week" => Fill::BirthdaysWeek,
             "birthdays-month" => Fill::BirthdaysMonth,
             "passage" => Fill::Passage,
+            "schedule-week" => Fill::ScheduleWeek,
             _ => Fill::Nothing,
         }
     }
@@ -155,9 +160,14 @@ pub struct Person {
 /// The day an announcement is built on, with the month names to write dates in.
 #[derive(Clone, Copy, Debug)]
 pub struct Today<'a> {
+    pub year: i32,
     pub month: u8,
     pub day: u8,
     pub months: &'a [&'a str; 12],
+    /// The names of the weekdays, Monday first, as the window lists them.
+    pub weekdays: &'a [&'a str; 7],
+    /// How an hour and a minute read as a time of day in the window's language.
+    pub clock: fn(u8, u8) -> String,
     /// How a day and a month's name read as a date in the window's language.
     pub date: fn(u8, &str) -> String,
 }
@@ -185,7 +195,7 @@ pub fn birthday_days(fill: Fill, today: &Today) -> Option<((u8, u8), (u8, u8))> 
     match fill {
         Fill::BirthdaysWeek => Some(((today.month, today.day), days_after(today.month, today.day, 6))),
         Fill::BirthdaysMonth => Some(((today.month, 1), (today.month, MONTH_DAYS[usize::from(today.month.clamp(1, 12)) - 1]))),
-        Fill::Nothing | Fill::Passage => None,
+        Fill::Nothing | Fill::Passage | Fill::ScheduleWeek => None,
     }
 }
 
@@ -214,12 +224,43 @@ pub fn passage_state(item: &Announcement, bible: Option<&Bible>) -> PassageState
     }
 }
 
+impl Today<'_> {
+    /// Today as a date; a day the month does not have is taken as its last.
+    pub fn date_of(&self) -> Date {
+        let month = self.month.clamp(1, 12);
+        Date { year: self.year, month, day: self.day.clamp(1, Date::month_days(self.year, month)) }
+    }
+}
+
+/// The events of the seven days from today, in date and time order: date, start minute, name.
+pub fn week_events(events: &[Event], today: &Today) -> Vec<(Date, u16, String)> {
+    let from = today.date_of();
+    let mut found: Vec<(Date, u16, String)> = events.iter().flat_map(|event| occurrences(event, from, from.plus_days(6)).into_iter().map(|date| (date, event.start, event.name.clone()))).collect();
+    found.sort();
+    found
+}
+
+/// The lines of a schedule card: the weekday, the time and the name, with the weekday left empty
+/// on a line of the same day as the line above, so it is written once.
+fn schedule_lines(found: &[(Date, u16, String)], today: &Today) -> Vec<String> {
+    let mut before = None;
+    found
+        .iter()
+        .map(|(date, start, name)| {
+            let day = if before == Some(*date) { "" } else { today.weekdays[usize::from((date.weekday() + 6) % 7)] };
+            before = Some(*date);
+            let (hour, minute) = crate::calendar::hour_minute(*start);
+            format!("{day}	{}	{name}", (today.clock)(hour, minute))
+        })
+        .collect()
+}
+
 /// The people an announcement fills itself with, in date order from today.
 pub fn birthdays<'a>(people: &'a [Person], fill: Fill, today: &Today) -> Vec<&'a Person> {
     let key = |month: u8, day: u8| u16::from(month) * 100 + u16::from(day);
     let from = key(today.month, today.day);
     let mut found: Vec<&Person> = match fill {
-        Fill::Nothing | Fill::Passage => Vec::new(),
+        Fill::Nothing | Fill::Passage | Fill::ScheduleWeek => Vec::new(),
         Fill::BirthdaysMonth => people.iter().filter(|person| person.month == today.month).collect(),
         Fill::BirthdaysWeek => {
             let (month, day) = days_after(today.month, today.day, 6);
@@ -469,10 +510,11 @@ fn span_label(bible: &Bible, span: &Reference) -> String {
 }
 
 /// The slides of every announcement in order, each with the place of its announcement in the
-/// list. One that fills itself with birthdays gives a slide per eight names, and none at all
+/// list. One that fills itself with the calendar's week gives a slide per ten events, and none when
+/// the week is empty. One that fills itself with birthdays gives a slide per eight names, and none at all
 /// when nobody has one. A passage card gives its verses, `per_slide` to a slide, and none at all
 /// while its reference cannot be read from `bible`.
-pub fn announcement_pages(announcements: &[Announcement], people: &[Person], today: &Today, bible: Option<&Bible>, per_slide: usize) -> Vec<(usize, Slide)> {
+pub fn announcement_pages(announcements: &[Announcement], people: &[Person], events: &[Event], today: &Today, bible: Option<&Bible>, per_slide: usize) -> Vec<(usize, Slide)> {
     let mut pages = Vec::new();
     for (at, item) in announcements.iter().enumerate() {
         if item.fill == Fill::Passage {
@@ -482,6 +524,16 @@ pub fn announcement_pages(announcements: &[Announcement], people: &[Person], tod
                     slide.image = item.image.clone();
                     pages.push((at, slide));
                 }
+            }
+            continue;
+        }
+        if item.fill == Fill::ScheduleWeek {
+            // A week of services fits one slide; a longer one goes on, the weekday written again where a day is cut.
+            for group in week_events(events, today).chunks(LINES_PER_SLIDE) {
+                let mut slide = announcement_slide(&Announcement { body: schedule_lines(group, today).join("
+"), ..item.clone() });
+                slide.notice = NoticeKind::Schedule;
+                pages.push((at, slide));
             }
             continue;
         }
@@ -514,12 +566,12 @@ pub fn announcement_pages(announcements: &[Announcement], people: &[Person], tod
 }
 
 /// Every announcement as one deck, for the loop shown before a service.
-pub fn announcements_deck(announcements: &[Announcement], people: &[Person], today: &Today, bible: Option<&Bible>, per_slide: usize) -> Deck {
+pub fn announcements_deck(announcements: &[Announcement], people: &[Person], events: &[Event], today: &Today, bible: Option<&Bible>, per_slide: usize) -> Deck {
     Deck {
         title: "Announcements".to_string(),
         subtitle: String::new(),
         source: DeckSource::Announcements,
-        slides: announcement_pages(announcements, people, today, bible, per_slide).into_iter().map(|(_, slide)| slide).collect(),
+        slides: announcement_pages(announcements, people, events, today, bible, per_slide).into_iter().map(|(_, slide)| slide).collect(),
     }
 }
 
@@ -604,6 +656,17 @@ mod tests {
         assert!(deck.slides[1].caption.is_empty());
     }
 
+    const WEEKDAYS: [&str; 7] = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+
+    fn clock_dotted(hour: u8, minute: u8) -> String {
+        format!("{hour:02}.{minute:02}")
+    }
+
+    /// A day of 2026, with English names, for the cards that read the date.
+    fn today_on<'a>(month: u8, day: u8, months: &'a [&'a str; 12]) -> Today<'a> {
+        Today { year: 2026, month, day, months, weekdays: &WEEKDAYS, clock: clock_dotted, date: day_first }
+    }
+
     fn day_first(day: u8, month: &str) -> String {
         format!("{day} {month}")
     }
@@ -613,7 +676,7 @@ mod tests {
         const MONTHS: [&str; 12] = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
         let person = |name: &str, month: u8, day: u8| Person { id: 0, name: name.into(), day, month };
         let mut people = vec![person("Rina", 1, 2), person("Budi", 12, 30), person("Tom", 12, 20), person("Ana", 6, 1)];
-        let today = Today { month: 12, day: 28, months: &MONTHS, date: day_first };
+        let today = today_on(12, 28, &MONTHS);
         // The week from 28 December runs into January, and 20 December is already past.
         let week: Vec<&str> = birthdays(&people, Fill::BirthdaysWeek, &today).iter().map(|p| p.name.as_str()).collect();
         assert_eq!(week, ["Budi", "Rina"]);
@@ -623,21 +686,21 @@ mod tests {
             Announcement { title: "Welcome".into(), body: "Hello".into(), ..Announcement::default() },
             Announcement { title: "Birthdays".into(), fill: Fill::BirthdaysMonth, ..Announcement::default() },
         ];
-        let pages = announcement_pages(&items, &people, &today, None, 2);
+        let pages = announcement_pages(&items, &people, &[], &today, None, 2);
         assert_eq!(pages.len(), 2);
         assert_eq!(pages[1].1.text, "Tom\t20 December\nBudi\t30 December");
         // A language that names the month first writes its dates that way.
         let month_first = Today { date: |day, month| format!("{month} {day}"), ..today };
-        assert_eq!(announcement_pages(&items, &people, &month_first, None, 2)[1].1.text, "Tom\tDecember 20\nBudi\tDecember 30");
+        assert_eq!(announcement_pages(&items, &people, &[], &month_first, None, 2)[1].1.text, "Tom\tDecember 20\nBudi\tDecember 30");
         // Ten more December birthdays spill onto a second slide; an empty month gives none.
         people.extend((1..=10).map(|day| person(&format!("Person {day:02}"), 12, day)));
-        assert_eq!(announcement_pages(&items, &people, &today, None, 2).iter().filter(|(at, _)| *at == 1).count(), 2);
-        let june = Today { month: 7, day: 1, months: &MONTHS, date: day_first };
-        assert_eq!(announcement_pages(&items, &people, &june, None, 2).len(), 1);
+        assert_eq!(announcement_pages(&items, &people, &[], &today, None, 2).iter().filter(|(at, _)| *at == 1).count(), 2);
+        let june = today_on(7, 1, &MONTHS);
+        assert_eq!(announcement_pages(&items, &people, &[], &june, None, 2).len(), 1);
         // Twenty-five lines of a brought-in table become three slides of the same announcement.
         let long = vec![Announcement { title: "List".into(), body: (1..=25).map(|n| format!("Row {n}	{n}")).collect::<Vec<_>>().join("
 "), ..Announcement::default() }];
-        let pages = announcement_pages(&long, &[], &today, None, 2);
+        let pages = announcement_pages(&long, &[], &[], &today, None, 2);
         assert_eq!(pages.iter().map(|(_, slide)| slide.text.lines().count()).collect::<Vec<_>>(), [10, 10, 5]);
     }
 
@@ -650,18 +713,18 @@ mod tests {
     #[test]
     fn a_passage_card_fills_from_the_bible() {
         const MONTHS: [&str; 12] = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-        let today = Today { month: 5, day: 1, months: &MONTHS, date: day_first };
+        let today = today_on(5, 1, &MONTHS);
         let bible = made_up_bible();
         let card = Announcement { title: "Verse of the week".into(), fill: Fill::Passage, passage: "mazmur 23:1-3".into(), ..Announcement::default() };
         assert_eq!(passage_state(&card, Some(&bible)), PassageState::Ready(Reference { book: 19, chapter: 23, verse: 1, end_chapter: 23, end_verse: 3 }));
-        let pages = announcement_pages(std::slice::from_ref(&card), &[], &today, Some(&bible), 2);
+        let pages = announcement_pages(std::slice::from_ref(&card), &[], &[], &today, Some(&bible), 2);
         assert_eq!(pages.len(), 2);
         assert_eq!(pages[0].1.heading, "Verse of the week");
         assert_eq!(pages[0].1.text, "1 Made up one. 2 Made up two.");
         assert_eq!(pages[1].1.caption, "Mazmur 23:3 TST");
         // The English name reads too, and the reference is re-read when the Bible changes.
         let english = Announcement { passage: "psalms 23:2".into(), ..card.clone() };
-        assert_eq!(announcement_pages(&[english], &[], &today, Some(&bible), 2)[0].1.text, "Made up two.");
+        assert_eq!(announcement_pages(&[english], &[], &[], &today, Some(&bible), 2)[0].1.text, "Made up two.");
     }
 
     #[test]
@@ -676,14 +739,14 @@ mod tests {
         let plain = Announcement { title: "Plain".into(), ..Announcement::default() };
         assert_eq!(passage_state(&plain, Some(&bible)), PassageState::NotAPassage);
         const MONTHS: [&str; 12] = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-        let today = Today { month: 5, day: 1, months: &MONTHS, date: day_first };
-        assert!(announcement_pages(&[card], &[], &today, None, 2).is_empty());
+        let today = today_on(5, 1, &MONTHS);
+        assert!(announcement_pages(&[card], &[], &[], &today, None, 2).is_empty());
     }
 
     #[test]
     fn a_birthday_card_names_the_days_it_covers() {
         const MONTHS: [&str; 12] = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-        let today = Today { month: 12, day: 28, months: &MONTHS, date: day_first };
+        let today = today_on(12, 28, &MONTHS);
         assert_eq!(birthday_days(Fill::BirthdaysWeek, &today), Some(((12, 28), (1, 3))));
         assert_eq!(birthday_days(Fill::BirthdaysMonth, &today), Some(((12, 1), (12, 31))));
         assert_eq!(birthday_days(Fill::Passage, &today), None);
@@ -865,5 +928,50 @@ mod tests {
         assert_eq!(paired.slides[0].text, "16 One. 17 Two.");
         assert_eq!(paired.slides[0].second, "16 One. 17 Two.");
         assert_eq!(paired.slides[0].label, "John 3:16-17");
+    }
+
+    fn service(name: &str, date: crate::calendar::Date, start: u16, repeat: crate::calendar::Repeat) -> Event {
+        Event { id: 0, calendar: 1, name: name.into(), date, start, end: start + 60, repeat, until: None, skipped: Vec::new() }
+    }
+
+    #[test]
+    fn a_schedule_card_lists_the_next_seven_days_and_writes_each_day_once() {
+        use crate::calendar::Repeat;
+        const MONTHS: [&str; 12] = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        let first = Date::new(2026, 1, 4).unwrap();
+        let events = vec![
+            service("Second service", first, 9 * 60, Repeat::Weekly(1)),
+            service("First service", first, 6 * 60 + 30, Repeat::Weekly(1)),
+            service("Prayer", first, 18 * 60 + 30, Repeat::Weekly(1 << 3)),
+            // Eight days off: outside the week.
+            service("Later", Date::new(2026, 11, 22).unwrap(), 10 * 60, Repeat::Once),
+        ];
+        let card = Announcement { title: "This week".into(), fill: Fill::ScheduleWeek, ..Announcement::default() };
+        // Friday 13 November 2026: Sunday the 15th and Wednesday the 18th are in; the next Sunday, the 22nd, is a week and a day off.
+        let today = today_on(11, 13, &MONTHS);
+        let pages = announcement_pages(std::slice::from_ref(&card), &[], &events, &today, None, 2);
+        assert_eq!(pages.len(), 1);
+        assert_eq!(pages[0].1.text, "Sunday	06.30	First service
+	09.00	Second service
+Wednesday	18.30	Prayer");
+        assert_eq!(pages[0].1.notice, NoticeKind::Schedule);
+        assert_eq!(pages[0].1.heading, "This week");
+        // Saturday the 14th: the week now reaches Friday the 20th, and the 22nd is still out.
+        let saturday = today_on(11, 14, &MONTHS);
+        assert_eq!(week_events(&events, &saturday).len(), 3);
+        // A week over New Year reads January's events too.
+        let new_year = Today { year: 2026, ..today_on(12, 29, &MONTHS) };
+        let found = week_events(&events, &new_year);
+        assert_eq!(found.first().map(|f| f.0), Some(Date::new(2026, 12, 30).unwrap()), "Wednesday's prayer first");
+        assert_eq!(found.last().map(|f| f.0), Some(Date::new(2027, 1, 3).unwrap()));
+        // Nothing in the week: no slide at all.
+        let none = vec![service("Once", Date::new(2027, 6, 1).unwrap(), 60, Repeat::Once)];
+        assert!(announcement_pages(&[card.clone()], &[], &none, &today, None, 2).is_empty());
+        // More than ten lines go on a second slide, which writes its first day again.
+        let many: Vec<Event> = (0..12).map(|n| service(&format!("Event {n}"), Date::new(2026, 11, 15).unwrap(), 6 * 60 + n * 15, Repeat::Once)).collect();
+        let pages = announcement_pages(&[card], &[], &many, &today, None, 2);
+        assert_eq!(pages.len(), 2);
+        assert!(pages[1].1.text.starts_with("Sunday	"));
+        assert_eq!(pages[1].1.text.lines().count(), 2);
     }
 }

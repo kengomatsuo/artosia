@@ -3930,5 +3930,294 @@
   "text": "Solo sirve con un fondo de foto o de un color",
   "back": "Only works with a photo or one-colour background",
   "why": "Plain statement"
+ },
+ "CAL_TODAY": {
+  "text": "Hoy",
+  "back": "Today",
+  "why": "Same word as the plans list."
+ },
+ "CAL_PREVIOUS": {
+  "text": "Anterior",
+  "back": "Previous",
+  "why": "Works for a month and a week."
+ },
+ "CAL_NEXT": {
+  "text": "Siguiente",
+  "back": "Next",
+  "why": "Pairs with Anterior."
+ },
+ "CAL_WEEK": {
+  "text": "Semana",
+  "back": "Week",
+  "why": "One unit word."
+ },
+ "CAL_MONTH": {
+  "text": "Mes",
+  "back": "Month",
+  "why": "One unit word."
+ },
+ "CAL_NEW_EVENT": {
+  "text": "Nuevo evento",
+  "back": "New event",
+  "why": "Evento is the calendar entry."
+ },
+ "CAL_EVENT": {
+  "text": "Evento",
+  "back": "Event",
+  "why": "One word."
+ },
+ "CAL_CALENDARS": {
+  "text": "Calendarios",
+  "back": "Calendars",
+  "why": "Plural of the tab word."
+ },
+ "CAL_MANAGE": {
+  "text": "Administrar",
+  "back": "Manage",
+  "why": "Latin American verb for looking after a list."
+ },
+ "CAL_READ_BY": {
+  "text": "Lo leen los anuncios",
+  "back": "The announcements read it",
+  "why": "Anuncios is the table's word."
+ },
+ "CAL_READ_BY_HINT": {
+  "text": "El anuncio de horarios toma sus líneas de este calendario. Lo que cambies aquí se ve allí.",
+  "back": "The schedule announcement takes its lines from this calendar. What you change here shows there.",
+  "why": "Each card is an anuncio in this table."
+ },
+ "CAL_EVENT_NAME": {
+  "text": "Nombre",
+  "back": "Name",
+  "why": "One word."
+ },
+ "CAL_CALENDAR": {
+  "text": "Calendario",
+  "back": "Calendar",
+  "why": "Singular, the group."
+ },
+ "CAL_REPEAT": {
+  "text": "Repetir",
+  "back": "Repeat",
+  "why": "Verb that labels a choice."
+ },
+ "CAL_ONCE": {
+  "text": "Una vez",
+  "back": "Once",
+  "why": "Plain."
+ },
+ "CAL_EVERY_WEEK": {
+  "text": "Cada semana",
+  "back": "Every week",
+  "why": "Plain."
+ },
+ "CAL_EVERY_MONTH": {
+  "text": "Cada mes",
+  "back": "Every month",
+  "why": "Pairs with Cada semana."
+ },
+ "CAL_DAYS": {
+  "text": "Días",
+  "back": "Days",
+  "why": "Seven toggles."
+ },
+ "CAL_WHICH": {
+  "text": "Posición",
+  "back": "Position",
+  "why": "Place of the weekday in the month."
+ },
+ "CAL_POS_FIRST": {
+  "text": "Primer",
+  "back": "First",
+  "why": "Apocopated so it reads in the rule sentence before the weekday."
+ },
+ "CAL_POS_SECOND": {
+  "text": "Segundo",
+  "back": "Second",
+  "why": "Masculine, as every Spanish weekday."
+ },
+ "CAL_POS_THIRD": {
+  "text": "Tercer",
+  "back": "Third",
+  "why": "Apocopated like Primer."
+ },
+ "CAL_POS_FOURTH": {
+  "text": "Cuarto",
+  "back": "Fourth",
+  "why": "Masculine."
+ },
+ "CAL_POS_LAST": {
+  "text": "Último",
+  "back": "Last",
+  "why": "Masculine."
+ },
+ "CAL_WEEKDAY": {
+  "text": "Día",
+  "back": "Day",
+  "why": "Single weekday."
+ },
+ "CAL_START": {
+  "text": "Inicio",
+  "back": "Start",
+  "why": "One word."
+ },
+ "CAL_END": {
+  "text": "Fin",
+  "back": "End",
+  "why": "One word."
+ },
+ "CAL_FIRST_DATE": {
+  "text": "Desde",
+  "back": "From",
+  "why": "Pairs with Hasta."
+ },
+ "CAL_UNTIL": {
+  "text": "Hasta",
+  "back": "Until",
+  "why": "Pairs with Desde."
+ },
+ "CAL_NO_END": {
+  "text": "Sin final",
+  "back": "No end",
+  "why": "Fits 14; Sin fecha final does not."
+ },
+ "CAL_DATES": {
+  "text": "Próximas fechas (x quita la fecha)",
+  "back": "Coming dates (x removes the date)",
+  "why": "Names the x as the chips show it."
+ },
+ "CAL_SKIPPED": {
+  "text": "Fechas quitadas (clic para devolver)",
+  "back": "Removed dates (click to return)",
+  "why": "Quitar, as in the cross; clic as in the table."
+ },
+ "CAL_NO_DATES": {
+  "text": "No hay fechas próximas",
+  "back": "There are no coming dates",
+  "why": "Plain statement."
+ },
+ "CAL_ADD_CALENDAR": {
+  "text": "Agregar calendario",
+  "back": "Add calendar",
+  "why": "Agregar is the table's add verb."
+ },
+ "CAL_CALENDAR_NAME": {
+  "text": "Nombre",
+  "back": "Name",
+  "why": "Fits 18."
+ },
+ "CAL_COLOUR": {
+  "text": "Color",
+  "back": "Colour",
+  "why": "Same as the picker."
+ },
+ "CAL_DELETE_CALENDAR": {
+  "text": "Eliminar calendario",
+  "back": "Delete calendar",
+  "why": "Eliminar is the table's delete."
+ },
+ "CAL_NEW_CALENDAR": {
+  "text": "Calendario nuevo",
+  "back": "New calendar",
+  "why": "A name."
+ },
+ "CAL_SERVICES": {
+  "text": "Servicios",
+  "back": "Services",
+  "why": "Servicio is the event; culto is the plan."
+ },
+ "FILL_SCHEDULE": {
+  "text": "Eventos de la semana",
+  "back": "Events of the week",
+  "why": "Phrase like the birthday ones."
+ },
+ "month_year": {
+  "text": "{month} de {year}",
+  "back": "{month} of {year}",
+  "why": "Spanish order with de."
+ },
+ "date_long": {
+  "text": "{day} de {month} de {year}",
+  "back": "{day} of {month} of {year}",
+  "why": "Usual written date."
+ },
+ "more_events": {
+  "text": {
+   "one": "+{count} más",
+   "other": "+{count} más"
+  },
+  "back": "+{count} more",
+  "why": "Same form for every count."
+ },
+ "events_this_week": {
+  "text": {
+   "zero": "No hay eventos esta semana",
+   "one": "{count} evento esta semana",
+   "other": "{count} eventos esta semana"
+  },
+  "back": "No events this week / {count} event(s) this week",
+  "why": "Full statement for zero."
+ },
+ "weekday_list": {
+  "text": {
+   "one": "{first}",
+   "other": "{all} y {last}"
+  },
+  "back": "{first} / {all} and {last}",
+  "why": "All is the names before the last."
+ },
+ "rule_once": {
+  "text": "{date}, de {start} a {end}.",
+  "back": "{date}, from {start} to {end}.",
+  "why": "Date then hours."
+ },
+ "rule_week": {
+  "text": {
+   "until": "{days}, de {start} a {end}, del {from} al {until}.",
+   "open": "{days}, de {start} a {end}, desde el {from}."
+  },
+  "back": "{days}, from {start} to {end}, from {from} to {until}. / ... from {from}.",
+  "why": "Weekday names arrive capitalised from the table."
+ },
+ "rule_month": {
+  "text": {
+   "until": "{position} {weekday} de cada mes, de {start} a {end}, del {from} al {until}.",
+   "open": "{position} {weekday} de cada mes, de {start} a {end}, desde el {from}."
+  },
+  "back": "{position} {weekday} of each month, from {start} to {end}, from {from} to {until}. / ... from {from}.",
+  "why": "Position is apocopated, so it fits before the weekday."
+ },
+ "event_deleted": {
+  "text": "Se eliminó el evento «{name}»",
+  "back": "The event «{name}» was deleted",
+  "why": "Same shape as plan_deleted."
+ },
+ "calendar_deleted": {
+  "text": "Se eliminó el calendario «{name}» y sus eventos",
+  "back": "The calendar «{name}» and its events were deleted",
+  "why": "Says the events went too."
+ },
+ "CAL_DATE": {
+  "text": "Fecha",
+  "back": "Date",
+  "why": "One word."
+ },
+ "week_title": {
+  "text": {
+   "two_months": "{from_day} de {from_month} al {to_day} de {to_month} de {to_year}",
+   "two_years": "{from_day} de {from_month} de {from_year} al {to_day} de {to_month} de {to_year}"
+  },
+  "back": "{from_day} of {from_month} to the {to_day} of {to_month} of {to_year}",
+  "why": "Al reads as the usual from-to now that 56 allows it."
+ },
+ "CMD_CALENDAR_DETAIL": {
+  "text": "Servicios y reuniones por semana y por mes",
+  "back": "Services and meetings by week and by month",
+  "why": "Fragment."
+ },
+ "CMD_NEW_EVENT_DETAIL": {
+  "text": "Un servicio, una reunión o un ensayo",
+  "back": "A service, a meeting or a rehearsal",
+  "why": "Fragment."
  }
 }

@@ -34,6 +34,10 @@ pub enum Command {
     NewSong,
     PasteSong,
     Announcements,
+    /// The Calendar tab.
+    Calendar,
+    /// A new event on the Calendar tab.
+    NewEvent,
     Looks,
     Backdrops,
     Settings,
@@ -78,7 +82,7 @@ pub enum Command {
 }
 
 impl Command {
-    pub const ALL: [Command; 42] = [
+    pub const ALL: [Command; 44] = [
         Command::StartService,
         Command::Next,
         Command::Previous,
@@ -94,6 +98,8 @@ impl Command {
         Command::EditSong,
         Command::Announcements,
         Command::NewAnnouncement,
+        Command::Calendar,
+        Command::NewEvent,
         Command::Heading,
         Command::StartHere,
         Command::Earlier,
@@ -128,6 +134,8 @@ impl Command {
             Command::NewSong => t::CMD_NEW_SONG(),
             Command::PasteSong => t::CMD_PASTE_SONG(),
             Command::Announcements => t::CMD_ANNOUNCEMENTS(),
+            Command::Calendar => t::TAB_CALENDAR(),
+            Command::NewEvent => t::CAL_NEW_EVENT(),
             Command::Looks => t::CMD_LOOKS(),
             Command::Settings => t::CMD_SETTINGS(),
             Command::Backdrops => t::BACKDROPS_TITLE(),
@@ -175,6 +183,8 @@ impl Command {
             Command::NewSong => t::CMD_NEW_SONG_DETAIL(),
             Command::PasteSong => t::CMD_PASTE_SONG_DETAIL(),
             Command::Announcements => t::CMD_ANNOUNCEMENTS_DETAIL(),
+            Command::Calendar => t::CMD_CALENDAR_DETAIL(),
+            Command::NewEvent => t::CMD_NEW_EVENT_DETAIL(),
             Command::Looks => t::CMD_LOOKS_DETAIL(),
             Command::Settings => t::CMD_SETTINGS_DETAIL(),
             Command::Backdrops => t::CMD_BACKDROPS_DETAIL(),
@@ -224,6 +234,8 @@ impl Command {
             Command::NewSong => &["add song", "create song", "lagu baru", "tambah lagu", "buat lagu"],
             Command::PasteSong => &["paste", "clipboard", "tempel lirik", "tempel lagu"],
             Command::Announcements => &["notices", "edit announcements", "pengumuman", "warta"],
+            Command::Calendar => &["calendar", "schedule", "events", "week", "month", "services", "kalender", "jadwal", "acara", "agenda", "minggu ini"],
+            Command::NewEvent => &["add event", "new service", "new meeting", "prayer", "rehearsal", "youth", "schedule", "calendar", "acara baru", "tambah acara", "jadwal", "kalender", "rapat", "latihan"],
             Command::Looks => &[
                 "look", "theme", "background", "font", "text size", "colour", "color", "text colour", "text color", "yellow", "white", "outline", "shadow", "words", "lines", "position", "tampilan", "desain", "tema", "latar", "ukuran teks", "warna", "warna teks", "kuning", "putih",
                 "huruf", "garis tepi", "baris", "posisi teks",
@@ -699,6 +711,7 @@ impl App {
             let body = match item.fill {
                 Fill::Nothing => item.body.clone(),
                 Fill::Passage => item.passage.clone(),
+                Fill::ScheduleWeek => t::events_this_week(artosia_core::deck::week_events(&self.events, &self.today()).len()),
                 _ => t::names_today(artosia_core::deck::birthdays(&self.people, item.fill, &self.today()).len()),
             };
             let mut doc = Doc::new(format!("announcement:{}", item.id), "announcement", item.title.clone())
@@ -707,6 +720,7 @@ impl App {
             doc = match item.fill {
                 Fill::BirthdaysWeek | Fill::BirthdaysMonth => doc.aliases(&["birthday", "birthdays", "show birthdays", "ulang tahun", "ultah", "tampilkan ulang tahun"]),
                 Fill::Passage => doc.aliases(&["verse of the week", "bible verse", "verse", "ayat", "ayat minggu ini"]),
+                Fill::ScheduleWeek => doc.aliases(&["schedule", "this week", "events", "jadwal", "jadwal ibadah", "minggu ini"]),
                 Fill::Nothing => doc,
             };
             out.push((doc, Hit::Announcement { index, title: item.title.clone(), body }));
@@ -1012,6 +1026,11 @@ impl App {
             Command::NewSong => self.edit_new_song(artosia_core::song::Song::default()),
             Command::PasteSong => self.want_paste = true,
             Command::Announcements => self.edit_announcements(),
+            Command::Calendar => self.open_tab(crate::state::Tab::Calendar),
+            Command::NewEvent => {
+                self.open_tab(crate::state::Tab::Calendar);
+                self.new_event_here();
+            }
             Command::Looks => {
                 // The part the typed word lives in opens first: "yellow" and "font" are about the words.
                 let typed = self.palette.query.text.to_lowercase();
@@ -1118,6 +1137,22 @@ mod tests {
             assert_eq!(command.usable_in(&app, true), command.usable_in(&app, false), "{command:?}");
         }
         assert!(Command::FirstRun.usable_in(&app, true));
+    }
+
+    #[test]
+    fn the_search_opens_the_calendar_and_starts_an_event() {
+        let mut app = App::practice();
+        search(&mut app, "new event");
+        assert!(matches!(app.palette.hits.first(), Some(Hit::Command(Command::NewEvent))));
+        search(&mut app, "kalender");
+        assert!(app.palette.hits.iter().any(|hit| matches!(hit, Hit::Command(Command::Calendar))));
+        app.run(Command::Calendar);
+        assert_eq!(app.tab, crate::state::Tab::Calendar);
+        assert!(app.calendar.form.is_none());
+        app.open_tab(crate::state::Tab::Plan);
+        app.run(Command::NewEvent);
+        assert_eq!(app.tab, crate::state::Tab::Calendar);
+        assert!(app.calendar.form.is_some(), "the dialog for a new event is open");
     }
 
     fn search(app: &mut App, query: &str) {

@@ -3899,5 +3899,292 @@
   "text": "Chỉ lấy được khi hình nền là ảnh hoặc một màu",
   "back": "Can only be taken when the backdrop is a photo or one colour",
   "why": "hình nền is the table's backdrop word"
+ },
+ "CAL_TODAY": {
+  "text": "Hôm nay",
+  "back": "Today",
+  "why": "Reuses the table words: sự kiện, lịch, thông báo, thứ tự lễ; short plain register"
+ },
+ "CAL_PREVIOUS": {
+  "text": "Trước",
+  "back": "Previous",
+  "why": "Reuses the table words: sự kiện, lịch, thông báo, thứ tự lễ; short plain register"
+ },
+ "CAL_NEXT": {
+  "text": "Tiếp theo",
+  "back": "Next",
+  "why": "Reuses the table words: sự kiện, lịch, thông báo, thứ tự lễ; short plain register"
+ },
+ "CAL_WEEK": {
+  "text": "Tuần",
+  "back": "Week",
+  "why": "Reuses the table words: sự kiện, lịch, thông báo, thứ tự lễ; short plain register"
+ },
+ "CAL_MONTH": {
+  "text": "Tháng",
+  "back": "Month",
+  "why": "Reuses the table words: sự kiện, lịch, thông báo, thứ tự lễ; short plain register"
+ },
+ "CAL_NEW_EVENT": {
+  "text": "Sự kiện mới",
+  "back": "New event",
+  "why": "Reuses the table words: sự kiện, lịch, thông báo, thứ tự lễ; short plain register"
+ },
+ "CAL_EVENT": {
+  "text": "Sự kiện",
+  "back": "Event",
+  "why": "Reuses the table words: sự kiện, lịch, thông báo, thứ tự lễ; short plain register"
+ },
+ "CAL_CALENDARS": {
+  "text": "Các lịch",
+  "back": "The calendars",
+  "why": "Reuses the table words: sự kiện, lịch, thông báo, thứ tự lễ; short plain register"
+ },
+ "CAL_MANAGE": {
+  "text": "Quản lý",
+  "back": "Manage",
+  "why": "Reuses the table words: sự kiện, lịch, thông báo, thứ tự lễ; short plain register"
+ },
+ "CAL_READ_BY": {
+  "text": "Thông báo dùng lịch này",
+  "back": "Announcements use this calendar",
+  "why": "Reuses the table words: sự kiện, lịch, thông báo, thứ tự lễ; short plain register"
+ },
+ "CAL_READ_BY_HINT": {
+  "text": "Thông báo giờ lễ lấy các dòng từ lịch này. Sửa ở đây, thông báo tự đổi theo, không phải gõ lại.",
+  "back": "A service-times announcement takes its lines from this calendar. Change it here and the announcement follows, no retyping.",
+  "why": "Reuses the table words: sự kiện, lịch, thông báo, thứ tự lễ; short plain register"
+ },
+ "CAL_EVENT_NAME": {
+  "text": "Tên sự kiện",
+  "back": "Name of the event",
+  "why": "Reuses the table words: sự kiện, lịch, thông báo, thứ tự lễ; short plain register"
+ },
+ "CAL_CALENDAR": {
+  "text": "Lịch",
+  "back": "Calendar",
+  "why": "Reuses the table words: sự kiện, lịch, thông báo, thứ tự lễ; short plain register"
+ },
+ "CAL_REPEAT": {
+  "text": "Lặp lại",
+  "back": "Repeat",
+  "why": "Reuses the table words: sự kiện, lịch, thông báo, thứ tự lễ; short plain register"
+ },
+ "CAL_ONCE": {
+  "text": "Một lần",
+  "back": "Once",
+  "why": "Reuses the table words: sự kiện, lịch, thông báo, thứ tự lễ; short plain register"
+ },
+ "CAL_EVERY_WEEK": {
+  "text": "Mỗi tuần",
+  "back": "Every week",
+  "why": "Reuses the table words: sự kiện, lịch, thông báo, thứ tự lễ; short plain register"
+ },
+ "CAL_EVERY_MONTH": {
+  "text": "Mỗi tháng",
+  "back": "Every month",
+  "why": "Reuses the table words: sự kiện, lịch, thông báo, thứ tự lễ; short plain register"
+ },
+ "CAL_DAYS": {
+  "text": "Ngày",
+  "back": "Days",
+  "why": "Reuses the table words: sự kiện, lịch, thông báo, thứ tự lễ; short plain register"
+ },
+ "CAL_WHICH": {
+  "text": "Vị trí",
+  "back": "Position",
+  "why": "Reuses the table words: sự kiện, lịch, thông báo, thứ tự lễ; short plain register"
+ },
+ "CAL_POS_FIRST": {
+  "text": "Đầu tiên",
+  "back": "First",
+  "why": "Reuses the table words: sự kiện, lịch, thông báo, thứ tự lễ; short plain register"
+ },
+ "CAL_POS_SECOND": {
+  "text": "Thứ hai",
+  "back": "Second",
+  "why": "Reuses the table words: sự kiện, lịch, thông báo, thứ tự lễ; short plain register"
+ },
+ "CAL_POS_THIRD": {
+  "text": "Thứ ba",
+  "back": "Third",
+  "why": "Reuses the table words: sự kiện, lịch, thông báo, thứ tự lễ; short plain register"
+ },
+ "CAL_POS_FOURTH": {
+  "text": "Thứ tư",
+  "back": "Fourth",
+  "why": "Reuses the table words: sự kiện, lịch, thông báo, thứ tự lễ; short plain register"
+ },
+ "CAL_POS_LAST": {
+  "text": "Cuối cùng",
+  "back": "Last",
+  "why": "Reuses the table words: sự kiện, lịch, thông báo, thứ tự lễ; short plain register"
+ },
+ "CAL_WEEKDAY": {
+  "text": "Thứ",
+  "back": "Weekday",
+  "why": "Reuses the table words: sự kiện, lịch, thông báo, thứ tự lễ; short plain register"
+ },
+ "CAL_START": {
+  "text": "Bắt đầu",
+  "back": "Start",
+  "why": "Reuses the table words: sự kiện, lịch, thông báo, thứ tự lễ; short plain register"
+ },
+ "CAL_END": {
+  "text": "Kết thúc",
+  "back": "End",
+  "why": "Reuses the table words: sự kiện, lịch, thông báo, thứ tự lễ; short plain register"
+ },
+ "CAL_FIRST_DATE": {
+  "text": "Ngày bắt đầu",
+  "back": "Start day",
+  "why": "Reuses the table words: sự kiện, lịch, thông báo, thứ tự lễ; short plain register"
+ },
+ "CAL_UNTIL": {
+  "text": "Đến ngày",
+  "back": "Until day",
+  "why": "Reuses the table words: sự kiện, lịch, thông báo, thứ tự lễ; short plain register"
+ },
+ "CAL_NO_END": {
+  "text": "Không kết thúc",
+  "back": "No end",
+  "why": "Reuses the table words: sự kiện, lịch, thông báo, thứ tự lễ; short plain register"
+ },
+ "CAL_DATES": {
+  "text": "Các ngày tới, bấm x để bỏ qua",
+  "back": "The coming days, press x to skip",
+  "why": "Reuses the table words: sự kiện, lịch, thông báo, thứ tự lễ; short plain register"
+ },
+ "CAL_SKIPPED": {
+  "text": "Đã bỏ qua, bấm để thêm lại",
+  "back": "Skipped, press to add back",
+  "why": "Reuses the table words: sự kiện, lịch, thông báo, thứ tự lễ; short plain register"
+ },
+ "CAL_NO_DATES": {
+  "text": "Chưa có ngày nào sắp tới",
+  "back": "No day coming up yet",
+  "why": "Reuses the table words: sự kiện, lịch, thông báo, thứ tự lễ; short plain register"
+ },
+ "CAL_ADD_CALENDAR": {
+  "text": "Thêm lịch",
+  "back": "Add calendar",
+  "why": "Reuses the table words: sự kiện, lịch, thông báo, thứ tự lễ; short plain register"
+ },
+ "CAL_CALENDAR_NAME": {
+  "text": "Tên lịch",
+  "back": "Name of the calendar",
+  "why": "Reuses the table words: sự kiện, lịch, thông báo, thứ tự lễ; short plain register"
+ },
+ "CAL_COLOUR": {
+  "text": "Màu",
+  "back": "Colour",
+  "why": "Reuses the table words: sự kiện, lịch, thông báo, thứ tự lễ; short plain register"
+ },
+ "CAL_DELETE_CALENDAR": {
+  "text": "Xóa lịch",
+  "back": "Delete calendar",
+  "why": "Reuses the table words: sự kiện, lịch, thông báo, thứ tự lễ; short plain register"
+ },
+ "CAL_NEW_CALENDAR": {
+  "text": "Lịch mới",
+  "back": "New calendar",
+  "why": "Reuses the table words: sự kiện, lịch, thông báo, thứ tự lễ; short plain register"
+ },
+ "CAL_SERVICES": {
+  "text": "Buổi lễ",
+  "back": "Services",
+  "why": "Reuses the table words: sự kiện, lịch, thông báo, thứ tự lễ; short plain register"
+ },
+ "FILL_SCHEDULE": {
+  "text": "Sự kiện tuần này từ lịch",
+  "back": "This week's events from the calendar",
+  "why": "Reuses the table words: sự kiện, lịch, thông báo, thứ tự lễ; short plain register"
+ },
+ "month_year": {
+  "text": "{month} năm {year}",
+  "back": "{month} of year {year}",
+  "why": "Reuses the table words: sự kiện, lịch, thông báo, thứ tự lễ; short plain register"
+ },
+ "date_long": {
+  "text": "{day} {month} năm {year}",
+  "back": "{day} {month} of year {year}",
+  "why": "Reuses the table words: sự kiện, lịch, thông báo, thứ tự lễ; short plain register"
+ },
+ "more_events": {
+  "text": {
+   "other": "+{count} nữa"
+  },
+  "back": "+{count} more",
+  "why": "Reuses the table words: sự kiện, lịch, thông báo, thứ tự lễ; short plain register"
+ },
+ "events_this_week": {
+  "text": {
+   "zero": "Tuần này chưa có sự kiện nào",
+   "other": "Tuần này có {count} sự kiện"
+  },
+  "back": "No event this week yet / This week has {count} events",
+  "why": "Reuses the table words: sự kiện, lịch, thông báo, thứ tự lễ; short plain register"
+ },
+ "weekday_list": {
+  "text": {
+   "one": "{first}",
+   "other": "{all} và {last}"
+  },
+  "back": "{first} / {all} and {last}",
+  "why": "Reuses the table words: sự kiện, lịch, thông báo, thứ tự lễ; short plain register"
+ },
+ "rule_once": {
+  "text": "{date}, từ {start} đến {end}.",
+  "back": "{date}, from {start} to {end}.",
+  "why": "Reuses the table words: sự kiện, lịch, thông báo, thứ tự lễ; short plain register"
+ },
+ "rule_week": {
+  "text": {
+   "until": "Mỗi {days}, {start} đến {end}, từ {from} đến {until}.",
+   "open": "Mỗi {days}, {start} đến {end}, từ {from}, không kết thúc."
+  },
+  "back": "Every {days}, {start} to {end}, from {from} to {until}. / ..., from {from}, no end.",
+  "why": "Reuses the table words: sự kiện, lịch, thông báo, thứ tự lễ; short plain register"
+ },
+ "rule_month": {
+  "text": {
+   "until": "{weekday} {position} hằng tháng, {start} đến {end}, từ {from} đến {until}.",
+   "open": "{weekday} {position} hằng tháng, {start} đến {end}, từ {from}, không kết thúc."
+  },
+  "back": "{weekday} {position} each month, {start} to {end}, from {from} to {until}. / ..., from {from}, no end.",
+  "why": "Reuses the table words: sự kiện, lịch, thông báo, thứ tự lễ; short plain register"
+ },
+ "event_deleted": {
+  "text": "Đã xóa sự kiện “{name}”",
+  "back": "Deleted the event “{name}”",
+  "why": "Reuses the table words: sự kiện, lịch, thông báo, thứ tự lễ; short plain register"
+ },
+ "calendar_deleted": {
+  "text": "Đã xóa lịch “{name}” cùng mọi sự kiện trong đó",
+  "back": "Deleted the calendar “{name}” with every event in it",
+  "why": "Reuses the table words: sự kiện, lịch, thông báo, thứ tự lễ; short plain register"
+ },
+ "CAL_DATE": {
+  "text": "Ngày",
+  "back": "Date",
+  "why": "Reuses the table words: sự kiện, lịch, thông báo, thứ tự lễ; short plain register"
+ },
+ "week_title": {
+  "text": {
+   "two_months": "{from_day} {from_month} đến {to_day} {to_month} năm {to_year}",
+   "two_years": "{from_day} {from_month} năm {from_year} đến {to_day} {to_month} năm {to_year}"
+  },
+  "back": "{from_day} {from_month} to {to_day} {to_month} of year {to_year}",
+  "why": "Reuses the table words: sự kiện, lịch, thông báo, thứ tự lễ; short plain register"
+ },
+ "CMD_CALENDAR_DETAIL": {
+  "text": "Buổi lễ và buổi họp theo tuần, theo tháng",
+  "back": "Services and meetings by week, by month",
+  "why": "Reuses the table words: sự kiện, lịch, thông báo, thứ tự lễ; short plain register"
+ },
+ "CMD_NEW_EVENT_DETAIL": {
+  "text": "Buổi lễ, buổi họp hoặc buổi tập trong lịch",
+  "back": "A service, meeting or rehearsal in the calendar",
+  "why": "Reuses the table words: sự kiện, lịch, thông báo, thứ tự lễ; short plain register"
  }
 }
