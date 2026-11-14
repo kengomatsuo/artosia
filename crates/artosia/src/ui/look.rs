@@ -158,18 +158,12 @@ pub fn rows(s: &App, k: &Kit, layer: &mut Vec<El>) -> Vec<El> {
     ]
 }
 
-/// The look's sample slide, large enough to show the outline, kept above the scrolling settings
-/// so it stays in view while a control changes.
-pub fn preview(s: &App, k: &Kit) -> El {
-    let (width, height) = (360.0, 203.0);
+/// The look's sample slide, `width` points wide, kept in view beside the settings while a control
+/// changes.
+pub fn stage(s: &App, k: &Kit, width: f32) -> El {
+    let height = (width * 9.0 / 16.0).round();
     let state = s.preview_state(Some(super::sample_slide()));
-    row()
-        .key("look-preview")
-        .w_full()
-        .px(space::S4)
-        .pb(space::S2)
-        .justify_center()
-        .child(el().size(width, height).radius(k.radius.md).clip_rounded(k.radius.md).child(super::thumb(s, &state, width)))
+    el().key("look-preview").size(width, height).radius(k.radius.md).clip_rounded(k.radius.md).child(super::thumb(s, &state, width))
 }
 
 /// What the dialog edits: the usual look, or the open plan's own. Two buttons of equal width

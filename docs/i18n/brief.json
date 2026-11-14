@@ -591,10 +591,10 @@
  {
   "key": "CMD_ANNOUNCEMENTS",
   "kind": "const",
-  "screen": "Search panel, results list: a row for an action the program can do (not a song). Icon at the left, bold title, and a lighter line under it that says what the action does. The row shows when the typed words match the action or when the field is empty.",
+  "screen": "Three places: a row of the search panel's results for an action (icon, bold title, a lighter line under it); a plan item's name for the list of cards; and the second of seven tabs under the main window's title bar, an icon and a word, about 100 points wide.",
   "moment": "The person wants to work on the notices that run before the service.",
-  "role": "row title",
-  "does": "Names the list of announcement cards. Also used as the plan item's name for that list.",
+  "role": "row title and tab name",
+  "does": "Names the list of announcement cards, and the window where they are written.",
   "budget": 22,
   "variables": [],
   "cases": [],
@@ -603,7 +603,8 @@
   "concepts": [
    "announcement",
    "card",
-   "plan_item"
+   "plan_item",
+   "program_window"
   ],
   "notes": "The same word as every other place that names the announcements. The plan row and the Start screen tile use it too."
  },
@@ -2321,11 +2322,11 @@
  {
   "key": "BTN_LOOK",
   "kind": "const",
-  "screen": "Main window, top bar: from left to right the logo, a wide search box, then the icon-and-word buttons Design, Screens, Phone, Stream, Listen and Settings. A button is about 70 points wide. Second button, with a palette icon. It is also the title of the dialog it opens.",
+  "screen": "Main window, a row of seven tabs under the title bar, each an icon and a word, about 100 points wide: the service plan, the announcements, the calendar, the members, the offerings, the templates, and this one, the last. The open tab is filled.",
   "moment": "The person wants to change how the words look on the projector.",
-  "role": "top bar button and dialog title",
-  "does": "Names the dialog and button where the projector's appearance is chosen: the picture behind the words, the text colour, size and position.",
-  "budget": 10,
+  "role": "tab name",
+  "does": "Names the window where the projector's appearance is chosen: the picture behind the words, the text colour, size and position, and the emblem.",
+  "budget": 12,
   "variables": [],
   "cases": [],
   "counts": "",
@@ -2333,9 +2334,123 @@
   "concepts": [
    "design",
    "projector",
-   "backdrop"
+   "backdrop",
+   "program_window"
   ],
-  "notes": "Not the program's own settings; that is the last button. About 70 points: one word of at most ten characters."
+  "notes": "Not the program's own settings, which stay a button in the title bar. One word if the language allows."
+ },
+ {
+  "key": "TAB_PLAN",
+  "kind": "const",
+  "screen": "Main window, the first of seven tabs under the title bar, each an icon and a word, about 100 to 130 points wide. The others are the announcements, the calendar, the members, the offerings, the templates and the design. The open tab is filled.",
+  "moment": "The person was in another window and wants the main one back: the plan on the left, then Preview and Live.",
+  "role": "tab name",
+  "does": "Names the window of the service: the list of what is sung and read, the slide that comes next, and what the room sees now. Every start opens here.",
+  "budget": 16,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "plan",
+   "program_window",
+   "preview",
+   "live"
+  ],
+  "notes": "The word used for the plan elsewhere, alone or with the word for a service if the plan's word on its own would not tell this window apart."
+ },
+ {
+  "key": "TAB_CALENDAR",
+  "kind": "const",
+  "screen": "Main window, the third of seven tabs under the title bar, an icon of a calendar page and a word, about 100 points wide.",
+  "moment": "The person wants to see or change the church's week: services, Sunday school, prayer, rehearsals.",
+  "role": "tab name",
+  "does": "Names the window that holds the church's events by day and hour; the schedule announcement reads it.",
+  "budget": 12,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event",
+   "program_window"
+  ],
+  "notes": "One word."
+ },
+ {
+  "key": "TAB_PEOPLE",
+  "kind": "const",
+  "screen": "Main window, the fourth of seven tabs under the title bar, an icon of a person and a word, about 100 points wide.",
+  "moment": "The person wants the list of the congregation with their birthdays.",
+  "role": "tab name",
+  "does": "Names the window that lists the people of the congregation with their dates of birth; the birthday announcement reads it.",
+  "budget": 12,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "member",
+   "program_window"
+  ],
+  "notes": "The word a church uses for its own people, not for users of a program or members of a club."
+ },
+ {
+  "key": "TAB_GIVING",
+  "kind": "const",
+  "screen": "Main window, the fifth of seven tabs under the title bar, an icon of a coin and a word, about 100 points wide.",
+  "moment": "The person wants to enter or read what was given in the services.",
+  "role": "tab name",
+  "does": "Names the window that lists the money given, gift by gift, with a total the program adds up; the offering announcement reads it.",
+  "budget": 12,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "offering",
+   "fund",
+   "program_window"
+  ],
+  "notes": "The church's own word for what is collected in a service."
+ },
+ {
+  "key": "TAB_TEMPLATES",
+  "kind": "const",
+  "screen": "Main window, the sixth of seven tabs under the title bar, an icon of four tiles and a word, about 100 points wide.",
+  "moment": "The person wants to pick a ready slide for an announcement.",
+  "role": "tab name",
+  "does": "Names the window that shows every ready announcement slide, each filled with this church's own data, in its three styles.",
+  "budget": 12,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template",
+   "announcement",
+   "program_window"
+  ],
+  "notes": "One word."
+ },
+ {
+  "key": "HINT_TABS",
+  "kind": "const",
+  "screen": "Main window, the right end of the row of tabs under the title bar: key caps for Ctrl and Page Up, a small word for or, key caps for Ctrl and Page Down, then this phrase.",
+  "moment": "The person looks for a way to move between the windows without the mouse.",
+  "role": "key hint label",
+  "does": "Says that these keys go to the next or the previous window.",
+  "budget": 24,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "program_window",
+   "keyboard"
+  ],
+  "notes": "A short phrase after the key caps, like the other key hints."
  },
  {
   "key": "BTN_SETTINGS",
@@ -9357,6 +9472,24 @@
    "plan"
   ],
   "notes": "Fragment, no full stop."
+ },
+ {
+  "key": "KEYS_PLAN_ROWS[8].1",
+  "kind": "row",
+  "screen": "Keyboard shortcuts sheet: a wide window with two columns of groups. Each row has the keys drawn as little key caps at the left (never translated) and a description at the right, about 300 points wide. This text is the description. Third group (the plan). The keys at the left are: Ctrl PgDn.",
+  "moment": "The person opens the sheet to learn what pressing these keys does, and reads this line while looking at the key caps beside it.",
+  "role": "key description",
+  "does": "Moves to the next of the windows reached by the tabs under the title bar; with Page Up in place of Page Down, to the window before.",
+  "budget": 52,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "program_window",
+   "keyboard"
+  ],
+  "notes": "Fragment, no full stop. Name Page Up as the keyboard prints it: PgUp."
  },
  {
   "key": "KEYS_EDITING_ROWS[0].1",

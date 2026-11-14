@@ -421,6 +421,12 @@ text!(CMD_LOOP_DETAIL, "Show each one in turn until you stop", "Tayang bergantia
 
 // Top bar and status bar.
 text!(BTN_LOOK, "Design", "Design");
+text!(TAB_PLAN, "Service plan", "Service plan");
+text!(TAB_CALENDAR, "Calendar", "Calendar");
+text!(TAB_PEOPLE, "Members", "Members");
+text!(TAB_GIVING, "Offerings", "Offerings");
+text!(TAB_TEMPLATES, "Templates", "Templates");
+text!(HINT_TABS, "Other window", "Other window");
 text!(BTN_SETTINGS, "Settings", "Settings");
 text!(DESIGN_BACKGROUND, "Background", "Background");
 text!(DESIGN_TEXT, "Words", "Words");
@@ -1439,7 +1445,7 @@ pub fn KEYS_FINDING_ROWS() -> &'static [(&'static str, &'static str)] {
     }
     if indonesian() { &KEYS_FINDING_ROWS_ID } else { &KEYS_FINDING_ROWS_EN }
 }
-const KEYS_PLAN_ROWS_EN: [(&str, &str); 8] = [
+const KEYS_PLAN_ROWS_EN: [(&str, &str); 9] = [
     ("Tab", "Bring the next plan item into Preview"),
     ("Shift Tab", "Bring the item before it into Preview"),
     ("Alt Up Down", "Move the Preview item earlier or later"),
@@ -1448,8 +1454,9 @@ const KEYS_PLAN_ROWS_EN: [(&str, &str); 8] = [
     ("Shift Enter", "Add what is in Preview to the plan"),
     ("Ctrl Tab", "Open the next plan; with Shift, the one before"),
     ("Ctrl Shift N", "Start a new plan"),
+    ("Ctrl PgDn", "Open the next window; with PgUp, the one before"),
 ];
-const KEYS_PLAN_ROWS_ID: [(&str, &str); 8] = [
+const KEYS_PLAN_ROWS_ID: [(&str, &str); 9] = [
     ("Tab", "Bawa item acara berikutnya ke pratinjau"),
     ("Shift Tab", "Bawa item acara sebelumnya ke pratinjau"),
     ("Alt panah atas, bawah", "Geser item pratinjau naik atau turun"),
@@ -1458,6 +1465,7 @@ const KEYS_PLAN_ROWS_ID: [(&str, &str); 8] = [
     ("Shift Enter", "Add what is in Preview to the plan"),
     ("Ctrl Tab", "Open the next plan; with Shift, the one before"),
     ("Ctrl Shift N", "Start a new plan"),
+    ("Ctrl PgDn", "Open the next window; with PgUp, the one before"),
 ];
 pub fn KEYS_PLAN_ROWS() -> &'static [(&'static str, &'static str)] {
     if languages::has_table(language()) {

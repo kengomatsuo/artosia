@@ -312,11 +312,34 @@ pub struct Editor {
     pub marks_hidden: bool,
 }
 
+/// The program's windows, one tab each under the title bar (UIOVER1, direction B): the plan,
+/// then the church's own data, then what the projector looks like.
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub enum Tab {
+    /// Today's window: the plan, Preview and Live.
+    #[default]
+    Plan,
+    Notices,
+    Calendar,
+    People,
+    Giving,
+    Templates,
+    Look,
+}
+
+impl Tab {
+    pub const ALL: [Tab; 7] = [Tab::Plan, Tab::Notices, Tab::Calendar, Tab::People, Tab::Giving, Tab::Templates, Tab::Look];
+
+    /// The tab `step` places along, wrapping at either end.
+    pub fn step(self, step: i32) -> Tab {
+        let at = Tab::ALL.iter().position(|tab| *tab == self).unwrap_or(0) as i32;
+        Tab::ALL[(at + step).rem_euclid(Tab::ALL.len() as i32) as usize]
+    }
+}
+
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum Sheet {
     None,
-    /// What the projector draws: background, words, logo.
-    Looks,
     /// The program's own settings.
     Settings,
     Screens,
@@ -415,6 +438,8 @@ pub struct App {
     /// Where an editor field writes once the editor has closed under it.
     pub spare_edit: TextEdit,
     pub sheet: Sheet,
+    /// The window under the title bar; every start opens on the plan, so it is never saved.
+    pub tab: Tab,
     /// The song being written was started from the plan's Add menu, so saving it adds it.
     pub plan_new_song: bool,
     /// The part of the Design dialog that shows: 0 background, 1 words, 2 logo.
@@ -682,6 +707,7 @@ impl App {
             editor: None,
             spare_edit: TextEdit::new(""),
             sheet: Sheet::None,
+            tab: Tab::Plan,
             plan_new_song: false,
             design_part: 0,
             tour: None,
@@ -1370,6 +1396,8 @@ impl App {
         self.open = Some(OpenDeck::new(deck, item, cursor));
         self.editor = None;
         self.notices = None;
+        // What comes into Preview is seen there, whichever window asked for it.
+        self.tab = Tab::Plan;
     }
 
     pub fn open_song(&mut self, at: usize, section: Option<usize>) {

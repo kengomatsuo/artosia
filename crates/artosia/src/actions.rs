@@ -14,7 +14,7 @@ use rune::{TextEdit, Tx};
 
 use crate::link::OutputOptions;
 use crate::firewall::{self, Standing};
-use crate::state::{App, Arrived, Editor, HeardHit, Notices, OpenDeck, Sheet, Suggestion, TempoCount, Undo, entry_matches, section_starts, unix_now};
+use crate::state::{App, Arrived, Editor, HeardHit, Notices, OpenDeck, Sheet, Suggestion, Tab, TempoCount, Undo, entry_matches, section_starts, unix_now};
 use crate::strings as t;
 
 /// The phone remote's port, for the server and for its firewall rule.
@@ -229,6 +229,7 @@ impl App {
     pub fn edit_new_song(&mut self, song: Song) {
         self.editor = Some(App::editor_for(&song));
         self.notices = None;
+        self.tab = Tab::Plan;
         self.close_palette();
         self.sheet = Sheet::None;
         self.title_changed();
@@ -255,6 +256,7 @@ impl App {
         if let Some(at) = self.song_position(id) {
             self.editor = Some(App::editor_for(&self.songs[at]));
             self.notices = None;
+            self.tab = Tab::Plan;
         }
     }
 
@@ -692,9 +694,23 @@ impl App {
             _ => None,
         };
         self.notices = Some(App::notices_for(opened.or(self.announcements.first())));
-        self.editor = None;
+        self.sheet = Sheet::None;
+        self.tab = Tab::Notices;
+        self.close_palette();
+    }
+
+    /// Opens one of the program's windows. The announcement editor lives in its own tab and is
+    /// saved and closed on the way out, so every other tab's keys work as they always did.
+    pub fn open_tab(&mut self, tab: Tab) {
+        if self.notices.is_some() && tab != Tab::Notices {
+            self.close_announcements();
+        }
+        self.tab = tab;
         self.sheet = Sheet::None;
         self.close_palette();
+        if tab == Tab::Notices && self.notices.is_none() {
+            self.edit_announcements();
+        }
     }
 
     /// The announcement in the form, as it would be saved; None while it has no words.
@@ -964,6 +980,9 @@ impl App {
     pub fn close_announcements(&mut self) {
         self.save_notice();
         self.notices = None;
+        if self.tab == Tab::Notices {
+            self.tab = Tab::Plan;
+        }
     }
 
     pub fn open_announcements(&mut self) {

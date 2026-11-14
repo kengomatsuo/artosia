@@ -20,6 +20,8 @@ A second reader of a finished language found one thing under two or three names,
 
 **One feature, one name.** The listener, the phone remote, the stream and the design each have one name, and the name is a noun: a bare imperative verb on a button in the top bar reads as an order to the volunteer. Its button in the top bar, the title of its dialog and its command in search all read as that same name. A switch inside the dialog says the state (on), not a third form of the name. Do not mix an English word with a local abbreviation in one name.
 
+**Windows of the program.** The word for `program_window` (the windows reached by the tabs) is the language's word for a window of a computer program. It is never the word used for what the projector shows, for the picture on a monitor, or for the monitor itself.
+
 **Counting.** How many times something happened is written with the word for times, never with the letter x.
 
 **Languages.** Where the program lists languages to choose for speech or for a Bible, each language is named in the reader's own language. The one exception is the picker of the window's language, where every language is shown under its own name so that anyone can find theirs.
@@ -127,6 +129,22 @@ A second reader of a finished language found one thing under two or three names,
 **`settings`** The program's own preferences, apart from how the projector looks: the language of the window, light or dark window, Bible choices, the licence number, the search's memory, key behaviour, the version and the tour.
 
 **`window_language`** The language the program's own words are shown in. Not the language sung in the room, which is a separate choice in the listener.
+
+## The church's own windows
+
+**`program_window`** One of the program's windows, each reached by a tab in a row under the title bar: the service plan, the announcements, the calendar, the members, the offerings, the templates and the design. Moving between windows never changes what the room sees.
+
+**`church_calendar`** The church's events kept in the program: services, Sunday school, youth meetings, prayer meetings, rehearsals, each in one of a few colour-coded groups the church names itself. An announcement that lists this week's services reads it, so nothing is typed twice.
+
+**`event`** One entry of the calendar: a name, a day, an hour it starts and ends, and whether and how it repeats.
+
+**`member`** A person of the congregation kept in the members list with a date of birth, so the birthday announcement fills itself. Not a person who uses the program.
+
+**`offering`** Money given in a service, kept as one row per gift: its date, the giver or the collection plate, the fund it goes to, cash or transfer, and the amount. The program adds up the total itself.
+
+**`fund`** What a gift is given for: the tithe, the general offering, the building, missions, help for the poor, a thanksgiving.
+
+**`slide_template`** A ready shape for an announcement slide that fills itself from one of the church's windows (the calendar, the members, the offerings) or holds plain words a person writes. Each comes in one of three styles.
 
 ## Finding things
 

@@ -243,7 +243,8 @@ impl App {
 
     /// Back to Design, where the browser was opened.
     pub fn close_backdrops(&mut self) {
-        self.sheet = Sheet::Looks;
+        self.sheet = Sheet::None;
+        self.tab = crate::state::Tab::Look;
         self.backdrops.returned = true;
     }
 

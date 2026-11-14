@@ -21,6 +21,7 @@ pub use sheets::SETTINGS_FIRST;
 mod shell;
 pub(crate) mod slides;
 pub(crate) mod suggest;
+pub(crate) mod tabs;
 pub(crate) mod tour;
 pub mod widgets;
 
@@ -29,7 +30,7 @@ use rune::{Align, Cursor, Cx, El, Side, Transition, Tx, col, el, icon, row, spac
 use rune_kit::Kit;
 
 use crate::palette::Scope;
-use crate::state::{App, Sheet};
+use crate::state::{App, Sheet, Tab};
 use crate::strings as t;
 use crate::theme::{self, icons, size, space, type_};
 use widgets::{btn, key_hint, keycap};
@@ -119,10 +120,8 @@ pub(crate) fn topbar(s: &App, k: &Kit, insets: rune::ChromeInsets, wide: bool) -
         )
         .child(search)
         .child(spacer())
-        // Three groups: what the projector draws, what Artosia is connected to, and the
-        // program's own settings, last, where a person looks for them.
-        .child(btn(t::BTN_LOOK()).icon(&icons::PALETTE).ghost().build(k, |s, _| s.sheet = Sheet::Looks))
-        .child(el().w(1.0).h(20.0).fill(k.c.border_base).a11y_hidden())
+        // Two groups: what Artosia is connected to, and the program's own settings, last, where
+        // a person looks for them. What the projector draws is the Design tab.
         .child(btn(t::BTN_SCREENS()).icon(&icons::SCREEN).ghost().build(k, |s, _| s.sheet = Sheet::Screens))
         .child(btn(t::BTN_PHONE()).icon(&icons::PHONE).ghost().build(k, |s, _| s.sheet = Sheet::Remote))
         .child(btn(t::BTN_STREAM()).icon(&icons::STREAM).ghost().active(s.stream.is_some()).build(k, |s, _| s.open_stream()))
@@ -262,6 +261,18 @@ pub(crate) fn toast(s: &App, k: &Kit) -> Option<El> {
     Some(body.anchored("statusbar", Side::Top, Align::Center, space::S3))
 }
 
+/// The window of the open tab, between the tabs and the status bar.
+fn window(s: &App, cx: &mut Cx<App>, k: &Kit, layer: &mut Vec<El>) -> El {
+    match s.tab {
+        Tab::Plan => shell::view(s, cx, k, layer),
+        Tab::Notices => shell::beside_live(s, cx, k, layer, |s, k, width, _| announcements::view(s, k, width)),
+        Tab::Look => sheets::design(s, cx, k, layer),
+        tab => col().key("window-body").w_full().grow(1.0).min_h(0.0).fill(theme::surf().work).center().gap(space::S2)
+            .child(icon(tabs::glyph(tab), 32.0).color(k.c.text_faint).a11y_hidden())
+            .child(text(tabs::name(tab)).font(type_::HEADING).color(k.c.text_muted)),
+    }
+}
+
 pub fn view(s: &App, cx: &mut Cx<App>) -> El {
     theme::set_dark(match s.settings.appearance {
         crate::state::Appearance::Auto => cx.system_dark(),
@@ -292,7 +303,9 @@ pub fn view(s: &App, cx: &mut Cx<App>) -> El {
         .fill(sf.chrome)
         .child(topbar(s, k, insets, cx.layout_size("window").map(|size| size[0]).unwrap_or(1366.0) >= 1560.0).fill(sf.chrome))
         .child(hline())
-        .child(shell::view(s, cx, k, &mut layer))
+        .child(tabs::bar(s, k))
+        .child(hline())
+        .child(window(s, cx, k, &mut layer))
         .child(hline())
         .child(statusbar(s, k).fill(if s.only_language.is_some() { theme::warn().alpha(0.22) } else { sf.chrome }))
         .on_paste(|s: &mut App, text: &str, _: &mut Tx| s.song_from_clipboard(text))

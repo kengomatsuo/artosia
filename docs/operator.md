@@ -525,3 +525,19 @@ Three directions were drawn in the real window as scenes `mock-a-p1` to `mock-c-
 | Offerings | a statement table, amounts right-aligned, a total that sums itself (`mock-b-p5`) |
 | Templates | live tiles from the church's data in each style, apply modes (`mock-b-p6`) |
 | Rundown | A's layout: header bands, video and audio items with end action (stop, loop, next) and volume, a scene of layers with actions that clear, music lowered under a video with sound (`mock-a-p7`) |
+
+### The tabs (OVSHELL1, built 2026-11-14)
+
+Seven tabs sit under the title bar (`ui/tabs.rs`): the service plan, Announcements, Calendar,
+Members, Offerings, Templates and Design. Every start opens on the plan and the tab is never saved.
+Ctrl Page Down and Ctrl Page Up walk them, as Excel walks its sheets and Chrome its tabs (Google's
+Chrome shortcuts page, read 2026-11-14); Ctrl and a digit stay the Preview ring's, and FreeShow's
+plain digits for its tabs (`src/frontend/utils/shortcuts.ts`) would take the live song's jumps.
+
+- The projector's keys (arrows, Space, Enter, digits, letters that search) act only on the plan
+  tab, where Preview and Live are in view; F1, F2, F3 and F6 act on every tab.
+- Anything brought into Preview (`open_deck`) opens the plan tab, and so do the song editor and a new plan.
+- The announcement editor lives in its own tab, beside a narrow Live pane, and is saved and closed
+  on the way out (`App::open_tab`), so `notices.is_some()` holds only on that tab.
+- Design left the title bar for its tab: the settings in a column, the sample slide as large as
+  the rest of the window allows (`ui/sheets.rs` `design`).

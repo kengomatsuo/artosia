@@ -177,7 +177,7 @@
  "CMD_ANNOUNCEMENTS": {
   "text": "Avisos",
   "back": "Announcements",
-  "why": "avisos for announcements"
+  "why": "Existing word for announcements."
  },
  "CMD_ANNOUNCEMENTS_DETAIL": {
   "text": "Avisos alternados enquanto o pessoal chega",
@@ -658,7 +658,7 @@
  "BTN_LOOK": {
   "text": "Aparência",
   "back": "Appearance",
-  "why": "-"
+  "why": "Same word as the existing button."
  },
  "BTN_SETTINGS": {
   "text": "Ajustes",
@@ -3835,5 +3835,40 @@
   "text": "Letra em {language}",
   "back": "lyrics in {language}",
   "why": "names the language of the song's words, so a bare language name is not read as the window's language"
+ },
+ "TAB_PLAN": {
+  "text": "Roteiro",
+  "back": "Plan",
+  "why": "Roteiro is the table's plan word."
+ },
+ "TAB_CALENDAR": {
+  "text": "Calendário",
+  "back": "Calendar",
+  "why": "Plain word."
+ },
+ "TAB_PEOPLE": {
+  "text": "Membros",
+  "back": "Members",
+  "why": "Church word for its people."
+ },
+ "TAB_GIVING": {
+  "text": "Ofertas",
+  "back": "Offerings",
+  "why": "What Brazilian churches collect."
+ },
+ "TAB_TEMPLATES": {
+  "text": "Modelos",
+  "back": "Templates",
+  "why": "Matches existing modelo."
+ },
+ "HINT_TABS": {
+  "text": "Trocar de janela",
+  "back": "Change window",
+  "why": "Janela is the table's window word."
+ },
+ "KEYS_PLAN_ROWS[8].1": {
+  "text": "Vai à janela seguinte (com PgUp, à anterior)",
+  "back": "Goes to the next window (with PgUp, the previous)",
+  "why": "Fragment, PgUp as printed."
  }
 }

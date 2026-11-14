@@ -162,7 +162,7 @@
  "CMD_ANNOUNCEMENTS": {
   "text": "Pengumuman",
   "back": "Announcements",
-  "why": "What the church calls the notices shown before the service"
+  "why": "Table's word"
  },
  "CMD_ANNOUNCEMENTS_DETAIL": {
   "text": "Bergantian di layar saat jemaat masih datang",
@@ -560,7 +560,7 @@
  "BTN_LOOK": {
   "text": "Tema",
   "back": "Theme",
-  "why": "Not a form of tayang or tampil, not the preview"
+  "why": "Same word as the existing Design button"
  },
  "BTN_SETTINGS": {
   "text": "Pengaturan",
@@ -3755,5 +3755,40 @@
   "text": "Lirik {language}",
   "back": "{language} lyrics",
   "why": "Names the lyrics language with 'lirik', so a bare name is not read as the window's language or a country"
+ },
+ "TAB_PLAN": {
+  "text": "Rundown ibadah",
+  "back": "Service rundown",
+  "why": "Table's plan word plus ibadah to tell the window apart"
+ },
+ "TAB_CALENDAR": {
+  "text": "Kalender",
+  "back": "Calendar",
+  "why": "Plain"
+ },
+ "TAB_PEOPLE": {
+  "text": "Jemaat",
+  "back": "Congregation",
+  "why": "Church word for its people"
+ },
+ "TAB_GIVING": {
+  "text": "Persembahan",
+  "back": "Offering",
+  "why": "Church word for what is collected"
+ },
+ "TAB_TEMPLATES": {
+  "text": "Templat",
+  "back": "Template",
+  "why": "Common loan word, fits"
+ },
+ "HINT_TABS": {
+  "text": "pindah jendela",
+  "back": "change window",
+  "why": "Short phrase after key caps"
+ },
+ "KEYS_PLAN_ROWS[8].1": {
+  "text": "Jendela berikutnya, dengan PgUp yang sebelumnya",
+  "back": "Next window, with PgUp the previous one",
+  "why": "Fragment, no full stop"
  }
 }

@@ -1023,7 +1023,7 @@ impl App {
                 } else if about(&["background", "latar", "picture", "gambar", "video", "camera", "kamera"]) {
                     self.design_part = 0;
                 }
-                self.sheet = Sheet::Looks;
+                self.open_tab(crate::state::Tab::Look);
             }
             Command::Settings => self.sheet = Sheet::Settings,
             Command::Backdrops => self.open_backdrops(),
@@ -1153,8 +1153,8 @@ mod tests {
             assert!(matches!(app.palette.hits.first(), Some(Hit::Command(Command::Looks))), "{typed}");
             app.design_part = 2;
             app.pick(Pick::Open);
-            assert_eq!((app.sheet, app.design_part), (Sheet::Looks, part), "{typed}");
-            app.sheet = Sheet::None;
+            assert_eq!((app.tab, app.design_part), (crate::state::Tab::Look, part), "{typed}");
+            app.open_tab(crate::state::Tab::Plan);
         }
     }
 

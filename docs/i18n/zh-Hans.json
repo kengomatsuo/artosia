@@ -172,7 +172,7 @@
  "CMD_ANNOUNCEMENTS": {
   "text": "公告",
   "back": "Announcements",
-  "why": "公告 for the set, 卡片 for one notice"
+  "why": "Table's word"
  },
  "CMD_ANNOUNCEMENTS_DETAIL": {
   "text": "人们入座时，公告轮流显示在屏幕上",
@@ -653,8 +653,8 @@
  },
  "BTN_LOOK": {
   "text": "样式",
-  "back": "Design",
-  "why": "one word"
+  "back": "Style",
+  "why": "Table's existing word for design"
  },
  "BTN_SETTINGS": {
   "text": "设置",
@@ -3806,5 +3806,40 @@
   "text": "{language}歌词",
   "back": "{language} lyrics",
   "why": "names the lyrics language of the match with the same 歌词语言 word used everywhere"
+ },
+ "TAB_PLAN": {
+  "text": "流程",
+  "back": "Order of service",
+  "why": "Table's word for plan"
+ },
+ "TAB_CALENDAR": {
+  "text": "日历",
+  "back": "Calendar",
+  "why": "Common word"
+ },
+ "TAB_PEOPLE": {
+  "text": "会友",
+  "back": "Church friends",
+  "why": "Church's word for its people"
+ },
+ "TAB_GIVING": {
+  "text": "奉献",
+  "back": "Offering",
+  "why": "Church's word for giving"
+ },
+ "TAB_TEMPLATES": {
+  "text": "模板",
+  "back": "Template",
+  "why": "Common word"
+ },
+ "HINT_TABS": {
+  "text": "切换窗口",
+  "back": "Switch window",
+  "why": "Short noun phrase"
+ },
+ "KEYS_PLAN_ROWS[8].1": {
+  "text": "下一个窗口，PgUp 为上一个",
+  "back": "Next window, PgUp for the previous",
+  "why": "Fragment"
  }
 }

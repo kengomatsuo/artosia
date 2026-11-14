@@ -172,7 +172,7 @@
  "CMD_ANNOUNCEMENTS": {
   "text": "公告",
   "back": "Announcements",
-  "why": "教會慣用公告，全程同詞"
+  "why": "Table's word"
  },
  "CMD_ANNOUNCEMENTS_DETAIL": {
   "text": "人們入座時輪流投影的公告",
@@ -651,8 +651,8 @@
  },
  "BTN_LOOK": {
   "text": "外觀",
-  "back": "Design",
-  "why": "全程同詞"
+  "back": "Appearance",
+  "why": "Table's existing word for design"
  },
  "BTN_SETTINGS": {
   "text": "設定",
@@ -3804,5 +3804,40 @@
   "text": "{language}歌詞",
   "back": "{language} song words",
   "why": "語言名加歌詞，與其他處同詞，不會被當成介面語言"
+ },
+ "TAB_PLAN": {
+  "text": "流程",
+  "back": "Order of service",
+  "why": "Table's word for plan"
+ },
+ "TAB_CALENDAR": {
+  "text": "行事曆",
+  "back": "Calendar",
+  "why": "Taiwan usage"
+ },
+ "TAB_PEOPLE": {
+  "text": "會友",
+  "back": "Church friends",
+  "why": "Church's word for its people"
+ },
+ "TAB_GIVING": {
+  "text": "奉獻",
+  "back": "Offering",
+  "why": "Church's word for giving"
+ },
+ "TAB_TEMPLATES": {
+  "text": "範本",
+  "back": "Template",
+  "why": "Table's word"
+ },
+ "HINT_TABS": {
+  "text": "切換視窗",
+  "back": "Switch window",
+  "why": "Taiwan word 視窗"
+ },
+ "KEYS_PLAN_ROWS[8].1": {
+  "text": "下一個視窗，PgUp 為上一個",
+  "back": "Next window, PgUp for the previous",
+  "why": "Fragment"
  }
 }

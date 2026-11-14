@@ -48,7 +48,7 @@ use std::time::Duration;
 use rune::{AppSpec, ImageCache, Key, KeyEvent, Titlebar, Tx, Waker};
 
 use palette::Scope;
-use state::{App, Sheet};
+use state::{App, Sheet, Tab};
 
 fn setup(s: &mut App, waker: Waker) {
     s.waker = Some(waker.clone());
@@ -130,13 +130,22 @@ fn on_key(s: &mut App, ev: &KeyEvent, tx: &mut Tx) -> bool {
         return held_changed;
     }
     let focused = tx.focused().is_some();
-    let editing = s.editor.is_some() || s.notices.is_some();
+    // The song editor lives in the plan's tab and keeps its words while another tab is open.
+    let song_editor = s.editor.is_some() && s.tab == Tab::Plan;
+    let editing = song_editor || s.notices.is_some();
     match &ev.key {
         Key::Command('k') => {
             s.open_palette(Scope::All, "");
             return true;
         }
-        Key::Command('s') if s.editor.is_some() => {
+        // The next and the previous window, as the next sheet of Excel and the next tab of
+        // Chrome and Edge on Windows. Ctrl and a digit stay the Preview ring's.
+        Key::PageDown | Key::PageUp if (ev.mods.ctrl || ev.mods.cmd) && !ev.mods.alt && !s.palette.open && s.sheet == Sheet::None => {
+            s.open_tab(s.tab.step(if ev.key == Key::PageDown { 1 } else { -1 }));
+            tx.blur();
+            return true;
+        }
+        Key::Command('s') if song_editor => {
             s.save_editor();
             tx.blur();
             return true;
@@ -157,6 +166,7 @@ fn on_key(s: &mut App, ev: &KeyEvent, tx: &mut Tx) -> bool {
         // Ctrl Shift N is a new plan, beside Ctrl N for a new song; the plus of the list of
         // plans prints it.
         Key::Command('n') if ev.mods.shift && !editing && !s.palette.open && s.sheet == Sheet::None => {
+            s.open_tab(Tab::Plan);
             s.begin_new_plan();
             return true;
         }
@@ -201,7 +211,7 @@ fn on_key(s: &mut App, ev: &KeyEvent, tx: &mut Tx) -> bool {
             return true;
         }
         // Ctrl and a digit put the Preview ring on that section.
-        Key::Command(digit) if digit.is_ascii_digit() && !editing && !s.palette.open && s.sheet == Sheet::None => {
+        Key::Command(digit) if digit.is_ascii_digit() && !editing && !s.palette.open && s.sheet == Sheet::None && s.tab == Tab::Plan => {
             let digit = digit.to_digit(10).unwrap_or(1) as usize;
             s.select_section(if digit == 0 { 9 } else { digit - 1 });
             follow(s, tx);
@@ -218,7 +228,7 @@ fn on_key(s: &mut App, ev: &KeyEvent, tx: &mut Tx) -> bool {
             s.palette_escape();
             return true;
         }
-        Key::Escape if s.editor.is_some() && s.sheet == Sheet::None => {
+        Key::Escape if song_editor && s.sheet == Sheet::None => {
             if !s.dismiss_suggestions() {
                 s.close_editor();
             }
@@ -242,7 +252,8 @@ fn on_key(s: &mut App, ev: &KeyEvent, tx: &mut Tx) -> bool {
         }
         return false;
     }
-    if focused || editing || s.sheet != Sheet::None {
+    // The projector's keys act where Preview and Live are in view, and nowhere else.
+    if focused || editing || s.sheet != Sheet::None || s.tab != Tab::Plan {
         return false;
     }
     // The arrows are EasiSlides': Up and Down are the slide before and after, Left the first
@@ -485,7 +496,7 @@ const SCENES: &[Scene] = &[
         s.show(0);
         s.open_palette(Scope::All, "alone");
     }),
-    ("look", |s| s.sheet = Sheet::Looks),
+    ("look", |s| s.open_tab(crate::state::Tab::Look)),
     ("settings", |s| s.sheet = Sheet::Settings),
     // Settings with several Bibles installed: each choice reads as people call that Bible,
     // never as its file is named. The names are made up.
@@ -502,7 +513,7 @@ const SCENES: &[Scene] = &[
         s.language_open = true;
     }),
     ("look-styled", |s| {
-        s.sheet = Sheet::Looks;
+        s.open_tab(crate::state::Tab::Look);
         let styled = artosia_slides::look::Look { ink: [255, 214, 0], font: "Georgia".into(), outline: artosia_slides::look::Outline::Thick, ..s.look() };
         s.set_look(styled);
     }),
@@ -512,7 +523,7 @@ const SCENES: &[Scene] = &[
     ("design-network-camera", |s| {
         let look = artosia_slides::look::Look { background: artosia_slides::look::Background::Camera("rtsp://192.168.1.20:8554/live".into()), shadow: true, ..s.look() };
         s.set_look(look);
-        s.sheet = Sheet::Looks;
+        s.open_tab(crate::state::Tab::Look);
     }),
     ("camera-background", |s| {
         let look = artosia_slides::look::Look { background: artosia_slides::look::Background::Camera(String::new()), place: artosia_slides::look::Place::Bottom, shadow: true, ..s.look() };
@@ -542,6 +553,13 @@ const SCENES: &[Scene] = &[
         s.sheet = Sheet::Remote;
     }),
     // UIOVER1: the overhaul's three directions, seven pages each.
+    // UIOVER1: each window of the tab bar.
+    ("tab-notices", |s| s.open_tab(Tab::Notices)),
+    ("tab-calendar", |s| s.open_tab(Tab::Calendar)),
+    ("tab-people", |s| s.open_tab(Tab::People)),
+    ("tab-giving", |s| s.open_tab(Tab::Giving)),
+    ("tab-templates", |s| s.open_tab(Tab::Templates)),
+    ("tab-look", |s| s.open_tab(Tab::Look)),
     ("mock-a-p1", |s| s.mock = Some(('a', 1))),
     ("mock-a-p2", |s| s.mock = Some(('a', 2))),
     ("mock-a-p3", |s| s.mock = Some(('a', 3))),
@@ -802,7 +820,7 @@ const SCENES: &[Scene] = &[
         s.use_own_look();
         let styled = artosia_slides::look::Look { ink: [255, 214, 0], outline: artosia_slides::look::Outline::Thick, ..s.look() };
         s.set_look(styled);
-        s.sheet = Sheet::Looks;
+        s.open_tab(crate::state::Tab::Look);
     }),
     ("plans-own-look", |s| {
         s.demo_plans();

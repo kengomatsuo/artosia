@@ -177,7 +177,7 @@
  "CMD_ANNOUNCEMENTS": {
   "text": "Anuncios",
   "back": "Announcements",
-  "why": "One word for the announcements everywhere."
+  "why": "Existing word for announcements."
  },
  "CMD_ANNOUNCEMENTS_DETAIL": {
   "text": "Se alternan en el proyector mientras llega gente",
@@ -658,7 +658,7 @@
  "BTN_LOOK": {
   "text": "Diseño",
   "back": "Design",
-  "why": "One word."
+  "why": "Same word as the existing Design button."
  },
  "BTN_SETTINGS": {
   "text": "Ajustes",
@@ -3835,5 +3835,40 @@
   "text": "Letra en {language}",
   "back": "Words in {language}",
   "why": "Chip names the language of the matched words; 'en' keeps it from reading as the window's language."
+ },
+ "TAB_PLAN": {
+  "text": "Culto",
+  "back": "Service plan",
+  "why": "Culto is the table's plan word."
+ },
+ "TAB_CALENDAR": {
+  "text": "Calendario",
+  "back": "Calendar",
+  "why": "Plain word."
+ },
+ "TAB_PEOPLE": {
+  "text": "Miembros",
+  "back": "Members",
+  "why": "Church word for its people."
+ },
+ "TAB_GIVING": {
+  "text": "Ofrendas",
+  "back": "Offerings",
+  "why": "What evangelical churches collect."
+ },
+ "TAB_TEMPLATES": {
+  "text": "Plantillas",
+  "back": "Templates",
+  "why": "Matches existing Usar una plantilla."
+ },
+ "HINT_TABS": {
+  "text": "Cambiar de ventana",
+  "back": "Change window",
+  "why": "Ventana is the table's window word."
+ },
+ "KEYS_PLAN_ROWS[8].1": {
+  "text": "Ir a la ventana siguiente (con PgUp, a la anterior)",
+  "back": "Go to the next window (with PgUp, the previous)",
+  "why": "Fragment, PgUp as printed."
  }
 }

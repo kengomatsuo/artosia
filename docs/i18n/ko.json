@@ -172,7 +172,7 @@
  "CMD_ANNOUNCEMENTS": {
   "text": "공지",
   "back": "Announcements",
-  "why": "공지 is the announcements word everywhere"
+  "why": "Table's word"
  },
  "CMD_ANNOUNCEMENTS_DETAIL": {
   "text": "예배 전 화면에 차례로 돌아가며 나오는 공지",
@@ -652,7 +652,7 @@
  "BTN_LOOK": {
   "text": "디자인",
   "back": "Design",
-  "why": ""
+  "why": "Table's word"
  },
  "BTN_SETTINGS": {
   "text": "설정",
@@ -3806,5 +3806,40 @@
   "text": "{language} 가사",
   "back": "{language} lyrics",
   "why": "uses 가사, the window's word for a song's words"
+ },
+ "TAB_PLAN": {
+  "text": "예배 순서",
+  "back": "Order of worship",
+  "why": "Table's word for plan"
+ },
+ "TAB_CALENDAR": {
+  "text": "일정",
+  "back": "Schedule",
+  "why": "Church schedule by day and hour"
+ },
+ "TAB_PEOPLE": {
+  "text": "교인",
+  "back": "Church member",
+  "why": "Church's word for its people"
+ },
+ "TAB_GIVING": {
+  "text": "헌금",
+  "back": "Offering",
+  "why": "Church's word"
+ },
+ "TAB_TEMPLATES": {
+  "text": "템플릿",
+  "back": "Template",
+  "why": "Common loanword"
+ },
+ "HINT_TABS": {
+  "text": "창 전환",
+  "back": "Switch window",
+  "why": "창 is the table's word for a program window"
+ },
+ "KEYS_PLAN_ROWS[8].1": {
+  "text": "다음 창으로, PgUp은 이전 창으로",
+  "back": "To the next window, PgUp to the previous window",
+  "why": "창, as in the table"
  }
 }

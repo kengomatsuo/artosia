@@ -177,7 +177,7 @@
  "CMD_ANNOUNCEMENTS": {
   "text": "Annonces",
   "back": "Announcements",
-  "why": "the church word"
+  "why": "Table's word"
  },
  "CMD_ANNOUNCEMENTS_DETAIL": {
   "text": "Annonces à tour de rôle pendant l'arrivée",
@@ -658,7 +658,7 @@
  "BTN_LOOK": {
   "text": "Apparence",
   "back": "Look",
-  "why": "one word"
+  "why": "Table's word for the design"
  },
  "BTN_SETTINGS": {
   "text": "Réglages",
@@ -3838,5 +3838,40 @@
   "text": "Paroles en {language}",
   "back": "Words in {language}",
   "why": "en before the bare name reads right for any initial"
+ },
+ "TAB_PLAN": {
+  "text": "Programme",
+  "back": "Plan",
+  "why": "Table's plan word"
+ },
+ "TAB_CALENDAR": {
+  "text": "Calendrier",
+  "back": "Calendar",
+  "why": "Plain"
+ },
+ "TAB_PEOPLE": {
+  "text": "Membres",
+  "back": "Members",
+  "why": "Church word for its own people"
+ },
+ "TAB_GIVING": {
+  "text": "Offrandes",
+  "back": "Offerings",
+  "why": "Church word for what is collected"
+ },
+ "TAB_TEMPLATES": {
+  "text": "Modèles",
+  "back": "Templates",
+  "why": "Plain"
+ },
+ "HINT_TABS": {
+  "text": "changer de fenêtre",
+  "back": "change window",
+  "why": "Short phrase after key caps"
+ },
+ "KEYS_PLAN_ROWS[8].1": {
+  "text": "Fenêtre suivante, avec PgUp la précédente",
+  "back": "Next window, with PgUp the previous one",
+  "why": "Fragment, no full stop"
  }
 }

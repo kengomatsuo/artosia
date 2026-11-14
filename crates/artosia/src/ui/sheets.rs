@@ -28,7 +28,9 @@ fn file_name(path: &str) -> String {
     std::path::Path::new(path).file_name().map(|name| name.to_string_lossy().to_string()).unwrap_or_default()
 }
 
-fn looks(s: &App, k: &Kit, layer: &mut Vec<El>, tall: f32) {
+/// What the projector draws, as the Design tab: the settings in a column on the left and the
+/// sample slide as large as the rest of the window allows (UIOVER1, direction B's Tampilan).
+pub(super) fn design(s: &App, cx: &mut rune::Cx<App>, k: &Kit, layer: &mut Vec<El>) -> El {
     let look = s.look();
     // The cameras the projector program found on this computer; none in a build without video.
     let cameras = s.link.status().cameras;
@@ -215,11 +217,23 @@ fn looks(s: &App, k: &Kit, layer: &mut Vec<El>, tall: f32) {
                 .child(text(if s.settings.logo.is_empty() { t::LOOK_NO_FILE().to_string() } else { file_name(&s.settings.logo) }).font(type_::SMALL).color(k.c.text_muted).truncate().grow(1.0)),
         )),
     };
-    let body = col().w_full().px(space::S4).pb(space::S4).gap(space::S3).child(chooser).child(row().w_full().child(parts)).child(pane);
-    // A window lower than a laptop's scrolls the part under the sample slide.
-    let body = col().w_full().max_h((tall - 330.0).max(200.0)).scroll(rune::ScrollSpec { stick_bottom: false }).scroll_edge_fade(crate::theme::size::FADE).child(body).scroll_bar(k);
-    let content = col().w_full().child(super::look::preview(s, k)).child(body);
-    Dialog::new("looks", t::BTN_LOOK()).open(true).width(620.0).fit().on_close(close).child(content).build(k, layer);
+    let sf = theme::surf();
+    let body = col().w_full().px(space::S5).py(space::S5).gap(space::S3).child(chooser).child(row().w_full().child(parts)).child(pane);
+    let settings = col()
+        .key("design-settings")
+        .w(620.0)
+        .h_full()
+        .min_h(0.0)
+        .fill(sf.side)
+        .scroll(rune::ScrollSpec { stick_bottom: false })
+        .scroll_edge_fade(crate::theme::size::FADE)
+        .child(body)
+        .scroll_bar(k);
+    // The slide takes the width that is left, up to a projector's own proportions in the height.
+    let room = cx.layout_size("design-stage").unwrap_or([640.0, 560.0]);
+    let width = (room[0] - 2.0 * space::S6).min((room[1] - 2.0 * space::S6) * 16.0 / 9.0).clamp(320.0, 1280.0).round();
+    let stage = col().key("design-stage").grow(1.0).min_w(0.0).h_full().min_h(0.0).px(space::S6).py(space::S6).center().child(super::look::stage(s, k, width));
+    row().key("design").w_full().grow(1.0).min_h(0.0).fill(sf.work).child(settings).child(el().w(1.0).h_full().fill(sf.edge).a11y_hidden()).child(stage)
 }
 
 /// The program's own settings: what is chosen once and left. Grouped under one-word headings,
@@ -1018,7 +1032,6 @@ fn listen(s: &App, k: &Kit, layer: &mut Vec<El>, tall: f32) {
 pub fn view(s: &App, k: &Kit, layer: &mut Vec<El>, tall: f32) {
     match s.sheet {
         Sheet::None => {}
-        Sheet::Looks => looks(s, k, layer, tall),
         Sheet::Settings => settings(s, k, layer, tall),
         Sheet::Screens => screens(s, k, layer),
         Sheet::Remote => remote(s, k, layer),

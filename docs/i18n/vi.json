@@ -172,7 +172,7 @@
  "CMD_ANNOUNCEMENTS": {
   "text": "Thông báo",
   "back": "Announcements",
-  "why": "One word for the announcements everywhere"
+  "why": "Table's word"
  },
  "CMD_ANNOUNCEMENTS_DETAIL": {
   "text": "Lần lượt chiếu khi mọi người đang vào chỗ",
@@ -652,7 +652,7 @@
  "BTN_LOOK": {
   "text": "Hiển thị",
   "back": "Design",
-  "why": "One word"
+  "why": "Table's word for the design"
  },
  "BTN_SETTINGS": {
   "text": "Cài đặt",
@@ -3804,5 +3804,40 @@
   "text": "Lời {language}",
   "back": "Words in {language}",
   "why": "Lời is the song's words as in the editor; the name arrives with tiếng already"
+ },
+ "TAB_PLAN": {
+  "text": "Thứ tự lễ",
+  "back": "Order of service",
+  "why": "Table's plan word"
+ },
+ "TAB_CALENDAR": {
+  "text": "Lịch",
+  "back": "Calendar",
+  "why": "One word"
+ },
+ "TAB_PEOPLE": {
+  "text": "Tín hữu",
+  "back": "Believers",
+  "why": "Church word for its own people, not users"
+ },
+ "TAB_GIVING": {
+  "text": "Dâng hiến",
+  "back": "Giving",
+  "why": "Church word for offerings"
+ },
+ "TAB_TEMPLATES": {
+  "text": "Mẫu",
+  "back": "Template",
+  "why": "One short word"
+ },
+ "HINT_TABS": {
+  "text": "chuyển cửa sổ",
+  "back": "switch window",
+  "why": "Short phrase after key caps"
+ },
+ "KEYS_PLAN_ROWS[8].1": {
+  "text": "Cửa sổ sau, với PgUp thì cửa sổ trước",
+  "back": "Next window, with PgUp the previous window",
+  "why": "Fragment, no full stop"
  }
 }

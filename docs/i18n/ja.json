@@ -172,7 +172,7 @@
  "CMD_ANNOUNCEMENTS": {
   "text": "お知らせ",
   "back": "Announcements",
-  "why": "お知らせ for the whole set, カード for one"
+  "why": "Table's word"
  },
  "CMD_ANNOUNCEMENTS_DETAIL": {
   "text": "集まる間に、お知らせが順番に映ります",
@@ -652,7 +652,7 @@
  "BTN_LOOK": {
   "text": "デザイン",
   "back": "Design",
-  "why": "Loan word"
+  "why": "Table's word"
  },
  "BTN_SETTINGS": {
   "text": "設定",
@@ -3804,5 +3804,40 @@
   "text": "{language}の歌詞",
   "back": "{language} words",
   "why": "Same noun as the other texts, so the chip names a song's words, not the window language"
+ },
+ "TAB_PLAN": {
+  "text": "式次第",
+  "back": "Order of service",
+  "why": "Table's word for plan"
+ },
+ "TAB_CALENDAR": {
+  "text": "カレンダー",
+  "back": "Calendar",
+  "why": "Everyday word, fits budget"
+ },
+ "TAB_PEOPLE": {
+  "text": "教会員",
+  "back": "Church members",
+  "why": "Church's word for its people"
+ },
+ "TAB_GIVING": {
+  "text": "献金",
+  "back": "Offering",
+  "why": "Church's word"
+ },
+ "TAB_TEMPLATES": {
+  "text": "ひな形",
+  "back": "Template",
+  "why": "Table's word"
+ },
+ "HINT_TABS": {
+  "text": "ウィンドウの切り替え",
+  "back": "Switching windows",
+  "why": "ウィンドウ is the table's word for a program window"
+ },
+ "KEYS_PLAN_ROWS[8].1": {
+  "text": "次のウィンドウへ。PgUp で前のウィンドウへ",
+  "back": "To the next window; PgUp to the previous window",
+  "why": "ウィンドウ, as in the table"
  }
 }

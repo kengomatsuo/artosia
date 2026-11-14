@@ -591,22 +591,30 @@ pub fn view(s: &App, cx: &mut Cx<App>, k: &Kit, layer: &mut Vec<El>) -> El {
     let width = area.map(|size| size[0]).unwrap_or(1366.0 - PLAN);
     let tall = area.map(|size| size[1]).unwrap_or(680.0);
     // An editor takes the Preview pane; what the room sees stays in view beside it.
-    let editor = if s.editor.is_some() {
-        Some(crate::ui::editor::view(s, k, width - NARROW - 1.0, layer))
-    } else if s.notices.is_some() {
-        Some(crate::ui::announcements::view(s, k, width - NARROW - 1.0))
-    } else {
-        None
-    };
     let centre = row().key("centre").grow(1.0).min_w(0.0).h_full().min_h(0.0);
-    let centre = match editor {
-        Some(editor) => centre.child(col().grow(1.0).min_w(0.0).h_full().min_h(0.0).fill(theme::surf().work).child(editor)).child(vline()).child(live_pane(s, k, None, layer)),
-        None => {
-            let size = Foot::fit((width - 1.0) / 2.0, tall);
-            centre.child(preview_pane(s, k, size)).child(vline()).child(live_pane(s, k, Some(size), layer))
-        }
+    let centre = if s.editor.is_some() {
+        let editor = crate::ui::editor::view(s, k, width - NARROW - 1.0, layer);
+        centre.child(col().grow(1.0).min_w(0.0).h_full().min_h(0.0).fill(theme::surf().work).child(editor)).child(vline()).child(live_pane(s, k, None, layer))
+    } else {
+        let size = Foot::fit((width - 1.0) / 2.0, tall);
+        centre.child(preview_pane(s, k, size)).child(vline()).child(live_pane(s, k, Some(size), layer))
     };
     row().key("columns").w_full().grow(1.0).min_h(0.0).child(plan_column(s, k, layer, tall)).child(vline()).child(centre)
+}
+
+/// A window of its own tab with the Live pane narrow beside it, so what the room sees stays in
+/// view while the announcements are written. `draw` gets the width it may fill.
+pub fn beside_live(s: &App, cx: &mut Cx<App>, k: &Kit, layer: &mut Vec<El>, draw: impl FnOnce(&App, &Kit, f32, &mut Vec<El>) -> El) -> El {
+    let width = cx.layout_size("centre").map(|size| size[0]).unwrap_or(1366.0);
+    let body = draw(s, k, width - NARROW - 1.0, layer);
+    row()
+        .key("centre")
+        .w_full()
+        .grow(1.0)
+        .min_h(0.0)
+        .child(col().grow(1.0).min_w(0.0).h_full().min_h(0.0).fill(theme::surf().work).child(body))
+        .child(vline())
+        .child(live_pane(s, k, None, layer))
 }
 
 #[cfg(test)]
