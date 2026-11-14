@@ -1791,8 +1791,8 @@
  },
  "LOOK_TEXT_COLOUR": {
   "text": "文字颜色",
-  "back": "Colour of the words",
-  "why": "noun phrase"
+  "back": "Text colour",
+  "why": "reuses the table word"
  },
  "LOOK_COLOUR_WHITE": {
   "text": "纯白",
@@ -1817,12 +1817,12 @@
  "LOOK_COLOUR_HEX": {
   "text": "颜色代码",
   "back": "Colour code",
-  "why": "not visible"
+  "why": "reuses the table word"
  },
  "LOOK_COLOUR_HEX_HINT": {
-  "text": "例如#FFD84D",
-  "back": "For example #FFD84D",
-  "why": "例如 written in full"
+  "text": "例如 #FFD400",
+  "back": "For example #FFD400",
+  "why": "plain everyday word"
  },
  "LOOK_FONT": {
   "text": "字体",
@@ -3841,5 +3841,65 @@
   "text": "下一个窗口，PgUp 为上一个",
   "back": "Next window, PgUp for the previous",
   "why": "Fragment"
+ },
+ "COLOUR_MORE": {
+  "text": "更多颜色",
+  "back": "More colours",
+  "why": "plain everyday word"
+ },
+ "COLOUR_USE": {
+  "text": "用这个颜色",
+  "back": "Use this colour",
+  "why": "plain everyday word"
+ },
+ "COLOUR_DESIGN": {
+  "text": "样式里的颜色",
+  "back": "Colours in the design",
+  "why": "plain everyday word"
+ },
+ "COLOUR_SAMPLES": {
+  "text": "现成颜色",
+  "back": "Ready colours",
+  "why": "plain everyday word"
+ },
+ "COLOUR_OWN": {
+  "text": "自己调色",
+  "back": "Mix your own",
+  "why": "plain everyday word"
+ },
+ "COLOUR_RECENT": {
+  "text": "最近用过的颜色",
+  "back": "Recently used colours",
+  "why": "plain everyday word"
+ },
+ "COLOUR_CODE": {
+  "text": "颜色代码",
+  "back": "Colour code",
+  "why": "plain everyday word"
+ },
+ "COLOUR_SHADE": {
+  "text": "颜色的深浅和浓淡",
+  "back": "Depth and strength of the colour",
+  "why": "plain everyday word"
+ },
+ "COLOUR_HUE": {
+  "text": "色相",
+  "back": "Hue",
+  "why": "plain everyday word"
+ },
+ "COLOUR_DROPPER": {
+  "text": "从幻灯片取色",
+  "back": "Take colour from the slide",
+  "why": "plain everyday word"
+ },
+ "COLOUR_DROPPER_ON": {
+  "text": "请点一下幻灯片，取指针下的颜色",
+  "back": "Please click the slide, to take the colour under the pointer",
+  "why": "plain everyday word"
+ },
+ "COLOUR_DROPPER_NONE": {
+  "text": "背景是照片或纯色时才能取色",
+  "back": "Colour can be taken only when the background is a photo or plain colour",
+  "why": "plain everyday word"
  }
 }

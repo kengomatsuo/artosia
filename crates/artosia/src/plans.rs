@@ -166,7 +166,6 @@ impl App {
     pub fn use_usual_look(&mut self) {
         let Some(look) = self.plan.look.take() else { return };
         self.touch_plan();
-        self.look_edit.sync(&self.look());
         self.refresh_decks();
         self.say(t::look_own_dropped(&self.plan_title()), Some(Undo::PlanLook { plan: self.plan.id, look }));
     }
@@ -178,7 +177,6 @@ impl App {
         }
         self.plan.look = Some(look);
         self.touch_plan();
-        self.look_edit.sync(&self.look());
         self.refresh_decks();
     }
 
@@ -263,7 +261,6 @@ impl App {
         let lines = self.look().max_lines;
         self.plan = plan;
         self.save_plan_now();
-        self.look_edit.sync(&self.look());
         self.plan_drag = None;
         self.plan_menu = None;
         self.more_menu = false;

@@ -232,7 +232,18 @@ pub(super) fn design(s: &App, cx: &mut rune::Cx<App>, k: &Kit, layer: &mut Vec<E
     // The slide takes the width that is left, up to a projector's own proportions in the height.
     let room = cx.layout_size("design-stage").unwrap_or([640.0, 560.0]);
     let width = (room[0] - 2.0 * space::S6).min((room[1] - 2.0 * space::S6) * 16.0 / 9.0).clamp(320.0, 1280.0).round();
-    let stage = col().key("design-stage").grow(1.0).min_w(0.0).h_full().min_h(0.0).px(space::S6).py(space::S6).center().child(super::look::stage(s, k, width));
+    // While the dropper is lit, a press on the slide takes the colour under it.
+    let slide = super::look::stage(s, k, width);
+    let slide = if s.colour.dropper {
+        slide.cursor(Cursor::Crosshair).border(2.0, theme::accent()).on_drag(|s: &mut App, d: &mut rune::Drag, _: &mut Tx| {
+            if d.phase == rune::Phase::Down && d.w > 0.0 && d.h > 0.0 {
+                s.drop_colour(d.x / d.w, d.y / d.h);
+            }
+        })
+    } else {
+        slide
+    };
+    let stage = col().key("design-stage").grow(1.0).min_w(0.0).h_full().min_h(0.0).px(space::S6).py(space::S6).center().child(slide);
     row().key("design").w_full().grow(1.0).min_h(0.0).fill(sf.work).child(settings).child(el().w(1.0).h_full().fill(sf.edge).a11y_hidden()).child(stage)
 }
 

@@ -1703,7 +1703,7 @@
  "LOOK_TEXT_COLOUR": {
   "text": "Warna teks",
   "back": "Text colour",
-  "why": "teks"
+  "why": "Table's teks and warna"
  },
  "LOOK_COLOUR_WHITE": {
   "text": "Putih",
@@ -1728,12 +1728,12 @@
  "LOOK_COLOUR_HEX": {
   "text": "Kode warna",
   "back": "Colour code",
-  "why": "Screen reader only"
+  "why": "Same as the table's Kode warna"
  },
  "LOOK_COLOUR_HEX_HINT": {
-  "text": "Kode, contoh: ffcc00",
-  "back": "Code, example: ffcc00",
-  "why": "'contoh' in full"
+  "text": "contoh: 1E90FF",
+  "back": "example: 1E90FF",
+  "why": "contoh written in full"
  },
  "LOOK_FONT": {
   "text": "Font",
@@ -3790,5 +3790,65 @@
   "text": "Jendela berikutnya, dengan PgUp yang sebelumnya",
   "back": "Next window, with PgUp the previous one",
   "why": "Fragment, no full stop"
+ },
+ "COLOUR_MORE": {
+  "text": "Warna lainnya",
+  "back": "Other colours",
+  "why": "Short noun phrase"
+ },
+ "COLOUR_USE": {
+  "text": "Pakai warna",
+  "back": "Use colour",
+  "why": "Verb first, everyday pakai"
+ },
+ "COLOUR_DESIGN": {
+  "text": "Warna di tema ini",
+  "back": "Colours in this theme",
+  "why": "tema is the table's word for design"
+ },
+ "COLOUR_SAMPLES": {
+  "text": "Warna siap pakai",
+  "back": "Ready-to-use colours",
+  "why": "Plain, fits 16"
+ },
+ "COLOUR_OWN": {
+  "text": "Warna sendiri",
+  "back": "Own colour",
+  "why": "Pairs with the ready ones"
+ },
+ "COLOUR_RECENT": {
+  "text": "Terakhir dipakai",
+  "back": "Last used",
+  "why": "Plain heading"
+ },
+ "COLOUR_CODE": {
+  "text": "Kode warna",
+  "back": "Colour code",
+  "why": "Same as the box label"
+ },
+ "COLOUR_SHADE": {
+  "text": "Terang dan pekatnya warna",
+  "back": "Lightness and depth of the colour",
+  "why": "Describes both drag directions"
+ },
+ "COLOUR_HUE": {
+  "text": "Rona",
+  "back": "Hue",
+  "why": "Painter's word, one word"
+ },
+ "COLOUR_DROPPER": {
+  "text": "Ambil dari slide",
+  "back": "Take from the slide",
+  "why": "slide is the table's word"
+ },
+ "COLOUR_DROPPER_ON": {
+  "text": "Klik slide untuk mengambil warna",
+  "back": "Click the slide to take the colour",
+  "why": "Short polite instruction"
+ },
+ "COLOUR_DROPPER_NONE": {
+  "text": "Hanya bisa jika latar foto atau satu warna",
+  "back": "Only possible if the backdrop is a photo or one colour",
+  "why": "latar is the table's backdrop word"
  }
 }

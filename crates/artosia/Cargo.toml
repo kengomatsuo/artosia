@@ -11,6 +11,8 @@ description = "Artosia's operator window."
 speech = ["artosia-listen/whisper"]
 
 [dependencies]
+# Already built for Rune; read here for the colour dropper.
+image = { version = "0.25", default-features = false, features = ["png", "jpeg", "gif", "webp", "bmp"] }
 artosia-listen = { path = "../artosia-listen" }
 artosia-locale = { path = "../artosia-locale" }
 artosia-lyrics = { path = "../artosia-lyrics" }

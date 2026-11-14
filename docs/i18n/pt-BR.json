@@ -1795,8 +1795,8 @@
  },
  "LOOK_TEXT_COLOUR": {
   "text": "Cor do texto",
-  "back": "Text colour",
-  "why": "-"
+  "back": "Colour of the text",
+  "why": "Same as the existing table"
  },
  "LOOK_COLOUR_WHITE": {
   "text": "Branco",
@@ -1821,12 +1821,12 @@
  "LOOK_COLOUR_HEX": {
   "text": "Código da cor",
   "back": "Colour code",
-  "why": "-"
+  "why": "Code as in the table"
  },
  "LOOK_COLOUR_HEX_HINT": {
-  "text": "Por exemplo: #FFD54A",
-  "back": "For example: #FFD54A",
-  "why": "-"
+  "text": "Por exemplo: 1E90FF",
+  "back": "For example: 1E90FF",
+  "why": "Full words, no abbreviation"
  },
  "LOOK_FONT": {
   "text": "Fonte",
@@ -3870,5 +3870,65 @@
   "text": "Vai à janela seguinte (com PgUp, à anterior)",
   "back": "Goes to the next window (with PgUp, the previous)",
   "why": "Fragment, PgUp as printed."
+ },
+ "COLOUR_MORE": {
+  "text": "Mais cores",
+  "back": "More colours",
+  "why": "Short noun phrase"
+ },
+ "COLOUR_USE": {
+  "text": "Usar cor",
+  "back": "Use colour",
+  "why": "Verb first"
+ },
+ "COLOUR_DESIGN": {
+  "text": "Nesta aparência",
+  "back": "In this design",
+  "why": "Design word of the table"
+ },
+ "COLOUR_SAMPLES": {
+  "text": "Amostras",
+  "back": "Samples",
+  "why": "Swatch word"
+ },
+ "COLOUR_OWN": {
+  "text": "Cor própria",
+  "back": "Own colour",
+  "why": "Pairs with Propio/Própria"
+ },
+ "COLOUR_RECENT": {
+  "text": "Recentes",
+  "back": "Recent",
+  "why": "One word"
+ },
+ "COLOUR_CODE": {
+  "text": "Código da cor",
+  "back": "Colour code",
+  "why": "Same as the hex label"
+ },
+ "COLOUR_SHADE": {
+  "text": "Intensidade e luminosidade",
+  "back": "Strength and lightness",
+  "why": "Plain words for the two directions"
+ },
+ "COLOUR_HUE": {
+  "text": "Matiz",
+  "back": "Hue",
+  "why": "Painter's one word"
+ },
+ "COLOUR_DROPPER": {
+  "text": "Pegar do slide",
+  "back": "Take from the picture",
+  "why": "Short; icon says the rest"
+ },
+ "COLOUR_DROPPER_ON": {
+  "text": "Clique no slide para pegar a cor",
+  "back": "Click on the slide",
+  "why": "Familiar imperative, slide word of the table"
+ },
+ "COLOUR_DROPPER_NONE": {
+  "text": "Só funciona com fundo de foto ou de uma cor",
+  "back": "Only works with a photo or one-colour background",
+  "why": "Plain statement"
  }
 }

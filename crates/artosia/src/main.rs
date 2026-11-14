@@ -231,6 +231,12 @@ fn on_key(s: &mut App, ev: &KeyEvent, tx: &mut Tx) -> bool {
             s.palette_escape();
             return true;
         }
+        // The colour picker prints Esc on its Cancel, wherever the focus is.
+        Key::Escape if s.colour.open.is_some() && s.sheet == Sheet::None => {
+            s.finish_colour(false);
+            tx.blur();
+            return true;
+        }
         Key::Escape if song_editor && s.sheet == Sheet::None => {
             if !s.dismiss_suggestions() {
                 s.close_editor();
@@ -563,6 +569,14 @@ const SCENES: &[Scene] = &[
     ("tab-giving", |s| s.open_tab(Tab::Giving)),
     ("tab-templates", |s| s.open_tab(Tab::Templates)),
     ("tab-look", |s| s.open_tab(Tab::Look)),
+    // OVCOLOR1: the colour picker open under the words' colour, a colour used before it.
+    ("colour-picker", |s| {
+        s.open_tab(Tab::Look);
+        s.design_part = 1;
+        s.settings.recent_colours = vec![[255, 214, 0], [120, 200, 255], [255, 120, 90]];
+        s.toggle_colour(crate::ui::colour::ColourFor::Ink);
+        s.colour.more = true;
+    }),
     ("mock-a-p1", |s| s.mock = Some(('a', 1))),
     ("mock-a-p2", |s| s.mock = Some(('a', 2))),
     ("mock-a-p3", |s| s.mock = Some(('a', 3))),

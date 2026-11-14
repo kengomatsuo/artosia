@@ -1790,7 +1790,7 @@
  "LOOK_TEXT_COLOUR": {
   "text": "글자 색",
   "back": "Letter colour",
-  "why": ""
+  "why": "reuses the table word"
  },
  "LOOK_COLOUR_WHITE": {
   "text": "흰색",
@@ -1815,12 +1815,12 @@
  "LOOK_COLOUR_HEX": {
   "text": "색상 코드",
   "back": "Colour code",
-  "why": ""
+  "why": "reuses the table word"
  },
  "LOOK_COLOUR_HEX_HINT": {
-  "text": "예를 들어 #FFD700",
-  "back": "For example #FFD700",
-  "why": ""
+  "text": "예를 들어 #FFD400",
+  "back": "For example #FFD400",
+  "why": "plain everyday word"
  },
  "LOOK_FONT": {
   "text": "글꼴",
@@ -3841,5 +3841,65 @@
   "text": "다음 창으로, PgUp은 이전 창으로",
   "back": "To the next window, PgUp to the previous window",
   "why": "창, as in the table"
+ },
+ "COLOUR_MORE": {
+  "text": "더 많은 색",
+  "back": "More colours",
+  "why": "plain everyday word"
+ },
+ "COLOUR_USE": {
+  "text": "이 색 사용",
+  "back": "Use this colour",
+  "why": "plain everyday word"
+ },
+ "COLOUR_DESIGN": {
+  "text": "디자인에 쓴 색",
+  "back": "Colours used in the design",
+  "why": "plain everyday word"
+ },
+ "COLOUR_SAMPLES": {
+  "text": "기본 색상",
+  "back": "Basic colours",
+  "why": "plain everyday word"
+ },
+ "COLOUR_OWN": {
+  "text": "직접 만들기",
+  "back": "Make your own",
+  "why": "plain everyday word"
+ },
+ "COLOUR_RECENT": {
+  "text": "최근에 쓴 색",
+  "back": "Recently used colours",
+  "why": "plain everyday word"
+ },
+ "COLOUR_CODE": {
+  "text": "색상 코드",
+  "back": "Colour code",
+  "why": "plain everyday word"
+ },
+ "COLOUR_SHADE": {
+  "text": "색의 밝기와 선명도",
+  "back": "Brightness and clarity of the colour",
+  "why": "plain everyday word"
+ },
+ "COLOUR_HUE": {
+  "text": "색조",
+  "back": "Hue",
+  "why": "plain everyday word"
+ },
+ "COLOUR_DROPPER": {
+  "text": "스포이트",
+  "back": "Eyedropper",
+  "why": "plain everyday word"
+ },
+ "COLOUR_DROPPER_ON": {
+  "text": "슬라이드를 클릭하면 그 색을 골라요",
+  "back": "Click the slide and it picks that colour",
+  "why": "plain everyday word"
+ },
+ "COLOUR_DROPPER_NONE": {
+  "text": "배경이 사진이나 단색일 때만 쓸 수 있어요",
+  "back": "Usable only when the background is a photo or single colour",
+  "why": "plain everyday word"
  }
 }

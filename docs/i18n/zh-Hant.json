@@ -1790,7 +1790,7 @@
  "LOOK_TEXT_COLOUR": {
   "text": "文字顏色",
   "back": "Text colour",
-  "why": "名詞片語"
+  "why": "reuses the table word"
  },
  "LOOK_COLOUR_WHITE": {
   "text": "白色",
@@ -1815,12 +1815,12 @@
  "LOOK_COLOUR_HEX": {
   "text": "自訂色碼",
   "back": "Custom colour code",
-  "why": "不顯示"
+  "why": "reuses the table word"
  },
  "LOOK_COLOUR_HEX_HINT": {
-  "text": "例如 #FFD54F",
-  "back": "For example #FFD54F",
-  "why": "例如寫全"
+  "text": "例如 #FFD400",
+  "back": "For example #FFD400",
+  "why": "plain everyday word"
  },
  "LOOK_FONT": {
   "text": "字型",
@@ -3839,5 +3839,65 @@
   "text": "下一個視窗，PgUp 為上一個",
   "back": "Next window, PgUp for the previous",
   "why": "Fragment"
+ },
+ "COLOUR_MORE": {
+  "text": "更多顏色",
+  "back": "More colours",
+  "why": "plain everyday word"
+ },
+ "COLOUR_USE": {
+  "text": "使用這個顏色",
+  "back": "Use this colour",
+  "why": "plain everyday word"
+ },
+ "COLOUR_DESIGN": {
+  "text": "外觀裡的顏色",
+  "back": "Colours in the appearance",
+  "why": "plain everyday word"
+ },
+ "COLOUR_SAMPLES": {
+  "text": "現成顏色",
+  "back": "Ready colours",
+  "why": "plain everyday word"
+ },
+ "COLOUR_OWN": {
+  "text": "自己調色",
+  "back": "Mix your own",
+  "why": "plain everyday word"
+ },
+ "COLOUR_RECENT": {
+  "text": "最近用過的顏色",
+  "back": "Recently used colours",
+  "why": "plain everyday word"
+ },
+ "COLOUR_CODE": {
+  "text": "自訂色碼",
+  "back": "Custom colour code",
+  "why": "plain everyday word"
+ },
+ "COLOUR_SHADE": {
+  "text": "顏色的深淺濃淡",
+  "back": "Depth and strength of the colour",
+  "why": "plain everyday word"
+ },
+ "COLOUR_HUE": {
+  "text": "色相",
+  "back": "Hue",
+  "why": "plain everyday word"
+ },
+ "COLOUR_DROPPER": {
+  "text": "從投影片取色",
+  "back": "Take colour from the slide",
+  "why": "plain everyday word"
+ },
+ "COLOUR_DROPPER_ON": {
+  "text": "請點一下投影片，取指標下的顏色",
+  "back": "Please click the slide, to take the colour under the pointer",
+  "why": "plain everyday word"
+ },
+ "COLOUR_DROPPER_NONE": {
+  "text": "背景是相片或單一顏色時才能取色",
+  "back": "Colour can be taken only when the background is a photo or single colour",
+  "why": "plain everyday word"
  }
 }

@@ -541,3 +541,12 @@ plain digits for its tabs (`src/frontend/utils/shortcuts.ts`) would take the liv
   on the way out (`App::open_tab`), so `notices.is_some()` holds only on that tab.
 - Design left the title bar for its tab: the settings in a column, the sample slide as large as
   the rest of the window allows (`ui/sheets.rs` `design`).
+
+### One colour picker (OVCOLOR1, built 2026-11-14)
+
+Every colour the program keeps is chosen in one picker (`ui/colour.rs`): a row offers the usual
+colours as squares and More, and More opens the picker under the row, so the large slide beside it
+shows each colour as it is tried. The colours already in the design come first, then forty samples,
+then a saturation square with a hue strip and a dropper that takes a colour from the slide, then
+the colours used last; a colour code is typed only behind its own disclosure. Cancel and Esc put
+back the colour it opened with.

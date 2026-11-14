@@ -1789,8 +1789,8 @@
  },
  "LOOK_TEXT_COLOUR": {
   "text": "Màu chữ",
-  "back": "Letter colour",
-  "why": "Noun phrase"
+  "back": "Text colour",
+  "why": "Table's Màu chữ"
  },
  "LOOK_COLOUR_WHITE": {
   "text": "Trắng",
@@ -1815,12 +1815,12 @@
  "LOOK_COLOUR_HEX": {
   "text": "Mã màu",
   "back": "Colour code",
-  "why": "Not visible"
+  "why": "Table's Mã màu"
  },
  "LOOK_COLOUR_HEX_HINT": {
-  "text": "Ví dụ #FFD54F",
-  "back": "For example #FFD54F",
-  "why": "For example in full"
+  "text": "ví dụ 1E90FF",
+  "back": "for example 1E90FF",
+  "why": "ví dụ in full"
  },
  "LOOK_FONT": {
   "text": "Phông chữ",
@@ -3839,5 +3839,65 @@
   "text": "Cửa sổ sau, với PgUp thì cửa sổ trước",
   "back": "Next window, with PgUp the previous window",
   "why": "Fragment, no full stop"
+ },
+ "COLOUR_MORE": {
+  "text": "Màu khác",
+  "back": "Other colours",
+  "why": "Short noun phrase"
+ },
+ "COLOUR_USE": {
+  "text": "Dùng màu này",
+  "back": "Use this colour",
+  "why": "Verb first"
+ },
+ "COLOUR_DESIGN": {
+  "text": "Màu trong Hiển thị",
+  "back": "Colours in Design",
+  "why": "Hiển thị is the table's design word"
+ },
+ "COLOUR_SAMPLES": {
+  "text": "Màu có sẵn",
+  "back": "Ready colours",
+  "why": "Plain"
+ },
+ "COLOUR_OWN": {
+  "text": "Tự pha màu",
+  "back": "Mix your own colour",
+  "why": "pha is mixing paint"
+ },
+ "COLOUR_RECENT": {
+  "text": "Màu dùng gần đây",
+  "back": "Recently used colours",
+  "why": "Plain heading"
+ },
+ "COLOUR_CODE": {
+  "text": "Mã màu",
+  "back": "Colour code",
+  "why": "Same as the box label"
+ },
+ "COLOUR_SHADE": {
+  "text": "Độ đậm nhạt và độ sáng",
+  "back": "Strength and lightness",
+  "why": "Both drag directions"
+ },
+ "COLOUR_HUE": {
+  "text": "Sắc màu",
+  "back": "Hue",
+  "why": "Painter's two-syllable word"
+ },
+ "COLOUR_DROPPER": {
+  "text": "Lấy màu từ trang",
+  "back": "Take colour from the slide",
+  "why": "trang is the table's slide word"
+ },
+ "COLOUR_DROPPER_ON": {
+  "text": "Bấm vào trang để lấy màu",
+  "back": "Press on the slide to take the colour",
+  "why": "Short instruction"
+ },
+ "COLOUR_DROPPER_NONE": {
+  "text": "Chỉ lấy được khi hình nền là ảnh hoặc một màu",
+  "back": "Can only be taken when the backdrop is a photo or one colour",
+  "why": "hình nền is the table's backdrop word"
  }
 }

@@ -1290,7 +1290,6 @@ impl App {
     pub fn set_look(&mut self, look: Look) {
         let lines = self.look().max_lines;
         let changed_lines = look.max_lines != lines;
-        self.look_edit.sync(&look);
         if let Background::Camera(name) = &look.background
             && name.contains("://")
             && self.camera_address.text != *name

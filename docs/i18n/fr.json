@@ -1796,7 +1796,7 @@
  "LOOK_TEXT_COLOUR": {
   "text": "Couleur du texte",
   "back": "Colour of the text",
-  "why": "noun phrase"
+  "why": "Table's Couleur du texte"
  },
  "LOOK_COLOUR_WHITE": {
   "text": "Blanc",
@@ -1821,12 +1821,12 @@
  "LOOK_COLOUR_HEX": {
   "text": "Code couleur",
   "back": "Colour code",
-  "why": "screen reader only"
+  "why": "Table's Code couleur"
  },
  "LOOK_COLOUR_HEX_HINT": {
-  "text": "Par exemple : #FFD700",
-  "back": "For example: #FFD700",
-  "why": "for example in full"
+  "text": "par exemple 1E90FF",
+  "back": "for example 1E90FF",
+  "why": "par exemple in full"
  },
  "LOOK_FONT": {
   "text": "Police",
@@ -3873,5 +3873,65 @@
   "text": "Fenêtre suivante, avec PgUp la précédente",
   "back": "Next window, with PgUp the previous one",
   "why": "Fragment, no full stop"
+ },
+ "COLOUR_MORE": {
+  "text": "Autres couleurs",
+  "back": "Other colours",
+  "why": "Short noun phrase"
+ },
+ "COLOUR_USE": {
+  "text": "Utiliser",
+  "back": "Use",
+  "why": "Verb first; the tick says what"
+ },
+ "COLOUR_DESIGN": {
+  "text": "Déjà dans l'apparence",
+  "back": "Already in the look",
+  "why": "Apparence is the table's design word"
+ },
+ "COLOUR_SAMPLES": {
+  "text": "Couleurs prêtes",
+  "back": "Ready colours",
+  "why": "Plain"
+ },
+ "COLOUR_OWN": {
+  "text": "Couleur libre",
+  "back": "Free colour",
+  "why": "Any colour by dragging"
+ },
+ "COLOUR_RECENT": {
+  "text": "Dernières couleurs",
+  "back": "Last colours",
+  "why": "Fits 18"
+ },
+ "COLOUR_CODE": {
+  "text": "Code couleur",
+  "back": "Colour code",
+  "why": "Same as the box label"
+ },
+ "COLOUR_SHADE": {
+  "text": "Intensité et luminosité",
+  "back": "Strength and brightness",
+  "why": "Both drag directions"
+ },
+ "COLOUR_HUE": {
+  "text": "Teinte",
+  "back": "Hue",
+  "why": "Painter's word"
+ },
+ "COLOUR_DROPPER": {
+  "text": "Prélever sur diapo",
+  "back": "Take from the slide",
+  "why": "diapo is the table's slide word"
+ },
+ "COLOUR_DROPPER_ON": {
+  "text": "Cliquez sur la diapo",
+  "back": "Click on the slide",
+  "why": "Short polite instruction"
+ },
+ "COLOUR_DROPPER_NONE": {
+  "text": "Possible avec une photo ou un fond uni",
+  "back": "Possible with a photo or a plain backdrop",
+  "why": "fond is the table's backdrop word"
  }
 }

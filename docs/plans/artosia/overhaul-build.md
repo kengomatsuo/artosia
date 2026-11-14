@@ -25,3 +25,21 @@ ACTION   press a pill or Ctrl+N: open_tab(tab); Notices with no announcement ope
 KEYS     Ctrl+1..7 outside the song editor (where Ctrl+digit adds a section) and outside a text field
 EDGES    1366 wide in Indonesian: seven pills fit with room; dark and light
 ```
+
+## OVCOLOR1: one colour picker
+
+```
+SOURCES  mock_b.rs p2; directions.md P2 (ProPresenter text fill, Adobe Express fill colour, Planning
+         Center colour themes, FreeShow MaterialColorInput.svelte, Canva text colour panel)
+BASE     ui/colour.rs: ColourFor names what is coloured; one picker, one state (App.colour), every
+         colour of the program a ColourFor variant (calendar, title roles and item kinds join later)
+TREE     row: the usual colours as squares, More (rainbow or the colour in use) · panel under the row:
+         head (colour, name, Cancel Esc, Use colour), In this design, Samples (4 x 10 OKLCH),
+         Your own (saturation square, hue strip, dropper), Used lately (8, in settings), Colour code
+         behind its disclosure
+ACTION   a pick applies at once so the slide shows it; Cancel or Esc puts back the colour it opened
+         with; Use keeps it and records it as used lately; a drag on the square or strip moves the
+         colour; arrows move both; the dropper's next press on the Design slide takes its colour
+         (solid, gradient, or the picture decoded at 320 points; none for a video or camera)
+EDGES    the panel opens in the scrolling column, never over the slide; 620 wide in ten languages
+```

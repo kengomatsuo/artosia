@@ -6631,9 +6631,9 @@
  {
   "key": "LOOK_TEXT_COLOUR",
   "kind": "const",
-  "screen": "Design dialog: a window about 620 points wide over the main window. A preview picture of a projector slide at the top, two wide buttons under it, then rows of choices: a grid of backgrounds, a file chooser, then Words with colour, font, outline, lines per slide, size and position, then the church's emblem. Label at the left of a row of four round colour swatches and a small box for a colour code.",
-  "moment": "The person changes the colour of the letters.",
-  "role": "row label",
+  "screen": "Design window, a tab of the main window: a column of choices on the left about 620 points wide, a large picture of a projector slide on the right. Under Words, the label at the left of a row of four colour squares and a button that opens the colour picker. The same words are the title of the picker when it opens under the row.",
+  "moment": "The person wants the letters on the projector in another colour.",
+  "role": "row label and picker title",
   "does": "Names the choice of the colour of the letters on the projector.",
   "budget": 20,
   "variables": [],
@@ -6717,10 +6717,10 @@
  {
   "key": "LOOK_COLOUR_HEX",
   "kind": "const",
-  "screen": "Design dialog: a window about 620 points wide over the main window. A preview picture of a projector slide at the top, two wide buttons under it, then rows of choices: a grid of backgrounds, a file chooser, then Words with colour, font, outline, lines per slide, size and position, then the church's emblem. Accessibility name of the small text box beside the swatches.",
-  "moment": "The person types a colour by its code.",
+  "screen": "The colour picker, opened under a colour row of the Design window. At its foot a disclosure opens a small text box for a colour code. Accessibility name of that box.",
+  "moment": "The person opened the colour code disclosure to type a code they were given.",
   "role": "accessibility label",
-  "does": "Names the box where a colour of the person's own is typed as a code.",
+  "does": "Names the box where a colour is typed as a code.",
   "budget": 24,
   "variables": [],
   "cases": [],
@@ -6734,8 +6734,8 @@
  {
   "key": "LOOK_COLOUR_HEX_HINT",
   "kind": "const",
-  "screen": "Design dialog: a window about 620 points wide over the main window. A preview picture of a projector slide at the top, two wide buttons under it, then rows of choices: a grid of backgrounds, a file chooser, then Words with colour, font, outline, lines per slide, size and position, then the church's emblem. Hint inside the empty colour code box, about 100 points wide.",
-  "moment": "The box is empty.",
+  "screen": "The colour picker, opened under a colour row of the Design window. Hint inside the empty colour code box at its foot, about 140 points wide.",
+  "moment": "The person opened the colour code disclosure to type a code they were given.",
   "role": "placeholder",
   "does": "Says the box takes a colour code made of letters and digits, with an example.",
   "budget": 22,
@@ -6747,6 +6747,212 @@
    "design"
   ],
   "notes": "Write the word for 'for example' in full; no abbreviation."
+ },
+ {
+  "key": "COLOUR_MORE",
+  "kind": "const",
+  "screen": "Design window, a colour row: four colour squares, then this button, about 150 points wide, with a small rainbow square (or the colour in use) at its left and an arrow at its right. It opens the colour picker under the row.",
+  "moment": "None of the four usual colours is the one the person wants.",
+  "role": "button",
+  "does": "Opens the full colour picker with every other colour.",
+  "budget": 16,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "design"
+  ],
+  "notes": "Short noun phrase."
+ },
+ {
+  "key": "COLOUR_USE",
+  "kind": "const",
+  "screen": "The colour picker's top line, at the right: a Cancel button, then this filled button with a tick.",
+  "moment": "The person tried colours, the slide shows the one they like, and they are done.",
+  "role": "button",
+  "does": "Keeps the colour now shown and closes the picker.",
+  "budget": 14,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "design"
+  ],
+  "notes": "Verb first."
+ },
+ {
+  "key": "COLOUR_DESIGN",
+  "kind": "const",
+  "screen": "The colour picker, a small heading in capitals over a row of squares: the colours already on the slide (the letters, the line round them, the background) and the four usual colours.",
+  "moment": "The person wants a colour that matches what the slide already has.",
+  "role": "section heading",
+  "does": "Heads the colours already used in this design.",
+  "budget": 22,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "design"
+  ],
+  "notes": "Shown in capitals in scripts that have them."
+ },
+ {
+  "key": "COLOUR_SAMPLES",
+  "kind": "const",
+  "screen": "The colour picker, a small heading in capitals over a grid of forty colour squares: four rows from light to dark, ten hues in each.",
+  "moment": "The person looks for a ready colour.",
+  "role": "section heading",
+  "does": "Heads the grid of ready colours to choose from.",
+  "budget": 16,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "design"
+  ],
+  "notes": "Shown in capitals in scripts that have them."
+ },
+ {
+  "key": "COLOUR_OWN",
+  "kind": "const",
+  "screen": "The colour picker, a small heading in capitals over a square that blends from white and black into one colour, with a rainbow strip beside it, and a button to take a colour from the slide.",
+  "moment": "No ready colour is right, so the person mixes one.",
+  "role": "section heading",
+  "does": "Heads the place where a person mixes any colour by dragging.",
+  "budget": 16,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "design"
+  ],
+  "notes": "Shown in capitals in scripts that have them."
+ },
+ {
+  "key": "COLOUR_RECENT",
+  "kind": "const",
+  "screen": "The colour picker, a small heading in capitals over up to eight squares of the colours chosen last in any picker of the program.",
+  "moment": "The person wants a colour they used a moment or a week ago.",
+  "role": "section heading",
+  "does": "Heads the colours chosen most recently.",
+  "budget": 18,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "design"
+  ],
+  "notes": "Shown in capitals in scripts that have them."
+ },
+ {
+  "key": "COLOUR_CODE",
+  "kind": "const",
+  "screen": "The colour picker's foot: a small arrow and these words, a disclosure that shows a box for a colour code when pressed.",
+  "moment": "The person was given an exact colour as a code, for example by the church's designer.",
+  "role": "disclosure",
+  "does": "Shows the box where a colour is typed as a code of letters and digits.",
+  "budget": 18,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "design"
+  ],
+  "notes": "A noun phrase."
+ },
+ {
+  "key": "COLOUR_SHADE",
+  "kind": "const",
+  "screen": "The colour picker: accessibility name of the square where dragging left and right changes how strong the colour is and up and down how light it is. The arrow keys move it too.",
+  "moment": "A person using a screen reader reaches the square.",
+  "role": "accessibility label",
+  "does": "Names the square that sets how light and how strong the colour is.",
+  "budget": 30,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "design"
+  ],
+  "notes": "Not visible."
+ },
+ {
+  "key": "COLOUR_HUE",
+  "kind": "const",
+  "screen": "The colour picker: accessibility name of the thin rainbow strip beside the square, which sets which colour of the rainbow it is. Up and Down move it.",
+  "moment": "A person using a screen reader reaches the strip.",
+  "role": "accessibility label",
+  "does": "Names the strip that picks the colour's place in the rainbow: red, yellow, green, blue, purple.",
+  "budget": 16,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "design"
+  ],
+  "notes": "Not visible. The painter's word for this, one word if the language has it."
+ },
+ {
+  "key": "COLOUR_DROPPER",
+  "kind": "const",
+  "screen": "The colour picker, under the square: a button with an eyedropper icon, about 150 points wide. Pressed, it stays lit until the next click on the large slide picture beside the panel.",
+  "moment": "The person wants the letters in a colour taken from the background picture.",
+  "role": "button",
+  "does": "Lets the next click on the slide take the colour under the pointer.",
+  "budget": 18,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "design",
+   "backdrop",
+   "slide"
+  ],
+  "notes": "Short; the icon says the rest."
+ },
+ {
+  "key": "COLOUR_DROPPER_ON",
+  "kind": "const",
+  "screen": "The colour picker, beside the lit eyedropper button, in the accent colour, wrapped on up to three lines about 110 points wide.",
+  "moment": "The person pressed the eyedropper button and now has to click the slide.",
+  "role": "instruction",
+  "does": "Tells the person that a click on the slide picture now picks the colour under the pointer.",
+  "budget": 40,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide"
+  ],
+  "notes": "An instruction, polite and short."
+ },
+ {
+  "key": "COLOUR_DROPPER_NONE",
+  "kind": "const",
+  "screen": "Tooltip of the eyedropper button when it is greyed out, because the background is a video or a camera.",
+  "moment": "The person points at the greyed eyedropper and wonders why it does nothing.",
+  "role": "tooltip",
+  "does": "Says the colour can be taken only when the background is a photo or one flat colour.",
+  "budget": 48,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "backdrop"
+  ],
+  "notes": "A plain sentence, no full stop needed."
  },
  {
   "key": "LOOK_FONT",

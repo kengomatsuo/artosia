@@ -249,6 +249,7 @@ pub mod icons {
     icon!(PERSON, "a-person", r#"<circle cx="8" cy="5.5" r="2.7" stroke="currentColor"/><path d="M2.8 13.5C3.3 10.8 5.3 9.6 8 9.6C10.7 9.6 12.7 10.8 13.2 13.5" stroke="currentColor" stroke-linecap="round"/>"#);
     icon!(COIN, "a-coin", r#"<circle cx="8" cy="8" r="5.8" stroke="currentColor"/><circle cx="8" cy="8" r="2.6" stroke="currentColor"/>"#);
     icon!(TEMPLATES, "a-templates", r#"<rect x="2" y="2.5" width="5.5" height="5" rx="1" stroke="currentColor"/><rect x="8.5" y="2.5" width="5.5" height="5" rx="1" stroke="currentColor"/><rect x="2" y="8.5" width="5.5" height="5" rx="1" stroke="currentColor"/><rect x="8.5" y="8.5" width="5.5" height="5" rx="1" stroke="currentColor"/>"#);
+    icon!(DROPPER, "a-dropper", r#"<path d="M9.5 3.2L12.8 6.5M11 2L14 5L12.6 6.4L9.6 3.4L11 2ZM9.4 4.6L3.4 10.6L2.6 13.4L5.4 12.6L11.4 6.6" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>"#);
     icon!(HEADING, "a-heading", r#"<path d="M2.5 8H13.5" stroke="currentColor" stroke-linecap="round"/>"#);
 }
 

@@ -1790,7 +1790,7 @@
  "LOOK_TEXT_COLOUR": {
   "text": "文字の色",
   "back": "Text colour",
-  "why": "Noun phrase"
+  "why": "reuses the table word"
  },
  "LOOK_COLOUR_WHITE": {
   "text": "白",
@@ -1815,12 +1815,12 @@
  "LOOK_COLOUR_HEX": {
   "text": "色コード",
   "back": "Colour code",
-  "why": "Not visible"
+  "why": "reuses the table word"
  },
  "LOOK_COLOUR_HEX_HINT": {
-  "text": "例えば #FFD700",
-  "back": "For example #FFD700",
-  "why": "'For example' in full"
+  "text": "例えば #FFD400",
+  "back": "For example #FFD400",
+  "why": "plain everyday word"
  },
  "LOOK_FONT": {
   "text": "フォント",
@@ -3839,5 +3839,65 @@
   "text": "次のウィンドウへ。PgUp で前のウィンドウへ",
   "back": "To the next window; PgUp to the previous window",
   "why": "ウィンドウ, as in the table"
+ },
+ "COLOUR_MORE": {
+  "text": "その他の色",
+  "back": "Other colours",
+  "why": "plain everyday word"
+ },
+ "COLOUR_USE": {
+  "text": "この色にする",
+  "back": "Make it this colour",
+  "why": "plain everyday word"
+ },
+ "COLOUR_DESIGN": {
+  "text": "デザイン内の色",
+  "back": "Colours in the design",
+  "why": "plain everyday word"
+ },
+ "COLOUR_SAMPLES": {
+  "text": "用意された色",
+  "back": "Prepared colours",
+  "why": "plain everyday word"
+ },
+ "COLOUR_OWN": {
+  "text": "自分で作る色",
+  "back": "A colour you make",
+  "why": "plain everyday word"
+ },
+ "COLOUR_RECENT": {
+  "text": "最近使った色",
+  "back": "Recently used colours",
+  "why": "plain everyday word"
+ },
+ "COLOUR_CODE": {
+  "text": "色コード",
+  "back": "Colour code",
+  "why": "plain everyday word"
+ },
+ "COLOUR_SHADE": {
+  "text": "色の明るさと鮮やかさ",
+  "back": "Lightness and vividness of the colour",
+  "why": "plain everyday word"
+ },
+ "COLOUR_HUE": {
+  "text": "色相",
+  "back": "Hue",
+  "why": "plain everyday word"
+ },
+ "COLOUR_DROPPER": {
+  "text": "スライドから取る",
+  "back": "Take from the slide",
+  "why": "plain everyday word"
+ },
+ "COLOUR_DROPPER_ON": {
+  "text": "取りたい色の場所でスライドをクリック",
+  "back": "Click the slide at the place of the colour you want",
+  "why": "plain everyday word"
+ },
+ "COLOUR_DROPPER_NONE": {
+  "text": "背景が写真か単色のときだけ使えます",
+  "back": "Usable only when the background is a photo or a single colour",
+  "why": "plain everyday word"
  }
 }

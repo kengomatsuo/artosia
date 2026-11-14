@@ -4,6 +4,7 @@
 mod announcements;
 mod backdrops;
 mod bibles;
+pub(crate) mod colour;
 mod editor;
 mod languages;
 // UIOVER1: three directions of the overhaul, drawn only by the `mock-*` scenes.
@@ -122,8 +123,8 @@ pub(crate) fn topbar(s: &App, k: &Kit, insets: rune::ChromeInsets, wide: bool) -
         .child(spacer())
         // Two groups: what Artosia is connected to, and the program's own settings, last, where
         // a person looks for them. What the projector draws is the Design tab.
-        .child(btn(t::BTN_SCREENS()).icon(&icons::SCREEN).ghost().build(k, |s, _| s.sheet = Sheet::Screens))
-        .child(btn(t::BTN_PHONE()).icon(&icons::PHONE).ghost().build(k, |s, _| s.sheet = Sheet::Remote))
+        .child(btn(t::BTN_SCREENS()).icon(&icons::SCREEN).ghost().anchor(crate::palette::Command::Screens, crate::guide::Place::Bar).build(k, |s, _| s.sheet = Sheet::Screens))
+        .child(btn(t::BTN_PHONE()).icon(&icons::PHONE).ghost().anchor(crate::palette::Command::Remote, crate::guide::Place::Bar).build(k, |s, _| s.sheet = Sheet::Remote))
         .child(btn(t::BTN_STREAM()).icon(&icons::STREAM).ghost().active(s.stream.is_some()).build(k, |s, _| s.open_stream()))
         .child(btn(t::BTN_LISTEN()).icon(&icons::MIC).ghost().build(k, |s, _| s.open_listen()))
         .child(el().w(1.0).h(20.0).fill(k.c.border_base).a11y_hidden())
@@ -282,6 +283,7 @@ pub fn view(s: &App, cx: &mut Cx<App>) -> El {
     t::set_language(&s.settings.language);
     s.motion_reduced.store(cx.system_reduced_motion(), std::sync::atomic::Ordering::Relaxed);
     let k = theme::kit();
+    crate::guide::anchors::begin_frame();
     cx.caption_color(k.c.text_base);
     let insets = cx.chrome_insets();
     let mut layer: Vec<El> = Vec::new();

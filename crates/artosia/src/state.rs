@@ -99,6 +99,8 @@ pub enum Appearance {
 #[serde(default)]
 pub struct Settings {
     pub look: Look,
+    /// The colours picked last, newest first, offered again by every colour picker.
+    pub recent_colours: Vec<[u8; 3]>,
     pub verses_per_slide: usize,
     /// The church's CCLI licence number, printed with song credits.
     pub licence: String,
@@ -170,6 +172,7 @@ impl Default for Settings {
     fn default() -> Self {
         Settings {
             look: Look::default(),
+            recent_colours: Vec::new(),
             verses_per_slide: 1,
             licence: String::new(),
             logo: String::new(),
@@ -558,6 +561,8 @@ pub struct App {
     pub licence_edit: TextEdit,
     /// The Look dialog's hex fields and font picker.
     pub look_edit: crate::ui::look::LookEdit,
+    /// The one colour picker (`ui/colour.rs`).
+    pub colour: crate::ui::colour::ColourPick,
     pub toast: Option<Toast>,
     pub plan_menu: Option<u64>,
     pub more_menu: bool,
@@ -767,6 +772,7 @@ impl App {
             confirmed: false,
             licence_edit,
             look_edit,
+            colour: Default::default(),
             toast: None,
             plan_menu: None,
             more_menu: false,
