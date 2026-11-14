@@ -1,6 +1,6 @@
 # Artosia handoff (2026-11-14)
 
-**Now:** build card OVGIVING1 (the Offerings tab), then OVTEMPL1, OVRUN1, OVPPTX1 and WEBDLG1. Tabs, colour picker, calendar, members and the lyric reader are in Review. Each card's plan is its section of [overhaul-build.md](overhaul-build.md); a builder brief starts from [builder-rules.md](builder-rules.md).
+**Now:** the UI overhaul (UIOVER1, 13 cards) and the song browser (WEBSONGS1) are built and in Review, waiting for the trailing reviewer. Next owner-facing step: release them (`bash tools/publish.sh <version> "<notes>"`), then the Mac edition once Tailscale is signed in.
 
 ## Where things stand
 
@@ -13,22 +13,21 @@
 | Mac | Reached over Tailscale SSH at 100.120.153.35 (`Host mac` in `C:\Users\kenne\.ssh\config`); Tailscale's check mode wants the owner's Tailscale sign-in, then 12 hours free | [read: ssh mac printed "Tailscale SSH requires an additional check"] |
 | PowerPoint import | Works (6 of 6 Warta slides); redraws text only; picture-only card now named | [commit c2f10e6] [card: PPTX1] |
 | Announcement styles | Hairline, Ledger, Band drawn for five kinds (`crates/artosia-slides/src/notice.rs`), demo scenes only | [commit 88013b9] |
-| UI overhaul | In Review: tabs (c7ff4e7), one colour picker (e63fb2c), calendar with schedule card (30ff5d9), members with import and 30 birthdays a slide (b300540). Claimed, not started: OVGIVING1. Ready: OVTEMPL1, OVRUN1, OVPPTX1 | [card: UIOVER1] [rule: .claude/rules/operator.md, last five lines] |
-| Song browser | Page reader rebuilt on scraper with a site table and ChordPro chord tests, 10 real pages (35ad9cd); `browse` and `words` give the dialog one call each (d2df40f); the dialog itself is card WEBDLG1 | [card: WEBSONGS1] [card: LYRICPARSE1] [card: WEBDLG1] |
+| UI overhaul | All in Review: tabs c7ff4e7, colour picker e63fb2c, calendar 30ff5d9, members b300540, offerings 9435328, templates 7318e0d, rundown items ebeb24c with playback 1671469 and thumbnails 24a39ee, PowerPoint 8bd3111 with export f059ebe | [card: UIOVER1] [rule: .claude/rules/operator.md, last lines] |
+| Song browser | In Review: page reader 35ad9cd (repeat directions dropped d3018b0), browse layer d2df40f, dialog 9c494ab | [card: WEBSONGS1] |
 
 ## Last checks
 
-- `bun ~/.claude/scripts/limit.ts 1200 cargo test -q -p artosia -p artosia-core -p artosia-office -p artosia-slides`: 267, 202 (+2), 37 and 19 passed [read: run after the members tables merged, 2026-11-14]
-- `bun ~/.claude/scripts/limit.ts 600 cargo test -q -p artosia-lyrics`: 41 passed, 1 ignored [read: browse layer builder's run, d2df40f]
-- `python -I tools/check-brief.py`: 919 entries, 0 problems [read: same run]
+- `bun ~/.claude/scripts/limit.ts 1200 cargo test -q -p artosia -p artosia-lyrics`: 303 and 42 passed (1 ignored) [read: run before 9c494ab]
+- `cargo test -p artosia-core -p artosia-slides -p artosia-office`: 215 (+2), 22 and 51 passed [read: runs before ebeb24c and 8bd3111]
+- `python -I tools/check-brief.py`: 5 problems, all `GUIDE_SCREENS_OPEN*` from the guide session's commit 7859a8f [read: last run]
+- RAM, `artosia-output` release: 293 MB background alone, 355 MB with a looping 1080p item with sound, 286 MB with the background torn down under it [commit 1671469]
 
 ## Next actions, in order
 
-1. OVGIVING1: launch a builder with `docs/plans/artosia/builder-rules.md` and the card's section "OVGIVING1: Persembahan" of overhaul-build.md; it is claimed as builder-giving and nothing was started [card: OVGIVING1].
-2. When it reports: look at its renders, press its controls in a practice window (`target/debug/artosia --practice`, Esc skips the tour, then `tools/drive-window.ps1`), run a writer round (`docs/i18n/README.md`, last section), merge, test, commit the card's paths, `board.ts move OVGIVING1 review --commit <sha>` [rule: docs/i18n/README.md] [rule: .claude/rules/operator.md, real-window line].
-3. Then OVTEMPL1, OVRUN1 (RAM measured with `tools/ram/measure.ps1` only after the video is logged looping twice, CLAUDE.md), OVPPTX1, in that order, the same way [card: UIOVER1].
-4. WEBDLG1: the song browser dialog on `artosia_lyrics::browse` and `artosia_lyrics::words` (d2df40f), Gema index kept by `GemaIndex::load`/`save`/`is_stale` in the library folder; Import on a button with its key [card: WEBDLG1].
-5. When the owner has signed in to Tailscale: `bash tools/publish.sh 0.1.31 --finish` adds the Mac edition [commit 211d426], then `bash tools/publish-site.sh`.
+1. Release the overhaul: `bash tools/publish.sh <next version> "<notes>"` [rule: CLAUDE.md Commands]; it was not released in this session.
+2. Unverified, to check on a real run: a scene whose background is a video, a media item whose file fails, a Stop item's end in the operator thumbnail [read: OVRUN1 builder report]; the LibreOffice export route (no LibreOffice on this PC) [read: OVPPTX1 office report]; Letras pages live (it refuses programs) [commit 35ad9cd].
+3. When the owner has signed in to Tailscale: `bash tools/publish.sh 0.1.31 --finish` adds the Mac edition [commit 211d426], then `bash tools/publish-site.sh`.
 
 ## Owner decisions in force
 
