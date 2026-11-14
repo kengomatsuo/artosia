@@ -125,6 +125,13 @@ fn month_of(date: Date) -> (Date, Date) {
 }
 
 impl App {
+    /// A member picked under the giver field fills it.
+    pub fn pick_giver(&mut self, name: &str) {
+        if let Some(form) = self.giving.form.as_mut() {
+            form.giver.replace_text(name);
+        }
+    }
+
     /// The funds, gifts and account as the library holds them, and a first fund for a library with none.
     pub fn load_giving(&mut self) {
         if self.store.funds().map(|funds| funds.is_empty()).unwrap_or(false) {

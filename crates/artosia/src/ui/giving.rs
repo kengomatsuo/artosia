@@ -407,6 +407,31 @@ fn edit_in(s: &mut App, pick: fn(&mut crate::giving::GiftForm) -> &mut rune::Tex
     }
 }
 
+/// The members whose names hold what was typed, as buttons that fill the giver: a giver who is
+/// a member is picked, never spelled out again. Nothing shows for the plate or a name already whole.
+fn giver_matches(s: &App, k: &Kit, form: &crate::giving::GiftForm) -> Option<El> {
+    let typed = form.giver.text.trim().to_lowercase();
+    if form.plate || typed.is_empty() {
+        return None;
+    }
+    let names: Vec<String> = s
+        .people
+        .iter()
+        .map(|person| person.name.clone())
+        .filter(|name| name.to_lowercase().contains(&typed) && name.to_lowercase() != typed)
+        .take(4)
+        .collect();
+    if names.is_empty() {
+        return None;
+    }
+    let mut chips = row().w_full().gap(space::S1).flex_wrap().key("giver-matches");
+    for name in names {
+        let fill = name.clone();
+        chips = chips.child(btn(name).icon(&icons::PERSON).small().focusable().build(k, move |s, _| s.pick_giver(&fill)));
+    }
+    Some(chips)
+}
+
 fn plate_toggle(k: &Kit, on: bool) -> El {
     row()
         .key("gift-plate")
@@ -498,7 +523,7 @@ fn gift_dialog(s: &App, k: &Kit, layer: &mut Vec<El>, tall: f32) {
         body = body.child(col().key("gift-picker").w_full().padding(space::S3).radius(k.radius.md).fill(sf.raised).border(1.0, sf.edge).child(grid));
     }
     body = body
-        .child(field(k, t::GIVING_COL_GIVER(), col().w_full().gap(space::S1).child(giver).child(plate_toggle(k, form.plate))))
+        .child(field(k, t::GIVING_COL_GIVER(), col().w_full().gap(space::S1).child(giver).children(giver_matches(s, k, form)).child(plate_toggle(k, form.plate))))
         .child(row().w_full().gap(space::S3).child(field(k, t::GIVING_COL_FUND(), fund)).child(field(k, t::GIVING_COL_METHOD(), method)))
         .child(field(k, t::GIVING_COL_AMOUNT(), col().w_full().gap(space::S1).child(amount).child(written)));
     let scrolling = col().w_full().max_h((tall - 84.0 - 60.0).max(240.0)).scroll(ScrollSpec { stick_bottom: false }).scroll_edge_fade(theme::size::FADE).child(body).scroll_bar(k);
