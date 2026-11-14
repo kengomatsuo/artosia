@@ -1,12 +1,12 @@
 # Artosia handoff (2026-11-14)
 
-**Now:** 0.1.32 is released (Windows with speech, Mac signed and notarized, homepage) [card: RELEASE0132]: the overhaul, the song browser, the guide (the whole tour on the practice library, 15 lessons, help on every feature), the part-card song editor and the search's song/verse sections. A release with another session's unfinished work in this tree is built from the clean clone `F:/Repositories/.artosia-release` (`git fetch && git merge --ff-only origin/main`, then `bash tools/publish.sh <version> "<notes>"`); its `target` is a junction to this repo's, so remove the junction with `cmd /c rmdir target` before ever deleting the clone.
+**Now:** 0.1.33 is released (Windows with speech, Mac signed and notarized, homepage) [read: `gh release view v0.1.33` lists 291 files, not a draft]: a downloaded update waits and is offered with Later and Restart now, with an Update ready button in the top bar [card: UPDATEASK1], and a line too long for the screen is marked in its part card with Split; 0.1.32 brought the guide, the whole tour, the part-card song editor and the search's song/verse sections [card: RELEASE0132]. A release with another session's unfinished work in this tree is built from the clean clone `F:/Repositories/.artosia-release` (`git fetch && git merge --ff-only origin/main`, then `bash tools/publish.sh <version> "<notes>"`); its `target` is a junction to this repo's, so remove the junction with `cmd /c rmdir target` before ever deleting the clone.
 
 ## Where things stand
 
 | Area | State | Source |
 |---|---|---|
-| 0.1.31 | Published with Windows and Linux; no Mac files (the Mac was unreachable) | [read: `gh release view v0.1.31` lists Artosia-linux-x86_64.tar.gz, not a draft] |
+| 0.1.31 | Published with Windows, Linux and the Mac edition, added later with `--finish` | [read: `gh release view v0.1.31` lists Artosia-macos-aarch64.dmg] |
 | Linux one-line install | Live: `curl -fsSL https://artosia.matsuokengo.com/install.sh \| bash`, homepage row with copy button, ten languages | [commit 211d426] [card: LINUXSH1] |
 | Release finish | `tools/publish.sh <version> --finish` builds only what a release lacks, from the tag | [commit 211d426] [card: RELFIN1] |
 | WSL | Off limits (owner); scripts carry no WSL call; Linux builds paused | [rule: memory no-wsl.md] [card: NOWSL1] |
@@ -37,7 +37,6 @@
 
 1. Release on-slide editing with the next version: `bash tools/publish.sh <next version> "<notes>"` from the clean clone [commit ab94bc9 is after the v0.1.33 tag].
 2. Unverified, to check on a real run: typing on a real phone's keyboard into a card (checked only through the remote's test client) [card: PHONEEDIT1]; a scene whose background is a video, a media item whose file fails, a Stop item's end in the operator thumbnail [read: OVRUN1 builder report]; the LibreOffice export route (no LibreOffice on this PC) [read: OVPPTX1 office report]; Letras pages live (it refuses programs) [commit 35ad9cd].
-3. When the owner has signed in to Tailscale: `bash tools/publish.sh 0.1.31 --finish` adds the Mac edition [commit 211d426], then `bash tools/publish-site.sh`.
 
 ## Owner decisions in force
 
