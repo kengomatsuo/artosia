@@ -12,6 +12,8 @@ dependency (`zip` and `quick-xml` only). Both formats are zips of XML.
 | `guess`, `read` | rows of a table | which column is name, date, day, month or year (`Mapping`), and the people under a mapping |
 | `to_announcements` | a read `Pptx` | `Vec<Draft { title, body, picture, .. }>` for Artosia's announcements |
 | `Picture::drawable` | any picture | PNG or JPEG bytes Artosia can draw |
+| `slides_as_pictures` | a .pptx | each visible slide as a PNG (`Exported { tool, files }`), drawn by the installed PowerPoint, else LibreOffice (one `soffice` run per slide, untested here); `Error::NoRenderer` when neither is installed, `Error::Export` on failure or a time limit |
+| `redraw`, `classify` | a bulletin's tables | per table `Birthdays(Found)`, `Money { gifts: Vec<Gift>, printed_total }` or `Other`; a money table needs a header naming an amount and a giver or fund column; `parse_rupiah` reads `Rp 2.500.000`, `2.500.000,-`, `Rp2,500,000` |
 
 ```bash
 cargo run -p artosia-office --example read -- bulletin.pptx birthdays.docx target/out

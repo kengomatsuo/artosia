@@ -9,6 +9,10 @@ pub enum Error {
     /// A part the format requires is not in the zip.
     MissingPart(String),
     Xml(String),
+    /// Neither PowerPoint nor LibreOffice is installed, so slides cannot be drawn as made.
+    NoRenderer,
+    /// A program was found but did not draw every slide (it failed or ran past its time limit).
+    Export(String),
 }
 
 impl fmt::Display for Error {
@@ -18,6 +22,8 @@ impl fmt::Display for Error {
             Error::Zip(e) => write!(f, "not a readable Office file: {e}"),
             Error::MissingPart(p) => write!(f, "the file has no {p}"),
             Error::Xml(e) => write!(f, "damaged XML: {e}"),
+            Error::NoRenderer => write!(f, "neither PowerPoint nor LibreOffice is installed"),
+            Error::Export(e) => write!(f, "drawing the slides failed: {e}"),
         }
     }
 }
