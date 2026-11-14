@@ -39,6 +39,8 @@ STEPS = [
     ("look-tab", "start", "tab-look", "whole"),
     ("plan-tab", "tab-calendar", "tab-plan", "whole"),
     ("plan-add", "start", "plan-add-button", "part"),
+    ("phone-open", "start", "anchor-Remote-Bar-0", "part"),
+    ("listen-open", "start", "anchor-Listen-Bar-0", "part"),
 ]
 START, STEP, PRESS = 0.2, 0.1, 1.4
 

@@ -5310,9 +5310,9 @@
   "why": "table terms reused, plain register"
  },
  "GUIDE_SCREENS_SWITCH_MORE": {
-  "text": "下方可以替每個螢幕指定用途",
-  "back": "Below, a use can be assigned to each screen",
-  "why": "table terms reused, plain register"
+  "text": "關閉時，會眾的螢幕上什麼都不會出現",
+  "back": "When off, nothing appears on the congregation's screen",
+  "why": "plain volunteer register, table words reused"
  },
  "GUIDE_PHONE_OPEN": {
   "text": "按下框起來的按鈕，開啟手機遙控",
@@ -5476,5 +5476,15 @@
   "text": "{name}的重複日期已更新",
   "back": "The repeating dates of {name} were updated",
   "why": "not a deletion word"
+ },
+ "GUIDE_SCREENS_JOBS": {
+  "text": "為每個螢幕指定用途",
+  "back": "Assign a use to each screen",
+  "why": "plain volunteer register, table words reused"
+ },
+ "GUIDE_SCREENS_JOBS_MORE": {
+  "text": "投影機給會眾，樂團給樂手，或不使用",
+  "back": "Projector for the congregation, band for the players, or not used",
+  "why": "plain volunteer register, table words reused"
  }
 }

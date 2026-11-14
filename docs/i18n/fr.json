@@ -5356,9 +5356,9 @@
   "why": "table terms reused, plain register"
  },
  "GUIDE_SCREENS_SWITCH_MORE": {
-  "text": "En dessous, chaque écran reçoit son rôle",
-  "back": "Below, each screen gets its role",
-  "why": "table terms reused, plain register"
+  "text": "Éteint, rien n'arrive sur l'écran de l'assemblée",
+  "back": "Off, nothing arrives on the assembly's screen",
+  "why": "plain volunteer register, table words reused"
  },
  "GUIDE_PHONE_OPEN": {
   "text": "Clique sur le bouton entouré : la télécommande",
@@ -5532,5 +5532,15 @@
   "text": "Dates modifiées : « {name} »",
   "back": "Dates changed: “{name}”",
   "why": "Not deleted"
+ },
+ "GUIDE_SCREENS_JOBS": {
+  "text": "Donne un rôle à chaque écran",
+  "back": "Give each screen a role",
+  "why": "plain volunteer register, table words reused"
+ },
+ "GUIDE_SCREENS_JOBS_MORE": {
+  "text": "Projecteur pour l'assemblée, Écran scène pour les musiciens, ou Inutilisé",
+  "back": "Projector for the assembly, Stage screen for the musicians, or Unused",
+  "why": "plain volunteer register, table words reused"
  }
 }

@@ -481,15 +481,10 @@ fn wall(s: &App, k: &Kit) -> El {
 }
 
 fn screens(s: &App, k: &Kit, layer: &mut Vec<El>) {
-    let mut status = s.link.status();
+    let status = s.screens_status();
     let started = s.link.is_started() || s.demo_screens;
-    if s.demo_screens {
-        // Two made-up screens, so a headless render shows the dialog a volunteer will see.
-        let screen = |width, height, primary, scale| artosia_slides::frame::DisplayInfo { name: String::new(), width, height, primary, scale };
-        status = crate::link::LinkStatus { connected: true, displays: vec![screen(1920, 1080, true, 1.25), screen(1280, 720, false, 1.0)], audience: Some(1), ..status };
-    }
     let options = s.output_options();
-    let mut body = col().w_full().px(space::S4).pb(space::S4).gap(space::S3);
+    let mut body = col().w_full().px(space::S4).pb(space::S4).gap(space::S3).child(crate::ui::tour::help_row(k, crate::guide::lessons::Feature::Screens));
     if !started {
         body = body.child(crate::ui::widgets::wrapped(t::SCREENS_OFF()).font(type_::BODY).color(k.c.text_muted).wrap());
     } else {
@@ -513,6 +508,8 @@ fn screens(s: &App, k: &Kit, layer: &mut Vec<El>) {
             }));
         }
         if status.connected && status.displays.len() >= 2 {
+            // The guide's Screens lesson rings the first monitor's choices.
+            let first_choice = status.displays.iter().position(|display| !display.primary);
             for (index, display) in status.displays.iter().enumerate() {
                 let role = if status.audience == Some(index) {
                     0
@@ -564,6 +561,7 @@ fn screens(s: &App, k: &Kit, layer: &mut Vec<El>) {
                                     s.settings_screens(next);
                                 })
                                 .build(k)
+                                .key(if first_choice == Some(index) { "screen-jobs".to_string() } else { format!("screen-jobs-{index}") })
                         }),
                 );
             }
@@ -610,7 +608,7 @@ fn screens(s: &App, k: &Kit, layer: &mut Vec<El>) {
 fn remote(s: &App, k: &Kit, layer: &mut Vec<El>) {
     // On while the firewall step is still answering: the remote starts after it.
     let on = s.remote.is_some() || s.firewall != crate::firewall::Standing::Idle;
-    let mut body = col().w_full().px(space::S4).pb(space::S4).gap(space::S3).child(
+    let mut body = col().child(crate::ui::tour::help_row(k, crate::guide::lessons::Feature::Phone)).w_full().px(space::S4).pb(space::S4).gap(space::S3).child(
         row()
             .w_full()
             .gap(space::S3)
@@ -886,7 +884,7 @@ fn listen(s: &App, k: &Kit, layer: &mut Vec<El>, tall: f32) {
     let part = if keeps { s.listen_part.min(1) } else { 0 };
     // The parts and the switch stay; what is under them scrolls when the window is lower
     // than the dialog (six microphones, a tempo and three heard songs passed 768 points).
-    let mut head = col().w_full().px(space::S4).gap(space::S3);
+    let mut head = col().child(crate::ui::tour::help_row(k, crate::guide::lessons::Feature::Listen)).w_full().px(space::S4).gap(space::S3);
     if keeps {
         // Two parts, as Design has three: with the recordings under the rest the dialog was
         // taller than a laptop's screen.

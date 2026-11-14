@@ -52,10 +52,10 @@ impl World<Action> for Window<'_> {
 }
 
 /// Every state name `holds` knows; the lesson test checks each step against it.
-pub const KNOWN: [&str; 17] = [
+pub const KNOWN: [&str; 20] = [
     "screens-open", "phone-open", "settings-open", "no-dialog", "plan-tab", "calendar-tab", "people-tab", "giving-tab",
     "notices-tab", "templates-tab", "look-tab", "search-open", "event-form-open", "gift-form-open", "person-form-open",
-    "notice-draft", "add-menu-open",
+    "notice-draft", "add-menu-open", "listen-open", "no-projector", "no-monitor-list",
 ];
 
 /// The states lessons name. A name nobody knows is never true, and a test lists the names every
@@ -79,6 +79,10 @@ pub fn holds(app: &App, state: &str) -> bool {
         "person-form-open" => app.members.form.is_some(),
         "notice-draft" => app.notice_draft().is_some(),
         "add-menu-open" => app.add_menu,
+        "listen-open" => app.sheet == Sheet::Listen,
+        // Practice and a window started before the projector have no switch to explain.
+        "no-projector" => !(app.link.is_started() || app.demo_screens),
+        "no-monitor-list" => !app.lists_monitors(),
         _ => false,
     }
 }

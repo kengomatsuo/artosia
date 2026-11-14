@@ -12,7 +12,6 @@ use rune_kit::Kit;
 use crate::guide::lessons::Feature;
 use crate::guide::window::{Action, Window};
 use crate::guide::{Goal, Lesson, Runner, Show, Step};
-use crate::palette::Command;
 use crate::state::{App, Sheet};
 use crate::strings as t;
 use crate::theme::{self, icons, space, type_};
@@ -27,9 +26,8 @@ const BUTTON: f32 = 124.0;
 /// Room between a ring and the part it surrounds.
 const PAD: f32 = 4.0;
 
+/// A stop's card: where it sits beside the part its lesson step points at, and its words.
 struct Stop {
-    /// The key of the element the ring goes round.
-    target: &'static str,
     /// Which side of it the card sits on, and how it lines up.
     side: Side,
     align: Align,
@@ -39,13 +37,13 @@ struct Stop {
 
 /// The five stops and their words, in one table so they can be rewritten without touching the drawing.
 const STOPS: [Stop; 5] = [
-    Stop { target: "plan", side: Side::Right, align: Align::Start, main: t::TOUR_PLAN, more: t::TOUR_PLAN_MORE },
+    Stop { side: Side::Right, align: Align::Start, main: t::TOUR_PLAN, more: t::TOUR_PLAN_MORE },
     // The card goes under the list, over the strip with the picture, which this stop is not about.
-    Stop { target: "slide-list", side: Side::Bottom, align: Align::Start, main: t::TOUR_PREVIEW, more: t::TOUR_PREVIEW_MORE },
+    Stop { side: Side::Bottom, align: Align::Start, main: t::TOUR_PREVIEW, more: t::TOUR_PREVIEW_MORE },
     // A ring goes round a container the shell keys, never one button: the buttons are rearranged often.
-    Stop { target: "preview-controls", side: Side::Top, align: Align::End, main: t::TOUR_SHOW, more: t::TOUR_SHOW_MORE },
-    Stop { target: "transport", side: Side::Top, align: Align::End, main: t::TOUR_LIVE, more: t::TOUR_LIVE_MORE },
-    Stop { target: "search-button", side: Side::Bottom, align: Align::Start, main: t::TOUR_SEARCH, more: t::TOUR_SEARCH_MORE },
+    Stop { side: Side::Top, align: Align::End, main: t::TOUR_SHOW, more: t::TOUR_SHOW_MORE },
+    Stop { side: Side::Top, align: Align::End, main: t::TOUR_LIVE, more: t::TOUR_LIVE_MORE },
+    Stop { side: Side::Bottom, align: Align::Start, main: t::TOUR_SEARCH, more: t::TOUR_SEARCH_MORE },
 ];
 
 /// How many stops there are.
@@ -158,11 +156,9 @@ impl App {
     /// What's new closes and its version counts as seen.
     pub fn close_news(&mut self) {
         self.news = None;
-        if let Some(version) = crate::guide::news::newest(env!("CARGO_PKG_VERSION")) {
-            if self.settings.news_seen != version {
-                self.settings.news_seen = version.to_string();
-                self.touch_settings();
-            }
+        if let Some(version) = crate::guide::news::newest(env!("CARGO_PKG_VERSION")).filter(|version| self.settings.news_seen != *version) {
+            self.settings.news_seen = version.to_string();
+            self.touch_settings();
         }
     }
 
@@ -208,9 +204,18 @@ fn lesson_view(s: &App, cx: &mut Cx<App>, k: &Kit, layer: &mut Vec<El>) {
             layer.push(strip().key("lesson-dim-left").pin(Some(0.0), Some(y0), None, None).w(x0).h(y1 - y0));
             layer.push(strip().key("lesson-dim-right").pin(Some(x1), Some(y0), Some(0.0), None).h(y1 - y0));
             layer.push(el().key("lesson-ring").absolute(x0, y0).size(x1 - x0, y1 - y0).radius(k.radius.lg).border(3.0, theme::accent()).a11y_hidden());
-            let below = y1 + 220.0 < cx.layout_size("window").map_or(768.0, |size| size[1]);
-            let side = if below { Side::Bottom } else { Side::Top };
-            layer.push(bubble(s, k, lesson.steps[step].id, step, total, None).anchored(&key, side, Align::Start, space::S3));
+            let window = cx.layout_size("window").unwrap_or([1366.0, 768.0]);
+            let card = bubble(s, k, lesson.steps[step].id, step, total, None);
+            // A kit dialog's box is keyed by its sheet's name; the part may sit inside it.
+            let dialog = (s.sheet != Sheet::None).then(|| format!("{:?}-dialog", s.sheet).to_lowercase()).and_then(|key| cx.layout(&key));
+            let tall = cx.layout("lesson-card").map_or(260.0, |rect| rect[3]);
+            match dialog.filter(|[dx, dy, dw, dh]| x >= *dx && y >= *dy && x + w <= dx + dw && y + h <= dy + dh).and_then(|box_| beside(box_, y0, window, tall)) {
+                Some((bx, by)) => layer.push(card.absolute(bx, by)),
+                None => {
+                    let side = if y1 + 220.0 < window[1] { Side::Bottom } else { Side::Top };
+                    layer.push(card.anchored(&key, side, Align::Start, space::S3));
+                }
+            }
         }
         Show::Search { step } => {
             let command = match lesson.steps[step].goal {
@@ -221,6 +226,22 @@ fn lesson_view(s: &App, cx: &mut Cx<App>, k: &Kit, layer: &mut Vec<El>) {
             layer.push(el().key("lesson-dim").absolute(0.0, 0.0).w_full().h_full().fill(dim).a11y_hidden().on_press_tx(|_: &mut App, _: &mut Tx| {}));
             layer.push(col().key("lesson-centre").absolute(0.0, 0.0).w_full().h_full().center().child(bubble(s, k, lesson.steps[step].id, step, total, command)));
         }
+    }
+}
+
+/// Where a lesson card goes when the part it explains is inside a dialog: beside the dialog at the
+/// part's height, right first, so the card never covers the dialog it explains. None when the
+/// window has no room on either side.
+fn beside(dialog: [f32; 4], top: f32, window: [f32; 2], tall: f32) -> Option<(f32, f32)> {
+    let [dx, _, dw, _] = dialog;
+    let gap = space::S3;
+    let y = top.min(window[1] - tall - gap).max(gap);
+    if window[0] - (dx + dw) >= CARD + 2.0 * gap {
+        Some((dx + dw + gap, y))
+    } else if dx >= CARD + 2.0 * gap {
+        Some((dx - gap - CARD, y))
+    } else {
+        None
     }
 }
 
@@ -296,6 +317,22 @@ pub(crate) fn help_mark(s: &App, k: &Kit, feature: Feature) -> El {
     btn(t::GUIDE_HELP()).icon(&HELP_MARK).icon_only().ghost().small().active(on).focusable().build(k, move |s, _| s.toggle_help(feature)).key(feature.key())
 }
 
+/// A dialog's help, as the first row of its body (a dialog has no room for a mark in its title):
+/// what the dialog is for and Show me, which starts its lesson where the dialog already is.
+pub(crate) fn help_row(k: &Kit, feature: Feature) -> El {
+    row()
+        .key(feature.key())
+        .w_full()
+        .gap(space::S3)
+        .padding(space::S3)
+        .radius(k.radius.md)
+        .fill(k.c.layer_03)
+        .center_y()
+        .child(icon(&HELP_MARK, 16.0).color(k.c.text_muted).a11y_hidden())
+        .child(crate::ui::widgets::wrapped(feature.about()).font(type_::SMALL).color(k.c.text_muted).wrap().grow(1.0))
+        .child(btn(t::GUIDE_SHOW_ME()).small().focusable().build(k, move |s, _| s.show_me(feature)))
+}
+
 /// The open help card under its mark: what the feature is for, Show me, and Close.
 fn help_card(s: &App, k: &Kit, layer: &mut Vec<El>) {
     let Some(feature) = s.help else { return };
@@ -309,7 +346,7 @@ fn help_card(s: &App, k: &Kit, layer: &mut Vec<El>) {
     let card = col()
         .key("help-card")
         .role("dialog")
-        .label(crate::ui::tabs::name(feature.tab()))
+        .label(feature.name())
         .w(CARD)
         .padding(space::S4)
         .gap(space::S3)
@@ -317,7 +354,7 @@ fn help_card(s: &App, k: &Kit, layer: &mut Vec<El>) {
         .fill(k.c.layer_04)
         .border(1.0, k.c.border_strong)
         .shadow(8.0, 24.0, rune::Color::BLACK.alpha(0.4))
-        .child(text(crate::ui::tabs::name(feature.tab())).font(type_::TITLE).color(k.c.text_base))
+        .child(text(feature.name()).font(type_::TITLE).color(k.c.text_base))
         .child(crate::ui::widgets::wrapped(feature.about()).font(type_::BODY).color(k.c.text_muted).wrap())
         .child(buttons);
     layer.push(card.anchored(feature.key(), Side::Bottom, Align::End, space::S2));
@@ -344,7 +381,7 @@ fn news_view(s: &App, k: &Kit, layer: &mut Vec<El>) {
             row()
                 .key(format!("news-{}", feature.key()))
                 .role("listitem")
-                .label(crate::ui::tabs::name(feature.tab()))
+                .label(feature.name())
                 .w_full()
                 .h(40.0)
                 .px(space::S3)
@@ -357,7 +394,7 @@ fn news_view(s: &App, k: &Kit, layer: &mut Vec<El>) {
                 .focusable(true)
                 .on_press(move |s: &mut App| s.news = Some(at))
                 .child(icon(crate::ui::tabs::glyph(feature.tab()), 16.0).color(if on { k.c.text_base } else { k.c.text_muted }).a11y_hidden())
-                .child(text(crate::ui::tabs::name(feature.tab())).font(if on { type_::BODY_STRONG } else { type_::BODY }).color(k.c.text_base)),
+                .child(text(feature.name()).font(if on { type_::BODY_STRONG } else { type_::BODY }).color(k.c.text_base)),
         );
     }
     let mut detail = col().key("news-detail").grow(1.0).gap(space::S3);
@@ -366,7 +403,7 @@ fn news_view(s: &App, k: &Kit, layer: &mut Vec<El>) {
         None => detail,
     };
     detail = detail
-        .child(text(crate::ui::tabs::name(current.tab())).font(type_::TITLE).color(k.c.text_base))
+        .child(text(current.name()).font(type_::TITLE).color(k.c.text_base))
         .child(crate::ui::widgets::wrapped(current.about()).font(type_::BODY).color(k.c.text_muted).wrap())
         .child(row().child(btn(t::WHATSNEW_TRY()).icon(&icons::ARROW_RIGHT).primary().focusable().build(k, move |s, _| s.try_news(current)).key("news-try")));
     let card = col()
@@ -469,10 +506,13 @@ mod tests {
     use super::*;
 
     #[test]
-    fn the_lesson_points_where_the_stops_point() {
-        for (stop, step) in STOPS.iter().zip(BASICS.steps) {
-            assert_eq!(step.goal, Goal::Point(stop.target));
-        }
+    fn a_card_sits_beside_a_dialog_with_room_and_never_off_the_window() {
+        let window = [1366.0, 768.0];
+        let (x, y) = beside([258.0, 20.0, 483.0, 700.0], 100.0, window, 200.0).expect("room on the right");
+        assert!(x > 258.0 + 483.0 && x + CARD <= window[0] && y == 100.0);
+        let (_, low) = beside([258.0, 20.0, 483.0, 700.0], 700.0, window, 200.0).unwrap();
+        assert!(low + 200.0 <= window[1], "a part low in the window pulls the card up");
+        assert_eq!(beside([403.0, 80.0, 560.0, 600.0], 100.0, window, 200.0), None, "no room either side");
     }
 
     #[test]

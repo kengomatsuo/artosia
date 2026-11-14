@@ -5343,9 +5343,9 @@
   "why": "table terms reused, plain register"
  },
  "GUIDE_SCREENS_SWITCH_MORE": {
-  "text": "Logo abaixo, cada monitor ganha a sua função",
-  "back": "Right below, each monitor gets its function",
-  "why": "table terms reused, plain register"
+  "text": "Desligado, nada chega à tela da igreja",
+  "back": "Off, nothing reaches the church's screen",
+  "why": "plain volunteer register, table words reused"
  },
  "GUIDE_PHONE_OPEN": {
   "text": "Clique no botão destacado para abrir o controle",
@@ -5510,5 +5510,15 @@
   "text": "Evento “{name}” alterado nas datas escolhidas",
   "back": "Event “{name}” changed on the chosen dates",
   "why": "Past tense; not deleted."
+ },
+ "GUIDE_SCREENS_JOBS": {
+  "text": "Dê a cada tela a sua função",
+  "back": "Give each screen its role",
+  "why": "plain volunteer register, table words reused"
+ },
+ "GUIDE_SCREENS_JOBS_MORE": {
+  "text": "Projetor é para a igreja, Palco para os músicos, ou Sem uso",
+  "back": "Projector is for the church, Stage for the musicians, or Unused",
+  "why": "plain volunteer register, table words reused"
  }
 }

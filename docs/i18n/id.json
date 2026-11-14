@@ -5260,9 +5260,9 @@
   "why": "table terms reused, plain register"
  },
  "GUIDE_SCREENS_SWITCH_MORE": {
-  "text": "Di bawahnya, tiap monitor diberi tugasnya",
-  "back": "Below it, each monitor is given its task",
-  "why": "table terms reused, plain register"
+  "text": "Saat mati, tidak ada yang sampai ke layar jemaat",
+  "back": "When off, nothing arrives at the congregation's screen",
+  "why": "plain volunteer register, table words reused"
  },
  "GUIDE_PHONE_OPEN": {
   "text": "Tekan tombol berlingkar untuk buka remote ponsel",
@@ -5434,5 +5434,15 @@
   "text": "Jadwal “{name}” diperbarui",
   "back": "Schedule “{name}” updated",
   "why": "Not deleted"
+ },
+ "GUIDE_SCREENS_JOBS": {
+  "text": "Beri tiap monitor tugasnya",
+  "back": "Give each monitor its task",
+  "why": "plain volunteer register, table words reused"
+ },
+ "GUIDE_SCREENS_JOBS_MORE": {
+  "text": "Proyektor untuk jemaat, Panggung untuk pemusik, atau Tidak dipakai",
+  "back": "Projector for the congregation, Stage for the musicians, or Not used",
+  "why": "plain volunteer register, table words reused"
  }
 }

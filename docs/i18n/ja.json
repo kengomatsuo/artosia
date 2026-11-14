@@ -5310,9 +5310,9 @@
   "why": "table terms reused, plain register"
  },
  "GUIDE_SCREENS_SWITCH_MORE": {
-  "text": "その下で、モニターごとに役割を選びます",
-  "back": "Below it, choose a role for each monitor",
-  "why": "table terms reused, plain register"
+  "text": "オフの間は、会場の画面に何も出ません",
+  "back": "While off, nothing appears on the venue's screen",
+  "why": "plain volunteer register, table words reused"
  },
  "GUIDE_PHONE_OPEN": {
   "text": "枠のボタンを押して、スマホリモコンを開く",
@@ -5476,5 +5476,15 @@
   "text": "{name}のくり返しを書き換えました",
   "back": "Rewrote the repeat of {name}",
   "why": "not a deletion word"
+ },
+ "GUIDE_SCREENS_JOBS": {
+  "text": "モニターごとに役割を決めます",
+  "back": "Decide a role for each monitor",
+  "why": "plain volunteer register, table words reused"
+ },
+ "GUIDE_SCREENS_JOBS_MORE": {
+  "text": "会場用は会衆向け、ステージ用は演奏者向け、または使用しない",
+  "back": "Venue use is for the congregation, stage use for the players, or not used",
+  "why": "plain volunteer register, table words reused"
  }
 }

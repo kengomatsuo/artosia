@@ -2284,3 +2284,22 @@ mod tempo_tests {
 pub(crate) fn demo_microphones() -> Vec<artosia_listen::Device> {
     ["Microphone Array", "USB microphone", "Headset", "Mixer line in"].iter().map(|name| artosia_listen::Device { name: (*name).to_string(), id: (*name).to_string() }).collect()
 }
+
+impl App {
+    /// What the Screens dialog shows: the output's own status, or two made-up screens when a
+    /// headless render asks for them, so it shows the dialog a volunteer will see.
+    pub fn screens_status(&self) -> crate::link::LinkStatus {
+        let status = self.link.status();
+        if !self.demo_screens {
+            return status;
+        }
+        let screen = |width, height, primary, scale| artosia_slides::frame::DisplayInfo { name: String::new(), width, height, primary, scale };
+        crate::link::LinkStatus { connected: true, displays: vec![screen(1920, 1080, true, 1.25), screen(1280, 720, false, 1.0)], audience: Some(1), ..status }
+    }
+
+    /// The Screens dialog lists each monitor with its job: the output runs and sees two or more.
+    pub fn lists_monitors(&self) -> bool {
+        let status = self.screens_status();
+        (self.link.is_started() || self.demo_screens) && status.connected && status.displays.len() >= 2
+    }
+}

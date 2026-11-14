@@ -19978,19 +19978,18 @@
  {
   "key": "GUIDE_SCREENS_SWITCH_MORE",
   "kind": "const",
-  "screen": "The grey line under that headline. Below the switch, each connected monitor is a row whose job is picked: the congregation's, the musicians', or none.",
-  "moment": "The person reads the detail.",
+  "screen": "The grey line under the headline of a guide bubble pointing at the switch at the top of the Screens dialog that turns the projector on and off (the headline says just that).",
+  "moment": "The person reads the detail before pressing Next.",
   "role": "explanation line",
-  "does": "Says that below it each monitor is given its job.",
+  "does": "Says that while it is off, nothing from the program reaches the congregation's screen.",
   "budget": 70,
   "variables": [],
   "cases": [],
   "counts": "",
   "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
   "concepts": [
-   "monitor",
    "projector",
-   "stage_screen"
+   "switched_on"
   ],
   "notes": "One sentence."
  },
@@ -20133,5 +20132,42 @@
    "projector"
   ],
   "notes": "One sentence."
+ },
+ {
+  "key": "GUIDE_SCREENS_JOBS",
+  "kind": "const",
+  "screen": "A guide bubble pointing at the first monitor's row in the Screens dialog. Each connected monitor is a row with its name and three choices side by side: the program's words for the projector, the stage and not used (keys SCREEN_PROJECTOR, SCREEN_STAGE, SCREEN_UNUSED). The bubble has Next.",
+  "moment": "The guide explains the rows; the person reads and presses Next.",
+  "role": "headline of a guide explanation",
+  "does": "Tells the person to give each monitor its job.",
+  "budget": 45,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "monitor",
+   "screens_dialog"
+  ],
+  "notes": "Short."
+ },
+ {
+  "key": "GUIDE_SCREENS_JOBS_MORE",
+  "kind": "const",
+  "screen": "The grey line under that headline.",
+  "moment": "The person reads the detail.",
+  "role": "explanation line",
+  "does": "Names the three jobs with the same words the row shows: one for the congregation, one for the musicians on stage, or not used.",
+  "budget": 90,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "projector",
+   "stage_screen",
+   "monitor"
+  ],
+  "notes": "Use exactly the program's words for the three choices, read from the table, so the line matches the row."
  }
 ]

@@ -5312,9 +5312,9 @@
   "why": "table terms reused, plain register"
  },
  "GUIDE_SCREENS_SWITCH_MORE": {
-  "text": "아래에서 모니터마다 역할을 정해요",
-  "back": "Below, set a role for each monitor",
-  "why": "table terms reused, plain register"
+  "text": "꺼져 있으면 예배당 화면에 아무것도 안 나가요",
+  "back": "If it is off, nothing goes to the sanctuary screen",
+  "why": "plain volunteer register, table words reused"
  },
  "GUIDE_PHONE_OPEN": {
   "text": "표시된 버튼을 눌러 휴대폰 리모컨을 열어요",
@@ -5478,5 +5478,15 @@
   "text": "{name}의 반복 일정을 바꿨어요",
   "back": "Changed the repeating events of {name}",
   "why": "not a deletion word"
+ },
+ "GUIDE_SCREENS_JOBS": {
+  "text": "모니터마다 역할을 정해요",
+  "back": "Set a role for each monitor",
+  "why": "plain volunteer register, table words reused"
+ },
+ "GUIDE_SCREENS_JOBS_MORE": {
+  "text": "프로젝터용은 회중에게, 찬양팀용은 연주자에게, 아니면 사용 안 함",
+  "back": "Projector use is for the congregation, worship-team use for the players, or not used",
+  "why": "plain volunteer register, table words reused"
  }
 }

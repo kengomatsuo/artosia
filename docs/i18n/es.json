@@ -5343,9 +5343,9 @@
   "why": "table terms reused, plain register"
  },
  "GUIDE_SCREENS_SWITCH_MORE": {
-  "text": "Abajo, cada pantalla recibe su función",
-  "back": "Below, each screen gets its function",
-  "why": "table terms reused, plain register"
+  "text": "Apagado, nada llega a la pantalla de la congregación",
+  "back": "Off, nothing reaches the congregation's screen",
+  "why": "plain volunteer register, table words reused"
  },
  "GUIDE_PHONE_OPEN": {
   "text": "Pulsa el botón marcado para abrir el remoto",
@@ -5510,5 +5510,15 @@
   "text": "Se cambió «{name}» en las fechas elegidas",
   "back": "«{name}» was changed on the chosen dates",
   "why": "Past tense; not deleted."
+ },
+ "GUIDE_SCREENS_JOBS": {
+  "text": "Dale su trabajo a cada pantalla",
+  "back": "Give each screen its job",
+  "why": "plain volunteer register, table words reused"
+ },
+ "GUIDE_SCREENS_JOBS_MORE": {
+  "text": "Proyector es para la congregación, Banda para los músicos, o Sin uso",
+  "back": "Projector is for the congregation, Band for the musicians, or Unused",
+  "why": "plain volunteer register, table words reused"
  }
 }

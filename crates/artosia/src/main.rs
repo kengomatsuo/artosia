@@ -842,6 +842,11 @@ const SCENES: &[Scene] = &[
         s.sheet = Sheet::Screens;
         s.start_lesson(crate::guide::lessons::SCREENS);
     }),
+    ("lesson-screens-jobs", |s| {
+        s.demo_screens = true;
+        s.sheet = Sheet::Screens;
+        s.lesson = Some((crate::guide::lessons::SCREENS, 2));
+    }),
     ("whats-new-people", |s| s.news = Some(1)),
     ("lesson-calendar-new", |s| {
         s.open_tab(Tab::Calendar);

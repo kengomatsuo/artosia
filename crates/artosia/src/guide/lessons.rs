@@ -16,20 +16,27 @@ const fn on_tab(id: &'static str, action: Action, needs: &'static str, done: &'s
     Step { id, goal: Goal::Run(action), needs: Some(needs), done: Some(done), restore: Some(back) }
 }
 
-/// An explanation of a part of the window, read and passed with Next.
-const fn point(id: &'static str, key: &'static str) -> Step<Action> {
-    Step { id, goal: Goal::Point(key), needs: None, done: None, restore: None }
+/// An explanation of a part of the window, read and passed with Next. It stands on the tab or
+/// dialog the step before it opened, and goes back to that step when it is closed.
+const fn point(id: &'static str, key: &'static str, needs: &'static str, back: &'static str) -> Step<Action> {
+    Step { id, goal: Goal::Point(key), needs: Some(needs), done: None, restore: Some(back) }
 }
 
-const SCREENS_STEPS: [Step<Action>; 1] = [go("screens-open", Action::Run(Command::Screens), "screens-open")];
+const SCREENS_STEPS: [Step<Action>; 3] = [
+    go("screens-open", Action::Run(Command::Screens), "screens-open"),
+    Step { done: Some("no-projector"), ..point("screens-switch", "projector-switch", "screens-open", "screens-open") },
+    Step { done: Some("no-monitor-list"), ..point("screens-jobs", "screen-jobs", "screens-open", "screens-open") },
+];
+const PHONE_STEPS: [Step<Action>; 2] = [go("phone-open", Action::Run(Command::Remote), "phone-open"), point("phone-switch", "remote-switch", "phone-open", "phone-open")];
+const LISTEN_STEPS: [Step<Action>; 2] = [go("listen-open", Action::Run(Command::Listen), "listen-open"), point("listen-mics", "microphones", "listen-open", "listen-open")];
 const NOTICES_STEPS: [Step<Action>; 2] = [
     go("notices-tab", Action::Tab(Tab::Notices), "notices-tab"),
     on_tab("notices-new", Action::Press("notice-add"), "notices-tab", "notice-draft", "notices-tab"),
 ];
-const LOOK_STEPS: [Step<Action>; 2] = [go("look-tab", Action::Tab(Tab::Look), "look-tab"), point("look-for", "look-for")];
+const LOOK_STEPS: [Step<Action>; 2] = [go("look-tab", Action::Tab(Tab::Look), "look-tab"), point("look-for", "look-for", "look-tab", "look-tab")];
 const PLAN_STEPS: [Step<Action>; 3] = [
     go("plan-tab", Action::Tab(Tab::Plan), "plan-tab"),
-    point("plan-explain", "plan-add"),
+    point("plan-explain", "plan-add", "plan-tab", "plan-tab"),
     on_tab("plan-add", Action::Press("plan-add-button"), "plan-tab", "add-menu-open", "plan-tab"),
 ];
 const CALENDAR_STEPS: [Step<Action>; 2] = [
@@ -57,9 +64,11 @@ pub const TEMPLATES: Lesson<Action> = Lesson { id: "templates", steps: &TEMPLATE
 pub const NOTICES: Lesson<Action> = Lesson { id: "notices", steps: &NOTICES_STEPS };
 pub const LOOK: Lesson<Action> = Lesson { id: "look", steps: &LOOK_STEPS };
 pub const PLAN: Lesson<Action> = Lesson { id: "plan", steps: &PLAN_STEPS };
+pub const PHONE: Lesson<Action> = Lesson { id: "phone", steps: &PHONE_STEPS };
+pub const LISTEN: Lesson<Action> = Lesson { id: "listen", steps: &LISTEN_STEPS };
 
 /// Every lesson, for the lesson list and the test that runs each one.
-pub const ALL: [Lesson<Action>; 8] = [SCREENS, CALENDAR, PEOPLE, GIVING, TEMPLATES, NOTICES, LOOK, PLAN];
+pub const ALL: [Lesson<Action>; 10] = [SCREENS, CALENDAR, PEOPLE, GIVING, TEMPLATES, NOTICES, LOOK, PLAN, PHONE, LISTEN];
 
 /// A feature with a help mark: its name, what it is for, and the lesson that shows it.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -71,6 +80,9 @@ pub enum Feature {
     Notices,
     Look,
     Plan,
+    Screens,
+    Phone,
+    Listen,
 }
 
 impl Feature {
@@ -83,9 +95,23 @@ impl Feature {
             Feature::Notices => "help-notices",
             Feature::Look => "help-look",
             Feature::Plan => "help-plan",
+            Feature::Screens => "help-screens",
+            Feature::Phone => "help-phone",
+            Feature::Listen => "help-listen",
         }
     }
 
+    /// The feature's name, as its tab or its dialog is named.
+    pub fn name(self) -> &'static str {
+        match self {
+            Feature::Screens => t::BTN_SCREENS(),
+            Feature::Phone => t::BTN_PHONE(),
+            Feature::Listen => t::BTN_LISTEN(),
+            tabbed => crate::ui::tabs::name(tabbed.tab()),
+        }
+    }
+
+    /// The tab a feature lives in; a dialog's feature lives over the rundown.
     pub fn tab(self) -> Tab {
         match self {
             Feature::Calendar => Tab::Calendar,
@@ -94,7 +120,7 @@ impl Feature {
             Feature::Templates => Tab::Templates,
             Feature::Notices => Tab::Notices,
             Feature::Look => Tab::Look,
-            Feature::Plan => Tab::Plan,
+            Feature::Plan | Feature::Screens | Feature::Phone | Feature::Listen => Tab::Plan,
         }
     }
 
@@ -109,6 +135,9 @@ impl Feature {
             Feature::Notices => t::HELP_NOTICES(),
             Feature::Look => t::HELP_LOOK(),
             Feature::Plan => t::HELP_PLAN(),
+            Feature::Screens => t::HELP_SCREENS(),
+            Feature::Phone => t::HELP_PHONE(),
+            Feature::Listen => t::HELP_LISTEN(),
         }
     }
 
@@ -122,6 +151,9 @@ impl Feature {
             Feature::Notices => "notices-new",
             Feature::Look => "look-tab",
             Feature::Plan => "plan-add",
+            Feature::Screens => "screens-open",
+            Feature::Phone => "phone-open",
+            Feature::Listen => "listen-open",
         }
     }
 
@@ -134,6 +166,9 @@ impl Feature {
             Feature::Notices => NOTICES,
             Feature::Look => LOOK,
             Feature::Plan => PLAN,
+            Feature::Screens => SCREENS,
+            Feature::Phone => PHONE,
+            Feature::Listen => LISTEN,
         }
     }
 }
@@ -156,13 +191,15 @@ pub fn clip(step: &str) -> Option<&'static [u8]> {
         "look-tab" => include_bytes!("../../../../assets/guide/look-tab.png"),
         "plan-tab" => include_bytes!("../../../../assets/guide/plan-tab.png"),
         "plan-add" => include_bytes!("../../../../assets/guide/plan-add.png"),
+        "phone-open" => include_bytes!("../../../../assets/guide/phone-open.png"),
+        "listen-open" => include_bytes!("../../../../assets/guide/listen-open.png"),
         _ => return None,
     })
 }
 
 /// The headline and the line under it for a step.
 pub fn words(step: &str) -> (String, &'static str) {
-    let tab = |feature: Feature| (t::guide_open_tab(crate::ui::tabs::name(feature.tab())), feature.about());
+    let tab = |feature: Feature| (t::guide_open_tab(feature.name()), feature.about());
     match step {
         "screens-open" => (t::GUIDE_SCREENS_OPEN().to_string(), t::GUIDE_SCREENS_OPEN_MORE()),
         "calendar-tab" => tab(Feature::Calendar),
@@ -180,6 +217,12 @@ pub fn words(step: &str) -> (String, &'static str) {
         "plan-tab" => tab(Feature::Plan),
         "plan-explain" => (t::GUIDE_PLAN_EXPLAIN().to_string(), t::GUIDE_PLAN_EXPLAIN_MORE()),
         "plan-add" => (t::GUIDE_PLAN_ADD().to_string(), t::GUIDE_PLAN_ADD_MORE()),
+        "screens-switch" => (t::GUIDE_SCREENS_SWITCH().to_string(), t::GUIDE_SCREENS_SWITCH_MORE()),
+        "screens-jobs" => (t::GUIDE_SCREENS_JOBS().to_string(), t::GUIDE_SCREENS_JOBS_MORE()),
+        "phone-open" => (t::GUIDE_PHONE_OPEN().to_string(), t::GUIDE_PHONE_OPEN_MORE()),
+        "phone-switch" => (t::GUIDE_PHONE_SWITCH().to_string(), t::GUIDE_PHONE_SWITCH_MORE()),
+        "listen-open" => (t::GUIDE_LISTEN_OPEN().to_string(), t::GUIDE_LISTEN_OPEN_MORE()),
+        "listen-mics" => (t::GUIDE_LISTEN_MICS().to_string(), t::GUIDE_LISTEN_MICS_MORE()),
         _ => (String::new(), ""),
     }
 }

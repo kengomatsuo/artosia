@@ -5312,9 +5312,9 @@
   "why": "table terms reused, plain register"
  },
  "GUIDE_SCREENS_SWITCH_MORE": {
-  "text": "下面给每块屏幕分配用途",
-  "back": "Below, assign a use to each screen",
-  "why": "table terms reused, plain register"
+  "text": "关闭时，现场观众的屏幕上什么都不会出现",
+  "back": "When off, nothing appears on the audience's screen",
+  "why": "plain volunteer register, table words reused"
  },
  "GUIDE_PHONE_OPEN": {
   "text": "按下带框的按钮，打开手机遥控",
@@ -5478,5 +5478,15 @@
   "text": "{name}的重复日期已更新",
   "back": "The repeating dates of {name} were updated",
   "why": "重复日期 keeps it from sounding like a deletion"
+ },
+ "GUIDE_SCREENS_JOBS": {
+  "text": "给每块屏幕分配用途",
+  "back": "Assign a use to each screen",
+  "why": "plain volunteer register, table words reused"
+ },
+ "GUIDE_SCREENS_JOBS_MORE": {
+  "text": "投影屏给观众看，舞台屏给台上的乐手看，或者不使用",
+  "back": "Projection screen is for the audience, stage screen for the players on stage, or not used",
+  "why": "plain volunteer register, table words reused"
  }
 }

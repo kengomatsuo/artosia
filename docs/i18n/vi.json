@@ -5311,9 +5311,9 @@
   "why": "table terms reused, plain register"
  },
  "GUIDE_SCREENS_SWITCH_MORE": {
-  "text": "Bên dưới, mỗi màn hình được giao việc riêng",
-  "back": "Below, each screen is given its own job",
-  "why": "table terms reused, plain register"
+  "text": "Khi tắt, không có gì lên màn hình của hội thánh",
+  "back": "When off, nothing goes onto the church's screen",
+  "why": "plain volunteer register, table words reused"
  },
  "GUIDE_PHONE_OPEN": {
   "text": "Bấm nút được khoanh để mở điện thoại điều khiển",
@@ -5485,5 +5485,15 @@
   "text": "Đã cập nhật “{name}”",
   "back": "Updated “{name}”",
   "why": "Not deleted"
+ },
+ "GUIDE_SCREENS_JOBS": {
+  "text": "Giao việc cho từng màn hình",
+  "back": "Assign work to each screen",
+  "why": "plain volunteer register, table words reused"
+ },
+ "GUIDE_SCREENS_JOBS_MORE": {
+  "text": "Máy chiếu cho hội thánh, Ban nhạc cho nhóm nhạc, hoặc Không dùng",
+  "back": "Projector for the church, Band for the music group, or Not used",
+  "why": "plain volunteer register, table words reused"
  }
 }
