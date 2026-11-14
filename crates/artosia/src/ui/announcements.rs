@@ -415,14 +415,11 @@ fn form(s: &App, k: &Kit, form: &Notices, width: f32) -> El {
         .children(reads_pill(s, draft.as_ref(), empty));
     let words = match template {
         Template::Passage => {
+            // The passage is picked from the books, chapters and verses, never typed.
+            let chosen = form.passage.text.trim().to_string();
+            let words = if chosen.is_empty() { t::START_BIBLE_DETAIL().to_string() } else { chosen };
             let mut field = col().w_full().gap(space::S1).child(section_label(k, t::ANNOUNCEMENT_PASSAGE())).child(
-                TextInput::new(&form.passage)
-                    .width(None)
-                    .label(t::ANNOUNCEMENT_PASSAGE())
-                    .placeholder(s.example_passage("23:1-6"))
-                    .on_edit(|s: &mut App| edit_of(s, |form| &mut form.passage))
-                    .on_key(escape_closes)
-                    .build(k),
+                btn(words).icon(&icons::BOOK).focusable().build(k, |s, _| s.pick_notice_passage()).key("notice-passage"),
             );
             // Without words the card says why, and the Bibles dialog is one press away.
             let problem = match state {

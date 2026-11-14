@@ -422,6 +422,8 @@ pub struct Palette {
     /// Opened from the plan's Add button: Enter and a click put the row in the plan, and the
     /// search stays open for the next one.
     pub adding: bool,
+    /// Opened from a verse card's passage button: the passage chosen goes on the card.
+    pub for_notice: bool,
 }
 
 const SONG_LIMIT: usize = 40;
@@ -494,8 +496,16 @@ impl App {
     pub fn close_palette(&mut self) {
         self.palette.open = false;
         self.palette.adding = false;
+        self.palette.for_notice = false;
         self.palette.chip = None;
         self.palette.query.focused = false;
+    }
+
+    /// The verse card's passage button: the search on the Bible's books, and the passage chosen
+    /// there goes on the card instead of into Preview.
+    pub fn pick_notice_passage(&mut self) {
+        self.open_palette(Scope::Bible, "");
+        self.palette.for_notice = true;
     }
 
     fn pick_into_plan(&mut self, hit: Hit) {
@@ -999,6 +1009,14 @@ impl App {
                     self.set_query(&step);
                     return;
                 }
+                if self.palette.for_notice {
+                    let words = self.bible().map(|bible| bible.format(&reference)).unwrap_or_default();
+                    if let Some(form) = self.notices.as_mut() {
+                        form.passage.replace_text(&words);
+                    }
+                    self.close_palette();
+                    return;
+                }
                 if how == Pick::AddToPlan {
                     self.add_passage_to_plan(&reference);
                     return;
@@ -1414,6 +1432,25 @@ mod tests {
         let command = app.palette.hits.iter().position(|hit| matches!(hit, Hit::Command(Command::NewPlan))).expect("the plan commands are found");
         let passage = app.palette.hits.iter().position(|hit| matches!(hit, Hit::Passage { .. })).unwrap_or(usize::MAX);
         assert!(command < passage, "the command stands before any passage");
+    }
+
+    #[test]
+    fn a_verse_card_takes_the_passage_picked_from_the_books() {
+        use artosia_core::bible::{Bible, Verse};
+        let mut app = App::practice();
+        let verse = |v: u16| Verse { book: 19, chapter: 23, verse: v, text: format!("Made-up words {v}").into() };
+        let bible = Bible::from_parts("TST".into(), None, String::new(), vec![(19, "Psalms".to_string(), "Ps".to_string())], vec![verse(1), verse(2)]).expect("a made-up Bible");
+        app.bibles.clear();
+        app.bibles.insert("TST".into(), std::sync::Arc::new(bible));
+        app.settings.bible = "TST".into();
+        app.new_notice("", "");
+        app.pick_notice_passage();
+        assert!(app.palette.open && app.palette.scope == Scope::Bible, "the Bible's books open");
+        search(&mut app, "ps 23 1");
+        app.pick(Pick::Open);
+        assert!(!app.palette.open, "the search closes on the pick");
+        let passage = app.notices.as_ref().map(|form| form.passage.text.clone()).unwrap_or_default();
+        assert!(passage.contains("23:1"), "the card holds the passage, not Preview: {passage}");
     }
 
     #[test]

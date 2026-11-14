@@ -810,6 +810,15 @@ const SCENES: &[Scene] = &[
         s.toggle_colour(crate::ui::colour::ColourFor::Ink);
         s.colour.more = true;
     }),
+    ("lyrics-a-p1", |s| s.mock = Some(('x', 1))),
+    ("lyrics-a-p2", |s| s.mock = Some(('x', 2))),
+    ("lyrics-a-p3", |s| s.mock = Some(('x', 3))),
+    ("lyrics-b-p1", |s| s.mock = Some(('y', 1))),
+    ("lyrics-b-p2", |s| s.mock = Some(('y', 2))),
+    ("lyrics-b-p3", |s| s.mock = Some(('y', 3))),
+    ("lyrics-c-p1", |s| s.mock = Some(('z', 1))),
+    ("lyrics-c-p2", |s| s.mock = Some(('z', 2))),
+    ("lyrics-c-p3", |s| s.mock = Some(('z', 3))),
     ("mock-a-p1", |s| s.mock = Some(('a', 1))),
     ("mock-a-p2", |s| s.mock = Some(('a', 2))),
     ("mock-a-p3", |s| s.mock = Some(('a', 3))),

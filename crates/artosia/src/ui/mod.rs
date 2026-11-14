@@ -12,6 +12,8 @@ mod languages;
 mod mock_a;
 mod mock_b;
 mod mock_c;
+// LYRICSEDIT1: three directions of the song editor, drawn only by the `lyrics-*` scenes.
+mod mock_lyrics;
 pub(crate) mod onboard;
 pub(crate) mod live;
 pub(crate) mod look;
@@ -320,6 +322,7 @@ pub fn view(s: &App, cx: &mut Cx<App>) -> El {
         let body = match direction {
             'a' => mock_a::page(s, cx, k, page, &mut layer),
             'b' => mock_b::page(s, cx, k, page, &mut layer),
+            'x' | 'y' | 'z' => mock_lyrics::page(s, cx, k, direction, page, &mut layer),
             _ => mock_c::page(s, cx, k, page, &mut layer),
         };
         return rune_kit::root(body, layer);
