@@ -1,6 +1,6 @@
 # Artosia handoff (2026-11-14)
 
-**Now:** the UI overhaul (UIOVER1, 13 cards) and the song browser (WEBSONGS1) are built and in Review, waiting for the trailing reviewer. Next owner-facing step: release them (`bash tools/publish.sh <version> "<notes>"`), then the Mac edition once Tailscale is signed in.
+**Now:** 0.1.32 is released (Windows with speech, Mac signed and notarized, homepage) [card: RELEASE0132]: the overhaul, the song browser, the guide (the whole tour on the practice library, 15 lessons, help on every feature), the part-card song editor and the search's song/verse sections. A release with another session's unfinished work in this tree is built from the clean clone `F:/Repositories/.artosia-release` (`git fetch && git merge --ff-only origin/main`, then `bash tools/publish.sh <version> "<notes>"`); its `target` is a junction to this repo's, so remove the junction with `cmd /c rmdir target` before ever deleting the clone.
 
 ## Where things stand
 
@@ -15,6 +15,9 @@
 | Announcement styles | Hairline, Ledger, Band drawn for five kinds (`crates/artosia-slides/src/notice.rs`), demo scenes only | [commit 88013b9] |
 | UI overhaul | All in Review: tabs c7ff4e7, colour picker e63fb2c, calendar 30ff5d9, members b300540, offerings 9435328, templates 7318e0d, rundown items ebeb24c with playback 1671469 and thumbnails 24a39ee, PowerPoint 8bd3111 with export f059ebe | [card: UIOVER1] [rule: .claude/rules/operator.md, last lines] |
 | Song browser | In Review: page reader 35ad9cd (repeat directions dropped d3018b0), browse layer d2df40f, dialog 9c494ab | [card: WEBSONGS1] |
+| Song editor | In Review: part cards over the marker text, kinds picked, order strip (`parts.rs`, `ui/editor.rs`) | [card: LYRICSEDIT1] [commit 42363ad] |
+| Search | In Review: songs and verses are two sections; the one that holds what was typed leads | [card: SEARCHINTENT1] [commit 3413516] |
+| Tour | In Review: runs on the practice library, then every feature's lesson in turn | [card: TOURROOM1] [card: TOURFULL1] [commit a1b3b96] |
 | Guide | In Review: fifteen lessons and the tour, help on every feature, what's new, all texts in ten languages; a lesson keeps its progress and rings scrolled controls | [card: GUIDE1] [card: HELPNEAR1] [commit 825682f] [rule: docs/plans/artosia/guide.md "Where it stands"] |
 
 ## Last checks
