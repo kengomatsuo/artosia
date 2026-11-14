@@ -351,7 +351,7 @@ pub fn window_events(events: &[Event], today: &Today, month: bool, calendars: &[
     let mut found: Vec<(Date, u16, String)> = events
         .iter()
         .filter(|event| calendars.is_empty() || calendars.contains(&event.calendar))
-        .flat_map(|event| occurrences(event, from, to).into_iter().map(|date| (date, event.start, event.name.clone())))
+        .flat_map(|event| occurrences(event, from, to).into_iter().map(|found| (found.date, found.start, found.name)))
         .collect();
     found.sort();
     found
@@ -1117,7 +1117,7 @@ Write the fund"));
     }
 
     fn service(name: &str, date: crate::calendar::Date, start: u16, repeat: crate::calendar::Repeat) -> Event {
-        Event { id: 0, calendar: 1, name: name.into(), date, start, end: start + 60, repeat, until: None, skipped: Vec::new() }
+        Event { id: 0, calendar: 1, name: name.into(), date, start, end: start + 60, repeat, until: None, overrides: Vec::new() }
     }
 
     #[test]
@@ -1126,9 +1126,9 @@ Write the fund"));
         const MONTHS: [&str; 12] = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
         let first = Date::new(2026, 1, 4).unwrap();
         let events = vec![
-            service("Second service", first, 9 * 60, Repeat::Weekly(1)),
-            service("First service", first, 6 * 60 + 30, Repeat::Weekly(1)),
-            service("Prayer", first, 18 * 60 + 30, Repeat::Weekly(1 << 3)),
+            service("Second service", first, 9 * 60, Repeat::Weekly(1, 1)),
+            service("First service", first, 6 * 60 + 30, Repeat::Weekly(1, 1)),
+            service("Prayer", first, 18 * 60 + 30, Repeat::Weekly(1 << 3, 1)),
             // Eight days off: outside the week.
             service("Later", Date::new(2026, 11, 22).unwrap(), 10 * 60, Repeat::Once),
         ];
@@ -1160,6 +1160,27 @@ Wednesday	18.30	Prayer");
         assert!(pages[1].1.text.starts_with("Sunday	"));
         assert_eq!(pages[1].1.text.lines().count(), 2);
     }
+    #[test]
+    fn a_schedule_card_follows_cancelled_and_moved_dates() {
+        use crate::calendar::{Change, Repeat};
+        const MONTHS: [&str; 12] = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        let day = |month, day| Date::new(2026, month, day).unwrap();
+        let mut weekly = service("Sunday", day(1, 4), 9 * 60, Repeat::Weekly(1, 1));
+        let today = today_on(11, 13, &MONTHS);
+        assert_eq!(week_events(std::slice::from_ref(&weekly), &today), vec![(day(11, 15), 9 * 60, "Sunday".to_string())]);
+        // Moved to Tuesday evening, under another name: the card says so.
+        weekly.set_change(day(11, 15), Some(Change::Moved { date: day(11, 17), start: 19 * 60, end: 20 * 60, name: Some("Thanksgiving".into()) }));
+        assert_eq!(week_events(std::slice::from_ref(&weekly), &today), vec![(day(11, 17), 19 * 60, "Thanksgiving".to_string())]);
+        // A date moved out of the window into it from a week later.
+        weekly.set_change(day(11, 22), Some(Change::Moved { date: day(11, 16), start: 600, end: 660, name: None }));
+        assert_eq!(week_events(std::slice::from_ref(&weekly), &today).len(), 2);
+        weekly.set_change(day(11, 15), Some(Change::Cancelled));
+        weekly.set_change(day(11, 22), Some(Change::Cancelled));
+        assert!(week_events(std::slice::from_ref(&weekly), &today).is_empty());
+        let card = Announcement { fill: Fill::ScheduleWeek, ..Announcement::default() };
+        assert_eq!(source_count(&card, &[], &[weekly], &nothing(), &today, None), Some(0));
+    }
+
     #[test]
     fn a_schedule_card_reads_its_calendars_and_its_window_and_counts_them() {
         use crate::calendar::Repeat;

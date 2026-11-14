@@ -5290,5 +5290,193 @@
   "text": "在打开的列表里选择要添加的内容",
   "back": "In the list that opens, choose what to add",
   "why": "Plain"
+ },
+ "HELP_SCREENS": {
+  "text": "决定哪块屏幕给现场会众看，哪块给舞台上的乐队看",
+  "back": "Decide which screen the people in the room see and which the band on stage sees",
+  "why": "table terms reused, plain register"
+ },
+ "HELP_PHONE": {
+  "text": "同一无线网络里的手机，可以在场内任何位置翻动幻灯片",
+  "back": "A phone on the same wireless network can flip slides from any spot in the room",
+  "why": "table terms reused, plain register"
+ },
+ "HELP_LISTEN": {
+  "text": "通过麦克风听现场的声音，推荐诗歌或经文。它自己不会上屏",
+  "back": "Listens to the room's sound through a microphone and recommends songs or verses. It never goes on screen itself",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_SCREENS_SWITCH": {
+  "text": "这个开关用来打开和关闭投影屏",
+  "back": "This switch is used to turn the projector screen on and off",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_SCREENS_SWITCH_MORE": {
+  "text": "下面给每块屏幕分配用途",
+  "back": "Below, assign a use to each screen",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_PHONE_OPEN": {
+  "text": "按下带框的按钮，打开手机遥控",
+  "back": "Press the framed button to open the phone remote",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_PHONE_OPEN_MORE": {
+  "text": "同一无线网络的手机，都能当幻灯片遥控器",
+  "back": "Phones on the same wireless network can all act as slide remotes",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_PHONE_SWITCH": {
+  "text": "先打开开关，再用手机相机扫二维码",
+  "back": "First turn the switch on, then scan the QR code with the phone camera",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_PHONE_SWITCH_MORE": {
+  "text": "手机随后会要这里显示的PIN码，输入后就能翻幻灯片",
+  "back": "The phone then asks for the PIN shown here, and after entering it can flip slides",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_LISTEN_OPEN": {
+  "text": "按下带框的按钮，打开语音识别",
+  "back": "Press the framed button to open voice recognition",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_LISTEN_OPEN_MORE": {
+  "text": "程序通过麦克风听现场的声音",
+  "back": "The program listens to the room's sound through the microphone",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_LISTEN_MICS": {
+  "text": "选一个能听到现场的麦克风",
+  "back": "Pick a microphone that can hear the room",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_LISTEN_MICS_MORE": {
+  "text": "听到的内容会推荐在预览上方，不会自己上屏",
+  "back": "What is heard is recommended above the preview and never goes on screen by itself",
+  "why": "table terms reused, plain register"
+ },
+ "CAL_EVERY_2_WEEKS": {
+  "text": "每两周",
+  "back": "Every two weeks",
+  "why": "sibling of 每周; 两, not 二, before a unit"
+ },
+ "CAL_EVERY_2_MONTHS": {
+  "text": "每两个月",
+  "back": "Every two months",
+  "why": "sibling of 每月; 个 is needed with 月 after a number"
+ },
+ "CAL_CUSTOM": {
+  "text": "自定义",
+  "back": "Custom",
+  "why": "the usual menu word for a setting the person makes"
+ },
+ "CAL_EVERY": {
+  "text": "每隔",
+  "back": "Every (a gap of)",
+  "why": "reads as 每隔 3 周; 隔 says the gap between two meetings"
+ },
+ "CAL_UNIT_WEEKS": {
+  "text": "周",
+  "back": "weeks",
+  "why": "the 周 of the table; counts after a number"
+ },
+ "CAL_UNIT_MONTHS": {
+  "text": "个月",
+  "back": "months",
+  "why": "个月 is the counted form after a number, unlike bare 月"
+ },
+ "CAL_THIS_EVENT": {
+  "text": "只改这一次",
+  "back": "Change only this one time",
+  "why": "改 names the action; 这一次 is the one opened date"
+ },
+ "CAL_THIS_AND_FOLLOWING": {
+  "text": "这一次及之后的所有活动",
+  "back": "This time and all the events after it",
+  "why": "also reads inside the drop sentence; 活动 is the table word"
+ },
+ "CAL_ALL_EVENTS": {
+  "text": "所有活动",
+  "back": "All events",
+  "why": "活动 as in the table, 所有 as in 所有日历"
+ },
+ "CAL_ASK_TITLE": {
+  "text": "要改哪几次活动？",
+  "back": "Which times of the event to change?",
+  "why": "plain question with 哪几次 and a full-width question mark"
+ },
+ "CAL_CANCEL_DATE": {
+  "text": "取消这一次",
+  "back": "Cancel this one time",
+  "why": "取消 on one 次 cannot read as 删除 of the event"
+ },
+ "CAL_MOVE_DATE": {
+  "text": "这一次改期",
+  "back": "Move this one time to another date",
+  "why": "改期 is what a volunteer says of a moved meeting"
+ },
+ "CAL_RESTORE_DATE": {
+  "text": "恢复",
+  "back": "Restore",
+  "why": "one word; not 撤销, which is Undo"
+ },
+ "CAL_ALL_DATES": {
+  "text": "全部都改",
+  "back": "Change all of them",
+  "why": "an action on the series, clearly not 撤销"
+ },
+ "rule_weeks": {
+  "text": {
+   "until": "每隔{every}周的{days}，{start}至{end}，从{from}开始，到{until}为止。",
+   "open": "每隔{every}周的{days}，{start}至{end}，从{from}开始，没有结束日期。"
+  },
+  "back": "every {every} weeks on {days}, {start} to {end}, from {from} until {until} / with no end",
+  "why": "the table rule_week wording with 每隔 and 周 added"
+ },
+ "rule_months": {
+  "text": {
+   "until": "每隔{every}个月的{position}{weekday}，{start}至{end}，从{from}开始，到{until}为止。",
+   "open": "每隔{every}个月的{position}{weekday}，{start}至{end}，从{from}开始，没有结束日期。"
+  },
+  "back": "every {every} months on the {position} {weekday}, {start} to {end}, from {from} until {until} / with no end",
+  "why": "the table rule_month wording with 每隔 and 个月 added"
+ },
+ "date_cancelled": {
+  "text": "{date}的{name}已取消",
+  "back": "{name} of {date} is cancelled",
+  "why": "date first; 已取消, not 已删除"
+ },
+ "date_restored": {
+  "text": "{date}的{name}已恢复",
+  "back": "{name} of {date} is restored",
+  "why": "same shape as the cancel toast"
+ },
+ "date_moved": {
+  "text": "{name}改到了{date}",
+  "back": "{name} was changed to {date}",
+  "why": "the new day comes last, as the point"
+ },
+ "dates_moved_all": {
+  "text": "{name}的全部日期已一起改动",
+  "back": "All dates of {name} were changed together",
+  "why": "全部日期 says all, not one"
+ },
+ "scope_drops": {
+  "text": {
+   "other": "{scope}会丢掉{count}个改过的日期。"
+  },
+  "back": "{scope} would lose {count} changed dates.",
+  "why": "starts with the button name; one form"
+ },
+ "chip_cancelled": {
+  "text": "{label}，已取消",
+  "back": "{label}, cancelled",
+  "why": "label first, then the fact"
+ },
+ "series_changed": {
+  "text": "{name}的重复日期已更新",
+  "back": "The repeating dates of {name} were updated",
+  "why": "重复日期 keeps it from sounding like a deletion"
  }
 }

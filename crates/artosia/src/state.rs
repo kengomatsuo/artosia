@@ -268,6 +268,12 @@ pub enum Undo {
     Recordings,
     /// An event was deleted from the calendar.
     Event(Event),
+    /// A date of an event was cancelled, restored or moved; this is the event as it was.
+    EventBack(Event),
+    /// A change to the later dates or to all dates of a series: the event as it was, and the id of the new half a split made.
+    Series { before: Event, added: Option<i64> },
+    /// A date of a repeating event was dropped on another day or hour; All dates reads the drop.
+    Moved { before: Event, drag: crate::calendar::CalDrag },
     /// A calendar was deleted with its events.
     Calendar(Calendar, Vec<Event>),
     /// A person was deleted from the Members list.

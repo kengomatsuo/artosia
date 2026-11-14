@@ -5288,5 +5288,193 @@
   "text": "從打開的清單裡挑選要加入的內容",
   "back": "From the list that opens, pick what to add",
   "why": "Plain"
+ },
+ "HELP_SCREENS": {
+  "text": "決定哪個螢幕給現場會眾看，哪個給台上的樂團看",
+  "back": "Decide which screen the people on site see and which the band on stage sees",
+  "why": "table terms reused, plain register"
+ },
+ "HELP_PHONE": {
+  "text": "教會無線網路上的手機，可以在場內任何地方切換投影片",
+  "back": "A phone on the church's wireless network can switch slides from anywhere in the venue",
+  "why": "table terms reused, plain register"
+ },
+ "HELP_LISTEN": {
+  "text": "用麥克風聽現場聲音，建議詩歌或經文。它自己不會顯示任何東西",
+  "back": "Listens to the venue's sound with a microphone and suggests songs or verses. It displays nothing by itself",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_SCREENS_SWITCH": {
+  "text": "這個開關可以開啟或關閉投影機",
+  "back": "This switch can turn the projector on or off",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_SCREENS_SWITCH_MORE": {
+  "text": "下方可以替每個螢幕指定用途",
+  "back": "Below, a use can be assigned to each screen",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_PHONE_OPEN": {
+  "text": "按下框起來的按鈕，開啟手機遙控",
+  "back": "Press the boxed button to open the phone remote",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_PHONE_OPEN_MORE": {
+  "text": "同一個無線網路的手機，都能當投影片遙控器",
+  "back": "A phone on the same wireless network can act as a slide remote",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_PHONE_SWITCH": {
+  "text": "先開啟開關，再用手機相機掃描 QR Code",
+  "back": "First turn the switch on, then scan the QR Code with the phone camera",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_PHONE_SWITCH_MORE": {
+  "text": "手機接著會要求輸入這裡顯示的 PIN 碼，輸入後就能切換投影片",
+  "back": "The phone then asks you to enter the PIN shown here, and after that it can switch slides",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_LISTEN_OPEN": {
+  "text": "按下框起來的按鈕，開啟麥克風辨識",
+  "back": "Press the boxed button to open microphone recognition",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_LISTEN_OPEN_MORE": {
+  "text": "程式會透過麥克風聽現場的聲音",
+  "back": "The program listens to the venue's sound through the microphone",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_LISTEN_MICS": {
+  "text": "選擇能聽到現場的麥克風",
+  "back": "Choose the microphone that can hear the venue",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_LISTEN_MICS_MORE": {
+  "text": "聽到的內容會以建議顯示在預覽上方，不會自己投影",
+  "back": "What is heard shows as a suggestion above the preview and will not project by itself",
+  "why": "table terms reused, plain register"
+ },
+ "CAL_EVERY_2_WEEKS": {
+  "text": "每兩週",
+  "back": "Every two weeks",
+  "why": "sibling of 每週; 兩 before a unit"
+ },
+ "CAL_EVERY_2_MONTHS": {
+  "text": "每兩個月",
+  "back": "Every two months",
+  "why": "sibling of 每月; 個 after a number"
+ },
+ "CAL_CUSTOM": {
+  "text": "自訂",
+  "back": "Custom",
+  "why": "the short Taiwan menu word for an own setting"
+ },
+ "CAL_EVERY": {
+  "text": "每隔",
+  "back": "Every (a gap of)",
+  "why": "reads as 每隔 3 週"
+ },
+ "CAL_UNIT_WEEKS": {
+  "text": "週",
+  "back": "weeks",
+  "why": "the 週 of the Taiwan table"
+ },
+ "CAL_UNIT_MONTHS": {
+  "text": "個月",
+  "back": "months",
+  "why": "個月 after a number"
+ },
+ "CAL_THIS_EVENT": {
+  "text": "只改這一次",
+  "back": "Change only this one time",
+  "why": "改 names the action"
+ },
+ "CAL_THIS_AND_FOLLOWING": {
+  "text": "這一次及之後的所有活動",
+  "back": "This time and all the events after it",
+  "why": "also read inside the drop sentence"
+ },
+ "CAL_ALL_EVENTS": {
+  "text": "所有活動",
+  "back": "All events",
+  "why": "活動 and 所有 as in the table"
+ },
+ "CAL_ASK_TITLE": {
+  "text": "要改哪幾次活動？",
+  "back": "Which times of the event to change?",
+  "why": "plain question"
+ },
+ "CAL_CANCEL_DATE": {
+  "text": "取消這一次",
+  "back": "Cancel this one time",
+  "why": "cannot read as deleting the event"
+ },
+ "CAL_MOVE_DATE": {
+  "text": "這一次改期",
+  "back": "Move this one time to another date",
+  "why": "改期 is the everyday word"
+ },
+ "CAL_RESTORE_DATE": {
+  "text": "恢復",
+  "back": "Restore",
+  "why": "one word; 復原 is already Undo"
+ },
+ "CAL_ALL_DATES": {
+  "text": "全部都改",
+  "back": "Change all of them",
+  "why": "an action on the series, not 復原"
+ },
+ "rule_weeks": {
+  "text": {
+   "until": "每隔{every}週的{days}，{start}至{end}，從{from}開始，到{until}為止。",
+   "open": "每隔{every}週的{days}，{start}至{end}，從{from}開始，沒有結束日期。"
+  },
+  "back": "every {every} weeks on {days}, {start} to {end}, from {from} until {until} / with no end",
+  "why": "the table wording with 每隔 and 週"
+ },
+ "rule_months": {
+  "text": {
+   "until": "每隔{every}個月的{position}{weekday}，{start}至{end}，從{from}開始，到{until}為止。",
+   "open": "每隔{every}個月的{position}{weekday}，{start}至{end}，從{from}開始，沒有結束日期。"
+  },
+  "back": "every {every} months on the {position} {weekday}, {start} to {end}, from {from} until {until} / with no end",
+  "why": "the table wording with 每隔 and 個月"
+ },
+ "date_cancelled": {
+  "text": "{date}的{name}已取消",
+  "back": "{name} of {date} is cancelled",
+  "why": "已取消, not 已刪除"
+ },
+ "date_restored": {
+  "text": "{date}的{name}已恢復",
+  "back": "{name} of {date} is restored",
+  "why": "same shape"
+ },
+ "date_moved": {
+  "text": "{name}改到了{date}",
+  "back": "{name} was changed to {date}",
+  "why": "new day last"
+ },
+ "dates_moved_all": {
+  "text": "{name}的全部日期已一起改動",
+  "back": "All dates of {name} were changed together",
+  "why": "says all"
+ },
+ "scope_drops": {
+  "text": {
+   "other": "{scope}會丟掉{count}個改過的日期。"
+  },
+  "back": "{scope} would lose {count} changed dates.",
+  "why": "starts with the button name"
+ },
+ "chip_cancelled": {
+  "text": "{label}，已取消",
+  "back": "{label}, cancelled",
+  "why": "label first"
+ },
+ "series_changed": {
+  "text": "{name}的重複日期已更新",
+  "back": "The repeating dates of {name} were updated",
+  "why": "not a deletion word"
  }
 }

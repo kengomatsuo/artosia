@@ -2093,6 +2093,20 @@ text!(CAL_NO_END, "No end", "No end");
 text!(CAL_DATES, "Dates, press x to skip one", "Dates, press x to skip one");
 text!(CAL_SKIPPED, "Skipped, press to bring one back", "Skipped, press to bring one back");
 text!(CAL_NO_DATES, "No dates in the coming years", "No dates in the coming years");
+text!(CAL_EVERY_2_WEEKS, "Every 2 weeks", "Every 2 weeks");
+text!(CAL_EVERY_2_MONTHS, "Every 2 months", "Every 2 months");
+text!(CAL_CUSTOM, "Custom", "Custom");
+text!(CAL_EVERY, "Every", "Every");
+text!(CAL_UNIT_WEEKS, "Weeks", "Weeks");
+text!(CAL_UNIT_MONTHS, "Months", "Months");
+text!(CAL_THIS_EVENT, "This event", "This event");
+text!(CAL_THIS_AND_FOLLOWING, "This and following events", "This and following events");
+text!(CAL_ALL_EVENTS, "All events", "All events");
+text!(CAL_ASK_TITLE, "Change which events?", "Change which events?");
+text!(CAL_CANCEL_DATE, "Cancel this date", "Cancel this date");
+text!(CAL_MOVE_DATE, "Move this date", "Move this date");
+text!(CAL_RESTORE_DATE, "Restore", "Restore");
+text!(CAL_ALL_DATES, "All dates", "All dates");
 text!(CAL_ADD_CALENDAR, "Add calendar", "Add calendar");
 text!(CAL_CALENDAR_NAME, "Calendar name", "Calendar name");
 text!(CAL_COLOUR, "Colour", "Colour");
@@ -2195,6 +2209,90 @@ pub fn rule_month(position: &str, weekday: &str, start: &str, end: &str, from: &
         Some(until) => format!("Every month on the {position} {weekday}, {start} to {end}, from {from} until {until}."),
         None => format!("Every month on the {position} {weekday}, {start} to {end}, from {from}, with no end."),
     }
+}
+
+/// The rule of an event that repeats every few weeks on some days.
+pub fn rule_weeks(every: u8, days: &str, start: &str, end: &str, from: &str, until: Option<&str>) -> String {
+    let until_text = until.unwrap_or_default();
+    if let Some(text) = say("rule_weeks", Some(if until.is_some() { "until" } else { "open" }), None, &[("every", text_arg(every)), ("days", text_arg(days)), ("start", text_arg(start)), ("end", text_arg(end)), ("from", text_arg(from)), ("until", text_arg(until_text))]) {
+        return text;
+    }
+    match until {
+        Some(until) => format!("Every {every} weeks on {days}, {start} to {end}, from {from} until {until}."),
+        None => format!("Every {every} weeks on {days}, {start} to {end}, from {from}, with no end."),
+    }
+}
+
+/// The rule of an event that repeats every few months on a numbered weekday.
+pub fn rule_months(every: u8, position: &str, weekday: &str, start: &str, end: &str, from: &str, until: Option<&str>) -> String {
+    let until_text = until.unwrap_or_default();
+    if let Some(text) = say("rule_months", Some(if until.is_some() { "until" } else { "open" }), None, &[("every", text_arg(every)), ("position", text_arg(position)), ("weekday", text_arg(weekday)), ("start", text_arg(start)), ("end", text_arg(end)), ("from", text_arg(from)), ("until", text_arg(until_text))]) {
+        return text;
+    }
+    let position = position.to_lowercase();
+    match until {
+        Some(until) => format!("Every {every} months on the {position} {weekday}, {start} to {end}, from {from} until {until}."),
+        None => format!("Every {every} months on the {position} {weekday}, {start} to {end}, from {from}, with no end."),
+    }
+}
+
+/// The toast after one date of an event was cancelled.
+pub fn date_cancelled(name: &str, date: &str) -> String {
+    if let Some(text) = say("date_cancelled", None, None, &[("name", text_arg(name)), ("date", text_arg(date))]) {
+        return text;
+    }
+    format!("Cancelled {name} on {date}")
+}
+
+/// The toast after a cancelled or moved date went back to the rule's.
+pub fn date_restored(name: &str, date: &str) -> String {
+    if let Some(text) = say("date_restored", None, None, &[("name", text_arg(name)), ("date", text_arg(date))]) {
+        return text;
+    }
+    format!("Restored {name} on {date}")
+}
+
+/// The toast after one date of an event was moved, by the dialog, the menu or a drag.
+pub fn date_moved(name: &str, date: &str) -> String {
+    if let Some(text) = say("date_moved", None, None, &[("name", text_arg(name)), ("date", text_arg(date))]) {
+        return text;
+    }
+    format!("Moved {name} to {date}")
+}
+
+/// The toast after a move was applied to every date of the series.
+pub fn dates_moved_all(name: &str) -> String {
+    if let Some(text) = say("dates_moved_all", None, None, &[("name", text_arg(name))]) {
+        return text;
+    }
+    format!("Moved every date of {name}")
+}
+
+/// The toast after a change to the later dates or to all dates of an event; Undo puts the series back as it was.
+pub fn series_changed(name: &str) -> String {
+    if let Some(text) = say("series_changed", None, None, &[("name", text_arg(name))]) {
+        return text;
+    }
+    format!("Changed {name}")
+}
+
+/// What a choice of the question costs: the changed dates the new rule does not give any more.
+pub fn scope_drops(scope: &str, count: usize) -> String {
+    if let Some(text) = say("scope_drops", None, Some(count), &[("scope", text_arg(scope)), ("count", text_arg(count))]) {
+        return text;
+    }
+    match count {
+        1 => format!("{scope} drops 1 changed date that no longer fits."),
+        _ => format!("{scope} drops {count} changed dates that no longer fit."),
+    }
+}
+
+/// How a screen reader reads a chip of a cancelled date: the chip's own words, then the fact.
+pub fn chip_cancelled(label: &str) -> String {
+    if let Some(text) = say("chip_cancelled", None, None, &[("label", text_arg(label))]) {
+        return text;
+    }
+    format!("{label}, cancelled")
 }
 
 /// The toast after an event was deleted.

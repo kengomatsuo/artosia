@@ -279,6 +279,10 @@ pub(crate) fn toast(s: &App, k: &Kit) -> Option<El> {
         .transition(Transition::opacity())
         .child(text(toast.text.clone()).font(type_::BODY).color(k.c.text_base).truncate());
     if toast.undo.is_some() {
+        // A date of a repeating event that was just dropped elsewhere can take the whole series along.
+        if matches!(toast.undo, Some(crate::state::Undo::Moved { .. })) {
+            body = body.child(btn(t::CAL_ALL_DATES()).small().build(k, |s, _| s.move_all_dates()).key("toast-all-dates"));
+        }
         // The key is printed on the button: a tester guessed it.
         body = body.child(btn(t::BTN_UNDO()).small().hint("Ctrl Z").build(k, |s, _| s.undo()));
     }

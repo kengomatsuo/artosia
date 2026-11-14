@@ -5,15 +5,15 @@
 
 use std::collections::HashMap;
 
-use artosia_core::calendar::{Date, Event, Position, occurrences};
+use artosia_core::calendar::{Change, Date, Event, Position, Repeat, cancelled, occurrences};
 use artosia_core::deck::{Announcement, Fill};
 use artosia_slides::look::rgb;
-use rune::{Align, Color, Cursor, Cx, El, ScrollSpec, Tx, col, el, icon, row, spacer, text};
+use rune::{Align, Color, Cursor, Cx, Drag, El, Phase, PointerPress, ScrollSpec, Side, Tx, col, el, icon, row, spacer, text};
 use rune_kit::{Dialog, Kit, Menu, MenuItem, ScrollBar, SegmentedControl, Select, SelectAppearance, TextInput};
 
 use super::colour::ColourFor;
 use super::widgets::{btn, divider, enter_key, section_label};
-use crate::calendar::{EventForm, Kind, Part, STEP, date_words, position_name, rule_words, time_words, weekday_name};
+use crate::calendar::{CalDrag, ChipMenu, EventForm, Kind, MOST_EVERY, Part, SLOP, STEP, Scope, cells_from, date_words, position_name, rule_words, snapped_start, time_words, weekday_name};
 use crate::state::App;
 use crate::strings as t;
 use crate::theme::{self, icons, space, type_};
@@ -56,30 +56,110 @@ pub(super) fn tick(k: &Kit, on: bool, colour: Color) -> El {
     if on { e.fill(colour).child(icon(&icons::CHECK, 12.0).color(Color::WHITE)) } else { e.border(1.0, k.c.border_strong) }
 }
 
-/// Where each event of every calendar that is drawn falls, by day, in time order.
-fn by_day(s: &App, from: Date, to: Date) -> HashMap<Date, Vec<(&Event, [u8; 3])>> {
-    let mut found: HashMap<Date, Vec<(&Event, [u8; 3])>> = HashMap::new();
+/// One thing a day of a view draws: a date the rule gave, held where it was moved to, or struck out.
+struct Shown<'a> {
+    event: &'a Event,
+    colour: [u8; 3],
+    date: Date,
+    /// The date the rule gave, which keys the change made to it.
+    original: Date,
+    start: u16,
+    end: u16,
+    name: String,
+    cancelled: bool,
+}
+
+/// Where each event of every calendar that is drawn falls, by day, in time order. A cancelled date
+/// stays, struck, until its day has passed, so it can be brought back.
+fn by_day(s: &App, from: Date, to: Date) -> HashMap<Date, Vec<Shown<'_>>> {
+    let today = s.civil_today();
+    let mut found: HashMap<Date, Vec<Shown>> = HashMap::new();
     for event in &s.events {
         let Some(calendar) = s.calendar_of(event.calendar).filter(|calendar| !s.calendar.hidden.contains(&calendar.id)) else { continue };
-        for date in occurrences(event, from, to) {
-            found.entry(date).or_default().push((event, calendar.colour));
+        for at in occurrences(event, from, to) {
+            found.entry(at.date).or_default().push(Shown { event, colour: calendar.colour, date: at.date, original: at.original, start: at.start, end: at.end, name: at.name, cancelled: false });
+        }
+        for original in cancelled(event, from.max(today), to) {
+            found.entry(original).or_default().push(Shown { event, colour: calendar.colour, date: original, original, start: event.start, end: event.end, name: event.name.clone(), cancelled: true });
         }
     }
-    for events in found.values_mut() {
-        events.sort_by(|a, b| (a.0.start, &a.0.name).cmp(&(b.0.start, &b.0.name)));
+    for items in found.values_mut() {
+        items.sort_by(|a, b| (a.start, &a.name).cmp(&(b.start, &b.name)));
     }
     found
 }
 
+/// Where a chip sits in its view, so a drag can tell which day or hour the pointer is over.
+#[derive(Clone, Copy)]
+struct Geo {
+    /// The first day of the grid and the weeks it has.
+    first: Date,
+    weeks: i32,
+    /// One day's cell: its width and, in the month, its height.
+    cell: [f32; 2],
+    /// The day's column and the week's row.
+    at: (i32, i32),
+    /// The chip's left and top inside its cell.
+    inset: [f32; 2],
+    week: bool,
+}
+
+/// What every chip does: opens its date, is carried to another day, opens a menu on a right press.
+fn live(s: &App, chip: El, item: &Shown, geo: Geo) -> El {
+    let (id, original, date, start0) = (item.event.id, item.original, item.date, item.start);
+    let carried = s.calendar.drag.is_some_and(|drag| drag.id == id && drag.original == original);
+    let chip = if carried { chip.layer_opacity(0.4) } else { chip };
+    let chip = chip.on_press(move |s: &mut App| {
+        // The press that ends a drag put the chip down; it opens nothing.
+        if std::mem::take(&mut s.calendar.dropped) {
+            return;
+        }
+        s.calendar.menu = None;
+        s.edit_date(id, original);
+    });
+    let chip = if item.event.repeat == Repeat::Once { chip } else { chip.on_secondary_press(move |s: &mut App, at: PointerPress, _: &mut Tx| s.calendar.menu = Some(ChipMenu { id, original, at: [at.x, at.y] })) };
+    if item.cancelled {
+        return chip;
+    }
+    chip.on_drag(move |s: &mut App, d: &mut Drag, _: &mut Tx| match d.phase {
+        Phase::Down => s.calendar.dropped = false,
+        Phase::Move => {
+            if s.calendar.drag.is_none() && d.dx.hypot(d.dy) < SLOP {
+                return;
+            }
+            let (across, down) = cells_from([geo.inset[0] + d.x, geo.inset[1] + d.y], geo.cell);
+            let column = (geo.at.0 + across).clamp(0, 6);
+            let (to, start) = if geo.week {
+                (geo.first.plus_days(i64::from(column)), snapped_start(start0, d.dy))
+            } else {
+                (geo.first.plus_days(i64::from((geo.at.1 + down).clamp(0, geo.weeks - 1) * 7 + column)), start0)
+            };
+            s.drag_chip(CalDrag { id, original, from: date, start0, to, start });
+        }
+        Phase::Up => s.drop_chip(d.cancelled()),
+    })
+}
+
+/// The words a chip says for an event's name: struck through when the date is cancelled.
+fn chip_name(item: &Shown, style: rune::TextStyle, c: Color) -> El {
+    let name = text(item.name.clone()).font(style).color(theme::ink_of(c)).a11y_hidden();
+    if item.cancelled { name.strike(0, item.name.len(), None) } else { name }
+}
+
+/// The time a chip shows: where it is being carried to while it is.
+fn chip_start(s: &App, item: &Shown) -> u16 {
+    s.calendar.drag.filter(|drag| drag.id == item.event.id && drag.original == item.original).map_or(item.start, |drag| drag.start)
+}
+
 /// One event in a day of the month: its colour at the left, its name, its time.
-fn chip(k: &Kit, event: &Event, colour: [u8; 3], date: Date) -> El {
-    let c = rgb(colour);
-    let id = event.id;
-    let time = time_words(event.start);
-    row()
-        .key(format!("cal-event-{id}-{}", date.code()))
+fn chip(s: &App, k: &Kit, item: &Shown, geo: Geo) -> El {
+    let c = rgb(item.colour);
+    let (id, time) = (item.event.id, time_words(item.start));
+    let label = format!("{} {time}", item.name);
+    let e = row()
+        .key(format!("cal-event-{id}-{}", item.original.code()))
         .role("button")
-        .label(format!("{} {time}", event.name))
+        .label(if item.cancelled { t::chip_cancelled(&label) } else { label })
         .w_full()
         .h(CHIP)
         .pr(5.0)
@@ -91,21 +171,24 @@ fn chip(k: &Kit, event: &Event, colour: [u8; 3], date: Date) -> El {
         .hover(k.c.hover)
         .cursor(Cursor::Pointer)
         .child(el().w(3.0).h_full().fill(c).a11y_hidden())
-        .child(text(event.name.clone()).font(rune::TextStyle::new(11.0, 600.0).lh(14.0)).color(theme::ink_of(c)).truncate().grow(1.0).min_w(0.0).a11y_hidden())
-        .child(text(time).font(rune::TextStyle::new(11.0, 500.0).lh(14.0).features("'tnum' 1")).color(theme::ink_of(c)).a11y_hidden())
-        .on_press(move |s: &mut App| s.edit_event(id))
+        .child(chip_name(item, rune::TextStyle::new(11.0, 600.0).lh(14.0), c).truncate().grow(1.0).min_w(0.0))
+        .child(text(time).font(rune::TextStyle::new(11.0, 500.0).lh(14.0).features("'tnum' 1")).color(theme::ink_of(c)).a11y_hidden());
+    live(s, if item.cancelled { e.layer_opacity(0.55) } else { e }, item, geo)
 }
 
 /// One event in a column of the week: the time over the name, so a long name has the width.
-fn week_chip(k: &Kit, event: &Event, colour: [u8; 3], date: Date) -> El {
-    let c = rgb(colour);
-    let id = event.id;
+fn week_chip(s: &App, k: &Kit, item: &Shown, geo: Geo) -> El {
+    let c = rgb(item.colour);
+    let id = item.event.id;
+    let start = chip_start(s, item);
+    let end = start + item.end.saturating_sub(item.start);
     // A hyphen: the interface never draws an en dash.
-    let time = format!("{}-{}", time_words(event.start), time_words(event.end));
-    row()
-        .key(format!("cal-event-{id}-{}", date.code()))
+    let time = format!("{}-{}", time_words(start), time_words(end));
+    let label = format!("{} {time}", item.name);
+    let e = row()
+        .key(format!("cal-event-{id}-{}", item.original.code()))
         .role("button")
-        .label(format!("{} {time}", event.name))
+        .label(if item.cancelled { t::chip_cancelled(&label) } else { label })
         .w_full()
         .pr(6.0)
         .gap(6.0)
@@ -121,10 +204,10 @@ fn week_chip(k: &Kit, event: &Event, colour: [u8; 3], date: Date) -> El {
                 .min_w(0.0)
                 .py(5.0)
                 .gap(1.0)
-                .child(text(event.name.clone()).font(rune::TextStyle::new(12.0, 600.0).lh(16.0)).color(theme::ink_of(c)).wrap().a11y_hidden())
+                .child(chip_name(item, rune::TextStyle::new(12.0, 600.0).lh(16.0), c).wrap())
                 .child(text(time).font(rune::TextStyle::new(11.0, 500.0).lh(14.0).features("'tnum' 1")).color(theme::ink_of(c)).a11y_hidden()),
-        )
-        .on_press(move |s: &mut App| s.edit_event(id))
+        );
+    live(s, if item.cancelled { e.layer_opacity(0.55) } else { e }, item, geo)
 }
 
 /// The day's number: a filled circle for today.
@@ -236,6 +319,7 @@ fn month(s: &App, cx: &Cx<App>, k: &Kit) -> El {
     let size = cx.layout_size("cal-grid").unwrap_or(GRID_FALLBACK);
     // The room a day has under its number, from what the grid measured last frame.
     let row_height = (size[1] - 27.0) / weeks as f32 - 1.0;
+    let day_cell = [size[0] / 7.0, row_height + 1.0];
     let room = row_height - 2.0 * 4.0 - NUMBER - 2.0;
     let mut heads = row().w_full().h(26.0);
     for day in 0..7u8 {
@@ -248,6 +332,7 @@ fn month(s: &App, cx: &Cx<App>, k: &Kit) -> El {
             let date = first.plus_days((week * 7 + day) as i64);
             let inside = date.month == anchor.month;
             let events = found.get(&date).map(Vec::as_slice).unwrap_or_default();
+            let target = s.calendar.drag.is_some_and(|drag| drag.to == date);
             // Every chip when they fit, else one line less for the "+N more".
             let all = ((events.len() as f32) * (CHIP + 2.0) - 2.0) <= room;
             let shown = if all { events.len() } else { (((room - 16.0) / (CHIP + 2.0)).floor().max(0.0) as usize).min(events.len()) };
@@ -259,11 +344,12 @@ fn month(s: &App, cx: &Cx<App>, k: &Kit) -> El {
                 .padding(4.0)
                 .gap(2.0)
                 .border_sides([0.0, 0.0, 1.0, 1.0], sf.edge)
-                .fill(if inside { Color::TRANSPARENT } else { sf.side.alpha(0.6) })
+                .fill(if target { theme::accent().alpha(0.16) } else if inside { Color::TRANSPARENT } else { sf.side.alpha(0.6) })
                 .clip_soft(0.0)
                 .child(row().w_full().justify_end().child(number(k, date, today, !inside)));
-            for (event, colour) in &events[..shown] {
-                cell = cell.child(chip(k, event, *colour, date));
+            for (at, item) in events[..shown].iter().enumerate() {
+                let geo = Geo { first, weeks: weeks as i32, cell: day_cell, at: (day as i32, week as i32), inset: [4.0, 4.0 + NUMBER + 2.0 + at as f32 * (CHIP + 2.0)], week: false };
+                cell = cell.child(chip(s, k, item, geo));
             }
             if shown < events.len() {
                 cell = cell.child(
@@ -291,17 +377,19 @@ fn month(s: &App, cx: &Cx<App>, k: &Kit) -> El {
 }
 
 /// Seven columns, Sunday first, each a day's events in full.
-fn week(s: &App, k: &Kit) -> El {
+fn week(s: &App, cx: &Cx<App>, k: &Kit) -> El {
     let sf = theme::surf();
     let today = s.civil_today();
     let first = s.week_start();
     let found = by_day(s, first, first.plus_days(6));
+    let width = cx.layout_size("cal-grid").map_or(GRID_FALLBACK[0], |size| size[0]);
     let mut columns = row().key("cal-grid").w_full().grow(1.0).min_h(0.0).border_sides([1.0, 0.0, 0.0, 0.0], sf.edge);
     for day in 0..7 {
         let date = first.plus_days(day);
         let mut chips = col().w_full().px(6.0).pb(6.0).gap(6.0);
-        for (event, colour) in found.get(&date).map(Vec::as_slice).unwrap_or_default() {
-            chips = chips.child(week_chip(k, event, *colour, date));
+        for item in found.get(&date).map(Vec::as_slice).unwrap_or_default() {
+            let geo = Geo { first, weeks: 1, cell: [width / 7.0, 0.0], at: (day as i32, 0), inset: [6.0, 0.0], week: true };
+            chips = chips.child(week_chip(s, k, item, geo));
         }
         let head = col().w_full().h(64.0).items_end().justify_center().px(space::S2).gap(2.0).child(cap(k, &short(weekday_name(date.weekday())))).child(number(k, date, today, false));
         columns = columns.child(
@@ -312,6 +400,7 @@ fn week(s: &App, k: &Kit) -> El {
                 .h_full()
                 .min_h(0.0)
                 .border_sides([0.0, 0.0, 0.0, 1.0], sf.edge)
+                .fill(if s.calendar.drag.is_some_and(|drag| drag.to == date) { theme::accent().alpha(0.16) } else { Color::TRANSPARENT })
                 .child(head)
                 .child(col().w_full().grow(1.0).min_h(0.0).scroll(ScrollSpec { stick_bottom: false }).scroll_edge_fade(theme::size::FADE).child(chips).scroll_bar(k))
                 .on_double_press(move |s: &mut App| s.new_event(date)),
@@ -322,11 +411,60 @@ fn week(s: &App, k: &Kit) -> El {
 
 pub fn view(s: &App, cx: &mut Cx<App>, k: &Kit, layer: &mut Vec<El>) -> El {
     let sf = theme::surf();
-    let main = col().grow(1.0).min_w(0.0).h_full().child(toolbar(s, k)).child(if s.calendar.week { week(s, k) } else { month(s, cx, k) });
+    let main = col().grow(1.0).min_w(0.0).h_full().child(toolbar(s, k)).child(if s.calendar.week { week(s, cx, k) } else { month(s, cx, k) });
     let tall = cx.layout_size("window").map(|size| size[1]).unwrap_or(768.0);
     event_dialog(s, k, layer, tall);
     manage_dialog(s, k, layer, tall);
+    chip_menu(s, k, layer);
+    carried(s, k, layer);
     row().key("calendar").w_full().grow(1.0).min_h(0.0).fill(sf.work).child(rail(s, k)).child(el().w(1.0).h_full().fill(sf.edge).a11y_hidden()).child(main)
+}
+
+/// What a right press on a chip offers: cancel the date, move it, or put it back.
+fn chip_menu(s: &App, k: &Kit, layer: &mut Vec<El>) {
+    let Some(ChipMenu { id, original, at }) = s.calendar.menu else { return };
+    let Some(event) = s.events.iter().find(|event| event.id == id) else { return };
+    let change = event.change_of(original);
+    let mut menu = Menu::new("cal-chip-menu").trigger(el().size(0.0, 0.0)).at(at[0], at[1]).open(true).min_width(220.0).on_close(|s: &mut App| s.calendar.menu = None);
+    if change.is_none() {
+        menu = menu.item(MenuItem::new(t::CAL_CANCEL_DATE()).icon(&icons::CLOSE).on_select(move |s: &mut App| {
+            s.calendar.menu = None;
+            s.cancel_date(id, original);
+        }));
+    }
+    if change != Some(&Change::Cancelled) {
+        menu = menu.item(MenuItem::new(t::CAL_MOVE_DATE()).icon(&icons::CALENDAR).on_select(move |s: &mut App| {
+            s.calendar.menu = None;
+            s.menu_move_date(id, original);
+        }));
+    }
+    if change.is_some() {
+        menu = menu.item(MenuItem::new(t::CAL_RESTORE_DATE()).icon(&icons::UNDO).on_select(move |s: &mut App| {
+            s.calendar.menu = None;
+            s.restore_date(id, original);
+        }));
+    }
+    menu.build(k, layer);
+}
+
+/// The chip being carried, shown where it will land: the day, and the time it will start at.
+fn carried(s: &App, k: &Kit, layer: &mut Vec<El>) {
+    let Some(drag) = s.calendar.drag else { return };
+    let Some(event) = s.events.iter().find(|event| event.id == drag.id) else { return };
+    let words = format!("{} {}", t::day_month(drag.to.day, t::MONTHS()[usize::from(drag.to.month - 1)]), time_words(drag.start));
+    let ghost = row()
+        .key("cal-ghost")
+        .h(CHIP + 4.0)
+        .px(space::S2)
+        .gap(space::S2)
+        .center_y()
+        .radius(k.radius.md)
+        .fill(theme::accent())
+        .shadow(4.0, 12.0, Color::BLACK.alpha(0.3))
+        .a11y_hidden()
+        .child(text(event.name.clone()).font(rune::TextStyle::new(11.0, 600.0).lh(14.0)).color(Color::WHITE).truncate().max_w(140.0))
+        .child(text(words).font(rune::TextStyle::new(11.0, 500.0).lh(14.0).features("'tnum' 1")).color(Color::WHITE));
+    layer.push(ghost.anchored(format!("cal-day-{}", drag.to.code()), Side::Top, Align::Start, 4.0));
 }
 
 // ---------------------------------------------------------------- the event dialog
@@ -459,7 +597,7 @@ pub(super) fn month_grid(s: &App, k: &Kit, id: &str, shown: Date, on: impl Fn(Da
 fn month_picker(s: &App, k: &Kit, form: &EventForm) -> El {
     let chosen = if form.open == Part::Until { form.until } else { Some(form.date) };
     let until = form.open == Part::Until;
-    let first = form.date;
+    let first = form.first.min(form.date);
     let mut foot = row().w_full().gap(space::S2).justify_end();
     if until {
         foot = foot.child(btn(t::CAL_NO_END()).small().focusable().build(k, |s, _| s.event_no_end()));
@@ -493,14 +631,50 @@ fn event_dialog(s: &App, k: &Kit, layer: &mut Vec<El>, tall: f32) {
     }
     let calendar = menu.build(k, &mut popups);
 
-    let at = Kind::ALL.iter().position(|kind| *kind == form.kind);
-    let repeat = SegmentedControl::new(&[t::CAL_ONCE(), t::CAL_EVERY_WEEK(), t::CAL_EVERY_MONTH()], at)
+    let choices = [t::CAL_ONCE(), t::CAL_EVERY_WEEK(), t::CAL_EVERY_2_WEEKS(), t::CAL_EVERY_MONTH(), t::CAL_EVERY_2_MONTHS(), t::CAL_CUSTOM()];
+    let repeat = Select::new("event-repeat", &choices)
         .label(t::CAL_REPEAT())
-        .width(None)
-        .on_pick(|s: &mut App, picked, _: &mut Tx| s.event_kind(Kind::ALL[picked.min(2)]))
-        .build(k);
+        .appearance(SelectAppearance::Field)
+        .width(FIELD)
+        .current(Some(choices[form.choice()]))
+        .open(form.open == Part::Repeat)
+        .on_toggle(|s: &mut App| s.event_open(Part::Repeat))
+        .on_close(|s: &mut App| s.event_close_part())
+        .on_choose(|s: &mut App, picked: &str, _: &mut Tx| {
+            let choices = [t::CAL_ONCE(), t::CAL_EVERY_WEEK(), t::CAL_EVERY_2_WEEKS(), t::CAL_EVERY_MONTH(), t::CAL_EVERY_2_MONTHS(), t::CAL_CUSTOM()];
+            if let Some(at) = choices.iter().position(|choice| *choice == picked) {
+                s.event_choice(at);
+            }
+        })
+        .build(k, &mut popups);
 
     let mut which: Vec<El> = Vec::new();
+    // A custom repeat counts its own weeks or months, from a list, never typed.
+    if form.choice() == 5 {
+        let numbers: Vec<String> = (1..=MOST_EVERY).map(|n| n.to_string()).collect();
+        let open = form.open == Part::Every;
+        let options: Vec<&str> = if open { numbers.iter().map(String::as_str).collect() } else { vec![numbers[usize::from(form.every.clamp(1, MOST_EVERY) - 1)].as_str()] };
+        let every = Select::new("event-every", &options)
+            .label(t::CAL_EVERY())
+            .appearance(SelectAppearance::Field)
+            .width(88.0)
+            .current(Some(numbers[usize::from(form.every.clamp(1, MOST_EVERY) - 1)].as_str()))
+            .open(open)
+            .on_toggle(|s: &mut App| s.event_open(Part::Every))
+            .on_close(|s: &mut App| s.event_close_part())
+            .on_choose(|s: &mut App, picked: &str, _: &mut Tx| {
+                if let Ok(every) = picked.parse::<u8>() {
+                    s.event_every(every);
+                }
+            })
+            .build(k, &mut popups);
+        let unit = SegmentedControl::new(&[t::CAL_UNIT_WEEKS(), t::CAL_UNIT_MONTHS()], Some(usize::from(form.kind == Kind::Month)))
+            .label(t::CAL_EVERY())
+            .fit()
+            .on_pick(|s: &mut App, picked, _: &mut Tx| s.event_kind(if picked == 0 { Kind::Week } else { Kind::Month }))
+            .build(k);
+        which.push(field(k, t::CAL_EVERY(), row().gap(space::S2).center_y().child(every).child(unit)));
+    }
     match form.kind {
         Kind::Once => {}
         Kind::Week => {
@@ -550,7 +724,7 @@ fn event_dialog(s: &App, k: &Kit, layer: &mut Vec<El>, tall: f32) {
     let end = times(k, form, Part::End, half, &mut popups);
 
     let first = picker(k, "event-first", t::CAL_FIRST_DATE(), Some(icon(&icons::CALENDAR, 16.0).color(k.c.text_muted).a11y_hidden()), date_words(form.date), form.open == Part::First).on_press(|s: &mut App| s.event_open(Part::First));
-    let mut dates = row().w_full().gap(space::S3).child(col().w(0.0).grow(1.0).child(field(k, if form.kind == Kind::Once { t::CAL_DATE() } else { t::CAL_FIRST_DATE() }, first)));
+    let mut dates = row().w_full().gap(space::S3).child(col().w(0.0).grow(1.0).child(field(k, if form.kind == Kind::Once || form.target.is_some() { t::CAL_DATE() } else { t::CAL_FIRST_DATE() }, first)));
     if form.kind != Kind::Once {
         let until = picker(k, "event-until", t::CAL_UNTIL(), Some(icon(&icons::CALENDAR, 16.0).color(k.c.text_muted).a11y_hidden()), form.until.map_or_else(|| t::CAL_NO_END().to_string(), date_words), form.open == Part::Until).on_press(|s: &mut App| s.event_open(Part::Until));
         dates = dates.child(col().w(0.0).grow(1.0).child(field(k, t::CAL_UNTIL(), until)));
@@ -574,12 +748,24 @@ fn event_dialog(s: &App, k: &Kit, layer: &mut Vec<El>, tall: f32) {
         body = body.child(month_picker(s, k, form));
     }
     body = body.child(rule);
+    if s.form_is_series() {
+        let changed = s.form_base().is_some_and(|base| form.target.is_some_and(|target| base.change_of(target).is_some()));
+        let mut quick = row().key("event-quick").w_full().gap(space::S2).flex_wrap();
+        if !changed {
+            quick = quick.child(btn(t::CAL_CANCEL_DATE()).icon(&icons::CLOSE).focusable().build(k, |s, _| s.form_cancel_date()).key("event-cancel-date"));
+        }
+        quick = quick.child(btn(t::CAL_MOVE_DATE()).icon(&icons::CALENDAR).disabled(!s.form_moves()).focusable().build(k, |s, _| s.form_move_date()).key("event-move-date"));
+        if changed {
+            quick = quick.child(btn(t::CAL_RESTORE_DATE()).icon(&icons::UNDO).focusable().build(k, |s, _| s.form_restore_date()).key("event-restore-date"));
+        }
+        body = body.child(quick);
+    }
     if form.kind != Kind::Once {
         let listed = s.event_dates();
         let mut chips = row().key("event-dates").w_full().gap(space::S1).flex_wrap();
         for date in &listed {
             let date = *date;
-            let skipped = form.skipped.contains(&date);
+            let skipped = form.overrides.iter().any(|item| item.original == date && item.change == Change::Cancelled);
             let words = t::day_month(date.day, t::MONTHS()[usize::from(date.month - 1)]);
             let chip = row()
                 .key(format!("event-skip-{}", date.code()))
@@ -623,6 +809,28 @@ fn event_dialog(s: &App, k: &Kit, layer: &mut Vec<El>, tall: f32) {
     let title = if id == 0 { t::CAL_NEW_EVENT() } else { t::CAL_EVENT() };
     Dialog::new("calendar-event", title).open(true).width(DIALOG).fit().on_close(|s: &mut App| s.close_event()).child(all).build(k, layer);
     layer.extend(popups);
+    if form.asking {
+        scope_dialog(s, k, layer);
+    }
+}
+
+/// "This event, This and following events, All events": which dates a change to a date of a series is for.
+fn scope_dialog(s: &App, k: &Kit, layer: &mut Vec<El>) {
+    let drops = |scope: Scope, name: &str| {
+        let count = s.scope_drops(scope);
+        (count > 0).then(|| text(t::scope_drops(name, count)).font(type_::SMALL).color(theme::warn_ink()).wrap())
+    };
+    let mut body = col().key("event-scope").w_full().px(space::S4).pb(space::S3).gap(space::S2);
+    let this = btn(t::CAL_THIS_EVENT()).icon(&icons::CALENDAR).focusable().build(k, |s, _| s.save_scope(Scope::This)).key("scope-this").w_full().autofocus();
+    body = body.child(this);
+    if s.form_can_split() {
+        body = body.child(btn(t::CAL_THIS_AND_FOLLOWING()).icon(&icons::LOOP).focusable().build(k, |s, _| s.save_scope(Scope::Following)).key("scope-following").w_full());
+        body = body.children(drops(Scope::Following, t::CAL_THIS_AND_FOLLOWING()));
+    }
+    body = body.child(btn(t::CAL_ALL_EVENTS()).icon(&icons::LAYERS).focusable().build(k, |s, _| s.save_scope(Scope::All)).key("scope-all").w_full());
+    body = body.children(drops(Scope::All, t::CAL_ALL_EVENTS()));
+    let foot = row().w_full().px(space::S4).py(space::S3).gap(space::S2).center_y().child(spacer()).child(btn(t::BTN_CANCEL()).focusable().build(k, |s, _| s.save_back()).key("scope-back"));
+    Dialog::new("calendar-scope", t::CAL_ASK_TITLE()).open(true).width(420.0).fit().on_close(|s: &mut App| s.save_back()).child(col().w_full().child(body).child(divider(k)).child(foot)).build(k, layer);
 }
 
 // ---------------------------------------------------------------- the calendars dialog

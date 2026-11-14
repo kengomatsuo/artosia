@@ -5288,5 +5288,193 @@
   "text": "開いた一覧から、追加するものを選びます",
   "back": "From the list that opened, choose what to add",
   "why": "Plain polite"
+ },
+ "HELP_SCREENS": {
+  "text": "会場に映すモニターと、ステージの演奏者に見せるモニターを決めます",
+  "back": "Decide the monitor shown to the venue and the monitor shown to the performers on stage",
+  "why": "table terms reused, plain register"
+ },
+ "HELP_PHONE": {
+  "text": "教会のWi-Fiにつないだスマホで、部屋のどこからでもスライドを送れます",
+  "back": "With a phone on the church Wi-Fi, you can send slides from anywhere in the room",
+  "why": "table terms reused, plain register"
+ },
+ "HELP_LISTEN": {
+  "text": "マイクで会場の音を聞き、歌や聖句を候補に出します。自分では何も映しません",
+  "back": "Hears the room's sound with the mic and puts songs or verses up as candidates. Shows nothing by itself",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_SCREENS_SWITCH": {
+  "text": "このスイッチでプロジェクターを入り切りします",
+  "back": "With this switch the projector goes on and off",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_SCREENS_SWITCH_MORE": {
+  "text": "その下で、モニターごとに役割を選びます",
+  "back": "Below it, choose a role for each monitor",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_PHONE_OPEN": {
+  "text": "枠のボタンを押して、スマホリモコンを開く",
+  "back": "Press the framed button to open the phone remote",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_PHONE_OPEN_MORE": {
+  "text": "同じWi-Fiのスマホなら、スライドのリモコンになります",
+  "back": "A phone on the same Wi-Fi becomes the slide remote",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_PHONE_SWITCH": {
+  "text": "オンにして、スマホのカメラでコードを読み取ります",
+  "back": "Turn it on and read the code with the phone's camera",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_PHONE_SWITCH_MORE": {
+  "text": "次にスマホがここに出るPINを聞くので、入れるとスライドを送れます",
+  "back": "Next the phone asks for the PIN shown here, and once entered it can send slides",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_LISTEN_OPEN": {
+  "text": "枠のボタンを押して、曲の認識を開く",
+  "back": "Press the framed button to open song recognition",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_LISTEN_OPEN_MORE": {
+  "text": "マイクで会場の音を聞きます",
+  "back": "Hears the room's sound with the mic",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_LISTEN_MICS": {
+  "text": "会場の音を拾うマイクを選びます",
+  "back": "Choose the mic that picks up the room's sound",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_LISTEN_MICS_MORE": {
+  "text": "聞き取った結果はプレビューの上に候補で出て、自動では映りません",
+  "back": "The heard result appears as a candidate above the preview and is not shown automatically",
+  "why": "table terms reused, plain register"
+ },
+ "CAL_EVERY_2_WEEKS": {
+  "text": "2週間ごと",
+  "back": "Every 2 weeks",
+  "why": "ごと as the sibling of 毎週 and 毎月 in a list"
+ },
+ "CAL_EVERY_2_MONTHS": {
+  "text": "2か月ごと",
+  "back": "Every 2 months",
+  "why": "か月 is the usual count of months"
+ },
+ "CAL_CUSTOM": {
+  "text": "カスタム",
+  "back": "Custom",
+  "why": "the menu word for an own setting"
+ },
+ "CAL_EVERY": {
+  "text": "間隔",
+  "back": "Interval",
+  "why": "heading over a number and a unit"
+ },
+ "CAL_UNIT_WEEKS": {
+  "text": "週間",
+  "back": "weeks",
+  "why": "counted form after a number"
+ },
+ "CAL_UNIT_MONTHS": {
+  "text": "か月",
+  "back": "months",
+  "why": "counted form after a number"
+ },
+ "CAL_THIS_EVENT": {
+  "text": "この1回だけ",
+  "back": "Only this one time",
+  "why": "1回 names one date of the series"
+ },
+ "CAL_THIS_AND_FOLLOWING": {
+  "text": "この1回とそれ以降",
+  "back": "This one time and after it",
+  "why": "also read in the drop sentence"
+ },
+ "CAL_ALL_EVENTS": {
+  "text": "すべての予定",
+  "back": "All events",
+  "why": "予定 is the table word"
+ },
+ "CAL_ASK_TITLE": {
+  "text": "どの回を変えますか？",
+  "back": "Which times will you change?",
+  "why": "polite plain question; 回 is one date"
+ },
+ "CAL_CANCEL_DATE": {
+  "text": "この1回を中止",
+  "back": "Cancel this one time",
+  "why": "中止 is for one meeting, not 削除"
+ },
+ "CAL_MOVE_DATE": {
+  "text": "この1回を移動",
+  "back": "Move this one time",
+  "why": "same 1回 as the other buttons"
+ },
+ "CAL_RESTORE_DATE": {
+  "text": "くり返しに戻す",
+  "back": "Return to the repeat",
+  "why": "avoids 元に戻す, which is Undo"
+ },
+ "CAL_ALL_DATES": {
+  "text": "すべての回に適用",
+  "back": "Apply to all times",
+  "why": "apply, so it does not read as undo"
+ },
+ "rule_weeks": {
+  "text": {
+   "until": "{every}週間ごとの{days}、{start}から{end}まで。{from}から{until}まで続きます。",
+   "open": "{every}週間ごとの{days}、{start}から{end}まで。{from}から、終わりはありません。"
+  },
+  "back": "every {every} weeks on {days}, {start} to {end}. Runs from {from} until {until} / from {from}, with no end",
+  "why": "the table wording with 週間ごと"
+ },
+ "rule_months": {
+  "text": {
+   "until": "{every}か月ごとの{position}{weekday}、{start}から{end}まで。{from}から{until}まで続きます。",
+   "open": "{every}か月ごとの{position}{weekday}、{start}から{end}まで。{from}から、終わりはありません。"
+  },
+  "back": "every {every} months on the {position} {weekday}, {start} to {end}. Runs from {from} until {until} / from {from}, with no end",
+  "why": "the table wording with か月ごと"
+ },
+ "date_cancelled": {
+  "text": "{date}の{name}を中止にしました",
+  "back": "Made {name} of {date} cancelled",
+  "why": "中止, never 削除"
+ },
+ "date_restored": {
+  "text": "{date}の{name}を予定どおりにしました",
+  "back": "Made {name} of {date} as scheduled",
+  "why": "as the rule gives it"
+ },
+ "date_moved": {
+  "text": "{name}を{date}に移しました",
+  "back": "Moved {name} to {date}",
+  "why": "the new day is the point"
+ },
+ "dates_moved_all": {
+  "text": "{name}のすべての回を移動しました",
+  "back": "Moved all times of {name}",
+  "why": "says all"
+ },
+ "scope_drops": {
+  "text": {
+   "other": "{scope}を選ぶと、変更した{count}回分がなくなります。"
+  },
+  "back": "Choosing {scope} removes {count} changed times.",
+  "why": "starts with the button name"
+ },
+ "chip_cancelled": {
+  "text": "{label}、中止",
+  "back": "{label}, cancelled",
+  "why": "label first"
+ },
+ "series_changed": {
+  "text": "{name}のくり返しを書き換えました",
+  "back": "Rewrote the repeat of {name}",
+  "why": "not a deletion word"
  }
 }

@@ -138,6 +138,8 @@ A second reader of a finished language found one thing under two or three names,
 
 **`event`** One entry of the calendar: a name, a day, an hour it starts and ends, and whether and how it repeats.
 
+**`event_series`** An event that repeats: every week, every two weeks, every month, every two months or every few weeks or months. One date of it can be cancelled or moved without touching the others, and a change can be made to that date alone, to it and every later date, or to the whole series. A cancelled date stays on the calendar, struck through, until its day has passed, so it can be brought back.
+
 **`member`** A person of the congregation kept in the members list with a date of birth, so the birthday announcement fills itself. Not a person who uses the program.
 
 **`offering`** Money given in a service, kept as one row per gift: its date, the giver or the collection plate, the fund it goes to, cash or transfer, and the amount. The program adds up the total itself.

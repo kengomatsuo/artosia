@@ -177,7 +177,7 @@ pub fn practice_calendar(store: &Store) {
         ids.push(calendar.id);
     }
     let sunday = Date { year: 2026, month: 1, day: 4 };
-    let weekly = |day: u8| Repeat::Weekly(1 << day);
+    let weekly = |day: u8| Repeat::Weekly(1 << day, 1);
     // Group, name, weekday (0 is Sunday), start and end in minutes.
     let rows: [(usize, &str, u8, u16, u16); 6] = [
         (0, "Ibadah Raya 1", 0, 6 * 60 + 30, 8 * 60),
@@ -188,10 +188,10 @@ pub fn practice_calendar(store: &Store) {
         (4, "Latihan pujian", 6, 17 * 60, 18 * 60 + 30),
     ];
     for (group, name, day, start, end) in rows {
-        let mut event = Event { id: 0, calendar: ids[group], name: name.into(), date: sunday.plus_days(i64::from(day)), start, end, repeat: weekly(day), until: None, skipped: Vec::new() };
+        let mut event = Event { id: 0, calendar: ids[group], name: name.into(), date: sunday.plus_days(i64::from(day)), start, end, repeat: weekly(day), until: None, overrides: Vec::new() };
         let _ = store.save_event(&mut event);
     }
-    let mut communion = Event { id: 0, calendar: ids[0], name: "Perjamuan kudus".into(), date: Date { year: 2026, month: 1, day: 1 }, start: 11 * 60, end: 12 * 60, repeat: Repeat::Monthly(Position::Nth(1), 0), until: None, skipped: Vec::new() };
+    let mut communion = Event { id: 0, calendar: ids[0], name: "Perjamuan kudus".into(), date: Date { year: 2026, month: 1, day: 1 }, start: 11 * 60, end: 12 * 60, repeat: Repeat::Monthly(Position::Nth(1), 0, 1), until: None, overrides: Vec::new() };
     let _ = store.save_event(&mut communion);
 }
 

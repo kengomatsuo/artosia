@@ -5321,5 +5321,194 @@
   "text": "Escolha o que adicionar na lista que abrir",
   "back": "Choose what to add in the list that opens",
   "why": "Plain"
+ },
+ "HELP_SCREENS": {
+  "text": "Escolha qual monitor a igreja vê e qual os músicos veem no palco.",
+  "back": "Choose which monitor the church sees and which the musicians see on the stage.",
+  "why": "table terms reused, plain register"
+ },
+ "HELP_PHONE": {
+  "text": "Um celular na rede wi-fi da igreja muda os slides de qualquer lugar da sala.",
+  "back": "A phone on the church wifi network changes the slides from anywhere in the room.",
+  "why": "table terms reused, plain register"
+ },
+ "HELP_LISTEN": {
+  "text": "Escuta a sala pelo microfone e sugere a música ou o versículo. Não mostra nada sozinho.",
+  "back": "Listens to the room through the microphone and suggests the song or verse. Shows nothing alone.",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_SCREENS_SWITCH": {
+  "text": "Esta chave liga e desliga o projetor",
+  "back": "This switch turns the projector on and off",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_SCREENS_SWITCH_MORE": {
+  "text": "Logo abaixo, cada monitor ganha a sua função",
+  "back": "Right below, each monitor gets its function",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_PHONE_OPEN": {
+  "text": "Clique no botão destacado para abrir o controle",
+  "back": "Click the highlighted button to open the remote",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_PHONE_OPEN_MORE": {
+  "text": "Qualquer celular na mesma rede wi-fi vira controle",
+  "back": "Any phone on the same wifi network becomes a remote",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_PHONE_SWITCH": {
+  "text": "Ligue e leia o código com a câmera do celular",
+  "back": "Switch on and read the code with the phone camera",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_PHONE_SWITCH_MORE": {
+  "text": "Depois o celular pede o PIN mostrado aqui e já pode mudar os slides",
+  "back": "Then the phone asks for the PIN shown here and can already change the slides",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_LISTEN_OPEN": {
+  "text": "Clique no botão destacado e abra o microfone",
+  "back": "Click the highlighted button and open the microphone",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_LISTEN_OPEN_MORE": {
+  "text": "O programa ouve a sala pelo microfone",
+  "back": "The program hears the room through the microphone",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_LISTEN_MICS": {
+  "text": "Escolha o microfone que capta a sala",
+  "back": "Choose the microphone that picks up the room",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_LISTEN_MICS_MORE": {
+  "text": "O que ele ouve aparece como sugestão acima da Prévia, e nada vai ao projetor sozinho",
+  "back": "What it hears appears as a suggestion above the Preview, and nothing goes to the projector alone",
+  "why": "table terms reused, plain register"
+ },
+ "CAL_EVERY_2_WEEKS": {
+  "text": "A cada 2 semanas",
+  "back": "Every 2 weeks",
+  "why": "Toda semana would not take a number; a cada keeps the sibling."
+ },
+ "CAL_EVERY_2_MONTHS": {
+  "text": "A cada 2 meses",
+  "back": "Every 2 months",
+  "why": "Same form."
+ },
+ "CAL_CUSTOM": {
+  "text": "Personalizado",
+  "back": "Customised",
+  "why": "Menu word for a choice the person makes."
+ },
+ "CAL_EVERY": {
+  "text": "A cada",
+  "back": "Every",
+  "why": "Heading over a number and a unit: A cada 3 semanas."
+ },
+ "CAL_UNIT_WEEKS": {
+  "text": "Semanas",
+  "back": "Weeks",
+  "why": "Plural, as after a number."
+ },
+ "CAL_UNIT_MONTHS": {
+  "text": "Meses",
+  "back": "Months",
+  "why": "Plural, as after a number."
+ },
+ "CAL_THIS_EVENT": {
+  "text": "Somente este evento",
+  "back": "Only this event",
+  "why": "Evento is the calendar entry; somente says one date."
+ },
+ "CAL_THIS_AND_FOLLOWING": {
+  "text": "Este e os seguintes",
+  "back": "This one and the following ones",
+  "why": "Reads inside the dropped-dates sentence too."
+ },
+ "CAL_ALL_EVENTS": {
+  "text": "Todos os eventos",
+  "back": "All the events",
+  "why": "Third of three; same event word."
+ },
+ "CAL_ASK_TITLE": {
+  "text": "Quais eventos mudar?",
+  "back": "Which events to change?",
+  "why": "Impersonal question with the buttons' own noun."
+ },
+ "CAL_CANCEL_DATE": {
+  "text": "Cancelar esta data",
+  "back": "Cancel this date",
+  "why": "Order for one date; esta data keeps it apart from Cancelar and Apagar."
+ },
+ "CAL_MOVE_DATE": {
+  "text": "Mover esta data",
+  "back": "Move this date",
+  "why": "Pairs with Cancelar esta data."
+ },
+ "CAL_RESTORE_DATE": {
+  "text": "Restaurar",
+  "back": "Restore",
+  "why": "One word, as a button says it."
+ },
+ "CAL_ALL_DATES": {
+  "text": "Todas as datas",
+  "back": "All the dates",
+  "why": "Reads as widening, not as undoing."
+ },
+ "rule_weeks": {
+  "text": {
+   "until": "{days}, a cada {every} semanas, das {start} às {end}, de {from} a {until}.",
+   "open": "{days}, a cada {every} semanas, das {start} às {end}, a partir de {from}."
+  },
+  "back": "{days}, every {every} weeks, from {start} to {end}, from {from} to {until}. / ... starting {from}.",
+  "why": "Same order as rule_week with the gap added."
+ },
+ "rule_months": {
+  "text": {
+   "until": "{weekday}, {position} semana do mês, a cada {every} meses, das {start} às {end}, de {from} a {until}.",
+   "open": "{weekday}, {position} semana do mês, a cada {every} meses, das {start} às {end}, a partir de {from}."
+  },
+  "back": "{weekday}, {position} week of the month, every {every} months, from {start} to {end}, from {from} to {until}. / ... starting {from}.",
+  "why": "Same order as rule_month with the gap added."
+ },
+ "date_cancelled": {
+  "text": "Evento “{name}” cancelado em {date}",
+  "back": "Event “{name}” cancelled on {date}",
+  "why": "Past tense; em {date} limits it to the one day."
+ },
+ "date_restored": {
+  "text": "Evento “{name}” restaurado em {date}",
+  "back": "Event “{name}” restored on {date}",
+  "why": "Past tense."
+ },
+ "date_moved": {
+  "text": "Evento “{name}” movido para {date}",
+  "back": "Event “{name}” moved to {date}",
+  "why": "New day last."
+ },
+ "dates_moved_all": {
+  "text": "Todas as datas de “{name}” foram movidas",
+  "back": "All the dates of “{name}” were moved",
+  "why": "Says all the dates."
+ },
+ "scope_drops": {
+  "text": {
+   "one": "{scope}: {count} data alterada se perderia.",
+   "other": "{scope}: {count} datas alteradas se perderiam."
+  },
+  "back": "{scope}: {count} changed date(s) would be lost.",
+  "why": "Name first with its capitals; conditional because nothing is saved yet."
+ },
+ "chip_cancelled": {
+  "text": "{label}, data cancelada",
+  "back": "{label}, date cancelled",
+  "why": "Label leads, then the fact."
+ },
+ "series_changed": {
+  "text": "Evento “{name}” alterado nas datas escolhidas",
+  "back": "Event “{name}” changed on the chosen dates",
+  "why": "Past tense; not deleted."
  }
 }

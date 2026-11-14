@@ -5334,5 +5334,203 @@
   "text": "Choisis quoi ajouter dans la liste qui s'ouvre",
   "back": "Choose what to add in the list that opens",
   "why": "Plain tu"
+ },
+ "HELP_SCREENS": {
+  "text": "Choisis quel écran la salle voit et lequel les musiciens voient sur scène.",
+  "back": "Choose which screen the room sees and which one the musicians see on stage.",
+  "why": "table terms reused, plain register"
+ },
+ "HELP_PHONE": {
+  "text": "Un téléphone sur le wifi de l'église peut changer de diapo de n'importe où dans la salle.",
+  "back": "A phone on the church wifi can change slide from anywhere in the room.",
+  "why": "table terms reused, plain register"
+ },
+ "HELP_LISTEN": {
+  "text": "Écoute la salle avec un micro et propose le chant ou le verset. N'affiche rien tout seul.",
+  "back": "Listens to the room with a microphone and proposes the song or verse. Displays nothing by itself.",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_SCREENS_SWITCH": {
+  "text": "Cet interrupteur allume et éteint le projecteur",
+  "back": "This switch turns the projector on and off",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_SCREENS_SWITCH_MORE": {
+  "text": "En dessous, chaque écran reçoit son rôle",
+  "back": "Below, each screen gets its role",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_PHONE_OPEN": {
+  "text": "Clique sur le bouton entouré : la télécommande",
+  "back": "Click the ringed button: the remote",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_PHONE_OPEN_MORE": {
+  "text": "Tout téléphone du même wifi devient télécommande",
+  "back": "Any phone on the same wifi becomes a remote",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_PHONE_SWITCH": {
+  "text": "Allume, puis scanne le code avec le téléphone",
+  "back": "Switch on, then scan the code with the phone",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_PHONE_SWITCH_MORE": {
+  "text": "Le téléphone demande alors le code PIN affiché ici, puis il change les diapos",
+  "back": "The phone then asks for the PIN code shown here, then it changes the slides",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_LISTEN_OPEN": {
+  "text": "Clique sur le bouton entouré pour l'écoute",
+  "back": "Click the ringed button for the listening",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_LISTEN_OPEN_MORE": {
+  "text": "Le programme entend la salle par un micro",
+  "back": "The program hears the room through a microphone",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_LISTEN_MICS": {
+  "text": "Choisis le micro qui entend la salle",
+  "back": "Choose the microphone that hears the room",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_LISTEN_MICS_MORE": {
+  "text": "Ce qu'il entend arrive en suggestion au-dessus de l'Aperçu, sans rien projeter seul",
+  "back": "What it hears arrives as a suggestion above the Preview, projecting nothing alone",
+  "why": "table terms reused, plain register"
+ },
+ "CAL_EVERY_2_WEEKS": {
+  "text": "Toutes les 2 semaines",
+  "back": "Every 2 weeks",
+  "why": "Sibling of Chaque semaine"
+ },
+ "CAL_EVERY_2_MONTHS": {
+  "text": "Tous les 2 mois",
+  "back": "Every 2 months",
+  "why": "Sibling of Chaque mois"
+ },
+ "CAL_CUSTOM": {
+  "text": "Personnalisé",
+  "back": "Custom",
+  "why": "Menu word, as LOOK_CUSTOM"
+ },
+ "CAL_EVERY": {
+  "text": "Intervalle",
+  "back": "Interval",
+  "why": "Avoids the Toutes les / Tous les gender split"
+ },
+ "CAL_UNIT_WEEKS": {
+  "text": "Semaines",
+  "back": "Weeks",
+  "why": "Plural, as after a number"
+ },
+ "CAL_UNIT_MONTHS": {
+  "text": "Mois",
+  "back": "Months",
+  "why": "Plural, as after a number"
+ },
+ "CAL_THIS_EVENT": {
+  "text": "Cette date seulement",
+  "back": "This date only",
+  "why": "Short and exact"
+ },
+ "CAL_THIS_AND_FOLLOWING": {
+  "text": "Cette date et les suivantes",
+  "back": "This date and the following ones",
+  "why": "Also reads inside a sentence"
+ },
+ "CAL_ALL_EVENTS": {
+  "text": "Toutes les dates",
+  "back": "All dates",
+  "why": "Same name as the toast button"
+ },
+ "CAL_ASK_TITLE": {
+  "text": "Pour quelles dates ?",
+  "back": "For which dates?",
+  "why": "Plain question with French spacing"
+ },
+ "CAL_CANCEL_DATE": {
+  "text": "Annuler cette date",
+  "back": "Cancel this date",
+  "why": "Annuler as BTN_CANCEL; 'date' keeps it about one meeting"
+ },
+ "CAL_MOVE_DATE": {
+  "text": "Déplacer cette date",
+  "back": "Move this date",
+  "why": "Everyday verb"
+ },
+ "CAL_RESTORE_DATE": {
+  "text": "Rétablir",
+  "back": "Restore",
+  "why": "Not Annuler, which is also the Undo word"
+ },
+ "CAL_ALL_DATES": {
+  "text": "Toutes les dates",
+  "back": "All dates",
+  "why": "Not a verb of undoing"
+ },
+ "rule_weeks": {
+  "text": {
+   "until": "Toutes les {every} semaines, {days}, de {start} à {end}, du {from} au {until}.",
+   "open": "Toutes les {every} semaines, {days}, de {start} à {end}, à partir du {from}, sans fin."
+  },
+  "back": {
+   "until": "Every {every} weeks, {days}, from {start} to {end}, from {from} to {until}.",
+   "open": "Every {every} weeks, {days}, from {start} to {end}, starting {from}, no end."
+  },
+  "why": "Follows the wording of rule_week"
+ },
+ "rule_months": {
+  "text": {
+   "until": "{position} {weekday}, tous les {every} mois, de {start} à {end}, du {from} au {until}.",
+   "open": "{position} {weekday}, tous les {every} mois, de {start} à {end}, à partir du {from}, sans fin."
+  },
+  "back": {
+   "until": "{position} {weekday}, every {every} months, from {start} to {end}, from {from} to {until}.",
+   "open": "{position} {weekday}, every {every} months, from {start} to {end}, starting {from}, no end."
+  },
+  "why": "Follows the wording of rule_month"
+ },
+ "date_cancelled": {
+  "text": "Date annulée : « {name} », le {date}",
+  "back": "Date cancelled: “{name}”, on {date}",
+  "why": "Colon form as event_deleted"
+ },
+ "date_restored": {
+  "text": "Date rétablie : « {name} », le {date}",
+  "back": "Date restored: “{name}”, on {date}",
+  "why": "Same verb as the button"
+ },
+ "date_moved": {
+  "text": "Date déplacée : « {name} », au {date}",
+  "back": "Date moved: “{name}”, to {date}",
+  "why": "New day last"
+ },
+ "dates_moved_all": {
+  "text": "Toutes les dates déplacées : « {name} »",
+  "back": "All dates moved: “{name}”",
+  "why": "Says all, not one"
+ },
+ "scope_drops": {
+  "text": {
+   "one": "{scope} fait perdre {count} date modifiée.",
+   "other": "{scope} fait perdre {count} dates modifiées."
+  },
+  "back": {
+   "one": "{scope} makes you lose {count} changed date.",
+   "other": "{scope} makes you lose {count} changed dates."
+  },
+  "why": "Starts with the answer's name"
+ },
+ "chip_cancelled": {
+  "text": "{label}, date annulée",
+  "back": "{label}, date cancelled",
+  "why": "Label first, then the fact"
+ },
+ "series_changed": {
+  "text": "Dates modifiées : « {name} »",
+  "back": "Dates changed: “{name}”",
+  "why": "Not deleted"
  }
 }

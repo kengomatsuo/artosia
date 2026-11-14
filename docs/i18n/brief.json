@@ -19129,6 +19129,590 @@
   "notes": "Keep the token {version} and the name Artosia exactly."
  },
  {
+  "key": "CAL_EVERY_2_WEEKS",
+  "kind": "const",
+  "screen": "Event dialog, opened over the calendar window by a press on a chip, a double press on an empty day or the New event button. Fields top to bottom: name, calendar, a drop-down list of how the event repeats, days or position, start and end times, first date and until date, one sentence saying the rule, quick buttons for one date, the next dates as small chips, and Cancel, Delete and Save at the foot.",
+  "moment": "The person opens the list of how the event repeats; this is its third choice, after Once and Every week.",
+  "role": "list choice",
+  "does": "Picks a rhythm of one meeting in each pair of weeks, on the chosen days.",
+  "budget": 24,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event",
+   "event_series"
+  ],
+  "notes": "Reads as a sibling of Every week and Every month in the same list."
+ },
+ {
+  "key": "CAL_EVERY_2_MONTHS",
+  "kind": "const",
+  "screen": "Event dialog, opened over the calendar window by a press on a chip, a double press on an empty day or the New event button. Fields top to bottom: name, calendar, a drop-down list of how the event repeats, days or position, start and end times, first date and until date, one sentence saying the rule, quick buttons for one date, the next dates as small chips, and Cancel, Delete and Save at the foot.",
+  "moment": "The person opens the list of how the event repeats; this is its fifth choice, after Every month.",
+  "role": "list choice",
+  "does": "Picks a rhythm of one meeting in each pair of months, on the chosen weekday of the month.",
+  "budget": 24,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event",
+   "event_series"
+  ],
+  "notes": "Reads as a sibling of Every 2 weeks and Every month in the same list."
+ },
+ {
+  "key": "CAL_CUSTOM",
+  "kind": "const",
+  "screen": "Event dialog, opened over the calendar window by a press on a chip, a double press on an empty day or the New event button. Fields top to bottom: name, calendar, a drop-down list of how the event repeats, days or position, start and end times, first date and until date, one sentence saying the rule, quick buttons for one date, the next dates as small chips, and Cancel, Delete and Save at the foot.",
+  "moment": "The person opens the list of how the event repeats; this is its last choice, for a rhythm the other choices do not name.",
+  "role": "list choice",
+  "does": "Lets the person choose their own count of weeks or months between meetings.",
+  "budget": 20,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event",
+   "event_series"
+  ],
+  "notes": "One word as a menu would say it; a choice made by the person, not a kind of event."
+ },
+ {
+  "key": "CAL_EVERY",
+  "kind": "const",
+  "screen": "Event dialog, opened over the calendar window by a press on a chip, a double press on an empty day or the New event button. Fields top to bottom: name, calendar, a drop-down list of how the event repeats, days or position, start and end times, first date and until date, one sentence saying the rule, quick buttons for one date, the next dates as small chips, and Cancel, Delete and Save at the foot.",
+  "moment": "The repeat list says Custom, so a row appears with a list of numbers and a switch between weeks and months.",
+  "role": "field label",
+  "does": "Names the number list beside it, the count of weeks or months between two meetings.",
+  "budget": 16,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event",
+   "event_series"
+  ],
+  "notes": "Read as a heading over a number and a unit, as in every 3 weeks."
+ },
+ {
+  "key": "CAL_UNIT_WEEKS",
+  "kind": "const",
+  "screen": "Event dialog, opened over the calendar window by a press on a chip, a double press on an empty day or the New event button. Fields top to bottom: name, calendar, a drop-down list of how the event repeats, days or position, start and end times, first date and until date, one sentence saying the rule, quick buttons for one date, the next dates as small chips, and Cancel, Delete and Save at the foot.",
+  "moment": "The repeat list says Custom; this is the first of two segments beside the number, the unit being counted.",
+  "role": "segment of a switch",
+  "does": "Chooses weeks as the unit that the number beside it counts.",
+  "budget": 16,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event",
+   "event_series"
+  ],
+  "notes": "The plural of the unit, as after a number."
+ },
+ {
+  "key": "CAL_UNIT_MONTHS",
+  "kind": "const",
+  "screen": "Event dialog, opened over the calendar window by a press on a chip, a double press on an empty day or the New event button. Fields top to bottom: name, calendar, a drop-down list of how the event repeats, days or position, start and end times, first date and until date, one sentence saying the rule, quick buttons for one date, the next dates as small chips, and Cancel, Delete and Save at the foot.",
+  "moment": "The repeat list says Custom; this is the second of two segments beside the number, the unit being counted.",
+  "role": "segment of a switch",
+  "does": "Chooses months as the unit that the number beside it counts.",
+  "budget": 16,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event",
+   "event_series"
+  ],
+  "notes": "The plural of the unit, as after a number."
+ },
+ {
+  "key": "CAL_THIS_EVENT",
+  "kind": "const",
+  "screen": "A small dialog over the event dialog titled with a question, holding three wide buttons one under another and a Cancel button at its foot. Below the buttons a grey line may say how many changed dates a choice would drop.",
+  "moment": "The person pressed Save on a date of an event that repeats and must say which dates the change is for.",
+  "role": "button",
+  "does": "Applies the change to the one date that was opened and leaves every other date as it was.",
+  "budget": 30,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event",
+   "event_series"
+  ],
+  "notes": "The first of three answers; the other two say this and the later ones, and all of them."
+ },
+ {
+  "key": "CAL_THIS_AND_FOLLOWING",
+  "kind": "const",
+  "screen": "A small dialog over the event dialog titled with a question, holding three wide buttons one under another and a Cancel button at its foot. Below the buttons a grey line may say how many changed dates a choice would drop.",
+  "moment": "The person pressed Save on a date of an event that repeats, not its first, and must say which dates the change is for.",
+  "role": "button",
+  "does": "Applies the change to the opened date and every later one, and leaves the earlier dates as they were.",
+  "budget": 44,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event",
+   "event_series"
+  ],
+  "notes": "The second of three answers, between one date and all of them. It is a name the volunteer also reads inside a sentence about dropped dates."
+ },
+ {
+  "key": "CAL_ALL_EVENTS",
+  "kind": "const",
+  "screen": "A small dialog over the event dialog titled with a question, holding three wide buttons one under another and a Cancel button at its foot. Below the buttons a grey line may say how many changed dates a choice would drop.",
+  "moment": "The person pressed Save on a date of an event that repeats and must say which dates the change is for.",
+  "role": "button",
+  "does": "Applies the change to the whole series, the earlier dates and the later ones alike.",
+  "budget": 30,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event",
+   "event_series"
+  ],
+  "notes": "The third of three answers. It is a name the volunteer also reads inside a sentence about dropped dates."
+ },
+ {
+  "key": "CAL_ASK_TITLE",
+  "kind": "const",
+  "screen": "A small dialog over the event dialog titled with a question, holding three wide buttons one under another and a Cancel button at its foot. Below the buttons a grey line may say how many changed dates a choice would drop.",
+  "moment": "The person pressed Save on a date of an event that repeats; nothing is written until they answer.",
+  "role": "dialog title",
+  "does": "Asks which of the dates of a repeating event the person's change is meant for.",
+  "budget": 36,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event",
+   "event_series"
+  ],
+  "notes": "A question ending with a question mark where the language uses one."
+ },
+ {
+  "key": "CAL_CANCEL_DATE",
+  "kind": "const",
+  "screen": "Event dialog on a date of an event that repeats: a row of quick buttons under the sentence that says the rule. The same words head an item of the menu a right press on a chip opens, beside Move this date and Restore.",
+  "moment": "The person wants this one meeting not to happen while the rest of the series goes on.",
+  "role": "button and menu item",
+  "does": "Takes the one opened date out of the calendar at once, leaving it struck through until its day has passed.",
+  "budget": 30,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event",
+   "event_series"
+  ],
+  "notes": "An order for the one date; it must not read as deleting the event, which has its own Delete."
+ },
+ {
+  "key": "CAL_MOVE_DATE",
+  "kind": "const",
+  "screen": "Event dialog on a date of an event that repeats: a row of quick buttons under the sentence that says the rule. The same words head an item of the menu a right press on a chip opens, beside Cancel this date and Restore.",
+  "moment": "The person wants this one meeting held on another day or at another hour while the rest of the series stays.",
+  "role": "button and menu item",
+  "does": "Writes the date and times the dialog now shows as the place of this one meeting only.",
+  "budget": 30,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event",
+   "event_series"
+  ],
+  "notes": "Grey and unusable until the date or an hour has been changed in the dialog."
+ },
+ {
+  "key": "CAL_RESTORE_DATE",
+  "kind": "const",
+  "screen": "Event dialog on a date of an event that repeats which was cancelled or moved: a row of quick buttons under the sentence that says the rule. The same word heads an item of the menu a right press on a chip opens.",
+  "moment": "The date was cancelled or moved earlier and the person wants it back as the rule gives it.",
+  "role": "button and menu item",
+  "does": "Undoes the cancelling or the moving of this one date.",
+  "budget": 20,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event",
+   "event_series"
+  ],
+  "notes": "One word as a button would say it."
+ },
+ {
+  "key": "CAL_ALL_DATES",
+  "kind": "const",
+  "screen": "A grey bar over the foot of the Calendar window with the toast text, then an All dates button and an Undo button with the key Ctrl Z.",
+  "moment": "A chip of a repeating event was just dropped on another day or hour and moved that one date only.",
+  "role": "toast button",
+  "does": "Offers to carry the same move over to every date of the series instead of just the one.",
+  "budget": 20,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event",
+   "event_series"
+  ],
+  "notes": "Stands beside Undo, so it must not read as a way of undoing."
+ },
+ {
+  "key": "rule_weeks",
+  "kind": "sentence",
+  "screen": "Event dialog, opened over the calendar window by a press on a chip, a double press on an empty day or the New event button. Fields top to bottom: name, calendar, a drop-down list of how the event repeats, days or position, start and end times, first date and until date, one sentence saying the rule, quick buttons for one date, the next dates as small chips, and Cancel, Delete and Save at the foot.",
+  "moment": "The dialog is on a weekly rhythm of two or more weeks between meetings.",
+  "role": "explanatory sentence",
+  "does": "Says in one sentence the gap in weeks, the weekdays, hours and opening date of the event, and its closing date or that it has none.",
+  "budget": 110,
+  "variables": [
+   {
+    "name": "every",
+    "example": "3",
+    "meaning": "How many weeks between two meetings, 2 or more."
+   },
+   {
+    "name": "days",
+    "example": "Sunday and Wednesday",
+    "meaning": "Weekday names already joined."
+   },
+   {
+    "name": "start",
+    "example": "06.30",
+    "meaning": "Start time."
+   },
+   {
+    "name": "end",
+    "example": "08.00",
+    "meaning": "End time."
+   },
+   {
+    "name": "from",
+    "example": "1 November 2026",
+    "meaning": "Whole opening date."
+   },
+   {
+    "name": "until",
+    "example": "1 June 2027",
+    "meaning": "Whole closing date; used only in the case with an end."
+   }
+  ],
+  "cases": [
+   {
+    "name": "until",
+    "when": "The rule has a closing date. Uses until."
+   },
+   {
+    "name": "open",
+    "when": "The rule has no closing date; no until."
+   }
+  ],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event",
+   "event_series"
+  ],
+  "notes": "Two cases: until (a closing date) and open (none). Ends with a full stop. The number is never 1."
+ },
+ {
+  "key": "rule_months",
+  "kind": "sentence",
+  "screen": "Event dialog, opened over the calendar window by a press on a chip, a double press on an empty day or the New event button. Fields top to bottom: name, calendar, a drop-down list of how the event repeats, days or position, start and end times, first date and until date, one sentence saying the rule, quick buttons for one date, the next dates as small chips, and Cancel, Delete and Save at the foot.",
+  "moment": "The dialog is on a monthly rhythm of two or more months between meetings.",
+  "role": "explanatory sentence",
+  "does": "Says in one sentence the gap in months, which weekday of the month the event is on, its hours and opening date, and its closing date or that it has none.",
+  "budget": 120,
+  "variables": [
+   {
+    "name": "every",
+    "example": "2",
+    "meaning": "How many months between two meetings, 2 or more."
+   },
+   {
+    "name": "position",
+    "example": "First",
+    "meaning": "Which weekday of the month, first to last, capitalised as a list entry."
+   },
+   {
+    "name": "weekday",
+    "example": "Sunday",
+    "meaning": "Weekday name."
+   },
+   {
+    "name": "start",
+    "example": "06.30",
+    "meaning": "Start time."
+   },
+   {
+    "name": "end",
+    "example": "08.00",
+    "meaning": "End time."
+   },
+   {
+    "name": "from",
+    "example": "1 November 2026",
+    "meaning": "Whole opening date."
+   },
+   {
+    "name": "until",
+    "example": "1 June 2027",
+    "meaning": "Whole closing date; used only in the case with an end."
+   }
+  ],
+  "cases": [
+   {
+    "name": "until",
+    "when": "The rule has a closing date. Uses until."
+   },
+   {
+    "name": "open",
+    "when": "The rule has no closing date; no until."
+   }
+  ],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event",
+   "event_series"
+  ],
+  "notes": "Two cases: until (a closing date) and open (none). Ends with a full stop. The number is never 1."
+ },
+ {
+  "key": "date_cancelled",
+  "kind": "sentence",
+  "screen": "A grey bar over the foot of the Calendar window, with an Undo button and the key Ctrl Z.",
+  "moment": "The person has just cancelled one date of an event that repeats; the rest of the series goes on.",
+  "role": "toast",
+  "does": "Confirms that the named event will not be held on the given day, while Undo still brings it back.",
+  "budget": 70,
+  "variables": [
+   {
+    "name": "name",
+    "example": "Sunday service",
+    "meaning": "What the event is called."
+   },
+   {
+    "name": "date",
+    "example": "22 November 2026",
+    "meaning": "Whole date that was cancelled."
+   }
+  ],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event",
+   "event_series"
+  ],
+  "notes": "Short, past tense; it must not say the event was deleted."
+ },
+ {
+  "key": "date_restored",
+  "kind": "sentence",
+  "screen": "A grey bar over the foot of the Calendar window, with an Undo button and the key Ctrl Z.",
+  "moment": "The person has just put one cancelled or moved date back as the rule gives it.",
+  "role": "toast",
+  "does": "Confirms that the named event is again held on the given day as the rule says.",
+  "budget": 70,
+  "variables": [
+   {
+    "name": "name",
+    "example": "Sunday service",
+    "meaning": "What the event is called."
+   },
+   {
+    "name": "date",
+    "example": "22 November 2026",
+    "meaning": "Whole date that was put back."
+   }
+  ],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event",
+   "event_series"
+  ],
+  "notes": "Short, past tense."
+ },
+ {
+  "key": "date_moved",
+  "kind": "sentence",
+  "screen": "A grey bar over the foot of the Calendar window, with an All dates button when the event repeats, an Undo button and the key Ctrl Z.",
+  "moment": "One date of an event was just held on another day or hour, by the dialog, the chip's menu or by dropping its chip on another day.",
+  "role": "toast",
+  "does": "Confirms that the named event now falls on the given day, while Undo still puts it back.",
+  "budget": 70,
+  "variables": [
+   {
+    "name": "name",
+    "example": "Sunday service",
+    "meaning": "What the event is called."
+   },
+   {
+    "name": "date",
+    "example": "24 November 2026",
+    "meaning": "Whole date it now falls on."
+   }
+  ],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event",
+   "event_series"
+  ],
+  "notes": "Short, past tense; the new day is the point of the sentence."
+ },
+ {
+  "key": "dates_moved_all",
+  "kind": "sentence",
+  "screen": "A grey bar over the foot of the Calendar window, with an Undo button and the key Ctrl Z.",
+  "moment": "The person pressed All dates after dropping a chip, so the move was carried over to the whole series.",
+  "role": "toast",
+  "does": "Confirms that every meeting of the named event moved by the same step, while Undo still puts the series back.",
+  "budget": 70,
+  "variables": [
+   {
+    "name": "name",
+    "example": "Sunday service",
+    "meaning": "What the event is called."
+   }
+  ],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event",
+   "event_series"
+  ],
+  "notes": "Short, past tense; it says all the dates, not one."
+ },
+ {
+  "key": "scope_drops",
+  "kind": "sentence",
+  "screen": "A small dialog over the event dialog titled with a question, holding three wide buttons one under another and a Cancel button at its foot. A yellow-grey line under a button says what that choice costs.",
+  "moment": "The rule was changed, and choosing the named answer would leave some dates that were cancelled or moved earlier with no place in the new rule.",
+  "role": "warning line",
+  "does": "Warns that picking the named answer will lose that many changed dates, before anything is saved.",
+  "budget": 90,
+  "variables": [
+   {
+    "name": "scope",
+    "example": "All events",
+    "meaning": "The name of the answer the line is about, exactly as its button says it."
+   },
+   {
+    "name": "count",
+    "example": "2",
+    "meaning": "How many changed dates would be lost."
+   }
+  ],
+  "cases": [],
+  "counts": "count = number of changed dates that would be lost; forms for each count the language needs.",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event",
+   "event_series"
+  ],
+  "notes": "Starts with the answer's name, which keeps its capitals. Ends with a full stop."
+ },
+ {
+  "key": "chip_cancelled",
+  "kind": "sentence",
+  "screen": "Calendar window, a month or a week of coloured chips; the chip of a cancelled date is struck through and faded. This text is what a screen reader says for that chip and is never drawn.",
+  "moment": "A screen reader reaches the chip of a date that was cancelled but has not yet passed.",
+  "role": "spoken label",
+  "does": "Tells the listener, after the chip's own words, that the date is cancelled.",
+  "budget": 60,
+  "variables": [
+   {
+    "name": "label",
+    "example": "Sunday service 09.00",
+    "meaning": "The event's name and time as the chip says them."
+   }
+  ],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event",
+   "event_series"
+  ],
+  "notes": "The label leads, then the fact; no full stop is needed."
+ },
+ {
+  "key": "series_changed",
+  "kind": "sentence",
+  "screen": "A grey bar over the foot of the Calendar window, with an Undo button and the key Ctrl Z.",
+  "moment": "The person answered the question with the later dates or all dates, so a whole series was rewritten and some changed dates may have been dropped.",
+  "role": "toast",
+  "does": "Confirms that the named series was rewritten, while Undo still puts it back with every date it had.",
+  "budget": 60,
+  "variables": [
+   {
+    "name": "name",
+    "example": "Sunday service",
+    "meaning": "What the event is called."
+   }
+  ],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event",
+   "event_series"
+  ],
+  "notes": "Short, past tense; it must not say the event was deleted."
+ },
+ {
   "key": "HELP_NOTICES",
   "kind": "const",
   "screen": "The help card of the Announcements window, under the window's name; also the grey line of the guide's first step that opens that tab.",
@@ -19316,6 +19900,237 @@
   "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
   "concepts": [
    "plan"
+  ],
+  "notes": "One sentence."
+ },
+ {
+  "key": "HELP_SCREENS",
+  "kind": "const",
+  "screen": "The first row inside a dialog: a grey band with a small question-mark icon, this text, and a button that starts a short guided lesson. The dialog is the Screens dialog; the same text is also the grey line of the guide step that opens it.",
+  "moment": "The person opened the Screens dialog and wonders what it is for.",
+  "role": "explanation",
+  "does": "Says this dialog decides which connected monitor the congregation sees and which one the musicians and singers on stage see.",
+  "budget": 100,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "screens_dialog",
+   "projector",
+   "stage_screen"
+  ],
+  "notes": "One sentence."
+ },
+ {
+  "key": "HELP_PHONE",
+  "kind": "const",
+  "screen": "The first row inside a dialog: a grey band with a small question-mark icon, this text, and a button that starts a short guided lesson. The dialog is the phone remote dialog; the same text is also the grey line of the guide step that opens it.",
+  "moment": "The person opened the phone remote dialog and wonders what it is for.",
+  "role": "explanation",
+  "does": "Says a phone on the church's wireless network can move the slides from anywhere in the room.",
+  "budget": 90,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "phone_remote"
+  ],
+  "notes": "One sentence."
+ },
+ {
+  "key": "HELP_LISTEN",
+  "kind": "const",
+  "screen": "The first row inside a dialog: a grey band with a small question-mark icon, this text, and a button that starts a short guided lesson. The dialog is the microphone helper's dialog; the same text is also the grey line of the guide step that opens it.",
+  "moment": "The person opened the microphone helper's dialog and wonders what it is for.",
+  "role": "explanation",
+  "does": "Says the program listens to the room through a microphone and offers the song or Bible verse being sung or read; it shows nothing by itself.",
+  "budget": 110,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "listener",
+   "suggestion"
+  ],
+  "notes": "One or two short sentences."
+ },
+ {
+  "key": "GUIDE_SCREENS_SWITCH",
+  "kind": "const",
+  "screen": "A guide bubble pointing at the switch at the top of the Screens dialog that turns the projector on and off. The bubble has Next.",
+  "moment": "The guide explains the switch; the person reads and presses Next.",
+  "role": "headline of a guide explanation",
+  "does": "Says this switch turns the projector on and off.",
+  "budget": 50,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "projector",
+   "switched_on"
+  ],
+  "notes": "Short."
+ },
+ {
+  "key": "GUIDE_SCREENS_SWITCH_MORE",
+  "kind": "const",
+  "screen": "The grey line under that headline. Below the switch, each connected monitor is a row whose job is picked: the congregation's, the musicians', or none.",
+  "moment": "The person reads the detail.",
+  "role": "explanation line",
+  "does": "Says that below it each monitor is given its job.",
+  "budget": 70,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "monitor",
+   "projector",
+   "stage_screen"
+  ],
+  "notes": "One sentence."
+ },
+ {
+  "key": "GUIDE_PHONE_OPEN",
+  "kind": "const",
+  "screen": "A guide bubble beside the ringed phone remote button in the top bar, the rest of the window dimmed.",
+  "moment": "The guide waits for the person to press it themselves.",
+  "role": "headline of a guide step",
+  "does": "Tells the person to press the ringed button to open the phone remote.",
+  "budget": 48,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "phone_remote"
+  ],
+  "notes": "Same verb and the same words for the ringed button as the program's other guide steps (GUIDE_CAL_NEW, GUIDE_NOTICE_NEW)."
+ },
+ {
+  "key": "GUIDE_PHONE_OPEN_MORE",
+  "kind": "const",
+  "screen": "The grey line under that headline.",
+  "moment": "The person reads what comes next.",
+  "role": "explanation line of a guide step",
+  "does": "Says any phone on the same wireless network can become a remote for the slides.",
+  "budget": 60,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "phone_remote"
+  ],
+  "notes": "One sentence."
+ },
+ {
+  "key": "GUIDE_PHONE_SWITCH",
+  "kind": "const",
+  "screen": "A guide bubble pointing at the switch in the phone remote dialog. Once on, the dialog shows a square code to scan with the phone's camera, a web address and a short number (a PIN). The bubble has Next.",
+  "moment": "The guide explains how a phone joins; the person reads and presses Next.",
+  "role": "headline of a guide explanation",
+  "does": "Says to switch it on, then scan the code with the phone's camera.",
+  "budget": 55,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "phone_remote",
+   "switched_on"
+  ],
+  "notes": "Short."
+ },
+ {
+  "key": "GUIDE_PHONE_SWITCH_MORE",
+  "kind": "const",
+  "screen": "The grey line under that headline.",
+  "moment": "The person reads the detail.",
+  "role": "explanation line",
+  "does": "Says the phone then asks for the short number shown here, and after that it can move the slides.",
+  "budget": 80,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "phone_remote",
+   "slide"
+  ],
+  "notes": "One sentence. The short number is a PIN; use the word people in that country use for it."
+ },
+ {
+  "key": "GUIDE_LISTEN_OPEN",
+  "kind": "const",
+  "screen": "A guide bubble beside the ringed microphone helper button in the top bar, the rest of the window dimmed.",
+  "moment": "The guide waits for the person to press it themselves.",
+  "role": "headline of a guide step",
+  "does": "Tells the person to press the ringed button to open the microphone helper.",
+  "budget": 48,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "listener"
+  ],
+  "notes": "Same verb and the same words for the ringed button as the program's other guide steps (GUIDE_CAL_NEW, GUIDE_NOTICE_NEW)."
+ },
+ {
+  "key": "GUIDE_LISTEN_OPEN_MORE",
+  "kind": "const",
+  "screen": "The grey line under that headline.",
+  "moment": "The person reads what comes next.",
+  "role": "explanation line of a guide step",
+  "does": "Says the program hears the room through a microphone.",
+  "budget": 60,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "listener"
+  ],
+  "notes": "One sentence."
+ },
+ {
+  "key": "GUIDE_LISTEN_MICS",
+  "kind": "const",
+  "screen": "A guide bubble pointing at the list of microphones in the microphone helper's dialog: the computer's own, any others plugged in, and the sound the computer itself plays. The bubble has Next.",
+  "moment": "The guide explains the choice; the person reads and presses Next.",
+  "role": "headline of a guide explanation",
+  "does": "Tells the person to pick the microphone that hears the room.",
+  "budget": 50,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "listener"
+  ],
+  "notes": "Short."
+ },
+ {
+  "key": "GUIDE_LISTEN_MICS_MORE",
+  "kind": "const",
+  "screen": "The grey line under that headline.",
+  "moment": "The person reads the detail.",
+  "role": "explanation line",
+  "does": "Says what it hears is offered in a strip above Preview, and nothing reaches the projector by itself.",
+  "budget": 90,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "suggestion",
+   "preview",
+   "projector"
   ],
   "notes": "One sentence."
  }

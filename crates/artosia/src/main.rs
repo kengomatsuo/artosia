@@ -622,6 +622,58 @@ const SCENES: &[Scene] = &[
         let today = s.civil_today();
         s.new_event(today);
     }),
+    // CALREPEAT1: the dialog on a custom interval, every 3 weeks.
+    ("calendar-repeat", |s| {
+        s.open_tab(Tab::Calendar);
+        let today = s.civil_today();
+        s.new_event(today);
+        if let Some(form) = s.calendar.form.as_mut() {
+            form.name = rune::TextEdit::new("Cell group");
+        }
+        s.event_choice(5);
+    }),
+    // CALEXCEPT1: the question over the dialog, with a changed date the new rule would drop.
+    ("calendar-this-or-all", |s| {
+        s.open_tab(Tab::Calendar);
+        let today = s.civil_today();
+        let Some(event) = s.events.iter().find(|event| event.name == "Ibadah Raya 1").cloned() else { return };
+        let dates = artosia_core::calendar::rule_dates(&event, today, today.plus_days(60));
+        let Some(&third) = dates.get(2) else { return };
+        s.cancel_date(event.id, dates[0]);
+        s.toast = None;
+        s.edit_date(event.id, third);
+        s.event_choice(2);
+        s.save_event();
+    }),
+    // CALEXCEPT1: a cancelled date stays in the month, struck, until its day has passed.
+    ("calendar-cancelled", |s| {
+        s.open_tab(Tab::Calendar);
+        let today = s.civil_today();
+        let Some(event) = s.events.iter().find(|event| event.name == "Ibadah Raya 2").cloned() else { return };
+        if let Some(&next) = artosia_core::calendar::rule_dates(&event, today, today.plus_days(30)).get(1) {
+            s.cancel_date(event.id, next);
+            s.toast = None;
+        }
+    }),
+    // CALDRAG1: a chip of the month carried to another day, and the same in the week with its new hour.
+    ("calendar-drag", |s| {
+        s.open_tab(Tab::Calendar);
+        let today = s.civil_today();
+        let Some(event) = s.events.iter().find(|event| event.name == "Ibadah Raya 1").cloned() else { return };
+        if let Some(&from) = artosia_core::calendar::rule_dates(&event, today, today.plus_days(30)).first() {
+            s.drag_chip(calendar::CalDrag { id: event.id, original: from, from, start0: event.start, to: from.plus_days(3), start: event.start });
+        }
+    }),
+    ("calendar-drag-week", |s| {
+        s.open_tab(Tab::Calendar);
+        let today = s.civil_today();
+        s.calendar_show_week(true);
+        let Some(event) = s.events.iter().find(|event| event.name == "Ibadah Raya 1").cloned() else { return };
+        if let Some(&from) = artosia_core::calendar::rule_dates(&event, today, today.plus_days(30)).first() {
+            s.calendar.anchor = from;
+            s.drag_chip(calendar::CalDrag { id: event.id, original: from, from, start0: event.start, to: from.plus_days(2), start: 19 * 60 + 15 });
+        }
+    }),
     ("notice-schedule", |s| s.demo_notices("schedule")),
     ("tab-people", |s| s.open_tab(Tab::People)),
     // OVPEOPLE1: the dialog on one person, the import's column step with a made-up csv, an empty list.
@@ -777,6 +829,19 @@ const SCENES: &[Scene] = &[
     ("whats-new", |s| s.news = Some(0)),
     ("lesson-plan", |s| s.start_lesson(crate::guide::lessons::PLAN)),
     ("help-plan", |s| s.help = Some(crate::guide::lessons::Feature::Plan)),
+    ("lesson-phone", |s| {
+        s.sheet = Sheet::Remote;
+        s.start_lesson(crate::guide::lessons::PHONE);
+    }),
+    ("lesson-listen", |s| {
+        s.open_listen();
+        s.start_lesson(crate::guide::lessons::LISTEN);
+    }),
+    ("lesson-screens-two", |s| {
+        s.demo_screens = true;
+        s.sheet = Sheet::Screens;
+        s.start_lesson(crate::guide::lessons::SCREENS);
+    }),
     ("whats-new-people", |s| s.news = Some(1)),
     ("lesson-calendar-new", |s| {
         s.open_tab(Tab::Calendar);
@@ -826,7 +891,7 @@ const SCENES: &[Scene] = &[
         s.settings.recordings_folder = r"D:\Artosia\recordings".to_string();
         s.listen_level.store(0.4f32.to_bits(), std::sync::atomic::Ordering::Relaxed);
         s.tempo = Some((artosia_listen::Tempo { bpm: 92.0, confidence: 0.7, period: 60.0 / 92.0, since_beat: 0.0 }, 0.0));
-        s.microphones = ["Microphone Array", "USB microphone", "Headset", "Mixer line in"].iter().map(|name| artosia_listen::Device { name: (*name).to_string(), id: (*name).to_string() }).collect();
+        s.microphones = crate::actions::demo_microphones();
         s.heard.push("morning light upon the hill and every voice".to_string());
         s.heard_hits = (0..3).map(crate::state::HeardHit::Song).collect();
     }),

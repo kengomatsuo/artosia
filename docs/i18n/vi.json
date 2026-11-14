@@ -5289,5 +5289,201 @@
   "text": "Chọn mục cần thêm trong danh sách vừa mở",
   "back": "Choose the item to add in the list that just opened",
   "why": "Plain"
+ },
+ "HELP_SCREENS": {
+  "text": "Chọn màn hình nào hội chúng thấy và màn hình nào ban nhạc thấy trên sân khấu.",
+  "back": "Choose which screen the congregation sees and which screen the band sees on stage.",
+  "why": "table terms reused, plain register"
+ },
+ "HELP_PHONE": {
+  "text": "Điện thoại cùng wifi nhà thờ có thể chuyển trang từ bất cứ đâu trong phòng.",
+  "back": "A phone on the church's wifi can turn pages from anywhere in the room.",
+  "why": "table terms reused, plain register"
+ },
+ "HELP_LISTEN": {
+  "text": "Nghe phòng qua micro và gợi ý bài hát hoặc câu Kinh Thánh. Tự nó không chiếu gì.",
+  "back": "Listens to the room through the micro and suggests a song or Bible verse. By itself it projects nothing.",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_SCREENS_SWITCH": {
+  "text": "Nút gạt này bật và tắt máy chiếu",
+  "back": "This toggle turns the projector on and off",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_SCREENS_SWITCH_MORE": {
+  "text": "Bên dưới, mỗi màn hình được giao việc riêng",
+  "back": "Below, each screen is given its own job",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_PHONE_OPEN": {
+  "text": "Bấm nút được khoanh để mở điện thoại điều khiển",
+  "back": "Press the ringed button to open the phone remote",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_PHONE_OPEN_MORE": {
+  "text": "Điện thoại nào cùng wifi cũng thành điều khiển được",
+  "back": "Any phone on the same wifi can become a controller",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_PHONE_SWITCH": {
+  "text": "Bật lên, rồi quét mã bằng camera điện thoại",
+  "back": "Turn it on, then scan the code with the phone camera",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_PHONE_SWITCH_MORE": {
+  "text": "Điện thoại sẽ hỏi mã PIN hiện ở đây, rồi chuyển trang được",
+  "back": "The phone will ask for the PIN shown here, then can turn pages",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_LISTEN_OPEN": {
+  "text": "Bấm nút được khoanh để mở micro",
+  "back": "Press the ringed button to open the micro",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_LISTEN_OPEN_MORE": {
+  "text": "Chương trình nghe phòng qua micro",
+  "back": "The program listens to the room through the micro",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_LISTEN_MICS": {
+  "text": "Chọn micro nghe được phòng",
+  "back": "Choose the micro that hears the room",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_LISTEN_MICS_MORE": {
+  "text": "Điều nghe được hiện thành gợi ý phía trên Xem trước, không gì tự chiếu lên",
+  "back": "What it hears shows as a suggestion above Preview, nothing goes up by itself",
+  "why": "table terms reused, plain register"
+ },
+ "CAL_EVERY_2_WEEKS": {
+  "text": "Mỗi 2 tuần",
+  "back": "Every 2 weeks",
+  "why": "Same 'Mỗi' as Mỗi tuần"
+ },
+ "CAL_EVERY_2_MONTHS": {
+  "text": "Mỗi 2 tháng",
+  "back": "Every 2 months",
+  "why": "Same 'Mỗi' as Mỗi tháng"
+ },
+ "CAL_CUSTOM": {
+  "text": "Tùy chỉnh",
+  "back": "Custom",
+  "why": "Menu word"
+ },
+ "CAL_EVERY": {
+  "text": "Mỗi",
+  "back": "Every",
+  "why": "Heading over a number and a unit"
+ },
+ "CAL_UNIT_WEEKS": {
+  "text": "Tuần",
+  "back": "Weeks",
+  "why": "Same word as the Tuần tab; no plural form"
+ },
+ "CAL_UNIT_MONTHS": {
+  "text": "Tháng",
+  "back": "Months",
+  "why": "Same word as the Tháng tab"
+ },
+ "CAL_THIS_EVENT": {
+  "text": "Chỉ ngày này",
+  "back": "Only this date",
+  "why": "Short and exact"
+ },
+ "CAL_THIS_AND_FOLLOWING": {
+  "text": "Ngày này và các ngày sau",
+  "back": "This date and the dates after",
+  "why": "Also reads inside a sentence"
+ },
+ "CAL_ALL_EVENTS": {
+  "text": "Tất cả ngày",
+  "back": "All dates",
+  "why": "Same name as the toast button"
+ },
+ "CAL_ASK_TITLE": {
+  "text": "Áp dụng thay đổi cho ngày nào?",
+  "back": "Apply the change to which date?",
+  "why": "Plain question"
+ },
+ "CAL_CANCEL_DATE": {
+  "text": "Hủy ngày này",
+  "back": "Cancel this date",
+  "why": "Hủy as in Cancel; 'ngày' keeps it about one date"
+ },
+ "CAL_MOVE_DATE": {
+  "text": "Dời ngày này",
+  "back": "Move this date",
+  "why": "Everyday verb dời for a date"
+ },
+ "CAL_RESTORE_DATE": {
+  "text": "Khôi phục",
+  "back": "Restore",
+  "why": "Not Hoàn tác, which is Undo"
+ },
+ "CAL_ALL_DATES": {
+  "text": "Tất cả ngày",
+  "back": "All dates",
+  "why": "Not a verb of undoing"
+ },
+ "rule_weeks": {
+  "text": {
+   "until": "Mỗi {every} tuần, {days}, {start} đến {end}, từ {from} đến {until}.",
+   "open": "Mỗi {every} tuần, {days}, {start} đến {end}, từ {from}, không kết thúc."
+  },
+  "back": {
+   "until": "Every {every} weeks, {days}, {start} to {end}, from {from} to {until}.",
+   "open": "Every {every} weeks, {days}, {start} to {end}, from {from}, no end."
+  },
+  "why": "Follows the wording of rule_week"
+ },
+ "rule_months": {
+  "text": {
+   "until": "{weekday} {position}, mỗi {every} tháng, {start} đến {end}, từ {from} đến {until}.",
+   "open": "{weekday} {position}, mỗi {every} tháng, {start} đến {end}, từ {from}, không kết thúc."
+  },
+  "back": {
+   "until": "{weekday} {position}, every {every} months, {start} to {end}, from {from} to {until}.",
+   "open": "{weekday} {position}, every {every} months, {start} to {end}, from {from}, no end."
+  },
+  "why": "Follows the wording of rule_month"
+ },
+ "date_cancelled": {
+  "text": "Đã hủy “{name}” ngày {date}",
+  "back": "Cancelled “{name}” on {date}",
+  "why": "Past tense with Đã, as the table does"
+ },
+ "date_restored": {
+  "text": "Đã khôi phục “{name}” ngày {date}",
+  "back": "Restored “{name}” on {date}",
+  "why": "Same verb as the button"
+ },
+ "date_moved": {
+  "text": "Đã dời “{name}” sang {date}",
+  "back": "Moved “{name}” to {date}",
+  "why": "New day last"
+ },
+ "dates_moved_all": {
+  "text": "Đã dời mọi ngày của “{name}”",
+  "back": "Moved every date of “{name}”",
+  "why": "Says all, not one"
+ },
+ "scope_drops": {
+  "text": {
+   "other": "{scope} sẽ làm mất {count} ngày đã thay đổi."
+  },
+  "back": {
+   "other": "{scope} will lose {count} changed dates."
+  },
+  "why": "Starts with the answer's name"
+ },
+ "chip_cancelled": {
+  "text": "{label}, đã hủy",
+  "back": "{label}, cancelled",
+  "why": "Label first, then the fact"
+ },
+ "series_changed": {
+  "text": "Đã cập nhật “{name}”",
+  "back": "Updated “{name}”",
+  "why": "Not deleted"
  }
 }

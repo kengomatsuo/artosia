@@ -6,7 +6,7 @@ use rusqlite::{Connection, OptionalExtension, params};
 use serde::Serialize;
 use serde::de::DeserializeOwned;
 
-use crate::calendar::{Calendar, Date, Event, Repeat};
+use crate::calendar::{Calendar, Change, Date, Event, Override, Repeat};
 use crate::deck::{Announcement, Fill, NoticeStyle, Person};
 use crate::giving::{Account, Fund, Gift, Method};
 use crate::plan::Plan;
@@ -126,6 +126,18 @@ create table if not exists events (
     repeat text not null default 'once',
     until text not null default '',
     skipped text not null default ''
+);
+-- One row per changed date of a series, keyed by the date the rule gave it (kind 'moved' or 'cancelled').
+-- `events.skipped` is still written with the cancelled dates, so an older Artosia reads them.
+create table if not exists event_overrides (
+    event_id integer not null,
+    original text not null,
+    kind text not null,
+    date text not null default '',
+    start integer not null default 0,
+    finish integer not null default 0,
+    name text not null default '',
+    primary key (event_id, original)
 );
 create table if not exists funds (
     id integer primary key,
@@ -536,17 +548,42 @@ impl Store {
 
     /// Deletes a calendar and the events in it.
     pub fn delete_calendar(&self, id: i64) -> Result<()> {
+        self.db.execute("delete from event_overrides where event_id in (select id from events where calendar = ?1)", [id])?;
         self.db.execute("delete from events where calendar = ?1", [id])?;
         self.db.execute("delete from calendars where id = ?1", [id])?;
         Ok(())
     }
 
     pub fn events(&self) -> Result<Vec<Event>> {
+        let mut rows = self.db.prepare("select event_id, original, kind, date, start, finish, name from event_overrides")?;
+        let mut changes: std::collections::HashMap<i64, Vec<Override>> = std::collections::HashMap::new();
+        for found in rows.query_map([], |row| {
+            let (id, original, kind, date, name): (i64, String, String, String, String) = (row.get(0)?, row.get(1)?, row.get(2)?, row.get(3)?, row.get(6)?);
+            Ok((id, original, kind, date, row.get::<_, u16>(4)?, row.get::<_, u16>(5)?, name))
+        })? {
+            let (id, original, kind, date, start, end, name) = found?;
+            let Some(original) = Date::parse(&original) else { continue };
+            let change = match (kind.as_str(), Date::parse(&date)) {
+                ("moved", Some(date)) => Change::Moved { date, start, end, name: (!name.is_empty()).then_some(name) },
+                ("cancelled", _) => Change::Cancelled,
+                _ => continue,
+            };
+            changes.entry(id).or_default().push(Override { original, change });
+        }
         let mut statement = self.db.prepare("select id, calendar, name, date, start, finish, repeat, until, skipped from events order by id")?;
         let rows = statement.query_map([], |row| {
             let (date, repeat, until, skipped): (String, String, String, String) = (row.get(3)?, row.get(6)?, row.get(7)?, row.get(8)?);
+            let id: i64 = row.get(0)?;
+            let mut overrides = changes.get(&id).cloned().unwrap_or_default();
+            // A date an older Artosia skipped has no row: it reads as cancelled.
+            for original in skipped.split(',').filter_map(Date::parse) {
+                if !overrides.iter().any(|item| item.original == original) {
+                    overrides.push(Override { original, change: Change::Cancelled });
+                }
+            }
+            overrides.sort_by_key(|item| item.original);
             Ok(Event {
-                id: row.get(0)?,
+                id,
                 calendar: row.get(1)?,
                 name: row.get(2)?,
                 date: Date::parse(&date).unwrap_or(Date { year: 1970, month: 1, day: 1 }),
@@ -554,7 +591,7 @@ impl Store {
                 end: row.get(5)?,
                 repeat: Repeat::from_code(&repeat),
                 until: Date::parse(&until),
-                skipped: skipped.split(',').filter_map(Date::parse).collect(),
+                overrides,
             })
         })?;
         Ok(rows.collect::<rusqlite::Result<Vec<_>>>()?)
@@ -563,7 +600,7 @@ impl Store {
     /// Inserts an event with id 0, otherwise updates it; the id is set either way.
     pub fn save_event(&self, event: &mut Event) -> Result<()> {
         let until = event.until.map(Date::code).unwrap_or_default();
-        let skipped = event.skipped.iter().map(|date| date.code()).collect::<Vec<_>>().join(",");
+        let skipped = event.overrides.iter().filter(|item| item.change == Change::Cancelled).map(|item| item.original.code()).collect::<Vec<_>>().join(",");
         if event.id == 0 {
             self.db.execute(
                 "insert into events (calendar, name, date, start, finish, repeat, until, skipped) values (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8)",
@@ -576,10 +613,19 @@ impl Store {
                 params![event.calendar, event.name, event.date.code(), event.start, event.end, event.repeat.code(), until, skipped, event.id],
             )?;
         }
+        self.db.execute("delete from event_overrides where event_id = ?1", [event.id])?;
+        for item in &event.overrides {
+            let (kind, date, start, end, name) = match &item.change {
+                Change::Cancelled => ("cancelled", String::new(), 0, 0, String::new()),
+                Change::Moved { date, start, end, name } => ("moved", date.code(), *start, *end, name.clone().unwrap_or_default()),
+            };
+            self.db.execute("insert into event_overrides (event_id, original, kind, date, start, finish, name) values (?1, ?2, ?3, ?4, ?5, ?6, ?7)", params![event.id, item.original.code(), kind, date, start, end, name])?;
+        }
         Ok(())
     }
 
     pub fn delete_event(&self, id: i64) -> Result<()> {
+        self.db.execute("delete from event_overrides where event_id = ?1", [id])?;
         self.db.execute("delete from events where id = ?1", [id])?;
         Ok(())
     }
@@ -752,15 +798,15 @@ mod tests {
         store.save_calendar(&mut youth).unwrap();
         assert!(services.id > 0 && youth.id > services.id);
         let day = |year, month, day| Date::new(year, month, day).unwrap();
-        let mut weekly = Event { id: 0, calendar: services.id, name: "Morning".into(), date: day(2026, 1, 4), start: 390, end: 480, repeat: Repeat::Weekly(1), until: Some(day(2027, 1, 3)), skipped: vec![day(2026, 12, 27), day(2026, 11, 1)] };
-        let mut monthly = Event { id: 0, calendar: youth.id, name: "Night".into(), date: day(2026, 1, 1), start: 1110, end: 1170, repeat: Repeat::Monthly(Position::Last, 5), until: None, skipped: Vec::new() };
+        let mut weekly = Event { id: 0, calendar: services.id, name: "Morning".into(), date: day(2026, 1, 4), start: 390, end: 480, repeat: Repeat::Weekly(1, 2), until: Some(day(2027, 1, 3)), overrides: vec![Override { original: day(2026, 11, 1), change: Change::Cancelled }, Override { original: day(2026, 12, 27), change: Change::Moved { date: day(2026, 12, 29), start: 600, end: 660, name: Some("Evening".into()) } }] };
+        let mut monthly = Event { id: 0, calendar: youth.id, name: "Night".into(), date: day(2026, 1, 1), start: 1110, end: 1170, repeat: Repeat::Monthly(Position::Last, 5, 3), until: None, overrides: Vec::new() };
         store.save_event(&mut weekly).unwrap();
         store.save_event(&mut monthly).unwrap();
         assert_eq!(store.calendars().unwrap(), vec![services.clone(), youth.clone()]);
         assert_eq!(store.events().unwrap(), vec![weekly.clone(), monthly.clone()]);
         weekly.name = "Early".into();
         weekly.until = None;
-        weekly.skipped.clear();
+        weekly.overrides.clear();
         store.save_event(&mut weekly).unwrap();
         services.colour = [1, 2, 3];
         store.save_calendar(&mut services).unwrap();
@@ -771,6 +817,28 @@ mod tests {
         store.delete_calendar(services.id).unwrap();
         assert!(store.events().unwrap().is_empty(), "the events of a deleted calendar go with it");
         assert_eq!(store.calendars().unwrap(), vec![youth]);
+    }
+
+    #[test]
+    fn a_date_an_older_artosia_skipped_reads_as_cancelled_and_stays_in_step() {
+        let store = store();
+        let day = |year, month, day| Date::new(year, month, day).unwrap();
+        let mut event = Event { id: 0, calendar: 1, name: "Old".into(), date: day(2026, 1, 4), start: 540, end: 600, repeat: Repeat::Weekly(1, 1), until: None, overrides: Vec::new() };
+        store.save_event(&mut event).unwrap();
+        // What an older program wrote: a skipped column and no override rows.
+        store.db.execute("update events set skipped = '2026-11-22,2026-11-01' where id = ?1", [event.id]).unwrap();
+        let read = store.events().unwrap();
+        assert_eq!(read[0].overrides, vec![Override { original: day(2026, 11, 1), change: Change::Cancelled }, Override { original: day(2026, 11, 22), change: Change::Cancelled }]);
+        // Saving writes rows and the column together, and bringing a date back clears both.
+        let mut again = read[0].clone();
+        again.set_change(day(2026, 11, 1), None);
+        store.save_event(&mut again).unwrap();
+        assert_eq!(store.events().unwrap()[0].overrides, vec![Override { original: day(2026, 11, 22), change: Change::Cancelled }]);
+        let skipped: String = store.db.query_row("select skipped from events where id = ?1", [event.id], |row| row.get(0)).unwrap();
+        assert_eq!(skipped, "2026-11-22");
+        store.delete_event(event.id).unwrap();
+        let rows: i64 = store.db.query_row("select count(*) from event_overrides", [], |row| row.get(0)).unwrap();
+        assert_eq!(rows, 0, "a deleted event leaves no changes behind");
     }
 
     #[test]

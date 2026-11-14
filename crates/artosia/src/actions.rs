@@ -202,6 +202,8 @@ impl App {
             Some(Undo::EditorLanguage { at, entry }) => self.restore_editor_language(at, entry),
             Some(Undo::Recordings) => self.restore_recordings(),
             Some(Undo::Event(event)) => self.restore_event(event),
+            Some(Undo::Series { before, added }) => self.restore_series(before, added),
+            Some(Undo::EventBack(event) | Undo::Moved { before: event, .. }) => self.put_back_event(event),
             Some(Undo::Calendar(calendar, events)) => self.restore_calendar(calendar, events),
             Some(Undo::Person(person)) => self.restore_person(person),
             Some(Undo::People(people)) => self.restore_people(people),
@@ -1112,9 +1114,10 @@ impl App {
 
     // ---- Listening ----
 
-    /// Opens the listening dialog with the microphones this computer has now.
+    /// Opens the listening dialog with the microphones this computer has now. A headless run lists
+    /// made-up ones, so a recorded clip or a render never names this computer's devices.
     pub fn open_listen(&mut self) {
-        self.microphones = artosia_listen::devices();
+        self.microphones = if rune::is_headless() { demo_microphones() } else { artosia_listen::devices() };
         self.check_model();
         self.refresh_recordings();
         self.listen_part = 0;
@@ -2275,4 +2278,9 @@ mod tempo_tests {
         app.set_listening(false);
         assert_eq!(app.tempo_count, TempoCount::AsHeard);
     }
+}
+
+/// The microphones a headless run shows in Listen.
+pub(crate) fn demo_microphones() -> Vec<artosia_listen::Device> {
+    ["Microphone Array", "USB microphone", "Headset", "Mixer line in"].iter().map(|name| artosia_listen::Device { name: (*name).to_string(), id: (*name).to_string() }).collect()
 }

@@ -5290,5 +5290,193 @@
   "text": "열리는 목록에서 추가할 것을 골라요",
   "back": "Pick what to add from the list that opens",
   "why": "해요 style"
+ },
+ "HELP_SCREENS": {
+  "text": "모인 사람들이 보는 모니터와 찬양팀이 보는 모니터를 정해요",
+  "back": "Choose the monitor the gathered people see and the monitor the worship team sees",
+  "why": "table terms reused, plain register"
+ },
+ "HELP_PHONE": {
+  "text": "교회 와이파이에 연결한 휴대폰으로 예배당 어디서나 슬라이드를 넘겨요",
+  "back": "With a phone connected to the church wifi, flip slides from anywhere in the sanctuary",
+  "why": "table terms reused, plain register"
+ },
+ "HELP_LISTEN": {
+  "text": "마이크로 예배당 소리를 듣고 곡이나 구절을 제안해요. 혼자서 화면에 띄우진 않아요",
+  "back": "Listens to the sanctuary sound with the mic and suggests songs or verses. Doesn't put anything on screen alone",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_SCREENS_SWITCH": {
+  "text": "이 스위치로 프로젝터를 켜고 꺼요",
+  "back": "With this switch you turn the projector on and off",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_SCREENS_SWITCH_MORE": {
+  "text": "아래에서 모니터마다 역할을 정해요",
+  "back": "Below, set a role for each monitor",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_PHONE_OPEN": {
+  "text": "표시된 버튼을 눌러 휴대폰 리모컨을 열어요",
+  "back": "Press the marked button to open the phone remote",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_PHONE_OPEN_MORE": {
+  "text": "같은 와이파이의 휴대폰은 슬라이드 리모컨이 돼요",
+  "back": "A phone on the same wifi becomes a slide remote",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_PHONE_SWITCH": {
+  "text": "켠 다음 휴대폰 카메라로 코드를 스캔해요",
+  "back": "After turning on, scan the code with the phone camera",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_PHONE_SWITCH_MORE": {
+  "text": "휴대폰이 여기 보이는 PIN 번호를 물으면, 넣고 슬라이드를 넘겨요",
+  "back": "When the phone asks for the PIN number shown here, enter it and flip slides",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_LISTEN_OPEN": {
+  "text": "표시된 버튼을 눌러 마이크를 열어요",
+  "back": "Press the marked button to open the mic",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_LISTEN_OPEN_MORE": {
+  "text": "프로그램이 마이크로 예배당 소리를 들어요",
+  "back": "The program hears the sanctuary sound with the mic",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_LISTEN_MICS": {
+  "text": "예배당 소리를 듣는 마이크를 골라요",
+  "back": "Pick the mic that hears the sanctuary sound",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_LISTEN_MICS_MORE": {
+  "text": "들은 결과는 미리보기 위에 제안으로 나오고, 저절로 화면에 뜨진 않아요",
+  "back": "The heard result comes out as a suggestion above Preview and doesn't pop onto the screen by itself",
+  "why": "table terms reused, plain register"
+ },
+ "CAL_EVERY_2_WEEKS": {
+  "text": "2주마다",
+  "back": "Every 2 weeks",
+  "why": "마다 as the sibling of 매주"
+ },
+ "CAL_EVERY_2_MONTHS": {
+  "text": "2개월마다",
+  "back": "Every 2 months",
+  "why": "개월 counts months"
+ },
+ "CAL_CUSTOM": {
+  "text": "직접 설정",
+  "back": "Set it yourself",
+  "why": "plain menu wording"
+ },
+ "CAL_EVERY": {
+  "text": "간격",
+  "back": "Interval",
+  "why": "heading over a number and a unit"
+ },
+ "CAL_UNIT_WEEKS": {
+  "text": "주",
+  "back": "weeks",
+  "why": "counted form"
+ },
+ "CAL_UNIT_MONTHS": {
+  "text": "개월",
+  "back": "months",
+  "why": "counted form after a number"
+ },
+ "CAL_THIS_EVENT": {
+  "text": "이번 한 번만",
+  "back": "Only this one time",
+  "why": "한 번 names one date"
+ },
+ "CAL_THIS_AND_FOLLOWING": {
+  "text": "이번 일정과 이후 모두",
+  "back": "This event and all after it",
+  "why": "also read in the drop sentence"
+ },
+ "CAL_ALL_EVENTS": {
+  "text": "모든 일정",
+  "back": "All events",
+  "why": "일정 is the table word"
+ },
+ "CAL_ASK_TITLE": {
+  "text": "어느 일정을 바꿀까요?",
+  "back": "Which event shall I change?",
+  "why": "해요체 question"
+ },
+ "CAL_CANCEL_DATE": {
+  "text": "이번 한 번 취소",
+  "back": "Cancel this one time",
+  "why": "not 삭제"
+ },
+ "CAL_MOVE_DATE": {
+  "text": "이번 한 번 옮기기",
+  "back": "Move this one time",
+  "why": "옮기기 as a button"
+ },
+ "CAL_RESTORE_DATE": {
+  "text": "원래대로",
+  "back": "As it was",
+  "why": "avoids 되돌리기, which is Undo"
+ },
+ "CAL_ALL_DATES": {
+  "text": "모두 적용",
+  "back": "Apply to all",
+  "why": "apply, not undo"
+ },
+ "rule_weeks": {
+  "text": {
+   "until": "{every}주마다 {days} {start}부터 {end}까지, {from}부터 {until}까지 해요.",
+   "open": "{every}주마다 {days} {start}부터 {end}까지, {from}부터 계속돼요."
+  },
+  "back": "every {every} weeks {days} from {start} to {end}, from {from} until {until} / on from {from}",
+  "why": "the table wording with 주마다"
+ },
+ "rule_months": {
+  "text": {
+   "until": "{every}개월마다 {position} {weekday} {start}부터 {end}까지, {from}부터 {until}까지 해요.",
+   "open": "{every}개월마다 {position} {weekday} {start}부터 {end}까지, {from}부터 계속돼요."
+  },
+  "back": "every {every} months the {position} {weekday} from {start} to {end}, from {from} until {until} / on from {from}",
+  "why": "the table wording with 개월마다"
+ },
+ "date_cancelled": {
+  "text": "{name}의 {date} 일정을 취소했어요",
+  "back": "Cancelled the {date} event of {name}",
+  "why": "의 avoids a particle clash; not 삭제"
+ },
+ "date_restored": {
+  "text": "{name}의 {date} 일정을 되살렸어요",
+  "back": "Brought back the {date} event of {name}",
+  "why": "되살리다 for a cancelled date"
+ },
+ "date_moved": {
+  "text": "{name}의 일정을 {date}로 옮겼어요",
+  "back": "Moved the event of {name} to {date}",
+  "why": "dates end in 일, so 로"
+ },
+ "dates_moved_all": {
+  "text": "{name}의 모든 일정을 함께 옮겼어요",
+  "back": "Moved all events of {name} together",
+  "why": "says all"
+ },
+ "scope_drops": {
+  "text": {
+   "other": "{scope} 선택 시 바뀐 날짜 {count}개가 사라져요."
+  },
+  "back": "On choosing {scope}, {count} changed dates disappear.",
+  "why": "no particle after the variable"
+ },
+ "chip_cancelled": {
+  "text": "{label}, 취소됨",
+  "back": "{label}, cancelled",
+  "why": "label first"
+ },
+ "series_changed": {
+  "text": "{name}의 반복 일정을 바꿨어요",
+  "back": "Changed the repeating events of {name}",
+  "why": "not a deletion word"
  }
 }

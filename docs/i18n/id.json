@@ -5238,5 +5238,201 @@
   "text": "Pilih yang mau ditambah dari daftar yang terbuka",
   "back": "Choose what you want to add from the list that opens",
   "why": "Spoken register"
+ },
+ "HELP_SCREENS": {
+  "text": "Atur monitor mana yang dilihat jemaat dan mana yang dilihat pemusik di panggung.",
+  "back": "Set which monitor the congregation sees and which the musicians on stage see.",
+  "why": "table terms reused, plain register"
+ },
+ "HELP_PHONE": {
+  "text": "Ponsel di jaringan wifi gereja bisa menggeser slide dari mana saja di ruangan.",
+  "back": "A phone on the church wifi network can move slides from anywhere in the room.",
+  "why": "table terms reused, plain register"
+ },
+ "HELP_LISTEN": {
+  "text": "Mendengarkan ruangan lewat mikrofon, lalu menyarankan lagu atau ayat. Tidak menampilkan apa pun sendiri.",
+  "back": "Listens to the room through the microphone, then suggests a song or verse. Shows nothing itself.",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_SCREENS_SWITCH": {
+  "text": "Saklar ini menyalakan dan mematikan proyektor",
+  "back": "This switch turns the projector on and off",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_SCREENS_SWITCH_MORE": {
+  "text": "Di bawahnya, tiap monitor diberi tugasnya",
+  "back": "Below it, each monitor is given its task",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_PHONE_OPEN": {
+  "text": "Tekan tombol berlingkar untuk buka remote ponsel",
+  "back": "Press the ringed button to open the phone remote",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_PHONE_OPEN_MORE": {
+  "text": "Ponsel mana pun di wifi yang sama bisa jadi remote slide",
+  "back": "Any phone on the same wifi can become a slide remote",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_PHONE_SWITCH": {
+  "text": "Nyalakan, lalu pindai kodenya dengan kamera ponsel",
+  "back": "Switch it on, then scan the code with the phone camera",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_PHONE_SWITCH_MORE": {
+  "text": "Ponsel lalu minta PIN yang tampil di sini, setelah itu bisa menggeser slide",
+  "back": "The phone then asks for the PIN shown here, after that it can move slides",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_LISTEN_OPEN": {
+  "text": "Tekan tombol berlingkar untuk buka mikrofon",
+  "back": "Press the ringed button to open the microphone",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_LISTEN_OPEN_MORE": {
+  "text": "Program mendengar ruangan lewat mikrofon",
+  "back": "The program hears the room through the microphone",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_LISTEN_MICS": {
+  "text": "Pilih mikrofon yang menangkap suara ruangan",
+  "back": "Pick the microphone that catches the room's sound",
+  "why": "table terms reused, plain register"
+ },
+ "GUIDE_LISTEN_MICS_MORE": {
+  "text": "Hasilnya muncul sebagai saran di atas Preview, tidak ada yang langsung tayang",
+  "back": "The result appears as a suggestion above Preview, nothing goes up right away",
+  "why": "table terms reused, plain register"
+ },
+ "CAL_EVERY_2_WEEKS": {
+  "text": "Tiap 2 pekan",
+  "back": "Every 2 weeks",
+  "why": "Same 'Tiap' as Tiap pekan"
+ },
+ "CAL_EVERY_2_MONTHS": {
+  "text": "Tiap 2 bulan",
+  "back": "Every 2 months",
+  "why": "Same 'Tiap' as Tiap bulan"
+ },
+ "CAL_CUSTOM": {
+  "text": "Atur sendiri",
+  "back": "Set it yourself",
+  "why": "A choice the person makes, as a menu says it"
+ },
+ "CAL_EVERY": {
+  "text": "Tiap",
+  "back": "Every",
+  "why": "Heading over a number and a unit"
+ },
+ "CAL_UNIT_WEEKS": {
+  "text": "Pekan",
+  "back": "Weeks",
+  "why": "Same word as the table; Indonesian has no plural form"
+ },
+ "CAL_UNIT_MONTHS": {
+  "text": "Bulan",
+  "back": "Months",
+  "why": "Same word as the Bulan tab"
+ },
+ "CAL_THIS_EVENT": {
+  "text": "Hanya tanggal ini",
+  "back": "Only this date",
+  "why": "Short and exact"
+ },
+ "CAL_THIS_AND_FOLLOWING": {
+  "text": "Tanggal ini dan sesudahnya",
+  "back": "This date and the ones after it",
+  "why": "Also reads inside a sentence"
+ },
+ "CAL_ALL_EVENTS": {
+  "text": "Semua tanggal",
+  "back": "All dates",
+  "why": "Same name as the toast button"
+ },
+ "CAL_ASK_TITLE": {
+  "text": "Perubahan ini untuk tanggal mana?",
+  "back": "This change is for which date?",
+  "why": "Plain question"
+ },
+ "CAL_CANCEL_DATE": {
+  "text": "Batalkan tanggal ini",
+  "back": "Cancel this date",
+  "why": "Order for one date; 'tanggal' keeps it from reading as deleting the event"
+ },
+ "CAL_MOVE_DATE": {
+  "text": "Pindahkan tanggal ini",
+  "back": "Move this date",
+  "why": "Everyday verb pindah"
+ },
+ "CAL_RESTORE_DATE": {
+  "text": "Pulihkan",
+  "back": "Restore",
+  "why": "Not Kembalikan, which is the Undo button"
+ },
+ "CAL_ALL_DATES": {
+  "text": "Semua tanggal",
+  "back": "All dates",
+  "why": "Not a verb of undoing"
+ },
+ "rule_weeks": {
+  "text": {
+   "until": "Tiap {every} pekan, {days}, {start} sampai {end}, dari {from} sampai {until}.",
+   "open": "Tiap {every} pekan, {days}, {start} sampai {end}, mulai {from}, tanpa batas akhir."
+  },
+  "back": {
+   "until": "Every {every} weeks, {days}, {start} to {end}, from {from} to {until}.",
+   "open": "Every {every} weeks, {days}, {start} to {end}, starting {from}, with no end."
+  },
+  "why": "Follows the wording of rule_week"
+ },
+ "rule_months": {
+  "text": {
+   "until": "Hari {weekday} {position}, tiap {every} bulan, {start} sampai {end}, dari {from} sampai {until}.",
+   "open": "Hari {weekday} {position}, tiap {every} bulan, {start} sampai {end}, mulai {from}, tanpa batas akhir."
+  },
+  "back": {
+   "until": "Day {weekday} {position}, every {every} months, {start} to {end}, from {from} to {until}.",
+   "open": "Day {weekday} {position}, every {every} months, {start} to {end}, starting {from}, with no end."
+  },
+  "why": "Follows the wording of rule_month"
+ },
+ "date_cancelled": {
+  "text": "Kegiatan “{name}” tanggal {date} dibatalkan",
+  "back": "Event “{name}” on {date} cancelled",
+  "why": "Echoes event_deleted but says cancelled"
+ },
+ "date_restored": {
+  "text": "Kegiatan “{name}” tanggal {date} dipulihkan",
+  "back": "Event “{name}” on {date} restored",
+  "why": "Same verb as the button"
+ },
+ "date_moved": {
+  "text": "Kegiatan “{name}” dipindah ke {date}",
+  "back": "Event “{name}” moved to {date}",
+  "why": "New day last, as the point"
+ },
+ "dates_moved_all": {
+  "text": "Semua tanggal “{name}” dipindah",
+  "back": "All dates of “{name}” moved",
+  "why": "Says all, not one"
+ },
+ "scope_drops": {
+  "text": {
+   "other": "{scope} menghapus {count} tanggal yang diubah."
+  },
+  "back": {
+   "other": "{scope} removes {count} changed dates."
+  },
+  "why": "Starts with the answer's name"
+ },
+ "chip_cancelled": {
+  "text": "{label}, dibatalkan",
+  "back": "{label}, cancelled",
+  "why": "Label first, then the fact"
+ },
+ "series_changed": {
+  "text": "Jadwal “{name}” diperbarui",
+  "back": "Schedule “{name}” updated",
+  "why": "Not deleted"
  }
 }
