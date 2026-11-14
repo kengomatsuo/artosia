@@ -14,9 +14,13 @@
 
 #![cfg_attr(test, allow(clippy::unwrap_used))]
 
+mod gema;
 mod http;
 mod lrclib;
+mod page;
 mod text;
+
+pub use gema::{GemaIndex, GemaSong};
 
 use std::fmt;
 
@@ -94,5 +98,16 @@ pub fn search(query: &str) -> Result<Vec<Found>, LyricsError> {
 ///
 /// Blocking, five seconds at most.
 pub fn fetch(found: &Found) -> Result<Fetched, LyricsError> {
+    if found.source == gema::SOURCE {
+        return page::from_page(&found.url);
+    }
     lrclib::fetch(found)
+}
+
+/// Reads the words of one web page the person chose and pressed Import on: a Gema SABDA song
+/// page, or any lyrics page whose address they pasted after searching in their own browser.
+///
+/// Blocking, five seconds at most. `NotFound` when the page holds nothing shaped like a song.
+pub fn from_page(url: &str) -> Result<Fetched, LyricsError> {
+    page::from_page(url)
 }
