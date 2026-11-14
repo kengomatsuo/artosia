@@ -4,7 +4,7 @@ use artosia_core::deck::NoticeKind;
 
 use super::data::{self as w, Data, Have};
 use super::fit;
-use super::{Fits, H, fit_cells, put_lines, Pic, Pos, R, Sheet, Split, Tx, W, largest, largest_name_size, name_in, paragraph, paragraphs, verse, VerseBox};
+use super::{Fits, H, fit_cells, put_lines, Pic, Pos, R, Sheet, Split, Tx, W, largest, largest_name_size, largest_step, name_in, paragraph, paragraphs, verse, VerseBox};
 
 const ROMAN: [&str; 10] = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"];
 
@@ -295,7 +295,7 @@ fn s06(sl: &mut Sheet, d: &Data, have: Have) -> Fits {
         let word = |s: &str| sl.adv(&face, s, z, ls * z);
         fit::wrap(&words, wide, space, &word, &word).iter().map(|line| fit::join(line)).collect()
     };
-    let z = largest_step(k("title_max"), k("title_floor"), 4.0, |z| wrap_at(z).len() <= 2).unwrap_or(k("title_floor"));
+    let z = sl.must(largest_step(k("title_max"), k("title_floor"), 1.0, |z| wrap_at(z).len() <= 2), k("title_floor"))?;
     let lines = wrap_at(z);
     let tl = z * k("title_lh");
     let body_face = sl.face_of("n_body");
@@ -305,6 +305,8 @@ fn s06(sl: &mut Sheet, d: &Data, have: Have) -> Fits {
     let nb: usize = body.iter().map(Vec::len).sum();
     let block = 16.0 + 44.0 + lines.len() as f32 * tl + 46.0 + 4.0 + 40.0 + nb as f32 * blh + body.len().saturating_sub(1) as f32 * k("line_gap");
     let top = (H - block) / 2.0;
+    // The stack stays clear of the frame; a body taller than that does not fit at this size.
+    sl.need(top >= 110.0)?;
     let place = |x: f32, y: f32| if centre { Tx::c(x, y) } else { Tx::l(x, y) };
     sl.text("kicker", w::NOTICE_KICKER, place(x0, top + 16.0).cy().fill("accent"));
     let mut y = top + 16.0 + 44.0;
@@ -329,14 +331,4 @@ fn s06(sl: &mut Sheet, d: &Data, have: Have) -> Fits {
     Ok(())
 }
 
-/// The largest size from `hi` down to `lo` in steps of `step` at which `ok` holds.
-pub(super) fn largest_step(hi: f32, lo: f32, step: f32, ok: impl Fn(f32) -> bool) -> Option<f32> {
-    let mut z = hi;
-    while z >= lo {
-        if ok(z) {
-            return Some(z);
-        }
-        z -= step;
-    }
-    None
-}
+

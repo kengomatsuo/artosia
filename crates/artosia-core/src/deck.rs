@@ -29,6 +29,43 @@ pub enum NoticeKind {
     Verse,
 }
 
+/// Where the lines of a box sit across it.
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Hash, Serialize, Deserialize)]
+pub enum Align {
+    #[default]
+    Start,
+    Centre,
+    End,
+}
+
+/// How one box of an announcement's slide is set: a ceiling size of its own (0 takes the style's),
+/// bold, italic and where its lines sit.
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Hash, Serialize, Deserialize)]
+pub struct Face {
+    pub size: u16,
+    pub bold: bool,
+    pub italic: bool,
+    pub align: Align,
+}
+
+impl Face {
+    /// The word stored in the library: "108:3" is size 108, bold and italic, aligned to the start.
+    pub fn code(self) -> String {
+        let flags = u8::from(self.bold) | u8::from(self.italic) << 1 | match self.align {
+            Align::Start => 0,
+            Align::Centre => 4,
+            Align::End => 8,
+        };
+        format!("{}:{flags}", self.size)
+    }
+
+    pub fn from_code(code: &str) -> Face {
+        let (size, flags) = code.split_once(':').unwrap_or(("0", "0"));
+        let flags: u8 = flags.parse().unwrap_or(0);
+        Face { size: size.parse().unwrap_or(0), bold: flags & 1 != 0, italic: flags & 2 != 0, align: if flags & 8 != 0 { Align::End } else if flags & 4 != 0 { Align::Centre } else { Align::Start } }
+    }
+}
+
 /// How an announcement slide is built: its structure, not only its colours.
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Hash, Serialize, Deserialize)]
 pub enum NoticeStyle {
@@ -88,6 +125,11 @@ pub struct Slide {
     /// The title colour its card chose; None takes the style's own.
     #[serde(default)]
     pub title_colour: Option<[u8; 3]>,
+    /// How the card set its title and its body, which a style draws within its own floor.
+    #[serde(default)]
+    pub title_face: Face,
+    #[serde(default)]
+    pub body_face: Face,
     /// "Verse 1", "Chorus", "John 3:16".
     pub label: String,
     /// "V1", "C", "16".
@@ -282,6 +324,11 @@ pub struct Announcement {
     /// The colour of the title; None takes the style's own.
     #[serde(default)]
     pub title_colour: Option<[u8; 3]>,
+    /// How the title and the body are set: a ceiling size, bold, italic and alignment.
+    #[serde(default)]
+    pub title_face: Face,
+    #[serde(default)]
+    pub body_face: Face,
     /// The calendars a schedule card reads, by id; empty reads all of them.
     #[serde(default)]
     pub calendars: Vec<i64>,
@@ -741,6 +788,8 @@ pub fn announcement_pages(announcements: &[Announcement], people: &[Person], eve
     for (at, slide) in &mut pages {
         slide.style = announcements[*at].style;
         slide.title_colour = announcements[*at].title_colour;
+        slide.title_face = announcements[*at].title_face;
+        slide.body_face = announcements[*at].body_face;
         slide.church = today.church.to_string();
         slide.image2 = announcements[*at].image2.clone();
         if slide.notice == NoticeKind::Account {
@@ -1305,5 +1354,17 @@ Wednesday	18.30	Prayer");
         assert_eq!((pages[1].1.style, pages[1].1.title_colour), (None, None));
         assert_eq!(NoticeStyle::from_code(NoticeStyle::Band.code()), Some(NoticeStyle::Band));
         assert_eq!(NoticeStyle::from_code(""), None);
+    }
+
+    #[test]
+    fn how_a_card_sets_its_title_and_body_reaches_every_slide_of_it_and_survives_its_code() {
+        let face = Face { size: 96, bold: true, italic: false, align: Align::Centre };
+        let card = Announcement { title: "Hello".into(), body: "Words".into(), title_face: face, body_face: Face { italic: true, ..Face::default() }, ..Announcement::default() };
+        let pages = announcement_pages(&[card], &[], &[], &nothing(), &today_on(11, 13, &["January"; 12]), None, 2);
+        assert_eq!((pages[0].1.title_face, pages[0].1.body_face.italic), (face, true));
+        for each in [face, Face::default(), Face { size: 40, bold: false, italic: true, align: Align::End }] {
+            assert_eq!(Face::from_code(&each.code()), each);
+        }
+        assert_eq!(Face::from_code("nonsense"), Face::default());
     }
 }

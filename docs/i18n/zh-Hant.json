@@ -5892,5 +5892,205 @@
   "text": "無法重新啟動。請關閉程式再重新開啟來更新",
   "back": "Could not restart; close the program and open it again to update",
   "why": "program's own words for update and projector, plain volunteer register"
+ },
+ "KEYS_EDITING_ROWS[6].1": {
+  "text": "跳到投影片上下一處可修改的地方，最後一處之後是按鈕",
+  "back": "Jump to the next place on the slide that can be changed; after the last one come the buttons",
+  "why": "投影片 as the table"
+ },
+ "KEYS_EDITING_ROWS[7].1": {
+  "text": "把游標放進選取的文字，直接在投影片上修改",
+  "back": "Put the cursor into the picked text and change it right on the slide",
+  "why": "游標 and 選取 are the Taiwan editor words"
+ },
+ "KEYS_EDITING_ROWS[8].1": {
+  "text": "每按一次退一層：輸入、選取的部分及面板，最後是公告",
+  "back": "Each press steps back one layer: typing, the picked part and its sheet, finally the announcement",
+  "why": "One layer per press"
+ },
+ "KEYS_EDITING_ROWS[9].1": {
+  "text": "取回剛復原的修改",
+  "back": "Take back the change just undone",
+  "why": "復原 matches BTN_UNDO"
+ },
+ "KEYS_EDITING_ROWS[10].1": {
+  "text": "選取的文字變粗體（B）或斜體（I）",
+  "back": "Make the picked text bold (B) or italic (I)",
+  "why": "粗體 and 斜體 are the Taiwan editor names"
+ },
+ "EDIT_ROLE_BODY": {
+  "text": "內文",
+  "back": "Body text",
+  "why": "Taiwan word for body text"
+ },
+ "EDIT_FIT": {
+  "text": "最佳大小",
+  "back": "Best size",
+  "why": "One phrase that says the job"
+ },
+ "EDIT_SIZE": {
+  "text": "文字大小",
+  "back": "Text size",
+  "why": "Same as the table's look size"
+ },
+ "EDIT_REDO": {
+  "text": "取消復原",
+  "back": "Cancel undo",
+  "why": "Taiwan editor name for redo, pairs with 復原"
+ },
+ "EDIT_BOLD": {
+  "text": "粗體",
+  "back": "Bold",
+  "why": "Taiwan editor name"
+ },
+ "EDIT_ITALIC": {
+  "text": "斜體",
+  "back": "Italic",
+  "why": "Taiwan editor name"
+ },
+ "EDIT_ALIGN_LEFT": {
+  "text": "靠左對齊",
+  "back": "Align left",
+  "why": "Taiwan editor name"
+ },
+ "EDIT_ALIGN_CENTRE": {
+  "text": "置中",
+  "back": "Centre",
+  "why": "Taiwan editor name"
+ },
+ "EDIT_ALIGN_RIGHT": {
+  "text": "靠右對齊",
+  "back": "Align right",
+  "why": "Taiwan editor name"
+ },
+ "EDIT_SHRUNK": {
+  "text": "已縮小以放得下",
+  "back": "Made smaller to fit",
+  "why": "State"
+ },
+ "EDIT_SMALLEST": {
+  "text": "已縮到最小",
+  "back": "Already shrunk to the smallest",
+  "why": "State"
+ },
+ "EDIT_NO_FIT_LONG": {
+  "text": "文字太多，縮到最小也放不下",
+  "back": "Too much text; even at the smallest size it does not fit",
+  "why": "Names what happened"
+ },
+ "EDIT_CONTINUE": {
+  "text": "把放不下的接到新投影片",
+  "back": "Put what does not fit onto a new slide",
+  "why": "Verb first"
+ },
+ "EDIT_NEXT_STARTS": {
+  "text": "下一張從這裡開始",
+  "back": "The next slide starts here",
+  "why": "Tag on a line"
+ },
+ "EDIT_ADDS_SLIDE": {
+  "text": "緊接這張新增一張投影片",
+  "back": "Add a new slide right after this one",
+  "why": "新增 as the table uses it"
+ },
+ "EDIT_NOT_SAVED": {
+  "text": "未儲存",
+  "back": "Not saved",
+  "why": "State, 儲存 as the table"
+ },
+ "EDIT_CANT_SAVE": {
+  "text": "先決定放不下的文字怎麼處理",
+  "back": "First decide how to handle the text that does not fit",
+  "why": "Names the way out"
+ },
+ "EDIT_OPEN_CALENDAR": {
+  "text": "前往行事曆視窗",
+  "back": "Go to the Calendar window",
+  "why": "Window named as the tab is"
+ },
+ "EDIT_OPEN_MEMBERS": {
+  "text": "前往會友視窗",
+  "back": "Go to the Members window",
+  "why": "Window named as the tab is"
+ },
+ "EDIT_OPEN_OFFERINGS": {
+  "text": "前往奉獻視窗",
+  "back": "Go to the Offerings window",
+  "why": "Window named as the tab is"
+ },
+ "EDIT_READ_CAL": {
+  "text": "取自行事曆，不用輸入",
+  "back": "Taken from the calendar, no typing",
+  "why": "Label on a pill"
+ },
+ "EDIT_READ_MEMBERS": {
+  "text": "取自會友名單，不用輸入",
+  "back": "Taken from the members list, no typing",
+  "why": "Label on a pill"
+ },
+ "EDIT_READ_OFFERINGS": {
+  "text": "取自奉獻紀錄，不用輸入",
+  "back": "Taken from the offering records, no typing",
+  "why": "Label on a pill"
+ },
+ "EDIT_PART_ROWS": {
+  "text": "聚會行程",
+  "back": "Service schedule",
+  "why": "Same words as the schedule template"
+ },
+ "EDIT_PART_NAMES": {
+  "text": "生日名單",
+  "back": "Birthday list",
+  "why": "Plain two-word heading"
+ },
+ "EDIT_PART_FUNDS": {
+  "text": "奉獻用途",
+  "back": "Offering funds",
+  "why": "Table word 用途"
+ },
+ "EDIT_PART_ACCOUNT": {
+  "text": "轉帳帳戶",
+  "back": "Transfer account",
+  "why": "Same as the table"
+ },
+ "EDIT_PART_VERSE": {
+  "text": "經文",
+  "back": "Verses",
+  "why": "Table word"
+ },
+ "EDIT_CARD_SETTINGS": {
+  "text": "公告設定",
+  "back": "Announcement settings",
+  "why": "Card-wide settings"
+ },
+ "EDIT_WORDS": {
+  "text": "文字",
+  "back": "Text",
+  "why": "One word"
+ },
+ "EDIT_MORE": {
+  "text": "更多",
+  "back": "More",
+  "why": "Usual three-dots name"
+ },
+ "EDIT_RAIL_OPEN": {
+  "text": "展開公告列表",
+  "back": "Expand the announcement list",
+  "why": "Arrow button name"
+ },
+ "EDIT_RAIL_CLOSE": {
+  "text": "收合公告列表",
+  "back": "Fold the announcement list",
+  "why": "Arrow button name"
+ },
+ "NOTICE_CONTINUED": {
+  "text": "已在這張後新增一張，放下多出的文字",
+  "back": "A new slide was added after this one for the extra text",
+  "why": "Past tense"
+ },
+ "NOTICE_CONTINUE_FAILED": {
+  "text": "沒能新增投影片，公告維持原樣",
+  "back": "The slide could not be added; the announcement stays as it was",
+  "why": "States the fact"
  }
 }

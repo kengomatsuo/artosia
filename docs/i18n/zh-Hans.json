@@ -5894,5 +5894,205 @@
   "text": "无法重启。请关闭程序再重新打开来更新",
   "back": "Could not restart; close the program and open it again to update",
   "why": "program's own words for update and projector, plain volunteer register"
+ },
+ "KEYS_EDITING_ROWS[6].1": {
+  "text": "跳到幻灯片上下一处可修改的地方，最后一处之后是按钮",
+  "back": "Jump to the next place on the slide that can be changed; after the last one come the buttons",
+  "why": "幻灯片 as the table"
+ },
+ "KEYS_EDITING_ROWS[7].1": {
+  "text": "把光标放进选中的文字，直接在幻灯片上修改",
+  "back": "Put the cursor into the selected text and change it right on the slide",
+  "why": "文字 is the everyday word for text on a screen"
+ },
+ "KEYS_EDITING_ROWS[8].1": {
+  "text": "每按一次退一级：输入、选中的部分及面板，最后是公告",
+  "back": "Each press steps back one level: typing, the selected part and its sheet, finally the announcement",
+  "why": "One level per press, in the listed order"
+ },
+ "KEYS_EDITING_ROWS[9].1": {
+  "text": "恢复刚撤销的修改",
+  "back": "Restore the change just undone",
+  "why": "撤销 matches BTN_UNDO"
+ },
+ "KEYS_EDITING_ROWS[10].1": {
+  "text": "选中的文字加粗（B）或倾斜（I）",
+  "back": "Make the selected text bold (B) or slanted (I)",
+  "why": "Letters in brackets match the key caps"
+ },
+ "EDIT_ROLE_BODY": {
+  "text": "正文",
+  "back": "Body text",
+  "why": "Usual word for the longer text under a title"
+ },
+ "EDIT_FIT": {
+  "text": "适配",
+  "back": "Fit",
+  "why": "One word for fitting size to place"
+ },
+ "EDIT_SIZE": {
+  "text": "文字大小",
+  "back": "Text size",
+  "why": "Same word as the table's look size"
+ },
+ "EDIT_REDO": {
+  "text": "重做",
+  "back": "Redo",
+  "why": "Usual editor name"
+ },
+ "EDIT_BOLD": {
+  "text": "加粗",
+  "back": "Bold",
+  "why": "Usual editor name"
+ },
+ "EDIT_ITALIC": {
+  "text": "倾斜",
+  "back": "Slant",
+  "why": "Usual editor name for italic on a slide"
+ },
+ "EDIT_ALIGN_LEFT": {
+  "text": "左对齐",
+  "back": "Align left",
+  "why": "Usual editor name"
+ },
+ "EDIT_ALIGN_CENTRE": {
+  "text": "居中",
+  "back": "Centre",
+  "why": "Usual editor name"
+ },
+ "EDIT_ALIGN_RIGHT": {
+  "text": "右对齐",
+  "back": "Align right",
+  "why": "Usual editor name"
+ },
+ "EDIT_SHRUNK": {
+  "text": "已缩小以放下",
+  "back": "Made smaller to fit",
+  "why": "State, past"
+ },
+ "EDIT_SMALLEST": {
+  "text": "已缩到最小",
+  "back": "Already shrunk to the smallest",
+  "why": "State"
+ },
+ "EDIT_NO_FIT_LONG": {
+  "text": "文字太多，缩到最小也放不下",
+  "back": "Too much text; even at the smallest size it does not fit",
+  "why": "Names what happened"
+ },
+ "EDIT_CONTINUE": {
+  "text": "把放不下的接到新幻灯片",
+  "back": "Put what does not fit onto a new slide",
+  "why": "Verb first, plain"
+ },
+ "EDIT_NEXT_STARTS": {
+  "text": "下一张从这里开始",
+  "back": "The next slide starts here",
+  "why": "Tag on a line"
+ },
+ "EDIT_ADDS_SLIDE": {
+  "text": "紧接这张新建一张幻灯片",
+  "back": "Make a new slide right after this one",
+  "why": "Says what the button does"
+ },
+ "EDIT_NOT_SAVED": {
+  "text": "未保存",
+  "back": "Not saved",
+  "why": "State"
+ },
+ "EDIT_CANT_SAVE": {
+  "text": "先决定放不下的文字怎么办",
+  "back": "First decide what to do with the text that does not fit",
+  "why": "Names the way out"
+ },
+ "EDIT_OPEN_CALENDAR": {
+  "text": "前往日历窗口",
+  "back": "Go to the Calendar window",
+  "why": "Window named as the tab is"
+ },
+ "EDIT_OPEN_MEMBERS": {
+  "text": "前往会友窗口",
+  "back": "Go to the Members window",
+  "why": "Window named as the tab is"
+ },
+ "EDIT_OPEN_OFFERINGS": {
+  "text": "前往奉献窗口",
+  "back": "Go to the Offerings window",
+  "why": "Window named as the tab is"
+ },
+ "EDIT_READ_CAL": {
+  "text": "取自日历，不用输入",
+  "back": "Taken from the calendar, no typing",
+  "why": "Label on a pill"
+ },
+ "EDIT_READ_MEMBERS": {
+  "text": "取自会友名单，不用输入",
+  "back": "Taken from the members list, no typing",
+  "why": "Label on a pill"
+ },
+ "EDIT_READ_OFFERINGS": {
+  "text": "取自奉献记录，不用输入",
+  "back": "Taken from the offering records, no typing",
+  "why": "Label on a pill"
+ },
+ "EDIT_PART_ROWS": {
+  "text": "聚会日程",
+  "back": "Service schedule",
+  "why": "Same words as the schedule template"
+ },
+ "EDIT_PART_NAMES": {
+  "text": "生日名单",
+  "back": "Birthday list",
+  "why": "Plain two-word heading"
+ },
+ "EDIT_PART_FUNDS": {
+  "text": "奉献用途",
+  "back": "Offering funds",
+  "why": "Table word 用途 for fund"
+ },
+ "EDIT_PART_ACCOUNT": {
+  "text": "转账账户",
+  "back": "Transfer account",
+  "why": "Same as the table"
+ },
+ "EDIT_PART_VERSE": {
+  "text": "经文",
+  "back": "Verses",
+  "why": "Table word for scripture verses"
+ },
+ "EDIT_CARD_SETTINGS": {
+  "text": "公告设置",
+  "back": "Announcement settings",
+  "why": "Card-wide settings"
+ },
+ "EDIT_WORDS": {
+  "text": "文字",
+  "back": "Text",
+  "why": "One word"
+ },
+ "EDIT_MORE": {
+  "text": "更多",
+  "back": "More",
+  "why": "Usual three-dots name"
+ },
+ "EDIT_RAIL_OPEN": {
+  "text": "展开公告列表",
+  "back": "Expand the announcement list",
+  "why": "Arrow button name"
+ },
+ "EDIT_RAIL_CLOSE": {
+  "text": "收起公告列表",
+  "back": "Fold the announcement list",
+  "why": "Arrow button name"
+ },
+ "NOTICE_CONTINUED": {
+  "text": "已在这张后新建一张，放下多出的文字",
+  "back": "A new slide was made after this one for the extra text",
+  "why": "Past tense"
+ },
+ "NOTICE_CONTINUE_FAILED": {
+  "text": "新幻灯片没建成，公告保持原样",
+  "back": "The new slide was not made; the announcement stays as it was",
+  "why": "States the fact"
  }
 }

@@ -22,8 +22,9 @@ const CURATED: [(Template, NoticeStyle); 6] = [
 ];
 
 /// What a press on "Apply style to" changes.
-#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub enum Target {
+    #[default]
     Slide,
     Every,
     Plan,

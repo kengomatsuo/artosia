@@ -259,6 +259,8 @@ pub enum Undo {
     PlanItem { at: usize, item: PlanItem },
     Song(Box<Song>),
     Announcement(Announcement),
+    /// A body went on a second card: the card as it was, and the id of the one added.
+    Continued { before: Box<Announcement>, added: i64 },
     /// An editor closed with unsaved changes.
     Editor(Box<Editor>),
     /// The search history was forgotten.
@@ -445,6 +447,62 @@ pub struct Notices {
     pub window: artosia_core::window::Window,
     /// The date of the window a month picker is open for, and the month it shows.
     pub pick: Option<(Edge, artosia_core::calendar::Date)>,
+    /// How the card sets its title and its body.
+    pub title_face: artosia_core::deck::Face,
+    pub body_face: artosia_core::deck::Face,
+    /// What the editor on the slide holds: the box picked, the panel under the slide, the history.
+    pub slide: SlideEdit,
+}
+
+/// What is open under the slide while a card is edited on it.
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub enum Panel {
+    #[default]
+    None,
+    /// A data part's window: its pickers and the button to its tab.
+    Data,
+    /// The card's template, style, title colour and pictures, which the strip has no room for.
+    More,
+}
+
+/// The words of a card the strip changes, as one step of the history.
+#[derive(Clone, Debug, PartialEq)]
+pub struct Snapshot {
+    pub title: String,
+    pub body: String,
+    pub title_face: artosia_core::deck::Face,
+    pub body_face: artosia_core::deck::Face,
+}
+
+/// One step of the editor's history: what a committed edit changed, taken back whole.
+#[derive(Clone, Debug, PartialEq)]
+pub enum Step {
+    Words(Snapshot),
+    /// A body that went on a second card: the first as it was and as it is, and the card added.
+    Continued { before: Snapshot, after: Snapshot, added: Box<Announcement> },
+}
+
+/// The editor on the slide: which box is picked and whether it takes the caret, what is open
+/// under the slide, and the history of committed edits.
+#[derive(Default)]
+pub struct SlideEdit {
+    pub selected: Option<artosia_slides::warta::Field>,
+    pub editing: bool,
+    pub hover: Option<artosia_slides::warta::Field>,
+    pub panel: Panel,
+    /// The old list of cards, opened over the rail.
+    pub list: bool,
+    /// The words as they were when the caret went in, to make one step of the edit.
+    pub began: Option<Snapshot>,
+    pub undo: Vec<Step>,
+    pub redo: Vec<Step>,
+    /// What "Apply style to" will do, and whether its choices are showing.
+    pub apply: crate::templates::Target,
+    pub apply_open: bool,
+    /// The card the second slide was added after, until its toast goes.
+    pub continued: Option<i64>,
+    /// The words a new card started from; the card is not kept until they change.
+    pub seeded: Option<(String, String)>,
 }
 
 /// Which date of a card's window the open month picker sets.

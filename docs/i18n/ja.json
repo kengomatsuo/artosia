@@ -5892,5 +5892,205 @@
   "text": "再起動できませんでした。閉じてもう一度開くと更新されます",
   "back": "Could not restart; close the program and open it again to update",
   "why": "program's own words for update and projector, plain volunteer register"
+ },
+ "KEYS_EDITING_ROWS[6].1": {
+  "text": "スライド上の次の編集できる所へ、最後はボタンへ",
+  "back": "To the next place on the slide that can be edited, and at the last one to the buttons",
+  "why": "Fragment with へ"
+ },
+ "KEYS_EDITING_ROWS[7].1": {
+  "text": "選んだ文字にカーソルを入れて、その場で直す",
+  "back": "Put the cursor into the chosen text and fix it on the spot",
+  "why": "文字 for slide text; その場で says right on the slide"
+ },
+ "KEYS_EDITING_ROWS[8].1": {
+  "text": "入力、選んだ部分、お知らせの順に一段ずつ戻る",
+  "back": "Back one level at a time: typing, chosen part, announcement",
+  "why": "Order as the brief"
+ },
+ "KEYS_EDITING_ROWS[9].1": {
+  "text": "元に戻したものをやり直す",
+  "back": "Redo what was put back",
+  "why": "Uses the table's 元に戻す and やり直す"
+ },
+ "KEYS_EDITING_ROWS[10].1": {
+  "text": "選んだ文字を太字(B)や斜体(I)にする",
+  "back": "Make the chosen text bold (B) or italic (I)",
+  "why": "Usual editor names"
+ },
+ "EDIT_ROLE_BODY": {
+  "text": "本文",
+  "back": "Body text",
+  "why": "Usual word"
+ },
+ "EDIT_FIT": {
+  "text": "最適サイズ",
+  "back": "Best size",
+  "why": "One word for the job"
+ },
+ "EDIT_SIZE": {
+  "text": "文字サイズ",
+  "back": "Text size",
+  "why": "Everyday editor label"
+ },
+ "EDIT_REDO": {
+  "text": "やり直し",
+  "back": "Redo",
+  "why": "Usual editor name"
+ },
+ "EDIT_BOLD": {
+  "text": "太字",
+  "back": "Bold",
+  "why": "Usual editor name"
+ },
+ "EDIT_ITALIC": {
+  "text": "斜体",
+  "back": "Italic",
+  "why": "Usual editor name"
+ },
+ "EDIT_ALIGN_LEFT": {
+  "text": "左揃え",
+  "back": "Align left",
+  "why": "Usual editor name"
+ },
+ "EDIT_ALIGN_CENTRE": {
+  "text": "中央揃え",
+  "back": "Centre",
+  "why": "Usual editor name"
+ },
+ "EDIT_ALIGN_RIGHT": {
+  "text": "右揃え",
+  "back": "Align right",
+  "why": "Usual editor name"
+ },
+ "EDIT_SHRUNK": {
+  "text": "収まるよう縮小",
+  "back": "Shrunk to fit",
+  "why": "State"
+ },
+ "EDIT_SMALLEST": {
+  "text": "最小サイズです",
+  "back": "It is the smallest size",
+  "why": "State"
+ },
+ "EDIT_NO_FIT_LONG": {
+  "text": "最小にしても文字が収まりません",
+  "back": "Even at the smallest the text does not fit",
+  "why": "Names what happened"
+ },
+ "EDIT_CONTINUE": {
+  "text": "収まらない分を次のスライドへ",
+  "back": "What does not fit, to the next slide",
+  "why": "Noun-and-へ button as the table does"
+ },
+ "EDIT_NEXT_STARTS": {
+  "text": "次のスライドはここから",
+  "back": "The next slide starts here",
+  "why": "Tag on a line"
+ },
+ "EDIT_ADDS_SLIDE": {
+  "text": "この後ろに新しいスライドを作ります",
+  "back": "A new slide is made right behind this",
+  "why": "Says what the button does"
+ },
+ "EDIT_NOT_SAVED": {
+  "text": "未保存",
+  "back": "Not saved",
+  "why": "State"
+ },
+ "EDIT_CANT_SAVE": {
+  "text": "収まらない文字をどうするか先に選択",
+  "back": "First choose what to do with the text that does not fit",
+  "why": "Names the way out"
+ },
+ "EDIT_OPEN_CALENDAR": {
+  "text": "カレンダーを開く",
+  "back": "Open Calendar",
+  "why": "Tab name カレンダー"
+ },
+ "EDIT_OPEN_MEMBERS": {
+  "text": "教会員を開く",
+  "back": "Open Members",
+  "why": "Tab name 教会員"
+ },
+ "EDIT_OPEN_OFFERINGS": {
+  "text": "献金を開く",
+  "back": "Open Offerings",
+  "why": "Tab name 献金"
+ },
+ "EDIT_READ_CAL": {
+  "text": "カレンダーから自動表示",
+  "back": "Shown automatically from the calendar",
+  "why": "Label on a pill"
+ },
+ "EDIT_READ_MEMBERS": {
+  "text": "教会員の名簿から自動表示",
+  "back": "Shown automatically from the members list",
+  "why": "Label on a pill"
+ },
+ "EDIT_READ_OFFERINGS": {
+  "text": "献金の記録から自動表示",
+  "back": "Shown automatically from the offering records",
+  "why": "Label on a pill"
+ },
+ "EDIT_PART_ROWS": {
+  "text": "予定の行",
+  "back": "Rows of events",
+  "why": "Two-word heading"
+ },
+ "EDIT_PART_NAMES": {
+  "text": "誕生日の人",
+  "back": "Birthday people",
+  "why": "Plain heading"
+ },
+ "EDIT_PART_FUNDS": {
+  "text": "用途と金額",
+  "back": "Funds and amounts",
+  "why": "Table word 用途"
+ },
+ "EDIT_PART_ACCOUNT": {
+  "text": "振込先口座",
+  "back": "Transfer account",
+  "why": "Same as the table"
+ },
+ "EDIT_PART_VERSE": {
+  "text": "聖句",
+  "back": "Verses",
+  "why": "Table word 聖句"
+ },
+ "EDIT_CARD_SETTINGS": {
+  "text": "お知らせの設定",
+  "back": "Announcement settings",
+  "why": "Table word お知らせ"
+ },
+ "EDIT_WORDS": {
+  "text": "文字",
+  "back": "Text",
+  "why": "One word"
+ },
+ "EDIT_MORE": {
+  "text": "その他",
+  "back": "More",
+  "why": "Usual name"
+ },
+ "EDIT_RAIL_OPEN": {
+  "text": "お知らせ一覧を開く",
+  "back": "Open the announcement list",
+  "why": "Arrow button"
+ },
+ "EDIT_RAIL_CLOSE": {
+  "text": "お知らせ一覧を閉じる",
+  "back": "Close the announcement list",
+  "why": "Arrow button"
+ },
+ "NOTICE_CONTINUED": {
+  "text": "収まらない分を次のスライドに作りました",
+  "back": "A next slide was made for what did not fit",
+  "why": "Past tense"
+ },
+ "NOTICE_CONTINUE_FAILED": {
+  "text": "スライドを作れず、お知らせは元のままです",
+  "back": "The slide could not be made, and the announcement is as it was",
+  "why": "States the fact"
  }
 }

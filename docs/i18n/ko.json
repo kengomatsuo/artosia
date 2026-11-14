@@ -5894,5 +5894,205 @@
   "text": "다시 시작하지 못했어요. 닫았다가 다시 열면 업데이트돼요",
   "back": "Could not restart; close the program and open it again to update",
   "why": "program's own words for update and projector, plain volunteer register"
+ },
+ "KEYS_EDITING_ROWS[6].1": {
+  "text": "다음으로 고칠 수 있는 부분으로, 마지막 뒤엔 버튼으로",
+  "back": "To the next part that can be changed, after the last to the buttons",
+  "why": "Fragment; 부분 for part of the slide"
+ },
+ "KEYS_EDITING_ROWS[7].1": {
+  "text": "고른 글자에 커서를 넣어 슬라이드에서 바로 고치기",
+  "back": "Put the cursor in the picked words and change them right on the slide",
+  "why": "Table style 하기 ending; 글자 for slide words"
+ },
+ "KEYS_EDITING_ROWS[8].1": {
+  "text": "한 번에 한 단계씩 뒤로: 입력, 고른 부분, 공지",
+  "back": "One step back per press: typing, picked part, announcement",
+  "why": "공지 as the table"
+ },
+ "KEYS_EDITING_ROWS[9].1": {
+  "text": "되돌린 것을 다시 적용하기",
+  "back": "Apply again what was put back",
+  "why": "Table style 하기 ending"
+ },
+ "KEYS_EDITING_ROWS[10].1": {
+  "text": "고른 글자를 굵게(B), 기울임(I)으로 바꾸기",
+  "back": "Change the picked text to bold (B) or italic (I)",
+  "why": "Usual editor names"
+ },
+ "EDIT_ROLE_BODY": {
+  "text": "본문",
+  "back": "Body text",
+  "why": "Usual word"
+ },
+ "EDIT_FIT": {
+  "text": "맞추기",
+  "back": "Fit",
+  "why": "One word for fitting"
+ },
+ "EDIT_SIZE": {
+  "text": "글자 크기",
+  "back": "Text size",
+  "why": "Table word 글자 크기"
+ },
+ "EDIT_REDO": {
+  "text": "다시 실행",
+  "back": "Redo",
+  "why": "Usual editor name"
+ },
+ "EDIT_BOLD": {
+  "text": "굵게",
+  "back": "Bold",
+  "why": "Usual editor name"
+ },
+ "EDIT_ITALIC": {
+  "text": "기울임",
+  "back": "Italic",
+  "why": "Usual editor name"
+ },
+ "EDIT_ALIGN_LEFT": {
+  "text": "왼쪽 맞춤",
+  "back": "Align left",
+  "why": "Usual editor name"
+ },
+ "EDIT_ALIGN_CENTRE": {
+  "text": "가운데 맞춤",
+  "back": "Align centre",
+  "why": "Usual editor name"
+ },
+ "EDIT_ALIGN_RIGHT": {
+  "text": "오른쪽 맞춤",
+  "back": "Align right",
+  "why": "Usual editor name"
+ },
+ "EDIT_SHRUNK": {
+  "text": "맞추려고 줄였어요",
+  "back": "Made smaller to fit",
+  "why": "State in the table's 요 register"
+ },
+ "EDIT_SMALLEST": {
+  "text": "가장 작은 크기",
+  "back": "Smallest size",
+  "why": "State"
+ },
+ "EDIT_NO_FIT_LONG": {
+  "text": "가장 작게 해도 글이 안 들어가요",
+  "back": "Even at the smallest the words do not go in",
+  "why": "Names what happened"
+ },
+ "EDIT_CONTINUE": {
+  "text": "넘치는 글을 새 슬라이드로",
+  "back": "The overflowing words to a new slide",
+  "why": "Table-style button"
+ },
+ "EDIT_NEXT_STARTS": {
+  "text": "다음 슬라이드는 여기부터",
+  "back": "The next slide is from here",
+  "why": "Tag on a line"
+ },
+ "EDIT_ADDS_SLIDE": {
+  "text": "바로 뒤에 새 슬라이드가 생겨요",
+  "back": "A new slide appears right behind",
+  "why": "Says what the button does"
+ },
+ "EDIT_NOT_SAVED": {
+  "text": "저장 안 됨",
+  "back": "Not saved",
+  "why": "State"
+ },
+ "EDIT_CANT_SAVE": {
+  "text": "넘치는 글부터 처리해야 저장돼요",
+  "back": "It saves once the overflowing words are dealt with",
+  "why": "Names the way out"
+ },
+ "EDIT_OPEN_CALENDAR": {
+  "text": "일정 창으로 가기",
+  "back": "Go to the Calendar window",
+  "why": "Tab name 일정"
+ },
+ "EDIT_OPEN_MEMBERS": {
+  "text": "교인 창으로 가기",
+  "back": "Go to the Members window",
+  "why": "Tab name 교인"
+ },
+ "EDIT_OPEN_OFFERINGS": {
+  "text": "헌금 창으로 가기",
+  "back": "Go to the Offerings window",
+  "why": "Tab name 헌금"
+ },
+ "EDIT_READ_CAL": {
+  "text": "일정에서 자동으로 채움",
+  "back": "Filled automatically from the calendar",
+  "why": "Label on a pill"
+ },
+ "EDIT_READ_MEMBERS": {
+  "text": "교인 목록에서 자동으로 채움",
+  "back": "Filled automatically from the members list",
+  "why": "Label on a pill"
+ },
+ "EDIT_READ_OFFERINGS": {
+  "text": "헌금 기록에서 자동으로 채움",
+  "back": "Filled automatically from the offering records",
+  "why": "Label on a pill"
+ },
+ "EDIT_PART_ROWS": {
+  "text": "일정 목록",
+  "back": "Schedule list",
+  "why": "Two-word heading"
+ },
+ "EDIT_PART_NAMES": {
+  "text": "생일자 명단",
+  "back": "Birthday list",
+  "why": "Plain heading"
+ },
+ "EDIT_PART_FUNDS": {
+  "text": "헌금 용도",
+  "back": "Offering funds",
+  "why": "Table word 용도"
+ },
+ "EDIT_PART_ACCOUNT": {
+  "text": "입금 계좌",
+  "back": "Deposit account",
+  "why": "Table word"
+ },
+ "EDIT_PART_VERSE": {
+  "text": "성경 구절",
+  "back": "Bible verses",
+  "why": "Plain heading"
+ },
+ "EDIT_CARD_SETTINGS": {
+  "text": "공지 설정",
+  "back": "Announcement settings",
+  "why": "Table word 공지"
+ },
+ "EDIT_WORDS": {
+  "text": "글",
+  "back": "Words",
+  "why": "One word for slide words"
+ },
+ "EDIT_MORE": {
+  "text": "더 보기",
+  "back": "More",
+  "why": "Usual name"
+ },
+ "EDIT_RAIL_OPEN": {
+  "text": "공지 목록 펼치기",
+  "back": "Expand the announcement list",
+  "why": "Arrow button"
+ },
+ "EDIT_RAIL_CLOSE": {
+  "text": "공지 목록 접기",
+  "back": "Fold the announcement list",
+  "why": "Arrow button"
+ },
+ "NOTICE_CONTINUED": {
+  "text": "넘친 글을 담을 새 슬라이드를 만들었어요",
+  "back": "A new slide was made to hold the overflowing words",
+  "why": "Past tense"
+ },
+ "NOTICE_CONTINUE_FAILED": {
+  "text": "새 슬라이드를 못 만들었고 공지는 그대로예요",
+  "back": "The new slide could not be made and the announcement is as it was",
+  "why": "States the fact"
  }
 }

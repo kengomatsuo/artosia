@@ -29,6 +29,7 @@ mod sheets;
 mod templates;
 pub use sheets::SETTINGS_FIRST;
 mod shell;
+mod slide_edit;
 pub(crate) mod slides;
 pub(crate) mod suggest;
 pub(crate) mod tabs;
@@ -301,7 +302,7 @@ pub(crate) fn toast(s: &App, k: &Kit) -> Option<El> {
 fn window(s: &App, cx: &mut Cx<App>, k: &Kit, layer: &mut Vec<El>) -> El {
     match s.tab {
         Tab::Plan => shell::view(s, cx, k, layer),
-        Tab::Notices => shell::beside_live(s, cx, k, layer, |s, k, width, _| announcements::view(s, k, width)),
+        Tab::Notices => shell::beside_live(s, cx, k, layer, announcements::view),
         Tab::Look => sheets::design(s, cx, k, layer),
         Tab::Calendar => calendar::view(s, cx, k, layer),
         Tab::People => people::view(s, cx, k, layer),

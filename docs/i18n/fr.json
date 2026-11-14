@@ -5952,5 +5952,205 @@
   "text": "Redémarrage impossible. Fermez le programme et rouvrez-le pour mettre à jour.",
   "back": "Could not restart; close the program and open it again to update",
   "why": "program's own words for update and projector, plain volunteer register"
+ },
+ "KEYS_EDITING_ROWS[6].1": {
+  "text": "Partie suivante de la diapo, puis les boutons",
+  "back": "Next part of the slide, then the buttons",
+  "why": "Reuses table words: annonce, diapo, texte, tab names"
+ },
+ "KEYS_EDITING_ROWS[7].1": {
+  "text": "Modifier le texte choisi sur la diapo",
+  "back": "Change the chosen text on the slide",
+  "why": "Reuses table words: annonce, diapo, texte, tab names"
+ },
+ "KEYS_EDITING_ROWS[8].1": {
+  "text": "Reculer d'un niveau, du curseur jusqu'à l'annonce",
+  "back": "Step back one level, from the cursor to the announcement",
+  "why": "Reuses table words: annonce, diapo, texte, tab names"
+ },
+ "KEYS_EDITING_ROWS[9].1": {
+  "text": "Rétablir la modification annulée",
+  "back": "Restore the cancelled change",
+  "why": "Reuses table words: annonce, diapo, texte, tab names"
+ },
+ "KEYS_EDITING_ROWS[10].1": {
+  "text": "Mettre le texte choisi en gras ou en italique",
+  "back": "Put the chosen text in bold or in italic",
+  "why": "Reuses table words: annonce, diapo, texte, tab names"
+ },
+ "EDIT_ROLE_BODY": {
+  "text": "Texte",
+  "back": "Text",
+  "why": "Reuses table words: annonce, diapo, texte, tab names"
+ },
+ "EDIT_FIT": {
+  "text": "Ajuster",
+  "back": "Adjust",
+  "why": "Reuses table words: annonce, diapo, texte, tab names"
+ },
+ "EDIT_SIZE": {
+  "text": "Taille",
+  "back": "Size",
+  "why": "Reuses table words: annonce, diapo, texte, tab names"
+ },
+ "EDIT_REDO": {
+  "text": "Rétablir",
+  "back": "Restore",
+  "why": "Reuses table words: annonce, diapo, texte, tab names"
+ },
+ "EDIT_BOLD": {
+  "text": "Gras",
+  "back": "Bold",
+  "why": "Reuses table words: annonce, diapo, texte, tab names"
+ },
+ "EDIT_ITALIC": {
+  "text": "Italique",
+  "back": "Italic",
+  "why": "Reuses table words: annonce, diapo, texte, tab names"
+ },
+ "EDIT_ALIGN_LEFT": {
+  "text": "Aligner à gauche",
+  "back": "Align to the left",
+  "why": "Reuses table words: annonce, diapo, texte, tab names"
+ },
+ "EDIT_ALIGN_CENTRE": {
+  "text": "Centrer",
+  "back": "Centre",
+  "why": "Reuses table words: annonce, diapo, texte, tab names"
+ },
+ "EDIT_ALIGN_RIGHT": {
+  "text": "Aligner à droite",
+  "back": "Align to the right",
+  "why": "Reuses table words: annonce, diapo, texte, tab names"
+ },
+ "EDIT_SHRUNK": {
+  "text": "Réduit pour tenir",
+  "back": "Reduced to fit",
+  "why": "Reuses table words: annonce, diapo, texte, tab names"
+ },
+ "EDIT_SMALLEST": {
+  "text": "Taille minimale",
+  "back": "Minimum size",
+  "why": "Reuses table words: annonce, diapo, texte, tab names"
+ },
+ "EDIT_NO_FIT_LONG": {
+  "text": "Texte trop long, même à la taille minimale",
+  "back": "Text too long, even at the minimum size",
+  "why": "Reuses table words: annonce, diapo, texte, tab names"
+ },
+ "EDIT_CONTINUE": {
+  "text": "Continuer sur la diapo suivante",
+  "back": "Continue on the next slide",
+  "why": "Reuses table words: annonce, diapo, texte, tab names"
+ },
+ "EDIT_NEXT_STARTS": {
+  "text": "Suite sur la diapo suivante",
+  "back": "Rest on the next slide",
+  "why": "Reuses table words: annonce, diapo, texte, tab names"
+ },
+ "EDIT_ADDS_SLIDE": {
+  "text": "Crée une diapo juste après celle-ci",
+  "back": "Creates a slide just after this one",
+  "why": "Reuses table words: annonce, diapo, texte, tab names"
+ },
+ "EDIT_NOT_SAVED": {
+  "text": "Non validé",
+  "back": "Not validated",
+  "why": "Reuses table words: annonce, diapo, texte, tab names"
+ },
+ "EDIT_CANT_SAVE": {
+  "text": "Traiter d'abord le texte qui ne tient pas",
+  "back": "Deal first with the text that does not fit",
+  "why": "Reuses table words: annonce, diapo, texte, tab names"
+ },
+ "EDIT_OPEN_CALENDAR": {
+  "text": "Aller au Calendrier",
+  "back": "Go to Calendar",
+  "why": "Reuses table words: annonce, diapo, texte, tab names"
+ },
+ "EDIT_OPEN_MEMBERS": {
+  "text": "Aller aux Membres",
+  "back": "Go to Members",
+  "why": "Reuses table words: annonce, diapo, texte, tab names"
+ },
+ "EDIT_OPEN_OFFERINGS": {
+  "text": "Aller aux Offrandes",
+  "back": "Go to Offerings",
+  "why": "Reuses table words: annonce, diapo, texte, tab names"
+ },
+ "EDIT_READ_CAL": {
+  "text": "Tiré du Calendrier",
+  "back": "Taken from Calendar",
+  "why": "Reuses table words: annonce, diapo, texte, tab names"
+ },
+ "EDIT_READ_MEMBERS": {
+  "text": "Tiré des Membres",
+  "back": "Taken from Members",
+  "why": "Reuses table words: annonce, diapo, texte, tab names"
+ },
+ "EDIT_READ_OFFERINGS": {
+  "text": "Tiré des Offrandes",
+  "back": "Taken from Offerings",
+  "why": "Reuses table words: annonce, diapo, texte, tab names"
+ },
+ "EDIT_PART_ROWS": {
+  "text": "Lignes du calendrier",
+  "back": "Calendar rows",
+  "why": "Reuses table words: annonce, diapo, texte, tab names"
+ },
+ "EDIT_PART_NAMES": {
+  "text": "Noms des anniversaires",
+  "back": "Names of the birthdays",
+  "why": "Reuses table words: annonce, diapo, texte, tab names"
+ },
+ "EDIT_PART_FUNDS": {
+  "text": "Lignes d'offrandes",
+  "back": "Offering rows",
+  "why": "Reuses table words: annonce, diapo, texte, tab names"
+ },
+ "EDIT_PART_ACCOUNT": {
+  "text": "Compte de virement",
+  "back": "Transfer account",
+  "why": "Reuses table words: annonce, diapo, texte, tab names"
+ },
+ "EDIT_PART_VERSE": {
+  "text": "Versets du passage",
+  "back": "Verses of the passage",
+  "why": "Reuses table words: annonce, diapo, texte, tab names"
+ },
+ "EDIT_CARD_SETTINGS": {
+  "text": "Réglages de l'annonce",
+  "back": "Announcement settings",
+  "why": "Reuses table words: annonce, diapo, texte, tab names"
+ },
+ "EDIT_WORDS": {
+  "text": "Texte",
+  "back": "Text",
+  "why": "Reuses table words: annonce, diapo, texte, tab names"
+ },
+ "EDIT_MORE": {
+  "text": "Plus",
+  "back": "More",
+  "why": "Reuses table words: annonce, diapo, texte, tab names"
+ },
+ "EDIT_RAIL_OPEN": {
+  "text": "Ouvrir la liste des annonces",
+  "back": "Open the list of announcements",
+  "why": "Reuses table words: annonce, diapo, texte, tab names"
+ },
+ "EDIT_RAIL_CLOSE": {
+  "text": "Fermer la liste des annonces",
+  "back": "Close the list of announcements",
+  "why": "Reuses table words: annonce, diapo, texte, tab names"
+ },
+ "NOTICE_CONTINUED": {
+  "text": "Diapo ajoutée pour le texte restant",
+  "back": "Slide added for the remaining text",
+  "why": "Reuses table words: annonce, diapo, texte, tab names"
+ },
+ "NOTICE_CONTINUE_FAILED": {
+  "text": "Diapo non créée, l'annonce n'a pas changé",
+  "back": "Slide not created, the announcement did not change",
+  "why": "Reuses table words: annonce, diapo, texte, tab names"
  }
 }

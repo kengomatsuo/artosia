@@ -152,13 +152,12 @@ impl App {
         if card.title.is_empty() && card.body.is_empty() && card.image.is_empty() && card.fill == Fill::Nothing {
             return Err(Refused::Invalid);
         }
-        self.store.save_announcement(&mut card).map_err(|_| Refused::Invalid)?;
+        self.apply_card(card.clone())?;
         // An editor open on the card, with nothing unsaved, shows what was written.
         if let Some(form) = self.notices.as_mut().filter(|form| form.id == id) {
             form.title = rune::TextEdit::new(card.title.clone());
             form.body = rune::TextEdit::new(card.body.clone());
         }
-        self.reload_announcements();
         Ok(())
     }
 

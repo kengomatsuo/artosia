@@ -7,6 +7,9 @@
 //! returns [`Split`], and [`paginate`] then cuts the card into slides that can.
 
 pub mod fit;
+mod layout;
+
+pub use layout::{Field, Fit, Layout, Line, TextBox, cut, layout, layout_typing};
 
 mod d1;
 mod d2;
@@ -17,7 +20,7 @@ mod data;
 use std::collections::HashMap;
 use std::sync::{Mutex, OnceLock};
 
-use artosia_core::deck::{NoticeKind, NoticeStyle, Slide};
+use artosia_core::deck::{Align, Face, NoticeKind, NoticeStyle, Slide};
 use rune::{Color, El, Family, Pixels, SurfaceFit, TextStyle, el, text};
 use serde_json::Value;
 
@@ -219,6 +222,11 @@ struct Tt {
     fill: String,
     op: f32,
     rot: f32,
+    role: String,
+    /// The advance of the text as set, and where it was anchored in its column.
+    w: f32,
+    at: At,
+    maxw: Option<f32>,
 }
 
 #[derive(Clone, Debug)]
@@ -228,7 +236,7 @@ enum Item {
     Text(Tt),
 }
 
-#[derive(Clone, Copy, PartialEq)]
+#[derive(Clone, Copy, Debug, PartialEq)]
 pub enum At {
     Left,
     Right,
@@ -319,11 +327,111 @@ struct Ty {
 pub struct Sheet {
     d: &'static Value,
     items: Vec<Item>,
+    /// A body's size and a title's ceiling the search of [`sheet`] is trying.
+    body_px: Option<f32>,
+    title_cap: Option<f32>,
+    /// Draw at the floors whatever does not fit, so a card nothing can hold is still seen.
+    force: bool,
+    /// The type roles a card's bold or italic applies to: role, bold, italic.
+    styled: Vec<(String, bool, bool)>,
 }
+
+thread_local! {
+    /// A key is being typed: a slide that does not hold is drawn as it is and not cut into slides first.
+    static TYPING: std::cell::Cell<bool> = const { std::cell::Cell::new(false) };
+}
+
+/// Runs `build` with slides drawn for a key being typed when `typing`, as `layout_typing` works them out.
+pub fn while_typing<R>(typing: bool, build: impl FnOnce() -> R) -> R {
+    let before = TYPING.with(|flag| flag.replace(typing));
+    let built = build();
+    TYPING.with(|flag| flag.set(before));
+    built
+}
+
+thread_local! {
+    /// Advances already measured, by face, size and words: a balanced wrap, a size search and every
+    /// layout of the same words ask for the same ones again and again.
+    static ADVANCES: std::cell::RefCell<Advances> = std::cell::RefCell::new(HashMap::new());
+}
+
+/// Advances kept by face (family, weight, slant), size and words.
+type Advances = HashMap<(&'static str, u32, bool, u32, String), f32>;
+
+/// The size a body is never set below, and the least a person at the back can read.
+pub const BODY_FLOOR: f32 = 40.0;
 
 impl Sheet {
     fn new(style: NoticeStyle) -> Sheet {
-        Sheet { d: dir_of(style), items: Vec::new() }
+        Sheet { d: dir_of(style), items: Vec::new(), body_px: None, title_cap: None, force: false, styled: Vec::new() }
+    }
+
+    /// `found`, or the floor when a drawing is forced; the layout cannot hold it otherwise.
+    pub fn must<T>(&self, found: Option<T>, floor: T) -> Result<T, Split> {
+        found.or(self.force.then_some(floor)).ok_or(Split)
+    }
+
+    /// Ok while `holds`, or while a drawing is forced.
+    pub fn need(&self, holds: bool) -> Fits {
+        if holds || self.force { Ok(()) } else { Err(Split) }
+    }
+
+    /// The font of `key` in the weight and slant a card asked for: the same family's nearest cut that
+    /// is heavier or slanted, else the key itself.
+    fn restyle(&self, key: &str, bold: bool, italic: bool) -> String {
+        let fonts = &self.d["fonts"];
+        let Some(own) = fonts.get(key) else { return key.to_string() };
+        let (family, weight, slanted) = (own["family"].as_str().unwrap_or(""), number(&own["weight"]), own["italic"].as_bool().unwrap_or(false));
+        let mut best: Option<(&str, f32)> = None;
+        for (other, spec) in fonts.as_object().into_iter().flatten() {
+            let (w, s) = (number(&spec["weight"]), spec["italic"].as_bool().unwrap_or(false));
+            if spec["family"].as_str() != Some(family) || (italic && !slanted && !s) || (!italic && s != slanted) || (bold && w <= weight) {
+                continue;
+            }
+            let near = (w - weight).abs();
+            if best.is_none_or(|(_, kept)| near < kept) {
+                best = Some((other, near));
+            }
+        }
+        match best {
+            Some((other, _)) => other.to_string(),
+            // A family with no slanted cut is slanted by the renderer; the mark says so.
+            None if italic && !slanted => format!("{key}~i"),
+            None => key.to_string(),
+        }
+    }
+
+    /// `key` as the card's bold and italic set it for texts of `role`.
+    fn styled_key(&self, role: &str, key: &str) -> String {
+        match self.styled.iter().find(|(own, ..)| own == role) {
+            Some((_, bold, italic)) => self.restyle(key, *bold, *italic),
+            None => key.to_string(),
+        }
+    }
+
+    /// Moves the lines of the texts in `roles` across the column each was set in; Start is the style's own.
+    fn align(&mut self, align: Align, roles: &[&str]) {
+        if align == Align::Start {
+            return;
+        }
+        for item in &mut self.items {
+            let Item::Text(t) = item else { continue };
+            let Some(max) = t.maxw.filter(|_| t.rot == 0.0 && roles.contains(&t.role.as_str())) else { continue };
+            let (from, to) = match t.at {
+                At::Left => (t.x, t.x + max),
+                At::Right => (t.x + t.w - max, t.x + t.w),
+                At::Centre => (t.x + t.w / 2.0 - max / 2.0, t.x + t.w / 2.0 + max / 2.0),
+            };
+            t.x = if align == Align::Centre { from + (to - from - t.w) / 2.0 } else { to - t.w };
+        }
+    }
+
+    /// Makes the fonts of a type role's family follow a card's bold and italic.
+    fn style_roles(&mut self, roles: &[&str], face: Face) {
+        if !face.bold && !face.italic {
+            return;
+        }
+        self.styled.extend(roles.iter().map(|role| (role.to_string(), face.bold, face.italic)));
     }
 
     /// A grid number.
@@ -338,8 +446,14 @@ impl Sheet {
 
     /// A reader of one section's numbers that does not borrow the sheet.
     pub fn sec(&self, section: &'static str) -> impl Fn(&str) -> f32 + use<> {
-        let d = self.d;
-        move |key: &str| number(&d[section][key])
+        let (d, cap) = (self.d, self.title_cap);
+        move |key: &str| {
+            let value = number(&d[section][key]);
+            match cap {
+                Some(cap) if key == "title_max" => value.min(cap),
+                _ => value,
+            }
+        }
     }
 
     pub fn list(&self, section: &str, key: &str) -> Vec<Vec<f32>> {
@@ -353,7 +467,8 @@ impl Sheet {
 
     fn ty(&self, role: &str) -> Ty {
         let spec = &self.d["type"][role];
-        Ty { font: spec["font"].as_str().unwrap_or("sans").to_string(), size: number(&spec["size"]), ls: number(&spec["ls"]), caps: spec["caps"].as_bool().unwrap_or(false), color: spec["color"].as_str().unwrap_or("ink").to_string() }
+        let size = if matches!(role, "n_body" | "n_body_b") { self.body_px.unwrap_or(number(&spec["size"])) } else { number(&spec["size"]) };
+        Ty { font: self.styled_key(role, spec["font"].as_str().unwrap_or("sans")), size, ls: number(&spec["ls"]), caps: spec["caps"].as_bool().unwrap_or(false), color: spec["color"].as_str().unwrap_or("ink").to_string() }
     }
 
     pub fn ty_size(&self, role: &str) -> f32 {
@@ -361,8 +476,10 @@ impl Sheet {
     }
 
     fn font_of(&self, key: &str) -> (&'static str, f32, bool, String) {
+        let (key, slant) = key.strip_suffix("~i").map_or((key, false), |own| (own, true));
         let spec = &self.d["fonts"][key];
-        (interned(spec["family"].as_str().unwrap_or("")), number(&spec["weight"]), spec["italic"].as_bool().unwrap_or(false), spec["file"].as_str().unwrap_or("").to_string())
+        let slanted = spec["italic"].as_bool().unwrap_or(false) || slant;
+        (interned(spec["family"].as_str().unwrap_or("")), number(&spec["weight"]), slanted, spec["file"].as_str().unwrap_or("").to_string())
     }
 
     fn rune_style(family: &'static str, weight: f32, italic: bool, size: f32) -> TextStyle {
@@ -373,7 +490,21 @@ impl Sheet {
     /// The advance of `s` in a face at `size`, with `ls` added between glyphs.
     pub fn adv(&self, font: &str, s: &str, size: f32, ls: f32) -> f32 {
         let (family, weight, italic, _) = self.font_of(font);
-        rune::text::advance(s, Sheet::rune_style(family, weight, italic, size)) + ls * (s.chars().count().max(1) - 1) as f32
+        let key = (family, weight as u32, italic, size.to_bits(), s.to_string());
+        let kept = ADVANCES.with(|all| all.borrow().get(&key).copied());
+        let width = kept.unwrap_or_else(|| {
+            let width = rune::text::advance(s, Sheet::rune_style(family, weight, italic, size));
+            ADVANCES.with(|all| {
+                let mut all = all.borrow_mut();
+                // A person typing makes new words at every key; the oldest are let go when there are too many.
+                if all.len() > 60_000 {
+                    all.clear();
+                }
+                all.insert(key, width);
+            });
+            width
+        });
+        width + ls * (s.chars().count().max(1) - 1) as f32
     }
 
     /// The width of `s` in a type role, optionally at another size or face.
@@ -411,7 +542,7 @@ impl Sheet {
         let ty = self.ty(role);
         let mut size = o.size.unwrap_or(ty.size);
         let s = if ty.caps { s.to_uppercase() } else { s.to_string() };
-        let font_key = o.font.clone().unwrap_or(ty.font.clone());
+        let font_key = o.font.as_deref().map_or_else(|| ty.font.clone(), |own| self.styled_key(role, own));
         let (family, weight, italic, file) = self.font_of(&font_key);
         let mut w = self.adv(&font_key, &s, size, ty.ls * size);
         if let Some(max) = o.maxw.filter(|max| w > *max + 0.5) {
@@ -426,7 +557,7 @@ impl Sheet {
         let cap = metrics(&file).cap * size;
         let base = if o.cy { o.y + cap / 2.0 } else { o.y };
         let fill = self.c(o.fill.as_deref().unwrap_or(&ty.color));
-        self.items.push(Item::Text(Tt { x: (left * 100.0).round() / 100.0, y: (base * 100.0).round() / 100.0, s, family, weight, italic, file, size, ls: ty.ls * size, fill, op: o.op, rot: o.rot, }));
+        self.items.push(Item::Text(Tt { x: (left * 100.0).round() / 100.0, y: (base * 100.0).round() / 100.0, s, family, weight, italic, file, size, ls: ty.ls * size, fill, op: o.op, rot: o.rot, role: role.to_string(), w, at: o.at, maxw: o.maxw }));
         Tm { x: left, w }
     }
 
@@ -518,14 +649,30 @@ impl Sheet {
 
 /// The largest whole size from `hi` down to `lo` at which `ok` holds, None when none does.
 pub fn largest(hi: f32, lo: f32, ok: impl Fn(f32) -> bool) -> Option<f32> {
-    let (mut z, lo) = (hi.floor(), lo.floor());
-    while z >= lo {
-        if ok(z) {
-            return Some(z);
-        }
-        z -= 1.0;
+    largest_step(hi.floor(), lo.floor(), 1.0, ok)
+}
+
+/// The largest size from `hi` down to `lo` in steps of `step` at which `ok` holds: a size that holds keeps
+/// holding as it gets smaller, so it is found by halving, a few measures where a walk down took dozens.
+pub fn largest_step(hi: f32, lo: f32, step: f32, ok: impl Fn(f32) -> bool) -> Option<f32> {
+    if hi < lo {
+        return None;
     }
-    None
+    let steps = ((hi - lo) / step).floor() as u32;
+    let at = |n: u32| hi - n as f32 * step;
+    if ok(at(0)) {
+        return Some(at(0));
+    }
+    if !ok(at(steps)) {
+        return None;
+    }
+    // at(first) does not hold and at(last) does.
+    let (mut first, mut last) = (0, steps);
+    while last - first > 1 {
+        let mid = (first + last) / 2;
+        if ok(at(mid)) { last = mid } else { first = mid }
+    }
+    Some(at(last))
 }
 
 /// The largest size at which every name fits `width` in `role`, shortened by the ladder where it must be.
@@ -646,22 +793,65 @@ pub fn verse(sl: &mut Sheet, verses: &[(u32, String)], b: &VerseBox) -> Result<f
 /// shows a card that long as several slides through [`paginate`].
 pub fn draw(slide: &Slide, style: NoticeStyle, w: f32, h: f32, pics: &Pics) -> El {
     let have = data::Have { photo: pics.photo.is_some(), photo2: pics.photo2.is_some(), qris: pics.qris.is_some() };
-    let sheet = sheet(slide, style, have).unwrap_or_else(|_| {
+    let typing = TYPING.with(std::cell::Cell::get);
+    let sheet = sheet(slide, style, have).or_else(|split| if typing { forced(slide, style, have) } else { Err(split) }).unwrap_or_else(|_| {
         let mut half = slide.clone();
-        while let Some((first, _)) = split(&half) {
+        while let Some((first, _)) = split(&half, style) {
             half = first;
             if let Ok(sheet) = sheet(&half, style, have) {
                 return sheet;
             }
         }
-        Sheet::new(style)
+        // What nothing can hold is drawn at its floors, so the editor still shows it.
+        forced(slide, style, have).unwrap_or_else(|_| Sheet::new(style))
     });
     sheet.build(w, h, pics)
 }
 
+/// The slide at the floors of its styles, whatever does not fit.
+fn forced(slide: &Slide, style: NoticeStyle, have: data::Have) -> Result<Sheet, Split> {
+    let floor = if slide.notice == NoticeKind::Plain { Some(plain_body_range(slide, style).1) } else { None };
+    build(slide, style, have, floor, true)
+}
+
+/// The largest and smallest size a plain card's body is set in: the card's own ceiling or the
+/// style's, down to the floor.
+fn plain_body_range(slide: &Slide, style: NoticeStyle) -> (f32, f32) {
+    let spec = number(&dir_of(style)["type"]["n_body"]["size"]);
+    let hi = if slide.body_face.size > 0 { f32::from(slide.body_face.size) } else { spec }.floor();
+    (hi, BODY_FLOOR.min(hi))
+}
+
+/// A plain card's body is set as large as its ceiling lets the whole slide hold, down to the floor.
 fn sheet(slide: &Slide, style: NoticeStyle, have: data::Have) -> Result<Sheet, Split> {
+    if slide.notice != NoticeKind::Plain {
+        return build(slide, style, have, None, false);
+    }
+    let (hi, lo) = plain_body_range(slide, style);
+    if let Ok(found) = build(slide, style, have, Some(hi), false) {
+        return Ok(found);
+    }
+    let mut best = build(slide, style, have, Some(lo), false)?;
+    let (mut ok, mut bad) = (lo, hi);
+    while bad - ok > 1.0 {
+        let mid = ((ok + bad) / 2.0).floor();
+        match build(slide, style, have, Some(mid), false) {
+            Ok(found) => (best, ok) = (found, mid),
+            Err(_) => bad = mid,
+        }
+    }
+    Ok(best)
+}
+
+fn build(slide: &Slide, style: NoticeStyle, have: data::Have, body: Option<f32>, force: bool) -> Result<Sheet, Split> {
     let data = Data::of(slide);
     let mut sheet = Sheet::new(style);
+    (sheet.body_px, sheet.force) = (body, force);
+    if slide.notice == NoticeKind::Plain {
+        sheet.title_cap = (slide.title_face.size > 0).then(|| f32::from(slide.title_face.size));
+        sheet.style_roles(&["title", "title_w", "n_title"], slide.title_face);
+        sheet.style_roles(&["n_body", "n_body_b"], slide.body_face);
+    }
     match style {
         NoticeStyle::Greige => d1::draw(&mut sheet, &data, have)?,
         NoticeStyle::Pill => d2::draw(&mut sheet, &data, have)?,
@@ -669,6 +859,10 @@ fn sheet(slide: &Slide, style: NoticeStyle, have: data::Have) -> Result<Sheet, S
         _ => d4::draw(&mut sheet, &data, have)?,
     }
     foot(&mut sheet, slide, style);
+    if slide.notice == NoticeKind::Plain {
+        sheet.align(slide.title_face.align, &["title", "title_w", "n_title"]);
+        sheet.align(slide.body_face.align, &["n_body", "n_body_b"]);
+    }
     Ok(sheet)
 }
 
@@ -687,11 +881,14 @@ fn foot(sheet: &mut Sheet, slide: &Slide, style: NoticeStyle) {
 
 /// Whether a layout holds this slide, and the least it has to give up when it does not.
 pub fn holds(slide: &Slide, style: NoticeStyle) -> bool {
-    sheet(slide, style, data::Have { photo: false, photo2: false, qris: false }).is_ok()
+    sheet(slide, style, layout::have_of(slide, &Pics::default())).is_ok()
 }
 
 /// The slide in two halves of its rows, each with its place in `part`; None for a kind with no rows to cut.
-fn split(slide: &Slide) -> Option<(Slide, Slide)> {
+fn split(slide: &Slide, style: NoticeStyle) -> Option<(Slide, Slide)> {
+    if slide.notice == NoticeKind::Plain {
+        return cut(slide, style);
+    }
     let lines: Vec<&str> = slide.text.lines().filter(|line| !line.trim().is_empty()).collect();
     let rows: Vec<&str> = lines.iter().copied().filter(|line| !line.starts_with("== ")).collect();
     let total: Option<&str> = lines.iter().copied().find(|line| line.starts_with("== "));
@@ -733,7 +930,7 @@ pub fn paginate(slide: &Slide, style: NoticeStyle) -> Vec<Slide> {
             out.push(slide.clone());
             return;
         }
-        match split(slide) {
+        match split(slide, style) {
             Some((first, second)) => {
                 go(&first, style, depth + 1, out);
                 go(&second, style, depth + 1, out);
@@ -781,8 +978,8 @@ mod tests {
     fn a_card_with_more_rows_than_a_slide_holds_becomes_slides_with_their_places() {
         let rows: Vec<String> = (0..60).map(|at| format!("Contoh Nama Lengkap {at}\t{} November", at % 28 + 1)).collect();
         let slide = Slide { notice: NoticeKind::Birthdays, text: rows.join("\n"), ..Slide::default() };
-        let (first, second) = split(&slide).expect("rows can be cut");
+        let (first, second) = split(&slide, NoticeStyle::Greige).expect("rows can be cut");
         assert_eq!(first.text.lines().count() + second.text.lines().count(), 60);
-        assert!(split(&Slide { notice: NoticeKind::Plain, text: "a\nb".into(), ..Slide::default() }).is_none());
+        assert!(split(&Slide { notice: NoticeKind::Plain, text: "a\nb".into(), ..Slide::default() }, NoticeStyle::Greige).is_none());
     }
 }

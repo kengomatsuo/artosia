@@ -5930,5 +5930,205 @@
   "text": "No se pudo reiniciar. Cierra el programa y ábrelo otra vez para actualizar.",
   "back": "Could not restart; close the program and open it again to update",
   "why": "program's own words for update and projector, plain volunteer register"
+ },
+ "KEYS_EDITING_ROWS[6].1": {
+  "text": "Pasa a la siguiente parte editable y a los botones",
+  "back": "Moves to the next editable part and to the buttons",
+  "why": "Slide is clear from the open card; 51 of 56."
+ },
+ "KEYS_EDITING_ROWS[7].1": {
+  "text": "Pone el cursor en el texto elegido de la diapo",
+  "back": "Puts the cursor in the picked text of the slide",
+  "why": "Texto is the slide words; diapo as in the slides count; 46 of 48."
+ },
+ "KEYS_EDITING_ROWS[8].1": {
+  "text": "Retrocede un nivel: cursor, parte elegida y anuncio",
+  "back": "Steps back one level: cursor, picked part and announcement",
+  "why": "Names the three levels in order; 51 of 56."
+ },
+ "KEYS_EDITING_ROWS[9].1": {
+  "text": "Rehace el último cambio que deshiciste",
+  "back": "Redoes the last change that you undid",
+  "why": "Rehacer pairs with Deshacer; 38 of 48."
+ },
+ "KEYS_EDITING_ROWS[10].1": {
+  "text": "Negrita con B y cursiva con I en el texto elegido",
+  "back": "Bold with B and italic with I on the picked text",
+  "why": "Editor words; 49 of 56."
+ },
+ "EDIT_ROLE_BODY": {
+  "text": "Detalles",
+  "back": "Details",
+  "why": "Same word as the announcement's details field; 8 of 14."
+ },
+ "EDIT_FIT": {
+  "text": "Ajustar",
+  "back": "Fit",
+  "why": "Usual word for fitting to size; 7 of 10."
+ },
+ "EDIT_SIZE": {
+  "text": "Tamaño",
+  "back": "Size",
+  "why": "One plain word; 6 of 12."
+ },
+ "EDIT_REDO": {
+  "text": "Rehacer",
+  "back": "Redo",
+  "why": "Pairs with Deshacer; 7 of 12."
+ },
+ "EDIT_BOLD": {
+  "text": "Negrita",
+  "back": "Bold",
+  "why": "Name in Spanish editors; 7 of 12."
+ },
+ "EDIT_ITALIC": {
+  "text": "Cursiva",
+  "back": "Italic",
+  "why": "Name in Spanish editors; 7 of 12."
+ },
+ "EDIT_ALIGN_LEFT": {
+  "text": "Alinear a la izquierda",
+  "back": "Align left",
+  "why": "Usual editor name; 22 of 24."
+ },
+ "EDIT_ALIGN_CENTRE": {
+  "text": "Alinear al centro",
+  "back": "Align to the centre",
+  "why": "Same shape as its two siblings; 17 of 24."
+ },
+ "EDIT_ALIGN_RIGHT": {
+  "text": "Alinear a la derecha",
+  "back": "Align right",
+  "why": "Usual editor name; 20 of 24."
+ },
+ "EDIT_SHRUNK": {
+  "text": "Reducido para caber",
+  "back": "Reduced to fit",
+  "why": "A state, not a command; 19 of 20."
+ },
+ "EDIT_SMALLEST": {
+  "text": "Tamaño mínimo",
+  "back": "Minimum size",
+  "why": "Two words, a state; 13 of 20."
+ },
+ "EDIT_NO_FIT_LONG": {
+  "text": "El texto no cabe ni en el tamaño mínimo",
+  "back": "The text does not fit even at the minimum size",
+  "why": "Caber is the plain verb; 39 of 44."
+ },
+ "EDIT_CONTINUE": {
+  "text": "Seguir en otra diapositiva",
+  "back": "Continue on another slide",
+  "why": "Plain words, no jargon; 26 of 40."
+ },
+ "EDIT_NEXT_STARTS": {
+  "text": "Aquí empieza la siguiente diapo",
+  "back": "Here the next slide starts",
+  "why": "Diapo because diapositiva does not fit 34; 31 of 34."
+ },
+ "EDIT_ADDS_SLIDE": {
+  "text": "Crea una diapositiva justo después",
+  "back": "Creates a slide right after",
+  "why": "Says what the button does; 34 of 38."
+ },
+ "EDIT_NOT_SAVED": {
+  "text": "Sin guardar",
+  "back": "Not saved",
+  "why": "Uses Guardar; 11 of 14."
+ },
+ "EDIT_CANT_SAVE": {
+  "text": "Elige qué hacer con el texto que no cabe",
+  "back": "Choose what to do with the text that does not fit",
+  "why": "Names the way out; 40 of 44."
+ },
+ "EDIT_OPEN_CALENDAR": {
+  "text": "Abrir Calendario",
+  "back": "Open Calendar",
+  "why": "Tab name as is; 16 of 24."
+ },
+ "EDIT_OPEN_MEMBERS": {
+  "text": "Abrir Miembros",
+  "back": "Open Members",
+  "why": "Tab name as is; 14 of 24."
+ },
+ "EDIT_OPEN_OFFERINGS": {
+  "text": "Abrir Ofrendas",
+  "back": "Open Offerings",
+  "why": "Tab name as is; 14 of 26."
+ },
+ "EDIT_READ_CAL": {
+  "text": "Viene del Calendario",
+  "back": "Comes from the Calendar",
+  "why": "Says the rows are not typed here; 20 of 30."
+ },
+ "EDIT_READ_MEMBERS": {
+  "text": "Viene de Miembros",
+  "back": "Comes from Members",
+  "why": "Same shape as the calendar pill; 17 of 30."
+ },
+ "EDIT_READ_OFFERINGS": {
+  "text": "Viene de Ofrendas",
+  "back": "Comes from Offerings",
+  "why": "Same shape as the calendar pill; 17 of 30."
+ },
+ "EDIT_PART_ROWS": {
+  "text": "Eventos de la semana",
+  "back": "Events of the week",
+  "why": "Evento is the calendar entry; 20 of 24."
+ },
+ "EDIT_PART_NAMES": {
+  "text": "Nombres de cumpleaños",
+  "back": "Names of birthdays",
+  "why": "Cumpleaños as in the table; 21 of 24."
+ },
+ "EDIT_PART_FUNDS": {
+  "text": "Destinos y montos",
+  "back": "Funds and amounts",
+  "why": "Destino is the table's word for fund; 17 of 24."
+ },
+ "EDIT_PART_ACCOUNT": {
+  "text": "Cuenta bancaria",
+  "back": "Bank account",
+  "why": "Same as the account heading in Ofrendas; 15 of 20."
+ },
+ "EDIT_PART_VERSE": {
+  "text": "Versículos",
+  "back": "Verses",
+  "why": "Versículo is the Bible verse; one word fits 20 best; 10 of 20."
+ },
+ "EDIT_CARD_SETTINGS": {
+  "text": "Ajustes del anuncio",
+  "back": "Settings of the announcement",
+  "why": "Ajustes is the settings word; 19 of 24."
+ },
+ "EDIT_WORDS": {
+  "text": "Texto",
+  "back": "Text",
+  "why": "Texto is the slide words; 5 of 14."
+ },
+ "EDIT_MORE": {
+  "text": "Más ajustes",
+  "back": "More settings",
+  "why": "Says what the dots open; 11 of 12."
+ },
+ "EDIT_RAIL_OPEN": {
+  "text": "Abrir la lista de anuncios",
+  "back": "Open the list of announcements",
+  "why": "Plain verb and noun; 26 of 40."
+ },
+ "EDIT_RAIL_CLOSE": {
+  "text": "Cerrar la lista de anuncios",
+  "back": "Close the list of announcements",
+  "why": "Pairs with the open name; 27 of 40."
+ },
+ "NOTICE_CONTINUED": {
+  "text": "Se creó una diapositiva con el resto",
+  "back": "A slide was created with the rest",
+  "why": "Past tense, no full stop; 36 of 40."
+ },
+ "NOTICE_CONTINUE_FAILED": {
+  "text": "No se pudo crear la diapositiva, nada cambió",
+  "back": "The slide could not be created, nothing changed",
+  "why": "States what is true, no apology; 43 of 44."
  }
 }

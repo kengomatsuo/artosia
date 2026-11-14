@@ -606,9 +606,10 @@ pub fn view(s: &App, cx: &mut Cx<App>, k: &Kit, layer: &mut Vec<El>) -> El {
 
 /// A window of its own tab with the Live pane narrow beside it, so what the room sees stays in
 /// view while the announcements are written. `draw` gets the width it may fill.
-pub fn beside_live(s: &App, cx: &mut Cx<App>, k: &Kit, layer: &mut Vec<El>, draw: impl FnOnce(&App, &Kit, f32, &mut Vec<El>) -> El) -> El {
-    let width = cx.layout_size("centre").map(|size| size[0]).unwrap_or(1366.0);
-    let body = draw(s, k, width - NARROW - 1.0, layer);
+pub fn beside_live(s: &App, cx: &mut Cx<App>, k: &Kit, layer: &mut Vec<El>, draw: impl FnOnce(&App, &Kit, [f32; 2], &mut Vec<El>) -> El) -> El {
+    // The first frame of a window is drawn before it has a size: a laptop's 1366 by 768.
+    let [width, height] = cx.layout_size("centre").unwrap_or([1366.0, 638.0]);
+    let body = draw(s, k, [width - NARROW - 1.0, height], layer);
     row()
         .key("centre")
         .w_full()

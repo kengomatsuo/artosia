@@ -7,7 +7,7 @@ use serde::Serialize;
 use serde::de::DeserializeOwned;
 
 use crate::calendar::{Calendar, Change, Date, Event, Override, Repeat};
-use crate::deck::{Announcement, Fill, NoticeStyle, Person};
+use crate::deck::{Announcement, Face, Fill, NoticeStyle, Person};
 use crate::window::{Range, Window};
 use crate::giving::{Account, Fund, Gift, Method};
 use crate::plan::Plan;
@@ -227,6 +227,7 @@ impl Store {
             ("announcements", "month", "integer not null default 0"),
             ("announcements", "window", "text not null default ''"),
             ("announcements", "highlight", "text not null default ''"),
+            ("announcements", "faces", "text not null default ''"),
         ];
         for (table, column, definition) in added {
             let present = db.prepare(&format!("select 1 from pragma_table_info('{table}') where name = ?1"))?.exists([column])?;
@@ -426,10 +427,12 @@ impl Store {
     }
 
     pub fn announcements(&self) -> Result<Vec<Announcement>> {
-        let mut statement = self.db.prepare("select id, title, body, seconds, image, fill, passage, style, title_colour, calendars, month, window, highlight, qris, image2 from announcements order by position, id")?;
+        let mut statement = self.db.prepare("select id, title, body, seconds, image, fill, passage, style, title_colour, calendars, month, window, highlight, qris, image2, faces from announcements order by position, id")?;
         let rows = statement.query_map([], |row| {
             let (fill, style, colour, calendars): (String, String, String, String) = (row.get(5)?, row.get(7)?, row.get(8)?, row.get(9)?);
             let (month, window, highlight): (i64, String, String) = (row.get(10)?, row.get(11)?, row.get(12)?);
+            let faces: String = row.get(15)?;
+            let (title_face, body_face) = faces.split_once(',').map_or_else(Default::default, |(title, body)| (Face::from_code(title), Face::from_code(body)));
             Ok(Announcement {
                 id: row.get(0)?,
                 title: row.get(1)?,
@@ -440,6 +443,8 @@ impl Store {
                 passage: row.get(6)?,
                 qris: row.get(13)?,
                 image2: row.get(14)?,
+                title_face,
+                body_face,
                 style: NoticeStyle::from_code(&style),
                 title_colour: colour_of_code(&colour),
                 calendars: calendars.split(',').filter_map(|id| id.parse().ok()).collect(),
@@ -455,19 +460,20 @@ impl Store {
         let colour = announcement.title_colour.map_or(String::new(), |[r, g, b]| format!("{r:02x}{g:02x}{b:02x}"));
         let calendars = announcement.calendars.iter().map(i64::to_string).collect::<Vec<_>>().join(",");
         let (window, highlight) = announcement.window.codes();
+        let faces = format!("{},{}", announcement.title_face.code(), announcement.body_face.code());
         // `month` is still written, so an older Artosia reads a card of the month as it did.
         let month = announcement.window.range == Range::Month(0);
         if announcement.id == 0 {
             self.db.execute(
-                "insert into announcements (position, title, body, seconds, image, fill, passage, style, title_colour, calendars, month, window, highlight, qris, image2)
-                 values ((select coalesce(max(position), 0) + 1 from announcements), ?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13, ?14)",
-                params![announcement.title, announcement.body, announcement.seconds, announcement.image, announcement.fill.code(), announcement.passage, style, colour, calendars, month, window, highlight, announcement.qris, announcement.image2],
+                "insert into announcements (position, title, body, seconds, image, fill, passage, style, title_colour, calendars, month, window, highlight, qris, image2, faces)
+                 values ((select coalesce(max(position), 0) + 1 from announcements), ?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13, ?14, ?15)",
+                params![announcement.title, announcement.body, announcement.seconds, announcement.image, announcement.fill.code(), announcement.passage, style, colour, calendars, month, window, highlight, announcement.qris, announcement.image2, faces],
             )?;
             announcement.id = self.db.last_insert_rowid();
         } else {
             self.db.execute(
-                "update announcements set title = ?1, body = ?2, seconds = ?3, image = ?4, fill = ?5, passage = ?6, style = ?7, title_colour = ?8, calendars = ?9, month = ?10, window = ?11, highlight = ?12, qris = ?13, image2 = ?14 where id = ?15",
-                params![announcement.title, announcement.body, announcement.seconds, announcement.image, announcement.fill.code(), announcement.passage, style, colour, calendars, month, window, highlight, announcement.qris, announcement.image2, announcement.id],
+                "update announcements set title = ?1, body = ?2, seconds = ?3, image = ?4, fill = ?5, passage = ?6, style = ?7, title_colour = ?8, calendars = ?9, month = ?10, window = ?11, highlight = ?12, qris = ?13, image2 = ?14, faces = ?15 where id = ?16",
+                params![announcement.title, announcement.body, announcement.seconds, announcement.image, announcement.fill.code(), announcement.passage, style, colour, calendars, month, window, highlight, announcement.qris, announcement.image2, faces, announcement.id],
             )?;
         }
         Ok(())
@@ -763,6 +769,7 @@ mod tests {
     }
 
     use super::*;
+    use crate::deck::Align;
     use crate::plan::PlanEntry;
     use crate::song::Translation;
 
@@ -1084,6 +1091,20 @@ Other words
         assert!(store.save_announcement(&mut old).is_ok());
         let kept = store.announcements().unwrap_or_default();
         assert_eq!((kept[1].style, kept[1].title_colour, kept[1].calendars.len(), kept[1].window), (None, None, 0, Window::default()));
+    }
+
+    #[test]
+    fn a_card_keeps_how_its_title_and_body_are_set() {
+        let store = Store::in_memory().unwrap_or_else(|_| unreachable!());
+        let title_face = Face { size: 96, bold: true, italic: false, align: Align::Centre };
+        let body_face = Face { size: 0, bold: false, italic: true, align: Align::End };
+        let mut item = Announcement { title: "Set".into(), title_face, body_face, ..Announcement::default() };
+        assert!(store.save_announcement(&mut item).is_ok());
+        let kept = store.announcements().unwrap_or_default();
+        assert_eq!((kept[0].title_face, kept[0].body_face), (title_face, body_face));
+        // A row written before the column existed reads as the style's own setting.
+        store.db.execute("update announcements set faces = ''", []).unwrap();
+        assert_eq!(store.announcements().unwrap_or_default()[0].title_face, Face::default());
     }
 
     #[test]

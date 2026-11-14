@@ -9,7 +9,7 @@ use rune::{Align, Color, El, Family, TextStyle, col, el, row, text};
 
 use crate::fonts;
 use crate::look::{Look, NoticeStyle, rgb};
-use crate::warta::Pics;
+use crate::warta::{Field, Layout, Pics, TextBox};
 
 /// The word a kind's label, tab and band line show.
 pub fn kind_name(kind: NoticeKind) -> &'static str {
@@ -23,15 +23,37 @@ pub fn kind_name(kind: NoticeKind) -> &'static str {
 }
 
 /// GUESS: a look has no accent colour, so each style carries the accent of the card it follows.
-fn accent(style: NoticeStyle) -> Color {
-    rgb(match style {
+fn accent_rgb(style: NoticeStyle) -> [u8; 3] {
+    match style {
         NoticeStyle::Hairline => [124, 196, 106],
         NoticeStyle::Ledger => [104, 72, 184],
         NoticeStyle::Band => [22, 184, 170],
         // The poster styles carry their own palette and never read this.
         _ => [255, 255, 255],
-    })
+    }
 }
+
+fn accent(style: NoticeStyle) -> Color {
+    rgb(accent_rgb(style))
+}
+
+/// What the words of a kind are called in the editor: a plain notice's lines are its body.
+fn body_field(kind: NoticeKind) -> Field {
+    match kind {
+        NoticeKind::Schedule => Field::Rows,
+        NoticeKind::Birthdays => Field::Names,
+        NoticeKind::Money => Field::Funds,
+        NoticeKind::Account => Field::Account,
+        NoticeKind::Verse => Field::Verse,
+        NoticeKind::Plain => Field::Body,
+    }
+}
+
+/// What the words of these styles stand on: the dark scrim over the picture, a ledger's paper, a band's charcoal.
+const DARK: [u8; 3] = [14, 14, 18];
+const PAPER: [u8; 3] = [250, 250, 246];
+const CHARCOAL: [u8; 3] = [32, 32, 34];
+const WHITE: [u8; 3] = [255, 255, 255];
 
 /// The colour a style draws its title in until its card picks one.
 pub fn title_default(style: NoticeStyle) -> [u8; 3] {
@@ -54,6 +76,16 @@ struct Ctx {
     accent: Color,
     /// The title colour the card chose; None leaves the style's own.
     title: Option<Color>,
+    /// Where each part of the words was put, for an editor to draw its boxes over.
+    boxes: std::cell::RefCell<Vec<TextBox>>,
+}
+
+impl Ctx {
+    /// Notes the box of one part of the words: its rectangle, its type and what it stands on.
+    #[allow(clippy::too_many_arguments)]
+    fn record(&self, field: Field, rect: (f32, f32, f32, f32), style: TextStyle, lines: usize, ground: [u8; 3], ink: [u8; 3]) {
+        self.boxes.borrow_mut().push(TextBox { field, x: rect.0, y: rect.1, w: rect.2, h: rect.3, size: style.size, lines, ground: Some(ground), ink, family: style.family, weight: style.weight, italic: false, tracking: 0.0, align: artosia_core::deck::Align::Start, pad: 0.0 });
+    }
 }
 
 /// The cells of a kind, split into blocks of rows side by side.
@@ -271,6 +303,25 @@ pub fn notice(slide: &Slide, look: &Look, w: f32, h: f32, pics: &Pics) -> El {
     if style.is_poster() {
         return crate::warta::draw(slide, style, w, h, pics);
     }
+    drawn(slide, look, w, h, style).0
+}
+
+/// The boxes of any announcement slide in the 1920x1080 space, whichever of the seven styles draws it
+/// and whether the look's own slide does: where each part of its words is, for an editor to pick and
+/// type in. `typing` is a key being typed (see `warta::layout_typing`).
+pub fn layout(slide: &Slide, look: &Look, pics: &Pics, typing: bool) -> Layout {
+    let style = style_of_slide(slide, look);
+    if style.is_poster() {
+        return if typing { crate::warta::layout_typing(slide, style, pics) } else { crate::warta::layout(slide, style, pics) };
+    }
+    if !draws_notice(slide, look) {
+        return Layout { boxes: crate::audience::plain_boxes(slide, look, 1920.0, 1080.0, pics.photo.is_some() && !slide.image.is_empty()), ..Layout::default() };
+    }
+    Layout { boxes: drawn(slide, look, 1920.0, 1080.0, style).1, ..Layout::default() }
+}
+
+/// A slide in Hairline, Ledger or Band, and the boxes it put its words in.
+fn drawn(slide: &Slide, look: &Look, w: f32, h: f32, style: NoticeStyle) -> (El, Vec<TextBox>) {
     let mut body = notice_body(&slide.text);
     if slide.notice == NoticeKind::Plain || slide.notice == NoticeKind::Account {
         // These kinds have no columns: a tab in them would only clip a word.
@@ -278,13 +329,14 @@ pub fn notice(slide: &Slide, look: &Look, w: f32, h: f32, pics: &Pics) -> El {
     }
     let sans = fonts::family(&look.font);
     let serif = if look.font.trim().is_empty() { fonts::family("Cambria") } else { sans };
-    let c = Ctx { w, h, u: h / 1080.0, sans, serif, accent: accent(style), title: slide.title_colour.map(rgb) };
+    let c = Ctx { w, h, u: h / 1080.0, sans, serif, accent: accent(style), title: slide.title_colour.map(rgb), boxes: Default::default() };
     let layer = el().key("notice").absolute(0.0, 0.0).size(w, h);
-    match style {
+    let drawn = match style {
         NoticeStyle::Hairline => hairline(layer, slide, &body, &c),
         NoticeStyle::Ledger => ledger(layer, slide, &body, &c),
         _ => band(layer, slide, &body, &c),
-    }
+    };
+    (drawn, c.boxes.take())
 }
 
 fn hairline(layer: El, slide: &Slide, body: &NoticeBody, c: &Ctx) -> El {
@@ -298,10 +350,14 @@ fn hairline(layer: El, slide: &Slide, body: &NoticeBody, c: &Ctx) -> El {
         .child(el().key("rule").absolute(mx, (0.082 * h).round()).size(inner, (1.5 * u).max(1.0)).fill(Color::WHITE.alpha(0.3)).a11y_hidden())
         .child(text(slide.heading.as_str()).font(title_style(c.sans, &slide.heading, 0.09 * h, 800.0, inner)).color(c.title.unwrap_or(c.accent)).absolute(mx, (0.098 * h).round()));
     let (top, bottom) = ((0.33 * h).round(), (0.95 * h).round());
+    let heading = title_style(c.sans, &slide.heading, 0.09 * h, 800.0, inner);
+    c.record(Field::Title, (mx, (0.098 * h).round(), width_of(&slide.heading, heading).min(inner), heading.line_height), heading, 1, DARK, slide.title_colour.unwrap_or(title_default(NoticeStyle::Hairline)));
     if slide.notice == NoticeKind::Account {
         let (bank, number, holder, note) = account_parts(body);
         let big = title_style(c.sans, &number, 0.17 * h, 800.0, inner);
         let at = (0.06 * h).round();
+        let tall = (at * 1.25).round() + big.line_height + (0.05 * h * 1.25).round() + if note.is_empty() { 0.0 } else { (0.04 * h * 1.25).round() } + (0.03 * h).round() * if note.is_empty() { 2.0 } else { 3.0 };
+        c.record(Field::Account, (mx, top, inner, tall), style_of(c.sans, at, 700.0), 3, DARK, WHITE);
         let lines = col()
             .key("account")
             .absolute(mx, top)
@@ -337,6 +393,7 @@ fn hairline(layer: El, slide: &Slide, body: &NoticeBody, c: &Ctx) -> El {
         .collect();
     let spread = (blocks > 1.0).then_some(inner);
     let table_w = if blocks > 1.0 { inner } else { grid.natural(0.0).max(total_wide(size)).ceil() };
+    c.record(body_field(slide.notice), (mx, top, table_w, table.rows_tall() as f32 * row_k * size + total_tall(size)), styles_for(NoticeStyle::Hairline, &table, c, size)[table.key], body.rows.len(), DARK, WHITE);
     let mut lines = col().key("rows").absolute(mx, top).w(table_w).gap((0.02 * h).round());
     lines = lines.child(grid.build(&Paint { colors, row_h: row_k * size, row_line: None, col_line: None, marked: (c.accent, rgb([18, 24, 18])), spread, block_gap }));
     if let Some(total) = &body.total {
@@ -362,6 +419,12 @@ fn ledger(layer: El, slide: &Slide, body: &NoticeBody, c: &Ctx) -> El {
     let (w, h, u) = (c.w, c.h, c.u);
     let tab_w = (w * 0.07).round();
     let (cx0, cw) = ((w * 0.11).round(), (w * 0.85).round());
+    let heading = title_style(c.sans, &slide.heading, 0.07 * h, 700.0, cw);
+    c.record(Field::Title, (cx0, (0.05 * h).round(), cw, heading.line_height), heading, 1, DARK, slide.title_colour.unwrap_or(title_default(NoticeStyle::Ledger)));
+    // A ledger's title is centred over its panel.
+    if let Some(title) = c.boxes.borrow_mut().last_mut() {
+        title.align = artosia_core::deck::Align::Centre;
+    }
     let ink = rgb([28, 28, 34]);
     let line = rgb([70, 72, 84]);
     let tint = rgb([224, 230, 246]);
@@ -406,6 +469,7 @@ fn ledger(layer: El, slide: &Slide, body: &NoticeBody, c: &Ctx) -> El {
         let (bank_h, number_h, holder_h) = ((0.12 * h).round(), (0.30 * h).round(), (0.12 * h).round());
         let tall = bank_h + number_h + holder_h;
         let y = top + ((0.955 * h - top - tall) / 2.0).max(0.0).round();
+        c.record(Field::Account, ((cx0 + (cw - panel_w) / 2.0).round(), y, panel_w, tall), big, 3, PAPER, [28, 28, 34]);
         let panel = col()
             .key("panel")
             .absolute((cx0 + (cw - panel_w) / 2.0).round(), y)
@@ -438,6 +502,7 @@ fn ledger(layer: El, slide: &Slide, body: &NoticeBody, c: &Ctx) -> El {
     let colors = vec![ink; table.right.len()];
     let tall = (table.rows_tall() + 1) as f32 * row_h;
     let y = top + ((limit - top - tall) / 2.0).max(0.0).round();
+    c.record(body_field(slide.notice), ((cx0 + (cw - panel_w) / 2.0).round(), y, panel_w, tall), styles_for(NoticeStyle::Ledger, &table, c, size)[table.key], body.rows.len(), PAPER, [28, 28, 34]);
     let panel = col()
         .key("panel")
         .absolute((cx0 + (cw - panel_w) / 2.0).round(), y)
@@ -475,6 +540,8 @@ fn band(layer: El, slide: &Slide, body: &NoticeBody, c: &Ctx) -> El {
     let ink = Color::WHITE;
     let title = title_style(c.sans, &slide.heading, 0.10 * h, 800.0, inner);
     let second = (0.045 * h).round();
+    let band_text = title.line_height + (0.012 * h).round() + (second * 1.25).round();
+    c.record(Field::Title, (mx, ((band_h - band_text) / 2.0).max(0.0), width_of(&slide.heading, title).min(inner), title.line_height), title, 1, accent_rgb(NoticeStyle::Band), slide.title_colour.unwrap_or(WHITE));
     let mut layer = layer
         .child(el().key("ground").absolute(0.0, 0.0).size(w, h).fill(rgb([32, 32, 34])).a11y_hidden())
         // A square turned a quarter, half under the band, is the notch that points down from it.
@@ -497,6 +564,8 @@ fn band(layer: El, slide: &Slide, body: &NoticeBody, c: &Ctx) -> El {
         let (bank, number, holder, note) = account_parts(body);
         let big = title_style(c.sans, &number, 0.15 * h, 800.0, inner - 0.08 * h).features("'tnum' 1");
         let pill_h = (big.size * 1.45).round();
+        let tall = (0.07 * h * 1.25).round() + pill_h + (0.05 * h * 1.25).round() + if note.is_empty() { 0.0 } else { (0.04 * h * 1.25).round() } + (0.03 * h).round() * if note.is_empty() { 2.0 } else { 3.0 };
+        c.record(Field::Account, (mx, top, inner, tall), big, 3, CHARCOAL, WHITE);
         let lines = col()
             .key("account")
             .absolute(mx, top)
@@ -532,6 +601,7 @@ fn band(layer: El, slide: &Slide, body: &NoticeBody, c: &Ctx) -> El {
     let grid = Grid::new(&table, styles_for(NoticeStyle::Band, &table, c, size), size * f32::max(gap_k - 3.0 * pad_k, 0.0), size * pad_k);
     let spread = (blocks > 1.0).then_some(inner);
     let table_w = if blocks > 1.0 { inner } else { grid.natural(0.0).max(pill_wide(size)).ceil() };
+    c.record(body_field(slide.notice), (mx, top, table_w, table.rows_tall() as f32 * row_k * size + pill_h(size)), styles_for(NoticeStyle::Band, &table, c, size)[table.key], body.rows.len(), CHARCOAL, WHITE);
     let colors = vec![ink; table.right.len()];
     let mut lines = col().key("rows").absolute(mx, top).w(table_w);
     lines = lines.child(grid.build(&Paint { colors, row_h: (row_k * size).round(), row_line: Some(rule), col_line: None, marked: (c.accent, rgb([16, 22, 24])), spread, block_gap }));
@@ -558,6 +628,7 @@ fn band(layer: El, slide: &Slide, body: &NoticeBody, c: &Ctx) -> El {
 }
 
 #[cfg(test)]
+#[allow(clippy::expect_used)]
 mod tests {
     use super::*;
 
@@ -584,6 +655,53 @@ mod tests {
         assert_eq!([table.is_marked(0, 0), table.is_marked(1, 0), table.is_marked(2, 9), table.is_marked(2, 8)], [true, true, true, false]);
         assert!(!Table::of(NoticeKind::Birthdays, &rows(30), &[]).has_marks());
         assert!(!Table::of(NoticeKind::Schedule, &rows(3), &[1]).has_marks());
+    }
+
+    #[test]
+    fn every_style_gives_a_title_box_over_a_box_for_its_words_whichever_slide_draws_it() {
+        let slide = |kind: NoticeKind, text: &str, style: Option<NoticeStyle>| Slide { notice: kind, style, heading: "Retret keluarga jemaat".into(), text: text.into(), ..Slide::default() };
+        let cases = [
+            (NoticeKind::Plain, "Sabtu 12 Desember
+Pendaftaran di meja informasi", Field::Body),
+            (NoticeKind::Schedule, "Minggu	07.00	Ibadah Raya I
+	09.30	Ibadah Raya II", Field::Rows),
+            (NoticeKind::Birthdays, "Ibu Susi	3 November
+Bpk. Andi	5 November", Field::Names),
+            (NoticeKind::Money, "Persepuluhan	Rp 1.500.000
+Kas	Rp 500.000
+== Jumlah	Rp 2.000.000", Field::Funds),
+            (NoticeKind::Account, "Bank Contoh
+1234 5678
+Gereja Contoh
+Berita: nama dan nomor", Field::Account),
+        ];
+        for style in [None, Some(NoticeStyle::Hairline), Some(NoticeStyle::Ledger), Some(NoticeStyle::Band)] {
+            for (kind, text, field) in &cases {
+                let found = layout(&slide(*kind, text, style), &Look::default(), &Pics::default(), false);
+                let (title, words) = (found.of(Field::Title).expect("a title box"), found.of(*field).expect("a box for the words"));
+                assert!(title.y < words.y, "{style:?} {kind:?}: the title is above the words");
+                for each in [title, words] {
+                    assert!(each.w > 50.0 && each.h > 20.0 && each.x >= 0.0 && each.x + each.w <= 1921.0 && each.y >= 0.0 && each.y + each.h <= 1081.0, "{style:?} {kind:?} {:?}: {each:?}", each.field);
+                }
+                assert!(found.title.is_none() && found.body.is_none(), "only the poster styles are fitted by the editor");
+            }
+        }
+    }
+
+    #[test]
+    fn a_box_says_how_the_slide_aligns_its_lines_so_the_words_typed_in_it_stay_where_they_are() {
+        use artosia_core::deck::Align;
+        let plain = |style: Option<NoticeStyle>| Slide { notice: NoticeKind::Plain, style, heading: "Selamat datang".into(), text: "Kami senang".into(), ..Slide::default() };
+        let aligns = |slide: &Slide, look: &Look| layout(slide, look, &Pics::default(), false).boxes.iter().map(|each| (each.field, each.align)).collect::<Vec<_>>();
+        let (centred, left) = (Look { centered: true, ..Look::default() }, Look { centered: false, ..Look::default() });
+        assert_eq!(aligns(&plain(None), &centred), [(Field::Title, Align::Centre), (Field::Body, Align::Centre)]);
+        assert_eq!(aligns(&plain(None), &left), [(Field::Title, Align::Start), (Field::Body, Align::Start)]);
+        assert_eq!(aligns(&plain(Some(NoticeStyle::Ledger)), &left)[0], (Field::Title, Align::Centre));
+        assert_eq!(aligns(&plain(Some(NoticeStyle::Band)), &centred)[0], (Field::Title, Align::Start));
+        // An editorial card with no picture is centred on its plate; with one it stands left.
+        assert_eq!(aligns(&plain(Some(NoticeStyle::Greige)), &left)[0], (Field::Title, Align::Centre));
+        let picture = Slide { image: "photo.png".into(), ..plain(Some(NoticeStyle::Greige)) };
+        assert_eq!(aligns(&picture, &left)[0], (Field::Title, Align::Start));
     }
 
     #[test]

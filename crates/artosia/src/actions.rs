@@ -198,6 +198,7 @@ impl App {
                     self.reload_announcements();
                 }
             }
+            Some(Undo::Continued { before, added }) => self.undo_continue(*before, added),
             Some(Undo::Plan(plan)) => self.restore_plan(*plan),
             Some(Undo::PlanLook { plan, look }) => self.restore_plan_look(plan, look),
             Some(Undo::PlanLanguages { plan, list }) => self.restore_plan_languages(plan, list),
@@ -670,6 +671,9 @@ impl App {
                 calendars: item.calendars.clone(),
                 window: item.window,
                 pick: None,
+                title_face: item.title_face,
+                body_face: item.body_face,
+                slide: Default::default(),
             },
             None => Notices { seconds: 10, ..Notices::default() },
         };
@@ -719,7 +723,7 @@ impl App {
             Fill::Birthdays => form.window,
             _ => Window::default(),
         };
-        has_words.then_some(Announcement { id: form.id, title, body, seconds: form.seconds.clamp(2, 600), image: form.image.clone(), qris: if form.fill == Fill::Transfer { form.qris.clone() } else { String::new() }, image2: form.image2.clone(), fill: form.fill, passage, style: form.style, title_colour: form.title_colour, calendars, window })
+        has_words.then_some(Announcement { id: form.id, title, body, seconds: form.seconds.clamp(2, 600), image: form.image.clone(), qris: if form.fill == Fill::Transfer { form.qris.clone() } else { String::new() }, image2: form.image2.clone(), fill: form.fill, passage, style: form.style, title_colour: form.title_colour, calendars, window, title_face: form.title_face, body_face: form.body_face })
     }
 
     pub(crate) fn reload_announcements(&mut self) {
@@ -727,19 +731,44 @@ impl App {
         self.refresh_decks();
     }
 
-    /// Saves the announcement in the form when it has words and differs from what is stored.
+    /// Saves the announcement in the form when it has words, differs from what is stored and holds
+    /// on its slide: a text that does not fit waits for its second slide (D3).
     pub fn save_notice(&mut self) {
-        let Some(mut draft) = self.notice_draft() else { return };
+        if self.notice_overflow() != crate::edit_slide::Overflow::None {
+            return;
+        }
+        self.write_notice();
+    }
+
+    /// The form's announcement through the one write every route to a card's words ends in.
+    pub(crate) fn write_notice(&mut self) {
+        let Some(draft) = self.notice_draft() else { return };
         if self.announcements.contains(&draft) {
             return;
         }
-        if self.store.save_announcement(&mut draft).is_ok() {
+        // The words a new card started from are not a card yet.
+        if self.notices.as_ref().is_some_and(|form| form.id == 0 && form.slide.seeded.as_ref().is_some_and(|(title, body)| *title == draft.title && *body == draft.body)) {
+            return;
+        }
+        if let Ok(id) = self.apply_card(draft) {
             if let Some(form) = self.notices.as_mut() {
-                form.id = draft.id;
+                form.id = id;
             }
-            self.reload_announcements();
             self.say(t::NOTICE_SAVED(), None);
         }
+    }
+
+    /// The one write of a card: what the console's editor, its sheets and a phone's Done all end in.
+    /// The revision a phone's conflict check reads is worked out from what this stores, so it moves
+    /// with every write that changes the words.
+    pub fn apply_card(&mut self, mut card: Announcement) -> Result<i64, crate::phone_edit::Refused> {
+        let empty = card.title.trim().is_empty() && card.body.trim().is_empty() && card.image.is_empty() && card.fill == Fill::Nothing;
+        if empty {
+            return Err(crate::phone_edit::Refused::Invalid);
+        }
+        self.store.save_announcement(&mut card).map_err(|_| crate::phone_edit::Refused::Invalid)?;
+        self.reload_announcements();
+        Ok(card.id)
     }
 
     /// The card before or after the one in the form, from anywhere in the editor.
@@ -759,7 +788,7 @@ impl App {
 
     /// Puts another announcement in the form; the one being written is saved first.
     pub fn pick_notice(&mut self, id: i64) {
-        self.save_notice();
+        self.settle_notice();
         let found = self.announcements.iter().find(|item| item.id == id);
         self.notices = Some(App::notices_for(found));
         self.preview_card(id);
@@ -792,14 +821,20 @@ impl App {
 
     /// Starts a new announcement, blank or from a ready-made one.
     pub fn new_notice(&mut self, title: &str, body: &str) {
-        self.save_notice();
+        self.settle_notice();
         let mut form = App::notices_for(None);
+        // A card with no words has no slide to type on, so it starts from the plain template's words,
+        // picked, and is not kept while they are still those.
+        let (title, body) = if title.is_empty() && body.is_empty() { t::ANNOUNCEMENT_TEMPLATES()[0] } else { (title, body) };
+        form.slide.seeded = Some((title.to_string(), body.to_string()));
         form.title = TextEdit::new(title);
         form.body = TextEdit::new(body);
-        form.title.focused = true;
-        let end = form.title.text.len();
-        form.title.set_selection(0, end);
         self.notices = Some(form);
+        self.notice_begin_edit(crate::edit_slide::Field::Title);
+        if let Some(form) = self.notices.as_mut() {
+            let end = form.title.text.len();
+            form.title.set_selection(0, end);
+        }
     }
 
     pub fn set_notice_seconds(&mut self, seconds: u32) {
@@ -1007,7 +1042,7 @@ impl App {
     }
 
     pub fn duplicate_notice(&mut self, id: i64) {
-        self.save_notice();
+        self.settle_notice();
         let Some(mut copy) = self.announcements.iter().find(|item| item.id == id).cloned() else { return };
         copy.id = 0;
         if self.store.save_announcement(&mut copy).is_ok() {
@@ -1022,7 +1057,7 @@ impl App {
     }
 
     pub fn move_notice(&mut self, id: i64, by: isize) {
-        self.save_notice();
+        self.settle_notice();
         let mut ids: Vec<i64> = self.announcements.iter().map(|item| item.id).collect();
         let Some(at) = ids.iter().position(|own| *own == id) else { return };
         let to = at as isize + by;
@@ -1049,9 +1084,10 @@ impl App {
         }
     }
 
-    /// Leaves the announcement editor; what was being written is saved.
+    /// Leaves the announcement editor; what was being written is saved. A body that does not fit
+    /// continues on a second slide first, and a toast offers Undo (D4).
     pub fn close_announcements(&mut self) {
-        self.save_notice();
+        self.settle_notice();
         // The Templates tab applies a style to the card that was open last.
         if let Some(form) = self.notices.as_ref() {
             self.templates.card = form.id;

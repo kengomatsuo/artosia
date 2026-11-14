@@ -5854,5 +5854,205 @@
   "text": "Gagal memulai ulang. Tutup program lalu buka lagi untuk memperbarui.",
   "back": "Could not restart; close the program and open it again to update",
   "why": "program's own words for update and projector, plain volunteer register"
+ },
+ "KEYS_EDITING_ROWS[6].1": {
+  "text": "Pindah ke bagian slide berikutnya, lalu ke tombol",
+  "back": "Move to the next part of the slide, then to the buttons",
+  "why": "Reuses table words: pengumuman, slide, teks, tab names"
+ },
+ "KEYS_EDITING_ROWS[7].1": {
+  "text": "Ubah teks yang dipilih langsung di slide",
+  "back": "Change the picked text right on the slide",
+  "why": "Reuses table words: pengumuman, slide, teks, tab names"
+ },
+ "KEYS_EDITING_ROWS[8].1": {
+  "text": "Mundur satu tingkat: kursor, bagian, pengumuman",
+  "back": "Step back one level: cursor, part, announcement",
+  "why": "Reuses table words: pengumuman, slide, teks, tab names"
+ },
+ "KEYS_EDITING_ROWS[9].1": {
+  "text": "Ulangi perubahan yang baru dibatalkan",
+  "back": "Repeat the change that was just cancelled",
+  "why": "Reuses table words: pengumuman, slide, teks, tab names"
+ },
+ "KEYS_EDITING_ROWS[10].1": {
+  "text": "B tebalkan, I miringkan teks yang dipilih",
+  "back": "B makes bold, I slants the picked text",
+  "why": "Reuses table words: pengumuman, slide, teks, tab names"
+ },
+ "EDIT_ROLE_BODY": {
+  "text": "Isi",
+  "back": "Content",
+  "why": "Reuses table words: pengumuman, slide, teks, tab names"
+ },
+ "EDIT_FIT": {
+  "text": "Pas",
+  "back": "Fits",
+  "why": "Reuses table words: pengumuman, slide, teks, tab names"
+ },
+ "EDIT_SIZE": {
+  "text": "Ukuran",
+  "back": "Size",
+  "why": "Reuses table words: pengumuman, slide, teks, tab names"
+ },
+ "EDIT_REDO": {
+  "text": "Ulangi",
+  "back": "Repeat",
+  "why": "Reuses table words: pengumuman, slide, teks, tab names"
+ },
+ "EDIT_BOLD": {
+  "text": "Tebal",
+  "back": "Bold",
+  "why": "Reuses table words: pengumuman, slide, teks, tab names"
+ },
+ "EDIT_ITALIC": {
+  "text": "Miring",
+  "back": "Slanted",
+  "why": "Reuses table words: pengumuman, slide, teks, tab names"
+ },
+ "EDIT_ALIGN_LEFT": {
+  "text": "Rata kiri",
+  "back": "Flush left",
+  "why": "Reuses table words: pengumuman, slide, teks, tab names"
+ },
+ "EDIT_ALIGN_CENTRE": {
+  "text": "Rata tengah",
+  "back": "Flush centre",
+  "why": "Reuses table words: pengumuman, slide, teks, tab names"
+ },
+ "EDIT_ALIGN_RIGHT": {
+  "text": "Rata kanan",
+  "back": "Flush right",
+  "why": "Reuses table words: pengumuman, slide, teks, tab names"
+ },
+ "EDIT_SHRUNK": {
+  "text": "Diperkecil agar muat",
+  "back": "Made smaller to fit",
+  "why": "Reuses table words: pengumuman, slide, teks, tab names"
+ },
+ "EDIT_SMALLEST": {
+  "text": "Sudah terkecil",
+  "back": "Already smallest",
+  "why": "Reuses table words: pengumuman, slide, teks, tab names"
+ },
+ "EDIT_NO_FIT_LONG": {
+  "text": "Teks tidak muat, bahkan di ukuran terkecil",
+  "back": "Text does not fit, even at the smallest size",
+  "why": "Reuses table words: pengumuman, slide, teks, tab names"
+ },
+ "EDIT_CONTINUE": {
+  "text": "Lanjutkan di slide berikutnya",
+  "back": "Continue on the next slide",
+  "why": "Reuses table words: pengumuman, slide, teks, tab names"
+ },
+ "EDIT_NEXT_STARTS": {
+  "text": "Slide berikutnya mulai dari sini",
+  "back": "The next slide starts from here",
+  "why": "Reuses table words: pengumuman, slide, teks, tab names"
+ },
+ "EDIT_ADDS_SLIDE": {
+  "text": "Membuat slide baru setelah slide ini",
+  "back": "Makes a new slide after this slide",
+  "why": "Reuses table words: pengumuman, slide, teks, tab names"
+ },
+ "EDIT_NOT_SAVED": {
+  "text": "Belum disimpan",
+  "back": "Not yet saved",
+  "why": "Reuses table words: pengumuman, slide, teks, tab names"
+ },
+ "EDIT_CANT_SAVE": {
+  "text": "Selesaikan dulu teks yang tidak muat",
+  "back": "First sort out the text that does not fit",
+  "why": "Reuses table words: pengumuman, slide, teks, tab names"
+ },
+ "EDIT_OPEN_CALENDAR": {
+  "text": "Ke Kalender",
+  "back": "To Calendar",
+  "why": "Reuses table words: pengumuman, slide, teks, tab names"
+ },
+ "EDIT_OPEN_MEMBERS": {
+  "text": "Ke Jemaat",
+  "back": "To Congregation",
+  "why": "Reuses table words: pengumuman, slide, teks, tab names"
+ },
+ "EDIT_OPEN_OFFERINGS": {
+  "text": "Ke Persembahan",
+  "back": "To Offerings",
+  "why": "Reuses table words: pengumuman, slide, teks, tab names"
+ },
+ "EDIT_READ_CAL": {
+  "text": "Diambil dari Kalender",
+  "back": "Taken from Calendar",
+  "why": "Reuses table words: pengumuman, slide, teks, tab names"
+ },
+ "EDIT_READ_MEMBERS": {
+  "text": "Diambil dari daftar Jemaat",
+  "back": "Taken from the Congregation list",
+  "why": "Reuses table words: pengumuman, slide, teks, tab names"
+ },
+ "EDIT_READ_OFFERINGS": {
+  "text": "Diambil dari Persembahan",
+  "back": "Taken from Offerings",
+  "why": "Reuses table words: pengumuman, slide, teks, tab names"
+ },
+ "EDIT_PART_ROWS": {
+  "text": "Baris kegiatan",
+  "back": "Activity rows",
+  "why": "Reuses table words: pengumuman, slide, teks, tab names"
+ },
+ "EDIT_PART_NAMES": {
+  "text": "Nama yang berulang tahun",
+  "back": "Names having a birthday",
+  "why": "Reuses table words: pengumuman, slide, teks, tab names"
+ },
+ "EDIT_PART_FUNDS": {
+  "text": "Baris persembahan",
+  "back": "Offering rows",
+  "why": "Reuses table words: pengumuman, slide, teks, tab names"
+ },
+ "EDIT_PART_ACCOUNT": {
+  "text": "Rekening gereja",
+  "back": "Church account",
+  "why": "Reuses table words: pengumuman, slide, teks, tab names"
+ },
+ "EDIT_PART_VERSE": {
+  "text": "Ayat Alkitab",
+  "back": "Bible verses",
+  "why": "Reuses table words: pengumuman, slide, teks, tab names"
+ },
+ "EDIT_CARD_SETTINGS": {
+  "text": "Pengaturan pengumuman",
+  "back": "Announcement settings",
+  "why": "Reuses table words: pengumuman, slide, teks, tab names"
+ },
+ "EDIT_WORDS": {
+  "text": "Teks",
+  "back": "Text",
+  "why": "Reuses table words: pengumuman, slide, teks, tab names"
+ },
+ "EDIT_MORE": {
+  "text": "Lainnya",
+  "back": "More",
+  "why": "Reuses table words: pengumuman, slide, teks, tab names"
+ },
+ "EDIT_RAIL_OPEN": {
+  "text": "Buka daftar pengumuman",
+  "back": "Open the list of announcements",
+  "why": "Reuses table words: pengumuman, slide, teks, tab names"
+ },
+ "EDIT_RAIL_CLOSE": {
+  "text": "Tutup daftar pengumuman",
+  "back": "Close the list of announcements",
+  "why": "Reuses table words: pengumuman, slide, teks, tab names"
+ },
+ "NOTICE_CONTINUED": {
+  "text": "Slide baru dibuat untuk sisa teks",
+  "back": "A new slide was made for the rest of the text",
+  "why": "Reuses table words: pengumuman, slide, teks, tab names"
+ },
+ "NOTICE_CONTINUE_FAILED": {
+  "text": "Slide gagal dibuat, pengumuman tidak berubah",
+  "back": "Slide could not be made, announcement unchanged",
+  "why": "Reuses table words: pengumuman, slide, teks, tab names"
  }
 }

@@ -10495,6 +10495,11 @@
   ],
   "notes": "Fragment, no full stop."
  },
+ {"key": "KEYS_EDITING_ROWS[6].1", "kind": "row", "screen": "Keyboard shortcuts sheet: a wide window with two columns of groups. Each row has the keys drawn as little key caps at the left (never translated) and a description at the right, about 300 points wide. This text is the description. Fourth group (editing). The keys at the left are: Tab.", "moment": "The person opens the sheet to learn what pressing these keys does, and reads this line while looking at the key caps beside it. The announcement is open on its slide.", "role": "key description", "does": "Moves the pick on to the following piece of the slide that can be changed, and to the buttons after the last.", "budget": 56, "variables": [], "cases": [], "counts": "", "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.", "concepts": ["announcement", "slide"], "notes": "Fragment, no full stop."},
+ {"key": "KEYS_EDITING_ROWS[7].1", "kind": "row", "screen": "Keyboard shortcuts sheet: a wide window with two columns of groups. Each row has the keys drawn as little key caps at the left (never translated) and a description at the right, about 300 points wide. This text is the description. Fourth group (editing). The keys at the left are: Enter.", "moment": "The person opens the sheet to learn what pressing these keys does, and reads this line while looking at the key caps beside it. A part of the announcement's slide is picked.", "role": "key description", "does": "Puts the typing cursor into the picked words so they can be changed where they are on the slide.", "budget": 48, "variables": [], "cases": [], "counts": "", "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.", "concepts": ["announcement", "slide_words"], "notes": "Fragment, no full stop."},
+ {"key": "KEYS_EDITING_ROWS[8].1", "kind": "row", "screen": "Keyboard shortcuts sheet: a wide window with two columns of groups. Each row has the keys drawn as little key caps at the left (never translated) and a description at the right, about 300 points wide. This text is the description. Fourth group (editing). The keys at the left are: Esc.", "moment": "The person opens the sheet to learn what pressing these keys does, and reads this line while looking at the key caps beside it. An announcement is open on its slide.", "role": "key description", "does": "Steps back one level each press: the typing cursor first, then the picked part and its sheet, then the announcement itself.", "budget": 56, "variables": [], "cases": [], "counts": "", "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.", "concepts": ["announcement", "slide"], "notes": "Fragment, no full stop."},
+ {"key": "KEYS_EDITING_ROWS[9].1", "kind": "row", "screen": "Keyboard shortcuts sheet: a wide window with two columns of groups. Each row has the keys drawn as little key caps at the left (never translated) and a description at the right, about 300 points wide. This text is the description. Fourth group (editing). The keys at the left are: Ctrl, Shift and Z.", "moment": "The person opens the sheet to learn what pressing these keys does, and reads this line while looking at the key caps beside it. An edit on the slide was just taken back with Ctrl and Z.", "role": "key description", "does": "Puts back the change that the last undo took away.", "budget": 48, "variables": [], "cases": [], "counts": "", "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.", "concepts": ["announcement", "undo"], "notes": "Fragment, no full stop."},
+ {"key": "KEYS_EDITING_ROWS[10].1", "kind": "row", "screen": "Keyboard shortcuts sheet: a wide window with two columns of groups. Each row has the keys drawn as little key caps at the left (never translated) and a description at the right, about 300 points wide. This text is the description. Fourth group (editing). The keys at the left are: Ctrl with B or with I.", "moment": "The person opens the sheet to learn what pressing these keys does, and reads this line while looking at the key caps beside it. Words of the announcement's slide are picked.", "role": "key description", "does": "Makes the picked words heavier with the one letter and slanted with the other.", "budget": 56, "variables": [], "cases": [], "counts": "", "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.", "concepts": ["announcement", "slide_words"], "notes": "Fragment, no full stop; the letters B and I are as a text editor uses them."},
  {
   "key": "announcement_deleted",
   "kind": "sentence",
@@ -21551,6 +21556,616 @@
    "slide_words"
   ],
   "notes": "One word."
+ },
+ {
+  "key": "EDIT_ROLE_BODY",
+  "kind": "const",
+  "screen": "Announcements window with a card open on its slide: the strip above the slide, whose first chip names the part of the card the strip works on.",
+  "moment": "The person picked the longer words under the title on the slide.",
+  "role": "chip",
+  "does": "Names the part of the card that holds the longer words under the title.",
+  "budget": 14,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "Plain, short, polite and familiar, one church volunteer to another; no jargon, no slang.",
+  "concepts": [
+   "announcement",
+   "slide_words"
+  ],
+  "notes": "One word; its sibling chip is the card's title."
+ },
+ {
+  "key": "EDIT_FIT",
+  "kind": "const",
+  "screen": "The strip above the slide, and the small bar over a picked part of the slide.",
+  "moment": "The words are too large or too small for their place and the person wants the best size.",
+  "role": "button",
+  "does": "Asks the program to set the picked words as large as they can be while still filling no more than their place.",
+  "budget": 10,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "Plain, short, polite and familiar, one church volunteer to another; no jargon, no slang.",
+  "concepts": [
+   "slide_words"
+  ],
+  "notes": "One word with a small icon of corners drawing in."
+ },
+ {
+  "key": "EDIT_SIZE",
+  "kind": "const",
+  "screen": "The strip above the slide, in front of a number and two small buttons with a minus and a plus.",
+  "moment": "The person looks for where to make the picked words larger or smaller.",
+  "role": "label",
+  "does": "Labels the number of the picked words and the two small buttons that make them larger or smaller; also names those buttons for a screen reader.",
+  "budget": 12,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "Plain, short, polite and familiar, one church volunteer to another; no jargon, no slang.",
+  "concepts": [
+   "slide_words"
+  ],
+  "notes": "One word."
+ },
+ {
+  "key": "EDIT_REDO",
+  "kind": "const",
+  "screen": "The strip above the slide, an icon button with an arrow turning forward beside the one turning back.",
+  "moment": "The person took back an edit and wants it again.",
+  "role": "button name",
+  "does": "Names the icon button that brings back the last edit that was taken back.",
+  "budget": 12,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "Plain, short, polite and familiar, one church volunteer to another; no jargon, no slang.",
+  "concepts": [
+   "undo"
+  ],
+  "notes": "Only read by a screen reader and in a tip; one word."
+ },
+ {
+  "key": "EDIT_BOLD",
+  "kind": "const",
+  "screen": "The strip above the slide, an icon button showing a heavy letter B.",
+  "moment": "The person wants the picked words heavier.",
+  "role": "button name",
+  "does": "Names the icon button that makes the picked words heavier, and lights while they are.",
+  "budget": 12,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "Plain, short, polite and familiar, one church volunteer to another; no jargon, no slang.",
+  "concepts": [
+   "slide_words"
+  ],
+  "notes": "One word, the usual name of that button in a text editor."
+ },
+ {
+  "key": "EDIT_ITALIC",
+  "kind": "const",
+  "screen": "The strip above the slide, an icon button showing a slanted letter I beside the heavy B.",
+  "moment": "The person wants the picked words slanted.",
+  "role": "button name",
+  "does": "Names the icon button that slants the picked words, and lights while they are.",
+  "budget": 12,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "Plain, short, polite and familiar, one church volunteer to another; no jargon, no slang.",
+  "concepts": [
+   "slide_words"
+  ],
+  "notes": "One word, the usual name of that button in a text editor."
+ },
+ {
+  "key": "EDIT_ALIGN_LEFT",
+  "kind": "const",
+  "screen": "The strip above the slide, the first of three small icon buttons of lines pushed to one side.",
+  "moment": "The person wants the lines of the picked words against the left edge of their place.",
+  "role": "button name",
+  "does": "Names the icon button that puts the lines of the picked words against the left edge of their place.",
+  "budget": 24,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "Plain, short, polite and familiar, one church volunteer to another; no jargon, no slang.",
+  "concepts": [
+   "slide_words"
+  ],
+  "notes": "The usual name of that button in a text editor."
+ },
+ {
+  "key": "EDIT_ALIGN_CENTRE",
+  "kind": "const",
+  "screen": "The strip above the slide, the middle of three small icon buttons of lines pushed to one side.",
+  "moment": "The person wants the lines of the picked words in the middle of their place.",
+  "role": "button name",
+  "does": "Names the icon button that puts the lines of the picked words in the middle of their place.",
+  "budget": 24,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "Plain, short, polite and familiar, one church volunteer to another; no jargon, no slang.",
+  "concepts": [
+   "slide_words"
+  ],
+  "notes": "The usual name of that button in a text editor."
+ },
+ {
+  "key": "EDIT_ALIGN_RIGHT",
+  "kind": "const",
+  "screen": "The strip above the slide, the last of three small icon buttons of lines pushed to one side.",
+  "moment": "The person wants the lines of the picked words against the right edge of their place.",
+  "role": "button name",
+  "does": "Names the icon button that puts the lines of the picked words against the right edge of their place.",
+  "budget": 24,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "Plain, short, polite and familiar, one church volunteer to another; no jargon, no slang.",
+  "concepts": [
+   "slide_words"
+  ],
+  "notes": "The usual name of that button in a text editor."
+ },
+ {
+  "key": "EDIT_SHRUNK",
+  "kind": "const",
+  "screen": "A small pill under the lower right corner of the title or body on the slide, with a short bar beside the words.",
+  "moment": "The person is typing and the words had to be made smaller than the size asked, so that they still fit.",
+  "role": "status",
+  "does": "Tells the person the words were set smaller than asked so that they still fit; the bar beside it shows how far down they went.",
+  "budget": 20,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "Plain, short, polite and familiar, one church volunteer to another; no jargon, no slang.",
+  "concepts": [
+   "slide_words"
+  ],
+  "notes": "A state, not a command; no full stop."
+ },
+ {
+  "key": "EDIT_SMALLEST",
+  "kind": "const",
+  "screen": "The strip above the slide, a yellow chip with a warning triangle that takes the place of the Fit chip.",
+  "moment": "The words are already as small as the program lets them go.",
+  "role": "chip",
+  "does": "Says the picked words cannot be made any smaller, which is the least a person at the back can read.",
+  "budget": 20,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "Plain, short, polite and familiar, one church volunteer to another; no jargon, no slang.",
+  "concepts": [
+   "slide_words"
+  ],
+  "notes": "A state; two or three words."
+ },
+ {
+  "key": "EDIT_NO_FIT_LONG",
+  "kind": "const",
+  "screen": "The yellow-edged card under the slide, first line, with a warning triangle before it.",
+  "moment": "The words do not fit their place even at the smallest size; nothing is saved yet.",
+  "role": "warning",
+  "does": "Warns that the words are too many for their place even when set as small as they may go.",
+  "budget": 44,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "Plain, short, polite and familiar, one church volunteer to another; no jargon, no slang.",
+  "concepts": [
+   "slide_words"
+  ],
+  "notes": "For a title the card offers only Undo; for the longer words it also offers a second slide."
+ },
+ {
+  "key": "EDIT_CONTINUE",
+  "kind": "const",
+  "screen": "The yellow-edged card under the slide, its light button.",
+  "moment": "The longer words do not fit; the person can move what does not fit onto a new slide.",
+  "role": "button",
+  "does": "Moves the words that do not fit onto a new slide that comes right after this one, with the same title.",
+  "budget": 40,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "Plain, short, polite and familiar, one church volunteer to another; no jargon, no slang.",
+  "concepts": [
+   "slide",
+   "announcement"
+  ],
+  "notes": "The owner's own words in English; keep them as plain."
+ },
+ {
+  "key": "EDIT_NEXT_STARTS",
+  "kind": "const",
+  "screen": "A yellow tag at the end of a line drawn across the slide's longer words, where they are cut.",
+  "moment": "The words do not fit and the faint lines under the line are the ones that would go on.",
+  "role": "label",
+  "does": "Marks the line below which the words would go on to the following slide.",
+  "budget": 34,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "Plain, short, polite and familiar, one church volunteer to another; no jargon, no slang.",
+  "concepts": [
+   "slide"
+  ],
+  "notes": "A tag on a line; no full stop."
+ },
+ {
+  "key": "EDIT_ADDS_SLIDE",
+  "kind": "const",
+  "screen": "The yellow-edged card under the slide, in grey beside its buttons.",
+  "moment": "The person is about to press the button that continues the words on a second slide.",
+  "role": "helper",
+  "does": "Says what the button will do: a new slide is made and put right behind the one being edited.",
+  "budget": 38,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "Plain, short, polite and familiar, one church volunteer to another; no jargon, no slang.",
+  "concepts": [
+   "slide"
+  ],
+  "notes": "A grey line beside the buttons; no full stop."
+ },
+ {
+  "key": "EDIT_NOT_SAVED",
+  "kind": "const",
+  "screen": "The bar under the slide, a small yellow pill beside the Save button.",
+  "moment": "Words on the slide were changed and not yet saved.",
+  "role": "status",
+  "does": "Says the changes made on the slide are not kept yet, until the person saves.",
+  "budget": 14,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "Plain, short, polite and familiar, one church volunteer to another; no jargon, no slang.",
+  "concepts": [
+   "announcement"
+  ],
+  "notes": "A state; yellow means a warning, never red."
+ },
+ {
+  "key": "EDIT_CANT_SAVE",
+  "kind": "const",
+  "screen": "The bar under the slide, in yellow beside the dimmed Show now and Save buttons.",
+  "moment": "The words do not fit and the person has not yet chosen what to do about it.",
+  "role": "reason",
+  "does": "Tells why Save waits: the person must first decide what happens to the words that do not fit.",
+  "budget": 44,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "Plain, short, polite and familiar, one church volunteer to another; no jargon, no slang.",
+  "concepts": [
+   "slide_words"
+  ],
+  "notes": "Names the way out in words, not an error code."
+ },
+ {
+  "key": "EDIT_OPEN_CALENDAR",
+  "kind": "const",
+  "screen": "The strip above the slide and the head of the sheet under the slide, a button with an arrow leaving a square.",
+  "moment": "A schedule on the slide is picked and the person wants to change its events.",
+  "role": "button",
+  "does": "Goes to the Calendar window, where the events the schedule reads are changed.",
+  "budget": 24,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "Plain, short, polite and familiar, one church volunteer to another; no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "program_window"
+  ],
+  "notes": "Names the window as the tab is named."
+ },
+ {
+  "key": "EDIT_OPEN_MEMBERS",
+  "kind": "const",
+  "screen": "The strip above the slide and the head of the sheet under the slide, a button with an arrow leaving a square.",
+  "moment": "Birthday names on the slide are picked and the person wants to change the people.",
+  "role": "button",
+  "does": "Goes to the Members window, where the names the birthday slide reads are changed.",
+  "budget": 24,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "Plain, short, polite and familiar, one church volunteer to another; no jargon, no slang.",
+  "concepts": [
+   "member",
+   "program_window"
+  ],
+  "notes": "Names the window as the tab is named."
+ },
+ {
+  "key": "EDIT_OPEN_OFFERINGS",
+  "kind": "const",
+  "screen": "The strip above the slide and the head of the sheet under the slide, a button with an arrow leaving a square.",
+  "moment": "Offering rows or the account on the slide are picked and the person wants to change them.",
+  "role": "button",
+  "does": "Goes to the Offerings window, where the gifts and the account the slide reads are changed.",
+  "budget": 26,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "Plain, short, polite and familiar, one church volunteer to another; no jargon, no slang.",
+  "concepts": [
+   "offering",
+   "program_window"
+  ],
+  "notes": "Names the window as the tab is named."
+ },
+ {
+  "key": "EDIT_READ_CAL",
+  "kind": "const",
+  "screen": "A blue pill over the top edge of the schedule's rows on the slide, with a small calendar before it.",
+  "moment": "The person sees which words of the slide are typed and which are filled from a window.",
+  "role": "label",
+  "does": "Says the rows under it are filled in from the church's calendar and are not typed on the slide.",
+  "budget": 30,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "Plain, short, polite and familiar, one church volunteer to another; no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "slide_template"
+  ],
+  "notes": "A label on a pill; no full stop."
+ },
+ {
+  "key": "EDIT_READ_MEMBERS",
+  "kind": "const",
+  "screen": "A blue pill over the top edge of the birthday names on the slide.",
+  "moment": "The person sees which words of the slide are typed and which are filled from a window.",
+  "role": "label",
+  "does": "Says the names under it come from the church's list of members and are not typed on the slide.",
+  "budget": 30,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "Plain, short, polite and familiar, one church volunteer to another; no jargon, no slang.",
+  "concepts": [
+   "member",
+   "slide_template"
+  ],
+  "notes": "A label on a pill; no full stop."
+ },
+ {
+  "key": "EDIT_READ_OFFERINGS",
+  "kind": "const",
+  "screen": "A blue pill over the top edge of the offering rows on the slide.",
+  "moment": "The person sees which words of the slide are typed and which are filled from a window.",
+  "role": "label",
+  "does": "Says the rows under it come from the church's gifts and are not typed on the slide.",
+  "budget": 30,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "Plain, short, polite and familiar, one church volunteer to another; no jargon, no slang.",
+  "concepts": [
+   "offering",
+   "slide_template"
+  ],
+  "notes": "A label on a pill; no full stop."
+ },
+ {
+  "key": "EDIT_PART_ROWS",
+  "kind": "const",
+  "screen": "The strip's first chip and the heading of the sheet under the slide, when the rows of a schedule are picked.",
+  "moment": "The person picked the rows of a schedule on the slide.",
+  "role": "name of a part",
+  "does": "Names the rows of the week's services that the schedule slide draws from the calendar.",
+  "budget": 24,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "Plain, short, polite and familiar, one church volunteer to another; no jargon, no slang.",
+  "concepts": [
+   "church_calendar",
+   "event"
+  ],
+  "notes": "A heading of two words."
+ },
+ {
+  "key": "EDIT_PART_NAMES",
+  "kind": "const",
+  "screen": "The strip's first chip and the heading of the sheet under the slide, when the names of a birthday slide are picked.",
+  "moment": "The person picked the names on a birthday slide.",
+  "role": "name of a part",
+  "does": "Names the list of people whose birthdays the slide draws from the members.",
+  "budget": 24,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "Plain, short, polite and familiar, one church volunteer to another; no jargon, no slang.",
+  "concepts": [
+   "member"
+  ],
+  "notes": "A heading of two words."
+ },
+ {
+  "key": "EDIT_PART_FUNDS",
+  "kind": "const",
+  "screen": "The strip's first chip and the heading of the sheet under the slide, when the rows of an offering slide are picked.",
+  "moment": "The person picked the rows of an offering slide.",
+  "role": "name of a part",
+  "does": "Names the rows of funds and amounts the offering slide draws from the offerings.",
+  "budget": 24,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "Plain, short, polite and familiar, one church volunteer to another; no jargon, no slang.",
+  "concepts": [
+   "offering",
+   "fund"
+  ],
+  "notes": "A heading of two words."
+ },
+ {
+  "key": "EDIT_PART_ACCOUNT",
+  "kind": "const",
+  "screen": "The strip's first chip and the heading of the sheet under the slide, when the bank details of a transfer slide are picked.",
+  "moment": "The person picked the bank details on a transfer slide.",
+  "role": "name of a part",
+  "does": "Names the bank, number and holder of the church's account that the slide shows.",
+  "budget": 20,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "Plain, short, polite and familiar, one church volunteer to another; no jargon, no slang.",
+  "concepts": [
+   "transfer_account"
+  ],
+  "notes": "A heading of two words."
+ },
+ {
+  "key": "EDIT_PART_VERSE",
+  "kind": "const",
+  "screen": "The strip's first chip and the heading of the sheet under the slide, when the verses of a passage slide are picked.",
+  "moment": "The person picked the verses on a passage slide.",
+  "role": "name of a part",
+  "does": "Names the verses of the passage that the slide reads from the installed Bible.",
+  "budget": 20,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "Plain, short, polite and familiar, one church volunteer to another; no jargon, no slang.",
+  "concepts": [
+   "passage",
+   "verse"
+  ],
+  "notes": "A heading of two words."
+ },
+ {
+  "key": "EDIT_CARD_SETTINGS",
+  "kind": "const",
+  "screen": "The heading of the sheet that opens under the slide from the three dots on the small bar.",
+  "moment": "The person wants to change the card's template, style, title colour or pictures.",
+  "role": "heading",
+  "does": "Heads the sheet that holds what is set for the whole card: its kind, its look, its title colour and its pictures.",
+  "budget": 24,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "Plain, short, polite and familiar, one church volunteer to another; no jargon, no slang.",
+  "concepts": [
+   "announcement",
+   "slide_template"
+  ],
+  "notes": "Two words."
+ },
+ {
+  "key": "EDIT_WORDS",
+  "kind": "const",
+  "screen": "The heading of the sheet under the slide for an announcement style that has no parts to pick on the slide.",
+  "moment": "The person wants to change the words of a card whose style cannot be typed on directly.",
+  "role": "heading",
+  "does": "Heads the sheet where the card's title and details are typed when the slide itself cannot take them.",
+  "budget": 14,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "Plain, short, polite and familiar, one church volunteer to another; no jargon, no slang.",
+  "concepts": [
+   "announcement",
+   "slide_words"
+  ],
+  "notes": "One word."
+ },
+ {
+  "key": "EDIT_MORE",
+  "kind": "const",
+  "screen": "The last button of the small bar over a picked part of the slide, three dots.",
+  "moment": "The person looks for more settings of the card.",
+  "role": "button name",
+  "does": "Names the three-dots button that opens the card's other settings under the slide.",
+  "budget": 12,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "Plain, short, polite and familiar, one church volunteer to another; no jargon, no slang.",
+  "concepts": [
+   "announcement"
+  ],
+  "notes": "Only read by a screen reader and in a tip; one word."
+ },
+ {
+  "key": "EDIT_RAIL_OPEN",
+  "kind": "const",
+  "screen": "The narrow column of numbers left of the slide, the small button with an arrow at its top.",
+  "moment": "The person wants the full list of cards back beside the slide.",
+  "role": "button name",
+  "does": "Names the arrow button that opens the list of the announcements' names over the narrow column of numbers.",
+  "budget": 40,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "Plain, short, polite and familiar, one church volunteer to another; no jargon, no slang.",
+  "concepts": [
+   "announcement"
+  ],
+  "notes": "Only read by a screen reader and in a tip."
+ },
+ {
+  "key": "EDIT_RAIL_CLOSE",
+  "kind": "const",
+  "screen": "The list of announcements, the small arrow button beside New announcement.",
+  "moment": "The person has the full list open and wants the slide larger again.",
+  "role": "button name",
+  "does": "Names the arrow button that folds the list of the announcements' names back into the narrow column of numbers.",
+  "budget": 40,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "Plain, short, polite and familiar, one church volunteer to another; no jargon, no slang.",
+  "concepts": [
+   "announcement"
+  ],
+  "notes": "Only read by a screen reader and in a tip."
+ },
+ {
+  "key": "NOTICE_CONTINUED",
+  "kind": "const",
+  "screen": "A toast at the bottom of the window with an Undo button.",
+  "moment": "The person pressed the button that continues words on a second slide, or left the window with words that did not fit.",
+  "role": "toast",
+  "does": "Tells the person a new slide was made after this one to hold the words that did not fit; Undo takes it away.",
+  "budget": 40,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "Plain, short, polite and familiar, one church volunteer to another; no jargon, no slang.",
+  "concepts": [
+   "slide",
+   "undo"
+  ],
+  "notes": "Past tense; no full stop."
+ },
+ {
+  "key": "NOTICE_CONTINUE_FAILED",
+  "kind": "const",
+  "screen": "A toast at the bottom of the window.",
+  "moment": "The second slide could not be made, and nothing was changed.",
+  "role": "toast",
+  "does": "Tells the person the new slide could not be made and the card stays as it was.",
+  "budget": 44,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "Plain, short, polite and familiar, one church volunteer to another; no jargon, no slang.",
+  "concepts": [
+   "slide",
+   "announcement"
+  ],
+  "notes": "States what is true; no apology, no code."
  },
  {
   "key": "UPDATE_BUTTON",

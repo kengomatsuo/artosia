@@ -192,9 +192,29 @@ macro_rules! icon {
     };
 }
 
+/// An icon of the editing mock's, on its 24 point grid.
+macro_rules! icon24 {
+    ($name:ident, $id:literal, $body:literal) => {
+        pub static $name: Icon = Icon { name: $id, view: 24.0, body: concat!(r#"<g stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none">"#, $body, "</g>") };
+    };
+}
+
 /// Line icons on a 16 point grid, drawn for this app.
 pub mod icons {
     use super::Icon;
+    icon24!(UNDO_STEP, "a-undo-step", r#"<path d="M9 6.5L4.5 11 9 15.5M5 11h9a5 5 0 0 1 0 10h-3"/>"#);
+    icon24!(REDO, "a-redo", r#"<path d="M15 6.5L19.5 11 15 15.5M19 11h-9a5 5 0 0 0 0 10h3"/>"#);
+    icon24!(BOLD, "a-bold", r#"<path d="M7 4h6a3.5 3.5 0 0 1 0 7H7zM7 11h7a3.5 3.5 0 0 1 0 7H7z"/>"#);
+    icon24!(ITALIC, "a-italic", r#"<path d="M10 4h8M6 20h8M15 4L9 20"/>"#);
+    icon24!(ALIGN_L, "a-align-l", r#"<path d="M4 6h16M4 10h10M4 14h16M4 18h10"/>"#);
+    icon24!(ALIGN_C, "a-align-c", r#"<path d="M4 6h16M7 10h10M4 14h16M7 18h10"/>"#);
+    icon24!(ALIGN_R, "a-align-r", r#"<path d="M4 6h16M10 10h10M4 14h16M10 18h10"/>"#);
+    icon24!(FIT, "a-fit", r#"<path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5M9 12h6"/>"#);
+    icon24!(ALERT, "a-alert", r#"<path d="M12 3.5L2.8 19.5h18.4L12 3.5zM12 10v4.5M12 17.2h.01"/>"#);
+    icon24!(EXTERNAL, "a-external", r#"<path d="M14 4h6v6M20 4l-9 9M18 14v4.5a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 4 18.5v-11A1.5 1.5 0 0 1 5.5 6H10"/>"#);
+    icon24!(CHEV_RIGHT, "a-chev-right", r#"<path d="M9 6l6 6-6 6"/>"#);
+    icon24!(CHEV_LEFT, "a-chev-left", r#"<path d="M15 6l-6 6 6 6"/>"#);
+    icon24!(SPLIT, "a-split", r#"<rect x="3" y="4" width="10" height="7" rx="1.5"/><rect x="11" y="13" width="10" height="7" rx="1.5"/><path d="M8 11v3a1 1 0 0 0 1 1h2"/>"#);
     icon!(SONG, "a-song", r#"<path d="M6 12.5V3.6L13 2.2V11" stroke="currentColor" stroke-linejoin="round"/><circle cx="4.3" cy="12.5" r="1.7" stroke="currentColor"/><circle cx="11.3" cy="11" r="1.7" stroke="currentColor"/>"#);
     icon!(BOOK, "a-book", r#"<path d="M8 4.5V13.5M8 4.5C7 3.5 5.2 3 2.5 3V12C5.2 12 7 12.5 8 13.5M8 4.5C9 3.5 10.8 3 13.5 3V12C10.8 12 9 12.5 8 13.5" stroke="currentColor" stroke-linejoin="round"/>"#);
     icon!(ANNOUNCE, "a-announce", r#"<path d="M2.5 6.5V9.5H4.5L9.5 12.5V3.5L4.5 6.5H2.5Z" stroke="currentColor" stroke-linejoin="round"/><path d="M11.8 6C12.6 6.5 13 7.2 13 8C13 8.8 12.6 9.5 11.8 10" stroke="currentColor" stroke-linecap="round"/>"#);

@@ -1706,21 +1706,32 @@ pub fn KEYS_PLAN_ROWS() -> &'static [(&'static str, &'static str)] {
     }
     if indonesian() { &KEYS_PLAN_ROWS_ID } else { &KEYS_PLAN_ROWS_EN }
 }
-const KEYS_EDITING_ROWS_EN: [(&str, &str); 6] = [
+const KEYS_EDITING_ROWS_EN: [(&str, &str); 11] = [
     ("Ctrl N", "New song"),
     ("Ctrl E", "Edit the open song"),
     ("Ctrl S", "Save"),
     ("Ctrl 1 to 5", "Start a verse, chorus or other section"),
     ("Down Enter", "Fill in the whole song offered under the title"),
     ("Ctrl Z", "Undo the last removal"),
+    ("Tab", "Pick the next part of the announcement's slide"),
+    ("Enter", "Type in the part that is picked"),
+    ("Esc", "Leave the part, then the announcement"),
+    ("Ctrl Shift Z", "Bring back the edit that was taken back"),
+    ("Ctrl B or I", "Bold or slanted words in the part that is picked"),
 ];
-const KEYS_EDITING_ROWS_ID: [(&str, &str); 6] = [
+const KEYS_EDITING_ROWS_ID: [(&str, &str); 11] = [
     ("Ctrl N", "Mulai lagu baru"),
     ("Ctrl E", "Edit lagu yang terbuka"),
     ("Ctrl S", "Simpan"),
     ("Ctrl 1 sampai 5", "Sisipkan penanda bait, reff, atau lainnya"),
     ("Down Enter", "Terima lagu yang diusulkan sekaligus"),
     ("Ctrl Z", "Kembalikan yang terakhir dihapus"),
+    // The rows below wait for their writers; until then they read as the English does.
+    ("Tab", "Pick the next part of the announcement's slide"),
+    ("Enter", "Type in the part that is picked"),
+    ("Esc", "Leave the part, then the announcement"),
+    ("Ctrl Shift Z", "Bring back the edit that was taken back"),
+    ("Ctrl B or I", "Bold or slanted words in the part that is picked"),
 ];
 pub fn KEYS_EDITING_ROWS() -> &'static [(&'static str, &'static str)] {
     if languages::has_table(language()) {
@@ -2599,6 +2610,42 @@ text!(TPL_APPLY_SLIDE, "This slide", "This slide");
 text!(TPL_APPLY_ALL, "Every announcement", "Every announcement");
 text!(TPL_APPLY_PLAN, "This plan", "This plan");
 text!(TPL_APPLIED_PLAN, "Style applied to this plan", "Style applied to this plan");
+// NOTICEEDIT1: editing a card on its slide.
+text!(EDIT_ROLE_BODY, "Body", "Body");
+text!(EDIT_FIT, "Fit", "Fit");
+text!(EDIT_SIZE, "Size", "Size");
+text!(EDIT_REDO, "Redo", "Redo");
+text!(EDIT_BOLD, "Bold", "Bold");
+text!(EDIT_ITALIC, "Italic", "Italic");
+text!(EDIT_ALIGN_LEFT, "Align left", "Align left");
+text!(EDIT_ALIGN_CENTRE, "Align centre", "Align centre");
+text!(EDIT_ALIGN_RIGHT, "Align right", "Align right");
+text!(EDIT_SHRUNK, "Shrunk to fit", "Shrunk to fit");
+text!(EDIT_SMALLEST, "Smallest size", "Smallest size");
+text!(EDIT_NO_FIT_LONG, "Does not fit at the smallest size", "Does not fit at the smallest size");
+text!(EDIT_CONTINUE, "Continue on a second slide", "Continue on a second slide");
+text!(EDIT_NEXT_STARTS, "Next slide starts here", "Next slide starts here");
+text!(EDIT_ADDS_SLIDE, "Adds a slide after this one", "Adds a slide after this one");
+text!(EDIT_NOT_SAVED, "Not saved", "Not saved");
+text!(EDIT_CANT_SAVE, "Choose how the text continues first", "Choose how the text continues first");
+text!(EDIT_OPEN_CALENDAR, "Open Calendar", "Open Calendar");
+text!(EDIT_OPEN_MEMBERS, "Open Members", "Open Members");
+text!(EDIT_OPEN_OFFERINGS, "Open Offerings", "Open Offerings");
+text!(EDIT_READ_CAL, "Read from the calendar", "Read from the calendar");
+text!(EDIT_READ_MEMBERS, "Read from the members", "Read from the members");
+text!(EDIT_READ_OFFERINGS, "Read from the offerings", "Read from the offerings");
+text!(EDIT_PART_ROWS, "Schedule rows", "Schedule rows");
+text!(EDIT_PART_NAMES, "Birthday names", "Birthday names");
+text!(EDIT_PART_FUNDS, "Offering rows", "Offering rows");
+text!(EDIT_PART_ACCOUNT, "The account", "The account");
+text!(EDIT_PART_VERSE, "The verses", "The verses");
+text!(EDIT_CARD_SETTINGS, "Card settings", "Card settings");
+text!(EDIT_WORDS, "Words", "Words");
+text!(EDIT_MORE, "More", "More");
+text!(EDIT_RAIL_OPEN, "Show the list of cards", "Show the list of cards");
+text!(EDIT_RAIL_CLOSE, "Fold the list of cards", "Fold the list of cards");
+text!(NOTICE_CONTINUED, "Added a second slide", "Added a second slide");
+text!(NOTICE_CONTINUE_FAILED, "Could not add the second slide", "Could not add the second slide");
 
 /// What a schedule card reads, as a line at the top of its slide.
 pub fn read_calendar(count: usize) -> String {

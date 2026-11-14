@@ -13,6 +13,7 @@ use crate::fonts;
 use crate::look::{Background, Look, Outline, Place, rgb};
 use crate::notice;
 use crate::voices;
+use crate::warta::{Field, TextBox};
 
 /// Pictures and video a screen draws; the caller loads them.
 #[derive(Clone, Copy, Default)]
@@ -202,6 +203,51 @@ fn slide_picture(slide: &Slide, picture: &Pixels, w: f32, h: f32) -> El {
 
 /// How much of the screen's height a picture takes when words sit under it.
 const PICTURE_SHARE: f32 = 0.56;
+
+/// The boxes of an announcement that the look's own slide draws, in a `w` by `h` space: its heading over its words,
+/// where `slide_text` puts them (same margins, same fit, same size and gap, the block set by the look's place).
+pub fn plain_boxes(slide: &Slide, look: &Look, w: f32, h: f32, under_picture: bool) -> Vec<TextBox> {
+    let u = h / 1080.0;
+    let (mx, mut my) = ((w * 0.07).round(), (h * 0.085).round());
+    let caption_room = if slide.caption.is_empty() && slide.part.is_none() { 0.0 } else { (64.0 * u).round() };
+    let (box_w, mut box_h) = (w - 2.0 * mx, h - 2.0 * my - caption_room);
+    if under_picture {
+        let top = (h * PICTURE_SHARE).round();
+        box_h = (h - top - my * 0.6).max(1.0);
+        my = top;
+    }
+    let (base_size, floor) = ((66.0 * u * look.size).round(), (26.0 * u).round().max(4.0));
+    let s = sizes(fit(slide, look, box_w, box_h, base_size, floor), look);
+    let tall = |content: &str, style: TextStyle| rune::text::measure(content, &[], style, Some(box_w)).1;
+    let head_h = if slide.heading.is_empty() { 0.0 } else { tall(&slide.heading, s.heading) };
+    let words_h = match (slide.text.is_empty(), table_of(&slide.text)) {
+        (true, _) => 0.0,
+        (false, Some(rows)) => rows.len() as f32 * s.main.line_height,
+        (false, None) => tall(&slide.text, s.main),
+    };
+    let gap = if head_h > 0.0 && words_h > 0.0 { s.gap } else { 0.0 };
+    let total = head_h + gap + words_h;
+    let top = match look.place {
+        Place::Top => my,
+        Place::Middle => my + (box_h - total) / 2.0,
+        Place::Bottom => my + box_h - total,
+    };
+    // Light words stand on dark, dark words on light, whatever picture is behind them.
+    let light = look.ink.iter().map(|c| f32::from(*c)).sum::<f32>() > 3.0 * 128.0;
+    let ground = if light { [12, 14, 22] } else { [246, 246, 246] };
+    let mut boxes = Vec::new();
+    let mut put = |field: Field, y: f32, height: f32, style: TextStyle| {
+        let lines = (height / style.line_height.max(1.0)).round().max(1.0) as usize;
+        boxes.push(TextBox { field, x: mx, y, w: box_w, h: height, size: style.size, lines, ground: Some(ground), ink: look.ink, family: style.family, weight: style.weight, italic: false, tracking: style.tracking, align: if look.centered { artosia_core::deck::Align::Centre } else { artosia_core::deck::Align::Start }, pad: 0.0 });
+    };
+    if head_h > 0.0 {
+        put(Field::Title, top, head_h, s.heading);
+    }
+    if words_h > 0.0 {
+        put(Field::Body, top + head_h + gap, words_h, s.main);
+    }
+    boxes
+}
 
 fn slide_text(slide: &Slide, look: &Look, w: f32, h: f32, detail: Detail, under_picture: bool) -> El {
     let u = h / 1080.0;

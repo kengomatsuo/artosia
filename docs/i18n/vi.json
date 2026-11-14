@@ -5905,5 +5905,205 @@
   "text": "Không khởi động lại được. Hãy đóng phần mềm rồi mở lại để cập nhật.",
   "back": "Could not restart; close the program and open it again to update",
   "why": "program's own words for update and projector, plain volunteer register"
+ },
+ "KEYS_EDITING_ROWS[6].1": {
+  "text": "Chuyển sang phần tiếp theo của slide, rồi đến các nút",
+  "back": "Move on to the next part of the slide, then to the buttons",
+  "why": "Reuses table words: thông báo, slide, chữ, tab names"
+ },
+ "KEYS_EDITING_ROWS[7].1": {
+  "text": "Sửa chữ đã chọn ngay trên slide",
+  "back": "Edit the picked words right on the slide",
+  "why": "Reuses table words: thông báo, slide, chữ, tab names"
+ },
+ "KEYS_EDITING_ROWS[8].1": {
+  "text": "Lùi một bước: con trỏ, phần đã chọn, thông báo",
+  "back": "Step back one: cursor, picked part, announcement",
+  "why": "Reuses table words: thông báo, slide, chữ, tab names"
+ },
+ "KEYS_EDITING_ROWS[9].1": {
+  "text": "Làm lại thay đổi vừa bị hoàn tác",
+  "back": "Redo the change that was just undone",
+  "why": "Reuses table words: thông báo, slide, chữ, tab names"
+ },
+ "KEYS_EDITING_ROWS[10].1": {
+  "text": "B in đậm, I in nghiêng chữ đã chọn",
+  "back": "B makes bold, I makes italic the picked words",
+  "why": "Reuses table words: thông báo, slide, chữ, tab names"
+ },
+ "EDIT_ROLE_BODY": {
+  "text": "Nội dung",
+  "back": "Content",
+  "why": "Reuses table words: thông báo, slide, chữ, tab names"
+ },
+ "EDIT_FIT": {
+  "text": "Vừa khít",
+  "back": "Snug fit",
+  "why": "Reuses table words: thông báo, slide, chữ, tab names"
+ },
+ "EDIT_SIZE": {
+  "text": "Cỡ chữ",
+  "back": "Letter size",
+  "why": "Reuses table words: thông báo, slide, chữ, tab names"
+ },
+ "EDIT_REDO": {
+  "text": "Làm lại",
+  "back": "Do again",
+  "why": "Reuses table words: thông báo, slide, chữ, tab names"
+ },
+ "EDIT_BOLD": {
+  "text": "In đậm",
+  "back": "Bold",
+  "why": "Reuses table words: thông báo, slide, chữ, tab names"
+ },
+ "EDIT_ITALIC": {
+  "text": "In nghiêng",
+  "back": "Italic",
+  "why": "Reuses table words: thông báo, slide, chữ, tab names"
+ },
+ "EDIT_ALIGN_LEFT": {
+  "text": "Căn trái",
+  "back": "Align left",
+  "why": "Reuses table words: thông báo, slide, chữ, tab names"
+ },
+ "EDIT_ALIGN_CENTRE": {
+  "text": "Căn giữa",
+  "back": "Align centre",
+  "why": "Reuses table words: thông báo, slide, chữ, tab names"
+ },
+ "EDIT_ALIGN_RIGHT": {
+  "text": "Căn phải",
+  "back": "Align right",
+  "why": "Reuses table words: thông báo, slide, chữ, tab names"
+ },
+ "EDIT_SHRUNK": {
+  "text": "Đã thu nhỏ cho vừa",
+  "back": "Made smaller to fit",
+  "why": "Reuses table words: thông báo, slide, chữ, tab names"
+ },
+ "EDIT_SMALLEST": {
+  "text": "Đã nhỏ nhất",
+  "back": "Already smallest",
+  "why": "Reuses table words: thông báo, slide, chữ, tab names"
+ },
+ "EDIT_NO_FIT_LONG": {
+  "text": "Chữ không vừa, dù đã ở cỡ nhỏ nhất",
+  "back": "Words do not fit, even at the smallest size",
+  "why": "Reuses table words: thông báo, slide, chữ, tab names"
+ },
+ "EDIT_CONTINUE": {
+  "text": "Tiếp tục ở slide sau",
+  "back": "Continue on the next slide",
+  "why": "Reuses table words: thông báo, slide, chữ, tab names"
+ },
+ "EDIT_NEXT_STARTS": {
+  "text": "Slide sau bắt đầu từ đây",
+  "back": "The next slide starts from here",
+  "why": "Reuses table words: thông báo, slide, chữ, tab names"
+ },
+ "EDIT_ADDS_SLIDE": {
+  "text": "Tạo slide mới ngay sau slide này",
+  "back": "Makes a new slide right after this slide",
+  "why": "Reuses table words: thông báo, slide, chữ, tab names"
+ },
+ "EDIT_NOT_SAVED": {
+  "text": "Chưa lưu",
+  "back": "Not yet saved",
+  "why": "Reuses table words: thông báo, slide, chữ, tab names"
+ },
+ "EDIT_CANT_SAVE": {
+  "text": "Xử lý phần chữ không vừa trước",
+  "back": "First deal with the words that do not fit",
+  "why": "Reuses table words: thông báo, slide, chữ, tab names"
+ },
+ "EDIT_OPEN_CALENDAR": {
+  "text": "Đến Lịch",
+  "back": "To Calendar",
+  "why": "Reuses table words: thông báo, slide, chữ, tab names"
+ },
+ "EDIT_OPEN_MEMBERS": {
+  "text": "Đến Tín hữu",
+  "back": "To Believers",
+  "why": "Reuses table words: thông báo, slide, chữ, tab names"
+ },
+ "EDIT_OPEN_OFFERINGS": {
+  "text": "Đến Dâng hiến",
+  "back": "To Giving",
+  "why": "Reuses table words: thông báo, slide, chữ, tab names"
+ },
+ "EDIT_READ_CAL": {
+  "text": "Lấy từ Lịch",
+  "back": "Taken from Calendar",
+  "why": "Reuses table words: thông báo, slide, chữ, tab names"
+ },
+ "EDIT_READ_MEMBERS": {
+  "text": "Lấy từ danh sách Tín hữu",
+  "back": "Taken from the Believers list",
+  "why": "Reuses table words: thông báo, slide, chữ, tab names"
+ },
+ "EDIT_READ_OFFERINGS": {
+  "text": "Lấy từ Dâng hiến",
+  "back": "Taken from Giving",
+  "why": "Reuses table words: thông báo, slide, chữ, tab names"
+ },
+ "EDIT_PART_ROWS": {
+  "text": "Dòng trong lịch",
+  "back": "Rows in the calendar",
+  "why": "Reuses table words: thông báo, slide, chữ, tab names"
+ },
+ "EDIT_PART_NAMES": {
+  "text": "Tên người sinh nhật",
+  "back": "Names of birthday people",
+  "why": "Reuses table words: thông báo, slide, chữ, tab names"
+ },
+ "EDIT_PART_FUNDS": {
+  "text": "Dòng dâng hiến",
+  "back": "Giving rows",
+  "why": "Reuses table words: thông báo, slide, chữ, tab names"
+ },
+ "EDIT_PART_ACCOUNT": {
+  "text": "Tài khoản nhận tiền",
+  "back": "Account that receives money",
+  "why": "Reuses table words: thông báo, slide, chữ, tab names"
+ },
+ "EDIT_PART_VERSE": {
+  "text": "Câu Kinh Thánh",
+  "back": "Bible verses",
+  "why": "Reuses table words: thông báo, slide, chữ, tab names"
+ },
+ "EDIT_CARD_SETTINGS": {
+  "text": "Cài đặt thông báo",
+  "back": "Announcement settings",
+  "why": "Reuses table words: thông báo, slide, chữ, tab names"
+ },
+ "EDIT_WORDS": {
+  "text": "Chữ",
+  "back": "Words",
+  "why": "Reuses table words: thông báo, slide, chữ, tab names"
+ },
+ "EDIT_MORE": {
+  "text": "Thêm",
+  "back": "More",
+  "why": "Reuses table words: thông báo, slide, chữ, tab names"
+ },
+ "EDIT_RAIL_OPEN": {
+  "text": "Mở danh sách thông báo",
+  "back": "Open the list of announcements",
+  "why": "Reuses table words: thông báo, slide, chữ, tab names"
+ },
+ "EDIT_RAIL_CLOSE": {
+  "text": "Đóng danh sách thông báo",
+  "back": "Close the list of announcements",
+  "why": "Reuses table words: thông báo, slide, chữ, tab names"
+ },
+ "NOTICE_CONTINUED": {
+  "text": "Đã tạo slide mới cho phần chữ còn lại",
+  "back": "A new slide was made for the remaining words",
+  "why": "Reuses table words: thông báo, slide, chữ, tab names"
+ },
+ "NOTICE_CONTINUE_FAILED": {
+  "text": "Không tạo được slide mới, mọi thứ giữ nguyên",
+  "back": "New slide could not be made, everything stays",
+  "why": "Reuses table words: thông báo, slide, chữ, tab names"
  }
 }

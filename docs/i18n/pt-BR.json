@@ -5930,5 +5930,205 @@
   "text": "Não foi possível reiniciar. Feche o programa e abra de novo para atualizar.",
   "back": "Could not restart; close the program and open it again to update",
   "why": "program's own words for update and projector, plain volunteer register"
+ },
+ "KEYS_EDITING_ROWS[6].1": {
+  "text": "Vai à próxima parte editável do slide e aos botões",
+  "back": "Goes to the next editable part of the slide and to the buttons",
+  "why": "Plain verb; 50 of 56."
+ },
+ "KEYS_EDITING_ROWS[7].1": {
+  "text": "Põe o cursor no texto escolhido do slide",
+  "back": "Puts the cursor in the picked text of the slide",
+  "why": "Texto is the slide words; 40 of 48."
+ },
+ "KEYS_EDITING_ROWS[8].1": {
+  "text": "Volta um nível: cursor, parte escolhida e aviso",
+  "back": "Goes back one level: cursor, picked part and announcement",
+  "why": "Names the three levels in order; 47 of 56."
+ },
+ "KEYS_EDITING_ROWS[9].1": {
+  "text": "Refaz a última alteração desfeita",
+  "back": "Redoes the last change that was undone",
+  "why": "Refazer pairs with Desfazer; 33 of 48."
+ },
+ "KEYS_EDITING_ROWS[10].1": {
+  "text": "Negrito com B e itálico com I no texto escolhido",
+  "back": "Bold with B and italic with I on the picked text",
+  "why": "Editor words; 48 of 56."
+ },
+ "EDIT_ROLE_BODY": {
+  "text": "Texto",
+  "back": "Text",
+  "why": "Same word as the announcement's text field; 5 of 14."
+ },
+ "EDIT_FIT": {
+  "text": "Ajustar",
+  "back": "Fit",
+  "why": "Usual word for fitting to size; 7 of 10."
+ },
+ "EDIT_SIZE": {
+  "text": "Tamanho",
+  "back": "Size",
+  "why": "One plain word; 7 of 12."
+ },
+ "EDIT_REDO": {
+  "text": "Refazer",
+  "back": "Redo",
+  "why": "Pairs with Desfazer; 7 of 12."
+ },
+ "EDIT_BOLD": {
+  "text": "Negrito",
+  "back": "Bold",
+  "why": "Name in Brazilian editors; 7 of 12."
+ },
+ "EDIT_ITALIC": {
+  "text": "Itálico",
+  "back": "Italic",
+  "why": "Name in Brazilian editors; 7 of 12."
+ },
+ "EDIT_ALIGN_LEFT": {
+  "text": "Alinhar à esquerda",
+  "back": "Align left",
+  "why": "Usual editor name; 18 of 24."
+ },
+ "EDIT_ALIGN_CENTRE": {
+  "text": "Alinhar ao centro",
+  "back": "Align to the centre",
+  "why": "Same shape as its siblings; 17 of 24."
+ },
+ "EDIT_ALIGN_RIGHT": {
+  "text": "Alinhar à direita",
+  "back": "Align right",
+  "why": "Usual editor name; 17 of 24."
+ },
+ "EDIT_SHRUNK": {
+  "text": "Reduzido para caber",
+  "back": "Reduced to fit",
+  "why": "A state, not a command; 19 of 20."
+ },
+ "EDIT_SMALLEST": {
+  "text": "Tamanho mínimo",
+  "back": "Minimum size",
+  "why": "Two words, a state; 14 of 20."
+ },
+ "EDIT_NO_FIT_LONG": {
+  "text": "O texto não cabe nem no tamanho mínimo",
+  "back": "The text does not fit even at the minimum size",
+  "why": "Caber is the plain verb; 38 of 44."
+ },
+ "EDIT_CONTINUE": {
+  "text": "Continuar em outro slide",
+  "back": "Continue on another slide",
+  "why": "Plain words; slide as in the table; 24 of 40."
+ },
+ "EDIT_NEXT_STARTS": {
+  "text": "Aqui começa o próximo slide",
+  "back": "Here the next slide starts",
+  "why": "Próximo slide as in the tooltips; 27 of 34."
+ },
+ "EDIT_ADDS_SLIDE": {
+  "text": "Cria um slide logo depois deste",
+  "back": "Creates a slide right after this one",
+  "why": "Says what the button does; 31 of 38."
+ },
+ "EDIT_NOT_SAVED": {
+  "text": "Não salvo",
+  "back": "Not saved",
+  "why": "Uses Salvar; 9 of 14."
+ },
+ "EDIT_CANT_SAVE": {
+  "text": "Escolha o que fazer com o texto que não cabe",
+  "back": "Choose what to do with the text that does not fit",
+  "why": "Names the way out; 44 of 44."
+ },
+ "EDIT_OPEN_CALENDAR": {
+  "text": "Abrir Calendário",
+  "back": "Open Calendar",
+  "why": "Tab name as is; 16 of 24."
+ },
+ "EDIT_OPEN_MEMBERS": {
+  "text": "Abrir Membros",
+  "back": "Open Members",
+  "why": "Tab name as is; 13 of 24."
+ },
+ "EDIT_OPEN_OFFERINGS": {
+  "text": "Abrir Ofertas",
+  "back": "Open Offerings",
+  "why": "Tab name as is; 13 of 26."
+ },
+ "EDIT_READ_CAL": {
+  "text": "Vem do Calendário",
+  "back": "Comes from the Calendar",
+  "why": "Says the rows are not typed here; 17 of 30."
+ },
+ "EDIT_READ_MEMBERS": {
+  "text": "Vem de Membros",
+  "back": "Comes from Members",
+  "why": "Same shape as the calendar pill; 14 of 30."
+ },
+ "EDIT_READ_OFFERINGS": {
+  "text": "Vem de Ofertas",
+  "back": "Comes from Offerings",
+  "why": "Same shape as the calendar pill; 14 of 30."
+ },
+ "EDIT_PART_ROWS": {
+  "text": "Eventos da semana",
+  "back": "Events of the week",
+  "why": "Evento as in the table; 17 of 24."
+ },
+ "EDIT_PART_NAMES": {
+  "text": "Nomes de aniversariantes",
+  "back": "Names of birthday people",
+  "why": "Aniversariante is the person; 24 of 24."
+ },
+ "EDIT_PART_FUNDS": {
+  "text": "Destinos e valores",
+  "back": "Funds and amounts",
+  "why": "Destino is the table's word for fund; 18 of 24."
+ },
+ "EDIT_PART_ACCOUNT": {
+  "text": "Conta bancária",
+  "back": "Bank account",
+  "why": "Same as the account heading in Ofertas; 14 of 20."
+ },
+ "EDIT_PART_VERSE": {
+  "text": "Versículos",
+  "back": "Verses",
+  "why": "Versículo is the Bible verse; 10 of 20."
+ },
+ "EDIT_CARD_SETTINGS": {
+  "text": "Ajustes do aviso",
+  "back": "Settings of the announcement",
+  "why": "Ajustes is the settings word; 16 of 24."
+ },
+ "EDIT_WORDS": {
+  "text": "Texto do aviso",
+  "back": "Text of the announcement",
+  "why": "Texto alone is the body chip, so the heading names the card; 14 of 14."
+ },
+ "EDIT_MORE": {
+  "text": "Mais ajustes",
+  "back": "More settings",
+  "why": "Says what the dots open; 12 of 12."
+ },
+ "EDIT_RAIL_OPEN": {
+  "text": "Abrir a lista de avisos",
+  "back": "Open the list of announcements",
+  "why": "Plain verb and noun; 23 of 40."
+ },
+ "EDIT_RAIL_CLOSE": {
+  "text": "Fechar a lista de avisos",
+  "back": "Close the list of announcements",
+  "why": "Pairs with the open name; 24 of 40."
+ },
+ "NOTICE_CONTINUED": {
+  "text": "Slide criado com o que não coube",
+  "back": "Slide created with what did not fit",
+  "why": "Past tense, no full stop; 32 of 40."
+ },
+ "NOTICE_CONTINUE_FAILED": {
+  "text": "Não foi possível criar o slide, nada mudou",
+  "back": "It was not possible to create the slide, nothing changed",
+  "why": "States what is true, no apology; 42 of 44."
  }
 }

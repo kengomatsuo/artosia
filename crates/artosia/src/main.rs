@@ -14,6 +14,7 @@ mod backdrops;
 mod bibles;
 mod calendar;
 mod data;
+mod edit_slide;
 mod firewall;
 mod giving;
 // GUIDE1: the guide engine; the window wires it in task G3.
@@ -179,6 +180,34 @@ fn on_key(s: &mut App, ev: &KeyEvent, tx: &mut Tx) -> bool {
             s.save_notice();
             return true;
         }
+        // The editor on the slide: Ctrl Z takes back a committed edit, Ctrl Shift Z and Ctrl Y bring it
+        // back, unless a toast of another removal is up, which the key takes first as it always did.
+        Key::Command('z' | 'Z') if s.notices.is_some() && s.sheet == Sheet::None && !s.palette.open => {
+            if ev.mods.shift {
+                s.notice_redo();
+            } else if s.toast.as_ref().is_some_and(|toast| toast.undo.is_some()) {
+                s.undo();
+            } else {
+                s.notice_undo();
+            }
+            return true;
+        }
+        Key::Command('y') if s.notices.is_some() && s.sheet == Sheet::None && !s.palette.open => {
+            s.notice_redo();
+            return true;
+        }
+        Key::Command('b') if s.notices.is_some() && s.sheet == Sheet::None && !s.palette.open => {
+            s.notice_toggle_bold();
+            return true;
+        }
+        Key::Command('i') if s.notices.is_some() && s.sheet == Sheet::None && !s.palette.open => {
+            s.notice_toggle_italic();
+            return true;
+        }
+        // Tab walks the boxes of the slide, and after the last lets the focus reach the strip's controls.
+        Key::Tab if s.notices.is_some() && s.sheet == Sheet::None && !s.palette.open && !focused && !ev.mods.ctrl && s.notice_walk(!ev.mods.shift) => return true,
+        // Enter puts the caret in the box that is picked.
+        Key::Enter if s.notices.is_some() && s.sheet == Sheet::None && !s.palette.open && !focused && !ev.mods.shift && s.notice_enter() => return true,
         Key::Up | Key::Down if s.notices.is_some() && (ev.mods.ctrl || ev.mods.cmd) && !s.palette.open => {
             s.step_notice(if ev.key == Key::Up { -1 } else { 1 });
             return true;
@@ -282,7 +311,10 @@ fn on_key(s: &mut App, ev: &KeyEvent, tx: &mut Tx) -> bool {
             return true;
         }
         Key::Escape if s.notices.is_some() && s.sheet == Sheet::None => {
-            s.close_announcements();
+            // The caret, then the box and its sheet, then the editor.
+            if !s.notice_escape() {
+                s.close_announcements();
+            }
             tx.blur();
             return true;
         }
@@ -700,6 +732,66 @@ Until we reach the house
         }
     }),
     ("notice-schedule", |s| s.demo_notices("schedule")),
+    // NOTICEEDIT1: a card edited on its slide (editing-mocks E1a to E1d), and the sheets the small bar opens.
+    ("notice-edit-a", |s| {
+        s.demo_plain_notice(false);
+        s.notice_select(Some(artosia_slides::warta::Field::Title));
+    }),
+    ("notice-edit-b", |s| s.demo_plain_notice_typing()),
+    ("notice-edit-c", |s| {
+        s.demo_notices("schedule");
+        s.set_notice_style(artosia_core::deck::NoticeStyle::Greige);
+        s.toast = None;
+        s.notice_select(Some(artosia_slides::warta::Field::Rows));
+    }),
+    ("notice-edit-d", |s| {
+        s.demo_plain_notice(true);
+        s.notice_select(Some(artosia_slides::warta::Field::Body));
+    }),
+    ("notice-edit-more", |s| {
+        s.demo_plain_notice(false);
+        s.notice_select(Some(artosia_slides::warta::Field::Title));
+        s.notice_more();
+    }),
+    ("notice-edit-apply", |s| {
+        s.demo_plain_notice(false);
+        s.notice_select(Some(artosia_slides::warta::Field::Title));
+        if let Some(form) = s.notices.as_mut() {
+            form.slide.apply_open = true;
+        }
+    }),
+    ("notice-edit-new", |s| {
+        s.demo_plain_notice(false);
+        s.set_notice_style(artosia_core::deck::NoticeStyle::Greige);
+        s.new_notice("", "");
+        s.toast = None;
+    }),
+    // Every style has boxes: Ledger, Band and the look's own slide, each with its title picked and its words picked.
+    ("notice-edit-ledger", |s| {
+        s.demo_plain_notice(false);
+        s.set_notice_style(artosia_core::deck::NoticeStyle::Ledger);
+        s.toast = None;
+        s.notice_select(Some(artosia_slides::warta::Field::Body));
+    }),
+    ("notice-edit-band", |s| {
+        s.demo_notices("schedule");
+        s.set_notice_style(artosia_core::deck::NoticeStyle::Band);
+        s.toast = None;
+        s.notice_select(Some(artosia_slides::warta::Field::Rows));
+    }),
+    ("notice-edit-look", |s| {
+        s.demo_plain_notice(false);
+        s.set_notice_style(artosia_core::deck::NoticeStyle::Hairline);
+        s.toast = None;
+        s.notice_select(Some(artosia_slides::warta::Field::Title));
+    }),
+    // A part with no words has no box to pick: its field is in the Words sheet.
+    ("notice-edit-words", |s| {
+        s.demo_plain_notice(false);
+        if let Some(form) = s.notices.as_mut() {
+            form.title = rune::TextEdit::new("");
+        }
+    }),
     // SCHEDRANGE1 and BDAYRANGE1: next week's schedule, and a month of birthdays with the past week highlighted in each style.
     ("notice-schedule-next-week", |s| {
         s.demo_notices("schedule");
