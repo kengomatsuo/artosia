@@ -42,6 +42,10 @@ pub enum Command {
     People,
     /// A new person on the Members tab.
     AddPerson,
+    /// The Offerings tab.
+    Giving,
+    /// A new gift on the Offerings tab.
+    AddGift,
     Looks,
     Backdrops,
     Settings,
@@ -86,7 +90,7 @@ pub enum Command {
 }
 
 impl Command {
-    pub const ALL: [Command; 46] = [
+    pub const ALL: [Command; 48] = [
         Command::StartService,
         Command::Next,
         Command::Previous,
@@ -106,6 +110,8 @@ impl Command {
         Command::NewEvent,
         Command::People,
         Command::AddPerson,
+        Command::Giving,
+        Command::AddGift,
         Command::Heading,
         Command::StartHere,
         Command::Earlier,
@@ -144,6 +150,8 @@ impl Command {
             Command::NewEvent => t::CAL_NEW_EVENT(),
             Command::People => t::TAB_PEOPLE(),
             Command::AddPerson => t::PEOPLE_ADD(),
+            Command::Giving => t::TAB_GIVING(),
+            Command::AddGift => t::GIVING_ADD(),
             Command::Looks => t::CMD_LOOKS(),
             Command::Settings => t::CMD_SETTINGS(),
             Command::Backdrops => t::BACKDROPS_TITLE(),
@@ -195,6 +203,8 @@ impl Command {
             Command::NewEvent => t::CMD_NEW_EVENT_DETAIL(),
             Command::People => t::CMD_PEOPLE_DETAIL(),
             Command::AddPerson => t::CMD_ADD_PERSON_DETAIL(),
+            Command::Giving => t::CMD_GIVING_DETAIL(),
+            Command::AddGift => t::CMD_ADD_GIFT_DETAIL(),
             Command::Looks => t::CMD_LOOKS_DETAIL(),
             Command::Settings => t::CMD_SETTINGS_DETAIL(),
             Command::Backdrops => t::CMD_BACKDROPS_DETAIL(),
@@ -248,6 +258,8 @@ impl Command {
             Command::NewEvent => &["add event", "new service", "new meeting", "prayer", "rehearsal", "youth", "schedule", "calendar", "acara baru", "tambah acara", "jadwal", "kalender", "rapat", "latihan"],
             Command::People => &["members", "people", "birthdays", "congregation", "list", "jemaat", "anggota", "ulang tahun", "ultah", "daftar"],
             Command::AddPerson => &["add member", "new member", "new person", "add birthday", "birthday", "jemaat baru", "tambah jemaat", "tambah anggota", "tambah ulang tahun"],
+            Command::Giving => &["offerings", "offering", "giving", "gifts", "tithe", "money", "collection", "persembahan", "persepuluhan", "kolekte", "uang"],
+            Command::AddGift => &["add gift", "new gift", "add offering", "new offering", "record offering", "tithe", "persembahan baru", "tambah persembahan", "catat persembahan", "kolekte"],
             Command::Looks => &[
                 "look", "theme", "background", "font", "text size", "colour", "color", "text colour", "text color", "yellow", "white", "outline", "shadow", "words", "lines", "position", "tampilan", "desain", "tema", "latar", "ukuran teks", "warna", "warna teks", "kuning", "putih",
                 "huruf", "garis tepi", "baris", "posisi teks",
@@ -724,6 +736,8 @@ impl App {
                 Fill::Nothing => item.body.clone(),
                 Fill::Passage => item.passage.clone(),
                 Fill::ScheduleWeek => t::events_this_week(artosia_core::deck::week_events(&self.events, &self.today()).len()),
+                Fill::Offerings => artosia_core::giving::latest(&self.gifts).map(|date| t::giving_latest(&crate::calendar::date_words(date))).unwrap_or_default(),
+                Fill::Transfer => self.account.bank.clone(),
                 _ => t::names_today(artosia_core::deck::birthdays(&self.people, item.fill, &self.today()).len()),
             };
             let mut doc = Doc::new(format!("announcement:{}", item.id), "announcement", item.title.clone())
@@ -733,6 +747,8 @@ impl App {
                 Fill::BirthdaysWeek | Fill::BirthdaysMonth => doc.aliases(&["birthday", "birthdays", "show birthdays", "ulang tahun", "ultah", "tampilkan ulang tahun"]),
                 Fill::Passage => doc.aliases(&["verse of the week", "bible verse", "verse", "ayat", "ayat minggu ini"]),
                 Fill::ScheduleWeek => doc.aliases(&["schedule", "this week", "events", "jadwal", "jadwal ibadah", "minggu ini"]),
+                Fill::Offerings => doc.aliases(&["offering", "offerings", "collection", "tithe", "persembahan", "persepuluhan", "kolekte"]),
+                Fill::Transfer => doc.aliases(&["transfer", "account", "bank", "rekening", "nomor rekening", "persembahan transfer"]),
                 Fill::Nothing => doc,
             };
             out.push((doc, Hit::Announcement { index, title: item.title.clone(), body }));
@@ -1045,6 +1061,8 @@ impl App {
             }
             Command::People => self.open_tab(crate::state::Tab::People),
             Command::AddPerson => self.add_person_here(),
+            Command::Giving => self.open_tab(crate::state::Tab::Giving),
+            Command::AddGift => self.add_gift_here(),
             Command::Looks => {
                 // The part the typed word lives in opens first: "yellow" and "font" are about the words.
                 let typed = self.palette.query.text.to_lowercase();

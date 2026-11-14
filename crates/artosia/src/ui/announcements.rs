@@ -314,6 +314,13 @@ fn form(s: &App, k: &Kit, form: &Notices, width: f32) -> El {
                         .label(t::ANNOUNCEMENT_FILL())
                         .on_pick(|s: &mut App, _, _: &mut Tx| s.set_notice_fill(Fill::ScheduleWeek))
                         .build(k),
+                )
+                .child(
+                    SegmentedControl::new(&[t::FILL_OFFERINGS(), t::FILL_TRANSFER()], [Fill::Offerings, Fill::Transfer].iter().position(|fill| *fill == form.fill))
+                        .width(None)
+                        .label(t::ANNOUNCEMENT_FILL())
+                        .on_pick(|s: &mut App, picked, _: &mut Tx| s.set_notice_fill([Fill::Offerings, Fill::Transfer][picked.min(1)]))
+                        .build(k),
                 ),
         )
 
@@ -331,6 +338,15 @@ fn holds(s: &App, k: &Kit, draft: Option<&artosia_core::deck::Announcement>) -> 
     // A schedule card writes its lines from the calendar: how many it holds this week is all there is to say.
     if draft.fill == Fill::ScheduleWeek {
         return Some(col().key("notice-holds").w_full().child(text(t::events_this_week(week_events(&s.events, &today).len())).font(type_::SMALL).color(k.c.text_muted)));
+    }
+    // The money cards write their lines from the Offerings window: what they hold is said once.
+    if matches!(draft.fill, Fill::Offerings | Fill::Transfer) {
+        let words = match draft.fill {
+            Fill::Offerings => artosia_core::giving::latest(&s.gifts).map_or_else(|| t::GIVING_EMPTY().to_string(), |date| t::giving_latest(&crate::calendar::date_words(date))),
+            _ if s.account.ready() => s.account.bank.clone(),
+            _ => t::GIVING_ACCOUNT_NONE().to_string(),
+        };
+        return Some(col().key("notice-holds").w_full().child(text(words).font(type_::SMALL).color(k.c.text_muted)));
     }
     let ((from_month, from_day), (to_month, to_day)) = birthday_days(draft.fill, &today)?;
     let covers = if draft.fill == Fill::BirthdaysMonth { t::birthdays_cover_month(from_month) } else { t::birthdays_cover_week((from_month, from_day), (to_month, to_day)) };

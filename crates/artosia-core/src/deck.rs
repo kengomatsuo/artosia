@@ -4,6 +4,7 @@ use serde::{Deserialize, Serialize};
 
 use crate::bible::{Bible, Reference};
 use crate::calendar::{Date, Event, occurrences};
+use crate::giving::{Giving, offering_text, transfer_text};
 use crate::song::{SectionKind, Song, Tag};
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Hash, Serialize, Deserialize)]
@@ -102,6 +103,10 @@ pub enum Fill {
     Passage,
     /// The calendar's events in the seven days from today, one line each.
     ScheduleWeek,
+    /// The funds and what each received on the newest date a gift was kept, with their total.
+    Offerings,
+    /// The church's transfer account: bank, number, holder and note.
+    Transfer,
 }
 
 impl Fill {
@@ -113,6 +118,8 @@ impl Fill {
             Fill::BirthdaysMonth => "birthdays-month",
             Fill::Passage => "passage",
             Fill::ScheduleWeek => "schedule-week",
+            Fill::Offerings => "offerings",
+            Fill::Transfer => "transfer",
         }
     }
 
@@ -122,6 +129,8 @@ impl Fill {
             "birthdays-month" => Fill::BirthdaysMonth,
             "passage" => Fill::Passage,
             "schedule-week" => Fill::ScheduleWeek,
+            "offerings" => Fill::Offerings,
+            "transfer" => Fill::Transfer,
             _ => Fill::Nothing,
         }
     }
@@ -174,6 +183,8 @@ pub struct Today<'a> {
     pub clock: fn(u8, u8) -> String,
     /// How a day and a month's name read as a date in the window's language.
     pub date: fn(u8, &str) -> String,
+    /// The word that names a card's total, as the window writes it.
+    pub total: &'a str,
 }
 
 /// The most names on one birthday slide, three columns of ten; more go on a second slide.
@@ -199,7 +210,7 @@ pub fn birthday_days(fill: Fill, today: &Today) -> Option<((u8, u8), (u8, u8))> 
     match fill {
         Fill::BirthdaysWeek => Some(((today.month, today.day), days_after(today.month, today.day, 6))),
         Fill::BirthdaysMonth => Some(((today.month, 1), (today.month, MONTH_DAYS[usize::from(today.month.clamp(1, 12)) - 1]))),
-        Fill::Nothing | Fill::Passage | Fill::ScheduleWeek => None,
+        Fill::Nothing | Fill::Passage | Fill::ScheduleWeek | Fill::Offerings | Fill::Transfer => None,
     }
 }
 
@@ -264,7 +275,7 @@ pub fn birthdays<'a>(people: &'a [Person], fill: Fill, today: &Today) -> Vec<&'a
     let key = |month: u8, day: u8| u16::from(month) * 100 + u16::from(day);
     let from = key(today.month, today.day);
     let mut found: Vec<&Person> = match fill {
-        Fill::Nothing | Fill::Passage | Fill::ScheduleWeek => Vec::new(),
+        Fill::Nothing | Fill::Passage | Fill::ScheduleWeek | Fill::Offerings | Fill::Transfer => Vec::new(),
         Fill::BirthdaysMonth => people.iter().filter(|person| person.month == today.month).collect(),
         Fill::BirthdaysWeek => {
             let (month, day) = days_after(today.month, today.day, 6);
@@ -515,10 +526,11 @@ fn span_label(bible: &Bible, span: &Reference) -> String {
 
 /// The slides of every announcement in order, each with the place of its announcement in the
 /// list. One that fills itself with the calendar's week gives a slide per ten events, and none when
-/// the week is empty. One that fills itself with birthdays gives a slide per eight names, and none at all
+/// the week is empty. One that fills itself with the offerings or the transfer account gives one slide,
+/// and none while there is no gift or the account lacks its bank, number or holder. One that fills itself with birthdays gives a slide per eight names, and none at all
 /// when nobody has one. A passage card gives its verses, `per_slide` to a slide, and none at all
 /// while its reference cannot be read from `bible`.
-pub fn announcement_pages(announcements: &[Announcement], people: &[Person], events: &[Event], today: &Today, bible: Option<&Bible>, per_slide: usize) -> Vec<(usize, Slide)> {
+pub fn announcement_pages(announcements: &[Announcement], people: &[Person], events: &[Event], giving: &Giving, today: &Today, bible: Option<&Bible>, per_slide: usize) -> Vec<(usize, Slide)> {
     let mut pages = Vec::new();
     for (at, item) in announcements.iter().enumerate() {
         if item.fill == Fill::Passage {
@@ -537,6 +549,16 @@ pub fn announcement_pages(announcements: &[Announcement], people: &[Person], eve
                 let mut slide = announcement_slide(&Announcement { body: schedule_lines(group, today).join("
 "), ..item.clone() });
                 slide.notice = NoticeKind::Schedule;
+                pages.push((at, slide));
+            }
+            continue;
+        }
+        if matches!(item.fill, Fill::Offerings | Fill::Transfer) {
+            let (text, notice) = if item.fill == Fill::Offerings { (offering_text(giving, today.total), NoticeKind::Money) } else { (transfer_text(giving.account), NoticeKind::Account) };
+            // A card with no gifts or no account gives no slide, as a birthday card with nobody does.
+            if let Some(text) = text {
+                let mut slide = announcement_slide(&Announcement { body: text, ..item.clone() });
+                slide.notice = notice;
                 pages.push((at, slide));
             }
             continue;
@@ -572,12 +594,12 @@ pub fn announcement_pages(announcements: &[Announcement], people: &[Person], eve
 }
 
 /// Every announcement as one deck, for the loop shown before a service.
-pub fn announcements_deck(announcements: &[Announcement], people: &[Person], events: &[Event], today: &Today, bible: Option<&Bible>, per_slide: usize) -> Deck {
+pub fn announcements_deck(announcements: &[Announcement], people: &[Person], events: &[Event], giving: &Giving, today: &Today, bible: Option<&Bible>, per_slide: usize) -> Deck {
     Deck {
         title: "Announcements".to_string(),
         subtitle: String::new(),
         source: DeckSource::Announcements,
-        slides: announcement_pages(announcements, people, events, today, bible, per_slide).into_iter().map(|(_, slide)| slide).collect(),
+        slides: announcement_pages(announcements, people, events, giving, today, bible, per_slide).into_iter().map(|(_, slide)| slide).collect(),
     }
 }
 
@@ -634,7 +656,39 @@ pub fn tag_group(tag: Tag) -> usize {
 mod tests {
     use super::*;
     use crate::bible::Verse;
+    use crate::giving::Account;
     use crate::song::Translation;
+
+    fn nothing() -> Giving<'static> {
+        static ACCOUNT: Account = Account { bank: String::new(), number: String::new(), holder: String::new(), note: String::new() };
+        Giving { funds: &[], gifts: &[], account: &ACCOUNT }
+    }
+
+    #[test]
+    fn the_money_cards_read_the_gifts_and_the_account_and_give_nothing_while_they_have_none() {
+        use crate::giving::{Fund, Gift, Method};
+        let funds = vec![Fund { id: 1, name: "Tithe".into(), colour: [0; 3] }, Fund { id: 2, name: "Missions".into(), colour: [0; 3] }];
+        let gift = |day: u8, fund: i64, amount: i64| Gift { id: 0, date: Date { year: 2026, month: 11, day }, giver: String::new(), fund, method: Method::Cash, amount };
+        let gifts = vec![gift(1, 1, 10), gift(8, 1, 1_000), gift(8, 2, 250_000)];
+        let account = Account { bank: "Bank Contoh".into(), number: "0123".into(), holder: "Gereja Contoh".into(), note: "Write the fund".into() };
+        let cards = vec![Announcement { title: "Offering".into(), fill: Fill::Offerings, ..Announcement::default() }, Announcement { title: "Transfer".into(), fill: Fill::Transfer, ..Announcement::default() }];
+        const MONTHS: [&str; 12] = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        let today = today_on(11, 13, &MONTHS);
+        let pages = announcement_pages(&cards, &[], &[], &Giving { funds: &funds, gifts: &gifts, account: &account }, &today, None, 2);
+        assert_eq!(pages.len(), 2);
+        assert_eq!((pages[0].1.notice, pages[0].1.text.as_str()), (NoticeKind::Money, "Tithe	Rp 1.000
+Missions	Rp 250.000
+== Total	Rp 251.000"));
+        assert_eq!((pages[1].1.notice, pages[1].1.text.as_str()), (NoticeKind::Account, "Bank Contoh
+0123
+Gereja Contoh
+Write the fund"));
+        assert_eq!(pages[1].1.heading, "Transfer");
+        assert!(announcement_pages(&cards, &[], &[], &nothing(), &today, None, 2).is_empty());
+        for fill in [Fill::Offerings, Fill::Transfer] {
+            assert_eq!(Fill::from_code(fill.code()), fill);
+        }
+    }
 
     #[test]
     fn a_notice_body_splits_cells_and_sets_the_total_line_apart() {
@@ -670,7 +724,7 @@ mod tests {
 
     /// A day of 2026, with English names, for the cards that read the date.
     fn today_on<'a>(month: u8, day: u8, months: &'a [&'a str; 12]) -> Today<'a> {
-        Today { year: 2026, month, day, months, weekdays: &WEEKDAYS, clock: clock_dotted, date: day_first }
+        Today { year: 2026, month, day, months, weekdays: &WEEKDAYS, clock: clock_dotted, date: day_first, total: "Total" }
     }
 
     fn day_first(day: u8, month: &str) -> String {
@@ -692,15 +746,15 @@ mod tests {
             Announcement { title: "Welcome".into(), body: "Hello".into(), ..Announcement::default() },
             Announcement { title: "Birthdays".into(), fill: Fill::BirthdaysMonth, ..Announcement::default() },
         ];
-        let pages = announcement_pages(&items, &people, &[], &today, None, 2);
+        let pages = announcement_pages(&items, &people, &[], &nothing(), &today, None, 2);
         assert_eq!(pages.len(), 2);
         assert_eq!(pages[1].1.text, "Tom\t20 December\nBudi\t30 December");
         // A language that names the month first writes its dates that way.
         let month_first = Today { date: |day, month| format!("{month} {day}"), ..today };
-        assert_eq!(announcement_pages(&items, &people, &[], &month_first, None, 2)[1].1.text, "Tom\tDecember 20\nBudi\tDecember 30");
+        assert_eq!(announcement_pages(&items, &people, &[], &nothing(), &month_first, None, 2)[1].1.text, "Tom\tDecember 20\nBudi\tDecember 30");
         // Thirty names fill one slide of three columns; the thirty-first goes on a second. An empty month gives none.
         people.extend((1..=28).map(|day| person(&format!("Person {day:02}"), 12, day)));
-        let cards = |people: &[Person]| announcement_pages(&items, people, &[], &today, None, 2).into_iter().filter(|(at, _)| *at == 1).collect::<Vec<_>>();
+        let cards = |people: &[Person]| announcement_pages(&items, people, &[], &nothing(), &today, None, 2).into_iter().filter(|(at, _)| *at == 1).collect::<Vec<_>>();
         assert_eq!(people.iter().filter(|p| p.month == 12).count(), 30);
         let thirty = cards(&people);
         assert_eq!((thirty.len(), thirty[0].1.text.lines().count(), thirty[0].1.notice), (1, 30, NoticeKind::Birthdays));
@@ -708,11 +762,11 @@ mod tests {
         assert_eq!(cards(&people).iter().map(|(_, slide)| slide.text.lines().count()).collect::<Vec<_>>(), [30, 1]);
         people.pop();
         let june = today_on(7, 1, &MONTHS);
-        assert_eq!(announcement_pages(&items, &people, &[], &june, None, 2).len(), 1);
+        assert_eq!(announcement_pages(&items, &people, &[], &nothing(), &june, None, 2).len(), 1);
         // Twenty-five lines of a brought-in table become three slides of the same announcement.
         let long = vec![Announcement { title: "List".into(), body: (1..=25).map(|n| format!("Row {n}	{n}")).collect::<Vec<_>>().join("
 "), ..Announcement::default() }];
-        let pages = announcement_pages(&long, &[], &[], &today, None, 2);
+        let pages = announcement_pages(&long, &[], &[], &nothing(), &today, None, 2);
         assert_eq!(pages.iter().map(|(_, slide)| slide.text.lines().count()).collect::<Vec<_>>(), [10, 10, 5]);
     }
 
@@ -729,14 +783,14 @@ mod tests {
         let bible = made_up_bible();
         let card = Announcement { title: "Verse of the week".into(), fill: Fill::Passage, passage: "mazmur 23:1-3".into(), ..Announcement::default() };
         assert_eq!(passage_state(&card, Some(&bible)), PassageState::Ready(Reference { book: 19, chapter: 23, verse: 1, end_chapter: 23, end_verse: 3 }));
-        let pages = announcement_pages(std::slice::from_ref(&card), &[], &[], &today, Some(&bible), 2);
+        let pages = announcement_pages(std::slice::from_ref(&card), &[], &[], &nothing(), &today, Some(&bible), 2);
         assert_eq!(pages.len(), 2);
         assert_eq!(pages[0].1.heading, "Verse of the week");
         assert_eq!(pages[0].1.text, "1 Made up one. 2 Made up two.");
         assert_eq!(pages[1].1.caption, "Mazmur 23:3 TST");
         // The English name reads too, and the reference is re-read when the Bible changes.
         let english = Announcement { passage: "psalms 23:2".into(), ..card.clone() };
-        assert_eq!(announcement_pages(&[english], &[], &[], &today, Some(&bible), 2)[0].1.text, "Made up two.");
+        assert_eq!(announcement_pages(&[english], &[], &[], &nothing(), &today, Some(&bible), 2)[0].1.text, "Made up two.");
     }
 
     #[test]
@@ -752,7 +806,7 @@ mod tests {
         assert_eq!(passage_state(&plain, Some(&bible)), PassageState::NotAPassage);
         const MONTHS: [&str; 12] = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
         let today = today_on(5, 1, &MONTHS);
-        assert!(announcement_pages(&[card], &[], &[], &today, None, 2).is_empty());
+        assert!(announcement_pages(&[card], &[], &[], &nothing(), &today, None, 2).is_empty());
     }
 
     #[test]
@@ -961,7 +1015,7 @@ mod tests {
         let card = Announcement { title: "This week".into(), fill: Fill::ScheduleWeek, ..Announcement::default() };
         // Friday 13 November 2026: Sunday the 15th and Wednesday the 18th are in; the next Sunday, the 22nd, is a week and a day off.
         let today = today_on(11, 13, &MONTHS);
-        let pages = announcement_pages(std::slice::from_ref(&card), &[], &events, &today, None, 2);
+        let pages = announcement_pages(std::slice::from_ref(&card), &[], &events, &nothing(), &today, None, 2);
         assert_eq!(pages.len(), 1);
         assert_eq!(pages[0].1.text, "Sunday	06.30	First service
 	09.00	Second service
@@ -978,10 +1032,10 @@ Wednesday	18.30	Prayer");
         assert_eq!(found.last().map(|f| f.0), Some(Date::new(2027, 1, 3).unwrap()));
         // Nothing in the week: no slide at all.
         let none = vec![service("Once", Date::new(2027, 6, 1).unwrap(), 60, Repeat::Once)];
-        assert!(announcement_pages(&[card.clone()], &[], &none, &today, None, 2).is_empty());
+        assert!(announcement_pages(&[card.clone()], &[], &none, &nothing(), &today, None, 2).is_empty());
         // More than ten lines go on a second slide, which writes its first day again.
         let many: Vec<Event> = (0..12).map(|n| service(&format!("Event {n}"), Date::new(2026, 11, 15).unwrap(), 6 * 60 + n * 15, Repeat::Once)).collect();
-        let pages = announcement_pages(&[card], &[], &many, &today, None, 2);
+        let pages = announcement_pages(&[card], &[], &many, &nothing(), &today, None, 2);
         assert_eq!(pages.len(), 2);
         assert!(pages[1].1.text.starts_with("Sunday	"));
         assert_eq!(pages[1].1.text.lines().count(), 2);

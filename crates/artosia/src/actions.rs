@@ -203,6 +203,8 @@ impl App {
             Some(Undo::Calendar(calendar, events)) => self.restore_calendar(calendar, events),
             Some(Undo::Person(person)) => self.restore_person(person),
             Some(Undo::People(people)) => self.restore_people(people),
+            Some(Undo::Gift(gift)) => self.restore_gift(gift),
+            Some(Undo::Fund(fund, gifts)) => self.restore_fund(fund, gifts),
             None => {}
         }
     }
@@ -983,6 +985,10 @@ impl App {
         if kind == "birthdays" {
             cards.reverse();
         }
+        if kind == "offerings" || kind == "transfer" {
+            // The offering card first, so a render shows one of these cards.
+            cards.push(Announcement { title: t::ANNOUNCEMENT_TEMPLATES()[4].0.into(), fill: if kind == "offerings" { Fill::Offerings } else { Fill::Transfer }, seconds: 12, ..Announcement::default() });
+        }
         if kind == "schedule" {
             cards.push(Announcement { title: t::ANNOUNCEMENT_TEMPLATES()[crate::calendar::SCHEDULE_TEMPLATE].0.into(), fill: Fill::ScheduleWeek, seconds: 12, ..Announcement::default() });
         }
@@ -999,6 +1005,8 @@ impl App {
         let wanted = match kind {
             "birthdays" => Fill::BirthdaysWeek,
             "schedule" => Fill::ScheduleWeek,
+            "offerings" => Fill::Offerings,
+            "transfer" => Fill::Transfer,
             _ => Fill::Passage,
         };
         let id = self.announcements.iter().find(|card| card.fill == wanted).map(|card| card.id).unwrap_or(0);
@@ -1839,6 +1847,9 @@ impl App {
         }
         if self.calendar.dirty {
             self.save_calendar_colours();
+        }
+        if self.giving.dirty {
+            self.save_fund_colours();
         }
         if self.settings_dirty {
             self.settings_dirty = false;

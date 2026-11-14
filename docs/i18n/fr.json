@@ -4440,5 +4440,253 @@
   "text": "Membre supprimé : {name}",
   "back": "Member deleted: {name}",
   "why": "Name last like plan_deleted"
+ },
+ "GIVING_COL_DATE": {
+  "text": "Date",
+  "back": "Date",
+  "why": "Same word"
+ },
+ "GIVING_COL_GIVER": {
+  "text": "Donateur",
+  "back": "Giver",
+  "why": "Usual word, short"
+ },
+ "GIVING_COL_FUND": {
+  "text": "Fonds",
+  "back": "Fund",
+  "why": "Fonds is the word for money set aside"
+ },
+ "GIVING_COL_METHOD": {
+  "text": "Paiement",
+  "back": "Payment",
+  "why": "Espèces and virement fit under it; short as a filter label"
+ },
+ "GIVING_COL_AMOUNT": {
+  "text": "Montant",
+  "back": "Amount",
+  "why": "Usual over figures"
+ },
+ "GIVING_DATES": {
+  "text": "Période",
+  "back": "Period",
+  "why": "Names a range of days"
+ },
+ "GIVING_ALL_DATES": {
+  "text": "Toute période",
+  "back": "Any period",
+  "why": "No limit on days"
+ },
+ "GIVING_THIS_MONTH": {
+  "text": "Ce mois-ci",
+  "back": "This month",
+  "why": "Plain"
+ },
+ "GIVING_ALL_FUNDS": {
+  "text": "Tous les fonds",
+  "back": "All funds",
+  "why": "No limit"
+ },
+ "GIVING_ALL_METHODS": {
+  "text": "Tous",
+  "back": "All",
+  "why": "The label above names the topic"
+ },
+ "GIVING_CASH": {
+  "text": "Espèces",
+  "back": "Cash",
+  "why": "Standard"
+ },
+ "GIVING_TRANSFER": {
+  "text": "Virement",
+  "back": "Bank transfer",
+  "why": "Not transfert, which means moving"
+ },
+ "GIVING_PLATE": {
+  "text": "Quête",
+  "back": "Collection",
+  "why": "The church's word for the passing plate"
+ },
+ "GIVING_TOTAL": {
+  "text": "Total",
+  "back": "Total",
+  "why": "Same word"
+ },
+ "GIVING_ADD": {
+  "text": "Noter une offrande",
+  "back": "Write down an offering",
+  "why": "Verb first, fits 18"
+ },
+ "GIVING_EDIT": {
+  "text": "Modifier la ligne",
+  "back": "Edit the row",
+  "why": "Existing Modifier"
+ },
+ "GIVING_EMPTY": {
+  "text": "Aucune offrande",
+  "back": "No offering",
+  "why": "State only"
+ },
+ "GIVING_EMPTY_HINT": {
+  "text": "Notez la première offrande",
+  "back": "Write down the first offering",
+  "why": "Short invitation"
+ },
+ "GIVING_NONE": {
+  "text": "Aucun résultat",
+  "back": "No result",
+  "why": "Existing PEOPLE_NONE"
+ },
+ "GIVING_NONE_HINT": {
+  "text": "Changez la période, le fonds ou le paiement",
+  "back": "Change the period, the fund or the payment",
+  "why": "Like PEOPLE_NONE_HINT"
+ },
+ "GIVING_SUMS_HINT": {
+  "text": "Le total se calcule seul. Cliquez sur un montant pour le modifier.",
+  "back": "The total works itself out. Click an amount to change it.",
+  "why": "Two short sentences"
+ },
+ "GIVING_USED_BY": {
+  "text": "Utilisé par",
+  "back": "Used by",
+  "why": "Existing PEOPLE_USED_BY"
+ },
+ "GIVING_USED_BY_HINT": {
+  "text": "L'annonce des offrandes prend ses chiffres dans ce tableau, sans les retaper.",
+  "back": "The offering announcement takes its figures from this table, without retyping.",
+  "why": "Follows the members hint"
+ },
+ "GIVING_BY_FUND": {
+  "text": "Par fonds",
+  "back": "By fund",
+  "why": "Short heading"
+ },
+ "GIVING_OPEN_CARD": {
+  "text": "Ouvrir l'annonce",
+  "back": "Open the announcement",
+  "why": "Existing PEOPLE_OPEN_CARD"
+ },
+ "GIVING_ACCOUNT": {
+  "text": "Compte de virement",
+  "back": "Transfer account",
+  "why": "Plain"
+ },
+ "GIVING_ACCOUNT_HINT": {
+  "text": "L'annonce du virement prend ses mots dans ce compte.",
+  "back": "The transfer announcement takes its words from this account.",
+  "why": "One sentence"
+ },
+ "GIVING_ACCOUNT_NONE": {
+  "text": "Compte non renseigné",
+  "back": "Account not filled in",
+  "why": "State only"
+ },
+ "GIVING_ACCOUNT_EDIT": {
+  "text": "Saisir le compte",
+  "back": "Enter the account",
+  "why": "Verb first"
+ },
+ "GIVING_BANK": {
+  "text": "Banque",
+  "back": "Bank",
+  "why": "Standard"
+ },
+ "GIVING_NUMBER": {
+  "text": "Numéro de compte",
+  "back": "Account number",
+  "why": "Standard"
+ },
+ "GIVING_HOLDER": {
+  "text": "Titulaire",
+  "back": "Holder",
+  "why": "Bank word"
+ },
+ "GIVING_NOTE": {
+  "text": "Remarque",
+  "back": "Remark",
+  "why": "One word"
+ },
+ "GIVING_FUNDS": {
+  "text": "Fonds",
+  "back": "Funds",
+  "why": "Fonds does not change in the plural"
+ },
+ "GIVING_FUND_NAME": {
+  "text": "Nom du fonds",
+  "back": "Name of the fund",
+  "why": "Plain"
+ },
+ "GIVING_FUND_COLOUR": {
+  "text": "Couleur",
+  "back": "Colour",
+  "why": "Existing CAL_COLOUR"
+ },
+ "GIVING_ADD_FUND": {
+  "text": "Ajouter un fonds",
+  "back": "Add a fund",
+  "why": "Existing Ajouter"
+ },
+ "GIVING_DELETE_FUND": {
+  "text": "Supprimer le fonds",
+  "back": "Delete the fund",
+  "why": "Existing Supprimer"
+ },
+ "GIVING_NEW_FUND": {
+  "text": "Nouveau fonds",
+  "back": "New fund",
+  "why": "Plain"
+ },
+ "GIVING_GENERAL_FUND": {
+  "text": "Fonds général",
+  "back": "General fund",
+  "why": "Usual church name"
+ },
+ "CMD_GIVING_DETAIL": {
+  "text": "Liste des offrandes avec leurs totaux",
+  "back": "List of offerings with their totals",
+  "why": "Detail line"
+ },
+ "CMD_ADD_GIFT_DETAIL": {
+  "text": "Une ligne pour noter une offrande en détail",
+  "back": "A row to write down an offering in detail",
+  "why": "Detail line"
+ },
+ "FILL_OFFERINGS": {
+  "text": "Offrandes du dernier jour, par fonds",
+  "back": "Offerings of the last day, by fund",
+  "why": "Switch label"
+ },
+ "FILL_TRANSFER": {
+  "text": "Compte de virement",
+  "back": "Transfer account",
+  "why": "Same as the panel heading"
+ },
+ "giving_count": {
+  "text": {
+   "one": "offrande",
+   "other": "offrandes"
+  },
+  "back": "offering / offerings",
+  "why": "Noun under a figure; one covers 0 and 1"
+ },
+ "giving_latest": {
+  "text": "Dernière offrande le {date}",
+  "back": "Latest offering on {date}",
+  "why": "Plain"
+ },
+ "giving_range": {
+  "text": "Du {from} au {to}",
+  "back": "From {from} to {to}",
+  "why": "Range"
+ },
+ "gift_deleted": {
+  "text": "Offrande supprimée : {amount}",
+  "back": "Offering deleted: {amount}",
+  "why": "Existing supprimé : pattern"
+ },
+ "fund_deleted": {
+  "text": "Fonds supprimé : {name}, avec ses offrandes",
+  "back": "Fund deleted: {name}, with its offerings",
+  "why": "Names both fund and gifts"
  }
 }

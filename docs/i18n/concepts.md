@@ -144,6 +144,8 @@ A second reader of a finished language found one thing under two or three names,
 
 **`fund`** What a gift is given for: the tithe, the general offering, the building, missions, help for the poor, a thanksgiving.
 
+**`transfer_account`** The bank account the church asks gifts to be sent to: the bank's name, the account number, the name it is held in and an optional note. The transfer announcement reads it, so the number is never typed twice.
+
 **`slide_template`** A ready shape for an announcement slide that fills itself from one of the church's windows (the calendar, the members, the offerings) or holds plain words a person writes. Each comes in one of three styles.
 
 ## Finding things

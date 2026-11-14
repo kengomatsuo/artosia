@@ -4353,5 +4353,252 @@
   "text": "{name} dihapus",
   "back": "{name} deleted",
   "why": "Name leads, past tense like plan_deleted"
+ },
+ "GIVING_COL_DATE": {
+  "text": "Tanggal",
+  "back": "Date",
+  "why": "Plain word for a day"
+ },
+ "GIVING_COL_GIVER": {
+  "text": "Pemberi",
+  "back": "Giver",
+  "why": "One word, from beri"
+ },
+ "GIVING_COL_FUND": {
+  "text": "Tujuan",
+  "back": "Purpose",
+  "why": "Church volunteers say persembahan untuk tujuan; one word for fund in every text"
+ },
+ "GIVING_COL_METHOD": {
+  "text": "Cara bayar",
+  "back": "Way of paying",
+  "why": "Short; covers tunai and transfer"
+ },
+ "GIVING_COL_AMOUNT": {
+  "text": "Jumlah",
+  "back": "Amount",
+  "why": "Usual word over money figures"
+ },
+ "GIVING_DATES": {
+  "text": "Tanggal",
+  "back": "Date",
+  "why": "Same word as the column"
+ },
+ "GIVING_ALL_DATES": {
+  "text": "Semua tanggal",
+  "back": "All dates",
+  "why": "Plain"
+ },
+ "GIVING_THIS_MONTH": {
+  "text": "Bulan ini",
+  "back": "This month",
+  "why": "Plain"
+ },
+ "GIVING_ALL_FUNDS": {
+  "text": "Semua tujuan",
+  "back": "All purposes",
+  "why": "Matches Tujuan"
+ },
+ "GIVING_ALL_METHODS": {
+  "text": "Semua",
+  "back": "All",
+  "why": "The label above names the topic"
+ },
+ "GIVING_CASH": {
+  "text": "Tunai",
+  "back": "Cash",
+  "why": "Standard"
+ },
+ "GIVING_TRANSFER": {
+  "text": "Transfer",
+  "back": "Bank transfer",
+  "why": "Standard in Indonesian banking"
+ },
+ "GIVING_PLATE": {
+  "text": "Kantong persembahan",
+  "back": "Offering bag",
+  "why": "The church's own name for the passing collection"
+ },
+ "GIVING_TOTAL": {
+  "text": "Total",
+  "back": "Total",
+  "why": "Same in Indonesian"
+ },
+ "GIVING_ADD": {
+  "text": "Catat persembahan",
+  "back": "Write down an offering",
+  "why": "Verb first; catat is write down; persembahan is the table's word"
+ },
+ "GIVING_EDIT": {
+  "text": "Ubah persembahan",
+  "back": "Change the offering",
+  "why": "Ubah as in BTN_EDIT"
+ },
+ "GIVING_EMPTY": {
+  "text": "Belum ada catatan",
+  "back": "Nothing written down yet",
+  "why": "State only"
+ },
+ "GIVING_EMPTY_HINT": {
+  "text": "Catat persembahan pertama",
+  "back": "Write down the first offering",
+  "why": "Short invitation"
+ },
+ "GIVING_NONE": {
+  "text": "Tidak ada yang cocok",
+  "back": "Nothing matches",
+  "why": "Same line the members list uses"
+ },
+ "GIVING_NONE_HINT": {
+  "text": "Coba tanggal, tujuan, atau cara bayar lain",
+  "back": "Try another date, purpose or way of paying",
+  "why": "Familiar, no pronoun, like PEOPLE_NONE_HINT"
+ },
+ "GIVING_SUMS_HINT": {
+  "text": "Total dihitung otomatis. Klik angkanya untuk mengubah.",
+  "back": "The total is counted automatically. Click the figure to change it.",
+  "why": "Two short sentences; desktop so klik"
+ },
+ "GIVING_USED_BY": {
+  "text": "Dipakai di",
+  "back": "Used in",
+  "why": "Heading over the slide"
+ },
+ "GIVING_USED_BY_HINT": {
+  "text": "Pengumuman persembahan mengambil isinya dari tabel ini, jadi tidak diketik ulang.",
+  "back": "The offering announcement takes its content from this table, so it is not typed again.",
+  "why": "Follows the members list hint"
+ },
+ "GIVING_BY_FUND": {
+  "text": "Per tujuan",
+  "back": "By purpose",
+  "why": "Short heading"
+ },
+ "GIVING_OPEN_CARD": {
+  "text": "Buka pengumuman",
+  "back": "Open announcement",
+  "why": "Existing PEOPLE_OPEN_CARD wording"
+ },
+ "GIVING_ACCOUNT": {
+  "text": "Rekening transfer",
+  "back": "Transfer account",
+  "why": "Rekening is the bank account"
+ },
+ "GIVING_ACCOUNT_HINT": {
+  "text": "Pengumuman transfer mengambil isinya dari rekening ini.",
+  "back": "The transfer announcement takes its content from this account.",
+  "why": "One sentence"
+ },
+ "GIVING_ACCOUNT_NONE": {
+  "text": "Rekening belum diisi",
+  "back": "Account not filled in yet",
+  "why": "State only"
+ },
+ "GIVING_ACCOUNT_EDIT": {
+  "text": "Isi rekening",
+  "back": "Fill in account",
+  "why": "Verb first"
+ },
+ "GIVING_BANK": {
+  "text": "Bank",
+  "back": "Bank",
+  "why": "Same word"
+ },
+ "GIVING_NUMBER": {
+  "text": "Nomor rekening",
+  "back": "Account number",
+  "why": "Usual"
+ },
+ "GIVING_HOLDER": {
+  "text": "Atas nama",
+  "back": "In the name of",
+  "why": "How banks label the holder"
+ },
+ "GIVING_NOTE": {
+  "text": "Catatan",
+  "back": "Note",
+  "why": "One word"
+ },
+ "GIVING_FUNDS": {
+  "text": "Daftar tujuan",
+  "back": "List of purposes",
+  "why": "No plural in Indonesian; one noun phrase serves button, title and heading"
+ },
+ "GIVING_FUND_NAME": {
+  "text": "Nama tujuan",
+  "back": "Name of purpose",
+  "why": "Plain"
+ },
+ "GIVING_FUND_COLOUR": {
+  "text": "Warna",
+  "back": "Colour",
+  "why": "Existing CAL_COLOUR word"
+ },
+ "GIVING_ADD_FUND": {
+  "text": "Tambah tujuan",
+  "back": "Add purpose",
+  "why": "Existing Tambah verb"
+ },
+ "GIVING_DELETE_FUND": {
+  "text": "Hapus tujuan",
+  "back": "Delete purpose",
+  "why": "Existing Hapus"
+ },
+ "GIVING_NEW_FUND": {
+  "text": "Tujuan baru",
+  "back": "New purpose",
+  "why": "Plain"
+ },
+ "GIVING_GENERAL_FUND": {
+  "text": "Persembahan umum",
+  "back": "General offering",
+  "why": "How churches name the ordinary offering"
+ },
+ "CMD_GIVING_DETAIL": {
+  "text": "Daftar persembahan beserta jumlahnya",
+  "back": "List of offerings with their sums",
+  "why": "Detail line"
+ },
+ "CMD_ADD_GIFT_DETAIL": {
+  "text": "Catat satu persembahan beserta jumlahnya",
+  "back": "Write down one offering with its amount",
+  "why": "Detail line"
+ },
+ "FILL_OFFERINGS": {
+  "text": "Persembahan terbaru per tujuan",
+  "back": "Newest offerings by purpose",
+  "why": "Switch label"
+ },
+ "FILL_TRANSFER": {
+  "text": "Rekening transfer",
+  "back": "Transfer account",
+  "why": "Same as the panel heading"
+ },
+ "giving_count": {
+  "text": {
+   "other": "persembahan"
+  },
+  "back": "offerings",
+  "why": "Noun under a figure"
+ },
+ "giving_latest": {
+  "text": "Persembahan terakhir {date}",
+  "back": "Latest offering {date}",
+  "why": "Plain"
+ },
+ "giving_range": {
+  "text": "{from} sampai {to}",
+  "back": "{from} until {to}",
+  "why": "Range"
+ },
+ "gift_deleted": {
+  "text": "Persembahan {amount} dihapus",
+  "back": "Offering {amount} deleted",
+  "why": "Past, as plan_deleted"
+ },
+ "fund_deleted": {
+  "text": "Tujuan {name} dan persembahannya dihapus",
+  "back": "Purpose {name} and its offerings deleted",
+  "why": "Names both fund and gifts"
  }
 }

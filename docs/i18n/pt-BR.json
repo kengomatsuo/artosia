@@ -4437,5 +4437,253 @@
   "text": "Apagado da lista: {name}",
   "back": "Deleted from the list: {name}",
   "why": "Apagar is the delete verb; avoids gender of the name."
+ },
+ "GIVING_COL_DATE": {
+  "text": "Data",
+  "back": "Date",
+  "why": "Reuses Ofertas/aviso; destino avoids the word for background"
+ },
+ "GIVING_COL_GIVER": {
+  "text": "Doador",
+  "back": "Giver",
+  "why": "Reuses Ofertas/aviso; destino avoids the word for background"
+ },
+ "GIVING_COL_FUND": {
+  "text": "Destino",
+  "back": "Destination",
+  "why": "Reuses Ofertas/aviso; destino avoids the word for background"
+ },
+ "GIVING_COL_METHOD": {
+  "text": "Método",
+  "back": "Method",
+  "why": "Reuses Ofertas/aviso; destino avoids the word for background"
+ },
+ "GIVING_COL_AMOUNT": {
+  "text": "Valor",
+  "back": "Amount",
+  "why": "Reuses Ofertas/aviso; destino avoids the word for background"
+ },
+ "GIVING_DATES": {
+  "text": "Período",
+  "back": "Period",
+  "why": "Reuses Ofertas/aviso; destino avoids the word for background"
+ },
+ "GIVING_ALL_DATES": {
+  "text": "Todos os dias",
+  "back": "All days",
+  "why": "Reuses Ofertas/aviso; destino avoids the word for background"
+ },
+ "GIVING_THIS_MONTH": {
+  "text": "Este mês",
+  "back": "This month",
+  "why": "Reuses Ofertas/aviso; destino avoids the word for background"
+ },
+ "GIVING_ALL_FUNDS": {
+  "text": "Todos",
+  "back": "All",
+  "why": "Reuses Ofertas/aviso; destino avoids the word for background"
+ },
+ "GIVING_ALL_METHODS": {
+  "text": "Todos",
+  "back": "All",
+  "why": "Reuses Ofertas/aviso; destino avoids the word for background"
+ },
+ "GIVING_CASH": {
+  "text": "Dinheiro",
+  "back": "Cash",
+  "why": "Reuses Ofertas/aviso; destino avoids the word for background"
+ },
+ "GIVING_TRANSFER": {
+  "text": "Pelo banco",
+  "back": "Through the bank",
+  "why": "Reuses Ofertas/aviso; destino avoids the word for background"
+ },
+ "GIVING_PLATE": {
+  "text": "Coleta do culto",
+  "back": "Service collection",
+  "why": "Reuses Ofertas/aviso; destino avoids the word for background"
+ },
+ "GIVING_TOTAL": {
+  "text": "Total",
+  "back": "Total",
+  "why": "Reuses Ofertas/aviso; destino avoids the word for background"
+ },
+ "GIVING_ADD": {
+  "text": "Adicionar oferta",
+  "back": "Add offering",
+  "why": "Reuses Ofertas/aviso; destino avoids the word for background"
+ },
+ "GIVING_EDIT": {
+  "text": "Editar oferta",
+  "back": "Edit offering",
+  "why": "Reuses Ofertas/aviso; destino avoids the word for background"
+ },
+ "GIVING_EMPTY": {
+  "text": "Nenhuma oferta ainda",
+  "back": "No offerings yet",
+  "why": "Reuses Ofertas/aviso; destino avoids the word for background"
+ },
+ "GIVING_EMPTY_HINT": {
+  "text": "Adicione a primeira oferta",
+  "back": "Add the first offering",
+  "why": "Reuses Ofertas/aviso; destino avoids the word for background"
+ },
+ "GIVING_NONE": {
+  "text": "Nada com esses filtros",
+  "back": "Nothing with these filters",
+  "why": "Reuses Ofertas/aviso; destino avoids the word for background"
+ },
+ "GIVING_NONE_HINT": {
+  "text": "Tente outros dias, destino ou método",
+  "back": "Try other days, destination or method",
+  "why": "Reuses Ofertas/aviso; destino avoids the word for background"
+ },
+ "GIVING_SUMS_HINT": {
+  "text": "O total se calcula sozinho. Para mudar um valor, clique nele.",
+  "back": "The total works itself out. To change a value, click it.",
+  "why": "Reuses Ofertas/aviso; destino avoids the word for background"
+ },
+ "GIVING_USED_BY": {
+  "text": "Onde aparece",
+  "back": "Where it appears",
+  "why": "Reuses Ofertas/aviso; destino avoids the word for background"
+ },
+ "GIVING_USED_BY_HINT": {
+  "text": "O aviso de ofertas é escrito com as linhas da tabela.",
+  "back": "The offerings announcement is written from the table's lines.",
+  "why": "Reuses Ofertas/aviso; destino avoids the word for background"
+ },
+ "GIVING_BY_FUND": {
+  "text": "Por destino",
+  "back": "By destination",
+  "why": "Reuses Ofertas/aviso; destino avoids the word for background"
+ },
+ "GIVING_OPEN_CARD": {
+  "text": "Abrir o aviso",
+  "back": "Open the announcement",
+  "why": "Reuses Ofertas/aviso; destino avoids the word for background"
+ },
+ "GIVING_ACCOUNT": {
+  "text": "Conta bancária",
+  "back": "Bank account",
+  "why": "Reuses Ofertas/aviso; destino avoids the word for background"
+ },
+ "GIVING_ACCOUNT_HINT": {
+  "text": "O aviso de transferência pega os dados desta conta.",
+  "back": "The transfer announcement takes its details from this account.",
+  "why": "Reuses Ofertas/aviso; destino avoids the word for background"
+ },
+ "GIVING_ACCOUNT_NONE": {
+  "text": "Conta ainda não informada",
+  "back": "Account not entered yet",
+  "why": "Reuses Ofertas/aviso; destino avoids the word for background"
+ },
+ "GIVING_ACCOUNT_EDIT": {
+  "text": "Editar conta",
+  "back": "Edit account",
+  "why": "Reuses Ofertas/aviso; destino avoids the word for background"
+ },
+ "GIVING_BANK": {
+  "text": "Banco",
+  "back": "Bank",
+  "why": "Reuses Ofertas/aviso; destino avoids the word for background"
+ },
+ "GIVING_NUMBER": {
+  "text": "Número da conta",
+  "back": "Account number",
+  "why": "Reuses Ofertas/aviso; destino avoids the word for background"
+ },
+ "GIVING_HOLDER": {
+  "text": "Titular",
+  "back": "Holder",
+  "why": "Reuses Ofertas/aviso; destino avoids the word for background"
+ },
+ "GIVING_NOTE": {
+  "text": "Observação",
+  "back": "Remark",
+  "why": "Reuses Ofertas/aviso; destino avoids the word for background"
+ },
+ "GIVING_FUNDS": {
+  "text": "Destinos",
+  "back": "Destinations",
+  "why": "Reuses Ofertas/aviso; destino avoids the word for background"
+ },
+ "GIVING_FUND_NAME": {
+  "text": "Nome do destino",
+  "back": "Name of the destination",
+  "why": "Reuses Ofertas/aviso; destino avoids the word for background"
+ },
+ "GIVING_FUND_COLOUR": {
+  "text": "Cor",
+  "back": "Colour",
+  "why": "Reuses Ofertas/aviso; destino avoids the word for background"
+ },
+ "GIVING_ADD_FUND": {
+  "text": "Adicionar destino",
+  "back": "Add destination",
+  "why": "Reuses Ofertas/aviso; destino avoids the word for background"
+ },
+ "GIVING_DELETE_FUND": {
+  "text": "Apagar destino",
+  "back": "Delete destination",
+  "why": "Reuses Ofertas/aviso; destino avoids the word for background"
+ },
+ "GIVING_NEW_FUND": {
+  "text": "Novo destino",
+  "back": "New destination",
+  "why": "Reuses Ofertas/aviso; destino avoids the word for background"
+ },
+ "GIVING_GENERAL_FUND": {
+  "text": "Oferta geral",
+  "back": "General offering",
+  "why": "Reuses Ofertas/aviso; destino avoids the word for background"
+ },
+ "CMD_GIVING_DETAIL": {
+  "text": "Lista de ofertas com os totais",
+  "back": "List of offerings with the totals",
+  "why": "Reuses Ofertas/aviso; destino avoids the word for background"
+ },
+ "CMD_ADD_GIFT_DETAIL": {
+  "text": "Uma oferta com data, destino e valor",
+  "back": "An offering with date, destination and amount",
+  "why": "Reuses Ofertas/aviso; destino avoids the word for background"
+ },
+ "FILL_OFFERINGS": {
+  "text": "Ofertas do último dia, por destino",
+  "back": "Offerings of the last day, by destination",
+  "why": "Reuses Ofertas/aviso; destino avoids the word for background"
+ },
+ "FILL_TRANSFER": {
+  "text": "Conta para transferência",
+  "back": "Account for transfer",
+  "why": "Reuses Ofertas/aviso; destino avoids the word for background"
+ },
+ "giving_count": {
+  "text": {
+   "one": "oferta",
+   "other": "ofertas"
+  },
+  "back": "offering / offerings",
+  "why": "Reuses Ofertas/aviso; destino avoids the word for background"
+ },
+ "giving_latest": {
+  "text": "Ofertas do dia {date}",
+  "back": "Offerings of the day {date}",
+  "why": "Reuses Ofertas/aviso; destino avoids the word for background"
+ },
+ "giving_range": {
+  "text": "De {from} a {to}",
+  "back": "From {from} to {to}",
+  "why": "Reuses Ofertas/aviso; destino avoids the word for background"
+ },
+ "gift_deleted": {
+  "text": "Oferta de {amount} apagada",
+  "back": "Offering of {amount} deleted",
+  "why": "Reuses Ofertas/aviso; destino avoids the word for background"
+ },
+ "fund_deleted": {
+  "text": "Destino «{name}» apagado, com suas ofertas",
+  "back": "Destination «{name}» deleted, with its offerings",
+  "why": "Reuses Ofertas/aviso; destino avoids the word for background"
  }
 }

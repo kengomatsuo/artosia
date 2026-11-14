@@ -2146,6 +2146,96 @@ pub fn person_deleted(name: &str) -> String {
     format!("Deleted {name}")
 }
 
+// ---- The Offerings window (OVGIVING1)
+
+text!(GIVING_COL_DATE, "Date", "Date");
+text!(GIVING_COL_GIVER, "Giver", "Giver");
+text!(GIVING_COL_FUND, "Fund", "Fund");
+text!(GIVING_COL_METHOD, "Method", "Method");
+text!(GIVING_COL_AMOUNT, "Amount", "Amount");
+text!(GIVING_DATES, "Dates", "Dates");
+text!(GIVING_ALL_DATES, "All dates", "All dates");
+text!(GIVING_THIS_MONTH, "This month", "This month");
+text!(GIVING_ALL_FUNDS, "All funds", "All funds");
+text!(GIVING_ALL_METHODS, "All", "All");
+text!(GIVING_CASH, "Cash", "Cash");
+text!(GIVING_TRANSFER, "Transfer", "Transfer");
+text!(GIVING_PLATE, "Collection plate", "Collection plate");
+text!(GIVING_TOTAL, "Total", "Total");
+text!(GIVING_ADD, "Add gift", "Add gift");
+text!(GIVING_EDIT, "Edit gift", "Edit gift");
+text!(GIVING_EMPTY, "No gifts yet", "No gifts yet");
+text!(GIVING_EMPTY_HINT, "Add the first gift.", "Add the first gift.");
+text!(GIVING_NONE, "No gift matches", "No gift matches");
+text!(GIVING_NONE_HINT, "Change the dates, the fund or the method.", "Change the dates, the fund or the method.");
+text!(GIVING_SUMS_HINT, "The total adds itself from the rows. Press an amount to change it.", "The total adds itself from the rows. Press an amount to change it.");
+text!(GIVING_USED_BY, "Used by", "Used by");
+text!(GIVING_USED_BY_HINT, "The offering card reads this table, so no figure is typed on a slide.", "The offering card reads this table, so no figure is typed on a slide.");
+text!(GIVING_BY_FUND, "By fund", "By fund");
+text!(GIVING_OPEN_CARD, "Open the card", "Open the card");
+text!(GIVING_ACCOUNT, "Transfer account", "Transfer account");
+text!(GIVING_ACCOUNT_HINT, "The transfer card reads this account, so the number is never typed twice.", "The transfer card reads this account, so the number is never typed twice.");
+text!(GIVING_ACCOUNT_NONE, "No account written yet", "No account written yet");
+text!(GIVING_ACCOUNT_EDIT, "Edit account", "Edit account");
+text!(GIVING_BANK, "Bank", "Bank");
+text!(GIVING_NUMBER, "Account number", "Account number");
+text!(GIVING_HOLDER, "Account holder", "Account holder");
+text!(GIVING_NOTE, "Note", "Note");
+text!(GIVING_FUNDS, "Funds", "Funds");
+text!(GIVING_FUND_NAME, "Fund name", "Fund name");
+text!(GIVING_FUND_COLOUR, "Fund colour", "Fund colour");
+text!(GIVING_ADD_FUND, "Add fund", "Add fund");
+text!(GIVING_DELETE_FUND, "Delete fund", "Delete fund");
+text!(GIVING_NEW_FUND, "New fund", "New fund");
+text!(GIVING_GENERAL_FUND, "General offering", "General offering");
+text!(CMD_GIVING_DETAIL, "The offerings, gift by gift, and their totals", "The offerings, gift by gift, and their totals");
+text!(CMD_ADD_GIFT_DETAIL, "A gift, its date, giver, fund and amount", "A gift, its date, giver, fund and amount");
+text!(FILL_OFFERINGS, "Offerings of the latest service", "Offerings of the latest service");
+text!(FILL_TRANSFER, "Transfer account", "Transfer account");
+
+/// The noun under the figure that counts the gifts the table lists.
+pub fn giving_count(count: usize) -> String {
+    if let Some(text) = say("giving_count", None, Some(count), &[]) {
+        return text;
+    }
+    match count {
+        1 => "gift".to_string(),
+        _ => "gifts".to_string(),
+    }
+}
+
+/// The day of the newest gift, beside the title.
+pub fn giving_latest(date: &str) -> String {
+    if let Some(text) = say("giving_latest", None, None, &[("date", text_arg(date))]) {
+        return text;
+    }
+    format!("Latest service: {date}")
+}
+
+/// The range of days the date filter shows.
+pub fn giving_range(from: &str, to: &str) -> String {
+    if let Some(text) = say("giving_range", None, None, &[("from", text_arg(from)), ("to", text_arg(to))]) {
+        return text;
+    }
+    format!("{from} - {to}")
+}
+
+/// The toast after a gift was deleted.
+pub fn gift_deleted(amount: &str) -> String {
+    if let Some(text) = say("gift_deleted", None, None, &[("amount", text_arg(amount))]) {
+        return text;
+    }
+    format!("Deleted the gift of {amount}")
+}
+
+/// The toast after a fund was deleted with its gifts.
+pub fn fund_deleted(name: &str) -> String {
+    if let Some(text) = say("fund_deleted", None, None, &[("name", text_arg(name))]) {
+        return text;
+    }
+    format!("Deleted {name} and its gifts")
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

@@ -29,15 +29,15 @@ const NUMBER: f32 = 24.0;
 /// The grid's size before the first frame has measured it, for a window of 1366 by 768.
 const GRID_FALLBACK: [f32; 2] = [1116.0, 520.0];
 
-fn label(k: &Kit, words: &str) -> El {
+pub(super) fn label(k: &Kit, words: &str) -> El {
     text(words).font(type_::SMALL_STRONG).color(k.c.text_muted)
 }
 
-fn cap(k: &Kit, words: &str) -> El {
+pub(super) fn cap(k: &Kit, words: &str) -> El {
     text(words.to_uppercase()).font(type_::TINY.tracking(0.8)).color(k.c.text_muted)
 }
 
-fn dot(colour: [u8; 3], d: f32) -> El {
+pub(super) fn dot(colour: [u8; 3], d: f32) -> El {
     el().size(d, d).radius(d / 2.0).fill(rgb(colour)).a11y_hidden()
 }
 
@@ -406,55 +406,67 @@ fn day_toggle(k: &Kit, weekday: u8, on: bool) -> El {
     e.on_press(move |s: &mut App| s.event_toggle_day(weekday))
 }
 
-/// A month to pick a day from, drawn under the date it picks for.
-fn month_picker(s: &App, k: &Kit, form: &EventForm) -> El {
-    let sf = theme::surf();
+/// A month to pick a day from, drawn under the date it picks for. `id` names its keys
+/// (`{id}-month`, `{id}-date-<code>`); `on` is a day drawn as picked, `within` a day between the two
+/// ends of a range, `allowed` a day that may be picked.
+#[allow(clippy::too_many_arguments)]
+pub(super) fn month_grid(s: &App, k: &Kit, id: &str, shown: Date, on: impl Fn(Date) -> bool, within: impl Fn(Date) -> bool, allowed: impl Fn(Date) -> bool, step: fn(&mut App, i32), pick: fn(&mut App, Date), foot: El) -> El {
     let today = s.civil_today();
-    let shown = form.shown;
     let first = shown.first_of_month();
     let start = first.plus_days(-i64::from(first.weekday()));
-    let chosen = if form.open == Part::Until { form.until } else { Some(form.date) };
     let head = row()
         .w_full()
         .gap(space::S2)
         .center_y()
-        .child(btn(t::CAL_PREVIOUS()).icon(&icons::ARROW_LEFT).icon_only().small().focusable().build(k, |s, _| s.event_month(-1)))
+        .child(btn(t::CAL_PREVIOUS()).icon(&icons::ARROW_LEFT).icon_only().small().focusable().build(k, move |s, _| step(s, -1)))
         .child(text(t::month_year(t::MONTHS()[usize::from(shown.month - 1)], shown.year)).font(type_::BODY_STRONG).color(k.c.text_base).grow(1.0).align(Align::Center))
-        .child(btn(t::CAL_NEXT()).icon(&icons::ARROW_RIGHT).icon_only().small().focusable().build(k, |s, _| s.event_month(1)));
+        .child(btn(t::CAL_NEXT()).icon(&icons::ARROW_RIGHT).icon_only().small().focusable().build(k, move |s, _| step(s, 1)));
     let mut heads = row().w_full();
     for day in 0..7u8 {
         heads = heads.child(row().w(0.0).grow(1.0).h(20.0).center().child(cap(k, &short(weekday_name(day)))));
     }
-    let mut grid = col().key("event-month").role("grid").w_full().gap(2.0).focus_group().focus_follows();
+    let mut grid = col().key(format!("{id}-month")).role("grid").w_full().gap(2.0).focus_group().focus_follows();
     // As many weeks as the month has, so a short month does not end in a row of next month's days.
     let weeks = (usize::from(first.weekday()) + usize::from(Date::month_days(shown.year, shown.month))).div_ceil(7) as i64;
     for week in 0..weeks {
         let mut line = row().w_full().gap(2.0);
         for day in 0..7 {
             let date = start.plus_days(week * 7 + day);
-            let on = chosen == Some(date);
+            let picked = on(date);
             let inside = date.month == shown.month;
-            // The last day cannot come before the first.
-            let allowed = form.open != Part::Until || date >= form.date;
-            let words = text(date.day.to_string()).font(if on { type_::BODY_STRONG } else { type_::BODY }).color(if on { Color::WHITE } else if !allowed { k.c.text_faint } else if inside { k.c.text_base } else { k.c.text_muted });
-            let mut cell = row().key(format!("event-date-{}", date.code())).role("button").label(date_words(date)).w(0.0).grow(1.0).h(28.0).center().radius(k.radius.md);
-            cell = if on {
+            let may = allowed(date);
+            let words = text(date.day.to_string()).font(if picked { type_::BODY_STRONG } else { type_::BODY }).color(if picked { Color::WHITE } else if !may { k.c.text_faint } else if inside { k.c.text_base } else { k.c.text_muted });
+            let mut cell = row().key(format!("{id}-date-{}", date.code())).role("button").label(date_words(date)).w(0.0).grow(1.0).h(28.0).center().radius(k.radius.md);
+            cell = if picked {
                 cell.fill(theme::accent())
+            } else if within(date) {
+                cell.fill(theme::accent().alpha(0.18))
             } else if date == today {
                 cell.border(1.5, theme::accent())
             } else {
                 cell
             };
             cell = cell.child(words.a11y_hidden());
-            line = line.child(if allowed { cell.hover(k.c.hover).cursor(Cursor::Pointer).focusable(true).focus_selected(on).on_key(enter_key).on_press(move |s: &mut App| s.event_pick_date(date)) } else { cell.disabled(true) });
+            line = line.child(if may { cell.hover(k.c.hover).cursor(Cursor::Pointer).focusable(true).focus_selected(picked).on_key(enter_key).on_press(move |s: &mut App| pick(s, date)) } else { cell.disabled(true) });
         }
         grid = grid.child(line);
     }
+    col().key(format!("{id}-grid")).w_full().gap(space::S2).child(head).child(heads).child(grid).child(foot)
+}
+
+/// The event dialog's month picker.
+fn month_picker(s: &App, k: &Kit, form: &EventForm) -> El {
+    let chosen = if form.open == Part::Until { form.until } else { Some(form.date) };
+    let until = form.open == Part::Until;
+    let first = form.date;
     let mut foot = row().w_full().gap(space::S2).justify_end();
-    if form.open == Part::Until {
+    if until {
         foot = foot.child(btn(t::CAL_NO_END()).small().focusable().build(k, |s, _| s.event_no_end()));
     }
-    col().key("event-picker").w_full().padding(space::S3).gap(space::S2).radius(k.radius.md).fill(sf.raised).border(1.0, sf.edge).child(head).child(heads).child(grid).child(foot)
+    // The last day cannot come before the first.
+    let sf = theme::surf();
+    let grid = month_grid(s, k, "event", form.shown, move |date| chosen == Some(date), |_| false, move |date| !until || date >= first, |s, by| s.event_month(by), |s, date| s.event_pick_date(date), foot);
+    col().key("event-picker").w_full().padding(space::S3).radius(k.radius.md).fill(sf.raised).border(1.0, sf.edge).child(grid)
 }
 
 fn event_dialog(s: &App, k: &Kit, layer: &mut Vec<El>, tall: f32) {

@@ -8,6 +8,7 @@ use serde::de::DeserializeOwned;
 
 use crate::calendar::{Calendar, Date, Event, Repeat};
 use crate::deck::{Announcement, Fill, Person};
+use crate::giving::{Account, Fund, Gift, Method};
 use crate::plan::Plan;
 use crate::song::{Song, Translation};
 
@@ -119,6 +120,19 @@ create table if not exists events (
     repeat text not null default 'once',
     until text not null default '',
     skipped text not null default ''
+);
+create table if not exists funds (
+    id integer primary key,
+    name text not null,
+    colour integer not null default 0
+);
+create table if not exists gifts (
+    id integer primary key,
+    date text not null,
+    giver text not null default '',
+    fund integer not null,
+    method text not null default 'cash',
+    amount integer not null default 0
 );
 create table if not exists settings (
     key text primary key,
@@ -545,6 +559,73 @@ impl Store {
         Ok(())
     }
 
+    // ---- Offerings ----
+
+    /// The church's funds, in the order they were made.
+    pub fn funds(&self) -> Result<Vec<Fund>> {
+        let mut statement = self.db.prepare("select id, name, colour from funds order by id")?;
+        let rows = statement.query_map([], |row| {
+            let colour: u32 = row.get(2)?;
+            Ok(Fund { id: row.get(0)?, name: row.get(1)?, colour: [(colour >> 16) as u8, (colour >> 8) as u8, colour as u8] })
+        })?;
+        Ok(rows.collect::<rusqlite::Result<Vec<_>>>()?)
+    }
+
+    /// Inserts a fund with id 0, otherwise updates it; the id is set either way.
+    pub fn save_fund(&self, fund: &mut Fund) -> Result<()> {
+        let [r, g, b] = fund.colour;
+        let colour = u32::from(r) << 16 | u32::from(g) << 8 | u32::from(b);
+        if fund.id == 0 {
+            self.db.execute("insert into funds (name, colour) values (?1, ?2)", params![fund.name, colour])?;
+            fund.id = self.db.last_insert_rowid();
+        } else {
+            self.db.execute("update funds set name = ?1, colour = ?2 where id = ?3", params![fund.name, colour, fund.id])?;
+        }
+        Ok(())
+    }
+
+    /// Deletes a fund and the gifts given to it.
+    pub fn delete_fund(&self, id: i64) -> Result<()> {
+        self.db.execute("delete from gifts where fund = ?1", [id])?;
+        self.db.execute("delete from funds where id = ?1", [id])?;
+        Ok(())
+    }
+
+    /// Every gift, the newest date first.
+    pub fn gifts(&self) -> Result<Vec<Gift>> {
+        let mut statement = self.db.prepare("select id, date, giver, fund, method, amount from gifts order by date desc, id")?;
+        let rows = statement.query_map([], |row| {
+            let (date, method): (String, String) = (row.get(1)?, row.get(4)?);
+            Ok(Gift { id: row.get(0)?, date: Date::parse(&date).unwrap_or(Date { year: 1970, month: 1, day: 1 }), giver: row.get(2)?, fund: row.get(3)?, method: Method::from_code(&method), amount: row.get(5)? })
+        })?;
+        Ok(rows.collect::<rusqlite::Result<Vec<_>>>()?)
+    }
+
+    /// Inserts a gift with id 0, otherwise updates it; the id is set either way.
+    pub fn save_gift(&self, gift: &mut Gift) -> Result<()> {
+        if gift.id == 0 {
+            self.db.execute("insert into gifts (date, giver, fund, method, amount) values (?1, ?2, ?3, ?4, ?5)", params![gift.date.code(), gift.giver, gift.fund, gift.method.code(), gift.amount])?;
+            gift.id = self.db.last_insert_rowid();
+        } else {
+            self.db.execute("update gifts set date = ?1, giver = ?2, fund = ?3, method = ?4, amount = ?5 where id = ?6", params![gift.date.code(), gift.giver, gift.fund, gift.method.code(), gift.amount, gift.id])?;
+        }
+        Ok(())
+    }
+
+    pub fn delete_gift(&self, id: i64) -> Result<()> {
+        self.db.execute("delete from gifts where id = ?1", [id])?;
+        Ok(())
+    }
+
+    /// The transfer account, kept once; empty until it is written.
+    pub fn account(&self) -> Account {
+        self.setting("transfer_account").unwrap_or_default()
+    }
+
+    pub fn set_account(&self, account: &Account) -> Result<()> {
+        self.set_setting("transfer_account", account)
+    }
+
     /// Reads a setting, or None when it was never saved or no longer parses.
     pub fn setting<T: DeserializeOwned>(&self, key: &str) -> Option<T> {
         let value: Option<String> =
@@ -604,6 +685,36 @@ mod tests {
 
     fn store() -> Store {
         Store::in_memory().unwrap_or_else(|error| panic!("{error}"))
+    }
+
+    #[test]
+    fn funds_gifts_and_the_account_round_trip_and_a_fund_takes_its_gifts_with_it() {
+        let store = store();
+        let mut tithe = Fund { id: 0, name: "Tithe".into(), colour: [1, 2, 3] };
+        let mut missions = Fund { id: 0, name: "Missions".into(), colour: [200, 100, 50] };
+        store.save_fund(&mut tithe).unwrap();
+        store.save_fund(&mut missions).unwrap();
+        let day = Date { year: 2026, month: 11, day: 8 };
+        let mut first = Gift { id: 0, date: day, giver: String::new(), fund: tithe.id, method: Method::Cash, amount: 123_456_789_012 };
+        let mut second = Gift { id: 0, date: Date { year: 2026, month: 11, day: 15 }, giver: "A. Giver".into(), fund: missions.id, method: Method::Transfer, amount: 5 };
+        store.save_gift(&mut first).unwrap();
+        store.save_gift(&mut second).unwrap();
+        assert_eq!(store.gifts().unwrap(), vec![second.clone(), first.clone()], "newest date first");
+        first.amount = 7;
+        store.save_gift(&mut first).unwrap();
+        assert_eq!(store.gifts().unwrap()[1].amount, 7);
+        missions.colour = [9, 9, 9];
+        store.save_fund(&mut missions).unwrap();
+        assert_eq!(store.funds().unwrap()[1].colour, [9, 9, 9]);
+        assert_eq!(store.account(), Account::default());
+        let account = Account { bank: "Bank Contoh".into(), number: "0123".into(), holder: "Gereja Contoh".into(), note: String::new() };
+        store.set_account(&account).unwrap();
+        assert_eq!(store.account(), account);
+        store.delete_gift(first.id).unwrap();
+        assert_eq!(store.gifts().unwrap(), vec![second.clone()]);
+        store.delete_fund(missions.id).unwrap();
+        assert!(store.gifts().unwrap().is_empty());
+        assert_eq!(store.funds().unwrap(), vec![tithe]);
     }
 
     #[test]

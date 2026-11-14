@@ -15,6 +15,7 @@ mod bibles;
 mod calendar;
 mod data;
 mod firewall;
+mod giving;
 // GUIDE1: the guide engine; the window wires it in task G3.
 #[allow(dead_code)]
 mod guide;
@@ -187,6 +188,11 @@ fn on_key(s: &mut App, ev: &KeyEvent, tx: &mut Tx) -> bool {
         // And a person on the Members tab.
         Key::Command('n') if s.tab == Tab::People && s.sheet == Sheet::None && !s.palette.open && s.members.form.is_none() && s.members.import.is_none() => {
             s.new_person();
+            return true;
+        }
+        // And a gift on the Offerings tab.
+        Key::Command('n') if s.tab == Tab::Giving && s.sheet == Sheet::None && !s.palette.open && s.giving.form.is_none() && s.giving.manage.is_none() && s.giving.account.is_none() => {
+            s.new_gift();
             return true;
         }
         Key::Command('n') if !editing && !s.palette.open => {
@@ -619,6 +625,46 @@ const SCENES: &[Scene] = &[
         s.open_tab(Tab::People);
     }),
     ("tab-giving", |s| s.open_tab(Tab::Giving)),
+    // OVGIVING1: an amount being edited in its cell, an empty list, and the two cards that read the data.
+    ("giving-edit", |s| {
+        s.open_tab(Tab::Giving);
+        if let Some(id) = s.gift_at(3).map(|gift| gift.id) {
+            s.begin_amount(id);
+        }
+    }),
+    ("giving-empty", |s| {
+        for gift in s.gifts.clone() {
+            let _ = s.store.delete_gift(gift.id);
+        }
+        s.gifts.clear();
+        s.refresh_giving();
+        s.open_tab(Tab::Giving);
+    }),
+    ("giving-gift", |s| {
+        s.open_tab(Tab::Giving);
+        if let Some(id) = s.gift_at(1).map(|gift| gift.id) {
+            s.edit_gift(id);
+        }
+    }),
+    ("giving-gift-date", |s| {
+        s.open_tab(Tab::Giving);
+        s.new_gift();
+        s.gift_open(crate::giving::Part::Date);
+    }),
+    ("giving-dates", |s| {
+        s.open_tab(Tab::Giving);
+        s.giving_open(crate::giving::Part::Date);
+    }),
+    ("giving-funds", |s| {
+        s.open_tab(Tab::Giving);
+        s.open_funds();
+    }),
+    ("giving-account", |s| {
+        s.open_tab(Tab::Giving);
+        s.edit_account();
+    }),
+    ("notice-offerings", |s| s.demo_notices("offerings")),
+    ("notice-transfer", |s| s.demo_notices("transfer")),
     ("tab-templates", |s| s.open_tab(Tab::Templates)),
     ("tab-look", |s| s.open_tab(Tab::Look)),
     // OVCOLOR1: the colour picker open under the words' colour, a colour used before it.

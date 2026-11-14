@@ -16167,5 +16167,884 @@
    "undo"
   ],
   "notes": "Short, past tense; the name leads or follows as the language likes."
+ },
+ {
+  "key": "GIVING_COL_DATE",
+  "kind": "const",
+  "screen": "Offerings window, the fifth tab under the title bar. A title with the date of the latest service, filters for dates, fund and method with the number of gifts and their sum, a table of gifts (date, giver, fund, method, amount, and an edit and a delete icon per row), an Add gift button with the total under the table, and a side panel with the money slide, the sum per fund and the transfer account.",
+  "moment": "The person reads the table's headings to find a gift.",
+  "role": "column heading",
+  "does": "Labels the day a gift came in. The table opens sorted by it, newest first.",
+  "budget": 12,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "offering"
+  ],
+  "notes": "A heading above a date."
+ },
+ {
+  "key": "GIVING_COL_GIVER",
+  "kind": "const",
+  "screen": "Offerings window, the fifth tab under the title bar. A title with the date of the latest service, filters for dates, fund and method with the number of gifts and their sum, a table of gifts (date, giver, fund, method, amount, and an edit and a delete icon per row), an Add gift button with the total under the table, and a side panel with the money slide, the sum per fund and the transfer account.",
+  "moment": "The person looks for who gave a gift.",
+  "role": "column heading",
+  "does": "Labels who handed in the money. A gift with no name belongs to the collection plate.",
+  "budget": 14,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "offering"
+  ],
+  "notes": "One word, a heading above names."
+ },
+ {
+  "key": "GIVING_COL_FUND",
+  "kind": "const",
+  "screen": "Offerings window, the fifth tab under the title bar. A title with the date of the latest service, filters for dates, fund and method with the number of gifts and their sum, a table of gifts (date, giver, fund, method, amount, and an edit and a delete icon per row), an Add gift button with the total under the table, and a side panel with the money slide, the sum per fund and the transfer account.",
+  "moment": "The person looks for what a gift was given for.",
+  "role": "column heading",
+  "does": "Labels the purpose the money was set aside for, drawn below as a coloured chip.",
+  "budget": 12,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "offering",
+   "fund"
+  ],
+  "notes": "Short heading."
+ },
+ {
+  "key": "GIVING_COL_METHOD",
+  "kind": "const",
+  "screen": "Offerings window, the fifth tab under the title bar. A title with the date of the latest service, filters for dates, fund and method with the number of gifts and their sum, a table of gifts (date, giver, fund, method, amount, and an edit and a delete icon per row), an Add gift button with the total under the table, and a side panel with the money slide, the sum per fund and the transfer account.",
+  "moment": "The person looks for how a gift arrived.",
+  "role": "column heading and filter label",
+  "does": "Labels whether money came as cash in hand or by bank transfer. Also names the list that filters by it.",
+  "budget": 12,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "offering"
+  ],
+  "notes": "Short; both a table heading and the label over a list."
+ },
+ {
+  "key": "GIVING_COL_AMOUNT",
+  "kind": "const",
+  "screen": "Offerings window, the fifth tab under the title bar. A title with the date of the latest service, filters for dates, fund and method with the number of gifts and their sum, a table of gifts (date, giver, fund, method, amount, and an edit and a delete icon per row), an Add gift button with the total under the table, and a side panel with the money slide, the sum per fund and the transfer account.",
+  "moment": "The person reads the money column, or presses a figure to change it.",
+  "role": "column heading and field name",
+  "does": "Labels how much money a gift was, in rupiah. The figures under it are right-aligned.",
+  "budget": 12,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "offering"
+  ],
+  "notes": "Short heading over figures; also names the field in which a figure is typed."
+ },
+ {
+  "key": "GIVING_DATES",
+  "kind": "const",
+  "screen": "Offerings window, the fifth tab under the title bar. A title with the date of the latest service, filters for dates, fund and method with the number of gifts and their sum, a table of gifts (date, giver, fund, method, amount, and an edit and a delete icon per row), an Add gift button with the total under the table, and a side panel with the money slide, the sum per fund and the transfer account.",
+  "moment": "The person narrows the table to some days.",
+  "role": "filter label",
+  "does": "Names the box that picks a range of days to show.",
+  "budget": 12,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "offering"
+  ],
+  "notes": "A label over a box, not a heading."
+ },
+ {
+  "key": "GIVING_ALL_DATES",
+  "kind": "const",
+  "screen": "Offerings window, the fifth tab under the title bar. A title with the date of the latest service, filters for dates, fund and method with the number of gifts and their sum, a table of gifts (date, giver, fund, method, amount, and an edit and a delete icon per row), an Add gift button with the total under the table, and a side panel with the money slide, the sum per fund and the transfer account.",
+  "moment": "No range of days is chosen, or the person wants the choice cleared.",
+  "role": "filter value and button",
+  "does": "Says no limit on the days: every gift is listed. Also the button that takes a chosen range away.",
+  "budget": 14,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "offering"
+  ],
+  "notes": "Fits in a box about 200 points wide."
+ },
+ {
+  "key": "GIVING_THIS_MONTH",
+  "kind": "const",
+  "screen": "Month picker under the dates filter of the Offerings window, with a button beside the arrows.",
+  "moment": "The person wants every gift of the present month.",
+  "role": "button",
+  "does": "Chooses the whole of the month that holds today as the range of days to list.",
+  "budget": 14,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "offering"
+  ],
+  "notes": "A small button."
+ },
+ {
+  "key": "GIVING_ALL_FUNDS",
+  "kind": "const",
+  "screen": "Offerings window, the fifth tab under the title bar. A title with the date of the latest service, filters for dates, fund and method with the number of gifts and their sum, a table of gifts (date, giver, fund, method, amount, and an edit and a delete icon per row), an Add gift button with the total under the table, and a side panel with the money slide, the sum per fund and the transfer account.",
+  "moment": "No fund is chosen in the filter.",
+  "role": "filter value",
+  "does": "Says no limit on funds: gifts to every fund are listed.",
+  "budget": 14,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "offering",
+   "fund"
+  ],
+  "notes": "Fits a list box about 180 points wide."
+ },
+ {
+  "key": "GIVING_ALL_METHODS",
+  "kind": "const",
+  "screen": "Offerings window, the fifth tab under the title bar. A title with the date of the latest service, filters for dates, fund and method with the number of gifts and their sum, a table of gifts (date, giver, fund, method, amount, and an edit and a delete icon per row), an Add gift button with the total under the table, and a side panel with the money slide, the sum per fund and the transfer account.",
+  "moment": "No method is chosen in the filter.",
+  "role": "filter value",
+  "does": "Says no limit on how gifts arrived: cash and transfers are both listed.",
+  "budget": 10,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "offering"
+  ],
+  "notes": "One short word in a box about 150 points wide; the label above already says what it is about."
+ },
+ {
+  "key": "GIVING_CASH",
+  "kind": "const",
+  "screen": "Offerings window, the fifth tab under the title bar. A title with the date of the latest service, filters for dates, fund and method with the number of gifts and their sum, a table of gifts (date, giver, fund, method, amount, and an edit and a delete icon per row), an Add gift button with the total under the table, and a side panel with the money slide, the sum per fund and the transfer account.",
+  "moment": "A gift is read or chosen by how it came.",
+  "role": "method name",
+  "does": "Names money that was handed over in notes and coins.",
+  "budget": 10,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "offering"
+  ],
+  "notes": "One word."
+ },
+ {
+  "key": "GIVING_TRANSFER",
+  "kind": "const",
+  "screen": "Offerings window, the fifth tab under the title bar. A title with the date of the latest service, filters for dates, fund and method with the number of gifts and their sum, a table of gifts (date, giver, fund, method, amount, and an edit and a delete icon per row), an Add gift button with the total under the table, and a side panel with the money slide, the sum per fund and the transfer account.",
+  "moment": "A gift is read or chosen by how it came.",
+  "role": "method name",
+  "does": "Names money that arrived through the bank, sent from one account to another.",
+  "budget": 12,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "offering"
+  ],
+  "notes": "One word; not the word for moving something to another place."
+ },
+ {
+  "key": "GIVING_PLATE",
+  "kind": "const",
+  "screen": "Gift dialog, opened over the Offerings window: a month picker for the date, a giver field with a tick for the collection plate, lists for fund and method, an amount field, and Delete, Cancel and Save.",
+  "moment": "The gift was dropped in the plate and nobody gave their name.",
+  "role": "tick label and table value",
+  "does": "Marks a gift that came in the passing plate with no giver named; the table writes it in the giver column.",
+  "budget": 24,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "offering"
+  ],
+  "notes": "Said the way a church names its collection; also drawn in muted ink in the table."
+ },
+ {
+  "key": "GIVING_TOTAL",
+  "kind": "const",
+  "screen": "Offerings window, the fifth tab under the title bar. A title with the date of the latest service, filters for dates, fund and method with the number of gifts and their sum, a table of gifts (date, giver, fund, method, amount, and an edit and a delete icon per row), an Add gift button with the total under the table, and a side panel with the money slide, the sum per fund and the transfer account.",
+  "moment": "The person reads the sum of the gifts listed, or the room reads it on a slide.",
+  "role": "label",
+  "does": "Names the sum of all the amounts. Under the table it is a small capital label; on the offering slide it is the last line.",
+  "budget": 12,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "offering"
+  ],
+  "notes": "One word, also drawn on the projector."
+ },
+ {
+  "key": "GIVING_ADD",
+  "kind": "const",
+  "screen": "Offerings window, the fifth tab under the title bar. A title with the date of the latest service, filters for dates, fund and method with the number of gifts and their sum, a table of gifts (date, giver, fund, method, amount, and an edit and a delete icon per row), an Add gift button with the total under the table, and a side panel with the money slide, the sum per fund and the transfer account.",
+  "moment": "The person has money to write down.",
+  "role": "button and dialog title",
+  "does": "Starts a new row of the offering list. Also the name of the command in the search.",
+  "budget": 18,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "offering"
+  ],
+  "notes": "Short, starts with a verb."
+ },
+ {
+  "key": "GIVING_EDIT",
+  "kind": "const",
+  "screen": "Gift dialog, opened over the Offerings window: a month picker for the date, a giver field with a tick for the collection plate, lists for fund and method, an amount field, and Delete, Cancel and Save.",
+  "moment": "The person presses a row or its pencil.",
+  "role": "dialog title and icon name",
+  "does": "Opens an existing row of the offering list to change it.",
+  "budget": 18,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "offering"
+  ],
+  "notes": "Short, starts with a verb."
+ },
+ {
+  "key": "GIVING_EMPTY",
+  "kind": "const",
+  "screen": "Offerings window, the fifth tab under the title bar. A title with the date of the latest service, filters for dates, fund and method with the number of gifts and their sum, a table of gifts (date, giver, fund, method, amount, and an edit and a delete icon per row), an Add gift button with the total under the table, and a side panel with the money slide, the sum per fund and the transfer account.",
+  "moment": "The list holds nothing at all.",
+  "role": "empty state title",
+  "does": "Says nothing has been written down yet.",
+  "budget": 20,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "offering"
+  ],
+  "notes": "A heading in the middle of an empty table."
+ },
+ {
+  "key": "GIVING_EMPTY_HINT",
+  "kind": "const",
+  "screen": "Offerings window, the fifth tab under the title bar. A title with the date of the latest service, filters for dates, fund and method with the number of gifts and their sum, a table of gifts (date, giver, fund, method, amount, and an edit and a delete icon per row), an Add gift button with the total under the table, and a side panel with the money slide, the sum per fund and the transfer account.",
+  "moment": "The list holds nothing at all.",
+  "role": "empty state line",
+  "does": "Invites the person to write down the first row.",
+  "budget": 30,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "offering"
+  ],
+  "notes": "One short invitation under the title."
+ },
+ {
+  "key": "GIVING_NONE",
+  "kind": "const",
+  "screen": "Offerings window, the fifth tab under the title bar. A title with the date of the latest service, filters for dates, fund and method with the number of gifts and their sum, a table of gifts (date, giver, fund, method, amount, and an edit and a delete icon per row), an Add gift button with the total under the table, and a side panel with the money slide, the sum per fund and the transfer account.",
+  "moment": "The filters hide every gift.",
+  "role": "empty state title",
+  "does": "Says the chosen days, fund and method leave no row to show.",
+  "budget": 24,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "offering"
+  ],
+  "notes": "A heading in the middle of an empty table."
+ },
+ {
+  "key": "GIVING_NONE_HINT",
+  "kind": "const",
+  "screen": "Offerings window, the fifth tab under the title bar. A title with the date of the latest service, filters for dates, fund and method with the number of gifts and their sum, a table of gifts (date, giver, fund, method, amount, and an edit and a delete icon per row), an Add gift button with the total under the table, and a side panel with the money slide, the sum per fund and the transfer account.",
+  "moment": "The filters hide every gift.",
+  "role": "empty state line",
+  "does": "Tells the person what to loosen to see rows again.",
+  "budget": 48,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "offering"
+  ],
+  "notes": "One short line under the title."
+ },
+ {
+  "key": "GIVING_SUMS_HINT",
+  "kind": "const",
+  "screen": "Offerings window, the fifth tab under the title bar. A title with the date of the latest service, filters for dates, fund and method with the number of gifts and their sum, a table of gifts (date, giver, fund, method, amount, and an edit and a delete icon per row), an Add gift button with the total under the table, and a side panel with the money slide, the sum per fund and the transfer account.",
+  "moment": "The person looks under the table.",
+  "role": "note under the table",
+  "does": "Tells that nobody types a total, and that a figure is changed where it stands by pressing it.",
+  "budget": 90,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "offering"
+  ],
+  "notes": "Two short sentences."
+ },
+ {
+  "key": "GIVING_USED_BY",
+  "kind": "const",
+  "screen": "Offerings window, the fifth tab under the title bar. A title with the date of the latest service, filters for dates, fund and method with the number of gifts and their sum, a table of gifts (date, giver, fund, method, amount, and an edit and a delete icon per row), an Add gift button with the total under the table, and a side panel with the money slide, the sum per fund and the transfer account.",
+  "moment": "The person wonders where the table's numbers end up.",
+  "role": "side panel heading",
+  "does": "Heads the part of the panel that shows the slide made from this table.",
+  "budget": 12,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "offering",
+   "announcement"
+  ],
+  "notes": "Short heading."
+ },
+ {
+  "key": "GIVING_USED_BY_HINT",
+  "kind": "const",
+  "screen": "Offerings window, the fifth tab under the title bar. A title with the date of the latest service, filters for dates, fund and method with the number of gifts and their sum, a table of gifts (date, giver, fund, method, amount, and an edit and a delete icon per row), an Add gift button with the total under the table, and a side panel with the money slide, the sum per fund and the transfer account.",
+  "moment": "The person looks at the slide in the side panel.",
+  "role": "side panel note",
+  "does": "Explains that the money slide is written from the rows, not typed by hand.",
+  "budget": 90,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "offering",
+   "announcement",
+   "slide_template"
+  ],
+  "notes": "One sentence."
+ },
+ {
+  "key": "GIVING_BY_FUND",
+  "kind": "const",
+  "screen": "Offerings window, the fifth tab under the title bar. A title with the date of the latest service, filters for dates, fund and method with the number of gifts and their sum, a table of gifts (date, giver, fund, method, amount, and an edit and a delete icon per row), an Add gift button with the total under the table, and a side panel with the money slide, the sum per fund and the transfer account.",
+  "moment": "The person wants to see what each fund received.",
+  "role": "side panel heading",
+  "does": "Heads the list of funds, each with the sum its gifts make.",
+  "budget": 14,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "offering",
+   "fund"
+  ],
+  "notes": "Small capital heading over a list."
+ },
+ {
+  "key": "GIVING_OPEN_CARD",
+  "kind": "const",
+  "screen": "Offerings window, the fifth tab under the title bar. A title with the date of the latest service, filters for dates, fund and method with the number of gifts and their sum, a table of gifts (date, giver, fund, method, amount, and an edit and a delete icon per row), an Add gift button with the total under the table, and a side panel with the money slide, the sum per fund and the transfer account.",
+  "moment": "The person wants to change how the slide looks.",
+  "role": "button",
+  "does": "Goes to the announcement editor on the card that draws this slide.",
+  "budget": 20,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "announcement"
+  ],
+  "notes": "Small button with an arrow."
+ },
+ {
+  "key": "GIVING_ACCOUNT",
+  "kind": "const",
+  "screen": "Offerings window, the fifth tab under the title bar. A title with the date of the latest service, filters for dates, fund and method with the number of gifts and their sum, a table of gifts (date, giver, fund, method, amount, and an edit and a delete icon per row), an Add gift button with the total under the table, and a side panel with the money slide, the sum per fund and the transfer account.",
+  "moment": "The person looks for the account the church asks gifts to be sent to.",
+  "role": "side panel heading and dialog title",
+  "does": "Names the bank account for transfers: bank, number, holder.",
+  "budget": 22,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "transfer_account"
+  ],
+  "notes": "Heading in the side panel and the title of its dialog."
+ },
+ {
+  "key": "GIVING_ACCOUNT_HINT",
+  "kind": "const",
+  "screen": "Offerings window, the fifth tab under the title bar. A title with the date of the latest service, filters for dates, fund and method with the number of gifts and their sum, a table of gifts (date, giver, fund, method, amount, and an edit and a delete icon per row), an Add gift button with the total under the table, and a side panel with the money slide, the sum per fund and the transfer account.",
+  "moment": "The person looks at the account in the side panel.",
+  "role": "side panel note",
+  "does": "Says the transfer slide takes its words from this account.",
+  "budget": 90,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "transfer_account",
+   "announcement"
+  ],
+  "notes": "One sentence."
+ },
+ {
+  "key": "GIVING_ACCOUNT_NONE",
+  "kind": "const",
+  "screen": "Offerings window, the fifth tab under the title bar. A title with the date of the latest service, filters for dates, fund and method with the number of gifts and their sum, a table of gifts (date, giver, fund, method, amount, and an edit and a delete icon per row), an Add gift button with the total under the table, and a side panel with the money slide, the sum per fund and the transfer account.",
+  "moment": "No bank, number or holder is written.",
+  "role": "empty state line",
+  "does": "Says the church's account has not been entered, so the transfer slide has nothing to show.",
+  "budget": 36,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "transfer_account"
+  ],
+  "notes": "A short line in the side panel."
+ },
+ {
+  "key": "GIVING_ACCOUNT_EDIT",
+  "kind": "const",
+  "screen": "Offerings window, the fifth tab under the title bar. A title with the date of the latest service, filters for dates, fund and method with the number of gifts and their sum, a table of gifts (date, giver, fund, method, amount, and an edit and a delete icon per row), an Add gift button with the total under the table, and a side panel with the money slide, the sum per fund and the transfer account.",
+  "moment": "The person wants to write or correct the account.",
+  "role": "button",
+  "does": "Opens the dialog where the bank, number, holder and note are written.",
+  "budget": 20,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "transfer_account"
+  ],
+  "notes": "Small button."
+ },
+ {
+  "key": "GIVING_BANK",
+  "kind": "const",
+  "screen": "Transfer account dialog, opened over the Offerings window: four fields for the bank, the account number, the holder and a note, with Cancel and Save.",
+  "moment": "The person writes the name of the bank.",
+  "role": "field label",
+  "does": "Names the field for the bank that keeps the account, as the bank writes itself.",
+  "budget": 12,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "transfer_account"
+  ],
+  "notes": "One word."
+ },
+ {
+  "key": "GIVING_NUMBER",
+  "kind": "const",
+  "screen": "Transfer account dialog, opened over the Offerings window: four fields for the bank, the account number, the holder and a note, with Cancel and Save.",
+  "moment": "The person writes the number of the account.",
+  "role": "field label",
+  "does": "Names the field for the account number, typed as the bank prints it, with its spaces.",
+  "budget": 20,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "transfer_account"
+  ],
+  "notes": "Short; a number, not a phone number."
+ },
+ {
+  "key": "GIVING_HOLDER",
+  "kind": "const",
+  "screen": "Transfer account dialog, opened over the Offerings window: four fields for the bank, the account number, the holder and a note, with Cancel and Save.",
+  "moment": "The person writes the name the account is held in.",
+  "role": "field label",
+  "does": "Names the field for the name of the person or church that owns the account.",
+  "budget": 20,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "transfer_account"
+  ],
+  "notes": "Short."
+ },
+ {
+  "key": "GIVING_NOTE",
+  "kind": "const",
+  "screen": "Transfer account dialog, opened over the Offerings window: four fields for the bank, the account number, the holder and a note, with Cancel and Save.",
+  "moment": "The person may add a line for people who send money.",
+  "role": "field label",
+  "does": "Names the optional field for a line of advice, such as what to write with a transfer.",
+  "budget": 12,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "transfer_account"
+  ],
+  "notes": "One word; the field may stay empty."
+ },
+ {
+  "key": "GIVING_FUNDS",
+  "kind": "const",
+  "screen": "Offerings window, the fifth tab under the title bar. A title with the date of the latest service, filters for dates, fund and method with the number of gifts and their sum, a table of gifts (date, giver, fund, method, amount, and an edit and a delete icon per row), an Add gift button with the total under the table, and a side panel with the money slide, the sum per fund and the transfer account.",
+  "moment": "The person wants to look after the funds.",
+  "role": "button, dialog title and picker heading",
+  "does": "Names the places money can be set aside for; opens the dialog that adds, renames, colours and removes them.",
+  "budget": 14,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "offering",
+   "fund"
+  ],
+  "notes": "Short; a plural noun."
+ },
+ {
+  "key": "GIVING_FUND_NAME",
+  "kind": "const",
+  "screen": "Funds dialog, opened over the Offerings window: the funds as chips, a name field, the colour row with its picker, and Add fund, Delete fund and Close.",
+  "moment": "The person renames the fund they picked.",
+  "role": "field label",
+  "does": "Names the field for what a fund is called.",
+  "budget": 18,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "offering",
+   "fund"
+  ],
+  "notes": "Short."
+ },
+ {
+  "key": "GIVING_FUND_COLOUR",
+  "kind": "const",
+  "screen": "Funds dialog, opened over the Offerings window: the funds as chips, a name field, the colour row with its picker, and Add fund, Delete fund and Close.",
+  "moment": "The person picks the colour of a fund's chip.",
+  "role": "row label",
+  "does": "Names the row of colours that tints the fund wherever it is drawn.",
+  "budget": 18,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "offering",
+   "fund"
+  ],
+  "notes": "Short."
+ },
+ {
+  "key": "GIVING_ADD_FUND",
+  "kind": "const",
+  "screen": "Funds dialog, opened over the Offerings window: the funds as chips, a name field, the colour row with its picker, and Add fund, Delete fund and Close.",
+  "moment": "The person needs one more fund.",
+  "role": "button",
+  "does": "Makes a new, named and coloured fund.",
+  "budget": 18,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "offering",
+   "fund"
+  ],
+  "notes": "Short, starts with a verb."
+ },
+ {
+  "key": "GIVING_DELETE_FUND",
+  "kind": "const",
+  "screen": "Funds dialog, opened over the Offerings window: the funds as chips, a name field, the colour row with its picker, and Add fund, Delete fund and Close.",
+  "moment": "The person wants a fund gone.",
+  "role": "button",
+  "does": "Removes the picked fund together with the gifts given to it; Undo brings both back.",
+  "budget": 18,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "offering",
+   "fund"
+  ],
+  "notes": "Short, starts with a verb."
+ },
+ {
+  "key": "GIVING_NEW_FUND",
+  "kind": "const",
+  "screen": "Funds dialog, opened over the Offerings window: the funds as chips, a name field, the colour row with its picker, and Add fund, Delete fund and Close.",
+  "moment": "A fund was just added and waits for its name.",
+  "role": "default fund name",
+  "does": "The name a fund has until the person types its own.",
+  "budget": 18,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "offering",
+   "fund"
+  ],
+  "notes": "Appears selected in the name field."
+ },
+ {
+  "key": "GIVING_GENERAL_FUND",
+  "kind": "const",
+  "screen": "Offerings window of a library that has no fund yet.",
+  "moment": "A new church opens the Offerings window for the first time.",
+  "role": "default fund name",
+  "does": "The name of the one fund every new library starts with, for money not given for a special purpose.",
+  "budget": 24,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "offering",
+   "fund"
+  ],
+  "notes": "Written into the library once, in the window's language."
+ },
+ {
+  "key": "CMD_GIVING_DETAIL",
+  "kind": "const",
+  "screen": "Search results list, a second line under an action's name.",
+  "moment": "The person types a word to go to the offerings.",
+  "role": "search result detail",
+  "does": "Says what the action opens: the list of money given, with sums.",
+  "budget": 50,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "offering"
+  ],
+  "notes": "A line of detail under the name of an action."
+ },
+ {
+  "key": "CMD_ADD_GIFT_DETAIL",
+  "kind": "const",
+  "screen": "Search results list, a second line under an action's name.",
+  "moment": "The person types a word to write down a gift.",
+  "role": "search result detail",
+  "does": "Says what the action starts: a new row that records one gift in full.",
+  "budget": 50,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "offering"
+  ],
+  "notes": "A line of detail under the name of an action."
+ },
+ {
+  "key": "FILL_OFFERINGS",
+  "kind": "const",
+  "screen": "Announcement editor, the list of what a card fills itself with: a few choices in rows of a switch.",
+  "moment": "The person chooses what the card writes itself from.",
+  "role": "choice label",
+  "does": "Makes the card list the funds and their sums for the newest day a gift was written down.",
+  "budget": 40,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "offering",
+   "announcement"
+  ],
+  "notes": "A label in a switch about 270 points wide."
+ },
+ {
+  "key": "FILL_TRANSFER",
+  "kind": "const",
+  "screen": "Announcement editor, the list of what a card fills itself with: a few choices in rows of a switch.",
+  "moment": "The person chooses what the card writes itself from.",
+  "role": "choice label",
+  "does": "Makes the card show the bank account for transfers.",
+  "budget": 24,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "transfer_account",
+   "announcement"
+  ],
+  "notes": "A label in a switch."
+ },
+ {
+  "key": "giving_count",
+  "kind": "sentence",
+  "screen": "Offerings window, the fifth tab under the title bar. A title with the date of the latest service, filters for dates, fund and method with the number of gifts and their sum, a table of gifts (date, giver, fund, method, amount, and an edit and a delete icon per row), an Add gift button with the total under the table, and a side panel with the money slide, the sum per fund and the transfer account.",
+  "moment": "The person looks at the numbers beside the filters.",
+  "role": "word under a figure",
+  "does": "Names what the figure above it counts, in the form that fits the figure.",
+  "budget": 14,
+  "variables": [],
+  "cases": [],
+  "counts": "count = the figure above; forms for one and for many.",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "offering"
+  ],
+  "notes": "One word, small, under a large figure; the figure itself is not part of it."
+ },
+ {
+  "key": "giving_latest",
+  "kind": "sentence",
+  "screen": "Offerings window, the fifth tab under the title bar. A title with the date of the latest service, filters for dates, fund and method with the number of gifts and their sum, a table of gifts (date, giver, fund, method, amount, and an edit and a delete icon per row), an Add gift button with the total under the table, and a side panel with the money slide, the sum per fund and the transfer account.",
+  "moment": "The person looks at the title of the window.",
+  "role": "note beside the title",
+  "does": "Tells the day of the newest gift, which the offering slide is written for.",
+  "budget": 40,
+  "variables": [
+   {
+    "name": "date",
+    "example": "8 November 2026",
+    "meaning": "The day of the newest gift, written out."
+   }
+  ],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "offering"
+  ],
+  "notes": "Short; the date is already written out with its month's name."
+ },
+ {
+  "key": "giving_range",
+  "kind": "sentence",
+  "screen": "Offerings window, the fifth tab under the title bar. A title with the date of the latest service, filters for dates, fund and method with the number of gifts and their sum, a table of gifts (date, giver, fund, method, amount, and an edit and a delete icon per row), an Add gift button with the total under the table, and a side panel with the money slide, the sum per fund and the transfer account.",
+  "moment": "A range of days is chosen in the filter.",
+  "role": "filter value",
+  "does": "Writes the first and last day of the chosen range as the box shows it.",
+  "budget": 40,
+  "variables": [
+   {
+    "name": "from",
+    "example": "1 Nov 2026",
+    "meaning": "The first day of the range."
+   },
+   {
+    "name": "to",
+    "example": "30 Nov 2026",
+    "meaning": "The last day of the range."
+   }
+  ],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "offering"
+  ],
+  "notes": "Fits a box about 230 points wide, so each date is short."
+ },
+ {
+  "key": "gift_deleted",
+  "kind": "sentence",
+  "screen": "A grey bar over the foot of the Offerings window, with an Undo button and the key Ctrl Z.",
+  "moment": "The person has just removed a row.",
+  "role": "toast",
+  "does": "Confirms that the gift of the given amount is gone, while Undo still brings it back.",
+  "budget": 40,
+  "variables": [
+   {
+    "name": "amount",
+    "example": "Rp 2.500.000",
+    "meaning": "The amount of the gift, with Rp and dots."
+   }
+  ],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "offering"
+  ],
+  "notes": "Past tense."
+ },
+ {
+  "key": "fund_deleted",
+  "kind": "sentence",
+  "screen": "A grey bar over the foot of the Offerings window, with an Undo button and the key Ctrl Z.",
+  "moment": "The person has just removed a fund.",
+  "role": "toast",
+  "does": "Confirms that the named fund is gone together with every gift given to it, while Undo brings them back.",
+  "budget": 50,
+  "variables": [
+   {
+    "name": "name",
+    "example": "Misi",
+    "meaning": "The name of the fund."
+   }
+  ],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "offering",
+   "fund"
+  ],
+  "notes": "Past tense; says both the fund and its gifts are gone."
  }
 ]

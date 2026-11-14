@@ -7,6 +7,7 @@ use std::sync::{Arc, Mutex};
 
 use artosia_core::bible::{Bible, Reference};
 use artosia_core::calendar::{Calendar, Event};
+use artosia_core::giving::{Account, Fund, Gift};
 use artosia_core::deck::{Announcement, Deck, DeckSource, Fill, Person, Slide, Today, announcement_pages, passage_deck, tag_group};
 use artosia_core::plan::{Plan, PlanEntry, PlanItem};
 use artosia_core::search::SongIndex;
@@ -270,6 +271,10 @@ pub enum Undo {
     Person(Person),
     /// An import replaced the whole Members list; this was it.
     People(Vec<Person>),
+    /// A gift was deleted from the Offerings list.
+    Gift(Gift),
+    /// A fund was deleted with its gifts.
+    Fund(Fund, Vec<Gift>),
 }
 
 pub struct Toast {
@@ -434,6 +439,11 @@ pub struct App {
     pub calendar: crate::calendar::Window,
     /// The Members tab (`people.rs`).
     pub members: crate::people::Window,
+    /// The church's funds, gifts and transfer account, and the Offerings tab (`giving.rs`).
+    pub funds: Vec<Fund>,
+    pub gifts: Vec<Gift>,
+    pub account: Account,
+    pub giving: crate::giving::Window,
     pub plan: Plan,
     pub settings: Settings,
 
@@ -675,6 +685,7 @@ impl App {
             }
             data::practice_calendar(&store);
             data::practice_people(&store);
+            data::practice_giving(&store);
         }
         let songs = store.songs().unwrap_or_default();
         let index = SongIndex::build(&songs);
@@ -715,6 +726,10 @@ impl App {
             events: Vec::new(),
             calendar: Default::default(),
             members: Default::default(),
+            funds: Vec::new(),
+            gifts: Vec::new(),
+            account: Account::default(),
+            giving: Default::default(),
             plan,
             settings,
             open: None,
@@ -834,6 +849,7 @@ impl App {
         app.people = app.store.people().unwrap_or_default();
         app.load_calendar();
         app.refresh_members();
+        app.load_giving();
         app.stream_address.replace_text(app.settings.stream_address.clone());
         app.stream_key.replace_text(app.settings.stream_key.clone());
         app.sync_camera_address();
@@ -1066,30 +1082,30 @@ impl App {
     /// Today's date, for announcements that fill themselves with this week's birthdays.
     pub fn today(&self) -> Today<'static> {
         let time = rune::LocalTime::at((self.now * 1000.0) as i64);
-        Today { year: time.year, month: time.month.clamp(1, 12) as u8, day: time.day.clamp(1, 31) as u8, months: t::MONTHS(), weekdays: t::WEEKDAYS(), clock: t::time_of_day, date: t::day_month }
+        Today { year: time.year, month: time.month.clamp(1, 12) as u8, day: time.day.clamp(1, 31) as u8, months: t::MONTHS(), weekdays: t::WEEKDAYS(), clock: t::time_of_day, date: t::day_month, total: t::GIVING_TOTAL() }
     }
 
     /// Every announcement slide in order, each with the place of its announcement in the list.
     pub fn announcement_pages(&self) -> Vec<(usize, Slide)> {
-        announcement_pages(&self.announcements, &self.people, &self.events, &self.today(), self.bible().map(|bible| &**bible), self.settings.verses_per_slide)
+        announcement_pages(&self.announcements, &self.people, &self.events, &self.giving_data(), &self.today(), self.bible().map(|bible| &**bible), self.settings.verses_per_slide)
     }
 
     pub fn announcements_deck(&self) -> Deck {
-        let mut deck = artosia_core::deck::announcements_deck(&self.announcements, &self.people, &self.events, &self.today(), self.bible().map(|bible| &**bible), self.settings.verses_per_slide);
+        let mut deck = artosia_core::deck::announcements_deck(&self.announcements, &self.people, &self.events, &self.giving_data(), &self.today(), self.bible().map(|bible| &**bible), self.settings.verses_per_slide);
         deck.title = t::CMD_ANNOUNCEMENTS().to_string();
         deck
     }
 
     /// The card a slide of the announcements came from. A card may give several slides or none.
     pub fn card_at_slide(&self, slide: usize) -> Option<&Announcement> {
-        let pages = announcement_pages(&self.announcements, &self.people, &self.events, &self.today(), self.bible().map(|bible| &**bible), self.settings.verses_per_slide);
+        let pages = announcement_pages(&self.announcements, &self.people, &self.events, &self.giving_data(), &self.today(), self.bible().map(|bible| &**bible), self.settings.verses_per_slide);
         pages.get(slide).and_then(|(at, _)| self.announcements.get(*at))
     }
 
     /// The slides one card gives today: none for a birthday card with nobody, or a passage card
     /// the Bible cannot read.
     pub fn card_slides(&self, card: &Announcement) -> Vec<Slide> {
-        announcement_pages(std::slice::from_ref(card), &self.people, &self.events, &self.today(), self.bible().map(|bible| &**bible), self.settings.verses_per_slide).into_iter().map(|(_, slide)| slide).collect()
+        announcement_pages(std::slice::from_ref(card), &self.people, &self.events, &self.giving_data(), &self.today(), self.bible().map(|bible| &**bible), self.settings.verses_per_slide).into_iter().map(|(_, slide)| slide).collect()
     }
 
     /// One saved card as a deck of its own, so it can be shown without the rest; None when it has
@@ -1650,6 +1666,7 @@ impl App {
             countdown: self.countdown.clone(),
             stage,
             warp: self.settings.warp,
+            ..OutputState::default()
         }
     }
 

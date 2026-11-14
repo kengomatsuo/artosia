@@ -4404,5 +4404,252 @@
   "text": "Đã xóa {name}",
   "back": "Deleted {name}",
   "why": "Past tense as plan_deleted"
+ },
+ "GIVING_COL_DATE": {
+  "text": "Ngày",
+  "back": "Date",
+  "why": "Plain"
+ },
+ "GIVING_COL_GIVER": {
+  "text": "Người dâng",
+  "back": "Giver",
+  "why": "Dâng is the church verb for giving an offering"
+ },
+ "GIVING_COL_FUND": {
+  "text": "Quỹ",
+  "back": "Fund",
+  "why": "Standard for money set aside"
+ },
+ "GIVING_COL_METHOD": {
+  "text": "Hình thức",
+  "back": "Form",
+  "why": "Covers tiền mặt and chuyển khoản"
+ },
+ "GIVING_COL_AMOUNT": {
+  "text": "Số tiền",
+  "back": "Sum of money",
+  "why": "Standard over money figures"
+ },
+ "GIVING_DATES": {
+  "text": "Ngày",
+  "back": "Date",
+  "why": "Same as the column"
+ },
+ "GIVING_ALL_DATES": {
+  "text": "Mọi ngày",
+  "back": "Every day",
+  "why": "Short for no limit"
+ },
+ "GIVING_THIS_MONTH": {
+  "text": "Tháng này",
+  "back": "This month",
+  "why": "Plain"
+ },
+ "GIVING_ALL_FUNDS": {
+  "text": "Mọi quỹ",
+  "back": "Every fund",
+  "why": "Matches Quỹ"
+ },
+ "GIVING_ALL_METHODS": {
+  "text": "Tất cả",
+  "back": "All",
+  "why": "The label above names the topic"
+ },
+ "GIVING_CASH": {
+  "text": "Tiền mặt",
+  "back": "Cash",
+  "why": "Standard"
+ },
+ "GIVING_TRANSFER": {
+  "text": "Chuyển khoản",
+  "back": "Bank transfer",
+  "why": "Not chuyển alone, which means move"
+ },
+ "GIVING_PLATE": {
+  "text": "Túi dâng hiến",
+  "back": "Offering bag",
+  "why": "The bag passed in Vietnamese churches"
+ },
+ "GIVING_TOTAL": {
+  "text": "Tổng",
+  "back": "Total",
+  "why": "Short"
+ },
+ "GIVING_ADD": {
+  "text": "Thêm khoản dâng",
+  "back": "Add an offering item",
+  "why": "Verb first; khoản dâng is one gift; Thêm as in PEOPLE_ADD"
+ },
+ "GIVING_EDIT": {
+  "text": "Sửa khoản dâng",
+  "back": "Edit the offering item",
+  "why": "Existing Sửa"
+ },
+ "GIVING_EMPTY": {
+  "text": "Chưa ghi khoản nào",
+  "back": "No item written yet",
+  "why": "State only"
+ },
+ "GIVING_EMPTY_HINT": {
+  "text": "Ghi khoản dâng đầu tiên",
+  "back": "Write the first offering item",
+  "why": "Invitation"
+ },
+ "GIVING_NONE": {
+  "text": "Không có khoản nào khớp",
+  "back": "No item matches",
+  "why": "Plain, like PEOPLE_NONE"
+ },
+ "GIVING_NONE_HINT": {
+  "text": "Thử ngày, quỹ hoặc hình thức khác",
+  "back": "Try another date, fund or form",
+  "why": "Short suggestion"
+ },
+ "GIVING_SUMS_HINT": {
+  "text": "Tổng tự cộng. Bấm vào số để sửa ngay tại chỗ.",
+  "back": "The total adds itself. Press the figure to change it right there.",
+  "why": "Two short sentences"
+ },
+ "GIVING_USED_BY": {
+  "text": "Được dùng ở",
+  "back": "Used in",
+  "why": "Existing PEOPLE_USED_BY"
+ },
+ "GIVING_USED_BY_HINT": {
+  "text": "Thông báo dâng hiến lấy nội dung từ bảng này, khỏi gõ lại trên trang chiếu.",
+  "back": "The offering announcement takes its content from this table, no retyping on the slide.",
+  "why": "Follows the members hint"
+ },
+ "GIVING_BY_FUND": {
+  "text": "Theo quỹ",
+  "back": "By fund",
+  "why": "Short heading"
+ },
+ "GIVING_OPEN_CARD": {
+  "text": "Mở thông báo",
+  "back": "Open announcement",
+  "why": "Existing PEOPLE_OPEN_CARD"
+ },
+ "GIVING_ACCOUNT": {
+  "text": "Tài khoản nhận tiền",
+  "back": "Account that receives money",
+  "why": "Natural for the account asked for gifts"
+ },
+ "GIVING_ACCOUNT_HINT": {
+  "text": "Thông báo chuyển khoản lấy chữ từ tài khoản này.",
+  "back": "The transfer announcement takes its words from this account.",
+  "why": "One sentence"
+ },
+ "GIVING_ACCOUNT_NONE": {
+  "text": "Chưa nhập tài khoản",
+  "back": "Account not entered yet",
+  "why": "State only"
+ },
+ "GIVING_ACCOUNT_EDIT": {
+  "text": "Nhập tài khoản",
+  "back": "Enter account",
+  "why": "Verb first"
+ },
+ "GIVING_BANK": {
+  "text": "Ngân hàng",
+  "back": "Bank",
+  "why": "Standard"
+ },
+ "GIVING_NUMBER": {
+  "text": "Số tài khoản",
+  "back": "Account number",
+  "why": "Standard"
+ },
+ "GIVING_HOLDER": {
+  "text": "Chủ tài khoản",
+  "back": "Account holder",
+  "why": "Standard"
+ },
+ "GIVING_NOTE": {
+  "text": "Ghi chú",
+  "back": "Note",
+  "why": "Standard"
+ },
+ "GIVING_FUNDS": {
+  "text": "Các quỹ",
+  "back": "The funds",
+  "why": "Plural marker Các"
+ },
+ "GIVING_FUND_NAME": {
+  "text": "Tên quỹ",
+  "back": "Fund name",
+  "why": "Plain"
+ },
+ "GIVING_FUND_COLOUR": {
+  "text": "Màu",
+  "back": "Colour",
+  "why": "Existing CAL_COLOUR"
+ },
+ "GIVING_ADD_FUND": {
+  "text": "Thêm quỹ",
+  "back": "Add fund",
+  "why": "Existing Thêm"
+ },
+ "GIVING_DELETE_FUND": {
+  "text": "Xóa quỹ",
+  "back": "Delete fund",
+  "why": "Existing Xóa"
+ },
+ "GIVING_NEW_FUND": {
+  "text": "Quỹ mới",
+  "back": "New fund",
+  "why": "Plain"
+ },
+ "GIVING_GENERAL_FUND": {
+  "text": "Quỹ chung",
+  "back": "General fund",
+  "why": "Usual church name"
+ },
+ "CMD_GIVING_DETAIL": {
+  "text": "Danh sách khoản dâng kèm tổng số",
+  "back": "List of offering items with sums",
+  "why": "Detail line"
+ },
+ "CMD_ADD_GIFT_DETAIL": {
+  "text": "Một dòng mới ghi đủ một khoản dâng",
+  "back": "A new row that records one item in full",
+  "why": "Detail line"
+ },
+ "FILL_OFFERINGS": {
+  "text": "Khoản dâng mới nhất theo quỹ",
+  "back": "Newest offering items by fund",
+  "why": "Switch label"
+ },
+ "FILL_TRANSFER": {
+  "text": "Tài khoản nhận tiền",
+  "back": "Account that receives money",
+  "why": "Same as the panel heading"
+ },
+ "giving_count": {
+  "text": {
+   "other": "khoản dâng"
+  },
+  "back": "offerings",
+  "why": "Noun under a figure"
+ },
+ "giving_latest": {
+  "text": "Khoản dâng mới nhất {date}",
+  "back": "Newest offering item {date}",
+  "why": "Plain"
+ },
+ "giving_range": {
+  "text": "{from} đến {to}",
+  "back": "{from} to {to}",
+  "why": "Range"
+ },
+ "gift_deleted": {
+  "text": "Đã xóa khoản dâng {amount}",
+  "back": "Deleted offering item {amount}",
+  "why": "Đã xóa as in song_deleted"
+ },
+ "fund_deleted": {
+  "text": "Đã xóa quỹ {name} cùng các khoản dâng",
+  "back": "Deleted fund {name} with its items",
+  "why": "Names both fund and gifts"
  }
 }

@@ -4403,5 +4403,252 @@
   "text": "已刪除 {name}",
   "back": "{name} deleted",
   "why": "uses the table word 會友 for member, in the briefed register"
+ },
+ "GIVING_COL_DATE": {
+  "text": "日期",
+  "back": "Date",
+  "why": "plain word for a day"
+ },
+ "GIVING_COL_GIVER": {
+  "text": "奉獻者",
+  "back": "Giver of the offering",
+  "why": "者 names a person who gives"
+ },
+ "GIVING_COL_FUND": {
+  "text": "用途",
+  "back": "Purpose",
+  "why": "用途 is the one word for fund"
+ },
+ "GIVING_COL_METHOD": {
+  "text": "奉獻方式",
+  "back": "Offering method",
+  "why": "says what kind of giving"
+ },
+ "GIVING_COL_AMOUNT": {
+  "text": "金額",
+  "back": "Amount",
+  "why": "plain money word"
+ },
+ "GIVING_DATES": {
+  "text": "日期範圍",
+  "back": "Range of dates",
+  "why": "names the box that picks days"
+ },
+ "GIVING_ALL_DATES": {
+  "text": "全部日期",
+  "back": "All dates",
+  "why": "says no limit on days"
+ },
+ "GIVING_THIS_MONTH": {
+  "text": "本月",
+  "back": "This month",
+  "why": "short button"
+ },
+ "GIVING_ALL_FUNDS": {
+  "text": "全部用途",
+  "back": "All purposes",
+  "why": "no limit on funds"
+ },
+ "GIVING_ALL_METHODS": {
+  "text": "全部",
+  "back": "All",
+  "why": "one short word"
+ },
+ "GIVING_CASH": {
+  "text": "現金",
+  "back": "Cash",
+  "why": "everyday word for cash in hand"
+ },
+ "GIVING_TRANSFER": {
+  "text": "轉帳",
+  "back": "Transfer (bank)",
+  "why": "轉帳 matches 帳戶 used in the table"
+ },
+ "GIVING_PLATE": {
+  "text": "奉獻袋",
+  "back": "Offering bag",
+  "why": "church word for the collection passed round"
+ },
+ "GIVING_TOTAL": {
+  "text": "合計",
+  "back": "Total",
+  "why": "合計 is the usual sum label"
+ },
+ "GIVING_ADD": {
+  "text": "記錄奉獻",
+  "back": "Record offering",
+  "why": "verb first, starts a new row"
+ },
+ "GIVING_EDIT": {
+  "text": "修改奉獻",
+  "back": "Change offering",
+  "why": "verb first, opens an existing row"
+ },
+ "GIVING_EMPTY": {
+  "text": "還沒有奉獻紀錄",
+  "back": "No offering records yet",
+  "why": "紀錄 as in 投影紀錄"
+ },
+ "GIVING_EMPTY_HINT": {
+  "text": "記下第一筆奉獻",
+  "back": "Write down the first offering",
+  "why": "invites the first row"
+ },
+ "GIVING_NONE": {
+  "text": "沒有符合的奉獻紀錄",
+  "back": "No offering record matches",
+  "why": "says the filters leave nothing"
+ },
+ "GIVING_NONE_HINT": {
+  "text": "放寬日期、用途或方式再看看",
+  "back": "Widen the dates, purposes or methods and look again",
+  "why": "names what to loosen"
+ },
+ "GIVING_SUMS_HINT": {
+  "text": "合計由程式自動算出，不用輸入。要改某個數字，直接點它。",
+  "back": "The total is worked out by the program itself, no need to type. To change a number, press it directly.",
+  "why": "two short sentences"
+ },
+ "GIVING_USED_BY": {
+  "text": "用於公告",
+  "back": "Used for announcement",
+  "why": "heads the slide made from the table"
+ },
+ "GIVING_USED_BY_HINT": {
+  "text": "奉獻公告的投影片由這些紀錄自動寫成，不用手動輸入。",
+  "back": "The offering announcement's slides are written automatically from these records, no manual typing needed.",
+  "why": "one sentence, 投影片 as in the table"
+ },
+ "GIVING_BY_FUND": {
+  "text": "各用途合計",
+  "back": "Totals per purpose",
+  "why": "heads the per-fund list"
+ },
+ "GIVING_OPEN_CARD": {
+  "text": "到公告裡編輯",
+  "back": "Edit in announcements",
+  "why": "goes to the announcement editor"
+ },
+ "GIVING_ACCOUNT": {
+  "text": "轉帳帳戶",
+  "back": "Transfer account",
+  "why": "帳戶 is the bank account"
+ },
+ "GIVING_ACCOUNT_HINT": {
+  "text": "轉帳公告的內容取自這個帳戶。",
+  "back": "The transfer announcement's content is taken from this account.",
+  "why": "says where the words come from"
+ },
+ "GIVING_ACCOUNT_NONE": {
+  "text": "還沒有填寫轉帳帳戶",
+  "back": "The transfer account has not been filled in yet",
+  "why": "states what is missing"
+ },
+ "GIVING_ACCOUNT_EDIT": {
+  "text": "編輯帳戶",
+  "back": "Edit account",
+  "why": "opens the account dialog"
+ },
+ "GIVING_BANK": {
+  "text": "銀行",
+  "back": "Bank",
+  "why": "one word"
+ },
+ "GIVING_NUMBER": {
+  "text": "帳號",
+  "back": "Account number",
+  "why": "帳號 is the number as printed"
+ },
+ "GIVING_HOLDER": {
+  "text": "戶名",
+  "back": "Account holder name",
+  "why": "戶名 is the name the account is held in"
+ },
+ "GIVING_NOTE": {
+  "text": "備註",
+  "back": "Remarks",
+  "why": "one word, optional field"
+ },
+ "GIVING_FUNDS": {
+  "text": "奉獻用途",
+  "back": "Offering purposes",
+  "why": "plural noun naming the funds dialog"
+ },
+ "GIVING_FUND_NAME": {
+  "text": "用途名稱",
+  "back": "Purpose name",
+  "why": "names the field"
+ },
+ "GIVING_FUND_COLOUR": {
+  "text": "顏色",
+  "back": "Colour",
+  "why": "short row label"
+ },
+ "GIVING_ADD_FUND": {
+  "text": "新增用途",
+  "back": "Add purpose",
+  "why": "新增 as elsewhere in the table"
+ },
+ "GIVING_DELETE_FUND": {
+  "text": "刪除用途",
+  "back": "Delete purpose",
+  "why": "verb first"
+ },
+ "GIVING_NEW_FUND": {
+  "text": "新用途",
+  "back": "New purpose",
+  "why": "name until the person types one"
+ },
+ "GIVING_GENERAL_FUND": {
+  "text": "一般奉獻",
+  "back": "General offering",
+  "why": "for money with no special aim"
+ },
+ "CMD_GIVING_DETAIL": {
+  "text": "查看奉獻紀錄和合計",
+  "back": "View the offering records and totals",
+  "why": "says what it opens"
+ },
+ "CMD_ADD_GIFT_DETAIL": {
+  "text": "寫下一筆奉獻的日期、用途和金額",
+  "back": "Write down one offering's date, purpose and amount",
+  "why": "says what the new row records"
+ },
+ "FILL_OFFERINGS": {
+  "text": "列出最新一天各用途的奉獻合計",
+  "back": "List the offering totals per purpose for the newest day",
+  "why": "says what the card fills in"
+ },
+ "FILL_TRANSFER": {
+  "text": "顯示轉帳帳戶",
+  "back": "Show the transfer account",
+  "why": "short switch label"
+ },
+ "giving_count": {
+  "text": {
+   "other": "筆奉獻"
+  },
+  "back": "offerings (counter 筆)",
+  "why": "筆 counts gifts"
+ },
+ "giving_latest": {
+  "text": "最近奉獻日：{date}",
+  "back": "Latest offering day: {date}",
+  "why": "names the day the slide is for"
+ },
+ "giving_range": {
+  "text": "{from} 至 {to}",
+  "back": "{from} to {to}",
+  "why": "至 joins the two days"
+ },
+ "gift_deleted": {
+  "text": "已刪除奉獻 {amount}",
+  "back": "Offering {amount} deleted",
+  "why": "past tense, 已"
+ },
+ "fund_deleted": {
+  "text": "已刪除用途「{name}」及其奉獻紀錄",
+  "back": "Deleted the purpose \"{name}\" and its offering records",
+  "why": "「」 as in the table"
  }
 }

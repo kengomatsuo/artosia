@@ -216,6 +216,39 @@ pub fn practice_people(store: &Store) {
     let _ = store.replace_people(&people);
 }
 
+/// The practice offerings: six funds, nine made-up gifts across the last two Sundays and an
+/// account at "Bank Contoh". Names are the made-up church's own, so they stay as they are in every
+/// window language.
+pub fn practice_giving(store: &Store) {
+    use artosia_core::giving::{Account, Fund, Gift, Method};
+    let today = crate::calendar::civil_at(crate::state::unix_now());
+    let latest = today.plus_days(-i64::from(today.weekday()));
+    let earlier = latest.plus_days(-7);
+    let mut ids = Vec::new();
+    for (at, name) in ["Persepuluhan", "Persembahan umum", "Pembangunan", "Misi", "Diakonia", "Syukur"].iter().enumerate() {
+        let mut fund = Fund { id: 0, name: (*name).into(), colour: crate::calendar::next_colour(at) };
+        let _ = store.save_fund(&mut fund);
+        ids.push(fund.id);
+    }
+    // Which Sunday (0 the earlier), giver (empty is the plate), fund, method, rupiah.
+    let rows: [(u8, &str, usize, Method, i64); 9] = [
+        (0, "Contoh Alfa Beta", 0, Method::Transfer, 2_500_000),
+        (0, "", 1, Method::Cash, 1_275_000),
+        (0, "Contoh Gamma Delta", 2, Method::Transfer, 5_000_000),
+        (1, "Contoh Epsilon Zeta", 0, Method::Transfer, 1_800_000),
+        (1, "", 1, Method::Cash, 1_340_000),
+        (1, "Contoh Eta Teta", 3, Method::Transfer, 750_000),
+        (1, "", 4, Method::Cash, 400_000),
+        (1, "Contoh Iota Kapa", 5, Method::Transfer, 350_000),
+        (1, "", 2, Method::Cash, 600_000),
+    ];
+    for (week, giver, fund, method, amount) in rows {
+        let mut gift = Gift { id: 0, date: if week == 0 { earlier } else { latest }, giver: giver.into(), fund: ids[fund], method, amount };
+        let _ = store.save_gift(&mut gift);
+    }
+    let _ = store.set_account(&Account { bank: "Bank Contoh".into(), number: "0123 4567 89".into(), holder: "Gereja Contoh".into(), note: "Tulis jenis persembahan pada berita transfer".into() });
+}
+
 /// The practice announcements, in the window's language (`strings::PRACTICE_NOTICES`): a tester
 /// read "Wednesday" on a card of an Indonesian window.
 pub fn practice_announcements() -> Vec<Announcement> {

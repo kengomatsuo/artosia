@@ -581,3 +581,25 @@ the values (`mapping.rs`), and the choice of Add (the default, repeats are left 
 brings the old list back). A birthday card writes up to 30 names on one slide in three columns of ten
 (`BIRTHDAYS_PER_SLIDE`, `NoticeKind::Birthdays`). Ctrl N is a new person on this tab, and a file
 dropped on it is an import.
+
+### Offerings (OVGIVING1, built 2026-11-14)
+
+The Offerings tab (`ui/giving.rs`, `giving.rs`, `artosia-core/src/giving.rs`) is the table the money
+cards read. A gift is a date, a giver (empty is the collection plate), a fund, cash or transfer and
+an amount in whole rupiah as `i64`; the funds (a name and a colour, `ColourFor::Fund`) and the gifts
+are two tables of the library, and the transfer account (bank, number, holder, note, all typed as
+the bank prints them) is one setting. `rupiah()` is the one function that writes an amount ("Rp
+2.500.000") and `parse_amount()` the one that reads typed digits; the total, the count and the sum per
+fund are worked out from the rows shown every time they are drawn and never stored. The table
+filters by a range of days (two presses in the month picker `month_grid`, shared with the event
+dialog), a fund and a method, sorts by any column, and an amount is edited in its cell: a press makes
+the cell a field of digits, each key writes the gift and the slides that read it, and the cell shows
+rupiah again when the field is left. The other values are edited in a dialog (month picker, giver or
+the plate, fund and method lists). Delete and Delete fund (which takes the fund's gifts) offer Undo.
+`Fill::Offerings` gives one slide of the funds that received something on the newest date a gift
+exists, with their total, drawn by the Money kind of `notice.rs`; `Fill::Transfer` gives the account
+(bank, number, holder, and the note when there is one) on the Account kind, and both give no slide
+while there is no gift or the account lacks its bank, number or holder. A range chosen in the table
+filters the table only; a card with a range of its own waits for OVTEMPL1's data-source panel.
+Scenes: `tab-giving`, `giving-edit`, `giving-empty`, `notice-offerings`, `notice-transfer`, and
+`giving-gift`, `giving-gift-date`, `giving-dates`, `giving-funds`, `giving-account` for the dialogs.

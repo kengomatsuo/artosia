@@ -27,6 +27,8 @@ pub enum ColourFor {
     Outline,
     /// A calendar's chips, by the calendar's id.
     Calendar(i64),
+    /// An offering fund's chips, by the fund's id.
+    Fund(i64),
 }
 
 impl ColourFor {
@@ -35,6 +37,7 @@ impl ColourFor {
             ColourFor::Ink => "ink",
             ColourFor::Outline => "outline",
             ColourFor::Calendar(_) => "calendar",
+            ColourFor::Fund(_) => "fund",
         }
     }
 }
@@ -70,6 +73,7 @@ pub fn current(s: &App, target: ColourFor) -> [u8; 3] {
         ColourFor::Ink => look.ink,
         ColourFor::Outline => look.outline_ink,
         ColourFor::Calendar(id) => s.calendar_of(id).map_or([128, 128, 128], |calendar| calendar.colour),
+        ColourFor::Fund(id) => s.fund_of(id).map_or([128, 128, 128], |fund| fund.colour),
     }
 }
 
@@ -83,6 +87,14 @@ fn apply(s: &mut App, target: ColourFor, colour: [u8; 3]) {
             if let Some(calendar) = s.calendars.iter_mut().find(|calendar| calendar.id == id) {
                 calendar.colour = colour;
                 s.calendar.dirty = true;
+            }
+            return;
+        }
+        ColourFor::Fund(id) => {
+            // Kept in the library once the picker stops moving it, as a calendar's is.
+            if let Some(fund) = s.funds.iter_mut().find(|fund| fund.id == id) {
+                fund.colour = colour;
+                s.giving.dirty = true;
             }
             return;
         }
@@ -324,6 +336,10 @@ fn panel(s: &App, k: &Kit, target: ColourFor, label: &'static str) -> El {
     if matches!(target, ColourFor::Calendar(_)) {
         theirs = s.calendars.iter().map(|calendar| calendar.colour).collect();
         heading = t::CAL_CALENDARS();
+    }
+    if matches!(target, ColourFor::Fund(_)) {
+        theirs = s.funds.iter().map(|fund| fund.colour).collect();
+        heading = t::GIVING_FUNDS();
     }
     theirs.extend([[255, 255, 255], [255, 244, 222], [255, 214, 0], [0, 0, 0]]);
     let mut seen = Vec::new();

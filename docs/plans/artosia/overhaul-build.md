@@ -115,6 +115,27 @@ EDIT     an amount is edited in place in its cell (digits only, grouped as rupia
 SLIDES   Fill::Offerings: the funds with their sums and the total of the last service's date or the
          chosen range; Fill::Transfer: bank, number, holder and note from the account
 EDGES    no gifts (empty state) · a fund with nothing · 12-digit sums · a gift without a giver
+
+BUILD PLAN (builder, 2026-11-14)
+BOUNDARY artosia-core giving.rs (no UI: Fund, Gift, Method, Account, rupiah(), parse_amount(), sums, Filter,
+         offering_lines) <- store.rs (funds, gifts tables; the account is one setting) <- deck.rs
+         (Fill::Offerings, Fill::Transfer read a `Giving` bundle through announcement_pages) <- artosia
+         giving.rs (Window state, buttons) <- ui/giving.rs (draws). Month picker: ui/calendar.rs
+         `month_grid`, taken out of the event dialog's picker and used by both.
+STATE    funds, gifts, account: App (store is the owner, reloaded after each write) · filter, sort, form,
+         amount edit, open list: giving::Window · view (indices into gifts): derived by refresh_giving ·
+         totals and sums: derived in render, never stored.
+ACTION   press an amount: that row's amount edit opens focused, digits only; each key writes the gift and
+         refreshes decks; leaving the field shows rupiah · Add gift: dialog (date from the month picker,
+         giver typed or Plate, fund and method from lists, amount) · row press or pencil: same dialog ·
+         trash: gift removed, Undo in the toast · Funds: dialog like the calendars dialog, colour is
+         ColourFor::Fund(id) · Edit account: dialog of four typed fields.
+SLIDES   Fill::Offerings -> NoticeKind::Money rows (fund, rupiah) plus "== Total"; the date is the latest
+         date in the gifts. Fill::Transfer -> NoticeKind::Account lines bank, number, holder, note.
+         The range chosen on the Offerings tab filters the table only; a card holding its own range waits
+         for the template data-source panel (OVTEMPL1).
+TIMING   no animation added; the amount edit and the sums are plain re-renders. Per-event path measured:
+         filtering and summing 5000 gifts in jest-style test (giving.rs test).
 ```
 
 ## OVTEMPL1: announcement templates

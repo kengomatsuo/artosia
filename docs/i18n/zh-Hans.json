@@ -4405,5 +4405,252 @@
   "text": "已删除 {name}",
   "back": "{name} deleted",
   "why": "uses the table word 会友 for member, in the briefed register"
+ },
+ "GIVING_COL_DATE": {
+  "text": "日期",
+  "back": "Date",
+  "why": "plain word for a day"
+ },
+ "GIVING_COL_GIVER": {
+  "text": "奉献者",
+  "back": "Giver of the offering",
+  "why": "者 names a person who gives"
+ },
+ "GIVING_COL_FUND": {
+  "text": "用途",
+  "back": "Purpose",
+  "why": "用途 is the one word for fund"
+ },
+ "GIVING_COL_METHOD": {
+  "text": "奉献方式",
+  "back": "Offering method",
+  "why": "says what kind of giving, fits heading and filter label"
+ },
+ "GIVING_COL_AMOUNT": {
+  "text": "金额",
+  "back": "Amount",
+  "why": "plain money word"
+ },
+ "GIVING_DATES": {
+  "text": "日期范围",
+  "back": "Range of dates",
+  "why": "names the box that picks days"
+ },
+ "GIVING_ALL_DATES": {
+  "text": "全部日期",
+  "back": "All dates",
+  "why": "says no limit on days"
+ },
+ "GIVING_THIS_MONTH": {
+  "text": "本月",
+  "back": "This month",
+  "why": "short button"
+ },
+ "GIVING_ALL_FUNDS": {
+  "text": "全部用途",
+  "back": "All purposes",
+  "why": "no limit on funds"
+ },
+ "GIVING_ALL_METHODS": {
+  "text": "全部",
+  "back": "All",
+  "why": "one short word"
+ },
+ "GIVING_CASH": {
+  "text": "现金",
+  "back": "Cash",
+  "why": "everyday word for cash in hand"
+ },
+ "GIVING_TRANSFER": {
+  "text": "转账",
+  "back": "Transfer (bank)",
+  "why": "转账 is money through a bank, not moving something"
+ },
+ "GIVING_PLATE": {
+  "text": "奉献袋",
+  "back": "Offering bag",
+  "why": "church word for the collection passed round"
+ },
+ "GIVING_TOTAL": {
+  "text": "合计",
+  "back": "Total",
+  "why": "合计 is the usual sum label"
+ },
+ "GIVING_ADD": {
+  "text": "记录奉献",
+  "back": "Record offering",
+  "why": "verb first, starts a new row"
+ },
+ "GIVING_EDIT": {
+  "text": "修改奉献",
+  "back": "Change offering",
+  "why": "verb first, opens an existing row"
+ },
+ "GIVING_EMPTY": {
+  "text": "还没有奉献记录",
+  "back": "No offering records yet",
+  "why": "states what is missing"
+ },
+ "GIVING_EMPTY_HINT": {
+  "text": "记下第一笔奉献",
+  "back": "Write down the first offering",
+  "why": "invites the first row without a command"
+ },
+ "GIVING_NONE": {
+  "text": "没有符合的奉献记录",
+  "back": "No offering record matches",
+  "why": "says the filters leave nothing"
+ },
+ "GIVING_NONE_HINT": {
+  "text": "放宽日期、用途或方式再看看",
+  "back": "Widen the dates, purposes or methods and look again",
+  "why": "names what to loosen"
+ },
+ "GIVING_SUMS_HINT": {
+  "text": "合计由程序自动算出，无需输入。要改某个数字，直接点它。",
+  "back": "The total is worked out by the program itself, no input needed. To change a number, press it directly.",
+  "why": "two short sentences, no typed total"
+ },
+ "GIVING_USED_BY": {
+  "text": "用于公告",
+  "back": "Used for announcement",
+  "why": "heads the slide made from the table"
+ },
+ "GIVING_USED_BY_HINT": {
+  "text": "奉献公告的幻灯片由这些记录自动写成，无需手动输入。",
+  "back": "The offering announcement's slides are written automatically from these records, no manual input needed.",
+  "why": "one sentence, slide not typed by hand"
+ },
+ "GIVING_BY_FUND": {
+  "text": "各用途合计",
+  "back": "Totals per purpose",
+  "why": "heads the per-fund list"
+ },
+ "GIVING_OPEN_CARD": {
+  "text": "到公告里编辑",
+  "back": "Edit in announcements",
+  "why": "goes to the announcement editor"
+ },
+ "GIVING_ACCOUNT": {
+  "text": "转账账户",
+  "back": "Transfer account",
+  "why": "账户 is the bank account"
+ },
+ "GIVING_ACCOUNT_HINT": {
+  "text": "转账公告的内容取自这个账户。",
+  "back": "The transfer announcement's content is taken from this account.",
+  "why": "says where the words come from"
+ },
+ "GIVING_ACCOUNT_NONE": {
+  "text": "还没有填写转账账户",
+  "back": "The transfer account has not been filled in yet",
+  "why": "states what is missing"
+ },
+ "GIVING_ACCOUNT_EDIT": {
+  "text": "编辑账户",
+  "back": "Edit account",
+  "why": "opens the account dialog"
+ },
+ "GIVING_BANK": {
+  "text": "银行",
+  "back": "Bank",
+  "why": "one word"
+ },
+ "GIVING_NUMBER": {
+  "text": "账号",
+  "back": "Account number",
+  "why": "账号 is the number as printed"
+ },
+ "GIVING_HOLDER": {
+  "text": "户名",
+  "back": "Account holder name",
+  "why": "户名 is the name the account is held in"
+ },
+ "GIVING_NOTE": {
+  "text": "备注",
+  "back": "Remarks",
+  "why": "one word, optional field"
+ },
+ "GIVING_FUNDS": {
+  "text": "奉献用途",
+  "back": "Offering purposes",
+  "why": "plural noun naming the funds dialog"
+ },
+ "GIVING_FUND_NAME": {
+  "text": "用途名称",
+  "back": "Purpose name",
+  "why": "names the field"
+ },
+ "GIVING_FUND_COLOUR": {
+  "text": "颜色",
+  "back": "Colour",
+  "why": "short row label"
+ },
+ "GIVING_ADD_FUND": {
+  "text": "添加用途",
+  "back": "Add purpose",
+  "why": "verb first"
+ },
+ "GIVING_DELETE_FUND": {
+  "text": "删除用途",
+  "back": "Delete purpose",
+  "why": "verb first"
+ },
+ "GIVING_NEW_FUND": {
+  "text": "新用途",
+  "back": "New purpose",
+  "why": "name until the person types one"
+ },
+ "GIVING_GENERAL_FUND": {
+  "text": "一般奉献",
+  "back": "General offering",
+  "why": "for money with no special aim"
+ },
+ "CMD_GIVING_DETAIL": {
+  "text": "查看奉献记录和合计",
+  "back": "View the offering records and totals",
+  "why": "says what it opens"
+ },
+ "CMD_ADD_GIFT_DETAIL": {
+  "text": "写下一笔奉献的日期、用途和金额",
+  "back": "Write down one offering's date, purpose and amount",
+  "why": "says what the new row records"
+ },
+ "FILL_OFFERINGS": {
+  "text": "列出最新一天各用途的奉献合计",
+  "back": "List the offering totals per purpose for the newest day",
+  "why": "says what the card fills in"
+ },
+ "FILL_TRANSFER": {
+  "text": "显示转账账户",
+  "back": "Show the transfer account",
+  "why": "short switch label"
+ },
+ "giving_count": {
+  "text": {
+   "other": "笔奉献"
+  },
+  "back": "offerings (counter 笔)",
+  "why": "笔 counts gifts"
+ },
+ "giving_latest": {
+  "text": "最近奉献日：{date}",
+  "back": "Latest offering day: {date}",
+  "why": "names the day the slide is for"
+ },
+ "giving_range": {
+  "text": "{from} 至 {to}",
+  "back": "{from} to {to}",
+  "why": "至 joins the two days"
+ },
+ "gift_deleted": {
+  "text": "已删除奉献 {amount}",
+  "back": "Offering {amount} deleted",
+  "why": "past tense, 已"
+ },
+ "fund_deleted": {
+  "text": "已删除用途“{name}”及其奉献记录",
+  "back": "Deleted the purpose \"{name}\" and its offering records",
+  "why": "says both fund and gifts are gone"
  }
 }

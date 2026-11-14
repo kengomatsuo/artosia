@@ -8,6 +8,7 @@ pub mod calendar;
 pub mod countries;
 pub mod deck;
 pub mod ebible;
+pub mod giving;
 pub mod import;
 pub mod languages;
 pub mod learn;

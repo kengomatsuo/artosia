@@ -4403,5 +4403,252 @@
   "text": "{name}さんを削除しました",
   "back": "{name} was deleted",
   "why": "uses the table word 教会員 for member, in the briefed register"
+ },
+ "GIVING_COL_DATE": {
+  "text": "日付",
+  "back": "Date",
+  "why": "plain word for a day"
+ },
+ "GIVING_COL_GIVER": {
+  "text": "献金者",
+  "back": "Giver",
+  "why": "者 names the person who gives"
+ },
+ "GIVING_COL_FUND": {
+  "text": "用途",
+  "back": "Use",
+  "why": "用途 is the one word for fund"
+ },
+ "GIVING_COL_METHOD": {
+  "text": "方法",
+  "back": "Method",
+  "why": "short, fits heading and filter label"
+ },
+ "GIVING_COL_AMOUNT": {
+  "text": "金額",
+  "back": "Amount",
+  "why": "plain money word"
+ },
+ "GIVING_DATES": {
+  "text": "期間",
+  "back": "Period",
+  "why": "names the box that picks days"
+ },
+ "GIVING_ALL_DATES": {
+  "text": "全期間",
+  "back": "Whole period",
+  "why": "says no limit on days"
+ },
+ "GIVING_THIS_MONTH": {
+  "text": "今月",
+  "back": "This month",
+  "why": "short button"
+ },
+ "GIVING_ALL_FUNDS": {
+  "text": "すべての用途",
+  "back": "All uses",
+  "why": "no limit on funds"
+ },
+ "GIVING_ALL_METHODS": {
+  "text": "すべて",
+  "back": "All",
+  "why": "one short word"
+ },
+ "GIVING_CASH": {
+  "text": "現金",
+  "back": "Cash",
+  "why": "everyday word"
+ },
+ "GIVING_TRANSFER": {
+  "text": "振込",
+  "back": "Bank transfer",
+  "why": "振込 is money sent through a bank"
+ },
+ "GIVING_PLATE": {
+  "text": "献金かご",
+  "back": "Offering basket",
+  "why": "the passing collection, not the named envelope"
+ },
+ "GIVING_TOTAL": {
+  "text": "合計",
+  "back": "Total",
+  "why": "合計 is the usual sum label"
+ },
+ "GIVING_ADD": {
+  "text": "献金を追加",
+  "back": "Add an offering",
+  "why": "を追加 as elsewhere in the table"
+ },
+ "GIVING_EDIT": {
+  "text": "献金を編集",
+  "back": "Edit an offering",
+  "why": "を編集 as elsewhere in the table"
+ },
+ "GIVING_EMPTY": {
+  "text": "まだ献金がありません",
+  "back": "There are no offerings yet",
+  "why": "states what is missing"
+ },
+ "GIVING_EMPTY_HINT": {
+  "text": "最初の1件を記録",
+  "back": "Record the first one",
+  "why": "invites the first row"
+ },
+ "GIVING_NONE": {
+  "text": "該当する献金がありません",
+  "back": "No matching offering exists",
+  "why": "says the filters leave nothing"
+ },
+ "GIVING_NONE_HINT": {
+  "text": "期間・用途・方法を広げると出ます",
+  "back": "Widening the period, use and method will show them",
+  "why": "names what to loosen"
+ },
+ "GIVING_SUMS_HINT": {
+  "text": "合計は自動で計算されます。金額を直すには、その金額を押します。",
+  "back": "The total is calculated automatically. To fix an amount, press that amount.",
+  "why": "two short sentences"
+ },
+ "GIVING_USED_BY": {
+  "text": "お知らせ用",
+  "back": "For announcements",
+  "why": "heads the slide made from the table"
+ },
+ "GIVING_USED_BY_HINT": {
+  "text": "献金のお知らせは、この表から自動で作られます。手入力は不要です。",
+  "back": "The offering announcement is made automatically from this table. No typing by hand is needed.",
+  "why": "お知らせ as in the table, no hand typing"
+ },
+ "GIVING_BY_FUND": {
+  "text": "用途別の合計",
+  "back": "Totals per use",
+  "why": "heads the per-fund list"
+ },
+ "GIVING_OPEN_CARD": {
+  "text": "お知らせの編集へ",
+  "back": "To editing of the announcement",
+  "why": "goes to the announcement editor"
+ },
+ "GIVING_ACCOUNT": {
+  "text": "振込先口座",
+  "back": "Account to transfer to",
+  "why": "names the church's receiving account"
+ },
+ "GIVING_ACCOUNT_HINT": {
+  "text": "振込のお知らせは、この口座の内容を使います。",
+  "back": "The transfer announcement uses the contents of this account.",
+  "why": "says where the words come from"
+ },
+ "GIVING_ACCOUNT_NONE": {
+  "text": "口座がまだ入力されていません",
+  "back": "The account has not been entered yet",
+  "why": "states what is missing"
+ },
+ "GIVING_ACCOUNT_EDIT": {
+  "text": "口座を編集",
+  "back": "Edit the account",
+  "why": "opens the account dialog"
+ },
+ "GIVING_BANK": {
+  "text": "銀行名",
+  "back": "Bank name",
+  "why": "one word"
+ },
+ "GIVING_NUMBER": {
+  "text": "口座番号",
+  "back": "Account number",
+  "why": "口座番号 is the number as printed"
+ },
+ "GIVING_HOLDER": {
+  "text": "口座名義",
+  "back": "Account holder name",
+  "why": "口座名義 is the name it is held in"
+ },
+ "GIVING_NOTE": {
+  "text": "備考",
+  "back": "Remarks",
+  "why": "one word, optional"
+ },
+ "GIVING_FUNDS": {
+  "text": "用途の管理",
+  "back": "Managing uses",
+  "why": "names the funds dialog"
+ },
+ "GIVING_FUND_NAME": {
+  "text": "用途の名前",
+  "back": "Name of the use",
+  "why": "names the field"
+ },
+ "GIVING_FUND_COLOUR": {
+  "text": "色",
+  "back": "Colour",
+  "why": "short row label"
+ },
+ "GIVING_ADD_FUND": {
+  "text": "用途を追加",
+  "back": "Add a use",
+  "why": "を追加 as elsewhere"
+ },
+ "GIVING_DELETE_FUND": {
+  "text": "用途を削除",
+  "back": "Delete a use",
+  "why": "を削除 as elsewhere"
+ },
+ "GIVING_NEW_FUND": {
+  "text": "新しい用途",
+  "back": "New use",
+  "why": "name until the person types one"
+ },
+ "GIVING_GENERAL_FUND": {
+  "text": "一般献金",
+  "back": "General offering",
+  "why": "for money with no special aim"
+ },
+ "CMD_GIVING_DETAIL": {
+  "text": "献金の一覧と合計",
+  "back": "List of offerings and the total",
+  "why": "says what it opens"
+ },
+ "CMD_ADD_GIFT_DETAIL": {
+  "text": "献金1件の日付・用途・金額を記録",
+  "back": "Record the date, use and amount of one offering",
+  "why": "says what the new row records"
+ },
+ "FILL_OFFERINGS": {
+  "text": "最新の献金日の用途別の合計を載せる",
+  "back": "Put the totals per use for the newest offering day",
+  "why": "says what the card fills in"
+ },
+ "FILL_TRANSFER": {
+  "text": "振込先の口座を載せる",
+  "back": "Put the account to transfer to",
+  "why": "short switch label"
+ },
+ "giving_count": {
+  "text": {
+   "other": "件"
+  },
+  "back": "(counter) items",
+  "why": "件 counts gifts"
+ },
+ "giving_latest": {
+  "text": "最新の献金日：{date}",
+  "back": "Date of the latest offering: {date}",
+  "why": "names the day the slide is for"
+ },
+ "giving_range": {
+  "text": "{from}から{to}",
+  "back": "From {from} to {to}",
+  "why": "から joins the two days"
+ },
+ "gift_deleted": {
+  "text": "{amount}の献金を削除しました",
+  "back": "The offering of {amount} was deleted",
+  "why": "past tense polite"
+ },
+ "fund_deleted": {
+  "text": "用途「{name}」と、その献金を削除しました",
+  "back": "Deleted the use \"{name}\" and its offerings too",
+  "why": "says both fund and gifts are gone"
  }
 }

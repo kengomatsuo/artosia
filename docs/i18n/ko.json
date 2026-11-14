@@ -4405,5 +4405,252 @@
   "text": "{name} 님을 삭제했어요",
   "back": "{name} was deleted",
   "why": "uses the table word 교인 for member, in the briefed register"
+ },
+ "GIVING_COL_DATE": {
+  "text": "날짜",
+  "back": "Date",
+  "why": "plain word for a day"
+ },
+ "GIVING_COL_GIVER": {
+  "text": "헌금자",
+  "back": "Giver",
+  "why": "자 names the person who gives"
+ },
+ "GIVING_COL_FUND": {
+  "text": "용도",
+  "back": "Use",
+  "why": "용도 is the one word for fund"
+ },
+ "GIVING_COL_METHOD": {
+  "text": "헌금 방법",
+  "back": "Giving method",
+  "why": "says what kind of giving"
+ },
+ "GIVING_COL_AMOUNT": {
+  "text": "금액",
+  "back": "Amount",
+  "why": "plain money word"
+ },
+ "GIVING_DATES": {
+  "text": "기간",
+  "back": "Period",
+  "why": "names the box that picks days"
+ },
+ "GIVING_ALL_DATES": {
+  "text": "전체 기간",
+  "back": "Whole period",
+  "why": "says no limit on days"
+ },
+ "GIVING_THIS_MONTH": {
+  "text": "이번 달",
+  "back": "This month",
+  "why": "short button"
+ },
+ "GIVING_ALL_FUNDS": {
+  "text": "모든 용도",
+  "back": "Every use",
+  "why": "no limit on funds"
+ },
+ "GIVING_ALL_METHODS": {
+  "text": "전체",
+  "back": "All",
+  "why": "one short word"
+ },
+ "GIVING_CASH": {
+  "text": "현금",
+  "back": "Cash",
+  "why": "everyday word"
+ },
+ "GIVING_TRANSFER": {
+  "text": "계좌이체",
+  "back": "Account transfer",
+  "why": "계좌이체 is money sent through a bank"
+ },
+ "GIVING_PLATE": {
+  "text": "헌금 바구니",
+  "back": "Offering basket",
+  "why": "passing collection basket"
+ },
+ "GIVING_TOTAL": {
+  "text": "합계",
+  "back": "Total",
+  "why": "합계 is the usual sum label"
+ },
+ "GIVING_ADD": {
+  "text": "헌금 추가",
+  "back": "Add offering",
+  "why": "verb last, as elsewhere"
+ },
+ "GIVING_EDIT": {
+  "text": "헌금 수정",
+  "back": "Edit offering",
+  "why": "verb last, as elsewhere"
+ },
+ "GIVING_EMPTY": {
+  "text": "헌금 기록이 없어요",
+  "back": "There are no offering records",
+  "why": "states what is missing"
+ },
+ "GIVING_EMPTY_HINT": {
+  "text": "첫 헌금을 적어 보세요",
+  "back": "Try writing the first offering",
+  "why": "invites the first row"
+ },
+ "GIVING_NONE": {
+  "text": "맞는 헌금이 없어요",
+  "back": "There is no matching offering",
+  "why": "says the filters leave nothing"
+ },
+ "GIVING_NONE_HINT": {
+  "text": "날짜, 용도, 방법을 넓혀 보세요",
+  "back": "Try widening the date, use and method",
+  "why": "names what to loosen"
+ },
+ "GIVING_SUMS_HINT": {
+  "text": "합계는 자동으로 계산돼요. 금액을 바꾸려면 그 금액을 누르세요.",
+  "back": "The total is calculated automatically. To change an amount, press that amount.",
+  "why": "two short sentences"
+ },
+ "GIVING_USED_BY": {
+  "text": "공지에 사용",
+  "back": "Used in announcements",
+  "why": "heads the slide made from the table"
+ },
+ "GIVING_USED_BY_HINT": {
+  "text": "헌금 공지 슬라이드는 이 표로 자동으로 만들어져요.",
+  "back": "The offering announcement slide is made automatically from this table.",
+  "why": "one sentence"
+ },
+ "GIVING_BY_FUND": {
+  "text": "용도별 합계",
+  "back": "Total per use",
+  "why": "heads the per-fund list"
+ },
+ "GIVING_OPEN_CARD": {
+  "text": "공지에서 편집",
+  "back": "Edit in announcements",
+  "why": "goes to the announcement editor"
+ },
+ "GIVING_ACCOUNT": {
+  "text": "입금 계좌",
+  "back": "Deposit account",
+  "why": "입금 계좌 is where gifts are sent"
+ },
+ "GIVING_ACCOUNT_HINT": {
+  "text": "계좌이체 공지는 이 계좌 내용으로 만들어져요.",
+  "back": "The transfer announcement is made from this account's contents.",
+  "why": "says where the words come from"
+ },
+ "GIVING_ACCOUNT_NONE": {
+  "text": "입금 계좌를 아직 안 적었어요",
+  "back": "The deposit account has not been written yet",
+  "why": "states what is missing"
+ },
+ "GIVING_ACCOUNT_EDIT": {
+  "text": "계좌 입력",
+  "back": "Enter account",
+  "why": "opens the account dialog"
+ },
+ "GIVING_BANK": {
+  "text": "은행",
+  "back": "Bank",
+  "why": "one word"
+ },
+ "GIVING_NUMBER": {
+  "text": "계좌번호",
+  "back": "Account number",
+  "why": "계좌번호 is the number as printed"
+ },
+ "GIVING_HOLDER": {
+  "text": "예금주",
+  "back": "Account holder",
+  "why": "예금주 is who the account belongs to"
+ },
+ "GIVING_NOTE": {
+  "text": "메모",
+  "back": "Memo",
+  "why": "one word, optional"
+ },
+ "GIVING_FUNDS": {
+  "text": "용도 관리",
+  "back": "Use management",
+  "why": "names the funds dialog"
+ },
+ "GIVING_FUND_NAME": {
+  "text": "용도 이름",
+  "back": "Use name",
+  "why": "names the field"
+ },
+ "GIVING_FUND_COLOUR": {
+  "text": "색",
+  "back": "Colour",
+  "why": "short row label"
+ },
+ "GIVING_ADD_FUND": {
+  "text": "용도 추가",
+  "back": "Add use",
+  "why": "verb last"
+ },
+ "GIVING_DELETE_FUND": {
+  "text": "용도 삭제",
+  "back": "Delete use",
+  "why": "verb last"
+ },
+ "GIVING_NEW_FUND": {
+  "text": "새 용도",
+  "back": "New use",
+  "why": "name until the person types one"
+ },
+ "GIVING_GENERAL_FUND": {
+  "text": "일반 헌금",
+  "back": "General offering",
+  "why": "for money with no special aim"
+ },
+ "CMD_GIVING_DETAIL": {
+  "text": "헌금 목록과 합계 보기",
+  "back": "View the list of offerings and totals",
+  "why": "says what it opens"
+ },
+ "CMD_ADD_GIFT_DETAIL": {
+  "text": "헌금 한 건의 날짜, 용도, 금액 적기",
+  "back": "Write down the date, use and amount of one offering",
+  "why": "says what the new row records"
+ },
+ "FILL_OFFERINGS": {
+  "text": "가장 최근 날짜의 용도별 합계 넣기",
+  "back": "Put in the totals per use for the most recent date",
+  "why": "says what the card fills in"
+ },
+ "FILL_TRANSFER": {
+  "text": "입금 계좌 넣기",
+  "back": "Put in the deposit account",
+  "why": "short switch label"
+ },
+ "giving_count": {
+  "text": {
+   "other": "건"
+  },
+  "back": "(counter) cases",
+  "why": "건 counts gifts"
+ },
+ "giving_latest": {
+  "text": "최근 헌금일: {date}",
+  "back": "Latest offering day: {date}",
+  "why": "names the day the slide is for"
+ },
+ "giving_range": {
+  "text": "{from} ~ {to}",
+  "back": "{from} to {to}",
+  "why": "~ joins the two days"
+ },
+ "gift_deleted": {
+  "text": "{amount} 헌금을 삭제했어요",
+  "back": "Deleted {amount} offering",
+  "why": "past tense polite"
+ },
+ "fund_deleted": {
+  "text": "용도와 헌금을 삭제했어요: {name}",
+  "back": "Deleted the use and offerings: {name}",
+  "why": "colon avoids a particle"
  }
 }

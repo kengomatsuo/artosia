@@ -205,10 +205,10 @@ fn lines_of(slide: &Slide) -> Vec<String> {
     notice_body(&slide.text).rows.into_iter().map(|cells| cells.join(" ")).collect()
 }
 
-/// The account's three lines: the bank, the number and the holder.
-fn account_parts(body: &NoticeBody) -> (String, String, String) {
+/// The account's lines: the bank, the number, the holder and the note, which may be empty.
+fn account_parts(body: &NoticeBody) -> (String, String, String, String) {
     let line = |at: usize| body.rows.get(at).map(|cells| cells.join(" ")).unwrap_or_default();
-    (line(0), line(1), line(2))
+    (line(0), line(1), line(2), line(3))
 }
 
 /// The whole slide at `w` by `h` points, in the look's notice style.
@@ -241,7 +241,7 @@ fn hairline(layer: El, slide: &Slide, body: &NoticeBody, c: &Ctx) -> El {
         .child(text(slide.heading.as_str()).font(title_style(c.sans, &slide.heading, 0.09 * h, 800.0, inner)).color(c.accent).absolute(mx, (0.098 * h).round()));
     let (top, bottom) = ((0.33 * h).round(), (0.95 * h).round());
     if slide.notice == NoticeKind::Account {
-        let (bank, number, holder) = account_parts(body);
+        let (bank, number, holder, note) = account_parts(body);
         let big = title_style(c.sans, &number, 0.17 * h, 800.0, inner);
         let at = (0.06 * h).round();
         let lines = col()
@@ -251,7 +251,8 @@ fn hairline(layer: El, slide: &Slide, body: &NoticeBody, c: &Ctx) -> El {
             .gap((0.03 * h).round())
             .child(text(bank).font(style_of(c.sans, at, 700.0)).color(Color::WHITE))
             .child(text(number).font(big.features("'tnum' 1")).color(Color::WHITE))
-            .child(text(holder).font(style_of(c.sans, (0.05 * h).round(), 400.0)).color(Color::WHITE.alpha(0.78)));
+            .child(text(holder).font(style_of(c.sans, (0.05 * h).round(), 400.0)).color(Color::WHITE.alpha(0.78)))
+            .children((!note.is_empty()).then(|| text(note).font(style_of(c.sans, (0.04 * h).round(), 400.0)).color(Color::WHITE.alpha(0.6))));
         return layer.child(lines);
     }
     let table = Table::of(slide.notice, &body.rows);
@@ -339,7 +340,7 @@ fn ledger(layer: El, slide: &Slide, body: &NoticeBody, c: &Ctx) -> El {
             .child(text(content).font(TextStyle::new(size, 800.0).family(c.sans).tracking(size * 0.14)).color(ink))
     };
     if slide.notice == NoticeKind::Account {
-        let (bank, number, holder) = account_parts(body);
+        let (bank, number, holder, note) = account_parts(body);
         let panel_w = (cw * 0.9).round();
         let big = title_style(c.serif, &number, 0.16 * h, 700.0, panel_w * 0.92).features("'tnum' 1");
         let (bank_h, number_h, holder_h) = ((0.12 * h).round(), (0.30 * h).round(), (0.12 * h).round());
@@ -354,7 +355,11 @@ fn ledger(layer: El, slide: &Slide, body: &NoticeBody, c: &Ctx) -> El {
             .child(heading_row(&bank, (0.05 * h).round(), bank_h, tint, panel_w))
             .child(row().w(panel_w).h(number_h).items_center().justify_center().child(text(number).font(big).color(ink)))
             .child(row().w(panel_w).h(holder_h).fill(tint).items_center().justify_center().border_sides([hair, 0.0, 0.0, 0.0], line).child(text(holder).font(style_of(c.serif, (0.05 * h).round(), 600.0)).color(ink)));
-        return layer.child(panel);
+        layer = layer.child(panel);
+        if !note.is_empty() {
+            layer = layer.child(text(note).font(style_of(c.sans, (0.04 * h).round(), 500.0)).color(Color::WHITE.alpha(0.85)).absolute(cx0, y + tall + (0.03 * h).round()).w(cw).align(Align::Center).truncate());
+        }
+        return layer;
     }
     let table = Table::of(slide.notice, &body.rows);
     let total = body.total.is_some();
@@ -429,7 +434,7 @@ fn band(layer: El, slide: &Slide, body: &NoticeBody, c: &Ctx) -> El {
     let foot = (0.965 * h).round();
     let rule = Color::WHITE.alpha(0.14);
     if slide.notice == NoticeKind::Account {
-        let (bank, number, holder) = account_parts(body);
+        let (bank, number, holder, note) = account_parts(body);
         let big = title_style(c.sans, &number, 0.15 * h, 800.0, inner - 0.08 * h).features("'tnum' 1");
         let pill_h = (big.size * 1.45).round();
         let lines = col()
@@ -440,7 +445,8 @@ fn band(layer: El, slide: &Slide, body: &NoticeBody, c: &Ctx) -> El {
             .items_start()
             .child(text(bank).font(style_of(c.sans, (0.07 * h).round(), 800.0)).color(ink))
             .child(row().h(pill_h).items_center().px((0.035 * h).round()).radius((pill_h / 2.0).round()).border((4.0 * u).max(1.0), c.accent).child(text(number).font(big).color(ink)))
-            .child(text(holder).font(style_of(c.sans, (0.05 * h).round(), 600.0)).color(ink.alpha(0.8)));
+            .child(text(holder).font(style_of(c.sans, (0.05 * h).round(), 600.0)).color(ink.alpha(0.8)))
+            .children((!note.is_empty()).then(|| text(note).font(style_of(c.sans, (0.04 * h).round(), 400.0)).color(ink.alpha(0.6))));
         return layer.child(lines);
     }
     let table = Table::of(slide.notice, &body.rows);
