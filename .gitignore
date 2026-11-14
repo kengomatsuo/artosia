@@ -1,5 +1,6 @@
 /target
 /fixtures/*.mp4
+/fixtures/*.wav
 /spikes/*/target
 *.log
 /fixtures/easislides/
