@@ -232,6 +232,32 @@ pub struct LineHit {
     pub lang: String,
 }
 
+/// Whether Bible verses lead a typed search instead of songs, from the best hit of each. A
+/// volunteer who types a line of a verse is after the verse, and one who types a line of a song is
+/// after the song: the verses lead when the best verse holds the typed words as one phrase, or
+/// holds them all, and no song holds them all in one line or in its title.
+pub fn verses_lead(song: Option<&SongHit>, verse_complete: bool, verse_phrase: bool) -> bool {
+    let Some(song) = song else { return verse_complete };
+    let song_holds_it = song.complete && (song.in_title || song.together >= song.words);
+    if song_holds_it {
+        return false;
+    }
+    verse_phrase || (verse_complete && !song.complete)
+}
+
+/// Two kinds of result as sections of one list: the first few of the kind that leads, the first
+/// few of the other, then the rest of each. The other kind is never pushed below every row of
+/// the leader, so a verse is not lost under fifty songs that only share a word with it.
+pub fn federate<T>(lead: Vec<T>, follow: Vec<T>, peek: usize) -> Vec<T> {
+    let mut lead = lead.into_iter();
+    let mut follow = follow.into_iter();
+    let mut out: Vec<T> = lead.by_ref().take(peek).collect();
+    out.extend(follow.by_ref().take(peek));
+    out.extend(lead);
+    out.extend(follow);
+    out
+}
+
 #[derive(Clone, Debug, PartialEq)]
 pub struct SongHit {
     /// Index into the slice the index was built from.
@@ -501,6 +527,41 @@ impl SongIndex {
     /// The entry that holds a song's title. Entries are in song order, title first.
     fn title_entry(&self, song: u32) -> u32 {
         self.entries.partition_point(|entry| entry.song < song) as u32
+    }
+}
+
+#[cfg(test)]
+mod intent_tests {
+    use super::*;
+
+    fn song(complete: bool, together: u8, words: u8, in_title: bool) -> SongHit {
+        SongHit { song: 0, preferred: false, complete, together, words, in_title, habit: 0, title_ranges: Vec::new(), line: None }
+    }
+
+    #[test]
+    fn a_verse_typed_as_written_leads_songs_that_only_share_its_words() {
+        // Every word is in the song, scattered over its lines; the verse holds them as typed.
+        assert!(verses_lead(Some(&song(true, 3, 7, false)), true, true));
+        // A song missing a word loses to a verse that holds them all, phrase or not.
+        assert!(verses_lead(Some(&song(false, 4, 5, false)), true, false));
+        // No song at all: the verses lead when one holds every word.
+        assert!(verses_lead(None, true, false));
+        assert!(!verses_lead(None, false, false));
+    }
+
+    #[test]
+    fn a_song_line_or_title_typed_out_keeps_the_song_first() {
+        assert!(!verses_lead(Some(&song(true, 5, 5, false)), true, true), "the whole line of a song");
+        assert!(!verses_lead(Some(&song(true, 1, 2, true)), true, true), "the title of a song");
+        assert!(!verses_lead(Some(&song(true, 3, 4, false)), true, false), "both hold every word, neither as typed");
+    }
+
+    #[test]
+    fn the_other_kind_comes_after_the_first_few_rows_never_after_all_of_them() {
+        let list = federate(vec!["s1", "s2", "s3", "s4", "s5", "s6"], vec!["v1", "v2"], 4);
+        assert_eq!(list, ["s1", "s2", "s3", "s4", "v1", "v2", "s5", "s6"]);
+        assert_eq!(federate(vec!["v1"], vec!["s1", "s2"], 4), ["v1", "s1", "s2"]);
+        assert_eq!(federate(Vec::<&str>::new(), vec!["s1"], 4), ["s1"]);
     }
 }
 

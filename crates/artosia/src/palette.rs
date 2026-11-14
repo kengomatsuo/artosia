@@ -427,6 +427,9 @@ pub struct Palette {
 const SONG_LIMIT: usize = 40;
 /// The most commands and other named things that may go above the songs.
 const NAMED_LIMIT: usize = 4;
+/// How many rows of the other kind, songs or verses, come right after the first rows of the kind
+/// that leads a typed search.
+const PEEK: usize = 4;
 
 fn verse_title(app: &App, reference: &Reference) -> String {
     app.bible().map(|bible| bible.format(reference)).unwrap_or_else(|| english_name(reference.book).to_string())
@@ -614,18 +617,20 @@ impl App {
     }
 
     /// The order of a typed search, top to bottom: a countdown or message typed out, a Bible
-    /// reference, songs in today's plan, commands and other things found by name, every other
-    /// song, what was found by another word, then Bible text.
+    /// reference, songs in today's plan, commands and other things found by name, then songs and
+    /// Bible text as two sections led by the one that holds what was typed (`verses_lead`), then
+    /// what was found by another word.
     fn query_hits(&mut self, query: &str) -> Vec<Hit> {
         let scope = self.palette.scope;
         let mut hits: Vec<Hit> = Vec::new();
         if scope == Scope::All {
             hits.extend(self.typed_hits(query));
         }
-        let passages = if scope == Scope::Songs { Vec::new() } else { self.passage_hits(query) };
+        let (passages, verse_complete, verse_phrase) = if scope == Scope::Songs { (Vec::new(), false, false) } else { self.passage_hits(query) };
         // A typed reference is nearly always what was meant, so it goes first.
         let reference_first = passages.iter().any(|hit| matches!(hit, Hit::Passage { ranges, .. } if ranges.is_empty()));
         let (mut first_songs, mut songs) = (Vec::new(), Vec::new());
+        let mut best_song = None;
         if scope != Scope::Bible {
             let planned = self.planned_songs();
             // What was picked for this text lately only orders songs that tied on everything else.
@@ -633,6 +638,7 @@ impl App {
             let weight = |song: usize| habits.get(&song).map_or(0, |habit| habit.weight());
             let found = self.index.search_ranked(query, SONG_LIMIT, &|song| planned.contains(&song), &weight);
             self.palette.total = found.len();
+            best_song = found.first().cloned();
             let typed = artosia_core::learn::fold_typed(query);
             for hit in found {
                 let leads = hit.preferred && hit.complete;
@@ -677,11 +683,14 @@ impl App {
         hits.extend(leading);
         hits.extend(first_songs);
         hits.extend(named);
-        hits.extend(songs);
-        hits.extend(others);
-        if !reference_first {
-            hits.extend(passages);
+        if reference_first {
+            hits.extend(songs);
+        } else if artosia_core::search::verses_lead(best_song.as_ref(), verse_complete, verse_phrase) {
+            hits.extend(artosia_core::search::federate(passages, songs, PEEK));
+        } else {
+            hits.extend(artosia_core::search::federate(songs, passages, PEEK));
         }
+        hits.extend(others);
         hits
     }
 
@@ -845,8 +854,10 @@ impl App {
             .collect()
     }
 
-    fn passage_hits(&self, query: &str) -> Vec<Hit> {
-        let Some(bible) = self.bible() else { return Vec::new() };
+    /// The Bible's rows for a typed search, and whether the best verse found by its words holds
+    /// every word and holds them as one phrase.
+    fn passage_hits(&self, query: &str) -> (Vec<Hit>, bool, bool) {
+        let Some(bible) = self.bible() else { return (Vec::new(), false, false) };
         let mut hits = Vec::new();
         let guesses = bible.guess(query);
         if let Some(best) = guesses.first() {
@@ -896,12 +907,15 @@ impl App {
                     step: None,
                 });
             }
-            return hits;
+            return (hits, false, false);
         }
         if query.chars().count() < 3 {
-            return hits;
+            return (hits, false, false);
         }
+        let (mut complete, mut phrase) = (false, false);
         for found in bible.search(query, 24) {
+            complete |= found.complete;
+            phrase |= found.phrase;
             if self.palette.scope == Scope::All && !found.complete {
                 continue;
             }
@@ -909,7 +923,7 @@ impl App {
             let reference = Reference::single(verse.book, verse.chapter, verse.verse);
             hits.push(Hit::Passage { reference, title: bible.format(&reference), text: verse.text.to_string(), ranges: found.ranges, step: None });
         }
-        hits
+        (hits, complete, phrase)
     }
 
     /// Whether every result is a book or chapter to step into, which draws as a grid.
@@ -1400,5 +1414,27 @@ mod tests {
         let command = app.palette.hits.iter().position(|hit| matches!(hit, Hit::Command(Command::NewPlan))).expect("the plan commands are found");
         let passage = app.palette.hits.iter().position(|hit| matches!(hit, Hit::Passage { .. })).unwrap_or(usize::MAX);
         assert!(command < passage, "the command stands before any passage");
+    }
+
+    #[test]
+    fn words_typed_from_a_verse_find_the_verse_first_and_a_song_line_its_song() {
+        use artosia_core::bible::{Bible, Verse};
+        let mut app = app();
+        let verse = |v: u16, text: &str| Verse { book: 19, chapter: 23, verse: v, text: text.into() };
+        let names = vec![(19, "Psalms".to_string(), "Ps".to_string())];
+        // Made-up verses: one holds a line of its own, one holds a practice song's line out of order.
+        let verses = vec![verse(1, "The keeper walks beside quiet water at dawn"), verse(2, "Over the valley breaks the first light of the day")];
+        let bible = Bible::from_parts("TST".into(), None, String::new(), names, verses).expect("a made-up Bible");
+        app.bibles.clear();
+        app.bibles.insert("TST".into(), std::sync::Arc::new(bible));
+        app.settings.bible = "TST".into();
+        search(&mut app, "keeper walks beside quiet water");
+        assert!(matches!(first(&app), Some(Hit::Passage { .. })), "the verse leads songs that share none of its line");
+        // A practice song's whole line: the song leads, and the verse holding the same words
+        // follows the first songs instead of every song.
+        search(&mut app, "first light breaks over the valley");
+        assert!(matches!(first(&app), Some(Hit::Song { .. })), "the song leads");
+        let verse = app.palette.hits.iter().position(|hit| matches!(hit, Hit::Passage { .. })).expect("the verse is listed");
+        assert!(verse <= 4, "the verse comes after the first songs, at {verse}");
     }
 }

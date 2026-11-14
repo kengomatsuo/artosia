@@ -271,6 +271,8 @@ pub struct VerseHit {
     pub ranges: Vec<Range<usize>>,
     /// The verse holds every word of the query.
     pub complete: bool,
+    /// The verse holds the query's words as typed, next to each other and in order.
+    pub phrase: bool,
 }
 
 #[derive(Debug)]
@@ -648,7 +650,7 @@ impl Bible {
             return Vec::new();
         }
         let phrase = tokens.join(" ");
-        let mut scored: Vec<(f32, usize, bool)> = self
+        let mut scored: Vec<(f32, usize, bool, bool)> = self
             .index()
             .query(&tokens)
             .into_iter()
@@ -657,15 +659,16 @@ impl Bible {
             .map(|hit| {
                 let text = normalize(&self.verses[hit.entry as usize].text);
                 let whole = usize::from(hit.matched) == tokens.len();
-                let bonus = if whole && tokens.len() > 1 && text.contains(&phrase) { 3.0 } else { 0.0 };
-                (hit.score + f32::from(hit.matched) * 2.0 + bonus, hit.entry as usize, whole)
+                let together = whole && text.contains(&phrase);
+                let bonus = if together && tokens.len() > 1 { 3.0 } else { 0.0 };
+                (hit.score + f32::from(hit.matched) * 2.0 + bonus, hit.entry as usize, whole, together)
             })
             .collect();
         scored.sort_by(|a, b| b.0.total_cmp(&a.0).then(a.1.cmp(&b.1)));
         scored
             .into_iter()
             .take(limit)
-            .map(|(_, index, complete)| VerseHit { index, ranges: highlight_ranges(&self.verses[index].text, &tokens), complete })
+            .map(|(_, index, complete, phrase)| VerseHit { index, ranges: highlight_ranges(&self.verses[index].text, &tokens), complete, phrase })
             .collect()
     }
 }

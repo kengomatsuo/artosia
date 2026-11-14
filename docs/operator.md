@@ -130,9 +130,10 @@ What a typed search shows, top to bottom:
 | 2 | A Bible reference | `joh 3 16-18`, `1 pet 3:3` |
 | 3 | Songs in today's plan that hold every typed word | marked "Plan" |
 | 4 | Commands, announcements and looks found by the start of their name, four at most | `black`, `start`, `youth` |
-| 5 | Every other song: the title before the lyrics, whole words before word starts, a word inside a longer word last | `berkat` finds `diberkati` after `Berkat` |
+| 5 | Songs and verses as two sections: the first four of the one that leads, the first four of the other, then the rest of each. Within songs, the title before the lyrics, whole words before word starts, a word inside a longer word last | `berkat` finds `diberkati` after `Berkat` |
 | 6 | What another word found | `hitam` finds Black, `mulai ibadah` finds Start the service |
-| 7 | Verses that hold every typed word | |
+
+Verses lead the sections when the best verse holds the typed words as one phrase, or holds them all, and no song holds them all in one line or its title (`verses_lead` in `crates/artosia-core/src/search.rs`). A volunteer who types a line of a verse is after the verse, and one who types a line of a song is after the song. Until 2026-11-14 every verse came after every song, so a verse typed word for word sat under fifty songs that shared one of its words (owner-reported). Each source as its own section follows Algolia's federated search, where results from different indices are shown apart rather than blended into one ranking.
 
 The song order is `Facts` in `crates/artosia-core/src/search.rs`. It differs from the kit in one line: a title outranks a whole-word match, because a word common in lyrics would otherwise bury the song named after it.
 
