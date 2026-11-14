@@ -10,6 +10,8 @@ use crate::state::{App, Sheet, Tab};
 pub enum Action {
     Run(Command),
     Tab(Tab),
+    /// Press the control the window keys this way (a window's own button such as `cal-new`).
+    Press(&'static str),
 }
 
 pub struct Window<'a> {
@@ -26,6 +28,10 @@ impl World<Action> for Window<'_> {
                 let key = crate::ui::tabs::key(tab);
                 let visible = (self.layout)(key).is_some_and(|[_, _, w, h]| w > 0.0 && h > 0.0);
                 vec![Anchor { key: key.to_string(), place: Place::Bar, visible, enabled: true, presses: 1 }]
+            }
+            Action::Press(key) => {
+                let visible = (self.layout)(key).is_some_and(|[_, _, w, h]| w > 0.0 && h > 0.0);
+                vec![Anchor { key: key.to_string(), place: Place::Panel, visible, enabled: true, presses: 1 }]
             }
         }
     }
@@ -46,9 +52,9 @@ impl World<Action> for Window<'_> {
 }
 
 /// Every state name `holds` knows; the lesson test checks each step against it.
-pub const KNOWN: [&str; 12] = [
+pub const KNOWN: [&str; 15] = [
     "screens-open", "phone-open", "settings-open", "no-dialog", "plan-tab", "calendar-tab", "people-tab", "giving-tab",
-    "notices-tab", "templates-tab", "look-tab", "search-open",
+    "notices-tab", "templates-tab", "look-tab", "search-open", "event-form-open", "gift-form-open", "person-form-open",
 ];
 
 /// The states lessons name. A name nobody knows is never true, and a test lists the names every
@@ -67,6 +73,9 @@ pub fn holds(app: &App, state: &str) -> bool {
         "templates-tab" => app.tab == Tab::Templates,
         "look-tab" => app.tab == Tab::Look,
         "search-open" => app.palette.open,
+        "event-form-open" => app.calendar.form.is_some(),
+        "gift-form-open" => app.giving.form.is_some(),
+        "person-form-open" => app.members.form.is_some(),
         _ => false,
     }
 }

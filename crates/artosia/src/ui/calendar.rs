@@ -222,6 +222,7 @@ fn toolbar(s: &App, k: &Kit) -> El {
                 .build(k),
         )
         .child(btn(t::CAL_NEW_EVENT()).icon(&icons::PLUS).primary().hint("Ctrl N").build(k, |s, _| s.new_event_here()).key("cal-new"))
+        .child(crate::ui::tour::help_mark(s, k, crate::guide::lessons::Feature::Calendar))
 }
 
 /// The grid of a month, Sunday first, today filled, each day with the chips that fit and "+N more".

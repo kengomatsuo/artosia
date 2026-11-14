@@ -642,6 +642,20 @@ text!(TOUR_SKIP, "Skip", "Skip");
 text!(GUIDE_SCREENS_OPEN, "Press the ringed button to set up the projector", "Tekan tombol berlingkar untuk atur proyektor");
 text!(GUIDE_SCREENS_OPEN_MORE, "Pick which screen the congregation sees and which one the stage sees", "Pilih monitor untuk jemaat dan monitor untuk panggung");
 text!(GUIDE_OPEN_SEARCH, "Open search", "Buka pencarian");
+text!(GUIDE_HELP, "Help", "Bantuan");
+text!(GUIDE_SHOW_ME, "Show me", "Tunjukkan caranya");
+text!(HELP_CALENDAR, "The church's regular services and events. The schedule slide fills itself from here", "The church's regular services and events. The schedule slide fills itself from here");
+text!(HELP_PEOPLE, "The congregation's names and birthdays. The birthday slide reads this list", "The congregation's names and birthdays. The birthday slide reads this list");
+text!(HELP_GIVING, "Gifts and offerings with their amounts. The total adds itself up for the slide", "Gifts and offerings with their amounts. The total adds itself up for the slide");
+text!(HELP_TEMPLATES, "Ready announcement slides that fill themselves from the church's data", "Ready announcement slides that fill themselves from the church's data");
+text!(GUIDE_CAL_NEW, "Press the ringed button to add an event", "Press the ringed button to add an event");
+text!(GUIDE_CAL_NEW_MORE, "Pick its days and time; a weekly service is entered once", "Pick its days and time; a weekly service is entered once");
+text!(GUIDE_PEOPLE_ADD, "Press the ringed button to add a person", "Press the ringed button to add a person");
+text!(GUIDE_PEOPLE_ADD_MORE, "Type the name and pick the birthday", "Type the name and pick the birthday");
+text!(GUIDE_GIVING_ADD, "Press the ringed button to add a gift", "Press the ringed button to add a gift");
+text!(GUIDE_GIVING_ADD_MORE, "Type the amount; the total adds itself up", "Type the amount; the total adds itself up");
+text!(GUIDE_TPL_USE, "Press Use on a template you like", "Press Use on a template you like");
+text!(GUIDE_TPL_USE_MORE, "It becomes an announcement that fills itself", "It becomes an announcement that fills itself");
 text!(TOUR_DONE, "Done", "Done");
 text!(TOUR_PLAN, "The plan holds everything you will show, in order.", "The plan holds everything you will show, in order.");
 text!(TOUR_PLAN_MORE, "Drag an item to move it.", "Drag an item to move it.");
@@ -1644,6 +1658,17 @@ pub fn stage_next(label: &str) -> String {
 }
 
 /// Which stop of the tour is showing, out of how many.
+/// A lesson step that sends the person to a tab, named as the tab bar names it.
+pub fn guide_open_tab(tab: &str) -> String {
+    if let Some(text) = say("guide_open_tab", None, None, &[("tab", text_arg(tab))]) {
+        return text;
+    }
+    if indonesian() {
+        return format!("Buka tab {tab}");
+    }
+    format!("Open the {tab} tab")
+}
+
 pub fn tour_place(at: usize, total: usize) -> String {
     if let Some(text) = say("tour_place", None, None, &[("at", text_arg(at.to_string())), ("total", text_arg(total.to_string()))]) {
         return text;

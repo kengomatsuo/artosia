@@ -305,6 +305,7 @@ fn summary(s: &App, k: &Kit) -> El {
         .center_y()
         .fill(sf.header)
         .child(btn(t::GIVING_ADD()).icon(&icons::PLUS).small().hint("Ctrl N").build(k, |s, _| s.new_gift()).key("giving-add"))
+        .child(crate::ui::tour::help_mark(s, k, crate::guide::lessons::Feature::Giving))
         .child(spacer())
         .child(cap(k, t::GIVING_TOTAL()))
         .child(text(rupiah(sum)).key("giving-total").font(type_::HEADING.features("'tnum' 1")).color(k.c.text_base).w(AMOUNT_W).align(Align::End))

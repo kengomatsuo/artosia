@@ -202,6 +202,7 @@ fn filters(s: &App, k: &Kit) -> El {
     bar.child(spacer())
         .child(btn(t::PEOPLE_IMPORT()).icon(&icons::IMPORT).build(k, |s, _| s.want_birthdays = true).key("people-import"))
         .child(btn(t::PEOPLE_ADD()).icon(&icons::PLUS).primary().hint("Ctrl N").build(k, |s, _| s.new_person()).key("people-add"))
+        .child(crate::ui::tour::help_mark(s, k, crate::guide::lessons::Feature::People))
 }
 
 fn main_column(s: &App, k: &Kit) -> El {

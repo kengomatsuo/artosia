@@ -9,6 +9,7 @@
 use rune::{Align, Cx, El, Key, Side, Tx, col, el, row, spacer, text};
 use rune_kit::Kit;
 
+use crate::guide::lessons::Feature;
 use crate::guide::window::{Action, Window};
 use crate::guide::{Goal, Lesson, Runner, Show, Step};
 use crate::palette::Command;
@@ -138,7 +139,19 @@ impl App {
         match action {
             Action::Run(command) => self.open_palette(crate::palette::Scope::All, command.label()),
             Action::Tab(tab) => self.open_tab(tab),
+            Action::Press(_) => {}
         }
+    }
+
+    /// A help mark's press: its card opens, or closes when it was open.
+    pub fn toggle_help(&mut self, feature: Feature) {
+        self.help = if self.help == Some(feature) { None } else { Some(feature) };
+    }
+
+    /// The help card's Show me: the feature's lesson starts and the card closes.
+    pub fn show_me(&mut self, feature: Feature) {
+        self.help = None;
+        self.start_lesson(feature.lesson());
     }
 }
 
@@ -172,6 +185,7 @@ fn lesson_view(s: &App, cx: &mut Cx<App>, k: &Kit, layer: &mut Vec<El>) {
         }
         Show::Search { step } => {
             let command = match lesson.steps[step].goal {
+                crate::guide::Goal::Run(Action::Press(_)) => None,
                 crate::guide::Goal::Run(action) => Some(action),
                 _ => None,
             };
@@ -185,6 +199,7 @@ fn lesson_view(s: &App, cx: &mut Cx<App>, k: &Kit, layer: &mut Vec<El>) {
 /// is not on screen. No Next: the step ends on the person's own press.
 fn bubble(k: &Kit, id: &str, step: usize, total: usize, search: Option<Action>) -> El {
     let (main, more) = crate::guide::lessons::words(id);
+    let main = main.as_str();
     let mut buttons = row().w_full().gap(space::S2).center_y().child(row().w(BUTTON).child(btn(t::TOUR_SKIP()).icon(&icons::CLOSE).ghost().grow().focusable().build(k, |s, _| s.end_lesson()))).child(spacer());
     if let Some(command) = search {
         buttons = buttons.child(btn(t::GUIDE_OPEN_SEARCH()).icon(&rune_kit::glyphs::SEARCH).primary().focusable().build(k, move |s, _| s.lesson_search(command)).key("lesson-search"));
@@ -210,8 +225,50 @@ fn bubble(k: &Kit, id: &str, step: usize, total: usize, search: Option<Action>) 
         .child(buttons)
 }
 
+/// A question mark in a ring, on the 16 point grid of the window's own icons.
+static HELP_MARK: rune::Icon = rune::Icon {
+    name: "g-help",
+    view: 16.0,
+    body: r#"<circle cx="8" cy="8" r="6.5" stroke="currentColor"/><path d="M6.2 6.3C6.4 5.4 7.1 4.8 8 4.8C9 4.8 9.8 5.5 9.8 6.4C9.8 7.6 8 7.9 8 9.2" stroke="currentColor" stroke-linecap="round"/><circle cx="8" cy="11.3" r="0.7" fill="currentColor"/>"#,
+};
+
+/// A feature's help mark: a small round mark in or beside the feature, found again whenever it
+/// is needed (AirOps' and Evernote's info marks in the research). It opens the feature's card.
+pub(crate) fn help_mark(s: &App, k: &Kit, feature: Feature) -> El {
+    let on = s.help == Some(feature);
+    btn(t::GUIDE_HELP()).icon(&HELP_MARK).icon_only().ghost().small().active(on).focusable().build(k, move |s, _| s.toggle_help(feature)).key(feature.key())
+}
+
+/// The open help card under its mark: what the feature is for, Show me, and Close.
+fn help_card(s: &App, k: &Kit, layer: &mut Vec<El>) {
+    let Some(feature) = s.help else { return };
+    let buttons = row()
+        .w_full()
+        .gap(space::S2)
+        .center_y()
+        .child(spacer())
+        .child(btn(t::BTN_CLOSE()).icon(&icons::CLOSE).ghost().focusable().build(k, |s, _| s.help = None))
+        .child(btn(t::GUIDE_SHOW_ME()).icon(&icons::ARROW_RIGHT).primary().focusable().build(k, move |s, _| s.show_me(feature)).key("help-show-me"));
+    let card = col()
+        .key("help-card")
+        .role("dialog")
+        .label(crate::ui::tabs::name(feature.tab()))
+        .w(CARD)
+        .padding(space::S4)
+        .gap(space::S3)
+        .radius(k.radius.lg)
+        .fill(k.c.layer_04)
+        .border(1.0, k.c.border_strong)
+        .shadow(8.0, 24.0, rune::Color::BLACK.alpha(0.4))
+        .child(text(crate::ui::tabs::name(feature.tab())).font(type_::TITLE).color(k.c.text_base))
+        .child(crate::ui::widgets::wrapped(feature.about()).font(type_::BODY).color(k.c.text_muted).wrap())
+        .child(buttons);
+    layer.push(card.anchored(feature.key(), Side::Bottom, Align::End, space::S2));
+}
+
 /// The dim around the part a stop points at, the ring, and the card.
 pub(crate) fn view(s: &App, cx: &mut Cx<App>, k: &Kit, layer: &mut Vec<El>) {
+    help_card(s, k, layer);
     lesson_view(s, cx, k, layer);
     let Some(at) = s.tour else { return };
     let stop = &STOPS[at.min(STOP_COUNT - 1)];

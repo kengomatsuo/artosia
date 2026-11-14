@@ -766,6 +766,15 @@ const SCENES: &[Scene] = &[
     ("tour-plan", |s| s.tour = Some(0)),
     // GUIDE1: the Screens lesson, with its control on screen and with the control hidden.
     ("lesson-screens", |s| s.start_lesson(crate::guide::lessons::SCREENS)),
+    ("help-calendar", |s| {
+        s.open_tab(Tab::Calendar);
+        s.help = Some(crate::guide::lessons::Feature::Calendar);
+    }),
+    ("lesson-calendar", |s| s.start_lesson(crate::guide::lessons::CALENDAR)),
+    ("lesson-calendar-new", |s| {
+        s.open_tab(Tab::Calendar);
+        s.start_lesson(crate::guide::lessons::CALENDAR);
+    }),
     ("tour-preview", |s| s.tour = Some(1)),
     ("tour-show", |s| s.tour = Some(2)),
     ("tour-live", |s| s.tour = Some(3)),
