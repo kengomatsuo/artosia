@@ -203,7 +203,8 @@ copy_from_mac() {
 built_on_mac() {
     [ "$finish" = 1 ] && ssh -o BatchMode=yes mac "test -f ~/$remote/feed/manifest-macos-aarch64.json && test -f ~/$remote/Artosia-macos-aarch64.dmg"
 }
-if [ -f "dist/$version/macos.md" ] && has_asset Artosia-macos-aarch64.dmg; then
+# A Mac edition is there when its signed update list is: a disk image alone updates no copy.
+if [ -f "dist/$version/macos.md" ] && has_asset Artosia-macos-aarch64.dmg && has_asset manifest-macos-aarch64.json; then
     echo "The release already carries the Mac edition."
 elif ssh -o BatchMode=yes mac true 2>/dev/null; then
     # Built every time: a tool left from an older release may lack a command used below.
