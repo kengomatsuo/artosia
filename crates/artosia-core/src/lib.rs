@@ -5,6 +5,7 @@ pub mod bible;
 pub mod beblia;
 pub mod bible_file;
 pub mod calendar;
+pub mod church_year;
 pub mod countries;
 pub mod deck;
 pub mod ebible;

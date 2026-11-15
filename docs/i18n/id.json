@@ -4915,20 +4915,10 @@
   "back": "As pictures",
   "why": "Plain phrase; 'gambar' is what a slide picture is called"
  },
- "PPTX_AS_MADE_HINT": {
-  "text": "Tiap slide jadi satu gambar, dibuat program presentasi",
-  "back": "Each slide becomes one picture, made by the presentation program",
-  "why": "'slide' is the table's word"
- },
  "PPTX_REDRAW": {
   "text": "Susun ulang",
   "back": "Arrange again",
   "why": "Short, says words are set again"
- },
- "PPTX_REDRAW_HINT": {
-  "text": "Teks dan tabel tiap slide disusun ulang jadi kartu pengumuman",
-  "back": "The text and tables of each slide are arranged again into announcement cards",
-  "why": "'pengumuman' and 'kartu' as in the table"
  },
  "PPTX_DRAWING": {
   "text": "Slide dijadikan gambar",
@@ -6201,5 +6191,80 @@
   "text": "Jumlah",
   "back": "Amount",
   "why": "Distinct from existing STYLE_ names; fits budget"
+ },
+ "SEASON_FOLLOW": {
+  "text": "Warna sesuai tahun gereja",
+  "back": "Colour following the church year",
+  "why": "Tahun gereja is the common GKI term"
+ },
+ "season_hint": {
+  "text": "Hari ini {season}. Kartu memakai palet masa itu jika gayanya punya.",
+  "back": "Today {season}. The card wears that season's palette if its style has one.",
+  "why": "short, familiar"
+ },
+ "SEASON_ADVENT": {
+  "text": "Adven",
+  "back": "Advent",
+  "why": "GKI/HKBP"
+ },
+ "SEASON_CHRISTMAS": {
+  "text": "Natal",
+  "back": "Christmas",
+  "why": "GKI/HKBP"
+ },
+ "SEASON_EPIPHANY": {
+  "text": "Epifani",
+  "back": "Epiphany",
+  "why": "GKI term"
+ },
+ "SEASON_LENT": {
+  "text": "Pra-Paskah",
+  "back": "Pre-Easter",
+  "why": "GKI term for Lent"
+ },
+ "SEASON_HOLY_WEEK": {
+  "text": "Pekan Suci",
+  "back": "Holy Week",
+  "why": "church term"
+ },
+ "SEASON_GOOD_FRIDAY": {
+  "text": "Jumat Agung",
+  "back": "Good Friday",
+  "why": "church term"
+ },
+ "SEASON_EASTER": {
+  "text": "Paskah",
+  "back": "Easter",
+  "why": "church term"
+ },
+ "SEASON_ASCENSION": {
+  "text": "Kenaikan Tuhan Yesus",
+  "back": "Ascension of the Lord Jesus",
+  "why": "GKI wording"
+ },
+ "SEASON_PENTECOST": {
+  "text": "Pentakosta",
+  "back": "Pentecost",
+  "why": "church term"
+ },
+ "SEASON_REFORMATION": {
+  "text": "Minggu Reformasi",
+  "back": "Reformation Sunday",
+  "why": "church term"
+ },
+ "SEASON_ORDINARY": {
+  "text": "Masa Biasa",
+  "back": "Ordinary Time",
+  "why": "church term"
+ },
+ "PPTX_PICK": {
+  "text": "Pilih cara slide masuk",
+  "back": "Choose how the slides come in",
+  "why": "Tema and slide as in table; tile label copied"
+ },
+ "PPTX_NO_FAMILY": {
+  "text": "Tidak ada tema yang memuat slide ini utuh. Hanya tersisa Sebagai gambar",
+  "back": "No theme holds these slides whole. Only As images is left",
+  "why": "Tema and slide as in table; tile label copied"
  }
 }

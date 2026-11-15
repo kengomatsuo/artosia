@@ -175,6 +175,8 @@ pub struct Settings {
     /// The church's first weekday, 0 for Sunday or 1 for Monday: the calendar's weeks and the
     /// weeks an announcement reads start on it.
     pub first_weekday: u8,
+    /// Announcement cards are drawn in their family's colourway for today's season of the church year.
+    pub follow_church_year: bool,
 }
 
 impl Default for Settings {
@@ -218,6 +220,7 @@ impl Default for Settings {
             letter_keys: true,
             song_languages: Vec::new(),
             first_weekday: 0,
+            follow_church_year: false,
         }
     }
 }
@@ -537,6 +540,8 @@ pub enum Arrived {
     Firewall(u64, crate::firewall::Progress),
     /// The slides of a PowerPoint were drawn as pictures, or why not (the number of the dialog's export).
     Pptx(u64, crate::pptx_import::Made),
+    /// Which template families hold every redrawn card of that dialog's file.
+    PptxFamilies(u64, Vec<artosia_core::deck::NoticeStyle>),
     /// The Gema index: what is kept or was read, and whether the reading is over (WEBDLG1).
     WebIndex { index: Option<artosia_lyrics::GemaIndex>, done: bool },
     /// The results of the Songs from the internet dialog for the words asked, by call number.
@@ -792,6 +797,8 @@ pub struct App {
     pub remote_rx: Receiver<RemoteCommand>,
     /// Seconds since the Unix epoch, refreshed every frame.
     pub now: f64,
+    /// A scene's fixed clock; None is the computer's.
+    pub pinned_now: Option<f64>,
     /// The app clock, for toasts.
     pub clock: f64,
     pub sent: Option<OutputState>,
@@ -1019,6 +1026,7 @@ impl App {
             remote_tx,
             remote_rx,
             now: unix_now(),
+            pinned_now: None,
             clock: 0.0,
             sent: None,
             plan_dirty: false,
@@ -1268,36 +1276,51 @@ impl App {
 
     /// Every announcement slide in order, each with the place of its announcement in the list.
     pub fn announcement_pages(&self) -> Vec<(usize, Slide)> {
-        self.paged(&self.announcements)
+        self.paged(&self.announcements, true)
     }
 
-    /// The pages of `cards`, a card too long for its poster style cut into slides that hold.
-    fn paged(&self, cards: &[Announcement]) -> Vec<(usize, Slide)> {
+    /// The pages of `cards`, a card too long for its poster style cut into slides that hold. `on_air`
+    /// draws each card in its family's colourway for today's season when the church follows the year.
+    fn paged(&self, cards: &[Announcement], on_air: bool) -> Vec<(usize, Slide)> {
+        let seasonal: Vec<Announcement>;
+        let cards = if on_air && self.settings.follow_church_year {
+            let season = artosia_core::church_year::season_on(self.civil_today());
+            seasonal = cards
+                .iter()
+                .map(|card| match artosia_slides::warta::colourway_for_season(card.style.unwrap_or(self.look().notice_style), season) {
+                    Some(colourway) => Announcement { colourway: colourway.into(), ..card.clone() },
+                    None => card.clone(),
+                })
+                .collect();
+            &seasonal[..]
+        } else {
+            cards
+        };
         let pages = announcement_pages(cards, &self.people, &self.events, &self.giving_data(), &self.today(), self.bible().map(|bible| &**bible), self.settings.verses_per_slide);
         artosia_slides::warta::paginate_pages(pages, self.look().notice_style)
     }
 
     pub fn announcements_deck(&self) -> Deck {
-        Deck { title: t::CMD_ANNOUNCEMENTS().to_string(), subtitle: String::new(), source: DeckSource::Announcements, slides: self.paged(&self.announcements).into_iter().map(|(_, slide)| slide).collect() }
+        Deck { title: t::CMD_ANNOUNCEMENTS().to_string(), subtitle: String::new(), source: DeckSource::Announcements, slides: self.paged(&self.announcements, true).into_iter().map(|(_, slide)| slide).collect() }
     }
 
     /// The card a slide of the announcements came from. A card may give several slides or none.
     pub fn card_at_slide(&self, slide: usize) -> Option<&Announcement> {
-        let pages = self.paged(&self.announcements);
+        let pages = self.paged(&self.announcements, true);
         pages.get(slide).and_then(|(at, _)| self.announcements.get(*at))
     }
 
     /// The slides one card gives today: none for a birthday card with nobody, or a passage card
     /// the Bible cannot read.
     pub fn card_slides(&self, card: &Announcement) -> Vec<Slide> {
-        self.paged(std::slice::from_ref(card)).into_iter().map(|(_, slide)| slide).collect()
+        self.paged(std::slice::from_ref(card), false).into_iter().map(|(_, slide)| slide).collect()
     }
 
     /// One saved card as a deck of its own, so it can be shown without the rest; None when it has
     /// nothing to show today.
     pub fn card_deck(&self, id: i64) -> Option<Deck> {
         let card = self.announcements.iter().find(|card| card.id == id)?;
-        let slides = self.card_slides(card);
+        let slides: Vec<Slide> = self.paged(std::slice::from_ref(card), true).into_iter().map(|(_, slide)| slide).collect();
         if slides.is_empty() {
             return None;
         }

@@ -162,6 +162,11 @@ pub fn colourways(style: NoticeStyle) -> Vec<Swatch> {
         .collect()
 }
 
+/// The style's colourway tagged for `season`, if its family has one.
+pub fn colourway_for_season(style: NoticeStyle, season: artosia_core::church_year::Season) -> Option<&'static str> {
+    tokens()["families"][family_of(style)]["colourways"].as_array()?.iter().find(|colourway| colourway["season"].as_str() == Some(season.code()))?["id"].as_str()
+}
+
 /// Where `colourway` stands among the style's colourways; an empty or unknown name is the style's first.
 pub fn colourway_at(style: NoticeStyle, colourway: &str) -> usize {
     let wanted = if colourway_ids(style).any(|id| id == colourway) { colourway } else { first_colourway(style) };
@@ -1199,6 +1204,15 @@ mod tests {
         assert_eq!(dir_of(NoticeStyle::Simple, "")["palette"]["paper"], "#FFFFFF");
         assert_eq!(colourway_at(NoticeStyle::SimpleDark, ""), 1);
         assert_eq!(colourways(NoticeStyle::Neon).len(), 6);
+    }
+
+    #[test]
+    fn a_season_names_the_colourway_tagged_for_it_and_a_family_without_one_gets_none() {
+        use artosia_core::church_year::Season;
+        assert_eq!(colourway_for_season(NoticeStyle::Greige, Season::Advent), Some("adven"));
+        assert_eq!(colourway_for_season(NoticeStyle::Greige, Season::Christmas), None);
+        assert_eq!(colourway_for_season(NoticeStyle::Neon, Season::Easter), Some("paskah"));
+        assert_eq!(colourway_for_season(NoticeStyle::Greige, Season::Ordinary), None);
     }
 
     #[test]

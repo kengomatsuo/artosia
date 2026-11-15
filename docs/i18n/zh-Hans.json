@@ -4966,20 +4966,10 @@
   "back": "Made into pictures as they are",
   "why": "按原样 says it looks like the original; 图片 for picture"
  },
- "PPTX_AS_MADE_HINT": {
-  "text": "每页幻灯片由演示软件画成一张图片",
-  "back": "Each slide is drawn by the presentation software into one picture",
-  "why": "幻灯片 is the slide word of the table; 页 for one slide of the file"
- },
  "PPTX_REDRAW": {
   "text": "重新排成公告卡",
   "back": "Set again as announcement cards",
   "why": "公告 and 卡片 follow the table"
- },
- "PPTX_REDRAW_HINT": {
-  "text": "每页幻灯片的文字和表格，重新排成公告卡片",
-  "back": "The words and tables of each slide are set again as announcement cards",
-  "why": "文字 is the everyday word for words on a screen"
  },
  "PPTX_DRAWING": {
   "text": "正在把幻灯片画成图片",
@@ -6241,5 +6231,80 @@
   "text": "金额",
   "back": "amount",
   "why": "plain everyday word, distinct from the other STYLE_ names"
+ },
+ "SEASON_FOLLOW": {
+  "text": "公告按教会年历配色",
+  "back": "Announcements follow the church year's colours",
+  "why": "Mainland Protestant season names; table's 公告"
+ },
+ "season_hint": {
+  "text": "今天是{season}。样式有该节期配色的卡片会用上。",
+  "back": "Today is {season}. A card whose style has that season's colours uses them.",
+  "why": "Mainland Protestant season names; table's 公告"
+ },
+ "SEASON_ADVENT": {
+  "text": "将临期",
+  "back": "Advent",
+  "why": "Mainland Protestant season names; table's 公告"
+ },
+ "SEASON_CHRISTMAS": {
+  "text": "圣诞节期",
+  "back": "Christmas season",
+  "why": "Mainland Protestant season names; table's 公告"
+ },
+ "SEASON_EPIPHANY": {
+  "text": "主显节",
+  "back": "Epiphany",
+  "why": "Mainland Protestant season names; table's 公告"
+ },
+ "SEASON_LENT": {
+  "text": "四旬期",
+  "back": "Lent",
+  "why": "Mainland Protestant season names; table's 公告"
+ },
+ "SEASON_HOLY_WEEK": {
+  "text": "圣周",
+  "back": "Holy Week",
+  "why": "Mainland Protestant season names; table's 公告"
+ },
+ "SEASON_GOOD_FRIDAY": {
+  "text": "受难节",
+  "back": "Good Friday",
+  "why": "Mainland Protestant season names; table's 公告"
+ },
+ "SEASON_EASTER": {
+  "text": "复活节期",
+  "back": "Easter season",
+  "why": "Mainland Protestant season names; table's 公告"
+ },
+ "SEASON_ASCENSION": {
+  "text": "升天节",
+  "back": "Ascension Day",
+  "why": "Mainland Protestant season names; table's 公告"
+ },
+ "SEASON_PENTECOST": {
+  "text": "圣灵降临节",
+  "back": "Pentecost",
+  "why": "Mainland Protestant season names; table's 公告"
+ },
+ "SEASON_REFORMATION": {
+  "text": "宗教改革主日",
+  "back": "Reformation Sunday",
+  "why": "Mainland Protestant season names; table's 公告"
+ },
+ "SEASON_ORDINARY": {
+  "text": "常年期",
+  "back": "Ordinary Time",
+  "why": "Mainland Protestant season names; table's 公告"
+ },
+ "PPTX_PICK": {
+  "text": "选择幻灯片的导入方式",
+  "back": "Choose how the slides are imported",
+  "why": "样式 and 幻灯片 as in table; tile label copied"
+ },
+ "PPTX_NO_FAMILY": {
+  "text": "没有样式能完整放下这些幻灯片，只剩按原样做成图片",
+  "back": "No style can hold these slides whole, only make as pictures as they are remains",
+  "why": "样式 and 幻灯片 as in table; tile label copied"
  }
 }

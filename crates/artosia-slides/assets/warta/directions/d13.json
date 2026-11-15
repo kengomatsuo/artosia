@@ -45,7 +45,7 @@
 "mute": "#D2C5CD"
 }
 },
-{"id":"merah","name":"Merah","palette":{"signal":"#FF4136","deep":"#140A0A","field2":"#0B2A6B","white":"#FFFFFF","mute":"#D2C4C4"}},
+{"id":"merah","season":"pentecost","name":"Merah","palette":{"signal":"#FF4136","deep":"#140A0A","field2":"#0B2A6B","white":"#FFFFFF","mute":"#D2C4C4"}},
 {"id":"tosca","name":"Tosca","palette":{"signal":"#2EF2D0","deep":"#0A1414","field2":"#B8400C","white":"#FFFFFF","mute":"#C2D0CE"}}
 ],
 "swatch": [

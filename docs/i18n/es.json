@@ -5003,19 +5003,9 @@
   "back": "As images",
   "why": "Names the picture way."
  },
- "PPTX_AS_MADE_HINT": {
-  "text": "Cada diapositiva, una imagen dibujada por su programa",
-  "back": "Each slide, an image drawn by its program",
-  "why": "-"
- },
  "PPTX_REDRAW": {
   "text": "Redibujado",
   "back": "Redrawn",
-  "why": "-"
- },
- "PPTX_REDRAW_HINT": {
-  "text": "Texto y tablas de cada diapositiva, como tarjetas de anuncio",
-  "back": "Text and tables of each slide, as announcement cards",
   "why": "-"
  },
  "PPTX_DRAWING": {
@@ -6277,5 +6267,80 @@
   "text": "Monto",
   "back": "Amount",
   "why": "Latin American word for money amount"
+ },
+ "SEASON_FOLLOW": {
+  "text": "Colores del año litúrgico",
+  "back": "Colors of the church year",
+  "why": "name used by Protestant and Catholic churches; product word kept"
+ },
+ "season_hint": {
+  "text": "Hoy: {season}. Si el estilo tiene paleta, el anuncio la usa.",
+  "back": "Today: {season}. If the style has a palette, the announcement uses it.",
+  "why": "name used by Protestant and Catholic churches; product word kept"
+ },
+ "SEASON_ADVENT": {
+  "text": "Adviento",
+  "back": "Advent",
+  "why": "name used by Protestant and Catholic churches; product word kept"
+ },
+ "SEASON_CHRISTMAS": {
+  "text": "Navidad",
+  "back": "Christmas",
+  "why": "name used by Protestant and Catholic churches; product word kept"
+ },
+ "SEASON_EPIPHANY": {
+  "text": "Epifanía",
+  "back": "Epiphany",
+  "why": "name used by Protestant and Catholic churches; product word kept"
+ },
+ "SEASON_LENT": {
+  "text": "Cuaresma",
+  "back": "Lent",
+  "why": "name used by Protestant and Catholic churches; product word kept"
+ },
+ "SEASON_HOLY_WEEK": {
+  "text": "Semana Santa",
+  "back": "Holy Week",
+  "why": "name used by Protestant and Catholic churches; product word kept"
+ },
+ "SEASON_GOOD_FRIDAY": {
+  "text": "Viernes Santo",
+  "back": "Good Friday",
+  "why": "name used by Protestant and Catholic churches; product word kept"
+ },
+ "SEASON_EASTER": {
+  "text": "Pascua",
+  "back": "Easter",
+  "why": "name used by Protestant and Catholic churches; product word kept"
+ },
+ "SEASON_ASCENSION": {
+  "text": "Ascensión",
+  "back": "Ascension",
+  "why": "name used by Protestant and Catholic churches; product word kept"
+ },
+ "SEASON_PENTECOST": {
+  "text": "Pentecostés",
+  "back": "Pentecost",
+  "why": "name used by Protestant and Catholic churches; product word kept"
+ },
+ "SEASON_REFORMATION": {
+  "text": "Domingo de Reforma",
+  "back": "Reformation Sunday",
+  "why": "name used by Protestant and Catholic churches; product word kept"
+ },
+ "SEASON_ORDINARY": {
+  "text": "Tiempo ordinario",
+  "back": "Ordinary Time",
+  "why": "name used by Protestant and Catholic churches; product word kept"
+ },
+ "PPTX_PICK": {
+  "text": "Elige cómo importar",
+  "back": "Choose how to import",
+  "why": "diseño and diapositivas as in table; tile label copied"
+ },
+ "PPTX_NO_FAMILY": {
+  "text": "Ningún diseño cabe sin cortar las diapositivas. Solo queda Como imágenes",
+  "back": "No design fits without cutting the slides. Only As images is left",
+  "why": "diseño and diapositivas as in table; tile label copied"
  }
 }

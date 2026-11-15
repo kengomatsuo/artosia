@@ -5,7 +5,7 @@
 {"id":"safir","palette":{"ground":"#14274F","ground2":"#0B1731","gold":"#E3C06C","cream":"#F5EEDC","ink":"#0B1731","mute":"#CFD8EC"}},
 {"id":"zamrud","palette":{"ground":"#14392C","ground2":"#0B2119","gold":"#DDBC6C","cream":"#F4EEDC","ink":"#0B2119","mute":"#D2E3D8"}},
 {"id":"ametis","palette":{"ground":"#3F1F56","ground2":"#26113A","gold":"#E6C77C","cream":"#F5ECDD","ink":"#26113A","mute":"#DDCDEE"}},
-{"id":"merah","palette":{"ground":"#A3161A","ground2":"#6E0C10","gold":"#F0CE7A","cream":"#FBEFD9","ink":"#4A0508","mute":"#FADFD6"}},
+{"id":"merah","season":"pentecost","palette":{"ground":"#A3161A","ground2":"#6E0C10","gold":"#F0CE7A","cream":"#FBEFD9","ink":"#4A0508","mute":"#FADFD6"}},
 {"id":"arang","palette":{"ground":"#1F1F24","ground2":"#0C0C0F","gold":"#E3C06C","cream":"#F2EDE0","ink":"#0C0C0F","mute":"#CFCFD6"}}
 ],
 "swatch": ["ground","gold"],

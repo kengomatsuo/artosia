@@ -19,7 +19,7 @@ EXE = Path(os.environ.get("ARTOSIA_EXE", ROOT / "target" / "debug" / "artosia.ex
 # The help key of each feature (`Feature::key` in guide/lessons.rs) and a scene that opens it.
 PLACES = [
     ("help-plan", "start"),
-    ("help-notices", "tab-notices"),
+    ("help-notices", "tab-notices-list"),
     ("help-calendar", "tab-calendar"),
     ("help-people", "tab-people"),
     ("help-giving", "tab-giving"),

@@ -77,8 +77,8 @@
 "on_fund": "#FFFFFF"
 }
 },
-{"id":"adven","name":"Adven","palette":{"ground":"#EFE8F4","cell":"#FFFFFF","ink":"#1A1520","mute":"#5E5468","signal":"#6B34B8","on_signal":"#FFFFFF","fund1":"#C2410C","fund2":"#0F766E","fund3":"#1D4ED8","fund4":"#A21CAF","fund5":"#4D7C0F","fund6":"#B45309","on_fund":"#FFFFFF"}},
-{"id":"natal","name":"Natal","palette":{"ground":"#0F2A22","cell":"#17382E","ink":"#F2F5F1","mute":"#A9C0B5","signal":"#F2C14E","on_signal":"#0F2A22","fund1":"#FDBA74","fund2":"#5EEAD4","fund3":"#93C5FD","fund4":"#F0ABFC","fund5":"#BEF264","fund6":"#FCD34D","on_fund":"#0F2A22"}}
+{"id":"adven","season":"advent","name":"Adven","palette":{"ground":"#EFE8F4","cell":"#FFFFFF","ink":"#1A1520","mute":"#5E5468","signal":"#6B34B8","on_signal":"#FFFFFF","fund1":"#C2410C","fund2":"#0F766E","fund3":"#1D4ED8","fund4":"#A21CAF","fund5":"#4D7C0F","fund6":"#B45309","on_fund":"#FFFFFF"}},
+{"id":"natal","season":"christmas","name":"Natal","palette":{"ground":"#0F2A22","cell":"#17382E","ink":"#F2F5F1","mute":"#A9C0B5","signal":"#F2C14E","on_signal":"#0F2A22","fund1":"#FDBA74","fund2":"#5EEAD4","fund3":"#93C5FD","fund4":"#F0ABFC","fund5":"#BEF264","fund6":"#FCD34D","on_fund":"#0F2A22"}}
 ],
 "swatch": [
 "ground",

@@ -4964,20 +4964,10 @@
   "back": "As a picture, looking the same",
   "why": "見た目のまま says it looks like the original"
  },
- "PPTX_AS_MADE_HINT": {
-  "text": "スライドを1枚ずつ、ソフトが画像に描きます",
-  "back": "The software draws the slides one by one into pictures",
-  "why": "描きます for the program drawing; 枚 is the slide counter"
- },
  "PPTX_REDRAW": {
   "text": "カードに組み直す",
   "back": "Set again as cards",
   "why": "組み直す is set again; カード follows the table"
- },
- "PPTX_REDRAW_HINT": {
-  "text": "スライドの文字と表を、お知らせカードとして組み直します",
-  "back": "The words and tables of the slides are set again as announcement cards",
-  "why": "お知らせ is the announcement word of the table"
  },
  "PPTX_DRAWING": {
   "text": "スライドを画像にしています",
@@ -6239,5 +6229,80 @@
   "text": "金額",
   "back": "amount",
   "why": "plain everyday word, distinct from the other STYLE_ names"
+ },
+ "SEASON_FOLLOW": {
+  "text": "お知らせを教会暦の色にする",
+  "back": "Announcements follow the church year's colours",
+  "why": "Protestant names (受難節 for Lent, 降誕節); table's お知らせ"
+ },
+ "season_hint": {
+  "text": "今日は{season}です。スタイルにその色があれば、カードに使います。",
+  "back": "Today is {season}. A card whose style has that season's colours uses them.",
+  "why": "Protestant names (受難節 for Lent, 降誕節); table's お知らせ"
+ },
+ "SEASON_ADVENT": {
+  "text": "待降節",
+  "back": "Advent",
+  "why": "Protestant names (受難節 for Lent, 降誕節); table's お知らせ"
+ },
+ "SEASON_CHRISTMAS": {
+  "text": "降誕節",
+  "back": "Christmas season",
+  "why": "Protestant names (受難節 for Lent, 降誕節); table's お知らせ"
+ },
+ "SEASON_EPIPHANY": {
+  "text": "顕現日",
+  "back": "Epiphany",
+  "why": "Protestant names (受難節 for Lent, 降誕節); table's お知らせ"
+ },
+ "SEASON_LENT": {
+  "text": "受難節",
+  "back": "Lent",
+  "why": "Protestant names (受難節 for Lent, 降誕節); table's お知らせ"
+ },
+ "SEASON_HOLY_WEEK": {
+  "text": "受難週",
+  "back": "Holy Week",
+  "why": "Protestant names (受難節 for Lent, 降誕節); table's お知らせ"
+ },
+ "SEASON_GOOD_FRIDAY": {
+  "text": "受難日",
+  "back": "Good Friday",
+  "why": "Protestant names (受難節 for Lent, 降誕節); table's お知らせ"
+ },
+ "SEASON_EASTER": {
+  "text": "復活節",
+  "back": "Easter season",
+  "why": "Protestant names (受難節 for Lent, 降誕節); table's お知らせ"
+ },
+ "SEASON_ASCENSION": {
+  "text": "昇天日",
+  "back": "Ascension Day",
+  "why": "Protestant names (受難節 for Lent, 降誕節); table's お知らせ"
+ },
+ "SEASON_PENTECOST": {
+  "text": "聖霊降臨日",
+  "back": "Pentecost",
+  "why": "Protestant names (受難節 for Lent, 降誕節); table's お知らせ"
+ },
+ "SEASON_REFORMATION": {
+  "text": "宗教改革記念日",
+  "back": "Reformation Sunday",
+  "why": "Protestant names (受難節 for Lent, 降誕節); table's お知らせ"
+ },
+ "SEASON_ORDINARY": {
+  "text": "年間",
+  "back": "Ordinary Time",
+  "why": "Protestant names (受難節 for Lent, 降誕節); table's お知らせ"
+ },
+ "PPTX_PICK": {
+  "text": "取り込み方を選ぶ",
+  "back": "Choose how to bring them in",
+  "why": "デザイン and スライド as in table; tile label copied"
+ },
+ "PPTX_NO_FAMILY": {
+  "text": "どのデザインでもスライドが切れるので、「見た目のまま画像に」だけです",
+  "back": "In every design the slides get cut off, so only As it looks, to images is left",
+  "why": "デザイン and スライド as in table; tile label copied"
  }
 }

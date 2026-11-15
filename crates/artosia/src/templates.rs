@@ -194,6 +194,27 @@ mod tests {
     }
 
     #[test]
+    fn following_the_church_year_recolours_the_projected_cards_and_not_the_saved_card_or_a_tile() {
+        let mut app = App::practice();
+        let card = Announcement { title: "Welcome".into(), body: "Hello".into(), style: Some(NoticeStyle::Greige), colourway: "moss".into(), ..Announcement::default() };
+        let first_advent = artosia_core::calendar::Date { year: 2026, month: 11, day: 29 };
+        app.pinned_now = Some(first_advent.days() as f64 * 86400.0 + 43200.0);
+        app.now = app.pinned_now.unwrap();
+        app.announcements = vec![card.clone()];
+        assert_eq!(app.announcements_deck().slides[0].colourway, "moss");
+        app.settings.follow_church_year = true;
+        assert_eq!(app.announcements_deck().slides[0].colourway, "adven");
+        // The tile and the editor's preview keep the colourway the card was saved with.
+        assert_eq!(app.card_slides(&card)[0].colourway, "moss");
+        assert_eq!(app.announcements[0].colourway, "moss");
+        // A day with no tagged colourway in the family leaves the card as saved.
+        let ordinary = artosia_core::calendar::Date { year: 2026, month: 11, day: 1 };
+        app.pinned_now = Some(ordinary.days() as f64 * 86400.0 + 43200.0);
+        app.now = app.pinned_now.unwrap();
+        assert_eq!(app.announcements_deck().slides[0].colourway, "moss");
+    }
+
+    #[test]
     fn a_colourway_goes_with_use_template_and_apply_and_draws_in_the_tile() {
         let mut app = App::practice();
         let ids: Vec<&str> = artosia_slides::warta::colourways(NoticeStyle::Neon).iter().map(|swatch| swatch.id).collect();

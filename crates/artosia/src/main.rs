@@ -448,6 +448,23 @@ fn three_language_song(s: &App) -> usize {
 /// Words written for the scenes that show the section suggestions: no marks, a chorus sung three times.
 const MARKS_DEMO: &str = "Lantern Song\n\nCarry the lantern through the night\nKeep the small flame burning bright\n\nShine, shine on the road ahead\nShine till the morning comes\n\nWalk beside me down the hill\nHold my hand and hold me still\n\nShine, shine on the road ahead\nShine till the morning comes\n\nCold wind over the sleeping sea\nStars come out for you and me\n\nShine, shine on the road ahead\nShine till the morning comes\n";
 
+/// A scene on a pinned day with Follow the church year on: every demo card in `style`, shown live.
+fn season_scene(s: &mut App, (year, month, day): (i32, u8, u8), style: artosia_core::deck::NoticeStyle) {
+    let noon = artosia_core::calendar::Date { year, month, day }.days() as f64 * 86400.0 + 43200.0;
+    s.pinned_now = Some(noon);
+    s.now = noon;
+    s.settings.follow_church_year = true;
+    s.demo_notices("birthdays");
+    for card in &mut s.announcements {
+        card.style = Some(style);
+        let _ = s.store.save_announcement(card);
+    }
+    s.reload_announcements();
+    s.open_tab(Tab::Plan);
+    s.open_announcements();
+    s.show(0);
+}
+
 /// Screens a headless run can render: `--scene <name> --snap out.png`.
 const SCENES: &[Scene] = &[
     ("start", |_| {}),
@@ -594,6 +611,16 @@ Until we reach the house
     }),
     ("look", |s| s.open_tab(crate::state::Tab::Look)),
     ("settings", |s| s.sheet = Sheet::Settings),
+    // SEASONENGINE1: Follow the church year on, on a day of each season, cards in a style that has the season's colourway.
+    ("season-advent", |s| season_scene(s, (2026, 12, 6), artosia_core::deck::NoticeStyle::Greige)),
+    ("season-christmas", |s| season_scene(s, (2026, 12, 25), artosia_core::deck::NoticeStyle::Magazine)),
+    ("season-easter", |s| season_scene(s, (2026, 4, 12), artosia_core::deck::NoticeStyle::Neon)),
+    ("season-pentecost", |s| season_scene(s, (2026, 5, 24), artosia_core::deck::NoticeStyle::Glow)),
+    ("season-settings", |s| {
+        s.pinned_now = Some(artosia_core::calendar::Date { year: 2026, month: 12, day: 6 }.days() as f64 * 86400.0 + 43200.0);
+        s.settings.follow_church_year = true;
+        s.sheet = Sheet::Settings;
+    }),
     // Settings with several Bibles installed: each choice reads as people call that Bible,
     // never as its file is named. The names are made up.
     ("settings-bibles", |s| {
@@ -657,6 +684,11 @@ Until we reach the house
     // UIOVER1: each window of the tab bar.
     // OVTEMPL1: the editor on a schedule card, in the three styles.
     ("tab-notices", |s| s.demo_notices("schedule")),
+    // The same with the card list unfolded over the rail, where Import PowerPoint sits.
+    ("tab-notices-list", |s| {
+        s.demo_notices("schedule");
+        s.notice_list(true);
+    }),
     ("notice-style-ledger", |s| {
         s.demo_notices("schedule");
         s.set_notice_style(artosia_core::deck::NoticeStyle::Ledger);
@@ -945,6 +977,15 @@ Until we reach the house
     ("pptx-import-none", |s| {
         s.open_tab(Tab::Notices);
         s.demo_pptx("none");
+    }),
+    // PPTXGALLERY1: the gallery while the pictures are drawn, and with a long table that some designs cannot hold.
+    ("pptx-import-drawing", |s| {
+        s.open_tab(Tab::Notices);
+        s.demo_pptx("drawing");
+    }),
+    ("pptx-import-long", |s| {
+        s.open_tab(Tab::Notices);
+        s.demo_pptx("long");
     }),
     ("tab-look", |s| s.open_tab(Tab::Look)),
     // OVCOLOR1: the colour picker open under the words' colour, a colour used before it.

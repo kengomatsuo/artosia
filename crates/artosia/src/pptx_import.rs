@@ -1,14 +1,15 @@
-//! Import a PowerPoint (OVPPTX1): the dialog offers the slides as made (pictures drawn by the
-//! installed PowerPoint or LibreOffice, on a worker) or redrawn (their words as announcement
-//! cards), and a redraw proposes the birthday table for Members and the money table for
-//! Offerings. Nothing is written until the person presses Import.
+//! Import a PowerPoint (OVPPTX1, PPTXGALLERY1): one gallery offers the slides as made (pictures
+//! drawn by the installed PowerPoint or LibreOffice, on a worker) and, after it, each template
+//! family that holds every redrawn card; a redraw proposes the birthday table for Members and
+//! the money table for Offerings. Nothing is written until the person presses Import.
 
 use std::path::{Path, PathBuf};
 
 use artosia_core::calendar::Date;
-use artosia_core::deck::{Announcement, Fill, Person};
+use artosia_core::deck::{Announcement, Fill, LINES_PER_SLIDE, NoticeStyle, Person, announcement_slide, even_chunks};
 use artosia_core::giving::{Fund, Gift, Method};
 use artosia_office::{Money, TableKind};
+use artosia_slides::warta::{self, BODY_FLOOR, Field, Pics};
 
 use crate::state::{App, Arrived};
 use crate::strings as t;
@@ -16,11 +17,11 @@ use crate::strings as t;
 /// How wide each slide is drawn: a card shows it full screen.
 const EXPORT_WIDTH: u32 = 1920;
 
-/// The two ways a file comes in.
+/// The tile picked in the gallery: the file as made, or cards in one template family.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
-pub enum Way {
+pub enum Pick {
     AsMade,
-    Redraw,
+    Redraw(NoticeStyle),
 }
 
 /// Where the slides as pictures stand.
@@ -64,10 +65,14 @@ pub struct PptxImport {
     pub file: String,
     /// Visible slides.
     pub slides: usize,
-    /// The cards a redraw makes: title and first line of each.
-    pub cards: Vec<(String, String)>,
+    /// The cards a redraw makes, in the default family; a card with a picture holds a marker path.
+    pub cards: Vec<Announcement>,
+    /// The families that hold every card, the default first; worked out on a worker, empty until it answers.
+    pub families: Vec<NoticeStyle>,
+    /// The worker has not yet said which families hold the cards.
+    pub sorting: bool,
     pub proposals: Vec<Proposal>,
-    pub way: Way,
+    pub pick: Pick,
     pub made: Made,
     /// Which export this dialog waits for; a later one leaves the earlier one's folder to be cleaned.
     pub round: u64,
@@ -76,11 +81,16 @@ pub struct PptxImport {
 }
 
 impl PptxImport {
+    /// The first family that holds the cards, or As made when none does.
+    fn redraw_pick(&self) -> Pick {
+        self.families.first().map_or(Pick::AsMade, |style| Pick::Redraw(*style))
+    }
+
     /// Whether Import can be pressed now.
     pub fn ready(&self) -> bool {
-        match self.way {
-            Way::AsMade => matches!(self.made, Made::Ready(_)),
-            Way::Redraw => true,
+        match self.pick {
+            Pick::AsMade => matches!(self.made, Made::Ready(_)),
+            Pick::Redraw(_) => true,
         }
     }
 }
@@ -98,6 +108,53 @@ fn folder_of(round: u64) -> PathBuf {
 /// How many slides the folder holds so far.
 fn drawn_in(folder: &Path) -> usize {
     std::fs::read_dir(folder).map_or(0, |entries| entries.flatten().filter(|entry| entry.file_name().to_string_lossy().starts_with("slide-")).filter(|entry| entry.path().extension().is_some_and(|extension| extension == "png")).count())
+}
+
+/// The card a slide of the file makes, in `style`; None for a slide with nothing on it.
+pub(crate) fn card_of(draft: &artosia_office::Draft, image: String, style: NoticeStyle) -> Option<Announcement> {
+    if draft.title.trim().is_empty() && draft.body.trim().is_empty() && image.is_empty() {
+        return None;
+    }
+    Some(Announcement { id: 0, title: draft.title.clone(), body: draft.body.clone(), seconds: 10, image, fill: Fill::Nothing, passage: String::new(), style: Some(style), ..Announcement::new() })
+}
+
+/// The slides a card gives, a long list cut into slides of `LINES_PER_SLIDE` rows as the loop does.
+fn pages_of(card: &Announcement) -> Vec<artosia_core::deck::Slide> {
+    let lines: Vec<&str> = card.body.lines().collect();
+    let bodies: Vec<String> = if lines.len() <= LINES_PER_SLIDE { vec![card.body.clone()] } else { even_chunks(&lines, LINES_PER_SLIDE).map(|group| group.join("\n")).collect() };
+    bodies
+        .into_iter()
+        .map(|body| {
+            let mut slide = announcement_slide(&Announcement { body, ..card.clone() });
+            (slide.style, slide.colourway) = (card.style, card.colourway.clone());
+            slide
+        })
+        .collect()
+}
+
+/// Whether `style` holds every card: no card is past its floor beyond the continuation slides the
+/// family already makes (`warta::paginate` and `holds`), and a card with a picture is laid out with
+/// its picture. The look's own Hairline, Ledger and Band do not continue, so there the words must
+/// be set at the poster floor or larger and inside the screen.
+pub fn fits_family(cards: &[Announcement], style: NoticeStyle) -> bool {
+    cards.iter().all(|card| {
+        let card = Announcement { style: Some(style), colourway: String::new(), ..card.clone() };
+        pages_of(&card).iter().all(|slide| {
+            if style.is_poster() {
+                return warta::paginate(slide, style).iter().all(|page| warta::holds(page, style));
+            }
+            let layout = artosia_slides::notice::layout(slide, &artosia_slides::look::Look::default(), &Pics::default(), false);
+            layout.boxes.iter().all(|found| found.x >= 0.0 && found.y >= 0.0 && found.x + found.w <= 1920.5 && found.y + found.h <= 1080.5 && (found.field != Field::Body || found.size >= BODY_FLOOR))
+        })
+    })
+}
+
+/// The families that hold every card, the default first.
+fn families_for(cards: &[Announcement]) -> Vec<NoticeStyle> {
+    if cards.is_empty() {
+        return Vec::new();
+    }
+    NoticeStyle::ALL.iter().copied().filter(|style| fits_family(cards, *style)).collect()
 }
 
 /// The gift as the library would hold it, for telling a repeat from a new one: day, giver, amount.
@@ -156,13 +213,25 @@ impl App {
             }
         };
         self.save_notice();
-        let cards = artosia_office::to_announcements(&deck).into_iter().map(|draft| (draft.title, draft.body.lines().find(|line| !line.trim().is_empty()).unwrap_or_default().split_whitespace().collect::<Vec<_>>().join(" "))).collect();
+        let default = Announcement::new().style.unwrap_or(NoticeStyle::SerifItalic);
+        let cards: Vec<Announcement> = artosia_office::to_announcements(&deck).iter().filter_map(|draft| card_of(draft, draft.picture.as_ref().map(|_| "picture".to_string()).unwrap_or_default(), default)).collect();
         let slides = deck.slides.iter().filter(|slide| !slide.hidden).count();
         let proposals = self.proposals_of(&deck);
         let round = ROUNDS.fetch_add(1, std::sync::atomic::Ordering::Relaxed) + 1;
         let file = path.file_name().map(|name| name.to_string_lossy().to_string()).unwrap_or_default();
-        self.pptx = Some(PptxImport { path: path.to_path_buf(), file, slides, cards, proposals, way: Way::AsMade, made: Made::Drawing { done: 0 }, round, cancel: artosia_office::Cancel::new() });
+        self.pptx = Some(PptxImport { path: path.to_path_buf(), file, slides, cards: cards.clone(), families: Vec::new(), sorting: true, proposals, pick: Pick::AsMade, made: Made::Drawing { done: 0 }, round, cancel: artosia_office::Cancel::new() });
         let cancel = self.pptx.as_ref().map(|import| import.cancel.clone()).unwrap_or_default();
+        // Which families hold the cards takes a second on a big file, so it is worked out beside the export.
+        let (inbox, waker) = (self.inbox.clone(), self.waker.clone());
+        std::thread::spawn(move || {
+            let families = families_for(&cards);
+            if let Ok(mut inbox) = inbox.lock() {
+                inbox.push(Arrived::PptxFamilies(round, families));
+            }
+            if let Some(wake) = &waker {
+                wake();
+            }
+        });
         let (inbox, waker, export, from, folder) = (self.inbox.clone(), self.waker.clone(), self.pptx_exporter, path.to_path_buf(), folder_of(round));
         std::thread::spawn(move || {
             let made = match export(&from, &folder, EXPORT_WIDTH, &cancel) {
@@ -185,13 +254,23 @@ impl App {
         match self.pptx.as_mut() {
             Some(import) if import.round == round && matches!(import.made, Made::Drawing { .. }) => {
                 if !matches!(made, Made::Ready(_)) {
-                    import.way = Way::Redraw;
+                    import.pick = import.redraw_pick();
                 }
                 import.made = made;
             }
             _ => {
                 let _ = std::fs::remove_dir_all(folder_of(round));
             }
+        }
+    }
+
+    /// The worker named the families that hold the cards. When As made cannot be had, the first of them is picked.
+    pub fn pptx_families_arrived(&mut self, round: u64, families: Vec<NoticeStyle>) {
+        let Some(import) = self.pptx.as_mut().filter(|import| import.round == round) else { return };
+        import.families = families;
+        import.sorting = false;
+        if import.pick == Pick::AsMade && !matches!(import.made, Made::Ready(_) | Made::Drawing { .. }) {
+            import.pick = import.redraw_pick();
         }
     }
 
@@ -210,13 +289,19 @@ impl App {
         if let Some(import) = self.pptx.as_mut().filter(|import| matches!(import.made, Made::Drawing { .. })) {
             import.cancel.cancel();
             import.made = Made::Stopped;
-            import.way = Way::Redraw;
+            import.pick = import.redraw_pick();
         }
     }
 
-    pub fn pptx_way(&mut self, way: Way) {
-        if let Some(import) = self.pptx.as_mut().filter(|import| way == Way::Redraw || matches!(import.made, Made::Ready(_) | Made::Drawing { .. })) {
-            import.way = way;
+    /// A tile is picked: As made once its pictures are coming, or a family that holds the cards.
+    pub fn pptx_pick(&mut self, pick: Pick) {
+        let Some(import) = self.pptx.as_mut() else { return };
+        let allowed = match pick {
+            Pick::AsMade => matches!(import.made, Made::Ready(_) | Made::Drawing { .. }),
+            Pick::Redraw(style) => import.families.contains(&style),
+        };
+        if allowed {
+            import.pick = pick;
         }
     }
 
@@ -244,11 +329,12 @@ impl App {
             return;
         }
         let (mut members, mut gifts) = (0, 0);
-        let counts = match (&import.way, &import.made) {
-            (Way::AsMade, Made::Ready(files)) => Some(self.pictures_as_cards(&import.path, files)),
-            _ => self.redraw_cards(&import.path),
+        let counts = match (&import.pick, &import.made) {
+            (Pick::AsMade, Made::Ready(files)) => Some(self.pictures_as_cards(&import.path, files)),
+            (Pick::Redraw(style), _) => self.redraw_cards(&import.path, *style),
+            _ => None,
         };
-        if import.way == Way::Redraw {
+        if matches!(import.pick, Pick::Redraw(_)) {
             for proposal in &import.proposals {
                 match (&proposal.kind, proposal.on) {
                     (Kind::Members(people), true) => members += self.add_members(people),
@@ -343,7 +429,8 @@ impl App {
 
 impl App {
     /// Fills the dialog for a headless render: "made" (pictures and both proposals), "money" (a table
-    /// whose printed total is not its rows' sum) or "none" (no program to draw the slides). All made up.
+    /// whose printed total is not its rows' sum), "none" (no program to draw the slides), "drawing"
+    /// (the pictures not there yet) or "long" (a table some families cannot hold). All made up.
     pub fn demo_pptx(&mut self, kind: &str) {
         let folder = std::env::temp_dir().join("artosia-pptx-demo");
         let _ = std::fs::create_dir_all(&folder);
@@ -356,17 +443,25 @@ impl App {
             })
             .collect();
         let titles = ["Sunday times", "Youth night", "Birthdays", "Offering report", "Prayer meeting", "Thank you", "Next week", "Church picnic"];
-        let cards = titles.iter().map(|title| (title.to_string(), "Made-up line of words".to_string())).collect();
+        let mut cards: Vec<Announcement> = titles.iter().map(|title| Announcement { title: title.to_string(), body: "Made-up line of words\nA second made-up line".to_string(), seconds: 10, ..Announcement::new() }).collect();
+        if kind == "long" {
+            let rows: Vec<String> = (1..=10).map(|n| format!("Sample giver number {n} with a long made-up name\tGeneral offering for the building fund\t{n}00.000")).collect();
+            cards.push(Announcement { title: "Offering report".into(), body: rows.join("\n"), seconds: 10, ..Announcement::new() });
+        }
+        let families = families_for(&cards);
+        let redraw = Pick::Redraw(families.first().copied().unwrap_or(NoticeStyle::SerifItalic));
         let gift = |giver: &str, fund: &str, amount: i64| artosia_office::Gift { date: Some((2, 11, 2026)), giver: giver.into(), fund: fund.into(), method: String::new(), amount };
         let money = |printed: i64| Money { gifts: vec![gift("Sample Gamma", "General offering", 200_000), gift("Sample Delta", "Building", 300_000), gift("", "General offering", 150_000)], printed_total: Some(printed), unread: 0 };
         let person = |name: &str, day: u8, month: u8| Person { id: 0, name: name.into(), day, month, year: 0 };
         let people = vec![person("Sample Alpha", 5, 1), person("Sample Beta", 17, 3), person("Sample Epsilon", 9, 11), person("Sample Zeta", 21, 6)];
-        let (made, way, proposals) = match kind {
-            "money" => (Made::Ready(files), Way::Redraw, vec![Proposal { kind: Kind::Offerings { money: money(700_000), new: 3 }, on: true }]),
-            "none" => (Made::NoRenderer, Way::Redraw, vec![Proposal { kind: Kind::Members(people), on: true }, Proposal { kind: Kind::Offerings { money: money(650_000), new: 3 }, on: true }]),
-            _ => (Made::Ready(files), Way::AsMade, vec![Proposal { kind: Kind::Members(people), on: true }, Proposal { kind: Kind::Offerings { money: money(650_000), new: 3 }, on: true }]),
+        let (made, pick, proposals) = match kind {
+            "money" => (Made::Ready(files), redraw, vec![Proposal { kind: Kind::Offerings { money: money(700_000), new: 3 }, on: true }]),
+            "drawing" => (Made::Drawing { done: 3 }, Pick::AsMade, Vec::new()),
+            "none" => (Made::NoRenderer, redraw, vec![Proposal { kind: Kind::Members(people), on: true }, Proposal { kind: Kind::Offerings { money: money(650_000), new: 3 }, on: true }]),
+            "long" => (Made::Ready(files), redraw, Vec::new()),
+            _ => (Made::Ready(files), Pick::AsMade, vec![Proposal { kind: Kind::Members(people), on: true }, Proposal { kind: Kind::Offerings { money: money(650_000), new: 3 }, on: true }]),
         };
-        self.pptx = Some(PptxImport { path: PathBuf::from("Bulletin.pptx"), file: "Bulletin.pptx".into(), slides: 8, cards, proposals, way, made, round: 0, cancel: artosia_office::Cancel::new() });
+        self.pptx = Some(PptxImport { path: PathBuf::from("Bulletin.pptx"), file: "Bulletin.pptx".into(), slides: 8, cards, families, sorting: false, proposals, pick, made, round: 0, cancel: artosia_office::Cancel::new() });
     }
 }
 
@@ -420,11 +515,25 @@ mod tests {
         Err(artosia_office::Error::NoRenderer)
     }
 
+    /// Waits for both answers of an opened dialog: the pictures and the families that hold the cards.
     fn wait_for(app: &mut App) {
-        for _ in 0..200 {
+        let (mut made, mut sorted) = (false, false);
+        for _ in 0..500 {
             let arrived: Vec<Arrived> = app.inbox.lock().map(|mut inbox| std::mem::take(&mut *inbox)).unwrap_or_default();
-            if let Some(Arrived::Pptx(round, made)) = arrived.into_iter().next() {
-                app.pptx_arrived(round, made);
+            for item in arrived {
+                match item {
+                    Arrived::Pptx(round, answer) => {
+                        app.pptx_arrived(round, answer);
+                        made = true;
+                    }
+                    Arrived::PptxFamilies(round, families) => {
+                        app.pptx_families_arrived(round, families);
+                        sorted = true;
+                    }
+                    _ => {}
+                }
+            }
+            if made && sorted {
                 return;
             }
             std::thread::sleep(std::time::Duration::from_millis(10));
@@ -448,7 +557,8 @@ mod tests {
         wait_for(&mut app);
         let import = app.pptx.as_ref().expect("the dialog is open");
         assert_eq!((import.slides, import.cards.len()), (2, 2));
-        assert_eq!(import.cards[0], (String::new(), "No Nama Tanggal Lahir".to_string()), "a table slide is named by its first row, cells joined with spaces");
+        assert_eq!((import.cards[0].title.as_str(), import.cards[0].body.lines().next()), ("", Some("No\tNama\tTanggal Lahir")), "a table slide is one row per line, cells joined by a tab");
+        assert_eq!(import.families.first(), Some(&NoticeStyle::SerifItalic), "the default family comes first");
         assert!(matches!(&import.made, Made::Ready(files) if files.len() == 2));
         let counts: Vec<usize> = import.proposals.iter().map(Proposal::count).collect();
         assert_eq!(counts, vec![2, 2], "two people for Members, two gifts for Offerings");
@@ -506,7 +616,7 @@ mod tests {
         let (people, gifts, cards) = (app.people.len(), app.gifts.len(), app.announcements.len());
         app.open_pptx_import(&path);
         wait_for(&mut app);
-        app.pptx_way(Way::Redraw);
+        app.pptx_pick(Pick::Redraw(NoticeStyle::SerifItalic));
         app.apply_pptx_import();
         assert_eq!((app.people.len(), app.gifts.len(), app.announcements.len()), (people + 2, gifts + 2, cards + 2));
         assert!(app.funds.iter().any(|fund| fund.name == "Pembangunan"), "an unknown fund is made");
@@ -527,7 +637,7 @@ mod tests {
         let (people, gifts) = (app.people.len(), app.gifts.len());
         app.open_pptx_import(&path);
         wait_for(&mut app);
-        app.pptx_way(Way::Redraw);
+        app.pptx_pick(Pick::Redraw(NoticeStyle::SerifItalic));
         app.pptx_tick(0);
         app.apply_pptx_import();
         assert_eq!((app.people.len(), app.gifts.len()), (people, gifts + 2));
@@ -542,9 +652,9 @@ mod tests {
         app.open_pptx_import(&path);
         wait_for(&mut app);
         let import = app.pptx.as_ref().expect("open");
-        assert_eq!((import.made.clone(), import.way, import.ready()), (Made::NoRenderer, Way::Redraw, true));
-        app.pptx_way(Way::AsMade);
-        assert_eq!(app.pptx.as_ref().map(|import| import.way), Some(Way::Redraw), "As made cannot be chosen");
+        assert_eq!((import.made.clone(), import.pick, import.ready()), (Made::NoRenderer, Pick::Redraw(NoticeStyle::SerifItalic), true));
+        app.pptx_pick(Pick::AsMade);
+        assert_eq!(app.pptx.as_ref().map(|import| import.pick), Some(Pick::Redraw(NoticeStyle::SerifItalic)), "As made cannot be chosen");
         let _ = std::fs::remove_file(path);
     }
 
@@ -556,8 +666,9 @@ mod tests {
         app.open_pptx_import(&path);
         let round = app.pptx.as_ref().expect("open").round;
         app.stop_pptx_export();
-        assert_eq!(app.pptx.as_ref().map(|import| (import.made.clone(), import.way)), Some((Made::Stopped, Way::Redraw)));
+        assert_eq!(app.pptx.as_ref().map(|import| (import.made.clone(), import.sorting)), Some((Made::Stopped, true)));
         wait_for(&mut app);
+        assert_eq!(app.pptx.as_ref().map(|import| import.pick), Some(Pick::Redraw(NoticeStyle::SerifItalic)), "with no pictures the first family that holds the cards is picked");
         assert!(!folder_of(round).exists(), "the late pictures are removed");
         assert_eq!(app.pptx.as_ref().map(|import| import.made.clone()), Some(Made::Stopped));
         let _ = std::fs::remove_file(path);
@@ -594,6 +705,42 @@ mod tests {
         assert!(second.is_cancelled(), "leaving the dialog reaches it too");
         wait_for(&mut app);
         let _ = std::fs::remove_file(path);
+    }
+
+    /// A card of `rows` table rows, `width` characters in each of its two cells.
+    fn table_card(rows: usize, width: usize) -> Announcement {
+        let body = (0..rows).map(|row| format!("{}\t{}", "Aaaa bbbb ".repeat(width / 10 + 1).trim_end().chars().take(width).collect::<String>(), row)).collect::<Vec<_>>().join("\n");
+        Announcement { title: "Report".into(), body, seconds: 10, fill: Fill::Nothing, ..Announcement::new() }
+    }
+
+    #[test]
+    fn a_family_is_offered_only_when_every_card_holds_in_it() {
+        let short = [Announcement { title: "Picnic".into(), body: "On the field\nAfter the service".into(), seconds: 10, ..Announcement::new() }];
+        let offered: Vec<NoticeStyle> = NoticeStyle::ALL.iter().copied().filter(|style| fits_family(&short, *style)).collect();
+        assert_eq!(offered.first(), Some(&NoticeStyle::SerifItalic), "the default family is first");
+        assert!(offered.len() >= 10, "a short card holds in most families: {offered:?}");
+        // A table of very long cells is past the floor in some family and not in another.
+        let long = [table_card(10, 160)];
+        let held: Vec<NoticeStyle> = NoticeStyle::ALL.iter().copied().filter(|style| fits_family(&long, *style)).collect();
+        println!("long table holds in {} of {}: {held:?}", held.len(), NoticeStyle::ALL.len());
+        assert!(!held.is_empty() && held.len() < NoticeStyle::ALL.len(), "some family is left out and some remain: {held:?}");
+        assert!(held.len() < offered.len(), "the long table narrows the offer");
+        // One card that cannot hold takes the family out for the whole file.
+        let both = [short[0].clone(), long[0].clone()];
+        assert!(NoticeStyle::ALL.iter().all(|style| fits_family(&both, *style) == (fits_family(&short, *style) && fits_family(&long, *style))));
+        // A card with a picture goes through the same check with its picture laid out.
+        let picture = [Announcement { image: "picture".into(), seconds: 10, ..Announcement::new() }];
+        assert!(NoticeStyle::ALL.iter().any(|style| fits_family(&picture, *style)));
+    }
+
+    #[test]
+    fn working_out_the_offer_for_a_big_file_costs_what_is_measured() {
+        let cards: Vec<Announcement> = (0..30).map(|at| Announcement { title: format!("Card {at}"), body: "A made-up line of words\nAnother made-up line".into(), seconds: 10, ..Announcement::new() }).collect();
+        let start = std::time::Instant::now();
+        let offered = families_for(&cards);
+        let spent = start.elapsed();
+        println!("offer for 30 cards: {spent:?}, {} families", offered.len());
+        assert!(spent < std::time::Duration::from_secs(3), "{spent:?}");
     }
 
     #[test]

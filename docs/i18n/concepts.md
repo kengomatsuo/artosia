@@ -193,3 +193,6 @@ A second reader of a finished language found one thing under two or three names,
 **`rundown_item`** A video, a sound or a scene in the plan, beside the songs and passages. It has a file, what it does when it reaches its end (stop, play again, or go on to the next item of the plan) and how loud it plays. Showing it plays it through the projector.
 
 **`scene`** Several layers shown together as one plan item: a background of its own, a video, music, and the church's logo. It also lists which of those it takes away when its video has played to its end.
+
+
+**`church_year`** The yearly round of seasons a church keeps: Advent before Christmas, Christmas, Epiphany, Lent, Holy Week and Good Friday, Easter, Ascension, Pentecost, Reformation Sunday, and the ordinary weeks between. Artosia works out today's season from the date and can draw announcement cards in the colours of that season. Use the names churches of the language already say for each season.

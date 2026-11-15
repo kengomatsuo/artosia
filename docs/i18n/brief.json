@@ -4852,6 +4852,246 @@
   "notes": "Give the letters of YOUR language as the examples: for Indonesian, R goes to the chorus and B to the bridge. The bridge key is B in every language, whatever your word for a bridge. The chorus key is the first letter of your word for the chorus when that is a plain Latin letter other than V, P, B, I, E and X; in every other language it is C. Say 'when switched off' the natural way. One or two short sentences."
  },
  {
+  "key": "SEASON_FOLLOW",
+  "kind": "const",
+  "screen": "Settings dialog, a row of the General or Announcements part.",
+  "moment": "The person wants the announcement cards to change colour with the church year.",
+  "role": "switch label",
+  "does": "Names the choice of drawing announcement cards in the colours of the current season of the church year.",
+  "budget": 30,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_year",
+   "settings"
+  ],
+  "notes": "The church year is the yearly round of Advent, Christmas, Lent, Easter and Pentecost. Use the words churches of the language say for it."
+ },
+ {
+  "key": "SEASON_ADVENT",
+  "kind": "const",
+  "screen": "Settings dialog, inside the grey line under the church-year switch's label.",
+  "moment": "The person reads which season it is today (the four weeks before Christmas).",
+  "role": "name of a season",
+  "does": "Advent, the weeks of waiting before Christmas.",
+  "budget": 20,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_year",
+   "settings"
+  ],
+  "notes": "The name of one season of the church year, as the church of the language says it. It is placed inside a sentence, so it needs no capital beyond what the language gives a season's name."
+ },
+ {
+  "key": "SEASON_CHRISTMAS",
+  "kind": "const",
+  "screen": "Settings dialog, inside the grey line under the church-year switch's label.",
+  "moment": "The person reads which season it is today (the days of Christmas).",
+  "role": "name of a season",
+  "does": "Christmas, the season that begins on Christmas Eve.",
+  "budget": 20,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_year",
+   "settings"
+  ],
+  "notes": "The name of one season of the church year, as the church of the language says it. It is placed inside a sentence, so it needs no capital beyond what the language gives a season's name."
+ },
+ {
+  "key": "SEASON_EPIPHANY",
+  "kind": "const",
+  "screen": "Settings dialog, inside the grey line under the church-year switch's label.",
+  "moment": "The person reads which season it is today (the sixth of January).",
+  "role": "name of a season",
+  "does": "Epiphany, the day the church remembers the visit of the wise men.",
+  "budget": 20,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_year",
+   "settings"
+  ],
+  "notes": "The name of one season of the church year, as the church of the language says it. It is placed inside a sentence, so it needs no capital beyond what the language gives a season's name."
+ },
+ {
+  "key": "SEASON_LENT",
+  "kind": "const",
+  "screen": "Settings dialog, inside the grey line under the church-year switch's label.",
+  "moment": "The person reads which season it is today (the forty days before Easter).",
+  "role": "name of a season",
+  "does": "Lent, the weeks of fasting and reflection before Easter.",
+  "budget": 20,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_year",
+   "settings"
+  ],
+  "notes": "The name of one season of the church year, as the church of the language says it. It is placed inside a sentence, so it needs no capital beyond what the language gives a season's name."
+ },
+ {
+  "key": "SEASON_HOLY_WEEK",
+  "kind": "const",
+  "screen": "Settings dialog, inside the grey line under the church-year switch's label.",
+  "moment": "The person reads which season it is today (the week before Easter).",
+  "role": "name of a season",
+  "does": "Holy Week, from Palm Sunday to the day before Easter.",
+  "budget": 20,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_year",
+   "settings"
+  ],
+  "notes": "The name of one season of the church year, as the church of the language says it. It is placed inside a sentence, so it needs no capital beyond what the language gives a season's name."
+ },
+ {
+  "key": "SEASON_GOOD_FRIDAY",
+  "kind": "const",
+  "screen": "Settings dialog, inside the grey line under the church-year switch's label.",
+  "moment": "The person reads which season it is today (the Friday before Easter).",
+  "role": "name of a season",
+  "does": "Good Friday, the day the church remembers the cross.",
+  "budget": 20,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_year",
+   "settings"
+  ],
+  "notes": "The name of one season of the church year, as the church of the language says it. It is placed inside a sentence, so it needs no capital beyond what the language gives a season's name."
+ },
+ {
+  "key": "SEASON_EASTER",
+  "kind": "const",
+  "screen": "Settings dialog, inside the grey line under the church-year switch's label.",
+  "moment": "The person reads which season it is today (the weeks of Easter).",
+  "role": "name of a season",
+  "does": "Easter, the season that begins with the resurrection of Jesus.",
+  "budget": 20,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_year",
+   "settings"
+  ],
+  "notes": "The name of one season of the church year, as the church of the language says it. It is placed inside a sentence, so it needs no capital beyond what the language gives a season's name."
+ },
+ {
+  "key": "SEASON_ASCENSION",
+  "kind": "const",
+  "screen": "Settings dialog, inside the grey line under the church-year switch's label.",
+  "moment": "The person reads which season it is today (the fortieth day of Easter).",
+  "role": "name of a season",
+  "does": "Ascension Day, the day the church remembers Jesus going up to heaven.",
+  "budget": 20,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_year",
+   "settings"
+  ],
+  "notes": "The name of one season of the church year, as the church of the language says it. It is placed inside a sentence, so it needs no capital beyond what the language gives a season's name."
+ },
+ {
+  "key": "SEASON_PENTECOST",
+  "kind": "const",
+  "screen": "Settings dialog, inside the grey line under the church-year switch's label.",
+  "moment": "The person reads which season it is today (the day and week of Pentecost).",
+  "role": "name of a season",
+  "does": "Pentecost, the day the church remembers the Holy Spirit coming.",
+  "budget": 20,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_year",
+   "settings"
+  ],
+  "notes": "The name of one season of the church year, as the church of the language says it. It is placed inside a sentence, so it needs no capital beyond what the language gives a season's name."
+ },
+ {
+  "key": "SEASON_REFORMATION",
+  "kind": "const",
+  "screen": "Settings dialog, inside the grey line under the church-year switch's label.",
+  "moment": "The person reads which season it is today (the Sunday before 31 October).",
+  "role": "name of a season",
+  "does": "Reformation Sunday, when Protestant churches remember the Reformation.",
+  "budget": 20,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_year",
+   "settings"
+  ],
+  "notes": "The name of one season of the church year, as the church of the language says it. It is placed inside a sentence, so it needs no capital beyond what the language gives a season's name."
+ },
+ {
+  "key": "SEASON_ORDINARY",
+  "kind": "const",
+  "screen": "Settings dialog, inside the grey line under the church-year switch's label.",
+  "moment": "The person reads which season it is today (a week with no special season).",
+  "role": "name of a season",
+  "does": "Ordinary Time, the weeks of the church year with no special season.",
+  "budget": 20,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_year",
+   "settings"
+  ],
+  "notes": "The name of one season of the church year, as the church of the language says it. It is placed inside a sentence, so it needs no capital beyond what the language gives a season's name."
+ },
+ {
+  "key": "season_hint",
+  "kind": "sentence",
+  "screen": "Settings dialog, grey line under the church-year switch's label.",
+  "moment": "The person wonders what the switch will do today.",
+  "role": "explanatory text",
+  "does": "Tells the person which season of the church year today falls in, and that a card then wears that season's palette if its style has one.",
+  "budget": 70,
+  "variables": [
+     {
+        "name": "season",
+        "example": "Advent",
+        "meaning": "The name of today's season of the church year."
+     }
+  ],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "church_year",
+   "settings"
+  ],
+  "notes": "One short sentence or two. The season name stays as given."
+ },
+ {
   "key": "COUNTDOWN",
   "kind": "const",
   "screen": "Search panel, result row whose title is this word, shown when the person types the word for a countdown.",
@@ -8374,7 +8614,7 @@
  {
   "key": "PPTX_AS_MADE",
   "kind": "const",
-  "screen": "Import dialog for a presentation file, opened over any window after a file is chosen. A file name and slide count on top; two side by side panels, each with a radio choice, a hint and small pictures of what it would make; the right panel also lists what the tables of the slides offer for Members and Offerings, each with a tick; Cancel and Import at the foot.",
+  "screen": "Import dialog for a presentation file, opened over any window after a file is chosen. A file name and slide count on top, then one gallery of tiles in rows: the first tile is the file as made, drawn from its first slide picture, and each tile after it is the redrawn first card in one design; the picked tile has a ring. Under the gallery sit a progress bar with Cancel while the pictures are drawn, or the reason there are none, and, for a redraw, what the tables offer for Members and Offerings, each with a tick; Cancel and Import (Ctrl Enter) at the foot.",
   "moment": "The person decides how the file comes in.",
   "role": "choice title",
   "does": "Names the way that keeps each slide as a picture, looking exactly like the original.",
@@ -8391,28 +8631,9 @@
   "notes": "Heading of the left panel, beside a radio."
  },
  {
-  "key": "PPTX_AS_MADE_HINT",
-  "kind": "const",
-  "screen": "Import dialog for a presentation file, opened over any window after a file is chosen. A file name and slide count on top; two side by side panels, each with a radio choice, a hint and small pictures of what it would make; the right panel also lists what the tables of the slides offer for Members and Offerings, each with a tick; Cancel and Import at the foot.",
-  "moment": "Reading what the left choice does.",
-  "role": "hint under a choice title",
-  "does": "Explains that every slide becomes one image drawn by the presentation program itself.",
-  "budget": 60,
-  "variables": [],
-  "cases": [],
-  "counts": "",
-  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
-  "concepts": [
-   "announcement",
-   "import",
-   "slide"
-  ],
-  "notes": "Up to two lines in a panel about 330 points wide."
- },
- {
   "key": "PPTX_REDRAW",
   "kind": "const",
-  "screen": "Import dialog for a presentation file, opened over any window after a file is chosen. A file name and slide count on top; two side by side panels, each with a radio choice, a hint and small pictures of what it would make; the right panel also lists what the tables of the slides offer for Members and Offerings, each with a tick; Cancel and Import at the foot.",
+  "screen": "Import dialog for a presentation file, opened over any window after a file is chosen. A file name and slide count on top, then one gallery of tiles in rows: the first tile is the file as made, drawn from its first slide picture, and each tile after it is the redrawn first card in one design; the picked tile has a ring. Under the gallery sit a progress bar with Cancel while the pictures are drawn, or the reason there are none, and, for a redraw, what the tables offer for Members and Offerings, each with a tick; Cancel and Import (Ctrl Enter) at the foot.",
   "moment": "The person decides how the file comes in.",
   "role": "choice title",
   "does": "Names the way that takes the words and tables out of the slides and sets them again in this program's own look.",
@@ -8429,28 +8650,9 @@
   "notes": "Heading of the right panel, beside a radio."
  },
  {
-  "key": "PPTX_REDRAW_HINT",
-  "kind": "const",
-  "screen": "Import dialog for a presentation file, opened over any window after a file is chosen. A file name and slide count on top; two side by side panels, each with a radio choice, a hint and small pictures of what it would make; the right panel also lists what the tables of the slides offer for Members and Offerings, each with a tick; Cancel and Import at the foot.",
-  "moment": "Reading what the right choice does.",
-  "role": "hint under a choice title",
-  "does": "Explains that the text and tables of every slide are set again as announcement cards.",
-  "budget": 70,
-  "variables": [],
-  "cases": [],
-  "counts": "",
-  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
-  "concepts": [
-   "announcement",
-   "import",
-   "slide"
-  ],
-  "notes": "Up to two lines in a panel about 330 points wide."
- },
- {
   "key": "PPTX_DRAWING",
   "kind": "const",
-  "screen": "Import dialog for a presentation file, opened over any window after a file is chosen. A file name and slide count on top; two side by side panels, each with a radio choice, a hint and small pictures of what it would make; the right panel also lists what the tables of the slides offer for Members and Offerings, each with a tick; Cancel and Import at the foot.",
+  "screen": "Import dialog for a presentation file, opened over any window after a file is chosen. A file name and slide count on top, then one gallery of tiles in rows: the first tile is the file as made, drawn from its first slide picture, and each tile after it is the redrawn first card in one design; the picked tile has a ring. Under the gallery sit a progress bar with Cancel while the pictures are drawn, or the reason there are none, and, for a redraw, what the tables offer for Members and Offerings, each with a tick; Cancel and Import (Ctrl Enter) at the foot.",
   "moment": "The presentation program is working and may take up to a minute.",
   "role": "progress bar label",
   "does": "Says that the slides are being turned into pictures now.",
@@ -8469,7 +8671,7 @@
  {
   "key": "PPTX_NO_RENDERER",
   "kind": "const",
-  "screen": "Import dialog for a presentation file, opened over any window after a file is chosen. A file name and slide count on top; two side by side panels, each with a radio choice, a hint and small pictures of what it would make; the right panel also lists what the tables of the slides offer for Members and Offerings, each with a tick; Cancel and Import at the foot.",
+  "screen": "Import dialog for a presentation file, opened over any window after a file is chosen. A file name and slide count on top, then one gallery of tiles in rows: the first tile is the file as made, drawn from its first slide picture, and each tile after it is the redrawn first card in one design; the picked tile has a ring. Under the gallery sit a progress bar with Cancel while the pictures are drawn, or the reason there are none, and, for a redraw, what the tables offer for Members and Offerings, each with a tick; Cancel and Import (Ctrl Enter) at the foot.",
   "moment": "The left panel is dimmed because neither PowerPoint nor LibreOffice is installed.",
   "role": "explanation",
   "does": "Gives the reason the picture way is not offered: the machine has no program able to draw slides.",
@@ -8488,7 +8690,7 @@
  {
   "key": "PPTX_FAILED",
   "kind": "const",
-  "screen": "Import dialog for a presentation file, opened over any window after a file is chosen. A file name and slide count on top; two side by side panels, each with a radio choice, a hint and small pictures of what it would make; the right panel also lists what the tables of the slides offer for Members and Offerings, each with a tick; Cancel and Import at the foot.",
+  "screen": "Import dialog for a presentation file, opened over any window after a file is chosen. A file name and slide count on top, then one gallery of tiles in rows: the first tile is the file as made, drawn from its first slide picture, and each tile after it is the redrawn first card in one design; the picked tile has a ring. Under the gallery sit a progress bar with Cancel while the pictures are drawn, or the reason there are none, and, for a redraw, what the tables offer for Members and Offerings, each with a tick; Cancel and Import (Ctrl Enter) at the foot.",
   "moment": "The drawing program ran but did not finish every slide.",
   "role": "explanation",
   "does": "Says that turning the slides into pictures did not work.",
@@ -8507,7 +8709,7 @@
  {
   "key": "PPTX_STOPPED",
   "kind": "const",
-  "screen": "Import dialog for a presentation file, opened over any window after a file is chosen. A file name and slide count on top; two side by side panels, each with a radio choice, a hint and small pictures of what it would make; the right panel also lists what the tables of the slides offer for Members and Offerings, each with a tick; Cancel and Import at the foot.",
+  "screen": "Import dialog for a presentation file, opened over any window after a file is chosen. A file name and slide count on top, then one gallery of tiles in rows: the first tile is the file as made, drawn from its first slide picture, and each tile after it is the redrawn first card in one design; the picked tile has a ring. Under the gallery sit a progress bar with Cancel while the pictures are drawn, or the reason there are none, and, for a redraw, what the tables offer for Members and Offerings, each with a tick; Cancel and Import (Ctrl Enter) at the foot.",
   "moment": "The person pressed Cancel beside the progress bar.",
   "role": "explanation",
   "does": "Says that the person ended the picture drawing before it finished.",
@@ -8526,7 +8728,7 @@
  {
   "key": "PPTX_FOUND",
   "kind": "const",
-  "screen": "Import dialog for a presentation file, opened over any window after a file is chosen. A file name and slide count on top; two side by side panels, each with a radio choice, a hint and small pictures of what it would make; the right panel also lists what the tables of the slides offer for Members and Offerings, each with a tick; Cancel and Import at the foot.",
+  "screen": "Import dialog for a presentation file, opened over any window after a file is chosen. A file name and slide count on top, then one gallery of tiles in rows: the first tile is the file as made, drawn from its first slide picture, and each tile after it is the redrawn first card in one design; the picked tile has a ring. Under the gallery sit a progress bar with Cancel while the pictures are drawn, or the reason there are none, and, for a redraw, what the tables offer for Members and Offerings, each with a tick; Cancel and Import (Ctrl Enter) at the foot.",
   "moment": "A heading above ticks for what could be added to other windows.",
   "role": "small heading",
   "does": "Introduces the lists of people or gifts the program recognised inside the slides' tables.",
@@ -8541,6 +8743,44 @@
    "slide"
   ],
   "notes": ""
+ },
+ {
+  "key": "PPTX_PICK",
+  "kind": "const",
+  "screen": "Import dialog for a presentation file, opened over any window after a file is chosen. A file name and slide count on top, then one gallery of tiles in rows: the first tile is the file as made, drawn from its first slide picture, and each tile after it is the redrawn first card in one design; the picked tile has a ring. Under the gallery sit a progress bar with Cancel while the pictures are drawn, or the reason there are none, and, for a redraw, what the tables offer for Members and Offerings, each with a tick; Cancel and Import (Ctrl Enter) at the foot.",
+  "moment": "The person decides how the file comes in.",
+  "role": "label above a gallery",
+  "does": "Asks the person to choose one of the tiles below, each a way the slides can come in.",
+  "budget": 30,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "member",
+   "offering",
+   "slide"
+  ],
+  "notes": "A small label over the tiles; no full stop."
+ },
+ {
+  "key": "PPTX_NO_FAMILY",
+  "kind": "const",
+  "screen": "Import dialog for a presentation file, opened over any window after a file is chosen. A file name and slide count on top, then one gallery of tiles in rows: the first tile is the file as made, drawn from its first slide picture, and each tile after it is the redrawn first card in one design; the picked tile has a ring. Under the gallery sit a progress bar with Cancel while the pictures are drawn, or the reason there are none, and, for a redraw, what the tables offer for Members and Offerings, each with a tick; Cancel and Import (Ctrl Enter) at the foot.",
+  "moment": "Every design was tried on the slides and none holds them.",
+  "role": "note under the gallery",
+  "does": "Tells that no design can set these slides again without cutting them off, so only the pictures as made remain.",
+  "budget": 80,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "member",
+   "offering",
+   "slide"
+  ],
+  "notes": "Up to two lines under the tiles; names the tile As made in the same words as its label."
  },
  {
   "key": "MONTHS[0]",
@@ -8894,7 +9134,7 @@
  {
   "key": "pptx_progress",
   "kind": "sentence",
-  "screen": "Import dialog for a presentation file, opened over any window after a file is chosen. A file name and slide count on top; two side by side panels, each with a radio choice, a hint and small pictures of what it would make; the right panel also lists what the tables of the slides offer for Members and Offerings, each with a tick; Cancel and Import at the foot.",
+  "screen": "Import dialog for a presentation file, opened over any window after a file is chosen. A file name and slide count on top, then one gallery of tiles in rows: the first tile is the file as made, drawn from its first slide picture, and each tile after it is the redrawn first card in one design; the picked tile has a ring. Under the gallery sit a progress bar with Cancel while the pictures are drawn, or the reason there are none, and, for a redraw, what the tables offer for Members and Offerings, each with a tick; Cancel and Import (Ctrl Enter) at the foot.",
   "moment": "The bar moves while the presentation program works.",
   "role": "status line",
   "does": "Reports how many of the slides have been turned into pictures so far.",
@@ -8923,7 +9163,7 @@
  {
   "key": "pptx_members",
   "kind": "sentence",
-  "screen": "Import dialog for a presentation file, opened over any window after a file is chosen. A file name and slide count on top; two side by side panels, each with a radio choice, a hint and small pictures of what it would make; the right panel also lists what the tables of the slides offer for Members and Offerings, each with a tick; Cancel and Import at the foot.",
+  "screen": "Import dialog for a presentation file, opened over any window after a file is chosen. A file name and slide count on top, then one gallery of tiles in rows: the first tile is the file as made, drawn from its first slide picture, and each tile after it is the redrawn first card in one design; the picked tile has a ring. Under the gallery sit a progress bar with Cancel while the pictures are drawn, or the reason there are none, and, for a redraw, what the tables offer for Members and Offerings, each with a tick; Cancel and Import (Ctrl Enter) at the foot.",
   "moment": "A tick the person may clear before importing.",
   "role": "tick label",
   "does": "Says how many people of a birthday table would be added to the church's list of people.",
@@ -8947,7 +9187,7 @@
  {
   "key": "pptx_gifts",
   "kind": "sentence",
-  "screen": "Import dialog for a presentation file, opened over any window after a file is chosen. A file name and slide count on top; two side by side panels, each with a radio choice, a hint and small pictures of what it would make; the right panel also lists what the tables of the slides offer for Members and Offerings, each with a tick; Cancel and Import at the foot.",
+  "screen": "Import dialog for a presentation file, opened over any window after a file is chosen. A file name and slide count on top, then one gallery of tiles in rows: the first tile is the file as made, drawn from its first slide picture, and each tile after it is the redrawn first card in one design; the picked tile has a ring. Under the gallery sit a progress bar with Cancel while the pictures are drawn, or the reason there are none, and, for a redraw, what the tables offer for Members and Offerings, each with a tick; Cancel and Import (Ctrl Enter) at the foot.",
   "moment": "A tick the person may clear before importing.",
   "role": "tick label",
   "does": "Says how many gifts of a money table would be added to the church's record of offerings.",
@@ -8971,7 +9211,7 @@
  {
   "key": "pptx_total_differs",
   "kind": "sentence",
-  "screen": "Import dialog for a presentation file, opened over any window after a file is chosen. A file name and slide count on top; two side by side panels, each with a radio choice, a hint and small pictures of what it would make; the right panel also lists what the tables of the slides offer for Members and Offerings, each with a tick; Cancel and Import at the foot.",
+  "screen": "Import dialog for a presentation file, opened over any window after a file is chosen. A file name and slide count on top, then one gallery of tiles in rows: the first tile is the file as made, drawn from its first slide picture, and each tile after it is the redrawn first card in one design; the picked tile has a ring. Under the gallery sit a progress bar with Cancel while the pictures are drawn, or the reason there are none, and, for a redraw, what the tables offer for Members and Offerings, each with a tick; Cancel and Import (Ctrl Enter) at the foot.",
   "moment": "Under the tick of a money table whose total looks wrong; shown in a warning colour.",
   "role": "warning",
   "does": "Warns that the sum printed on a table does not equal what its lines add up to, giving both amounts.",
@@ -9000,7 +9240,7 @@
  {
   "key": "pptx_also",
   "kind": "sentence",
-  "screen": "Import dialog for a presentation file, opened over any window after a file is chosen. A file name and slide count on top; two side by side panels, each with a radio choice, a hint and small pictures of what it would make; the right panel also lists what the tables of the slides offer for Members and Offerings, each with a tick; Cancel and Import at the foot.",
+  "screen": "Import dialog for a presentation file, opened over any window after a file is chosen. A file name and slide count on top, then one gallery of tiles in rows: the first tile is the file as made, drawn from its first slide picture, and each tile after it is the redrawn first card in one design; the picked tile has a ring. Under the gallery sit a progress bar with Cancel while the pictures are drawn, or the reason there are none, and, for a redraw, what the tables offer for Members and Offerings, each with a tick; Cancel and Import (Ctrl Enter) at the foot.",
   "moment": "A second sentence after the toast that counts the new cards.",
   "role": "toast addition",
   "does": "Says what was added to the people list and to the offerings record besides the cards.",

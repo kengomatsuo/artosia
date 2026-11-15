@@ -5,7 +5,7 @@
 {"id":"tinta","name":"Tinta","palette":{"ground":"#0F1220","ink":"#F1EEE6","mute":"#B4B8CC","rule":"#565C7D","accent":"#E8B04B","inv_bg":"#F1EEE6","inv_fg":"#0F1220","card":"#FFFFFF"}},
 {"id":"anggur","name":"Anggur","palette":{"ground":"#2B0E17","ink":"#F6ECE6","mute":"#D9BFC0","rule":"#7A4B55","accent":"#E9B26A","inv_bg":"#F6ECE6","inv_fg":"#2B0E17","card":"#FFFFFF"}},
 {"id":"kertas","name":"Kertas","palette":{"ground":"#F3EFE5","ink":"#17150F","mute":"#5A554A","rule":"#A9A292","accent":"#A9361C","inv_bg":"#17150F","inv_fg":"#F3EFE5","card":"#FFFFFF"}},
-{"id":"natal","name":"Natal","palette":{"ground":"#F6F0E0","ink":"#14180F","mute":"#58584A","rule":"#A8A58E","accent":"#1F5B3A","inv_bg":"#14180F","inv_fg":"#F6F0E0","card":"#FFFFFF"}},
+{"id":"natal","season":"christmas","name":"Natal","palette":{"ground":"#F6F0E0","ink":"#14180F","mute":"#58584A","rule":"#A8A58E","accent":"#1F5B3A","inv_bg":"#14180F","inv_fg":"#F6F0E0","card":"#FFFFFF"}},
 {"id":"arang","name":"Arang","palette":{"ground":"#16181B","ink":"#F0EEE8","mute":"#B8BCC0","rule":"#555B61","accent":"#F0735A","inv_bg":"#F0EEE8","inv_fg":"#16181B","card":"#FFFFFF"}}
 ],
 "swatch": ["ground","accent"],

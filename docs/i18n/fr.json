@@ -5006,20 +5006,10 @@
   "back": "Like the original",
   "why": "Says the look is kept"
  },
- "PPTX_AS_MADE_HINT": {
-  "text": "Chaque diapo devient une image du logiciel de présentation",
-  "back": "Each slide becomes an image from the presentation software",
-  "why": "'diapo' as in the table"
- },
  "PPTX_REDRAW": {
   "text": "Remise en forme",
   "back": "Reshaping",
   "why": "Noun, like a feature name"
- },
- "PPTX_REDRAW_HINT": {
-  "text": "Texte et tableaux de chaque diapo refaits en cartes d'annonce",
-  "back": "Text and tables of each slide remade as announcement cards",
-  "why": "'annonce' as in the table"
  },
  "PPTX_DRAWING": {
   "text": "Création des images",
@@ -6299,5 +6289,80 @@
   "text": "Montant",
   "back": "Amount",
   "why": "Distinct from existing STYLE_ names; fits budget"
+ },
+ "SEASON_FOLLOW": {
+  "text": "Couleurs de l'année liturgique",
+  "back": "Colours of the liturgical year",
+  "why": "standard French term"
+ },
+ "season_hint": {
+  "text": "Aujourd'hui : {season}. L'annonce prend ses teintes si son style en a.",
+  "back": "Today: {season}. The announcement takes its tints if its style has any.",
+  "why": "colon avoids article trouble with season names"
+ },
+ "SEASON_ADVENT": {
+  "text": "Avent",
+  "back": "Advent",
+  "why": "church term"
+ },
+ "SEASON_CHRISTMAS": {
+  "text": "Noël",
+  "back": "Christmas",
+  "why": "church term"
+ },
+ "SEASON_EPIPHANY": {
+  "text": "Épiphanie",
+  "back": "Epiphany",
+  "why": "church term"
+ },
+ "SEASON_LENT": {
+  "text": "Carême",
+  "back": "Lent",
+  "why": "church term"
+ },
+ "SEASON_HOLY_WEEK": {
+  "text": "Semaine sainte",
+  "back": "Holy Week",
+  "why": "church term"
+ },
+ "SEASON_GOOD_FRIDAY": {
+  "text": "Vendredi saint",
+  "back": "Good Friday",
+  "why": "church term"
+ },
+ "SEASON_EASTER": {
+  "text": "Pâques",
+  "back": "Easter",
+  "why": "church term"
+ },
+ "SEASON_ASCENSION": {
+  "text": "Ascension",
+  "back": "Ascension",
+  "why": "church term"
+ },
+ "SEASON_PENTECOST": {
+  "text": "Pentecôte",
+  "back": "Pentecost",
+  "why": "church term"
+ },
+ "SEASON_REFORMATION": {
+  "text": "Réformation",
+  "back": "Reformation",
+  "why": "Protestant name; Dimanche de la Réformation exceeds 20"
+ },
+ "SEASON_ORDINARY": {
+  "text": "Temps ordinaire",
+  "back": "Ordinary Time",
+  "why": "church term"
+ },
+ "PPTX_PICK": {
+  "text": "Choisissez comment importer",
+  "back": "Choose how to import",
+  "why": "apparence and diapos as in table; tile label copied"
+ },
+ "PPTX_NO_FAMILY": {
+  "text": "Aucune apparence ne contient ces diapos sans les couper. Reste Comme l'original",
+  "back": "No appearance holds these slides without cutting them. Only As the original remains",
+  "why": "apparence and diapos as in table; tile label copied"
  }
 }

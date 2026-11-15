@@ -4966,20 +4966,10 @@
   "back": "Just as the original looks",
   "why": "원본 모습 그대로 says the picture keeps the original look"
  },
- "PPTX_AS_MADE_HINT": {
-  "text": "슬라이드마다 프로그램이 그림 한 장으로 그려요",
-  "back": "For each slide the program draws one picture",
-  "why": "해요 style; 장 here counts pictures, not slides"
- },
  "PPTX_REDRAW": {
   "text": "공지 카드로 만들기",
   "back": "Make into announcement cards",
   "why": "공지 and 카드 follow the table"
- },
- "PPTX_REDRAW_HINT": {
-  "text": "슬라이드의 글자와 표를 공지 카드로 다시 배치해요",
-  "back": "The words and tables of the slides are set again as announcement cards",
-  "why": "글자 is the word of the table for words on a slide"
  },
  "PPTX_DRAWING": {
   "text": "그림으로 만드는 중",
@@ -6241,5 +6231,80 @@
   "text": "금액",
   "back": "amount",
   "why": "plain everyday word, distinct from the other STYLE_ names"
+ },
+ "SEASON_FOLLOW": {
+  "text": "교회력에 맞춰 공지 색 바꾸기",
+  "back": "Announcements follow the church year's colours",
+  "why": "Protestant names (대림절, 성령강림절); table's 공지, polite 요 style"
+ },
+ "season_hint": {
+  "text": "오늘 절기는 {season}. 스타일에 그 절기 색이 있으면 카드에 입혀요.",
+  "back": "Today is {season}. A card whose style has that season's colours uses them.",
+  "why": "Protestant names (대림절, 성령강림절); table's 공지, polite 요 style"
+ },
+ "SEASON_ADVENT": {
+  "text": "대림절",
+  "back": "Advent",
+  "why": "Protestant names (대림절, 성령강림절); table's 공지, polite 요 style"
+ },
+ "SEASON_CHRISTMAS": {
+  "text": "성탄절",
+  "back": "Christmas season",
+  "why": "Protestant names (대림절, 성령강림절); table's 공지, polite 요 style"
+ },
+ "SEASON_EPIPHANY": {
+  "text": "주현절",
+  "back": "Epiphany",
+  "why": "Protestant names (대림절, 성령강림절); table's 공지, polite 요 style"
+ },
+ "SEASON_LENT": {
+  "text": "사순절",
+  "back": "Lent",
+  "why": "Protestant names (대림절, 성령강림절); table's 공지, polite 요 style"
+ },
+ "SEASON_HOLY_WEEK": {
+  "text": "고난주간",
+  "back": "Holy Week",
+  "why": "Protestant names (대림절, 성령강림절); table's 공지, polite 요 style"
+ },
+ "SEASON_GOOD_FRIDAY": {
+  "text": "성금요일",
+  "back": "Good Friday",
+  "why": "Protestant names (대림절, 성령강림절); table's 공지, polite 요 style"
+ },
+ "SEASON_EASTER": {
+  "text": "부활절",
+  "back": "Easter season",
+  "why": "Protestant names (대림절, 성령강림절); table's 공지, polite 요 style"
+ },
+ "SEASON_ASCENSION": {
+  "text": "승천일",
+  "back": "Ascension Day",
+  "why": "Protestant names (대림절, 성령강림절); table's 공지, polite 요 style"
+ },
+ "SEASON_PENTECOST": {
+  "text": "성령강림절",
+  "back": "Pentecost",
+  "why": "Protestant names (대림절, 성령강림절); table's 공지, polite 요 style"
+ },
+ "SEASON_REFORMATION": {
+  "text": "종교개혁주일",
+  "back": "Reformation Sunday",
+  "why": "Protestant names (대림절, 성령강림절); table's 공지, polite 요 style"
+ },
+ "SEASON_ORDINARY": {
+  "text": "연중 시기",
+  "back": "Ordinary Time",
+  "why": "Protestant names (대림절, 성령강림절); table's 공지, polite 요 style"
+ },
+ "PPTX_PICK": {
+  "text": "가져오는 방법을 고르세요",
+  "back": "Choose how to import",
+  "why": "디자인 and 슬라이드 as in table; tile label copied"
+ },
+ "PPTX_NO_FAMILY": {
+  "text": "슬라이드가 잘리지 않는 디자인이 없어서 '원본 모습 그대로'만 쓸 수 있어요",
+  "back": "No design keeps the slides uncut, so only As the original looks can be used",
+  "why": "디자인 and 슬라이드 as in table; tile label copied"
  }
 }

@@ -836,6 +836,45 @@ text!(BTN_EARLIER, "Earlier", "Earlier");
 text!(EARLIER_HINT, "Shown before. Opens in Preview.", "Shown before. Opens in Preview.");
 text!(LETTER_KEYS, "Letters jump to sections", "Letters jump to sections");
 text!(LETTER_KEYS_HINT, "C is the chorus, V a verse. Off, every letter starts a search.", "C is the chorus, V a verse. Off, every letter starts a search.");
+text!(SEASON_FOLLOW, "Follow the church year", "Follow the church year");
+text!(SEASON_ADVENT, "Advent", "Advent");
+text!(SEASON_CHRISTMAS, "Christmas", "Christmas");
+text!(SEASON_EPIPHANY, "Epiphany", "Epiphany");
+text!(SEASON_LENT, "Lent", "Lent");
+text!(SEASON_HOLY_WEEK, "Holy Week", "Holy Week");
+text!(SEASON_GOOD_FRIDAY, "Good Friday", "Good Friday");
+text!(SEASON_EASTER, "Easter", "Easter");
+text!(SEASON_ASCENSION, "Ascension Day", "Ascension Day");
+text!(SEASON_PENTECOST, "Pentecost", "Pentecost");
+text!(SEASON_REFORMATION, "Reformation Sunday", "Reformation Sunday");
+text!(SEASON_ORDINARY, "Ordinary Time", "Ordinary Time");
+/// The name of a season of the church year.
+pub fn season_name(season: artosia_core::church_year::Season) -> &'static str {
+    use artosia_core::church_year::Season;
+    match season {
+        Season::Advent => SEASON_ADVENT(),
+        Season::Christmas => SEASON_CHRISTMAS(),
+        Season::Epiphany => SEASON_EPIPHANY(),
+        Season::Lent => SEASON_LENT(),
+        Season::HolyWeek => SEASON_HOLY_WEEK(),
+        Season::GoodFriday => SEASON_GOOD_FRIDAY(),
+        Season::Easter => SEASON_EASTER(),
+        Season::Ascension => SEASON_ASCENSION(),
+        Season::Pentecost => SEASON_PENTECOST(),
+        Season::Reformation => SEASON_REFORMATION(),
+        Season::Ordinary => SEASON_ORDINARY(),
+    }
+}
+/// The line under the church-year switch, naming today's season.
+pub fn season_hint(season: &str) -> String {
+    if let Some(text) = say("season_hint", None, None, &[("season", text_arg(season))]) {
+        return text;
+    }
+    if indonesian() {
+        return format!("Today is {season}: cards take its colours where they have them.");
+    }
+    format!("Today is {season}: cards take its colours where they have them.")
+}
 text!(COUNTDOWN, "Countdown", "Hitung mundur");
 text!(COUNTDOWN_LABEL, "We start in", "Ibadah dimulai dalam");
 
@@ -1401,14 +1440,14 @@ pub fn pptx_imported(added: usize, lost: usize) -> String {
 }
 
 text!(PPTX_AS_MADE, "As made", "As made");
-text!(PPTX_AS_MADE_HINT, "Each slide as a picture, just as PowerPoint draws it", "Each slide as a picture, just as PowerPoint draws it");
 text!(PPTX_REDRAW, "Redraw", "Redraw");
-text!(PPTX_REDRAW_HINT, "The words and tables of each slide, drawn again in Artosia's look", "The words and tables of each slide, drawn again in Artosia's look");
 text!(PPTX_DRAWING, "Drawing the slides", "Drawing the slides");
 text!(PPTX_NO_RENDERER, "Slides can only be drawn as made when PowerPoint or LibreOffice is installed, and neither is on this computer.", "Slides can only be drawn as made when PowerPoint or LibreOffice is installed, and neither is on this computer.");
 text!(PPTX_FAILED, "The slides could not be drawn as pictures.", "The slides could not be drawn as pictures.");
 text!(PPTX_STOPPED, "Drawing the slides was stopped.", "Drawing the slides was stopped.");
 text!(PPTX_FOUND, "Found in the tables", "Found in the tables");
+text!(PPTX_PICK, "How the slides come in", "How the slides come in");
+text!(PPTX_NO_FAMILY, "No design can hold these slides redrawn, so only As made is left.", "No design can hold these slides redrawn, so only As made is left.");
 
 /// The progress of the export, beside its bar.
 pub fn pptx_progress(done: usize, total: usize) -> String {

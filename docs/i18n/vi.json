@@ -4966,20 +4966,10 @@
   "back": "Picture like the original",
   "why": "Fits 18 and says exact look"
  },
- "PPTX_AS_MADE_HINT": {
-  "text": "Mỗi trang thành một ảnh do chính phần mềm trình chiếu vẽ",
-  "back": "Each page becomes one picture drawn by the presentation software itself",
-  "why": "'trang' is the slide classifier in the table"
- },
  "PPTX_REDRAW": {
   "text": "Soạn lại",
   "back": "Compose again",
   "why": "Short; words and tables set again"
- },
- "PPTX_REDRAW_HINT": {
-  "text": "Chữ và bảng của mỗi trang được soạn lại thành thẻ thông báo",
-  "back": "The words and tables of each page are composed again into announcement cards",
-  "why": "'thông báo' for announcement, 'chữ' for words on screen"
  },
  "PPTX_DRAWING": {
   "text": "Đang đổi trang thành ảnh",
@@ -6252,5 +6242,80 @@
   "text": "Số tiền",
   "back": "Amount",
   "why": "Distinct from existing STYLE_ names; fits budget"
+ },
+ "SEASON_FOLLOW": {
+  "text": "Màu theo năm phụng vụ",
+  "back": "Colour following the liturgical year",
+  "why": "common term for the church year"
+ },
+ "season_hint": {
+  "text": "Hôm nay là {season}. Thông báo dùng màu mùa này nếu kiểu có màu ấy.",
+  "back": "Today is {season}. The announcement uses this season's colour if the style has it.",
+  "why": "thông báo matches the table"
+ },
+ "SEASON_ADVENT": {
+  "text": "Mùa Vọng",
+  "back": "Season of Advent",
+  "why": "church term"
+ },
+ "SEASON_CHRISTMAS": {
+  "text": "Giáng Sinh",
+  "back": "Christmas",
+  "why": "church term"
+ },
+ "SEASON_EPIPHANY": {
+  "text": "Lễ Hiển Linh",
+  "back": "Epiphany feast",
+  "why": "church term"
+ },
+ "SEASON_LENT": {
+  "text": "Mùa Chay",
+  "back": "Season of fasting",
+  "why": "church term"
+ },
+ "SEASON_HOLY_WEEK": {
+  "text": "Tuần Thánh",
+  "back": "Holy Week",
+  "why": "church term"
+ },
+ "SEASON_GOOD_FRIDAY": {
+  "text": "Thứ Sáu Tuần Thánh",
+  "back": "Friday of Holy Week",
+  "why": "church term"
+ },
+ "SEASON_EASTER": {
+  "text": "Mùa Phục Sinh",
+  "back": "Season of Easter",
+  "why": "church term"
+ },
+ "SEASON_ASCENSION": {
+  "text": "Lễ Thăng Thiên",
+  "back": "Ascension feast",
+  "why": "church term"
+ },
+ "SEASON_PENTECOST": {
+  "text": "Lễ Ngũ Tuần",
+  "back": "Pentecost feast",
+  "why": "Protestant term"
+ },
+ "SEASON_REFORMATION": {
+  "text": "Chúa Nhật Cải Chánh",
+  "back": "Reformation Sunday",
+  "why": "Protestant term"
+ },
+ "SEASON_ORDINARY": {
+  "text": "Mùa Thường Niên",
+  "back": "Ordinary season",
+  "why": "church term"
+ },
+ "PPTX_PICK": {
+  "text": "Chọn cách nhập các trang",
+  "back": "Choose how the pages are imported",
+  "why": "trang for slide as in table; tile label copied"
+ },
+ "PPTX_NO_FAMILY": {
+  "text": "Không kiểu nào chứa vừa các trang này, chỉ còn Ảnh giống bản gốc",
+  "back": "No style fits these pages, only Image like the original is left",
+  "why": "trang for slide as in table; tile label copied"
  }
 }

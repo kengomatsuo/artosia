@@ -4964,20 +4964,10 @@
   "back": "Made into pictures just as they were",
   "why": "照原樣 for the original look; 圖片 for picture"
  },
- "PPTX_AS_MADE_HINT": {
-  "text": "每張投影片由簡報軟體畫成一張圖片",
-  "back": "Each slide is drawn by the presentation software into one picture",
-  "why": "投影片 and 簡報 are the Taiwan words"
- },
  "PPTX_REDRAW": {
   "text": "重新排成公告卡",
   "back": "Set again as announcement cards",
   "why": "公告 follows the table"
- },
- "PPTX_REDRAW_HINT": {
-  "text": "每張投影片的文字和表格，重新排成公告卡片",
-  "back": "The words and tables of each slide are set again as announcement cards",
-  "why": "文字 for words on a screen"
  },
  "PPTX_DRAWING": {
   "text": "正在把投影片畫成圖片",
@@ -6239,5 +6229,80 @@
   "text": "金額",
   "back": "amount",
   "why": "plain everyday word, distinct from the other STYLE_ names"
+ },
+ "SEASON_FOLLOW": {
+  "text": "公告按教會年曆配色",
+  "back": "Announcements follow the church year's colours",
+  "why": "Taiwan and Hong Kong Protestant season names; table's 公告"
+ },
+ "season_hint": {
+  "text": "今天是{season}。樣式有該節期配色的卡片會用上。",
+  "back": "Today is {season}. A card whose style has that season's colours uses them.",
+  "why": "Taiwan and Hong Kong Protestant season names; table's 公告"
+ },
+ "SEASON_ADVENT": {
+  "text": "將臨期",
+  "back": "Advent",
+  "why": "Taiwan and Hong Kong Protestant season names; table's 公告"
+ },
+ "SEASON_CHRISTMAS": {
+  "text": "聖誕節期",
+  "back": "Christmas season",
+  "why": "Taiwan and Hong Kong Protestant season names; table's 公告"
+ },
+ "SEASON_EPIPHANY": {
+  "text": "主顯節",
+  "back": "Epiphany",
+  "why": "Taiwan and Hong Kong Protestant season names; table's 公告"
+ },
+ "SEASON_LENT": {
+  "text": "四旬期",
+  "back": "Lent",
+  "why": "Taiwan and Hong Kong Protestant season names; table's 公告"
+ },
+ "SEASON_HOLY_WEEK": {
+  "text": "聖週",
+  "back": "Holy Week",
+  "why": "Taiwan and Hong Kong Protestant season names; table's 公告"
+ },
+ "SEASON_GOOD_FRIDAY": {
+  "text": "受難節",
+  "back": "Good Friday",
+  "why": "Taiwan and Hong Kong Protestant season names; table's 公告"
+ },
+ "SEASON_EASTER": {
+  "text": "復活節期",
+  "back": "Easter season",
+  "why": "Taiwan and Hong Kong Protestant season names; table's 公告"
+ },
+ "SEASON_ASCENSION": {
+  "text": "升天節",
+  "back": "Ascension Day",
+  "why": "Taiwan and Hong Kong Protestant season names; table's 公告"
+ },
+ "SEASON_PENTECOST": {
+  "text": "聖靈降臨節",
+  "back": "Pentecost",
+  "why": "Taiwan and Hong Kong Protestant season names; table's 公告"
+ },
+ "SEASON_REFORMATION": {
+  "text": "宗教改革主日",
+  "back": "Reformation Sunday",
+  "why": "Taiwan and Hong Kong Protestant season names; table's 公告"
+ },
+ "SEASON_ORDINARY": {
+  "text": "常年期",
+  "back": "Ordinary Time",
+  "why": "Taiwan and Hong Kong Protestant season names; table's 公告"
+ },
+ "PPTX_PICK": {
+  "text": "選擇投影片的匯入方式",
+  "back": "Choose how the slides are imported",
+  "why": "外觀 and 投影片 as in table; tile label copied"
+ },
+ "PPTX_NO_FAMILY": {
+  "text": "沒有外觀能完整放下這些投影片，只剩照原樣做成圖片",
+  "back": "No appearance can hold these slides whole, only make as pictures as they are remains",
+  "why": "外觀 and 投影片 as in table; tile label copied"
  }
 }

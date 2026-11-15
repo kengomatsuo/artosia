@@ -994,14 +994,14 @@ impl App {
 
     /// Brings a PowerPoint in as announcements at once, as a start from a script wants.
     pub fn import_pptx(&mut self, path: &std::path::Path) {
-        if let Some((added, lost)) = self.redraw_cards(path) {
+        if let Some((added, lost)) = self.redraw_cards(path, Announcement::new().style.unwrap_or(artosia_core::deck::NoticeStyle::SerifItalic)) {
             self.say(t::pptx_imported(added, lost), None);
         }
     }
 
-    /// Redraws a PowerPoint as announcements: one per slide, tables as columns, pictures kept.
+    /// Redraws a PowerPoint as announcements in `style`: one per slide, tables as columns, pictures kept.
     /// The cards made and the pictures that did not come across; None when the file would not read.
-    pub(crate) fn redraw_cards(&mut self, path: &std::path::Path) -> Option<(usize, usize)> {
+    pub(crate) fn redraw_cards(&mut self, path: &std::path::Path, style: artosia_core::deck::NoticeStyle) -> Option<(usize, usize)> {
         let deck = match artosia_office::Pptx::open(path) {
             Ok(deck) => deck,
             Err(_) => {
@@ -1031,10 +1031,7 @@ impl App {
                 }
             }
             lost += draft.dropped_pictures;
-            if draft.title.trim().is_empty() && draft.body.trim().is_empty() && image.is_empty() {
-                continue;
-            }
-            let mut item = Announcement { id: 0, title: draft.title, body: draft.body, seconds: 10, image, fill: Fill::Nothing, passage: String::new(), ..Announcement::new() };
+            let Some(mut item) = crate::pptx_import::card_of(&draft, image, style) else { continue };
             if self.store.save_announcement(&mut item).is_ok() {
                 added += 1;
             }
@@ -1823,7 +1820,7 @@ impl App {
     pub fn poll(&mut self, clock: f64, tx: &mut Tx) -> bool {
         let mut changed = false;
         self.clock = clock;
-        let now = unix_now();
+        let now = self.pinned_now.unwrap_or_else(unix_now);
         if now.floor() != self.now.floor() {
             // The clock and any countdown tick once a second.
             changed = self.countdown.is_some() || (now / 60.0).floor() != (self.now / 60.0).floor();
@@ -1898,6 +1895,7 @@ impl App {
                 }
                 Arrived::Heard(_) => {}
                 Arrived::Pptx(round, made) => self.pptx_arrived(round, made),
+                Arrived::PptxFamilies(round, families) => self.pptx_families_arrived(round, families),
                 Arrived::WebIndex { index, done } => self.web_index_arrived(index, done),
                 Arrived::WebFound(round, query, browse) => self.web_found_arrived(round, query, browse),
                 Arrived::WebWords(round, url, fetched) => self.web_words_arrived(round, url, fetched),

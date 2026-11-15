@@ -306,6 +306,11 @@ fn settings(s: &App, k: &Kit, layer: &mut Vec<El>, tall: f32) {
                 })
                 .build(k),
         ))
+        .child(switch_row(k, "church-year-switch", t::SEASON_FOLLOW(), &t::season_hint(t::season_name(artosia_core::church_year::season_on(s.civil_today()))), s.settings.follow_church_year, |s| {
+            s.settings.follow_church_year = !s.settings.follow_church_year;
+            s.touch_settings();
+            s.refresh_decks();
+        }))
         .child(el().h(2.0))
         .child(section_label(k, t::KIND_BIBLE()))
         .child(setting(k, t::LOOK_BIBLE(), bible_picker(s, k, false)))
@@ -434,15 +439,15 @@ fn bible_picker(s: &App, k: &Kit, second: bool) -> El {
 }
 
 /// A line with a switch at its end: what it turns on, and a word of help under it.
-fn switch_row(k: &Kit, key: &'static str, label: &'static str, hint: &'static str, on: bool, flip: fn(&mut App)) -> El {
+fn switch_row(k: &Kit, key: &'static str, label: &'static str, hint: &str, on: bool, flip: fn(&mut App)) -> El {
     switch_row_at(k, key, label, hint, on, flip, false)
 }
 
 /// The same; `lead` makes it the control its dialog opens on.
-fn switch_row_at(k: &Kit, key: &'static str, label: &'static str, hint: &'static str, on: bool, flip: fn(&mut App), lead: bool) -> El {
+fn switch_row_at(k: &Kit, key: &'static str, label: &'static str, hint: &str, on: bool, flip: fn(&mut App), lead: bool) -> El {
     let mut words = col().grow(1.0).min_w(0.0).child(text(label).font(type_::BODY_STRONG).color(k.c.text_base));
     if !hint.is_empty() {
-        words = words.child(text(hint).font(type_::SMALL).color(k.c.text_muted));
+        words = words.child(text(hint.to_string()).font(type_::SMALL).color(k.c.text_muted));
     }
     row().key(key).w_full().min_h(40.0).gap(space::S3).center_y().child(words).child({
         let switch = Switch::new(on).label(label).hide_label().on_toggle(flip).build(k);
