@@ -720,6 +720,8 @@ three. The designs and their wireframes are `docs/plans/artosia/templates-defaul
 `templates-library.md`; the fonts are SIL Open Font License cuts made by their `build/make_fonts.py`.
 A new family follows `docs/plans/artosia/family-builder.md`.
 
+Measured (release with video, `--here --demo-video fixtures/bg30.mp4`, 75 s, both runs traced looping 4 times): the projector before the library 328 MB working set and 292 MB private, after it 326 MB and 300 MB. The bundled fonts cost about 8 MB private; the binary grew from 32.6 MB to 47.1 MB.
+
 ### A slide's fixed words in the window's language (SLIDEWORDS1, 2026-11-15)
 
 The styles were designed in Indonesian, and every church saw "ULANG TAHUN", "WARTA JEMAAT" and
