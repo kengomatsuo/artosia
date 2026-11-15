@@ -216,6 +216,7 @@ dependencies = [
  "artosia-remote",
  "artosia-slides",
  "artosia-update",
+ "artosia-warp",
  "image",
  "png 0.17.16",
  "rune",
@@ -366,6 +367,7 @@ version = "0.0.1"
 dependencies = [
  "artosia-slides",
  "rune",
+ "rune-fx",
  "wgpu",
 ]
 
@@ -3627,6 +3629,17 @@ dependencies = [
  "xkbcommon",
  "zbus 6.2.1",
  "zeroize",
+]
+
+[[package]]
+name = "rune-fx"
+version = "0.0.1"
+source = "git+https://github.com/anomalyco/rune?rev=70eff81165e9854834a75f17753edb6c96ab2ab7#70eff81165e9854834a75f17753edb6c96ab2ab7"
+dependencies = [
+ "bytemuck",
+ "rune-motion",
+ "rune-staging",
+ "wgpu",
 ]
 
 [[package]]
