@@ -36,8 +36,27 @@ python -I tools/build-site.py --version "${tag#v}" --setup-bytes "$setup" --zip-
 
 ssh -o BatchMode=yes mac 'mkdir -p ~/artosia-site' \
     || { echo "The Mac cannot be reached over ssh, so the site was built and not deployed." >&2; exit 1; }
-# The folder goes over as one tar stream: this shell has no rsync.
-tar -C "$out" -cf - . | ssh -o BatchMode=yes mac 'rm -rf ~/artosia-site/public.new && mkdir -p ~/artosia-site/public.new && tar -xf - -C ~/artosia-site/public.new && rm -rf ~/artosia-site/public && mv ~/artosia-site/public.new ~/artosia-site/public'
+# The folder goes over as one archive cut into 4 MB parts, each copied on its own, checked by its
+# SHA-256 and tried up to five times: Tailscale dropped the one long stream this used to be (0.1.34),
+# as it dropped the Mac edition's copy home (tools/publish.sh `copy_from_mac`).
+parts="$(mktemp -d)"
+tar -C "$out" -cf - . | split -b 4m - "$parts/part."
+(cd "$parts" && sha256sum part.* > sums)
+ssh -o BatchMode=yes mac 'rm -rf ~/artosia-site/incoming && mkdir -p ~/artosia-site/incoming'
+while read -r sum name; do
+    name="${name#\*}"
+    for try in 1 2 3 4 5; do
+        if scp -q -o BatchMode=yes -o ServerAliveInterval=15 "$parts/$name" "mac:artosia-site/incoming/$name"             && [ "$(ssh -o BatchMode=yes mac "shasum -a 256 ~/artosia-site/incoming/$name" | cut -d' ' -f1)" = "$sum" ]; then
+            continue 2
+        fi
+        echo "Part $name of the site reached the Mac damaged or not at all (try $try of 5)."
+        sleep 5
+    done
+    echo "The site could not be copied to the Mac." >&2
+    exit 1
+done < "$parts/sums"
+rm -rf "$parts"
+ssh -o BatchMode=yes mac 'set -e; cd ~/artosia-site && rm -rf public.new && mkdir -p public.new && cat incoming/part.* | tar -xf - -C public.new && rm -rf public incoming && mv public.new public'
 scp -q site/deploy/wrangler.jsonc site/deploy/package.json mac:artosia-site/
 ssh -o BatchMode=yes mac 'export PATH=$HOME/.bun/bin:/opt/homebrew/bin:$PATH
   set -o pipefail
