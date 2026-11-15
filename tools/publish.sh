@@ -174,18 +174,29 @@ fi
 # fails, the release carries no Mac files and says so.
 mac="dist/$version/macos"
 remote="Repositories/artosia/dist/$version/macos"
-# Tailscale drops an ssh link now and then; the copy home is tried three times, so a dropped
-# link does not throw away a build Apple has already notarized.
+# Tailscale drops an ssh link now and then, and one stream of 260 MB rarely got through: the
+# Mac packs one archive, cut into 16 MB parts with their SHA-256 sums, and each part comes home
+# on its own, checked and tried up to five times, so a dropped link costs one part. The archive
+# is made with COPYFILE_DISABLE=1: macOS's tar otherwise adds a ._ file of attributes beside
+# every file that has any, and 0.1.31 and 0.1.34 carried those as "default._" assets.
 copy_from_mac() {
-    for try in 1 2 3; do
-        rm -rf "$mac/feed"
-        if ssh -o BatchMode=yes -o ServerAliveInterval=15 mac "cd ~/$remote && tar -cf - feed Artosia-macos-aarch64.dmg" | tar -xf - -C "$mac"; then
-            return 0
-        fi
-        echo "Copying the Mac edition home failed (try $try of 3)."
-        sleep 10
-    done
-    return 1
+    local parts="$mac/parts" sum name try
+    rm -rf "$parts" && mkdir -p "$parts" || return 1
+    ssh -o BatchMode=yes -o ServerAliveInterval=15 mac "cd ~/$remote && rm -rf home && mkdir home && COPYFILE_DISABLE=1 tar -cf - feed Artosia-macos-aarch64.dmg | split -b 16m - home/part. && cd home && shasum -a 256 part.* > sums" || return 1
+    ssh -o BatchMode=yes mac "cat ~/$remote/home/sums" > "$parts/sums" || return 1
+    while read -r sum name; do
+        for try in 1 2 3 4 5; do
+            if scp -q -o BatchMode=yes -o ServerAliveInterval=15 "mac:$remote/home/$name" "$parts/$name" \
+                && [ "$(sha256sum "$parts/$name" | cut -d' ' -f1)" = "$sum" ]; then
+                continue 2
+            fi
+            echo "Part $name of the Mac edition came home damaged or not at all (try $try of 5)."
+            sleep 5
+        done
+        return 1
+    done < "$parts/sums"
+    rm -rf "$mac/feed"
+    cat "$parts"/part.* | tar -xf - -C "$mac" && rm -rf "$parts"
 }
 # A finished build of this version on the Mac (its signed list and disk image) is used again
 # by a later --finish instead of being built and notarized a second time.
@@ -218,7 +229,11 @@ elif ssh -o BatchMode=yes mac true 2>/dev/null; then
         && copy_from_mac \
         && target/release-tool/release/artosia-release.exe sign --dir "$mac/feed" --platform macos-aarch64 --key-file "$key"; then
         gh release upload "v$version" "$mac/Artosia-macos-aarch64.dmg" --clobber
-        find "$mac/feed" -type f -print0 | xargs -0 -n 12 gh release upload "v$version" --clobber
+        find "$mac/feed" -type f ! -name '._*' -print0 | xargs -0 -n 12 gh release upload "v$version" --clobber
+        # A ._ file uploaded by an older run shows on GitHub as "default._<name>": none belongs.
+        gh release view "v$version" --json assets --jq '.assets[].name | select(startswith("default._"))' | while read -r junk; do
+            gh release delete-asset "v$version" "$junk" -y
+        done
         mac_megabytes=$(( ($(stat -c %s "$mac/Artosia-macos-aarch64.dmg") + 524288) / 1048576 ))
         # The notes say what the app really carries, read from its signature on the Mac.
         if ssh -o BatchMode=yes mac "codesign -dv ~/$remote/Artosia.app 2>&1 | grep -q 'Authority=Developer ID Application'"; then
