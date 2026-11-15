@@ -20,6 +20,7 @@ artosia-office = { path = "../artosia-office" }
 artosia-core = { path = "../artosia-core" }
 artosia-remote = { path = "../artosia-remote" }
 artosia-slides = { path = "../artosia-slides" }
+artosia-warp = { path = "../artosia-warp" }
 artosia-update = { path = "../artosia-update" }
 rune = { workspace = true, features = ["native-file-dialog"] }
 rune-kit.workspace = true

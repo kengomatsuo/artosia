@@ -68,6 +68,7 @@ pub(super) fn design(s: &App, cx: &mut rune::Cx<App>, k: &Kit, layer: &mut Vec<E
             s.backdrops.entry(&stem).map(|entry| entry.title.clone()).unwrap_or_else(|| file_name(path))
         }
         Background::Camera(name) => name.clone(),
+        Background::Live(live) => super::moving::name(live.kind).to_string(),
         _ => t::LOOK_NO_FILE().to_string(),
     };
     let lines = [2usize, 3, 4, 6, 0];
@@ -129,6 +130,8 @@ pub(super) fn design(s: &App, cx: &mut rune::Cx<App>, k: &Kit, layer: &mut Vec<E
                 ))
                 .child(text(background).font(type_::SMALL).color(k.c.text_muted).truncate().grow(1.0)),
         ))
+        // Backgrounds that move by themselves, drawn by the graphics chip (LIVEBG1).
+        .children(super::moving::rows(k, &look))
         // What is wrong with the background is said here too, over the camera rows, where it was just chosen:
         // the status bar is behind this dialog, and the rows' own foot is under the fold.
         .children(s.link.status().media_error.as_ref().map(|error| crate::ui::widgets::wrapped(crate::why::media_problem(error)).key("design-media-problem").font(type_::SMALL).color(theme::warn_ink()).wrap()))

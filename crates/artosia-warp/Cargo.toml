@@ -8,6 +8,7 @@ description = "Corner pin and colour correction for the projector picture."
 [dependencies]
 artosia-slides = { path = "../artosia-slides" }
 rune.workspace = true
+rune-fx.workspace = true
 # Same version and features as Rune's own, so the two unify into one wgpu.
 wgpu = { version = "~30.0.1", default-features = false, features = ["std", "wgsl"] }
 

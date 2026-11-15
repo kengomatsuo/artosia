@@ -128,3 +128,22 @@ Demo: `artosia-output --here --demo-item <file> [--demo-audio] [--demo-end stop|
 
 Measured (release, Windows 11, Intel Iris Xe, `tools/ram/measure.ps1`, 40 s, both runs proven looping): background loop alone 293 MB working set, 283 MB private for `artosia-output`; the same with a looping 1080p video item with sound over it 358 MB working set, 375 MB private (+65 MB, +92 MB), redraws 125/s against 109/s, no skipped presents. The item costs a second decoder; stopping the background while an opaque item covers it is not built.
 
+## Live backgrounds (2026-11-15, LIVEBG1)
+
+A look's background can be `Background::Live { kind, colours, pace }` (`artosia-slides/src/live.rs`): eight kinds that draw themselves on the graphics chip, with no file and no decoder. The audience view draws the look's resting gradient with an effect slot over it, whose mark carries the kind and whose data carries the three colours as whole numbers and the pace (`live::slot`, `live::read`). `artosia-warp`'s `LivePainter` finds those slots among the frame's instances before Rune draws, prepares six kinds as `rune-fx` fills (mesh gradient, aurora, swirl, waves, voronoi, metaballs) and draws the stars and the kaleidoscope with Artosia's own shader (`live.wgsl`), then paints each slot where Rune's `draw_with` reaches it. The projector's `WarpCompositor` calls it, headless runs included; the operator window has a `LiveCompositor`. Only the projector moves: previews and tiles hold one still pose (`Detail::Output` alone sets a pace), except the Design tab's own tiles. Where nothing paints a slot, the gradient under it shows. A live background is darkened under the words like a picture (`Look::is_media`).
+
+Scenes: `artosia-output --window audience --scene live-<kind> --snap out.png --size 1920x1080 --scale 1`, kinds flow, aurora, ink, sea, glass, lava, stars, kaleidoscope; `--at <seconds>` shows it later. `--demo-live <kind>` starts a real window on it.
+
+Measured (release, `tools/ram/measure-cpu.ps1`, 20 s settle, 15 s window, `--here` on the 144 Hz primary screen, `WGPU_ADAPTER_NAME=Intel` for the Iris Xe):
+
+| What ran | CPU cores | Working set | Private |
+|---|---|---|---|
+| Output alone, nothing shown | 0.00 | 134 MB | 123 MB |
+| Flow (mesh gradient) | 0.13 | 144 MB | 134 MB |
+| Ink (swirl) | 0.09 | 144 MB | 134 MB |
+| Glass (voronoi) | 0.08 | 144 MB | 134 MB |
+| Kaleidoscope (own shader) | 0.22 | 142 MB | 133 MB |
+| Stars (own shader) | 0.18 | 142 MB | 133 MB |
+
+A 1080p video background in the table above is about 300 MB and 0.23 to 0.42 cores. A live background costs about 10 MB. It redraws at the screen's own rate (144 Hz here; a projector usually runs at 60 Hz); Rune has no frame cap a compositor can set, and a poll-driven 30 Hz tick would rebuild the view every frame. Graphics time per draw of the fills on this Iris Xe, from `rune-fx`'s gallery, is in `docs/plans/artosia/live-backgrounds.md`.
+

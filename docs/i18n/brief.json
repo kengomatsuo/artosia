@@ -5076,11 +5076,11 @@
   "does": "Tells the person which season of the church year today falls in, and that a card then wears that season's palette if its style has one.",
   "budget": 70,
   "variables": [
-     {
-        "name": "season",
-        "example": "Advent",
-        "meaning": "The name of today's season of the church year."
-     }
+   {
+    "name": "season",
+    "example": "Advent",
+    "meaning": "The name of today's season of the church year."
+   }
   ],
   "cases": [],
   "counts": "",
@@ -6201,6 +6201,381 @@
    "design"
   ],
   "notes": "It stands right under the heading of the background part, so it must NOT repeat that heading. Say picture or video."
+ },
+ {
+  "key": "LOOK_MOVING",
+  "kind": "const",
+  "screen": "Design tab, Background part: the label on the left of a row of small moving tiles, under the row with the buttons for ready backdrops and a file of one's own.",
+  "moment": "The person looks for a background that is neither a still picture nor a video file.",
+  "role": "row label",
+  "does": "Labels the tiles of backgrounds that keep changing by themselves while they show, drawn by the program, with no file and no camera.",
+  "budget": 18,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "moving_backdrop",
+   "design"
+  ],
+  "notes": "Must not use the word chosen for switching the projector on (switched_on) nor the word for the camera. One or two words."
+ },
+ {
+  "key": "LOOK_MOVING_COLOURS",
+  "kind": "const",
+  "screen": "Design tab, Background part: the label on the left of a row of round chips, each split into three coloured stripes, shown once a moving background is picked.",
+  "moment": "The person has picked a moving background and wants other colours in it.",
+  "role": "row label",
+  "does": "Labels the chips that choose the three colours the moving background is drawn in.",
+  "budget": 18,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "moving_backdrop"
+  ],
+  "notes": "One word if the language allows."
+ },
+ {
+  "key": "LOOK_MOVING_PACE",
+  "kind": "const",
+  "screen": "Design tab, Background part: the label on the left of a switch of three segments, shown once a moving background is picked.",
+  "moment": "The person wants the moving background calmer or livelier.",
+  "role": "row label",
+  "does": "Labels the switch that sets how quickly the moving background changes.",
+  "budget": 18,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "moving_backdrop"
+  ],
+  "notes": "One word if the language allows."
+ },
+ {
+  "key": "LIVE_FLOW",
+  "kind": "const",
+  "screen": "Design tab: the name under a small moving tile about 96 points wide.",
+  "moment": "The person compares the tiles of moving backgrounds.",
+  "role": "tile name",
+  "does": "Names soft colours that drift slowly into one another, like dye spreading in water.",
+  "budget": 12,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "moving_backdrop"
+  ],
+  "notes": "A short noun. The tiles sit side by side, so each name must differ clearly from the others."
+ },
+ {
+  "key": "LIVE_AURORA",
+  "kind": "const",
+  "screen": "Design tab: the name under a small moving tile about 96 points wide.",
+  "moment": "The person compares the tiles of moving backgrounds.",
+  "role": "tile name",
+  "does": "Names curtains of coloured light that ripple across a dark sky, the northern lights.",
+  "budget": 15,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "moving_backdrop"
+  ],
+  "notes": "The everyday name of the northern lights in the language."
+ },
+ {
+  "key": "LIVE_INK",
+  "kind": "const",
+  "screen": "Design tab: the name under a small moving tile about 96 points wide.",
+  "moment": "The person compares the tiles of moving backgrounds.",
+  "role": "tile name",
+  "does": "Names colours stirred into a slow whirl, like drops of writing fluid turning in a glass of water.",
+  "budget": 12,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "moving_backdrop"
+  ],
+  "notes": "A short noun."
+ },
+ {
+  "key": "LIVE_SEA",
+  "kind": "const",
+  "screen": "Design tab: the name under a small moving tile about 96 points wide.",
+  "moment": "The person compares the tiles of moving backgrounds.",
+  "role": "tile name",
+  "does": "Names layered bands of colour that roll gently like waves on open water.",
+  "budget": 12,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "moving_backdrop"
+  ],
+  "notes": "A short noun."
+ },
+ {
+  "key": "LIVE_GLASS",
+  "kind": "const",
+  "screen": "Design tab: the name under a small moving tile about 96 points wide.",
+  "moment": "The person compares the tiles of moving backgrounds.",
+  "role": "tile name",
+  "does": "Names pieces of coloured glass held by dark seams, as in a church window, slowly shifting.",
+  "budget": 14,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "moving_backdrop"
+  ],
+  "notes": "The word for a church's coloured window glass if it is short; otherwise the word for glass."
+ },
+ {
+  "key": "LIVE_LAVA",
+  "kind": "const",
+  "screen": "Design tab: the name under a small moving tile about 96 points wide.",
+  "moment": "The person compares the tiles of moving backgrounds.",
+  "role": "tile name",
+  "does": "Names glossy round blobs that float, meet and merge, like the wax in a lava lamp.",
+  "budget": 12,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "moving_backdrop"
+  ],
+  "notes": "A short noun."
+ },
+ {
+  "key": "LIVE_STARS",
+  "kind": "const",
+  "screen": "Design tab: the name under a small moving tile about 96 points wide.",
+  "moment": "The person compares the tiles of moving backgrounds.",
+  "role": "tile name",
+  "does": "Names a night sky full of small points of light that twinkle.",
+  "budget": 12,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "moving_backdrop"
+  ],
+  "notes": "A short plural noun."
+ },
+ {
+  "key": "LIVE_KALEIDOSCOPE",
+  "kind": "const",
+  "screen": "Design tab: the name under a small moving tile about 96 points wide.",
+  "moment": "The person compares the tiles of moving backgrounds.",
+  "role": "tile name",
+  "does": "Names a pattern mirrored many times round its centre that slowly turns, like the toy tube one looks into.",
+  "budget": 14,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "moving_backdrop"
+  ],
+  "notes": "The everyday name of that toy in the language."
+ },
+ {
+  "key": "PACE_SLOW",
+  "kind": "const",
+  "screen": "Design tab: the first of three segments of a switch beside the speed label.",
+  "moment": "The person wants the moving background calmer.",
+  "role": "segment",
+  "does": "Picks the calm, unhurried rate.",
+  "budget": 10,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "moving_backdrop"
+  ],
+  "notes": "One word; the three segments are one size."
+ },
+ {
+  "key": "PACE_NORMAL",
+  "kind": "const",
+  "screen": "Design tab: the middle of three segments of a switch beside the speed label.",
+  "moment": "The person wants the usual rate back.",
+  "role": "segment",
+  "does": "Picks the usual rate, neither calm nor lively.",
+  "budget": 10,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "moving_backdrop"
+  ],
+  "notes": "One word."
+ },
+ {
+  "key": "PACE_FAST",
+  "kind": "const",
+  "screen": "Design tab: the last of three segments of a switch beside the speed label.",
+  "moment": "The person wants the moving background livelier.",
+  "role": "segment",
+  "does": "Picks the lively, quick rate.",
+  "budget": 10,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "moving_backdrop"
+  ],
+  "notes": "One word."
+ },
+ {
+  "key": "COLOURS_DUSK",
+  "kind": "const",
+  "screen": "Design tab: the name a screen reader says, and the tip on hover, for a round chip of three stripes: deep violet, rose and warm gold.",
+  "moment": "The person moves over or tabs to a colour chip.",
+  "role": "chip name",
+  "does": "Names the colours of the sky just after sunset.",
+  "budget": 16,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "moving_backdrop"
+  ],
+  "notes": "A short noun for that time of day."
+ },
+ {
+  "key": "COLOURS_OCEAN",
+  "kind": "const",
+  "screen": "Design tab: the name a screen reader says, and the tip on hover, for a round chip of three stripes: deep navy, mid blue and pale aqua.",
+  "moment": "The person moves over or tabs to a colour chip.",
+  "role": "chip name",
+  "does": "Names the blues of deep open water.",
+  "budget": 16,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "moving_backdrop"
+  ],
+  "notes": "A short noun, different from the tile name for waves."
+ },
+ {
+  "key": "COLOURS_FOREST",
+  "kind": "const",
+  "screen": "Design tab: the name a screen reader says, and the tip on hover, for a round chip of three stripes: very dark green, leaf green and pale lime.",
+  "moment": "The person moves over or tabs to a colour chip.",
+  "role": "chip name",
+  "does": "Names the greens of a thick wood.",
+  "budget": 16,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "moving_backdrop"
+  ],
+  "notes": "A short noun."
+ },
+ {
+  "key": "COLOURS_EMBER",
+  "kind": "const",
+  "screen": "Design tab: the name a screen reader says, and the tip on hover, for a round chip of three stripes: near black, flame red and amber.",
+  "moment": "The person moves over or tabs to a colour chip.",
+  "role": "chip name",
+  "does": "Names the glow of a dying fire.",
+  "budget": 16,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "moving_backdrop"
+  ],
+  "notes": "A short noun."
+ },
+ {
+  "key": "COLOURS_ROYAL",
+  "kind": "const",
+  "screen": "Design tab: the name a screen reader says, and the tip on hover, for a round chip of three stripes: deep purple, violet and gold.",
+  "moment": "The person moves over or tabs to a colour chip.",
+  "role": "chip name",
+  "does": "Names purple and gold, the colours of a king's robe.",
+  "budget": 16,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "moving_backdrop"
+  ],
+  "notes": "A short adjective or noun."
+ },
+ {
+  "key": "COLOURS_NIGHT",
+  "kind": "const",
+  "screen": "Design tab: the name a screen reader says, and the tip on hover, for a round chip of three stripes: almost black blue, teal and mint.",
+  "moment": "The person moves over or tabs to a colour chip.",
+  "role": "chip name",
+  "does": "Names the colours of the sky late at night.",
+  "budget": 16,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "moving_backdrop"
+  ],
+  "notes": "A short noun."
+ },
+ {
+  "key": "COLOURS_GLASS",
+  "kind": "const",
+  "screen": "Design tab: the name a screen reader says, and the tip on hover, for a round chip of three stripes: indigo, crimson and jade.",
+  "moment": "The person moves over or tabs to a colour chip.",
+  "role": "chip name",
+  "does": "Names the strong jewel colours of a church's coloured windows.",
+  "budget": 16,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "moving_backdrop"
+  ],
+  "notes": "May share its word with the tile of coloured glass; it is the same idea."
+ },
+ {
+  "key": "COLOURS_DAWN",
+  "kind": "const",
+  "screen": "Design tab: the name a screen reader says, and the tip on hover, for a round chip of three stripes: plum, soft pink and cream.",
+  "moment": "The person moves over or tabs to a colour chip.",
+  "role": "chip name",
+  "does": "Names the colours of the sky just before sunrise.",
+  "budget": 16,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "moving_backdrop"
+  ],
+  "notes": "A short noun, different from the word for the evening colours."
  },
  {
   "key": "LOOK_CHOOSE_FILE",
@@ -22362,7 +22737,7 @@
   "screen": "The song editor: in a part card, after one line of the words, small text in the warning colour, followed by a small button.",
   "moment": "The line is so long that the projector could only show it in letters too small to read.",
   "role": "warning",
-  "does": "Says this line is too long for the screen.",
+  "does": "Warns that this one line will not fit across the projector at a readable size.",
   "budget": 26,
   "variables": [],
   "cases": [],
@@ -23024,7 +23399,7 @@
   "screen": "The text in the update dialog, above the two buttons Later and Restart now.",
   "moment": "The person decides whether to restart now, perhaps just before a service.",
   "role": "explanation",
-  "does": "Says restarting takes only a few seconds and the projector comes back on its own.",
+  "does": "Reassures that a restart is brief and that whatever was on the projector returns without anyone doing anything.",
   "budget": 80,
   "variables": [],
   "cases": [],
@@ -23076,7 +23451,7 @@
   "screen": "A toast at the foot of the window after Restart now did not work.",
   "moment": "The program could not start its updated copy.",
   "role": "toast",
-  "does": "Says the program could not restart, and to close it and open it again to update.",
+  "does": "Says the restart did not happen, and that quitting the program and starting it once more installs the update.",
   "budget": 80,
   "variables": [],
   "cases": [],

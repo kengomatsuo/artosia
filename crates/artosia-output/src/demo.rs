@@ -94,6 +94,14 @@ pub fn lyrics() -> OutputState {
     OutputState { slide: Some(chorus()), stage: stage_info(), ..OutputState::default() }
 }
 
+/// The chorus over a live background of `kind`, by its name in any case (LIVEBG1).
+pub fn live(kind: &str) -> OutputState {
+    let mut state = lyrics();
+    let kind = artosia_slides::live::LiveKind::ALL.into_iter().find(|k| format!("{k:?}").eq_ignore_ascii_case(kind)).unwrap_or(artosia_slides::live::LiveKind::Flow);
+    state.look.background = artosia_slides::look::Background::Live(artosia_slides::live::Live::new(kind));
+    state
+}
+
 pub fn two_languages() -> OutputState {
     let mut slide = slide(
         SlideKind::Lyrics,

@@ -14,6 +14,7 @@ mod mock_b;
 mod mock_c;
 // LYRICSEDIT1: three directions of the song editor, drawn only by the `lyrics-*` scenes.
 mod mock_lyrics;
+mod moving;
 pub(crate) mod onboard;
 pub(crate) mod live;
 pub(crate) mod look;

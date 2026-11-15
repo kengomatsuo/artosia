@@ -6317,5 +6317,115 @@
   "text": "Không kiểu nào chứa vừa các trang này, chỉ còn Ảnh giống bản gốc",
   "back": "No style fits these pages, only Image like the original is left",
   "why": "trang for slide as in table; tile label copied"
+ },
+ "LOOK_MOVING": {
+  "text": "Nền động",
+  "back": "Moving background",
+  "why": "Nen dong, nen as the background and dong as self-moving"
+ },
+ "LOOK_MOVING_COLOURS": {
+  "text": "Màu sắc",
+  "back": "Colours",
+  "why": "Mau sac, a familiar colour label like Mau chu"
+ },
+ "LOOK_MOVING_PACE": {
+  "text": "Tốc độ",
+  "back": "Speed",
+  "why": "Toc do, the everyday word"
+ },
+ "LIVE_FLOW": {
+  "text": "Dòng chảy",
+  "back": "Flowing stream",
+  "why": "Dong chay, flowing stream as a noun"
+ },
+ "LIVE_AURORA": {
+  "text": "Cực quang",
+  "back": "Polar light",
+  "why": "Cuc quang, the everyday name of the northern lights"
+ },
+ "LIVE_INK": {
+  "text": "Mực",
+  "back": "Ink",
+  "why": "Muc, plain ink word"
+ },
+ "LIVE_SEA": {
+  "text": "Sóng",
+  "back": "Waves",
+  "why": "Song, short word for waves, unlike Dai duong"
+ },
+ "LIVE_GLASS": {
+  "text": "Kính màu",
+  "back": "Coloured glass",
+  "why": "Kinh mau, what churches say for coloured window glass"
+ },
+ "LIVE_LAVA": {
+  "text": "Dung nham",
+  "back": "Lava",
+  "why": "Dung nham, the word for lava"
+ },
+ "LIVE_STARS": {
+  "text": "Sao trời",
+  "back": "Sky stars",
+  "why": "Sao troi, short noun for stars in the sky"
+ },
+ "LIVE_KALEIDOSCOPE": {
+  "text": "Kính vạn hoa",
+  "back": "Ten-thousand-flowers glass",
+  "why": "Kinh van hoa, the toy's name"
+ },
+ "PACE_SLOW": {
+  "text": "Chậm",
+  "back": "Slow",
+  "why": "Cham, plain rate word"
+ },
+ "PACE_NORMAL": {
+  "text": "Vừa",
+  "back": "Medium",
+  "why": "Vua reuses the existing medium word"
+ },
+ "PACE_FAST": {
+  "text": "Nhanh",
+  "back": "Fast",
+  "why": "Nhanh, plain rate word"
+ },
+ "COLOURS_DUSK": {
+  "text": "Hoàng hôn",
+  "back": "Sunset",
+  "why": "Hoang hon, the evening sky"
+ },
+ "COLOURS_OCEAN": {
+  "text": "Đại dương",
+  "back": "Ocean",
+  "why": "Dai duong, deep open water"
+ },
+ "COLOURS_FOREST": {
+  "text": "Rừng",
+  "back": "Forest",
+  "why": "Rung, plain word for woods"
+ },
+ "COLOURS_EMBER": {
+  "text": "Than hồng",
+  "back": "Glowing coal",
+  "why": "Than hong, glowing coal"
+ },
+ "COLOURS_ROYAL": {
+  "text": "Hoàng gia",
+  "back": "Royal house",
+  "why": "Hoang gia, royal colours"
+ },
+ "COLOURS_NIGHT": {
+  "text": "Đêm",
+  "back": "Night",
+  "why": "Dem, plain night"
+ },
+ "COLOURS_GLASS": {
+  "text": "Kính màu",
+  "back": "Coloured glass",
+  "why": "Kinh mau shares the tile word"
+ },
+ "COLOURS_DAWN": {
+  "text": "Bình minh",
+  "back": "Sunrise",
+  "why": "Binh minh, sky before sunrise, unlike Hoang hon"
  }
 }

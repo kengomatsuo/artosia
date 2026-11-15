@@ -14,6 +14,8 @@ pub enum Background {
     Video(String),
     /// A live camera by its device name; an empty name is the first camera found.
     Camera(String),
+    /// A background that draws itself on the graphics chip (LIVEBG1).
+    Live(crate::live::Live),
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
@@ -160,9 +162,10 @@ impl Look {
         }
     }
 
-    /// Whether the background is a picture, a video or a camera, which text sits over.
+    /// Whether the background is a picture, a video, a camera or a live background: busy under
+    /// the text, so the dim darkens it.
     pub fn is_media(&self) -> bool {
-        matches!(self.background, Background::Image(_) | Background::Video(_) | Background::Camera(_))
+        matches!(self.background, Background::Image(_) | Background::Video(_) | Background::Camera(_) | Background::Live(_))
     }
 
     /// Whether the background arrives as moving frames.

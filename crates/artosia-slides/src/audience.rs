@@ -63,11 +63,18 @@ fn key_of(slide: &Slide) -> String {
     format!("slide-{:x}", hasher.finish())
 }
 
-fn background(look: &Look, w: f32, h: f32, media: Media) -> El {
+fn background(look: &Look, w: f32, h: f32, media: Media, detail: Detail) -> El {
     let layer = el().key("background").absolute(0.0, 0.0).size(w, h).a11y_hidden();
     match &look.background {
         Background::Solid(color) => layer.fill(rgb(*color)),
         Background::Gradient(top, bottom) => layer.gradient(rgb(*top), rgb(*bottom)),
+        // The compositor paints the slot; where none does, the gradient under it shows. Only
+        // the projector moves: the operator's previews and tiles hold one still pose, so the
+        // console does not redraw every frame through a whole service.
+        Background::Live(live) => {
+            let (mark, data) = crate::live::slot(live, detail == Detail::Output);
+            layer.gradient(rgb(live.colours[0]), rgb(live.colours[1])).child(rune::effect(mark).effect_data(data).absolute(0.0, 0.0).size(w, h))
+        }
         Background::Image(_) | Background::Video(_) | Background::Camera(_) => {
             let layer = layer.fill(Color::BLACK);
             match (media.video, media.picture) {
@@ -389,7 +396,7 @@ pub fn audience_over(state: &OutputState, w: f32, h: f32, media: Media, item: Op
     if state.black {
         return root;
     }
-    root = root.child(background(look, w, h, media));
+    root = root.child(background(look, w, h, media, detail));
     if look.is_media() && look.dim > 0.0 {
         root = root.child(el().key("dim").absolute(0.0, 0.0).size(w, h).fill(Color::BLACK.alpha(look.dim.clamp(0.0, 1.0))).a11y_hidden());
     }

@@ -13,9 +13,11 @@
 
 mod compositor;
 mod handle;
+mod live;
 pub mod homography;
 
 pub use artosia_slides::frame::Warp;
 pub use compositor::{Filter, WarpCompositor};
 pub use handle::WarpHandle;
+pub use live::{LiveCompositor, LivePainter};
 pub use homography::{Degenerate, homography, try_homography};

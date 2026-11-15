@@ -6364,5 +6364,115 @@
   "text": "Aucune apparence ne contient ces diapos sans les couper. Reste Comme l'original",
   "back": "No appearance holds these slides without cutting them. Only As the original remains",
   "why": "apparence and diapos as in table; tile label copied"
+ },
+ "LOOK_MOVING": {
+  "text": "Fond animé",
+  "back": "Animated background",
+  "why": "Fond anime, fond as the background and anime as self-moving"
+ },
+ "LOOK_MOVING_COLOURS": {
+  "text": "Couleurs",
+  "back": "Colours",
+  "why": "Couleurs, as in Couleur du texte"
+ },
+ "LOOK_MOVING_PACE": {
+  "text": "Vitesse",
+  "back": "Speed",
+  "why": "Vitesse, the everyday word"
+ },
+ "LIVE_FLOW": {
+  "text": "Flux",
+  "back": "Flow",
+  "why": "Flux, a short noun for drifting colour"
+ },
+ "LIVE_AURORA": {
+  "text": "Aurore boréale",
+  "back": "Northern lights",
+  "why": "Aurore boreale, the full everyday name so it cannot read as dawn"
+ },
+ "LIVE_INK": {
+  "text": "Encre",
+  "back": "Ink",
+  "why": "Encre, plain ink word"
+ },
+ "LIVE_SEA": {
+  "text": "Vagues",
+  "back": "Waves",
+  "why": "Vagues, plural, differing from Ocean"
+ },
+ "LIVE_GLASS": {
+  "text": "Vitrail",
+  "back": "Stained glass",
+  "why": "Vitrail, the church window word"
+ },
+ "LIVE_LAVA": {
+  "text": "Lave",
+  "back": "Lava",
+  "why": "Lave, same as the lamp"
+ },
+ "LIVE_STARS": {
+  "text": "Étoiles",
+  "back": "Stars",
+  "why": "Etoiles, plural as briefed"
+ },
+ "LIVE_KALEIDOSCOPE": {
+  "text": "Kaléidoscope",
+  "back": "Kaleidoscope",
+  "why": "Kaleidoscope, the toy's name"
+ },
+ "PACE_SLOW": {
+  "text": "Lente",
+  "back": "Slow",
+  "why": "Lente, agreeing with the feminine vitesse"
+ },
+ "PACE_NORMAL": {
+  "text": "Normale",
+  "back": "Normal",
+  "why": "Normale, agreeing with vitesse and matching the existing word"
+ },
+ "PACE_FAST": {
+  "text": "Rapide",
+  "back": "Fast",
+  "why": "Rapide, agreeing with vitesse"
+ },
+ "COLOURS_DUSK": {
+  "text": "Crépuscule",
+  "back": "Twilight",
+  "why": "Crepuscule, the common word for the evening sky"
+ },
+ "COLOURS_OCEAN": {
+  "text": "Océan",
+  "back": "Ocean",
+  "why": "Ocean, deep-water blues"
+ },
+ "COLOURS_FOREST": {
+  "text": "Forêt",
+  "back": "Forest",
+  "why": "Foret, thick wood"
+ },
+ "COLOURS_EMBER": {
+  "text": "Braises",
+  "back": "Embers",
+  "why": "Braises, glowing coals"
+ },
+ "COLOURS_ROYAL": {
+  "text": "Royal",
+  "back": "Royal",
+  "why": "Royal, the adjective for purple and gold"
+ },
+ "COLOURS_NIGHT": {
+  "text": "Nuit",
+  "back": "Night",
+  "why": "Nuit, plain night"
+ },
+ "COLOURS_GLASS": {
+  "text": "Vitrail",
+  "back": "Stained glass",
+  "why": "Vitrail shares the tile word"
+ },
+ "COLOURS_DAWN": {
+  "text": "Aube",
+  "back": "Dawn",
+  "why": "Aube, sky before sunrise, distinct from Crepuscule"
  }
 }

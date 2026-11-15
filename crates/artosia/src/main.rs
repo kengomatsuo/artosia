@@ -648,6 +648,14 @@ Until we reach the house
     // The owner's look: a camera behind words at the bottom. The frame is a made-up gradient
     // handed over as if the projector had sent it, so both previews show it under the words.
     // Design with a camera on the network as the background: the address in its field, Use lit.
+    // LIVEBG1: the Design tab with a moving background picked, its colours and speed below.
+    ("design-moving", |s| {
+        let mut live = artosia_slides::live::Live::new(artosia_slides::live::LiveKind::Kaleidoscope);
+        live.pace = artosia_slides::live::Pace::Slow;
+        let look = artosia_slides::look::Look { background: artosia_slides::look::Background::Live(live), ..s.look() };
+        s.set_look(look);
+        s.open_tab(crate::state::Tab::Look);
+    }),
     ("design-network-camera", |s| {
         let look = artosia_slides::look::Look { background: artosia_slides::look::Background::Camera("rtsp://192.168.1.20:8554/live".into()), shadow: true, ..s.look() };
         s.set_look(look);
@@ -1432,7 +1440,9 @@ fn main() {
     // the corner, and its foot hung under the taskbar of a 1080 point screen and off a 768
     // point one, where the status bar and the lowest tiles could not be pressed (owner,
     // 2026-11-11: "summoning the window partly out of bounds").
-    let app = rune::App::new(spec).titlebar(Titlebar::new(theme::size::TOPBAR)).maximized(true).modifier_keys().on_close(|s: &mut App, _: &mut Tx| {
+    // The compositor paints live backgrounds in previews, samples and tiles (LIVEBG1); with
+    // none on screen the frame is Rune's own.
+    let app = rune::App::new(spec).compositor(artosia_warp::LiveCompositor::new()).titlebar(Titlebar::new(theme::size::TOPBAR)).maximized(true).modifier_keys().on_close(|s: &mut App, _: &mut Tx| {
         // Closing the operator on purpose closes the projector too, and ends a stream cleanly;
         // a crash never gets here, and then both go on.
         if let Some(stream) = s.stream.as_mut() {

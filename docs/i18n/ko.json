@@ -6306,5 +6306,115 @@
   "text": "슬라이드가 잘리지 않는 디자인이 없어서 '원본 모습 그대로'만 쓸 수 있어요",
   "back": "No design keeps the slides uncut, so only As the original looks can be used",
   "why": "디자인 and 슬라이드 as in table; tile label copied"
+ },
+ "LOOK_MOVING": {
+  "text": "움직이는 배경",
+  "back": "Moving background",
+  "why": "The backdrop word plus an adjective for self-moving"
+ },
+ "LOOK_MOVING_COLOURS": {
+  "text": "색상",
+  "back": "Colour",
+  "why": "The everyday word for colours"
+ },
+ "LOOK_MOVING_PACE": {
+  "text": "속도",
+  "back": "Speed",
+  "why": "Plain word for speed"
+ },
+ "LIVE_FLOW": {
+  "text": "흐름",
+  "back": "Flow",
+  "why": "A soft noun for drifting colour"
+ },
+ "LIVE_AURORA": {
+  "text": "오로라",
+  "back": "Aurora",
+  "why": "The everyday name for the northern lights"
+ },
+ "LIVE_INK": {
+  "text": "잉크",
+  "back": "Ink",
+  "why": "The everyday word for ink"
+ },
+ "LIVE_SEA": {
+  "text": "파도",
+  "back": "Waves",
+  "why": "Plain word for waves, unlike the deep-sea chip"
+ },
+ "LIVE_GLASS": {
+  "text": "스테인드글라스",
+  "back": "Stained glass",
+  "why": "The word churches say for stained glass, fits the budget now"
+ },
+ "LIVE_LAVA": {
+  "text": "용암",
+  "back": "Lava",
+  "why": "The word for lava"
+ },
+ "LIVE_STARS": {
+  "text": "별들",
+  "back": "Stars",
+  "why": "Plural as briefed"
+ },
+ "LIVE_KALEIDOSCOPE": {
+  "text": "만화경",
+  "back": "Kaleidoscope",
+  "why": "The toy's name"
+ },
+ "PACE_SLOW": {
+  "text": "느리게",
+  "back": "Slowly",
+  "why": "An adverb that reads naturally on a segment"
+ },
+ "PACE_NORMAL": {
+  "text": "보통",
+  "back": "Normal",
+  "why": "Reuses the existing normal word"
+ },
+ "PACE_FAST": {
+  "text": "빠르게",
+  "back": "Quickly",
+  "why": "Adverb matching the slow segment"
+ },
+ "COLOURS_DUSK": {
+  "text": "노을",
+  "back": "Sunset glow",
+  "why": "The common word for the evening glow"
+ },
+ "COLOURS_OCEAN": {
+  "text": "깊은 바다",
+  "back": "Deep sea",
+  "why": "Deep open water"
+ },
+ "COLOURS_FOREST": {
+  "text": "숲",
+  "back": "Forest",
+  "why": "Plain word for woods"
+ },
+ "COLOURS_EMBER": {
+  "text": "잔불",
+  "back": "Dying embers",
+  "why": "Glowing coal of a dying fire"
+ },
+ "COLOURS_ROYAL": {
+  "text": "왕실",
+  "back": "Royal court",
+  "why": "Royal colours"
+ },
+ "COLOURS_NIGHT": {
+  "text": "밤",
+  "back": "Night",
+  "why": "Plain night"
+ },
+ "COLOURS_GLASS": {
+  "text": "색유리",
+  "back": "Coloured glass",
+  "why": "Shares the tile word"
+ },
+ "COLOURS_DAWN": {
+  "text": "새벽",
+  "back": "Dawn",
+  "why": "Sky before sunrise, unlike the evening chip"
  }
 }

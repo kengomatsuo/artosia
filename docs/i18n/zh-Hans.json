@@ -6306,5 +6306,115 @@
   "text": "没有样式能完整放下这些幻灯片，只剩按原样做成图片",
   "back": "No style can hold these slides whole, only make as pictures as they are remains",
   "why": "样式 and 幻灯片 as in table; tile label copied"
+ },
+ "LOOK_MOVING": {
+  "text": "动态背景",
+  "back": "Dynamic background",
+  "why": "The backdrop word plus a word for self-moving, with no word for on or camera"
+ },
+ "LOOK_MOVING_COLOURS": {
+  "text": "配色",
+  "back": "Colour scheme",
+  "why": "The everyday word for a colour set"
+ },
+ "LOOK_MOVING_PACE": {
+  "text": "速度",
+  "back": "Speed",
+  "why": "Plain word for speed"
+ },
+ "LIVE_FLOW": {
+  "text": "流彩",
+  "back": "Flowing colours",
+  "why": "Short noun for drifting colour"
+ },
+ "LIVE_AURORA": {
+  "text": "极光",
+  "back": "Aurora",
+  "why": "The everyday name for the northern lights"
+ },
+ "LIVE_INK": {
+  "text": "墨水",
+  "back": "Ink",
+  "why": "The everyday word for ink"
+ },
+ "LIVE_SEA": {
+  "text": "海浪",
+  "back": "Sea waves",
+  "why": "Waves, unlike the deep-sea chip"
+ },
+ "LIVE_GLASS": {
+  "text": "彩色玻璃",
+  "back": "Coloured glass",
+  "why": "The plain word for coloured glass"
+ },
+ "LIVE_LAVA": {
+  "text": "熔岩",
+  "back": "Molten rock",
+  "why": "The word for lava"
+ },
+ "LIVE_STARS": {
+  "text": "星星",
+  "back": "Stars",
+  "why": "Plain word for stars"
+ },
+ "LIVE_KALEIDOSCOPE": {
+  "text": "万花筒",
+  "back": "Kaleidoscope",
+  "why": "The toy's name"
+ },
+ "PACE_SLOW": {
+  "text": "慢速",
+  "back": "Slow",
+  "why": "Plain rate word"
+ },
+ "PACE_NORMAL": {
+  "text": "正常",
+  "back": "Normal",
+  "why": "The usual rate"
+ },
+ "PACE_FAST": {
+  "text": "快速",
+  "back": "Fast",
+  "why": "Plain rate word"
+ },
+ "COLOURS_DUSK": {
+  "text": "黄昏",
+  "back": "Dusk",
+  "why": "The evening sky"
+ },
+ "COLOURS_OCEAN": {
+  "text": "深海",
+  "back": "Deep sea",
+  "why": "Deep open water"
+ },
+ "COLOURS_FOREST": {
+  "text": "森林",
+  "back": "Forest",
+  "why": "Plain word for woods"
+ },
+ "COLOURS_EMBER": {
+  "text": "余烬",
+  "back": "Embers",
+  "why": "Glowing coals"
+ },
+ "COLOURS_ROYAL": {
+  "text": "皇家",
+  "back": "Imperial",
+  "why": "Royal colours"
+ },
+ "COLOURS_NIGHT": {
+  "text": "夜晚",
+  "back": "Night",
+  "why": "Plain night"
+ },
+ "COLOURS_GLASS": {
+  "text": "彩色玻璃",
+  "back": "Coloured glass",
+  "why": "Shares the tile word"
+ },
+ "COLOURS_DAWN": {
+  "text": "黎明",
+  "back": "Dawn",
+  "why": "Sky before sunrise, unlike the dusk chip"
  }
 }

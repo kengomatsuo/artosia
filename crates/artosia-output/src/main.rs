@@ -428,6 +428,15 @@ const SCENES: &[Scene] = &[
     ("languages-split", |_| shared().set_state(demo::languages(&["id", "en", "zh-Hans"], "Midnight", true))),
     ("languages-one", |_| shared().set_state(demo::languages(&["id"], "Midnight", false))),
     ("scripture", |_| shared().set_state(demo::scripture())),
+    // The chorus over each live background (LIVEBG1).
+    ("live-flow", |_| shared().set_state(demo::live("flow"))),
+    ("live-aurora", |_| shared().set_state(demo::live("aurora"))),
+    ("live-ink", |_| shared().set_state(demo::live("ink"))),
+    ("live-sea", |_| shared().set_state(demo::live("sea"))),
+    ("live-glass", |_| shared().set_state(demo::live("glass"))),
+    ("live-lava", |_| shared().set_state(demo::live("lava"))),
+    ("live-stars", |_| shared().set_state(demo::live("stars"))),
+    ("live-kaleidoscope", |_| shared().set_state(demo::live("kaleidoscope"))),
     ("announcement", |_| shared().set_state(demo::announcement())),
     // The state in the JSON file `--state-file` names, as `examples/notice_matrix.rs` writes it.
     ("state-file", |_| shared().set_state(flag_value("--state-file").and_then(|path| std::fs::read_to_string(path).ok()).and_then(|json| serde_json::from_str(&json).ok()).unwrap_or_default())),
@@ -915,6 +924,10 @@ fn main() {
         }
         apply(ToOutput::State(Box::new(state)));
     }
+    // `--demo-live <kind>` starts on the chorus over a live background, for measuring RAM.
+    if let Some(kind) = flag_value("--demo-live") {
+        apply(ToOutput::State(Box::new(demo::live(&kind))));
+    }
     if let Some(path) = flag_value("--demo-video").filter(|_| !has_flag("--demo-item")) {
         let mut state = demo::lyrics();
         state.look.background = Background::Video(path);
@@ -940,7 +953,10 @@ fn main() {
     }
     rune::run_windows(move |rune_displays| {
         if headless {
-            let mut windows = vec![WindowSpec::new("audience", spec("Artosia projector")).state(Screen::new(Role::Audience, 0))];
+            // The projector draws through its compositor here too, so a snapshot shows what the
+            // screen would: the corner pin, the colour and a live background.
+            let projector = rune::App::new(spec("Artosia projector")).compositor(artosia_warp::WarpCompositor::new(warp().clone()));
+            let mut windows = vec![WindowSpec::from_app("audience", projector).state(Screen::new(Role::Audience, 0))];
             windows.push(WindowSpec::new("stage", spec("Artosia stage")).state(Screen::new(Role::Stage, 0)));
             return windows;
         }

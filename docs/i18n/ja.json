@@ -6304,5 +6304,115 @@
   "text": "どのデザインでもスライドが切れるので、「見た目のまま画像に」だけです",
   "back": "In every design the slides get cut off, so only As it looks, to images is left",
   "why": "デザイン and スライド as in table; tile label copied"
+ },
+ "LOOK_MOVING": {
+  "text": "動く背景",
+  "back": "Moving background",
+  "why": "Plain words, with the backdrop word and no word for projector on or camera"
+ },
+ "LOOK_MOVING_COLOURS": {
+  "text": "配色",
+  "back": "Colour scheme",
+  "why": "The everyday word for a set of colours"
+ },
+ "LOOK_MOVING_PACE": {
+  "text": "速さ",
+  "back": "Speed",
+  "why": "Plain word for speed"
+ },
+ "LIVE_FLOW": {
+  "text": "流れ",
+  "back": "Flow",
+  "why": "A soft noun for drifting colour"
+ },
+ "LIVE_AURORA": {
+  "text": "オーロラ",
+  "back": "Aurora",
+  "why": "The everyday katakana name for the northern lights"
+ },
+ "LIVE_INK": {
+  "text": "インク",
+  "back": "Ink",
+  "why": "The everyday word for ink"
+ },
+ "LIVE_SEA": {
+  "text": "波",
+  "back": "Waves",
+  "why": "A single character for waves, unlike the deep-sea chip"
+ },
+ "LIVE_GLASS": {
+  "text": "ステンドグラス",
+  "back": "Glass",
+  "why": "The word churches say for stained glass, fits the budget now"
+ },
+ "LIVE_LAVA": {
+  "text": "溶岩",
+  "back": "Lava",
+  "why": "The word for lava"
+ },
+ "LIVE_STARS": {
+  "text": "星空",
+  "back": "Starry sky",
+  "why": "A night sky of stars"
+ },
+ "LIVE_KALEIDOSCOPE": {
+  "text": "万華鏡",
+  "back": "Kaleidoscope",
+  "why": "The toy's name"
+ },
+ "PACE_SLOW": {
+  "text": "ゆっくり",
+  "back": "Slowly",
+  "why": "The everyday calm word"
+ },
+ "PACE_NORMAL": {
+  "text": "ふつう",
+  "back": "Normal",
+  "why": "Reuses the existing normal word"
+ },
+ "PACE_FAST": {
+  "text": "速い",
+  "back": "Fast",
+  "why": "Plain quick word"
+ },
+ "COLOURS_DUSK": {
+  "text": "夕暮れ",
+  "back": "Evening dusk",
+  "why": "Evening sky in everyday speech"
+ },
+ "COLOURS_OCEAN": {
+  "text": "大海",
+  "back": "Great sea",
+  "why": "Deep open water, unlike the waves tile"
+ },
+ "COLOURS_FOREST": {
+  "text": "森",
+  "back": "Forest",
+  "why": "Plain word for woods"
+ },
+ "COLOURS_EMBER": {
+  "text": "残り火",
+  "back": "Remaining fire",
+  "why": "Glowing coals of a dying fire"
+ },
+ "COLOURS_ROYAL": {
+  "text": "ロイヤル",
+  "back": "Royal",
+  "why": "The common word for royal colours"
+ },
+ "COLOURS_NIGHT": {
+  "text": "夜",
+  "back": "Night",
+  "why": "Plain night"
+ },
+ "COLOURS_GLASS": {
+  "text": "ガラス",
+  "back": "Glass",
+  "why": "Shares the tile word"
+ },
+ "COLOURS_DAWN": {
+  "text": "夜明け",
+  "back": "Daybreak",
+  "why": "Sky before sunrise, unlike the evening chip"
  }
 }

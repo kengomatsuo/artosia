@@ -6342,5 +6342,115 @@
   "text": "Ningún diseño cabe sin cortar las diapositivas. Solo queda Como imágenes",
   "back": "No design fits without cutting the slides. Only As images is left",
   "why": "diseño and diapositivas as in table; tile label copied"
+ },
+ "LOOK_MOVING": {
+  "text": "Fondo animado",
+  "back": "Animated background",
+  "why": "Fondo animado, fondo is the background and animado says it moves by itself"
+ },
+ "LOOK_MOVING_COLOURS": {
+  "text": "Colores",
+  "back": "Colours",
+  "why": "Colores, as in Color del texto"
+ },
+ "LOOK_MOVING_PACE": {
+  "text": "Velocidad",
+  "back": "Speed",
+  "why": "Velocidad, the everyday word"
+ },
+ "LIVE_FLOW": {
+  "text": "Flujo",
+  "back": "Flow",
+  "why": "Flujo, a short noun for drifting colour"
+ },
+ "LIVE_AURORA": {
+  "text": "Aurora",
+  "back": "Aurora",
+  "why": "Aurora, the usual name, aurora boreal being too long"
+ },
+ "LIVE_INK": {
+  "text": "Tinta",
+  "back": "Ink",
+  "why": "Tinta, plain word for ink"
+ },
+ "LIVE_SEA": {
+  "text": "Olas",
+  "back": "Waves",
+  "why": "Olas, plural, differing from Oceano"
+ },
+ "LIVE_GLASS": {
+  "text": "Vitral",
+  "back": "Stained glass",
+  "why": "Vitral, the church word for coloured window glass"
+ },
+ "LIVE_LAVA": {
+  "text": "Lava",
+  "back": "Lava",
+  "why": "Lava, same word as the lamp"
+ },
+ "LIVE_STARS": {
+  "text": "Estrellas",
+  "back": "Stars",
+  "why": "Estrellas, plural as briefed"
+ },
+ "LIVE_KALEIDOSCOPE": {
+  "text": "Caleidoscopio",
+  "back": "Kaleidoscope",
+  "why": "Caleidoscopio, the toy's name"
+ },
+ "PACE_SLOW": {
+  "text": "Lento",
+  "back": "Slow",
+  "why": "Lento, plain one-word rate"
+ },
+ "PACE_NORMAL": {
+  "text": "Normal",
+  "back": "Normal",
+  "why": "Normal reuses the existing word"
+ },
+ "PACE_FAST": {
+  "text": "Rápido",
+  "back": "Fast",
+  "why": "Rapido, plain one-word rate"
+ },
+ "COLOURS_DUSK": {
+  "text": "Atardecer",
+  "back": "Evening",
+  "why": "Atardecer, what people call the evening sky"
+ },
+ "COLOURS_OCEAN": {
+  "text": "Océano",
+  "back": "Ocean",
+  "why": "Oceano, the deep-water blues"
+ },
+ "COLOURS_FOREST": {
+  "text": "Bosque",
+  "back": "Forest",
+  "why": "Bosque, plain word for woods"
+ },
+ "COLOURS_EMBER": {
+  "text": "Brasas",
+  "back": "Embers",
+  "why": "Brasas, glowing coals"
+ },
+ "COLOURS_ROYAL": {
+  "text": "Realeza",
+  "back": "Royalty",
+  "why": "Realeza, noun for king's colours"
+ },
+ "COLOURS_NIGHT": {
+  "text": "Noche",
+  "back": "Night",
+  "why": "Noche, plain night"
+ },
+ "COLOURS_GLASS": {
+  "text": "Vitral",
+  "back": "Stained glass",
+  "why": "Vitral shares the tile word"
+ },
+ "COLOURS_DAWN": {
+  "text": "Alba",
+  "back": "Daybreak",
+  "why": "Alba, the sky before sunrise, unlike Atardecer"
  }
 }

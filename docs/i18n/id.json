@@ -6266,5 +6266,115 @@
   "text": "Tidak ada tema yang memuat slide ini utuh. Hanya tersisa Sebagai gambar",
   "back": "No theme holds these slides whole. Only As images is left",
   "why": "Tema and slide as in table; tile label copied"
+ },
+ "LOOK_MOVING": {
+  "text": "Latar bergerak",
+  "back": "Moving background",
+  "why": "Latar matches the existing background wording and bergerak says it changes itself"
+ },
+ "LOOK_MOVING_COLOURS": {
+  "text": "Warna",
+  "back": "Colour",
+  "why": "Warna as in Warna teks"
+ },
+ "LOOK_MOVING_PACE": {
+  "text": "Kecepatan",
+  "back": "Speed",
+  "why": "Kecepatan, everyday word for speed"
+ },
+ "LIVE_FLOW": {
+  "text": "Arus",
+  "back": "Current",
+  "why": "Arus, a short noun for drifting colour unlike Ombak"
+ },
+ "LIVE_AURORA": {
+  "text": "Aurora",
+  "back": "Aurora",
+  "why": "Aurora is the word Indonesians say"
+ },
+ "LIVE_INK": {
+  "text": "Tinta",
+  "back": "Ink",
+  "why": "Tinta, the everyday word for ink"
+ },
+ "LIVE_SEA": {
+  "text": "Ombak",
+  "back": "Waves",
+  "why": "Ombak, waves, apart from the Samudra chip"
+ },
+ "LIVE_GLASS": {
+  "text": "Kaca patri",
+  "back": "Stained glass",
+  "why": "Kaca patri is what churches say for stained glass"
+ },
+ "LIVE_LAVA": {
+  "text": "Lava",
+  "back": "Lava",
+  "why": "Lava used as is, as in lava lamp"
+ },
+ "LIVE_STARS": {
+  "text": "Bintang",
+  "back": "Stars",
+  "why": "Bintang, short and familiar"
+ },
+ "LIVE_KALEIDOSCOPE": {
+  "text": "Kaleidoskop",
+  "back": "Kaleidoscope",
+  "why": "Kaleidoskop, the usual spelling for the toy"
+ },
+ "PACE_SLOW": {
+  "text": "Lambat",
+  "back": "Slow",
+  "why": "Lambat, plain calm rate"
+ },
+ "PACE_NORMAL": {
+  "text": "Sedang",
+  "back": "Medium",
+  "why": "Sedang reuses the existing medium word"
+ },
+ "PACE_FAST": {
+  "text": "Cepat",
+  "back": "Fast",
+  "why": "Cepat, plain quick rate"
+ },
+ "COLOURS_DUSK": {
+  "text": "Senja",
+  "back": "Twilight",
+  "why": "Senja, the common word for post-sunset sky"
+ },
+ "COLOURS_OCEAN": {
+  "text": "Samudra",
+  "back": "Ocean",
+  "why": "Samudra, deep open water, unlike Ombak"
+ },
+ "COLOURS_FOREST": {
+  "text": "Hutan",
+  "back": "Forest",
+  "why": "Hutan, the plain word for woods"
+ },
+ "COLOURS_EMBER": {
+  "text": "Bara",
+  "back": "Embers",
+  "why": "Bara, glowing coals of a dying fire"
+ },
+ "COLOURS_ROYAL": {
+  "text": "Kerajaan",
+  "back": "Kingdom",
+  "why": "Kerajaan, royal colours in one noun"
+ },
+ "COLOURS_NIGHT": {
+  "text": "Malam",
+  "back": "Night",
+  "why": "Malam, the plain word for night"
+ },
+ "COLOURS_GLASS": {
+  "text": "Kaca patri",
+  "back": "Stained glass",
+  "why": "Kaca patri shares the tile word"
+ },
+ "COLOURS_DAWN": {
+  "text": "Fajar",
+  "back": "Dawn",
+  "why": "Fajar, sky before sunrise, unlike Senja"
  }
 }

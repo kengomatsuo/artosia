@@ -122,6 +122,8 @@ A second reader of a finished language found one thing under two or three names,
 
 **`backdrop`** What lies behind the words on the projector: a plain colour scheme, a picture or a video from the computer, or a live camera. The program also offers a collection of ready photos and looping videos, free to use, fetched from the internet one at a time; that collection is named with this same word.
 
+**`moving_backdrop`** A backdrop that keeps changing by itself while it shows, drawn by the program: drifting colours, northern lights, waves, stars, a turning mirrored pattern. It needs no file and no camera. It is not the projector's switch for on and off, and not a camera's picture.
+
 **`lyrics_service`** A website the program asks for the words of a song while a new song is being written. The program offers what it finds under the song's title; nothing is fetched until the person picks one. It is not part of Artosia and may be unreachable.
 
 **`outline`** A thin line drawn round each letter of the words, so that they stay readable over a busy picture. It has a thickness (off, thin, middle, thick) and a colour. It is not the white ring of Preview.

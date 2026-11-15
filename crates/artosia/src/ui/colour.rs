@@ -211,6 +211,11 @@ pub fn sample(look: &Look, picture: Option<&(String, u32, u32, Vec<u8>)>, fx: f3
             let at = ((y * w as u32 + x) * 3) as usize;
             bytes.get(at..at + 3).map(|rgb| [rgb[0], rgb[1], rgb[2]])
         }
+        // A live background moves; its resting gradient, darkest to middle, stands in for it.
+        Background::Live(live) => {
+            let (top, bottom) = (live.colours[0], live.colours[1]);
+            Some([0, 1, 2].map(|i| (f32::from(top[i]) + (f32::from(bottom[i]) - f32::from(top[i])) * fy).round() as u8))
+        }
         Background::Video(_) | Background::Camera(_) => None,
     }
 }

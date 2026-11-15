@@ -8,6 +8,7 @@ use rune::compose::DeviceKey;
 use rune::{Compositor, Frame};
 
 use crate::handle::WarpHandle;
+use crate::live::LivePainter;
 use crate::homography::{self, Matrix};
 
 const SHADER: &str = include_str!("warp.wgsl");
@@ -168,6 +169,8 @@ pub struct WarpCompositor {
     seen: u64,
     prepared: Prepared,
     identity: bool,
+    /// Paints a live background's slot where Rune's frame reaches it (LIVEBG1).
+    live: LivePainter,
 }
 
 impl WarpCompositor {
@@ -179,6 +182,7 @@ impl WarpCompositor {
             seen: 0,
             prepared: prepare(&Warp::default()),
             identity: true,
+            live: LivePainter::new(),
         }
     }
 
@@ -205,8 +209,14 @@ fn floats(values: &[f32]) -> Vec<u8> {
 impl<S: 'static> Compositor<S> for WarpCompositor {
     fn render(&mut self, f: &mut Frame<'_, S>) {
         self.refresh();
+        let live = self.live.prepare(f);
         if self.identity {
-            f.draw_ui();
+            if live {
+                let target = f.target;
+                self.live.draw(f, target);
+            } else {
+                f.draw_ui();
+            }
             return;
         }
         if self.gpu.as_ref().is_none_or(|g| g.key != f.device_key() || g.format != f.format) {
@@ -226,9 +236,13 @@ impl<S: 'static> Compositor<S> for WarpCompositor {
         gpu.ensure_scene(f.device, size);
         let Some(scene) = gpu.scene.as_ref() else { return };
         // Rune's own frame, into the offscreen texture.
-        let clear = f.rt.clear_color();
-        f.ui.prepare(f.device, f.queue, &mut f.rt.text.atlas, &f.rt.instances, f.size);
-        f.ui.draw(f.encoder, &scene.view, clear);
+        if live {
+            self.live.draw(f, &scene.view);
+        } else {
+            let clear = f.rt.clear_color();
+            f.ui.prepare(f.device, f.queue, &mut f.rt.text.atlas, &f.rt.instances, f.size);
+            f.ui.draw(f.encoder, &scene.view, clear);
+        }
         // Then the pinned, tinted copy into the window.
         let mut pass = f.encoder.begin_render_pass(&wgpu::RenderPassDescriptor {
             label: Some("artosia warp"),
@@ -243,6 +257,10 @@ impl<S: 'static> Compositor<S> for WarpCompositor {
         pass.set_pipeline(&gpu.pipeline);
         pass.set_bind_group(0, &scene.group, &[]);
         pass.draw(0..3, 0..1);
+    }
+
+    fn animating(&self) -> bool {
+        self.live.moving()
     }
 }
 
