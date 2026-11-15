@@ -6169,5 +6169,75 @@
   "text": "發車時刻板",
   "back": "Departure time board",
   "why": "names the letter or layout look, apart from the other style names in this table"
+ },
+ "STYLE_WARM": {
+  "text": "暖色圓卡",
+  "back": "warm-colour round cards",
+  "why": "plain everyday word, distinct from the other STYLE_ names"
+ },
+ "STYLE_MAGAZINE": {
+  "text": "雜誌版",
+  "back": "magazine page",
+  "why": "plain everyday word, distinct from the other STYLE_ names"
+ },
+ "STYLE_LITURGY": {
+  "text": "禮拜程序",
+  "back": "order of worship",
+  "why": "plain everyday word, distinct from the other STYLE_ names"
+ },
+ "STYLE_BLOCK": {
+  "text": "色塊",
+  "back": "colour blocks",
+  "why": "plain everyday word, distinct from the other STYLE_ names"
+ },
+ "STYLE_GLASS": {
+  "text": "毛玻璃",
+  "back": "frosted glass",
+  "why": "plain everyday word, distinct from the other STYLE_ names"
+ },
+ "STYLE_FIGURES": {
+  "text": "登記表",
+  "back": "register sheet",
+  "why": "plain everyday word, distinct from the other STYLE_ names"
+ },
+ "STYLE_DIAGONAL": {
+  "text": "斜切",
+  "back": "slanted cut",
+  "why": "plain everyday word, distinct from the other STYLE_ names"
+ },
+ "STYLE_GLOW": {
+  "text": "輝光",
+  "back": "glow",
+  "why": "plain everyday word, distinct from the other STYLE_ names"
+ },
+ "SLIDE_COL_DATE": {
+  "text": "日期",
+  "back": "date",
+  "why": "plain everyday word, distinct from the other STYLE_ names"
+ },
+ "SLIDE_COL_NAME": {
+  "text": "姓名",
+  "back": "name",
+  "why": "plain everyday word, distinct from the other STYLE_ names"
+ },
+ "SLIDE_COL_NO": {
+  "text": "序號",
+  "back": "serial number",
+  "why": "plain everyday word, distinct from the other STYLE_ names"
+ },
+ "SLIDE_COL_FUND": {
+  "text": "用途",
+  "back": "purpose",
+  "why": "plain everyday word, distinct from the other STYLE_ names"
+ },
+ "SLIDE_COL_SHARE": {
+  "text": "占比",
+  "back": "proportion",
+  "why": "plain everyday word, distinct from the other STYLE_ names"
+ },
+ "SLIDE_COL_SUM": {
+  "text": "金額",
+  "back": "amount",
+  "why": "plain everyday word, distinct from the other STYLE_ names"
  }
 }

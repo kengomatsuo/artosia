@@ -6229,5 +6229,75 @@
   "text": "Tableau horaire",
   "back": "Timetable board",
   "why": "names the letter or layout look, apart from the other style names in this table"
+ },
+ "STYLE_WARM": {
+  "text": "Chaleureux",
+  "back": "Warm",
+  "why": "Distinct from existing STYLE_ names; fits budget"
+ },
+ "STYLE_MAGAZINE": {
+  "text": "Magazine",
+  "back": "Magazine",
+  "why": "Distinct from existing STYLE_ names; fits budget"
+ },
+ "STYLE_LITURGY": {
+  "text": "Ordre du culte",
+  "back": "Order of worship",
+  "why": "Distinct from existing STYLE_ names; fits budget"
+ },
+ "STYLE_BLOCK": {
+  "text": "Blocs",
+  "back": "Blocks",
+  "why": "Distinct from existing STYLE_ names; fits budget"
+ },
+ "STYLE_GLASS": {
+  "text": "Verre dépoli",
+  "back": "Frosted glass",
+  "why": "Distinct from existing STYLE_ names; fits budget"
+ },
+ "STYLE_FIGURES": {
+  "text": "Dons chiffrés",
+  "back": "Gifts in figures",
+  "why": "Distinct from existing STYLE_ names; fits budget"
+ },
+ "STYLE_DIAGONAL": {
+  "text": "Diagonale",
+  "back": "Diagonal",
+  "why": "Distinct from existing STYLE_ names; fits budget"
+ },
+ "STYLE_GLOW": {
+  "text": "Halo",
+  "back": "Halo",
+  "why": "Distinct from existing STYLE_ names; fits budget"
+ },
+ "SLIDE_COL_DATE": {
+  "text": "Date",
+  "back": "Date",
+  "why": "Distinct from existing STYLE_ names; fits budget"
+ },
+ "SLIDE_COL_NAME": {
+  "text": "Nom",
+  "back": "Name",
+  "why": "Distinct from existing STYLE_ names; fits budget"
+ },
+ "SLIDE_COL_NO": {
+  "text": "N°",
+  "back": "No.",
+  "why": "Distinct from existing STYLE_ names; fits budget"
+ },
+ "SLIDE_COL_FUND": {
+  "text": "Fonds",
+  "back": "Fund",
+  "why": "Distinct from existing STYLE_ names; fits budget"
+ },
+ "SLIDE_COL_SHARE": {
+  "text": "Part",
+  "back": "Share",
+  "why": "Distinct from existing STYLE_ names; fits budget"
+ },
+ "SLIDE_COL_SUM": {
+  "text": "Montant",
+  "back": "Amount",
+  "why": "Distinct from existing STYLE_ names; fits budget"
  }
 }

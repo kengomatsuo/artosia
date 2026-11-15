@@ -6169,5 +6169,75 @@
   "text": "発車案内板",
   "back": "Departure information board",
   "why": "names the letter or layout look, apart from the other style names in this table"
+ },
+ "STYLE_WARM": {
+  "text": "丸カード",
+  "back": "round cards",
+  "why": "plain everyday word, distinct from the other STYLE_ names"
+ },
+ "STYLE_MAGAZINE": {
+  "text": "雑誌風",
+  "back": "magazine style",
+  "why": "plain everyday word, distinct from the other STYLE_ names"
+ },
+ "STYLE_LITURGY": {
+  "text": "礼拝式",
+  "back": "worship service form",
+  "why": "plain everyday word, distinct from the other STYLE_ names"
+ },
+ "STYLE_BLOCK": {
+  "text": "ブロック",
+  "back": "blocks",
+  "why": "plain everyday word, distinct from the other STYLE_ names"
+ },
+ "STYLE_GLASS": {
+  "text": "すりガラス",
+  "back": "frosted glass",
+  "why": "plain everyday word, distinct from the other STYLE_ names"
+ },
+ "STYLE_FIGURES": {
+  "text": "一覧表",
+  "back": "list table",
+  "why": "plain everyday word, distinct from the other STYLE_ names"
+ },
+ "STYLE_DIAGONAL": {
+  "text": "斜めカット",
+  "back": "slanted cut",
+  "why": "plain everyday word, distinct from the other STYLE_ names"
+ },
+ "STYLE_GLOW": {
+  "text": "グロー",
+  "back": "glow",
+  "why": "plain everyday word, distinct from the other STYLE_ names"
+ },
+ "SLIDE_COL_DATE": {
+  "text": "日付",
+  "back": "date",
+  "why": "plain everyday word, distinct from the other STYLE_ names"
+ },
+ "SLIDE_COL_NAME": {
+  "text": "名前",
+  "back": "name",
+  "why": "plain everyday word, distinct from the other STYLE_ names"
+ },
+ "SLIDE_COL_NO": {
+  "text": "番号",
+  "back": "number",
+  "why": "plain everyday word, distinct from the other STYLE_ names"
+ },
+ "SLIDE_COL_FUND": {
+  "text": "用途",
+  "back": "purpose",
+  "why": "plain everyday word, distinct from the other STYLE_ names"
+ },
+ "SLIDE_COL_SHARE": {
+  "text": "割合",
+  "back": "ratio",
+  "why": "plain everyday word, distinct from the other STYLE_ names"
+ },
+ "SLIDE_COL_SUM": {
+  "text": "金額",
+  "back": "amount",
+  "why": "plain everyday word, distinct from the other STYLE_ names"
  }
 }

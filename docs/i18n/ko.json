@@ -6171,5 +6171,75 @@
   "text": "출발 안내판",
   "back": "Departure information board",
   "why": "names the letter or layout look, apart from the other style names in this table"
+ },
+ "STYLE_WARM": {
+  "text": "둥근 카드",
+  "back": "round cards",
+  "why": "plain everyday word, distinct from the other STYLE_ names"
+ },
+ "STYLE_MAGAZINE": {
+  "text": "잡지형",
+  "back": "magazine type",
+  "why": "plain everyday word, distinct from the other STYLE_ names"
+ },
+ "STYLE_LITURGY": {
+  "text": "금테 예배",
+  "back": "gold-rimmed worship",
+  "why": "plain everyday word, distinct from the other STYLE_ names"
+ },
+ "STYLE_BLOCK": {
+  "text": "블록",
+  "back": "blocks",
+  "why": "plain everyday word, distinct from the other STYLE_ names"
+ },
+ "STYLE_GLASS": {
+  "text": "반투명 유리",
+  "back": "translucent glass",
+  "why": "plain everyday word, distinct from the other STYLE_ names"
+ },
+ "STYLE_FIGURES": {
+  "text": "현황표",
+  "back": "status table",
+  "why": "plain everyday word, distinct from the other STYLE_ names"
+ },
+ "STYLE_DIAGONAL": {
+  "text": "사선 컷",
+  "back": "slanted cut",
+  "why": "plain everyday word, distinct from the other STYLE_ names"
+ },
+ "STYLE_GLOW": {
+  "text": "은은한 빛",
+  "back": "soft glow",
+  "why": "plain everyday word, distinct from the other STYLE_ names"
+ },
+ "SLIDE_COL_DATE": {
+  "text": "날짜",
+  "back": "date",
+  "why": "plain everyday word, distinct from the other STYLE_ names"
+ },
+ "SLIDE_COL_NAME": {
+  "text": "이름",
+  "back": "name",
+  "why": "plain everyday word, distinct from the other STYLE_ names"
+ },
+ "SLIDE_COL_NO": {
+  "text": "번호",
+  "back": "number",
+  "why": "plain everyday word, distinct from the other STYLE_ names"
+ },
+ "SLIDE_COL_FUND": {
+  "text": "용도",
+  "back": "purpose",
+  "why": "plain everyday word, distinct from the other STYLE_ names"
+ },
+ "SLIDE_COL_SHARE": {
+  "text": "비율",
+  "back": "ratio",
+  "why": "plain everyday word, distinct from the other STYLE_ names"
+ },
+ "SLIDE_COL_SUM": {
+  "text": "금액",
+  "back": "amount",
+  "why": "plain everyday word, distinct from the other STYLE_ names"
  }
 }

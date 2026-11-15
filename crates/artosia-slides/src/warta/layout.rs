@@ -324,7 +324,7 @@ mod tests {
     use artosia_core::deck::{Align, Face};
 
     const WORDS: &str = "Pendaftaran di meja informasi sampai 6 Desember Biaya Rp 350.000 per orang anak di bawah lima tahun gratis Bawa perlengkapan tidur alat mandi dan Alkitab sendiri Bus berangkat Sabtu pukul 06.00 dari halaman gereja dan kembali Minggu sore";
-    const POSTERS: &[NoticeStyle] = &[NoticeStyle::QuietTint, NoticeStyle::CivicBoard,NoticeStyle::Greige, NoticeStyle::Pill, NoticeStyle::Neon, NoticeStyle::Split, NoticeStyle::Simple, NoticeStyle::SimpleDark, NoticeStyle::SwissNumerals, NoticeStyle::SerifItalic];
+    const POSTERS: &[NoticeStyle] = &[NoticeStyle::Diagonal, NoticeStyle::Glow,NoticeStyle::Liturgy,NoticeStyle::Figures,NoticeStyle::Glass, NoticeStyle::Block,NoticeStyle::QuietTint, NoticeStyle::Warm,NoticeStyle::Magazine, NoticeStyle::CivicBoard,NoticeStyle::Greige, NoticeStyle::Pill, NoticeStyle::Neon, NoticeStyle::Split, NoticeStyle::Simple, NoticeStyle::SimpleDark, NoticeStyle::SwissNumerals, NoticeStyle::SerifItalic];
 
     fn card(title: &str, body: &str) -> Slide {
         Slide { notice: NoticeKind::Plain, heading: title.into(), text: body.into(), ..Slide::default() }

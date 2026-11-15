@@ -41,6 +41,12 @@ pub struct Words {
     pub holder: String,
     pub scan: String,
     pub sticker: String,
+    pub col_date: String,
+    pub col_name: String,
+    pub col_no: String,
+    pub col_fund: String,
+    pub col_share: String,
+    pub col_sum: String,
     months: Vec<String>,
     weekdays: Vec<String>,
 }
@@ -64,6 +70,12 @@ impl Words {
             holder: or(&words.holder, HOLDER_LABEL),
             scan: or(&words.scan, QRIS_CAPTION),
             sticker: or(&words.sticker, STICKER),
+            col_date: or(&words.col_date, "Tgl"),
+            col_name: or(&words.col_name, "Nama"),
+            col_no: or(&words.col_no, "No"),
+            col_fund: or(&words.col_fund, "Dana"),
+            col_share: or(&words.col_share, "Bagian"),
+            col_sum: or(&words.col_sum, "Jumlah"),
             months: list(&words.months, &MONTHS),
             weekdays: list(&words.weekdays, &DAYS),
         }
@@ -124,6 +136,12 @@ pub struct Name {
     pub hl: bool,
 }
 
+/// A row of a birthday column: a month heading, or the name at an index.
+pub enum Slot {
+    Head(String),
+    Name(usize),
+}
+
 pub struct Fund {
     pub label: String,
     pub rupiah: i64,
@@ -145,6 +163,8 @@ pub struct Data {
     pub church: String,
     pub rows: Vec<Row>,
     pub names: Vec<Name>,
+    /// The week of each name, counted from the Sunday on or before the page's first date; 0 for a name with no date.
+    pub weeks: Vec<usize>,
     pub funds: Vec<Fund>,
     /// The card's whole total, which a part of a long card keeps; None sums the funds shown.
     pub whole: Option<i64>,
@@ -224,10 +244,12 @@ impl Data {
         }
         // A strip of seven days means one week, so a longer or shorter range has none.
         let days = slide.week.filter(|(from, to)| from.plus_days(6) == *to).map_or_else(Vec::new, |(from, _)| (0..7).map(|k| from.plus_days(k)).map(|date| (words.dow(date), date.day)).collect());
+        let weeks = (0..names.len()).map(|at| slide.dates.first().zip(slide.dates.get(at)).map_or(0, |(first, date)| Data::week_of(*first, *date))).collect();
         let spans = slide.notice == NoticeKind::Birthdays && slide.dates.windows(2).any(|pair| (pair[0].year, pair[0].month) != (pair[1].year, pair[1].month));
         let week_label = slide.week.map_or_else(String::new, |(from, to)| words.range(from, to));
         let covers = slide.week.is_some_and(|(from, to)| slide.dates.iter().all(|date| *date >= from && *date <= to));
-        let date_long = first.map(|date| format!("{}, {} {} {}", words.day_name(date), date.day, words.month(date.month), date.year));
+        // A birthday slide's dates are the members' birthdays, never the day the slide is about.
+        let date_long = first.filter(|_| slide.notice != NoticeKind::Birthdays).map(|date| format!("{}, {} {} {}", words.day_name(date), date.day, words.month(date.month), date.year));
         let date_card = first.filter(|_| slide.notice == NoticeKind::Plain).map(|date| (words.day_name(date).to_string(), date.day.to_string(), words.month(date.month).to_string()));
         let account = |at: usize| body.rows.get(at).map(|cells| cells.join(" ")).unwrap_or_default();
         let paragraphs = body.rows.iter().map(|cells| cells.join(" ")).collect();
@@ -237,6 +259,7 @@ impl Data {
             title: slide.heading.clone(),
             church: slide.church.clone(),
             rows,
+            weeks,
             names,
             funds,
             whole: body.total.as_ref().and_then(|cells| cells.get(1)).map(|cell| fit::amount(cell)),
@@ -278,6 +301,32 @@ impl Data {
     /// A name's day as its row writes it: "08", or "08 Okt" on a page that crosses a month.
     pub fn day_of(&self, name: &Name) -> String {
         if self.spans && !name.month.is_empty() { format!("{:02} {}", name.day, name.month) } else { format!("{:02}", name.day) }
+    }
+
+    /// The week of `date` counted from the Sunday on or before `first`: 0 for that week, 1 for the next.
+    pub fn week_of(first: Date, date: Date) -> usize {
+        let sunday = first.days() - i64::from(first.weekday() % 7);
+        ((date.days() - sunday).max(0) / 7) as usize
+    }
+
+    /// The names in `cols` columns of `per` each. On a page across months a column opens with its month's
+    /// heading and writes another where the month turns, so a row writes its day only.
+    pub fn month_runs(&self, per: usize, cols: usize) -> Vec<Vec<Slot>> {
+        let long = |name: &Name| (1..=12u8).find(|m| !name.month.is_empty() && self.w.month_short(*m) == name.month).map_or_else(|| self.month.clone(), |m| self.w.month(m).to_string());
+        (0..cols)
+            .map(|c| {
+                let (mut column, mut last) = (Vec::new(), String::new());
+                for (i, name) in self.names.iter().enumerate().skip(c * per).take(per) {
+                    let month = long(name);
+                    if self.spans && month != last {
+                        column.push(Slot::Head(month.clone()));
+                        last = month;
+                    }
+                    column.push(Slot::Name(i));
+                }
+                column
+            })
+            .collect()
     }
 
     pub fn total(&self) -> i64 {
@@ -323,6 +372,33 @@ mod tests {
         assert_eq!(english.range(day(11, 29), day(12, 5)), "29 Nov \u{2013} 5 Dec");
         assert_eq!(english.warta, "Church news");
         assert_eq!(english.holder, HOLDER_LABEL, "an empty word keeps the design's");
+    }
+
+    #[test]
+    fn a_week_counts_from_the_sunday_on_or_before_the_first_date() {
+        let day = |month: u8, day: u8| Date { year: 2026, month, day };
+        // 22 November 2026 is a Sunday.
+        assert_eq!(Data::week_of(day(11, 22), day(11, 22)), 0);
+        assert_eq!(Data::week_of(day(11, 22), day(11, 28)), 0);
+        assert_eq!(Data::week_of(day(11, 22), day(11, 29)), 1);
+        assert_eq!(Data::week_of(day(11, 22), day(12, 6)), 2);
+        // A first date mid-week leaves its Sunday behind: Wednesday the 18th is still in week 0 with the 21st.
+        assert_eq!(Data::week_of(day(11, 18), day(11, 21)), 0);
+        assert_eq!(Data::week_of(day(11, 18), day(11, 22)), 1);
+    }
+
+    #[test]
+    fn a_column_heads_each_month_it_holds_once() {
+        let day = |month: u8, day: u8| Date { year: 2026, month, day };
+        let dates = vec![day(11, 29), day(11, 30), day(12, 1), day(12, 2)];
+        let slide = Slide { notice: NoticeKind::Birthdays, text: "A\t1\nB\t1\nC\t1\nD\t1".into(), dates, ..Slide::default() };
+        let data = Data::of(&slide);
+        let shape = |runs: Vec<Vec<Slot>>| runs.iter().map(|c| c.iter().map(|s| match s { Slot::Head(m) => m.clone(), Slot::Name(i) => i.to_string() }).collect::<Vec<_>>().join(",")).collect::<Vec<_>>();
+        // The heading opens each column and again where the month turns inside one.
+        assert_eq!(shape(data.month_runs(3, 2)), ["November,0,1,Desember,2", "Desember,3"]);
+        // A page inside one month has no headings.
+        let one = Data::of(&Slide { notice: NoticeKind::Birthdays, text: "A\t1 November\nB\t2 November".into(), dates: vec![day(11, 1), day(11, 2)], ..Slide::default() });
+        assert_eq!(shape(one.month_runs(2, 1)), ["0,1"]);
     }
 
     #[test]

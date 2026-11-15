@@ -74,9 +74,24 @@ pub fn initials(name: &str) -> String {
     out.join(" ")
 }
 
-/// The name as it fits `width`: whole, else with middle names as initials; None when neither fits.
+/// Every given name as its initial ("Bpk. Y. B. Tampubolon"), or with `first_only` just the first ("Bpk. Y. Tampubolon").
+fn surname_only(name: &str, first_only: bool) -> String {
+    let parts: Vec<&str> = name.split_whitespace().collect();
+    let head = usize::from(parts.first().is_some_and(|first| HONORIFICS.contains(first)));
+    let rest = &parts[head..];
+    if rest.len() < 2 {
+        return name.to_string();
+    }
+    let given = if first_only { &rest[..1] } else { &rest[..rest.len() - 1] };
+    let mut out: Vec<String> = parts[..head].iter().map(|part| part.to_string()).collect();
+    out.extend(given.iter().map(|part| format!("{}.", part.chars().next().unwrap_or(' '))));
+    out.push(rest[rest.len() - 1].to_string());
+    out.join(" ")
+}
+
+/// The name as it fits `width`: whole, middle names as initials, every given name as an initial, then the first only; None when none fits.
 pub fn ladder(name: &str, width: f32, measure: &dyn Fn(&str) -> f32) -> Option<String> {
-    [name.to_string(), initials(name)].into_iter().find(|candidate| measure(candidate) <= width)
+    [name.to_string(), initials(name), surname_only(name, false), surname_only(name, true)].into_iter().find(|candidate| measure(candidate) <= width)
 }
 
 /// `12345678` as `12.345.678`, the church's one style of digits.

@@ -6207,5 +6207,75 @@
   "text": "Painel de saídas",
   "back": "Departures panel",
   "why": "names the letter or layout look, apart from the other style names in this table"
+ },
+ "STYLE_WARM": {
+  "text": "Acolhedor",
+  "back": "Welcoming",
+  "why": "Warm in feel; not used by another style"
+ },
+ "STYLE_MAGAZINE": {
+  "text": "Revista",
+  "back": "Magazine",
+  "why": "Everyday word"
+ },
+ "STYLE_LITURGY": {
+  "text": "Liturgia",
+  "back": "Liturgy",
+  "why": "Order of service, church word"
+ },
+ "STYLE_BLOCK": {
+  "text": "Blocos",
+  "back": "Blocks",
+  "why": "Building blocks of colour"
+ },
+ "STYLE_GLASS": {
+  "text": "Vidro fosco",
+  "back": "Frosted glass",
+  "why": "Names the frosted panel"
+ },
+ "STYLE_FIGURES": {
+  "text": "Registro",
+  "back": "Register",
+  "why": "Ruled register; Livro-caixa is taken"
+ },
+ "STYLE_DIAGONAL": {
+  "text": "Diagonal",
+  "back": "Diagonal",
+  "why": "Same word, slanted cut"
+ },
+ "STYLE_GLOW": {
+  "text": "Brilho",
+  "back": "Glow",
+  "why": "Gentle glow of light"
+ },
+ "SLIDE_COL_DATE": {
+  "text": "Data",
+  "back": "Date",
+  "why": "One short word"
+ },
+ "SLIDE_COL_NAME": {
+  "text": "Nome",
+  "back": "Name",
+  "why": "Plain"
+ },
+ "SLIDE_COL_NO": {
+  "text": "Nº",
+  "back": "No.",
+  "why": "Usual short mark"
+ },
+ "SLIDE_COL_FUND": {
+  "text": "Destino",
+  "back": "Purpose",
+  "why": "Fundo means background elsewhere"
+ },
+ "SLIDE_COL_SHARE": {
+  "text": "Fatia",
+  "back": "Share",
+  "why": "Slice of the whole"
+ },
+ "SLIDE_COL_SUM": {
+  "text": "Valor",
+  "back": "Amount",
+  "why": "Plain word for money amount"
  }
 }

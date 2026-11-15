@@ -2563,6 +2563,12 @@ text!(SLIDE_CHURCH_ACCOUNT, "Church account", "Church account");
 text!(SLIDE_HOLDER, "in the name of", "in the name of");
 text!(SLIDE_SCAN, "Scan to give", "Scan to give");
 text!(SLIDE_STICKER, "Info", "Info");
+text!(SLIDE_COL_DATE, "Date", "Date");
+text!(SLIDE_COL_NAME, "Name", "Name");
+text!(SLIDE_COL_NO, "No.", "No.");
+text!(SLIDE_COL_FUND, "Fund", "Fund");
+text!(SLIDE_COL_SHARE, "Share", "Share");
+text!(SLIDE_COL_SUM, "Amount", "Amount");
 
 /// The words the announcement styles write on the screen, in the window's language.
 pub fn notice_words() -> artosia_core::deck::NoticeWords {
@@ -2583,6 +2589,12 @@ pub fn notice_words() -> artosia_core::deck::NoticeWords {
         holder: SLIDE_HOLDER().into(),
         scan: SLIDE_SCAN().into(),
         sticker: SLIDE_STICKER().into(),
+        col_date: SLIDE_COL_DATE().into(),
+        col_name: SLIDE_COL_NAME().into(),
+        col_no: SLIDE_COL_NO().into(),
+        col_fund: SLIDE_COL_FUND().into(),
+        col_share: SLIDE_COL_SHARE().into(),
+        col_sum: SLIDE_COL_SUM().into(),
     }
 }
 
@@ -2614,6 +2626,14 @@ text!(STYLE_SWISS_NUMERALS, "Swiss numerals", "Swiss numerals");
 text!(STYLE_SERIF_ITALIC, "Serif italic", "Serif italic");
 text!(STYLE_CIVIC_BOARD, "Civic board", "Civic board");
 text!(STYLE_QUIET_TINT, "Quiet tint", "Quiet tint");
+text!(STYLE_WARM, "Warm", "Warm");
+text!(STYLE_MAGAZINE, "Magazine", "Magazine");
+text!(STYLE_LITURGY, "Liturgy", "Liturgy");
+text!(STYLE_BLOCK, "Block", "Block");
+text!(STYLE_GLASS, "Glass", "Glass");
+text!(STYLE_FIGURES, "Figures", "Figures");
+text!(STYLE_DIAGONAL, "Diagonal", "Diagonal");
+text!(STYLE_GLOW, "Soft light", "Soft light");
 text!(NOTICE_CALENDARS, "Calendars used", "Calendars used");
 text!(NOTICE_WINDOW, "Show", "Show");
 text!(NOTICE_WEEK, "This week", "This week");

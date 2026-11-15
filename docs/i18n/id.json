@@ -6131,5 +6131,75 @@
   "text": "Papan jadwal",
   "back": "Schedule board",
   "why": "names the letter or layout look, apart from the other style names in this table"
+ },
+ "STYLE_WARM": {
+  "text": "Hangat",
+  "back": "Warm",
+  "why": "Distinct from existing STYLE_ names; fits budget"
+ },
+ "STYLE_MAGAZINE": {
+  "text": "Majalah",
+  "back": "Magazine",
+  "why": "Distinct from existing STYLE_ names; fits budget"
+ },
+ "STYLE_LITURGY": {
+  "text": "Tata ibadah",
+  "back": "Order of worship",
+  "why": "Distinct from existing STYLE_ names; fits budget"
+ },
+ "STYLE_BLOCK": {
+  "text": "Blok warna",
+  "back": "Colour block",
+  "why": "Distinct from existing STYLE_ names; fits budget"
+ },
+ "STYLE_GLASS": {
+  "text": "Kaca buram",
+  "back": "Frosted glass",
+  "why": "Distinct from existing STYLE_ names; fits budget"
+ },
+ "STYLE_FIGURES": {
+  "text": "Tabel angka",
+  "back": "Number table",
+  "why": "Distinct from existing STYLE_ names; fits budget"
+ },
+ "STYLE_DIAGONAL": {
+  "text": "Serong",
+  "back": "Slanted",
+  "why": "Distinct from existing STYLE_ names; fits budget"
+ },
+ "STYLE_GLOW": {
+  "text": "Cahaya",
+  "back": "Light",
+  "why": "Distinct from existing STYLE_ names; fits budget"
+ },
+ "SLIDE_COL_DATE": {
+  "text": "Tgl",
+  "back": "Date (abbr.)",
+  "why": "Distinct from existing STYLE_ names; fits budget"
+ },
+ "SLIDE_COL_NAME": {
+  "text": "Nama",
+  "back": "Name",
+  "why": "Distinct from existing STYLE_ names; fits budget"
+ },
+ "SLIDE_COL_NO": {
+  "text": "No",
+  "back": "No.",
+  "why": "Distinct from existing STYLE_ names; fits budget"
+ },
+ "SLIDE_COL_FUND": {
+  "text": "Pos",
+  "back": "Fund line",
+  "why": "Distinct from existing STYLE_ names; fits budget"
+ },
+ "SLIDE_COL_SHARE": {
+  "text": "Bagian",
+  "back": "Share",
+  "why": "Distinct from existing STYLE_ names; fits budget"
+ },
+ "SLIDE_COL_SUM": {
+  "text": "Jumlah",
+  "back": "Amount",
+  "why": "Distinct from existing STYLE_ names; fits budget"
  }
 }

@@ -74,6 +74,14 @@ pub fn style_name(style: NoticeStyle) -> &'static str {
         NoticeStyle::SerifItalic => t::STYLE_SERIF_ITALIC(),
         NoticeStyle::CivicBoard => t::STYLE_CIVIC_BOARD(),
         NoticeStyle::QuietTint => t::STYLE_QUIET_TINT(),
+        NoticeStyle::Warm => t::STYLE_WARM(),
+        NoticeStyle::Magazine => t::STYLE_MAGAZINE(),
+        NoticeStyle::Liturgy => t::STYLE_LITURGY(),
+        NoticeStyle::Block => t::STYLE_BLOCK(),
+        NoticeStyle::Glass => t::STYLE_GLASS(),
+        NoticeStyle::Figures => t::STYLE_FIGURES(),
+        NoticeStyle::Diagonal => t::STYLE_DIAGONAL(),
+        NoticeStyle::Glow => t::STYLE_GLOW(),
     }
 }
 

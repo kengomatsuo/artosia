@@ -17813,6 +17813,108 @@
   "notes": "One very short word, in capitals inside a circle."
  },
  {
+  "key": "SLIDE_COL_DATE",
+  "kind": "const",
+  "screen": "A birthday or offering slide on the projector, in the ruled register layout: a row of small column heads above the table.",
+  "moment": "The room looks along the table to see what each column holds.",
+  "role": "column head",
+  "does": "Heads the column that holds each person's birthday date, a day number with its month.",
+  "budget": 6,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template"
+  ],
+  "notes": "Shown in capitals; one short word, an abbreviation is fine where the language has one."
+ },
+ {
+  "key": "SLIDE_COL_NAME",
+  "kind": "const",
+  "screen": "A birthday or offering slide on the projector, in the ruled register layout: a row of small column heads above the table.",
+  "moment": "The room looks along the table to see what each column holds.",
+  "role": "column head",
+  "does": "Heads the column that holds the person each row is about.",
+  "budget": 8,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template"
+  ],
+  "notes": "Shown in capitals."
+ },
+ {
+  "key": "SLIDE_COL_NO",
+  "kind": "const",
+  "screen": "A birthday or offering slide on the projector, in the ruled register layout: a row of small column heads above the table.",
+  "moment": "The room looks along the table to see what each column holds.",
+  "role": "column head",
+  "does": "Heads the column of running numbers, one per fund, counting from one.",
+  "budget": 4,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template"
+  ],
+  "notes": "Shown in capitals above a small coloured square holding a digit; the usual short mark for a number."
+ },
+ {
+  "key": "SLIDE_COL_FUND",
+  "kind": "const",
+  "screen": "A birthday or offering slide on the projector, in the ruled register layout: a row of small column heads above the table.",
+  "moment": "The room looks along the table to see what each column holds.",
+  "role": "column head",
+  "does": "Heads the column that names what a gift was given for.",
+  "budget": 8,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template"
+  ],
+  "notes": "Shown in capitals."
+ },
+ {
+  "key": "SLIDE_COL_SHARE",
+  "kind": "const",
+  "screen": "A birthday or offering slide on the projector, in the ruled register layout: a row of small column heads above the table.",
+  "moment": "The room looks along the table to see what each column holds.",
+  "role": "column head",
+  "does": "Heads the column of bars and percentages showing how much of everything given each fund holds.",
+  "budget": 8,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template"
+  ],
+  "notes": "Shown in capitals."
+ },
+ {
+  "key": "SLIDE_COL_SUM",
+  "kind": "const",
+  "screen": "A birthday or offering slide on the projector, in the ruled register layout: a row of small column heads above the table.",
+  "moment": "The room looks along the table to see what each column holds.",
+  "role": "column head",
+  "does": "Heads the column of money amounts, one per fund, in rupiah.",
+  "budget": 8,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template"
+  ],
+  "notes": "Shown in capitals, right-aligned over the amounts; not the grand total."
+ },
+ {
   "key": "giving_count",
   "kind": "sentence",
   "screen": "Offerings window, the fifth tab under the title bar. A title with the date of the latest service, filters for dates, fund and method with the number of gifts and their sum, a table of gifts (date, giver, fund, method, amount, and an edit and a delete icon per row), an Add gift button with the total under the table, and a side panel with the money slide, the sum per fund and the transfer account.",
@@ -18421,6 +18523,143 @@
    "slide_template"
   ],
   "notes": ""
+ },
+ {
+  "key": "STYLE_WARM",
+  "kind": "const",
+  "screen": "Announcements window and Templates tab, in the switch of slide layouts and in the list of layouts on the left of the Templates tab.",
+  "moment": "The person picks one of the slide layouts.",
+  "role": "choice label",
+  "does": "Names the layout of soft rounded cards in one warm colour, with a cream plate under the offerings and faint arches above the title.",
+  "budget": 16,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template"
+  ],
+  "notes": ""
+ },
+ {
+  "key": "STYLE_MAGAZINE",
+  "kind": "const",
+  "screen": "Announcements window and Templates tab, in the switch of slide layouts and in the list of layouts on the left of the Templates tab.",
+  "moment": "The person picks one of the slide layouts.",
+  "role": "choice label",
+  "does": "Names the layout drawn like a printed magazine page, with a double rule under the masthead and a large serif headline.",
+  "budget": 16,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template"
+  ],
+  "notes": ""
+ },
+ {
+  "key": "STYLE_LITURGY",
+  "kind": "const",
+  "screen": "Announcements window and Templates tab, in the switch of slide layouts and in the list of layouts on the left of the Templates tab.",
+  "moment": "The person picks one of the slide layouts.",
+  "role": "choice label",
+  "does": "Names the layout drawn like a church's order of service: a deep robe colour inside a gold double frame, capital lettering and parchment strips for what is highlighted.",
+  "budget": 16,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template"
+  ],
+  "notes": ""
+ },
+ {
+  "key": "STYLE_GLASS",
+  "kind": "const",
+  "screen": "Announcements window and Templates tab, in the switch of slide layouts and in the list of layouts on the left of the Templates tab.",
+  "moment": "The person picks one of the slide layouts.",
+  "role": "choice label",
+  "does": "Names the layout that lays the church's own photograph under the whole slide, with every line of data on one frosted panel and a handwritten word as the title.",
+  "budget": 16,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template"
+  ],
+  "notes": ""
+ },
+ {
+  "key": "STYLE_FIGURES",
+  "kind": "const",
+  "screen": "Announcements window and Templates tab, in the switch of slide layouts and in the list of layouts on the left of the Templates tab.",
+  "moment": "The person picks one of the slide layouts.",
+  "role": "choice label",
+  "does": "Names the layout drawn as a ruled register, with big condensed numerals for dates, a colour per fund and the total as the largest thing.",
+  "budget": 16,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template"
+  ],
+  "notes": ""
+ },
+ {
+  "key": "STYLE_DIAGONAL",
+  "kind": "const",
+  "screen": "Announcements window and Templates tab, in the switch of slide layouts and in the list of layouts on the left of the Templates tab.",
+  "moment": "The person picks one of the slide layouts.",
+  "role": "choice label",
+  "does": "Names the layout whose heavy title sits on a coloured block cut at a slant, with white date tiles below and a slanted plate for the total.",
+  "budget": 16,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template"
+  ],
+  "notes": "Diagonal as a slanted cut across the slide, not a direction to go."
+ },
+ {
+  "key": "STYLE_GLOW",
+  "kind": "const",
+  "screen": "Announcements window and Templates tab, in the switch of slide layouts and in the list of layouts on the left of the Templates tab.",
+  "moment": "The person picks one of the slide layouts.",
+  "role": "choice label",
+  "does": "Names the layout drawn on a dark colour gradient with one large, blurred glow of light behind the title and thin spaced capitals.",
+  "budget": 16,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template"
+  ],
+  "notes": "Soft light as a gentle glow, not a lamp or a setting."
+ },
+ {
+  "key": "STYLE_BLOCK",
+  "kind": "const",
+  "screen": "Announcements window and Templates tab, in the switch of slide layouts and in the list of layouts on the left of the Templates tab.",
+  "moment": "The person picks one of the slide layouts.",
+  "role": "choice label",
+  "does": "Names the layout built from flat hard-edged blocks of colour, with a bright band for the title and big wide letters.",
+  "budget": 16,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "slide_template",
+   "announcement"
+  ],
+  "notes": "Block as in a building block or a block of colour, not a blocked item."
  },
  {
   "key": "ANNOUNCEMENT_QRIS",

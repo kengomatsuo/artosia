@@ -6207,5 +6207,75 @@
   "text": "Panel de salidas",
   "back": "Departures panel",
   "why": "names the letter or layout look, apart from the other style names in this table"
+ },
+ "STYLE_WARM": {
+  "text": "Cálido",
+  "back": "Warm",
+  "why": "Soft, warm; not used by another style"
+ },
+ "STYLE_MAGAZINE": {
+  "text": "Revista",
+  "back": "Magazine",
+  "why": "Everyday word"
+ },
+ "STYLE_LITURGY": {
+  "text": "Liturgia",
+  "back": "Liturgy",
+  "why": "Order of service, church word"
+ },
+ "STYLE_BLOCK": {
+  "text": "Bloques",
+  "back": "Blocks",
+  "why": "Building blocks of colour"
+ },
+ "STYLE_GLASS": {
+  "text": "Cristal",
+  "back": "Crystal",
+  "why": "Frosted panel; Vidrio not needed"
+ },
+ "STYLE_FIGURES": {
+  "text": "Registro",
+  "back": "Register",
+  "why": "Ruled register; Cifras grandes is taken"
+ },
+ "STYLE_DIAGONAL": {
+  "text": "Diagonal",
+  "back": "Diagonal",
+  "why": "Same word, slanted cut"
+ },
+ "STYLE_GLOW": {
+  "text": "Resplandor",
+  "back": "Glow",
+  "why": "Gentle glow of light"
+ },
+ "SLIDE_COL_DATE": {
+  "text": "Fecha",
+  "back": "Date",
+  "why": "One short word"
+ },
+ "SLIDE_COL_NAME": {
+  "text": "Nombre",
+  "back": "Name",
+  "why": "Plain"
+ },
+ "SLIDE_COL_NO": {
+  "text": "Nº",
+  "back": "No.",
+  "why": "Usual short mark"
+ },
+ "SLIDE_COL_FUND": {
+  "text": "Destino",
+  "back": "Purpose",
+  "why": "Fondo means background elsewhere"
+ },
+ "SLIDE_COL_SHARE": {
+  "text": "Porción",
+  "back": "Share",
+  "why": "Part is used for song parts"
+ },
+ "SLIDE_COL_SUM": {
+  "text": "Monto",
+  "back": "Amount",
+  "why": "Latin American word for money amount"
  }
 }

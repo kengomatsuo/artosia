@@ -96,11 +96,27 @@ pub enum NoticeStyle {
     CivicBoard,
     /// One sans in two weights on a tinted ground, a hairline under the title and a solid pill under whatever is special.
     QuietTint,
+    /// One warm hue in tone-on-tone steps: soft cards, a cream plate over the foot of the offering card and faint arches behind the header.
+    Warm,
+    /// An order of service: a vestment ground in a double gold frame, a small cross, parchment bands and Roman capitals over a book serif.
+    Liturgy,
+    /// A magazine page: a double rule under the masthead, a text-serif headline, corner lines in small caps and rows like a contents page.
+    Magazine,
+    /// Hard-edged flat blocks: a signal band with the title, a deep block, near-black rows and a signal foot for the total.
+    Block,
+    /// The church's photograph under one scrim, one frosted plate for every word and a script title.
+    Glass,
+    /// A ruled register: condensed numerals for dates, a colour bar per week, a hue per fund and a full-width signal foot for the total.
+    Figures,
+    /// A heavy caps headline cut by one diagonal into a deep colour block, white date tiles and a slanted total plate.
+    Diagonal,
+    /// A dark gradient field with one soft orb of light, light tracked caps and light figures, the data in plain white.
+    Glow,
 }
 
 impl NoticeStyle {
     /// Every style, as the gallery lists them: the default first, then the other plain families, then the posters and the look's own.
-    pub const ALL: &[NoticeStyle] = &[NoticeStyle::SerifItalic, NoticeStyle::SwissNumerals, NoticeStyle::QuietTint, NoticeStyle::CivicBoard, NoticeStyle::Greige, NoticeStyle::Pill, NoticeStyle::Neon, NoticeStyle::Split, NoticeStyle::Simple, NoticeStyle::SimpleDark, NoticeStyle::Hairline, NoticeStyle::Ledger, NoticeStyle::Band];
+    pub const ALL: &[NoticeStyle] = &[NoticeStyle::SerifItalic, NoticeStyle::SwissNumerals, NoticeStyle::QuietTint, NoticeStyle::Warm,NoticeStyle::CivicBoard, NoticeStyle::Liturgy, NoticeStyle::Magazine, NoticeStyle::Block, NoticeStyle::Glass, NoticeStyle::Figures, NoticeStyle::Diagonal, NoticeStyle::Glow, NoticeStyle::Greige, NoticeStyle::Pill, NoticeStyle::Neon, NoticeStyle::Split, NoticeStyle::Simple, NoticeStyle::SimpleDark, NoticeStyle::Hairline, NoticeStyle::Ledger, NoticeStyle::Band];
 
     /// The word stored in the library.
     pub fn code(self) -> &'static str {
@@ -118,12 +134,20 @@ impl NoticeStyle {
             NoticeStyle::SerifItalic => "serif",
             NoticeStyle::CivicBoard => "civic",
             NoticeStyle::QuietTint => "quiet",
+            NoticeStyle::Warm => "warm",
+            NoticeStyle::Liturgy => "liturgy",
+            NoticeStyle::Magazine => "magazine",
+            NoticeStyle::Block => "block",
+            NoticeStyle::Glass => "glass",
+            NoticeStyle::Figures => "figures",
+            NoticeStyle::Diagonal => "diagonal",
+            NoticeStyle::Glow => "glow",
         }
     }
 
     /// Whether the style brings its own ground, fonts and palette and ignores the look's.
     pub fn is_poster(self) -> bool {
-        matches!(self, NoticeStyle::Greige | NoticeStyle::Pill | NoticeStyle::Neon | NoticeStyle::Split | NoticeStyle::Simple | NoticeStyle::SimpleDark | NoticeStyle::SwissNumerals | NoticeStyle::SerifItalic | NoticeStyle::CivicBoard | NoticeStyle::QuietTint)
+        matches!(self, NoticeStyle::Greige | NoticeStyle::Pill | NoticeStyle::Neon | NoticeStyle::Split | NoticeStyle::Simple | NoticeStyle::SimpleDark | NoticeStyle::SwissNumerals | NoticeStyle::SerifItalic | NoticeStyle::CivicBoard | NoticeStyle::QuietTint | NoticeStyle::Warm | NoticeStyle::Liturgy | NoticeStyle::Magazine | NoticeStyle::Block | NoticeStyle::Glass | NoticeStyle::Figures | NoticeStyle::Diagonal | NoticeStyle::Glow)
     }
 
     /// None for a card that chose no style and follows the look.
@@ -151,6 +175,13 @@ pub struct NoticeWords {
     pub holder: String,
     pub scan: String,
     pub sticker: String,
+    /// The column heads of a ruled register: date, name, number, fund, share, amount.
+    pub col_date: String,
+    pub col_name: String,
+    pub col_no: String,
+    pub col_fund: String,
+    pub col_share: String,
+    pub col_sum: String,
 }
 
 impl NoticeWords {

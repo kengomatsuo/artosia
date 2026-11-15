@@ -6182,5 +6182,75 @@
   "text": "Bảng giờ",
   "back": "Time board",
   "why": "names the letter or layout look, apart from the other style names in this table"
+ },
+ "STYLE_WARM": {
+  "text": "Ấm áp",
+  "back": "Warm",
+  "why": "Distinct from existing STYLE_ names; fits budget"
+ },
+ "STYLE_MAGAZINE": {
+  "text": "Tạp chí",
+  "back": "Magazine",
+  "why": "Distinct from existing STYLE_ names; fits budget"
+ },
+ "STYLE_LITURGY": {
+  "text": "Trình tự lễ",
+  "back": "Order of the service",
+  "why": "Distinct from existing STYLE_ names; fits budget"
+ },
+ "STYLE_BLOCK": {
+  "text": "Khối màu",
+  "back": "Colour block",
+  "why": "Distinct from existing STYLE_ names; fits budget"
+ },
+ "STYLE_GLASS": {
+  "text": "Kính mờ",
+  "back": "Frosted glass",
+  "why": "Distinct from existing STYLE_ names; fits budget"
+ },
+ "STYLE_FIGURES": {
+  "text": "Sổ kẻ ô",
+  "back": "Ruled book",
+  "why": "Distinct from existing STYLE_ names; fits budget"
+ },
+ "STYLE_DIAGONAL": {
+  "text": "Cắt chéo",
+  "back": "Slanted cut",
+  "why": "Distinct from existing STYLE_ names; fits budget"
+ },
+ "STYLE_GLOW": {
+  "text": "Ánh sáng",
+  "back": "Light",
+  "why": "Distinct from existing STYLE_ names; fits budget"
+ },
+ "SLIDE_COL_DATE": {
+  "text": "Ngày",
+  "back": "Date",
+  "why": "Distinct from existing STYLE_ names; fits budget"
+ },
+ "SLIDE_COL_NAME": {
+  "text": "Tên",
+  "back": "Name",
+  "why": "Distinct from existing STYLE_ names; fits budget"
+ },
+ "SLIDE_COL_NO": {
+  "text": "STT",
+  "back": "Running no.",
+  "why": "Distinct from existing STYLE_ names; fits budget"
+ },
+ "SLIDE_COL_FUND": {
+  "text": "Quỹ",
+  "back": "Fund",
+  "why": "Distinct from existing STYLE_ names; fits budget"
+ },
+ "SLIDE_COL_SHARE": {
+  "text": "Tỷ lệ",
+  "back": "Proportion",
+  "why": "Distinct from existing STYLE_ names; fits budget"
+ },
+ "SLIDE_COL_SUM": {
+  "text": "Số tiền",
+  "back": "Amount",
+  "why": "Distinct from existing STYLE_ names; fits budget"
  }
 }

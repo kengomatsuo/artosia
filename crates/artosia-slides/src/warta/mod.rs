@@ -12,6 +12,10 @@ mod layout;
 pub use layout::{Field, Fit, Layout, Line, TextBox, cut, layout, layout_typing};
 
 mod d1;
+mod d16;
+mod d15;
+mod d12;
+mod d13;
 mod d2;
 mod d3;
 mod d4;
@@ -20,6 +24,10 @@ mod d6;
 mod d7;
 mod d8;
 mod d9;
+mod d10;
+mod d17;
+mod d11;
+mod d14;
 mod data;
 
 use std::collections::HashMap;
@@ -55,6 +63,11 @@ pub struct Pics<'a> {
 /// The layout families, each one file of tokens in `assets/warta/directions`.
 const FAMILIES: &[(&str, &str)] = &[
     ("d1", include_str!("../../assets/warta/directions/d1.json")),
+    ("d15", include_str!("../../assets/warta/directions/d15.json")),
+    ("d16", include_str!("../../assets/warta/directions/d16.json")),
+    ("d11", include_str!("../../assets/warta/directions/d11.json")),
+    ("d12", include_str!("../../assets/warta/directions/d12.json")),
+    ("d13", include_str!("../../assets/warta/directions/d13.json")),
     ("d2", include_str!("../../assets/warta/directions/d2.json")),
     ("d3", include_str!("../../assets/warta/directions/d3.json")),
     ("d4", include_str!("../../assets/warta/directions/d4.json")),
@@ -63,6 +76,9 @@ const FAMILIES: &[(&str, &str)] = &[
     ("d6", include_str!("../../assets/warta/directions/d6.json")),
     ("d7", include_str!("../../assets/warta/directions/d7.json")),
     ("d8", include_str!("../../assets/warta/directions/d8.json")),
+    ("d17", include_str!("../../assets/warta/directions/d17.json")),
+    ("d10", include_str!("../../assets/warta/directions/d10.json")),
+    ("d14", include_str!("../../assets/warta/directions/d14.json")),
 ];
 
 /// The shared tokens, each family under `families`, and every family with each colourway's
@@ -94,9 +110,17 @@ fn family_of(style: NoticeStyle) -> &'static str {
         NoticeStyle::Neon => "d3",
         NoticeStyle::Simple | NoticeStyle::SimpleDark => "d5",
         NoticeStyle::CivicBoard => "d9",
+        NoticeStyle::Liturgy => "d11",
+        NoticeStyle::Block => "d13",
+        NoticeStyle::Glass => "d12",
+        NoticeStyle::Figures => "d16",
         NoticeStyle::SerifItalic => "d6",
         NoticeStyle::SwissNumerals => "d7",
         NoticeStyle::QuietTint => "d8",
+        NoticeStyle::Warm => "d17",
+        NoticeStyle::Magazine => "d15",
+        NoticeStyle::Diagonal => "d10",
+        NoticeStyle::Glow => "d14",
         _ => "d4",
     }
 }
@@ -204,11 +228,18 @@ pub struct R {
     bc: String,
     bop: f32,
     rot: f32,
+    arch: bool,
 }
 
 impl R {
     pub fn new(x: f32, y: f32, w: f32, h: f32) -> R {
-        R { x, y, w, h, fill: None, rx: 0.0, op: 1.0, bw: 0.0, bc: String::new(), bop: 1.0, rot: 0.0 }
+        R { x, y, w, h, fill: None, rx: 0.0, op: 1.0, bw: 0.0, bc: String::new(), bop: 1.0, rot: 0.0, arch: false }
+    }
+
+    /// An open arch: round at the top by half its width, its border only on the top and the sides.
+    pub fn arch(mut self) -> R {
+        self.arch = true;
+        self
     }
 
     pub fn fill(mut self, colour: &str) -> R {
@@ -542,6 +573,20 @@ impl Sheet {
         self.d[section][key].as_array().map(|rows| rows.iter().map(|row| row.as_array().map(|cells| cells.iter().map(number).collect()).unwrap_or_default()).collect()).unwrap_or_default()
     }
 
+    /// A number of a radial gradient's circle (`cx`, `cy`, `r`) in the sheet's space.
+    pub fn glow(&self, name: &str, key: &str) -> f32 {
+        number(&self.d["gradients"][name]["radial"][key])
+    }
+
+    /// The radial gradient `name` over the rect `r`: its centre in the rect (0 to 1), its radius at scale
+    /// `u` and its stops, whose colours are palette keys with an alpha.
+    fn radial(&self, name: &str, r: &R, u: f32) -> Option<([f32; 2], f32, Vec<(f32, Color)>)> {
+        let spec = &self.d["gradients"][name];
+        spec.get("radial")?;
+        let stops = spec["stops"].as_array()?.iter().map(|row| Some((number(&row[0]), hex(&self.c(row[1].as_str()?)).alpha(number(&row[2]))))).collect::<Option<Vec<_>>>()?;
+        Some(([(self.glow(name, "cx") - r.x) / r.w, (self.glow(name, "cy") - r.y) / r.h], self.glow(name, "r") * u, stops))
+    }
+
     /// A palette key or a hex colour as hex.
     pub fn c(&self, key: &str) -> String {
         if key.starts_with('#') || key.starts_with("grad:") { key.to_string() } else { self.d["palette"][key].as_str().unwrap_or("#FF00FF").to_string() }
@@ -673,15 +718,23 @@ impl Sheet {
                     let (x, y, rw, rh) = if ground { (0.0, 0.0, w, h) } else { (ox + r.x * u, r.y * u, r.w * u, r.h * u) };
                     let mut e = el().key(format!("r{at}")).absolute(x, y).size(rw, rh).a11y_hidden();
                     if let Some(fill) = &r.fill {
-                        match fill.strip_prefix("grad:").and_then(gradient) {
-                            Some((top, bottom)) => e = e.fill(top).gradient(top, bottom),
-                            None => e = e.fill(hex(fill).alpha(r.op)),
+                        let name = fill.strip_prefix("grad:");
+                        if let Some((center, radius, stops)) = name.and_then(|name| self.radial(name, r, u)) {
+                            e = e.radial_gradient(center, radius, stops);
+                        } else {
+                            match name.and_then(gradient) {
+                                Some((top, bottom)) => e = e.fill(top).gradient(top, bottom),
+                                None => e = e.fill(hex(fill).alpha(r.op)),
+                            }
                         }
                     }
                     if r.rx > 0.0 {
                         e = e.radius(r.rx * u);
                     }
-                    if r.bw > 0.0 {
+                    if r.arch {
+                        let bw = (r.bw * u).max(0.5);
+                        e = e.corners([rw / 2.0, rw / 2.0, 0.0, 0.0]).border_sides([bw, bw, 0.0, bw], hex(&r.bc).alpha(r.bop));
+                    } else if r.bw > 0.0 {
                         e = e.border((r.bw * u).max(0.5), hex(&r.bc).alpha(r.bop));
                     }
                     if r.rot != 0.0 {
@@ -951,9 +1004,17 @@ fn build(slide: &Slide, style: NoticeStyle, have: data::Have, body: Option<f32>,
         NoticeStyle::Neon => d3::draw(&mut sheet, &data, have)?,
         NoticeStyle::Simple | NoticeStyle::SimpleDark => d5::draw(&mut sheet, &data, have)?,
         NoticeStyle::CivicBoard => d9::draw(&mut sheet, &data, have)?,
+        NoticeStyle::Liturgy => d11::draw(&mut sheet, &data, have)?,
+        NoticeStyle::Block => d13::draw(&mut sheet, &data, have)?,
+        NoticeStyle::Glass => d12::draw(&mut sheet, &data, have)?,
+        NoticeStyle::Figures => d16::draw(&mut sheet, &data, have)?,
         NoticeStyle::SerifItalic => d6::draw(&mut sheet, &data, have)?,
         NoticeStyle::SwissNumerals => d7::draw(&mut sheet, &data, have)?,
         NoticeStyle::QuietTint => d8::draw(&mut sheet, &data, have)?,
+        NoticeStyle::Warm => d17::draw(&mut sheet, &data, have)?,
+        NoticeStyle::Magazine => d15::draw(&mut sheet, &data, have)?,
+        NoticeStyle::Diagonal => d10::draw(&mut sheet, &data, have)?,
+        NoticeStyle::Glow => d14::draw(&mut sheet, &data, have)?,
         _ => d4::draw(&mut sheet, &data, have)?,
     }
     foot(&mut sheet, slide, style);
@@ -971,11 +1032,35 @@ fn foot(sheet: &mut Sheet, slide: &Slide, style: NoticeStyle) {
     if style == NoticeStyle::CivicBoard {
         return d9::foot(sheet, slide, &note);
     }
+    if style == NoticeStyle::Liturgy {
+        return d11::foot(sheet, &note);
+    }
+    if style == NoticeStyle::Glass {
+        return d12::foot(sheet, &note);
+    }
+    if style == NoticeStyle::Glow {
+        return d14::foot(sheet, &note);
+    }
+    if style == NoticeStyle::Block {
+        return d13::foot(sheet, slide, &note);
+    }
     if style == NoticeStyle::SwissNumerals {
         return d7::foot(sheet, &note);
     }
+    if style == NoticeStyle::Figures {
+        return d16::foot(sheet, slide, &note);
+    }
     if style == NoticeStyle::QuietTint {
         return d8::foot(sheet, &note);
+    }
+    if style == NoticeStyle::Warm {
+        return d17::foot(sheet, &note);
+    }
+    if style == NoticeStyle::Magazine {
+        return d15::foot(sheet, &note);
+    }
+    if style == NoticeStyle::Diagonal {
+        return d10::foot(sheet, &note, slide.notice == NoticeKind::Money);
     }
     let (colour, x) = match style {
         NoticeStyle::Greige => ("mute", sheet.g("mx")),

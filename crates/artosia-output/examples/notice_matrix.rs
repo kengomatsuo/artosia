@@ -45,6 +45,12 @@ fn english_words() -> NoticeWords {
         holder: "in the name of".into(),
         scan: "Scan to give".into(),
         sticker: "Info".into(),
+        col_date: "Date".into(),
+        col_name: "Name".into(),
+        col_no: "No.".into(),
+        col_fund: "Fund".into(),
+        col_share: "Share".into(),
+        col_sum: "Amount".into(),
     }
 }
 
@@ -92,6 +98,14 @@ fn main() {
         ("b-serif", Some(NoticeStyle::SerifItalic), "Midnight"),
         ("d-civic", Some(NoticeStyle::CivicBoard), "Midnight"),
         ("e-quiet", Some(NoticeStyle::QuietTint), "Midnight"),
+        ("q-warm", Some(NoticeStyle::Warm), "Midnight"),
+        ("m-magazine", Some(NoticeStyle::Magazine), "Midnight"),
+        ("g-liturgy", Some(NoticeStyle::Liturgy), "Midnight"),
+        ("m-block", Some(NoticeStyle::Block), "Midnight"),
+        ("l-glass", Some(NoticeStyle::Glass), "Midnight"),
+        ("n-figures", Some(NoticeStyle::Figures), "Midnight"),
+        ("o-diagonal", Some(NoticeStyle::Diagonal), "Midnight"),
+        ("o-glow", Some(NoticeStyle::Glow), "Midnight"),
     ];
     let account = Account::default();
     let giving = Giving { funds: &[], gifts: &[], account: &account };
