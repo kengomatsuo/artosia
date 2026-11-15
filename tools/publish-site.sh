@@ -43,10 +43,10 @@ parts="$(mktemp -d)"
 tar -C "$out" -cf - . | split -b 4m - "$parts/part."
 (cd "$parts" && sha256sum part.* > sums)
 ssh -o BatchMode=yes mac 'rm -rf ~/artosia-site/incoming && mkdir -p ~/artosia-site/incoming'
-while read -r sum name; do
+while read -r sum name <&3; do
     name="${name#\*}"
     for try in 1 2 3 4 5; do
-        if scp -q -o BatchMode=yes -o ServerAliveInterval=15 "$parts/$name" "mac:artosia-site/incoming/$name"             && [ "$(ssh -o BatchMode=yes mac "shasum -a 256 ~/artosia-site/incoming/$name" | cut -d' ' -f1)" = "$sum" ]; then
+        if scp -q -o BatchMode=yes -o ServerAliveInterval=15 "$parts/$name" "mac:artosia-site/incoming/$name"             && [ "$(ssh -n -o BatchMode=yes mac "shasum -a 256 ~/artosia-site/incoming/$name" | cut -d' ' -f1)" = "$sum" ]; then
             continue 2
         fi
         echo "Part $name of the site reached the Mac damaged or not at all (try $try of 5)."
@@ -54,9 +54,10 @@ while read -r sum name; do
     done
     echo "The site could not be copied to the Mac." >&2
     exit 1
-done < "$parts/sums"
+done 3< "$parts/sums"
 rm -rf "$parts"
-ssh -o BatchMode=yes mac 'set -e; cd ~/artosia-site && rm -rf public.new && mkdir -p public.new && cat incoming/part.* | tar -xf - -C public.new && rm -rf public incoming && mv public.new public'
+ssh -n -o BatchMode=yes mac 'set -e; cd ~/artosia-site && rm -rf public.new && mkdir -p public.new && cat incoming/part.* | tar -xf - -C public.new && rm -rf public incoming && mv public.new public' \
+    || { echo "The site's parts did not unpack on the Mac, so nothing was deployed." >&2; exit 1; }
 scp -q site/deploy/wrangler.jsonc site/deploy/package.json mac:artosia-site/
 ssh -o BatchMode=yes mac 'export PATH=$HOME/.bun/bin:/opt/homebrew/bin:$PATH
   set -o pipefail

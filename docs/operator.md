@@ -722,6 +722,19 @@ A new family follows `docs/plans/artosia/family-builder.md`.
 
 Measured (release with video, `--here --demo-video fixtures/bg30.mp4`, 75 s, both runs traced looping 4 times): the projector before the library 328 MB working set and 292 MB private, after it 326 MB and 300 MB. The bundled fonts cost about 8 MB private; the binary grew from 32.6 MB to 47.1 MB.
 
+### The church year and PowerPoint as a gallery (SEASONS1, PPTXGALLERY1, 2026-11-15, owner-asked)
+
+Every poster family has Advent, Christmas, Lent, Easter and Pentecost colourways (`season` tags in
+`assets/warta/directions/dN.json`), 14 families draw a small season mark at their own spot (16 marks in
+`warta/marks.rs`, Advent's candles counting the Sundays), and a hand-picked seasonal colourway carries its
+mark all year. Settings, Follow the church year (off by default) swaps every card on the projector and
+the phone to its family's colourway for today's season, worked out by `artosia-core/src/church_year.rs`
+from the rules in `docs/church-year.md`; the Templates tiles and the saved cards keep their own. The design
+and its 180 references are `docs/plans/artosia/seasons-design.md`.
+
+A PowerPoint import opens straight into one gallery: the file as made first, then every template family
+whose fit holds every redrawn card (`pptx_import.rs` `fits_family`), one press and Ctrl Enter.
+
 ### A slide's fixed words in the window's language (SLIDEWORDS1, 2026-11-15)
 
 The styles were designed in Indonesian, and every church saw "ULANG TAHUN", "WARTA JEMAAT" and
