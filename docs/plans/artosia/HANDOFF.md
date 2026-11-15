@@ -22,6 +22,8 @@
 | Card windows | In Review, in 0.1.33: schedule and birthdays read this or next week, month or quarter, or custom days, with a highlighted part inside the shown range | [card: SCHEDRANGE1] [card: BDAYRANGE1] [commit 7451f4c] |
 | Announcement styles, round 2 | In Review, in 0.1.33: seven styles in `crates/artosia-slides/src/warta/`, 28 bundled fonts, wrap before shrink, continuation slides at the 40 px floor | [card: WARTADESIGN1] [commit 13043bb] |
 | Phone editing | In Review, in 0.1.33: edit level per phone with its own PIN, text and lists, a stale save refused with both texts | [card: PHONEEDIT1] [commit 13043bb] |
+| Birthday check and slide words | In Review: every birthday setting rendered and fixed (`tools/notice-matrix.sh`), slide words in the window's language | [card: BDAYCHECK1] [commit 4c44e0b] [card: SLIDEWORDS1] [commit 8a8864b] |
+| Template library | In Review, NOT released: 21 families x 4 colourways (two more per family in progress), new cards start in Serif italic (owner's pick); research in `~/Shared/inspo/artosia-templates/`, model `docs/templates-is-colourways-and-archetypes.md` | [card: TEMPLATES1] [commit dd19301] [commit 42eafba] [commit e0fd3b1] |
 | On-slide editing | In Review, NOT released: click a box, Enter types in place, fit shrinks then continues; one save path (`App::apply_card`) for the console and the phone | [card: NOTICEEDIT1] [commit ab94bc9] |
 
 ## Last checks
@@ -35,7 +37,7 @@
 
 ## Next actions, in order
 
-1. Release on-slide editing with the next version: `bash tools/publish.sh <next version> "<notes>"` from the clean clone [commit ab94bc9 is after the v0.1.33 tag].
+1. Release on-slide editing and the template library with the next version: `bash tools/publish.sh <next version> "<notes>"` from the clean clone [commit ab94bc9 is after the v0.1.33 tag].
 2. Unverified, to check on a real run: typing on a real phone's keyboard into a card (checked only through the remote's test client) [card: PHONEEDIT1]; a scene whose background is a video, a media item whose file fails, a Stop item's end in the operator thumbnail [read: OVRUN1 builder report]; the LibreOffice export route (no LibreOffice on this PC) [read: OVPPTX1 office report]; Letras pages live (it refuses programs) [commit 35ad9cd].
 
 ## Owner decisions in force
