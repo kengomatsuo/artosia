@@ -2,8 +2,8 @@
 
     python -I commit_scratch.py <scratch dir> <base rev the scratch was made from> <message file>
 
-Every file under crates, docs, tools and assets that differs from the base is taken from the
-scratch copy. The merge base is the scratch's base, so commits another session landed since are
+Every file under crates, docs, tools, assets and .claude, and the root Cargo.toml, Cargo.lock
+and rust-toolchain.toml, that differs from the base is taken from the scratch copy. The merge base is the scratch's base, so commits another session landed since are
 kept. A conflict in a translation table or the briefs is merged by key (the scratch wins on keys
 it changed); any other conflict stops the commit. Then the index of the touched paths is synced,
 and the commit is pushed. The copy is then refreshed to the new commit, which is the base to
@@ -42,8 +42,11 @@ if os.path.exists(index):
     os.remove(index)
 git('read-tree', base, index=index)
 changed = []
-for top in ('crates', 'docs', 'tools', 'assets', '.claude'):
-    for path in sorted((scratch / top).rglob('*')):
+# The workspace's own files at the root count too: a crate that gains a workspace dependency
+# needs the root Cargo.toml and Cargo.lock in the same commit (8693b86 landed without them).
+roots = [scratch / name for name in ('Cargo.toml', 'Cargo.lock', 'rust-toolchain.toml')]
+for top in ('crates', 'docs', 'tools', 'assets', '.claude', None):
+    for path in (sorted((scratch / top).rglob('*')) if top else roots):
         if not path.is_file():
             continue
         rel = path.relative_to(scratch).as_posix()
