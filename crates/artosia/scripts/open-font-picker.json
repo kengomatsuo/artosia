@@ -1,0 +1,4 @@
+{"events": [
+  {"t": 0.40, "type": "tap", "key": "look-font-trigger"},
+  {"t": 1.20, "type": "mark", "name": "open"}
+]}

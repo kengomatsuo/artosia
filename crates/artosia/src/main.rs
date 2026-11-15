@@ -608,6 +608,11 @@ Until we reach the house
         s.sheet = Sheet::Settings;
         s.language_open = true;
     }),
+    // The Design tab's words part, where the font picker sits.
+    ("design-text", |s| {
+        s.open_tab(crate::state::Tab::Look);
+        s.design_part = 1;
+    }),
     ("look-styled", |s| {
         s.open_tab(crate::state::Tab::Look);
         let styled = artosia_slides::look::Look { ink: [255, 214, 0], font: "Georgia".into(), outline: artosia_slides::look::Outline::Thick, ..s.look() };
