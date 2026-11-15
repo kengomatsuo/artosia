@@ -25,6 +25,8 @@
 | Birthday check and slide words | In Review: every birthday setting rendered and fixed (`tools/notice-matrix.sh`), slide words in the window's language | [card: BDAYCHECK1] [commit 4c44e0b] [card: SLIDEWORDS1] [commit 8a8864b] |
 | Template library | In Review, NOT released: 21 families x 4 colourways (two more per family in progress), new cards start in Serif italic (owner's pick); research in `~/Shared/inspo/artosia-templates/`, model `docs/templates-is-colourways-and-archetypes.md` | [card: TEMPLATES1] [commit dd19301] [commit 42eafba] [commit e0fd3b1] |
 | On-slide editing | In Review, NOT released: click a box, Enter types in place, fit shrinks then continues; one save path (`App::apply_card`) for the console and the phone | [card: NOTICEEDIT1] [commit ab94bc9] |
+| Moving backgrounds | In Review, NOT released: eight kinds drawn on the graphics chip (rune-fx fills and `live.wgsl`), Design tiles with colour chips and three speeds, ten languages; projector +10 MB against +165 MB for a video | [card: LIVEBG1] [commit 8693b86] [rule: .claude/rules/output.md] |
+| Gestures | Researched and proposed (double-click to Show as EasiSlides, drag to Preview or Live, resizable columns with limits, file drop by kind, drag to sort); building waits on the owner's yes | [card: GESTURES1] [read: docs/plans/artosia/gestures.md] |
 
 ## Last checks
 
@@ -51,6 +53,7 @@
 
 - Tailscale sign-in for SSH to the Mac (check mode) [read: ssh mac printed the login link; two 20-minute waits expired].
 - Microsoft Store developer account [card: STORE1].
+- A yes on the gesture proposal, or changes to it [card: GESTURES1].
 
 ## Gotchas
 
@@ -60,6 +63,8 @@
 - The kit `Table` needs a `TableState` in `App`; the mocks drew tables by hand [read: builders' reports].
 - Ledger style with the Paper look draws its heading white on cream [read: direction A builder's report].
 - Other sessions commit to `crates/artosia` at the same time (a guide engine landed today): commit by path only, read `git status` first, and never sweep a peer's file into a card's commit [read: commits 4e5fa6d, 70433d2 by another session].
+- The F drive was full on 2026-11-15 (98 MB free of 1.9 TB): a build and a release log failed with "not enough space". Deleting this session's own build caches (`target/headcheck/debug/incremental`, 8.6 GB) and published release outputs in the clean clone's `dist/` freed room; check `df -h /f` before a release [read: df].
+- A release's Mac copy over Tailscale dropped mid-stream three times; `copy_from_mac` now brings it in checked 16 MB parts, and two release runs at once in one clone collide on the same files [commit a034ee9].
 - A session whose work sits beside another session's unfinished edits builds in a copy of HEAD (`git archive HEAD | tar -x -C <copy>`, `CARGO_TARGET_DIR=target/headcheck`) and commits it with `python -I tools/commit-scratch.py <copy> <the rev it was made from> <message file>`, which merges three ways onto the current HEAD, merges translation tables by key, and pushes. A plain copy of the copy's files over HEAD once reverted two commits another session had landed meanwhile [commit ef940ac, rebuilt on c463a33].
 - The other session commits whole files from the shared tree: apply every edit to the shared tree too, or its next commit takes the edit back out [read: 8350452 carried this session's unfinished main.rs and actions.rs hunks].
 - Python prints of non-English text fail on this console's cp1252 unless `PYTHONIOENCODING=utf8` is set; a script that writes then prints can stop half way [read: the people_in_days rewrite stopped at zh-Hans].
