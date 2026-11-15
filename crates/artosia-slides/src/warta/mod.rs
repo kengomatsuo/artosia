@@ -1198,7 +1198,7 @@ mod tests {
         assert_eq!(dir_of(NoticeStyle::SimpleDark, "")["palette"]["paper"], "#121417");
         assert_eq!(dir_of(NoticeStyle::Simple, "")["palette"]["paper"], "#FFFFFF");
         assert_eq!(colourway_at(NoticeStyle::SimpleDark, ""), 1);
-        assert_eq!(colourways(NoticeStyle::Neon).len(), 4);
+        assert_eq!(colourways(NoticeStyle::Neon).len(), 6);
     }
 
     #[test]

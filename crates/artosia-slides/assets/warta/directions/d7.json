@@ -4,7 +4,9 @@
 {"id":"light","name":"Putih","palette":{"paper":"#F2F1EC","ink":"#111213","mute":"#52544E","rule":"#CBCAC0","block":"#1C1D1B","block_ink":"#F2F1EC","block_mute":"#B7B8AF","accent":"#A3250B","card":"#FFFFFF"}},
 {"id":"dark","name":"Hitam","palette":{"paper":"#121314","ink":"#F1F0EA","mute":"#A6A8A0","rule":"#383933","block":"#F1F0EA","block_ink":"#121314","block_mute":"#4A4C46","accent":"#FF7447","card":"#FFFFFF"}},
 {"id":"tinted","name":"Sage","palette":{"paper":"#AEBC9A","ink":"#101712","mute":"#3A4631","rule":"#8E9C7A","block":"#1B2418","block_ink":"#E9F0DC","block_mute":"#AFBD99","accent":"#7B1C06","card":"#FFFFFF"}},
-{"id":"cream","name":"Krem","palette":{"paper":"#F5EBD7","ink":"#1A1713","mute":"#5A5245","rule":"#D3C6AB","block":"#231F18","block_ink":"#F5EBD7","block_mute":"#BDB29B","accent":"#A3250B","card":"#FFFFFF"}}
+{"id":"cream","name":"Krem","palette":{"paper":"#F5EBD7","ink":"#1A1713","mute":"#5A5245","rule":"#D3C6AB","block":"#231F18","block_ink":"#F5EBD7","block_mute":"#BDB29B","accent":"#A3250B","card":"#FFFFFF"}},
+{"id":"paskah","name":"Paskah","palette":{"paper":"#E8D9A0","ink":"#18140A","mute":"#4D4220","rule":"#C5B67C","block":"#241D0A","block_ink":"#F5EBC8","block_mute":"#BDB07F","accent":"#8A1F08","card":"#FFFFFF"}},
+{"id":"adven","name":"Adven","palette":{"paper":"#CFC4E0","ink":"#14101C","mute":"#433A58","rule":"#AB9CC6","block":"#1E1630","block_ink":"#EFE9F7","block_mute":"#B5A9CE","accent":"#4B1A8A","card":"#FFFFFF"}}
 ],
 "swatch": ["paper","accent"],
 "pairs": [["ink","paper","text"],["mute","paper","text"],["accent","paper","text"],["paper","accent","text"],["block_ink","block","text"],["block_mute","block","text"],["block","paper","mark"]],

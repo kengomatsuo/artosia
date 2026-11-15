@@ -4,7 +4,9 @@
 {"id":"biru","palette":{"ground":"#E9EEF5","panel":"#FFFFFF","ink":"#0E1A33","mute":"#46536D","brand":"#0B3FA6","brand_dk":"#082B73","on_brand":"#FFFFFF","sky":"#A9C6F2","tint":"#D3E1F8","line":"#BCC8DA"}},
 {"id":"merah","palette":{"ground":"#F2EDEA","panel":"#FFFFFF","ink":"#211515","mute":"#5C4A48","brand":"#B3141F","brand_dk":"#7C0D16","on_brand":"#FFFFFF","sky":"#F3B4B0","tint":"#F8D9D6","line":"#D8C9C6"}},
 {"id":"hijau","palette":{"ground":"#EAF1EC","panel":"#FFFFFF","ink":"#10241A","mute":"#455A4D","brand":"#0E6B43","brand_dk":"#09482D","on_brand":"#FFFFFF","sky":"#A6DBBF","tint":"#D2EBDC","line":"#BDD0C4"}},
-{"id":"ungu","palette":{"ground":"#F0ECF5","panel":"#FFFFFF","ink":"#1E1230","mute":"#54486A","brand":"#5B2A9B","brand_dk":"#3E1B70","on_brand":"#FFFFFF","sky":"#CDB6F0","tint":"#E3D8F5","line":"#CBC3D8"}}
+{"id":"ungu","palette":{"ground":"#F0ECF5","panel":"#FFFFFF","ink":"#1E1230","mute":"#54486A","brand":"#5B2A9B","brand_dk":"#3E1B70","on_brand":"#FFFFFF","sky":"#CDB6F0","tint":"#E3D8F5","line":"#CBC3D8"}},
+{"id":"emas","palette":{"ground":"#F3EEE0","panel":"#FFFFFF","ink":"#241C08","mute":"#5C5234","brand":"#7E5800","brand_dk":"#573D00","on_brand":"#FFFFFF","sky":"#F0D58A","tint":"#F3E4B4","line":"#D6CBA8"}},
+{"id":"tosca","palette":{"ground":"#E6F0F1","panel":"#FFFFFF","ink":"#0B2428","mute":"#415A5E","brand":"#0B6670","brand_dk":"#07434B","on_brand":"#FFFFFF","sky":"#9ADCE2","tint":"#CBE8EB","line":"#B7CDD0"}}
 ],
 "swatch": ["ground","brand"],
 "pairs": [["ink","ground","text"],["mute","ground","text"],["brand","ground","text"],["ink","panel","text"],["brand_dk","panel","text"],["ink","tint","text"],["on_brand","brand","text"],["on_brand","brand_dk","large"],["sky","brand_dk","text"],["mute","ground","large"],["brand","ground","mark"],["brand_dk","ground","mark"],["brand","tint","mark"]],

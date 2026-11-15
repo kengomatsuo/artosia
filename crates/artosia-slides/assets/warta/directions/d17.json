@@ -4,7 +4,9 @@
 {"id":"kakao","palette":{"ground":"#3E2A22","card":"#4D372D","ink":"#F6EAD9","mute":"#D6C0A8","accent":"#E6B36B","on_accent":"#3E2A22","plate":"#F6EAD9","on_plate":"#3E2A22","line":"#7A5E4D"}},
 {"id":"adven","palette":{"ground":"#3A2340","card":"#4A2E52","ink":"#F7ECE3","mute":"#D9C4D6","accent":"#E8BE74","on_accent":"#3A2340","plate":"#F7ECE3","on_plate":"#3A2340","line":"#7C5A86"}},
 {"id":"cemara","palette":{"ground":"#1E3A2E","card":"#284A3B","ink":"#F4EBD9","mute":"#C9D8C6","accent":"#E1BC6C","on_accent":"#1E3A2E","plate":"#F4EBD9","on_plate":"#1E3A2E","line":"#5B7F6C"}},
-{"id":"gading","palette":{"ground":"#F2E8D6","card":"#FBF5EA","ink":"#3A281F","mute":"#6E5A4B","accent":"#9A4A22","on_accent":"#FBF5EA","plate":"#3A281F","on_plate":"#F2E8D6","line":"#CDBBA0"}}
+{"id":"gading","palette":{"ground":"#F2E8D6","card":"#FBF5EA","ink":"#3A281F","mute":"#6E5A4B","accent":"#9A4A22","on_accent":"#FBF5EA","plate":"#3A281F","on_plate":"#F2E8D6","line":"#CDBBA0"}},
+{"id":"api","palette":{"ground":"#3E1A16","card":"#4F2420","ink":"#F8E9DD","mute":"#DDBBAE","accent":"#F0A878","on_accent":"#3E1A16","plate":"#F8E9DD","on_plate":"#3E1A16","line":"#82504A"}},
+{"id":"paskah","palette":{"ground":"#F7EBC9","card":"#FCF5E0","ink":"#33280C","mute":"#6A5A30","accent":"#855600","on_accent":"#FCF5E0","plate":"#33280C","on_plate":"#F7EBC9","line":"#D8C791"}}
 ],
 "swatch": ["ground","accent"],
 "pairs": [["ink","ground","text"],["mute","ground","text"],["accent","ground","text"],["ink","card","text"],["mute","card","text"],["accent","card","text"],["on_accent","accent","text"],["on_plate","plate","text"],["on_plate","plate","large"],["ink","ground","large"],["accent","card","mark"],["plate","card","mark"]],

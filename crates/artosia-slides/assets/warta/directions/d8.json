@@ -4,7 +4,9 @@
 {"id":"light","palette":{"paper":"#F3F2F9","ink":"#1E1B2E","mute":"#5A5672","rule":"#D8D5E6","pill":"#3D37A8","pill_ink":"#FFFFFF","card":"#FFFFFF"}},
 {"id":"dark","palette":{"paper":"#221A2C","ink":"#F1ECF8","mute":"#B9AECF","rule":"#43395A","pill":"#C7B8F2","pill_ink":"#221A2C","card":"#FFFFFF"}},
 {"id":"tinted","palette":{"paper":"#DAD3EC","ink":"#1C1830","mute":"#4B4670","rule":"#B7AED4","pill":"#2E2A78","pill_ink":"#FFFFFF","card":"#FFFFFF"}},
-{"id":"mint","palette":{"paper":"#E4F0EC","ink":"#10302B","mute":"#3E5E58","rule":"#C2D8D3","pill":"#0B5A50","pill_ink":"#FFFFFF","card":"#FFFFFF"}}
+{"id":"mint","palette":{"paper":"#E4F0EC","ink":"#10302B","mute":"#3E5E58","rule":"#C2D8D3","pill":"#0B5A50","pill_ink":"#FFFFFF","card":"#FFFFFF"}},
+{"id":"merah","palette":{"paper":"#F8E9E7","ink":"#2A1213","mute":"#6A4A4D","rule":"#E3C9C8","pill":"#A31F2A","pill_ink":"#FFFFFF","card":"#FFFFFF"}},
+{"id":"senja","palette":{"paper":"#14202E","ink":"#EAF1F9","mute":"#A9BBD0","rule":"#2F4660","pill":"#9CC7F2","pill_ink":"#14202E","card":"#FFFFFF"}}
 ],
 "swatch": ["paper","pill"],
 "pairs": [["ink","paper","text"],["mute","paper","text"],["pill","paper","text"],["pill_ink","pill","text"],["pill","paper","mark"]],
