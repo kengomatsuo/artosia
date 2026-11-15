@@ -174,13 +174,36 @@ fi
 # fails, the release carries no Mac files and says so.
 mac="dist/$version/macos"
 remote="Repositories/artosia/dist/$version/macos"
+# Tailscale drops an ssh link now and then; the copy home is tried three times, so a dropped
+# link does not throw away a build Apple has already notarized.
+copy_from_mac() {
+    for try in 1 2 3; do
+        rm -rf "$mac/feed"
+        if ssh -o BatchMode=yes -o ServerAliveInterval=15 mac "cd ~/$remote && tar -cf - feed Artosia-macos-aarch64.dmg" | tar -xf - -C "$mac"; then
+            return 0
+        fi
+        echo "Copying the Mac edition home failed (try $try of 3)."
+        sleep 10
+    done
+    return 1
+}
+# A finished build of this version on the Mac (its signed list and disk image) is used again
+# by a later --finish instead of being built and notarized a second time.
+built_on_mac() {
+    [ "$finish" = 1 ] && ssh -o BatchMode=yes mac "test -f ~/$remote/feed/manifest-macos-aarch64.json && test -f ~/$remote/Artosia-macos-aarch64.dmg"
+}
 if [ -f "dist/$version/macos.md" ] && has_asset Artosia-macos-aarch64.dmg; then
     echo "The release already carries the Mac edition."
 elif ssh -o BatchMode=yes mac true 2>/dev/null; then
     # Built every time: a tool left from an older release may lack a command used below.
     cargo build --release -q -p artosia-update --bin artosia-release --target-dir target/release-tool
     rm -rf "$mac" && mkdir -p "$mac"
-    if scp -q "dist/$version/notes.txt" "mac:Repositories/artosia-notes-$version.txt" \
+    reuse=0
+    if built_on_mac; then
+        reuse=1
+        echo "The Mac already holds the $version build; copying it home."
+    fi
+    if { [ "$reuse" = 1 ] || { scp -q "dist/$version/notes.txt" "mac:Repositories/artosia-notes-$version.txt" \
         && ssh -o BatchMode=yes mac "export PATH=\$HOME/.cargo/bin:\$HOME/.bun/bin:/opt/homebrew/bin:\$PATH
             cd ~/Repositories/artosia || exit 1
             git diff --quiet HEAD || { echo The clone on the Mac has changes that are not committed: a release is built from what is committed; exit 1; }
@@ -191,8 +214,8 @@ elif ssh -o BatchMode=yes mac true 2>/dev/null; then
                 && rm -f /tmp/artosia-throwaway.key && target/release/artosia-release keygen /tmp/artosia-throwaway.key >/dev/null \
                 && rm -rf dist/$version/macos/feed \
                 && target/release/artosia-release build --dir dist/$version/macos/Artosia.app/Contents --version $version --platform macos-aarch64 --out dist/$version/macos/feed --notes-file ../artosia-notes-$version.txt --key-file /tmp/artosia-throwaway.key
-            built=\$?; rm -f /tmp/artosia-throwaway.key; git checkout -q -- tools/package-macos.sh; git checkout -q main && git merge -q --ff-only origin/main; exit \$built" \
-        && ssh -o BatchMode=yes mac "cd ~/$remote && tar -cf - feed Artosia-macos-aarch64.dmg" | tar -xf - -C "$mac" \
+            built=\$?; rm -f /tmp/artosia-throwaway.key; git checkout -q -- tools/package-macos.sh; git checkout -q main && git merge -q --ff-only origin/main; exit \$built"; }; } \
+        && copy_from_mac \
         && target/release-tool/release/artosia-release.exe sign --dir "$mac/feed" --platform macos-aarch64 --key-file "$key"; then
         gh release upload "v$version" "$mac/Artosia-macos-aarch64.dmg" --clobber
         find "$mac/feed" -type f -print0 | xargs -0 -n 12 gh release upload "v$version" --clobber
