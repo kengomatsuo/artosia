@@ -6416,5 +6416,51 @@
   "text": "黎明",
   "back": "Dawn",
   "why": "Sky before sunrise, unlike the dusk chip"
+ },
+ "DROP_HINT": {
+  "text": "松开即添加到 Artosia",
+  "back": "Release to add to Artosia",
+  "why": "添加 as in the table"
+ },
+ "DOUBLE_CLICK_SHOWS": {
+  "text": "双击项目直接上屏",
+  "back": "Double-click an item to put it on screen directly",
+  "why": "上屏 is the table's verb"
+ },
+ "DOUBLE_CLICK_SHOWS_HINT": {
+  "text": "开启后双击流程中的项目直接上屏，关闭则只在预览中打开",
+  "back": "When on, double-clicking a plan item puts it on screen; when off it only opens in the preview",
+  "why": "流程 and 预览 as in the table"
+ },
+ "DROP_TO_PREVIEW": {
+  "text": "松开后在预览中打开",
+  "back": "After releasing, opens in the preview",
+  "why": "Pane name as in the table"
+ },
+ "DROP_TO_LIVE": {
+  "text": "松开后上屏",
+  "back": "After releasing, goes on screen",
+  "why": "上屏 kept for the projector"
+ },
+ "SPLIT_PLAN": {
+  "text": "流程栏宽度",
+  "back": "Width of the plan column",
+  "why": "流程 is the table's plan word"
+ },
+ "SPLIT_PANES": {
+  "text": "预览与上屏中的宽度",
+  "back": "Width of the preview and the on-screen pane",
+  "why": "上屏中 is the table's live tab name"
+ },
+ "drop_unknown": {
+  "text": {
+   "alone": "{name} 无法打开",
+   "more": "{name} 无法打开，另有 {more} 个文件也不能打开"
+  },
+  "back": {
+   "alone": "{name} cannot be opened",
+   "more": "{name} cannot be opened, and {more} other files cannot either"
+  },
+  "why": "另有 for others, plain"
  }
 }

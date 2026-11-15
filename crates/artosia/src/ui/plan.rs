@@ -8,7 +8,7 @@ use rune_kit::{Kit, Menu, MenuItem, ScrollBar};
 
 use crate::palette::Scope;
 use crate::run::Pick;
-use crate::state::{App, PlanDrag};
+use crate::state::{App, DropPane, PlanDrag};
 use crate::strings as t;
 use crate::theme::{self, icons, size, space, type_};
 use crate::ui::widgets::{btn, keycaps, state_pill};
@@ -151,6 +151,15 @@ pub(crate) fn item_row(s: &App, k: &Kit, item: &PlanItem, menu: El, inside: bool
             s.open_plan_item(id);
             tx.blur();
         })
+        // A double-click shows it, as in EasiSlides; the Live switch still decides whether the
+        // projector draws it (GESTURES1).
+        .on_double_press(move |s: &mut App| {
+            if s.settings.double_click_shows {
+                s.open_plan_item(id);
+                let at = s.open.as_ref().map(|open| open.cursor).unwrap_or(0);
+                s.show(at);
+            }
+        })
 }
 
 /// The line under a rundown item's title: a video's or sound's file, and the layers a scene holds.
@@ -171,7 +180,9 @@ fn run_line(k: &Kit, entry: &PlanEntry) -> El {
 fn progress_line(s: &App, k: &Kit, id: u64) -> Option<El> {
     let live = s.live.as_ref().is_some_and(|live| live.item == Some(id));
     let fraction = s.media_progress(id).filter(|_| live)?;
-    let fill = el().w((PROGRESS * fraction).round()).h(2.0).radius(1.0).fill(theme::accent());
+    // The line runs the plan column's width less the list's and the row's padding.
+    let length = s.plan_width() - 4.0 * space::S2;
+    let fill = el().w((length * fraction).round()).h(2.0).radius(1.0).fill(theme::accent());
     Some(el().key(format!("plan-progress-{id}")).pin(Some(space::S2), None, Some(space::S2), Some(1.0)).h(2.0).radius(1.0).fill(k.c.layer_03).a11y_hidden().child(fill))
 }
 
@@ -287,8 +298,6 @@ const LAYER: f32 = 24.0;
 const CLEARS_LABEL: f32 = 18.0;
 const CLEARS_CHIPS: f32 = 26.0;
 const PAD: f32 = 4.0;
-/// The progress line's length: the plan column less the list's and the row's padding.
-const PROGRESS: f32 = size::PLAN - 4.0 * space::S2;
 /// The volume slider's length under a title, which leaves room for the toggles and the number.
 const SLIDER: f32 = 84.0;
 /// Points an item under a divider is set in from it.
@@ -297,28 +306,36 @@ const INSET: f32 = 10.0;
 const GAP: f32 = 2.0;
 /// Points the pointer travels before a press on a row becomes a drag, as in the kit's lists.
 const SLOP: f32 = 4.0;
+/// Points sideways past which a carried row leaves the list and follows the pointer.
+const OUT: f32 = 40.0;
 
-/// Where a row carried `dy` points from place `from` would land: the number of other rows
-/// whose middle it has passed. Rows differ in height, a divider being shorter than an item.
-pub(crate) fn drop_place(from: usize, dy: f32, heights: &[f32]) -> usize {
-    let middle = |index: usize| heights[..index].iter().map(|height| height + GAP).sum::<f32>() + heights[index] / 2.0;
-    let carried = middle(from) + dy;
-    (0..heights.len()).filter(|&other| other != from && middle(other) < carried).count()
+fn out_of_list(drag: &PlanDrag) -> bool {
+    drag.over.is_some() || drag.dx.abs() > OUT
 }
 
-/// How far a row sits from its place during a drag: the carried row under the pointer, and
-/// the rows it has passed one step toward the gap it left.
+/// The card that follows the pointer while a plan item is carried out of the list: its title,
+/// over everything, a little below and right of the pointer.
+fn ghost(s: &App, k: &Kit, layer: &mut Vec<El>) {
+    let Some(drag) = s.plan_drag.filter(out_of_list) else { return };
+    let Some((px, py)) = drag.pointer else { return };
+    let Some(item) = s.plan.items.iter().find(|item| item.id == drag.id) else { return };
+    let title = s.entry_title(&item.entry);
+    layer.push(
+        el().key("plan-ghost")
+            .absolute(px + 12.0, py + 10.0)
+            .a11y_hidden()
+            .child(row().gap(space::S2).center_y().px(space::S3).py(space::S2).radius(k.radius.md).fill(theme::surf().raised).border(1.0, theme::accent()).child(text(title).font(type_::BODY_STRONG).color(k.c.text_base).max_w(260.0).truncate())),
+    );
+}
+
+/// Where a plan row carried `dy` points from place `from` would land.
+pub(crate) fn drop_place(from: usize, dy: f32, heights: &[f32]) -> usize {
+    crate::ui::widgets::drop_place(from, dy, heights, GAP)
+}
+
+/// How far a plan row sits from its place during a carry.
 fn drag_shift(drag: &PlanDrag, at: usize, heights: &[f32]) -> f32 {
-    let step = heights[drag.from] + GAP;
-    if at == drag.from {
-        drag.dy
-    } else if drag.from < at && at <= drag.to {
-        -step
-    } else if drag.to <= at && at < drag.from {
-        step
-    } else {
-        0.0
-    }
+    crate::ui::widgets::carried_shift(drag.from, drag.to, drag.dy, at, heights, GAP)
 }
 
 /// Makes a plan row something the pointer can carry to another place (owner, 2026-11-10:
@@ -327,23 +344,39 @@ fn drag_shift(drag: &PlanDrag, at: usize, heights: &[f32]) -> f32 {
 fn draggable(s: &App, body: El, id: u64, at: usize, heights: &Rc<[f32]>) -> El {
     let mut body = body;
     if let Some(drag) = s.plan_drag.filter(|drag| drag.from < heights.len()) {
-        body = body.offset(0.0, drag_shift(&drag, at, heights));
+        // Carried out of the list, the row stays faint in its place and a card follows the
+        // pointer (`ghost`), since the list clips what leaves it.
+        if drag.id == id && out_of_list(&drag) {
+            body = body.opacity(0.4);
+        } else {
+            body = body.offset(0.0, drag_shift(&drag, at, heights));
+        }
         if drag.id == id {
             // The carried row follows the pointer exactly, opaque, over the rows it passes.
             body = body.raise().offset_motion(Anim::INSTANT).fill(theme::surf().raised).border(1.0, theme::surf().edge);
         }
     }
     let heights = heights.clone();
+    // Where the row and the two panes were last drawn, in window points, to tell which pane the
+    // pointer is over while the row is carried.
+    let row_at = rune::memo::window_layout(&format!("plan-{id}"));
+    let panes = [(DropPane::Preview, rune::memo::window_layout("slide")), (DropPane::Live, rune::memo::window_layout("live-slide"))];
     body.on_drag(move |s: &mut App, drag: &mut Drag, tx: &mut Tx| match drag.phase {
         Phase::Down => s.plan_dropped = false,
         Phase::Move => {
-            if s.plan_drag.is_none() && drag.dy.abs() < SLOP {
+            if s.plan_drag.is_none() && drag.dy.abs() < SLOP && drag.dx.abs() < SLOP {
                 return;
             }
             // The rows it passes spring aside.
             tx.animated();
             s.plan_menu = None;
-            s.plan_drag = Some(PlanDrag { id, from: at, to: drop_place(at, drag.dy, &heights), dy: drag.dy });
+            // The press point in the row plus the travel: the row itself moves while carried.
+            let pointer = row_at.map(|[x, y, _, _]| (x + drag.start_x + drag.dx, y + drag.start_y + drag.dy));
+            let over = pointer.and_then(|(px, py)| panes.iter().find(|(_, rect)| rect.is_some_and(|[x, y, w, h]| px >= x && px < x + w && py >= y && py < y + h)).map(|(pane, _)| *pane));
+            // The press's own place is kept from the first move, before the row is offset.
+            let pointer = s.plan_drag.and_then(|held| held.pointer.map(|(px, py)| (px - held.dx + drag.dx, py - held.dy + drag.dy))).or(pointer);
+            let over = pointer.and_then(|(px, py)| panes.iter().find(|(_, rect)| rect.is_some_and(|[x, y, w, h]| px >= x && px < x + w && py >= y && py < y + h)).map(|(pane, _)| *pane));
+            s.plan_drag = Some(PlanDrag { id, from: at, to: if over.is_some() { at } else { drop_place(at, drag.dy, &heights) }, dy: drag.dy, dx: drag.dx, pointer, over });
         }
         Phase::Up => s.drop_plan_row(drag.cancelled()),
     })
@@ -483,6 +516,7 @@ fn height_of(s: &App, item: &PlanItem) -> f32 {
 
 /// The plan's rows, scrolling; the column and its title belong to the shell.
 pub(crate) fn list(s: &App, k: &Kit, layer: &mut Vec<El>) -> El {
+    ghost(s, k, layer);
     if s.plan.items.is_empty() {
         return empty(k);
     }

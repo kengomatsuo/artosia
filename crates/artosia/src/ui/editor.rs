@@ -477,13 +477,16 @@ fn cards(s: &App, k: &Kit, editor: &Editor) -> El {
     let deck = s.deck_of_song(&written);
     let mut cursor = 0;
     let mut stack = col().key("editor-cards").w_full().gap(space::S3);
+    // A card is carried by its grip to another place among the parts (GESTURES1).
+    let heights = crate::ui::widgets::row_heights((0..sections.len()).map(|index| format!("part-card-{index}")), 120.0);
     for (index, section) in sections.iter().enumerate() {
         let start = cursor;
         while cursor < deck.slides.len() && deck.slides[cursor].tag == Some(section.tag) {
             cursor += 1;
         }
         let here = open.filter(|part| !part.fresh && part.index == index);
-        stack = stack.child(part_card(s, k, index, section, here, editor.part_menu == Some(index), &deck.slides[start..cursor], sections.len(), &placeholder));
+        let card = el().key(format!("part-card-{index}")).w_full().child(part_card(s, k, index, section, here, editor.part_menu == Some(index), &deck.slides[start..cursor], sections.len(), &placeholder));
+        stack = stack.child(crate::ui::widgets::sortable(s, card, crate::state::Sorted::Parts, index, &heights, space::S3));
     }
     // A part just added waits as a card of its own until its first word writes it.
     match open.filter(|part| part.fresh) {

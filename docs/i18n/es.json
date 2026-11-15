@@ -6452,5 +6452,51 @@
   "text": "Alba",
   "back": "Daybreak",
   "why": "Alba, the sky before sunrise, unlike Atardecer"
+ },
+ "DROP_HINT": {
+  "text": "Suelta para agregar a Artosia",
+  "back": "Drop to add to Artosia",
+  "why": "Tu form, short; agregar as in the table"
+ },
+ "DOUBLE_CLICK_SHOWS": {
+  "text": "Doble clic muestra el elemento",
+  "back": "Double-click shows the item",
+  "why": "mostrar is the table's verb"
+ },
+ "DOUBLE_CLICK_SHOWS_HINT": {
+  "text": "Encendido: doble clic muestra el elemento. Apagado: se abre en Vista previa",
+  "back": "On: double-click shows the item. Off: it opens in Vista previa",
+  "why": "Encendido and apagado as switch states, Vista previa as pane name"
+ },
+ "DROP_TO_PREVIEW": {
+  "text": "Suelta para ver en Vista previa",
+  "back": "Drop to look in Vista previa",
+  "why": "Pane name as the table has it"
+ },
+ "DROP_TO_LIVE": {
+  "text": "Suelta para mostrar",
+  "back": "Drop to show",
+  "why": "mostrar kept for the projector"
+ },
+ "SPLIT_PLAN": {
+  "text": "Ancho de la lista del culto",
+  "back": "Width of the list of the service",
+  "why": "culto is the table's word for the plan"
+ },
+ "SPLIT_PANES": {
+  "text": "Ancho de Vista previa y En vivo",
+  "back": "Width of Vista previa and En vivo",
+  "why": "Pane names as in the table"
+ },
+ "drop_unknown": {
+  "text": {
+   "alone": "No se pudo abrir {name}",
+   "more": "No se pudo abrir {name} y {more} más"
+  },
+  "back": {
+   "alone": "Could not open {name}",
+   "more": "Could not open {name} and {more} more"
+  },
+  "why": "Impersonal, plain"
  }
 }

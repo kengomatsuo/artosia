@@ -6,7 +6,9 @@ use crate::strings as t;
 use rune::{Color, Cursor, El, Icon, Span, TextStyle, Tx, el, icon, rich, row, text};
 use rune_kit::Kit;
 
-use crate::state::App;
+use std::rc::Rc;
+
+use crate::state::{App, Carried, Sorted};
 use crate::theme::{self, icons, type_};
 
 /// Enter presses the button that has focus, as Space does. Rune follows AppKit, where Return
@@ -512,6 +514,101 @@ pub fn highlighted(content: &str, ranges: &[std::ops::Range<usize>], style: Text
         })
         .collect();
     rich(content, spans).font(style).color(ink)
+}
+
+/// Points the pointer travels before a press on a row becomes a carry, as in the kit's lists.
+pub(crate) const CARRY_SLOP: f32 = 4.0;
+
+/// Where a row carried `dy` points from place `from` would land: the number of other rows
+/// whose middle it has passed. Rows may differ in height (a divider is shorter than an item).
+pub(crate) fn drop_place(from: usize, dy: f32, heights: &[f32], gap: f32) -> usize {
+    let middle = |index: usize| heights[..index].iter().map(|height| height + gap).sum::<f32>() + heights[index] / 2.0;
+    let carried = middle(from) + dy;
+    (0..heights.len()).filter(|&other| other != from && middle(other) < carried).count()
+}
+
+/// How far row `at` sits from its place while row `from` is carried `dy` toward `to`: the
+/// carried row under the pointer, the rows it has passed one step toward the gap it left.
+pub(crate) fn carried_shift(from: usize, to: usize, dy: f32, at: usize, heights: &[f32], gap: f32) -> f32 {
+    let step = heights[from] + gap;
+    if at == from {
+        dy
+    } else if from < at && at <= to {
+        -step
+    } else if to <= at && at < from {
+        step
+    } else {
+        0.0
+    }
+}
+
+/// The heights of a list's rows as last laid out, by their keys; `fallback` before the first.
+pub(crate) fn row_heights(keys: impl Iterator<Item = String>, fallback: f32) -> Rc<[f32]> {
+    keys.map(|key| rune::memo::window_layout(&key).map(|rect| rect[3]).unwrap_or(fallback)).collect()
+}
+
+/// A row of `list` the pointer carries to another place (GESTURES1): the rows it passes step
+/// aside, and letting go moves it there. The plan has its own, which also takes a carry onto
+/// Preview or Live, on the same maths.
+pub fn sortable(s: &App, body: El, list: Sorted, at: usize, heights: &Rc<[f32]>, gap: f32) -> El {
+    let mut body = body;
+    if let Some(held) = s.carried.filter(|held| held.list == list && held.from < heights.len() && at < heights.len()) {
+        body = body.offset(0.0, carried_shift(held.from, held.to, held.dy, at, heights, gap));
+        if held.from == at {
+            body = body.raise().offset_motion(rune::Anim::INSTANT).fill(theme::surf().raised).border(1.0, theme::surf().edge);
+        }
+    }
+    let heights = heights.clone();
+    body.on_drag(move |s: &mut App, drag: &mut rune::Drag, tx: &mut Tx| match drag.phase {
+        rune::Phase::Down => {}
+        rune::Phase::Move => {
+            if s.carried.is_none() && drag.dy.abs() < CARRY_SLOP {
+                return;
+            }
+            tx.animated();
+            s.carried = Some(Carried { list, from: at, to: drop_place(at, drag.dy, &heights, gap), dy: drag.dy });
+        }
+        rune::Phase::Up => s.drop_carried(drag.cancelled()),
+    })
+}
+
+/// A line the pointer drags to resize the column beside it (GESTURES1). It is 5 points wide
+/// to be caught, draws a 1 point line, lights while hovered or dragged, puts its side back on a
+/// double-click, and moves by 16 points with the arrow keys when focused. `per_point` turns
+/// points of travel into the divider's own unit (1 for a width, 1 / room for a share).
+pub fn splitter(k: &Kit, which: crate::state::Divider, label: &'static str, now: f32, per_point: f32, active: bool) -> El {
+    let line = if active { crate::theme::accent() } else { crate::theme::surf().edge };
+    el().key(format!("splitter-{which:?}").to_lowercase())
+        .w(crate::theme::size::SPLITTER)
+        .h_full()
+        .role("separator")
+        .label(label)
+        .focusable(true)
+        .cursor(rune::Cursor::ResizeColumn)
+        .hover(k.c.hover)
+        .child(el().w(1.0).h_full().mx(2.0).fill(line).a11y_hidden())
+        .on_drag(move |s: &mut App, drag: &mut rune::Drag, _: &mut rune::Tx| match drag.phase {
+            rune::Phase::Down => s.resizing = Some((which, now)),
+            rune::Phase::Move => {
+                let start = s.resizing.map(|(_, start)| start).unwrap_or(now);
+                s.resizing = Some((which, start));
+                s.resize(which, start + drag.dx * per_point, false);
+            }
+            rune::Phase::Up => {
+                let start = s.resizing.map(|(_, start)| start).unwrap_or(now);
+                s.resize(which, if drag.cancelled() { start } else { start + drag.dx * per_point }, true);
+            }
+        })
+        .on_double_press(move |s: &mut App| s.reset_divider(which))
+        .on_key(move |s: &mut App, key: &rune::KeyEvent, _: &mut rune::Tx| {
+            let step = 16.0 * per_point;
+            match key.key {
+                rune::Key::Left => s.resize(which, now - step, true),
+                rune::Key::Right => s.resize(which, now + step, true),
+                _ => return false,
+            }
+            true
+        })
 }
 
 pub fn divider(k: &Kit) -> El {

@@ -743,6 +743,13 @@ text!(COLOURS_ROYAL, "Royal", "Kerajaan");
 text!(COLOURS_NIGHT, "Night", "Malam");
 text!(COLOURS_GLASS, "Glass", "Kaca patri");
 text!(COLOURS_DAWN, "Dawn", "Fajar");
+text!(DROP_HINT, "Release to add to Artosia", "Lepas untuk tambah ke Artosia");
+text!(DOUBLE_CLICK_SHOWS, "Double-click shows an item", "Klik dua kali menayangkan item");
+text!(DOUBLE_CLICK_SHOWS_HINT, "On: double-click shows a plan item. Off: it opens in Preview only", "Aktif: klik dua kali menayangkan item. Mati: hanya dibuka di Preview");
+text!(DROP_TO_PREVIEW, "Drop to open in Preview", "Lepas untuk lihat di Preview");
+text!(DROP_TO_LIVE, "Drop to show on projector", "Lepas untuk menayangkan");
+text!(SPLIT_PLAN, "Resize plan column", "Lebar kolom rundown");
+text!(SPLIT_PANES, "Resize Preview and Live", "Lebar Preview dan Live");
 text!(GUIDE_HELP, "Help", "Bantuan");
 text!(GUIDE_SHOW_ME, "Show me", "Tunjukkan caranya");
 text!(HELP_CALENDAR, "Your regular services and events, entered once. The schedule slide fills itself from them.", "Kalender berisi ibadah dan acara gereja, cukup diisi sekali. Slide pengumuman jadwal terisi sendiri.");
@@ -1860,6 +1867,19 @@ pub fn course_part(at: usize, total: usize, name: &str) -> String {
         return format!("Bagian {at} dari {total}: {name}");
     }
     format!("Part {at} of {total}: {name}")
+}
+
+/// A dropped file Artosia cannot read, named, with how many more there were.
+pub fn drop_unknown(name: &str, count: usize) -> String {
+    let more = count.saturating_sub(1);
+    let case = if more == 0 { "alone" } else { "more" };
+    if let Some(text) = say("drop_unknown", Some(case), None, &[("name", text_arg(name)), ("more", text_arg(more.to_string()))]) {
+        return text;
+    }
+    if indonesian() {
+        return if more == 0 { format!("{name} tidak bisa dibuka") } else { format!("{name} dan {more} berkas lain tidak bisa dibuka") };
+    }
+    if more == 0 { format!("Could not open {name}") } else { format!("Could not open {name} and {more} more") }
 }
 
 /// A lesson step that sends the person to a tab, named as the tab bar names it.

@@ -384,6 +384,10 @@ fn settings(s: &App, k: &Kit, layer: &mut Vec<El>, tall: f32) {
             s.settings.letter_keys = !s.settings.letter_keys;
             s.touch_settings();
         }))
+        .child(switch_row(k, "double-click-switch", t::DOUBLE_CLICK_SHOWS(), t::DOUBLE_CLICK_SHOWS_HINT(), s.settings.double_click_shows, |s| {
+            s.settings.double_click_shows = !s.settings.double_click_shows;
+            s.touch_settings();
+        }))
         .child(row().w_full().h(36.0).center_y().child(btn(t::CMD_KEYS()).icon(&icons::KEYBOARD).focusable().build(k, |s, _| s.sheet = Sheet::Keys)))
         .child(el().h(2.0))
         .child(section_label(k, t::SETTINGS_ABOUT()))

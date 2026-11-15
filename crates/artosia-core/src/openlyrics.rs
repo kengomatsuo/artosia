@@ -193,6 +193,26 @@ fn index_rows(folder: &Path) -> std::collections::HashMap<String, (String, Vec<S
     out
 }
 
+/// The OpenLyrics songs in these files, with the count that could not be read: a file dropped
+/// on the window is read alone, never with the rest of its folder.
+pub fn read_files(files: &[std::path::PathBuf]) -> (Vec<Song>, usize) {
+    let (mut songs, mut failed) = (Vec::new(), 0);
+    for file in files {
+        let id = file.file_stem().map(|stem| stem.to_string_lossy().to_string()).unwrap_or_default();
+        match std::fs::read_to_string(file).ok().and_then(|xml| read(&xml)) {
+            Some(mut song) => {
+                song.source = id.clone();
+                if song.title.is_empty() {
+                    song.title = song.first_line().unwrap_or(id);
+                }
+                songs.push(song);
+            }
+            None => failed += 1,
+        }
+    }
+    (songs, failed)
+}
+
 /// Every OpenLyrics song in a folder, its `songs` subfolder, or the nearest folder inside it
 /// that holds XML files, with the count of files that could not be read. Empty placeholders are skipped.
 pub fn read_folder(folder: &Path) -> (Vec<Song>, usize) {

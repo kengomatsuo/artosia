@@ -6414,5 +6414,51 @@
   "text": "黎明",
   "back": "Dawn",
   "why": "Sky before sunrise, unlike the dusk chip"
+ },
+ "DROP_HINT": {
+  "text": "放開即加入 Artosia",
+  "back": "Release to add to Artosia",
+  "why": "加入 for adding files"
+ },
+ "DOUBLE_CLICK_SHOWS": {
+  "text": "雙擊項目直接投影",
+  "back": "Double-click an item to project it directly",
+  "why": "投影 is the table's verb"
+ },
+ "DOUBLE_CLICK_SHOWS_HINT": {
+  "text": "開啟後雙擊流程中的項目直接投影，關閉則只在預覽中開啟",
+  "back": "When on, double-clicking a plan item projects it; when off it only opens in the preview",
+  "why": "流程 and 預覽 as in the table"
+ },
+ "DROP_TO_PREVIEW": {
+  "text": "放開後在預覽中開啟",
+  "back": "After releasing, opens in the preview",
+  "why": "Pane name as in the table"
+ },
+ "DROP_TO_LIVE": {
+  "text": "放開後投影",
+  "back": "After releasing, projects",
+  "why": "投影 kept for the projector"
+ },
+ "SPLIT_PLAN": {
+  "text": "流程欄寬度",
+  "back": "Width of the plan column",
+  "why": "流程 is the table's plan word"
+ },
+ "SPLIT_PANES": {
+  "text": "預覽與現場的寬度",
+  "back": "Width of the preview and the live",
+  "why": "現場 is the table's live name"
+ },
+ "drop_unknown": {
+  "text": {
+   "alone": "無法開啟 {name}",
+   "more": "無法開啟 {name}，另有 {more} 個檔案也無法開啟"
+  },
+  "back": {
+   "alone": "{name} cannot be opened",
+   "more": "{name} cannot be opened, and {more} other files cannot either"
+  },
+  "why": "檔案 and 開啟 as the usual Taiwan words"
  }
 }

@@ -6376,5 +6376,51 @@
   "text": "Fajar",
   "back": "Dawn",
   "why": "Fajar, sky before sunrise, unlike Senja"
+ },
+ "DROP_HINT": {
+  "text": "Lepas untuk tambah ke Artosia",
+  "back": "Release to add to Artosia",
+  "why": "Lepas, short and familiar; tambah as the table's word for adding"
+ },
+ "DOUBLE_CLICK_SHOWS": {
+  "text": "Klik dua kali menayangkan item",
+  "back": "Double-click shows item",
+  "why": "menayangkan from the table's tayangkan"
+ },
+ "DOUBLE_CLICK_SHOWS_HINT": {
+  "text": "Aktif: klik dua kali menayangkan item. Mati: hanya dibuka di Preview",
+  "back": "On: double-click shows the item. Off: only opened in Preview",
+  "why": "Aktif and mati as plain switch words; Preview kept as in the table"
+ },
+ "DROP_TO_PREVIEW": {
+  "text": "Lepas untuk lihat di Preview",
+  "back": "Release to look in Preview",
+  "why": "Preview kept as pane name"
+ },
+ "DROP_TO_LIVE": {
+  "text": "Lepas untuk menayangkan",
+  "back": "Release to show",
+  "why": "Same verb as the table's tayangkan"
+ },
+ "SPLIT_PLAN": {
+  "text": "Lebar kolom rundown",
+  "back": "Width of the rundown column",
+  "why": "rundown is the table's word for the plan"
+ },
+ "SPLIT_PANES": {
+  "text": "Lebar Preview dan Live",
+  "back": "Width of Preview and Live",
+  "why": "Pane names as in the table"
+ },
+ "drop_unknown": {
+  "text": {
+   "alone": "{name} tidak bisa dibuka",
+   "more": "{name} dan {more} berkas lain tidak bisa dibuka"
+  },
+  "back": {
+   "alone": "{name} cannot be opened",
+   "more": "{name} and {more} other files cannot be opened"
+  },
+  "why": "berkas is the everyday word for file; tidak bisa, not formal"
  }
 }

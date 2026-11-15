@@ -50,14 +50,16 @@ pub(crate) fn title_bar(s: &App, k: &Kit, layer: &mut Vec<El>, tools: El, tall: 
     // A plan with a name of its own says its day and time beside it, when both fit the box:
     // half a day's name after a name cut short says nothing.
     let slot = slot_words(s.plan.day, s.plan.time).filter(|_| !is_unnamed(&s.plan.name)).unwrap_or_default();
-    let room = BOX - 2.0 * space::S2 - 2.0 * space::S2 - 14.0;
+    // The box fills the plan column, whatever width it was dragged to.
+    let box_w = s.plan_width() - 2.0 * space::S2;
+    let room = box_w - 2.0 * space::S2 - 2.0 * space::S2 - 14.0;
     let slot = if wide(&name, type_::BODY_STRONG) + wide(&slot, type_::SMALL) <= room { slot } else { String::new() };
     let trigger = row()
         .key("plan-switcher-button")
         .role("button")
         .label(name.clone())
         .help(t::PLANS_TITLE())
-        .w(BOX)
+        .w(box_w)
         .h(30.0)
         .px(space::S2)
         .gap(space::S2)
@@ -90,7 +92,7 @@ pub(crate) fn title_bar(s: &App, k: &Kit, layer: &mut Vec<El>, tools: El, tall: 
     let groups = s.plan_groups();
     let longest = groups.iter().flat_map(|(_, plans)| plans.iter()).map(|plan| wide(&drop_words(plan), k.ty.ui_compact)).fold(0.0f32, f32::max);
     let keys = wide(t::PLAN_NEW(), k.ty.ui_compact) + wide("Ctrl Shift N", k.ty.small_medium) + space::S2;
-    let width = (longest.max(keys) + ROW_BESIDE).clamp(BOX, LIST_MOST);
+    let width = (longest.max(keys) + ROW_BESIDE).clamp(box_w, LIST_MOST.max(box_w));
     let mut menu = Menu::new("plan-switcher").trigger(trigger).open(open).min_width(width).on_close(|s: &mut App| s.close_switcher());
     let today = s.weekday_now().0;
     for (day, plans) in groups {

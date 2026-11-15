@@ -78,6 +78,47 @@ pub struct PlanDrag {
     pub to: usize,
     /// How far the pointer has carried the row.
     pub dy: f32,
+    pub dx: f32,
+    /// The pointer in window points, while the row's place in the window is known.
+    pub pointer: Option<(f32, f32)>,
+    /// The pane the row is over, where letting go opens or shows it (GESTURES1).
+    pub over: Option<DropPane>,
+}
+
+/// A list whose rows the pointer carries to another place (GESTURES1).
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum Sorted {
+    /// The song editor's part cards.
+    Parts,
+    /// The announcement list.
+    Notices,
+}
+
+/// A row being carried: its list, where it was, where it would land, how far it has gone.
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub struct Carried {
+    pub list: Sorted,
+    pub from: usize,
+    pub to: usize,
+    pub dy: f32,
+}
+
+/// A line the pointer drags to resize what is beside it (GESTURES1).
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum Divider {
+    /// The plan column's right edge.
+    Plan,
+    /// The line between Preview and Live.
+    Panes,
+}
+
+/// A pane a plan item can be carried onto.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum DropPane {
+    /// Opens it there, as a click does.
+    Preview,
+    /// Shows it, as Show does.
+    Live,
 }
 
 /// The deck on the projector.
@@ -169,6 +210,16 @@ pub struct Settings {
     /// turned off.
     #[serde(default = "yes")]
     pub letter_keys: bool,
+    /// A double-click on a plan item shows it, as in EasiSlides; off, it only opens Preview
+    /// (GESTURES1, owner's pick 2026-11-15).
+    #[serde(default = "yes")]
+    pub double_click_shows: bool,
+    /// The plan column's width in points, as last dragged (GESTURES1).
+    #[serde(default = "plan_width")]
+    pub plan_width: f32,
+    /// Preview's share of the room beside the plan, 0.35 to 0.65.
+    #[serde(default = "half")]
+    pub preview_share: f32,
     /// The languages the church usually shows together on a slide, in the order they are drawn
     /// (BCP 47 codes). A plan may have its own list; empty shows each song's first language.
     pub song_languages: Vec<String>,
@@ -218,6 +269,9 @@ impl Default for Settings {
             warp: artosia_slides::frame::Warp::default(),
             learn: true,
             letter_keys: true,
+            double_click_shows: true,
+            plan_width: crate::theme::size::PLAN,
+            preview_share: 0.5,
             song_languages: Vec::new(),
             first_weekday: 0,
             follow_church_year: false,
@@ -236,6 +290,14 @@ pub struct BibleFile {
     pub name: String,
     /// None for the translation packed into the program.
     pub path: Option<PathBuf>,
+}
+
+fn plan_width() -> f32 {
+    crate::theme::size::PLAN
+}
+
+fn half() -> f32 {
+    0.5
 }
 
 fn yes() -> bool {
@@ -787,6 +849,12 @@ pub struct App {
     pub update_waiting: Option<String>,
     /// The card offering that update, Restart now or Later, is open.
     pub update_card: bool,
+    /// Files are being dragged over the window (GESTURES1).
+    pub drop_hover: bool,
+    /// A divider being dragged: which, and its value when the press began.
+    pub resizing: Option<(Divider, f32)>,
+    /// A row of a sorted list being carried (GESTURES1).
+    pub carried: Option<Carried>,
     /// The church's own app, waiting while the tour shows the practice library (TOURROOM1).
     pub church: Option<Box<App>>,
     /// The whole tour is running: how many of its parts have started, the five stops first and
@@ -1021,6 +1089,9 @@ impl App {
             church: None,
             update_waiting: None,
             update_card: false,
+            drop_hover: false,
+            resizing: None,
+            carried: None,
             course: None,
             inbox: Arc::new(Mutex::new(Vec::new())),
             remote_tx,
@@ -1672,6 +1743,55 @@ impl App {
         if let Some(deck) = self.deck_of_passage(reference) {
             self.open_deck(deck, None, 0);
         }
+    }
+
+    /// The plan column's width now, inside its limits and the room Preview and Live leave in
+    /// the window as last laid out.
+    pub fn plan_width(&self) -> f32 {
+        use crate::theme::size::{PANE_MIN, PLAN_MAX, PLAN_MIN, SPLITTER};
+        let window = rune::memo::layout_size("columns").map(|size| size[0]).unwrap_or(1366.0);
+        let most = PLAN_MAX.min(window - 2.0 * PANE_MIN - 2.0 * SPLITTER).max(PLAN_MIN);
+        self.settings.plan_width.clamp(PLAN_MIN, most)
+    }
+
+    /// Preview's share of `room`, the width beside the plan: each pane keeps its least width.
+    pub fn preview_share(&self, room: f32) -> f32 {
+        let least = (crate::theme::size::PANE_MIN / room.max(1.0)).min(0.5);
+        self.settings.preview_share.clamp(least, 1.0 - least)
+    }
+
+    /// A divider moved: `value` is the new width or share, kept inside its limits; `done` keeps it.
+    pub fn resize(&mut self, which: Divider, value: f32, done: bool) {
+        match which {
+            Divider::Plan => self.settings.plan_width = value.clamp(crate::theme::size::PLAN_MIN, crate::theme::size::PLAN_MAX).round(),
+            // The share is kept as dragged; the view holds each pane to its least width.
+            Divider::Panes => self.settings.preview_share = value.clamp(0.0, 1.0),
+        }
+        if done {
+            self.resizing = None;
+            self.touch_settings();
+        }
+    }
+
+    /// A carried row was let go: it moves to where it landed, unless the drag was cancelled.
+    pub fn drop_carried(&mut self, cancelled: bool) {
+        let Some(held) = self.carried.take() else { return };
+        if cancelled || held.to == held.from {
+            return;
+        }
+        match held.list {
+            Sorted::Parts => self.move_part_to(held.from, held.to),
+            Sorted::Notices => self.move_notice_to(held.from, held.to),
+        }
+    }
+
+    /// A double-click on a divider puts its side back as it first was.
+    pub fn reset_divider(&mut self, which: Divider) {
+        let value = match which {
+            Divider::Plan => crate::theme::size::PLAN,
+            Divider::Panes => 0.5,
+        };
+        self.resize(which, value, true);
     }
 
     pub fn open_plan_item(&mut self, id: u64) {

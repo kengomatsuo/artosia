@@ -6452,5 +6452,51 @@
   "text": "Amanhecer",
   "back": "Sunrise",
   "why": "Amanhecer, the sky before sunrise, unlike Entardecer"
+ },
+ "DROP_HINT": {
+  "text": "Solte para incluir no Artosia",
+  "back": "Drop to include in Artosia",
+  "why": "incluir, plain and short"
+ },
+ "DOUBLE_CLICK_SHOWS": {
+  "text": "Duplo clique exibe o item",
+  "back": "Double-click shows the item",
+  "why": "exibir is the table's verb"
+ },
+ "DOUBLE_CLICK_SHOWS_HINT": {
+  "text": "Ligado: duplo clique exibe o item do roteiro. Desligado: só abre na Prévia",
+  "back": "On: double-click shows the roteiro item. Off: only opens in Prévia",
+  "why": "Ligado and desligado as in the table"
+ },
+ "DROP_TO_PREVIEW": {
+  "text": "Solte para ver na Prévia",
+  "back": "Drop to look in Prévia",
+  "why": "Pane name as in the table"
+ },
+ "DROP_TO_LIVE": {
+  "text": "Solte para exibir",
+  "back": "Drop to show",
+  "why": "exibir kept for the projector"
+ },
+ "SPLIT_PLAN": {
+  "text": "Largura da lista do roteiro",
+  "back": "Width of the roteiro list",
+  "why": "roteiro is the table's word for the plan"
+ },
+ "SPLIT_PANES": {
+  "text": "Largura de Prévia e Ao vivo",
+  "back": "Width of Prévia and Ao vivo",
+  "why": "Pane names as in the table"
+ },
+ "drop_unknown": {
+  "text": {
+   "alone": "Não foi possível abrir {name}",
+   "more": "Não foi possível abrir {name} e mais {more}"
+  },
+  "back": {
+   "alone": "Could not open {name}",
+   "more": "Could not open {name} and {more} more"
+  },
+  "why": "Impersonal, plain"
  }
 }

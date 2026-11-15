@@ -155,12 +155,20 @@ impl App {
 
     /// Moves a part up or down among the written ones.
     pub fn move_part(&mut self, index: usize, by: isize) {
-        let mut sections = self.written_parts();
         let to = index as isize + by;
-        if index >= sections.len() || to < 0 || to as usize >= sections.len() {
+        if to >= 0 {
+            self.move_part_to(index, to as usize);
+        }
+    }
+
+    /// Moves the part at `from` to place `to` among the written ones.
+    pub fn move_part_to(&mut self, from: usize, to: usize) {
+        let mut sections = self.written_parts();
+        if from >= sections.len() || to >= sections.len() || from == to {
             return;
         }
-        sections.swap(index, to as usize);
+        let part = sections.remove(from);
+        sections.insert(to, part);
         self.close_part();
         self.write_parts(&sections);
     }

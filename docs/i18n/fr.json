@@ -6474,5 +6474,51 @@
   "text": "Aube",
   "back": "Dawn",
   "why": "Aube, sky before sunrise, distinct from Crepuscule"
+ },
+ "DROP_HINT": {
+  "text": "Déposer pour ajouter à Artosia",
+  "back": "Drop to add to Artosia",
+  "why": "Infinitive avoids tu or vous; ajouter as in the table"
+ },
+ "DOUBLE_CLICK_SHOWS": {
+  "text": "Double-clic projette l'élément",
+  "back": "Double-click projects the element",
+  "why": "projeter is the table's verb"
+ },
+ "DOUBLE_CLICK_SHOWS_HINT": {
+  "text": "Activé : le double-clic projette l'élément. Désactivé : il s'ouvre dans l'aperçu",
+  "back": "On: double-click projects the element. Off: it opens in the preview",
+  "why": "Désactivé as in the table"
+ },
+ "DROP_TO_PREVIEW": {
+  "text": "Déposer pour voir dans l'aperçu",
+  "back": "Drop to look in the preview",
+  "why": "aperçu as pane name"
+ },
+ "DROP_TO_LIVE": {
+  "text": "Déposer pour projeter",
+  "back": "Drop to project",
+  "why": "projeter kept for the projector"
+ },
+ "SPLIT_PLAN": {
+  "text": "Largeur du programme",
+  "back": "Width of the programme",
+  "why": "programme is the table's word for the plan"
+ },
+ "SPLIT_PANES": {
+  "text": "Largeur de l'aperçu et du direct",
+  "back": "Width of the preview and the live",
+  "why": "Pane names as in the table"
+ },
+ "drop_unknown": {
+  "text": {
+   "alone": "Impossible d'ouvrir {name}",
+   "more": "Impossible d'ouvrir {name} et {more} de plus"
+  },
+  "back": {
+   "alone": "Impossible to open {name}",
+   "more": "Impossible to open {name} and {more} more"
+  },
+  "why": "Short and impersonal"
  }
 }

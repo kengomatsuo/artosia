@@ -247,6 +247,8 @@ struct Pane<'a> {
     empty: El,
     footer: El,
     ring: Option<Color>,
+    /// A plan item is carried over this pane: what letting go does (GESTURES1).
+    drop: Option<&'static str>,
 }
 
 fn pane(k: &Kit, p: Pane<'_>) -> El {
@@ -300,6 +302,17 @@ fn pane(k: &Kit, p: Pane<'_>) -> El {
         // A ring on every side marks the pane the keys act on. It is its own element, laid
         // over the rest: the pane's own border is drawn under its children.
         frame = frame.child(el().pin(Some(0.0), Some(0.0), Some(0.0), Some(0.0)).border(3.0, ring).a11y_hidden());
+    }
+    if let Some(label) = p.drop {
+        frame = frame.child(
+            el().key(format!("{}-drop", p.key))
+                .pin(Some(0.0), Some(0.0), Some(0.0), Some(0.0))
+                .fill(theme::accent().alpha(0.12))
+                .border(3.0, theme::accent())
+                .border_dash(14.0, 8.0)
+                .center()
+                .child(row().gap(space::S2).center_y().px(space::S4).py(space::S2).radius(k.radius.md).fill(k.c.layer_01).child(text(label).font(type_::BODY_STRONG).color(k.c.text_base))),
+        );
     }
     frame
 }
@@ -387,7 +400,7 @@ fn preview_controls(s: &App, k: &Kit, size: Foot) -> El {
     col().key("preview-controls").w(size.controls).gap(space::S2).child(row().w_full().child(show)).child(items)
 }
 
-fn preview_pane(s: &App, k: &Kit, size: Foot) -> El {
+fn preview_pane(s: &App, k: &Kit, size: Foot, width: Option<f32>) -> El {
     let open = s.open.as_ref();
     // Preview holds the live deck when nothing follows it; its live slide is marked there too.
     let live_index = s.live.as_ref().map(|live| live.index).filter(|_| s.open_is_live());
@@ -409,7 +422,7 @@ fn preview_pane(s: &App, k: &Kit, size: Foot) -> El {
             live_at: live_index,
             hidden,
             staged: !s.on_air(),
-            width: None,
+            width,
             cursor: open.map(|o| o.cursor).filter(|cursor| Some(*cursor) != live_index),
             go_live: false,
             letters: s.settings.letter_keys && s.live.is_none(),
@@ -423,6 +436,7 @@ fn preview_pane(s: &App, k: &Kit, size: Foot) -> El {
             empty: if open.is_some() { empty_words(k, t::DECK_EMPTY()) } else { crate::ui::slides::start(s, k) },
             footer: foot(size, picture(s, k, &state, size.picture, false), preview_controls(s, k, size)),
             ring: (ctrl && s.live.is_some() && open.is_some()).then(theme::accent),
+            drop: s.plan_drag.filter(|drag| drag.over == Some(crate::state::DropPane::Preview)).map(|_| t::DROP_TO_PREVIEW()),
         },
     )
 }
@@ -564,6 +578,7 @@ fn live_pane(s: &App, k: &Kit, size: Option<Foot>, layer: &mut Vec<El>) -> El {
             empty: empty_words(k, t::LIVE_NOTHING()),
             footer,
             ring,
+            drop: s.plan_drag.filter(|drag| drag.over == Some(crate::state::DropPane::Live)).map(|_| t::DROP_TO_LIVE()),
         },
     )
 }
@@ -575,7 +590,7 @@ fn plan_column(s: &App, k: &Kit, layer: &mut Vec<El>, tall: f32) -> El {
     // is the foot of the column.
     col()
         .key("plan")
-        .w(PLAN)
+        .w(s.plan_width())
         .h_full()
         .min_h(0.0)
         .fill(theme::surf().side)
@@ -590,7 +605,7 @@ fn plan_column(s: &App, k: &Kit, layer: &mut Vec<El>, tall: f32) -> El {
 /// The whole window under the title bar and over the status bar.
 pub fn view(s: &App, cx: &mut Cx<App>, k: &Kit, layer: &mut Vec<El>) -> El {
     let area = cx.layout_size("centre");
-    let width = area.map(|size| size[0]).unwrap_or(1366.0 - PLAN);
+    let width = area.map(|size| size[0]).unwrap_or(1366.0 - s.plan_width());
     let tall = area.map(|size| size[1]).unwrap_or(680.0);
     // An editor takes the Preview pane; what the room sees stays in view beside it.
     let centre = row().key("centre").grow(1.0).min_w(0.0).h_full().min_h(0.0);
@@ -598,10 +613,17 @@ pub fn view(s: &App, cx: &mut Cx<App>, k: &Kit, layer: &mut Vec<El>) -> El {
         let editor = crate::ui::editor::view(s, k, width - NARROW - 1.0, layer);
         centre.child(col().grow(1.0).min_w(0.0).h_full().min_h(0.0).fill(theme::surf().work).child(editor)).child(vline()).child(live_pane(s, k, None, layer))
     } else {
-        let size = Foot::fit((width - 1.0) / 2.0, tall);
-        centre.child(preview_pane(s, k, size)).child(vline()).child(live_pane(s, k, Some(size), layer))
+        // Preview takes its share of the room and Live the rest, split by a line the pointer
+        // drags (GESTURES1).
+        let room = width - theme::size::SPLITTER;
+        let share = s.preview_share(room);
+        let preview_w = (room * share).round();
+        let resizing = |which| s.resizing.is_some_and(|(held, _)| held == which);
+        let line = crate::ui::widgets::splitter(k, crate::state::Divider::Panes, t::SPLIT_PANES(), share, 1.0 / room.max(1.0), resizing(crate::state::Divider::Panes));
+        centre.child(preview_pane(s, k, Foot::fit(preview_w, tall), Some(preview_w))).child(line).child(live_pane(s, k, Some(Foot::fit(room - preview_w, tall)), layer))
     };
-    row().key("columns").w_full().grow(1.0).min_h(0.0).child(plan_column(s, k, layer, tall)).child(vline()).child(centre)
+    let edge = crate::ui::widgets::splitter(k, crate::state::Divider::Plan, t::SPLIT_PLAN(), s.plan_width(), 1.0, s.resizing.is_some_and(|(held, _)| held == crate::state::Divider::Plan));
+    row().key("columns").w_full().grow(1.0).min_h(0.0).child(plan_column(s, k, layer, tall)).child(edge).child(centre)
 }
 
 /// A window of its own tab with the Live pane narrow beside it, so what the room sees stays in
