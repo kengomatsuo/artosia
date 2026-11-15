@@ -68,7 +68,6 @@ pub(super) fn design(s: &App, cx: &mut rune::Cx<App>, k: &Kit, layer: &mut Vec<E
             s.backdrops.entry(&stem).map(|entry| entry.title.clone()).unwrap_or_else(|| file_name(path))
         }
         Background::Camera(name) => name.clone(),
-        Background::Live(live) => super::moving::name(live.kind).to_string(),
         _ => t::LOOK_NO_FILE().to_string(),
     };
     let lines = [2usize, 3, 4, 6, 0];
