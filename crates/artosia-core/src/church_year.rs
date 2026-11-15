@@ -3,7 +3,7 @@
 
 use crate::calendar::Date;
 
-#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize)]
 pub enum Season {
     Advent,
     Christmas,
@@ -38,6 +38,22 @@ impl Season {
             Season::Pentecost => "pentecost",
             Season::Reformation => "reformation",
             Season::Ordinary => "ordinary",
+        }
+    }
+
+    /// The season a colourway's `season` tag names; None for a name that is no season.
+    pub fn from_code(code: &str) -> Option<Season> {
+        [Season::Advent, Season::Christmas, Season::Epiphany, Season::Lent, Season::HolyWeek, Season::GoodFriday, Season::Easter, Season::Ascension, Season::Pentecost, Season::Reformation, Season::Ordinary].into_iter().find(|season| season.code() == code)
+    }
+
+    /// The season whose colourway a card wears in this one: five seasons have a colourway, the rest borrow the nearest.
+    pub fn colourway_season(self) -> Season {
+        match self {
+            Season::HolyWeek | Season::GoodFriday => Season::Lent,
+            Season::Epiphany => Season::Christmas,
+            Season::Ascension => Season::Easter,
+            Season::Reformation => Season::Pentecost,
+            other => other,
         }
     }
 }
@@ -107,6 +123,36 @@ pub fn season_on(date: Date) -> Season {
     }
 }
 
+/// The week of Advent `date` is in, 1 to 4: the Sunday belongs to the week it opens and 24 December ends week 4.
+pub fn advent_week(date: Date) -> Option<u8> {
+    let days = date.days() - advent_start(date.year).days();
+    (days >= 0 && date < (Date { year: date.year, month: 12, day: 25 })).then(|| (days / 7 + 1).min(4) as u8)
+}
+
+/// The mark a card draws in `season`, on `today` for Advent's candles; None for ordinary time. Advent with no day, or
+/// a day outside Advent (a card in the Advent colourway all year), has the one candle.
+pub fn mark_for(season: Season, today: Option<Date>) -> Option<&'static str> {
+    Some(match season {
+        Season::Advent => match today.and_then(advent_week) {
+            Some(1) => "advent-1",
+            Some(2) => "advent-2",
+            Some(3) => "advent-3",
+            Some(4) => "advent-4",
+            _ => "advent",
+        },
+        Season::Christmas => "christmas",
+        Season::Epiphany => "epiphany",
+        Season::Lent => "lent",
+        Season::HolyWeek => "palm",
+        Season::GoodFriday => "good-friday",
+        Season::Easter => "easter",
+        Season::Ascension => "ascension",
+        Season::Pentecost => "pentecost",
+        Season::Reformation => "reformation",
+        Season::Ordinary => return None,
+    })
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -163,5 +209,55 @@ mod tests {
         for (date, season) in cases {
             assert_eq!(season_on(date), season, "{}", date.code());
         }
+    }
+
+    #[test]
+    fn advent_week_counts_from_the_first_sunday_and_ends_on_christmas_eve() {
+        let cases = [(d(2026, 11, 28), None), (d(2026, 11, 29), Some(1)), (d(2026, 12, 5), Some(1)), (d(2026, 12, 6), Some(2)), (d(2026, 12, 12), Some(2)), (d(2026, 12, 13), Some(3)), (d(2026, 12, 19), Some(3)), (d(2026, 12, 20), Some(4)), (d(2026, 12, 24), Some(4)), (d(2026, 12, 25), None), (d(2027, 3, 1), None)];
+        for (date, week) in cases {
+            assert_eq!(advent_week(date), week, "{}", date.code());
+        }
+        // Christmas Eve on a Sunday opens week 4 on its own day, the latest start of Advent.
+        assert_eq!(advent_start(2022), d(2022, 11, 27));
+        assert_eq!(advent_week(d(2023, 12, 24)), Some(4));
+        assert_eq!(advent_week(d(2023, 12, 3)), Some(1));
+    }
+
+    #[test]
+    fn a_season_draws_its_mark_and_advent_draws_the_candles_of_the_week() {
+        let seasons = [
+            (Season::Christmas, "christmas"),
+            (Season::Epiphany, "epiphany"),
+            (Season::Lent, "lent"),
+            (Season::HolyWeek, "palm"),
+            (Season::GoodFriday, "good-friday"),
+            (Season::Easter, "easter"),
+            (Season::Ascension, "ascension"),
+            (Season::Pentecost, "pentecost"),
+            (Season::Reformation, "reformation"),
+        ];
+        for (season, mark) in seasons {
+            assert_eq!(mark_for(season, Some(d(2026, 12, 6))), Some(mark));
+        }
+        assert_eq!(mark_for(Season::Ordinary, Some(d(2026, 12, 6))), None);
+        assert_eq!(mark_for(Season::Advent, Some(d(2026, 11, 29))), Some("advent-1"));
+        assert_eq!(mark_for(Season::Advent, Some(d(2026, 12, 20))), Some("advent-4"));
+        // A card in the Advent colourway outside Advent, or with no day, has the one candle.
+        assert_eq!(mark_for(Season::Advent, Some(d(2026, 7, 1))), Some("advent"));
+        assert_eq!(mark_for(Season::Advent, None), Some("advent"));
+    }
+
+    #[test]
+    fn a_season_without_a_colourway_of_its_own_borrows_the_nearest_and_codes_read_back() {
+        assert_eq!(Season::HolyWeek.colourway_season(), Season::Lent);
+        assert_eq!(Season::GoodFriday.colourway_season(), Season::Lent);
+        assert_eq!(Season::Epiphany.colourway_season(), Season::Christmas);
+        assert_eq!(Season::Ascension.colourway_season(), Season::Easter);
+        assert_eq!(Season::Reformation.colourway_season(), Season::Pentecost);
+        assert_eq!(Season::Advent.colourway_season(), Season::Advent);
+        for season in [Season::Advent, Season::Christmas, Season::Epiphany, Season::Lent, Season::HolyWeek, Season::GoodFriday, Season::Easter, Season::Ascension, Season::Pentecost, Season::Reformation, Season::Ordinary] {
+            assert_eq!(Season::from_code(season.code()), Some(season));
+        }
+        assert_eq!(Season::from_code("harvest"), None);
     }
 }

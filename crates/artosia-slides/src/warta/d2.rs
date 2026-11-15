@@ -28,6 +28,12 @@ fn sticker(sl: &mut Sheet, cx: f32, cy: f32, dia: f32, label: &str, deg: f32) {
 fn head(sl: &mut Sheet, kicker: &str, second: Option<&str>, title: Option<&str>) {
     let (mx, pad, py, ph) = (sl.g("mx"), sl.g("pad"), sl.g("pill_y"), sl.g("pill_h"));
     sl.push(R::new(0.0, 0.0, W, H).fill("ground"));
+    if sl.has_mark() {
+        // The season's sign rides a round sticker at the right end of the pill row.
+        let (cx, dia) = (sl.g("x2") - sl.mk("edge"), sl.mk("disc"));
+        sl.push(R::new(cx - dia / 2.0, sl.mk("cy") - dia / 2.0, dia, dia).fill("orange").pill());
+        sl.mark_here(cx, sl.mk("cy"));
+    }
     let w1 = sl.measure("tag", kicker, None, None) + 2.0 * pad;
     sl.push(R::new(mx, py, w1, ph).fill("pill").pill());
     sl.text("tag", kicker, Tx::l(mx + pad, py + ph / 2.0).cy());

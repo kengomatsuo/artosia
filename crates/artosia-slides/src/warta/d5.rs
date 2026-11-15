@@ -25,9 +25,12 @@ fn page(sl: &mut Sheet, d: &Data, right: Option<(&str, &str)>) {
     if let Some((words, colour)) = right.filter(|(words, _)| !words.is_empty()) {
         taken = sl.text("ribbon", words, Tx::r(x2, ky).cy().fill(colour).maxw((x2 - mx) / 2.0)).w + 40.0;
     }
+    let mut end = mx - sl.mk("gap");
     if !d.church.is_empty() {
-        sl.text("kicker", &d.church, Tx::l(mx, ky).cy().maxw(x2 - mx - taken));
+        let church = sl.text("kicker", &d.church, Tx::l(mx, ky).cy().maxw(x2 - mx - taken - sl.mark_reserve()));
+        end = church.x + church.w;
     }
+    sl.mark_after(end);
 }
 
 fn masthead(sl: &mut Sheet, title: &str, sub: Option<&str>) {

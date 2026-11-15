@@ -30,10 +30,18 @@ fn neon(sl: &mut Sheet, x: f32, y: f32, wide: f32, high: f32, rx: f32, colour: &
 
 fn deco(sl: &mut Sheet, sid: &str) {
     let items = sl.d["deco"][sid].as_array().cloned().unwrap_or_default();
+    let mut marked = false;
     for item in items {
         let (kind, x, y, dia, colour) = (item[0].as_str().unwrap_or(""), item[1].as_f64().unwrap_or(0.0) as f32, item[2].as_f64().unwrap_or(0.0) as f32, item[3].as_f64().unwrap_or(0.0) as f32, item[4].as_str().unwrap_or("pink").to_string());
         match kind {
-            "ring" => neon(sl, x, y, dia, dia, dia / 2.0, &colour, 10.0, 0.0),
+            "ring" => {
+                neon(sl, x, y, dia, dia, dia / 2.0, &colour, 10.0, 0.0);
+                // The first ring small enough holds the season's sign at half its width, in its own colour.
+                if !marked && dia <= sl.mk("max_ring") {
+                    sl.put_mark(x + dia / 2.0, y + dia / 2.0, dia * sl.mk("ratio"), &colour, 1.0);
+                    marked = true;
+                }
+            }
             "diamond" => neon(sl, x, y, dia, dia, 10.0, &colour, 8.0, 45.0),
             _ => sl.push(R::new(x, y, dia, dia).fill(&colour).pill()),
         }

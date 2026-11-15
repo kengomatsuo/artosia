@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+<defs>
+<linearGradient id="wash" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#04271C" stop-opacity="0"/>
+<stop offset="1" stop-color="#004A2B" stop-opacity="1"/>
+</linearGradient>
+</defs>
+<rect x="0.0" y="0.0" width="1920.0" height="1080.0" fill="#04271C"/>
+<rect x="0.0" y="860.0" width="1920.0" height="220.0" fill="url(#wash)"/>
+<text x="112.0" y="84.0" font-family="Source Serif 4 Text" font-weight="600" font-size="32" letter-spacing="5.12" text-anchor="start" fill="#A9CEBE">WARTA JEMAAT</text>
+<text x="1808.0" y="84.0" font-family="Source Serif 4 Text" font-weight="600" font-size="32" letter-spacing="5.12" text-anchor="end" fill="#A9CEBE">GEREJA BETHEL KASIH NUSANTARA</text>
+<rect x="112.0" y="106.0" width="1696.0" height="2.0" fill="#F8EFE2"/>
+<text x="112.0" y="262.0" font-family="Source Serif 4 Display" font-weight="600" font-size="128" letter-spacing="-1.28" text-anchor="start" fill="#F8EFE2">Jadwal Pekan Ini</text>
+<text x="1808.0" y="262.0" font-family="Source Serif 4 Oldstyle" font-weight="400" font-style="italic" font-size="52" text-anchor="end" fill="#A9CEBE">15 sampai 21 November 2026</text>
+<text x="112.0" y="384.0" font-family="Source Serif 4 Display" font-weight="400" font-style="italic" font-size="72" text-anchor="start" fill="#F8EFE2">15</text>
+<text x="336.0" y="376.0" font-family="Source Serif 4 Text" font-weight="600" font-size="52" text-anchor="start" fill="#F8EFE2">07.00</text>
+<rect x="528.0" y="348.0" width="506.0" height="24.0" rx="12.0" fill="#F8EFE2" opacity="0.5"/>
+<text x="336.0" y="436.0" font-family="Source Serif 4 Text" font-weight="600" font-size="52" text-anchor="start" fill="#F8EFE2">09.30</text>
+<rect x="528.0" y="408.0" width="638.0" height="24.0" rx="12.0" fill="#F8EFE2" opacity="0.5"/>
+<text x="112.0" y="528.0" font-family="Source Serif 4 Display" font-weight="400" font-style="italic" font-size="72" text-anchor="start" fill="#F8EFE2">18</text>
+<text x="336.0" y="520.0" font-family="Source Serif 4 Text" font-weight="600" font-size="52" text-anchor="start" fill="#F8EFE2">18.30</text>
+<rect x="528.0" y="492.0" width="572.0" height="24.0" rx="12.0" fill="#F8EFE2" opacity="0.5"/>
+<text x="336.0" y="580.0" font-family="Source Serif 4 Text" font-weight="600" font-size="52" text-anchor="start" fill="#F8EFE2">19.00</text>
+<rect x="528.0" y="552.0" width="440.0" height="24.0" rx="12.0" fill="#F8EFE2" opacity="0.5"/>
+<text x="112.0" y="672.0" font-family="Source Serif 4 Display" font-weight="400" font-style="italic" font-size="72" text-anchor="start" fill="#F8EFE2">20</text>
+<text x="336.0" y="664.0" font-family="Source Serif 4 Text" font-weight="600" font-size="52" text-anchor="start" fill="#F8EFE2">17.30</text>
+<rect x="528.0" y="636.0" width="682.0" height="24.0" rx="12.0" fill="#F8EFE2" opacity="0.5"/>
+<rect x="96.0" y="676.0" width="1728.0" height="56.0" fill="#0A3D25"/>
+<rect x="96.0" y="676.0" width="6.0" height="56.0" fill="#EAC673"/>
+<text x="336.0" y="724.0" font-family="Source Serif 4 Text" font-weight="600" font-size="52" text-anchor="start" fill="#F8EFE2">19.00</text>
+<rect x="528.0" y="696.0" width="605.0" height="24.0" rx="12.0" fill="#F8EFE2" opacity="0.5"/>
+<text x="112.0" y="816.0" font-family="Source Serif 4 Display" font-weight="400" font-style="italic" font-size="72" text-anchor="start" fill="#F8EFE2">21</text>
+<text x="336.0" y="808.0" font-family="Source Serif 4 Text" font-weight="600" font-size="52" text-anchor="start" fill="#F8EFE2">09.00</text>
+<rect x="528.0" y="780.0" width="528.0" height="24.0" rx="12.0" fill="#F8EFE2" opacity="0.5"/>
+<text x="336.0" y="868.0" font-family="Source Serif 4 Text" font-weight="600" font-size="52" text-anchor="start" fill="#F8EFE2">16.00</text>
+<rect x="528.0" y="840.0" width="627.0" height="24.0" rx="12.0" fill="#F8EFE2" opacity="0.5"/>
+<svg x="440.35" y="49.0" width="48" height="48" viewBox="0 0 24 24"><g fill="none" stroke="#A9CEBE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1.8L13.3 8.86L16.67 7.33L15.14 10.7L20.8 12L15.14 13.3L16.67 16.67L13.3 15.14L12 20.8L10.7 15.14L7.33 16.67L8.86 13.3L3.2 12L8.86 10.7L7.33 7.33L10.7 8.86Z" fill="#A9CEBE" stroke="#A9CEBE" stroke-width="1"/></g></svg>
+</svg>

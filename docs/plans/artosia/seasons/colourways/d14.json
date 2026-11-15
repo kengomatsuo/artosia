@@ -1,0 +1,4 @@
+[{"id":"adven","season":"advent","palette":{"g1":"#1D0F27","g2":"#57337A","orb_a":"#F4C677","orb_b":"#B376F0","ink":"#F9F2FF","mute":"#D1BFE1","accent":"#FAD9A2","glass":"#FFFFFF","pill":"#F9F2FF","on_pill":"#1D0F27","glass_g2":"#674689"}},
+{"id":"natal","season":"christmas","palette":{"g1":"#001C12","g2":"#035634","orb_a":"#EEC976","orb_b":"#3DB44A","ink":"#E9FAF2","mute":"#A9D2C1","accent":"#F6DBA1","glass":"#FFFFFF","pill":"#E9FAF2","on_pill":"#001C12","glass_g2":"#056940"}},
+{"id":"prapaskah","season":"lent","palette":{"g1":"#240C1D","g2":"#722756","orb_a":"#FFB7C3","orb_b":"#E263B1","ink":"#FEF1F9","mute":"#DFBBD2","accent":"#FED0D7","glass":"#FFFFFF","pill":"#FEF1F9","on_pill":"#240C1D","glass_g2":"#823C66"}},
+{"id":"paskah","season":"easter","palette":{"g1":"#1D1500","g2":"#5F4202","orb_a":"#E7CC76","orb_b":"#C58D04","ink":"#FAF5E6","mute":"#D3C7A3","accent":"#F1DDA1","glass":"#FFFFFF","pill":"#FAF5E6","on_pill":"#1D1500","glass_g2":"#735103"}}]

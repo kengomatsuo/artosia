@@ -35,7 +35,8 @@ fn page(sl: &mut Sheet, d: &Data, have: Have, title: Option<&str>, sub: Option<&
     let scrim = sl.g("scrim_op");
     sl.push(R::new(0.0, 0.0, W, H).fill("scrim").op(scrim));
     let op = sl.g("kicker_op");
-    sl.text("kicker", &d.kicker(""), Tx::l(mx, ky).cy().op(op).maxw(x2 - mx));
+    let left = sl.text("kicker", &d.kicker(""), Tx::l(mx, ky).cy().op(op).maxw(x2 - mx - sl.mark_reserve()));
+    sl.mark_after(left.x + left.w);
     if let Some(title) = title.filter(|title| !title.is_empty()) {
         let (x, base) = (mx - sl.g("title_dx"), sl.g("title_base"));
         sl.text("title", title, Tx::l(x, base).maxw(x2 - x - reserve));

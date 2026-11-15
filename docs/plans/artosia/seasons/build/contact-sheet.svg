@@ -1,0 +1,400 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2480" height="4060" viewBox="0 0 2480 4060">
+
+<rect x="0.0" y="0.0" width="2480.0" height="4060.0" fill="#FFFFFF"/>
+<text x="40.0" y="70.0" font-family="Instrument Sans" font-weight="600" font-size="44" text-anchor="start" fill="#1D1A15">Season marks and four families in two seasons</text>
+<text x="40.0" y="116.0" font-family="Instrument Sans" font-weight="500" font-size="28" text-anchor="start" fill="#5A564E">SEASONMARK1. Sixteen marks, currentColor only, drawn here at 160 px. Wireframes at 1920 x 1080 from spec.json; each red box is the mark's rectangle.</text>
+<text x="40.0" y="156.0" font-family="Instrument Sans" font-weight="500" font-size="28" text-anchor="start" fill="#5A564E">Rendered by resvg-js (bunx @resvg/resvg-js-cli, bundled faces); text widths measured with fontTools, so a kicker's end is within a few percent of the engine's.</text>
+<rect x="40.0" y="190.0" width="280.0" height="230.0" rx="12.0" fill="#F4F1EA"/>
+<svg x="100.0" y="204.0" width="160" height="160" viewBox="0 0 24 24"><g fill="none" stroke="#1D1A15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8.7" y="10.5" width="6.6" height="10.5" rx="1.2" fill="#1D1A15" stroke="none"/><path d="M12 2.5C12.44 4.16 14.2 5.44 14.2 6.7A2.2 2.2 0 0 1 9.8 6.7C9.8 5.44 11.56 4.16 12 2.5Z" fill="#1D1A15" stroke="none"/></g></svg>
+<text x="180.0" y="395.0" font-family="Instrument Sans" font-weight="500" font-size="26" text-anchor="middle" fill="#5A564E">advent</text>
+<rect x="340.0" y="190.0" width="280.0" height="230.0" rx="12.0" fill="#F4F1EA"/>
+<svg x="400.0" y="204.0" width="160" height="160" viewBox="0 0 24 24"><g fill="none" stroke="#1D1A15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.2" y="9" width="3.4" height="8.5" rx="1.2" fill="#1D1A15" stroke="none"/><path d="M3.9 2.5C4.24 3.85 5.6 4.89 5.6 6A1.7 1.7 0 0 1 2.2 6C2.2 4.89 3.56 3.85 3.9 2.5Z" fill="#1D1A15" stroke="none"/><rect x="7.6" y="9" width="3.4" height="8.5" rx="1.2" fill="#1D1A15" stroke="none"/><rect x="13" y="9" width="3.4" height="8.5" rx="1.2" fill="#1D1A15" stroke="none"/><rect x="18.4" y="9" width="3.4" height="8.5" rx="1.2" fill="#1D1A15" stroke="none"/><path d="M3 19.5Q12 22.1 21 19.5"/></g></svg>
+<text x="480.0" y="395.0" font-family="Instrument Sans" font-weight="500" font-size="26" text-anchor="middle" fill="#5A564E">advent-1</text>
+<rect x="640.0" y="190.0" width="280.0" height="230.0" rx="12.0" fill="#F4F1EA"/>
+<svg x="700.0" y="204.0" width="160" height="160" viewBox="0 0 24 24"><g fill="none" stroke="#1D1A15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.2" y="9" width="3.4" height="8.5" rx="1.2" fill="#1D1A15" stroke="none"/><path d="M3.9 2.5C4.24 3.85 5.6 4.89 5.6 6A1.7 1.7 0 0 1 2.2 6C2.2 4.89 3.56 3.85 3.9 2.5Z" fill="#1D1A15" stroke="none"/><rect x="7.6" y="9" width="3.4" height="8.5" rx="1.2" fill="#1D1A15" stroke="none"/><path d="M9.3 2.5C9.64 3.85 11 4.89 11 6A1.7 1.7 0 0 1 7.6 6C7.6 4.89 8.96 3.85 9.3 2.5Z" fill="#1D1A15" stroke="none"/><rect x="13" y="9" width="3.4" height="8.5" rx="1.2" fill="#1D1A15" stroke="none"/><rect x="18.4" y="9" width="3.4" height="8.5" rx="1.2" fill="#1D1A15" stroke="none"/><path d="M3 19.5Q12 22.1 21 19.5"/></g></svg>
+<text x="780.0" y="395.0" font-family="Instrument Sans" font-weight="500" font-size="26" text-anchor="middle" fill="#5A564E">advent-2</text>
+<rect x="940.0" y="190.0" width="280.0" height="230.0" rx="12.0" fill="#F4F1EA"/>
+<svg x="1000.0" y="204.0" width="160" height="160" viewBox="0 0 24 24"><g fill="none" stroke="#1D1A15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.2" y="9" width="3.4" height="8.5" rx="1.2" fill="#1D1A15" stroke="none"/><path d="M3.9 2.5C4.24 3.85 5.6 4.89 5.6 6A1.7 1.7 0 0 1 2.2 6C2.2 4.89 3.56 3.85 3.9 2.5Z" fill="#1D1A15" stroke="none"/><rect x="7.6" y="9" width="3.4" height="8.5" rx="1.2" fill="#1D1A15" stroke="none"/><path d="M9.3 2.5C9.64 3.85 11 4.89 11 6A1.7 1.7 0 0 1 7.6 6C7.6 4.89 8.96 3.85 9.3 2.5Z" fill="#1D1A15" stroke="none"/><rect x="13" y="9" width="3.4" height="8.5" rx="1.2" fill="#1D1A15" stroke="none"/><path d="M14.7 2.5C15.04 3.85 16.4 4.89 16.4 6A1.7 1.7 0 0 1 13 6C13 4.89 14.36 3.85 14.7 2.5Z" fill="#1D1A15" stroke="none"/><rect x="18.4" y="9" width="3.4" height="8.5" rx="1.2" fill="#1D1A15" stroke="none"/><path d="M3 19.5Q12 22.1 21 19.5"/></g></svg>
+<text x="1080.0" y="395.0" font-family="Instrument Sans" font-weight="500" font-size="26" text-anchor="middle" fill="#5A564E">advent-3</text>
+<rect x="1240.0" y="190.0" width="280.0" height="230.0" rx="12.0" fill="#F4F1EA"/>
+<svg x="1300.0" y="204.0" width="160" height="160" viewBox="0 0 24 24"><g fill="none" stroke="#1D1A15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.2" y="9" width="3.4" height="8.5" rx="1.2" fill="#1D1A15" stroke="none"/><path d="M3.9 2.5C4.24 3.85 5.6 4.89 5.6 6A1.7 1.7 0 0 1 2.2 6C2.2 4.89 3.56 3.85 3.9 2.5Z" fill="#1D1A15" stroke="none"/><rect x="7.6" y="9" width="3.4" height="8.5" rx="1.2" fill="#1D1A15" stroke="none"/><path d="M9.3 2.5C9.64 3.85 11 4.89 11 6A1.7 1.7 0 0 1 7.6 6C7.6 4.89 8.96 3.85 9.3 2.5Z" fill="#1D1A15" stroke="none"/><rect x="13" y="9" width="3.4" height="8.5" rx="1.2" fill="#1D1A15" stroke="none"/><path d="M14.7 2.5C15.04 3.85 16.4 4.89 16.4 6A1.7 1.7 0 0 1 13 6C13 4.89 14.36 3.85 14.7 2.5Z" fill="#1D1A15" stroke="none"/><rect x="18.4" y="9" width="3.4" height="8.5" rx="1.2" fill="#1D1A15" stroke="none"/><path d="M20.1 2.5C20.44 3.85 21.8 4.89 21.8 6A1.7 1.7 0 0 1 18.4 6C18.4 4.89 19.76 3.85 20.1 2.5Z" fill="#1D1A15" stroke="none"/><path d="M3 19.5Q12 22.1 21 19.5"/></g></svg>
+<text x="1380.0" y="395.0" font-family="Instrument Sans" font-weight="500" font-size="26" text-anchor="middle" fill="#5A564E">advent-4</text>
+<rect x="1540.0" y="190.0" width="280.0" height="230.0" rx="12.0" fill="#F4F1EA"/>
+<svg x="1600.0" y="204.0" width="160" height="160" viewBox="0 0 24 24"><g fill="none" stroke="#1D1A15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1.8L13.3 8.86L16.67 7.33L15.14 10.7L20.8 12L15.14 13.3L16.67 16.67L13.3 15.14L12 20.8L10.7 15.14L7.33 16.67L8.86 13.3L3.2 12L8.86 10.7L7.33 7.33L10.7 8.86Z" fill="#1D1A15" stroke="#1D1A15" stroke-width="1"/></g></svg>
+<text x="1680.0" y="395.0" font-family="Instrument Sans" font-weight="500" font-size="26" text-anchor="middle" fill="#5A564E">christmas</text>
+<rect x="1840.0" y="190.0" width="280.0" height="230.0" rx="12.0" fill="#F4F1EA"/>
+<svg x="1900.0" y="204.0" width="160" height="160" viewBox="0 0 24 24"><g fill="none" stroke="#1D1A15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1.5Q12.9 4.5 15.9 5.4Q12.9 6.3 12 9.3Q11.1 6.3 8.1 5.4Q11.1 4.5 12 1.5 Z" fill="#1D1A15" stroke="#1D1A15" stroke-width="1"/><path d="M12 14.2C9.9 12.7 6.5 12.4 3.2 13.4V20.4C6.5 19.4 9.9 19.7 12 21.2C14.1 19.7 17.5 19.4 20.8 20.4V13.4C17.5 12.4 14.1 12.7 12 14.2ZM12 14.2V21.2"/></g></svg>
+<text x="1980.0" y="395.0" font-family="Instrument Sans" font-weight="500" font-size="26" text-anchor="middle" fill="#5A564E">epiphany</text>
+<rect x="2140.0" y="190.0" width="280.0" height="230.0" rx="12.0" fill="#F4F1EA"/>
+<svg x="2200.0" y="204.0" width="160" height="160" viewBox="0 0 24 24"><g fill="none" stroke="#1D1A15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.5H14V8H19V12H14V20.5H10V12H5V8H10Z"/></g></svg>
+<text x="2280.0" y="395.0" font-family="Instrument Sans" font-weight="500" font-size="26" text-anchor="middle" fill="#5A564E">lent</text>
+<rect x="40.0" y="440.0" width="280.0" height="230.0" rx="12.0" fill="#F4F1EA"/>
+<svg x="100.0" y="454.0" width="160" height="160" viewBox="0 0 24 24"><g fill="none" stroke="#1D1A15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 20.5C8 15 11.5 9 19.5 4.5"/><path d="M7.62 16.31Q11.77 15.31 13.54 17.34"/><path d="M7.62 16.31Q6.38 12.22 3.73 11.73"/><path d="M9.44 13.45Q13.41 12.9 14.87 14.96"/><path d="M9.44 13.45Q8.66 9.52 6.23 8.82"/><path d="M11.54 10.82Q15.01 10.72 16.07 12.64"/><path d="M11.54 10.82Q11.25 7.36 9.23 6.52"/><path d="M13.94 8.43Q16.6 8.67 17.23 10.23"/><path d="M13.94 8.43Q14.02 5.76 12.55 4.94"/></g></svg>
+<text x="180.0" y="645.0" font-family="Instrument Sans" font-weight="500" font-size="26" text-anchor="middle" fill="#5A564E">palm</text>
+<rect x="340.0" y="440.0" width="280.0" height="230.0" rx="12.0" fill="#F4F1EA"/>
+<svg x="400.0" y="454.0" width="160" height="160" viewBox="0 0 24 24"><g fill="none" stroke="#1D1A15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5V14M7.5 6.8H16.5"/><ellipse cx="12" cy="18.4" rx="8.2" ry="2.4"/><path d="M5.6 16.9L4.51 13.7"/><path d="M8.8 16.19L8.26 12.99"/><path d="M12 16L12 12.8"/><path d="M15.2 16.19L15.74 12.99"/><path d="M18.4 16.9L19.49 13.7"/></g></svg>
+<text x="480.0" y="645.0" font-family="Instrument Sans" font-weight="500" font-size="26" text-anchor="middle" fill="#5A564E">good-friday</text>
+<rect x="640.0" y="440.0" width="280.0" height="230.0" rx="12.0" fill="#F4F1EA"/>
+<svg x="700.0" y="454.0" width="160" height="160" viewBox="0 0 24 24"><g fill="none" stroke="#1D1A15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 20.5H21.5"/><path d="M8.5 20.5V16C8.5 12.6 11 10.8 14 10.8C17 10.8 19.5 12.6 19.5 16V20.5"/><path d="M12 20.5V17.6A2 2 0 0 1 16 17.6V20.5"/><circle cx="5.1" cy="16.9" r="3"/><path d="M11.4 10.8A2.6 2.6 0 0 1 16.6 10.8Z" fill="#1D1A15" stroke="none"/><path d="M10.03 8.69L8.17 7.7"/><path d="M11.68 6.94L10.6 5.14"/><path d="M14 6.3L14 4.2"/><path d="M16.32 6.94L17.4 5.14"/><path d="M17.97 8.69L19.83 7.7"/></g></svg>
+<text x="780.0" y="645.0" font-family="Instrument Sans" font-weight="500" font-size="26" text-anchor="middle" fill="#5A564E">easter</text>
+<rect x="940.0" y="440.0" width="280.0" height="230.0" rx="12.0" fill="#F4F1EA"/>
+<svg x="1000.0" y="454.0" width="160" height="160" viewBox="0 0 24 24"><g fill="none" stroke="#1D1A15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1.6Q12.8 6.2 15.1 7Q12.8 7.8 12 12.4Q11.2 7.8 8.9 7Q11.2 6.2 12 1.6 Z" fill="#1D1A15" stroke="none"/><path d="M5.28 21H18.06A3.41 3.41 0 0 0 18.25 13.9A5.11 5.11 0 0 0 8.58 13.5A3.6 3.6 0 0 0 5.28 21Z"/></g></svg>
+<text x="1080.0" y="645.0" font-family="Instrument Sans" font-weight="500" font-size="26" text-anchor="middle" fill="#5A564E">ascension</text>
+<rect x="1240.0" y="440.0" width="280.0" height="230.0" rx="12.0" fill="#F4F1EA"/>
+<svg x="1300.0" y="454.0" width="160" height="160" viewBox="0 0 24 24"><g fill="none" stroke="#1D1A15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.2 13L18.9 13.5C18.9 11.2 17.4 10.2 15.8 11C14.4 11.7 14.3 13.4 12.8 14.6C11 16 7.8 16.6 2.8 18.4C6 18.8 9 19.8 11.4 20C14.8 20.2 18 18.6 19.2 16C19.8 14.8 20.3 13.8 21.2 13Z"/><path d="M13 14C12.2 10.2 9.4 7.2 4.6 6C5 10.2 7.4 13.8 12 15.8"/><path d="M18.75 2C18.94 3.32 20.5 4.14 20.5 6.12C20.5 7.61 19.49 8.6 18.2 8.6C16.91 8.6 15.9 7.61 15.9 6.29C15.9 5.3 16.54 4.72 16.91 4.23C17 4.89 17.37 5.22 17.74 5.3C17.65 4.06 17.92 2.83 18.75 2Z" fill="#1D1A15" stroke="none"/></g></svg>
+<text x="1380.0" y="645.0" font-family="Instrument Sans" font-weight="500" font-size="26" text-anchor="middle" fill="#5A564E">pentecost</text>
+<rect x="1540.0" y="440.0" width="280.0" height="230.0" rx="12.0" fill="#F4F1EA"/>
+<svg x="1600.0" y="454.0" width="160" height="160" viewBox="0 0 24 24"><g fill="none" stroke="#1D1A15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7.5C9.5 5.6 5.5 5.2 2.6 6.2V17.6C5.5 16.6 9.5 17 12 19C14.5 17 18.5 16.6 21.4 17.6V6.2C18.5 5.2 14.5 5.6 12 7.5ZM12 7.5V19"/><path d="M5.6 10.2C6.8 10 8.2 10.2 9.2 10.7M5.6 13.4C6.8 13.2 8.2 13.4 9.2 13.9M14.8 10.7C15.8 10.2 17.2 10 18.4 10.2M14.8 13.9C15.8 13.4 17.2 13.2 18.4 13.4"/></g></svg>
+<text x="1680.0" y="645.0" font-family="Instrument Sans" font-weight="500" font-size="26" text-anchor="middle" fill="#5A564E">reformation</text>
+<rect x="1840.0" y="440.0" width="280.0" height="230.0" rx="12.0" fill="#F4F1EA"/>
+<svg x="1900.0" y="454.0" width="160" height="160" viewBox="0 0 24 24"><g fill="none" stroke="#1D1A15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21.5V13.5"/><path d="M10.2 16.82Q10.66 12.68 7.4 11.98Q6.38 15.15 10.2 16.82Z" fill="#1D1A15" stroke="none"/><path d="M13.8 16.82Q17.62 15.15 16.6 11.98Q13.34 12.68 13.8 16.82Z" fill="#1D1A15" stroke="none"/><path d="M10.2 13.62Q10.66 9.48 7.4 8.78Q6.38 11.95 10.2 13.62Z" fill="#1D1A15" stroke="none"/><path d="M13.8 13.62Q17.62 11.95 16.6 8.78Q13.34 9.48 13.8 13.62Z" fill="#1D1A15" stroke="none"/><path d="M10.2 10.42Q10.66 6.28 7.4 5.58Q6.38 8.75 10.2 10.42Z" fill="#1D1A15" stroke="none"/><path d="M13.8 10.42Q17.62 8.75 16.6 5.58Q13.34 6.28 13.8 10.42Z" fill="#1D1A15" stroke="none"/><path d="M12 8.2Q14.55 4.24 12 1.6Q9.45 4.24 12 8.2Z" fill="#1D1A15" stroke="none"/></g></svg>
+<text x="1980.0" y="645.0" font-family="Instrument Sans" font-weight="500" font-size="26" text-anchor="middle" fill="#5A564E">harvest</text>
+<rect x="2140.0" y="440.0" width="280.0" height="230.0" rx="12.0" fill="#F4F1EA"/>
+<svg x="2200.0" y="454.0" width="160" height="160" viewBox="0 0 24 24"><g fill="none" stroke="#1D1A15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.8Q13.5 10.5 21.2 12Q13.5 13.5 12 21.2Q10.5 13.5 2.8 12Q10.5 10.5 12 2.8 Z" fill="#1D1A15" stroke="none"/></g></svg>
+<text x="2280.0" y="645.0" font-family="Instrument Sans" font-weight="500" font-size="26" text-anchor="middle" fill="#5A564E">new-year</text>
+<text x="40.0" y="774.0" font-family="Instrument Sans" font-weight="600" font-size="30" text-anchor="start" fill="#1D1A15">Serif italic (d6): the mark follows the kicker word on the top line</text>
+<text x="40.0" y="1495.0" font-family="Instrument Sans" font-weight="500" font-size="26" text-anchor="start" fill="#5A564E">Christmas . colourway natal (new, dark) . mark christmas . 48 px . role mute</text>
+<text x="1280.0" y="1495.0" font-family="Instrument Sans" font-weight="500" font-size="26" text-anchor="start" fill="#5A564E">Easter . colourway paskah (existing, light) . mark easter . 48 px . role mute</text>
+<text x="40.0" y="1587.0" font-family="Instrument Sans" font-weight="600" font-size="30" text-anchor="start" fill="#1D1A15">Neon night (d3): the mark sits inside the first neon ring</text>
+<text x="40.0" y="2308.0" font-family="Instrument Sans" font-weight="500" font-size="26" text-anchor="start" fill="#5A564E">Christmas . colourway natal (new, dark) . mark christmas . 88 px . the ring's colour</text>
+<text x="1280.0" y="2308.0" font-family="Instrument Sans" font-weight="500" font-size="26" text-anchor="start" fill="#5A564E">Easter . colourway paskah (existing, dark) . mark easter . 88 px . the ring's colour</text>
+<text x="40.0" y="2400.0" font-family="Instrument Sans" font-weight="600" font-size="30" text-anchor="start" fill="#1D1A15">Liturgy (d11): the mark takes the place of the small cross</text>
+<text x="40.0" y="3121.0" font-family="Instrument Sans" font-weight="500" font-size="26" text-anchor="start" fill="#5A564E">Christmas . colourway natal (new, dark) . mark christmas . 56 px . role gold</text>
+<text x="1280.0" y="3121.0" font-family="Instrument Sans" font-weight="500" font-size="26" text-anchor="start" fill="#5A564E">Easter . colourway paskah (new, light) . mark easter . 56 px . role gold</text>
+<text x="40.0" y="3213.0" font-family="Instrument Sans" font-weight="600" font-size="30" text-anchor="start" fill="#1D1A15">Warm (d17): the mark follows the kicker on the top line</text>
+<text x="40.0" y="3934.0" font-family="Instrument Sans" font-weight="500" font-size="26" text-anchor="start" fill="#5A564E">Christmas . colourway natal (new, dark) . mark christmas . 48 px . role accent</text>
+<text x="1280.0" y="3934.0" font-family="Instrument Sans" font-weight="500" font-size="26" text-anchor="start" fill="#5A564E">Easter . colourway paskah (existing, light) . mark easter . 48 px . role accent</text>
+
+<svg x="40" y="796" width="1180" height="663" viewBox="0 0 1920 1080">
+<defs>
+<linearGradient id="wash-serif-italic-christmas" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#04271C" stop-opacity="0"/>
+<stop offset="1" stop-color="#004A2B" stop-opacity="1"/>
+</linearGradient>
+</defs>
+<rect x="0.0" y="0.0" width="1920.0" height="1080.0" fill="#04271C"/>
+<rect x="0.0" y="860.0" width="1920.0" height="220.0" fill="url(#wash-serif-italic-christmas)"/>
+<text x="112.0" y="84.0" font-family="Source Serif 4 Text" font-weight="600" font-size="32" letter-spacing="5.12" text-anchor="start" fill="#A9CEBE">WARTA JEMAAT</text>
+<text x="1808.0" y="84.0" font-family="Source Serif 4 Text" font-weight="600" font-size="32" letter-spacing="5.12" text-anchor="end" fill="#A9CEBE">GEREJA BETHEL KASIH NUSANTARA</text>
+<rect x="112.0" y="106.0" width="1696.0" height="2.0" fill="#F8EFE2"/>
+<text x="112.0" y="262.0" font-family="Source Serif 4 Display" font-weight="600" font-size="128" letter-spacing="-1.28" text-anchor="start" fill="#F8EFE2">Jadwal Pekan Ini</text>
+<text x="1808.0" y="262.0" font-family="Source Serif 4 Oldstyle" font-weight="400" font-style="italic" font-size="52" text-anchor="end" fill="#A9CEBE">15 sampai 21 November 2026</text>
+<text x="112.0" y="384.0" font-family="Source Serif 4 Display" font-weight="400" font-style="italic" font-size="72" text-anchor="start" fill="#F8EFE2">15</text>
+<text x="336.0" y="376.0" font-family="Source Serif 4 Text" font-weight="600" font-size="52" text-anchor="start" fill="#F8EFE2">07.00</text>
+<rect x="528.0" y="348.0" width="506.0" height="24.0" rx="12.0" fill="#F8EFE2" opacity="0.5"/>
+<text x="336.0" y="436.0" font-family="Source Serif 4 Text" font-weight="600" font-size="52" text-anchor="start" fill="#F8EFE2">09.30</text>
+<rect x="528.0" y="408.0" width="638.0" height="24.0" rx="12.0" fill="#F8EFE2" opacity="0.5"/>
+<text x="112.0" y="528.0" font-family="Source Serif 4 Display" font-weight="400" font-style="italic" font-size="72" text-anchor="start" fill="#F8EFE2">18</text>
+<text x="336.0" y="520.0" font-family="Source Serif 4 Text" font-weight="600" font-size="52" text-anchor="start" fill="#F8EFE2">18.30</text>
+<rect x="528.0" y="492.0" width="572.0" height="24.0" rx="12.0" fill="#F8EFE2" opacity="0.5"/>
+<text x="336.0" y="580.0" font-family="Source Serif 4 Text" font-weight="600" font-size="52" text-anchor="start" fill="#F8EFE2">19.00</text>
+<rect x="528.0" y="552.0" width="440.0" height="24.0" rx="12.0" fill="#F8EFE2" opacity="0.5"/>
+<text x="112.0" y="672.0" font-family="Source Serif 4 Display" font-weight="400" font-style="italic" font-size="72" text-anchor="start" fill="#F8EFE2">20</text>
+<text x="336.0" y="664.0" font-family="Source Serif 4 Text" font-weight="600" font-size="52" text-anchor="start" fill="#F8EFE2">17.30</text>
+<rect x="528.0" y="636.0" width="682.0" height="24.0" rx="12.0" fill="#F8EFE2" opacity="0.5"/>
+<rect x="96.0" y="676.0" width="1728.0" height="56.0" fill="#0A3D25"/>
+<rect x="96.0" y="676.0" width="6.0" height="56.0" fill="#EAC673"/>
+<text x="336.0" y="724.0" font-family="Source Serif 4 Text" font-weight="600" font-size="52" text-anchor="start" fill="#F8EFE2">19.00</text>
+<rect x="528.0" y="696.0" width="605.0" height="24.0" rx="12.0" fill="#F8EFE2" opacity="0.5"/>
+<text x="112.0" y="816.0" font-family="Source Serif 4 Display" font-weight="400" font-style="italic" font-size="72" text-anchor="start" fill="#F8EFE2">21</text>
+<text x="336.0" y="808.0" font-family="Source Serif 4 Text" font-weight="600" font-size="52" text-anchor="start" fill="#F8EFE2">09.00</text>
+<rect x="528.0" y="780.0" width="528.0" height="24.0" rx="12.0" fill="#F8EFE2" opacity="0.5"/>
+<text x="336.0" y="868.0" font-family="Source Serif 4 Text" font-weight="600" font-size="52" text-anchor="start" fill="#F8EFE2">16.00</text>
+<rect x="528.0" y="840.0" width="627.0" height="24.0" rx="12.0" fill="#F8EFE2" opacity="0.5"/>
+<svg x="440.35" y="49.0" width="48" height="48" viewBox="0 0 24 24"><g fill="none" stroke="#A9CEBE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1.8L13.3 8.86L16.67 7.33L15.14 10.7L20.8 12L15.14 13.3L16.67 16.67L13.3 15.14L12 20.8L10.7 15.14L7.33 16.67L8.86 13.3L3.2 12L8.86 10.7L7.33 7.33L10.7 8.86Z" fill="#A9CEBE" stroke="#A9CEBE" stroke-width="1"/></g></svg>
+</svg>
+<svg x="1280" y="796" width="1180" height="663" viewBox="0 0 1920 1080">
+<defs>
+<linearGradient id="wash-serif-italic-easter" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#FBF6E4" stop-opacity="0"/>
+<stop offset="1" stop-color="#F0D27A" stop-opacity="1"/>
+</linearGradient>
+</defs>
+<rect x="0.0" y="0.0" width="1920.0" height="1080.0" fill="#FBF6E4"/>
+<rect x="0.0" y="860.0" width="1920.0" height="220.0" fill="url(#wash-serif-italic-easter)"/>
+<text x="112.0" y="84.0" font-family="Source Serif 4 Text" font-weight="600" font-size="32" letter-spacing="5.12" text-anchor="start" fill="#605531">WARTA JEMAAT</text>
+<text x="1808.0" y="84.0" font-family="Source Serif 4 Text" font-weight="600" font-size="32" letter-spacing="5.12" text-anchor="end" fill="#605531">GEREJA BETHEL KASIH NUSANTARA</text>
+<rect x="112.0" y="106.0" width="1696.0" height="2.0" fill="#1C1809"/>
+<text x="112.0" y="262.0" font-family="Source Serif 4 Display" font-weight="600" font-size="128" letter-spacing="-1.28" text-anchor="start" fill="#1C1809">Jadwal Pekan Ini</text>
+<text x="1808.0" y="262.0" font-family="Source Serif 4 Oldstyle" font-weight="400" font-style="italic" font-size="52" text-anchor="end" fill="#605531">15 sampai 21 November 2026</text>
+<text x="112.0" y="384.0" font-family="Source Serif 4 Display" font-weight="400" font-style="italic" font-size="72" text-anchor="start" fill="#1C1809">15</text>
+<text x="336.0" y="376.0" font-family="Source Serif 4 Text" font-weight="600" font-size="52" text-anchor="start" fill="#1C1809">07.00</text>
+<rect x="528.0" y="348.0" width="506.0" height="24.0" rx="12.0" fill="#1C1809" opacity="0.5"/>
+<text x="336.0" y="436.0" font-family="Source Serif 4 Text" font-weight="600" font-size="52" text-anchor="start" fill="#1C1809">09.30</text>
+<rect x="528.0" y="408.0" width="638.0" height="24.0" rx="12.0" fill="#1C1809" opacity="0.5"/>
+<text x="112.0" y="528.0" font-family="Source Serif 4 Display" font-weight="400" font-style="italic" font-size="72" text-anchor="start" fill="#1C1809">18</text>
+<text x="336.0" y="520.0" font-family="Source Serif 4 Text" font-weight="600" font-size="52" text-anchor="start" fill="#1C1809">18.30</text>
+<rect x="528.0" y="492.0" width="572.0" height="24.0" rx="12.0" fill="#1C1809" opacity="0.5"/>
+<text x="336.0" y="580.0" font-family="Source Serif 4 Text" font-weight="600" font-size="52" text-anchor="start" fill="#1C1809">19.00</text>
+<rect x="528.0" y="552.0" width="440.0" height="24.0" rx="12.0" fill="#1C1809" opacity="0.5"/>
+<text x="112.0" y="672.0" font-family="Source Serif 4 Display" font-weight="400" font-style="italic" font-size="72" text-anchor="start" fill="#1C1809">20</text>
+<text x="336.0" y="664.0" font-family="Source Serif 4 Text" font-weight="600" font-size="52" text-anchor="start" fill="#1C1809">17.30</text>
+<rect x="528.0" y="636.0" width="682.0" height="24.0" rx="12.0" fill="#1C1809" opacity="0.5"/>
+<rect x="96.0" y="676.0" width="1728.0" height="56.0" fill="#F5E6B0"/>
+<rect x="96.0" y="676.0" width="6.0" height="56.0" fill="#7A5200"/>
+<text x="336.0" y="724.0" font-family="Source Serif 4 Text" font-weight="600" font-size="52" text-anchor="start" fill="#1C1809">19.00</text>
+<rect x="528.0" y="696.0" width="605.0" height="24.0" rx="12.0" fill="#1C1809" opacity="0.5"/>
+<text x="112.0" y="816.0" font-family="Source Serif 4 Display" font-weight="400" font-style="italic" font-size="72" text-anchor="start" fill="#1C1809">21</text>
+<text x="336.0" y="808.0" font-family="Source Serif 4 Text" font-weight="600" font-size="52" text-anchor="start" fill="#1C1809">09.00</text>
+<rect x="528.0" y="780.0" width="528.0" height="24.0" rx="12.0" fill="#1C1809" opacity="0.5"/>
+<text x="336.0" y="868.0" font-family="Source Serif 4 Text" font-weight="600" font-size="52" text-anchor="start" fill="#1C1809">16.00</text>
+<rect x="528.0" y="840.0" width="627.0" height="24.0" rx="12.0" fill="#1C1809" opacity="0.5"/>
+<svg x="440.35" y="49.0" width="48" height="48" viewBox="0 0 24 24"><g fill="none" stroke="#605531" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 20.5H21.5"/><path d="M8.5 20.5V16C8.5 12.6 11 10.8 14 10.8C17 10.8 19.5 12.6 19.5 16V20.5"/><path d="M12 20.5V17.6A2 2 0 0 1 16 17.6V20.5"/><circle cx="5.1" cy="16.9" r="3"/><path d="M11.4 10.8A2.6 2.6 0 0 1 16.6 10.8Z" fill="#605531" stroke="none"/><path d="M10.03 8.69L8.17 7.7"/><path d="M11.68 6.94L10.6 5.14"/><path d="M14 6.3L14 4.2"/><path d="M16.32 6.94L17.4 5.14"/><path d="M17.97 8.69L19.83 7.7"/></g></svg>
+</svg>
+<svg x="40" y="1609" width="1180" height="663" viewBox="0 0 1920 1080">
+<defs>
+<linearGradient id="ground-neon-night-christmas" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#04271C" stop-opacity="1"/>
+<stop offset="1" stop-color="#00140D" stop-opacity="1"/>
+</linearGradient>
+</defs>
+<rect x="0.0" y="0.0" width="1920.0" height="1080.0" fill="url(#ground-neon-night-christmas)"/>
+<circle cx="1728.0" cy="128.0" r="104.0" fill="none" stroke="#FF5C73" stroke-width="10" opacity="0.12"/>
+<circle cx="1728.0" cy="128.0" r="96.0" fill="none" stroke="#FF5C73" stroke-width="6" opacity="0.26"/>
+<circle cx="1728.0" cy="128.0" r="83.0" fill="none" stroke="#FF5C73" stroke-width="10"/>
+<rect x="1464.0" y="102.0" width="116.0" height="116.0" rx="26.0" fill="none" stroke="#FFD65C" stroke-width="10" opacity="0.12" transform="rotate(45 1522.0 160.0)"/>
+<rect x="1472.0" y="110.0" width="100.0" height="100.0" rx="18.0" fill="none" stroke="#FFD65C" stroke-width="6" opacity="0.26" transform="rotate(45 1522.0 160.0)"/>
+<rect x="1484.0" y="122.0" width="76.0" height="76.0" rx="10.0" fill="none" stroke="#FFD65C" stroke-width="8" transform="rotate(45 1522.0 160.0)"/>
+<circle cx="1835.0" cy="267.0" r="17.0" fill="#4DF2A6"/>
+<text x="84.0" y="95.2" font-family="Space Grotesk" font-weight="700" font-size="32" letter-spacing="5.12" text-anchor="start" fill="#FF5C73">WARTA JEMAAT . SEMUA JAM WIB</text>
+<text x="84.0" y="202.0" font-family="Space Grotesk" font-weight="700" font-size="100" text-anchor="start" fill="#F8EFE2">JADWAL PEKAN INI</text>
+<rect x="68.0" y="216.0" width="545.49" height="90.0" rx="45.0" fill="none" stroke="#FF5C73" stroke-width="10" opacity="0.12"/>
+<rect x="76.0" y="224.0" width="529.49" height="74.0" rx="37.0" fill="none" stroke="#FF5C73" stroke-width="6" opacity="0.26"/>
+<rect x="84.0" y="232.0" width="513.49" height="58.0" rx="29.0" fill="none" stroke="#FF5C73" stroke-width="4"/>
+<text x="114.0" y="272.9" font-family="Space Grotesk" font-weight="700" font-size="34" letter-spacing="2.72" text-anchor="start" fill="#FF5C73">15 - 21 NOVEMBER 2026</text>
+<rect x="84.0" y="350.0" width="110.0" height="22.0" rx="11.0" fill="#FF5C73" opacity="0.9"/>
+<text x="296.0" y="378.1" font-family="Space Grotesk" font-weight="700" font-size="46" text-anchor="start" fill="#4DF2A6">07.00</text>
+<rect x="456.0" y="350.0" width="460.0" height="22.0" rx="11.0" fill="#F8EFE2" opacity="0.55"/>
+<rect x="84.0" y="398.0" width="1752.0" height="2.0" fill="#035634"/>
+<rect x="84.0" y="430.0" width="110.0" height="22.0" rx="11.0" fill="#FF5C73" opacity="0.9"/>
+<text x="296.0" y="458.1" font-family="Space Grotesk" font-weight="700" font-size="46" text-anchor="start" fill="#4DF2A6">09.30</text>
+<rect x="456.0" y="430.0" width="580.0" height="22.0" rx="11.0" fill="#F8EFE2" opacity="0.55"/>
+<rect x="84.0" y="478.0" width="1752.0" height="2.0" fill="#035634"/>
+<rect x="84.0" y="510.0" width="110.0" height="22.0" rx="11.0" fill="#FF5C73" opacity="0.9"/>
+<text x="296.0" y="538.1" font-family="Space Grotesk" font-weight="700" font-size="46" text-anchor="start" fill="#4DF2A6">18.30</text>
+<rect x="456.0" y="510.0" width="520.0" height="22.0" rx="11.0" fill="#F8EFE2" opacity="0.55"/>
+<rect x="84.0" y="558.0" width="1752.0" height="2.0" fill="#035634"/>
+<rect x="84.0" y="590.0" width="110.0" height="22.0" rx="11.0" fill="#FF5C73" opacity="0.9"/>
+<text x="296.0" y="618.1" font-family="Space Grotesk" font-weight="700" font-size="46" text-anchor="start" fill="#4DF2A6">19.00</text>
+<rect x="456.0" y="590.0" width="400.0" height="22.0" rx="11.0" fill="#F8EFE2" opacity="0.55"/>
+<rect x="84.0" y="638.0" width="1752.0" height="2.0" fill="#035634"/>
+<rect x="84.0" y="670.0" width="110.0" height="22.0" rx="11.0" fill="#FF5C73" opacity="0.9"/>
+<text x="296.0" y="698.1" font-family="Space Grotesk" font-weight="700" font-size="46" text-anchor="start" fill="#4DF2A6">17.30</text>
+<rect x="456.0" y="670.0" width="620.0" height="22.0" rx="11.0" fill="#F8EFE2" opacity="0.55"/>
+<rect x="84.0" y="718.0" width="1752.0" height="2.0" fill="#035634"/>
+<rect x="60.0" y="724.0" width="1800.0" height="68.0" rx="34.0" fill="none" stroke="#FFD65C" stroke-width="4"/>
+<rect x="84.0" y="750.0" width="110.0" height="22.0" rx="11.0" fill="#FF5C73" opacity="0.9"/>
+<text x="296.0" y="778.1" font-family="Space Grotesk" font-weight="700" font-size="46" text-anchor="start" fill="#4DF2A6">19.00</text>
+<rect x="456.0" y="750.0" width="550.0" height="22.0" rx="11.0" fill="#F8EFE2" opacity="0.55"/>
+<rect x="84.0" y="830.0" width="110.0" height="22.0" rx="11.0" fill="#FF5C73" opacity="0.9"/>
+<text x="296.0" y="858.1" font-family="Space Grotesk" font-weight="700" font-size="46" text-anchor="start" fill="#4DF2A6">09.00</text>
+<rect x="456.0" y="830.0" width="480.0" height="22.0" rx="11.0" fill="#F8EFE2" opacity="0.55"/>
+<rect x="84.0" y="878.0" width="1752.0" height="2.0" fill="#035634"/>
+<rect x="84.0" y="910.0" width="110.0" height="22.0" rx="11.0" fill="#FF5C73" opacity="0.9"/>
+<text x="296.0" y="938.1" font-family="Space Grotesk" font-weight="700" font-size="46" text-anchor="start" fill="#4DF2A6">16.00</text>
+<rect x="456.0" y="910.0" width="570.0" height="22.0" rx="11.0" fill="#F8EFE2" opacity="0.55"/>
+<rect x="84.0" y="958.0" width="1752.0" height="2.0" fill="#035634"/>
+<svg x="1684.0" y="84.0" width="88" height="88" viewBox="0 0 24 24"><g fill="none" stroke="#FF5C73" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1.8L13.3 8.86L16.67 7.33L15.14 10.7L20.8 12L15.14 13.3L16.67 16.67L13.3 15.14L12 20.8L10.7 15.14L7.33 16.67L8.86 13.3L3.2 12L8.86 10.7L7.33 7.33L10.7 8.86Z" fill="#FF5C73" stroke="#FF5C73" stroke-width="1"/></g></svg>
+</svg>
+<svg x="1280" y="1609" width="1180" height="663" viewBox="0 0 1920 1080">
+<defs>
+<linearGradient id="ground-neon-night-easter" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#2B2308" stop-opacity="1"/>
+<stop offset="1" stop-color="#140F02" stop-opacity="1"/>
+</linearGradient>
+</defs>
+<rect x="0.0" y="0.0" width="1920.0" height="1080.0" fill="url(#ground-neon-night-easter)"/>
+<circle cx="1728.0" cy="128.0" r="104.0" fill="none" stroke="#FF7AA8" stroke-width="10" opacity="0.12"/>
+<circle cx="1728.0" cy="128.0" r="96.0" fill="none" stroke="#FF7AA8" stroke-width="6" opacity="0.26"/>
+<circle cx="1728.0" cy="128.0" r="83.0" fill="none" stroke="#FF7AA8" stroke-width="10"/>
+<rect x="1464.0" y="102.0" width="116.0" height="116.0" rx="26.0" fill="none" stroke="#FFE45C" stroke-width="10" opacity="0.12" transform="rotate(45 1522.0 160.0)"/>
+<rect x="1472.0" y="110.0" width="100.0" height="100.0" rx="18.0" fill="none" stroke="#FFE45C" stroke-width="6" opacity="0.26" transform="rotate(45 1522.0 160.0)"/>
+<rect x="1484.0" y="122.0" width="76.0" height="76.0" rx="10.0" fill="none" stroke="#FFE45C" stroke-width="8" transform="rotate(45 1522.0 160.0)"/>
+<circle cx="1835.0" cy="267.0" r="17.0" fill="#7CF0B0"/>
+<text x="84.0" y="95.2" font-family="Space Grotesk" font-weight="700" font-size="32" letter-spacing="5.12" text-anchor="start" fill="#FF7AA8">WARTA JEMAAT . SEMUA JAM WIB</text>
+<text x="84.0" y="202.0" font-family="Space Grotesk" font-weight="700" font-size="100" text-anchor="start" fill="#FFF8E0">JADWAL PEKAN INI</text>
+<rect x="68.0" y="216.0" width="545.49" height="90.0" rx="45.0" fill="none" stroke="#FF7AA8" stroke-width="10" opacity="0.12"/>
+<rect x="76.0" y="224.0" width="529.49" height="74.0" rx="37.0" fill="none" stroke="#FF7AA8" stroke-width="6" opacity="0.26"/>
+<rect x="84.0" y="232.0" width="513.49" height="58.0" rx="29.0" fill="none" stroke="#FF7AA8" stroke-width="4"/>
+<text x="114.0" y="272.9" font-family="Space Grotesk" font-weight="700" font-size="34" letter-spacing="2.72" text-anchor="start" fill="#FF7AA8">15 - 21 NOVEMBER 2026</text>
+<rect x="84.0" y="350.0" width="110.0" height="22.0" rx="11.0" fill="#FF7AA8" opacity="0.9"/>
+<text x="296.0" y="378.1" font-family="Space Grotesk" font-weight="700" font-size="46" text-anchor="start" fill="#7CF0B0">07.00</text>
+<rect x="456.0" y="350.0" width="460.0" height="22.0" rx="11.0" fill="#FFF8E0" opacity="0.55"/>
+<rect x="84.0" y="398.0" width="1752.0" height="2.0" fill="#6A5818"/>
+<rect x="84.0" y="430.0" width="110.0" height="22.0" rx="11.0" fill="#FF7AA8" opacity="0.9"/>
+<text x="296.0" y="458.1" font-family="Space Grotesk" font-weight="700" font-size="46" text-anchor="start" fill="#7CF0B0">09.30</text>
+<rect x="456.0" y="430.0" width="580.0" height="22.0" rx="11.0" fill="#FFF8E0" opacity="0.55"/>
+<rect x="84.0" y="478.0" width="1752.0" height="2.0" fill="#6A5818"/>
+<rect x="84.0" y="510.0" width="110.0" height="22.0" rx="11.0" fill="#FF7AA8" opacity="0.9"/>
+<text x="296.0" y="538.1" font-family="Space Grotesk" font-weight="700" font-size="46" text-anchor="start" fill="#7CF0B0">18.30</text>
+<rect x="456.0" y="510.0" width="520.0" height="22.0" rx="11.0" fill="#FFF8E0" opacity="0.55"/>
+<rect x="84.0" y="558.0" width="1752.0" height="2.0" fill="#6A5818"/>
+<rect x="84.0" y="590.0" width="110.0" height="22.0" rx="11.0" fill="#FF7AA8" opacity="0.9"/>
+<text x="296.0" y="618.1" font-family="Space Grotesk" font-weight="700" font-size="46" text-anchor="start" fill="#7CF0B0">19.00</text>
+<rect x="456.0" y="590.0" width="400.0" height="22.0" rx="11.0" fill="#FFF8E0" opacity="0.55"/>
+<rect x="84.0" y="638.0" width="1752.0" height="2.0" fill="#6A5818"/>
+<rect x="84.0" y="670.0" width="110.0" height="22.0" rx="11.0" fill="#FF7AA8" opacity="0.9"/>
+<text x="296.0" y="698.1" font-family="Space Grotesk" font-weight="700" font-size="46" text-anchor="start" fill="#7CF0B0">17.30</text>
+<rect x="456.0" y="670.0" width="620.0" height="22.0" rx="11.0" fill="#FFF8E0" opacity="0.55"/>
+<rect x="84.0" y="718.0" width="1752.0" height="2.0" fill="#6A5818"/>
+<rect x="60.0" y="724.0" width="1800.0" height="68.0" rx="34.0" fill="none" stroke="#FFE45C" stroke-width="4"/>
+<rect x="84.0" y="750.0" width="110.0" height="22.0" rx="11.0" fill="#FF7AA8" opacity="0.9"/>
+<text x="296.0" y="778.1" font-family="Space Grotesk" font-weight="700" font-size="46" text-anchor="start" fill="#7CF0B0">19.00</text>
+<rect x="456.0" y="750.0" width="550.0" height="22.0" rx="11.0" fill="#FFF8E0" opacity="0.55"/>
+<rect x="84.0" y="830.0" width="110.0" height="22.0" rx="11.0" fill="#FF7AA8" opacity="0.9"/>
+<text x="296.0" y="858.1" font-family="Space Grotesk" font-weight="700" font-size="46" text-anchor="start" fill="#7CF0B0">09.00</text>
+<rect x="456.0" y="830.0" width="480.0" height="22.0" rx="11.0" fill="#FFF8E0" opacity="0.55"/>
+<rect x="84.0" y="878.0" width="1752.0" height="2.0" fill="#6A5818"/>
+<rect x="84.0" y="910.0" width="110.0" height="22.0" rx="11.0" fill="#FF7AA8" opacity="0.9"/>
+<text x="296.0" y="938.1" font-family="Space Grotesk" font-weight="700" font-size="46" text-anchor="start" fill="#7CF0B0">16.00</text>
+<rect x="456.0" y="910.0" width="570.0" height="22.0" rx="11.0" fill="#FFF8E0" opacity="0.55"/>
+<rect x="84.0" y="958.0" width="1752.0" height="2.0" fill="#6A5818"/>
+<svg x="1684.0" y="84.0" width="88" height="88" viewBox="0 0 24 24"><g fill="none" stroke="#FF7AA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 20.5H21.5"/><path d="M8.5 20.5V16C8.5 12.6 11 10.8 14 10.8C17 10.8 19.5 12.6 19.5 16V20.5"/><path d="M12 20.5V17.6A2 2 0 0 1 16 17.6V20.5"/><circle cx="5.1" cy="16.9" r="3"/><path d="M11.4 10.8A2.6 2.6 0 0 1 16.6 10.8Z" fill="#FF7AA8" stroke="none"/><path d="M10.03 8.69L8.17 7.7"/><path d="M11.68 6.94L10.6 5.14"/><path d="M14 6.3L14 4.2"/><path d="M16.32 6.94L17.4 5.14"/><path d="M17.97 8.69L19.83 7.7"/></g></svg>
+</svg>
+<svg x="40" y="2422" width="1180" height="663" viewBox="0 0 1920 1080">
+<rect x="0.0" y="0.0" width="1920.0" height="1080.0" fill="#002C1A"/>
+<rect x="30.0" y="30.0" width="1860.0" height="1020.0" fill="#0B492F" stroke="#E6C77C" stroke-width="3"/>
+<rect x="42.0" y="42.0" width="1836.0" height="996.0" fill="none" stroke="#E6C77C" stroke-width="1.5" opacity="0.6"/>
+<rect x="34.0" y="34.0" width="16.0" height="16.0" fill="#E6C77C" transform="rotate(45 42.0 42.0)"/>
+<rect x="34.0" y="1030.0" width="16.0" height="16.0" fill="#E6C77C" transform="rotate(45 42.0 1038.0)"/>
+<rect x="1870.0" y="34.0" width="16.0" height="16.0" fill="#E6C77C" transform="rotate(45 1878.0 42.0)"/>
+<rect x="1870.0" y="1030.0" width="16.0" height="16.0" fill="#E6C77C" transform="rotate(45 1878.0 1038.0)"/>
+<rect x="420.0" y="91.0" width="500.0" height="2.0" fill="#E6C77C" opacity="0.4"/>
+<rect x="1000.0" y="91.0" width="500.0" height="2.0" fill="#E6C77C" opacity="0.4"/>
+<text x="960.0" y="161.2" font-family="Cinzel" font-weight="600" font-size="32" letter-spacing="6.4" text-anchor="middle" fill="#E6C77C">WARTA JEMAAT . GEREJA BETHEL KASIH NUSANTARA</text>
+<text x="960.0" y="258.8" font-family="Cinzel" font-weight="700" font-size="88" letter-spacing="8.8" text-anchor="middle" fill="#FBF1DC">JADWAL PEKAN INI</text>
+<text x="960.0" y="319.4" font-family="Source Serif 4 Text" font-weight="400" font-size="40" letter-spacing="0.8" text-anchor="middle" fill="#D2EBE1">15 sampai 21 November 2026</text>
+<rect x="96.0" y="386.0" width="120.0" height="20.0" rx="10.0" fill="#E6C77C" opacity="0.9"/>
+<text x="330.0" y="414.08" font-family="Source Serif 4 Text" font-weight="600" font-size="48" text-anchor="start" fill="#E6C77C">07.00</text>
+<rect x="520.0" y="386.0" width="460.0" height="22.0" rx="11.0" fill="#FBF1DC" opacity="0.55"/>
+<rect x="96.0" y="460.0" width="120.0" height="20.0" rx="10.0" fill="#E6C77C" opacity="0.9"/>
+<text x="330.0" y="488.08" font-family="Source Serif 4 Text" font-weight="600" font-size="48" text-anchor="start" fill="#E6C77C">09.30</text>
+<rect x="520.0" y="460.0" width="580.0" height="22.0" rx="11.0" fill="#FBF1DC" opacity="0.55"/>
+<rect x="96.0" y="534.0" width="120.0" height="20.0" rx="10.0" fill="#E6C77C" opacity="0.9"/>
+<text x="330.0" y="562.08" font-family="Source Serif 4 Text" font-weight="600" font-size="48" text-anchor="start" fill="#E6C77C">18.30</text>
+<rect x="520.0" y="534.0" width="520.0" height="22.0" rx="11.0" fill="#FBF1DC" opacity="0.55"/>
+<rect x="96.0" y="608.0" width="120.0" height="20.0" rx="10.0" fill="#E6C77C" opacity="0.9"/>
+<text x="330.0" y="636.08" font-family="Source Serif 4 Text" font-weight="600" font-size="48" text-anchor="start" fill="#E6C77C">19.00</text>
+<rect x="520.0" y="608.0" width="400.0" height="22.0" rx="11.0" fill="#FBF1DC" opacity="0.55"/>
+<rect x="96.0" y="682.0" width="120.0" height="20.0" rx="10.0" fill="#E6C77C" opacity="0.9"/>
+<text x="330.0" y="710.08" font-family="Source Serif 4 Text" font-weight="600" font-size="48" text-anchor="start" fill="#E6C77C">17.30</text>
+<rect x="520.0" y="682.0" width="620.0" height="22.0" rx="11.0" fill="#FBF1DC" opacity="0.55"/>
+<rect x="72.0" y="734.0" width="1776.0" height="66.0" rx="6.0" fill="#FBF1DC"/>
+<rect x="96.0" y="756.0" width="120.0" height="20.0" rx="10.0" fill="#E6C77C" opacity="0.9"/>
+<text x="330.0" y="784.08" font-family="Source Serif 4 Text" font-weight="600" font-size="48" text-anchor="start" fill="#001409">19.00</text>
+<rect x="520.0" y="756.0" width="550.0" height="22.0" rx="11.0" fill="#001409" opacity="0.6"/>
+<rect x="96.0" y="830.0" width="120.0" height="20.0" rx="10.0" fill="#E6C77C" opacity="0.9"/>
+<text x="330.0" y="858.08" font-family="Source Serif 4 Text" font-weight="600" font-size="48" text-anchor="start" fill="#E6C77C">09.00</text>
+<rect x="520.0" y="830.0" width="480.0" height="22.0" rx="11.0" fill="#FBF1DC" opacity="0.55"/>
+<rect x="96.0" y="904.0" width="120.0" height="20.0" rx="10.0" fill="#E6C77C" opacity="0.9"/>
+<text x="330.0" y="932.08" font-family="Source Serif 4 Text" font-weight="600" font-size="48" text-anchor="start" fill="#E6C77C">16.00</text>
+<rect x="520.0" y="904.0" width="570.0" height="22.0" rx="11.0" fill="#FBF1DC" opacity="0.55"/>
+<svg x="932.0" y="64.0" width="56" height="56" viewBox="0 0 24 24"><g fill="none" stroke="#E6C77C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1.8L13.3 8.86L16.67 7.33L15.14 10.7L20.8 12L15.14 13.3L16.67 16.67L13.3 15.14L12 20.8L10.7 15.14L7.33 16.67L8.86 13.3L3.2 12L8.86 10.7L7.33 7.33L10.7 8.86Z" fill="#E6C77C" stroke="#E6C77C" stroke-width="1"/></g></svg>
+</svg>
+<svg x="1280" y="2422" width="1180" height="663" viewBox="0 0 1920 1080">
+<rect x="0.0" y="0.0" width="1920.0" height="1080.0" fill="#E6D5A1"/>
+<rect x="30.0" y="30.0" width="1860.0" height="1020.0" fill="#F5EDCF" stroke="#735103" stroke-width="3"/>
+<rect x="42.0" y="42.0" width="1836.0" height="996.0" fill="none" stroke="#735103" stroke-width="1.5" opacity="0.6"/>
+<rect x="34.0" y="34.0" width="16.0" height="16.0" fill="#735103" transform="rotate(45 42.0 42.0)"/>
+<rect x="34.0" y="1030.0" width="16.0" height="16.0" fill="#735103" transform="rotate(45 42.0 1038.0)"/>
+<rect x="1870.0" y="34.0" width="16.0" height="16.0" fill="#735103" transform="rotate(45 1878.0 42.0)"/>
+<rect x="1870.0" y="1030.0" width="16.0" height="16.0" fill="#735103" transform="rotate(45 1878.0 1038.0)"/>
+<rect x="420.0" y="91.0" width="500.0" height="2.0" fill="#735103" opacity="0.4"/>
+<rect x="1000.0" y="91.0" width="500.0" height="2.0" fill="#735103" opacity="0.4"/>
+<text x="960.0" y="161.2" font-family="Cinzel" font-weight="600" font-size="32" letter-spacing="6.4" text-anchor="middle" fill="#735103">WARTA JEMAAT . GEREJA BETHEL KASIH NUSANTARA</text>
+<text x="960.0" y="258.8" font-family="Cinzel" font-weight="700" font-size="88" letter-spacing="8.8" text-anchor="middle" fill="#231903">JADWAL PEKAN INI</text>
+<text x="960.0" y="319.4" font-family="Source Serif 4 Text" font-weight="400" font-size="40" letter-spacing="0.8" text-anchor="middle" fill="#5F5132">15 sampai 21 November 2026</text>
+<rect x="96.0" y="386.0" width="120.0" height="20.0" rx="10.0" fill="#735103" opacity="0.9"/>
+<text x="330.0" y="414.08" font-family="Source Serif 4 Text" font-weight="600" font-size="48" text-anchor="start" fill="#735103">07.00</text>
+<rect x="520.0" y="386.0" width="460.0" height="22.0" rx="11.0" fill="#231903" opacity="0.55"/>
+<rect x="96.0" y="460.0" width="120.0" height="20.0" rx="10.0" fill="#735103" opacity="0.9"/>
+<text x="330.0" y="488.08" font-family="Source Serif 4 Text" font-weight="600" font-size="48" text-anchor="start" fill="#735103">09.30</text>
+<rect x="520.0" y="460.0" width="580.0" height="22.0" rx="11.0" fill="#231903" opacity="0.55"/>
+<rect x="96.0" y="534.0" width="120.0" height="20.0" rx="10.0" fill="#735103" opacity="0.9"/>
+<text x="330.0" y="562.08" font-family="Source Serif 4 Text" font-weight="600" font-size="48" text-anchor="start" fill="#735103">18.30</text>
+<rect x="520.0" y="534.0" width="520.0" height="22.0" rx="11.0" fill="#231903" opacity="0.55"/>
+<rect x="96.0" y="608.0" width="120.0" height="20.0" rx="10.0" fill="#735103" opacity="0.9"/>
+<text x="330.0" y="636.08" font-family="Source Serif 4 Text" font-weight="600" font-size="48" text-anchor="start" fill="#735103">19.00</text>
+<rect x="520.0" y="608.0" width="400.0" height="22.0" rx="11.0" fill="#231903" opacity="0.55"/>
+<rect x="96.0" y="682.0" width="120.0" height="20.0" rx="10.0" fill="#735103" opacity="0.9"/>
+<text x="330.0" y="710.08" font-family="Source Serif 4 Text" font-weight="600" font-size="48" text-anchor="start" fill="#735103">17.30</text>
+<rect x="520.0" y="682.0" width="620.0" height="22.0" rx="11.0" fill="#231903" opacity="0.55"/>
+<rect x="72.0" y="734.0" width="1776.0" height="66.0" rx="6.0" fill="#231903"/>
+<rect x="96.0" y="756.0" width="120.0" height="20.0" rx="10.0" fill="#735103" opacity="0.9"/>
+<text x="330.0" y="784.08" font-family="Source Serif 4 Text" font-weight="600" font-size="48" text-anchor="start" fill="#F9F2DC">19.00</text>
+<rect x="520.0" y="756.0" width="550.0" height="22.0" rx="11.0" fill="#F9F2DC" opacity="0.6"/>
+<rect x="96.0" y="830.0" width="120.0" height="20.0" rx="10.0" fill="#735103" opacity="0.9"/>
+<text x="330.0" y="858.08" font-family="Source Serif 4 Text" font-weight="600" font-size="48" text-anchor="start" fill="#735103">09.00</text>
+<rect x="520.0" y="830.0" width="480.0" height="22.0" rx="11.0" fill="#231903" opacity="0.55"/>
+<rect x="96.0" y="904.0" width="120.0" height="20.0" rx="10.0" fill="#735103" opacity="0.9"/>
+<text x="330.0" y="932.08" font-family="Source Serif 4 Text" font-weight="600" font-size="48" text-anchor="start" fill="#735103">16.00</text>
+<rect x="520.0" y="904.0" width="570.0" height="22.0" rx="11.0" fill="#231903" opacity="0.55"/>
+<svg x="932.0" y="64.0" width="56" height="56" viewBox="0 0 24 24"><g fill="none" stroke="#735103" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 20.5H21.5"/><path d="M8.5 20.5V16C8.5 12.6 11 10.8 14 10.8C17 10.8 19.5 12.6 19.5 16V20.5"/><path d="M12 20.5V17.6A2 2 0 0 1 16 17.6V20.5"/><circle cx="5.1" cy="16.9" r="3"/><path d="M11.4 10.8A2.6 2.6 0 0 1 16.6 10.8Z" fill="#735103" stroke="none"/><path d="M10.03 8.69L8.17 7.7"/><path d="M11.68 6.94L10.6 5.14"/><path d="M14 6.3L14 4.2"/><path d="M16.32 6.94L17.4 5.14"/><path d="M17.97 8.69L19.83 7.7"/></g></svg>
+</svg>
+<svg x="40" y="3235" width="1180" height="663" viewBox="0 0 1920 1080">
+<rect x="0.0" y="0.0" width="1920.0" height="1080.0" fill="#04271C"/>
+<path d="M1280.0 330.0V304.0A280.0 280.0 0 0 1 1840.0 304.0V330.0" fill="none" stroke="#F8EFE2" stroke-width="3" opacity="0.12"/>
+<path d="M1360.0 330.0V304.0A200.0 200.0 0 0 1 1760.0 304.0V330.0" fill="none" stroke="#F8EFE2" stroke-width="3" opacity="0.12"/>
+<path d="M1440.0 330.0V304.0A120.0 120.0 0 0 1 1680.0 304.0V330.0" fill="none" stroke="#F8EFE2" stroke-width="3" opacity="0.12"/>
+<text x="56.0" y="91.52" font-family="Instrument Sans" font-weight="600" font-size="32" letter-spacing="5.12" text-anchor="start" fill="#A9CEBE">WARTA JEMAAT . GEREJA BETHEL KASIH NUSANTARA</text>
+<text x="56.0" y="200.0" font-family="Fraunces" font-weight="600" font-size="112" text-anchor="start" fill="#F8EFE2">Jadwal Pekan Ini</text>
+<text x="987.5" y="200.0" font-family="Fraunces" font-weight="400" font-style="italic" font-size="56" text-anchor="start" fill="#EAC673">15 - 21 November 2026</text>
+<rect x="56.0" y="316.0" width="1808.0" height="704.0" rx="28.0" fill="#0F3629"/>
+<text x="112.0" y="393.28" font-family="Instrument Sans" font-weight="600" font-size="48" text-anchor="start" fill="#EAC673">07.00</text>
+<rect x="356.0" y="366.0" width="460.0" height="22.0" rx="11.0" fill="#F8EFE2" opacity="0.5"/>
+<text x="112.0" y="471.28" font-family="Instrument Sans" font-weight="600" font-size="48" text-anchor="start" fill="#EAC673">09.30</text>
+<rect x="356.0" y="444.0" width="580.0" height="22.0" rx="11.0" fill="#F8EFE2" opacity="0.5"/>
+<text x="112.0" y="549.28" font-family="Instrument Sans" font-weight="600" font-size="48" text-anchor="start" fill="#EAC673">18.30</text>
+<rect x="356.0" y="522.0" width="520.0" height="22.0" rx="11.0" fill="#F8EFE2" opacity="0.5"/>
+<text x="112.0" y="627.28" font-family="Instrument Sans" font-weight="600" font-size="48" text-anchor="start" fill="#EAC673">19.00</text>
+<rect x="356.0" y="600.0" width="400.0" height="22.0" rx="11.0" fill="#F8EFE2" opacity="0.5"/>
+<text x="112.0" y="705.28" font-family="Instrument Sans" font-weight="600" font-size="48" text-anchor="start" fill="#EAC673">17.30</text>
+<rect x="356.0" y="678.0" width="620.0" height="22.0" rx="11.0" fill="#F8EFE2" opacity="0.5"/>
+<rect x="72.0" y="730.0" width="1776.0" height="72.0" rx="20.0" fill="#EAC673"/>
+<text x="112.0" y="783.28" font-family="Instrument Sans" font-weight="600" font-size="48" text-anchor="start" fill="#04271C">19.00</text>
+<rect x="356.0" y="756.0" width="550.0" height="22.0" rx="11.0" fill="#04271C" opacity="0.7"/>
+<text x="112.0" y="861.28" font-family="Instrument Sans" font-weight="600" font-size="48" text-anchor="start" fill="#EAC673">09.00</text>
+<rect x="356.0" y="834.0" width="480.0" height="22.0" rx="11.0" fill="#F8EFE2" opacity="0.5"/>
+<text x="112.0" y="939.28" font-family="Instrument Sans" font-weight="600" font-size="48" text-anchor="start" fill="#EAC673">16.00</text>
+<rect x="356.0" y="912.0" width="570.0" height="22.0" rx="11.0" fill="#F8EFE2" opacity="0.5"/>
+<svg x="1153.57" y="56.0" width="48" height="48" viewBox="0 0 24 24"><g fill="none" stroke="#EAC673" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1.8L13.3 8.86L16.67 7.33L15.14 10.7L20.8 12L15.14 13.3L16.67 16.67L13.3 15.14L12 20.8L10.7 15.14L7.33 16.67L8.86 13.3L3.2 12L8.86 10.7L7.33 7.33L10.7 8.86Z" fill="#EAC673" stroke="#EAC673" stroke-width="1"/></g></svg>
+</svg>
+<svg x="1280" y="3235" width="1180" height="663" viewBox="0 0 1920 1080">
+<rect x="0.0" y="0.0" width="1920.0" height="1080.0" fill="#F7EBC9"/>
+<path d="M1280.0 330.0V304.0A280.0 280.0 0 0 1 1840.0 304.0V330.0" fill="none" stroke="#33280C" stroke-width="3" opacity="0.12"/>
+<path d="M1360.0 330.0V304.0A200.0 200.0 0 0 1 1760.0 304.0V330.0" fill="none" stroke="#33280C" stroke-width="3" opacity="0.12"/>
+<path d="M1440.0 330.0V304.0A120.0 120.0 0 0 1 1680.0 304.0V330.0" fill="none" stroke="#33280C" stroke-width="3" opacity="0.12"/>
+<text x="56.0" y="91.52" font-family="Instrument Sans" font-weight="600" font-size="32" letter-spacing="5.12" text-anchor="start" fill="#6A5A30">WARTA JEMAAT . GEREJA BETHEL KASIH NUSANTARA</text>
+<text x="56.0" y="200.0" font-family="Fraunces" font-weight="600" font-size="112" text-anchor="start" fill="#33280C">Jadwal Pekan Ini</text>
+<text x="987.5" y="200.0" font-family="Fraunces" font-weight="400" font-style="italic" font-size="56" text-anchor="start" fill="#855600">15 - 21 November 2026</text>
+<rect x="56.0" y="316.0" width="1808.0" height="704.0" rx="28.0" fill="#FCF5E0"/>
+<text x="112.0" y="393.28" font-family="Instrument Sans" font-weight="600" font-size="48" text-anchor="start" fill="#855600">07.00</text>
+<rect x="356.0" y="366.0" width="460.0" height="22.0" rx="11.0" fill="#33280C" opacity="0.5"/>
+<text x="112.0" y="471.28" font-family="Instrument Sans" font-weight="600" font-size="48" text-anchor="start" fill="#855600">09.30</text>
+<rect x="356.0" y="444.0" width="580.0" height="22.0" rx="11.0" fill="#33280C" opacity="0.5"/>
+<text x="112.0" y="549.28" font-family="Instrument Sans" font-weight="600" font-size="48" text-anchor="start" fill="#855600">18.30</text>
+<rect x="356.0" y="522.0" width="520.0" height="22.0" rx="11.0" fill="#33280C" opacity="0.5"/>
+<text x="112.0" y="627.28" font-family="Instrument Sans" font-weight="600" font-size="48" text-anchor="start" fill="#855600">19.00</text>
+<rect x="356.0" y="600.0" width="400.0" height="22.0" rx="11.0" fill="#33280C" opacity="0.5"/>
+<text x="112.0" y="705.28" font-family="Instrument Sans" font-weight="600" font-size="48" text-anchor="start" fill="#855600">17.30</text>
+<rect x="356.0" y="678.0" width="620.0" height="22.0" rx="11.0" fill="#33280C" opacity="0.5"/>
+<rect x="72.0" y="730.0" width="1776.0" height="72.0" rx="20.0" fill="#855600"/>
+<text x="112.0" y="783.28" font-family="Instrument Sans" font-weight="600" font-size="48" text-anchor="start" fill="#FCF5E0">19.00</text>
+<rect x="356.0" y="756.0" width="550.0" height="22.0" rx="11.0" fill="#FCF5E0" opacity="0.7"/>
+<text x="112.0" y="861.28" font-family="Instrument Sans" font-weight="600" font-size="48" text-anchor="start" fill="#855600">09.00</text>
+<rect x="356.0" y="834.0" width="480.0" height="22.0" rx="11.0" fill="#33280C" opacity="0.5"/>
+<text x="112.0" y="939.28" font-family="Instrument Sans" font-weight="600" font-size="48" text-anchor="start" fill="#855600">16.00</text>
+<rect x="356.0" y="912.0" width="570.0" height="22.0" rx="11.0" fill="#33280C" opacity="0.5"/>
+<svg x="1153.57" y="56.0" width="48" height="48" viewBox="0 0 24 24"><g fill="none" stroke="#855600" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 20.5H21.5"/><path d="M8.5 20.5V16C8.5 12.6 11 10.8 14 10.8C17 10.8 19.5 12.6 19.5 16V20.5"/><path d="M12 20.5V17.6A2 2 0 0 1 16 17.6V20.5"/><circle cx="5.1" cy="16.9" r="3"/><path d="M11.4 10.8A2.6 2.6 0 0 1 16.6 10.8Z" fill="#855600" stroke="none"/><path d="M10.03 8.69L8.17 7.7"/><path d="M11.68 6.94L10.6 5.14"/><path d="M14 6.3L14 4.2"/><path d="M16.32 6.94L17.4 5.14"/><path d="M17.97 8.69L19.83 7.7"/></g></svg>
+</svg>
+
+<rect x="306.64" y="822.12" width="37.5" height="37.5" fill="none" stroke="#E0201B" stroke-width="2"/>
+<rect x="1546.64" y="822.12" width="37.5" height="37.5" fill="none" stroke="#E0201B" stroke-width="2"/>
+<rect x="1070.99" y="1656.63" width="62.08" height="62.08" fill="none" stroke="#E0201B" stroke-width="2"/>
+<rect x="2310.99" y="1656.63" width="62.08" height="62.08" fill="none" stroke="#E0201B" stroke-width="2"/>
+<rect x="608.81" y="2457.33" width="42.42" height="42.42" fill="none" stroke="#E0201B" stroke-width="2"/>
+<rect x="1848.81" y="2457.33" width="42.42" height="42.42" fill="none" stroke="#E0201B" stroke-width="2"/>
+<rect x="744.98" y="3265.42" width="37.5" height="37.5" fill="none" stroke="#E0201B" stroke-width="2"/>
+<rect x="1984.98" y="3265.42" width="37.5" height="37.5" fill="none" stroke="#E0201B" stroke-width="2"/>
+
+</svg>

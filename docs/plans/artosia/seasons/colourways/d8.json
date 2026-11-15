@@ -1,0 +1,4 @@
+[{"id":"adven","season":"advent","palette":{"paper":"#EDE6F3","ink":"#1D1623","mute":"#594D63","rule":"#D6CCDF","pill":"#603288","pill_ink":"#FFFFFF","card":"#FFFFFF"}},
+{"id":"natal","season":"christmas","palette":{"paper":"#E6ECDD","ink":"#161C0D","mute":"#4D573E","rule":"#CCD5BE","pill":"#165B38","pill_ink":"#FFFFFF","card":"#FFFFFF"}},
+{"id":"prapaskah","season":"lent","palette":{"paper":"#EEE8E7","ink":"#22141D","mute":"#624A59","rule":"#D9CECD","pill":"#763058","pill_ink":"#FFFFFF","card":"#FFFFFF"}},
+{"id":"paskah","season":"easter","palette":{"paper":"#F2EACC","ink":"#1D190A","mute":"#595339","rule":"#DCD1A8","pill":"#684500","pill_ink":"#FFFFFF","card":"#FFFFFF"}}]

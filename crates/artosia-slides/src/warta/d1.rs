@@ -23,7 +23,8 @@ fn page(sl: &mut Sheet, kicker: &str, kicker_r: Option<&str>) {
     let (frame, fw, mx, x2, ky) = (sl.g("frame"), sl.g("frame_w"), sl.g("mx"), sl.g("x2"), sl.g("kicker_y"));
     sl.push(R::new(0.0, 0.0, W, H).fill("paper"));
     sl.push(R::new(frame, frame, W - 2.0 * frame, H - 2.0 * frame).border(fw, "ink"));
-    sl.text("kicker", kicker, Tx::l(mx, ky).cy().maxw(1180.0));
+    let left = sl.text("kicker", kicker, Tx::l(mx, ky).cy().maxw(1180.0 - sl.mark_reserve()));
+    sl.mark_after(left.x + left.w);
     if let Some(right) = kicker_r {
         sl.text("kicker", right, Tx::r(x2, ky).cy().maxw(700.0));
     }

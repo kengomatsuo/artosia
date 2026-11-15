@@ -38,8 +38,13 @@ fn page(sl: &mut Sheet, kicker: &str, title: Option<&str>) {
         sl.push(R::new(x - dia / 2.0, y - dia / 2.0, dia, dia).fill("gold").rot(45.0));
     }
     let (cy, cw, ch, arm, arm_h, up) = (sl.g("cross_cy"), sl.g("cross_w"), sl.g("cross_h"), sl.g("cross_arm"), sl.g("cross_arm_h"), sl.g("cross_up"));
-    gold_rule(sl, cx - cw / 2.0, cy - ch / 2.0, cw, ch, 1.0);
-    gold_rule(sl, cx - arm / 2.0, cy - up - arm_h / 2.0, arm, arm_h, 1.0);
+    if sl.has_mark() {
+        // The season's sign stands where the small cross does.
+        sl.mark_here(sl.mk("cx"), sl.mk("cy"));
+    } else {
+        gold_rule(sl, cx - cw / 2.0, cy - ch / 2.0, cw, ch, 1.0);
+        gold_rule(sl, cx - arm / 2.0, cy - up - arm_h / 2.0, arm, arm_h, 1.0);
+    }
     let (rx, rgap, rw) = (sl.g("rule_x"), sl.g("rule_gap"), sl.g("rule_w"));
     gold_rule(sl, rx, cy - rw / 2.0, cx - rgap - rx, rw, 1.0);
     gold_rule(sl, cx + rgap, cy - rw / 2.0, cx - rgap - rx, rw, 1.0);

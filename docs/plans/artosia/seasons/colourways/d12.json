@@ -1,0 +1,4 @@
+[{"id":"natal","season":"christmas","palette":{"scrim":"#00140D","plate":"#F4FAF7","ink":"#001C12","mute":"#2E5D4C","accent":"#015D38","on_accent":"#FFFFFF","white":"#FFFFFF","dusk_a":"#024126","dusk_b":"#CDA956","accent_tint":"#CCEAD7"}},
+{"id":"prapaskah","season":"lent","palette":{"scrim":"#170B13","plate":"#FCF6FA","ink":"#220E1C","mute":"#69455D","accent":"#723459","on_accent":"#FFFFFF","white":"#FFFFFF","dusk_a":"#571B41","dusk_b":"#EA909E","accent_tint":"#F6D7E7"}},
+{"id":"paskah","season":"easter","palette":{"scrim":"#150F00","plate":"#FAF8F2","ink":"#231103","mute":"#6B4A2F","accent":"#773A00","on_accent":"#FFFFFF","white":"#FFFFFF","dusk_a":"#473100","dusk_b":"#C7AC56","accent_tint":"#F3DDC5"}},
+{"id":"bara","season":"pentecost","palette":{"scrim":"#1F0605","plate":"#FEF7F5","ink":"#250E0C","mute":"#704640","accent":"#822C27","on_accent":"#FFFFFF","white":"#FFFFFF","dusk_a":"#5F1A17","dusk_b":"#E49B68","accent_tint":"#FBD8D3"}}]

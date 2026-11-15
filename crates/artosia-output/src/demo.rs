@@ -452,10 +452,82 @@ pub fn colourway_scene(style: NoticeStyle, n: usize) -> OutputState {
     state
 }
 
+/// The schedule card of a poster style in its colourway for `season`, which draws that season's mark, on a
+/// Sunday of Advent so the candles count (`season-mark-<style>-<season>` scenes).
+pub fn season_scene(style: NoticeStyle, season: artosia_core::church_year::Season) -> OutputState {
+    let mut state = poster_scene(style, NoticeKind::Schedule, true);
+    if let Some(slide) = state.slide.as_mut() {
+        slide.colourway = artosia_slides::warta::colourway_for_season(style, season).unwrap_or_default().to_string();
+        slide.today = artosia_core::calendar::Date::new(2026, 12, 6);
+    }
+    state
+}
+
 /// The state of a `notice-style-<style>-<kind>` scene: a poster style drawing one kind, over the default look.
 pub fn poster_scene(style: NoticeStyle, kind: NoticeKind, pictures: bool) -> OutputState {
     DIRECT.store(false, Ordering::Release);
     let mut slide = poster_slide(kind, pictures);
     slide.style = Some(style);
     OutputState { slide: Some(slide), look: Look { notice_style: style, ..Look::default() }, ..OutputState::default() }
+}
+
+#[cfg(test)]
+mod season_mark_tests {
+    use super::*;
+    use artosia_core::church_year::Season;
+    use artosia_slides::warta::{Pics, mark_gap, paginate};
+
+    fn picture() -> rune::Pixels {
+        let pixels = rune::Pixels::new();
+        pixels.set(4, 3, vec![128; 4 * 3 * 4]);
+        pixels
+    }
+
+    /// The season mark is at least 8 px from every text of the card, in every kind, with and without pictures, in
+    /// every seasonal colourway of every family that draws one; with the church's name as the demo has it the mark is
+    /// never left off, and with a long one the kicker shortens first and the mark goes only where the kicker is at its floor.
+    #[test]
+    fn a_season_mark_keeps_8_px_from_every_text_in_every_kind() {
+        // Measure with the faces the projector draws in; a test thread has none until a text system names them.
+        let _fonts = rune::text::TextSystem::new(artosia_slides::fonts::bundled(), ("Inter", "JetBrains Mono"));
+        let (photo, qris) = (picture(), picture());
+        let (mut seen, mut near, mut left_off, mut long_off) = (0, Vec::new(), Vec::new(), 0);
+        for &style in NoticeStyle::ALL.iter().filter(|style| style.is_poster()) {
+            for kind in [NoticeKind::Schedule, NoticeKind::Birthdays, NoticeKind::Money, NoticeKind::Account, NoticeKind::Verse, NoticeKind::Plain] {
+                for pictures in [true, false] {
+                    let pics = if pictures { Pics { photo: Some(&photo), photo2: Some(&photo), qris: Some(&qris) } } else { Pics::default() };
+                    for season in [Season::Advent, Season::Christmas, Season::Lent, Season::Easter, Season::Pentecost] {
+                        for long in [false, true] {
+                            let mut slide = poster_slide(kind, pictures);
+                            if long {
+                                slide.church = "Gereja Kristen Bethel Kasih Nusantara".to_string();
+                            }
+                            slide.style = Some(style);
+                            slide.colourway = artosia_slides::warta::colourway_for_season(style, season).unwrap_or_default().to_string();
+                            slide.today = artosia_core::calendar::Date::new(2026, 12, 20);
+                            for page in paginate(&slide, style).into_iter().filter(|page| artosia_slides::warta::holds(page, style)) {
+                                let marked = artosia_slides::warta::mark_of(&page, style).is_some();
+                                match mark_gap(&page, style, &pics) {
+                                    Some((gap, near_text)) => {
+                                        seen += 1;
+                                        if gap < 8.0 {
+                                            near.push(format!("{style:?} {kind:?} near {near_text}: {gap:.1}"));
+                                        }
+                                    }
+                                    None if marked && long => long_off += 1,
+                                    None if marked => left_off.push(format!("{style:?} {kind:?} pictures {pictures} {season:?}")),
+                                    None => {}
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        assert!(seen > 600, "only {seen} marks were measured");
+        assert!(near.is_empty(), "{} marks too near text: {near:?}", near.len());
+        left_off.dedup();
+        assert!(left_off.is_empty(), "marks left off with the demo church: {left_off:?}");
+        eprintln!("{seen} marks measured, {long_off} left off beside a long church name");
+    }
 }

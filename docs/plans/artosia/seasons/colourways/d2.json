@@ -1,0 +1,3 @@
+[{"id":"natal","season":"christmas","palette":{"ground":"#E6ECDD","pill":"#121906","white":"#F5F8F0","yellow":"#FFD23C","orange":"#FF8A83","burnt":"#165B38","ink":"#121906","mute":"#4D573E","on_pill":"#FFFFFF"}},
+{"id":"prapaskah","season":"lent","palette":{"ground":"#EEE8E7","pill":"#240F0F","white":"#F9F6F6","yellow":"#FFD23C","orange":"#EA998B","burnt":"#763058","ink":"#240F0F","mute":"#624A59","on_pill":"#FFFFFF"}},
+{"id":"paskah","season":"easter","palette":{"ground":"#F2EACC","pill":"#1D1503","white":"#FBF7E8","yellow":"#FFD23C","orange":"#F4993C","burnt":"#684500","ink":"#1D1503","mute":"#595339","on_pill":"#FFFFFF"}}]

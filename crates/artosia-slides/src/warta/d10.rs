@@ -70,8 +70,9 @@ fn page(sl: &mut Sheet, kicker: &str) {
     sl.push(R::new(0.0, 0.0, hw - cut, hh).fill("brand_dk"));
     slab(sl, (hw, 0.0), (hw - cut, hh), 1.0, 112.0, 0.0, "brand_dk");
     para(sl, hw + gap, hw + gap - cut, 0.0, hh, sw, "brand");
-    let (ky, maxw) = (sl.g("kicker_cy"), room(sl, "kicker", sl.g("kicker_cy")));
-    sl.text("kicker", kicker, Tx::l(mx, ky).cy().maxw(maxw));
+    let (ky, maxw) = (sl.g("kicker_cy"), room(sl, "kicker", sl.g("kicker_cy")) - sl.mark_reserve());
+    let left = sl.text("kicker", kicker, Tx::l(mx, ky).cy().maxw(maxw));
+    sl.mark_after(left.x + left.w);
 }
 
 /// The title and the line under it, both on the header block.

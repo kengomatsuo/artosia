@@ -29,12 +29,14 @@ mod d17;
 mod d11;
 mod d14;
 mod data;
+mod marks;
 
 use std::collections::HashMap;
 use std::sync::{Mutex, OnceLock};
 
+use artosia_core::church_year::Season;
 use artosia_core::deck::{Align, Face, NoticeKind, NoticeStyle, Slide};
-use rune::{Color, El, Family, Pixels, SurfaceFit, TextStyle, el, text};
+use rune::{Color, El, Family, Icon, Pixels, SurfaceFit, TextStyle, el, icon, text};
 use serde_json::Value;
 
 use crate::fonts;
@@ -162,9 +164,9 @@ pub fn colourways(style: NoticeStyle) -> Vec<Swatch> {
         .collect()
 }
 
-/// The style's colourway tagged for `season`, if its family has one.
-pub fn colourway_for_season(style: NoticeStyle, season: artosia_core::church_year::Season) -> Option<&'static str> {
-    tokens()["families"][family_of(style)]["colourways"].as_array()?.iter().find(|colourway| colourway["season"].as_str() == Some(season.code()))?["id"].as_str()
+/// The style's colourway tagged for `season` (or the nearest season that has one), if its family has one.
+pub fn colourway_for_season(style: NoticeStyle, season: Season) -> Option<&'static str> {
+    tokens()["families"][family_of(style)]["colourways"].as_array()?.iter().find(|colourway| colourway["season"].as_str() == Some(season.colourway_season().code()))?["id"].as_str()
 }
 
 /// Where `colourway` stands among the style's colourways; an empty or unknown name is the style's first.
@@ -347,11 +349,23 @@ struct Tt {
     maxw: Option<f32>,
 }
 
+/// A season mark: an icon of `size` at (`x`, `y`) in a colour.
+#[derive(Clone, Debug)]
+struct Mk {
+    icon: &'static Icon,
+    x: f32,
+    y: f32,
+    size: f32,
+    fill: String,
+    op: f32,
+}
+
 #[derive(Clone, Debug)]
 enum Item {
     Rect(R),
     Image(Im),
     Text(Tt),
+    Mark(Mk),
 }
 
 #[derive(Clone, Copy, Debug, PartialEq)]
@@ -452,6 +466,8 @@ pub struct Sheet {
     force: bool,
     /// The type roles a card's bold or italic applies to: role, bold, italic.
     styled: Vec<(String, bool, bool)>,
+    /// The season mark this card draws, if its family has a spot for one.
+    mark: Option<&'static Icon>,
 }
 
 thread_local! {
@@ -476,12 +492,15 @@ thread_local! {
 /// Advances kept by face (family, weight, slant), size and words.
 type Advances = HashMap<(&'static str, u32, bool, u32, String), f32>;
 
+/// The least distance in px between the season mark and any text.
+pub const MARK_CLEAR: f32 = 8.0;
+
 /// The size a body is never set below, and the least a person at the back can read.
 pub const BODY_FLOOR: f32 = 40.0;
 
 impl Sheet {
     fn new(style: NoticeStyle, colourway: &str) -> Sheet {
-        Sheet { d: dir_of(style, colourway), items: Vec::new(), body_px: None, title_cap: None, force: false, styled: Vec::new() }
+        Sheet { d: dir_of(style, colourway), items: Vec::new(), body_px: None, title_cap: None, force: false, styled: Vec::new(), mark: None }
     }
 
     /// `found`, or the floor when a drawing is forced; the layout cannot hold it otherwise.
@@ -555,6 +574,62 @@ impl Sheet {
     /// A grid number.
     pub fn g(&self, key: &str) -> f32 {
         number(&self.d["grid"][key])
+    }
+
+    /// A number of the family's season-mark block.
+    pub fn mk(&self, key: &str) -> f32 {
+        number(&self.d["mark"][key])
+    }
+
+    /// Whether this card draws a season mark.
+    pub fn has_mark(&self) -> bool {
+        self.mark.is_some()
+    }
+
+    /// What a text beside the mark gives up: its width and gap, none when no mark is drawn.
+    pub fn mark_reserve(&self) -> f32 {
+        if self.has_mark() { self.mk("reserve") } else { 0.0 }
+    }
+
+    /// The season mark `size` across, centred on (`cx`, `cy`), in palette `role` at opacity `op`; nothing without a mark.
+    pub fn put_mark(&mut self, cx: f32, cy: f32, size: f32, role: &str, op: f32) {
+        let Some(icon) = self.mark else { return };
+        let fill = self.c(role);
+        self.items.push(Item::Mark(Mk { icon, x: ((cx - size / 2.0) * 100.0).round() / 100.0, y: ((cy - size / 2.0) * 100.0).round() / 100.0, size, fill, op }));
+    }
+
+    /// The family's mark centred on (`cx`, `cy`), at the family's size and role.
+    pub fn mark_here(&mut self, cx: f32, cy: f32) {
+        let (role, op) = (self.d["mark"]["role"].as_str().unwrap_or("ink").to_string(), self.d["mark"]["op"].as_f64().map_or(1.0, |op| op as f32));
+        self.put_mark(cx, cy, self.mk("size"), &role, op);
+    }
+
+    /// The family's mark after a kicker that ends at `end`, one gap on and on the family's line.
+    pub fn mark_after(&mut self, end: f32) {
+        self.mark_here(end + self.mk("gap") + self.mk("size") / 2.0, self.mk("cy"));
+    }
+
+    /// The least distance from the season mark to any text of the sheet, with that text.
+    fn mark_gap(&self) -> Option<(f32, String)> {
+        let mark = self.items.iter().find_map(|item| if let Item::Mark(m) = item { Some(m) } else { None })?;
+        let gap = |lo: f32, hi: f32, from: f32, to: f32| (from - hi).max(lo - to).max(0.0);
+        self.items
+            .iter()
+            .filter_map(|item| if let Item::Text(t) = item { Some(t) } else { None })
+            .map(|t| {
+                // Ascenders reach 8% over the capitals' height and descenders 0.25 em under the baseline.
+                let (dx, dy) = (gap(mark.x, mark.x + mark.size, t.x, t.x + t.w), gap(mark.y, mark.y + mark.size, t.y - 1.08 * metrics(&t.file).cap * t.size, t.y + 0.25 * t.size));
+                (dx.hypot(dy), format!("{:?} at x {:.0} baseline {:.0} width {:.0} size {:.0}, the mark at x {:.0} y {:.0} size {:.0}", t.s, t.x, t.y, t.w, t.size, mark.x, mark.y, mark.size))
+            })
+            .reduce(|a, b| if b.0 < a.0 { b } else { a })
+    }
+
+    /// Leaves the season mark off a card whose text is too near it: a kicker already at its floor size cannot
+    /// give the mark room, and the mark never goes over words.
+    fn keep_mark_clear(&mut self) {
+        if self.mark_gap().is_some_and(|(gap, _)| gap < MARK_CLEAR) {
+            self.items.retain(|item| !matches!(item, Item::Mark(_)));
+        }
     }
 
     /// A number of a slide kind's own section, such as `s01`.
@@ -769,6 +844,9 @@ impl Sheet {
                     }
                     layer = layer.child(e);
                 }
+                Item::Mark(m) => {
+                    layer = layer.child(icon(m.icon, m.size * u).color(hex(&m.fill).alpha(m.op)).key(format!("m{at}")).absolute(ox + m.x * u, m.y * u).a11y_hidden());
+                }
                 Item::Text(t) => {
                     let size = t.size * u;
                     let m = metrics(&t.file);
@@ -959,6 +1037,25 @@ pub fn draw(slide: &Slide, style: NoticeStyle, w: f32, h: f32, pics: &Pics) -> E
     sheet.build(w, h, pics)
 }
 
+/// The season a card is in: today's while the church follows the year (ordinary time keeps the colourway's), else the
+/// season tag of its colourway; None for a plain colourway.
+pub fn season_of(slide: &Slide, style: NoticeStyle) -> Option<Season> {
+    let tag = tokens()["families"][family_of(style)]["colourways"].as_array().into_iter().flatten().find(|colourway| colourway["id"].as_str() == Some(slide.colourway.as_str())).and_then(|colourway| colourway["season"].as_str()).and_then(Season::from_code);
+    slide.season.filter(|season| *season != Season::Ordinary).or(tag)
+}
+
+/// The least distance in px between the season mark of a card and any text on its sheet (a turned text counts as
+/// its box), with that text; None when the card draws no mark or does not hold in one slide.
+pub fn mark_gap(slide: &Slide, style: NoticeStyle, pics: &Pics) -> Option<(f32, String)> {
+    sheet(slide, style, layout::have_of(slide, pics)).ok()?.mark_gap()
+}
+
+/// The name of the mark a card draws in `style`: its season's, none in a family with no spot for one.
+pub fn mark_of(slide: &Slide, style: NoticeStyle) -> Option<&'static str> {
+    tokens()["families"][family_of(style)]["mark"].is_object().then_some(())?;
+    artosia_core::church_year::mark_for(season_of(slide, style)?, slide.today)
+}
+
 /// The slide at the floors of its styles, whatever does not fit.
 fn forced(slide: &Slide, style: NoticeStyle, have: data::Have) -> Result<Sheet, Split> {
     let floor = if slide.notice == NoticeKind::Plain { Some(plain_body_range(slide, style).1) } else { None };
@@ -998,6 +1095,7 @@ fn build(slide: &Slide, style: NoticeStyle, have: data::Have, body: Option<f32>,
     let data = Data::of(slide);
     let mut sheet = Sheet::new(style, &slide.colourway);
     (sheet.body_px, sheet.force) = (body, force);
+    sheet.mark = mark_of(slide, style).and_then(marks::mark);
     if slide.notice == NoticeKind::Plain {
         sheet.title_cap = (slide.title_face.size > 0).then(|| f32::from(slide.title_face.size));
         sheet.style_roles(&["title", "title_w", "n_title"], slide.title_face);
@@ -1027,6 +1125,7 @@ fn build(slide: &Slide, style: NoticeStyle, have: data::Have, body: Option<f32>,
         sheet.align(slide.title_face.align, &["title", "title_w", "n_title"]);
         sheet.align(slide.body_face.align, &["n_body", "n_body_b"]);
     }
+    sheet.keep_mark_clear();
     Ok(sheet)
 }
 
@@ -1154,6 +1253,7 @@ pub fn paginate(slide: &Slide, style: NoticeStyle) -> Vec<Slide> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use artosia_core::calendar::Date;
 
     #[test]
     fn the_tokens_of_all_four_directions_are_there_with_their_faces() {
@@ -1203,14 +1303,13 @@ mod tests {
         assert_eq!(dir_of(NoticeStyle::SimpleDark, "")["palette"]["paper"], "#121417");
         assert_eq!(dir_of(NoticeStyle::Simple, "")["palette"]["paper"], "#FFFFFF");
         assert_eq!(colourway_at(NoticeStyle::SimpleDark, ""), 1);
-        assert_eq!(colourways(NoticeStyle::Neon).len(), 6);
+        assert_eq!(colourways(NoticeStyle::Neon).len(), 9);
     }
 
     #[test]
-    fn a_season_names_the_colourway_tagged_for_it_and_a_family_without_one_gets_none() {
-        use artosia_core::church_year::Season;
+    fn a_season_names_the_colourway_tagged_for_it_and_ordinary_time_gets_none() {
         assert_eq!(colourway_for_season(NoticeStyle::Greige, Season::Advent), Some("adven"));
-        assert_eq!(colourway_for_season(NoticeStyle::Greige, Season::Christmas), None);
+        assert_eq!(colourway_for_season(NoticeStyle::Greige, Season::Christmas), Some("natal"));
         assert_eq!(colourway_for_season(NoticeStyle::Neon, Season::Easter), Some("paskah"));
         assert_eq!(colourway_for_season(NoticeStyle::Greige, Season::Ordinary), None);
     }
@@ -1230,5 +1329,102 @@ mod tests {
         let (first, second) = split(&slide, NoticeStyle::Greige).expect("rows can be cut");
         assert_eq!(first.text.lines().count() + second.text.lines().count(), 60);
         assert!(split(&Slide { notice: NoticeKind::Plain, text: "a\nb".into(), ..Slide::default() }, NoticeStyle::Greige).is_none());
+    }
+    fn posters() -> impl Iterator<Item = NoticeStyle> {
+        NoticeStyle::ALL.iter().copied().filter(|style| style.is_poster())
+    }
+
+    fn marks_drawn(slide: &Slide, style: NoticeStyle) -> usize {
+        let have = layout::have_of(slide, &Pics::default());
+        sheet(slide, style, have).expect("the card holds").items.iter().filter(|item| matches!(item, Item::Mark(_))).count()
+    }
+
+    #[test]
+    fn every_family_has_the_five_seasonal_colourways_and_the_other_seasons_borrow_one() {
+        use artosia_core::church_year::Season::*;
+        for style in posters() {
+            for season in [Advent, Christmas, Lent, Easter, Pentecost] {
+                let id = colourway_for_season(style, season).unwrap_or_else(|| panic!("{style:?} has no {season:?}"));
+                assert!(colourway_ids(style).any(|own| own == id));
+            }
+            for (season, lent) in [(HolyWeek, Lent), (GoodFriday, Lent), (Epiphany, Christmas), (Ascension, Easter), (Reformation, Pentecost)] {
+                assert_eq!(colourway_for_season(style, season), colourway_for_season(style, lent), "{style:?} {season:?}");
+            }
+            assert_eq!(colourway_for_season(style, Ordinary), None);
+        }
+        // The six retagged colourways kept their palettes and their ids.
+        assert_eq!(colourway_for_season(NoticeStyle::Pill, Christmas), Some("mint"));
+        assert_eq!(colourway_for_season(NoticeStyle::Neon, Pentecost), Some("ember"));
+        assert_eq!(colourway_for_season(NoticeStyle::Split, Advent), Some("plum"));
+        assert_eq!(colourway_for_season(NoticeStyle::QuietTint, Christmas), Some("mint"));
+        assert_eq!(colourway_for_season(NoticeStyle::Diagonal, Advent), Some("ungu"));
+        assert_eq!(colourway_for_season(NoticeStyle::Liturgy, Advent), Some("ametis"));
+    }
+
+    #[test]
+    fn a_card_reports_the_season_of_its_colourway_or_the_one_the_church_year_gives_it() {
+        use artosia_core::church_year::Season::*;
+        let on = |colourway: &str, season, today| Slide { colourway: colourway.into(), season, today, ..Slide::default() };
+        let style = NoticeStyle::SerifItalic;
+        let christmas = colourway_for_season(style, Christmas).unwrap();
+        // A hand-picked seasonal colourway keeps its season on any day.
+        assert_eq!(season_of(&on(christmas, None, None), style), Some(Christmas));
+        assert_eq!(mark_of(&on(christmas, None, Date::new(2026, 7, 1)), style), Some("christmas"));
+        assert_eq!(season_of(&on("light", None, None), style), None);
+        assert_eq!(mark_of(&on("light", None, None), style), None);
+        // Following the year, today's season wins; ordinary time leaves the colourway's own.
+        assert_eq!(season_of(&on("light", Some(Easter), None), style), Some(Easter));
+        assert_eq!(mark_of(&on("light", Some(HolyWeek), None), style), Some("palm"));
+        assert_eq!(season_of(&on(christmas, Some(Ordinary), None), style), Some(Christmas));
+        assert_eq!(mark_of(&on("light", Some(Ordinary), None), style), None);
+        // Advent counts its candles from the day, and keeps one candle outside Advent.
+        let advent = colourway_for_season(style, Advent).unwrap();
+        assert_eq!(mark_of(&on(advent, None, Date::new(2026, 12, 6)), style), Some("advent-2"));
+        assert_eq!(mark_of(&on(advent, None, Date::new(2026, 7, 1)), style), Some("advent"));
+    }
+
+    #[test]
+    fn swiss_numerals_quiet_tint_and_civic_board_draw_no_mark_in_any_season() {
+        use artosia_core::church_year::Season::*;
+        for style in [NoticeStyle::SwissNumerals, NoticeStyle::QuietTint, NoticeStyle::CivicBoard] {
+            for colourway in colourway_ids(style) {
+                for season in [None, Some(Advent), Some(Christmas), Some(Lent), Some(Easter), Some(Pentecost), Some(HolyWeek)] {
+                    let slide = Slide { notice: NoticeKind::Plain, text: "Kabar".into(), colourway: colourway.into(), season, ..Slide::default() };
+                    assert_eq!(mark_of(&slide, style), None, "{style:?}/{colourway}");
+                    assert_eq!(marks_drawn(&slide, style), 0, "{style:?}/{colourway}");
+                }
+            }
+        }
+    }
+
+    #[test]
+    fn a_family_with_a_spot_draws_one_mark_in_a_season_and_none_without_one() {
+        let (mut marked, mut plain) = (0, 0);
+        for style in posters().filter(|style| !matches!(style, NoticeStyle::SwissNumerals | NoticeStyle::QuietTint | NoticeStyle::CivicBoard)) {
+            for notice in [NoticeKind::Plain, NoticeKind::Birthdays] {
+                let slide = |colourway: &str| Slide { notice, text: "Ibu Contoh	3 November
+Bapak Contoh	9 November".into(), church: "GKI Contoh".into(), colourway: colourway.into(), ..Slide::default() };
+                let seasonal = slide(colourway_for_season(style, artosia_core::church_year::Season::Easter).unwrap());
+                assert_eq!(marks_drawn(&seasonal, style), 1, "{style:?} {notice:?}");
+                assert_eq!(marks_drawn(&slide(""), style), 0, "{style:?} {notice:?}");
+                (marked, plain) = (marked + 1, plain + 1);
+            }
+        }
+        assert!(marked > 0 && plain > 0);
+    }
+
+    #[test]
+    fn every_season_mark_is_inside_the_painters_subset_and_leaves_its_edge_clear() {
+        for name in marks::ALL {
+            let icon = marks::mark(name).expect(name);
+            let tags: Vec<&str> = icon.body.split('<').skip(1).map(|piece| piece.split(|c: char| c == ' ' || c == '>' || c == '/').next().unwrap_or("")).filter(|tag| !tag.is_empty()).collect();
+            assert!(tags.iter().all(|tag| matches!(*tag, "g" | "path" | "rect" | "circle" | "ellipse")), "{name}: {tags:?}");
+            let px = 48usize;
+            let ink = rune::text::icon_coverage(icon, px as u32);
+            assert!(ink.iter().any(|v| *v > 0), "{name} draws nothing");
+            let at = |x: usize, y: usize| ink[y * px + x];
+            // One unit of the 24 grid is 2 px at 48: nothing is painted in the outer unit.
+            assert!((0..px).all(|k| [0, 1, px - 2, px - 1].iter().all(|e| at(*e, k) == 0 && at(k, *e) == 0)), "{name} reaches the edge");
+        }
     }
 }

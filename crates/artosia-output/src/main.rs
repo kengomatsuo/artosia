@@ -28,6 +28,7 @@ use std::sync::{Arc, Mutex, OnceLock};
 
 use artosia_slides::audience::{Detail, Media, audience_over};
 use artosia_slides::frame::{DisplayInfo, FromOutput, MediaEnd, MediaItem, MediaKind, OutputState, PORT, ToOutput, decode, encode, trace};
+use artosia_core::church_year::Season;
 use artosia_core::deck::NoticeKind;
 use artosia_slides::look::{Background, NoticeStyle};
 use artosia_slides::stage::stage;
@@ -440,6 +441,25 @@ const SCENES: &[Scene] = &[
     ("announcement", |_| shared().set_state(demo::announcement())),
     // The state in the JSON file `--state-file` names, as `examples/notice_matrix.rs` writes it.
     ("state-file", |_| shared().set_state(flag_value("--state-file").and_then(|path| std::fs::read_to_string(path).ok()).and_then(|json| serde_json::from_str(&json).ok()).unwrap_or_default())),
+    // A poster style's schedule card in a season's colourway, drawing that season's mark.
+    ("season-mark-serif-christmas", |_| shared().set_state(demo::season_scene(NoticeStyle::SerifItalic, Season::Christmas))),
+    ("season-mark-serif-easter", |_| shared().set_state(demo::season_scene(NoticeStyle::SerifItalic, Season::Easter))),
+    ("season-mark-neon-christmas", |_| shared().set_state(demo::season_scene(NoticeStyle::Neon, Season::Christmas))),
+    ("season-mark-neon-easter", |_| shared().set_state(demo::season_scene(NoticeStyle::Neon, Season::Easter))),
+    ("season-mark-liturgy-christmas", |_| shared().set_state(demo::season_scene(NoticeStyle::Liturgy, Season::Christmas))),
+    ("season-mark-liturgy-easter", |_| shared().set_state(demo::season_scene(NoticeStyle::Liturgy, Season::Easter))),
+    ("season-mark-warm-christmas", |_| shared().set_state(demo::season_scene(NoticeStyle::Warm, Season::Christmas))),
+    ("season-mark-warm-easter", |_| shared().set_state(demo::season_scene(NoticeStyle::Warm, Season::Easter))),
+    ("season-mark-greige-advent", |_| shared().set_state(demo::season_scene(NoticeStyle::Greige, Season::Advent))),
+    ("season-mark-pill-advent", |_| shared().set_state(demo::season_scene(NoticeStyle::Pill, Season::Advent))),
+    ("season-mark-split-advent", |_| shared().set_state(demo::season_scene(NoticeStyle::Split, Season::Advent))),
+    ("season-mark-simple-advent", |_| shared().set_state(demo::season_scene(NoticeStyle::Simple, Season::Advent))),
+    ("season-mark-diagonal-advent", |_| shared().set_state(demo::season_scene(NoticeStyle::Diagonal, Season::Advent))),
+    ("season-mark-glass-advent", |_| shared().set_state(demo::season_scene(NoticeStyle::Glass, Season::Advent))),
+    ("season-mark-block-advent", |_| shared().set_state(demo::season_scene(NoticeStyle::Block, Season::Advent))),
+    ("season-mark-glow-advent", |_| shared().set_state(demo::season_scene(NoticeStyle::Glow, Season::Advent))),
+    ("season-mark-magazine-advent", |_| shared().set_state(demo::season_scene(NoticeStyle::Magazine, Season::Advent))),
+    ("season-mark-figures-advent", |_| shared().set_state(demo::season_scene(NoticeStyle::Figures, Season::Advent))),
     // The announcement slides in three styles, for the owner to choose from.
     ("notice-hairline-schedule", |_| shared().set_state(demo::notice_scene(NoticeStyle::Hairline, NoticeKind::Schedule))),
     ("notice-hairline-birthdays", |_| shared().set_state(demo::notice_scene(NoticeStyle::Hairline, NoticeKind::Birthdays))),

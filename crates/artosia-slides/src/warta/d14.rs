@@ -33,7 +33,8 @@ fn page(sl: &mut Sheet, d: &Data, tag: Option<&str>) -> f32 {
         let (x0, y0, x1, y1) = ((cx - r).max(0.0), (cy - r).max(0.0), (cx + r).min(W), (cy + r).min(H));
         sl.push(R::new(x0, y0, x1 - x0, y1 - y0).fill(&format!("grad:{name}")));
     }
-    sl.text("kicker", &d.church_kicker(""), Tx::l(mx, ky).cy().maxw(x2 - mx));
+    let left = sl.text("kicker", &d.church_kicker(""), Tx::l(mx, ky).cy().maxw(x2 - mx - sl.mark_reserve()));
+    sl.mark_after(left.x + left.w);
     let mut room = x2 - mx;
     if let Some(tag) = tag.filter(|tag| !tag.is_empty()) {
         let (pad, h, cy) = (sl.g("pill_pad"), sl.g("pill_h"), sl.g("pill_cy"));

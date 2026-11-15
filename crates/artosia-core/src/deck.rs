@@ -202,6 +202,13 @@ pub struct Slide {
     /// The colourway of its style its card chose; empty is the style's first.
     #[serde(default)]
     pub colourway: String,
+    /// The season the church year puts the card in today, set while the church follows the year; None
+    /// takes the season tag of the card's colourway.
+    #[serde(default)]
+    pub season: Option<crate::church_year::Season>,
+    /// The day the card is shown, which picks the candles of Advent's mark.
+    #[serde(default)]
+    pub today: Option<Date>,
     /// The title colour its card chose; None takes the style's own.
     #[serde(default)]
     pub title_colour: Option<[u8; 3]>,

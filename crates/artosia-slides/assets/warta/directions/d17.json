@@ -6,9 +6,12 @@
 {"id":"cemara","palette":{"ground":"#1E3A2E","card":"#284A3B","ink":"#F4EBD9","mute":"#C9D8C6","accent":"#E1BC6C","on_accent":"#1E3A2E","plate":"#F4EBD9","on_plate":"#1E3A2E","line":"#5B7F6C"}},
 {"id":"gading","palette":{"ground":"#F2E8D6","card":"#FBF5EA","ink":"#3A281F","mute":"#6E5A4B","accent":"#9A4A22","on_accent":"#FBF5EA","plate":"#3A281F","on_plate":"#F2E8D6","line":"#CDBBA0"}},
 {"id":"api","season":"pentecost","palette":{"ground":"#3E1A16","card":"#4F2420","ink":"#F8E9DD","mute":"#DDBBAE","accent":"#F0A878","on_accent":"#3E1A16","plate":"#F8E9DD","on_plate":"#3E1A16","line":"#82504A"}},
-{"id":"paskah","season":"easter","palette":{"ground":"#F7EBC9","card":"#FCF5E0","ink":"#33280C","mute":"#6A5A30","accent":"#855600","on_accent":"#FCF5E0","plate":"#33280C","on_plate":"#F7EBC9","line":"#D8C791"}}
+{"id":"paskah","season":"easter","palette":{"ground":"#F7EBC9","card":"#FCF5E0","ink":"#33280C","mute":"#6A5A30","accent":"#855600","on_accent":"#FCF5E0","plate":"#33280C","on_plate":"#F7EBC9","line":"#D8C791"}},
+{"id":"natal","season":"christmas","palette":{"ground":"#04271C","card":"#0F3629","ink":"#F8EFE2","mute":"#A9CEBE","accent":"#EAC673","on_accent":"#04271C","plate":"#F8EFE2","on_plate":"#04271C","line":"#224C3D"}},
+{"id":"prapaskah","season":"lent","palette":{"ground":"#EEE8E7","card":"#F9F6F6","ink":"#22141D","mute":"#624A59","accent":"#763058","on_accent":"#EEE8E7","plate":"#240F0F","on_plate":"#EEE8E7","line":"#D9CECD"}}
 ],
 "swatch": ["ground","accent"],
+"mark": {"size":48,"role":"accent","cy":80,"gap":24,"reserve":72},
 "pairs": [["ink","ground","text"],["mute","ground","text"],["accent","ground","text"],["ink","card","text"],["mute","card","text"],["accent","card","text"],["on_accent","accent","text"],["on_plate","plate","text"],["on_plate","plate","large"],["ink","ground","large"],["accent","card","mark"],["plate","card","mark"]],
 "language": "One warm hue in tone-on-tone steps: soft rounded cards on the ground, a cream plate over the foot of the offering card and faint arches rising behind the header",
 "fonts": {"f4":{"family":"Fraunces","weight":400,"italic":false,"file":"Fraunces-400.ttf"},"f6":{"family":"Fraunces","weight":600,"italic":false,"file":"Fraunces-600.ttf"},"f4i":{"family":"Fraunces","weight":400,"italic":true,"file":"Fraunces-400i.ttf"},"g6":{"family":"Instrument Sans","weight":600,"italic":false,"file":"InstrumentSans-600.ttf"}},

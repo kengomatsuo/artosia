@@ -47,7 +47,8 @@ fn chrome(sl: &mut Sheet, d: &Data, x2: f32, bottom_left: Option<&str>) {
     sl.push(R::new(0.0, 0.0, super::W, super::H).fill("ground"));
     let left = sl.text("kicker", &d.w.warta, Tx::l(mx, top).cy());
     // A church name too long to sit beside the warta line is left out.
-    if !d.church.is_empty() && sl.measure("kicker", &d.church, None, None) <= x2 - mx - left.w - 48.0 {
+    sl.mark_after(left.x + left.w);
+    if !d.church.is_empty() && sl.measure("kicker", &d.church, None, None) <= x2 - mx - left.w - 48.0 - sl.mark_reserve() {
         sl.text("kicker", &d.church, Tx::r(x2, top).cy());
     }
     double_rule(sl, mx, sl.g("rule_y"), x2 - mx);

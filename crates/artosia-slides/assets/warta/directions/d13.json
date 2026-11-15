@@ -46,8 +46,13 @@
 }
 },
 {"id":"merah","season":"pentecost","name":"Merah","palette":{"signal":"#FF4136","deep":"#140A0A","field2":"#0B2A6B","white":"#FFFFFF","mute":"#D2C4C4"}},
-{"id":"tosca","name":"Tosca","palette":{"signal":"#2EF2D0","deep":"#0A1414","field2":"#B8400C","white":"#FFFFFF","mute":"#C2D0CE"}}
+{"id":"tosca","name":"Tosca","palette":{"signal":"#2EF2D0","deep":"#0A1414","field2":"#B8400C","white":"#FFFFFF","mute":"#C2D0CE"}},
+{"id":"adven","season":"advent","palette":{"signal":"#BE91F8","deep":"#15091E","field2":"#450F79","white":"#FFFFFF","mute":"#CBC4D1"}},
+{"id":"natal","season":"christmas","palette":{"signal":"#40D872","deep":"#00140D","field2":"#6C0816","white":"#FFFFFF","mute":"#BCCCC5"}},
+{"id":"prapaskah","season":"lent","palette":{"signal":"#E4A0BF","deep":"#170B13","field2":"#54183E","white":"#FFFFFF","mute":"#D1C3CB"}},
+{"id":"paskah","season":"easter","palette":{"signal":"#F6D653","deep":"#150F00","field2":"#653E01","white":"#FFFFFF","mute":"#CCC7B9"}}
 ],
+"mark": {"size":48,"role":"deep","cy":56,"gap":24,"reserve":72},
 "swatch": [
 "deep",
 "signal"

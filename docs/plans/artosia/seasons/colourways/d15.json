@@ -1,0 +1,4 @@
+[{"id":"adven","season":"advent","palette":{"ground":"#291736","ink":"#F8EFE2","mute":"#CDBDDB","rule":"#52495A","accent":"#F0C374","inv_bg":"#F8EFE2","inv_fg":"#291736","card":"#FFFFFF"}},
+{"id":"prapaskah","season":"lent","palette":{"ground":"#EEE8E7","ink":"#22141D","mute":"#624A59","rule":"#B79E9D","accent":"#763058","inv_bg":"#22141D","inv_fg":"#EEE8E7","card":"#FFFFFF"}},
+{"id":"paskah","season":"easter","palette":{"ground":"#F2EACC","ink":"#1D190A","mute":"#595339","rule":"#AAA590","accent":"#684500","inv_bg":"#1D190A","inv_fg":"#F2EACC","card":"#FFFFFF"}},
+{"id":"bara","season":"pentecost","palette":{"ground":"#38130F","ink":"#F8EFE2","mute":"#E0BAB4","rule":"#5D4744","accent":"#FFB98A","inv_bg":"#F8EFE2","inv_fg":"#38130F","card":"#FFFFFF"}}]

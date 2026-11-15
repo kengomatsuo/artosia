@@ -1,0 +1,4 @@
+[{"id":"adven","season":"advent","palette":{"signal":"#BE91F8","deep":"#15091E","field2":"#450F79","white":"#FFFFFF","mute":"#CBC4D1"}},
+{"id":"natal","season":"christmas","palette":{"signal":"#40D872","deep":"#00140D","field2":"#6C0816","white":"#FFFFFF","mute":"#BCCCC5"}},
+{"id":"prapaskah","season":"lent","palette":{"signal":"#E4A0BF","deep":"#170B13","field2":"#54183E","white":"#FFFFFF","mute":"#D1C3CB"}},
+{"id":"paskah","season":"easter","palette":{"signal":"#F6D653","deep":"#150F00","field2":"#653E01","white":"#FFFFFF","mute":"#CCC7B9"}}]

@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+<rect x="0.0" y="0.0" width="1920.0" height="1080.0" fill="#E6D5A1"/>
+<rect x="30.0" y="30.0" width="1860.0" height="1020.0" fill="#F5EDCF" stroke="#735103" stroke-width="3"/>
+<rect x="42.0" y="42.0" width="1836.0" height="996.0" fill="none" stroke="#735103" stroke-width="1.5" opacity="0.6"/>
+<rect x="34.0" y="34.0" width="16.0" height="16.0" fill="#735103" transform="rotate(45 42.0 42.0)"/>
+<rect x="34.0" y="1030.0" width="16.0" height="16.0" fill="#735103" transform="rotate(45 42.0 1038.0)"/>
+<rect x="1870.0" y="34.0" width="16.0" height="16.0" fill="#735103" transform="rotate(45 1878.0 42.0)"/>
+<rect x="1870.0" y="1030.0" width="16.0" height="16.0" fill="#735103" transform="rotate(45 1878.0 1038.0)"/>
+<rect x="420.0" y="91.0" width="500.0" height="2.0" fill="#735103" opacity="0.4"/>
+<rect x="1000.0" y="91.0" width="500.0" height="2.0" fill="#735103" opacity="0.4"/>
+<rect x="957.0" y="67.0" width="6.0" height="50.0" fill="#735103"/>
+<rect x="945.0" y="81.0" width="30.0" height="6.0" fill="#735103"/>
+<text x="960.0" y="161.2" font-family="Cinzel" font-weight="600" font-size="32" letter-spacing="6.4" text-anchor="middle" fill="#735103">WARTA JEMAAT . GEREJA BETHEL KASIH NUSANTARA</text>
+<text x="960.0" y="258.8" font-family="Cinzel" font-weight="700" font-size="88" letter-spacing="8.8" text-anchor="middle" fill="#231903">JADWAL PEKAN INI</text>
+<text x="960.0" y="319.4" font-family="Source Serif 4 Text" font-weight="400" font-size="40" letter-spacing="0.8" text-anchor="middle" fill="#5F5132">15 sampai 21 November 2026</text>
+<rect x="96.0" y="386.0" width="120.0" height="20.0" rx="10.0" fill="#735103" opacity="0.9"/>
+<text x="330.0" y="414.08" font-family="Source Serif 4 Text" font-weight="600" font-size="48" text-anchor="start" fill="#735103">07.00</text>
+<rect x="520.0" y="386.0" width="460.0" height="22.0" rx="11.0" fill="#231903" opacity="0.55"/>
+<rect x="96.0" y="460.0" width="120.0" height="20.0" rx="10.0" fill="#735103" opacity="0.9"/>
+<text x="330.0" y="488.08" font-family="Source Serif 4 Text" font-weight="600" font-size="48" text-anchor="start" fill="#735103">09.30</text>
+<rect x="520.0" y="460.0" width="580.0" height="22.0" rx="11.0" fill="#231903" opacity="0.55"/>
+<rect x="96.0" y="534.0" width="120.0" height="20.0" rx="10.0" fill="#735103" opacity="0.9"/>
+<text x="330.0" y="562.08" font-family="Source Serif 4 Text" font-weight="600" font-size="48" text-anchor="start" fill="#735103">18.30</text>
+<rect x="520.0" y="534.0" width="520.0" height="22.0" rx="11.0" fill="#231903" opacity="0.55"/>
+<rect x="96.0" y="608.0" width="120.0" height="20.0" rx="10.0" fill="#735103" opacity="0.9"/>
+<text x="330.0" y="636.08" font-family="Source Serif 4 Text" font-weight="600" font-size="48" text-anchor="start" fill="#735103">19.00</text>
+<rect x="520.0" y="608.0" width="400.0" height="22.0" rx="11.0" fill="#231903" opacity="0.55"/>
+<rect x="96.0" y="682.0" width="120.0" height="20.0" rx="10.0" fill="#735103" opacity="0.9"/>
+<text x="330.0" y="710.08" font-family="Source Serif 4 Text" font-weight="600" font-size="48" text-anchor="start" fill="#735103">17.30</text>
+<rect x="520.0" y="682.0" width="620.0" height="22.0" rx="11.0" fill="#231903" opacity="0.55"/>
+<rect x="72.0" y="734.0" width="1776.0" height="66.0" rx="6.0" fill="#231903"/>
+<rect x="96.0" y="756.0" width="120.0" height="20.0" rx="10.0" fill="#735103" opacity="0.9"/>
+<text x="330.0" y="784.08" font-family="Source Serif 4 Text" font-weight="600" font-size="48" text-anchor="start" fill="#F9F2DC">19.00</text>
+<rect x="520.0" y="756.0" width="550.0" height="22.0" rx="11.0" fill="#F9F2DC" opacity="0.6"/>
+<rect x="96.0" y="830.0" width="120.0" height="20.0" rx="10.0" fill="#735103" opacity="0.9"/>
+<text x="330.0" y="858.08" font-family="Source Serif 4 Text" font-weight="600" font-size="48" text-anchor="start" fill="#735103">09.00</text>
+<rect x="520.0" y="830.0" width="480.0" height="22.0" rx="11.0" fill="#231903" opacity="0.55"/>
+<rect x="96.0" y="904.0" width="120.0" height="20.0" rx="10.0" fill="#735103" opacity="0.9"/>
+<text x="330.0" y="932.08" font-family="Source Serif 4 Text" font-weight="600" font-size="48" text-anchor="start" fill="#735103">16.00</text>
+<rect x="520.0" y="904.0" width="570.0" height="22.0" rx="11.0" fill="#231903" opacity="0.55"/>
+<svg x="1688.0" y="40.0" width="160" height="160" viewBox="0 0 24 24"><g fill="none" stroke="#735103" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 20.5H21.5"/><path d="M8.5 20.5V16C8.5 12.6 11 10.8 14 10.8C17 10.8 19.5 12.6 19.5 16V20.5"/><path d="M12 20.5V17.6A2 2 0 0 1 16 17.6V20.5"/><circle cx="5.1" cy="16.9" r="3"/><path d="M11.4 10.8A2.6 2.6 0 0 1 16.6 10.8Z" fill="#735103" stroke="none"/><path d="M10.03 8.69L8.17 7.7"/><path d="M11.68 6.94L10.6 5.14"/><path d="M14 6.3L14 4.2"/><path d="M16.32 6.94L17.4 5.14"/><path d="M17.97 8.69L19.83 7.7"/></g></svg>
+</svg>

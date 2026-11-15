@@ -1,0 +1,4 @@
+[{"id":"natal","season":"christmas","palette":{"paper":"#04271C","card":"#0F3629","ink":"#F8EFE2","mute":"#A9CEBE","accent":"#EAC673","tint":"#0A3D25","sage":"#C2982A"}},
+{"id":"prapaskah","season":"lent","palette":{"paper":"#EEE8E7","card":"#F9F6F6","ink":"#22141D","mute":"#624A59","accent":"#763058","tint":"#F1D5E2","sage":"#9C4246"}},
+{"id":"paskah","season":"easter","palette":{"paper":"#F2EACC","card":"#FBF7E8","ink":"#1D190A","mute":"#595339","accent":"#684500","tint":"#FBD8A6","sage":"#7A6001"}},
+{"id":"merah","season":"pentecost","palette":{"paper":"#F7E5E2","card":"#FDF4F3","ink":"#251412","mute":"#674A45","accent":"#94020D","tint":"#F8D5D0","sage":"#994920"}}]

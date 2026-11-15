@@ -1,0 +1,4 @@
+[{"id":"adven","season":"advent","palette":{"ground":"#EDE6F3","panel":"#FFFFFF","ink":"#1D1623","mute":"#594D63","brand":"#603288","brand_dk":"#40195E","on_brand":"#FFFFFF","sky":"#CAB1E7","tint":"#E4D8F4","line":"#D6CCDF"}},
+{"id":"natal","season":"christmas","palette":{"ground":"#E6ECDD","panel":"#FFFFFF","ink":"#161C0D","mute":"#4D573E","brand":"#165B38","brand_dk":"#013B20","on_brand":"#FFFFFF","sky":"#93CEA8","tint":"#C7E7D2","line":"#CCD5BE"}},
+{"id":"prapaskah","season":"lent","palette":{"ground":"#EEE8E7","panel":"#FFFFFF","ink":"#22141D","mute":"#624A59","brand":"#763058","brand_dk":"#501838","on_brand":"#FFFFFF","sky":"#E5A9C7","tint":"#F1D5E2","line":"#D9CECD"}},
+{"id":"paskah","season":"easter","palette":{"ground":"#F2EACC","panel":"#FFFFFF","ink":"#1D190A","mute":"#595339","brand":"#684500","brand_dk":"#432B00","on_brand":"#FFFFFF","sky":"#DCB783","tint":"#FBD8A6","line":"#DCD1A8"}}]

@@ -36,11 +36,18 @@ fn rule(sl: &mut Sheet, x: f32, y: f32, w: f32) {
     sl.push(R::new(x, y, w, sl.g("rule_w")).fill("ink").op(sl.g("rule_op")));
 }
 
+/// The kicker at the top left, and the season's sign at the right end of its line.
+fn kicker(sl: &mut Sheet, words: &str) {
+    let (mx, x2) = (sl.g("mx"), W - sl.g("mx"));
+    sl.text("kicker", words, Tx::l(mx, sl.g("kicker_cy")).cy().maxw(x2 - mx - sl.mark_reserve()));
+    sl.mark_here(x2 - sl.mk("size") / 2.0, sl.mk("cy"));
+}
+
 /// The ground, the kicker, the title with what follows it, and the chip at the top right.
 fn page(sl: &mut Sheet, d: &Data, title: &str, sub: Option<&str>, tag: Option<&str>) {
     let (mx, x2) = (sl.g("mx"), W - sl.g("mx"));
     sl.push(R::new(0.0, 0.0, W, H).fill("ground"));
-    sl.text("kicker", &d.church_kicker(""), Tx::l(mx, sl.g("kicker_cy")).cy().maxw(x2 - mx));
+    kicker(sl, &d.church_kicker(""));
     let (gap, base) = (sl.g("sub_gap"), sl.g("title_base"));
     let tag_w = tag.map_or(0.0, |tag| sl.measure("tag", tag, None, None) + 2.0 * sl.g("tag_pad"));
     let room = x2 - mx - if tag.is_some() { tag_w + 30.0 } else { 0.0 };
@@ -315,7 +322,7 @@ fn s05(sl: &mut Sheet, d: &Data, have: Have) -> Fits {
     let (mx, x2, top) = (sl.g("mx"), W - sl.g("mx"), sl.g("body_top"));
     let k = sl.sec("s05");
     sl.push(R::new(0.0, 0.0, W, H).fill("ground"));
-    sl.text("kicker", &d.kicker(d.date_long.as_deref().unwrap_or("")), Tx::l(mx, sl.g("kicker_cy")).cy().maxw(x2 - mx));
+    kicker(sl, &d.kicker(d.date_long.as_deref().unwrap_or("")));
     let text_w = if have.photo { k("w_pic") } else { k("w") };
     let cell_w = text_w + 140.0;
     block(sl, mx, cell_w, sl.g("body_bot") - top);
@@ -340,7 +347,7 @@ fn s06(sl: &mut Sheet, d: &Data, have: Have) -> Fits {
     let (mx, x2, top, bottom) = (sl.g("mx"), W - sl.g("mx"), sl.g("head_y"), sl.g("body_bot"));
     let k = sl.sec("s06");
     sl.push(R::new(0.0, 0.0, W, H).fill("ground"));
-    sl.text("kicker", &d.kicker(d.date_long.as_deref().unwrap_or("")), Tx::l(mx, sl.g("kicker_cy")).cy().maxw(x2 - mx));
+    kicker(sl, &d.kicker(d.date_long.as_deref().unwrap_or("")));
     let wide = if have.photo { k("w_pic") } else { k("w") };
     let face = sl.face_of("n_title");
     let ls = sl.ty("n_title").ls;

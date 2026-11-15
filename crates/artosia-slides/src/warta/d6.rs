@@ -28,7 +28,8 @@ fn page(sl: &mut Sheet, d: &Data, right: &str) {
     if !right.is_empty() {
         taken = sl.text("kicker", right, Tx::r(x2, ky).maxw((x2 - mx) / 2.0)).w + 40.0;
     }
-    sl.text("kicker", &d.w.warta, Tx::l(mx, ky).maxw(x2 - mx - taken));
+    let left = sl.text("kicker", &d.w.warta, Tx::l(mx, ky).maxw(x2 - mx - taken - sl.mark_reserve()));
+    sl.mark_after(left.x + left.w);
     sl.push(R::new(mx, ry, x2 - mx, rw).fill("ink"));
 }
 

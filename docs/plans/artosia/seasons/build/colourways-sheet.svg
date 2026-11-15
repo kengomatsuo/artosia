@@ -1,0 +1,971 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2440" height="1762" viewBox="0 0 2440 1762">
+
+<rect x="0.0" y="0.0" width="2440.0" height="1762.0" fill="#EDEDED"/>
+<text x="96.0" y="44.0" font-family="Instrument Sans" font-weight="600" font-size="28" text-anchor="start" fill="#1D1A15">Advent</text>
+<text x="566.0" y="44.0" font-family="Instrument Sans" font-weight="600" font-size="28" text-anchor="start" fill="#1D1A15">Christmas</text>
+<text x="1036.0" y="44.0" font-family="Instrument Sans" font-weight="600" font-size="28" text-anchor="start" fill="#1D1A15">Lent</text>
+<text x="1506.0" y="44.0" font-family="Instrument Sans" font-weight="600" font-size="28" text-anchor="start" fill="#1D1A15">Easter</text>
+<text x="1976.0" y="44.0" font-family="Instrument Sans" font-weight="600" font-size="28" text-anchor="start" fill="#1D1A15">Pentecost</text>
+<text x="6.0" y="110.0" font-family="Instrument Sans" font-weight="600" font-size="26" text-anchor="start" fill="#1D1A15">d1</text>
+<text x="6.0" y="140.0" font-family="Instrument Sans" font-weight="500" font-size="18" text-anchor="start" fill="#5A564E">Editorial </text>
+<rect x="90.0" y="70.0" width="460.0" height="86.0" fill="#E6E0E8" stroke="#000000" stroke-width="4"/>
+<rect x="100.0" y="80.0" width="58.86" height="44.0" fill="#E6E0E8"/>
+<rect x="162.86" y="80.0" width="58.86" height="44.0" fill="#F3EFF5"/>
+<rect x="225.71" y="80.0" width="58.86" height="44.0" fill="#1B1620"/>
+<rect x="288.57" y="80.0" width="58.86" height="44.0" fill="#554C5E"/>
+<rect x="351.43" y="80.0" width="58.86" height="44.0" fill="#5B2D7A"/>
+<rect x="414.29" y="80.0" width="58.86" height="44.0" fill="#DCCBE6"/>
+<rect x="477.14" y="80.0" width="58.86" height="44.0" fill="#6B7058"/>
+<text x="100.0" y="148.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#1D1A15">adven . existing</text>
+<rect x="560.0" y="70.0" width="460.0" height="86.0" fill="#04271C"/>
+<rect x="570.0" y="80.0" width="58.86" height="44.0" fill="#04271C"/>
+<rect x="632.86" y="80.0" width="58.86" height="44.0" fill="#0F3629"/>
+<rect x="695.71" y="80.0" width="58.86" height="44.0" fill="#F8EFE2"/>
+<rect x="758.57" y="80.0" width="58.86" height="44.0" fill="#A9CEBE"/>
+<rect x="821.43" y="80.0" width="58.86" height="44.0" fill="#EAC673"/>
+<rect x="884.29" y="80.0" width="58.86" height="44.0" fill="#0A3D25"/>
+<rect x="947.14" y="80.0" width="58.86" height="44.0" fill="#C2982A"/>
+<text x="570.0" y="148.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#FFFFFF">natal . new</text>
+<rect x="1030.0" y="70.0" width="460.0" height="86.0" fill="#EEE8E7"/>
+<rect x="1040.0" y="80.0" width="58.86" height="44.0" fill="#EEE8E7"/>
+<rect x="1102.86" y="80.0" width="58.86" height="44.0" fill="#F9F6F6"/>
+<rect x="1165.71" y="80.0" width="58.86" height="44.0" fill="#22141D"/>
+<rect x="1228.57" y="80.0" width="58.86" height="44.0" fill="#624A59"/>
+<rect x="1291.43" y="80.0" width="58.86" height="44.0" fill="#763058"/>
+<rect x="1354.29" y="80.0" width="58.86" height="44.0" fill="#F1D5E2"/>
+<rect x="1417.14" y="80.0" width="58.86" height="44.0" fill="#9C4246"/>
+<text x="1040.0" y="148.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#1D1A15">prapaskah . new</text>
+<rect x="1500.0" y="70.0" width="460.0" height="86.0" fill="#F2EACC"/>
+<rect x="1510.0" y="80.0" width="58.86" height="44.0" fill="#F2EACC"/>
+<rect x="1572.86" y="80.0" width="58.86" height="44.0" fill="#FBF7E8"/>
+<rect x="1635.71" y="80.0" width="58.86" height="44.0" fill="#1D190A"/>
+<rect x="1698.57" y="80.0" width="58.86" height="44.0" fill="#595339"/>
+<rect x="1761.43" y="80.0" width="58.86" height="44.0" fill="#684500"/>
+<rect x="1824.29" y="80.0" width="58.86" height="44.0" fill="#FBD8A6"/>
+<rect x="1887.14" y="80.0" width="58.86" height="44.0" fill="#7A6001"/>
+<text x="1510.0" y="148.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#1D1A15">paskah . new</text>
+<rect x="1970.0" y="70.0" width="460.0" height="86.0" fill="#F7E5E2"/>
+<rect x="1980.0" y="80.0" width="58.86" height="44.0" fill="#F7E5E2"/>
+<rect x="2042.86" y="80.0" width="58.86" height="44.0" fill="#FDF4F3"/>
+<rect x="2105.71" y="80.0" width="58.86" height="44.0" fill="#251412"/>
+<rect x="2168.57" y="80.0" width="58.86" height="44.0" fill="#674A45"/>
+<rect x="2231.43" y="80.0" width="58.86" height="44.0" fill="#94020D"/>
+<rect x="2294.29" y="80.0" width="58.86" height="44.0" fill="#F8D5D0"/>
+<rect x="2357.14" y="80.0" width="58.86" height="44.0" fill="#994920"/>
+<text x="1980.0" y="148.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#1D1A15">merah . new</text>
+<text x="6.0" y="206.0" font-family="Instrument Sans" font-weight="600" font-size="26" text-anchor="start" fill="#1D1A15">d2</text>
+<text x="6.0" y="236.0" font-family="Instrument Sans" font-weight="500" font-size="18" text-anchor="start" fill="#5A564E">Pill poste</text>
+<rect x="90.0" y="166.0" width="460.0" height="86.0" fill="#D9D0E6" stroke="#000000" stroke-width="4"/>
+<rect x="100.0" y="176.0" width="44.89" height="44.0" fill="#D9D0E6"/>
+<rect x="148.89" y="176.0" width="44.89" height="44.0" fill="#1E1230"/>
+<rect x="197.78" y="176.0" width="44.89" height="44.0" fill="#F7F3FC"/>
+<rect x="246.67" y="176.0" width="44.89" height="44.0" fill="#FFD23C"/>
+<rect x="295.56" y="176.0" width="44.89" height="44.0" fill="#FF8A5C"/>
+<rect x="344.44" y="176.0" width="44.89" height="44.0" fill="#7A2AA8"/>
+<rect x="393.33" y="176.0" width="44.89" height="44.0" fill="#1E1230"/>
+<rect x="442.22" y="176.0" width="44.89" height="44.0" fill="#4A4262"/>
+<rect x="491.11" y="176.0" width="44.89" height="44.0" fill="#FFFFFF"/>
+<text x="100.0" y="244.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#1D1A15">adven . existing</text>
+<rect x="560.0" y="166.0" width="460.0" height="86.0" fill="#E6ECDD"/>
+<rect x="570.0" y="176.0" width="44.89" height="44.0" fill="#E6ECDD"/>
+<rect x="618.89" y="176.0" width="44.89" height="44.0" fill="#121906"/>
+<rect x="667.78" y="176.0" width="44.89" height="44.0" fill="#F5F8F0"/>
+<rect x="716.67" y="176.0" width="44.89" height="44.0" fill="#FFD23C"/>
+<rect x="765.56" y="176.0" width="44.89" height="44.0" fill="#FF8A83"/>
+<rect x="814.44" y="176.0" width="44.89" height="44.0" fill="#165B38"/>
+<rect x="863.33" y="176.0" width="44.89" height="44.0" fill="#121906"/>
+<rect x="912.22" y="176.0" width="44.89" height="44.0" fill="#4D573E"/>
+<rect x="961.11" y="176.0" width="44.89" height="44.0" fill="#FFFFFF"/>
+<text x="570.0" y="244.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#1D1A15">natal . retag mint</text>
+<rect x="1030.0" y="166.0" width="460.0" height="86.0" fill="#EEE8E7"/>
+<rect x="1040.0" y="176.0" width="44.89" height="44.0" fill="#EEE8E7"/>
+<rect x="1088.89" y="176.0" width="44.89" height="44.0" fill="#240F0F"/>
+<rect x="1137.78" y="176.0" width="44.89" height="44.0" fill="#F9F6F6"/>
+<rect x="1186.67" y="176.0" width="44.89" height="44.0" fill="#FFD23C"/>
+<rect x="1235.56" y="176.0" width="44.89" height="44.0" fill="#EA998B"/>
+<rect x="1284.44" y="176.0" width="44.89" height="44.0" fill="#763058"/>
+<rect x="1333.33" y="176.0" width="44.89" height="44.0" fill="#240F0F"/>
+<rect x="1382.22" y="176.0" width="44.89" height="44.0" fill="#624A59"/>
+<rect x="1431.11" y="176.0" width="44.89" height="44.0" fill="#FFFFFF"/>
+<text x="1040.0" y="244.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#1D1A15">prapaskah . new</text>
+<rect x="1500.0" y="166.0" width="460.0" height="86.0" fill="#F2EACC"/>
+<rect x="1510.0" y="176.0" width="44.89" height="44.0" fill="#F2EACC"/>
+<rect x="1558.89" y="176.0" width="44.89" height="44.0" fill="#1D1503"/>
+<rect x="1607.78" y="176.0" width="44.89" height="44.0" fill="#FBF7E8"/>
+<rect x="1656.67" y="176.0" width="44.89" height="44.0" fill="#FFD23C"/>
+<rect x="1705.56" y="176.0" width="44.89" height="44.0" fill="#F4993C"/>
+<rect x="1754.44" y="176.0" width="44.89" height="44.0" fill="#684500"/>
+<rect x="1803.33" y="176.0" width="44.89" height="44.0" fill="#1D1503"/>
+<rect x="1852.22" y="176.0" width="44.89" height="44.0" fill="#595339"/>
+<rect x="1901.11" y="176.0" width="44.89" height="44.0" fill="#FFFFFF"/>
+<text x="1510.0" y="244.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#1D1A15">paskah . new</text>
+<rect x="1970.0" y="166.0" width="460.0" height="86.0" fill="#E9B9AA" stroke="#000000" stroke-width="4"/>
+<rect x="1980.0" y="176.0" width="44.89" height="44.0" fill="#E9B9AA"/>
+<rect x="2028.89" y="176.0" width="44.89" height="44.0" fill="#2E0C0A"/>
+<rect x="2077.78" y="176.0" width="44.89" height="44.0" fill="#FFF3EE"/>
+<rect x="2126.67" y="176.0" width="44.89" height="44.0" fill="#FFD23C"/>
+<rect x="2175.56" y="176.0" width="44.89" height="44.0" fill="#FF5A1F"/>
+<rect x="2224.44" y="176.0" width="44.89" height="44.0" fill="#A32010"/>
+<rect x="2273.33" y="176.0" width="44.89" height="44.0" fill="#2A0C0A"/>
+<rect x="2322.22" y="176.0" width="44.89" height="44.0" fill="#5A2A22"/>
+<rect x="2371.11" y="176.0" width="44.89" height="44.0" fill="#FFFFFF"/>
+<text x="1980.0" y="244.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#1D1A15">api . existing</text>
+<text x="6.0" y="302.0" font-family="Instrument Sans" font-weight="600" font-size="26" text-anchor="start" fill="#1D1A15">d3</text>
+<text x="6.0" y="332.0" font-family="Instrument Sans" font-weight="500" font-size="18" text-anchor="start" fill="#5A564E">Neon night</text>
+<rect x="90.0" y="262.0" width="460.0" height="86.0" fill="#291736"/>
+<rect x="100.0" y="272.0" width="36.0" height="44.0" fill="#291736"/>
+<rect x="140.0" y="272.0" width="36.0" height="44.0" fill="#15091E"/>
+<rect x="180.0" y="272.0" width="36.0" height="44.0" fill="#F8EFE2"/>
+<rect x="220.0" y="272.0" width="36.0" height="44.0" fill="#CDBDDB"/>
+<rect x="260.0" y="272.0" width="36.0" height="44.0" fill="#FF5CC0"/>
+<rect x="300.0" y="272.0" width="36.0" height="44.0" fill="#FFD84A"/>
+<rect x="340.0" y="272.0" width="36.0" height="44.0" fill="#6FE8FF"/>
+<rect x="380.0" y="272.0" width="36.0" height="44.0" fill="#B596FF"/>
+<rect x="420.0" y="272.0" width="36.0" height="44.0" fill="#15091E"/>
+<rect x="460.0" y="272.0" width="36.0" height="44.0" fill="#58307F"/>
+<rect x="500.0" y="272.0" width="36.0" height="44.0" fill="#FFFFFF"/>
+<text x="100.0" y="340.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#FFFFFF">adven . new</text>
+<rect x="560.0" y="262.0" width="460.0" height="86.0" fill="#04271C"/>
+<rect x="570.0" y="272.0" width="36.0" height="44.0" fill="#04271C"/>
+<rect x="610.0" y="272.0" width="36.0" height="44.0" fill="#00140D"/>
+<rect x="650.0" y="272.0" width="36.0" height="44.0" fill="#F8EFE2"/>
+<rect x="690.0" y="272.0" width="36.0" height="44.0" fill="#A9CEBE"/>
+<rect x="730.0" y="272.0" width="36.0" height="44.0" fill="#FF5C73"/>
+<rect x="770.0" y="272.0" width="36.0" height="44.0" fill="#FFD65C"/>
+<rect x="810.0" y="272.0" width="36.0" height="44.0" fill="#4DF2A6"/>
+<rect x="850.0" y="272.0" width="36.0" height="44.0" fill="#8CD9FF"/>
+<rect x="890.0" y="272.0" width="36.0" height="44.0" fill="#00140D"/>
+<rect x="930.0" y="272.0" width="36.0" height="44.0" fill="#035634"/>
+<rect x="970.0" y="272.0" width="36.0" height="44.0" fill="#FFFFFF"/>
+<text x="570.0" y="340.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#FFFFFF">natal . new</text>
+<rect x="1030.0" y="262.0" width="460.0" height="86.0" fill="#2C1A26"/>
+<rect x="1040.0" y="272.0" width="36.0" height="44.0" fill="#2C1A26"/>
+<rect x="1080.0" y="272.0" width="36.0" height="44.0" fill="#170B13"/>
+<rect x="1120.0" y="272.0" width="36.0" height="44.0" fill="#F8EFE2"/>
+<rect x="1160.0" y="272.0" width="36.0" height="44.0" fill="#D9B9CD"/>
+<rect x="1200.0" y="272.0" width="36.0" height="44.0" fill="#FF8FB8"/>
+<rect x="1240.0" y="272.0" width="36.0" height="44.0" fill="#F2D27A"/>
+<rect x="1280.0" y="272.0" width="36.0" height="44.0" fill="#8FD9D0"/>
+<rect x="1320.0" y="272.0" width="36.0" height="44.0" fill="#C7A6FF"/>
+<rect x="1360.0" y="272.0" width="36.0" height="44.0" fill="#170B13"/>
+<rect x="1400.0" y="272.0" width="36.0" height="44.0" fill="#752257"/>
+<rect x="1440.0" y="272.0" width="36.0" height="44.0" fill="#FFFFFF"/>
+<text x="1040.0" y="340.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#FFFFFF">prapaskah . new</text>
+<rect x="1500.0" y="262.0" width="460.0" height="86.0" fill="#2B2308" stroke="#000000" stroke-width="4"/>
+<rect x="1510.0" y="272.0" width="36.0" height="44.0" fill="#2B2308"/>
+<rect x="1550.0" y="272.0" width="36.0" height="44.0" fill="#140F02"/>
+<rect x="1590.0" y="272.0" width="36.0" height="44.0" fill="#FFF8E0"/>
+<rect x="1630.0" y="272.0" width="36.0" height="44.0" fill="#DCCB94"/>
+<rect x="1670.0" y="272.0" width="36.0" height="44.0" fill="#FF7AA8"/>
+<rect x="1710.0" y="272.0" width="36.0" height="44.0" fill="#FFE45C"/>
+<rect x="1750.0" y="272.0" width="36.0" height="44.0" fill="#7CF0B0"/>
+<rect x="1790.0" y="272.0" width="36.0" height="44.0" fill="#B79CFF"/>
+<rect x="1830.0" y="272.0" width="36.0" height="44.0" fill="#140F02"/>
+<rect x="1870.0" y="272.0" width="36.0" height="44.0" fill="#6A5818"/>
+<rect x="1910.0" y="272.0" width="36.0" height="44.0" fill="#FFFFFF"/>
+<text x="1510.0" y="340.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#FFFFFF">paskah . existing</text>
+<rect x="1970.0" y="262.0" width="460.0" height="86.0" fill="#38130F"/>
+<rect x="1980.0" y="272.0" width="36.0" height="44.0" fill="#38130F"/>
+<rect x="2020.0" y="272.0" width="36.0" height="44.0" fill="#1F0605"/>
+<rect x="2060.0" y="272.0" width="36.0" height="44.0" fill="#F8EFE2"/>
+<rect x="2100.0" y="272.0" width="36.0" height="44.0" fill="#E0BAB4"/>
+<rect x="2140.0" y="272.0" width="36.0" height="44.0" fill="#FF4D4D"/>
+<rect x="2180.0" y="272.0" width="36.0" height="44.0" fill="#FFC83D"/>
+<rect x="2220.0" y="272.0" width="36.0" height="44.0" fill="#FF8A3C"/>
+<rect x="2260.0" y="272.0" width="36.0" height="44.0" fill="#FF7AA8"/>
+<rect x="2300.0" y="272.0" width="36.0" height="44.0" fill="#1F0605"/>
+<rect x="2340.0" y="272.0" width="36.0" height="44.0" fill="#7F211D"/>
+<rect x="2380.0" y="272.0" width="36.0" height="44.0" fill="#FFFFFF"/>
+<text x="1980.0" y="340.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#FFFFFF">bara . retag ember</text>
+<text x="6.0" y="398.0" font-family="Instrument Sans" font-weight="600" font-size="26" text-anchor="start" fill="#1D1A15">d4</text>
+<text x="6.0" y="428.0" font-family="Instrument Sans" font-weight="500" font-size="18" text-anchor="start" fill="#5A564E">Split pane</text>
+<rect x="90.0" y="358.0" width="460.0" height="86.0" fill="#EDE6F3"/>
+<rect x="100.0" y="368.0" width="32.67" height="44.0" fill="#EDE6F3"/>
+<rect x="136.67" y="368.0" width="32.67" height="44.0" fill="#FFFFFF"/>
+<rect x="173.33" y="368.0" width="32.67" height="44.0" fill="#1D1623"/>
+<rect x="210.0" y="368.0" width="32.67" height="44.0" fill="#603288"/>
+<rect x="246.67" y="368.0" width="32.67" height="44.0" fill="#40195E"/>
+<rect x="283.33" y="368.0" width="32.67" height="44.0" fill="#C8161C"/>
+<rect x="320.0" y="368.0" width="32.67" height="44.0" fill="#FFC20E"/>
+<rect x="356.67" y="368.0" width="32.67" height="44.0" fill="#FFEFB0"/>
+<rect x="393.33" y="368.0" width="32.67" height="44.0" fill="#D6CCDF"/>
+<rect x="430.0" y="368.0" width="32.67" height="44.0" fill="#594D63"/>
+<rect x="466.67" y="368.0" width="32.67" height="44.0" fill="#CAB1E7"/>
+<rect x="503.33" y="368.0" width="32.67" height="44.0" fill="#FFFFFF"/>
+<text x="100.0" y="436.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#1D1A15">adven . retag plum</text>
+<rect x="560.0" y="358.0" width="460.0" height="86.0" fill="#E6ECDD"/>
+<rect x="570.0" y="368.0" width="32.67" height="44.0" fill="#E6ECDD"/>
+<rect x="606.67" y="368.0" width="32.67" height="44.0" fill="#FFFFFF"/>
+<rect x="643.33" y="368.0" width="32.67" height="44.0" fill="#161C0D"/>
+<rect x="680.0" y="368.0" width="32.67" height="44.0" fill="#165B38"/>
+<rect x="716.67" y="368.0" width="32.67" height="44.0" fill="#013B20"/>
+<rect x="753.33" y="368.0" width="32.67" height="44.0" fill="#C8161C"/>
+<rect x="790.0" y="368.0" width="32.67" height="44.0" fill="#FFC20E"/>
+<rect x="826.67" y="368.0" width="32.67" height="44.0" fill="#FFEFB0"/>
+<rect x="863.33" y="368.0" width="32.67" height="44.0" fill="#CCD5BE"/>
+<rect x="900.0" y="368.0" width="32.67" height="44.0" fill="#4D573E"/>
+<rect x="936.67" y="368.0" width="32.67" height="44.0" fill="#93CEA8"/>
+<rect x="973.33" y="368.0" width="32.67" height="44.0" fill="#FFFFFF"/>
+<text x="570.0" y="436.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#1D1A15">natal . new</text>
+<rect x="1030.0" y="358.0" width="460.0" height="86.0" fill="#EEE8E7"/>
+<rect x="1040.0" y="368.0" width="32.67" height="44.0" fill="#EEE8E7"/>
+<rect x="1076.67" y="368.0" width="32.67" height="44.0" fill="#FFFFFF"/>
+<rect x="1113.33" y="368.0" width="32.67" height="44.0" fill="#22141D"/>
+<rect x="1150.0" y="368.0" width="32.67" height="44.0" fill="#763058"/>
+<rect x="1186.67" y="368.0" width="32.67" height="44.0" fill="#501838"/>
+<rect x="1223.33" y="368.0" width="32.67" height="44.0" fill="#C8161C"/>
+<rect x="1260.0" y="368.0" width="32.67" height="44.0" fill="#FFC20E"/>
+<rect x="1296.67" y="368.0" width="32.67" height="44.0" fill="#FFEFB0"/>
+<rect x="1333.33" y="368.0" width="32.67" height="44.0" fill="#D9CECD"/>
+<rect x="1370.0" y="368.0" width="32.67" height="44.0" fill="#624A59"/>
+<rect x="1406.67" y="368.0" width="32.67" height="44.0" fill="#E5A9C7"/>
+<rect x="1443.33" y="368.0" width="32.67" height="44.0" fill="#FFFFFF"/>
+<text x="1040.0" y="436.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#1D1A15">prapaskah . new</text>
+<rect x="1500.0" y="358.0" width="460.0" height="86.0" fill="#F2EACC"/>
+<rect x="1510.0" y="368.0" width="32.67" height="44.0" fill="#F2EACC"/>
+<rect x="1546.67" y="368.0" width="32.67" height="44.0" fill="#FFFFFF"/>
+<rect x="1583.33" y="368.0" width="32.67" height="44.0" fill="#1D190A"/>
+<rect x="1620.0" y="368.0" width="32.67" height="44.0" fill="#684500"/>
+<rect x="1656.67" y="368.0" width="32.67" height="44.0" fill="#432B00"/>
+<rect x="1693.33" y="368.0" width="32.67" height="44.0" fill="#C8161C"/>
+<rect x="1730.0" y="368.0" width="32.67" height="44.0" fill="#FFC20E"/>
+<rect x="1766.67" y="368.0" width="32.67" height="44.0" fill="#FFEFB0"/>
+<rect x="1803.33" y="368.0" width="32.67" height="44.0" fill="#DCD1A8"/>
+<rect x="1840.0" y="368.0" width="32.67" height="44.0" fill="#595339"/>
+<rect x="1876.67" y="368.0" width="32.67" height="44.0" fill="#DCB783"/>
+<rect x="1913.33" y="368.0" width="32.67" height="44.0" fill="#FFFFFF"/>
+<text x="1510.0" y="436.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#1D1A15">paskah . new</text>
+<rect x="1970.0" y="358.0" width="460.0" height="86.0" fill="#F6EEEC" stroke="#000000" stroke-width="4"/>
+<rect x="1980.0" y="368.0" width="32.67" height="44.0" fill="#F6EEEC"/>
+<rect x="2016.67" y="368.0" width="32.67" height="44.0" fill="#FFFFFF"/>
+<rect x="2053.33" y="368.0" width="32.67" height="44.0" fill="#2A1213"/>
+<rect x="2090.0" y="368.0" width="32.67" height="44.0" fill="#B3261E"/>
+<rect x="2126.67" y="368.0" width="32.67" height="44.0" fill="#5A0F14"/>
+<rect x="2163.33" y="368.0" width="32.67" height="44.0" fill="#B93A08"/>
+<rect x="2200.0" y="368.0" width="32.67" height="44.0" fill="#FFC20E"/>
+<rect x="2236.67" y="368.0" width="32.67" height="44.0" fill="#FFEFB0"/>
+<rect x="2273.33" y="368.0" width="32.67" height="44.0" fill="#E0C8C6"/>
+<rect x="2310.0" y="368.0" width="32.67" height="44.0" fill="#6A4446"/>
+<rect x="2346.67" y="368.0" width="32.67" height="44.0" fill="#F2B4AE"/>
+<rect x="2383.33" y="368.0" width="32.67" height="44.0" fill="#FFFFFF"/>
+<text x="1980.0" y="436.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#1D1A15">bara . existing</text>
+<text x="6.0" y="494.0" font-family="Instrument Sans" font-weight="600" font-size="26" text-anchor="start" fill="#1D1A15">d5</text>
+<text x="6.0" y="524.0" font-family="Instrument Sans" font-weight="500" font-size="18" text-anchor="start" fill="#5A564E">Simple</text>
+<rect x="90.0" y="454.0" width="460.0" height="86.0" fill="#FFFFFF" stroke="#000000" stroke-width="4"/>
+<rect x="100.0" y="464.0" width="58.86" height="44.0" fill="#FFFFFF"/>
+<rect x="162.86" y="464.0" width="58.86" height="44.0" fill="#FFFFFF"/>
+<rect x="225.71" y="464.0" width="58.86" height="44.0" fill="#231F2A"/>
+<rect x="288.57" y="464.0" width="58.86" height="44.0" fill="#645C70"/>
+<rect x="351.43" y="464.0" width="58.86" height="44.0" fill="#E4DDEA"/>
+<rect x="414.29" y="464.0" width="58.86" height="44.0" fill="#6B3FA0"/>
+<rect x="477.14" y="464.0" width="58.86" height="44.0" fill="#EEE6F7"/>
+<text x="100.0" y="532.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#1D1A15">adven . existing</text>
+<rect x="560.0" y="454.0" width="460.0" height="86.0" fill="#04271C"/>
+<rect x="570.0" y="464.0" width="58.86" height="44.0" fill="#04271C"/>
+<rect x="632.86" y="464.0" width="58.86" height="44.0" fill="#FFFFFF"/>
+<rect x="695.71" y="464.0" width="58.86" height="44.0" fill="#F8EFE2"/>
+<rect x="758.57" y="464.0" width="58.86" height="44.0" fill="#A9CEBE"/>
+<rect x="821.43" y="464.0" width="58.86" height="44.0" fill="#224C3D"/>
+<rect x="884.29" y="464.0" width="58.86" height="44.0" fill="#EAC673"/>
+<rect x="947.14" y="464.0" width="58.86" height="44.0" fill="#0A3D25"/>
+<text x="570.0" y="532.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#FFFFFF">natal . new</text>
+<rect x="1030.0" y="454.0" width="460.0" height="86.0" fill="#F9F6F6"/>
+<rect x="1040.0" y="464.0" width="58.86" height="44.0" fill="#F9F6F6"/>
+<rect x="1102.86" y="464.0" width="58.86" height="44.0" fill="#FFFFFF"/>
+<rect x="1165.71" y="464.0" width="58.86" height="44.0" fill="#22141D"/>
+<rect x="1228.57" y="464.0" width="58.86" height="44.0" fill="#624A59"/>
+<rect x="1291.43" y="464.0" width="58.86" height="44.0" fill="#D9CECD"/>
+<rect x="1354.29" y="464.0" width="58.86" height="44.0" fill="#763058"/>
+<rect x="1417.14" y="464.0" width="58.86" height="44.0" fill="#F1D5E2"/>
+<text x="1040.0" y="532.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#1D1A15">prapaskah . new</text>
+<rect x="1500.0" y="454.0" width="460.0" height="86.0" fill="#FBF7E8"/>
+<rect x="1510.0" y="464.0" width="58.86" height="44.0" fill="#FBF7E8"/>
+<rect x="1572.86" y="464.0" width="58.86" height="44.0" fill="#FFFFFF"/>
+<rect x="1635.71" y="464.0" width="58.86" height="44.0" fill="#1D190A"/>
+<rect x="1698.57" y="464.0" width="58.86" height="44.0" fill="#595339"/>
+<rect x="1761.43" y="464.0" width="58.86" height="44.0" fill="#DCD1A8"/>
+<rect x="1824.29" y="464.0" width="58.86" height="44.0" fill="#684500"/>
+<rect x="1887.14" y="464.0" width="58.86" height="44.0" fill="#FBD8A6"/>
+<text x="1510.0" y="532.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#1D1A15">paskah . new</text>
+<rect x="1970.0" y="454.0" width="460.0" height="86.0" fill="#1C1213" stroke="#000000" stroke-width="4"/>
+<rect x="1980.0" y="464.0" width="58.86" height="44.0" fill="#1C1213"/>
+<rect x="2042.86" y="464.0" width="58.86" height="44.0" fill="#FFFFFF"/>
+<rect x="2105.71" y="464.0" width="58.86" height="44.0" fill="#F6EDEE"/>
+<rect x="2168.57" y="464.0" width="58.86" height="44.0" fill="#B9A5A8"/>
+<rect x="2231.43" y="464.0" width="58.86" height="44.0" fill="#432E31"/>
+<rect x="2294.29" y="464.0" width="58.86" height="44.0" fill="#FF8A80"/>
+<rect x="2357.14" y="464.0" width="58.86" height="44.0" fill="#34191C"/>
+<text x="1980.0" y="532.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#FFFFFF">bara . existing</text>
+<text x="6.0" y="590.0" font-family="Instrument Sans" font-weight="600" font-size="26" text-anchor="start" fill="#1D1A15">d6</text>
+<text x="6.0" y="620.0" font-family="Instrument Sans" font-weight="500" font-size="18" text-anchor="start" fill="#5A564E">Serif ital</text>
+<rect x="90.0" y="550.0" width="460.0" height="86.0" fill="#2A1838" stroke="#000000" stroke-width="4"/>
+<rect x="100.0" y="560.0" width="51.0" height="44.0" fill="#2A1838"/>
+<rect x="155.0" y="560.0" width="51.0" height="44.0" fill="#F6ECF8"/>
+<rect x="210.0" y="560.0" width="51.0" height="44.0" fill="#D2BDDF"/>
+<rect x="265.0" y="560.0" width="51.0" height="44.0" fill="#4F3664"/>
+<rect x="320.0" y="560.0" width="51.0" height="44.0" fill="#3A2250"/>
+<rect x="375.0" y="560.0" width="51.0" height="44.0" fill="#F2C27A"/>
+<rect x="430.0" y="560.0" width="51.0" height="44.0" fill="#4A2A66"/>
+<rect x="485.0" y="560.0" width="51.0" height="44.0" fill="#FFFFFF"/>
+<text x="100.0" y="628.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#FFFFFF">adven . existing</text>
+<rect x="560.0" y="550.0" width="460.0" height="86.0" fill="#04271C"/>
+<rect x="570.0" y="560.0" width="51.0" height="44.0" fill="#04271C"/>
+<rect x="625.0" y="560.0" width="51.0" height="44.0" fill="#F8EFE2"/>
+<rect x="680.0" y="560.0" width="51.0" height="44.0" fill="#A9CEBE"/>
+<rect x="735.0" y="560.0" width="51.0" height="44.0" fill="#224C3D"/>
+<rect x="790.0" y="560.0" width="51.0" height="44.0" fill="#0A3D25"/>
+<rect x="845.0" y="560.0" width="51.0" height="44.0" fill="#EAC673"/>
+<rect x="900.0" y="560.0" width="51.0" height="44.0" fill="#004A2B"/>
+<rect x="955.0" y="560.0" width="51.0" height="44.0" fill="#FFFFFF"/>
+<text x="570.0" y="628.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#FFFFFF">natal . new</text>
+<rect x="1030.0" y="550.0" width="460.0" height="86.0" fill="#EEE8E7"/>
+<rect x="1040.0" y="560.0" width="51.0" height="44.0" fill="#EEE8E7"/>
+<rect x="1095.0" y="560.0" width="51.0" height="44.0" fill="#22141D"/>
+<rect x="1150.0" y="560.0" width="51.0" height="44.0" fill="#624A59"/>
+<rect x="1205.0" y="560.0" width="51.0" height="44.0" fill="#D9CECD"/>
+<rect x="1260.0" y="560.0" width="51.0" height="44.0" fill="#F1D5E2"/>
+<rect x="1315.0" y="560.0" width="51.0" height="44.0" fill="#763058"/>
+<rect x="1370.0" y="560.0" width="51.0" height="44.0" fill="#ECC9D8"/>
+<rect x="1425.0" y="560.0" width="51.0" height="44.0" fill="#FFFFFF"/>
+<text x="1040.0" y="628.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#1D1A15">prapaskah . new</text>
+<rect x="1500.0" y="550.0" width="460.0" height="86.0" fill="#FBF6E4" stroke="#000000" stroke-width="4"/>
+<rect x="1510.0" y="560.0" width="51.0" height="44.0" fill="#FBF6E4"/>
+<rect x="1565.0" y="560.0" width="51.0" height="44.0" fill="#1C1809"/>
+<rect x="1620.0" y="560.0" width="51.0" height="44.0" fill="#605531"/>
+<rect x="1675.0" y="560.0" width="51.0" height="44.0" fill="#E0D4A8"/>
+<rect x="1730.0" y="560.0" width="51.0" height="44.0" fill="#F5E6B0"/>
+<rect x="1785.0" y="560.0" width="51.0" height="44.0" fill="#7A5200"/>
+<rect x="1840.0" y="560.0" width="51.0" height="44.0" fill="#F0D27A"/>
+<rect x="1895.0" y="560.0" width="51.0" height="44.0" fill="#FFFFFF"/>
+<text x="1510.0" y="628.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#1D1A15">paskah . existing</text>
+<rect x="1970.0" y="550.0" width="460.0" height="86.0" fill="#F7E5E2"/>
+<rect x="1980.0" y="560.0" width="51.0" height="44.0" fill="#F7E5E2"/>
+<rect x="2035.0" y="560.0" width="51.0" height="44.0" fill="#251412"/>
+<rect x="2090.0" y="560.0" width="51.0" height="44.0" fill="#674A45"/>
+<rect x="2145.0" y="560.0" width="51.0" height="44.0" fill="#E4CAC6"/>
+<rect x="2200.0" y="560.0" width="51.0" height="44.0" fill="#F8D5D0"/>
+<rect x="2255.0" y="560.0" width="51.0" height="44.0" fill="#94020D"/>
+<rect x="2310.0" y="560.0" width="51.0" height="44.0" fill="#FFC5B1"/>
+<rect x="2365.0" y="560.0" width="51.0" height="44.0" fill="#FFFFFF"/>
+<text x="1980.0" y="628.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#1D1A15">merah . new</text>
+<text x="6.0" y="686.0" font-family="Instrument Sans" font-weight="600" font-size="26" text-anchor="start" fill="#1D1A15">d7</text>
+<text x="6.0" y="716.0" font-family="Instrument Sans" font-weight="500" font-size="18" text-anchor="start" fill="#5A564E">Swiss nume</text>
+<rect x="90.0" y="646.0" width="460.0" height="86.0" fill="#CFC4E0" stroke="#000000" stroke-width="4"/>
+<rect x="100.0" y="656.0" width="44.89" height="44.0" fill="#CFC4E0"/>
+<rect x="148.89" y="656.0" width="44.89" height="44.0" fill="#14101C"/>
+<rect x="197.78" y="656.0" width="44.89" height="44.0" fill="#433A58"/>
+<rect x="246.67" y="656.0" width="44.89" height="44.0" fill="#AB9CC6"/>
+<rect x="295.56" y="656.0" width="44.89" height="44.0" fill="#1E1630"/>
+<rect x="344.44" y="656.0" width="44.89" height="44.0" fill="#EFE9F7"/>
+<rect x="393.33" y="656.0" width="44.89" height="44.0" fill="#B5A9CE"/>
+<rect x="442.22" y="656.0" width="44.89" height="44.0" fill="#4B1A8A"/>
+<rect x="491.11" y="656.0" width="44.89" height="44.0" fill="#FFFFFF"/>
+<text x="100.0" y="724.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#1D1A15">adven . existing</text>
+<rect x="560.0" y="646.0" width="460.0" height="86.0" fill="#E6ECDD"/>
+<rect x="570.0" y="656.0" width="44.89" height="44.0" fill="#E6ECDD"/>
+<rect x="618.89" y="656.0" width="44.89" height="44.0" fill="#161C0D"/>
+<rect x="667.78" y="656.0" width="44.89" height="44.0" fill="#4D573E"/>
+<rect x="716.67" y="656.0" width="44.89" height="44.0" fill="#CCD5BE"/>
+<rect x="765.56" y="656.0" width="44.89" height="44.0" fill="#121906"/>
+<rect x="814.44" y="656.0" width="44.89" height="44.0" fill="#E8EEDF"/>
+<rect x="863.33" y="656.0" width="44.89" height="44.0" fill="#AAB795"/>
+<rect x="912.22" y="656.0" width="44.89" height="44.0" fill="#165B38"/>
+<rect x="961.11" y="656.0" width="44.89" height="44.0" fill="#FFFFFF"/>
+<text x="570.0" y="724.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#1D1A15">natal . new</text>
+<rect x="1030.0" y="646.0" width="460.0" height="86.0" fill="#EEE8E7"/>
+<rect x="1040.0" y="656.0" width="44.89" height="44.0" fill="#EEE8E7"/>
+<rect x="1088.89" y="656.0" width="44.89" height="44.0" fill="#22141D"/>
+<rect x="1137.78" y="656.0" width="44.89" height="44.0" fill="#624A59"/>
+<rect x="1186.67" y="656.0" width="44.89" height="44.0" fill="#D9CECD"/>
+<rect x="1235.56" y="656.0" width="44.89" height="44.0" fill="#240F0F"/>
+<rect x="1284.44" y="656.0" width="44.89" height="44.0" fill="#F8E6E6"/>
+<rect x="1333.33" y="656.0" width="44.89" height="44.0" fill="#CFA5A4"/>
+<rect x="1382.22" y="656.0" width="44.89" height="44.0" fill="#763058"/>
+<rect x="1431.11" y="656.0" width="44.89" height="44.0" fill="#FFFFFF"/>
+<text x="1040.0" y="724.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#1D1A15">prapaskah . new</text>
+<rect x="1500.0" y="646.0" width="460.0" height="86.0" fill="#E8D9A0" stroke="#000000" stroke-width="4"/>
+<rect x="1510.0" y="656.0" width="44.89" height="44.0" fill="#E8D9A0"/>
+<rect x="1558.89" y="656.0" width="44.89" height="44.0" fill="#18140A"/>
+<rect x="1607.78" y="656.0" width="44.89" height="44.0" fill="#4D4220"/>
+<rect x="1656.67" y="656.0" width="44.89" height="44.0" fill="#C5B67C"/>
+<rect x="1705.56" y="656.0" width="44.89" height="44.0" fill="#241D0A"/>
+<rect x="1754.44" y="656.0" width="44.89" height="44.0" fill="#F5EBC8"/>
+<rect x="1803.33" y="656.0" width="44.89" height="44.0" fill="#BDB07F"/>
+<rect x="1852.22" y="656.0" width="44.89" height="44.0" fill="#8A1F08"/>
+<rect x="1901.11" y="656.0" width="44.89" height="44.0" fill="#FFFFFF"/>
+<text x="1510.0" y="724.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#1D1A15">paskah . existing</text>
+<rect x="1970.0" y="646.0" width="460.0" height="86.0" fill="#F7E5E2"/>
+<rect x="1980.0" y="656.0" width="44.89" height="44.0" fill="#F7E5E2"/>
+<rect x="2028.89" y="656.0" width="44.89" height="44.0" fill="#251412"/>
+<rect x="2077.78" y="656.0" width="44.89" height="44.0" fill="#674A45"/>
+<rect x="2126.67" y="656.0" width="44.89" height="44.0" fill="#E4CAC6"/>
+<rect x="2175.56" y="656.0" width="44.89" height="44.0" fill="#24100C"/>
+<rect x="2224.44" y="656.0" width="44.89" height="44.0" fill="#F8E7E3"/>
+<rect x="2273.33" y="656.0" width="44.89" height="44.0" fill="#CFA69E"/>
+<rect x="2322.22" y="656.0" width="44.89" height="44.0" fill="#94020D"/>
+<rect x="2371.11" y="656.0" width="44.89" height="44.0" fill="#FFFFFF"/>
+<text x="1980.0" y="724.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#1D1A15">merah . new</text>
+<text x="6.0" y="782.0" font-family="Instrument Sans" font-weight="600" font-size="26" text-anchor="start" fill="#1D1A15">d8</text>
+<text x="6.0" y="812.0" font-family="Instrument Sans" font-weight="500" font-size="18" text-anchor="start" fill="#5A564E">Quiet Tint</text>
+<rect x="90.0" y="742.0" width="460.0" height="86.0" fill="#EDE6F3"/>
+<rect x="100.0" y="752.0" width="58.86" height="44.0" fill="#EDE6F3"/>
+<rect x="162.86" y="752.0" width="58.86" height="44.0" fill="#1D1623"/>
+<rect x="225.71" y="752.0" width="58.86" height="44.0" fill="#594D63"/>
+<rect x="288.57" y="752.0" width="58.86" height="44.0" fill="#D6CCDF"/>
+<rect x="351.43" y="752.0" width="58.86" height="44.0" fill="#603288"/>
+<rect x="414.29" y="752.0" width="58.86" height="44.0" fill="#FFFFFF"/>
+<rect x="477.14" y="752.0" width="58.86" height="44.0" fill="#FFFFFF"/>
+<text x="100.0" y="820.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#1D1A15">adven . new</text>
+<rect x="560.0" y="742.0" width="460.0" height="86.0" fill="#E6ECDD"/>
+<rect x="570.0" y="752.0" width="58.86" height="44.0" fill="#E6ECDD"/>
+<rect x="632.86" y="752.0" width="58.86" height="44.0" fill="#161C0D"/>
+<rect x="695.71" y="752.0" width="58.86" height="44.0" fill="#4D573E"/>
+<rect x="758.57" y="752.0" width="58.86" height="44.0" fill="#CCD5BE"/>
+<rect x="821.43" y="752.0" width="58.86" height="44.0" fill="#165B38"/>
+<rect x="884.29" y="752.0" width="58.86" height="44.0" fill="#FFFFFF"/>
+<rect x="947.14" y="752.0" width="58.86" height="44.0" fill="#FFFFFF"/>
+<text x="570.0" y="820.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#1D1A15">natal . retag mint</text>
+<rect x="1030.0" y="742.0" width="460.0" height="86.0" fill="#EEE8E7"/>
+<rect x="1040.0" y="752.0" width="58.86" height="44.0" fill="#EEE8E7"/>
+<rect x="1102.86" y="752.0" width="58.86" height="44.0" fill="#22141D"/>
+<rect x="1165.71" y="752.0" width="58.86" height="44.0" fill="#624A59"/>
+<rect x="1228.57" y="752.0" width="58.86" height="44.0" fill="#D9CECD"/>
+<rect x="1291.43" y="752.0" width="58.86" height="44.0" fill="#763058"/>
+<rect x="1354.29" y="752.0" width="58.86" height="44.0" fill="#FFFFFF"/>
+<rect x="1417.14" y="752.0" width="58.86" height="44.0" fill="#FFFFFF"/>
+<text x="1040.0" y="820.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#1D1A15">prapaskah . new</text>
+<rect x="1500.0" y="742.0" width="460.0" height="86.0" fill="#F2EACC"/>
+<rect x="1510.0" y="752.0" width="58.86" height="44.0" fill="#F2EACC"/>
+<rect x="1572.86" y="752.0" width="58.86" height="44.0" fill="#1D190A"/>
+<rect x="1635.71" y="752.0" width="58.86" height="44.0" fill="#595339"/>
+<rect x="1698.57" y="752.0" width="58.86" height="44.0" fill="#DCD1A8"/>
+<rect x="1761.43" y="752.0" width="58.86" height="44.0" fill="#684500"/>
+<rect x="1824.29" y="752.0" width="58.86" height="44.0" fill="#FFFFFF"/>
+<rect x="1887.14" y="752.0" width="58.86" height="44.0" fill="#FFFFFF"/>
+<text x="1510.0" y="820.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#1D1A15">paskah . new</text>
+<rect x="1970.0" y="742.0" width="460.0" height="86.0" fill="#F8E9E7" stroke="#000000" stroke-width="4"/>
+<rect x="1980.0" y="752.0" width="58.86" height="44.0" fill="#F8E9E7"/>
+<rect x="2042.86" y="752.0" width="58.86" height="44.0" fill="#2A1213"/>
+<rect x="2105.71" y="752.0" width="58.86" height="44.0" fill="#6A4A4D"/>
+<rect x="2168.57" y="752.0" width="58.86" height="44.0" fill="#E3C9C8"/>
+<rect x="2231.43" y="752.0" width="58.86" height="44.0" fill="#A31F2A"/>
+<rect x="2294.29" y="752.0" width="58.86" height="44.0" fill="#FFFFFF"/>
+<rect x="2357.14" y="752.0" width="58.86" height="44.0" fill="#FFFFFF"/>
+<text x="1980.0" y="820.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#1D1A15">merah . existing</text>
+<text x="6.0" y="878.0" font-family="Instrument Sans" font-weight="600" font-size="26" text-anchor="start" fill="#1D1A15">d9</text>
+<text x="6.0" y="908.0" font-family="Instrument Sans" font-weight="500" font-size="18" text-anchor="start" fill="#5A564E">Civic Boar</text>
+<rect x="90.0" y="838.0" width="460.0" height="86.0" fill="#D6CDE0" stroke="#000000" stroke-width="4"/>
+<rect x="100.0" y="848.0" width="44.89" height="44.0" fill="#D6CDE0"/>
+<rect x="148.89" y="848.0" width="44.89" height="44.0" fill="#120D1B"/>
+<rect x="197.78" y="848.0" width="44.89" height="44.0" fill="#453C58"/>
+<rect x="246.67" y="848.0" width="44.89" height="44.0" fill="#A89CBF"/>
+<rect x="295.56" y="848.0" width="44.89" height="44.0" fill="#150F1E"/>
+<rect x="344.44" y="848.0" width="44.89" height="44.0" fill="#D6CDE0"/>
+<rect x="393.33" y="848.0" width="44.89" height="44.0" fill="#A99DC2"/>
+<rect x="442.22" y="848.0" width="44.89" height="44.0" fill="#F2C200"/>
+<rect x="491.11" y="848.0" width="44.89" height="44.0" fill="#FFFFFF"/>
+<text x="100.0" y="916.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#1D1A15">adven . existing</text>
+<rect x="560.0" y="838.0" width="460.0" height="86.0" fill="#E6ECDD"/>
+<rect x="570.0" y="848.0" width="44.89" height="44.0" fill="#E6ECDD"/>
+<rect x="618.89" y="848.0" width="44.89" height="44.0" fill="#161C0D"/>
+<rect x="667.78" y="848.0" width="44.89" height="44.0" fill="#4D573E"/>
+<rect x="716.67" y="848.0" width="44.89" height="44.0" fill="#CCD5BE"/>
+<rect x="765.56" y="848.0" width="44.89" height="44.0" fill="#121906"/>
+<rect x="814.44" y="848.0" width="44.89" height="44.0" fill="#E6ECDD"/>
+<rect x="863.33" y="848.0" width="44.89" height="44.0" fill="#AAB795"/>
+<rect x="912.22" y="848.0" width="44.89" height="44.0" fill="#FFA098"/>
+<rect x="961.11" y="848.0" width="44.89" height="44.0" fill="#FFFFFF"/>
+<text x="570.0" y="916.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#1D1A15">natal . new</text>
+<rect x="1030.0" y="838.0" width="460.0" height="86.0" fill="#EEE8E7"/>
+<rect x="1040.0" y="848.0" width="44.89" height="44.0" fill="#EEE8E7"/>
+<rect x="1088.89" y="848.0" width="44.89" height="44.0" fill="#22141D"/>
+<rect x="1137.78" y="848.0" width="44.89" height="44.0" fill="#624A59"/>
+<rect x="1186.67" y="848.0" width="44.89" height="44.0" fill="#D9CECD"/>
+<rect x="1235.56" y="848.0" width="44.89" height="44.0" fill="#240F0F"/>
+<rect x="1284.44" y="848.0" width="44.89" height="44.0" fill="#EEE8E7"/>
+<rect x="1333.33" y="848.0" width="44.89" height="44.0" fill="#CFA5A4"/>
+<rect x="1382.22" y="848.0" width="44.89" height="44.0" fill="#FF9F9F"/>
+<rect x="1431.11" y="848.0" width="44.89" height="44.0" fill="#FFFFFF"/>
+<text x="1040.0" y="916.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#1D1A15">prapaskah . new</text>
+<rect x="1500.0" y="838.0" width="460.0" height="86.0" fill="#F2EACC"/>
+<rect x="1510.0" y="848.0" width="44.89" height="44.0" fill="#F2EACC"/>
+<rect x="1558.89" y="848.0" width="44.89" height="44.0" fill="#1D190A"/>
+<rect x="1607.78" y="848.0" width="44.89" height="44.0" fill="#595339"/>
+<rect x="1656.67" y="848.0" width="44.89" height="44.0" fill="#DCD1A8"/>
+<rect x="1705.56" y="848.0" width="44.89" height="44.0" fill="#1D1503"/>
+<rect x="1754.44" y="848.0" width="44.89" height="44.0" fill="#F2EACC"/>
+<rect x="1803.33" y="848.0" width="44.89" height="44.0" fill="#BBB18E"/>
+<rect x="1852.22" y="848.0" width="44.89" height="44.0" fill="#E1B942"/>
+<rect x="1901.11" y="848.0" width="44.89" height="44.0" fill="#FFFFFF"/>
+<text x="1510.0" y="916.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#1D1A15">paskah . new</text>
+<rect x="1970.0" y="838.0" width="460.0" height="86.0" fill="#E3CBC2" stroke="#000000" stroke-width="4"/>
+<rect x="1980.0" y="848.0" width="44.89" height="44.0" fill="#E3CBC2"/>
+<rect x="2028.89" y="848.0" width="44.89" height="44.0" fill="#1C0E0B"/>
+<rect x="2077.78" y="848.0" width="44.89" height="44.0" fill="#5A3A33"/>
+<rect x="2126.67" y="848.0" width="44.89" height="44.0" fill="#C0A096"/>
+<rect x="2175.56" y="848.0" width="44.89" height="44.0" fill="#1E0E0B"/>
+<rect x="2224.44" y="848.0" width="44.89" height="44.0" fill="#E3CBC2"/>
+<rect x="2273.33" y="848.0" width="44.89" height="44.0" fill="#B79488"/>
+<rect x="2322.22" y="848.0" width="44.89" height="44.0" fill="#FF7A45"/>
+<rect x="2371.11" y="848.0" width="44.89" height="44.0" fill="#FFFFFF"/>
+<text x="1980.0" y="916.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#1D1A15">api . existing</text>
+<text x="6.0" y="974.0" font-family="Instrument Sans" font-weight="600" font-size="26" text-anchor="start" fill="#1D1A15">d10</text>
+<text x="6.0" y="1004.0" font-family="Instrument Sans" font-weight="500" font-size="18" text-anchor="start" fill="#5A564E">Diagonal</text>
+<rect x="90.0" y="934.0" width="460.0" height="86.0" fill="#EDE6F3"/>
+<rect x="100.0" y="944.0" width="40.0" height="44.0" fill="#EDE6F3"/>
+<rect x="144.0" y="944.0" width="40.0" height="44.0" fill="#FFFFFF"/>
+<rect x="188.0" y="944.0" width="40.0" height="44.0" fill="#1D1623"/>
+<rect x="232.0" y="944.0" width="40.0" height="44.0" fill="#594D63"/>
+<rect x="276.0" y="944.0" width="40.0" height="44.0" fill="#603288"/>
+<rect x="320.0" y="944.0" width="40.0" height="44.0" fill="#40195E"/>
+<rect x="364.0" y="944.0" width="40.0" height="44.0" fill="#FFFFFF"/>
+<rect x="408.0" y="944.0" width="40.0" height="44.0" fill="#CAB1E7"/>
+<rect x="452.0" y="944.0" width="40.0" height="44.0" fill="#E4D8F4"/>
+<rect x="496.0" y="944.0" width="40.0" height="44.0" fill="#D6CCDF"/>
+<text x="100.0" y="1012.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#1D1A15">adven . retag ungu</text>
+<rect x="560.0" y="934.0" width="460.0" height="86.0" fill="#E6ECDD"/>
+<rect x="570.0" y="944.0" width="40.0" height="44.0" fill="#E6ECDD"/>
+<rect x="614.0" y="944.0" width="40.0" height="44.0" fill="#FFFFFF"/>
+<rect x="658.0" y="944.0" width="40.0" height="44.0" fill="#161C0D"/>
+<rect x="702.0" y="944.0" width="40.0" height="44.0" fill="#4D573E"/>
+<rect x="746.0" y="944.0" width="40.0" height="44.0" fill="#165B38"/>
+<rect x="790.0" y="944.0" width="40.0" height="44.0" fill="#013B20"/>
+<rect x="834.0" y="944.0" width="40.0" height="44.0" fill="#FFFFFF"/>
+<rect x="878.0" y="944.0" width="40.0" height="44.0" fill="#93CEA8"/>
+<rect x="922.0" y="944.0" width="40.0" height="44.0" fill="#C7E7D2"/>
+<rect x="966.0" y="944.0" width="40.0" height="44.0" fill="#CCD5BE"/>
+<text x="570.0" y="1012.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#1D1A15">natal . new</text>
+<rect x="1030.0" y="934.0" width="460.0" height="86.0" fill="#EEE8E7"/>
+<rect x="1040.0" y="944.0" width="40.0" height="44.0" fill="#EEE8E7"/>
+<rect x="1084.0" y="944.0" width="40.0" height="44.0" fill="#FFFFFF"/>
+<rect x="1128.0" y="944.0" width="40.0" height="44.0" fill="#22141D"/>
+<rect x="1172.0" y="944.0" width="40.0" height="44.0" fill="#624A59"/>
+<rect x="1216.0" y="944.0" width="40.0" height="44.0" fill="#763058"/>
+<rect x="1260.0" y="944.0" width="40.0" height="44.0" fill="#501838"/>
+<rect x="1304.0" y="944.0" width="40.0" height="44.0" fill="#FFFFFF"/>
+<rect x="1348.0" y="944.0" width="40.0" height="44.0" fill="#E5A9C7"/>
+<rect x="1392.0" y="944.0" width="40.0" height="44.0" fill="#F1D5E2"/>
+<rect x="1436.0" y="944.0" width="40.0" height="44.0" fill="#D9CECD"/>
+<text x="1040.0" y="1012.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#1D1A15">prapaskah . new</text>
+<rect x="1500.0" y="934.0" width="460.0" height="86.0" fill="#F2EACC"/>
+<rect x="1510.0" y="944.0" width="40.0" height="44.0" fill="#F2EACC"/>
+<rect x="1554.0" y="944.0" width="40.0" height="44.0" fill="#FFFFFF"/>
+<rect x="1598.0" y="944.0" width="40.0" height="44.0" fill="#1D190A"/>
+<rect x="1642.0" y="944.0" width="40.0" height="44.0" fill="#595339"/>
+<rect x="1686.0" y="944.0" width="40.0" height="44.0" fill="#684500"/>
+<rect x="1730.0" y="944.0" width="40.0" height="44.0" fill="#432B00"/>
+<rect x="1774.0" y="944.0" width="40.0" height="44.0" fill="#FFFFFF"/>
+<rect x="1818.0" y="944.0" width="40.0" height="44.0" fill="#DCB783"/>
+<rect x="1862.0" y="944.0" width="40.0" height="44.0" fill="#FBD8A6"/>
+<rect x="1906.0" y="944.0" width="40.0" height="44.0" fill="#DCD1A8"/>
+<text x="1510.0" y="1012.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#1D1A15">paskah . new</text>
+<rect x="1970.0" y="934.0" width="460.0" height="86.0" fill="#F2EDEA" stroke="#000000" stroke-width="4"/>
+<rect x="1980.0" y="944.0" width="40.0" height="44.0" fill="#F2EDEA"/>
+<rect x="2024.0" y="944.0" width="40.0" height="44.0" fill="#FFFFFF"/>
+<rect x="2068.0" y="944.0" width="40.0" height="44.0" fill="#211515"/>
+<rect x="2112.0" y="944.0" width="40.0" height="44.0" fill="#5C4A48"/>
+<rect x="2156.0" y="944.0" width="40.0" height="44.0" fill="#B3141F"/>
+<rect x="2200.0" y="944.0" width="40.0" height="44.0" fill="#7C0D16"/>
+<rect x="2244.0" y="944.0" width="40.0" height="44.0" fill="#FFFFFF"/>
+<rect x="2288.0" y="944.0" width="40.0" height="44.0" fill="#F3B4B0"/>
+<rect x="2332.0" y="944.0" width="40.0" height="44.0" fill="#F8D9D6"/>
+<rect x="2376.0" y="944.0" width="40.0" height="44.0" fill="#D8C9C6"/>
+<text x="1980.0" y="1012.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#1D1A15">merah . existing</text>
+<text x="6.0" y="1070.0" font-family="Instrument Sans" font-weight="600" font-size="26" text-anchor="start" fill="#1D1A15">d11</text>
+<text x="6.0" y="1100.0" font-family="Instrument Sans" font-weight="500" font-size="18" text-anchor="start" fill="#5A564E">Liturgy</text>
+<rect x="90.0" y="1030.0" width="460.0" height="86.0" fill="#4A2D66"/>
+<rect x="100.0" y="1040.0" width="69.33" height="44.0" fill="#4A2D66"/>
+<rect x="173.33" y="1040.0" width="69.33" height="44.0" fill="#30114A"/>
+<rect x="246.67" y="1040.0" width="69.33" height="44.0" fill="#E6C77C"/>
+<rect x="320.0" y="1040.0" width="69.33" height="44.0" fill="#FBF1DC"/>
+<rect x="393.33" y="1040.0" width="69.33" height="44.0" fill="#170427"/>
+<rect x="466.67" y="1040.0" width="69.33" height="44.0" fill="#EAE0F4"/>
+<text x="100.0" y="1108.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#FFFFFF">adven . retag ametis</text>
+<rect x="560.0" y="1030.0" width="460.0" height="86.0" fill="#0B492F"/>
+<rect x="570.0" y="1040.0" width="69.33" height="44.0" fill="#0B492F"/>
+<rect x="643.33" y="1040.0" width="69.33" height="44.0" fill="#002C1A"/>
+<rect x="716.67" y="1040.0" width="69.33" height="44.0" fill="#E6C77C"/>
+<rect x="790.0" y="1040.0" width="69.33" height="44.0" fill="#FBF1DC"/>
+<rect x="863.33" y="1040.0" width="69.33" height="44.0" fill="#001409"/>
+<rect x="936.67" y="1040.0" width="69.33" height="44.0" fill="#D2EBE1"/>
+<text x="570.0" y="1108.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#FFFFFF">natal . new</text>
+<rect x="1030.0" y="1030.0" width="460.0" height="86.0" fill="#4B3545"/>
+<rect x="1040.0" y="1040.0" width="69.33" height="44.0" fill="#4B3545"/>
+<rect x="1113.33" y="1040.0" width="69.33" height="44.0" fill="#301C2C"/>
+<rect x="1186.67" y="1040.0" width="69.33" height="44.0" fill="#E6C77C"/>
+<rect x="1260.0" y="1040.0" width="69.33" height="44.0" fill="#FBF1DC"/>
+<rect x="1333.33" y="1040.0" width="69.33" height="44.0" fill="#170B14"/>
+<rect x="1406.67" y="1040.0" width="69.33" height="44.0" fill="#F3DDEB"/>
+<text x="1040.0" y="1108.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#FFFFFF">prapaskah . new</text>
+<rect x="1500.0" y="1030.0" width="460.0" height="86.0" fill="#F5EDCF"/>
+<rect x="1510.0" y="1040.0" width="69.33" height="44.0" fill="#F5EDCF"/>
+<rect x="1583.33" y="1040.0" width="69.33" height="44.0" fill="#E6D5A1"/>
+<rect x="1656.67" y="1040.0" width="69.33" height="44.0" fill="#735103"/>
+<rect x="1730.0" y="1040.0" width="69.33" height="44.0" fill="#231903"/>
+<rect x="1803.33" y="1040.0" width="69.33" height="44.0" fill="#F9F2DC"/>
+<rect x="1876.67" y="1040.0" width="69.33" height="44.0" fill="#5F5132"/>
+<text x="1510.0" y="1108.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#1D1A15">paskah . new</text>
+<rect x="1970.0" y="1030.0" width="460.0" height="86.0" fill="#A3161A" stroke="#000000" stroke-width="4"/>
+<rect x="1980.0" y="1040.0" width="69.33" height="44.0" fill="#A3161A"/>
+<rect x="2053.33" y="1040.0" width="69.33" height="44.0" fill="#6E0C10"/>
+<rect x="2126.67" y="1040.0" width="69.33" height="44.0" fill="#F0CE7A"/>
+<rect x="2200.0" y="1040.0" width="69.33" height="44.0" fill="#FBEFD9"/>
+<rect x="2273.33" y="1040.0" width="69.33" height="44.0" fill="#4A0508"/>
+<rect x="2346.67" y="1040.0" width="69.33" height="44.0" fill="#FADFD6"/>
+<text x="1980.0" y="1108.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#FFFFFF">merah . existing</text>
+<text x="6.0" y="1166.0" font-family="Instrument Sans" font-weight="600" font-size="26" text-anchor="start" fill="#1D1A15">d12</text>
+<text x="6.0" y="1196.0" font-family="Instrument Sans" font-weight="500" font-size="18" text-anchor="start" fill="#5A564E">Glass</text>
+<rect x="90.0" y="1126.0" width="460.0" height="86.0" fill="#1C1038" stroke="#000000" stroke-width="4"/>
+<rect x="100.0" y="1136.0" width="40.0" height="44.0" fill="#1C1038"/>
+<rect x="144.0" y="1136.0" width="40.0" height="44.0" fill="#FBF8FF"/>
+<rect x="188.0" y="1136.0" width="40.0" height="44.0" fill="#1A1028"/>
+<rect x="232.0" y="1136.0" width="40.0" height="44.0" fill="#5A4C70"/>
+<rect x="276.0" y="1136.0" width="40.0" height="44.0" fill="#6A2BA0"/>
+<rect x="320.0" y="1136.0" width="40.0" height="44.0" fill="#FFFFFF"/>
+<rect x="364.0" y="1136.0" width="40.0" height="44.0" fill="#FFFFFF"/>
+<rect x="408.0" y="1136.0" width="40.0" height="44.0" fill="#3A2466"/>
+<rect x="452.0" y="1136.0" width="40.0" height="44.0" fill="#C79BE0"/>
+<rect x="496.0" y="1136.0" width="40.0" height="44.0" fill="#E8DAF6"/>
+<text x="100.0" y="1204.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#FFFFFF">adven . existing</text>
+<rect x="560.0" y="1126.0" width="460.0" height="86.0" fill="#00140D"/>
+<rect x="570.0" y="1136.0" width="40.0" height="44.0" fill="#00140D"/>
+<rect x="614.0" y="1136.0" width="40.0" height="44.0" fill="#F4FAF7"/>
+<rect x="658.0" y="1136.0" width="40.0" height="44.0" fill="#001C12"/>
+<rect x="702.0" y="1136.0" width="40.0" height="44.0" fill="#2E5D4C"/>
+<rect x="746.0" y="1136.0" width="40.0" height="44.0" fill="#015D38"/>
+<rect x="790.0" y="1136.0" width="40.0" height="44.0" fill="#FFFFFF"/>
+<rect x="834.0" y="1136.0" width="40.0" height="44.0" fill="#FFFFFF"/>
+<rect x="878.0" y="1136.0" width="40.0" height="44.0" fill="#024126"/>
+<rect x="922.0" y="1136.0" width="40.0" height="44.0" fill="#CDA956"/>
+<rect x="966.0" y="1136.0" width="40.0" height="44.0" fill="#CCEAD7"/>
+<text x="570.0" y="1204.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#FFFFFF">natal . new</text>
+<rect x="1030.0" y="1126.0" width="460.0" height="86.0" fill="#170B13"/>
+<rect x="1040.0" y="1136.0" width="40.0" height="44.0" fill="#170B13"/>
+<rect x="1084.0" y="1136.0" width="40.0" height="44.0" fill="#FCF6FA"/>
+<rect x="1128.0" y="1136.0" width="40.0" height="44.0" fill="#220E1C"/>
+<rect x="1172.0" y="1136.0" width="40.0" height="44.0" fill="#69455D"/>
+<rect x="1216.0" y="1136.0" width="40.0" height="44.0" fill="#723459"/>
+<rect x="1260.0" y="1136.0" width="40.0" height="44.0" fill="#FFFFFF"/>
+<rect x="1304.0" y="1136.0" width="40.0" height="44.0" fill="#FFFFFF"/>
+<rect x="1348.0" y="1136.0" width="40.0" height="44.0" fill="#571B41"/>
+<rect x="1392.0" y="1136.0" width="40.0" height="44.0" fill="#EA909E"/>
+<rect x="1436.0" y="1136.0" width="40.0" height="44.0" fill="#F6D7E7"/>
+<text x="1040.0" y="1204.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#FFFFFF">prapaskah . new</text>
+<rect x="1500.0" y="1126.0" width="460.0" height="86.0" fill="#150F00"/>
+<rect x="1510.0" y="1136.0" width="40.0" height="44.0" fill="#150F00"/>
+<rect x="1554.0" y="1136.0" width="40.0" height="44.0" fill="#FAF8F2"/>
+<rect x="1598.0" y="1136.0" width="40.0" height="44.0" fill="#231103"/>
+<rect x="1642.0" y="1136.0" width="40.0" height="44.0" fill="#6B4A2F"/>
+<rect x="1686.0" y="1136.0" width="40.0" height="44.0" fill="#773A00"/>
+<rect x="1730.0" y="1136.0" width="40.0" height="44.0" fill="#FFFFFF"/>
+<rect x="1774.0" y="1136.0" width="40.0" height="44.0" fill="#FFFFFF"/>
+<rect x="1818.0" y="1136.0" width="40.0" height="44.0" fill="#473100"/>
+<rect x="1862.0" y="1136.0" width="40.0" height="44.0" fill="#C7AC56"/>
+<rect x="1906.0" y="1136.0" width="40.0" height="44.0" fill="#F3DDC5"/>
+<text x="1510.0" y="1204.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#FFFFFF">paskah . new</text>
+<rect x="1970.0" y="1126.0" width="460.0" height="86.0" fill="#1F0605"/>
+<rect x="1980.0" y="1136.0" width="40.0" height="44.0" fill="#1F0605"/>
+<rect x="2024.0" y="1136.0" width="40.0" height="44.0" fill="#FEF7F5"/>
+<rect x="2068.0" y="1136.0" width="40.0" height="44.0" fill="#250E0C"/>
+<rect x="2112.0" y="1136.0" width="40.0" height="44.0" fill="#704640"/>
+<rect x="2156.0" y="1136.0" width="40.0" height="44.0" fill="#822C27"/>
+<rect x="2200.0" y="1136.0" width="40.0" height="44.0" fill="#FFFFFF"/>
+<rect x="2244.0" y="1136.0" width="40.0" height="44.0" fill="#FFFFFF"/>
+<rect x="2288.0" y="1136.0" width="40.0" height="44.0" fill="#5F1A17"/>
+<rect x="2332.0" y="1136.0" width="40.0" height="44.0" fill="#E49B68"/>
+<rect x="2376.0" y="1136.0" width="40.0" height="44.0" fill="#FBD8D3"/>
+<text x="1980.0" y="1204.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#FFFFFF">bara . new</text>
+<text x="6.0" y="1262.0" font-family="Instrument Sans" font-weight="600" font-size="26" text-anchor="start" fill="#1D1A15">d13</text>
+<text x="6.0" y="1292.0" font-family="Instrument Sans" font-weight="500" font-size="18" text-anchor="start" fill="#5A564E">Block</text>
+<rect x="90.0" y="1222.0" width="460.0" height="86.0" fill="#BE91F8"/>
+<rect x="100.0" y="1232.0" width="84.0" height="44.0" fill="#BE91F8"/>
+<rect x="188.0" y="1232.0" width="84.0" height="44.0" fill="#15091E"/>
+<rect x="276.0" y="1232.0" width="84.0" height="44.0" fill="#450F79"/>
+<rect x="364.0" y="1232.0" width="84.0" height="44.0" fill="#FFFFFF"/>
+<rect x="452.0" y="1232.0" width="84.0" height="44.0" fill="#CBC4D1"/>
+<text x="100.0" y="1300.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#1D1A15">adven . new</text>
+<rect x="560.0" y="1222.0" width="460.0" height="86.0" fill="#40D872"/>
+<rect x="570.0" y="1232.0" width="84.0" height="44.0" fill="#40D872"/>
+<rect x="658.0" y="1232.0" width="84.0" height="44.0" fill="#00140D"/>
+<rect x="746.0" y="1232.0" width="84.0" height="44.0" fill="#6C0816"/>
+<rect x="834.0" y="1232.0" width="84.0" height="44.0" fill="#FFFFFF"/>
+<rect x="922.0" y="1232.0" width="84.0" height="44.0" fill="#BCCCC5"/>
+<text x="570.0" y="1300.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#1D1A15">natal . new</text>
+<rect x="1030.0" y="1222.0" width="460.0" height="86.0" fill="#E4A0BF"/>
+<rect x="1040.0" y="1232.0" width="84.0" height="44.0" fill="#E4A0BF"/>
+<rect x="1128.0" y="1232.0" width="84.0" height="44.0" fill="#170B13"/>
+<rect x="1216.0" y="1232.0" width="84.0" height="44.0" fill="#54183E"/>
+<rect x="1304.0" y="1232.0" width="84.0" height="44.0" fill="#FFFFFF"/>
+<rect x="1392.0" y="1232.0" width="84.0" height="44.0" fill="#D1C3CB"/>
+<text x="1040.0" y="1300.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#1D1A15">prapaskah . new</text>
+<rect x="1500.0" y="1222.0" width="460.0" height="86.0" fill="#F6D653"/>
+<rect x="1510.0" y="1232.0" width="84.0" height="44.0" fill="#F6D653"/>
+<rect x="1598.0" y="1232.0" width="84.0" height="44.0" fill="#150F00"/>
+<rect x="1686.0" y="1232.0" width="84.0" height="44.0" fill="#653E01"/>
+<rect x="1774.0" y="1232.0" width="84.0" height="44.0" fill="#FFFFFF"/>
+<rect x="1862.0" y="1232.0" width="84.0" height="44.0" fill="#CCC7B9"/>
+<text x="1510.0" y="1300.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#1D1A15">paskah . new</text>
+<rect x="1970.0" y="1222.0" width="460.0" height="86.0" fill="#FF4136" stroke="#000000" stroke-width="4"/>
+<rect x="1980.0" y="1232.0" width="84.0" height="44.0" fill="#FF4136"/>
+<rect x="2068.0" y="1232.0" width="84.0" height="44.0" fill="#140A0A"/>
+<rect x="2156.0" y="1232.0" width="84.0" height="44.0" fill="#0B2A6B"/>
+<rect x="2244.0" y="1232.0" width="84.0" height="44.0" fill="#FFFFFF"/>
+<rect x="2332.0" y="1232.0" width="84.0" height="44.0" fill="#D2C4C4"/>
+<text x="1980.0" y="1300.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#FFFFFF">merah . existing</text>
+<text x="6.0" y="1358.0" font-family="Instrument Sans" font-weight="600" font-size="26" text-anchor="start" fill="#1D1A15">d14</text>
+<text x="6.0" y="1388.0" font-family="Instrument Sans" font-weight="500" font-size="18" text-anchor="start" fill="#5A564E">Cahaya</text>
+<rect x="90.0" y="1318.0" width="460.0" height="86.0" fill="#1D0F27"/>
+<rect x="100.0" y="1328.0" width="36.0" height="44.0" fill="#1D0F27"/>
+<rect x="140.0" y="1328.0" width="36.0" height="44.0" fill="#57337A"/>
+<rect x="180.0" y="1328.0" width="36.0" height="44.0" fill="#F4C677"/>
+<rect x="220.0" y="1328.0" width="36.0" height="44.0" fill="#B376F0"/>
+<rect x="260.0" y="1328.0" width="36.0" height="44.0" fill="#F9F2FF"/>
+<rect x="300.0" y="1328.0" width="36.0" height="44.0" fill="#D1BFE1"/>
+<rect x="340.0" y="1328.0" width="36.0" height="44.0" fill="#FAD9A2"/>
+<rect x="380.0" y="1328.0" width="36.0" height="44.0" fill="#FFFFFF"/>
+<rect x="420.0" y="1328.0" width="36.0" height="44.0" fill="#F9F2FF"/>
+<rect x="460.0" y="1328.0" width="36.0" height="44.0" fill="#1D0F27"/>
+<rect x="500.0" y="1328.0" width="36.0" height="44.0" fill="#674689"/>
+<text x="100.0" y="1396.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#FFFFFF">adven . new</text>
+<rect x="560.0" y="1318.0" width="460.0" height="86.0" fill="#001C12"/>
+<rect x="570.0" y="1328.0" width="36.0" height="44.0" fill="#001C12"/>
+<rect x="610.0" y="1328.0" width="36.0" height="44.0" fill="#035634"/>
+<rect x="650.0" y="1328.0" width="36.0" height="44.0" fill="#EEC976"/>
+<rect x="690.0" y="1328.0" width="36.0" height="44.0" fill="#3DB44A"/>
+<rect x="730.0" y="1328.0" width="36.0" height="44.0" fill="#E9FAF2"/>
+<rect x="770.0" y="1328.0" width="36.0" height="44.0" fill="#A9D2C1"/>
+<rect x="810.0" y="1328.0" width="36.0" height="44.0" fill="#F6DBA1"/>
+<rect x="850.0" y="1328.0" width="36.0" height="44.0" fill="#FFFFFF"/>
+<rect x="890.0" y="1328.0" width="36.0" height="44.0" fill="#E9FAF2"/>
+<rect x="930.0" y="1328.0" width="36.0" height="44.0" fill="#001C12"/>
+<rect x="970.0" y="1328.0" width="36.0" height="44.0" fill="#056940"/>
+<text x="570.0" y="1396.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#FFFFFF">natal . new</text>
+<rect x="1030.0" y="1318.0" width="460.0" height="86.0" fill="#240C1D"/>
+<rect x="1040.0" y="1328.0" width="36.0" height="44.0" fill="#240C1D"/>
+<rect x="1080.0" y="1328.0" width="36.0" height="44.0" fill="#722756"/>
+<rect x="1120.0" y="1328.0" width="36.0" height="44.0" fill="#FFB7C3"/>
+<rect x="1160.0" y="1328.0" width="36.0" height="44.0" fill="#E263B1"/>
+<rect x="1200.0" y="1328.0" width="36.0" height="44.0" fill="#FEF1F9"/>
+<rect x="1240.0" y="1328.0" width="36.0" height="44.0" fill="#DFBBD2"/>
+<rect x="1280.0" y="1328.0" width="36.0" height="44.0" fill="#FED0D7"/>
+<rect x="1320.0" y="1328.0" width="36.0" height="44.0" fill="#FFFFFF"/>
+<rect x="1360.0" y="1328.0" width="36.0" height="44.0" fill="#FEF1F9"/>
+<rect x="1400.0" y="1328.0" width="36.0" height="44.0" fill="#240C1D"/>
+<rect x="1440.0" y="1328.0" width="36.0" height="44.0" fill="#823C66"/>
+<text x="1040.0" y="1396.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#FFFFFF">prapaskah . new</text>
+<rect x="1500.0" y="1318.0" width="460.0" height="86.0" fill="#1D1500"/>
+<rect x="1510.0" y="1328.0" width="36.0" height="44.0" fill="#1D1500"/>
+<rect x="1550.0" y="1328.0" width="36.0" height="44.0" fill="#5F4202"/>
+<rect x="1590.0" y="1328.0" width="36.0" height="44.0" fill="#E7CC76"/>
+<rect x="1630.0" y="1328.0" width="36.0" height="44.0" fill="#C58D04"/>
+<rect x="1670.0" y="1328.0" width="36.0" height="44.0" fill="#FAF5E6"/>
+<rect x="1710.0" y="1328.0" width="36.0" height="44.0" fill="#D3C7A3"/>
+<rect x="1750.0" y="1328.0" width="36.0" height="44.0" fill="#F1DDA1"/>
+<rect x="1790.0" y="1328.0" width="36.0" height="44.0" fill="#FFFFFF"/>
+<rect x="1830.0" y="1328.0" width="36.0" height="44.0" fill="#FAF5E6"/>
+<rect x="1870.0" y="1328.0" width="36.0" height="44.0" fill="#1D1500"/>
+<rect x="1910.0" y="1328.0" width="36.0" height="44.0" fill="#735103"/>
+<text x="1510.0" y="1396.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#FFFFFF">paskah . new</text>
+<rect x="1970.0" y="1318.0" width="460.0" height="86.0" fill="#2B0B14" stroke="#000000" stroke-width="4"/>
+<rect x="1980.0" y="1328.0" width="36.0" height="44.0" fill="#2B0B14"/>
+<rect x="2020.0" y="1328.0" width="36.0" height="44.0" fill="#7A2418"/>
+<rect x="2060.0" y="1328.0" width="36.0" height="44.0" fill="#FFC27A"/>
+<rect x="2100.0" y="1328.0" width="36.0" height="44.0" fill="#F0643A"/>
+<rect x="2140.0" y="1328.0" width="36.0" height="44.0" fill="#FFF3EA"/>
+<rect x="2180.0" y="1328.0" width="36.0" height="44.0" fill="#E3BFAE"/>
+<rect x="2220.0" y="1328.0" width="36.0" height="44.0" fill="#FFD7A0"/>
+<rect x="2260.0" y="1328.0" width="36.0" height="44.0" fill="#FFFFFF"/>
+<rect x="2300.0" y="1328.0" width="36.0" height="44.0" fill="#FFF3EA"/>
+<rect x="2340.0" y="1328.0" width="36.0" height="44.0" fill="#2B0B14"/>
+<rect x="2380.0" y="1328.0" width="36.0" height="44.0" fill="#8A3E34"/>
+<text x="1980.0" y="1396.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#FFFFFF">bara . existing</text>
+<text x="6.0" y="1454.0" font-family="Instrument Sans" font-weight="600" font-size="26" text-anchor="start" fill="#1D1A15">d15</text>
+<text x="6.0" y="1484.0" font-family="Instrument Sans" font-weight="500" font-size="18" text-anchor="start" fill="#5A564E">Magazine</text>
+<rect x="90.0" y="1414.0" width="460.0" height="86.0" fill="#291736"/>
+<rect x="100.0" y="1424.0" width="51.0" height="44.0" fill="#291736"/>
+<rect x="155.0" y="1424.0" width="51.0" height="44.0" fill="#F8EFE2"/>
+<rect x="210.0" y="1424.0" width="51.0" height="44.0" fill="#CDBDDB"/>
+<rect x="265.0" y="1424.0" width="51.0" height="44.0" fill="#52495A"/>
+<rect x="320.0" y="1424.0" width="51.0" height="44.0" fill="#F0C374"/>
+<rect x="375.0" y="1424.0" width="51.0" height="44.0" fill="#F8EFE2"/>
+<rect x="430.0" y="1424.0" width="51.0" height="44.0" fill="#291736"/>
+<rect x="485.0" y="1424.0" width="51.0" height="44.0" fill="#FFFFFF"/>
+<text x="100.0" y="1492.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#FFFFFF">adven . new</text>
+<rect x="560.0" y="1414.0" width="460.0" height="86.0" fill="#F6F0E0" stroke="#000000" stroke-width="4"/>
+<rect x="570.0" y="1424.0" width="51.0" height="44.0" fill="#F6F0E0"/>
+<rect x="625.0" y="1424.0" width="51.0" height="44.0" fill="#14180F"/>
+<rect x="680.0" y="1424.0" width="51.0" height="44.0" fill="#58584A"/>
+<rect x="735.0" y="1424.0" width="51.0" height="44.0" fill="#A8A58E"/>
+<rect x="790.0" y="1424.0" width="51.0" height="44.0" fill="#1F5B3A"/>
+<rect x="845.0" y="1424.0" width="51.0" height="44.0" fill="#14180F"/>
+<rect x="900.0" y="1424.0" width="51.0" height="44.0" fill="#F6F0E0"/>
+<rect x="955.0" y="1424.0" width="51.0" height="44.0" fill="#FFFFFF"/>
+<text x="570.0" y="1492.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#1D1A15">natal . existing</text>
+<rect x="1030.0" y="1414.0" width="460.0" height="86.0" fill="#EEE8E7"/>
+<rect x="1040.0" y="1424.0" width="51.0" height="44.0" fill="#EEE8E7"/>
+<rect x="1095.0" y="1424.0" width="51.0" height="44.0" fill="#22141D"/>
+<rect x="1150.0" y="1424.0" width="51.0" height="44.0" fill="#624A59"/>
+<rect x="1205.0" y="1424.0" width="51.0" height="44.0" fill="#B79E9D"/>
+<rect x="1260.0" y="1424.0" width="51.0" height="44.0" fill="#763058"/>
+<rect x="1315.0" y="1424.0" width="51.0" height="44.0" fill="#22141D"/>
+<rect x="1370.0" y="1424.0" width="51.0" height="44.0" fill="#EEE8E7"/>
+<rect x="1425.0" y="1424.0" width="51.0" height="44.0" fill="#FFFFFF"/>
+<text x="1040.0" y="1492.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#1D1A15">prapaskah . new</text>
+<rect x="1500.0" y="1414.0" width="460.0" height="86.0" fill="#F2EACC"/>
+<rect x="1510.0" y="1424.0" width="51.0" height="44.0" fill="#F2EACC"/>
+<rect x="1565.0" y="1424.0" width="51.0" height="44.0" fill="#1D190A"/>
+<rect x="1620.0" y="1424.0" width="51.0" height="44.0" fill="#595339"/>
+<rect x="1675.0" y="1424.0" width="51.0" height="44.0" fill="#AAA590"/>
+<rect x="1730.0" y="1424.0" width="51.0" height="44.0" fill="#684500"/>
+<rect x="1785.0" y="1424.0" width="51.0" height="44.0" fill="#1D190A"/>
+<rect x="1840.0" y="1424.0" width="51.0" height="44.0" fill="#F2EACC"/>
+<rect x="1895.0" y="1424.0" width="51.0" height="44.0" fill="#FFFFFF"/>
+<text x="1510.0" y="1492.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#1D1A15">paskah . new</text>
+<rect x="1970.0" y="1414.0" width="460.0" height="86.0" fill="#38130F"/>
+<rect x="1980.0" y="1424.0" width="51.0" height="44.0" fill="#38130F"/>
+<rect x="2035.0" y="1424.0" width="51.0" height="44.0" fill="#F8EFE2"/>
+<rect x="2090.0" y="1424.0" width="51.0" height="44.0" fill="#E0BAB4"/>
+<rect x="2145.0" y="1424.0" width="51.0" height="44.0" fill="#5D4744"/>
+<rect x="2200.0" y="1424.0" width="51.0" height="44.0" fill="#FFB98A"/>
+<rect x="2255.0" y="1424.0" width="51.0" height="44.0" fill="#F8EFE2"/>
+<rect x="2310.0" y="1424.0" width="51.0" height="44.0" fill="#38130F"/>
+<rect x="2365.0" y="1424.0" width="51.0" height="44.0" fill="#FFFFFF"/>
+<text x="1980.0" y="1492.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#FFFFFF">bara . new</text>
+<text x="6.0" y="1550.0" font-family="Instrument Sans" font-weight="600" font-size="26" text-anchor="start" fill="#1D1A15">d16</text>
+<text x="6.0" y="1580.0" font-family="Instrument Sans" font-weight="500" font-size="18" text-anchor="start" fill="#5A564E">Figures</text>
+<rect x="90.0" y="1510.0" width="460.0" height="86.0" fill="#EFE8F4" stroke="#000000" stroke-width="4"/>
+<rect x="100.0" y="1520.0" width="29.85" height="44.0" fill="#EFE8F4"/>
+<rect x="133.85" y="1520.0" width="29.85" height="44.0" fill="#FFFFFF"/>
+<rect x="167.69" y="1520.0" width="29.85" height="44.0" fill="#1A1520"/>
+<rect x="201.54" y="1520.0" width="29.85" height="44.0" fill="#5E5468"/>
+<rect x="235.38" y="1520.0" width="29.85" height="44.0" fill="#6B34B8"/>
+<rect x="269.23" y="1520.0" width="29.85" height="44.0" fill="#FFFFFF"/>
+<rect x="303.08" y="1520.0" width="29.85" height="44.0" fill="#C2410C"/>
+<rect x="336.92" y="1520.0" width="29.85" height="44.0" fill="#0F766E"/>
+<rect x="370.77" y="1520.0" width="29.85" height="44.0" fill="#1D4ED8"/>
+<rect x="404.62" y="1520.0" width="29.85" height="44.0" fill="#A21CAF"/>
+<rect x="438.46" y="1520.0" width="29.85" height="44.0" fill="#4D7C0F"/>
+<rect x="472.31" y="1520.0" width="29.85" height="44.0" fill="#B45309"/>
+<rect x="506.15" y="1520.0" width="29.85" height="44.0" fill="#FFFFFF"/>
+<text x="100.0" y="1588.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#1D1A15">adven . existing</text>
+<rect x="560.0" y="1510.0" width="460.0" height="86.0" fill="#0F2A22" stroke="#000000" stroke-width="4"/>
+<rect x="570.0" y="1520.0" width="29.85" height="44.0" fill="#0F2A22"/>
+<rect x="603.85" y="1520.0" width="29.85" height="44.0" fill="#17382E"/>
+<rect x="637.69" y="1520.0" width="29.85" height="44.0" fill="#F2F5F1"/>
+<rect x="671.54" y="1520.0" width="29.85" height="44.0" fill="#A9C0B5"/>
+<rect x="705.38" y="1520.0" width="29.85" height="44.0" fill="#F2C14E"/>
+<rect x="739.23" y="1520.0" width="29.85" height="44.0" fill="#0F2A22"/>
+<rect x="773.08" y="1520.0" width="29.85" height="44.0" fill="#FDBA74"/>
+<rect x="806.92" y="1520.0" width="29.85" height="44.0" fill="#5EEAD4"/>
+<rect x="840.77" y="1520.0" width="29.85" height="44.0" fill="#93C5FD"/>
+<rect x="874.62" y="1520.0" width="29.85" height="44.0" fill="#F0ABFC"/>
+<rect x="908.46" y="1520.0" width="29.85" height="44.0" fill="#BEF264"/>
+<rect x="942.31" y="1520.0" width="29.85" height="44.0" fill="#FCD34D"/>
+<rect x="976.15" y="1520.0" width="29.85" height="44.0" fill="#0F2A22"/>
+<text x="570.0" y="1588.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#FFFFFF">natal . existing</text>
+<rect x="1030.0" y="1510.0" width="460.0" height="86.0" fill="#EEE8E7"/>
+<rect x="1040.0" y="1520.0" width="29.85" height="44.0" fill="#EEE8E7"/>
+<rect x="1073.85" y="1520.0" width="29.85" height="44.0" fill="#FFFFFF"/>
+<rect x="1107.69" y="1520.0" width="29.85" height="44.0" fill="#22141D"/>
+<rect x="1141.54" y="1520.0" width="29.85" height="44.0" fill="#624A59"/>
+<rect x="1175.38" y="1520.0" width="29.85" height="44.0" fill="#702A52"/>
+<rect x="1209.23" y="1520.0" width="29.85" height="44.0" fill="#FFFFFF"/>
+<rect x="1243.08" y="1520.0" width="29.85" height="44.0" fill="#C2410C"/>
+<rect x="1276.92" y="1520.0" width="29.85" height="44.0" fill="#0F766E"/>
+<rect x="1310.77" y="1520.0" width="29.85" height="44.0" fill="#1D4ED8"/>
+<rect x="1344.62" y="1520.0" width="29.85" height="44.0" fill="#A21CAF"/>
+<rect x="1378.46" y="1520.0" width="29.85" height="44.0" fill="#4D7C0F"/>
+<rect x="1412.31" y="1520.0" width="29.85" height="44.0" fill="#B45309"/>
+<rect x="1446.15" y="1520.0" width="29.85" height="44.0" fill="#FFFFFF"/>
+<text x="1040.0" y="1588.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#1D1A15">prapaskah . new</text>
+<rect x="1500.0" y="1510.0" width="460.0" height="86.0" fill="#F2EACC"/>
+<rect x="1510.0" y="1520.0" width="29.85" height="44.0" fill="#F2EACC"/>
+<rect x="1543.85" y="1520.0" width="29.85" height="44.0" fill="#FFFFFF"/>
+<rect x="1577.69" y="1520.0" width="29.85" height="44.0" fill="#1D190A"/>
+<rect x="1611.54" y="1520.0" width="29.85" height="44.0" fill="#595339"/>
+<rect x="1645.38" y="1520.0" width="29.85" height="44.0" fill="#F4CD4B"/>
+<rect x="1679.23" y="1520.0" width="29.85" height="44.0" fill="#1D190A"/>
+<rect x="1713.08" y="1520.0" width="29.85" height="44.0" fill="#C2410C"/>
+<rect x="1746.92" y="1520.0" width="29.85" height="44.0" fill="#0F766E"/>
+<rect x="1780.77" y="1520.0" width="29.85" height="44.0" fill="#1D4ED8"/>
+<rect x="1814.62" y="1520.0" width="29.85" height="44.0" fill="#A21CAF"/>
+<rect x="1848.46" y="1520.0" width="29.85" height="44.0" fill="#4D7C0F"/>
+<rect x="1882.31" y="1520.0" width="29.85" height="44.0" fill="#B45309"/>
+<rect x="1916.15" y="1520.0" width="29.85" height="44.0" fill="#FFFFFF"/>
+<text x="1510.0" y="1588.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#1D1A15">paskah . new</text>
+<rect x="1970.0" y="1510.0" width="460.0" height="86.0" fill="#F7E5E2"/>
+<rect x="1980.0" y="1520.0" width="29.85" height="44.0" fill="#F7E5E2"/>
+<rect x="2013.85" y="1520.0" width="29.85" height="44.0" fill="#FFFFFF"/>
+<rect x="2047.69" y="1520.0" width="29.85" height="44.0" fill="#251412"/>
+<rect x="2081.54" y="1520.0" width="29.85" height="44.0" fill="#674A45"/>
+<rect x="2115.38" y="1520.0" width="29.85" height="44.0" fill="#AC040C"/>
+<rect x="2149.23" y="1520.0" width="29.85" height="44.0" fill="#FFFFFF"/>
+<rect x="2183.08" y="1520.0" width="29.85" height="44.0" fill="#C2410C"/>
+<rect x="2216.92" y="1520.0" width="29.85" height="44.0" fill="#0F766E"/>
+<rect x="2250.77" y="1520.0" width="29.85" height="44.0" fill="#1D4ED8"/>
+<rect x="2284.62" y="1520.0" width="29.85" height="44.0" fill="#A21CAF"/>
+<rect x="2318.46" y="1520.0" width="29.85" height="44.0" fill="#4D7C0F"/>
+<rect x="2352.31" y="1520.0" width="29.85" height="44.0" fill="#B45309"/>
+<rect x="2386.15" y="1520.0" width="29.85" height="44.0" fill="#FFFFFF"/>
+<text x="1980.0" y="1588.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#1D1A15">merah . new</text>
+<text x="6.0" y="1646.0" font-family="Instrument Sans" font-weight="600" font-size="26" text-anchor="start" fill="#1D1A15">d17</text>
+<text x="6.0" y="1676.0" font-family="Instrument Sans" font-weight="500" font-size="18" text-anchor="start" fill="#5A564E">Warm</text>
+<rect x="90.0" y="1606.0" width="460.0" height="86.0" fill="#3A2340" stroke="#000000" stroke-width="4"/>
+<rect x="100.0" y="1616.0" width="44.89" height="44.0" fill="#3A2340"/>
+<rect x="148.89" y="1616.0" width="44.89" height="44.0" fill="#4A2E52"/>
+<rect x="197.78" y="1616.0" width="44.89" height="44.0" fill="#F7ECE3"/>
+<rect x="246.67" y="1616.0" width="44.89" height="44.0" fill="#D9C4D6"/>
+<rect x="295.56" y="1616.0" width="44.89" height="44.0" fill="#E8BE74"/>
+<rect x="344.44" y="1616.0" width="44.89" height="44.0" fill="#3A2340"/>
+<rect x="393.33" y="1616.0" width="44.89" height="44.0" fill="#F7ECE3"/>
+<rect x="442.22" y="1616.0" width="44.89" height="44.0" fill="#3A2340"/>
+<rect x="491.11" y="1616.0" width="44.89" height="44.0" fill="#7C5A86"/>
+<text x="100.0" y="1684.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#FFFFFF">adven . existing</text>
+<rect x="560.0" y="1606.0" width="460.0" height="86.0" fill="#04271C"/>
+<rect x="570.0" y="1616.0" width="44.89" height="44.0" fill="#04271C"/>
+<rect x="618.89" y="1616.0" width="44.89" height="44.0" fill="#0F3629"/>
+<rect x="667.78" y="1616.0" width="44.89" height="44.0" fill="#F8EFE2"/>
+<rect x="716.67" y="1616.0" width="44.89" height="44.0" fill="#A9CEBE"/>
+<rect x="765.56" y="1616.0" width="44.89" height="44.0" fill="#EAC673"/>
+<rect x="814.44" y="1616.0" width="44.89" height="44.0" fill="#04271C"/>
+<rect x="863.33" y="1616.0" width="44.89" height="44.0" fill="#F8EFE2"/>
+<rect x="912.22" y="1616.0" width="44.89" height="44.0" fill="#04271C"/>
+<rect x="961.11" y="1616.0" width="44.89" height="44.0" fill="#224C3D"/>
+<text x="570.0" y="1684.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#FFFFFF">natal . new</text>
+<rect x="1030.0" y="1606.0" width="460.0" height="86.0" fill="#EEE8E7"/>
+<rect x="1040.0" y="1616.0" width="44.89" height="44.0" fill="#EEE8E7"/>
+<rect x="1088.89" y="1616.0" width="44.89" height="44.0" fill="#F9F6F6"/>
+<rect x="1137.78" y="1616.0" width="44.89" height="44.0" fill="#22141D"/>
+<rect x="1186.67" y="1616.0" width="44.89" height="44.0" fill="#624A59"/>
+<rect x="1235.56" y="1616.0" width="44.89" height="44.0" fill="#763058"/>
+<rect x="1284.44" y="1616.0" width="44.89" height="44.0" fill="#EEE8E7"/>
+<rect x="1333.33" y="1616.0" width="44.89" height="44.0" fill="#240F0F"/>
+<rect x="1382.22" y="1616.0" width="44.89" height="44.0" fill="#EEE8E7"/>
+<rect x="1431.11" y="1616.0" width="44.89" height="44.0" fill="#D9CECD"/>
+<text x="1040.0" y="1684.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#1D1A15">prapaskah . new</text>
+<rect x="1500.0" y="1606.0" width="460.0" height="86.0" fill="#F7EBC9" stroke="#000000" stroke-width="4"/>
+<rect x="1510.0" y="1616.0" width="44.89" height="44.0" fill="#F7EBC9"/>
+<rect x="1558.89" y="1616.0" width="44.89" height="44.0" fill="#FCF5E0"/>
+<rect x="1607.78" y="1616.0" width="44.89" height="44.0" fill="#33280C"/>
+<rect x="1656.67" y="1616.0" width="44.89" height="44.0" fill="#6A5A30"/>
+<rect x="1705.56" y="1616.0" width="44.89" height="44.0" fill="#855600"/>
+<rect x="1754.44" y="1616.0" width="44.89" height="44.0" fill="#FCF5E0"/>
+<rect x="1803.33" y="1616.0" width="44.89" height="44.0" fill="#33280C"/>
+<rect x="1852.22" y="1616.0" width="44.89" height="44.0" fill="#F7EBC9"/>
+<rect x="1901.11" y="1616.0" width="44.89" height="44.0" fill="#D8C791"/>
+<text x="1510.0" y="1684.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#1D1A15">paskah . existing</text>
+<rect x="1970.0" y="1606.0" width="460.0" height="86.0" fill="#3E1A16" stroke="#000000" stroke-width="4"/>
+<rect x="1980.0" y="1616.0" width="44.89" height="44.0" fill="#3E1A16"/>
+<rect x="2028.89" y="1616.0" width="44.89" height="44.0" fill="#4F2420"/>
+<rect x="2077.78" y="1616.0" width="44.89" height="44.0" fill="#F8E9DD"/>
+<rect x="2126.67" y="1616.0" width="44.89" height="44.0" fill="#DDBBAE"/>
+<rect x="2175.56" y="1616.0" width="44.89" height="44.0" fill="#F0A878"/>
+<rect x="2224.44" y="1616.0" width="44.89" height="44.0" fill="#3E1A16"/>
+<rect x="2273.33" y="1616.0" width="44.89" height="44.0" fill="#F8E9DD"/>
+<rect x="2322.22" y="1616.0" width="44.89" height="44.0" fill="#3E1A16"/>
+<rect x="2371.11" y="1616.0" width="44.89" height="44.0" fill="#82504A"/>
+<text x="1980.0" y="1684.0" font-family="Instrument Sans" font-weight="600" font-size="18" text-anchor="start" fill="#FFFFFF">api . existing</text>
+
+
+
+</svg>

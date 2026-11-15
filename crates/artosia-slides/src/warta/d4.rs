@@ -28,6 +28,18 @@ fn ground(sl: &mut Sheet, left_w: Option<f32>, top_band: Option<f32>) {
     }
 }
 
+/// Where the top right is no navy, the season's sign sits after the kicker `left` on the light ground, in blue.
+fn after(sl: &mut Sheet, left: super::Tm, cy: f32) {
+    let size = sl.mk("after_size");
+    sl.put_mark(left.x + left.w + 24.0 + size / 2.0, cy, size, "blue", 1.0);
+}
+
+/// The season's sign in the top right corner of the navy area.
+fn corner(sl: &mut Sheet) {
+    let size = sl.mk("size");
+    sl.mark_here(W - sl.g("mx") - size / 2.0, sl.mk("y") + size / 2.0);
+}
+
 fn dots(sl: &mut Sheet, x: f32, cy: f32, count: usize, dia: f32, gap: f32) {
     for k in 0..count {
         sl.push(R::new(x + k as f32 * (dia + gap), cy - dia / 2.0, dia, dia).fill("yellow").pill());
@@ -40,7 +52,10 @@ fn s01(sl: &mut Sheet, d: &Data) -> Fits {
     let rows = &d.rows;
     let n = rows.len().max(1);
     ground(sl, Some(k("left_w")), None);
-    sl.text("kicker", &d.kicker(d.w.wib.as_str()), Tx::l(mx, ky).cy().maxw(900.0));
+    // The week's cells and their label fill the corner of the navy strip, so the sign follows the kicker.
+    let left = sl.text("kicker", &d.kicker(d.w.wib.as_str()), Tx::l(mx, ky).cy().maxw(900.0 - sl.mark_reserve()));
+    // The 84 px title stands close under the kicker, so the sign rides 4 px higher.
+    after(sl, left, ky - 4.0);
     sl.text("title", &d.title, Tx::l(mx, base).maxw(k("left_w") - 2.0 * mx));
     if !d.week_short.is_empty() {
         sl.text("sub", &d.week_short, Tx::l(mx, sub_base));
@@ -103,7 +118,10 @@ fn s02(sl: &mut Sheet, d: &Data) -> Fits {
         sl.text("title_w", &d.week_label, Tx::l(k("strip_x"), 140.0).maxw(W - k("strip_x") - k("mx")));
     }
     if !d.days.is_empty() && (d.highlighted() || d.covers) {
-        sl.text("kicker_y", &d.week_label, Tx::l(k("strip_x"), 40.0).cy());
+        let label = sl.text("kicker_y", &d.week_label, Tx::l(k("strip_x"), 40.0).cy());
+        // The week's strip fills the corner, so the season's sign follows the label that heads it, in sky.
+        let size = sl.mk("label_size");
+        sl.put_mark(label.x + label.w + 24.0 + size / 2.0, 40.0, size, "sky", 1.0);
         for (at, (dow, date)) in d.days.iter().enumerate() {
             let x = k("strip_x") + at as f32 * (k("strip_w") + k("strip_gap"));
             sl.push(R::new(x, k("strip_y"), k("strip_w"), 150.0).fill("white").rx(20.0).op(0.12));
@@ -113,6 +131,9 @@ fn s02(sl: &mut Sheet, d: &Data) -> Fits {
             sl.text("cell_n", &date.to_string(), Tx::c(x + k("strip_w") / 2.0, k("strip_y") + 86.0).cy().op(op));
             dots(sl, x + k("strip_w") / 2.0 - (count as f32 * k("dot") + count.saturating_sub(1) as f32 * 8.0) / 2.0, k("strip_y") + 128.0, count, k("dot"), 8.0);
         }
+    }
+    if d.days.is_empty() || !(d.highlighted() || d.covers) {
+        corner(sl);
     }
     let cols = sl.list("s02", "cols").into_iter().find(|row| n as f32 <= row[0]).map(|row| row[1] as usize).ok_or(Split)?;
     let per = n.div_ceil(cols);
@@ -150,6 +171,7 @@ fn s03(sl: &mut Sheet, d: &Data) -> Fits {
     let funds = &d.funds;
     let n = funds.len().max(1);
     ground(sl, Some(k("left_w")), None);
+    corner(sl);
     sl.text("kicker", &d.kicker(d.w.offerings.as_str()), Tx::l(k("mx"), ky).cy().maxw(900.0));
     sl.text("title", &d.title, Tx::l(k("mx"), base).maxw(k("left_w") - 2.0 * k("mx")));
     if let Some(date) = &d.date_long {
@@ -201,6 +223,7 @@ fn s04(sl: &mut Sheet, d: &Data, have: Have) -> Fits {
     let (ky, base) = (sl.g("kicker_y"), sl.g("title_base"));
     let k = sl.sec("s04");
     ground(sl, Some(k("left_w")), None);
+    corner(sl);
     let wide = k("left_w") - 2.0 * k("mx");
     let a = &d.account;
     sl.text("kicker", &d.kicker(d.w.account.as_str()), Tx::l(k("mx"), ky).cy().maxw(wide));
@@ -245,7 +268,8 @@ fn s05(sl: &mut Sheet, d: &Data, have: Have) -> Fits {
         sl.image(Pic::Photo, k("left_w"), 0.0, W - k("left_w"), H, 0.0, false, Pos::Max);
         sl.push(R::new(k("left_w"), k("shade_y"), W - k("left_w"), H - k("shade_y")).fill("grad:shade"));
     }
-    sl.text("kicker", &d.kicker(d.date_long.as_deref().unwrap_or("")), Tx::l(k("mx"), ky).cy().maxw(k("text_w")));
+    let left = sl.text("kicker", &d.kicker(d.date_long.as_deref().unwrap_or("")), Tx::l(k("mx"), ky).cy().maxw(k("text_w") - sl.mark_reserve()));
+    after(sl, left, ky);
     let face = sl.face_of("verse");
     verse(sl, &d.verses, &VerseBox { x: k("mx"), top: k("top"), w: k("text_w"), room: k("bottom") - k("top"), font: &face, section: "s05" })?;
     let px = k("left_w") + 56.0;
@@ -263,6 +287,7 @@ fn s06(sl: &mut Sheet, d: &Data, have: Have) -> Fits {
     } else {
         // The date is the picture: the day as a big numeral on the navy panel.
         sl.push(R::new(k("left_w"), 0.0, W - k("left_w"), H).fill("navy"));
+        corner(sl);
         let cx = k("left_w") + (W - k("left_w")) / 2.0;
         if let Some((dow, day, month)) = &d.date_card {
             sl.text("dow_big", dow, Tx::c(cx, H / 2.0 - 220.0).cy());
@@ -292,7 +317,10 @@ fn s06(sl: &mut Sheet, d: &Data, have: Have) -> Fits {
     let lines = wrap_at(z);
     let block = 32.0 + 36.0 + lines.len() as f32 * z * k("title_lh") + 44.0 + body_h;
     let top = (H - block) / 2.0;
-    sl.text("kicker", d.w.notice.as_str(), Tx::l(k("mx"), top + 16.0).cy());
+    let left = sl.text("kicker", d.w.notice.as_str(), Tx::l(k("mx"), top + 16.0).cy());
+    if have.photo {
+        after(sl, left, top + 16.0);
+    }
     let mut y = top + 32.0 + 36.0;
     let cap = sl.cap(&face, z);
     for (i, line) in lines.iter().enumerate() {

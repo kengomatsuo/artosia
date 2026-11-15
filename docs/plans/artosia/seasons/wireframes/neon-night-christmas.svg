@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+<defs>
+<linearGradient id="ground" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#04271C" stop-opacity="1"/>
+<stop offset="1" stop-color="#00140D" stop-opacity="1"/>
+</linearGradient>
+</defs>
+<rect x="0.0" y="0.0" width="1920.0" height="1080.0" fill="url(#ground)"/>
+<circle cx="1728.0" cy="128.0" r="104.0" fill="none" stroke="#FF5C73" stroke-width="10" opacity="0.12"/>
+<circle cx="1728.0" cy="128.0" r="96.0" fill="none" stroke="#FF5C73" stroke-width="6" opacity="0.26"/>
+<circle cx="1728.0" cy="128.0" r="83.0" fill="none" stroke="#FF5C73" stroke-width="10"/>
+<rect x="1464.0" y="102.0" width="116.0" height="116.0" rx="26.0" fill="none" stroke="#FFD65C" stroke-width="10" opacity="0.12" transform="rotate(45 1522.0 160.0)"/>
+<rect x="1472.0" y="110.0" width="100.0" height="100.0" rx="18.0" fill="none" stroke="#FFD65C" stroke-width="6" opacity="0.26" transform="rotate(45 1522.0 160.0)"/>
+<rect x="1484.0" y="122.0" width="76.0" height="76.0" rx="10.0" fill="none" stroke="#FFD65C" stroke-width="8" transform="rotate(45 1522.0 160.0)"/>
+<circle cx="1835.0" cy="267.0" r="17.0" fill="#4DF2A6"/>
+<text x="84.0" y="95.2" font-family="Space Grotesk" font-weight="700" font-size="32" letter-spacing="5.12" text-anchor="start" fill="#FF5C73">WARTA JEMAAT . SEMUA JAM WIB</text>
+<text x="84.0" y="202.0" font-family="Space Grotesk" font-weight="700" font-size="100" text-anchor="start" fill="#F8EFE2">JADWAL PEKAN INI</text>
+<rect x="68.0" y="216.0" width="545.49" height="90.0" rx="45.0" fill="none" stroke="#FF5C73" stroke-width="10" opacity="0.12"/>
+<rect x="76.0" y="224.0" width="529.49" height="74.0" rx="37.0" fill="none" stroke="#FF5C73" stroke-width="6" opacity="0.26"/>
+<rect x="84.0" y="232.0" width="513.49" height="58.0" rx="29.0" fill="none" stroke="#FF5C73" stroke-width="4"/>
+<text x="114.0" y="272.9" font-family="Space Grotesk" font-weight="700" font-size="34" letter-spacing="2.72" text-anchor="start" fill="#FF5C73">15 - 21 NOVEMBER 2026</text>
+<rect x="84.0" y="350.0" width="110.0" height="22.0" rx="11.0" fill="#FF5C73" opacity="0.9"/>
+<text x="296.0" y="378.1" font-family="Space Grotesk" font-weight="700" font-size="46" text-anchor="start" fill="#4DF2A6">07.00</text>
+<rect x="456.0" y="350.0" width="460.0" height="22.0" rx="11.0" fill="#F8EFE2" opacity="0.55"/>
+<rect x="84.0" y="398.0" width="1752.0" height="2.0" fill="#035634"/>
+<rect x="84.0" y="430.0" width="110.0" height="22.0" rx="11.0" fill="#FF5C73" opacity="0.9"/>
+<text x="296.0" y="458.1" font-family="Space Grotesk" font-weight="700" font-size="46" text-anchor="start" fill="#4DF2A6">09.30</text>
+<rect x="456.0" y="430.0" width="580.0" height="22.0" rx="11.0" fill="#F8EFE2" opacity="0.55"/>
+<rect x="84.0" y="478.0" width="1752.0" height="2.0" fill="#035634"/>
+<rect x="84.0" y="510.0" width="110.0" height="22.0" rx="11.0" fill="#FF5C73" opacity="0.9"/>
+<text x="296.0" y="538.1" font-family="Space Grotesk" font-weight="700" font-size="46" text-anchor="start" fill="#4DF2A6">18.30</text>
+<rect x="456.0" y="510.0" width="520.0" height="22.0" rx="11.0" fill="#F8EFE2" opacity="0.55"/>
+<rect x="84.0" y="558.0" width="1752.0" height="2.0" fill="#035634"/>
+<rect x="84.0" y="590.0" width="110.0" height="22.0" rx="11.0" fill="#FF5C73" opacity="0.9"/>
+<text x="296.0" y="618.1" font-family="Space Grotesk" font-weight="700" font-size="46" text-anchor="start" fill="#4DF2A6">19.00</text>
+<rect x="456.0" y="590.0" width="400.0" height="22.0" rx="11.0" fill="#F8EFE2" opacity="0.55"/>
+<rect x="84.0" y="638.0" width="1752.0" height="2.0" fill="#035634"/>
+<rect x="84.0" y="670.0" width="110.0" height="22.0" rx="11.0" fill="#FF5C73" opacity="0.9"/>
+<text x="296.0" y="698.1" font-family="Space Grotesk" font-weight="700" font-size="46" text-anchor="start" fill="#4DF2A6">17.30</text>
+<rect x="456.0" y="670.0" width="620.0" height="22.0" rx="11.0" fill="#F8EFE2" opacity="0.55"/>
+<rect x="84.0" y="718.0" width="1752.0" height="2.0" fill="#035634"/>
+<rect x="60.0" y="724.0" width="1800.0" height="68.0" rx="34.0" fill="none" stroke="#FFD65C" stroke-width="4"/>
+<rect x="84.0" y="750.0" width="110.0" height="22.0" rx="11.0" fill="#FF5C73" opacity="0.9"/>
+<text x="296.0" y="778.1" font-family="Space Grotesk" font-weight="700" font-size="46" text-anchor="start" fill="#4DF2A6">19.00</text>
+<rect x="456.0" y="750.0" width="550.0" height="22.0" rx="11.0" fill="#F8EFE2" opacity="0.55"/>
+<rect x="84.0" y="830.0" width="110.0" height="22.0" rx="11.0" fill="#FF5C73" opacity="0.9"/>
+<text x="296.0" y="858.1" font-family="Space Grotesk" font-weight="700" font-size="46" text-anchor="start" fill="#4DF2A6">09.00</text>
+<rect x="456.0" y="830.0" width="480.0" height="22.0" rx="11.0" fill="#F8EFE2" opacity="0.55"/>
+<rect x="84.0" y="878.0" width="1752.0" height="2.0" fill="#035634"/>
+<rect x="84.0" y="910.0" width="110.0" height="22.0" rx="11.0" fill="#FF5C73" opacity="0.9"/>
+<text x="296.0" y="938.1" font-family="Space Grotesk" font-weight="700" font-size="46" text-anchor="start" fill="#4DF2A6">16.00</text>
+<rect x="456.0" y="910.0" width="570.0" height="22.0" rx="11.0" fill="#F8EFE2" opacity="0.55"/>
+<rect x="84.0" y="958.0" width="1752.0" height="2.0" fill="#035634"/>
+<svg x="1684.0" y="84.0" width="88" height="88" viewBox="0 0 24 24"><g fill="none" stroke="#FF5C73" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1.8L13.3 8.86L16.67 7.33L15.14 10.7L20.8 12L15.14 13.3L16.67 16.67L13.3 15.14L12 20.8L10.7 15.14L7.33 16.67L8.86 13.3L3.2 12L8.86 10.7L7.33 7.33L10.7 8.86Z" fill="#FF5C73" stroke="#FF5C73" stroke-width="1"/></g></svg>
+</svg>

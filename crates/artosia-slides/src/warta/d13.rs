@@ -31,7 +31,8 @@ fn page(sl: &mut Sheet, d: &Data, band: f32, blue_x: f32, title: &str, sub: Opti
     let mx = sl.g("mx");
     blocks(sl, band, blue_x);
     let room = blue_x - mx - 40.0;
-    sl.text("kicker", &d.church_kicker(""), Tx::l(mx, sl.g("kicker_cy")).cy().maxw(room));
+    let left = sl.text("kicker", &d.church_kicker(""), Tx::l(mx, sl.g("kicker_cy")).cy().maxw(room - sl.mark_reserve()));
+    sl.mark_after(left.x + left.w);
     sl.text("title", title, Tx::l(mx, band - sl.g("title_up")).cy().maxw(room));
     if let Some(sub) = sub.filter(|sub| !sub.is_empty()) {
         sl.text("sub", sub, Tx::l(mx, band - sl.g("sub_up")).cy().maxw(room));
@@ -286,7 +287,8 @@ fn s06(sl: &mut Sheet, d: &Data, have: Have) -> Fits {
     let (cap, tl) = (sl.cap(&face, z), k("title_lh") * z);
     let band = k("title_top") + cap + (lines.len().max(1) - 1) as f32 * tl + k("pad");
     blocks(sl, band, W);
-    let left = sl.text("kicker", &d.church_kicker(""), Tx::l(mx, ky).cy().maxw(x2 - mx));
+    let left = sl.text("kicker", &d.church_kicker(""), Tx::l(mx, ky).cy().maxw(x2 - mx - sl.mark_reserve()));
+    sl.mark_after(left.x + left.w);
     if let Some(date) = d.date_long.as_deref() {
         sl.text("kicker", date, Tx::r(x2, ky).cy().maxw(x2 - mx - left.w - 40.0));
     }

@@ -4,11 +4,15 @@
 {"id":"anggur","palette":{"ground":"#6B1424","ground2":"#480C17","gold":"#E3C06C","cream":"#F7EBD3","ink":"#3C0A13","mute":"#EAD3C8"}},
 {"id":"safir","palette":{"ground":"#14274F","ground2":"#0B1731","gold":"#E3C06C","cream":"#F5EEDC","ink":"#0B1731","mute":"#CFD8EC"}},
 {"id":"zamrud","palette":{"ground":"#14392C","ground2":"#0B2119","gold":"#DDBC6C","cream":"#F4EEDC","ink":"#0B2119","mute":"#D2E3D8"}},
-{"id":"ametis","palette":{"ground":"#3F1F56","ground2":"#26113A","gold":"#E6C77C","cream":"#F5ECDD","ink":"#26113A","mute":"#DDCDEE"}},
+{"id":"ametis","season":"advent","palette":{"ground":"#3F1F56","ground2":"#26113A","gold":"#E6C77C","cream":"#F5ECDD","ink":"#26113A","mute":"#DDCDEE"}},
 {"id":"merah","season":"pentecost","palette":{"ground":"#A3161A","ground2":"#6E0C10","gold":"#F0CE7A","cream":"#FBEFD9","ink":"#4A0508","mute":"#FADFD6"}},
-{"id":"arang","palette":{"ground":"#1F1F24","ground2":"#0C0C0F","gold":"#E3C06C","cream":"#F2EDE0","ink":"#0C0C0F","mute":"#CFCFD6"}}
+{"id":"arang","palette":{"ground":"#1F1F24","ground2":"#0C0C0F","gold":"#E3C06C","cream":"#F2EDE0","ink":"#0C0C0F","mute":"#CFCFD6"}},
+{"id":"natal","season":"christmas","palette":{"ground":"#0B492F","ground2":"#002C1A","gold":"#E6C77C","cream":"#FBF1DC","ink":"#001409","mute":"#D2EBE1"}},
+{"id":"prapaskah","season":"lent","palette":{"ground":"#4B3545","ground2":"#301C2C","gold":"#E6C77C","cream":"#FBF1DC","ink":"#170B14","mute":"#F3DDEB"}},
+{"id":"paskah","season":"easter","palette":{"ground":"#F5EDCF","ground2":"#E6D5A1","gold":"#735103","cream":"#231903","ink":"#F9F2DC","mute":"#5F5132"}}
 ],
 "swatch": ["ground","gold"],
+"mark": {"size":56,"role":"gold","cx":960,"cy":92},
 "pairs": [["cream","ground","text"],["gold","ground","text"],["mute","ground","text"],["ink","cream","text"],["cream","ground","large"],["gold","ground","mark"],["gold","ground2","mark"],["ink","gold","text"],["ink","cream","large"]],
 "folder": "11-liturgy",
 "language": "Order of service: vestment ground, double gold frame, parchment bands, Cinzel capitals over Source Serif",

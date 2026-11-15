@@ -1,0 +1,3 @@
+[{"id":"natal","season":"christmas","palette":{"paper":"#E6ECDD","ink":"#161C0D","mute":"#4D573E","rule":"#CCD5BE","block":"#121906","block_ink":"#E8EEDF","block_mute":"#AAB795","accent":"#165B38","card":"#FFFFFF"}},
+{"id":"prapaskah","season":"lent","palette":{"paper":"#EEE8E7","ink":"#22141D","mute":"#624A59","rule":"#D9CECD","block":"#240F0F","block_ink":"#F8E6E6","block_mute":"#CFA5A4","accent":"#763058","card":"#FFFFFF"}},
+{"id":"merah","season":"pentecost","palette":{"paper":"#F7E5E2","ink":"#251412","mute":"#674A45","rule":"#E4CAC6","block":"#24100C","block_ink":"#F8E7E3","block_mute":"#CFA69E","accent":"#94020D","card":"#FFFFFF"}}]

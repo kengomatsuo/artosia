@@ -1,0 +1,4 @@
+[{"id":"adven","season":"advent","palette":{"night1":"#291736","night2":"#15091E","ink":"#F8EFE2","mute":"#CDBDDB","pink":"#FF5CC0","yellow":"#FFD84A","teal":"#6FE8FF","violet":"#B596FF","dark":"#15091E","line":"#58307F","white":"#FFFFFF"}},
+{"id":"natal","season":"christmas","palette":{"night1":"#04271C","night2":"#00140D","ink":"#F8EFE2","mute":"#A9CEBE","pink":"#FF5C73","yellow":"#FFD65C","teal":"#4DF2A6","violet":"#8CD9FF","dark":"#00140D","line":"#035634","white":"#FFFFFF"}},
+{"id":"prapaskah","season":"lent","palette":{"night1":"#2C1A26","night2":"#170B13","ink":"#F8EFE2","mute":"#D9B9CD","pink":"#FF8FB8","yellow":"#F2D27A","teal":"#8FD9D0","violet":"#C7A6FF","dark":"#170B13","line":"#752257","white":"#FFFFFF"}},
+{"id":"bara","season":"pentecost","palette":{"night1":"#38130F","night2":"#1F0605","ink":"#F8EFE2","mute":"#E0BAB4","pink":"#FF4D4D","yellow":"#FFC83D","teal":"#FF8A3C","violet":"#FF7AA8","dark":"#1F0605","line":"#7F211D","white":"#FFFFFF"}}]

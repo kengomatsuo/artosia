@@ -28,7 +28,8 @@ fn page(sl: &mut Sheet, d: &Data, right: &str, arches: Option<f32>) {
         }
     }
     let taken = if right.is_empty() { 0.0 } else { sl.text("kicker", right, Tx::r(x2, cy).cy().maxw((x2 - mx) / 2.0)).w + 40.0 };
-    sl.text("kicker", &d.church_kicker(""), Tx::l(mx, cy).cy().maxw(x2 - mx - taken));
+    let left = sl.text("kicker", &d.church_kicker(""), Tx::l(mx, cy).cy().maxw(x2 - mx - taken - sl.mark_reserve()));
+    sl.mark_after(left.x + left.w);
 }
 
 /// The title with `sub` in italic after it, when it fits the page.

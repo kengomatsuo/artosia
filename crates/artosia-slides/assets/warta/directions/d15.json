@@ -6,9 +6,14 @@
 {"id":"anggur","name":"Anggur","palette":{"ground":"#2B0E17","ink":"#F6ECE6","mute":"#D9BFC0","rule":"#7A4B55","accent":"#E9B26A","inv_bg":"#F6ECE6","inv_fg":"#2B0E17","card":"#FFFFFF"}},
 {"id":"kertas","name":"Kertas","palette":{"ground":"#F3EFE5","ink":"#17150F","mute":"#5A554A","rule":"#A9A292","accent":"#A9361C","inv_bg":"#17150F","inv_fg":"#F3EFE5","card":"#FFFFFF"}},
 {"id":"natal","season":"christmas","name":"Natal","palette":{"ground":"#F6F0E0","ink":"#14180F","mute":"#58584A","rule":"#A8A58E","accent":"#1F5B3A","inv_bg":"#14180F","inv_fg":"#F6F0E0","card":"#FFFFFF"}},
-{"id":"arang","name":"Arang","palette":{"ground":"#16181B","ink":"#F0EEE8","mute":"#B8BCC0","rule":"#555B61","accent":"#F0735A","inv_bg":"#F0EEE8","inv_fg":"#16181B","card":"#FFFFFF"}}
+{"id":"arang","name":"Arang","palette":{"ground":"#16181B","ink":"#F0EEE8","mute":"#B8BCC0","rule":"#555B61","accent":"#F0735A","inv_bg":"#F0EEE8","inv_fg":"#16181B","card":"#FFFFFF"}},
+{"id":"adven","season":"advent","palette":{"ground":"#291736","ink":"#F8EFE2","mute":"#CDBDDB","rule":"#52495A","accent":"#F0C374","inv_bg":"#F8EFE2","inv_fg":"#291736","card":"#FFFFFF"}},
+{"id":"prapaskah","season":"lent","palette":{"ground":"#EEE8E7","ink":"#22141D","mute":"#624A59","rule":"#B79E9D","accent":"#763058","inv_bg":"#22141D","inv_fg":"#EEE8E7","card":"#FFFFFF"}},
+{"id":"paskah","season":"easter","palette":{"ground":"#F2EACC","ink":"#1D190A","mute":"#595339","rule":"#AAA590","accent":"#684500","inv_bg":"#1D190A","inv_fg":"#F2EACC","card":"#FFFFFF"}},
+{"id":"bara","season":"pentecost","palette":{"ground":"#38130F","ink":"#F8EFE2","mute":"#E0BAB4","rule":"#5D4744","accent":"#FFB98A","inv_bg":"#F8EFE2","inv_fg":"#38130F","card":"#FFFFFF"}}
 ],
 "swatch": ["ground","accent"],
+"mark": {"size":48,"role":"accent","cy":56,"gap":24,"reserve":72},
 "pairs": [["ink","ground","text"],["mute","ground","text"],["accent","ground","text"],["inv_fg","inv_bg","text"],["ink","ground","large"],["accent","ground","large"],["accent","ground","mark"],["inv_bg","ground","mark"]],
 "language": "A magazine page: a double rule under the masthead, a big text-serif headline in mixed case, four corner lines of small caps and rows that read like a contents page, on ink or on newsprint",
 "fonts": {"d4":{"family":"Libre Caslon Display","weight":400,"italic":false,"file":"LibreCaslonDisplay-400.ttf"},"t4":{"family":"Libre Caslon Text","weight":400,"italic":false,"file":"LibreCaslonText-400.ttf"},"t7":{"family":"Libre Caslon Text","weight":700,"italic":false,"file":"LibreCaslonText-700.ttf"},"t4i":{"family":"Libre Caslon Text","weight":400,"italic":true,"file":"LibreCaslonText-400i.ttf"}},

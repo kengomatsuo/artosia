@@ -1283,8 +1283,9 @@ impl App {
     /// draws each card in its family's colourway for today's season when the church follows the year.
     fn paged(&self, cards: &[Announcement], on_air: bool) -> Vec<(usize, Slide)> {
         let seasonal: Vec<Announcement>;
-        let cards = if on_air && self.settings.follow_church_year {
-            let season = artosia_core::church_year::season_on(self.civil_today());
+        let (today, follows) = (self.civil_today(), on_air && self.settings.follow_church_year);
+        let season = artosia_core::church_year::season_on(today);
+        let cards = if follows {
             seasonal = cards
                 .iter()
                 .map(|card| match artosia_slides::warta::colourway_for_season(card.style.unwrap_or(self.look().notice_style), season) {
@@ -1296,7 +1297,11 @@ impl App {
         } else {
             cards
         };
-        let pages = announcement_pages(cards, &self.people, &self.events, &self.giving_data(), &self.today(), self.bible().map(|bible| &**bible), self.settings.verses_per_slide);
+        let mut pages = announcement_pages(cards, &self.people, &self.events, &self.giving_data(), &self.today(), self.bible().map(|bible| &**bible), self.settings.verses_per_slide);
+        // Each slide knows the day, for Advent's candles, and the season it follows when the church follows the year.
+        for (_, slide) in &mut pages {
+            (slide.today, slide.season) = (Some(today), follows.then_some(season));
+        }
         artosia_slides::warta::paginate_pages(pages, self.look().notice_style)
     }
 
