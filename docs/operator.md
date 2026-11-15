@@ -706,6 +706,20 @@ Split draws its week strip only for one week; a page's heading names its own mon
 carries its month when they differ; a card's slides split evenly (`deck.rs` `even_chunks`). Run the
 matrix after any change to a style or to how a card is filled.
 
+### The template library (TEMPLATES1, 2026-11-15, owner-asked: hundreds of templates and a good default)
+
+The owner rejected a plain white default as basic and asked for a library like Canva's. Research
+(`~/Shared/inspo/artosia-templates/`: 96 gallery, 43 presentation-app and 66 church references, 33 of
+them Indonesian, plus a prior-art pass on PowerPoint, Keynote, Google Slides and FreeShow) led to the
+model in `docs/templates-is-colourways-and-archetypes.md`: a template is a layout family and a
+colourway. Twenty-one families now draw all six kinds, each in four colourways that pass WCAG contrast
+for every pair they draw: the four default candidates (Serif italic, the owner's pick and the default for
+new cards, Swiss numerals, Quiet tint, Civic board), eight library families (Diagonal, Liturgy, Glass,
+Block, Soft light, Magazine, Figures, Warm), the four first posters, the plain pair and the look's own
+three. The designs and their wireframes are `docs/plans/artosia/templates-default.md` and
+`templates-library.md`; the fonts are SIL Open Font License cuts made by their `build/make_fonts.py`.
+A new family follows `docs/plans/artosia/family-builder.md`.
+
 ### A slide's fixed words in the window's language (SLIDEWORDS1, 2026-11-15)
 
 The styles were designed in Indonesian, and every church saw "ULANG TAHUN", "WARTA JEMAAT" and
