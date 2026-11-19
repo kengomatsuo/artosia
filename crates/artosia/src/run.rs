@@ -79,8 +79,7 @@ pub enum Pick {
     Layer(Layer),
 }
 
-const VIDEO_FILES: &[&str] = &["mp4", "mov", "mkv", "webm", "avi", "m4v", "wmv"];
-const AUDIO_FILES: &[&str] = &["mp3", "wav", "ogg", "flac", "m4a", "aac", "opus"];
+use artosia_core::import::{AUDIO_FILES, VIDEO_FILES};
 const BACKGROUND_FILES: &[&str] = &["png", "jpg", "jpeg", "webp", "bmp", "gif", "mp4", "mov", "mkv", "webm", "avi", "m4v", "wmv"];
 
 impl Pick {
@@ -333,6 +332,15 @@ impl App {
         let path = path.to_string_lossy().into_owned();
         let entry = if video { PlanEntry::Video { path, title: title.clone(), end: RunEnd::Stop, volume: 100 } } else { PlanEntry::Audio { path, title: title.clone(), end: RunEnd::Stop, volume: 100 } };
         self.queue_entry(entry);
+        self.requeue();
+        self.add_menu = false;
+        self.say(t::added_to_plan(&title), None);
+    }
+
+    /// Puts a picture in the plan as a scene that shows it, named by its file.
+    pub fn add_picture(&mut self, path: &Path) {
+        let title = path.file_stem().map(|name| name.to_string_lossy().into_owned()).unwrap_or_default();
+        self.queue_entry(PlanEntry::Scene { title: title.clone(), background: path.to_string_lossy().into_owned(), video: None, music: None, logo: false, clears: Default::default() });
         self.requeue();
         self.add_menu = false;
         self.say(t::added_to_plan(&title), None);

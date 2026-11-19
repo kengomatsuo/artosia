@@ -6221,6 +6221,153 @@
   "notes": "Must not use the word chosen for switching the projector on (switched_on) nor the word for the camera. One or two words."
  },
  {
+  "key": "DROP_HINT",
+  "kind": "const",
+  "screen": "A card in the middle of the whole program window, over a dimmed window with a dashed ring round its edge, shown only while files from the computer are dragged over the window.",
+  "moment": "The person drags songs, a Bible, a PowerPoint file, pictures or videos from a folder onto the program.",
+  "role": "overlay message",
+  "does": "Tells the person that releasing the mouse button brings these files into the program; nothing is put on the projector by it.",
+  "budget": 30,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [],
+  "notes": "Name the program Artosia. No word that means showing to the room."
+ },
+ {
+  "key": "drop_unknown",
+  "kind": "sentence",
+  "screen": "A short message at the foot of the window, after files were dropped on it.",
+  "moment": "Some of the dropped files were of a kind the program cannot read.",
+  "role": "toast",
+  "does": "Says the program could not open the named file, and how many others it could not open as well.",
+  "budget": 70,
+  "variables": [
+   {
+    "name": "name",
+    "example": "notes.bin",
+    "meaning": "The file name of the first file that could not be opened."
+   },
+   {
+    "name": "more",
+    "example": "2",
+    "meaning": "How many other files could not be opened; 0 when it was the only one."
+   }
+  ],
+  "cases": [],
+  "counts": "more: zero means no other file; write the zero form without mentioning others",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [],
+  "notes": "Keep {name} and {more} exactly. It may follow another sentence about what was added."
+ },
+ {
+  "key": "DOUBLE_CLICK_SHOWS",
+  "kind": "const",
+  "screen": "Settings dialog, Keys section: the label of a switch row.",
+  "moment": "The person decides what a double-click on an item of the service list does.",
+  "role": "switch label",
+  "does": "Labels the switch that makes a double-click on an item in the service list put it on the projector at once.",
+  "budget": 30,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "on_projector",
+   "plan_item"
+  ],
+  "notes": "Use the verb chosen for being on the projector."
+ },
+ {
+  "key": "DOUBLE_CLICK_SHOWS_HINT",
+  "kind": "const",
+  "screen": "Settings dialog, Keys section: the smaller line under the switch's label.",
+  "moment": "The person reads what the switch does before turning it off.",
+  "role": "switch hint",
+  "does": "Explains that when it is on, double-clicking an item of the service list sends it to the room, and when off a double-click only opens it to look at first.",
+  "budget": 80,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "on_projector",
+   "plan_item",
+   "preview"
+  ],
+  "notes": ""
+ },
+ {
+  "key": "DROP_TO_PREVIEW",
+  "kind": "const",
+  "screen": "A label in the middle of the preview pane, over a dashed ring, shown while an item of the service list is being dragged over that pane.",
+  "moment": "The person drags an item from the service list toward the preview pane.",
+  "role": "drop label",
+  "does": "Says that releasing the mouse here opens the item in this pane to look at, not on the projector.",
+  "budget": 32,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "preview"
+  ],
+  "notes": ""
+ },
+ {
+  "key": "DROP_TO_LIVE",
+  "kind": "const",
+  "screen": "A label in the middle of the pane that holds what is on the projector, over a dashed ring, shown while an item of the service list is being dragged over that pane.",
+  "moment": "The person drags an item from the service list toward the projector pane.",
+  "role": "drop label",
+  "does": "Says that releasing the mouse here puts the item on the projector.",
+  "budget": 32,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "on_projector"
+  ],
+  "notes": "Use the verb chosen for being on the projector."
+ },
+ {
+  "key": "SPLIT_PLAN",
+  "kind": "const",
+  "screen": "The name a screen reader says for a thin vertical line at the right edge of the service list column, which the mouse drags to make the column wider or narrower.",
+  "moment": "The person focuses or hovers over the line.",
+  "role": "separator name",
+  "does": "Names the handle that changes how wide the service list column is.",
+  "budget": 30,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "plan"
+  ],
+  "notes": ""
+ },
+ {
+  "key": "SPLIT_PANES",
+  "kind": "const",
+  "screen": "The name a screen reader says for a thin vertical line between the preview pane and the projector pane, which the mouse drags to share the room between them.",
+  "moment": "The person focuses or hovers over the line.",
+  "role": "separator name",
+  "does": "Names the handle that shares the width between the preview pane and the projector pane.",
+  "budget": 36,
+  "variables": [],
+  "cases": [],
+  "counts": "",
+  "register": "The program speaks to a church volunteer at the console: any age, in the middle of a service, with no time to read. Plain, short, polite and familiar, the way one volunteer talks to another. No honorific for the reader, no jargon, no slang.",
+  "concepts": [
+   "preview",
+   "on_projector"
+  ],
+  "notes": "Name both panes as the tabs name them elsewhere."
+ },
+ {
   "key": "LOOK_MOVING_COLOURS",
   "kind": "const",
   "screen": "Design tab, Background part: the label on the left of a row of round chips, each split into three coloured stripes, shown once a moving background is picked.",

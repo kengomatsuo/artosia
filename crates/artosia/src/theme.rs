@@ -168,6 +168,15 @@ pub mod size {
     /// past the column and was cut, and its list ended on the column's edge (owner, 2026-11-11:
     /// "don't let it clip right side like it does today").
     pub const PLAN: f32 = 256.0;
+    /// The narrowest and widest the plan column is dragged to (GESTURES1): its buttons and the
+    /// plan's box keep their measured room at the narrowest.
+    pub const PLAN_MIN: f32 = 240.0;
+    pub const PLAN_MAX: f32 = 520.0;
+    /// The least width Preview and Live each keep, so the empty Preview's tiles and the Show
+    /// button below it are never cut (measured on renders, GESTURES1).
+    pub const PANE_MIN: f32 = 505.0;
+    /// The width of a divider the pointer drags.
+    pub const SPLITTER: f32 = 5.0;
     /// Width of the top bar's lead, the logo and the name: the search box starts after it.
     pub const TOP_LEAD: f32 = 272.0;
 }

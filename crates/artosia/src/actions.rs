@@ -126,6 +126,15 @@ impl App {
     pub fn drop_plan_row(&mut self, cancelled: bool) {
         let Some(held) = self.plan_drag.take() else { return };
         self.plan_dropped = true;
+        // Let go over a pane: Preview opens the item, Live shows it (GESTURES1).
+        if let (false, Some(pane)) = (cancelled, held.over) {
+            self.open_plan_item(held.id);
+            if pane == crate::state::DropPane::Live {
+                let at = self.open.as_ref().map(|open| open.cursor).unwrap_or(0);
+                self.show(at);
+            }
+            return;
+        }
         if !cancelled && held.to != held.from {
             self.plan.move_to(held.id, held.to);
             self.touch_plan();
@@ -591,6 +600,13 @@ impl App {
     /// Brings songs and Bibles over from the EasiSlides folder found on this computer.
     pub fn import_easislides(&mut self) {
         let Some(folder) = self.easislides.clone() else { return };
+        self.import_easislides_from(&folder);
+    }
+
+    /// Brings songs and Bibles over from an EasiSlides data folder, the one found on this
+    /// computer or one dropped on the window.
+    pub fn import_easislides_from(&mut self, folder: &std::path::Path) {
+        let folder = folder.to_path_buf();
         let mut songs: Vec<Song> = Vec::new();
         let mut failed = 0usize;
         for file in artosia_core::import::easislides_song_files(&folder) {
@@ -631,7 +647,7 @@ impl App {
             self.say(nothing, None);
             return;
         };
-        let (mut songs, failed) = artosia_core::openlyrics::read_folder(&folder);
+        let (songs, failed) = artosia_core::openlyrics::read_folder(&folder);
         if zip {
             let _ = std::fs::remove_dir_all(&folder);
         }
@@ -639,6 +655,12 @@ impl App {
             self.say(nothing, None);
             return;
         }
+        self.add_read_songs(songs, failed);
+    }
+
+    /// Adds songs read from files, skipping songs the library already has, and says what came
+    /// in and how many files could not be read.
+    pub fn add_read_songs(&mut self, mut songs: Vec<Song>, failed: usize) {
         let done = self.store.import_songs(&mut songs).unwrap_or_default();
         self.reload_songs();
         self.settings.welcomed = true;
@@ -649,6 +671,50 @@ impl App {
             self.say(format!("{summary}. {}", t::files_unreadable(failed)), None);
         } else {
             self.say(summary, None);
+        }
+    }
+
+    /// Files dropped anywhere on the window, or handed over from the shortcut, each brought in
+    /// by what it holds (GESTURES1): songs and Bibles into the library, a PowerPoint into its
+    /// gallery, a list into Members, a picture, video or sound into the plan, and on the Design
+    /// tab a picture or video as the background. Nothing goes to the projector by a drop.
+    pub fn import_dropped(&mut self, paths: &[std::path::PathBuf]) {
+        use artosia_core::import::Dropped;
+        let mut song_files = Vec::new();
+        let mut unknown = Vec::new();
+        for path in paths {
+            match artosia_core::import::sniff(path) {
+                Dropped::Songs if path.is_file() && path.extension().is_some_and(|e| e.eq_ignore_ascii_case("xml")) => song_files.push(path.clone()),
+                Dropped::Songs => self.import_openlyrics(path),
+                Dropped::EasiSlides if path.is_dir() => self.import_easislides_from(path),
+                Dropped::EasiSlides => match artosia_core::import::read_easislides_songs(path) {
+                    Ok(songs) => self.add_read_songs(songs, 0),
+                    Err(_) => self.add_read_songs(Vec::new(), 1),
+                },
+                Dropped::Bible if path.is_dir() => {
+                    if let Some(first) = artosia_core::import::bible_files(path).first() {
+                        self.add_bible_file(first);
+                    }
+                }
+                Dropped::Bible => self.add_bible_file(path),
+                Dropped::PowerPoint => self.open_pptx_import(path),
+                Dropped::People => self.open_import(path),
+                Dropped::Picture | Dropped::Video if self.tab == crate::state::Tab::Look => self.set_background_file(path),
+                Dropped::Picture => self.add_picture(path),
+                Dropped::Video => self.add_media(true, path),
+                Dropped::Audio => self.add_media(false, path),
+                Dropped::Unknown => unknown.push(path.file_name().map(|name| name.to_string_lossy().into_owned()).unwrap_or_default()),
+            }
+        }
+        if !song_files.is_empty() {
+            let (songs, failed) = artosia_core::openlyrics::read_files(&song_files);
+            self.add_read_songs(songs, failed);
+        }
+        // What could not be read joins what the drop did, so neither hides the other.
+        if let Some(first) = unknown.first() {
+            let refused = t::drop_unknown(first, unknown.len());
+            let said = self.toast.as_ref().filter(|toast| toast.until > self.clock).map(|toast| toast.text.clone());
+            self.say(said.filter(|_| unknown.len() < paths.len()).map(|text| format!("{text}. {refused}")).unwrap_or(refused), None);
         }
     }
 
@@ -1056,14 +1122,22 @@ impl App {
     }
 
     pub fn move_notice(&mut self, id: i64, by: isize) {
+        let Some(at) = self.announcements.iter().position(|item| item.id == id) else { return };
+        let to = at as isize + by;
+        if to >= 0 {
+            self.move_notice_to(at, to as usize);
+        }
+    }
+
+    /// Moves the announcement at `from` to place `to` in the order.
+    pub fn move_notice_to(&mut self, from: usize, to: usize) {
         self.settle_notice();
         let mut ids: Vec<i64> = self.announcements.iter().map(|item| item.id).collect();
-        let Some(at) = ids.iter().position(|own| *own == id) else { return };
-        let to = at as isize + by;
-        if to < 0 || to as usize >= ids.len() {
+        if from >= ids.len() || to >= ids.len() || from == to {
             return;
         }
-        ids.swap(at, to as usize);
+        let id = ids.remove(from);
+        ids.insert(to, id);
         if self.store.order_announcements(&ids).is_ok() {
             self.reload_announcements();
         }

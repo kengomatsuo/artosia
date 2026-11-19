@@ -6416,5 +6416,51 @@
   "text": "새벽",
   "back": "Dawn",
   "why": "Sky before sunrise, unlike the evening chip"
+ },
+ "DROP_HINT": {
+  "text": "놓으면 Artosia에 추가돼요",
+  "back": "If you drop, it is added to Artosia",
+  "why": "Soft 요 register as in the table"
+ },
+ "DOUBLE_CLICK_SHOWS": {
+  "text": "더블클릭으로 항목 띄우기",
+  "back": "Show item with double-click",
+  "why": "띄우기 is the table's verb"
+ },
+ "DOUBLE_CLICK_SHOWS_HINT": {
+  "text": "켜면 더블클릭으로 항목을 바로 띄우고, 끄면 미리보기에서 열어요",
+  "back": "If on, double-click shows the item at once; if off it opens in the preview",
+  "why": "켜면 and 끄면 as plain switch words"
+ },
+ "DROP_TO_PREVIEW": {
+  "text": "놓으면 미리보기에서 열어요",
+  "back": "If you drop, it opens in the preview",
+  "why": "Pane name as in the table"
+ },
+ "DROP_TO_LIVE": {
+  "text": "놓으면 라이브로 띄워요",
+  "back": "If you drop, it is shown on live",
+  "why": "띄우다 as the table's verb"
+ },
+ "SPLIT_PLAN": {
+  "text": "예배 순서 너비",
+  "back": "Width of the service order",
+  "why": "예배 순서 is the table's plan word"
+ },
+ "SPLIT_PANES": {
+  "text": "미리보기와 라이브 너비",
+  "back": "Width of the preview and the live",
+  "why": "Pane names as in the table"
+ },
+ "drop_unknown": {
+  "text": {
+   "alone": "{name} 파일을 열 수 없어요",
+   "more": "{name} 외 {more}개 파일을 열 수 없어요"
+  },
+  "back": {
+   "alone": "Cannot open the file {name}",
+   "more": "Cannot open {name} and {more} other files"
+  },
+  "why": "외 for others, soft 요 form"
  }
 }

@@ -66,6 +66,8 @@ fn list(s: &App, k: &Kit, form: &Notices) -> El {
     // with a Tab stop each, the tester needed fourteen presses to get past four cards.
     let mut rows = col().key("notice-rows").role("list").label(t::CMD_ANNOUNCEMENTS()).w_full().gap(2.0).focus_group().focus_follows();
     let count = s.announcements.len();
+    // A row is carried to another place in the order (GESTURES1).
+    let heights = crate::ui::widgets::row_heights(s.announcements.iter().map(|item| format!("notice-{}", item.id)), size::ROW);
     for (at, item) in s.announcements.iter().enumerate() {
         let id = item.id;
         let picked = form.id == id;
@@ -114,7 +116,7 @@ fn list(s: &App, k: &Kit, form: &Notices) -> El {
         }
         // On every row, so a card can go on the projector without being opened first.
         line = line.child(btn(t::BTN_SHOW_NOW()).icon(&icons::PLAY).icon_only().ghost().small().build(k, move |s, _| s.show_notice_now(id)));
-        rows = rows.child(line.on_press(move |s: &mut App| s.pick_notice(id)));
+        rows = rows.child(crate::ui::widgets::sortable(s, line.on_press(move |s: &mut App| s.pick_notice(id)), crate::state::Sorted::Notices, at, &heights, 2.0));
     }
     if form.id == 0 && s.notice_draft().is_some() {
         let title = form.title.text.trim();
@@ -468,11 +470,12 @@ pub(super) fn holds(s: &App, k: &Kit, draft: Option<&artosia_core::deck::Announc
 fn rail(s: &App, k: &Kit, form: &Notices) -> El {
     let sf = theme::surf();
     let mut numbers = col().key("notice-rail-rows").role("list").label(t::CMD_ANNOUNCEMENTS()).w_full().gap(space::S1).items_center().focus_group().focus_follows();
+    // A number is carried to another place in the order (GESTURES1).
+    let heights = crate::ui::widgets::row_heights(s.announcements.iter().map(|item| format!("notice-{}", item.id)), 34.0);
     for (at, item) in s.announcements.iter().enumerate() {
         let id = item.id;
         let picked = form.id == id;
-        numbers = numbers.child(
-            row()
+        let number = row()
                 .key(format!("notice-{id}"))
                 .role("listitem")
                 .label(shown_title(item, None))
@@ -487,8 +490,8 @@ fn rail(s: &App, k: &Kit, form: &Notices) -> El {
                 .focus_selected(picked)
                 .on_key(enter_key)
                 .child(text((at + 1).to_string()).font(if picked { type_::BODY_STRONG } else { type_::BODY }).color(if picked { k.c.text_base } else { k.c.text_muted }).a11y_hidden())
-                .on_press(move |s: &mut App| s.pick_notice(id)),
-        );
+                .on_press(move |s: &mut App| s.pick_notice(id));
+        numbers = numbers.child(crate::ui::widgets::sortable(s, number, crate::state::Sorted::Notices, at, &heights, space::S1));
     }
     // A card not saved yet stands after the last one, lit, until it is.
     if form.id == 0 && s.notice_draft().is_some() {

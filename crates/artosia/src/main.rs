@@ -20,6 +20,7 @@ mod giving;
 // GUIDE1: the guide engine; the window wires it in task G3.
 #[allow(dead_code)]
 mod guide;
+mod handed;
 mod languages;
 mod learning;
 mod link;
@@ -65,6 +66,7 @@ use state::{App, Sheet, Tab};
 
 fn setup(s: &mut App, waker: Waker) {
     s.waker = Some(waker.clone());
+    handed::set_waker(waker.clone());
     s.images = Some(ImageCache::new(waker.clone()));
     let (first, second) = (s.settings.bible.clone(), s.settings.second_bible.clone());
     s.want_bible(&first);
@@ -105,7 +107,13 @@ fn poll(s: &mut App, clock: f64, tx: &mut Tx) -> bool {
         s.tour_focus = false;
         tx.focus("tour-next", false);
     }
-    s.poll(clock, tx)
+    // Files dropped on the shortcut, here or on a second start, come in as a drop would.
+    let handed = handed::take();
+    let came = !handed.is_empty();
+    if came {
+        s.import_dropped(&handed);
+    }
+    s.poll(clock, tx) || came
 }
 
 /// The keys of the window. A focused text field has already had its turn by the time a key
@@ -1393,7 +1401,7 @@ enum Instance {
 
 /// Two Artosias on one library would fight over the projector and overwrite each other's
 /// plan, so the second start hands over to the first and leaves.
-fn claim_instance() -> Instance {
+fn claim_instance(handed: &[std::path::PathBuf]) -> Instance {
     if rune::is_headless() || data::has_flag("--practice") || data::flag_value("--data").is_some() || std::env::var_os("ARTOSIA_DATA").is_some() {
         return Instance::Free;
     }
@@ -1405,9 +1413,16 @@ fn claim_instance() -> Instance {
     let _ = stream.set_read_timeout(Some(Duration::from_millis(800)));
     let _ = stream.write_all(b"show\n");
     let mut answer = String::new();
-    let _ = BufReader::new(stream).read_line(&mut answer);
+    let Ok(reader) = stream.try_clone() else { return Instance::Free };
+    let _ = BufReader::new(reader).read_line(&mut answer);
     // Anything else on that port is not Artosia, and must not stop it from opening.
-    if answer.trim() == INSTANCE_WORD { Instance::Second } else { Instance::Free }
+    if answer.trim() != INSTANCE_WORD {
+        return Instance::Free;
+    }
+    // Files dropped on the shortcut go to the copy that runs, one line each after its answer;
+    // a copy too old to read them has already answered and closed.
+    let _ = stream.write_all(handed::told(handed).as_bytes());
+    Instance::Second
 }
 
 fn main() {
@@ -1415,7 +1430,8 @@ fn main() {
     if store::report_if_asked() {
         return;
     }
-    let instance = claim_instance();
+    let handed = handed::from_args();
+    let instance = claim_instance(&handed);
     if matches!(instance, Instance::Second) {
         return;
     }
@@ -1450,6 +1466,7 @@ fn main() {
         }
         s.link.send(ToOutput::Quit);
     });
+    handed::hand(handed);
     if let Instance::First(listener) = instance {
         let handle = app.handle();
         std::thread::spawn(move || {
@@ -1457,11 +1474,14 @@ fn main() {
                 let mut line = String::new();
                 let Ok(reader) = stream.try_clone() else { continue };
                 let _ = reader.set_read_timeout(Some(Duration::from_millis(800)));
-                let _ = BufReader::new(reader).read_line(&mut line);
+                let mut reader = BufReader::new(reader);
+                let _ = reader.read_line(&mut line);
                 if line.trim() == "show" {
                     let mut stream = stream;
                     let _ = stream.write_all(format!("{INSTANCE_WORD}\n").as_bytes());
                     handle.open();
+                    // The files the second start was handed follow its answer, one a line.
+                    handed::hand(handed::heard(reader));
                 }
             }
         });

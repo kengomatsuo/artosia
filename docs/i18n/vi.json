@@ -6427,5 +6427,51 @@
   "text": "Bình minh",
   "back": "Sunrise",
   "why": "Binh minh, sky before sunrise, unlike Hoang hon"
+ },
+ "DROP_HINT": {
+  "text": "Thả để thêm vào Artosia",
+  "back": "Drop to add to Artosia",
+  "why": "thêm as in the table"
+ },
+ "DOUBLE_CLICK_SHOWS": {
+  "text": "Bấm đúp để chiếu mục",
+  "back": "Double-click to show the item",
+  "why": "chiếu is the table's verb"
+ },
+ "DOUBLE_CLICK_SHOWS_HINT": {
+  "text": "Bật: bấm đúp chiếu mục trong thứ tự lễ. Tắt: chỉ mở ở Xem trước",
+  "back": "On: double-click shows the item in the order of service. Off: only opens in Xem trước",
+  "why": "thứ tự lễ is the table's plan word"
+ },
+ "DROP_TO_PREVIEW": {
+  "text": "Thả để xem ở Xem trước",
+  "back": "Drop to look in Xem trước",
+  "why": "Pane name as in the table"
+ },
+ "DROP_TO_LIVE": {
+  "text": "Thả để chiếu",
+  "back": "Drop to show",
+  "why": "chiếu kept for the projector"
+ },
+ "SPLIT_PLAN": {
+  "text": "Độ rộng thứ tự lễ",
+  "back": "Width of the order of service",
+  "why": "thứ tự lễ is the table's plan word"
+ },
+ "SPLIT_PANES": {
+  "text": "Độ rộng Xem trước và Live",
+  "back": "Width of Xem trước and Live",
+  "why": "Pane names as in the table"
+ },
+ "drop_unknown": {
+  "text": {
+   "alone": "Không mở được {name}",
+   "more": "Không mở được {name} và {more} tệp khác"
+  },
+  "back": {
+   "alone": "Cannot open {name}",
+   "more": "Cannot open {name} and {more} other files"
+  },
+  "why": "tệp is the common word for file"
  }
 }

@@ -10,6 +10,89 @@ use std::path::{Path, PathBuf};
 use crate::bible::{Bible, BibleError, Verse};
 use crate::song::{Song, Translation, parse_lyrics, write_lyrics};
 
+/// Picture files a plan or a background takes.
+pub const PICTURE_FILES: &[&str] = &["png", "jpg", "jpeg", "webp", "bmp", "gif"];
+/// Video files the projector plays.
+pub const VIDEO_FILES: &[&str] = &["mp4", "mov", "mkv", "webm", "avi", "m4v", "wmv"];
+/// Sound files the projector plays.
+pub const AUDIO_FILES: &[&str] = &["mp3", "wav", "ogg", "flac", "m4a", "aac", "opus"];
+
+/// What a file or folder holds, for a drop on the window or a file handed to the program at
+/// start (GESTURES1): each kind goes to the import that already reads it.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum Dropped {
+    /// OpenLyrics songs: an XML file, a zip of them or a folder of them.
+    Songs,
+    /// An EasiSlides data folder or one of its song databases.
+    EasiSlides,
+    /// A Bible: a MyBible module, USFX or Beblia XML, USFM, or a zip of USFM.
+    Bible,
+    /// A PowerPoint file, imported as slides.
+    PowerPoint,
+    /// A list of people: a spreadsheet, a CSV file or a Word table.
+    People,
+    Picture,
+    Video,
+    Audio,
+    /// Nothing Artosia reads.
+    Unknown,
+}
+
+/// Tells what `path` holds, by its kind and, for XML and zip files, by what is inside: an XML
+/// file can be a song or a Bible, and a zip can hold either.
+pub fn sniff(path: &Path) -> Dropped {
+    if path.is_dir() {
+        if !easislides_song_files(path).is_empty() {
+            return Dropped::EasiSlides;
+        }
+        if has_files(path, &["xml"]) || has_files(&path.join("songs"), &["xml"]) {
+            return Dropped::Songs;
+        }
+        if !bible_files(path).is_empty() {
+            return Dropped::Bible;
+        }
+        return Dropped::Unknown;
+    }
+    let kind = path.extension().and_then(|e| e.to_str()).map(str::to_ascii_lowercase).unwrap_or_default();
+    let kind = kind.as_str();
+    match kind {
+        "pptx" => Dropped::PowerPoint,
+        "csv" | "xlsx" | "docx" => Dropped::People,
+        "sqlite3" | "mybible" | "usfm" | "sfm" => Dropped::Bible,
+        "db" => Dropped::EasiSlides,
+        "xml" => {
+            let mut head = Vec::new();
+            let _ = std::fs::File::open(path).and_then(|file| file.take(8192).read_to_end(&mut head));
+            let head = String::from_utf8_lossy(&head).to_ascii_lowercase();
+            if head.contains("openlyrics") || head.contains("<song") {
+                Dropped::Songs
+            } else if head.contains("<usfx") || head.contains("<bible") {
+                Dropped::Bible
+            } else {
+                Dropped::Unknown
+            }
+        }
+        "zip" => {
+            let names: Vec<String> = std::fs::File::open(path)
+                .ok()
+                .and_then(|file| zip::ZipArchive::new(std::io::BufReader::new(file)).ok())
+                .map(|archive| archive.file_names().filter_map(|name| name.ok()).map(|name| name.to_ascii_lowercase()).collect())
+                .unwrap_or_default();
+            if names.iter().any(|name| name.ends_with(".usfm") || name.ends_with(".sfm")) {
+                Dropped::Bible
+            } else if names.iter().any(|name| name.ends_with(".xml")) {
+                Dropped::Songs
+            } else {
+                Dropped::Unknown
+            }
+        }
+        _ if PICTURE_FILES.contains(&kind) => Dropped::Picture,
+        _ if VIDEO_FILES.contains(&kind) => Dropped::Video,
+        _ if AUDIO_FILES.contains(&kind) => Dropped::Audio,
+        _ => Dropped::Unknown,
+    }
+}
+
 /// The EasiSlides data folder on this computer, if EasiSlides was ever set up here.
 pub fn easislides_folder() -> Option<PathBuf> {
     let mut candidates: Vec<PathBuf> = Vec::new();
@@ -232,6 +315,42 @@ pub fn bundled_bible() -> Result<Bible, BibleError> {
 
 #[cfg(test)]
 mod tests {
+    #[test]
+    fn a_dropped_file_is_told_by_its_kind_and_an_xml_or_zip_by_what_it_holds() {
+        let dir = std::env::temp_dir().join(format!("artosia-sniff-{}", std::process::id()));
+        let _ = std::fs::remove_dir_all(&dir);
+        std::fs::create_dir_all(&dir).unwrap_or_else(|e| panic!("{e}"));
+        let write = |name: &str, body: &[u8]| {
+            let path = dir.join(name);
+            std::fs::write(&path, body).unwrap_or_else(|e| panic!("{e}"));
+            path
+        };
+        assert_eq!(sniff(&write("a.xml", b"<?xml version='1.0'?><song xmlns='http://openlyrics.info/namespace/2009/song'>")), Dropped::Songs);
+        assert_eq!(sniff(&write("b.xml", b"<?xml version='1.0'?><usfx>")), Dropped::Bible);
+        assert_eq!(sniff(&write("c.xml", b"<?xml version='1.0'?><bible translation='x'>")), Dropped::Bible);
+        assert_eq!(sniff(&write("d.xml", b"<?xml version='1.0'?><other/>")), Dropped::Unknown);
+        assert_eq!(sniff(&write("e.PPTX", b"")), Dropped::PowerPoint);
+        assert_eq!(sniff(&write("f.csv", b"")), Dropped::People);
+        assert_eq!(sniff(&write("g.JPG", b"")), Dropped::Picture);
+        assert_eq!(sniff(&write("h.mp4", b"")), Dropped::Video);
+        assert_eq!(sniff(&write("i.mp3", b"")), Dropped::Audio);
+        assert_eq!(sniff(&write("j.SQLite3", b"")), Dropped::Bible);
+        assert_eq!(sniff(&write("k.exe", b"")), Dropped::Unknown);
+        let zipped = |name: &str, inner: &str| {
+            let mut writer = zip::ZipWriter::new(std::io::Cursor::new(Vec::new()));
+            writer.start_file(inner, zip::write::SimpleFileOptions::default().compression_method(zip::CompressionMethod::Stored)).unwrap_or_else(|e| panic!("{e}"));
+            std::io::Write::write_all(&mut writer, b"x").unwrap_or_else(|e| panic!("{e}"));
+            write(name, &writer.finish().unwrap_or_else(|e| panic!("{e}")).into_inner())
+        };
+        assert_eq!(sniff(&zipped("songs.zip", "songs/a.xml")), Dropped::Songs);
+        assert_eq!(sniff(&zipped("bible.zip", "GEN.usfm")), Dropped::Bible);
+        let songs = dir.join("folder");
+        std::fs::create_dir_all(&songs).unwrap_or_else(|e| panic!("{e}"));
+        std::fs::write(songs.join("x.xml"), b"<song/>").unwrap_or_else(|e| panic!("{e}"));
+        assert_eq!(sniff(&songs), Dropped::Songs);
+        let _ = std::fs::remove_dir_all(&dir);
+    }
+
     use super::*;
 
     #[test]

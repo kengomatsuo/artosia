@@ -722,6 +722,19 @@ A new family follows `docs/plans/artosia/family-builder.md`.
 
 Measured (release with video, `--here --demo-video fixtures/bg30.mp4`, 75 s, both runs traced looping 4 times): the projector before the library 328 MB working set and 292 MB private, after it 326 MB and 300 MB. The bundled fonts cost about 8 MB private; the binary grew from 32.6 MB to 47.1 MB.
 
+### The church year and PowerPoint as a gallery (SEASONS1, PPTXGALLERY1, 2026-11-15, owner-asked)
+
+Every poster family has Advent, Christmas, Lent, Easter and Pentecost colourways (`season` tags in
+`assets/warta/directions/dN.json`), 14 families draw a small season mark at their own spot (16 marks in
+`warta/marks.rs`, Advent's candles counting the Sundays), and a hand-picked seasonal colourway carries its
+mark all year. Settings, Follow the church year (off by default) swaps every card on the projector and
+the phone to its family's colourway for today's season, worked out by `artosia-core/src/church_year.rs`
+from the rules in `docs/church-year.md`; the Templates tiles and the saved cards keep their own. The design
+and its 180 references are `docs/plans/artosia/seasons-design.md`.
+
+A PowerPoint import opens straight into one gallery: the file as made first, then every template family
+whose fit holds every redrawn card (`pptx_import.rs` `fits_family`), one press and Ctrl Enter.
+
 ### A slide's fixed words in the window's language (SLIDEWORDS1, 2026-11-15)
 
 The styles were designed in Indonesian, and every church saw "ULANG TAHUN", "WARTA JEMAAT" and
@@ -746,3 +759,19 @@ The Announcements tab shows the card's slide large. A press picks a box of it (h
 
 The Background part of the Design tab has a Moving row under the row for ready backdrops and a file: one moving tile per kind (`ui/moving.rs`), each in its own colours. Pressing one sets the look's background to it. While one is picked, two rows follow: eight colour chips of three stripes (`live::COLOUR_SETS`, picked, never typed) and Slow, Normal, Fast. The background row names the picked kind. The operator's Preview and Live panes show a still pose; the projector shows it moving (docs/output.md, "Live backgrounds").
 
+## Gestures (2026-11-15, GESTURES1)
+
+Researched from eight worship apps, Microsoft, Apple and NN/g (`~/Shared/inspo/artosia-gestures/notes.md`); the owner chose a double-click that shows and a drop that imports.
+
+| Gesture | Does | Where |
+|---|---|---|
+| Double-click a plan item | Shows it, as EasiSlides does; the Live switch still decides whether the projector draws it. Settings, Keys: Double-click shows turns it off, and then a double-click only opens Preview | `ui/plan.rs`, `settings.double_click_shows` |
+| Carry a plan item onto Preview | Opens it there, as one click. Out of the list the row stays faint in place and a card with its title follows the pointer; the pane under it lights and says what letting go does | `ui/plan.rs` `draggable`, `ghost`, `PlanDrag.over`, `drop_plan_row` |
+| Carry a plan item onto Live | Shows it, as Show | the same |
+| Drop files anywhere on the window | Each file is imported by what it holds (`artosia_core::import::sniff`): OpenLyrics songs and EasiSlides databases or folders into the library, a Bible (MyBible, USFX, Beblia, USFM, a zip of USFM) installed, a PowerPoint into its gallery, a list of people into Members, a picture into the plan as a scene, a video or sound into the plan; on the Design tab a picture or video becomes the background. Nothing goes to the projector. A file it cannot read is named in the toast beside what was added | `App::import_dropped`, `ui/mod.rs` `drop_veil` |
+| Drop files on the desktop shortcut | The same import: Windows passes them as the start's arguments (`handed::from_args`, only when every argument is an existing file). A second start sends them to the copy that runs, one `open<TAB>path` line after its answer, and leaves | `handed.rs`, `main.rs` `claim_instance` |
+| Drag the plan column's edge | 240 to 520 points, and never into the 505 points Preview and Live each keep; double-click puts back 256; Left and Right move it 16 points when focused; kept in the settings | `widgets::splitter`, `App::plan_width`, `settings.plan_width` |
+| Drag the line between Preview and Live | Shares the room; each pane keeps 505 points so the empty Preview's tiles and the Show button are never cut; double-click halves it | `App::preview_share`, `settings.preview_share` |
+| Carry a part card by its grip, an announcement row or rail number | Moves it to where it lands; the rows it passes step aside | `widgets::sortable`, `drop_carried`, `move_part_to`, `move_notice_to` |
+
+The plan, the part cards and the announcements share one set of carry maths (`widgets::drop_place`, `carried_shift`). A part card is carried by its grip: its words open it for typing.

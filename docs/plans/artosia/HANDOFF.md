@@ -23,10 +23,11 @@
 | Announcement styles, round 2 | In Review, in 0.1.33: seven styles in `crates/artosia-slides/src/warta/`, 28 bundled fonts, wrap before shrink, continuation slides at the 40 px floor | [card: WARTADESIGN1] [commit 13043bb] |
 | Phone editing | In Review, in 0.1.33: edit level per phone with its own PIN, text and lists, a stale save refused with both texts | [card: PHONEEDIT1] [commit 13043bb] |
 | Birthday check and slide words | In Review: every birthday setting rendered and fixed (`tools/notice-matrix.sh`), slide words in the window's language | [card: BDAYCHECK1] [commit 4c44e0b] [card: SLIDEWORDS1] [commit 8a8864b] |
-| Template library | In Review, NOT released: 21 families x 4 colourways (two more per family in progress), new cards start in Serif italic (owner's pick); research in `~/Shared/inspo/artosia-templates/`, model `docs/templates-is-colourways-and-archetypes.md` | [card: TEMPLATES1] [commit dd19301] [commit 42eafba] [commit e0fd3b1] |
+| Church year and PowerPoint gallery | Released in 0.1.35: seasonal colourways in all 17 poster families (159 templates), 16 season marks, opt-in Follow the church year; PowerPoint import opens into a gallery of the templates its slides fit | [card: SEASONS1] [card: PPTXGALLERY1] [commit 0ad6ffb] [commit cc42553] [commit 846c0d6] |
+| Template library | Released in 0.1.34: 21 families x 4 colourways (two more per family in progress), new cards start in Serif italic (owner's pick); research in `~/Shared/inspo/artosia-templates/`, model `docs/templates-is-colourways-and-archetypes.md` | [card: TEMPLATES1] [commit dd19301] [commit 42eafba] [commit e0fd3b1] |
 | On-slide editing | In Review, NOT released: click a box, Enter types in place, fit shrinks then continues; one save path (`App::apply_card`) for the console and the phone | [card: NOTICEEDIT1] [commit ab94bc9] |
 | Moving backgrounds | In Review, NOT released: eight kinds drawn on the graphics chip (rune-fx fills and `live.wgsl`), Design tiles with colour chips and three speeds, ten languages; projector +10 MB against +165 MB for a video | [card: LIVEBG1] [commit 8693b86] [rule: .claude/rules/output.md] |
-| Gestures | Researched and proposed (double-click to Show as EasiSlides, drag to Preview or Live, resizable columns with limits, file drop by kind, drag to sort); building waits on the owner's yes | [card: GESTURES1] [read: docs/plans/artosia/gestures.md] |
+| Gestures | In Review, NOT released: double-click Shows (Settings can turn it off), a plan item carried onto Preview opens and onto Live shows, files dropped on the window or the desktop shortcut import by kind, the plan column (240 to 520) and the Preview/Live line keep 505 points per pane, part cards and announcements carried; real window checked for double-click, carry and resize, the Explorer drop only headless | [card: GESTURES1] [commit ec7520c] [read: docs/operator.md "Gestures"] |
 
 ## Last checks
 
@@ -53,7 +54,6 @@
 
 - Tailscale sign-in for SSH to the Mac (check mode) [read: ssh mac printed the login link; two 20-minute waits expired].
 - Microsoft Store developer account [card: STORE1].
-- A yes on the gesture proposal, or changes to it [card: GESTURES1].
 
 ## Gotchas
 

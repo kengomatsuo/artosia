@@ -6414,5 +6414,51 @@
   "text": "夜明け",
   "back": "Daybreak",
   "why": "Sky before sunrise, unlike the evening chip"
+ },
+ "DROP_HINT": {
+  "text": "離すとArtosiaに追加",
+  "back": "Release and it is added to Artosia",
+  "why": "Plain verb 追加, no 映す"
+ },
+ "DOUBLE_CLICK_SHOWS": {
+  "text": "ダブルクリックで項目を映す",
+  "back": "Show the item with double-click",
+  "why": "映す is the table's verb"
+ },
+ "DOUBLE_CLICK_SHOWS_HINT": {
+  "text": "オンなら項目をダブルクリックですぐ映し、オフならプレビューで開くだけ",
+  "back": "If on, double-click shows the item at once; if off it only opens in the preview",
+  "why": "項目 and プレビュー as in the table"
+ },
+ "DROP_TO_PREVIEW": {
+  "text": "ここで離すとプレビューで開く",
+  "back": "Release here to open in the preview",
+  "why": "Pane name as in the table"
+ },
+ "DROP_TO_LIVE": {
+  "text": "ここで離すとライブへ映す",
+  "back": "Release here to show on live",
+  "why": "映す as the table's verb"
+ },
+ "SPLIT_PLAN": {
+  "text": "式次第の幅",
+  "back": "Width of the service order",
+  "why": "式次第 is the table's plan word"
+ },
+ "SPLIT_PANES": {
+  "text": "プレビューとライブの幅",
+  "back": "Width of the preview and the live",
+  "why": "Pane names as in the table"
+ },
+ "drop_unknown": {
+  "text": {
+   "alone": "{name}は開けませんでした",
+   "more": "{name}とほか{more}件は開けませんでした"
+  },
+  "back": {
+   "alone": "{name} could not be opened",
+   "more": "{name} and {more} others could not be opened"
+  },
+  "why": "件 as the plain counter"
  }
 }

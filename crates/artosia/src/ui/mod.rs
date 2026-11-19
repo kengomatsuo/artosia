@@ -312,6 +312,30 @@ fn window(s: &App, cx: &mut Cx<App>, k: &Kit, layer: &mut Vec<El>) -> El {
     }
 }
 
+/// While files hover over the window: a ring round it and what a drop does, in its middle.
+fn drop_veil(k: &Kit) -> El {
+    el().key("drop-veil")
+        .absolute(0.0, 0.0)
+        .w_full()
+        .h_full()
+        .px(space::S3).py(space::S3)
+        .fill(rune::Color::BLACK.alpha(0.45))
+        .a11y_hidden()
+        .child(
+            el().w_full()
+                .h_full()
+                .radius(k.radius.lg)
+                .border(3.0, theme::accent())
+                .border_dash(14.0, 8.0)
+                .center()
+                .child(
+                    col().gap(space::S2).center().px(space::S6).py(space::S4).radius(k.radius.lg).fill(k.c.layer_01)
+                        .child(icon(&icons::IMPORT, 28.0).color(theme::accent()))
+                        .child(text(t::DROP_HINT()).font(type_::BODY_STRONG).color(k.c.text_base)),
+                ),
+        )
+}
+
 pub fn view(s: &App, cx: &mut Cx<App>) -> El {
     theme::set_dark(match s.settings.appearance {
         crate::state::Appearance::Auto => cx.system_dark(),
@@ -350,16 +374,15 @@ pub fn view(s: &App, cx: &mut Cx<App>) -> El {
         .child(hline())
         .child(statusbar(s, k).fill(if s.only_language.is_some() { theme::warn().alpha(0.22) } else { sf.chrome }))
         .on_paste(|s: &mut App, text: &str, _: &mut Tx| s.song_from_clipboard(text))
+        // A drop anywhere is imported by what each file holds (GESTURES1).
         .on_drop_files(|s: &mut App, paths: &[std::path::PathBuf], _: &mut Tx| {
-            if let Some(path) = paths.first() {
-                // A list dropped on the Members tab is a list of people, anywhere else a background.
-                if s.tab == Tab::People {
-                    s.open_import(path);
-                } else {
-                    s.set_background_file(path);
-                }
-            }
-        });
+            s.drop_hover = false;
+            s.import_dropped(paths);
+        })
+        .on_drop_hover(|s: &mut App, over: bool, _: &mut Tx| s.drop_hover = over);
+    if s.drop_hover {
+        layer.push(drop_veil(k));
+    }
     if s.palette.open {
         palette::view(s, k, &mut layer);
     }
