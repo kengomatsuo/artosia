@@ -23,15 +23,18 @@ finish=0
 if [ "${2:-}" = "--finish" ]; then finish=1; notes=""; else notes="${2:-}"; fi
 root="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$root"
+# Everything this release builds goes under the temp folder tools/build-dir.sh names, never the repo.
+builds="$(tools/build-dir.sh)"
+echo "This release is built in $builds/$version."
 
 key="${ARTOSIA_KEY_FILE:-$USERPROFILE/.artosia-keys/update-signing.key}"
 [ -f "$key" ] || { echo "No signing key at $key"; exit 1; }
 files="https://github.com/kengomatsuo/artosia/releases/download/v$version"
-windows="dist/$version/windows.md"
-body="dist/$version/release-notes.md"
+windows="$builds/$version/windows.md"
+body="$builds/$version/release-notes.md"
 # The release page: the Windows part, then a line for each other system that built.
 write_body() {
-    cat "$windows" "dist/$version/linux.md" "dist/$version/macos.md" > "$body" 2>/dev/null || true
+    cat "$windows" "$builds/$version/linux.md" "$builds/$version/macos.md" > "$body" 2>/dev/null || true
 }
 has_asset() {
     gh release view "v$version" --json assets --jq '.assets[].name' | grep -qx "$1"
@@ -87,9 +90,9 @@ if [ "$finish" = 0 ]; then
     cargo build --release -p artosia-output --target-dir target/plain
     cargo build --release -p artosia-update --bin artosia-release --target-dir target/release-tool
 
-    programs="dist/$version/programs"
-    feed="dist/$version/feed"
-    rm -rf "dist/$version"
+    programs="$builds/$version/programs"
+    feed="$builds/$version/feed"
+    rm -rf "$builds/$version"
     mkdir -p "$programs"
     cp target/release/artosia.exe target/release/artosia-output.exe target/release/artosia-stream.exe "$programs/"
     cp target/plain/release/artosia-output.exe "$programs/artosia-output-plain.exe"
@@ -102,14 +105,14 @@ if [ "$finish" = 0 ]; then
     target/release-tool/release/artosia-release.exe build --dir "$programs" --version "$version" --out "$feed" --notes "$notes" --key-file "$key"
 
     # The same programs in one file, for a computer with no internet.
-    zip="dist/$version/Artosia-windows.zip"
-    powershell -NoProfile -Command "Compress-Archive -Path '$programs/*' -DestinationPath '$zip' -Force"
+    zip="$builds/$version/Artosia-windows.zip"
+    powershell -NoProfile -Command "Compress-Archive -Path '$(cygpath -w "$programs")\\*' -DestinationPath '$(cygpath -w "$zip")' -Force"
 
     # The setup: what a person downloads. Windows trusts an unsigned file by how often that
     # exact file was downloaded, so a release carries the last release's setup unchanged and
     # the trust carries over (docs/setup.md). ARTOSIA_NEW_SETUP=1 ships a newly built one,
     # for a release that changed the setup's own code.
-    setup="dist/$version/Artosia-setup.exe"
+    setup="$builds/$version/Artosia-setup.exe"
     cargo build --profile setup -p artosia-setup
     built="target/setup/Artosia-setup.exe"
     if [ -n "${ARTOSIA_SIGN_SHA1:-}" ]; then
@@ -117,7 +120,7 @@ if [ "$finish" = 0 ]; then
         cp "$built" "$setup"
         sign "$setup"
         echo "This release carries a newly built, signed setup."
-    elif [ "${ARTOSIA_NEW_SETUP:-0}" != "1" ] && gh release download --pattern Artosia-setup.exe --dir "dist/$version" 2>/dev/null; then
+    elif [ "${ARTOSIA_NEW_SETUP:-0}" != "1" ] && gh release download --pattern Artosia-setup.exe --dir "$builds/$version" 2>/dev/null; then
         if cmp -s "$setup" "$built"; then
             echo "The setup is the last release's file, and a new build gives the same bytes."
         else
@@ -155,13 +158,13 @@ if [ "$finish" = 0 ]; then
     # About eighty files: a few at a time, so one slow upload does not fail the whole release.
     find "$feed" -type f -print0 | xargs -0 -n 12 gh release upload "v$version" --clobber
 fi
-printf '%s' "$notes" > "dist/$version/notes.txt"
+printf '%s' "$notes" > "$builds/$version/notes.txt"
 # The Linux edition was built in this PC's WSL until 2026-11-14, when the owner put WSL off
 # limits (it is suspected of dropping the F drive, where its disk lives). Until another Linux
 # builder exists, a release carries no Linux files, the homepage keeps the newest release that
 # has them, and installed Linux copies keep the version they have (docs/linux.md).
-linux="dist/$version/linux"
-if [ -f "dist/$version/linux.md" ] && has_asset Artosia-linux-x86_64.tar.gz; then
+linux="$builds/$version/linux"
+if [ -f "$builds/$version/linux.md" ] && has_asset Artosia-linux-x86_64.tar.gz; then
     echo "The release already carries the Linux edition."
 else
     echo "The Linux edition is NOT built: WSL is off limits and no other Linux builder exists yet."
@@ -172,8 +175,9 @@ fi
 # where each file keeps its mode, under a throwaway key; only the list comes back to be signed
 # here, so the real key never leaves this PC. When the Mac cannot be reached, or its build
 # fails, the release carries no Mac files and says so.
-mac="dist/$version/macos"
-remote="Repositories/artosia/dist/$version/macos"
+mac="$builds/$version/macos"
+# The Mac builds in its own temp folder; $remote is set once the Mac answers, below.
+remote=""
 # Tailscale drops an ssh link now and then, and one stream of 260 MB rarely got through: the
 # Mac packs one archive, cut into 16 MB parts with their SHA-256 sums, and each part comes home
 # on its own, checked and tried up to five times, so a dropped link costs one part. The archive
@@ -182,8 +186,8 @@ remote="Repositories/artosia/dist/$version/macos"
 copy_from_mac() {
     local parts="$mac/parts" sum name try
     rm -rf "$parts" && mkdir -p "$parts" || return 1
-    ssh -o BatchMode=yes -o ServerAliveInterval=15 mac "cd ~/$remote && rm -rf home && mkdir home && COPYFILE_DISABLE=1 tar -cf - feed Artosia-macos-aarch64.dmg | split -b 16m - home/part. && cd home && shasum -a 256 part.* > sums" || return 1
-    ssh -o BatchMode=yes mac "cat ~/$remote/home/sums" > "$parts/sums" || return 1
+    ssh -o BatchMode=yes -o ServerAliveInterval=15 mac "cd '$remote' && rm -rf home && mkdir home && COPYFILE_DISABLE=1 tar -cf - feed Artosia-macos-aarch64.dmg | split -b 16m - home/part. && cd home && shasum -a 256 part.* > sums" || return 1
+    ssh -o BatchMode=yes mac "cat '$remote/home/sums'" > "$parts/sums" || return 1
     while read -r sum name; do
         for try in 1 2 3 4 5; do
             if scp -q -o BatchMode=yes -o ServerAliveInterval=15 "mac:$remote/home/$name" "$parts/$name" \
@@ -201,12 +205,16 @@ copy_from_mac() {
 # A finished build of this version on the Mac (its signed list and disk image) is used again
 # by a later --finish instead of being built and notarized a second time.
 built_on_mac() {
-    [ "$finish" = 1 ] && ssh -o BatchMode=yes mac "test -f ~/$remote/feed/manifest-macos-aarch64.json && test -f ~/$remote/Artosia-macos-aarch64.dmg"
+    [ "$finish" = 1 ] && ssh -o BatchMode=yes mac "test -f '$remote/feed/manifest-macos-aarch64.json' && test -f '$remote/Artosia-macos-aarch64.dmg'"
 }
 # A Mac edition is there when its signed update list is: a disk image alone updates no copy.
-if [ -f "dist/$version/macos.md" ] && has_asset Artosia-macos-aarch64.dmg && has_asset manifest-macos-aarch64.json; then
+if [ -f "$builds/$version/macos.md" ] && has_asset Artosia-macos-aarch64.dmg && has_asset manifest-macos-aarch64.json; then
     echo "The release already carries the Mac edition."
 elif ssh -o BatchMode=yes mac true 2>/dev/null; then
+    # The Mac's own build folder, from main's tools/build-dir.sh: the tag built below may predate it.
+    mac_builds="$(ssh -o BatchMode=yes mac "cd ~/Repositories/artosia && git fetch -q origin && git show origin/main:tools/build-dir.sh | bash")"
+    remote="$mac_builds/$version/macos"
+    echo "The Mac builds in $remote."
     # Built every time: a tool left from an older release may lack a command used below.
     cargo build --release -q -p artosia-update --bin artosia-release --target-dir target/release-tool
     rm -rf "$mac" && mkdir -p "$mac"
@@ -215,17 +223,17 @@ elif ssh -o BatchMode=yes mac true 2>/dev/null; then
         reuse=1
         echo "The Mac already holds the $version build; copying it home."
     fi
-    if { [ "$reuse" = 1 ] || { scp -q "dist/$version/notes.txt" "mac:Repositories/artosia-notes-$version.txt" \
+    if { [ "$reuse" = 1 ] || { ssh -o BatchMode=yes mac "mkdir -p '$mac_builds'" && scp -q "$builds/$version/notes.txt" "mac:$mac_builds/notes-$version.txt" \
         && ssh -o BatchMode=yes mac "export PATH=\$HOME/.cargo/bin:\$HOME/.bun/bin:/opt/homebrew/bin:\$PATH
             cd ~/Repositories/artosia || exit 1
             git diff --quiet HEAD || { echo The clone on the Mac has changes that are not committed: a release is built from what is committed; exit 1; }
             git fetch -q origin --tags --force && git checkout -q --detach v$version \
                 && git show origin/main:tools/package-macos.sh > tools/package-macos.sh \
-                && nice -n 19 bash tools/package-macos.sh $version --out dist/$version/macos \
+                && nice -n 19 bash tools/package-macos.sh $version --out '$remote' \
                 && cargo build --release -q -p artosia-update --bin artosia-release \
                 && rm -f /tmp/artosia-throwaway.key && target/release/artosia-release keygen /tmp/artosia-throwaway.key >/dev/null \
-                && rm -rf dist/$version/macos/feed \
-                && target/release/artosia-release build --dir dist/$version/macos/Artosia.app/Contents --version $version --platform macos-aarch64 --out dist/$version/macos/feed --notes-file ../artosia-notes-$version.txt --key-file /tmp/artosia-throwaway.key
+                && rm -rf '$remote/feed' \
+                && target/release/artosia-release build --dir '$remote/Artosia.app/Contents' --version $version --platform macos-aarch64 --out '$remote/feed' --notes-file '$mac_builds/notes-$version.txt' --key-file /tmp/artosia-throwaway.key
             built=\$?; rm -f /tmp/artosia-throwaway.key; git checkout -q -- tools/package-macos.sh; git checkout -q main && git merge -q --ff-only origin/main; exit \$built"; }; } \
         && copy_from_mac \
         && target/release-tool/release/artosia-release.exe sign --dir "$mac/feed" --platform macos-aarch64 --key-file "$key"; then
@@ -237,7 +245,7 @@ elif ssh -o BatchMode=yes mac true 2>/dev/null; then
         done
         mac_megabytes=$(( ($(stat -c %s "$mac/Artosia-macos-aarch64.dmg") + 524288) / 1048576 ))
         # The notes say what the app really carries, read from its signature on the Mac.
-        if ssh -o BatchMode=yes mac "codesign -dv ~/$remote/Artosia.app 2>&1 | grep -q 'Authority=Developer ID Application'"; then
+        if ssh -o BatchMode=yes mac "codesign -dv '$remote/Artosia.app' 2>&1 | grep -q 'Authority=Developer ID Application'"; then
             mac_signed="It is signed with a Developer ID and notarized by Apple."
         else
             mac_signed="It is not notarized yet: macOS refuses its first open, and System Settings, Privacy & Security, Open Anyway opens it."
@@ -246,7 +254,7 @@ elif ssh -o BatchMode=yes mac true 2>/dev/null; then
         {
             echo
             echo "**Mac (Apple silicon):** [Artosia-macos-aarch64.dmg]($files/Artosia-macos-aarch64.dmg) ($mac_megabytes MB). Drag Artosia to Applications. $mac_signed"
-        } > "dist/$version/macos.md"
+        } > "$builds/$version/macos.md"
         write_body
         gh release edit "v$version" --notes-file "$body"
         echo "This release carries the Mac edition."

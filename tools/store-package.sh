@@ -1,14 +1,15 @@
 #!/usr/bin/env bash
 # Packs a release's programs folder as the Microsoft Store edition (docs/store.md):
 #   tools/store-package.sh <version>
-# Makes dist/<version>/store/ (the loose folder: register it with Add-AppxPackage -Register) and
-# dist/<version>/Artosia-<version>-x64.msix. STORE_DIST=<folder> replaces dist/ (for trials).
+# Makes <version>/store/ (the loose folder: register it with Add-AppxPackage -Register) and
+# <version>/Artosia-<version>-x64.msix in the temp folder tools/build-dir.sh names, beside the
+# release's programs. STORE_DIST=<folder> replaces that folder (for trials).
 set -euo pipefail
 
 version="${1:-}"
 [ -n "$version" ] || { echo "usage: tools/store-package.sh <version>" >&2; exit 2; }
 repo="$(cd "$(dirname "$0")/.." && pwd)"
-dist="${STORE_DIST:-$repo/dist}"
+dist="${STORE_DIST:-$("$repo/tools/build-dir.sh")}"
 programs="$dist/$version/programs"
 [ -d "$programs" ] || { echo "ERROR: $programs is missing; build and release $version first" >&2; exit 1; }
 

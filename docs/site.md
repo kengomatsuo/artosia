@@ -90,7 +90,7 @@ shows only when its download exists: no row, no link and no word for it otherwis
 
 `python -I tools/build-site.py --version V --setup-bytes N --zip-bytes N --linux-bytes N
 [--mac-bytes N] [--langs en] [--out DIR]`. Without `--mac-bytes` (and without
-`dist/<version>/Artosia-macos-aarch64.dmg`) the Mac row and its link are left out and the hero names Linux
+`<tools/build-dir.sh>/<version>/Artosia-macos-aarch64.dmg`) the Mac row and its link are left out and the hero names Linux
 alone; with it they are built and the hero names both. Both variants are checked on every build: a key of
 either variant that a language lacks stops the build. `tools/publish-site.sh` reads the three sizes (and the
 Mac's when the release holds it) from the newest release and passes them.

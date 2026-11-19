@@ -6,9 +6,9 @@
 
 The version comes from --version, or from crates/artosia/Cargo.toml. The sizes
 of the setup, the zip and the Linux package come from --setup-bytes, --zip-bytes
-and --linux-bytes, or from the files in dist/<version>/ when that was built here.
+and --linux-bytes, or from the files in <tools/build-dir.sh>/<version>/ when that was built here.
 The Mac row, its link and the Mac words of the hero exist only when --mac-bytes
-is given or dist/<version>/Artosia-macos-aarch64.dmg is here: a system shows only
+is given or <tools/build-dir.sh>/<version>/Artosia-macos-aarch64.dmg is here: a system shows only
 when its download exists. tools/publish-site.sh passes the sizes from the newest release.
 A placeholder with no string, a string no placeholder uses, and a language
 missing a key each stop the build; both variants (with and without the Mac)
@@ -21,10 +21,22 @@ import json
 import re
 import shutil
 import struct
+import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
+
+
+def builds_dir() -> Path:
+    """The folder tools/build-dir.sh prints: the user's temp folder, where releases are built.
+    Worked out here rather than by running bash, because Windows' python may find WSL's bash."""
+    if sys.platform == "darwin":
+        t = subprocess.run(["getconf", "DARWIN_USER_TEMP_DIR"], capture_output=True, text=True, check=True).stdout.strip()
+    else:
+        t = tempfile.gettempdir()
+    return Path(t) / "builds" / "artosia"
 SITE = ROOT / "site"
 DOMAIN = "artosia.matsuokengo.com"
 ORIGIN = f"https://{DOMAIN}"
@@ -197,7 +209,7 @@ def main() -> None:
     def size_of(given: int | None, name: str, flag: str, required: bool = True) -> int | None:
         if given is not None:
             return given
-        built = ROOT / "dist" / v / name
+        built = builds_dir() / v / name
         if not built.exists():
             if required:
                 sys.exit(f"pass {flag}: {built} is not here")

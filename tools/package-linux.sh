@@ -3,7 +3,7 @@
 #
 #   tools/package-linux.sh <version> [--out <folder>] [--key-file <file> (--notes <text> | --notes-file <file>)]
 #
-# It writes into <folder> (default dist/<version>/linux):
+# It writes into <folder> (default <tools/build-dir.sh>/<version>/linux, a temp folder):
 #   Artosia/                         the folder a person unpacks: the programs, a menu entry,
 #                                    the icons, install.sh and README.txt
 #   Artosia-linux-x86_64.tar.gz      that folder, the download
@@ -31,7 +31,8 @@ root="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$root"
 [ "$(uname -s)" = "Linux" ] || { echo "Run this on Linux."; exit 1; }
 grep -q "^version = \"$version\"" crates/artosia/Cargo.toml || { echo "crates/artosia/Cargo.toml is not at $version"; exit 1; }
-out="${out:-dist/$version/linux}"
+out="${out:-$("$(dirname "$0")/build-dir.sh")/$version/linux}"
+echo "Building into $out"
 platform="linux-$(uname -m)"
 
 # Speech recognition needs CMake and libclang; with both the operator carries it.

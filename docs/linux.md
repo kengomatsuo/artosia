@@ -67,10 +67,10 @@ The list is a superset: it was written from Rune's and GStreamer's documentation
 Until then, `tools/publish.sh` ran in WSL, from the release's tag:
 
 ```bash
-cd ~/artosia && git fetch -q origin --tags --force && git checkout -q --detach v<version> && bash tools/package-linux.sh <version> --out <the Windows checkout>/dist/<version>/linux --key-file <the signing key> --notes-file <notes>
+cd ~/artosia && git fetch -q origin --tags --force && git checkout -q --detach v<version> && bash tools/package-linux.sh <version> --out <the Windows build folder, tools/build-dir.sh>/<version>/linux --key-file <the signing key> --notes-file <notes>
 ```
 
-and uploaded `Artosia-linux-x86_64.tar.gz` and everything in `dist/<version>/linux/feed` to the same release. A release that stopped as a draft is finished with `tools/publish.sh <version> --finish`, which builds only the systems the draft lacks.
+and uploaded `Artosia-linux-x86_64.tar.gz` and everything in `<tools/build-dir.sh>/<version>/linux/feed` to the same release. A release that stopped as a draft is finished with `tools/publish.sh <version> --finish`, which builds only the systems the draft lacks.
 
 ## Checked on 2026-11-12
 

@@ -24,11 +24,11 @@ that build their MSIX by script).
 ## Build the package
 
 ```bash
-tools/store-package.sh 0.1.15      # needs dist/0.1.15/programs; makeappx from Windows SDK 10.0.22621.0
+tools/store-package.sh 0.1.15      # needs <tools/build-dir.sh>/0.1.15/programs; makeappx from Windows SDK 10.0.22621.0
 ```
 
-Makes `dist/<version>/store/` (the loose folder: the release's `programs` as it is, `AppxManifest.xml`, `Assets/`) and
-`dist/<version>/Artosia-<version>-x64.msix`. Pictures come from `assets/brand/artosia-icon-512.png` through
+Makes `<tools/build-dir.sh>/<version>/store/` (the loose folder: the release's `programs` as it is, `AppxManifest.xml`, `Assets/`) and
+`<tools/build-dir.sh>/<version>/Artosia-<version>-x64.msix`. Pictures come from `assets/brand/artosia-icon-512.png` through
 `tools/store/make-images.ps1`: StoreLogo 50, Square44x44Logo 44, Square150x150Logo 150, no `makepri` (ChurchPresenter and
 mitmproxy ship the same three plain files). The package is unsigned: the Store signs it on publication.
 

@@ -3,7 +3,7 @@
 #
 #   tools/package-macos.sh <version> [--out <folder>] [--key-file <file> (--notes <text> | --notes-file <file>)]
 #
-# It writes into <folder> (default dist/<version>/macos):
+# It writes into <folder> (default <tools/build-dir.sh>/<version>/macos, a temp folder):
 #   Artosia.app                      the app: the operator, the projector and streaming programs
 #                                    and the part of GStreamer they need, signed with the
 #                                    Developer ID of this Mac's keychain and notarized by Apple
@@ -36,7 +36,8 @@ root="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$root"
 [ "$(uname -s)" = "Darwin" ] && [ "$(uname -m)" = "arm64" ] || { echo "Run this on a Mac with Apple silicon."; exit 1; }
 grep -q "^version = \"$version\"" crates/artosia/Cargo.toml || { echo "crates/artosia/Cargo.toml is not at $version"; exit 1; }
-out="${out:-dist/$version/macos}"
+out="${out:-$("$root/tools/build-dir.sh")/$version/macos}"
+echo "Building into $out"
 platform="macos-aarch64"
 
 gst="${ARTOSIA_GSTREAMER_ROOT:-$HOME/artosia-gst/root}"
