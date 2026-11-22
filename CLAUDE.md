@@ -33,16 +33,16 @@ It is authoritative; update it (and this file's headlines) whenever a decision c
 - `tools/` — `snap.sh`, `ram/measure.ps1`, `ram/measure-cpu.ps1`, `grab-window.ps1`, `make-fixture.sh`, `make-bible-asset.py`, `store-package.sh`
 - `site/` — the homepage at artosia.matsuokengo.com, one template in ten languages ([docs/site.md](docs/site.md))
 - `fixtures/` — generated media and the church's own library, gitignored
-- `docs/` — full accounts behind every rule: [operator.md](docs/operator.md) (the window and its rules), [output.md](docs/output.md) (the output process and its measured cost), [features.md](docs/features.md) (the owner's features and where each stands), [research.md](docs/research.md) (the stack survey), [store.md](docs/store.md) (the Microsoft Store edition), [linux.md](docs/linux.md) (the Linux edition), [macos.md](docs/macos.md) (the Mac edition)
+- `docs/` — full accounts behind every rule: [operator.md](docs/operator.md) (the window and its rules), [output.md](docs/output.md) (the output process and its measured cost), [features.md](docs/features.md) (the owner's features and where each stands), [research.md](docs/research.md) (the stack survey), [store.md](docs/store.md) (the Microsoft Store edition), [linux.md](docs/linux.md) (the Linux edition), [macos.md](docs/macos.md) (the Mac edition), [rule-origins.md](docs/rule-origins.md) (when each rule file began and the incidents no other page tells)
 - `.claude/rules/` — subsystem conventions, path-scoped
 
 ## Hard rules
 
-- **CHECK A SCREEN BY RENDERING IT, NEVER BY READING THE CODE (Rune headless, 2026-11-10, owner call).**
+- **CHECK A SCREEN BY RENDERING IT, NEVER BY READING THE CODE (Rune headless).**
   `cargo run -p artosia -- --snap out.png` renders without a window; Rune's README documents
   `--scene`, element-tree dumps and scripted input.
-- **A RAM NUMBER COUNTS ONLY IF THE VIDEO WAS PROVEN TO LOOP (2026-10-06, owner-reported).**
-  A WPF test was measured after its video had silently stopped. Log the playback position
+- **A RAM NUMBER COUNTS ONLY IF THE VIDEO WAS PROVEN TO LOOP.**
+  A video can stop silently, and a number taken after that measures nothing playing. Log the playback position
   and check it wraps twice before measuring. Full account: [spikes/SPEC.md](spikes/SPEC.md).
 
 ## Commands
