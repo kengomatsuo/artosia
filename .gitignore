@@ -17,3 +17,5 @@
 .taste-skill/
 # The board script's own note of which session holds which card.
 .board-sessions
+# The Cloudflare token tools/publish-site.sh deploys with.
+/.env

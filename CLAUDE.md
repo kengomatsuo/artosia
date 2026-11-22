@@ -58,14 +58,16 @@ cargo test                                    # core, slides, remote and operato
 cargo clippy
 tools/make-fixture.sh                         # needs ffmpeg on PATH or FFMPEG=<path>
 powershell -File tools/ram/measure-cpu.ps1 -Exe <exe> -ArgLine "<args>" -Label <name>
-tools/publish.sh <version> "<notes>"          # builds and publishes a GitHub release (signs only if ARTOSIA_SIGN_SHA1 is set)
-tools/publish.sh <version> --finish           # builds and uploads what a stopped or Mac-less release lacks
+tools/publish.sh <version> "<notes>"          # on the release PC: builds and publishes a GitHub release (signs only if ARTOSIA_SIGN_SHA1 is set)
+tools/publish.sh <version> --finish           # on the release PC: builds and uploads what a stopped or Mac-less release lacks
 tools/store-package.sh <version>              # builds the Microsoft Store package
 tools/package-linux.sh <version>              # on Linux: builds the Linux edition (paused: no builder since the WSL is gone)
 tools/package-macos.sh <version>              # on a Mac: builds the Mac edition; publish.sh runs it over ssh
 tools/site-shots.sh                           # the homepage's pictures, rendered from the real programs
-tools/publish-site.sh                         # builds the homepage and deploys it to Cloudflare from the Mac's wrangler, over ssh
+tools/publish-site.sh                         # builds the homepage and deploys it with wrangler: here on the Mac, over ssh to the Mac from the release PC
 ```
+
+The `.ps1` tools, `publish.sh`, `store-package.sh` and `site-shots.sh` need Windows: the release PC is the owner's Windows PC, which a session on the Mac reaches as `ssh win-pc` (PowerShell). `publish-site.sh` deploys with the Cloudflare token in `CLOUDFLARE_API_TOKEN` or the Mac's gitignored `.env`, else wrangler's own sign-in.
 
 With GStreamer's development files installed (variables in `crates/artosia-video/README.md`):
 

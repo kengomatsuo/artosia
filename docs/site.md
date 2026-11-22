@@ -26,8 +26,12 @@ by hand: wrangler's own sign-in may not write DNS records, and Cloudflare's page
 domains says it "will create DNS records and issue certificates". Requests for static files
 are free and unlimited (both pages read 2026-11-12).
 
-wrangler is signed in on the Mac, so `tools/publish-site.sh` sends the built folder there over
-ssh from Windows itself (Tailscale) and runs `wrangler deploy` there. Until 2026-11-14 that ssh
+wrangler deploys from the Mac. Run on the Mac, `tools/publish-site.sh` builds the page and deploys it
+from a temporary folder there (`SITE_DRY_RUN=1` stops at wrangler's `--dry-run`); run on the release PC,
+it sends the built folder to `~/artosia-site` on the Mac over ssh (Tailscale, `Host mac` in the PC's
+`~/.ssh/config`) and runs `wrangler deploy` there. wrangler takes `CLOUDFLARE_API_TOKEN` from the
+environment or from the Mac's `~/Repositories/artosia/.env` (gitignored), else its own sign-in.
+Until 2026-11-14 that ssh
 went through WSL, whose network could not reach the Mac, and every release since 0.1.28 left the
 page behind; 0.1.31 was deployed from WSL's own signed-in wrangler once, before the owner put
 WSL off limits. When the Mac cannot be reached the script says so and the site keeps its last

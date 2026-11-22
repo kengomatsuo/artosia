@@ -7,9 +7,12 @@
 # holds the Mac disk image.
 #
 # The site is a Cloudflare Worker that only serves files (site/deploy/wrangler.jsonc);
-# its custom domain made the DNS record and the certificate. wrangler is signed in on the
-# Mac, so the built folder goes there over ssh from Windows itself (Tailscale, `Host mac` in
-# ~/.ssh/config) and is deployed from there. WSL is off limits since 2026-11-14.
+# its custom domain made the DNS record and the certificate. wrangler deploys from the Mac.
+# Run on the Mac, the script builds and deploys right here. Run on the release PC (tools/publish.sh
+# ends with it), it sends the built folder to the Mac over ssh (Tailscale, `Host mac` in the PC's
+# ~/.ssh/config) and deploys there. Either way wrangler takes CLOUDFLARE_API_TOKEN from the
+# environment or from the Mac's ~/Repositories/artosia/.env (gitignored), else its own sign-in.
+# SITE_DRY_RUN=1 on the Mac builds and bundles everything and deploys nothing.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
@@ -29,10 +32,30 @@ read -r mac_tag mac < <(newest_with Artosia-macos-aarch64.dmg) || true
 [ -n "${linux:-}" ] || { echo "no release carries the Linux package" >&2; exit 1; }
 
 out=target/site
+# The Mac has only python3; Git Bash on the PC has python.
+py="$(command -v python || command -v python3)"
 # SITE_LANGS=en,id publishes only those languages, for a language whose pictures are not rendered yet.
-python -I tools/build-site.py --version "${tag#v}" --setup-bytes "$setup" --zip-bytes "$zip" \
+"$py" -I tools/build-site.py --version "${tag#v}" --setup-bytes "$setup" --zip-bytes "$zip" \
     --linux-bytes "$linux" --linux-version "${linux_tag#v}" \
     $([ -z "${mac:-}" ] || echo "--mac-bytes $mac --mac-version ${mac_tag#v}") --out "$out" ${SITE_LANGS:+--langs "$SITE_LANGS"}
+
+# The deploy, run on the Mac by bash with one argument: a folder holding public/, wrangler.jsonc and package.json.
+deploy='set -eo pipefail
+export PATH=$HOME/.bun/bin:/opt/homebrew/bin:$PATH
+env_file=$HOME/Repositories/artosia/.env
+if [ -z "${CLOUDFLARE_API_TOKEN:-}" ] && [ -f "$env_file" ]; then set -a; . "$env_file"; set +a; fi
+cd "$1" && bun install --silent && bunx --no-install wrangler deploy '"${SITE_DRY_RUN:+--dry-run}"' 2>&1 | tail -4'
+
+if [ "$(uname -s)" = Darwin ]; then
+    stage="$(mktemp -d)"
+    trap 'rm -rf "$stage"' EXIT
+    cp -R "$out" "$stage/public"
+    cp site/deploy/wrangler.jsonc site/deploy/package.json "$stage/"
+    bash -c "$deploy" deploy "$stage"
+    [ -z "${SITE_DRY_RUN:-}" ] || { echo "Site for ${tag#v} built and bundled; SITE_DRY_RUN deployed nothing."; exit 0; }
+    echo "Site for ${tag#v} is at https://artosia.matsuokengo.com."
+    exit 0
+fi
 
 ssh -o BatchMode=yes mac 'mkdir -p ~/artosia-site' \
     || { echo "The Mac cannot be reached over ssh, so the site was built and not deployed." >&2; exit 1; }
@@ -59,8 +82,6 @@ rm -rf "$parts"
 ssh -n -o BatchMode=yes mac 'set -e; cd ~/artosia-site && rm -rf public.new && mkdir -p public.new && cat incoming/part.* | tar -xf - -C public.new && rm -rf public incoming && mv public.new public' \
     || { echo "The site's parts did not unpack on the Mac, so nothing was deployed." >&2; exit 1; }
 scp -q site/deploy/wrangler.jsonc site/deploy/package.json mac:artosia-site/
-ssh -o BatchMode=yes mac 'export PATH=$HOME/.bun/bin:/opt/homebrew/bin:$PATH
-  set -o pipefail
-  cd ~/artosia-site && bun install --silent && bunx --no-install wrangler deploy 2>&1 | tail -4'
+ssh -o BatchMode=yes mac 'bash -s -- "$HOME/artosia-site"' <<< "$deploy"
 
 echo "Site for ${tag#v} is at https://artosia.matsuokengo.com."
