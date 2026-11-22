@@ -14,7 +14,8 @@ It is authoritative; update it (and this file's headlines) whenever a decision c
 - Rust, edition 2024; toolchain pinned in `rust-toolchain.toml` to match Rune.
 - UI: [Rune](https://github.com/anomalyco/rune), a git dependency pinned to a `dev` rev in the
   root `Cargo.toml`. Its own docs are the reference: `crates/rune/README.md` and `examples/`
-  at that rev. The `house-design-language` skill applies to every screen.
+  at that rev. The `house-design-language` skill applies when building a designed screen
+  (states, focus, contrast, strings in the catalogue); a design pass is not bound by it.
 - Output video: GStreamer hardware decode to NV12 into a Rune `NativeSurface` on every OS; projector and stage run in a separate renderer process (after Lerret).
 - Library: one SQLite file (`rusqlite`, SQLite built in); songs as marker text, Bibles as MyBible modules; EasiSlides and OpenLyrics import.
 - The church this is built for sings in Indonesian, so search works for Indonesian first ([docs/song-library.md](docs/song-library.md)). The interface speaks ten languages, each written from the briefs and none translated from another ([docs/i18n/README.md](docs/i18n/README.md)).
